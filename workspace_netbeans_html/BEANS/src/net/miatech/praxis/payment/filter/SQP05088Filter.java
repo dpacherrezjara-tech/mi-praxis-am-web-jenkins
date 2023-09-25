@@ -7,22 +7,11 @@ import java.util.List;
  *
  * @author Dvicente
  */
-public class SQP05059Filter {
-
+public class SQP05088Filter {
     private String IN_CCUST,
-            IN_DATE,
-            IN_TDATE,
-            IN_DATEFROM,
-            IN_DATETO,
-            IN_PROCTYPE,
-            IN_SMERCHID,
-            IN_TRANSTYPE,
-            IN_SCOUNTRY,
-            IN_FVOID,
-            IN_STVAL,
-            IN_CERROR,
-            IN_CODADJU;
-
+            IN_DATE,IN_TDATE,IN_DATEFROM,IN_DATETO,
+            IN_TRNCU,IN_AGENT,IN_SCOUNTRY,IN_FVOID,
+            IN_STVAL;
     private List<A4331SRFilter> response = new ArrayList<>();
 
     public String getIN_CCUST() {
@@ -65,28 +54,20 @@ public class SQP05059Filter {
         this.IN_DATETO = IN_DATETO;
     }
 
-    public String getIN_PROCTYPE() {
-        return IN_PROCTYPE;
+    public String getIN_TRNCU() {
+        return IN_TRNCU;
     }
 
-    public void setIN_PROCTYPE(String IN_PROCTYPE) {
-        this.IN_PROCTYPE = IN_PROCTYPE;
+    public void setIN_TRNCU(String IN_TRNCU) {
+        this.IN_TRNCU = IN_TRNCU;
     }
 
-    public String getIN_SMERCHID() {
-        return IN_SMERCHID;
+    public String getIN_AGENT() {
+        return IN_AGENT;
     }
 
-    public void setIN_SMERCHID(String IN_SMERCHID) {
-        this.IN_SMERCHID = IN_SMERCHID;
-    }
-
-    public String getIN_TRANSTYPE() {
-        return IN_TRANSTYPE;
-    }
-
-    public void setIN_TRANSTYPE(String IN_TRANSTYPE) {
-        this.IN_TRANSTYPE = IN_TRANSTYPE;
+    public void setIN_AGENT(String IN_AGENT) {
+        this.IN_AGENT = IN_AGENT;
     }
 
     public String getIN_SCOUNTRY() {
@@ -113,22 +94,6 @@ public class SQP05059Filter {
         this.IN_STVAL = IN_STVAL;
     }
 
-    public String getIN_CERROR() {
-        return IN_CERROR;
-    }
-
-    public void setIN_CERROR(String IN_CERROR) {
-        this.IN_CERROR = IN_CERROR;
-    }
-
-    public String getIN_CODADJU() {
-        return IN_CODADJU;
-    }
-
-    public void setIN_CODADJU(String IN_CODADJU) {
-        this.IN_CODADJU = IN_CODADJU;
-    }
-
     public List<A4331SRFilter> getResponse() {
         return response;
     }
@@ -136,6 +101,5 @@ public class SQP05059Filter {
     public void setResponse(List<A4331SRFilter> response) {
         this.response = response;
     }
-
     
 }

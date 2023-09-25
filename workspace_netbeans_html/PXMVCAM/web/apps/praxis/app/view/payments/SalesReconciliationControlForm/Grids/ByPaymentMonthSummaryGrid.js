@@ -1,5 +1,5 @@
 //width: 1370,
-prototype.idGrid = prototype.id + '-byPaymentMonthSummaryGrid';
+prototype.idGridBP = prototype.id + '-byPaymentMonthSummaryGrid';
 Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentMonthSummaryGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.' + prototype.id + '-byPaymentMonthSummaryGrid', // Alias para usar en el xtype

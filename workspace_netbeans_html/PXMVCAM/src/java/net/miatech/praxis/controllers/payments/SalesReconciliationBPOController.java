@@ -16,8 +16,11 @@ import net.miatech.praxis.payment.filter.SQP05062Filter;
 import net.miatech.praxis.payment.filter.SQP05063Filter;
 import net.miatech.praxis.payment.filter.SQP05065Filter;
 import net.miatech.praxis.payment.filter.SQP05072Filter;
+import net.miatech.praxis.payment.filter.SQP05074Filter;
 import net.miatech.praxis.payment.filter.SQP05077Filter;
 import net.miatech.praxis.payment.filter.SQP05081Filter;
+import net.miatech.praxis.payment.filter.SQP05088Filter;
+import net.miatech.praxis.payment.filter.SQP05089Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -42,6 +45,7 @@ public class SalesReconciliationBPOController {
     @Autowired
     private SalesReconciliationLogic logic;
 
+    //<editor-fold defaultstate="collapsed" desc="By payment">
     @RequestMapping(value = "loadByPaymentSummary")
     public ResponseEntity<?> loadByPaymentSummary(@ModelAttribute SQP05059Filter filter) {
         try {
@@ -60,10 +64,10 @@ public class SalesReconciliationBPOController {
         try {
             System.out.println("---------------SalesReconciliationBPO:loadFilters-------------");
             SQP05004Filter filter = new SQP05004Filter();
-            filter.setKEY1("PR");
+            filter.setKEY1("PK");
+            filter.setKEY2("PROCTYPE");
             model.put("paises", logic.getPaises());
             model.put("procesadores", logic.getSQP05004Filter(filter).getLst());
-            filter.setKEY1("PK");
             filter.setKEY2("86");
             model.put("cerror", logic.getSQP05004Filter(filter).getLst());
             filter.setKEY2("89");
@@ -83,6 +87,19 @@ public class SalesReconciliationBPOController {
             filter = logic.getSQP05060Filter(filter);
             System.out.println("Total: " + filter.getResponse().size());
             return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "processTransactionsBatch",method = RequestMethod.POST)
+    public ResponseEntity<?> processTransactionsBatch(@RequestBody SQP05074Filter params){
+        try {
+            System.out.println("---------------SalesReconciliationBPO:processTransactionsBatch-------------");
+            logic.loadSQP05074Filter(params);
+            System.out.println("Process Successfull");
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -274,5 +291,36 @@ public class SalesReconciliationBPOController {
     }
     //</editor-fold>
     
+//</editor-fold>
+
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="By Ticket">
+    
+    @RequestMapping(value = "loadByTicketSummary")
+    public ResponseEntity<?> loadByTicketSummary(@ModelAttribute SQP05088Filter params){
+        System.out.println("---------------SalesReconciliationBPO:loadByTicketSummary-------------");
+        try {
+            SQP05088Filter filter = logic.loadSQP05088Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter,HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "loadByTicketDetail")
+    public ResponseEntity<?> loadByTicketDetail(@ModelAttribute SQP05089Filter params){
+        System.out.println("---------------SalesReconciliationBPO:loadByTicketSummary-------------");
+        try {
+            SQP05089Filter filter = logic.loadSQP05089Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter,HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 //</editor-fold>
 }

@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
+Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPayment', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id + '-filters',
+    alias: 'widget.' + prototype.id + '-filtersByPayment',
     requires: [
         'Ext.Praxis.view.widgets.MonthField'
     ],
@@ -13,7 +13,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
             xtype: 'combobox',
             fieldLabel: 'Search By',
             padding: '10 5 10 10',
-            id: prototype.id + '-cmbFiltersBp',
+            id: prototype.id + '-cmbFiltersBP',
             store: Ext.create('Ext.data.SimpleStore', {
                 fields: ['code', 'name'],
                 data: [
@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
             editable: false,
             value: 'S',
             listeners: {
-                change: 'onChangeFiltersBp'
+                change: 'onChangeFiltersBP'
             }
         },
         {
@@ -43,10 +43,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                 align: 'center'
             },
             items: [
+                //<editor-fold defaultstate="collapsed" desc="Summary">
                 {
                     xtype: 'form',
                     border: false,
-                    id: prototype.id + '-formFilters-1',
+                    id: prototype.id + '-formFiltersBP-1',
                     bodyStyle: 'background: transparent',
                     layout: 'vbox',
                     defaults: {
@@ -75,7 +76,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Date',
-                                    id: prototype.id + '-cmbDate',
+                                    //id: prototype.id + '-cmbDate',
                                     name: 'IN_DATE',
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
@@ -124,10 +125,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                 {
                                     xtype: 'combo',
                                     id: prototype.id + '-cmbProctype',
-                                    name: 'IN_PROCTYPESQ',
+                                    name: 'IN_PROCTYPE',
                                     labelWidth: 70,
                                     width: 250,
-                                    valueField: 'a4451key2',
+                                    valueField: 'a4451key3',
                                     displayField: 'a4451desc1',
                                     fieldLabel: 'Processor',
                                     queryMode: 'local',
@@ -143,7 +144,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                 },
                                 {
                                     xtype: 'combo',
-                                    id: prototype.id + '-cmbPaises',
+                                    id: prototype.id + '-cmbPaisesBP',
                                     name: 'IN_SCOUNTRY',
                                     queryMode: 'local',
                                     allowBlank: true,
@@ -281,10 +282,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                         }
                     ]
                 },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Browser">
                 {
                     xtype: 'form',
                     border: false,
-                    id: prototype.id + '-formFilters-2',
+                    id: prototype.id + '-formFiltersBP-2',
                     bodyStyle: 'background: transparent',
                     hidden: true,
                     layout: 'vbox',
@@ -362,10 +365,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                 {
                                     xtype: 'combo',
                                     id: prototype.id + '-cmbProctypef',
-                                    name: 'IN_PROCTYPESQ',
+                                    name: 'IN_PROCTYPE',
                                     labelWidth: 70,
                                     width: 250,
-                                    valueField: 'a4451key2',
+                                    valueField: 'a4451key3',
                                     displayField: 'a4451desc1',
                                     fieldLabel: 'Processor',
                                     queryMode: 'local',
@@ -381,7 +384,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                 },
                                 {
                                     xtype: 'combo',
-                                    id: prototype.id + '-cmbPaisesf',
+                                    id: prototype.id + '-cmbPaisesfBP',
                                     name: 'IN_SCOUNTRY',
                                     queryMode: 'local',
                                     allowBlank: true,
@@ -600,6 +603,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                         }
                     ]
                 }
+                //</editor-fold>
             ]
         }
     ]

@@ -26,7 +26,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Options', {
                             items: [
                                 {boxLabel: '<b style="color:#148D28;">By Payment</b>', name: 'opcion', inputValue: 'P', checked: true, width: 100},
                                 {boxLabel: '<b style="color:#148D28;">By Ticket</b>', name: 'opcion', inputValue: 'T', width: 80}
-                            ]
+                            ],
+                            listeners: {
+                                change: 'onChangeModule'
+                            }
                         }
                     ]
                 }
@@ -46,6 +49,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Options', {
                             tooltip: 'Search',
                             listeners: {
                                 click: 'onClickSearchBtn'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnProcess',
+                            iconCls: 'prx-icon-image-process',
+                            tooltip: 'Process',
+                            hidden:true,
+                            listeners: {
+                                click: 'onClickProcessBtn'
                             }
                         },
                         {
