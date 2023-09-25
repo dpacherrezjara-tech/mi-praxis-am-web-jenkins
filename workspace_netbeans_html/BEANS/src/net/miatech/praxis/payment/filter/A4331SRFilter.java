@@ -5,7 +5,8 @@ package net.miatech.praxis.payment.filter;
  * @author Dvicente
  */
 public class A4331SRFilter {
-    private String PRDA,PAYDATE,DESC_PROCTYPE;
+    private String PRDA,PAYDATE,DESC_PROCTYPE,
+            A4496FECVT,A4496FPROC;
     private Integer TOTAL,
             TOTAL_MATCH,TOTAL_PENDING,
             TOTAL_NC_MATCH,TOTAL_NC_PENDING,
@@ -124,5 +125,20 @@ public class A4331SRFilter {
     public void setTOTAL_TAB_PENDING(Integer TOTAL_TAB_PENDING) {
         this.TOTAL_TAB_PENDING = TOTAL_TAB_PENDING;
     }
-    
+
+    public String getA4496FECVT() {
+        return A4496FECVT;
+    }
+
+    public void setA4496FECVT(String A4496FECVT) {
+        this.A4496FECVT = A4496FECVT;
+    }
+
+    public String getA4496FPROC() {
+        return A4496FPROC;
+    }
+
+    public void setA4496FPROC(String A4496FPROC) {
+        this.A4496FPROC = A4496FPROC;
+    }
 }

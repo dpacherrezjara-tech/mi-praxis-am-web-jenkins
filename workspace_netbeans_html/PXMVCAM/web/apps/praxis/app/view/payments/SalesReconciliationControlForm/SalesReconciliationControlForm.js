@@ -8,10 +8,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.SalesReconci
     alias: 'widget.SalesReconciliationControlForm',
     requires: [
         'Ext.Praxis.controller.payments.SalesReconciliationControl.SalesReconciliationControlController',
-        'Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPayment',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTicket',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.Options',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentMonthSummaryGrid',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTicketMonthSummaryGrid',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentDetailGrid',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTicketDetailGrid',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry'
     ],
     controller: 'SalesReconciliationControlController',
@@ -59,12 +62,40 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.SalesReconci
                                             xtype: prototype.id + '-options'
                                         },
                                         {
-                                            xtype: prototype.id + '-filters',
-                                            id: prototype.id + '-contentFilter'
+                                            //xtype: prototype.id + '-filtersByTicket',
+                                            id: prototype.id + '-contentFilter',
+                                            xtype: 'panel',
+                                            border: false,
+                                            defaults: {
+                                                width: prototype.width,
+                                                align: 'center'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: prototype.id + '-filtersByPayment',
+                                                    id: prototype.id + '-filtersByPayment-1'
+                                                },
+                                                {
+                                                    xtype: prototype.id + '-filtersByTicket',
+                                                    id: prototype.id + '-filtersByTicket-1',
+                                                    hidden: true
+                                                }
+                                            ]
                                         },
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-mainContent',
+                                            height: prototype.height,
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            layout: {
+                                                type: 'vbox',
+                                                align: 'center'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-mainContent2',
+                                            hidden: true,
                                             height: prototype.height,
                                             bodyStyle: 'background-color: #E3EAF9;',
                                             layout: {

@@ -432,6 +432,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         let params = {
             IN_CCUST: '139',
             IN_TRANSTYPE: me.bean.transtype,
+            IN_TDOC: me.bean.tdoc,
             ...scannerForm.getValues()
         };
         if (params.creditcard.at(0) !== '' && params.creditcard.at(1) !== '') {

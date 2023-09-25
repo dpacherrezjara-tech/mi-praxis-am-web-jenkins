@@ -1,0 +1,105 @@
+package net.miatech.praxis.payment.filter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author Dvicente
+ */
+public class SQP05088Filter {
+    private String IN_CCUST,
+            IN_DATE,IN_TDATE,IN_DATEFROM,IN_DATETO,
+            IN_TRNCU,IN_AGENT,IN_SCOUNTRY,IN_FVOID,
+            IN_STVAL;
+    private List<A4331SRFilter> response = new ArrayList<>();
+
+    public String getIN_CCUST() {
+        return IN_CCUST;
+    }
+
+    public void setIN_CCUST(String IN_CCUST) {
+        this.IN_CCUST = IN_CCUST;
+    }
+
+    public String getIN_DATE() {
+        return IN_DATE;
+    }
+
+    public void setIN_DATE(String IN_DATE) {
+        this.IN_DATE = IN_DATE;
+    }
+
+    public String getIN_TDATE() {
+        return IN_TDATE;
+    }
+
+    public void setIN_TDATE(String IN_TDATE) {
+        this.IN_TDATE = IN_TDATE;
+    }
+
+    public String getIN_DATEFROM() {
+        return IN_DATEFROM;
+    }
+
+    public void setIN_DATEFROM(String IN_DATEFROM) {
+        this.IN_DATEFROM = IN_DATEFROM;
+    }
+
+    public String getIN_DATETO() {
+        return IN_DATETO;
+    }
+
+    public void setIN_DATETO(String IN_DATETO) {
+        this.IN_DATETO = IN_DATETO;
+    }
+
+    public String getIN_TRNCU() {
+        return IN_TRNCU;
+    }
+
+    public void setIN_TRNCU(String IN_TRNCU) {
+        this.IN_TRNCU = IN_TRNCU;
+    }
+
+    public String getIN_AGENT() {
+        return IN_AGENT;
+    }
+
+    public void setIN_AGENT(String IN_AGENT) {
+        this.IN_AGENT = IN_AGENT;
+    }
+
+    public String getIN_SCOUNTRY() {
+        return IN_SCOUNTRY;
+    }
+
+    public void setIN_SCOUNTRY(String IN_SCOUNTRY) {
+        this.IN_SCOUNTRY = IN_SCOUNTRY;
+    }
+
+    public String getIN_FVOID() {
+        return IN_FVOID;
+    }
+
+    public void setIN_FVOID(String IN_FVOID) {
+        this.IN_FVOID = IN_FVOID;
+    }
+
+    public String getIN_STVAL() {
+        return IN_STVAL;
+    }
+
+    public void setIN_STVAL(String IN_STVAL) {
+        this.IN_STVAL = IN_STVAL;
+    }
+
+    public List<A4331SRFilter> getResponse() {
+        return response;
+    }
+
+    public void setResponse(List<A4331SRFilter> response) {
+        this.response = response;
+    }
+    
+}

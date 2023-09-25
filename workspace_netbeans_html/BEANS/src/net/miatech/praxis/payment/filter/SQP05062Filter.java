@@ -8,9 +8,10 @@ import java.util.List;
  * @author Dvicente
  */
 public class SQP05062Filter {
-    private String IN_CCUST,IN_TRANSTYPE,IN_SCARDN,IN_SAUTHOC,
-            IN_SDATE,IN_SPNR,IN_TICKET,IN_SAGENT;
-    
+
+    private String IN_CCUST, IN_TDOC, IN_TRANSTYPE, IN_SCARDN, IN_SAUTHOC,
+            IN_SDATE, IN_SPNR, IN_TICKET, IN_SAGENT;
+
     private List<ScannerFilter> response = new ArrayList<>();
 
     public List<ScannerFilter> getResponse() {
@@ -84,5 +85,12 @@ public class SQP05062Filter {
     public void setIN_SAGENT(String IN_SAGENT) {
         this.IN_SAGENT = IN_SAGENT;
     }
-    
+
+    public String getIN_TDOC() {
+        return IN_TDOC;
+    }
+
+    public void setIN_TDOC(String IN_TDOC) {
+        this.IN_TDOC = IN_TDOC;
+    }
 }

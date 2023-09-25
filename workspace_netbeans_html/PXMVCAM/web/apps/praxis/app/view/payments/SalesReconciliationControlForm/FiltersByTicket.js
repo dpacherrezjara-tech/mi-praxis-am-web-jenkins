@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
+Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTicket', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id + '-filters',
+    alias: 'widget.' + prototype.id + '-filtersByTicket',
     requires: [
         'Ext.Praxis.view.widgets.MonthField'
     ],
@@ -13,7 +13,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
             xtype: 'combobox',
             fieldLabel: 'Search By',
             padding: '10 5 10 10',
-            id: prototype.id + '-cmbFiltersBp',
+            id: prototype.id + '-cmbFiltersBT',
             store: Ext.create('Ext.data.SimpleStore', {
                 fields: ['code', 'name'],
                 data: [
@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
             editable: false,
             value: 'S',
             listeners: {
-                change: 'onChangeFiltersBp'
+                change: 'onChangeFiltersBT'
             }
         },
         {
@@ -43,10 +43,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                 align: 'center'
             },
             items: [
+                //<editor-fold defaultstate="collapsed" desc="Summary">
                 {
                     xtype: 'form',
                     border: false,
-                    id: prototype.id + '-formFilters-1',
+                    id: prototype.id + '-formFiltersBT-1',
                     bodyStyle: 'background: transparent',
                     layout: 'vbox',
                     defaults: {
@@ -75,13 +76,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Date',
-                                    id: prototype.id + '-cmbDate',
+                                    //id: prototype.id + '-cmbDate',
                                     name: 'IN_DATE',
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
                                         data: [
-                                            ['PRDA', 'Processing Date'],
-                                            ['PAYDATE', 'Payment Date']
+                                            ['FECVT', 'Sale Date'],
+                                            ['PRDA', 'Processing Date']
                                         ]
                                     }),
                                     labelWidth: 50,
@@ -90,7 +91,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                     valueField: 'code',
                                     queryMode: 'local',
                                     editable: false,
-                                    value: 'PRDA'
+                                    value: 'FECVT'
                                 },
                                 {
                                     xtype: 'monthfield',
@@ -123,27 +124,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                 },
                                 {
                                     xtype: 'combo',
-                                    id: prototype.id + '-cmbProctype',
-                                    name: 'IN_PROCTYPESQ',
-                                    labelWidth: 70,
-                                    width: 250,
-                                    valueField: 'a4451key2',
-                                    displayField: 'a4451desc1',
-                                    fieldLabel: 'Processor',
-                                    queryMode: 'local',
-                                    editable: false,
-                                    allowBlank: true,
-                                    caseSensitive: false,
-                                    autoSelect: true,
-                                    labelAlign: 'right',
-                                    typeAhead: true,
-                                    enableKeyEvents: true,
-                                    triggerAction: 'all',
-                                    value: ''
-                                },
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbPaises',
+                                    id: prototype.id + '-cmbPaisesBT',
                                     name: 'IN_SCOUNTRY',
                                     queryMode: 'local',
                                     allowBlank: true,
@@ -165,15 +146,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Doc. Type',
-                                    name: 'IN_TRANSTYPE',
+                                    name: 'IN_TRNCU',
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
                                             ['SALE', 'Sale'],
-                                            ['RFND', 'Refund'],
-                                            ['CHBK', 'Chargeback'],
-                                            ['ADJU', 'Adjustment']
+                                            ['RFND', 'Refund']
                                         ]
                                     }),
                                     labelWidth: 80,
@@ -195,17 +174,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                     listeners: {
                                         change: function (checkbox, newValue) {}
                                     }
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    fieldLabel: 'Merchant',
-                                    labelWidth: 70,
-                                    width: 185,
-                                    name: 'IN_SMERCHID',
-                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
-                                    maxLength: 15, // Límite máximo de caracteres
-                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
-                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
                                 }
                             ]
                         }
@@ -223,7 +191,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                 labelAlign: 'right',
                                 hidden: false
                             },
-                            items:[
+                            items: [
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Status',
@@ -235,12 +203,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                             ['0', 'Stand By'],
                                             ['1', 'Match'],
                                             ['2', 'Sales Without Settl.'],
-                                            ['3', 'Settl. Without Sales'],
                                             ['4', 'Match Diff.'],
                                             ['5', 'Manual Match'],
                                             ['6', 'Forced Match'],
-                                            ['7', 'Compensation Match'],
-                                            ['8', 'Pending RFND']
+                                            ['7', 'Compensation Match']
                                         ]
                                     }),
                                     labelWidth: 55,
@@ -250,41 +216,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
-                                },
-                                {
-                                    xtype: 'combobox',
-                                    id: prototype.id + '-cmbCerrorSum',
-                                    fieldLabel: 'Error Code',
-                                    name: 'IN_CERROR',
-                                    labelWidth: 80,
-                                    width: 290,
-                                    displayField: 'name',
-                                    valueField: 'code',
-                                    queryMode: 'local',
-                                    editable: false,
-                                    value: ''
-                                },
-                                {
-                                    xtype: 'combobox',
-                                    fieldLabel: 'Adj. Code',
-                                    id: prototype.id + '-cmbCodadjuSum',
-                                    name: 'IN_CODADJU',
-                                    labelWidth: 70,
-                                    width: 230,
-                                    displayField: 'a4451desc1',
-                                    valueField: 'a4451key3',
-                                    queryMode: 'local',
-                                    editable: false,
-                                    value: ''
                                 }
                             ]
                         }
                     ]
                 },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Browser">
                 {
                     xtype: 'form',
                     border: false,
-                    id: prototype.id + '-formFilters-2',
+                    id: prototype.id + '-formFiltersBT-2',
                     bodyStyle: 'background: transparent',
                     hidden: true,
                     layout: 'vbox',
@@ -361,27 +303,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                 },
                                 {
                                     xtype: 'combo',
-                                    id: prototype.id + '-cmbProctypef',
-                                    name: 'IN_PROCTYPESQ',
-                                    labelWidth: 70,
-                                    width: 250,
-                                    valueField: 'a4451key2',
-                                    displayField: 'a4451desc1',
-                                    fieldLabel: 'Processor',
-                                    queryMode: 'local',
-                                    editable: false,
-                                    allowBlank: true,
-                                    caseSensitive: false,
-                                    autoSelect: true,
-                                    labelAlign: 'right',
-                                    typeAhead: true,
-                                    enableKeyEvents: true,
-                                    triggerAction: 'all',
-                                    value: ''
-                                },
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbPaisesf',
+                                    id: prototype.id + '-cmbPaisesfBT',
                                     name: 'IN_SCOUNTRY',
                                     queryMode: 'local',
                                     allowBlank: true,
@@ -403,15 +325,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Doc. Type',
-                                    name: 'IN_TRANSTYPE',
+                                    name: 'IN_TRNCU',
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
                                             ['SALE', 'Sale'],
                                             ['RFND', 'Refund'],
-                                            ['CHBK', 'Chargeback'],
-                                            ['ADJU', 'Adjustment']
+                                            ['EXCH', 'Exchange']
                                         ]
                                     }),
                                     labelWidth: 80,
@@ -423,10 +344,32 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                     value: ''
                                 },
                                 {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Source',
+                                    name: 'IN_FUENT',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['ASR', 'ASR'],
+                                            ['BSP', 'BSP'],
+                                            ['ARC', 'ARC'],
+                                            ['MAN', 'Manual']
+                                        ]
+                                    }),
+                                    labelWidth: 60,
+                                    width: 150,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
                                     xtype: 'checkbox',
                                     fieldLabel: 'Void',
                                     labelWidth: 40,
-                                    width: 70,
+                                    width: 55,
                                     name: 'IN_FVOID',
                                     inputValue: 'V',
                                     uncheckedValue: '', // Establecer el valor cuando esté desmarcado como una cadena vacía
@@ -436,12 +379,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    fieldLabel: 'Ref. Number',
-                                    hidden: true,
-                                    labelWidth: 80,
-                                    width: 250,
-                                    name: 'IN_AREFNBR',
-                                    maxLength: 23, // Límite máximo de caracteres
+                                    fieldLabel: 'IATA',
+                                    labelWidth: 50,
+                                    width: 140,
+                                    name: 'IN_IATA',
+                                    maxLength: 8, // Límite máximo de caracteres
                                     maskRe: /[0-9]/, // Expresión regular para permitir solo números
                                     enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                                     listeners: {
@@ -449,8 +391,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                     }
                                 }
                             ]
-                        }
-                        ,
+                        },
                         {
                             xtype: 'panel',
                             layout: 'hbox',
@@ -540,12 +481,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                             ['0', 'Stand By'],
                                             ['1', 'Match'],
                                             ['2', 'Sales Without Settl.'],
-                                            ['3', 'Settl. Without Sales'],
                                             ['4', 'Match Diff.'],
                                             ['5', 'Manual Match'],
                                             ['6', 'Forced Match'],
-                                            ['7', 'Compensation Match'],
-                                            ['8', 'Pending RFND']
+                                            ['7', 'Compensation Match']
                                         ]
                                     }),
                                     labelWidth: 55,
@@ -555,51 +494,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Filters', {
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
-                                },
-                                {
-                                    xtype: 'combobox',
-                                    id: prototype.id + '-cmbCerror',
-                                    fieldLabel: 'Error Code',
-                                    name: 'IN_CERROR',
-                                    labelWidth: 80,
-                                    width: 290,
-                                    displayField: 'name',
-                                    valueField: 'code',
-                                    queryMode: 'local',
-                                    editable: false,
-                                    value: ''
-                                },
-                                {
-                                    xtype: 'combobox',
-                                    fieldLabel: 'Adj. Code',
-                                    id: prototype.id + '-cmbCodadju',
-                                    name: 'IN_CODADJU',
-                                    labelWidth: 70,
-                                    width: 230,
-                                    displayField: 'a4451desc1',
-                                    valueField: 'a4451key3',
-                                    queryMode: 'local',
-                                    editable: false,
-                                    value: ''
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    fieldLabel: 'Merchant',
-                                    labelWidth: 70,
-                                    width: 185,
-                                    name: 'IN_PMERCHID',
-                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
-                                    maxLength: 15, // Límite máximo de caracteres
-                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
-                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
-                                    listeners: {
-                                        specialkey: 'onEnterKeyPress'
-                                    }
                                 }
                             ]
                         }
                     ]
                 }
+                //</editor-fold>
             ]
         }
     ]
