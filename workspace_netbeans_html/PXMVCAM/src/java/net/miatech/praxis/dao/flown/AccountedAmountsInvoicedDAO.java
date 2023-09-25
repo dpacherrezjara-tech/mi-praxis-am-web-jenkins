@@ -156,6 +156,7 @@ public class AccountedAmountsInvoicedDAO {
                 objRtn.A2559TCAMF = rs01.getDouble("A2559TCAMF");
                 objRtn.DFQ = rs01.getDouble("DFQ");
                 objRtn.DCAMB = rs01.getDouble("DCAMB");
+                objRtn.STATUS = rs01.getString("STATUS").trim();
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM / filter.page.PAGROW + 1;
                 objRtn.page.PAGROW = filter.page.PAGROW;

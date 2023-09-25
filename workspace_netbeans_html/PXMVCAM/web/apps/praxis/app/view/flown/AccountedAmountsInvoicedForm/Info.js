@@ -58,6 +58,7 @@ Ext.define('Ext.Praxis.view.flown.AccountedAmountsInvoicedForm.Info', {
                             {text: 'Invoice Number', width: 120, dataIndex: 'A2559FACTU'},
                             {text: 'Accounting Date IXC', width: 150, dataIndex: 'A2559FCOIC'},
                             {text: 'Source Code', width: 120, dataIndex: 'A2559TUSO'},
+                            {text: 'Status 9', width: 120, dataIndex: 'STATUS'},
                             {text: 'Accounted',
                                 defaults: {
                                     menuDisabled: true,
