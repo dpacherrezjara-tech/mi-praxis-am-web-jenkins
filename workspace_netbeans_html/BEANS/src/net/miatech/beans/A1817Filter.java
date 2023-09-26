@@ -31,6 +31,7 @@ public class A1817Filter extends A1817 {
     public String DSALES = "";
     public String FVTA = "";
     public String descFVTA = "";
+    public String descFCONT = "";
     public String IN_TIPO = "";
     public String IN_DATE = "";
     public String IN_DATE_FROM = "";

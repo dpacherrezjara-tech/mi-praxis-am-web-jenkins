@@ -5,9 +5,11 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
     meDE: '',
     actionCode: '',
     bean: {},
+    beanEMDS: {},
     beanResult: {},
     lstCountry: [],
     searchParams: {},
+    paramsDetailEMDs: {},
     lstA1852: {},
     dataObtain: {},
     copia: '',
@@ -115,8 +117,20 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         beanTemp.HOUP = this.getValue("txtHOUP").trim();
     },
     getData: function () {
-        meDE.bean.data.IN_TICKET = meDE.bean.data.strTicket.substr(0, 3) +  meDE.bean.data.strTicket.substr(4, 4) + meDE.bean.data.strTicket.substr(8, 6);
-        var beanString = JSON.stringify(meDE.bean.data);
+        
+        var IN_TICKET = meDE.bean.data.strTicket.substr(0, 3) +  meDE.bean.data.strTicket.substr(4, 4) + meDE.bean.data.strTicket.substr(8, 6);
+        var IN_TIPO = '1';
+        var IN_DATE = '';
+        var IN_STVAL = '';
+        
+        
+        paramsDetailEMDs = {
+            IN_TIPO: IN_TIPO,
+            IN_DATE: IN_DATE,
+            IN_STVAL: IN_STVAL,
+            IN_TICKET: IN_TICKET
+        };
+        var beanString = JSON.stringify(paramsDetailEMDs);
         console.log(beanString);
         Ext.Ajax.request({
             url: prototype.url + '/search',
