@@ -1917,14 +1917,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                                 text: 'Curr', dataIndex: 'mfop', width: 50
                                                             },
                                                             {
-                                                                text: 'Auth<br>Amount', dataIndex: 'autamount', width: 100,
+                                                                text: 'Amount', dataIndex: 'vfop', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
                                                                     return Ext.util.Format.number(value, '0,000.00');
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Amount', dataIndex: 'vfop', width: 100,
+                                                                text: 'Auth<br>Amount', dataIndex: 'autamount', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
                                                                     return Ext.util.Format.number(value, '0,000.00');
