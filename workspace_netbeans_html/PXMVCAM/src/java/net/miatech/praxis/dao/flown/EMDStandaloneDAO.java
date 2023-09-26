@@ -55,7 +55,7 @@ public class EMDStandaloneDAO {
         hm.put("R","Refund");
         hm.put(" ","Without Use");
                
-        int TOT_QTYSALED = 0,TOT_QTYUSESD = 0,TOT_QTYSALEP = 0,TOT_QTYUSESP = 0,TOT_QTYEMDAU = 0,TOT_QTYEMDMA = 0,TOT_QTYEMDCT = 0;
+        int TOT_QTYUSED = 0,TOT_QTYCONCI = 0,TOT_QTYPEND = 0,TOT_QTYPOLIZA = 0;
         
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -94,13 +94,10 @@ public class EMDStandaloneDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
-                TOT_QTYSALED  = rst.getInt("QTYSALED");
-                TOT_QTYUSESD  = rst.getInt("QTYUSESD");
-                TOT_QTYSALEP  = rst.getInt("QTYSALEP");
-                TOT_QTYUSESP  = rst.getInt("QTYUSESP");
-                TOT_QTYEMDAU  = rst.getInt("QTYEMDAU");
-                TOT_QTYEMDMA  = rst.getInt("QTYEMDMA");
-                TOT_QTYEMDCT  = rst.getInt("QTYEMDCT");
+                TOT_QTYUSED  = rst.getInt("QTYUSED");
+                TOT_QTYCONCI  = rst.getInt("QTYCONCI");
+                TOT_QTYPEND  = rst.getInt("QTYPEND");
+                TOT_QTYPOLIZA  = rst.getInt("QTYPOLIZA");
             }
             rst.close();
 
@@ -111,23 +108,17 @@ public class EMDStandaloneDAO {
 
                     bean = new A1817Filter();
                     bean.IN_TIPO = filter.IN_TIPO.trim();
-                    bean.FCONT = rst.getString("FCONT");
-                    bean.strFormatDate = Functions.getMonthConvert(bean.FCONT);
-                    bean.QTYSALED  = rst.getInt("QTYSALED");
-                    bean.QTYUSESD  = rst.getInt("QTYUSESD");
-                    bean.QTYSALEP  = rst.getInt("QTYSALEP");
-                    bean.QTYUSESP  = rst.getInt("QTYUSESP");
-                    bean.QTYEMDAU  = rst.getInt("QTYEMDAU");
-                    bean.QTYEMDMA  = rst.getInt("QTYEMDMA");
-                    bean.QTYEMDCT  = rst.getInt("QTYEMDCT");
+                    bean.DFLIGHT = rst.getString("DFLIGHT");
+                    bean.strFormatDate = Functions.getMonthConvert(bean.DFLIGHT);
+                    bean.QTYUSED  = rst.getInt("QTYUSED");
+                    bean.QTYCONCI  = rst.getInt("QTYCONCI");
+                    bean.QTYPEND  = rst.getInt("QTYPEND");
+                    bean.QTYPOLIZA  = rst.getInt("QTYPOLIZA");
                     
-                    bean.TOT_QTYSALED  = TOT_QTYSALED;
-                    bean.TOT_QTYUSESD  = TOT_QTYUSESD;
-                    bean.TOT_QTYSALEP  = TOT_QTYSALEP;
-                    bean.TOT_QTYUSESP  = TOT_QTYUSESP;
-                    bean.TOT_QTYEMDAU  = TOT_QTYEMDAU;
-                    bean.TOT_QTYEMDMA  = TOT_QTYEMDMA;
-                    bean.TOT_QTYEMDCT  = TOT_QTYEMDCT;
+                    bean.TOT_QTYUSED  = TOT_QTYUSED;
+                    bean.TOT_QTYCONCI  = TOT_QTYCONCI;
+                    bean.TOT_QTYPEND  = TOT_QTYPEND;
+                    bean.TOT_QTYPOLIZA  = TOT_QTYPOLIZA;
                     
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;
@@ -164,6 +155,8 @@ public class EMDStandaloneDAO {
         return lstTkts;
     }
     
+    
+    
     public List<A1817Filter> loadPX529SQP04934(A1817Filter filter) throws SQLException, Exception {
         
         List<A1817Filter> lstTkts = new ArrayList<A1817Filter>(0);
@@ -175,7 +168,7 @@ public class EMDStandaloneDAO {
         hm.put("R","Refund");
         hm.put(" ","Without Use");
                
-        int TOT_QTYSALED = 0,TOT_QTYUSESD = 0,TOT_QTYSALEP = 0,TOT_QTYUSESP = 0,TOT_QTYEMDAU = 0,TOT_QTYEMDMA = 0,TOT_QTYEMDCT = 0;
+        int TOT_QTYUSED = 0,TOT_QTYCONCI = 0,TOT_QTYPEND = 0,TOT_QTYPOLIZA = 0;
         
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -213,13 +206,10 @@ public class EMDStandaloneDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
-                TOT_QTYSALED  = rst.getInt("QTYSALED");
-                TOT_QTYUSESD  = rst.getInt("QTYUSESD");
-                TOT_QTYSALEP  = rst.getInt("QTYSALEP");
-                TOT_QTYUSESP  = rst.getInt("QTYUSESP");
-                TOT_QTYEMDAU  = rst.getInt("QTYEMDAU");
-                TOT_QTYEMDMA  = rst.getInt("QTYEMDMA");
-                TOT_QTYEMDCT  = rst.getInt("QTYEMDCT");
+                TOT_QTYUSED  = rst.getInt("QTYUSED");
+                TOT_QTYCONCI  = rst.getInt("QTYCONCI");
+                TOT_QTYPEND  = rst.getInt("QTYPEND");
+                TOT_QTYPOLIZA  = rst.getInt("QTYPOLIZA");
             }
             rst.close();
 
@@ -230,23 +220,17 @@ public class EMDStandaloneDAO {
 
                     bean = new A1817Filter();
                     bean.IN_TIPO = filter.IN_TIPO.trim();
-                    bean.FCONT = rst.getString("FCONT");
-                    bean.strFormatDate = Functions.getMonthConvert(bean.FCONT);
-                    bean.QTYSALED  = rst.getInt("QTYSALED");
-                    bean.QTYUSESD  = rst.getInt("QTYUSESD");
-                    bean.QTYSALEP  = rst.getInt("QTYSALEP");
-                    bean.QTYUSESP  = rst.getInt("QTYUSESP");
-                    bean.QTYEMDAU  = rst.getInt("QTYEMDAU");
-                    bean.QTYEMDMA  = rst.getInt("QTYEMDMA");
-                    bean.QTYEMDCT  = rst.getInt("QTYEMDCT");
+                    bean.DFLIGHT = rst.getString("DFLIGHT");
+                    bean.strFormatDate = Functions.getMonthConvert(bean.DFLIGHT);
+                    bean.QTYUSED  = rst.getInt("QTYUSED");
+                    bean.QTYCONCI  = rst.getInt("QTYCONCI");
+                    bean.QTYPEND  = rst.getInt("QTYPEND");
+                    bean.QTYPOLIZA  = rst.getInt("QTYPOLIZA");
                     
-                    bean.TOT_QTYSALED  = TOT_QTYSALED;
-                    bean.TOT_QTYUSESD  = TOT_QTYUSESD;
-                    bean.TOT_QTYSALEP  = TOT_QTYSALEP;
-                    bean.TOT_QTYUSESP  = TOT_QTYUSESP;
-                    bean.TOT_QTYEMDAU  = TOT_QTYEMDAU;
-                    bean.TOT_QTYEMDMA  = TOT_QTYEMDMA;
-                    bean.TOT_QTYEMDCT  = TOT_QTYEMDCT;
+                    bean.TOT_QTYUSED  = TOT_QTYUSED;
+                    bean.TOT_QTYCONCI  = TOT_QTYCONCI;
+                    bean.TOT_QTYPEND  = TOT_QTYPEND;
+                    bean.TOT_QTYPOLIZA  = TOT_QTYPOLIZA;
                     
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;
@@ -282,6 +266,125 @@ public class EMDStandaloneDAO {
 
         return lstTkts;
     }
+    
+//    public List<A1817Filter> loadPX529SQP04934(A1817Filter filter) throws SQLException, Exception {
+//        
+//        List<A1817Filter> lstTkts = new ArrayList<A1817Filter>(0);
+//        A1817Filter bean;
+//        double VFOP = 0;
+//        HashMap hm = new HashMap();
+//        hm.put("F","Flown");
+//        hm.put("E","Exchange");
+//        hm.put("R","Refund");
+//        hm.put(" ","Without Use");
+//               
+//        int TOT_QTYSALED = 0,TOT_QTYUSESD = 0,TOT_QTYSALEP = 0,TOT_QTYUSESP = 0,TOT_QTYEMDAU = 0,TOT_QTYEMDMA = 0,TOT_QTYEMDCT = 0;
+//        
+//        CallableStatement cstmt = null;
+//        ResultSet rst = null;
+//        Connection cnx = null;
+//
+//        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04934(?,?,?,?,?,?,?,?)}";
+//
+//        try {
+//            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+//            cstmt = cnx.prepareCall(SQLCLL01);
+//
+//
+//            cstmt.registerOutParameter(5, Types.INTEGER);
+//            cstmt.registerOutParameter(6, Types.INTEGER);
+//            cstmt.registerOutParameter(7, Types.INTEGER);
+//            cstmt.registerOutParameter(8, Types.INTEGER);
+//            
+//            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+//            cstmt.setString(2, filter.IN_TIPO);
+//            cstmt.setString(3, filter.IN_DATE);
+//            cstmt.setString(4, filter.IN_STVAL);
+//
+//            cstmt.setInt(5, filter.page.PAGNUM);
+//            cstmt.setInt(6, filter.page.PAGROW);
+//            cstmt.setInt(7, filter.page.TOTPAG);
+//            cstmt.setInt(8, filter.page.TOTROW);
+//            
+//            cstmt.execute();
+//
+//            filter.page.PAGNUM = cstmt.getInt(5);
+//            filter.page.PAGROW = cstmt.getInt(6);
+//            filter.page.TOTPAG = cstmt.getInt(7);
+//            filter.page.TOTROW = cstmt.getInt(8);
+//            
+//            rst = cstmt.getResultSet();
+//
+//            while (rst.next()) {
+//                TOT_QTYSALED  = rst.getInt("QTYSALED");
+//                TOT_QTYUSESD  = rst.getInt("QTYUSESD");
+//                TOT_QTYSALEP  = rst.getInt("QTYSALEP");
+//                TOT_QTYUSESP  = rst.getInt("QTYUSESP");
+//                TOT_QTYEMDAU  = rst.getInt("QTYEMDAU");
+//                TOT_QTYEMDMA  = rst.getInt("QTYEMDMA");
+//                TOT_QTYEMDCT  = rst.getInt("QTYEMDCT");
+//            }
+//            rst.close();
+//
+//            if (cstmt.getMoreResults()) {
+//                rst = cstmt.getResultSet();
+//
+//                while (rst.next()) {
+//
+//                    bean = new A1817Filter();
+//                    bean.IN_TIPO = filter.IN_TIPO.trim();
+//                    bean.DFLIGHT = rst.getString("DFLIGHT");
+//                    bean.strFormatDate = Functions.getMonthConvert(bean.DFLIGHT);
+//                    bean.QTYSALED  = rst.getInt("QTYSALED");
+//                    bean.QTYUSESD  = rst.getInt("QTYUSESD");
+//                    bean.QTYSALEP  = rst.getInt("QTYSALEP");
+//                    bean.QTYUSESP  = rst.getInt("QTYUSESP");
+//                    bean.QTYEMDAU  = rst.getInt("QTYEMDAU");
+//                    bean.QTYEMDMA  = rst.getInt("QTYEMDMA");
+//                    bean.QTYEMDCT  = rst.getInt("QTYEMDCT");
+//                    
+//                    bean.TOT_QTYSALED  = TOT_QTYSALED;
+//                    bean.TOT_QTYUSESD  = TOT_QTYUSESD;
+//                    bean.TOT_QTYSALEP  = TOT_QTYSALEP;
+//                    bean.TOT_QTYUSESP  = TOT_QTYUSESP;
+//                    bean.TOT_QTYEMDAU  = TOT_QTYEMDAU;
+//                    bean.TOT_QTYEMDMA  = TOT_QTYEMDMA;
+//                    bean.TOT_QTYEMDCT  = TOT_QTYEMDCT;
+//                    
+//                    bean.page.PAGNUM = filter.page.PAGNUM;
+//                    bean.page.PAGROW = filter.page.PAGROW;
+//                    bean.page.TOTPAG = filter.page.TOTPAG;
+//                    bean.page.TOTROW = filter.page.TOTROW;
+//                    
+//                    lstTkts.add(bean);
+//                }
+//                rst.close();
+//            }
+//
+//        } catch (Exception e) {
+//            e.getMessage();
+//            e.printStackTrace();
+//        } finally {
+//            if (rst != null) {
+//                try {
+//                    rst.close();
+//                } catch (SQLException e) {
+//                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+//                }
+//            }
+//            if (cstmt != null) {
+//                try {
+//                    cstmt.close();
+//                } catch (SQLException e) {
+//                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+//                }
+//            }
+//            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+//            pasarGarbageCollector();
+//        }
+//
+//        return lstTkts;
+//    }
     
     public List<A1817Filter> loadPX529SQP04924(A1817Filter filter) throws SQLException, Exception {
         
@@ -343,8 +446,8 @@ public class EMDStandaloneDAO {
 
                     bean = new A1817Filter();
                     bean.IN_TIPO = filter.IN_TIPO.trim();
-                    bean.DSALES = rst.getString("FVTA");
-                    bean.strFormatDate = Functions.getMonthConvert(bean.DSALES);
+                    bean.DFLIGHT = rst.getString("DFLIGHT");
+                    bean.strFormatDate = Functions.getMonthConvert(bean.DFLIGHT);
                     bean.SCOUNTRY  = rst.getString("PSVVTA");
                     bean.AGENTE  = rst.getString("AGTIA");
 //                    bean.strDescAgente = rst.getString("desAGENTE");
@@ -373,8 +476,6 @@ public class EMDStandaloneDAO {
                     bean.descRDATE = Functions.getMonthConvert(bean.RDATE);
                     bean.STVAL  = rst.getString("STVAL");
                     bean.IDCON  = rst.getString("IDCON");
-                    bean.FCONT  = rst.getString("FCONT");
-                    bean.descFCONT = Functions.getMonthConvert(bean.FCONT);
                     bean.FVTA   = rst.getString("FVTA");
                     bean.descFVTA = Functions.getMonthConvert(bean.FVTA);
                     
@@ -458,7 +559,7 @@ public class EMDStandaloneDAO {
             cstmt.setString(13, filter.RECODE.trim());
             cstmt.setString(14, filter.DESC_RECODE.trim());
             cstmt.setString(15, filter.RDATE.trim());
-            cstmt.setString(16, filter.FCONT.trim());
+            cstmt.setString(16, filter.DFLIGHT.trim());
             cstmt.setString(17, filter.IDCON.trim());
             cstmt.setString(18, filter.STVAL.trim());
             cstmt.setString(19, session.getUserView().getUserInfo().USR);

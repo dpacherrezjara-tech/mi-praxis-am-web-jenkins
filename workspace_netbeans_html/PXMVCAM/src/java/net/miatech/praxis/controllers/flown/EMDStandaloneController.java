@@ -1065,7 +1065,7 @@ public class EMDStandaloneController extends BaseController {
                 rcell18.setCellValue(listaData.get(vi).DESC_RECODE);
                 rcell19.setCellValue(listaData.get(vi).descRDATE);
                 rcell20.setCellValue(listaData.get(vi).descSTVAL);
-                rcell21.setCellValue(listaData.get(vi).descFCONT);
+                rcell21.setCellValue(listaData.get(vi).descDFLIGHT);
                 rcell22.setCellValue(listaData.get(vi).IDCON);
                 iter.next();
                 ++vi;
