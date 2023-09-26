@@ -129,7 +129,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 
         Ext.getCmp(prototype.idDE + '-ChargebackTracking').hide();
         if (trnx === 'CHBK') {
-            let texto = me.bean.tgrosamoun>=0?'REVERSE CHARGEBACK':'CHARGEBACK';
+            let texto = me.bean.tgrosamoun >= 0 ? 'REVERSE CHARGEBACK' : 'CHARGEBACK';
             Ext.getCmp(prototype.idDE + '-specialPanel').show();
             Ext.getCmp(prototype.idDE + '-specialTitle').setText(texto);
             Ext.getCmp(prototype.idDE + '-ChargebackTracking').show();
@@ -504,6 +504,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         }
         let params = {
             IN_CCUST: '139',
+            IN_TDOC: me.bean.tdoc,
             IN_TRANSTYPE: me.bean.transtype,
             ...scannerForm.getValues()
         };
@@ -531,7 +532,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                             ...data.response.at(0)
                         };
                         adju.trncu = 'ADJU';
-                        adju.svfops = adju.tgrosamoun;
+                        adju.svfops = me.bean.tgrosamoun;
                         adjuStore.insert(0, adju);
                         adjuPanel.show();
                         console.log(data.response.at(0));
@@ -540,7 +541,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             scannerPanel.unmask();
         });
     },
-    onClickChbkTracking:function(){
+    onClickChbkTracking: function () {
         const me = this;
         let params = {
             IN_CCUST: '139',
