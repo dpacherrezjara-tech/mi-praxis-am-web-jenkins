@@ -108,6 +108,11 @@ public class A1817Filter extends A1817 {
     public long lngQCLO = 0;
     public long lngQREC = 0;
     
+    public int QTYUSED = 0;
+    public int QTYCONCI = 0;
+    public int QTYPOLIZA = 0;
+    
+    //TEMPORAL
     public int QTYSALED = 0;
     public int QTYUSESD = 0;
     public int QTYSALEP = 0;
@@ -115,7 +120,13 @@ public class A1817Filter extends A1817 {
     public int QTYEMDAU = 0;
     public int QTYEMDMA = 0;
     public int QTYEMDCT = 0;
+
+    public int TOT_QTYUSED = 0;
+    public int TOT_QTYCONCI = 0;
+    public int TOT_QTYPEND = 0;
+    public int TOT_QTYPOLIZA = 0;
     
+    //TEMPORAL 2
     public int TOT_QTYSALED = 0;
     public int TOT_QTYUSESD = 0;
     public int TOT_QTYSALEP = 0;
@@ -123,6 +134,7 @@ public class A1817Filter extends A1817 {
     public int TOT_QTYEMDAU = 0;
     public int TOT_QTYEMDMA = 0;
     public int TOT_QTYEMDCT = 0;
+
     //NRT-MEX
     public int QTYPEND = 0;
     public int QTYCONC = 0;

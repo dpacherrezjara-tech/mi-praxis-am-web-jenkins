@@ -272,7 +272,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setMainData: function (obj, val) {
         console.log("URL : " + prototype.url + '/searchMain');
-        win.lblUser_toolTip("Estructura: A4479");
+        win.lblUser_toolTip("Estructura: A4478");
         me.panelActual = '-panelGridDataMain';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         me.setWidthPie();
@@ -314,7 +314,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
 
         me.beanEMD = {};
 
-        me.beanEMD.IN_DATE = rowData.data.FCONT;
+        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
         var date = rowData.data.strFormatDate;
         var stval = '';
         me.beanEMD.IN_TIPO = '1';
@@ -334,7 +334,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
 
         me.beanEMD = {};
 
-        me.beanEMD.IN_DATE = rowData.data.FCONT;
+        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
         me.beanEMD.IN_STVAL = '1';
         var date = rowData.data.strFormatDate;
         var stval = ' - Sales';
@@ -355,7 +355,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
 
         me.beanEMD = {};
 
-        me.beanEMD.IN_DATE = rowData.data.FCONT;
+        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
         me.beanEMD.IN_STVAL = '2';
         var date = rowData.data.strFormatDate;
         var stval = ' - Used';
@@ -376,7 +376,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
 
         me.beanEMD = {};
 
-        me.beanEMD.IN_DATE = rowData.data.FCONT;
+        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
         me.beanEMD.IN_STVAL = '3';
         var date = rowData.data.strFormatDate;
         var stval = ' - Pending';
@@ -392,9 +392,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     setGridDataMidle: function (date, stval) {
         if (date !== '') {
             if (stval !== '') {
-                Ext.getCmp(prototype.id + '-gridMidleData').setTitle('<center style="font-size:12px;"> Sales Date :' + date + ' ' + stval + '</center>');
+                Ext.getCmp(prototype.id + '-gridMidleData').setTitle('<center style="font-size:12px;"> Used Date :' + date + ' ' + stval + '</center>');
             } else {
-                Ext.getCmp(prototype.id + '-gridMidleData').setTitle('<center style="font-size:12px;"> Sales Date :' + date + '</center>');
+                Ext.getCmp(prototype.id + '-gridMidleData').setTitle('<center style="font-size:12px;"> Used Date :' + date + '</center>');
             }
         } else {
             Ext.getCmp(prototype.id + '-gridMidleData').setTitle('<center style="font-size:12px;">' + '</center>');
@@ -443,7 +443,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
 
         me.beanEMD = {};
 
-        me.beanEMD.IN_DATE = rowData.data.FCONT;
+        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
         var date = rowData.data.strFormatDate;
         var stval = '';
         me.beanEMD.IN_TIPO = '1';
@@ -464,7 +464,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
 
         me.beanEMD = {};
 
-        me.beanEMD.IN_DATE = rowData.data.FCONT;
+        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
         me.beanEMD.IN_STVAL = '1';
         var date = rowData.data.strFormatDate;
         var stval = ' - Sales';
@@ -486,7 +486,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
 
         me.beanEMD = {};
 
-        me.beanEMD.IN_DATE = rowData.data.FCONT;
+        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
         me.beanEMD.IN_STVAL = '2';
         var date = rowData.data.strFormatDate;
         var stval = ' - Used';
@@ -508,7 +508,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
 
         me.beanEMD = {};
 
-        me.beanEMD.IN_DATE = rowData.data.FCONT;
+        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
         me.beanEMD.IN_STVAL = '3';
         var date = rowData.data.strFormatDate;
         var stval = ' - Pending';
@@ -524,9 +524,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     setGridData: function (date, stval) {
         if (date !== '') {
             if (stval !== '') {
-                Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Sales Date :' + date + ' ' + stval + '</center>');
+                Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Used Date :' + date + ' ' + stval + '</center>');
             } else {
-                Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Sales Date :' + date + '</center>');
+                Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Used Date :' + date + '</center>');
             }
         } else {
             Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;">' + '</center>');
@@ -605,7 +605,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
                         if (res.success) {
                             if (obj.data.length > 0) {
                                 var obj = obj.data.items[0].data;
-                                Ext.getCmp(prototype.id + '-gridDataDetEMD').setTitle('<center style="font-size:12px;"> Sale Date ' + obj.strFormatDate + '</center>');
+                                Ext.getCmp(prototype.id + '-gridDataDetEMD').setTitle('<center style="font-size:12px;"> Used Date ' + obj.strFormatDate + '</center>');
 
 
                             } else {
