@@ -397,6 +397,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     searchA1686: function (obj, val) {
+        win.lblUser_toolTip("Estructura: A1686");
         this.hideAllGrid();
         Ext.getCmp(prototype.id + '-gridDataMainA1686').show();
         searchParams_M = searchParams;
@@ -503,6 +504,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataMainA1686: function (obj, val) {
+        win.lblUser_toolTip("Estructura: A1686");
         this.setFormatParameter();
         this.hideAllGrid();
         Ext.getCmp(prototype.id + '-gridDataMainA1686').show();
@@ -543,6 +545,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataMainOCR: function (obj, val) {
+        win.lblUser_toolTip("Estructura: A1686");
         this.setFormatParameter();
         this.hideAllGrid();
         Ext.getCmp(prototype.id + '-gridMainDataOCR').show();
@@ -574,6 +577,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataMainEMDDelta: function (obj, val) {
+        win.lblUser_toolTip("Estructura: A1686");
         this.setFormatParameter();
         this.hideAllGrid();
         Ext.getCmp(prototype.id + '-gridDataMainEMDDelta').show();
@@ -605,6 +609,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataMainA1686IDEC: function (obj, val) {
+        win.lblUser_toolTip("Estructura: A1686");
         this.setFormatParameter();
         this.hideAllGrid();
         Ext.getCmp(prototype.id + '-gridDataMainA1686IDEC').show();
@@ -637,6 +642,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataA1686Formateados: function (dv, record, item, index, e) {
+        win.lblUser_toolTip("Estructura: A1686");
         var data = dv.dataSource.data.items[item].data;
         console.log(data);
         params = {
@@ -686,6 +692,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridProcDateData: function (dv, record, item, index, e) {
+        win.lblUser_toolTip("Estructura: A1686");
         var data = dv.dataSource.data.items[item].data;
         params = {
             IN_TIPOFECHA: data.IN_TIPOFECHA,
@@ -837,6 +844,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataA1687: function (dv, record, item, index, e) {
+        win.lblUser_toolTip("Estructura: A1687");
         var data = dv.dataSource.data.items[item].data;
         params = {
             FECHA: data.FECHA
@@ -875,6 +883,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataA1688: function (dv, record, item, index, e) {
+        win.lblUser_toolTip("Estructura: A1688");
         var data = dv.dataSource.data.items[item].data;
         params = {
             FECHA: data.FECHA,
@@ -916,6 +925,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataA1689: function (dv, record, item, index, e) {
+        win.lblUser_toolTip("Estructura: A1689");
         var data = dv.dataSource.data.items[item].data;
         params = {
             FECHA: data.FECHA
@@ -955,6 +965,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataA1413: function (dv, record, item, index, e) {
+        win.lblUser_toolTip("Estructura: A1413");
         var data = dv.dataSource.data.items[item].data;
         console.log(data);
         params = {
@@ -1000,6 +1011,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataA1419: function (dv, record, item, index, e) {
+        win.lblUser_toolTip("Estructura: A1419");
         var data = dv.dataSource.data.items[item].data;
         params = {
             FECHA: data.FECHA
@@ -1039,6 +1051,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataA1690: function (dv, record, item, index, e) {
+        win.lblUser_toolTip("Estructura: A1690");
         this.hideAllGrid();
         var data = dv.dataSource.data.items[item].data;
         params = {
@@ -1093,6 +1106,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataA2735: function (dv, record, item, index, e) {
+        win.lblUser_toolTip("Estructura: A2735");
         this.hideAllGrid();
         var data = dv.dataSource.data.items[item].data;
         var IN_ERROR;
