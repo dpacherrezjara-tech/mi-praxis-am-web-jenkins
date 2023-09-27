@@ -2,7 +2,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
     extend: 'Ext.app.ViewController',
     alias: 'controller.ByTicketDetailGridController',
     init: function (view) {
-        if(!view.backButton){
+        if (!view.backButton) {
             Ext.getCmp(prototype.id + '-backButtonDetail-2').hide();
         }
     },
@@ -43,14 +43,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
         });
         view.setStore(store);
     },
-//    onClickBPO:function(grid, td, rowIndex, cellIndex, e, record, tr, eOpts){
-//        const obj = record.data;
-//        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry',{
-//            id:prototype.id + '-TransacErrorBPODataEntry-1',
-//            obj:obj
-//        });
-//        dataEntry.show();
-//    }
+    onClickTicket: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
+        const obj = record.data;
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TicketConciliationDataEntry', {
+            id: prototype.id + '-TransacErrorBPODataEntry-1',
+            searchParams: me.formatByTicketInfoParams(obj),
+            obj: obj
+        });
+        dataEntry.show();
+    },
+    formatByTicketInfoParams: function (obj) {
+        let params = {
+            IN_CCUST: obj.a4501CCUST,
+            IN_CIA: obj.a4501CIA,
+            IN_FORMA: obj.a4501FORMA,
+            IN_SERIE: obj.a4501SERIE,
+            IN_SEQ: obj.a4501SEQ,
+            IN_TDOC: obj.a4501TDOC,
+            IN_CORRL: obj.a4501CORRL
+        };
+        return params;
+    }
 });
 
 

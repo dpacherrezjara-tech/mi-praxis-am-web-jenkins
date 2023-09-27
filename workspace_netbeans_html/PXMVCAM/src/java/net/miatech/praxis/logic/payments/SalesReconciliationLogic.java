@@ -22,6 +22,9 @@ import net.miatech.praxis.payment.filter.SQP05077Filter;
 import net.miatech.praxis.payment.filter.SQP05081Filter;
 import net.miatech.praxis.payment.filter.SQP05088Filter;
 import net.miatech.praxis.payment.filter.SQP05089Filter;
+import net.miatech.praxis.payment.filter.SQP05126Filter;
+import net.miatech.praxis.payment.filter.SQP05128Filter;
+import net.miatech.praxis.payment.filter.SQP05129Filter;
 
 /**
  *
@@ -73,4 +76,10 @@ public interface SalesReconciliationLogic {
     //storeds para listado de ticket
     SQP05088Filter loadSQP05088Filter(SQP05088Filter filter) throws Exception;
     SQP05089Filter loadSQP05089Filter(SQP05089Filter filter) throws Exception;
+    
+    SQP05126Filter loadSQP05126Filter(SQP05126Filter filter) throws Exception;
+    
+    //Mantenimiento Stand By BT
+    SQP05128Filter loadSQP05128Filter(SQP05128Filter filter) throws Exception;
+    SQP05129Filter loadSQP05129Filter(SQP05129Filter filter) throws Exception;
 }
