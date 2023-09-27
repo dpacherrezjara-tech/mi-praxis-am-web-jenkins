@@ -12,6 +12,7 @@ import net.miatech.praxis.payment.filter.A4331NEWFilter;
 import net.miatech.praxis.payment.filter.A4331SRFilter;
 import net.miatech.praxis.payment.filter.A4335Filter;
 import net.miatech.praxis.payment.filter.A4482Filter;
+import net.miatech.praxis.payment.filter.ByTicketFilter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05048Filter;
@@ -32,6 +33,9 @@ import net.miatech.praxis.payment.filter.SQP05077Filter;
 import net.miatech.praxis.payment.filter.SQP05081Filter;
 import net.miatech.praxis.payment.filter.SQP05088Filter;
 import net.miatech.praxis.payment.filter.SQP05089Filter;
+import net.miatech.praxis.payment.filter.SQP05126Filter;
+import net.miatech.praxis.payment.filter.SQP05128Filter;
+import net.miatech.praxis.payment.filter.SQP05129Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,10 +55,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Scope("session")
 public class SalesReconciliationDAO implements SalesReconciliationLogic {
-    
+
     @Autowired
     private JdbcUtils jdbcUtils;
-    
+
     private static final String LIBRARY = "PRAXISMP";
 
     @Override
@@ -112,7 +116,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 + "TRNCU,STVAL,PMERCHID,SMERCHID,PAYDATE,PROCTYPE,PROCTYPESQ,"
                 + "FREGLA,CERROR,FORCESCAN,OBSERV,STMANUAL,"
                 + "FUENTE,FVOID,CARDTYPE,SAGENT,SCARDCOD,SCURRENCY,SCOUNTRY,SDATE,SPNR,GRUPO,CODEPR,CANAL,"
-                + "CIAP,FORMAP,SERIEP,RUTA0,RUTA1,RUTA2,RUTA3,RUTA4,FVLO1,FVLO2,FVLO3,FVLO4," 
+                + "CIAP,FORMAP,SERIEP,RUTA0,RUTA1,RUTA2,RUTA3,RUTA4,FVLO1,FVLO2,FVLO3,FVLO4,"
                 + "TOTCUP,CPUI,PAX,FLAG,STDOC,"
                 + "NBRLIQUID,CODCHGBACK,CHGBNUM,TGROSAMOUN) "
                 + "VALUES"
@@ -120,7 +124,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 + ":TRNCU,:STVAL,:PMERCHID,:SMERCHID,:PAYDATE,:PROCTYPE,:PROCTYPESQ,"
                 + ":FREGLA,:CERROR,:FORCESCAN,:OBSERV,:STMANUAL,"
                 + ":FUENTE,:FVOID,:CARDTYPE,:SAGENT,:SCARDCOD,:SCURRENCY,:SCOUNTRY,:SDATE,:SPNR,:GRUPO,:CODEPR,:CANAL,"
-                + ":CIAP,:FORMAP,:SERIEP,:RUTA0,:RUTA1,:RUTA2,:RUTA3,:RUTA4,:FVLO1,:FVLO2,:FVLO3,:FVLO4," 
+                + ":CIAP,:FORMAP,:SERIEP,:RUTA0,:RUTA1,:RUTA2,:RUTA3,:RUTA4,:FVLO1,:FVLO2,:FVLO3,:FVLO4,"
                 + ":TOTCUP,:CPUI,:PAX,:FLAG,:STDOC,"
                 + ":NBRLIQUID,:CODCHGBACK,:CHGBNUM,:TGROSAMOUN)";
         BeanPropertySqlParameterSource[] insertParams = new BeanPropertySqlParameterSource[filter.getDetail().size()];
@@ -329,4 +333,44 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         jdbcCall.execute(params);
     }
+
+    @Override
+    public SQP05126Filter loadSQP05126Filter(SQP05126Filter filter) throws Exception {
+        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05126")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(ByTicketFilter.class));
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> obj = jdbcCall.execute(params);
+        List<ByTicketFilter> spRes = (List<ByTicketFilter>) obj.get("result");
+        if (spRes.size() > 0) {
+            filter.setResponse(spRes.get(0));
+        }
+        return filter;
+    }
+
+    @Override
+    public SQP05128Filter loadSQP05128Filter(SQP05128Filter filter) throws Exception {
+        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05128");
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = jdbcCall.execute(params);
+        filter.setSQLRES((Integer) spRes.get("SQLRES"));
+        filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        return filter;
+    }
+
+    @Override
+    public SQP05129Filter loadSQP05129Filter(SQP05129Filter filter) throws Exception {
+        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05129");
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = jdbcCall.execute(params);
+        filter.setSQLRES((Integer) spRes.get("SQLRES"));
+        filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        return filter;
+    }
+
 }

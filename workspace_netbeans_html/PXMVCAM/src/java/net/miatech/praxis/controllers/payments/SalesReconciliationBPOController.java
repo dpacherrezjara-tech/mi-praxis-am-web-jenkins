@@ -21,6 +21,9 @@ import net.miatech.praxis.payment.filter.SQP05077Filter;
 import net.miatech.praxis.payment.filter.SQP05081Filter;
 import net.miatech.praxis.payment.filter.SQP05088Filter;
 import net.miatech.praxis.payment.filter.SQP05089Filter;
+import net.miatech.praxis.payment.filter.SQP05126Filter;
+import net.miatech.praxis.payment.filter.SQP05128Filter;
+import net.miatech.praxis.payment.filter.SQP05129Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -92,9 +95,9 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
-    @RequestMapping(value = "processTransactionsBatch",method = RequestMethod.POST)
-    public ResponseEntity<?> processTransactionsBatch(@RequestBody SQP05074Filter params){
+
+    @RequestMapping(value = "processTransactionsBatch", method = RequestMethod.POST)
+    public ResponseEntity<?> processTransactionsBatch(@RequestBody SQP05074Filter params) {
         try {
             System.out.println("---------------SalesReconciliationBPO:processTransactionsBatch-------------");
             logic.loadSQP05074Filter(params);
@@ -175,9 +178,9 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @RequestMapping(value = "loadErrorTransactionBPODesgloseCHBK")
-    public ResponseEntity<?> loadErrorTransactionBPODesgloseCHBK(@ModelAttribute SQP05072Filter params){
+    public ResponseEntity<?> loadErrorTransactionBPODesgloseCHBK(@ModelAttribute SQP05072Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : loadErrorTransactionBPODesgloseCHBK-------------");
         try {
             SQP05072Filter filter = logic.loadSQP05072Filter(params);
@@ -212,7 +215,7 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @RequestMapping(value = "loadScannerManual")
     public ResponseEntity<?> loadScannerManual(@ModelAttribute SQP05062Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : loadScannerManual-------------");
@@ -225,6 +228,7 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     //<editor-fold defaultstate="collapsed" desc="MSI Tracking">
     @RequestMapping(value = "loadMSITrackingInfo")
     public ResponseEntity<?> loadMSITrackingInfo(@ModelAttribute SQP05061Filter params) {
@@ -238,7 +242,7 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @RequestMapping(value = "maintenanceReverseMSITracking", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> maintenanceReverseMSITracking(@RequestBody SQP05063Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : maintenanceReverseMSITracking-------------");
@@ -250,7 +254,7 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @RequestMapping(value = "maintenanceMSITracking", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> maintenanceMSITracking(@RequestBody SQP05065Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : maintenanceMSITracking-------------");
@@ -263,7 +267,7 @@ public class SalesReconciliationBPOController {
         }
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="ChargeBackTracking">
     @RequestMapping(value = "loadChargebackTrackingInfo")
     public ResponseEntity<?> loadChargebackTrackingInfo(@ModelAttribute SQP05081Filter params) {
@@ -277,7 +281,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
     @RequestMapping(value = "maintenanceChargebackTracking", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> maintenanceChargebackTracking(@RequestBody SQP05077Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : maintenanceChargebackTracking-------------");
@@ -290,33 +294,70 @@ public class SalesReconciliationBPOController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
     //</editor-fold>
-    
-//</editor-fold>
-
-    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="By Ticket">
-    
     @RequestMapping(value = "loadByTicketSummary")
-    public ResponseEntity<?> loadByTicketSummary(@ModelAttribute SQP05088Filter params){
+    public ResponseEntity<?> loadByTicketSummary(@ModelAttribute SQP05088Filter params) {
         System.out.println("---------------SalesReconciliationBPO:loadByTicketSummary-------------");
         try {
             SQP05088Filter filter = logic.loadSQP05088Filter(params);
             System.out.println("Total: " + filter.getResponse().size());
-            return new ResponseEntity<>(filter,HttpStatus.OK);
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "loadByTicketDetail")
+    public ResponseEntity<?> loadByTicketDetail(@ModelAttribute SQP05089Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:loadByTicketSummary-------------");
+        try {
+            SQP05089Filter filter = logic.loadSQP05089Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "loadByTicketConciliationInfo")
+    public ResponseEntity<?> loadByTicketConciliationInfo(@ModelAttribute SQP05126Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:loadByTicketConciliationInfo-------------");
+        try {
+            SQP05126Filter filter = logic.loadSQP05126Filter(params);
+            System.out.println("Ticket found: "
+                    + filter.getResponse().getA4496CIA()
+                    + filter.getResponse().getA4496FORMA()
+                    + filter.getResponse().getA4496SERIE());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     
-    @RequestMapping(value = "loadByTicketDetail")
-    public ResponseEntity<?> loadByTicketDetail(@ModelAttribute SQP05089Filter params){
-        System.out.println("---------------SalesReconciliationBPO:loadByTicketSummary-------------");
+    @RequestMapping(value = "ticketConciliationStandBy")
+    public ResponseEntity<?> ticketConciliationStandBy(@ModelAttribute SQP05128Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:ticketConciliationStandBy-------------");
         try {
-            SQP05089Filter filter = logic.loadSQP05089Filter(params);
-            System.out.println("Total: " + filter.getResponse().size());
-            return new ResponseEntity<>(filter,HttpStatus.OK);
+            SQP05128Filter filter = logic.loadSQP05128Filter(params);
+            System.out.println("Response: " + filter.getSQLMSG());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "ticketConciliationReverseStandBy")
+    public ResponseEntity<?> ticketConciliationReverseStandBy(@ModelAttribute SQP05129Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:ticketConciliationReverseStandBy-------------");
+        try {
+            SQP05129Filter filter = logic.loadSQP05129Filter(params);
+            System.out.println("Response: " + filter.getSQLMSG());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

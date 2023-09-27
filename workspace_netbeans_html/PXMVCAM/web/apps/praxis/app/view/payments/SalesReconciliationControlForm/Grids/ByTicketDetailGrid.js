@@ -2,7 +2,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
     extend: 'Ext.grid.Panel',
     alias: 'widget.' + prototype.id + '-ByTicketDetailGrid',
     requires: [
-        'Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDetailGridController'
+        'Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDetailGridController',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TicketConciliationDataEntry'
     ],
     controller: 'ByTicketDetailGridController',
     maxHeight: prototype.height,
@@ -46,19 +47,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     }
                 ]
             },
-            {text: 'Processing<br>Date', dataIndex: 'a4496FPROC', width: 75},
             {text: 'Sale<br>Date', dataIndex: 'a4496FECVT', width: 75},
-            {text: 'Group', dataIndex: 'a4496GRUPO', width: 80},
             {text: 'IATA', dataIndex: 'a4496AGENT', width: 80},
             {text: 'Src', dataIndex: 'a4496FUENT', width: 50},
             {text: 'Channel', dataIndex: 'a4496SFUEN', width: 60},
             {text: 'Country', dataIndex: 'a4496PAIS', width: 60},
-            {text: 'Global.', dataIndex: 'a4496PNRSP', width: 60},
             {text: 'Agent', dataIndex: 'a4496CODAG', width: 80},
             {text: 'Trnx', dataIndex: 'a4496TRNCU', width: 60},
             {text: 'Doc.<br>Type', dataIndex: 'a4496TIPOD', width: 60},
             {text: 'Void', dataIndex: 'a4496TKVOI', width: 45},
-            {text: 'Type', dataIndex: 'a4496TVENT', width: 45},
             {text: 'RFIC', dataIndex: 'a4496RFIC', width: 55},
             {text: 'RFIS', dataIndex: 'a4496RFIS1', width: 55},
             {text: 'Pax Name', dataIndex: 'a4496PAX', minWidth: 180, width: 180, autoSizeColumn: true},
@@ -68,6 +65,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     metaData.style = "text-align:center;background-color:#FCF6DC;font-weight:bold;";
                     const {a4496CIA, a4496FORMA, a4496SERIE} = record.data;
                     return `${a4496CIA + a4496FORMA + a4496SERIE}`;
+                }
+            },
+            {
+                text: 'PNR', width: 65, dataIndex: 'a4496PNR',
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    metaData.style = "text-align:center;background-color:#FCF6DC;font-weight:bold;";
+                    return value;
                 }
             },
             {text: 'Payment Information',
