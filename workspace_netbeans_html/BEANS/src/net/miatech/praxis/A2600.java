@@ -14,6 +14,7 @@ public class A2600 {
     public String A2600FORMA = "";
     public String A2600SERIE = "";
     public String A2600CUPON = "";
+    public String A2600SEQ = "";
     public String A2600FPRO = "";
     public Double A2600COMIF = 0.0;
     public Double A2600COMIV = 0.0;
@@ -26,5 +27,6 @@ public class A2600 {
     public String A2600FECVA = "";
     public String A2600DFLIG = "";
     public String A2600CUR = "";
-
+    public String A2600CERR = "";
+    public String STATUS = "";
 }

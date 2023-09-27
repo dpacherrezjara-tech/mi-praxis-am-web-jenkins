@@ -13,6 +13,8 @@ public class A2600Filter extends A2600{
     public long RN;
     public String IN_A2600CCUST = "";
     public String IN_A2600FECVA = "";
+    public String IN_FINI = "";
+    public String IN_FFIN = "";
     public String IN_A2600CUR = "";
     
     public Pagination page = new Pagination();
