@@ -102,9 +102,9 @@ public class SalesReconciliationBPOController {
     public ResponseEntity<?> processTransactionsBatch(@RequestBody SQP05074Filter params) {
         try {
             System.out.println("---------------SalesReconciliationBPO:processTransactionsBatch-------------");
-            logic.loadSQP05074Filter(params);
-            System.out.println("Process Successfull");
-            return new ResponseEntity<>(HttpStatus.OK);
+            SQP05074Filter filter = logic.loadSQP05074Filter(params);
+            System.out.println("Process Successfull, total affected: " + filter.getVP_CANT());
+            return new ResponseEntity<>(filter,HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

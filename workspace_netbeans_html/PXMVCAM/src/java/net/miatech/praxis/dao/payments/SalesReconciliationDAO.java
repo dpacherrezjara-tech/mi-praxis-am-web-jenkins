@@ -328,12 +328,14 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
     }
 
     @Override
-    public void loadSQP05074Filter(SQP05074Filter filter) throws Exception {
+    public SQP05074Filter loadSQP05074Filter(SQP05074Filter filter) throws Exception {
         SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05074");
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        jdbcCall.execute(params);
+        Map<String, Object> obj = jdbcCall.execute(params);
+        filter.setVP_CANT((Integer) obj.get("VP_CANT"));
+        return filter;
     }
 
     @Override

@@ -11,6 +11,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SQP05074Filter {
     private String VP_CCUST,VP_FPROC;
+    private Integer VP_CANT;
 
     public String getVP_CCUST() {
         return VP_CCUST;
@@ -26,5 +27,13 @@ public class SQP05074Filter {
 
     public void setVP_FPROC(String VP_FPROC) {
         this.VP_FPROC = VP_FPROC;
+    }
+
+    public Integer getVP_CANT() {
+        return VP_CANT;
+    }
+
+    public void setVP_CANT(Integer VP_CANT) {
+        this.VP_CANT = VP_CANT;
     }
 }
