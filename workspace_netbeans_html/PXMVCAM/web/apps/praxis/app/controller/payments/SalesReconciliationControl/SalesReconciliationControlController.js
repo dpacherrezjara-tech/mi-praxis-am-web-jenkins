@@ -212,7 +212,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         if (obj.getValue() === 'S') {
             filtroSumm.show();
             filtroFil.hide();
-            this.onClickSearchBtn();
+            //this.onClickSearchBtn();
         } else {
             filtroFil.show();
             filtroSumm.hide();
@@ -226,7 +226,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         if (obj.getValue() === 'S') {
             filtroSumm.show();
             filtroFil.hide();
-            this.onClickSearchBtn();
+            //this.onClickSearchBtn();
         } else {
             filtroFil.show();
             filtroSumm.hide();

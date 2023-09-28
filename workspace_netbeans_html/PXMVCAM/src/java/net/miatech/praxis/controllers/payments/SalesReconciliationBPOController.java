@@ -24,6 +24,8 @@ import net.miatech.praxis.payment.filter.SQP05089Filter;
 import net.miatech.praxis.payment.filter.SQP05126Filter;
 import net.miatech.praxis.payment.filter.SQP05128Filter;
 import net.miatech.praxis.payment.filter.SQP05129Filter;
+import net.miatech.praxis.payment.filter.SQP05130Filter;
+import net.miatech.praxis.payment.filter.SQP05132Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -363,5 +365,32 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    
+    @RequestMapping(value = "ticketConciliationGenerateAdm",method = RequestMethod.POST)
+    public ResponseEntity<?> ticketConciliationGenerateAdm(@RequestBody SQP05130Filter params){
+        System.out.println("---------------SalesReconciliationBPO:ticketConciliationGenerateAdm-------------");
+        try {
+            SQP05130Filter filter = logic.loadSQP05130Filter(params);
+            System.out.println("Response: " + filter.getSQLMSG());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "ticketConciliationReverseADM")
+    public ResponseEntity<?> ticketConciliationReverseADM(@ModelAttribute SQP05132Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:ticketConciliationReverseADM-------------");
+        try {
+            SQP05132Filter filter = logic.loadSQP05132Filter(params);
+            System.out.println("Response: " + filter.getSQLMSG());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
 //</editor-fold>
 }
