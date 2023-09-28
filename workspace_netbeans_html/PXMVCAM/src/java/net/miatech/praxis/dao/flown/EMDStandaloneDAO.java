@@ -476,6 +476,8 @@ public class EMDStandaloneDAO {
                     bean.descRDATE = Functions.getMonthConvert(bean.RDATE);
                     bean.STVAL  = rst.getString("STVAL");
                     bean.IDCON  = rst.getString("IDCON");
+                    bean.FCONT   = rst.getString("FCONT");
+                    bean.descFCONT = Functions.getMonthConvert(bean.FCONT);
                     bean.FVTA   = rst.getString("FVTA");
                     bean.descFVTA = Functions.getMonthConvert(bean.FVTA);
                     
@@ -537,7 +539,7 @@ public class EMDStandaloneDAO {
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04925(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04925(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -552,20 +554,27 @@ public class EMDStandaloneDAO {
             cstmt.setString(6, filter.SEQRO.trim());
             cstmt.setString(7, filter.ORIG.trim());
             cstmt.setString(8, filter.DEST.trim());
-            cstmt.setString(9, filter.DSALES.trim());
+            cstmt.setString(9, filter.DFLIGHT.trim());
             cstmt.setString(10, filter.SCOUNTRY.trim());
             cstmt.setString(11, filter.AGENTE.trim());
             cstmt.setString(12, filter.RFIC.trim());
             cstmt.setString(13, filter.RECODE.trim());
             cstmt.setString(14, filter.DESC_RECODE.trim());
-            cstmt.setString(15, filter.RDATE.trim());
-            cstmt.setString(16, filter.DFLIGHT.trim());
-            cstmt.setString(17, filter.IDCON.trim());
-            cstmt.setString(18, filter.STVAL.trim());
-            cstmt.setString(19, session.getUserView().getUserInfo().USR);
-            cstmt.setString(20, Functions.getFechaActual());
-            cstmt.setString(21, Functions.getHoraActual());
-
+            cstmt.setString(15, filter.FCONT.trim());
+            cstmt.setString(16, filter.IDCON.trim());
+            cstmt.setString(17, filter.STVAL.trim());
+            cstmt.setString(18, filter.FBASE.trim());
+            cstmt.setString(19, filter.RBD.trim());
+            cstmt.setInt(20, filter.QTYPAX);
+            cstmt.setString(21, filter.TPAX.trim());
+            cstmt.setString(22, filter.TOPUS.trim());
+            cstmt.setString(23, filter.CARR.trim());
+            cstmt.setString(24, filter.CURRENCY.trim());
+            cstmt.setDouble(25, filter.VCPN);
+            cstmt.setString(26, session.getUserView().getUserInfo().USR);
+            cstmt.setString(27, Functions.getFechaActual());
+            cstmt.setString(28, Functions.getHoraActual());
+            
             cstmt.execute();
 
         } catch (Exception e) {
