@@ -55,7 +55,7 @@ Ext.define('Ext.Praxis.controller.flown.ErrorReport.ErrorReportController', {
         });
     },
     xpanel_afterrender: function(obj, e) {
-        this.btnSearch_click();
+        //this.btnSearch_click();
     },
     btnSearch_click: function(obj, e) {
         this.setGridData(obj, e);
