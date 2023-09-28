@@ -2,7 +2,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
     extend: 'Ext.app.ViewController',
     alias: 'controller.ByPaymentDetailGridController',
     init: function (view) {
-        if(!view.backButton){
+        if (!view.backButton) {
             Ext.getCmp(prototype.id + '-backButtonDetail-1').hide();
         }
     },
@@ -44,13 +44,34 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
         view.setStore(store);
         //view.bindStore(store);
     },
-    onClickBPO:function(grid, td, rowIndex, cellIndex, e, record, tr, eOpts){
+    onClickBPO: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const obj = record.data;
-        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry',{
-            id:prototype.id + '-TransacErrorBPODataEntry-1',
-            obj:obj
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry', {
+            id: prototype.id + '-TransacErrorBPODataEntry-1',
+            obj: obj
         });
         dataEntry.show();
+    },
+    downloadExcel: function (btn) {
+        const me = this;
+        let params = Object.assign({}, me.view.searchParams);
+        params.excel = true;
+        console.log(params);
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Download Excel?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            global.getFile(`${me.view.url}/downloadByPaymentDetail?${new URLSearchParams(params)}`);
+                        }
+                    }
+                });
     }
 });
 
