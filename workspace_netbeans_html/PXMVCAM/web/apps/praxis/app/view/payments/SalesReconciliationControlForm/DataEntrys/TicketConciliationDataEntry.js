@@ -685,7 +685,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     xtype: 'textfield',
                                     margin: '3 5 3 5',
                                     labelStyle: 'text-align:left;font-weight: bolder;',
-                                    fieldStyle:'text-align:center;'
+                                    fieldStyle: 'text-align:center;'
                                 }
                             },
                             items: [
@@ -714,7 +714,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             fieldLabel: 'BPO Comment',
                                             labelWidth: 100,
                                             maxLength: 100,
-                                            fieldStyle:'text-align:left;',
+                                            fieldStyle: 'text-align:left;',
                                             enforceMaxLength: true,
                                             width: 500
                                         }
@@ -759,6 +759,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             tooltip: 'Cancel',
                                             listeners: {
                                                 click: 'onCancelADM'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.idDE + '-reverseADM',
+                                            width: 25,
+                                            hidden: true,
+                                            iconCls: 'prx-icon-reload',
+                                            tooltip: 'Reverse ADM',
+                                            listeners: {
+                                                click: 'onReverseADM'
                                             }
                                         }
                                     ]

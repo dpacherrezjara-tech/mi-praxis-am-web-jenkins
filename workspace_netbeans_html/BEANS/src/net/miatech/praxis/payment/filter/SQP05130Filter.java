@@ -13,7 +13,7 @@ public class SQP05130Filter {
     //datos de llave
     private String IN_CCUST,IN_CIA,IN_FORMA,IN_SERIE,IN_SEQ,IN_TDOC,IN_CORRL;
     //datos de actualizacion
-    private String IN_FUENTE,IN_CANAL,IN_AGENT,IN_CURRENCY,IN_PRDA,IN_FECVTA,IN_COUNTRY,
+    private String IN_TRNCU,IN_FUENTE,IN_CANAL,IN_AGENT,IN_CURRENCY,IN_PRDA,IN_FECVTA,IN_COUNTRY,
             IN_PAX,IN_PNR,IN_CODAG,IN_CERROR,IN_OBSERV;
     private Double IN_AMOUNT;
     
@@ -75,6 +75,14 @@ public class SQP05130Filter {
 
     public void setIN_CORRL(String IN_CORRL) {
         this.IN_CORRL = IN_CORRL;
+    }
+
+    public String getIN_TRNCU() {
+        return IN_TRNCU;
+    }
+
+    public void setIN_TRNCU(String IN_TRNCU) {
+        this.IN_TRNCU = IN_TRNCU;
     }
 
     public String getIN_FUENTE() {
