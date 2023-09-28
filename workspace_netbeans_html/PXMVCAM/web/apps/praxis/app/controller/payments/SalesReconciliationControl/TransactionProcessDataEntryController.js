@@ -44,8 +44,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
             body: JSON.stringify(params)
         }).then(async res => {
             if (res.ok) {
+                const data = await res.json();
+                const {vp_CANT} = data;
                 Ext.toast({
-                    html: `<b>Process Success</b>`,
+                    html: `<b>Process Success<br>Total Affected: ${vp_CANT}</b>`,
                     title: 'Notification',
                     align: 't',
                     closable: true,

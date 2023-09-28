@@ -73,7 +73,7 @@ public interface SalesReconciliationLogic {
     SQP05077Filter loadSQP05077Filter(SQP05077Filter filter) throws Exception;
     
     //proceso de conciliacion entre Transacciones
-    void loadSQP05074Filter(SQP05074Filter filter) throws Exception;
+    SQP05074Filter loadSQP05074Filter(SQP05074Filter filter) throws Exception;
     
     //storeds para listado de ticket
     SQP05088Filter loadSQP05088Filter(SQP05088Filter filter) throws Exception;
