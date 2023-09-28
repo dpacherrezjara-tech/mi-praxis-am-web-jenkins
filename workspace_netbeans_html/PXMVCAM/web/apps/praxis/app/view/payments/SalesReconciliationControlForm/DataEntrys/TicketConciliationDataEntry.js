@@ -564,14 +564,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 type: 'hbox',
                                 pack: 'end'
                             },
-                            defaults:{
+                            defaults: {
                                 xtype: 'button',
-                                margin:'0 5 0 5'
+                                margin: '0 5 0 5'
                             },
                             items: [
                                 {
-                                    
-                                    text:'ADM',
+
+                                    text: 'ADM',
                                     width: 60,
                                     iconCls: 'prx-icon-add',
                                     tooltip: 'Add ADM',
@@ -582,7 +582,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 },
                                 {
                                     xtype: 'button',
-                                    text:'Stand By',
+                                    text: 'Stand By',
                                     width: 100,
                                     iconCls: 'prx-icon-bpo-comment',
                                     tooltip: 'Open BPO Comment',
@@ -618,6 +618,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     id: prototype.idDE + '-bpocoment',
                                     fieldLabel: 'BPO Comment',
                                     labelWidth: 100,
+                                    maxLength: 100,
+                                    enforceMaxLength: true,
                                     width: 600
                                 },
                                 {
@@ -651,6 +653,115 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     listeners: {
                                         click: 'onCancelStandBy'
                                     }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'fieldset',
+                            hidden: true,
+                            id: prototype.idDE + '-panelADM',
+                            title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:12px;">ADM</span>',
+                            layout: {
+                                type: 'vbox',
+                                pack: 'center'
+                            },
+                            border: true,
+                            margin: '5 5 5 5',
+                            width: '100%',
+                            style: {
+                                backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
+                            },
+                            defaults: {
+                                xtype: 'panel',
+                                border: false,
+                                width: '100%',
+                                margin: '5 3 5 3',
+                                bodyStyle: 'background: transparent',
+                                layout: {
+                                    type: 'hbox',
+                                    pack: 'left'
+                                },
+                                defaults: {
+                                    xtype: 'textfield',
+                                    margin: '3 5 3 5',
+                                    labelStyle: 'text-align:left;font-weight: bolder;',
+                                    fieldStyle:'text-align:center;'
+                                }
+                            },
+                            items: [
+                                {
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            fieldLabel: 'Reason Code',
+                                            id: prototype.id + '-cmbCERROR',
+                                            store: Ext.create('Ext.data.SimpleStore', {
+                                                fields: ['code', 'name'],
+                                                data: [
+                                                    ['03', 'ADM/Double Emission']
+                                                ]
+                                            }),
+                                            labelWidth: 90,
+                                            width: 210,
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            queryMode: 'local',
+                                            readOnly: true,
+                                            value: '03'
+                                        },
+                                        {
+                                            id: prototype.idDE + '-ADM-BPOCOMEN',
+                                            fieldLabel: 'BPO Comment',
+                                            labelWidth: 100,
+                                            maxLength: 100,
+                                            fieldStyle:'text-align:left;',
+                                            enforceMaxLength: true,
+                                            width: 500
+                                        }
+                                    ]
+                                },
+                                {
+                                    items: [
+                                        {
+                                            id: prototype.idDE + '-ADM-TKT',
+                                            fieldLabel: 'Ticket',
+                                            labelWidth: 90,
+                                            width: 210,
+                                            editable: false
+                                        },
+                                        {
+                                            id: prototype.idDE + '-ADM-AMT',
+                                            fieldLabel: 'Amount',
+                                            labelWidth: 70,
+                                            width: 160,
+                                            editable: false
+                                        },
+                                        {
+                                            id: prototype.idDE + '-ADM-MDA',
+                                            width: 50,
+                                            editable: false
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.idDE + '-sendADM',
+                                            width: 25,
+                                            iconCls: 'prx-icon-new',
+                                            tooltip: 'Send ADM',
+                                            listeners: {
+                                                click: 'onSendADM'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.idDE + '-hideADM',
+                                            width: 25,
+                                            iconCls: 'prx-icon-cancel-action',
+                                            tooltip: 'Cancel',
+                                            listeners: {
+                                                click: 'onCancelADM'
+                                            }
+                                        }
+                                    ]
                                 }
                             ]
                         },

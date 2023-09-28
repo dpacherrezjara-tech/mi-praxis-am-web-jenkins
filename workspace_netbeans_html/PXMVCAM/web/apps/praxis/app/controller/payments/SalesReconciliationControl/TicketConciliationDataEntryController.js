@@ -23,51 +23,185 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             me.limpiaObjetoPX(data.response);
             me.bean = data.response;
             mainForm.reset();
-            const {a4496CIA, a4496FORMA, a4496SERIE} = data.response;
+            const {a4496CIA, a4496FORMA, a4496SERIE,a4501STVAL,a4501STADM,bpo_COMEN,adm_COMEN} = data.response;
             Ext.getCmp(prototype.idDE + '-ticketNumber').setValue(a4496CIA + ' ' + a4496FORMA + a4496SERIE);
+            Ext.getCmp(prototype.idDE + '-bpocoment').setValue(bpo_COMEN);
+            Ext.getCmp(prototype.idDE + '-ADM-BPOCOMEN').setValue(adm_COMEN);
+            me.setADMInfo();
             mainForm.setValues(data.response);
-            me.changePerspective(me.bean.a4501STVAL);
+            me.changePerspective(a4501STVAL,a4501STADM);
         }
         me.view.unmask();
     },
-    changePerspective: function (status) {
+    changePerspective: function (status,adm) {
         const match = ['1', '5', '6', '7'];
         if (match.some(x => status === x)) {
             Ext.getCmp(prototype.idDE + '-liquiInfo').show();
             Ext.getCmp(prototype.idDE + '-panelOptions').hide();
             Ext.getCmp(prototype.idDE + '-panelPending').hide();
             Ext.getCmp(prototype.idDE + '-panelStandBy').hide();
-        } else if(status ==='0'){
+        } else if (status === '0') {
             Ext.getCmp(prototype.idDE + '-liquiInfo').hide();
             Ext.getCmp(prototype.idDE + '-panelPending').show();
             Ext.getCmp(prototype.idDE + '-panelOptions').hide();
             Ext.getCmp(prototype.idDE + '-panelStandBy').show();
             Ext.getCmp(prototype.idDE + '-hideStandBy').hide();
             Ext.getCmp(prototype.idDE + '-revStandBy').show();
-        } 
-        else {
+        } else {
             Ext.getCmp(prototype.idDE + '-liquiInfo').hide();
+            if(adm===''){
+                Ext.getCmp(prototype.idDE + '-panelOptions').show();
+                Ext.getCmp(prototype.idDE + '-panelADM').hide();
+                Ext.getCmp(prototype.idDE + '-hideADM').show();
+                Ext.getCmp(prototype.idDE + '-sendADM').show();
+            }else{
+                Ext.getCmp(prototype.idDE + '-panelOptions').hide();
+                Ext.getCmp(prototype.idDE + '-panelADM').show();
+                Ext.getCmp(prototype.idDE + '-hideADM').hide();
+                Ext.getCmp(prototype.idDE + '-sendADM').hide();
+            }
+            
             Ext.getCmp(prototype.idDE + '-panelPending').show();
-            Ext.getCmp(prototype.idDE + '-panelOptions').show();
             Ext.getCmp(prototype.idDE + '-panelStandBy').hide();
             Ext.getCmp(prototype.idDE + '-hideStandBy').show();
             Ext.getCmp(prototype.idDE + '-revStandBy').hide();
+            Ext.getCmp(prototype.idDE + '-bpocoment').setValue('');
         }
+        this.view.center();
+    },
+    setADMInfo:function(){
+        const obj = this.bean;
+        Ext.getCmp(prototype.idDE + '-ADM-TKT').setValue(obj.a4501CIA+obj.a4501FORMA+obj.a4501SERIE);
+        let valor = Ext.util.Format.number(obj.a4501VFOP, '0,000.00');
+        Ext.getCmp(prototype.idDE + '-ADM-AMT').setValue(valor);
+        Ext.getCmp(prototype.idDE + '-ADM-MDA').setValue(obj.a4501MFOP);
     },
     //<editor-fold defaultstate="collapsed" desc="Handlers">
-    onOpenComments:function(){
+    onOpenComments: function () {
         Ext.getCmp(prototype.idDE + '-panelOptions').hide();
         Ext.getCmp(prototype.idDE + '-panelStandBy').show();
     },
-    onCancelStandBy:function(){
+    onCancelStandBy: function () {
         Ext.getCmp(prototype.idDE + '-panelOptions').show();
         Ext.getCmp(prototype.idDE + '-panelStandBy').hide();
     },
-    onChangeStandBy:function(){
-        
+    onChangeStandBy: function () {
+        const me = this;
+        const comment = Ext.getCmp(prototype.idDE + '-bpocoment').getValue();
+        let params = me.formatStandByParams(comment);
+        fetch(`${me.url}/ticketConciliationStandBy?${new URLSearchParams(params)}`)
+                .then(async res => {
+                    if (res.ok) {
+                        const data = await res.json();
+                        const {sqlres, sqlmsg} = data;
+                        if (sqlres === 1) {
+                            Ext.toast({
+                                html: `<b>${sqlmsg}</b>`,
+                                title: 'Notification',
+                                align: 't',
+                                closable: true,
+                                width: 300,
+                                timeout: 10000 // 10 segundos
+                            });
+                            me.afterRender();
+                            Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+                        }
+                    } else {
+                        throw new Error('Error in request');
+                    }
+                }).catch(err => {
+            console.error(err);
+            global.Msg({msg: 'Error'});
+            me.view.close();
+        });
     },
-    onReverseStandBy:function(){
-        
+    onReverseStandBy: function () {
+        const me = this;
+        const comment = Ext.getCmp(prototype.idDE + '-bpocoment').getValue();
+        let params = me.formatRevStandByParams();
+        fetch(`${me.url}/ticketConciliationReverseStandBy?${new URLSearchParams(params)}`)
+                .then(async res => {
+                    if (res.ok) {
+                        const data = await res.json();
+                        const {sqlres, sqlmsg} = data;
+                        if (sqlres === 1) {
+                            Ext.toast({
+                                html: `<b>${sqlmsg}</b>`,
+                                title: 'Notification',
+                                align: 't',
+                                closable: true,
+                                width: 300,
+                                timeout: 10000 // 10 segundos
+                            });
+                            me.afterRender();
+                            Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+                        }
+                    } else {
+                        throw new Error('Error in request');
+                    }
+                }).catch(err => {
+            console.error(err);
+            global.Msg({msg: 'Error'});
+            me.view.close();
+        });
+    },
+    onADMClick: function () {
+        Ext.getCmp(prototype.idDE + '-panelOptions').hide();
+        Ext.getCmp(prototype.idDE + '-panelADM').show();
+    },
+    onCancelADM: function () {
+        Ext.getCmp(prototype.idDE + '-panelOptions').show();
+        Ext.getCmp(prototype.idDE + '-panelADM').hide();
+    },
+    onSendADM: function (btn) {
+        const me = this;
+        let params = me.formatAdmParams();
+        console.log(params);
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure about sending ADM?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            me.generateADM(params);
+                        }
+                    }
+                });
+    },
+    generateADM: async function (params) {
+        const me = this;
+        const res = await fetch(`${me.url}/ticketConciliationGenerateAdm`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        });
+        if (res.ok) {
+            const data = await res.json();
+            const {sqlres, sqlmsg} = data;
+            if (sqlres === 1) {
+                Ext.toast({
+                    html: `<b>${sqlmsg}</b>`,
+                    title: 'Notification',
+                    align: 't',
+                    closable: true,
+                    width: 300,
+                    timeout: 10000 // 10 segundos
+                });
+                me.afterRender();
+                Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+            }else{
+                global.Msg({msg:'Error'});
+            }
+        }else{
+            global.Msg({msg:'Error'});
+        }
     },
     //</editor-fold>
 
@@ -85,6 +219,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             IN_PRDA: obj.a4496FPROC,
             IN_OBSERV: comment
         };
+        console.log(params);
         return params;
     },
     formatRevStandByParams: function () {
@@ -98,6 +233,33 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             IN_TDOC: obj.a4501TDOC,
             IN_CORRL: obj.a4501CORRL,
             IN_PRDA: obj.a4496FPROC
+        };
+        return params;
+    },
+    formatAdmParams: function () {
+        const obj = this.bean;
+        const observ = Ext.getCmp(prototype.idDE + '-ADM-BPOCOMEN').getValue();
+        let params = {
+            IN_CCUST: obj.a4501CCUST,
+            IN_CIA: obj.a4501CIA,
+            IN_FORMA: obj.a4501FORMA,
+            IN_SERIE: obj.a4501SERIE,
+            IN_SEQ: obj.a4501SEQ,
+            IN_TDOC: obj.a4501TDOC,
+            IN_CORRL: obj.a4501CORRL,
+            IN_PRDA:obj.a4496FPROC,
+            IN_FUENTE: obj.a4496FUENT,
+            IN_CANAL: obj.a4496SFUEN,
+            IN_AGENT: obj.a4496AGENT,
+            IN_CURRENCY: obj.a4501MFOP,
+            IN_FECVTA: obj.a4496FECVT,
+            IN_COUNTRY: obj.a4496PAIS,
+            IN_PAX: obj.a4496PAX,
+            IN_PNR: obj.a4496PNR,
+            IN_CODAG: obj.a4496CODAG,
+            IN_CERROR: '03',
+            IN_OBSERV: observ,
+            IN_AMOUNT: obj.a4501VFOP
         };
         return params;
     },
