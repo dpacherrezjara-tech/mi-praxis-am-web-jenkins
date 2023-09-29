@@ -1,6 +1,9 @@
 package net.miatech.praxis.controllers.payments;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
+import net.miatech.praxis.payment.filter.A4331NEWFilter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05048Filter;
@@ -26,6 +29,8 @@ import net.miatech.praxis.payment.filter.SQP05128Filter;
 import net.miatech.praxis.payment.filter.SQP05129Filter;
 import net.miatech.praxis.payment.filter.SQP05130Filter;
 import net.miatech.praxis.payment.filter.SQP05132Filter;
+import net.miatech.praxis.utils.ExportUtils;
+import net.miatech.utils.Functions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -49,6 +54,11 @@ public class SalesReconciliationBPOController {
 
     @Autowired
     private SalesReconciliationLogic logic;
+
+    @Autowired
+    private ExportUtils exportUtils;
+
+    private final String controllerName = "SalesReconciliationBPO";
 
     //<editor-fold defaultstate="collapsed" desc="By payment">
     @RequestMapping(value = "loadByPaymentSummary")
@@ -104,12 +114,13 @@ public class SalesReconciliationBPOController {
             System.out.println("---------------SalesReconciliationBPO:processTransactionsBatch-------------");
             SQP05074Filter filter = logic.loadSQP05074Filter(params);
             System.out.println("Process Successfull, total affected: " + filter.getVP_CANT());
-            return new ResponseEntity<>(filter,HttpStatus.OK);
+            return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Mantenimiento By Payment">
     @RequestMapping(value = "maintenanceErrorTransactionBPO", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -231,6 +242,82 @@ public class SalesReconciliationBPOController {
         }
     }
 
+    //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="Exceles">
+    @RequestMapping(value = "downloadByPaymentDetail")
+    public ResponseEntity<?> downloadByPaymentDetail(@ModelAttribute SQP05060Filter params) {
+        try {
+            System.out.println("---------------SalesReconciliationBPO:downloadByPaymentDetail-------------");
+            SQP05060Filter filter = logic.getSQP05060Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            List<Object[]> data = new ArrayList<>();
+            //headers
+            Object[] headers = new Object[26];
+            headers[0] = "Processing Date";
+            headers[1] = "Payment Date";
+            headers[2] = "Processor";
+            headers[3] = "Country";
+            headers[4] = "Payment Merchant ID";
+            headers[5] = "Status Sett. vs Sales";
+            headers[6] = "Doc. Type";
+            headers[7] = "Void";
+            headers[8] = "Sales Merchant ID";
+            headers[9] = "Description";
+            headers[10] = "Sale Date";
+            headers[11] = "Card Number";
+            headers[12] = "Auth Code";
+            headers[13] = "Installment Plan";
+            headers[14] = "Installment Number";
+            headers[15] = "Ticket";
+            headers[16] = "PNR";
+            headers[17] = "Invoice Refer. Number PNR";
+            headers[18] = "Currency";
+            headers[19] = "Transaction Amount";
+            headers[20] = "Error Code";
+            headers[21] = "Description";
+            headers[22] = "Adju. Code";
+            headers[23] = "Description";
+            headers[24] = "User Update";
+            headers[25] = "Date Update";
+            data.add(headers);
+            for (A4331NEWFilter obj : filter.getResponse()) {
+                Object[] row = new Object[26];
+                row[0] = obj.getPrda();
+                row[1] = obj.getPaydate();
+                row[2] = obj.getDESC_PROCTYPE();
+                row[3] = obj.getScountry();
+                row[4] = obj.getPmerchid();
+                row[5] = convertStatus(obj.getStval());
+                row[6] = obj.getTranstype();
+                row[7] = obj.getFvoid();
+                row[8] = obj.getSmerchid();
+                row[9] = obj.getDES_SMERCHANT();
+                row[10] = obj.getSdate();
+                row[11] = obj.getScardn();
+                row[12] = obj.getSauthoc();
+                row[13] = obj.getNbrinsta();
+                row[14] = obj.getInstanbr();
+                row[15] = obj.getTicket();
+                row[16] = obj.getSpnr();
+                row[17] = obj.getInvoirn();
+                row[18] = obj.getScurrency();
+                row[19] = obj.getTgrosamoun();
+                row[20] = obj.getCerror();
+                row[21] = obj.getDES_CERROR();
+                row[22] = obj.getCodadju();
+                row[23] = obj.getDESC_CODADJU();
+                row[24] = obj.getUsup();
+                row[25] = obj.getFeup();
+                data.add(row);
+            }
+            return exportUtils.createExcel(data, controllerName + " - ByPayment " + Functions.getFechaActual());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+//</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="MSI Tracking">
     @RequestMapping(value = "loadMSITrackingInfo")
     public ResponseEntity<?> loadMSITrackingInfo(@ModelAttribute SQP05061Filter params) {
@@ -339,7 +426,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "ticketConciliationStandBy")
     public ResponseEntity<?> ticketConciliationStandBy(@ModelAttribute SQP05128Filter params) {
         System.out.println("---------------SalesReconciliationBPO:ticketConciliationStandBy-------------");
@@ -352,7 +439,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "ticketConciliationReverseStandBy")
     public ResponseEntity<?> ticketConciliationReverseStandBy(@ModelAttribute SQP05129Filter params) {
         System.out.println("---------------SalesReconciliationBPO:ticketConciliationReverseStandBy-------------");
@@ -365,9 +452,9 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
-    @RequestMapping(value = "ticketConciliationGenerateAdm",method = RequestMethod.POST)
-    public ResponseEntity<?> ticketConciliationGenerateAdm(@RequestBody SQP05130Filter params){
+
+    @RequestMapping(value = "ticketConciliationGenerateAdm", method = RequestMethod.POST)
+    public ResponseEntity<?> ticketConciliationGenerateAdm(@RequestBody SQP05130Filter params) {
         System.out.println("---------------SalesReconciliationBPO:ticketConciliationGenerateAdm-------------");
         try {
             SQP05130Filter filter = logic.loadSQP05130Filter(params);
@@ -378,7 +465,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "ticketConciliationReverseADM")
     public ResponseEntity<?> ticketConciliationReverseADM(@ModelAttribute SQP05132Filter params) {
         System.out.println("---------------SalesReconciliationBPO:ticketConciliationReverseADM-------------");
@@ -391,6 +478,40 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
 //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Funciones">
+    private static String convertStatus(String stval) {
+        String valor = "";
+        switch (stval) {
+            case "1":
+                valor = "Stand By";
+                break;
+            case "2":
+                valor = "Sales without Settl.";
+                break;
+            case "3":
+                valor = "Settl. without Sales";
+                break;
+            case "4":
+                valor = "Match Difference";
+                break;
+            case "5":
+                valor = "Match Manual";
+                break;
+            case "6":
+                valor = "Forced Match";
+                break;
+            case "7":
+                valor = "Compensation Match";
+                break;
+            case "8":
+                valor = "Pending RFND";
+                break;
+        }
+        return valor;
+    }
+//</editor-fold>
+
 }
