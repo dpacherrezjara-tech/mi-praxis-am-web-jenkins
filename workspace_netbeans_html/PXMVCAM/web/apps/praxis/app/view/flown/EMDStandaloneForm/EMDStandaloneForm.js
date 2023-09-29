@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.EMDStandaloneForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1700,
+                                        width: 1800,
                                         align: 'center'
                                     },
                                     items: [
@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.EMDStandaloneForm', {
                                         {
                                             xtype: 'panel',
                                             height: 700,
-                                            width: 1700,
+                                            width: 1800,
                                             layout: 'fit',
                                             items: [
                                                 {

@@ -181,6 +181,21 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
 //        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
 
+        Ext.Ajax.request({
+            url: prototype.url + '/getPaises',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(this.dataObtain)},
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbSCOUNTRY').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                }
+            }
+        });
+
     },
     viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
@@ -208,6 +223,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         me.bean.IN_DATE_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
         me.bean.IN_TIPO = '1';
         me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+        me.bean.IN_COUNTRY = Ext.getCmp(prototype.id + '-cmbSCOUNTRY').getValue();
 
         console.log(me.bean);
         var beanString = JSON.stringify(me.bean);
@@ -239,34 +255,85 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
                     global.Msg({msg: 'Ticket Number must contain 13 digits.'});
                 }
             } else {
-                this.setFormatParameter();
-                this.setMainData();
+                var txtCountry = Ext.getCmp(prototype.id + '-cmbSCOUNTRY').getValue();
+                if (txtCountry.trim().length > 0) {
+
+                    this.setMainData();
+                    me.drillDown.push(me.panelActual);
+                    me.panelActual = '-panelMidleGridData';
+                    global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+                    me.beanEMD = {};
+
+//                    me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
+                    me.beanEMD.IN_COUNTRY = txtCountry;
+                    var date = '';
+                    var stval = '';
+                    me.beanEMD.IN_TIPO = '1';
+                    console.log(me.beanEMD);
+                    var beanString = JSON.stringify(me.beanEMD);
+                    paramsDetailEMD = {
+                        beanString: beanString,
+                        bean: me.beanEMD
+                    };
+                    this.setGridDataMidle(date, stval);
+                } else {
+                    this.setFormatParameter();
+                    this.setMainData();
+                }
+
             }
 
         } else {
-            console.log('panelGridData');
 
-            me.bean = {};
-            me.bean.IN_TIPO = '1';
-            var date = me.beanEMD.IN_DATE
-            var stval = '';
-            var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
-            if (txtTicket.trim().length > 0) {
-                if (txtTicket.trim().length === 13) {
-                    me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+            var txtCountry = Ext.getCmp(prototype.id + '-cmbSCOUNTRY').getValue();
+            if (txtCountry.trim().length > 0) {
+                this.setMainData();
+                me.drillDown.push(me.panelActual);
+                me.panelActual = '-panelMidleGridData';
+                global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+                me.beanEMD = {};
+
+//                    me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
+                me.beanEMD.IN_COUNTRY = txtCountry;
+                var date = '';
+                var stval = '';
+                me.beanEMD.IN_TIPO = '1';
+                console.log(me.beanEMD);
+                var beanString = JSON.stringify(me.beanEMD);
+                paramsDetailEMD = {
+                    beanString: beanString,
+                    bean: me.beanEMD
+                };
+                this.setGridDataMidle(date, stval);
+            } else {
+                console.log('panelGridData');
+
+                me.bean = {};
+                me.bean.IN_TIPO = '1';
+                var date = me.beanEMD.IN_DATE
+                var stval = '';
+                var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+                if (txtTicket.trim().length > 0) {
+                    if (txtTicket.trim().length === 13) {
+                        me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+                    } else {
+                        global.Msg({msg: 'Ticket Number must contain 13 digits.'});
+                    }
                 } else {
-                    global.Msg({msg: 'Ticket Number must contain 13 digits.'});
+                    me.bean.IN_DATE = me.beanEMD.IN_DATE;
+                    me.bean.IN_STVAL = me.beanEMD.IN_STVAL;
                 }
-            }else{
-                me.bean.IN_DATE = me.beanEMD.IN_DATE;
-                me.bean.IN_STVAL = me.beanEMD.IN_STVAL;
+                var beanString = JSON.stringify(me.bean);
+                paramsDetailEMD = {
+                    beanString: beanString,
+                    bean: me.bean
+                };
+                this.setGridData(date, stval);
             }
-            var beanString = JSON.stringify(me.bean);
-            paramsDetailEMD = {
-                beanString: beanString,
-                bean: me.bean
-            };
-            this.setGridData(date, stval);
+
+
         }
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
@@ -315,6 +382,11 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         me.beanEMD = {};
 
         me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
+        me.beanEMD.IN_COUNTRY = rowData.data.IN_COUNTRY;
+        if(me.beanEMD.IN_COUNTRY === ''){
+            me.beanEMD.IN_COUNTRY = Ext.getCmp(prototype.id + '-cmbSCOUNTRY').getValue();
+            console.log(me.beanEMD.IN_COUNTRY);
+        }
         var date = rowData.data.strFormatDate;
         var stval = '';
         me.beanEMD.IN_TIPO = '1';
@@ -326,8 +398,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         };
         this.setGridDataMidle(date, stval);
     },
-    //VENTAS
-    onGridData1Midle: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onGridDataMidleConcliliated: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelMidleGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -335,49 +406,29 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         me.beanEMD = {};
 
         me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
+        me.beanEMD.IN_COUNTRY = rowData.data.IN_COUNTRY;
+        me.beanEMD.IN_STVAL = '0';
+        var date = rowData.data.strFormatDate;
+        var stval = ' - Concliliated';
+        me.beanEMD.IN_TIPO = '1';
+        console.log(me.beanEMD);
+        var beanString = JSON.stringify(me.beanEMD);
+        paramsDetailEMD = {
+            beanString: beanString,
+            bean: me.beanEMD
+        };
+        this.setGridDataMidle(date, stval);
+    },
+    onGridDataMidlePending: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelMidleGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        me.beanEMD = {};
+
+        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
+        me.beanEMD.IN_COUNTRY = rowData.data.IN_COUNTRY;
         me.beanEMD.IN_STVAL = '1';
-        var date = rowData.data.strFormatDate;
-        var stval = ' - Sales';
-        me.beanEMD.IN_TIPO = '1';
-        console.log(me.beanEMD);
-        var beanString = JSON.stringify(me.beanEMD);
-        paramsDetailEMD = {
-            beanString: beanString,
-            bean: me.beanEMD
-        };
-        this.setGridDataMidle(date, stval);
-    },
-    //USOS
-    onGridData2Midle: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        me.drillDown.push(me.panelActual);
-        me.panelActual = '-panelMidleGridData';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-
-        me.beanEMD = {};
-
-        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
-        me.beanEMD.IN_STVAL = '2';
-        var date = rowData.data.strFormatDate;
-        var stval = ' - Used';
-        me.beanEMD.IN_TIPO = '1';
-        console.log(me.beanEMD);
-        var beanString = JSON.stringify(me.beanEMD);
-        paramsDetailEMD = {
-            beanString: beanString,
-            bean: me.beanEMD
-        };
-        this.setGridDataMidle(date, stval);
-    },
-    //PENDIENTES
-    onGridData3Midle: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        me.drillDown.push(me.panelActual);
-        me.panelActual = '-panelMidleGridData';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-
-        me.beanEMD = {};
-
-        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
-        me.beanEMD.IN_STVAL = '3';
         var date = rowData.data.strFormatDate;
         var stval = ' - Pending';
         me.beanEMD.IN_TIPO = '1';
@@ -444,6 +495,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         me.beanEMD = {};
 
         me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
+        me.beanEMD.IN_COUNTRY = rowData.data.IN_COUNTRY;
         var date = rowData.data.strFormatDate;
         var stval = '';
         me.beanEMD.IN_TIPO = '1';
@@ -455,8 +507,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         };
         this.setGridData(date, stval);
     },
-    //VENTAS
-    onGridData1: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onGridDataDetailConcliliated: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         Ext.getCmp(prototype.id + '-txtTICKET').show();
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridData';
@@ -465,53 +516,32 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         me.beanEMD = {};
 
         me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
+        me.beanEMD.IN_COUNTRY = rowData.data.IN_COUNTRY;
+        me.beanEMD.IN_STVAL = '0';
+        var date = rowData.data.strFormatDate;
+        var stval = '';
+        me.beanEMD.IN_TIPO = '1';
+        console.log(me.beanEMD);
+        var beanString = JSON.stringify(me.beanEMD);
+        paramsDetailEMD = {
+            beanString: beanString,
+            bean: me.beanEMD
+        };
+        this.setGridData(date, stval);
+    },
+    onGridDataDetailPending: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        Ext.getCmp(prototype.id + '-txtTICKET').show();
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        me.beanEMD = {};
+
+        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
+        me.beanEMD.IN_COUNTRY = rowData.data.IN_COUNTRY;
         me.beanEMD.IN_STVAL = '1';
         var date = rowData.data.strFormatDate;
-        var stval = ' - Sales';
-        me.beanEMD.IN_TIPO = '1';
-        console.log(me.beanEMD);
-        var beanString = JSON.stringify(me.beanEMD);
-        paramsDetailEMD = {
-            beanString: beanString,
-            bean: me.beanEMD
-        };
-        this.setGridData(date, stval);
-    },
-    //USOS
-    onGridData2: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        Ext.getCmp(prototype.id + '-txtTICKET').show();
-        me.drillDown.push(me.panelActual);
-        me.panelActual = '-panelGridData';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-
-        me.beanEMD = {};
-
-        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
-        me.beanEMD.IN_STVAL = '2';
-        var date = rowData.data.strFormatDate;
-        var stval = ' - Used';
-        me.beanEMD.IN_TIPO = '1';
-        console.log(me.beanEMD);
-        var beanString = JSON.stringify(me.beanEMD);
-        paramsDetailEMD = {
-            beanString: beanString,
-            bean: me.beanEMD
-        };
-        this.setGridData(date, stval);
-    },
-    //PENDIENTES
-    onGridData3: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        Ext.getCmp(prototype.id + '-txtTICKET').show();
-        me.drillDown.push(me.panelActual);
-        me.panelActual = '-panelGridData';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-
-        me.beanEMD = {};
-
-        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
-        me.beanEMD.IN_STVAL = '3';
-        var date = rowData.data.strFormatDate;
-        var stval = ' - Pending';
+        var stval = '';
         me.beanEMD.IN_TIPO = '1';
         console.log(me.beanEMD);
         var beanString = JSON.stringify(me.beanEMD);
@@ -650,7 +680,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         }).show();
     },
     btnBack_click: function (obj, e) {
-        
+
 
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
@@ -707,7 +737,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
                 break;
             case  '-panelMidleGridData':
                 global.getFile(prototype.url + '/getXLSXMidle?beanString=' + paramsDetailEMD.beanString);
-                break;    
+                break;
             case  '-panelGridData':
                 global.getFile(prototype.url + '/getXLSX?beanString=' + paramsDetailEMD.beanString);
                 break;
@@ -780,7 +810,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     },
     setWidthPie: function () {
         console.log(me.panelActual);
-        if (me.panelActual === '-panelGridData' ) {
+        if (me.panelActual === '-panelGridData') {
             var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
             Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
             Ext.getCmp(prototype.id + '-pie').setVisible(true);

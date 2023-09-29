@@ -41,11 +41,11 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                             items: [
                                 {
                                     xtype: 'label',
-                                    text: 'Used Information',
+                                    text: 'Transaction Information',
                                     style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                                     bodyStyle: 'background:#E5ECEF;',
                                     fontSize: '11',
-                                    width: 134,
+                                    width: 200,
                                     height: 20,
                                     margin: '4 2 4 3'
                                 },
@@ -72,7 +72,6 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                     hiddenLabel: false,
                                     value: '',
                                 },
-                                
                             ]
                         },
                         {
@@ -96,7 +95,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             textAlign: 'center',
                                             paddingLeft: 3,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120,
+                                            width: 80,
                                         },
                                         {xtype: 'tbspacer', width: 7},
                                         {
@@ -113,7 +112,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Cupon',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 50
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -122,7 +121,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             id: prototype.id + '-de-txtCUPON',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:center;',
-                                            width: 100,
+                                            width: 50,
                                         },
                                         {xtype: 'tbspacer', width: 20},
                                         {
@@ -130,7 +129,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Sequence',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 80
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -139,7 +138,25 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             id: prototype.id + '-de-txtSEQ',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:center;',
-                                            width: 100,
+                                            width: 50,
+                                        },
+                                        {xtype: 'tbspacer', width: 20},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Rolling',
+                                            fontSize: 15,
+                                            textAlign: 'center',
+                                            paddingLeft: 3,
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 80,
+                                        },
+                                        {xtype: 'tbspacer', width: 7},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtSEQROL',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            fieldStyle: 'text-align:center;',
+                                            width: 60,
                                         },
                                     ]
                                 },
@@ -152,30 +169,12 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                     items: [
                                         {
                                             xtype: 'label',
-                                            text: 'Rolling',
+                                            text: 'Date',
                                             fontSize: 15,
                                             textAlign: 'center',
                                             paddingLeft: 3,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120,
-                                        },
-                                        {xtype: 'tbspacer', width: 7},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-de-txtSEQROL',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            fieldStyle: 'text-align:center;',
-                                            width: 100,
-                                        },
-                                        {xtype: 'tbspacer', width: 20},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Used Date',
-                                            fontSize: 15,
-                                            textAlign: 'center',
-                                            paddingLeft: 3,
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120,
+                                            width: 80,
                                         },
                                         {xtype: 'tbspacer', width: 7},
                                         {
@@ -185,15 +184,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             fieldStyle: 'text-align:center;',
                                             width: 100,
                                         },
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    bodyStyle: 'background:#efe5e5;',
-                                    margin: '10 2 2 8',
-                                    items: [
+                                        {xtype: 'tbspacer', width: 20},
                                         {
                                             xtype: 'label',
                                             text: 'RFIC',
@@ -201,7 +192,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             textAlign: 'center',
                                             paddingLeft: 3,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120,
+                                            width: 50,
                                         },
                                         {xtype: 'tbspacer', width: 7},
                                         {
@@ -209,7 +200,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             id: prototype.id + '-de-txtRFIC',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:center;',
-                                            width: 100,
+                                            width: 50,
                                         },
                                         {xtype: 'tbspacer', width: 20},
                                         {
@@ -227,7 +218,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             id: prototype.id + '-de-txtRECODE',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:center;',
-                                            width: 60,
+                                            width: 50,
                                         },
                                         {xtype: 'tbspacer', width: 20},
                                         {
@@ -235,7 +226,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Free Descrip',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 100
+                                            width: 80
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -243,8 +234,8 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             xtype: 'textfield',
                                             id: prototype.id + '-de-txtFDESCRIP',
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            fieldStyle: 'text-align:center;',
-                                            width: 200,
+                                            fieldStyle: 'text-align:left;',
+                                            width: 150,
                                         },
                                     ]
                                 },
@@ -298,7 +289,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Country',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 100
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -315,7 +306,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Agent',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 100
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -334,12 +325,12 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             textAlign: 'center',
                                             paddingLeft: 3,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120,
+                                            width: 100,
                                         },
                                         {xtype: 'tbspacer', width: 7},
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-de-txtSDATE',
+                                            id: prototype.id + '-de-txtFVTA',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:center;',
                                             width: 100,
@@ -358,7 +349,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Orig',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 100
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -375,7 +366,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Dest',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 100
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -392,7 +383,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Fare Basis',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 100
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -417,7 +408,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'RBD',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 100
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -434,7 +425,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Pax',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 100
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -451,7 +442,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Pax Type',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 100
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -476,7 +467,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Oper.',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 100
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -493,7 +484,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Carrier',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 100
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -515,10 +506,27 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                     items: [
                                         {
                                             xtype: 'label',
+                                            text: 'Valuation Date',
+                                            hidden: false,
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 100
+
+                                        },
+                                        {xtype: 'tbspacer', width: 7},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtFECVAL',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            fieldStyle: 'text-align:center;',
+                                            width: 100,
+                                        },
+                                        {xtype: 'tbspacer', width: 20},
+                                        {
+                                            xtype: 'label',
                                             text: 'Currency',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 100
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -535,7 +543,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Total Value',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 100
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -573,45 +581,54 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                         },
                         {
                             xtype: 'panel',
-                            layout: 'hbox',
+                            layout: 'vbox',
                             border: false,
                             bodyStyle: 'background:#efe5e5;',
-                            margin: '10 2 2 8',
+                            margin: '10 10 10 10',
                             items: [
                                 {
-                                    xtype: 'label',
-                                    text: 'Accounting Date',
-                                    fontSize: 15,
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120,
-                                },
-                                {xtype: 'tbspacer', width: 7},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtFCONT',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 100,
-                                },
-                                {xtype: 'tbspacer', width: 20},
-                                {
-                                    xtype: 'label',
-                                    text: 'Accounting Id',
-                                    fontSize: 15,
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120,
-                                },
-                                {xtype: 'tbspacer', width: 7},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtIDCON',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 100,
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    bodyStyle: 'background:#efe5e5;',
+                                    margin: '10 2 2 8',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            text: 'Date',
+                                            fontSize: 15,
+                                            textAlign: 'center',
+                                            paddingLeft: 3,
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 100,
+                                        },
+                                        {xtype: 'tbspacer', width: 7},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtFCONT',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            fieldStyle: 'text-align:center;',
+                                            width: 100,
+                                        },
+                                        {xtype: 'tbspacer', width: 20},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Id',
+                                            fontSize: 15,
+                                            textAlign: 'center',
+                                            paddingLeft: 3,
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 100,
+                                        },
+                                        {xtype: 'tbspacer', width: 7},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtIDCON',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            fieldStyle: 'text-align:center;',
+                                            width: 100,
+                                        },
+                                    ]
                                 },
                             ]
                         },
@@ -775,7 +792,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                     text: 'Save',
                     id: prototype.id + '-btn-save',
                     iconCls: 'prx-icon-save',
-                    hidden:true,
+                    hidden: true,
                     listeners: {
                         click: 'onSaveClick'
                     }
@@ -784,7 +801,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                     text: 'Update',
                     id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
-                    hidden:true,
+                    hidden: true,
                     listeners: {
                         click: 'onUpdateClick'
                     }
@@ -793,7 +810,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                     text: 'Delete',
                     id: prototype.id + '-btn-delete',
                     iconCls: 'prx-icon-delete',
-                    hidden:true,
+                    hidden: true,
                     listeners: {
                         click: 'onDeleteClick'
                     }
@@ -802,7 +819,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                     text: 'Cancel',
                     id: prototype.id + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
-                    hidden:true,
+                    hidden: true,
                     listeners: {
                         click: 'onCancelClick'
                     }

@@ -61,35 +61,36 @@ public class EMDStandaloneDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04931(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04931(?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
 
-            cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
+            cstmt.registerOutParameter(10, Types.INTEGER);
             
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_TIPO);
             cstmt.setString(3, filter.IN_DATE_FROM);
             cstmt.setString(4, filter.IN_DATE_TO);
             cstmt.setString(5, filter.IN_STVAL);
+            cstmt.setString(6, filter.IN_COUNTRY);
 
-            cstmt.setInt(6, filter.page.PAGNUM);
-            cstmt.setInt(7, filter.page.PAGROW);
-            cstmt.setInt(8, filter.page.TOTPAG);
-            cstmt.setInt(9, filter.page.TOTROW);
+            cstmt.setInt(7, filter.page.PAGNUM);
+            cstmt.setInt(8, filter.page.PAGROW);
+            cstmt.setInt(9, filter.page.TOTPAG);
+            cstmt.setInt(10, filter.page.TOTROW);
             
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(6);
-            filter.page.PAGROW = cstmt.getInt(7);
-            filter.page.TOTPAG = cstmt.getInt(8);
-            filter.page.TOTROW = cstmt.getInt(9);
+            filter.page.PAGNUM = cstmt.getInt(7);
+            filter.page.PAGROW = cstmt.getInt(8);
+            filter.page.TOTPAG = cstmt.getInt(9);
+            filter.page.TOTROW = cstmt.getInt(10);
             
             rst = cstmt.getResultSet();
 
@@ -108,6 +109,7 @@ public class EMDStandaloneDAO {
 
                     bean = new A1817Filter();
                     bean.IN_TIPO = filter.IN_TIPO.trim();
+                    bean.IN_COUNTRY = filter.IN_COUNTRY.trim();
                     bean.DFLIGHT = rst.getString("DFLIGHT");
                     bean.strFormatDate = Functions.getMonthConvert(bean.DFLIGHT);
                     bean.QTYUSED  = rst.getInt("QTYUSED");
@@ -174,34 +176,35 @@ public class EMDStandaloneDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04934(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04934(?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
 
-            cstmt.registerOutParameter(5, Types.INTEGER);
             cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
             
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_TIPO);
             cstmt.setString(3, filter.IN_DATE);
             cstmt.setString(4, filter.IN_STVAL);
+            cstmt.setString(5, filter.IN_COUNTRY);
 
-            cstmt.setInt(5, filter.page.PAGNUM);
-            cstmt.setInt(6, filter.page.PAGROW);
-            cstmt.setInt(7, filter.page.TOTPAG);
-            cstmt.setInt(8, filter.page.TOTROW);
+            cstmt.setInt(6, filter.page.PAGNUM);
+            cstmt.setInt(7, filter.page.PAGROW);
+            cstmt.setInt(8, filter.page.TOTPAG);
+            cstmt.setInt(9, filter.page.TOTROW);
             
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(5);
-            filter.page.PAGROW = cstmt.getInt(6);
-            filter.page.TOTPAG = cstmt.getInt(7);
-            filter.page.TOTROW = cstmt.getInt(8);
+            filter.page.PAGNUM = cstmt.getInt(6);
+            filter.page.PAGROW = cstmt.getInt(7);
+            filter.page.TOTPAG = cstmt.getInt(8);
+            filter.page.TOTROW = cstmt.getInt(9);
             
             rst = cstmt.getResultSet();
 
@@ -220,6 +223,7 @@ public class EMDStandaloneDAO {
 
                     bean = new A1817Filter();
                     bean.IN_TIPO = filter.IN_TIPO.trim();
+                    bean.IN_COUNTRY = filter.IN_COUNTRY.trim();
                     bean.DFLIGHT = rst.getString("DFLIGHT");
                     bean.strFormatDate = Functions.getMonthConvert(bean.DFLIGHT);
                     bean.QTYUSED  = rst.getInt("QTYUSED");
@@ -244,6 +248,66 @@ public class EMDStandaloneDAO {
 
         } catch (Exception e) {
             e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
+    
+     public List<A1817Filter> loadPX529SQP05094(A1817Filter filter) throws SQLException, Exception {
+
+        List<A1817Filter> lstTkts = new ArrayList<A1817Filter>(0);
+        A1817Filter beanTkt;
+
+        A1817Filter objRtn;
+        objRtn = new A1817Filter();
+        objRtn.CODE = "";
+        objRtn.NAME = "All";
+        lstTkts.add(objRtn);
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP05094(?)}";
+        
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+
+                beanTkt = new A1817Filter();
+
+                beanTkt.CODE = rst.getString("CODE").trim();
+                beanTkt.NAME = rst.getString("NAME").trim();
+                lstTkts.add(beanTkt);
+            }
+            rst.close();
+
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (rst != null) {
@@ -402,35 +466,36 @@ public class EMDStandaloneDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04924(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04924(?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
 
-            cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
+            cstmt.registerOutParameter(10, Types.INTEGER);
             
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_TIPO);
             cstmt.setString(3, filter.IN_DATE);
             cstmt.setString(4, filter.IN_STVAL);
             cstmt.setString(5, filter.IN_TICKET);
+            cstmt.setString(6, filter.IN_COUNTRY);
 
-            cstmt.setInt(6, filter.page.PAGNUM);
-            cstmt.setInt(7, filter.page.PAGROW);
-            cstmt.setInt(8, filter.page.TOTPAG);
-            cstmt.setInt(9, filter.page.TOTROW);
+            cstmt.setInt(7, filter.page.PAGNUM);
+            cstmt.setInt(8, filter.page.PAGROW);
+            cstmt.setInt(9, filter.page.TOTPAG);
+            cstmt.setInt(10, filter.page.TOTROW);
             
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(6);
-            filter.page.PAGROW = cstmt.getInt(7);
-            filter.page.TOTPAG = cstmt.getInt(8);
-            filter.page.TOTROW = cstmt.getInt(9);
+            filter.page.PAGNUM = cstmt.getInt(7);
+            filter.page.PAGROW = cstmt.getInt(8);
+            filter.page.TOTPAG = cstmt.getInt(9);
+            filter.page.TOTROW = cstmt.getInt(10);
             
             rst = cstmt.getResultSet();
 
@@ -446,6 +511,7 @@ public class EMDStandaloneDAO {
 
                     bean = new A1817Filter();
                     bean.IN_TIPO = filter.IN_TIPO.trim();
+                    bean.IN_COUNTRY = filter.IN_COUNTRY.trim();
                     bean.DFLIGHT = rst.getString("DFLIGHT");
                     bean.strFormatDate = Functions.getMonthConvert(bean.DFLIGHT);
                     bean.SCOUNTRY  = rst.getString("PSVVTA");
@@ -480,7 +546,8 @@ public class EMDStandaloneDAO {
                     bean.descFCONT = Functions.getMonthConvert(bean.FCONT);
                     bean.FVTA   = rst.getString("FVTA");
                     bean.descFVTA = Functions.getMonthConvert(bean.FVTA);
-                    
+                    bean.FECVAL   = rst.getString("FECVAL");
+                    bean.descFECVAL = Functions.getMonthConvert(bean.FECVAL);
                     if(bean.STVAL.equals("0")){
                         bean.descSTVAL = "Venta sin Uso";
                     }else if(bean.STVAL.equals("1")){
@@ -539,7 +606,7 @@ public class EMDStandaloneDAO {
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04925(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04925(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -557,23 +624,25 @@ public class EMDStandaloneDAO {
             cstmt.setString(9, filter.DFLIGHT.trim());
             cstmt.setString(10, filter.SCOUNTRY.trim());
             cstmt.setString(11, filter.AGENTE.trim());
-            cstmt.setString(12, filter.RFIC.trim());
-            cstmt.setString(13, filter.RECODE.trim());
-            cstmt.setString(14, filter.DESC_RECODE.trim());
-            cstmt.setString(15, filter.FCONT.trim());
-            cstmt.setString(16, filter.IDCON.trim());
-            cstmt.setString(17, filter.STVAL.trim());
-            cstmt.setString(18, filter.FBASE.trim());
-            cstmt.setString(19, filter.RBD.trim());
-            cstmt.setInt(20, filter.QTYPAX);
-            cstmt.setString(21, filter.TPAX.trim());
-            cstmt.setString(22, filter.TOPUS.trim());
-            cstmt.setString(23, filter.CARR.trim());
-            cstmt.setString(24, filter.CURRENCY.trim());
-            cstmt.setDouble(25, filter.VCPN);
-            cstmt.setString(26, session.getUserView().getUserInfo().USR);
-            cstmt.setString(27, Functions.getFechaActual());
-            cstmt.setString(28, Functions.getHoraActual());
+            cstmt.setString(12, filter.FVTA.trim());
+            cstmt.setString(13, filter.RFIC.trim());
+            cstmt.setString(14, filter.RECODE.trim());
+            cstmt.setString(15, filter.DESC_RECODE.trim());
+            cstmt.setString(16, filter.FCONT.trim());
+            cstmt.setString(17, filter.IDCON.trim());
+            cstmt.setString(18, filter.STVAL.trim());
+            cstmt.setString(19, filter.FBASE.trim());
+            cstmt.setString(20, filter.RBD.trim());
+            cstmt.setInt(21, filter.QTYPAX);
+            cstmt.setString(22, filter.TPAX.trim());
+            cstmt.setString(23, filter.TOPUS.trim());
+            cstmt.setString(24, filter.CARR.trim());
+            cstmt.setString(25, filter.FECVAL.trim());
+            cstmt.setString(26, filter.CURRENCY.trim());
+            cstmt.setDouble(27, filter.VCPN);
+            cstmt.setString(28, session.getUserView().getUserInfo().USR);
+            cstmt.setString(29, Functions.getFechaActual());
+            cstmt.setString(30, Functions.getHoraActual());
             
             cstmt.execute();
 
