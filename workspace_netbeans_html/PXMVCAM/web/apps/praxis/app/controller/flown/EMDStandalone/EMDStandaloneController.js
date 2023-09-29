@@ -439,9 +439,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     setGridDataMidle: function (date, stval) {
         if (date !== '') {
             if (stval !== '') {
-                Ext.getCmp(prototype.id + '-gridMidleData').setTitle('<center style="font-size:12px;"> Used Date :' + date + ' ' + stval + '</center>');
+                Ext.getCmp(prototype.id + '-gridMidleData').setTitle('<center style="font-size:12px;"> Transaction Date :' + date + ' ' + stval + '</center>');
             } else {
-                Ext.getCmp(prototype.id + '-gridMidleData').setTitle('<center style="font-size:12px;"> Used Date :' + date + '</center>');
+                Ext.getCmp(prototype.id + '-gridMidleData').setTitle('<center style="font-size:12px;"> Transaction Date :' + date + '</center>');
             }
         } else {
             Ext.getCmp(prototype.id + '-gridMidleData').setTitle('<center style="font-size:12px;">' + '</center>');
@@ -550,9 +550,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     setGridData: function (date, stval) {
         if (date !== '') {
             if (stval !== '') {
-                Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Used Date :' + date + ' ' + stval + '</center>');
+                Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Transaction Date :' + date + ' ' + stval + '</center>');
             } else {
-                Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Used Date :' + date + '</center>');
+                Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Transaction Date :' + date + '</center>');
             }
         } else {
             Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;">' + '</center>');
@@ -610,7 +610,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         this.setGridDataDetEMD();
     },
     setGridDataDetEMD: function () {
-        win.lblUser_toolTip("Estructura: A3757");
+        win.lblUser_toolTip("Estructura: A4479");
         me.panelActual = '-panelGridDataDetEMD';
 //        me.setWidthPie();
         var msj = this.validateFields();
@@ -631,7 +631,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
                         if (res.success) {
                             if (obj.data.length > 0) {
                                 var obj = obj.data.items[0].data;
-                                Ext.getCmp(prototype.id + '-gridDataDetEMD').setTitle('<center style="font-size:12px;"> Used Date ' + obj.strFormatDate + '</center>');
+                                Ext.getCmp(prototype.id + '-gridDataDetEMD').setTitle('<center style="font-size:12px;"> Transaction Date ' + obj.strFormatDate + '</center>');
 
 
                             } else {
