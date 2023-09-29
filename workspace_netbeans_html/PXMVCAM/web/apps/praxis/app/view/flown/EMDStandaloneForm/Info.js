@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1700,
+                width: 1790,
                 height: 600,
                 align: 'center'
             },
@@ -56,7 +56,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: false,
                                     height: 550,
-                                    width: 480,
+                                    width: 520,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -76,7 +76,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Flight<br>Date', dataIndex: 'strFormatDate', width: 80,
+                                                    {text: 'Transaction<br>Date', dataIndex: 'strFormatDate', width: 100,
                                                         listeners: {
                                                             click: 'onGridDataMidle'
                                                         },
@@ -87,14 +87,10 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                         },
                                                     },
                                                     {text: 'Total EMDS', dataIndex: 'QTYUSED', width: 100,
-//                                                        listeners: {
-//                                                            click: 'onGridData1Midle'
-//                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
-//                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                            return  value;
+                                                            return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataMain').getStore().getData().items[0].data;
@@ -102,15 +98,11 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                             return '<b>' + Ext.util.Format.number(data.TOT_QTYUSED, '0,000') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'EMDS Conciliated', dataIndex: 'QTYCONCI', width: 100,
-//                                                        listeners: {
-//                                                            click: 'onGridData2Midle'
-//                                                        },
+                                                    {text: 'EMDS Conciliated', dataIndex: 'QTYCONCI', width: 120,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
-//                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                            return  value;
+                                                            return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataMain').getStore().getData().items[0].data;
@@ -119,14 +111,10 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                         }
                                                     },
                                                     {text: 'Total<br>Pending', dataIndex: 'QTYPEND', width: 100,
-//                                                        listeners: {
-//                                                            click: 'onGridData2Midle'
-//                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
-//                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                            return  value;
+                                                            return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataMain').getStore().getData().items[0].data;
@@ -172,7 +160,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: false,
                                     height: 550,
-                                    width: 480,
+                                    width: 520,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -192,7 +180,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Flight<br>Date', dataIndex: 'strFormatDate', width: 80,
+                                                    {text: 'Transaction<br>Date', dataIndex: 'strFormatDate', width: 100,
                                                         listeners: {
                                                             click: 'onGridData'
                                                         },
@@ -203,13 +191,9 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                         },
                                                     },
                                                     {text: 'Total EMDS', dataIndex: 'QTYUSED', width: 100,
-//                                                        listeners: {
-//                                                            click: 'onGridData1'
-//                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
-//                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                             return  value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -218,15 +202,14 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                             return '<b>' + Ext.util.Format.number(data.TOT_QTYUSED, '0,000') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'EMDS Conciliated', dataIndex: 'QTYCONCI', width: 100,
-//                                                        listeners: {
-//                                                            click: 'onGridData2'
-//                                                        },
+                                                    {text: 'EMDS Conciliated', dataIndex: 'QTYCONCI', width: 120,
+                                                        listeners: {
+                                                            click: 'onGridDataDetailConcliliated'
+                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
-//                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                            return  value;
+                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridMidleData').getStore().getData().items[0].data;
@@ -235,14 +218,13 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                         }
                                                     },
                                                     {text: 'Total<br>Pending', dataIndex: 'QTYPEND', width: 100,
-//                                                        listeners: {
-//                                                            click: 'onGridData2'
-//                                                        },
+                                                        listeners: {
+                                                            click: 'onGridDataDetailPending'
+                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
-//                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                            return  value;
+                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridMidleData').getStore().getData().items[0].data;
@@ -276,7 +258,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                             padding: '1',
                             border: false,
                             height: 575,
-                            width: 1700,
+                            width: 1790,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -288,7 +270,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: false,
                                     height: 575,
-                                    width: 1675,
+                                    width: 1775,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -301,19 +283,16 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Used Information',
+                                            {text: 'Transaction Information',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Used<br>Date', dataIndex: 'strFormatDate', width: 80,
-//                                                        listeners: {
-//                                                            click: 'onGridDetEMD'
-//                                                        },
+                                                    {text: 'Transaction<br>Date', dataIndex: 'strFormatDate', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
+                                                            metaData.style = "text-align:center;background-color:#E6FFE6";
                                                             value = '<b>' + value + '</b>';
                                                             return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         },
@@ -323,46 +302,46 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                             click: 'viewTicket'
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E6FFE6";
                                                             value = '<b>' + value + '</b>';
                                                             return '<a href="#flown-emd-standalone-form" style="color:#057ECB">' + value + '</a>';
                                                         },
                                                     },
                                                     {text: 'Seq', dataIndex: 'SEQ', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E6FFE6";
                                                             value = Ext.util.Format.number(value, '00');
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'Roll', dataIndex: 'SEQRO', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E6FFE6";
                                                             value = Ext.util.Format.number(value, '00');
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'Status', dataIndex: 'descSTVAL', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E6FFE6";
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'RFIC', dataIndex: 'RFIC', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E6FFE6";
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'Reason<br>Code', dataIndex: 'RECODE', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E6FFE6";
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'Free Description', dataIndex: 'DESC_RECODE', width: 140,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:left;background-color:#";
+                                                            metaData.style = "text-align:left;background-color:#E6FFE6";
                                                             return value;
                                                         },
                                                     },
@@ -377,50 +356,51 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                 columns: [
                                                     {text: 'Country', dataIndex: 'SCOUNTRY', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
-                                                            return value;
+                                                            metaData.style = "text-align:center;background-color:#E0F0FF";
+                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+
                                                         },
                                                     },
                                                     {text: 'Agent', dataIndex: 'AGENTE', width: 75,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'Sale<br>Date', dataIndex: 'descFVTA', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
+                                                            metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             value = '<b>' + value + '</b>';
-                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
                                                         },
                                                     },
                                                     {text: 'Orig', dataIndex: 'ORIG', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'Dest', dataIndex: 'DEST', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'Fare<br>Basis', dataIndex: 'FBASE', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#";
+                                                            metaData.style = "text-align:right;background-color:#E0F0FF";
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'RBD', dataIndex: 'RBD', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'Pax', dataIndex: 'QTYPAX', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return value;
                                                         },
@@ -432,39 +412,41 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                     },
                                                     {text: 'Pax<br>Type', dataIndex: 'TPAX', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'Oper.', dataIndex: 'TOPUS', width: 50,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'Carrier', dataIndex: 'CARR', width: 55,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E0F0FF";
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {text: 'Valuation<br>Date', dataIndex: 'descFECVAL', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#E0F0FF";
+                                                            value = '<b>' + value + '</b>';
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'Curr.', dataIndex: 'CURRENCY', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#";
+                                                            metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             return value;
                                                         },
                                                     },
                                                     {text: 'Total<br>Value', dataIndex: 'VCPN', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#";
+                                                            metaData.style = "text-align:right;background-color:#E0F0FF";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         },
-//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-//                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
-//                                                            metaData.style = 'text-align:right; margin-right:3px ';
-//                                                            return '<b>' + Ext.util.Format.number(data.totAMOUNT1, '0,000.00') + '<b>';
-//                                                        }
                                                     },
                                                 ]
                                             },
@@ -478,7 +460,8 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                     {text: 'Date', dataIndex: 'descFCONT', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
-                                                            return value;
+                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+
                                                         },
                                                     },
                                                     {text: 'Id', dataIndex: 'IDCON', width: 140,

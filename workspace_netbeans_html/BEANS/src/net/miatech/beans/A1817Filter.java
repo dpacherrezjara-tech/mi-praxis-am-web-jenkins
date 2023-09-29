@@ -28,15 +28,20 @@ public class A1817Filter extends A1817 {
     public String IN_SEQRO = "";
     public String strTicket = "";
     
+    public String CODE = "";
+    public String NAME = "";
     public String DSALES = "";
     public String FVTA = "";
+    public String FECVAL = "";
     public String descFVTA = "";
+    public String descFECVAL = "";
     public String descFCONT = "";
     public String IN_TIPO = "";
     public String IN_DATE = "";
     public String IN_DATE_FROM = "";
     public String IN_DATE_TO = "";
     public String IN_STVAL = "";
+    public String IN_COUNTRY = "";
     public String IN_TICKET = "";
     public String SCOUNTRY = "";
     public String AGENTE = "";

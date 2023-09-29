@@ -53,13 +53,13 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         this.setValue('de-txtCUPON', this.beanResult.CUPON);
         this.setValue('de-txtSEQ', this.beanResult.SEQ);
         this.setValue('de-txtSEQROL', this.beanResult.SEQRO);
-        this.setValue('de-txtDFLIGHT', this.beanResult.strFormatDate);
+        this.setValue('de-txtDFLIGHT', this.beanResult.DFLIGHT);
         this.setValue('de-txtRFIC', this.beanResult.RFIC);
         this.setValue('de-txtRECODE', this.beanResult.RECODE);
         this.setValue('de-txtFDESCRIP', this.beanResult.DESC_RECODE);
         this.setValue('de-txtCOUNTRY', this.beanResult.SCOUNTRY);
         this.setValue('de-txtAGENT', this.beanResult.AGENTE);
-        this.setValue('de-txtSDATE', this.beanResult.descFVTA);
+        this.setValue('de-txtFVTA', this.beanResult.FVTA);
         this.setValue('de-txtORIG', this.beanResult.ORIG);
         this.setValue('de-txtDEST', this.beanResult.DEST);
         this.setValue('de-txtFBASE', this.beanResult.FBASE);
@@ -68,9 +68,10 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         this.setValue('de-txtPTYPE', this.beanResult.TPAX);
         this.setValue('de-txtOPER', this.beanResult.TOPUS);
         this.setValue('de-txtCARRIER', this.beanResult.CARR);
+        this.setValue('de-txtFECVAL', this.beanResult.FECVAL);
         this.setValue('de-txtCURRENCY', this.beanResult.CURRENCY);
         this.setValue('de-txtTOTAL', this.beanResult.VCPN);
-        this.setValue('de-txtFCONT', this.beanResult.descFCONT);
+        this.setValue('de-txtFCONT', this.beanResult.FCONT);
         this.setValue('de-txtIDCON', this.beanResult.IDCON);
         
         this.setValue('txtUSCR', this.beanResult.USCR);
@@ -102,15 +103,13 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         beanTemp.CUPON = this.getValue("de-txtCUPON").trim();
         beanTemp.SEQ = this.getValue("de-txtSEQ").trim();
         beanTemp.SEQRO = this.getValue("de-txtSEQROL").trim();
-//        beanTemp.DFLIGHT = this.getValue("de-txtDFLIGHT").trim();
-        beanTemp.DFLIGHT = this.beanResult.DFLIGHT;
+        beanTemp.DFLIGHT = this.getValue("de-txtDFLIGHT").trim();
         beanTemp.RFIC = this.getValue("de-txtRFIC").trim();
         beanTemp.RECODE = this.getValue("de-txtRECODE").trim();
         beanTemp.DESC_RECODE = this.getValue("de-txtFDESCRIP").trim();
          beanTemp.SCOUNTRY = this.getValue("de-txtCOUNTRY").trim();
         beanTemp.AGENTE = this.getValue("de-txtAGENT").trim();
-//        beanTemp.SDATE = this.getValue("de-txtSDATE").trim();
-        beanTemp.FVTA = this.beanResult.FVTA;
+        beanTemp.FVTA = this.getValue("de-txtFVTA").trim();
         beanTemp.ORIG = this.getValue("de-txtORIG").trim();
         beanTemp.DEST = this.getValue("de-txtDEST").trim();
         beanTemp.FBASE = this.getValue("de-txtFBASE").trim();
@@ -127,8 +126,8 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         if(beanTemp.VCPN === ''){
             beanTemp.VCPN = 0;
         }
-//        beanTemp.FCONT = this.getValue("de-txtFCONT").trim();
-        beanTemp.FCONT = this.beanResult.FCONT;
+        beanTemp.FCONT = this.getValue("de-txtFCONT").trim();
+        beanTemp.FECVAL = this.getValue("de-txtFECVAL").trim();
         beanTemp.IDCON = this.getValue("de-txtIDCON").trim();
 
         beanTemp.USCR = this.getValue("txtUSCR").trim();
@@ -299,7 +298,11 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
 //        return msjResult;
     },
     DeshabilitarCampoClave: function () {
-//        Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-de-txtTICKET').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-de-txtCUPON').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-de-txtSEQ').setReadOnly(true);
+        
+        Ext.getCmp(prototype.id + '-de-txtFDESCRIP').setReadOnly(true);
     },
     setearCamposClave: function () {
 //        Ext.getCmp(prototype.id + '-de-txtCodeTable').setValue('89');
