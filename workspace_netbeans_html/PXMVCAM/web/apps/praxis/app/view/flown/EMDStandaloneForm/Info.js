@@ -90,7 +90,6 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
-//                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                             return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -100,13 +99,9 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                         }
                                                     },
                                                     {text: 'EMDS Conciliated', dataIndex: 'QTYCONCI', width: 120,
-//                                                        listeners: {
-//                                                            click: 'onGridDataMidleConcliliated'
-//                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
-//                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                             return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -116,13 +111,9 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                         }
                                                     },
                                                     {text: 'Total<br>Pending', dataIndex: 'QTYPEND', width: 100,
-//                                                        listeners: {
-//                                                            click: 'onGridDataMidlePending'
-//                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
-//                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                             return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -200,13 +191,9 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                         },
                                                     },
                                                     {text: 'Total EMDS', dataIndex: 'QTYUSED', width: 100,
-//                                                        listeners: {
-//                                                            click: 'onGridData1'
-//                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
-//                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                             return  value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -223,7 +210,6 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-//                                                            return  value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridMidleData').getStore().getData().items[0].data;
@@ -239,7 +225,6 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
                                                             return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-//                                                            return  value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridMidleData').getStore().getData().items[0].data;
@@ -306,9 +291,6 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Transaction<br>Date', dataIndex: 'strFormatDate', width: 100,
-//                                                        listeners: {
-//                                                            click: 'onGridDetEMD'
-//                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#E6FFE6";
                                                             value = '<b>' + value + '</b>';
@@ -375,7 +357,8 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                     {text: 'Country', dataIndex: 'SCOUNTRY', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#E0F0FF";
-                                                            return value;
+                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+
                                                         },
                                                     },
                                                     {text: 'Agent', dataIndex: 'AGENTE', width: 75,
@@ -388,7 +371,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             value = '<b>' + value + '</b>';
-                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
                                                         },
                                                     },
                                                     {text: 'Orig', dataIndex: 'ORIG', width: 60,
@@ -449,7 +432,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             value = '<b>' + value + '</b>';
-                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
                                                         },
                                                     },
                                                     {text: 'Curr.', dataIndex: 'CURRENCY', width: 40,
@@ -464,11 +447,6 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         },
-//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-//                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
-//                                                            metaData.style = 'text-align:right; margin-right:3px ';
-//                                                            return '<b>' + Ext.util.Format.number(data.totAMOUNT1, '0,000.00') + '<b>';
-//                                                        }
                                                     },
                                                 ]
                                             },
@@ -482,7 +460,8 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                     {text: 'Date', dataIndex: 'descFCONT', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
-                                                            return value;
+                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+
                                                         },
                                                     },
                                                     {text: 'Id', dataIndex: 'IDCON', width: 140,

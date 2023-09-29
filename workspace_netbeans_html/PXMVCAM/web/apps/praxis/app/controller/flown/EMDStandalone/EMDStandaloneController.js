@@ -257,7 +257,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
             } else {
                 var txtCountry = Ext.getCmp(prototype.id + '-cmbSCOUNTRY').getValue();
                 if (txtCountry.trim().length > 0) {
-
+                    me.drillDown.length = 0;
                     this.setMainData();
                     me.drillDown.push(me.panelActual);
                     me.panelActual = '-panelMidleGridData';
@@ -265,7 +265,6 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
 
                     me.beanEMD = {};
 
-//                    me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
                     me.beanEMD.IN_COUNTRY = txtCountry;
                     var date = '';
                     var stval = '';
@@ -281,13 +280,11 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
                     this.setFormatParameter();
                     this.setMainData();
                 }
-
             }
-
         } else {
-
             var txtCountry = Ext.getCmp(prototype.id + '-cmbSCOUNTRY').getValue();
             if (txtCountry.trim().length > 0) {
+                me.drillDown.length = 0;
                 this.setMainData();
                 me.drillDown.push(me.panelActual);
                 me.panelActual = '-panelMidleGridData';
@@ -295,7 +292,6 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
 
                 me.beanEMD = {};
 
-//                    me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
                 me.beanEMD.IN_COUNTRY = txtCountry;
                 var date = '';
                 var stval = '';
@@ -700,9 +696,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         }
     },
     btnClear_click: function (obj, e) {
-        Ext.getCmp(prototype.id + '-cmbCode').setValue('');
-        Ext.getCmp(prototype.id + '-cmbCountry').setValue('');
-        Ext.getCmp(prototype.id + '-cmbBank').setValue('');
+//        Ext.getCmp(prototype.id + '-cmbCode').setValue('');
+//        Ext.getCmp(prototype.id + '-cmbCountry').setValue('');
+//        Ext.getCmp(prototype.id + '-cmbBank').setValue('');
 
     },
     btnExcel_click: function (obj, e) {

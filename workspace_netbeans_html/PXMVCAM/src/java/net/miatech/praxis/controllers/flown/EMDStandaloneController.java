@@ -765,7 +765,7 @@ public class EMDStandaloneController extends BaseController {
 
             CH1_0.setCellValue("Transaction Information");
             CH1_8.setCellValue("Sales Information");
-            CH1_21.setCellValue("Poliza");
+            CH1_22.setCellValue("Poliza");
             
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -794,8 +794,8 @@ public class EMDStandaloneController extends BaseController {
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 7));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 20));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 23));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 21));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 23));
             ++vj;
             //============================================
 
@@ -874,6 +874,7 @@ public class EMDStandaloneController extends BaseController {
             CH2_20.setCellStyle(headerStyle);
             CH2_21.setCellStyle(headerStyle);
             CH2_22.setCellStyle(headerStyle);
+            CH2_23.setCellStyle(headerStyle);
            
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 0));//USED
