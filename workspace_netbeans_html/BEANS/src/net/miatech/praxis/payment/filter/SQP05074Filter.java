@@ -10,7 +10,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SQP05074Filter {
-    private String VP_CCUST,VP_FPROC;
+    private String VP_CCUST,VP_FPROC,VP_PROCESADOR;
     private Integer VP_CANT;
 
     public String getVP_CCUST() {
@@ -36,4 +36,13 @@ public class SQP05074Filter {
     public void setVP_CANT(Integer VP_CANT) {
         this.VP_CANT = VP_CANT;
     }
+
+    public String getVP_PROCESADOR() {
+        return VP_PROCESADOR;
+    }
+
+    public void setVP_PROCESADOR(String VP_PROCESADOR) {
+        this.VP_PROCESADOR = VP_PROCESADOR;
+    }
+    
 }

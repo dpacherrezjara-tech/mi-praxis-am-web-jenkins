@@ -1,0 +1,311 @@
+Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SettlementMerchantGrid', {
+    extend: 'Ext.grid.Panel',
+    alias: 'widget.' + prototype.id + '-SettlementMerchantGrid',
+    requires: [
+        'Ext.Praxis.controller.payments.SalesReconciliationControl.SettlementMerchantGridController'
+    ],
+    controller: 'SettlementMerchantGridController',
+    maxHeight: prototype.height,
+    minHeight: 200,
+    height: 'auto',
+    width: prototype.width,
+    viewConfig: {
+        stripeRows: true,
+        enableTextSelection: true,
+        markDirty: false,
+        listeners: {
+            refresh: function (dataview) {
+                Ext.each(dataview.panel.columns, function (column) {
+                    if (column.autoSizeColumn === true)
+                        column.autoSize();
+                });
+            }
+        }
+    },
+    features: [
+        {
+            ftype: 'summary' // Agrega la característica de resumen al grid
+        }
+    ],
+    columnLines: true,
+    columns: {
+        defaults: {
+            align: 'center',
+            menuDisabled: true,
+            sortable: true
+        },
+        items: [
+            //<editor-fold defaultstate="collapsed" desc="Detail Cols">
+            {
+                text: 'Date',
+                width: 80,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    const {prda, paydate} = record.data;
+                    if (paydate) {
+                        value = paydate;
+                    } else {
+                        value = prda;
+                    }
+                    return value;
+                }
+            },
+            {
+                text: 'Merchant ID', dataIndex: 'pmerchid', width: 120,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
+                    metaData.style += "font-weight:bolder;color:#057ECB;";
+                    return value;
+                },
+                listeners: {
+                    click: 'onClickMerchant'
+                }
+
+            },
+            {
+                text: 'Processor', dataIndex: 'desc_PROCTYPE', flex: 1,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    //metaData.style = "text-align:center;background-color:#FCF6DC";
+                    return value;
+                }
+            },
+            {
+                text: 'Country', dataIndex: 'scountry', width: 65,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    //metaData.style = "text-align:center;background-color:#FCF6DC";
+                    return value;
+                }
+            },
+            {
+                text: 'Currency', dataIndex: 'pcurrency', width: 70,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    //metaData.style = "text-align:center;background-color:#FCF6DC";
+                    return value;
+                }
+            },
+            {
+                text: 'GROSS<br>Amount', dataIndex: 'tgrosampay', width: 100,
+                listeners: {
+//                                                    click: 'onGridDetBankS'
+                },
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                    value = Ext.util.Format.number(value, '0,000.00');
+                    return value;
+                },
+                summaryType: 'sum',
+                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+
+                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                }
+            },
+            {
+                text: 'Commission',
+                defaults: {
+                    menuDisabled: true,
+                    sortable: false,
+                    align: 'center'
+                },
+                columns: [
+                    {
+                        text: 'Sale Rate', dataIndex: 'discrate', width: 70,
+                        listeners: {
+                            //                                                    click: 'onGridDetBankS'
+                        },
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                            value = Ext.util.Format.number(value, '0,000.00 %');
+                            return value;
+                            //                                                        return '<a href="#payments-reconciliation-payment-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                        }
+                    },
+                    {
+                        text: 'Amount', dataIndex: 'sfeeamou', width: 90,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right; margin-right:3px ';
+                            return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                        }
+                    },
+                    {
+                        text: 'VAT Rate', dataIndex: 'discratei', width: 90,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                            value = Ext.util.Format.number(value, '0,000.00 %');
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'VAT', dataIndex: 'ivacom12', width: 90,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right; margin-right:3px ';
+                            return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                        }
+                    },
+                ]
+            },
+            {
+                text: 'Serv. Fee',
+                //dataIndex: 'SERVICFEEP', 
+                width: 100,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    const {transtype, servicfeep, adjusmentp} = record.data;
+                    if (transtype === 'ADJU') {
+                        value = adjusmentp;
+                    } else {
+                        value = servicfeep;
+                    }
+                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                    value = Ext.util.Format.number(value, '0,000.00');
+                    return value;
+                }
+            },
+            {
+                text: 'Acceleration <br> Amount',
+                //dataIndex: 'ACCEAMOU', 
+                width: 100,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                    const {transtype, servicfeep, acceamou} = record.data;
+                    if (transtype !== 'ADJU' && transtype !== 'CHBK') {
+                        value = servicfeep;
+                    } else {
+                        value = acceamou;
+                    }
+                    value = Ext.util.Format.number(value, '0,000.00');
+                    return value;
+                }
+            },
+            {
+                text: 'VAT COMM<br>1+2', dataIndex: 'overcom12P', width: 100,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                    value = Ext.util.Format.number(value, '0,000.00');
+                    return value;
+                },
+                summaryType: 'sum',
+                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                    metaData.style = 'text-align:right; margin-right:3px ';
+                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                }
+            },
+            {
+                text: 'Chargeback',
+                defaults: {
+                    menuDisabled: true,
+                    sortable: false,
+                    align: 'center'
+                },
+                columns: [
+                    {
+                        text: 'Amount', dataIndex: 'tgrosampay_CB', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right; margin-right:3px ';
+                            return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                        }
+                    },
+                    {
+                        text: 'Commission', dataIndex: 'sfeeamou_CB', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right; margin-right:3px ';
+                            return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                        }
+                    },
+                    {
+                        text: 'VAT', dataIndex: 'ivacom12_CB', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right; margin-right:3px ';
+                            return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                        }
+                    }
+                ]
+            },
+            {
+                text: 'Net Amount<br>to Receive AM', dataIndex: 'netamoun', width: 100,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                    value = Ext.util.Format.number(value, '0,000.00');
+                    return value;
+                },
+                summaryType: 'sum',
+                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                    metaData.style = 'text-align:right; margin-right:3px ';
+                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                }
+            },
+            {
+                text: 'Currency<br>Settlement', dataIndex: 'pcurrency', width: 80,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:center;background-color:#FCF6DC";
+                    return value;
+                }
+            }
+            //</editor-fold>
+        ]
+    },
+    tbar: {
+        layout: {
+            pack: 'end'
+        },
+        defaults: {
+            scale: 'medium'
+        },
+        items: [
+            {
+                xtype: 'button',
+                iconCls: 'prx-icon-excel',
+                scale: 'small',
+                tooltip: 'Export to Excel',
+                listeners: {
+                    click: 'downloadExcel'
+                }
+            },
+            {
+                xtype: 'button',
+                scale: 'small',
+                hidden: true,
+                iconCls: 'prx-icon-back',
+                width: 25,
+                tooltip: 'Back',
+                listeners: {
+                    click: function (btn) {
+                        const panel = btn.up().up().up();
+                        const views = panel.items.items;
+                        views.at(-1).destroy();
+                        views.at(-1).show();
+                    }
+                }
+            }
+        ]
+    }
+});
+
+

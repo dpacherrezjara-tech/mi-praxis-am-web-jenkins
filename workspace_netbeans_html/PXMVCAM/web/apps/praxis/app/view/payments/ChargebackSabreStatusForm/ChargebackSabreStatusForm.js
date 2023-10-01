@@ -1,5 +1,7 @@
 prototype.id = 'ChargebackSabreStatusForm';
 prototype.url = CONTEXTPATH + '/ChargebackSabreStatus';
+prototype.width = 1800;
+prototype.height = 630;
 
 Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.ChargebackSabreStatusForm', {
     extend: 'Ext.form.Panel',
@@ -34,7 +36,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.ChargebackSabreSt
                         {
                             xtype: 'panel',
                             region: 'center',
-                            width: 1400,
+                            width: prototype.width,
                             layout: 'border',
                             items: [
                                 {
@@ -47,7 +49,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.ChargebackSabreSt
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1400,
+                                        width: prototype.width,
                                         align: 'center'
                                     },
                                     items: [
@@ -61,7 +63,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.ChargebackSabreSt
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-mainContent',
-                                            height:630,
+                                            height:prototype.height,
                                             layout: {
                                                 type: 'vbox',
                                                 align: 'center'
