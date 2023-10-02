@@ -30,7 +30,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryGrid
                 text: 'RN', dataIndex: 'rn', width: 40,hidden:true
             },
             {
-                text: 'Date', dataIndex: 'fecha', width: 80,
+                text: 'Processing<br>Date', dataIndex: 'fecha', width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;text-decoration:underline;color:#057ECB;cursor:pointer";
                     var date = Ext.Date.parse(value, 'Ym');
