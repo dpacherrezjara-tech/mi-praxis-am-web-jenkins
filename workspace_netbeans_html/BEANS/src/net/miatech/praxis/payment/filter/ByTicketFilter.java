@@ -9,7 +9,8 @@ import net.miatech.praxis.payment.A4496;
 public class ByTicketFilter extends A4496{
     
     //campos agregados
-    private String AGENT_NAME,PROC_NAME,DES_MERCHANT,DES_SMERCHANT,DESC_CERROR,DESC_CODADJU;
+    private String AGENT_NAME,PROC_NAME,DES_MERCHANT,DES_SMERCHANT,
+            DESC_CERROR,DESC_CODADJU,BPO_COMEN,ADM_COMEN;
 
     public String getAGENT_NAME() {
         return AGENT_NAME;
@@ -57,6 +58,22 @@ public class ByTicketFilter extends A4496{
 
     public void setDESC_CODADJU(String DESC_CODADJU) {
         this.DESC_CODADJU = DESC_CODADJU;
+    }
+
+    public String getBPO_COMEN() {
+        return BPO_COMEN;
+    }
+
+    public void setBPO_COMEN(String BPO_COMEN) {
+        this.BPO_COMEN = BPO_COMEN;
+    }
+
+    public String getADM_COMEN() {
+        return ADM_COMEN;
+    }
+
+    public void setADM_COMEN(String ADM_COMEN) {
+        this.ADM_COMEN = ADM_COMEN;
     }
     
     //<editor-fold defaultstate="collapsed" desc="Campos LIQUI">

@@ -180,16 +180,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         {xtype: 'tbspacer', width: 7, height: 24},
                                         {
                                             xtype: 'label',
-                                            text: 'ID Submission',
+                                            text: 'Adjustment ID',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             width: 120
                                         },
                                         {xtype: 'tbspacer', width: 10},
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtIDITEMS',
+                                            id: prototype.idDE + '-de-txtADJUID',
                                             fieldStyle: 'text-align:center',
-                                            name: 'iditems',
+                                            name: 'codchgback',
                                             enforceMaxLength: true,
                                             readOnly: true,
                                             width: 100
@@ -1291,6 +1291,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         {
                                             id: prototype.idDE + '-bpocoment',
                                             fieldLabel: 'BPO Comment',
+                                            maxLength: 100,
+                                            enforceMaxLength: true,
                                             labelWidth: 100,
                                             width: 450
                                         },
@@ -1933,7 +1935,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         ]
                                                     },
                                                     {
-                                                        text:'Doc.<br>Type', width:70, dataIndex:'tpdoc'
+                                                        text: 'Doc.<br>Type', width: 70, dataIndex: 'tpdoc'
                                                     },
                                                     {
                                                         text: 'Ticket', width: 120,
@@ -1953,7 +1955,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                     {
                                                         text: 'Usages', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            const {usopxcp1,usopxcp2,usopxcp3,usopxcp4} = record.data;
+                                                            const {usopxcp1, usopxcp2, usopxcp3, usopxcp4} = record.data;
                                                             const usages = usopxcp1 + usopxcp2 + usopxcp3 + usopxcp4;
                                                             return usages;
                                                         }

@@ -201,6 +201,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         console.log(transacAmt, '-', gridAmt);
         const objClon = Object.assign({}, registro);
         objClon.svfops = parseFloat(transacAmt) - parseFloat(gridAmt);
+        objClon.trnco = objClon.trncu;
         objClon.trncu = 'ADJU';
         const newCorrl = parseInt(objClon.corrl, 10) + 1;
         objClon.corrl = newCorrl.toString().padStart(2, '0');
@@ -827,6 +828,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     })).map(o => {
             //nueva validacion de fuente
             o.FUENTE = o.FUENTE === 'ASR' ? 'S' : o.FUENTE.slice(0, 1);
+            if(codADJU==='03'){
+                o.TRNCU = o.TRNCO;
+            }
             return o;
         });
         const conteo_void = details.filter(x => x.FVOID === 'V').length;

@@ -401,6 +401,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReportForm.ADMReportFormControll
             case 'MA':
                 value = 'Manual';
                 break;
+            case 'MP':
+                value = 'PAYMENT CONCILIATION';
+                break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
         return value;

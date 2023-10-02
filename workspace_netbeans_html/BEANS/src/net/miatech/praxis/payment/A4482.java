@@ -726,6 +726,76 @@ public class A4482 {
         return STUSOULCP4;
     }
 
+    private String STUSUCP1;
+
+    public void setSTUSUCP1(String STUSUCP1) {
+        this.STUSUCP1 = STUSUCP1;
+    }
+
+    public String getSTUSUCP1() {
+        return STUSUCP1;
+    }
+
+    private String STUSUCP2;
+
+    public void setSTUSUCP2(String STUSUCP2) {
+        this.STUSUCP2 = STUSUCP2;
+    }
+
+    public String getSTUSUCP2() {
+        return STUSUCP2;
+    }
+
+    private String STUSUCP3;
+
+    public void setSTUSUCP3(String STUSUCP3) {
+        this.STUSUCP3 = STUSUCP3;
+    }
+
+    public String getSTUSUCP3() {
+        return STUSUCP3;
+    }
+
+    private String STUSUCP4;
+
+    public void setSTUSUCP4(String STUSUCP4) {
+        this.STUSUCP4 = STUSUCP4;
+    }
+
+    public String getSTUSUCP4() {
+        return STUSUCP4;
+    }
+
+    private String STATUSPX;
+
+    public void setSTATUSPX(String STATUSPX) {
+        this.STATUSPX = STATUSPX;
+    }
+
+    public String getSTATUSPX() {
+        return STATUSPX;
+    }
+
+    private String STATSBRE;
+
+    public void setSTATSBRE(String STATSBRE) {
+        this.STATSBRE = STATSBRE;
+    }
+
+    public String getSTATSBRE() {
+        return STATSBRE;
+    }
+
+    private String STATSBR1;
+
+    public void setSTATSBR1(String STATSBR1) {
+        this.STATSBR1 = STATSBR1;
+    }
+
+    public String getSTATSBR1() {
+        return STATSBR1;
+    }
+
     private String TIPOBOL;
 
     public void setTIPOBOL(String TIPOBOL) {
@@ -1696,3 +1766,4 @@ public class A4482 {
         return HOREVERSA;
     }
 }
+    

@@ -25,6 +25,12 @@ import net.miatech.praxis.payment.filter.SQP05089Filter;
 import net.miatech.praxis.payment.filter.SQP05126Filter;
 import net.miatech.praxis.payment.filter.SQP05128Filter;
 import net.miatech.praxis.payment.filter.SQP05129Filter;
+import net.miatech.praxis.payment.filter.SQP05130Filter;
+import net.miatech.praxis.payment.filter.SQP05132Filter;
+import net.miatech.praxis.payment.filter.SQP05133Filter;
+import net.miatech.praxis.payment.filter.SQP05134Filter;
+import net.miatech.praxis.payment.filter.SQP05141Filter;
+import net.miatech.praxis.payment.filter.SQP05142Filter;
 
 /**
  *
@@ -71,7 +77,7 @@ public interface SalesReconciliationLogic {
     SQP05077Filter loadSQP05077Filter(SQP05077Filter filter) throws Exception;
     
     //proceso de conciliacion entre Transacciones
-    void loadSQP05074Filter(SQP05074Filter filter) throws Exception;
+    SQP05074Filter loadSQP05074Filter(SQP05074Filter filter) throws Exception;
     
     //storeds para listado de ticket
     SQP05088Filter loadSQP05088Filter(SQP05088Filter filter) throws Exception;
@@ -82,4 +88,15 @@ public interface SalesReconciliationLogic {
     //Mantenimiento Stand By BT
     SQP05128Filter loadSQP05128Filter(SQP05128Filter filter) throws Exception;
     SQP05129Filter loadSQP05129Filter(SQP05129Filter filter) throws Exception;
+    //ADM By Ticket
+    SQP05130Filter loadSQP05130Filter(SQP05130Filter filter) throws Exception;
+    //Reversa ADM
+    SQP05132Filter loadSQP05132Filter(SQP05132Filter filter) throws Exception;
+    
+    //summary
+    SQP05133Filter loadSQP05133Filter(SQP05133Filter filter) throws Exception;
+    SQP05134Filter loadSQP05134Filter(SQP05134Filter filter) throws Exception;
+    
+    SQP05141Filter loadSQP05141Filter(SQP05141Filter filter) throws Exception;
+    SQP05142Filter loadSQP05142Filter(SQP05142Filter filter) throws Exception;
 }

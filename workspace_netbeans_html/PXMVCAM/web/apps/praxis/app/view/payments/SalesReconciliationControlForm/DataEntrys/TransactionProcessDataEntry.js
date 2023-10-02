@@ -34,6 +34,33 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                     labelWidth: 100,
                     width: 200,
                     value: new Date()
+                },
+                {
+                    xtype: 'combo',
+                    id: prototype.id + '-processProctype',
+                    labelWidth: 70,
+                    width: 250,
+                    margin: '5 5 5 5',
+                    valueField: 'code',
+                    displayField: 'name',
+                    fieldLabel: 'Processor',
+                    queryMode: 'local',
+                    editable: false,
+                    allowBlank: true,
+                    caseSensitive: false,
+                    autoSelect: true,
+                    labelAlign: 'right',
+                    typeAhead: true,
+                    enableKeyEvents: true,
+                    triggerAction: 'all',
+                    value: 'AMEX',
+                    store: Ext.create('Ext.data.SimpleStore', {
+                        fields: ['code', 'name'],
+                        data: [
+                            ['GETMEX00', 'GetNet MX'],
+                            ['AMEX', 'American Express']
+                        ]
+                    })
                 }
             ]
         }

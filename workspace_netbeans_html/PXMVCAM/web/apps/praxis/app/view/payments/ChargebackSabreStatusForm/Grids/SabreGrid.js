@@ -8,8 +8,8 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
     controller: 'SabreGridController',
     //title: 'Chargeback',
     //titleAlign: 'center',
-    height: 610,
-    width: 1400,
+    height: prototype.height,
+    width: prototype.width,
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -208,11 +208,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                         defaults: {
                             menuDisabled: true,
                             sortable: false,
-                            align: 'center',
-//                            renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-//                                metaData.style = "background-color:#b2e1ff;";
-//                                return value;
-//                            }
+                            align: 'center'
                         },
                         columns: [
                             {
@@ -287,25 +283,13 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                     return value;
                                 }
                             },
-//                            {
-//                                text: 'Status', dataIndex: 'indcpns', width: 80,
-//                                listeners: {
-//                                    click: 'onDetByStatus'
-//                                },
-//                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-//                                    metaData.style = "text-align:center;background-color:#b2e1ff;";
-//                                    value = '<b>' + value + '</b>';
-//                                    return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-//                                }
-//                            },
-
                             {
                                 text: 'Date', dataIndex: 'datsabf', width: 80,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     //metaData.style = "text-align:center;background-color:#b2e1ff;";
                                     return value;
                                 }
-                            },
+                            }
                         ]
                     },
                     {
@@ -399,13 +383,6 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                     return value;
                                 }
                             },
-//                            {
-//                                text: 'Status', dataIndex: 'indcpnsl', width: 80,
-//                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-//                                    metaData.style = "text-align:center;background-color:#b2e1ff;";
-//                                    return value;
-//                                }
-//                            },
                             {
                                 text: 'Date', dataIndex: 'datsabl', width: 80,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -418,10 +395,76 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                 ]
             },
             {
+                text: 'Used Sabre Post 20 Days',
+                defaults: {
+                    menuDisabled: true,
+                    sortable: false,
+                    align: 'center'
+                },
+                columns: [
+                    {
+                        text: 'Uses',
+                        defaults: {
+                            menuDisabled: true,
+                            sortable: false,
+                            align: 'center'
+                        },
+                        columns: [
+                            {
+                                text: 'C1', dataIndex: 'stusucp1', width: 60,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "background-color:#FEF9B2;";
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'C2', dataIndex: 'stusucp2', width: 60,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "background-color:#FEF9B2;";
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'C3', dataIndex: 'stusucp3', width: 60,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "background-color:#FEF9B2;";
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'C4', dataIndex: 'stusucp4', width: 60,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "background-color:#FEF9B2;";
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'Praxis ST.', dataIndex: 'statuspx', width: 80,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "background-color:#FEF9B2;";
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'Sabre ST.', dataIndex: 'statsbre', width: 120,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "background-color:#FEF9B2;";
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'Sabre ST. 20 Days', dataIndex: 'statsbr1', width: 120,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "background-color:#FEF9B2;";
+                                    return value;
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
                 text: 'Flag<br>Exchange', dataIndex: 'fselecx', width: 70,
-//                listeners: {
-//                    click: 'onViewExchange'
-//                },
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;background-color:#CFDE1B;";
                     const opts = {
