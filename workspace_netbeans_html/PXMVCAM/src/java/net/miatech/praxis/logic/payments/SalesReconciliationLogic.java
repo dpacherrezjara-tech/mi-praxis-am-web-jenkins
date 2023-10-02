@@ -31,6 +31,7 @@ import net.miatech.praxis.payment.filter.SQP05133Filter;
 import net.miatech.praxis.payment.filter.SQP05134Filter;
 import net.miatech.praxis.payment.filter.SQP05141Filter;
 import net.miatech.praxis.payment.filter.SQP05142Filter;
+import net.miatech.praxis.payment.filter.SQP05147Filter;
 
 /**
  *
@@ -78,6 +79,7 @@ public interface SalesReconciliationLogic {
     
     //proceso de conciliacion entre Transacciones
     SQP05074Filter loadSQP05074Filter(SQP05074Filter filter) throws Exception;
+    SQP05147Filter loadSQP05147Filter() throws Exception;
     
     //storeds para listado de ticket
     SQP05088Filter loadSQP05088Filter(SQP05088Filter filter) throws Exception;
