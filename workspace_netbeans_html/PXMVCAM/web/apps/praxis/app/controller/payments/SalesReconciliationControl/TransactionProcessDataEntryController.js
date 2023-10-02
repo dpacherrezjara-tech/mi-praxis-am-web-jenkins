@@ -12,6 +12,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
         const me = this;
         const dateBtn = Ext.getCmp(prototype.id + '-processTransactionBatch').getValue();
         let date = Ext.Date.format(dateBtn, 'Ymd');
+        let proctype = Ext.getCmp(prototype.id + '-processProctype').getValue();
         //console.log(date);
         Ext.Msg.show(
                 {
@@ -24,17 +25,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
-                            me.processDate(date);
+                            me.processDate(date, proctype);
                         }
                     }
                 });
     },
-    processDate: function (date) {
+    processDate: function (date, proctype) {
         const me = this;
         me.view.mask('Processing...');
         let params = {
             VP_CCUST: '139',
-            VP_FPROC: date
+            VP_FPROC: date,
+            VP_PROCESADOR: proctype
         };
         fetch(`${me.url}/processTransactionsBatch`, {
             method: 'POST',

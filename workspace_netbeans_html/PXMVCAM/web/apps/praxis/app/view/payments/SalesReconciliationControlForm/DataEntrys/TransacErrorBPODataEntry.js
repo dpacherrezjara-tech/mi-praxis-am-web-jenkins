@@ -180,16 +180,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         {xtype: 'tbspacer', width: 7, height: 24},
                                         {
                                             xtype: 'label',
-                                            text: 'ID Submission',
+                                            text: 'Adjustment ID',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             width: 120
                                         },
                                         {xtype: 'tbspacer', width: 10},
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtIDITEMS',
+                                            id: prototype.idDE + '-de-txtADJUID',
                                             fieldStyle: 'text-align:center',
-                                            name: 'iditems',
+                                            name: 'codchgback',
                                             enforceMaxLength: true,
                                             readOnly: true,
                                             width: 100

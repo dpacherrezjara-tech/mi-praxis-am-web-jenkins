@@ -29,6 +29,10 @@ import net.miatech.praxis.payment.filter.SQP05128Filter;
 import net.miatech.praxis.payment.filter.SQP05129Filter;
 import net.miatech.praxis.payment.filter.SQP05130Filter;
 import net.miatech.praxis.payment.filter.SQP05132Filter;
+import net.miatech.praxis.payment.filter.SQP05133Filter;
+import net.miatech.praxis.payment.filter.SQP05134Filter;
+import net.miatech.praxis.payment.filter.SQP05141Filter;
+import net.miatech.praxis.payment.filter.SQP05142Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.utils.Functions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -479,6 +483,62 @@ public class SalesReconciliationBPOController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+//</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Settlement">
+    @RequestMapping(value = "loadSettlementSummary")
+    public ResponseEntity<?> loadSettlementSummary(@ModelAttribute SQP05133Filter params){
+        System.out.println("---------------SalesReconciliationBPO:loadSettlementSummary-------------");
+        try {
+            SQP05133Filter filter = logic.loadSQP05133Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "loadSettlementDetail")
+    public ResponseEntity<?> loadSettlementDetail(@ModelAttribute SQP05134Filter params){
+        System.out.println("---------------SalesReconciliationBPO:loadSettlementDetail-------------");
+        try {
+            SQP05134Filter filter = logic.loadSQP05134Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+//</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Summary">
+    @RequestMapping(value = "loadSummary")
+    public ResponseEntity<?> loadSummary(@ModelAttribute SQP05141Filter params){
+        System.out.println("---------------SalesReconciliationBPO:loadSummary-------------");
+        try {
+            SQP05141Filter filter = logic.loadSQP05141Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "loadSummaryDetail")
+    public ResponseEntity<?> loadSummary(@ModelAttribute SQP05142Filter params){
+        System.out.println("---------------SalesReconciliationBPO:loadSummaryDetail-------------");
+        try {
+            SQP05142Filter filter = logic.loadSQP05142Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Funciones">

@@ -9,7 +9,9 @@ import net.miatech.praxis.payment.A4496;
 import net.miatech.praxis.payment.A4501;
 import net.miatech.praxis.payment.filter.A4331BPOFilter;
 import net.miatech.praxis.payment.filter.A4331NEWFilter;
+import net.miatech.praxis.payment.filter.A4331SETTLFilter;
 import net.miatech.praxis.payment.filter.A4331SRFilter;
+import net.miatech.praxis.payment.filter.A4332Filter;
 import net.miatech.praxis.payment.filter.A4335Filter;
 import net.miatech.praxis.payment.filter.A4482Filter;
 import net.miatech.praxis.payment.filter.ByTicketFilter;
@@ -38,6 +40,10 @@ import net.miatech.praxis.payment.filter.SQP05128Filter;
 import net.miatech.praxis.payment.filter.SQP05129Filter;
 import net.miatech.praxis.payment.filter.SQP05130Filter;
 import net.miatech.praxis.payment.filter.SQP05132Filter;
+import net.miatech.praxis.payment.filter.SQP05133Filter;
+import net.miatech.praxis.payment.filter.SQP05134Filter;
+import net.miatech.praxis.payment.filter.SQP05141Filter;
+import net.miatech.praxis.payment.filter.SQP05142Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -402,5 +408,55 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         return filter;
     }
 
+    @Override
+    public SQP05133Filter loadSQP05133Filter(SQP05133Filter filter) throws Exception {
+        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05133")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331SETTLFilter.class));
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = jdbcCall.execute(params);
+        filter.setResponse((List<A4331SETTLFilter>) spRes.get("result"));
+        return filter;
+    }
+
+    @Override
+    public SQP05134Filter loadSQP05134Filter(SQP05134Filter filter) throws Exception {
+        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05134")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331NEWFilter.class));
+        filter.setPage();
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = jdbcCall.execute(params);
+        filter.setResponse((List<A4331NEWFilter>) spRes.get("result"));
+        filter.setPageOut(spRes);
+        return filter;
+    }
+
+    @Override
+    public SQP05141Filter loadSQP05141Filter(SQP05141Filter filter) throws Exception {
+        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05141")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4332Filter.class));
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = jdbcCall.execute(params);
+        filter.setResponse((List<A4332Filter>) spRes.get("result"));
+        return filter;
+    }
+
+    @Override
+    public SQP05142Filter loadSQP05142Filter(SQP05142Filter filter) throws Exception {
+        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05142")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4332Filter.class));
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = jdbcCall.execute(params);
+        filter.setResponse((List<A4332Filter>) spRes.get("result"));
+        return filter;
+    }
+    
     
 }

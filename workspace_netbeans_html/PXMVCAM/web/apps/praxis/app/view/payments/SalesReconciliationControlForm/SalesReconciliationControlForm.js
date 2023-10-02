@@ -10,11 +10,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.SalesReconci
         'Ext.Praxis.controller.payments.SalesReconciliationControl.SalesReconciliationControlController',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPayment',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTicket',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettlement',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSummary',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.Options',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentMonthSummaryGrid',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTicketMonthSummaryGrid',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentDetailGrid',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTicketDetailGrid',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SettlementSummaryGrid',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SettlementMerchantGrid',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SettlementDetailGrid',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SummaryGrid',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SummaryDetailGrid',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransactionProcessDataEntry'
     ],
@@ -80,6 +87,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.SalesReconci
                                                     xtype: prototype.id + '-filtersByTicket',
                                                     id: prototype.id + '-filtersByTicket-1',
                                                     hidden: true
+                                                },
+                                                {
+                                                    xtype: prototype.id + '-filtersSettlement',
+                                                    id: prototype.id + '-filtersSettl-1',
+                                                    hidden: true
+                                                },
+                                                {
+                                                    xtype: prototype.id + '-filtersSummary',
+                                                    id: prototype.id + '-filtersSumm-1',
+                                                    hidden: true
                                                 }
                                             ]
                                         },
@@ -96,6 +113,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.SalesReconci
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-mainContent2',
+                                            hidden: true,
+                                            height: prototype.height,
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            layout: {
+                                                type: 'vbox',
+                                                align: 'center'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-mainContentSettl',
+                                            hidden: true,
+                                            height: prototype.height,
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            layout: {
+                                                type: 'vbox',
+                                                align: 'center'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-mainContentSumm',
                                             hidden: true,
                                             height: prototype.height,
                                             bodyStyle: 'background-color: #E3EAF9;',
