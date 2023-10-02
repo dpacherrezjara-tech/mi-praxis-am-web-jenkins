@@ -3,6 +3,7 @@ package net.miatech.praxis.controllers.payments;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
+import net.miatech.praxis.payment.A4507;
 import net.miatech.praxis.payment.filter.A4331NEWFilter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
@@ -33,6 +34,7 @@ import net.miatech.praxis.payment.filter.SQP05133Filter;
 import net.miatech.praxis.payment.filter.SQP05134Filter;
 import net.miatech.praxis.payment.filter.SQP05141Filter;
 import net.miatech.praxis.payment.filter.SQP05142Filter;
+import net.miatech.praxis.payment.filter.SQP05147Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.utils.Functions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,6 +126,79 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    
+    @RequestMapping(value = "downloadTransactionsBatch")
+    public ResponseEntity<?> downloadTransactionsBatch(){
+        try {
+            System.out.println("---------------SalesReconciliationBPO:downloadTransactionsBatch-------------");
+            SQP05147Filter filter = logic.loadSQP05147Filter();
+            System.out.println("Total: " + filter.getResponse().size());
+            List<Object[]> data = new ArrayList<>();
+            //headers
+            Object[] headers = new Object[25];
+            headers[0] = "Processing Date";
+            headers[1] = "Payment Date";
+            headers[2] = "Processor";
+            headers[3] = "Country";
+            headers[4] = "Payment Merchant ID";
+            headers[5] = "Status Sett. vs Sales";
+            headers[6] = "Doc. Type";
+            headers[7] = "Void";
+            headers[8] = "Sales Merchant ID";
+            headers[9] = "Description";
+            headers[10] = "Sale Date";
+            headers[11] = "Card Number";
+            headers[12] = "Auth Code";
+            headers[13] = "Installment Plan";
+            headers[14] = "Installment Number";
+            headers[15] = "Ticket";
+            headers[16] = "PNR";
+            headers[17] = "Currency";
+            headers[18] = "Transaction Amount";
+            headers[19] = "Error Code";
+            headers[20] = "Description";
+            headers[21] = "Adju. Code";
+            headers[22] = "Description";
+            headers[23] = "User Update";
+            headers[24] = "Date Update";
+            data.add(headers);
+            for (A4507 obj : filter.getResponse()) {
+                Object[] row = new Object[25];
+                row[0] = obj.getPRDA();
+                row[1] = obj.getPAYDATE();
+                row[2] = obj.getDESC_PROCTYPE();
+                row[3] = obj.getSCOUNTRY();
+                row[4] = obj.getPMERCHID();
+                row[5] = convertStatus(obj.getSTVAL());
+                row[6] = obj.getTRANSTYPE();
+                row[7] = obj.getFVOID();
+                row[8] = obj.getSMERCHID();
+                row[9] = obj.getDES_SMERCHANT();
+                row[10] = obj.getSDATE();
+                row[11] = obj.getSCARDN();
+                row[12] = obj.getSAUTHOC();
+                row[13] = obj.getNBRINSTA();
+                row[14] = obj.getINSTANBR();
+                row[15] = obj.getTICKET();
+                row[16] = obj.getSPNR();
+                //row[17] = obj.getInvoirn();
+                row[17] = obj.getSCURRENCY();
+                row[18] = obj.getTGROSAMOUN();
+                row[19] = obj.getCERROR();
+                row[20] = obj.getDESC_CERROR();
+                row[21] = obj.getCODADJU();
+                row[22] = obj.getDESC_CODADJU();
+                row[23] = obj.getUSUP();
+                row[24] = obj.getFEUP();
+                data.add(row);
+            }
+            return exportUtils.createExcel(data, controllerName + " - BatchTrnx " + Functions.getFechaActual());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Mantenimiento By Payment">
@@ -247,6 +322,7 @@ public class SalesReconciliationBPOController {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Exceles">
     @RequestMapping(value = "downloadByPaymentDetail")
     public ResponseEntity<?> downloadByPaymentDetail(@ModelAttribute SQP05060Filter params) {
@@ -322,6 +398,7 @@ public class SalesReconciliationBPOController {
     }
 
 //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="MSI Tracking">
     @RequestMapping(value = "loadMSITrackingInfo")
     public ResponseEntity<?> loadMSITrackingInfo(@ModelAttribute SQP05061Filter params) {

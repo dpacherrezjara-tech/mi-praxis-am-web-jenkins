@@ -61,6 +61,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             ['AMEX', 'American Express']
                         ]
                     })
+                },
+                {
+                    xtype: 'button',
+                    id: prototype.id + '-processDownloadResult',
+                    hidden: true,
+                    margin: '5 5 5 5',
+                    iconCls: 'prx-icon-excel',
+                    scale: 'small',
+                    tooltip: 'Export result to Excel',
+                    listeners: {
+                        click: 'downloadExcel'
+                    }
                 }
             ]
         }

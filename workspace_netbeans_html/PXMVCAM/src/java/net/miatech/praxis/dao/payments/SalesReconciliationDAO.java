@@ -7,6 +7,7 @@ import net.miatech.praxis.payment.A3152MP;
 import net.miatech.praxis.payment.A4451MP;
 import net.miatech.praxis.payment.A4496;
 import net.miatech.praxis.payment.A4501;
+import net.miatech.praxis.payment.A4507;
 import net.miatech.praxis.payment.filter.A4331BPOFilter;
 import net.miatech.praxis.payment.filter.A4331NEWFilter;
 import net.miatech.praxis.payment.filter.A4331SETTLFilter;
@@ -44,6 +45,7 @@ import net.miatech.praxis.payment.filter.SQP05133Filter;
 import net.miatech.praxis.payment.filter.SQP05134Filter;
 import net.miatech.praxis.payment.filter.SQP05141Filter;
 import net.miatech.praxis.payment.filter.SQP05142Filter;
+import net.miatech.praxis.payment.filter.SQP05147Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -341,6 +343,18 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> obj = jdbcCall.execute(params);
         filter.setVP_CANT((Integer) obj.get("VP_CANT"));
+        return filter;
+    }
+
+    @Override
+    public SQP05147Filter loadSQP05147Filter() throws Exception {
+        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05147")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4507.class));
+        Map<String, Object> obj = jdbcCall.execute();
+        SQP05147Filter filter = new SQP05147Filter();
+        filter.setResponse((List<A4507>) obj.get("result"));
         return filter;
     }
 

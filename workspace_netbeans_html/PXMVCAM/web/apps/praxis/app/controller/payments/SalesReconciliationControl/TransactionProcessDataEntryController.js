@@ -56,6 +56,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
                     width: 300,
                     timeout: 10000 // 10 segundos
                 });
+                Ext.getCmp(prototype.id + '-processDownloadResult').show();
             } else {
                 Ext.MessageBox.show({
                     title: 'Error',
@@ -78,5 +79,26 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
     },
     onCancelClick: function () {
         this.view.close();
+    },
+    downloadExcel: function (btn) {
+        const me = this;
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Download Excel?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            me.downloadResultBatch();
+                        }
+                    }
+                });
+    },
+    downloadResultBatch:async function(){
+        global.getFile(`${prototype.url}/downloadTransactionsBatch`);
     }
 });
