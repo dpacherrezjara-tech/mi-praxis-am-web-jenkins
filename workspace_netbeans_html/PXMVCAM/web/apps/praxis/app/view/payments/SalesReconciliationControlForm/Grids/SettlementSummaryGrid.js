@@ -111,16 +111,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                     return value;
                 }
             },
-            {
-                text: 'Acceleration <br> Amount',
-                dataIndex: 'acceamou', 
-                width: 100,
-                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = "text-align:right;background-color:#B2DAFA";
-                    value = Ext.util.Format.number(value, '0,000.00');
-                    return value;
-                }
-            },
+//            {
+//                text: 'Acceleration <br> Amount',
+//                dataIndex: 'acceamou', 
+//                width: 100,
+//                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                    metaData.style = "text-align:right;background-color:#B2DAFA";
+//                    value = Ext.util.Format.number(value, '0,000.00');
+//                    return value;
+//                }
+//            },
             {
                 text: 'VAT COMM<br>1+2', dataIndex: 'overcom12P', width: 100,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
