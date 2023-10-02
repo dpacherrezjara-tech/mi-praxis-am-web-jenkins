@@ -45,15 +45,19 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.DetailGridContr
         const fechap = Ext.getCmp(prototype.id + '-det-fechap');
         const fechah = Ext.getCmp(prototype.id + '-det-fechah');
         if (type === 'P') {
-            fechap.setText('Payment<br>Date');
-            fechap.setConfig('dataIndex', 'paydate');
+            //fechap.setText('Payment<br>Date');
+            //fechap.setConfig('dataIndex', 'paydate');
+            fechap.setText('Processing<br>Date');
+            fechap.setConfig('dataIndex', 'prda');
             fechah.setText('Sale<br>Date');
             fechah.setConfig('dataIndex', 'sdate');
         } else {
             fechap.setText('Sale<br>Date');
             fechap.setConfig('dataIndex', 'sdate');
-            fechah.setText('Payment<br>Date');
-            fechah.setConfig('dataIndex', 'paydate');
+//            fechah.setText('Payment<br>Date');
+//            fechah.setConfig('dataIndex', 'paydate');
+            fechah.setText('Processing<br>Date');
+            fechah.setConfig('dataIndex', 'prda');
         }
         this.view.getView().refresh();
     },

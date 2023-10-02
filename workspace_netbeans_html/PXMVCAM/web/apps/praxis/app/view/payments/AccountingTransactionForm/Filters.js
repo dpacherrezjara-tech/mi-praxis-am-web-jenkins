@@ -43,7 +43,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                             store: Ext.create('Ext.data.SimpleStore', {
                                 fields: ['code', 'name'],
                                 data: [
-                                    ['P', 'Payment Date'],
+                                    ['P', 'Processing Date'],
                                     ['S', 'Sale Date']
                                 ]
                             }),

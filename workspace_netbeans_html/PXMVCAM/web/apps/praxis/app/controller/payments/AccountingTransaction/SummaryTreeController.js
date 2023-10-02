@@ -15,7 +15,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
         if (res.ok) {
             const data = await res.json();
             const tdate = view.tdate;
-            let keyDate = tdate === 'P' ? 'paydate' : 'sdate';
+            //let keyDate = tdate === 'P' ? 'paydate' : 'sdate'; // old
+            let keyDate = tdate === 'P' ? 'prda' : 'sdate'; //new
             //console.log(me.groupBy({data: data.response, key: keydate}));
             console.log(data.response.at(0));
             let firstObj = data.response.at((0));
@@ -52,8 +53,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
                 root: {text: '.', expanded: false, children: tree}
             });
             //</editor-fold>
-            Ext.getCmp(prototype.idTree + '-colFechaP').setText(tdate === 'P' ? 'Payment Date' : 'Sale Date');
-            Ext.getCmp(prototype.idTree + '-colFechaH').setText(tdate === 'P' ? 'Sale Date' : 'Payment Date');
+            Ext.getCmp(prototype.idTree + '-colFechaP').setText(tdate === 'P' ? 'Processing Date' : 'Sale Date');
+            Ext.getCmp(prototype.idTree + '-colFechaH').setText(tdate === 'P' ? 'Sale Date' : 'Processing Date');
             me.view.setStore(storeTree);
         }
         mainPanel.unmask();
@@ -107,7 +108,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
         const viewParams = view.searchParams;
         let params = {
             FECHA_FROM_P: obj.date,
-            FECHA_FROM_H: viewParams.IN_TFECHA === 'P' ? obj['sdate'] : obj['paydate'],
+            //FECHA_FROM_H: viewParams.IN_TFECHA === 'P' ? obj['sdate'] : obj['paydate'],
+            FECHA_FROM_H: viewParams.IN_TFECHA === 'P' ? obj['sdate'] : obj['prda'],
             IN_STCONL: type,
             ...viewParams
         };

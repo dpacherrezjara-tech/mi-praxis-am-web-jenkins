@@ -50,14 +50,16 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                 }
             },
             {
-                text: '',
+                text: '...',
                 id: prototype.idTree + '-colFechaH',
                 width: 120,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    // console.log(record.data);
                     if (record.data.tdate === 'P') {
-                        value = record.data.sdate;
+                        value = record.data.sdate;                        
                     } else {
-                        value = record.data.paydate;
+                        //value = record.data.paydate;
+                        value = record.data.prda;                      
                     }
                     switch (record.data.type) {
                         case 'header':
