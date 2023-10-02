@@ -51,6 +51,10 @@ public class LoadControlLogic {
         return objDAO.loadPX019S01A1348(filter);
     }
     
+    public   List<PX019S01A1348Filter>  loadSQP05150( PX019S01A1348Filter filter) throws SQLException, Exception {
+        return objDAO.loadSQP05150(filter);
+    }
+    
     public   PX074S02PRO9878Filter  loadPX074S02PRO9878(PX074S02PRO9878Filter filter) throws SQLException, Exception {
         return objDAO.loadPX074S02PRO9878(filter);
     }
@@ -67,7 +71,13 @@ public class LoadControlLogic {
     public   PX037S06PRO9822Filter  loadPX037S06PRO9822(PX037S06PRO9822Filter filter) throws SQLException, Exception {
         return objDAO.loadPX037S06PRO9822(filter);
     }
+    public   PX037S06PRO9822Filter  loadSQP05149(PX037S06PRO9822Filter filter) throws SQLException, Exception {
+        return objDAO.loadSQP05149(filter);
+    }
     public   PX037S07PRO9876Filter  loadPX037S07PRO9876(PX037S07PRO9876Filter filter) throws SQLException, Exception {
         return objDAO.loadPX037S07PRO9876(filter);
+    }
+    public   PX037S07PRO9876Filter  loadSQP05148(PX037S07PRO9876Filter filter) throws SQLException, Exception {
+        return objDAO.loadSQP05148(filter);
     }
 }
