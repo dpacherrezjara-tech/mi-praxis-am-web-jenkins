@@ -294,7 +294,8 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#E6FFE6";
                                                             value = '<b>' + value + '</b>';
-                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+//                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
                                                         },
                                                     },
                                                     {text: 'Ticket', dataIndex: 'strTicket', width: 120,
@@ -357,7 +358,8 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                     {text: 'Country', dataIndex: 'SCOUNTRY', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#E0F0FF";
-                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+//                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
 
                                                         },
                                                     },
@@ -460,7 +462,9 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                     {text: 'Date', dataIndex: 'descFCONT', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
-                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            value = '<b>' + value + '</b>';
+//                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return value;
 
                                                         },
                                                     },
