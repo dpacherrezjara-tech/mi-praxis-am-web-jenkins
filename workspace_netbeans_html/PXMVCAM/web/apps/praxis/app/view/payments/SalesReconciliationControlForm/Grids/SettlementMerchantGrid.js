@@ -165,21 +165,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                     return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                 }
             },
-            {
-                text: 'Acceleration <br> Amount',
-                dataIndex: 'acceamou', 
-                width: 100,
-                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = "text-align:right;background-color:#B2DAFA";
-                    value = Ext.util.Format.number(value, '0,000.00');
-                    return value;
-                },
-                summaryType: 'sum',
-                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                    metaData.style = 'text-align:right; margin-right:3px ';
-                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
-                }
-            },
+//            {
+//                text: 'Acceleration <br> Amount',
+//                dataIndex: 'acceamou', 
+//                width: 100,
+//                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                    metaData.style = "text-align:right;background-color:#B2DAFA";
+//                    value = Ext.util.Format.number(value, '0,000.00');
+//                    return value;
+//                },
+//                summaryType: 'sum',
+//                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                    metaData.style = 'text-align:right; margin-right:3px ';
+//                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+//                }
+//            },
             {
                 text: 'VAT COMM<br>1+2', dataIndex: 'overcom12P', width: 100,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
