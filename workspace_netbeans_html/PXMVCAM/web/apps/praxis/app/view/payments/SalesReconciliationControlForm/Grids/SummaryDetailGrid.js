@@ -69,6 +69,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Summar
                 width: 100,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     return value;
+                },
+                summaryType: 'sum',
+                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                    metaData.style = "text-align:center;";
+                    return '<b>' + value + '<b>';
                 }
             },
             {text: 'Curr', dataIndex: 'pcurrency', width: 50},

@@ -7,8 +7,9 @@ package net.miatech.praxis.payment.filter;
 public class A4331SETTLFilter{
     private String DESC_PROCTYPE,PAYDATE,PRDA,PCURRENCY,PROCTYPE,PROCTYPESQ,SCOUNTRY,PMERCHID;
     private Double TGROSAMOUN,ACCEAMOU,
-            NETAMOUN,TGROSAMPAY,SFEEAMOU,IVACOM12,SERVICFEEP,OVERCOM12P,
-            ADJUSMENTP,TGROSAMPAY_CB,SFEEAMOU_CB,IVACOM12_CB,
+            NETAMOUN,TGROSAMPAY,SFEEAMOU,IVACOM12,SERVICFEEP,OVERCOM12P,ADJUSMENTP,
+            TGROSAMPAY_CB,SFEEAMOU_CB,IVACOM12_CB,
+            TGROSAMPAY_ADJ,SFEEAMOU_ADJ,IVACOM12_ADJ,
             DISCRATEI,DISCRATE;
     
     public String getDESC_PROCTYPE() {
@@ -185,5 +186,29 @@ public class A4331SETTLFilter{
 
     public void setDISCRATE(Double DISCRATE) {
         this.DISCRATE = DISCRATE;
+    }
+
+    public Double getTGROSAMPAY_ADJ() {
+        return TGROSAMPAY_ADJ;
+    }
+
+    public void setTGROSAMPAY_ADJ(Double TGROSAMPAY_ADJ) {
+        this.TGROSAMPAY_ADJ = TGROSAMPAY_ADJ;
+    }
+
+    public Double getSFEEAMOU_ADJ() {
+        return SFEEAMOU_ADJ;
+    }
+
+    public void setSFEEAMOU_ADJ(Double SFEEAMOU_ADJ) {
+        this.SFEEAMOU_ADJ = SFEEAMOU_ADJ;
+    }
+
+    public Double getIVACOM12_ADJ() {
+        return IVACOM12_ADJ;
+    }
+
+    public void setIVACOM12_ADJ(Double IVACOM12_ADJ) {
+        this.IVACOM12_ADJ = IVACOM12_ADJ;
     }
 }
