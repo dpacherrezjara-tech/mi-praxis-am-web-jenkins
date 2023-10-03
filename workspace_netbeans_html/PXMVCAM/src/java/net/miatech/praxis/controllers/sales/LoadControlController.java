@@ -787,6 +787,39 @@ public class LoadControlController extends BaseController {
         return new Gson().toJson(map);
     }
     
+    @RequestMapping(value = "/loadVOID")
+    public @ResponseBody
+    String loadVOID(ModelMap map, HttpServletRequest request) {
+        List<PX019S01A1348Filter> listaData;
+        filter5 = new PX019S01A1348Filter();
+        filter5.page.TOTROW = -1;
+        filter5.page.START = 0;
+        filter5.page.LIMIT = 0;
+        try {
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            start = 2*start - start/2;
+            filter5.page.PAGROW = 30;
+            start = (start != 0 ? start : 0);
+            filter5.page.PAGNUM = (start / filter5.page.PAGROW) + 1;
+            
+            logic = new LoadControlLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.loadSQP05150(filter5);
+            
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
     @RequestMapping(value = "/processFormatASRHOT")
     public @ResponseBody
     String processFormatASRHOT(ModelMap map, HttpServletRequest request) {
@@ -909,6 +942,29 @@ public class LoadControlController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    @RequestMapping(value = "/processFormatARCVOID")
+    public @ResponseBody
+    String processFormatARCVOID(ModelMap map, HttpServletRequest request) {
+        PX037S07PRO9876Filter filter = new PX037S07PRO9876Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            LoadControlLogic logic = new LoadControlLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            filter = logic.loadSQP05148(filter);
+            
+            map.put("success", true);
+            map.put("filter", filter);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
     
     @RequestMapping(value = "/processLoadARCHOT")
     public @ResponseBody
@@ -921,6 +977,30 @@ public class LoadControlController extends BaseController {
             LoadControlLogic logic = new LoadControlLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             filter = logic.loadPX037S06PRO9822(filter);
+            
+            map.put("success", true);
+            map.put("filter", filter);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/processLoadARCVOID")
+    public @ResponseBody
+    String processLoadARCVOID(ModelMap map, HttpServletRequest request) {
+        PX037S06PRO9822Filter filter = new PX037S06PRO9822Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            LoadControlLogic logic = new LoadControlLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            filter = logic.loadSQP05149(filter);
             
             map.put("success", true);
             map.put("filter", filter);
