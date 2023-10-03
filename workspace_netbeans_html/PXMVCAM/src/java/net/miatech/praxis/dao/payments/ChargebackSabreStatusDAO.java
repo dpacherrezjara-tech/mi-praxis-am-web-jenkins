@@ -48,6 +48,7 @@ public class ChargebackSabreStatusDAO implements ChargebackSabreStatusLogic{
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> obj = jdbcCall.execute(params);
         filter.setResponse((List<A4482Filter>) obj.get("result"));
+        filter.setOU_ALERT((Integer) obj.get("OU_ALERT"));
         filter.setPageOut(obj);
         return filter;
     }

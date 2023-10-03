@@ -29,10 +29,19 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.SabreGridContro
                     if (!successful) {
                         global.Msg({msg: 'Data not Found'});
                     } else {
-                        //console.log(records);
+                        const responseData = JSON.parse(operation.getResponse().responseText);
                         if (records.length === 0) {
                             global.Msg({msg: 'Data not Found'});
+                            return;
                         }
+                        const btnAlert = Ext.getCmp(prototype.id + '-btnAlerts');
+                        if(responseData.ou_ALERT!==0){
+                            btnAlert.setText(`Alert! Total Refunds: ${responseData.ou_ALERT}`);
+                            btnAlert.show();
+                        }else{
+                            btnAlert.hide();
+                        }
+                        //btnAlert.setPressed(false);
                     }
                 }
             }

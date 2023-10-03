@@ -9,7 +9,8 @@ import net.miatech.praxis.payment.CustomPageImpl;
  * @author Dvicente
  */
 public class SQP05046Filter extends CustomPageImpl{
-    private String IN_TFECHA,IN_FROM,IN_TO,IN_TICKET,IN_PNR,IN_SCARDN,IN_SAUTHOC;
+    private String IN_TFECHA,IN_FROM,IN_TO,IN_TICKET,IN_PNR,IN_SCARDN,IN_SAUTHOC,IN_STATSBRE;
+    private Integer OU_ALERT;
     private List<A4482Filter> response = new ArrayList<>();
 
     public String getIN_TFECHA() {
@@ -75,6 +76,20 @@ public class SQP05046Filter extends CustomPageImpl{
     public void setResponse(List<A4482Filter> response) {
         this.response = response;
     }
-    
-    
+
+    public String getIN_STATSBRE() {
+        return IN_STATSBRE;
+    }
+
+    public void setIN_STATSBRE(String IN_STATSBRE) {
+        this.IN_STATSBRE = IN_STATSBRE;
+    }
+
+    public Integer getOU_ALERT() {
+        return OU_ALERT;
+    }
+
+    public void setOU_ALERT(Integer OU_ALERT) {
+        this.OU_ALERT = OU_ALERT;
+    }
 }

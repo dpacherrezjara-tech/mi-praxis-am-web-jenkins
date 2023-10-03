@@ -8,7 +8,8 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
     controller: 'SabreGridController',
     //title: 'Chargeback',
     //titleAlign: 'center',
-    height: prototype.height,
+    height: 'auto',
+    minHeight:300,
     width: prototype.width,
     viewConfig: {
         stripeRows: true,
@@ -31,7 +32,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                 text: 'Sales<br>Date', dataIndex: 'saledate', width: 70
             },
             {
-                text: 'IATA', dataIndex: 'agente', width: 70,
+                text: 'IATA', dataIndex: 'agente', width: 70
             },
             {
                 text: 'PNR', dataIndex: 'pnr', width: 65,
@@ -122,7 +123,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
                         }
-                    },
+                    }
                 ]
             },
             {
@@ -148,7 +149,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                             sortable: false,
                             align: 'center',
                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                metaData.style = "background-color:#d5f4d5;";
+                                metaData.style = "background-color:#d5f4d5;font-weight:bolder;";
                                 return value;
                             }
                         },
@@ -174,7 +175,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                             sortable: false,
                             align: 'center',
                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                metaData.style = "background-color:#d5f4d5;";
+                                metaData.style = "background-color:#d5f4d5;font-weight:bolder;";
                                 return value;
                             }
                         },
@@ -192,7 +193,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                 text: 'C4', dataIndex: 'usopxcp4', width: 35
                             }
                         ]
-                    },
+                    }
                 ]
             },
             {
@@ -218,10 +219,10 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                     let option = record.data.stusocp1;
                                     const opts = {
                                         'D': () => {
-                                            metaData.style = "background-color:#F34040;";
+                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
                                         },
                                         'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;";
+                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
                                         }
                                     };
                                     if (opts[option])
@@ -236,10 +237,10 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                     let option = record.data.stusocp2;
                                     const opts = {
                                         'D': () => {
-                                            metaData.style = "background-color:#F34040;";
+                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
                                         },
                                         'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;";
+                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
                                         }
                                     };
                                     if (opts[option])
@@ -254,10 +255,10 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                     let option = record.data.stusocp3;
                                     const opts = {
                                         'D': () => {
-                                            metaData.style = "background-color:#F34040;";
+                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
                                         },
                                         'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;";
+                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
                                         }
                                     };
                                     if (opts[option])
@@ -272,10 +273,10 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                     let option = record.data.stusocp4;
                                     const opts = {
                                         'D': () => {
-                                            metaData.style = "background-color:#F34040;";
+                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
                                         },
                                         'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;";
+                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
                                         }
                                     };
                                     if (opts[option])
@@ -306,7 +307,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                             sortable: false,
                             align: 'center',
                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                metaData.style = "background-color:#b2e1ff;";
+                                metaData.style = "background-color:#b2e1ff;font-weight:bolder;";
                                 return value;
                             }
                         },
@@ -318,10 +319,10 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                     let option = record.data.stusoulcp1;
                                     const opts = {
                                         'D': () => {
-                                            metaData.style = "background-color:#F34040;";
+                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
                                         },
                                         'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;";
+                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
                                         }
                                     };
                                     if (opts[option])
@@ -336,10 +337,10 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                     let option = record.data.stusoulcp2;
                                     const opts = {
                                         'D': () => {
-                                            metaData.style = "background-color:#F34040;";
+                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
                                         },
                                         'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;";
+                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
                                         }
                                     };
                                     if (opts[option])
@@ -354,10 +355,10 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                     let option = record.data.stusoulcp3;
                                     const opts = {
                                         'D': () => {
-                                            metaData.style = "background-color:#F34040;";
+                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
                                         },
                                         'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;";
+                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
                                         }
                                     };
                                     if (opts[option])
@@ -372,10 +373,10 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                     let option = record.data.stusoulcp4;
                                     const opts = {
                                         'D': () => {
-                                            metaData.style = "background-color:#F34040;";
+                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
                                         },
                                         'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;";
+                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
                                         }
                                     };
                                     if (opts[option])
@@ -389,9 +390,9 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                     //metaData.style = "text-align:center;background-color:#b2e1ff;";
                                     return value;
                                 }
-                            },
+                            }
                         ]
-                    },
+                    }
                 ]
             },
             {
@@ -413,49 +414,65 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                             {
                                 text: 'C1', dataIndex: 'stusucp1', width: 60,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "background-color:#FEF9B2;";
+                                    metaData.style = "background-color:#FEF9B2;font-weight:bolder;";
                                     return value;
                                 }
                             },
                             {
                                 text: 'C2', dataIndex: 'stusucp2', width: 60,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "background-color:#FEF9B2;";
+                                    metaData.style = "background-color:#FEF9B2;font-weight:bolder;";
                                     return value;
                                 }
                             },
                             {
                                 text: 'C3', dataIndex: 'stusucp3', width: 60,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "background-color:#FEF9B2;";
+                                    metaData.style = "background-color:#FEF9B2;font-weight:bolder;";
                                     return value;
                                 }
                             },
                             {
                                 text: 'C4', dataIndex: 'stusucp4', width: 60,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "background-color:#FEF9B2;";
+                                    metaData.style = "background-color:#FEF9B2;font-weight:bolder;";
                                     return value;
                                 }
                             },
                             {
                                 text: 'Praxis ST.', dataIndex: 'statuspx', width: 80,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "background-color:#FEF9B2;";
+                                    metaData.style = "background-color:#FEF9B2;font-weight:bolder;";
                                     return value;
                                 }
                             },
                             {
-                                text: 'Sabre ST.', dataIndex: 'statsbre', width: 120,
+                                text: 'Sabre ST.', dataIndex: 'statsbre', width: 100,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "background-color:#FEF9B2;";
+                                    metaData.style = "background-color:#FEF9B2;font-weight:bolder;";
+                                    let option = record.data.statsbre;
+                                    const opts = {
+                                        'R': () => {
+                                            metaData.style = "background-color:#FF5555;font-weight:bolder;";
+                                        }
+                                    };
+                                    if (opts[option])
+                                        opts[option]();
                                     return value;
                                 }
                             },
                             {
-                                text: 'Sabre ST. 20 Days', dataIndex: 'statsbr1', width: 120,
+                                text: 'Sabre<br>ST. 20 Days', dataIndex: 'statsbr1', width: 100,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "background-color:#FEF9B2;";
+                                    metaData.style = "background-color:#FEF9B2;font-weight:bolder;";
+                                    let option = record.data.statsbr1;
+                                    const opts = {
+                                        'R': () => {
+                                            metaData.style = "background-color:#FF5555;font-weight:bolder;";
+                                        }
+                                    };
+                                    if (opts[option])
+                                        opts[option]();
                                     return value;
                                 }
                             }

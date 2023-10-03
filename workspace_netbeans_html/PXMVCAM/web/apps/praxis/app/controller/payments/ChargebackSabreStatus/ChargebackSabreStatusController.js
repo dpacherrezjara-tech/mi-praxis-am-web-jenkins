@@ -12,6 +12,9 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.ChargebackSabre
         this.onClickSearchBtn();
     },
     onClickSearchBtn: function () {
+        const btnAlert = Ext.getCmp(prototype.id + '-btnAlerts');
+        btnAlert.hide();
+        btnAlert.setPressed(false);
         this.loadSabreGrid();
         //this.formatParameters();
     },
@@ -56,6 +59,23 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.ChargebackSabre
     },
     onClickBackBtn: function (obj) {
         window.location.href = CONTEXTPATH;
+    },
+    toggleAlertRfnd: function (button, pressed) {
+        const me = this;
+        const form = button.up('form');
+        if (form) {
+            const formValues = form.getForm().getValues();
+            if (pressed) {
+                // Agregar un valor adicional al formulario cuando el botón se activa
+                formValues.IN_STATSBRE = 'R';
+                //console.log(formValues);
+            } else {
+                // Eliminar el valor adicional si el botón se desactiva
+                formValues.IN_STATSBRE = '';
+            }
+            form.getForm().setValues(formValues);
+            me.loadSabreGrid();
+        }
     },
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">
     onChangeFechaBtn: function (obj) {
