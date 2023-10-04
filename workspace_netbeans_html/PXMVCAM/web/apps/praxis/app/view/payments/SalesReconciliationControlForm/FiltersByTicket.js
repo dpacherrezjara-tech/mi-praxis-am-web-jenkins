@@ -261,8 +261,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
                                         data: [
-                                            ['PRDA', 'Processing Date'],
-                                            ['PAYDATE', 'Payment Date']
+                                            ['FECVT', 'Sale Date'],
+                                            ['PRDA', 'Processing Date']
                                         ]
                                     }),
                                     labelWidth: 50,
