@@ -1375,7 +1375,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                         bvalida = false;
                         return;
                     }
-                    if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653CFOP')) === 'CA') {
+                    if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653CFOP')) !== 'CA' && Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653CFOP')) !== 'CC' && Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653CFOP')) !== 'RA') {
+                        Ext.Msg.alert('.: PRAXIS :.', 'Invalid payment method');
+                        bvalida = false;
+                        return;
+                    }
+                    
+                    if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653CFOP')) === 'CA' || Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653CFOP')) === 'RA') {
                         if (gridPAYMENT.getStore().getAt(p).get('A3653TYCAR') !== '') {
                             Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is cash, you not must enter the card type');
                             bvalida = false;
@@ -1403,7 +1409,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                         }
 
                     }
-                    if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653CFOP')) === 'CC' || Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653CFOP')) === 'ET') {
+                    if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653CFOP')) === 'CC') {
 
                         if (gridPAYMENT.getStore().getAt(p).get('A3653TYCAR') === '') {
                             Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is credit card you must enter the card type');
