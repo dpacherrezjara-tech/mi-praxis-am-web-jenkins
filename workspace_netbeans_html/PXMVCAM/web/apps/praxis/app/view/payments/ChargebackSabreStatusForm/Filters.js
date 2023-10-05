@@ -4,7 +4,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Filters', {
     border: true,
     bodyStyle: 'background-color: #E3EAF9;',
     padding: '2px 0px 1px 0px',
-    layout: 'column',
+    layout: 'fit',
     items: [
         {
             xtype: 'panel',
@@ -104,6 +104,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Filters', {
                         {
                             xtype: 'panel',
                             layout: 'hbox',
+                            width: prototype.width,
                             border: false,
                             bodyStyle: 'background: transparent',
                             defaults: {
@@ -191,7 +192,34 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Filters', {
                                     width: 120,
                                     enableKeyEvents: true
                                 },
-                                
+                                {
+                                    xtype: 'textfield',
+                                    name: 'IN_STATSBRE',
+                                    hidden: true
+                                },
+                                {
+                                    xtype: 'panel',
+                                    border: false,
+                                    bodyStyle: 'background: transparent',
+                                    flex: 1,
+                                    layout: {
+                                        type: 'hbox',
+                                        pack: 'end'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            text: 'Alerts',
+                                            width: 185,
+                                            iconCls: 'prx-icon-image-log',
+                                            margin: '0 5 0 5',
+                                            id: prototype.id + '-btnAlerts',
+                                            enableToggle: true,
+                                            hidden: true,
+                                            toggleHandler: 'toggleAlertRfnd'
+                                        }
+                                    ]
+                                }
                             ]
                         }
                     ]
