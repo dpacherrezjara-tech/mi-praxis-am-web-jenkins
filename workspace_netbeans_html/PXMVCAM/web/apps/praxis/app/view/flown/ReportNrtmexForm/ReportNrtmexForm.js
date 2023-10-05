@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.ReportNrtmexForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1400,
+                                        width: 1900,
                                         align: 'center'
                                     },
                                     items: [
@@ -70,13 +70,13 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.ReportNrtmexForm', {
                                         {
                                             xtype: 'panel',
                                             height: 700,
-                                            width: 1400,
+                                            width: 1900,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1350,
+                                                    width: 1850,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,

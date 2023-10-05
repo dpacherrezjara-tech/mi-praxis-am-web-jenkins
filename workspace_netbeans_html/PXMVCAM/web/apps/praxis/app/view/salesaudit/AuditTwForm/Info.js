@@ -333,12 +333,9 @@ Ext.define('Ext.Praxis.view.salesaudit.AuditTwForm.Info', {
                                             {dataIndex: 'column58', id: prototype.id + '-campo58'},
                                             {dataIndex: 'column59', id: prototype.id + '-campo59'},
                                             {dataIndex: 'column60', id: prototype.id + '-campo60'},
-                                            {dataIndex: 'column61', id: prototype.id + '-campo61'},
-                                            {dataIndex: 'column62', id: prototype.id + '-campo62'},
-                                            {dataIndex: 'column63', id: prototype.id + '-campo63'},
-                                            //SE AGREGO LOS CAMPOS EN DURO A PETICION DE --- EN 20231004
-                                            {dataIndex: 'column64', id: prototype.id + '-campo64', width: 200,  align: 'center'},
-                                            {dataIndex: 'column65', id: prototype.id + '-campo65', width: 70,  align: 'center'},
+                                            {dataIndex: 'column60', id: prototype.id + '-campo61'},
+                                            {dataIndex: 'column60', id: prototype.id + '-campo62'},
+                                            {dataIndex: 'column60', id: prototype.id + '-campo63'},
                                             {dataIndex: 'QTY', id: prototype.id + '-QTY'}
 
                                         ]

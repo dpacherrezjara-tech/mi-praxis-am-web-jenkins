@@ -13,9 +13,6 @@ import net.miatech.praxis.flown.A1817;
 public class A1817Filter extends A1817 {
 
     public int RN = 0;
-    public String DATE = "";
-    public String IN_TYPE = "";
-    public String DRILL = "";
     public String IN_FECHA_FROM = "";
     public String IN_FECHA_TO = "";
     public String strFormatDate = "";
@@ -23,62 +20,47 @@ public class A1817Filter extends A1817 {
     public String strFormatDate3 = "";
     public String strFormatDate4 = "";
     public String strFormatDate5 = "";
-    public String strFormatDate6 = "";
     public String IN_TKT = "";
     public String IN_SEQRO = "";
     public String strTicket = "";
     
-    public String CODE = "";
-    public String NAME = "";
     public String DSALES = "";
     public String FVTA = "";
-    public String FECVAL = "";
     public String descFVTA = "";
-    public String descFECVAL = "";
-    public String descFCONT = "";
     public String IN_TIPO = "";
     public String IN_DATE = "";
     public String IN_DATE_FROM = "";
     public String IN_DATE_TO = "";
     public String IN_STVAL = "";
-    public String IN_COUNTRY = "";
     public String IN_TICKET = "";
     public String SCOUNTRY = "";
     public String AGENTE = "";
     public String ORIG = "";
     public String DEST = "";
-    public String CLAS = "";
+    public String CLASS = "";
     public String PERIODO = "";
     public String SEQ = "";
     public String SEQRO = "";
-    public String SEQROP = "";
     public String CARR = "";
-    public String FCONTFL = "";
-    public String FSTOCK = "";
-    public String MATRICUL = "";
-    public String EQUIPO = "";
-    public String FOPER = "";
+    public String FPOLIZA = "";
+    public String STOCK = "";
+    public String MATRIC = "";
+    public String EQUI = "";
+    public String PERIOP = "";
     
     //Informacion del CCD
     public String PAXNAME = "";
-    public String SPNR = "";
+    public String PNR = "";
     public String CRPNRL = "";
-    public String FNAC = "";
-    public String DOCIDEN = "";
+    public String FNACIM = "";
+    public String TIDOCT = "";
     public String NDOCIDEN = "";
-    public String CCOUNTRY = "";
+    public String COUNTRY = "";
     public String TTRANS = "";
-    public String ETIQUETA = "";
     public String COMMENTS = "";
     public String RUTA = "";
     
     public double TAXAMOUNT = 0;
-    public String FARECAL = "";
-    public String ARGUME = "";
-    public String STATAX = "";
-    public String MONTAX = "";
-    public double VALTAX = 0;
-    public String RESTAX = "";
     public double TOT_TAXAMOUNT = 0;
     public int TOT_QTYPAX = 0;
     public double VCPN = 0;
@@ -114,11 +96,6 @@ public class A1817Filter extends A1817 {
     public long lngQCLO = 0;
     public long lngQREC = 0;
     
-    public int QTYUSED = 0;
-    public int QTYCONCI = 0;
-    public int QTYPOLIZA = 0;
-    
-    //TEMPORAL
     public int QTYSALED = 0;
     public int QTYUSESD = 0;
     public int QTYSALEP = 0;
@@ -126,13 +103,7 @@ public class A1817Filter extends A1817 {
     public int QTYEMDAU = 0;
     public int QTYEMDMA = 0;
     public int QTYEMDCT = 0;
-
-    public int TOT_QTYUSED = 0;
-    public int TOT_QTYCONCI = 0;
-    public int TOT_QTYPEND = 0;
-    public int TOT_QTYPOLIZA = 0;
     
-    //TEMPORAL 2
     public int TOT_QTYSALED = 0;
     public int TOT_QTYUSESD = 0;
     public int TOT_QTYSALEP = 0;
@@ -140,14 +111,6 @@ public class A1817Filter extends A1817 {
     public int TOT_QTYEMDAU = 0;
     public int TOT_QTYEMDMA = 0;
     public int TOT_QTYEMDCT = 0;
-
-    //NRT-MEX
-    public int QTYPEND = 0;
-    public int QTYCONC = 0;
-    public int QTYTOT = 0;
-    public int QTYAPLI = 0;
-    public int QTYEXON = 0;
-    public int QTYTAT = 0;
     
     public Pagination page = new Pagination();
 }

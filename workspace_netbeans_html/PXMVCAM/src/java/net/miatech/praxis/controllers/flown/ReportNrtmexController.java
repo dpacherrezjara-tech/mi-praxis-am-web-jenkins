@@ -3,19 +3,13 @@ package net.miatech.praxis.controllers.flown;
 
 import com.google.gson.Gson;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.praxis.controllers.BaseController;
@@ -25,7 +19,6 @@ import net.miatech.praxis.logic.flown.ReportNrtmexLogic;
 import net.miatech.beans.A1817Filter;
 import net.miatech.praxis.flown.A1817;
 import net.miatech.utils.Functions;
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -61,56 +54,6 @@ public class ReportNrtmexController extends BaseController {
         map.put("vp_serverTime", Functions.getHoraActual());
         return "sales/ReportNrtmex/form_index";
     }
-    
-    
-    @RequestMapping(value = "searchMain")
-    public @ResponseBody
-    String searchMain(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- ReportNrtmex : Search Main-------------");
-        map.put("success", true);
-        List<A1817Filter> lst = this.getListMain(request, false);
-        System.out.println("Total : " + lst.size());
-        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
-        map.put("data", lst);
-        return new Gson().toJson(map);
-    }
-
-    public List<A1817Filter> getListMain(HttpServletRequest request, Boolean bExcel) {
-
-        List<A1817Filter> lst = new ArrayList<>(0);
-        A1817Filter filter = new A1817Filter();
-        Gson gson = new Gson();
-        String beanString = "";
-
-        try {
-            logic = new ReportNrtmexLogic();
-            logic.setSession(this.serverSession.getServerSession());
-
-            beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A1817Filter.class);
-            filter.page.TOTROW = -1;
-            filter.page.START = 0;
-            filter.page.LIMIT = 0;
-
-            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
-            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
-
-            if (!bExcel) {
-                filter.page.PAGROW = 20;
-                start = (start != 0 ? start : 0);
-                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            } else {
-                filter.page.PAGROW = -1;
-                filter.page.PAGNUM = 1;
-            }
-
-            lst = logic.loadPX529SQP04935(filter);
-        } catch (Exception e) {
-            throw new SpringException(e);
-        }
-        return lst;
-    }
-
     
     @RequestMapping(value = "search")
     public @ResponseBody
@@ -160,138 +103,6 @@ public class ReportNrtmexController extends BaseController {
         return lst;
     }
 
-    @RequestMapping(value = "downloadText")
-    public @ResponseBody
-    void downloadText(HttpServletRequest request, HttpServletResponse response) {
-        A1817Filter filter = new A1817Filter();
-        String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();        
-
-        try {
-            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());  
-            
-            filter.page.PAGNUM = -1;            
-            filter.page.PAGROW = -1;           
-            
-            logic = new ReportNrtmexLogic();
-            logic.setSession(this.serverSession.getServerSession());
-            
-            List<A1817Filter> listaData = this.getList(request, true);
-            System.out.println("Tamaño de lista devuelta : " + listaData.size());
-
-            int len = listaData.size();
-            Integer vi = 0;
-            
-            String fileNameDownload = String.format("Reporte NRT-MEX-" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
-            File file = new File(rutaFile + "\\" + fileNameDownload + ".txt");
-            if (file.exists()) {
-                file.delete();
-            }
-            PrintWriter writer = new PrintWriter(file, "UTF-8");
-            String cadena;
-            cadena = "Period|Ticket|Flight Date|Orig|Dest|Service Clas|Carr|Stock|Poliza Date|Equip|Matric|Qty Pax|Period Oper|Date Oper|Fare Basis|Type|Name|PNR|PNR Locator|Birthday|Doc.Type|Doc.Nbr|Country|Transact|Comments|Tax Amount|Ruta";
-            writer.println("" + cadena);
-            for (vi = 0; vi < len; vi++) {
-                cadena = "";
-                //FLIGHT INFORMATION
-                cadena += "" + listaData.get(vi).strFormatDate + "|";
-                cadena += "" + listaData.get(vi).strTicket + "|";
-                cadena += "" + listaData.get(vi).strFormatDate2 + "|";
-                cadena += "" + listaData.get(vi).ORIG + "|";
-                cadena += "" + listaData.get(vi).DEST + "|";
-                cadena += "" + listaData.get(vi).CLAS + "|";
-                cadena += "" + listaData.get(vi).CARR + "|";
-                cadena += "" + listaData.get(vi).FSTOCK + "|";
-                cadena += "" + listaData.get(vi).strFormatDate3 + "|";
-                cadena += "" + listaData.get(vi).EQUIPO + "|";
-                cadena += "" + listaData.get(vi).MATRICUL + "|";
-                cadena += "" + listaData.get(vi).QTYPAX + "|";
-                cadena += "" + listaData.get(vi).strFormatDate4 + "|";
-                cadena += "" + listaData.get(vi).strFormatDate5 + "|";
-                cadena += "" + listaData.get(vi).FBASE + "|";
-                //CDD INFORMATION
-                cadena += "" + listaData.get(vi).TPAX + "|";
-                cadena += "" + listaData.get(vi).PAXNAME + "|";
-                cadena += "" + listaData.get(vi).SPNR+ "|";
-                cadena += "" + listaData.get(vi).CRPNRL+ "|";
-                cadena += "" + listaData.get(vi).FNAC+ "|";
-                cadena += "" + listaData.get(vi).DOCIDEN+ "|";
-                cadena += "" + listaData.get(vi).NDOCIDEN+ "|";
-                cadena += "" + listaData.get(vi).CCOUNTRY+ "|";
-                //
-                cadena += "" + listaData.get(vi).TTRANS+ "|"; 
-                cadena += "" + listaData.get(vi).COMMENTS+ "|";
-                cadena += "" + listaData.get(vi).TAXAMOUNT+ "|";
-                cadena += "" + listaData.get(vi).RUTA;
-                
-//                cadena += "" + listaData.get(vi).A1729LOTE;
-                
-                writer.println("" + cadena);
-            }
-            writer.flush();
-            writer.close();
-
-            /**
-             * Comprimimos archivo generado para su optima descarga
-             */
-            if (!zip(fileNameDownload)) {
-                response.setContentType("application/zip");
-            }
-            response.setHeader("Content-Disposition", "attachment;filename=\"" + fileNameDownload + ".gz" + "\"");
-            InputStream is = new FileInputStream(rutaFile + "\\" + fileNameDownload + ".gz");
-            IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();
-
-        } catch (Exception e) {
-//            System.out.println("" + e.getMessage());
-            e.printStackTrace();
-            throw new SpringException(e);
-        }
-    }
-
-    public Boolean zip(String fileName) {
-        String path = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
-        Boolean existe = false;
-        try {
-            File fileZip = new File(path + "\\" + fileName + ".gz");
-
-            if (fileZip.exists()) {
-                fileZip.delete();
-            }
-
-            zipFile(new File(path + "\\" + fileName + ".txt"), path + "\\" + fileName + ".gz");
-
-            existe = true;
-
-        } catch (FileNotFoundException e) {
-        } catch (IOException e) {
-        }
-        return existe;
-    }
-
-    public static void zipFile(File inputFile, String zipFilePath) throws FileNotFoundException, IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream(zipFilePath);
-        ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
-        zipOutputStream.setMethod(ZipOutputStream.DEFLATED);
-        ZipEntry zipEntry = new ZipEntry(inputFile.getName());
-        zipOutputStream.putNextEntry(zipEntry);
-        FileInputStream fileInputStream = new FileInputStream(inputFile);
-        byte[] buf = new byte[4096];
-        int bytesRead;
-
-        while ((bytesRead = fileInputStream.read(buf)) > 0) {
-            zipOutputStream.write(buf, 0, bytesRead);
-        }
-        fileInputStream.close();
-        zipOutputStream.flush();
-        zipOutputStream.closeEntry();
-        zipOutputStream.close();
-        fileOutputStream.close();
-    }
-
-    
-    
-    
 //    @RequestMapping(value = "search")
 //    public @ResponseBody
 //    String search(ModelMap map, HttpServletRequest request) {
@@ -666,8 +477,6 @@ public class ReportNrtmexController extends BaseController {
 //            throw new SpringException(e);
 //        }
 //    }
-
-    
-    
+//    
 }
 

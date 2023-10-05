@@ -256,9 +256,6 @@ public class AuditTWDAO {
                     obj.column5 = rst.getString("column5");
                     obj.column6 = rst.getString("column6");
                     obj.column7 = rst.getString("column7");
-                    //SE AGREGO LOS CAMPOS EN DURO A PETICION DE --- EN 20231004
-                    obj.column64 = rst.getString("A1721FRCA");
-                    obj.column65 = rst.getString("USED");
 
                     if (filter.RN > 7) {
                         obj.column8 = rst.getString("column8");

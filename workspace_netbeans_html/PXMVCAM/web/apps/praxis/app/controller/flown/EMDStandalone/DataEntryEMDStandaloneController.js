@@ -5,12 +5,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
     meDE: '',
     actionCode: '',
     bean: {},
-    beanEMDS: {},
     beanResult: {},
     lstCountry: [],
     searchParams: {},
-    paramsDetail: {},
-    paramsDetailEMDs: {},
     lstA1852: {},
     dataObtain: {},
     copia: '',
@@ -51,30 +48,21 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         console.log(meDE.beanResult);
         this.setValue('de-cmbSTATUS', this.beanResult.STVAL);
         this.setValue('de-txtTICKET', this.beanResult.CCIA + this.beanResult.FORMA + this.beanResult.SERIE);
-        this.setValue('de-txtCUPON', this.beanResult.CUPON);
+        this.setValue('de-txtCUPON', this.beanResult.CUPON);//Cortar
         this.setValue('de-txtSEQ', this.beanResult.SEQ);
         this.setValue('de-txtSEQROL', this.beanResult.SEQRO);
-        this.setValue('de-txtDFLIGHT', this.beanResult.DFLIGHT);
+        this.setValue('de-txtORIG', this.beanResult.ORIG);
+        this.setValue('de-txtDEST', this.beanResult.DEST);
+        this.setValue('de-txtSDATE', this.beanResult.strFormatDate);
+        this.setValue('de-txtCOUNTRY', this.beanResult.SCOUNTRY);
+        this.setValue('de-txtAGENT', this.beanResult.AGENTE);
         this.setValue('de-txtRFIC', this.beanResult.RFIC);
         this.setValue('de-txtRECODE', this.beanResult.RECODE);
         this.setValue('de-txtFDESCRIP', this.beanResult.DESC_RECODE);
-        this.setValue('de-txtCOUNTRY', this.beanResult.SCOUNTRY);
-        this.setValue('de-txtAGENT', this.beanResult.AGENTE);
-        this.setValue('de-txtFVTA', this.beanResult.FVTA);
-        this.setValue('de-txtORIG', this.beanResult.ORIG);
-        this.setValue('de-txtDEST', this.beanResult.DEST);
-        this.setValue('de-txtFBASE', this.beanResult.FBASE);
-        this.setValue('de-txtRBD', this.beanResult.RBD);
-        this.setValue('de-txtPAX', this.beanResult.QTYPAX);
-        this.setValue('de-txtPTYPE', this.beanResult.TPAX);
-        this.setValue('de-txtOPER', this.beanResult.TOPUS);
-        this.setValue('de-txtCARRIER', this.beanResult.CARR);
-        this.setValue('de-txtFECVAL', this.beanResult.FECVAL);
-        this.setValue('de-txtCURRENCY', this.beanResult.CURRENCY);
-        this.setValue('de-txtTOTAL', this.beanResult.VCPN);
-        this.setValue('de-txtFCONT', this.beanResult.FCONT);
+        this.setValue('de-txtRDATE', this.beanResult.descRDATE);
+        this.setValue('de-txtFCONT', this.beanResult.descFCONT);
         this.setValue('de-txtIDCON', this.beanResult.IDCON);
-
+        
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
         this.setValue('txtHOCR', this.beanResult.HOCR);
@@ -98,37 +86,25 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
-
+        
         beanTemp.STVAL = this.getValue("de-cmbSTATUS").trim();
         beanTemp.TICKET = this.getValue("de-txtTICKET").trim();
         beanTemp.CUPON = this.getValue("de-txtCUPON").trim();
         beanTemp.SEQ = this.getValue("de-txtSEQ").trim();
         beanTemp.SEQRO = this.getValue("de-txtSEQROL").trim();
-        beanTemp.DFLIGHT = this.getValue("de-txtDFLIGHT").trim();
+        beanTemp.ORIG = this.getValue("de-txtORIG").trim();
+        beanTemp.DEST = this.getValue("de-txtDEST").trim();
+//        beanTemp.SDATE = this.getValue("de-txtSDATE").trim();
+        beanTemp.DSALES = this.beanResult.DSALES;
+        beanTemp.SCOUNTRY = this.getValue("de-txtCOUNTRY").trim();
+        beanTemp.AGENTE = this.getValue("de-txtAGENT").trim();
         beanTemp.RFIC = this.getValue("de-txtRFIC").trim();
         beanTemp.RECODE = this.getValue("de-txtRECODE").trim();
         beanTemp.DESC_RECODE = this.getValue("de-txtFDESCRIP").trim();
-        beanTemp.SCOUNTRY = this.getValue("de-txtCOUNTRY").trim();
-        beanTemp.AGENTE = this.getValue("de-txtAGENT").trim();
-        beanTemp.FVTA = this.getValue("de-txtFVTA").trim();
-        beanTemp.ORIG = this.getValue("de-txtORIG").trim();
-        beanTemp.DEST = this.getValue("de-txtDEST").trim();
-        beanTemp.FBASE = this.getValue("de-txtFBASE").trim();
-        beanTemp.RBD = this.getValue("de-txtRBD").trim();
-        beanTemp.QTYPAX = this.getValue("de-txtPAX").trim();
-        if (beanTemp.QTYPAX === '') {
-            beanTemp.QTYPAX = 0;
-        }
-        beanTemp.TPAX = this.getValue("de-txtPTYPE").trim();
-        beanTemp.TOPUS = this.getValue("de-txtOPER").trim();
-        beanTemp.CARR = this.getValue("de-txtCARRIER").trim();
-        beanTemp.CURRENCY = this.getValue("de-txtCURRENCY").trim();
-        beanTemp.VCPN = this.getValue("de-txtTOTAL").trim();
-        if (beanTemp.VCPN === '') {
-            beanTemp.VCPN = 0;
-        }
-        beanTemp.FCONT = this.getValue("de-txtFCONT").trim();
-        beanTemp.FECVAL = this.getValue("de-txtFECVAL").trim();
+//        beanTemp.RDATE = this.getValue("de-txtRDATE").trim();
+        beanTemp.RDATE = this.beanResult.RDATE;
+//        beanTemp.FCONT = this.getValue("de-txtFCONT").trim();
+        beanTemp.FCONT = this.beanResult.FCONT;
         beanTemp.IDCON = this.getValue("de-txtIDCON").trim();
 
         beanTemp.USCR = this.getValue("txtUSCR").trim();
@@ -139,20 +115,8 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         beanTemp.HOUP = this.getValue("txtHOUP").trim();
     },
     getData: function () {
-
-        var IN_TICKET = meDE.bean.data.strTicket.substr(0, 3) + meDE.bean.data.strTicket.substr(4, 4) + meDE.bean.data.strTicket.substr(8, 6);
-        var IN_TIPO = '1';
-        var IN_DATE = '';
-        var IN_STVAL = '';
-
-
-        paramsDetailEMDs = {
-            IN_TIPO: IN_TIPO,
-            IN_DATE: IN_DATE,
-            IN_STVAL: IN_STVAL,
-            IN_TICKET: IN_TICKET
-        };
-        var beanString = JSON.stringify(paramsDetailEMDs);
+        meDE.bean.data.IN_TICKET = meDE.bean.data.strTicket.substr(0, 3) +  meDE.bean.data.strTicket.substr(4, 4) + meDE.bean.data.strTicket.substr(8, 6);
+        var beanString = JSON.stringify(meDE.bean.data);
         console.log(beanString);
         Ext.Ajax.request({
             url: prototype.url + '/search',
@@ -201,30 +165,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
     },
     onUpdateClick: function (btn) {
 //        var msj = this.validateDates();
-        var msj = '';
-        var RFIC = this.getValue("de-txtRFIC");
-        var RECODE = this.getValue("de-txtRECODE");
-//        var msj = '';
 
-        paramsDetail = {
-            RFIC: RFIC,
-            RECODE: RECODE
-        };
-        var beanString = JSON.stringify(paramsDetail);
-        Ext.Ajax.request({
-            url: prototype.url + '/validateRFIC',
-            method: 'POST',
-            timeout: 60000000,
-            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
-            params: {beanString: beanString},
-            success: function (response, options) {
-                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
-                var res = Ext.JSON.decode(response.responseText);
-                meDE.beanResult = res.data[0];
-                var total = res.total;
-               
-                if(total !== 0){
-                    Ext.Msg.show(
+//        if (msj === '') {
+            Ext.Msg.show(
                     {
                         title: '.:PRAXIS:.',
                         msg: 'Are you sure to update?',
@@ -236,53 +179,32 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
                         fn: function (btn) {
                             if (btn === 'yes') {
                                 var beanTemp = {};
-                                meDE.llenarData(beanTemp);
+                                this.llenarData(beanTemp);
                                 beanTemp.option = 'U';
                                 beanTemp.beanString = JSON.stringify(beanTemp);
-                                meDE.MaintenanceA4479(beanTemp);
+                                this.MaintenanceA4479(beanTemp);
                             }
                         }
                     });
-                }else{
-                    msj = 'RFIC or Reason Code do not exist';
-                    global.Msg({msg: msj});
-                }         
-            }
-        });
+//        } else {
+//            global.Msg({msg: msj});
+//        }
+
     },
     validateDates: function () {
-        var RFIC = this.getValue("de-txtRFIC");
-        var RECODE = this.getValue("de-txtRECODE");
-        var msj = '';
-
-        paramsDetail = {
-            RFIC: RFIC,
-            RECODE: RECODE
-        };
-        var beanString = JSON.stringify(paramsDetail);
-        
-        Ext.Ajax.request({
-            url: prototype.url + '/validateRFIC',
-            method: 'POST',
-            timeout: 60000000,
-            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
-            params: {beanString: beanString},
-            success: function (response, options) {
-                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
-                var res = Ext.JSON.decode(response.responseText);
-                meDE.beanResult = res.data[0];
-                console.log(meDE.beanResult);
-                if (meDE.beanResult !== null) {
-                    msj = 'A'
-                }else{
-                    msj = 'RFIC or Reason Code do not exist'
-                }
-                
-                
-            }
-        });
-
-        return msj;
+//        var DATINI = this.getValue("de-txtINI");
+//        var DATFIN = this.getValue("de-txtFIN");
+//        var msj = '';
+//
+//        if (DATINI.length === 8 && DATFIN.length === 8) {
+//            if (DATFIN < DATINI) {
+//                msj = 'Error in dates';
+//            }
+//        } else {
+//            msj = 'Error in date lenghts'
+//        }
+//
+//        return msj;
     },
     onDeleteClick: function (btn) {
         Ext.Msg.show({
@@ -341,11 +263,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
 //        return msjResult;
     },
     DeshabilitarCampoClave: function () {
-        Ext.getCmp(prototype.id + '-de-txtTICKET').setReadOnly(true);
-        Ext.getCmp(prototype.id + '-de-txtCUPON').setReadOnly(true);
-        Ext.getCmp(prototype.id + '-de-txtSEQ').setReadOnly(true);
-
-        Ext.getCmp(prototype.id + '-de-txtFDESCRIP').setReadOnly(true);
+//        Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
     },
     setearCamposClave: function () {
 //        Ext.getCmp(prototype.id + '-de-txtCodeTable').setValue('89');

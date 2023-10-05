@@ -15,10 +15,6 @@ public class ReportNrtmexLogic {
         ReportNrtmexDAO.setSession(ss);
     }
 
-    public List<A1817Filter> loadPX529SQP04935(A1817Filter filter) throws SQLException, Exception {
-        return ReportNrtmexDAO.loadPX529SQP04935(filter);
-    }
-    
     public List<A1817Filter> loadPX529SQP04932(A1817Filter filter) throws SQLException, Exception {
         return ReportNrtmexDAO.loadPX529SQP04932(filter);
     }
