@@ -126,7 +126,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                             return opts[value] || '';
                         }
                     },
-                    {text: 'Processor', dataIndex: 'a4501PRTP', width: 120},
+                    {text: 'Processor', dataIndex: 'desc_PROCTYPE', width: 120},
                     {text: 'ADM<br>Status', dataIndex: 'a4501STADM', width: 100}
                 ]
             }

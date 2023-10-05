@@ -2,7 +2,6 @@ package net.miatech.praxis.payment.filter;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.miatech.praxis.payment.A4501;
 import net.miatech.praxis.payment.CustomPageImpl;
 
 /**
@@ -11,9 +10,11 @@ import net.miatech.praxis.payment.CustomPageImpl;
  */
 public class SQP05089Filter extends CustomPageImpl{
     private String IN_CCUST,IN_DATE,IN_DATEFROM,IN_DATETO,IN_PROCTYPE,IN_TRNCU,IN_SCOUNTRY,
-            IN_FVOID,IN_TICKET,IN_SCARDN,IN_SAUTHOC,IN_SPNR,IN_TYPE,IN_STVAL;
+            IN_FVOID,IN_TICKET,IN_SCARDN,IN_SAUTHOC,IN_SPNR,IN_TYPE,IN_STVAL,
+            IN_SAGENT,IN_FUENT,IN_SFUEN,IN_TCARD,IN_CCARD,IN_SCURRENCY;
+    private Double IN_AMOUNT;
     
-    private List<? extends A4501> response = new ArrayList<>();
+    private List<A4496Filter> response = new ArrayList<>();
 
     public String getIN_CCUST() {
         return IN_CCUST;
@@ -127,11 +128,67 @@ public class SQP05089Filter extends CustomPageImpl{
         this.IN_STVAL = IN_STVAL;
     }
 
-    public List<? extends A4501> getResponse() {
+    public String getIN_SAGENT() {
+        return IN_SAGENT;
+    }
+
+    public void setIN_SAGENT(String IN_SAGENT) {
+        this.IN_SAGENT = IN_SAGENT;
+    }
+
+    public String getIN_FUENT() {
+        return IN_FUENT;
+    }
+
+    public void setIN_FUENT(String IN_FUENT) {
+        this.IN_FUENT = IN_FUENT;
+    }
+
+    public String getIN_SFUEN() {
+        return IN_SFUEN;
+    }
+
+    public void setIN_SFUEN(String IN_SFUEN) {
+        this.IN_SFUEN = IN_SFUEN;
+    }
+
+    public String getIN_TCARD() {
+        return IN_TCARD;
+    }
+
+    public void setIN_TCARD(String IN_TCARD) {
+        this.IN_TCARD = IN_TCARD;
+    }
+
+    public String getIN_CCARD() {
+        return IN_CCARD;
+    }
+
+    public void setIN_CCARD(String IN_CCARD) {
+        this.IN_CCARD = IN_CCARD;
+    }
+
+    public String getIN_SCURRENCY() {
+        return IN_SCURRENCY;
+    }
+
+    public void setIN_SCURRENCY(String IN_SCURRENCY) {
+        this.IN_SCURRENCY = IN_SCURRENCY;
+    }
+
+    public List<A4496Filter> getResponse() {
         return response;
     }
 
-    public void setResponse(List<? extends A4501> response) {
+    public void setResponse(List<A4496Filter> response) {
         this.response = response;
+    }
+
+    public Double getIN_AMOUNT() {
+        return IN_AMOUNT;
+    }
+
+    public void setIN_AMOUNT(Double IN_AMOUNT) {
+        this.IN_AMOUNT = IN_AMOUNT;
     }
 }

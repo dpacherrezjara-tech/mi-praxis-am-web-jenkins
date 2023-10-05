@@ -32,6 +32,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Cols">
             {
+                text: 'RN',
+                locked: true,
+                xtype: 'rownumberer', // Columna de número de fila
+                width: 40 // Ancho de la columna de número de fila (ajusta según tus necesidades)
+            },
+            {
                 sortable: false,
                 xtype: 'actioncolumn',
                 width: 40,
@@ -56,7 +62,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
             },
             {text: 'Processing<br>Date', dataIndex: 'prda', width: 75},
             {text: 'Payment<br>Date', dataIndex: 'paydate', width: 75},
-            {text: 'Processor', dataIndex: 'desc_PROCTYPE', width: 160,autoSizeColumn: true},
+            {text: 'Processor', dataIndex: 'desc_PROCTYPE', width: 160, autoSizeColumn: true},
             {text: 'Country', dataIndex: 'scountry', width: 60},
             //metaData.tdAttr = 'data-qtip="' + data.DES_MERCHANT + '"';
             {
@@ -89,10 +95,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
             },
             {
                 text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60,
-                 renderer: function (value, metaData, record, rowIndex, colIndex) {
-                    if(record.data.transtype==='CHBK' || record.data.transtype==='ADJU'){
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    if (record.data.transtype === 'CHBK' || record.data.transtype === 'ADJU') {
                         metaData.style = "font-weight:bold;color:red;";
-                        metaData.tdAttr = 'data-qtip="' + (record.data.transtype==='CHBK'?'CHARGEBACK':'ADJUSTMENT') + '"';
+                        metaData.tdAttr = 'data-qtip="' + (record.data.transtype === 'CHBK' ? 'CHARGEBACK' : 'ADJUSTMENT') + '"';
                     }
                     return value;
                 }

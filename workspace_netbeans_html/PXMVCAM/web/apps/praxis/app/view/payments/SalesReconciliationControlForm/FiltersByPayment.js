@@ -450,10 +450,35 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Status',
+                                    name: 'IN_STVAL',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['0', 'Stand By'],
+                                            ['1', 'Match'],
+                                            ['3', 'Settl. Without Sales'],
+                                            ['4', 'Match Diff.'],
+                                            ['5', 'Manual Match'],
+                                            ['6', 'Forced Match'],
+                                            ['7', 'Compensation Match'],
+                                            ['8', 'Pending RFND']
+                                        ]
+                                    }),
+                                    labelWidth: 55,
+                                    width: 180,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
                                 }
                             ]
-                        }
-                        ,
+                        },
                         {
                             xtype: 'panel',
                             layout: 'hbox',
@@ -534,33 +559,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                 },
                                 {
                                     xtype: 'combobox',
-                                    fieldLabel: 'Status',
-                                    name: 'IN_STVAL',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['', 'All'],
-                                            ['0', 'Stand By'],
-                                            ['1', 'Match'],
-                                            ['2', 'Sales Without Settl.'],
-                                            ['3', 'Settl. Without Sales'],
-                                            ['4', 'Match Diff.'],
-                                            ['5', 'Manual Match'],
-                                            ['6', 'Forced Match'],
-                                            ['7', 'Compensation Match'],
-                                            ['8', 'Pending RFND']
-                                        ]
-                                    }),
-                                    labelWidth: 55,
-                                    width: 180,
-                                    displayField: 'name',
-                                    valueField: 'code',
-                                    queryMode: 'local',
-                                    editable: false,
-                                    value: ''
-                                },
-                                {
-                                    xtype: 'combobox',
                                     id: prototype.id + '-cmbCerror',
                                     fieldLabel: 'Error Code',
                                     name: 'IN_CERROR',
@@ -595,6 +593,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     maxLength: 15, // Límite máximo de caracteres
                                     maskRe: /[0-9]/, // Expresión regular para permitir solo números
                                     enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Amount',
+                                    labelWidth: 60,
+                                    width: 160,
+                                    name: 'IN_AMOUNT',
+                                    maxLength: 15,
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9\.]/, // Máscara para números y punto decimal
+                                    regex: /^\d+(\.\d{1,2})?$/, // Validación para permitir hasta 2 decimales
+                                    regexText: 'Invalid Amount', // Mensaje de error personalizado
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }

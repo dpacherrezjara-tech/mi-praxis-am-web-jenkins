@@ -1,6 +1,7 @@
 package net.miatech.praxis.logic.payments;
 
 import java.util.List;
+import net.miatech.praxis.payment.A006;
 import net.miatech.praxis.payment.A3152MP;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
@@ -43,6 +44,7 @@ public interface SalesReconciliationLogic {
     SQP05059Filter getSQP05059Filter(SQP05059Filter filter) throws Exception;
 
     List<A3152MP> getPaises() throws Exception;
+    List<A006> getMonedas() throws Exception;
 
     SQP05004Filter getSQP05004Filter(SQP05004Filter filter) throws Exception;
 

@@ -17,9 +17,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         const res = await fetch(`${me.url}/loadFilters`);
         if (res.ok) {
             const data = await res.json();
-            //console.log(data);
+            console.log(data);
             const procesadores = data.procesadores;
+            const monedas = data.monedas.map(x => ({code: x.a006PAIS, name: `${x.a006PAIS}`}));
             const errores = data.cerror.map(x => ({name: `${x.a4451key3.trim()} - ${x.a4451desc1}`, code: x.a4451key3}));
+            me.creditcards = data.creditcards;
             //<editor-fold defaultstate="collapsed" desc="Combos">
             const cmbProcesadores = Ext.getCmp(prototype.id + '-cmbProctype');
             me.setComboStore({cmp: cmbProcesadores, data: procesadores,
@@ -32,7 +34,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const cmbProctypeSettl = Ext.getCmp(prototype.id + '-cmbProctypeSettl');
             me.setComboStore({cmp: cmbProctypeSettl, data: procesadores,
                 valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
-            
+
             const cmbProctypeSumm = Ext.getCmp(prototype.id + '-cmbProctypeSumm');
             me.setComboStore({cmp: cmbProctypeSumm, data: procesadores,
                 valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
@@ -72,6 +74,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const cmbCodadjuSum = Ext.getCmp(prototype.id + '-cmbCodadjuSum');
             me.setComboStore({cmp: cmbCodadjuSum, data: data.codadju,
                 valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+            
+            const cmbMdasBT = Ext.getCmp(prototype.id + '-cmbMonedaBT');
+            me.setComboStore({cmp: cmbMdasBT, data: monedas,
+                valueField: 'code', displayField: 'name', value: ''});
             //</editor-fold>
         }
         filterPanel.unmask();
@@ -225,7 +231,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 searchParams: params
             });
             mainPanel.add(panelSettl);
-        }else if (rb === 'U') {
+        } else if (rb === 'U') {
             win.lblUser_toolTip('Estructura: A4332');
             const mainPanel = Ext.getCmp(prototype.id + '-mainContentSumm');
             mainPanel.removeAll();
@@ -235,7 +241,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 url: prototype.url,
                 searchParams: params
             });
-            mainPanel.add(panelSettl); 
+            mainPanel.add(panelSettl);
         }
     },
     onChangeModule: function (radiogroup, newValue, oldValue) {
@@ -278,6 +284,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             Ext.getCmp(prototype.id + '-mainContent2').hide();
         }
         this.showProcessBtn();
+    },
+    onChangeCreditCardBT: function (obj) {
+        const me = this;
+        const cmbCard = Ext.getCmp(prototype.id + '-cmbCreditCardBT');
+        if (obj.getValue() === '') {
+            cmbCard.hide();
+        } else {
+            const data = me.creditcards.filter(x => x.a4451cant1 === parseInt(obj.getValue()));
+            me.setComboStore({cmp: cmbCard, data: data,
+                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+            cmbCard.show();
+        }
     },
     onClickProcessBtn: function () {
         const processWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransactionProcessDataEntry', {

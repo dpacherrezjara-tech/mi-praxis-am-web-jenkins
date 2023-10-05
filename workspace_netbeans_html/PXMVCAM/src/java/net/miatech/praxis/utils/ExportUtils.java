@@ -84,7 +84,8 @@ public class ExportUtils {
             }
             
             for(int c=0;c<cols;c++){
-                sheet.autoSizeColumn(c,false);
+                //sheet.autoSizeColumn(c,false);
+                sheet.setColumnWidth(c, 16 * 256);
             }
             
             for (int i = 1; i < data.size(); i++) {

@@ -5,6 +5,7 @@ import java.util.List;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
 import net.miatech.praxis.payment.A4507;
 import net.miatech.praxis.payment.filter.A4331NEWFilter;
+import net.miatech.praxis.payment.filter.A4496Filter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05048Filter;
@@ -66,20 +67,6 @@ public class SalesReconciliationBPOController {
 
     private final String controllerName = "SalesReconciliationBPO";
 
-    //<editor-fold defaultstate="collapsed" desc="By payment">
-    @RequestMapping(value = "loadByPaymentSummary")
-    public ResponseEntity<?> loadByPaymentSummary(@ModelAttribute SQP05059Filter filter) {
-        try {
-            System.out.println("---------------SalesReconciliationBPO:loadByPaymentSummary-------------");
-            filter = logic.getSQP05059Filter(filter);
-            System.out.println("Total: " + filter.getResponse().size());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
     @RequestMapping(value = "loadFilters")
     public ResponseEntity<?> loadFilters(ModelMap model) {
         try {
@@ -88,13 +75,31 @@ public class SalesReconciliationBPOController {
             filter.setKEY1("PK");
             filter.setKEY2("PROCTYPE");
             model.put("paises", logic.getPaises());
+            model.put("monedas", logic.getMonedas());
             model.put("procesadores", logic.getSQP05004Filter(filter).getLst());
             filter.setKEY2("86");
             model.put("cerror", logic.getSQP05004Filter(filter).getLst());
             filter.setKEY2("89");
             model.put("codadju", logic.getSQP05004Filter(filter).getLst());
+            filter.setKEY1("CC");
+            filter.setKEY2("");
+            model.put("creditcards", logic.getSQP05004Filter(filter).getLst());
             System.out.println("Total: " + model.size());
             return new ResponseEntity<>(model, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    //<editor-fold defaultstate="collapsed" desc="By payment">
+    @RequestMapping(value = "loadByPaymentSummary")
+    public ResponseEntity<?> loadByPaymentSummary(@ModelAttribute SQP05059Filter filter) {
+        try {
+            System.out.println("---------------SalesReconciliationBPO:loadByPaymentSummary-------------");
+            filter = logic.getSQP05059Filter(filter);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -391,6 +396,71 @@ public class SalesReconciliationBPOController {
                 data.add(row);
             }
             return exportUtils.createExcel(data, controllerName + " - ByPayment " + Functions.getFechaActual());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "downloadByTicketDetail")
+    public ResponseEntity<?> downloadByTicketDetail(@ModelAttribute SQP05089Filter params) {
+        try {
+            System.out.println("---------------SalesReconciliationBPO:downloadByTicketDetail-------------");
+            SQP05089Filter filter = logic.loadSQP05089Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            List<Object[]> data = new ArrayList<>();
+            //headers
+            Object[] headers = new Object[22];
+            headers[0] = "Sale Date";
+            headers[1] = "IATA";
+            headers[2] = "Source";
+            headers[3] = "Channel";
+            headers[4] = "Country";
+            headers[5] = "Agent";
+            headers[6] = "Trnx";
+            headers[7] = "Doc. Type";
+            headers[8] = "Void";
+            headers[9] = "RFIC";
+            headers[10] = "RFIS";
+            headers[11] = "Pax Name";
+            headers[12] = "Ticket";
+            headers[13] = "PNR";
+            headers[14] = "Card Code";
+            headers[15] = "Card Number";
+            headers[16] = "Auth Code";
+            headers[17] = "Amount";
+            headers[18] = "Currency";
+            headers[19] = "Status";
+            headers[20] = "Processor";
+            headers[21] = "ADM St.";
+            data.add(headers);
+            for (A4496Filter obj : filter.getResponse()) {
+                Object[] row = new Object[22];
+                row[0] = obj.getA4496FECVT();
+                row[1] = obj.getA4496AGENT();
+                row[2] = obj.getA4496FUENT();
+                row[3] = obj.getA4496SFUEN();
+                row[4] = obj.getA4496PAIS();
+                row[5] = obj.getA4496CODAG();
+                row[6] = obj.getA4496TRNCU();
+                row[7] = obj.getA4496TIPOD();
+                row[8] = obj.getA4496TKVOI();
+                row[9] = obj.getA4496RFIC();
+                row[10] = obj.getA4496RFIS1();
+                row[11] = obj.getA4496PAX();
+                row[12] = obj.getA4496CIA() + obj.getA4496FORMA() + obj.getA4496SERIE();
+                row[13] = obj.getA4496PNR();
+                row[14] = obj.getA4501TTARJ();
+                row[15] = obj.getA4501NREF();
+                row[16] = obj.getA4501CAPL();
+                row[17] = obj.getA4501VFOP();
+                row[18] = obj.getA4501MFOP();
+                row[19] = convertStatus(obj.getA4501STVAL());
+                row[20] = obj.getDESC_PROCTYPE();
+                row[21] = obj.getA4501STADM();
+                data.add(row);
+            }
+            return exportUtils.createExcel(data, controllerName + " - ByTicket " + Functions.getFechaActual());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
