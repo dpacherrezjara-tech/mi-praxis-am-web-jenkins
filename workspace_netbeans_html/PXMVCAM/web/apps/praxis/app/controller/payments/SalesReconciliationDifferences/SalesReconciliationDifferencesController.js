@@ -59,6 +59,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationDifferences.SalesR
         });
         newWindow.show();
     },
+    onClickFilterBtn: function () {
+        const panelFilters = Ext.getCmp(prototype.id + '-contentFilter');
+        if (panelFilters.isVisible())
+            panelFilters.hide();
+        else
+            panelFilters.show();
+    },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">
     onChangeFechaBtn: function (obj) {
