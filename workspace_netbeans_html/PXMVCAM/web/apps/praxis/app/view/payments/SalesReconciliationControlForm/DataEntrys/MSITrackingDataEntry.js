@@ -58,7 +58,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                         }
                     },
                     beforeselect: function (selModel, record, index) {
-                        const match = ['1', '5', '6', '7'];
+                        const match = ['6'];
                         if (match.some(x => record.data.stval === x)) {
                             return false;
                         }

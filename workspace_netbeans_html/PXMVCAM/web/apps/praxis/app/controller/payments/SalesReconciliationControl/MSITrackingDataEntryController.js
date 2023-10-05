@@ -108,8 +108,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         const gridDet = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
         grid.getView().mask('Loading...');
         console.log(seleccionados);
-        let sale = seleccionados.find(x => x.data.transtype.trim() === 'SALE');
-        let refund = seleccionados.find(x => x.data.transtype.trim() === 'RFND');
+        const match = ['1', '5', '6', '7'];
+        let sale = seleccionados.find(x => x.data.transtype.trim() === 'SALE'&& match.some(b => x.data.stval === b));
+        let refund = seleccionados.find(x => x.data.transtype.trim() === 'RFND' && match.some(b => x.data.stval === b));
         if (sale && refund) {
             let params = {
                 IN_CCUST: '139',
