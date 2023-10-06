@@ -205,7 +205,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                             ['1', 'Match'],
                                             ['2', 'Sales Without Settl.'],
                                             ['4', 'Match Diff.'],
-                                            ['5', 'Manual Match'],
+                                            ['5', 'Match Manual'],
                                             ['6', 'Forced Match'],
                                             ['7', 'Compensation Match']
                                         ]
@@ -528,7 +528,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                             ['1', 'Match'],
                                             ['2', 'Sales Without Settl.'],
                                             ['4', 'Match Diff.'],
-                                            ['5', 'Manual Match'],
+                                            ['5', 'Match Manual'],
                                             ['6', 'Forced Match'],
                                             ['7', 'Compensation Match']
                                         ]

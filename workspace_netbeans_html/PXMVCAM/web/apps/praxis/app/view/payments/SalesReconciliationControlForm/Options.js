@@ -18,13 +18,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Options', {
                             xtype: 'radiogroup',
                             id: prototype.id + '-viewOption',
                             //fieldLabel: 'Opciones',
-                            columns: 4, // Puedes ajustar el número de columnas según tus necesidades
+                            columns: 3, // Puedes ajustar el número de columnas según tus necesidades
                             vertical: false, // Esto alinea los botones verticalmente,
                             defaults: {
                                 margin: '0 5 0 5' // Margen entre los botones
                             },
                             items: [
-                                {boxLabel: '<b style="color:#148D28;">Summary</b>', name: 'opcion', inputValue: 'U', width: 90},
+                                //{boxLabel: '<b style="color:#148D28;">Summary</b>', name: 'opcion', inputValue: 'U', width: 90},
                                 {boxLabel: '<b style="color:#148D28;">Settlement</b>', name: 'opcion', inputValue: 'S', width: 90},
                                 {boxLabel: '<b style="color:#148D28;">By Payment</b>', name: 'opcion', inputValue: 'P', checked: true, width: 100},
                                 {boxLabel: '<b style="color:#148D28;">By Ticket</b>', name: 'opcion', inputValue: 'T', width: 80}

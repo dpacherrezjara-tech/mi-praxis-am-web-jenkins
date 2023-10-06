@@ -4,6 +4,10 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.PaymentsCommissio
     fecha: new Date(),
     url: prototype.url,
     init: function (view) {
+        prototype.id = 'PaymentsCommissions';
+        prototype.url = CONTEXTPATH + '/PaymentsCommissions';
+        prototype.width = 1600;
+        prototype.height = 630;
     },
     afterRender: async function (obj, e) {
         await this.fillFilters();

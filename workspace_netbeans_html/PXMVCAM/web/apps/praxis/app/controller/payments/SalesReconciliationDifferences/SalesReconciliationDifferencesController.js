@@ -4,6 +4,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationDifferences.SalesR
     fecha: new Date(),
     url: prototype.url,
     init: function (view) {
+        prototype.id = 'SalesReconciliationDiff';
+        prototype.url = CONTEXTPATH + '/SalesReconciliationDiff';
+        prototype.width = 1850;
+        prototype.height = 630;
     },
     afterRender: async function (obj, e) {
         await this.fillFilters();

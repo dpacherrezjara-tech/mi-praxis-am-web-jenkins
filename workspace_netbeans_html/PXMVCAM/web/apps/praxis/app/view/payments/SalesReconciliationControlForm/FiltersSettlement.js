@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
         {
             xtype: 'form',
             border: false,
-            id:prototype.id + '-filtersSettlement-1',
+            id: prototype.id + '-filtersSettlement-1',
             bodyStyle: 'background: transparent',
             layout: 'vbox',
             defaults: {
@@ -147,7 +147,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                             editable: false,
                             value: ''
                         },
-                        
+
                         {
                             xtype: 'textfield',
                             fieldLabel: 'Card Number',
@@ -210,6 +210,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                             queryMode: 'local',
                             editable: false,
                             value: ''
+                        },
+                        {
+                            xtype: 'textfield',
+                            fieldLabel: 'PNR',
+                            labelWidth: 40,
+                            width: 120,
+                            name: 'IN_PNR',
+                            maxLength: 8, // Límite máximo de caracteres
+                            maskRe: /[a-zA-Z0-9]/, // Expresión regular para permitir solo números
+                            enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                            listeners: {
+                                specialkey: 'onEnterKeyPress'
+                            }
                         }
                     ]
                 }

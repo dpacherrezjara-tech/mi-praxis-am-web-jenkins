@@ -6,6 +6,10 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.ChargebackSabre
     searchParams: null,
     searchUrl: null,
     init: function (view) {
+        prototype.id = 'ChargebackSabreStatusForm';
+        prototype.url = CONTEXTPATH + '/ChargebackSabreStatus';
+        prototype.width = 1800;
+        prototype.height = 630;
     },
     afterRender: async function (obj, e) {
         //const me = this;

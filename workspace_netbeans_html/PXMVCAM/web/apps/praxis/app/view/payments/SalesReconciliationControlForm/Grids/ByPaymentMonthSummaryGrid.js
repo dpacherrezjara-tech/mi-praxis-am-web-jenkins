@@ -48,7 +48,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 }
             },
             {
-                text: 'Total General', 
+                text: 'Total General',
                 //width: 400,
                 defaults: {
                     menuDisabled: true,
@@ -235,6 +235,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 iconCls: 'prx-icon-excel',
                 scale: 'small',
                 tooltip: 'Export to Excel',
+                hidden: true,
                 listeners: {
                     click: 'downloadExcel'
                 }

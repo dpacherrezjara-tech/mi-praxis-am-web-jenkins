@@ -47,7 +47,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                 }
             },
             {
-                text: 'Total General', 
+                text: 'Total General',
                 //width: 400,
                 defaults: {
                     menuDisabled: true,
@@ -126,6 +126,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                 xtype: 'button',
                 iconCls: 'prx-icon-excel',
                 scale: 'small',
+                hidden: true,
                 tooltip: 'Export to Excel',
                 listeners: {
                     click: 'downloadExcel'

@@ -132,29 +132,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                     },
                     {
                         text: 'Serv. Fee',
+                        dataIndex:'servicfeep',
                         width: 90,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            const {transtype, servicfeep, adjusmentp} = record.data;
-                            if (transtype.trim() === 'ADJU') {
-                                value = adjusmentp;
-                            } else {
-                                value = 0;
-                            }
-                            metaData.style = "text-align:right;background-color:#B2DAFA;";
-                            value = Ext.util.Format.number(value, '0,000.00');
-                            return value;
-                        }
-                    },
-                    {
-                        text: 'Accel.<br>Amount',
-                        width: 90,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            const {transtype, servicfeep, acceamou} = record.data;
-                            if (transtype.trim() !== 'ADJU' && transtype.trim() !== 'CHBK') {
-                                value = servicfeep;
-                            } else {
-                                value = 0;
-                            }
                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
@@ -172,12 +152,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         text: 'VAT COMM<br>1 2', dataIndex: 'overcom12p', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA;";
-                            const {transtype, overcom12p} = record.data;
-                            if (transtype.trim() !== 'CHBK') {
-                                value = overcom12p;
-                            } else {
-                                value = 0;
-                            }
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
                         }
@@ -233,140 +207,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 ]
             },
             {
-                text: 'Result Reconciliation Transaction',
-                defaults: {
-                    menuDisabled: true,
-                    sortable: false,
-                    align: 'center'
-                },
-                columns: [
-                    {
-                        text: 'Transaction <br> Amount', dataIndex: 'tgrosamouc', width: 100,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            let data = record.data;
-                            if (data.tgrosamoun >= data.tgrosamouc - 0.5 && data.tgrosamoun <= data.tgrosamouc + 0.5) {
-                                metaData.style = "text-align:right;background-color:#B2FAC6";
-                            } else {
-                                metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
-                            }
-                            value = Ext.util.Format.number(value, '0,000.00');
-                            return value;
-                        }
-                    },
-                    {
-                        text: 'MSI',
-                        defaults: {
-                            menuDisabled: true,
-                            sortable: false,
-                            align: 'center'
-                        },
-                        columns: [
-                            {
-                                text: 'Rate<br>Comm.', dataIndex: 'ratesfeec', width: 90,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    var data = record.data;
-                                    if (Ext.util.Format.number(data.ratesfee, '0,000.00') !== Ext.util.Format.number(data.ratesfeec, '0,000.00')) {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
-                                    } else {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6;";
-                                    }
-                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                    return value;
-                                }
-                            },
-                            {
-                                text: 'Total<br>Comm.', dataIndex: 'sfeeamouc', width: 90,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    var data = record.data;
-                                    if (data.acceamouc >= data.sfeeamouc - 0.5 && data.acceamouc <= data.sfeeamouc + 0.5) {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6";
-                                    } else {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
-                                    }
-                                    value = Ext.util.Format.number(value, '0,000.00');
-                                    return value;
-                                }
-                            },
-                            {
-                                text: 'VAT COMM<br>1 2', dataIndex: 'vatcommsic', width: 90,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    var data = record.data;
-                                    if (data.overcom12p >= data.vatcommsic - 0.5 && data.overcom12p <= data.vatcommsic + 0.5) {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6";
-                                    } else {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
-                                    }
-                                    value = Ext.util.Format.number(value, '0,000.00');
-                                    return value;
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        text: 'Commission Base',
-                        defaults: {
-                            menuDisabled: true,
-                            sortable: false,
-                            align: 'center'
-                        },
-                        columns: [
-                            {
-                                text: 'Discount<br>Rate Comm.', dataIndex: 'discratec', width: 90,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    var data = record.data;
-                                    if (Ext.util.Format.number(data.discrate, '0,000.00') !== Ext.util.Format.number(data.discratec, '0,000.00')) {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
-                                    } else {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6;";
-                                    }
-                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                    return value;
-                                }
-                            },
-                            {
-                                text: 'Discount<br>Amount Comm.', dataIndex: 'discamounc', width: 90,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    var data = record.data;
-                                    if (data.discamoun >= data.discamounc - 0.5 && data.discamoun <= data.discamounc + 0.5) {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6";
-                                    } else {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
-                                    }
-                                    value = Ext.util.Format.number(value, '0,000.00');
-                                    return value;
-                                }
-                            },
-                            {
-                                text: 'Discount<br>Rate VAT.', dataIndex: 'discrateic', width: 90,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    var data = record.data;
-                                    if (Ext.util.Format.number(data.discratei, '0,000.00') !== Ext.util.Format.number(data.discrateic, '0,000.00')) {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
-                                    } else {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6;";
-                                    }
-                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                    return value;
-                                }
-                            },
-                            {
-                                text: 'Discount<br>Amount VAT', dataIndex: 'discamouic', width: 90,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    var data = record.data;
-                                    if (data.discamouni >= data.discamouic - 0.5 && data.discamouni <= data.discamouic + 0.5) {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6";
-                                    } else {
-                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
-                                    }
-                                    value = Ext.util.Format.number(value, '0,000.00');
-                                    return value;
-                                }
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
                 text: 'Chargeback',
                 defaults: {
                     menuDisabled: true,
@@ -376,13 +216,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 columns: [
                     {text: 'Number', dataIndex: 'chgbnum', width: 110},
                     {text: 'Reason Code', dataIndex: 'codchgback', width: 90},
-                    {text: 'Merch. Loc.', dataIndex: 'lmerchid', width: 120,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "text-align:left;";
-                            return value;
-                        }
-                    },
-                    {text: 'Seller ID', dataIndex: 'sellerid', width: 70},
                     {
                         text: 'Amount', dataIndex: 'tgrosampay', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -417,6 +250,58 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             metaData.style = "text-align:right;";
                             const {transtype, ivacom12} = record.data;
                             if (transtype.trim() === 'CHBK') {
+                                value = ivacom12;
+                            } else {
+                                value = 0;
+                            }
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    }
+                ]
+            },
+            {
+                text: 'Adjustment',
+                defaults: {
+                    menuDisabled: true,
+                    sortable: false,
+                    align: 'center'
+                },
+                columns:[
+                    {
+                        text: 'Amount', dataIndex: 'tgrosampay', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            const {transtype, tgrosampay} = record.data;
+                            if (transtype.trim() === 'ADJU') {
+                                value = tgrosampay;
+                            } else {
+                                value = 0;
+                            }
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'Commission', dataIndex: 'sfeeamou', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            const {transtype, sfeeamou} = record.data;
+                            if (transtype.trim() === 'ADJU') {
+                                value = sfeeamou;
+                            } else {
+                                value = 0;
+                            }
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'VAT', dataIndex: 'ivacom12', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            const {transtype, ivacom12} = record.data;
+                            if (transtype.trim() === 'ADJU') {
                                 value = ivacom12;
                             } else {
                                 value = 0;
