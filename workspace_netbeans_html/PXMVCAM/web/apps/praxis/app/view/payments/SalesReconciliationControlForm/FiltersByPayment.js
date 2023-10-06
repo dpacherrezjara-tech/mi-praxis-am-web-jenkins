@@ -238,7 +238,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                             ['2', 'Sales Without Settl.'],
                                             ['3', 'Settl. Without Sales'],
                                             ['4', 'Match Diff.'],
-                                            ['5', 'Manual Match'],
+                                            ['5', 'Match Manual'],
                                             ['6', 'Forced Match'],
                                             ['7', 'Compensation Match'],
                                             ['8', 'Pending RFND']
@@ -463,7 +463,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                             ['1', 'Match'],
                                             ['3', 'Settl. Without Sales'],
                                             ['4', 'Match Diff.'],
-                                            ['5', 'Manual Match'],
+                                            ['5', 'Match Manual'],
                                             ['6', 'Forced Match'],
                                             ['7', 'Compensation Match'],
                                             ['8', 'Pending RFND']

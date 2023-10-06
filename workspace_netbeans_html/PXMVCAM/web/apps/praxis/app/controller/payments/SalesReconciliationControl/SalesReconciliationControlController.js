@@ -4,6 +4,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     fecha: new Date(),
     url: CONTEXTPATH + '/SalesReconciliationBPO',
     init: function (view) {
+        prototype.id = 'SalesReconciliationControlForm';
+        prototype.url = CONTEXTPATH + '/SalesReconciliationBPO';
+        prototype.width = 1850;
+        prototype.height = 630;
     },
     afterRender: async function (obj, e) {
         const me = this;
@@ -74,7 +78,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const cmbCodadjuSum = Ext.getCmp(prototype.id + '-cmbCodadjuSum');
             me.setComboStore({cmp: cmbCodadjuSum, data: data.codadju,
                 valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
-            
+
             const cmbMdasBT = Ext.getCmp(prototype.id + '-cmbMonedaBT');
             me.setComboStore({cmp: cmbMdasBT, data: monedas,
                 valueField: 'code', displayField: 'name', value: ''});
@@ -183,7 +187,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 console.log(params);
                 const panelTree = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentMonthSummaryGrid', {
                     id: prototype.id + '-ByPaymentMonthSummaryGrid-1',
-                    url: prototype.url,
+                    url: me.url,
                     searchParams: params
                 });
                 mainPanel.add(panelTree);
@@ -192,7 +196,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 console.log(params);
                 const panelDetail = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentDetailGrid', {
                     id: prototype.id + '-ByPaymentDetailGrid-1',
-                    url: prototype.url,
+                    url: me.url,
                     searchParams: params
                 });
                 mainPanel.add(panelDetail);
@@ -206,7 +210,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 let params = me.formatByTicketSummaryParams();
                 const panelTree = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTicketMonthSummaryGrid', {
                     id: prototype.id + '-ByTicketMonthSummaryGrid-1',
-                    url: prototype.url,
+                    url: me.url,
                     searchParams: params
                 });
                 mainPanel.add(panelTree);
@@ -215,7 +219,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 console.log(params);
                 const panelDetail = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTicketDetailGrid', {
                     id: prototype.id + '-ByTicketDetailGrid-1',
-                    url: prototype.url,
+                    url: me.url,
                     searchParams: params
                 });
                 mainPanel.add(panelDetail);
@@ -227,7 +231,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             let params = me.formatSettlementParams();
             const panelSettl = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SettlementSummaryGrid', {
                 id: prototype.id + '-SettlementSummaryGrid-1',
-                url: prototype.url,
+                url: me.url,
                 searchParams: params
             });
             mainPanel.add(panelSettl);
@@ -238,7 +242,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             let params = me.formatSummaryParams();
             const panelSettl = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SummaryGrid', {
                 id: prototype.id + '-SummaryGrid-1',
-                url: prototype.url,
+                url: me.url,
                 searchParams: params
             });
             mainPanel.add(panelSettl);
@@ -339,13 +343,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             panelFilters.show();
     },
     onClickClearBtn: function () {
-        const activeFilter = Ext.getCmp(prototype.id + '-filtersByPayment-1');
-        if (activeFilter.isVisible()) {
+        const filterBP = Ext.getCmp(prototype.id + '-filtersByPayment-1');
+        const filterBT = Ext.getCmp(prototype.id + '-filtersByTicket-1');
+        const filterST = Ext.getCmp(prototype.id + '-filtersSettl-1');
+        if (filterBP.isVisible()) {
             Ext.getCmp(prototype.id + '-formFiltersBP-1').getForm().reset();
             Ext.getCmp(prototype.id + '-formFiltersBP-2').getForm().reset();
-        } else {
+        } else if (filterBT.isVisible()) {
             Ext.getCmp(prototype.id + '-formFiltersBT-1').getForm().reset();
             Ext.getCmp(prototype.id + '-formFiltersBT-2').getForm().reset();
+        } else if (filterST.isVisible()) {
+            Ext.getCmp(prototype.id + '-filtersSettlement-1').getForm().reset();
         }
     },
     onClickBackBtn: function (obj) {

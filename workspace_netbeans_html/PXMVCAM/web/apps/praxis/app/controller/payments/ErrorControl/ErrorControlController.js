@@ -7,6 +7,8 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
     searchUrl: null,
     gridType: 'P',
     init: function (view) {
+        prototype.id = 'ErrorControlForm';
+        prototype.url = CONTEXTPATH + '/ErrorControl';
     },
     afterRender: async function (obj, e) {
         await this.fillStoreCombos();

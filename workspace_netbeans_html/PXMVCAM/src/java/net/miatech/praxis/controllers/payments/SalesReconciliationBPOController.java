@@ -466,6 +466,117 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    
+    @RequestMapping(value = "downloadSettlementDetail")
+    public ResponseEntity<?> downloadSettlementDetail(@ModelAttribute SQP05134Filter params){
+        System.out.println("---------------SalesReconciliationBPO:downloadSettlementDetail-------------");
+        try {
+            SQP05134Filter filter = logic.loadSQP05134Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            List<Object[]> data = new ArrayList<>();
+            //headers
+            Object[] headers = new Object[38];
+            headers[0] = "Processing Date";
+            headers[1] = "Payment Date";
+            headers[2] = "Sales Date";
+            headers[3] = "Settl. vs Sales";
+            headers[4] = "Processor";
+            headers[5] = "Country";
+            headers[6] = "Qty. Tkts";
+            headers[7] = "Invoice Refer. Number PNR";
+            headers[8] = "PNR";
+            headers[9] = "Doc. Type";
+            headers[10] = "Indust. Speci. Ref. Nbr";
+            headers[11] = "Card Number";
+            headers[12] = "Auth Code";
+            headers[13] = "Installment Plan";
+            headers[14] = "Installment Number";
+            headers[15] = "Sales Amount";
+            headers[16] = "Transacton Amount";
+            //comisiones
+            headers[17] = "MSI Rate Comm.";
+            headers[18] = "MSI Serv. Fee";
+            headers[19] = "MSI Total Comm.";
+            headers[20] = "MSI VAT Comm.";
+            headers[21] = "Comm. Disc. Rate";
+            headers[22] = "Comm. Disc. Amount";
+            headers[23] = "Comm. Disc. VAR Rate";
+            headers[24] = "Comm. VAT";
+            //comisiones especiales
+            headers[25] = "CHBK Number";
+            headers[26] = "CHBK Reason Code";
+            headers[27] = "CHBK Amount";
+            headers[28] = "CHBK Commission";
+            headers[29] = "CHBK VAT";
+            headers[30] = "ADJU Amount";
+            headers[31] = "ADJU Commission";
+            headers[32] = "ADJU VAT";
+            headers[33] = "NET Amount to Receive AM";
+            headers[34] = "Currency Settl.";
+            headers[35] = "Calculated Commission";
+            headers[36] = "Rule";
+            headers[37] = "Flag Complement";
+            data.add(headers);
+            for (A4331NEWFilter obj : filter.getResponse()) {
+                Object[] row = new Object[38];
+                row[0] = obj.getPrda();
+                row[1] = obj.getPaydate();
+                row[2] = obj.getTransdate();
+                row[3] = convertStatus(obj.getStval());
+                row[4] = obj.getDESC_PROCTYPE();
+                row[5] = obj.getScountry();
+                row[6] = obj.getQtytkt();
+                row[7] = obj.getInvoirn();
+                row[8] = obj.getSpnr();
+                row[9] = obj.getTranstype();
+                row[10] = obj.getTicket();
+                row[11] = obj.getScardn();
+                row[12] = obj.getSauthoc();
+                row[13] = obj.getNbrinsta();
+                row[14] = obj.getInstanbr();
+                row[15] = obj.getSvfops();
+                row[16] = obj.getTgrosamoun();
+                row[17] = obj.getSfeerate();
+                row[18] = obj.getServicfeep();
+                row[19] = obj.getAcceamouc();
+                row[20] = obj.getOvercom12p();
+                row[21] = obj.getDiscrate();
+                row[22] = obj.getSfeeamou();
+                row[23] = obj.getDiscratei();
+                row[24] = obj.getIvacom12();
+                row[25] = obj.getChgbnum();
+                    row[26] = obj.getCodchgback();
+                if(obj.getTranstype().equals("CHBK")){
+                    row[27] = obj.getTgrosampay();
+                    row[28] = obj.getSfeeamou();
+                    row[29] = obj.getIvacom12();
+                }else{
+                    row[27] = 0;
+                    row[28] = 0;
+                    row[29] = 0;
+                }
+                if(obj.getTranstype().equals("ADJU")){
+                    row[30] = obj.getTgrosampay();
+                    row[31] = obj.getSfeeamou();
+                    row[32] = obj.getIvacom12();
+                }else{
+                    row[30] = 0;
+                    row[31] = 0;
+                    row[32] = 0;
+                }
+                row[33] = obj.getNetopay();
+                row[34] = obj.getPcurrency();
+                row[35] = obj.getDiscamounc();
+                row[36] = obj.getFregla();
+                row[37] = obj.getFcompl();
+                data.add(row);
+            }
+            return exportUtils.createExcel(data, controllerName + " - Settlement " + Functions.getFechaActual());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 
 //</editor-fold>
     
