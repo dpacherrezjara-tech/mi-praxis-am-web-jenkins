@@ -140,7 +140,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
                     hiddenLabel: false,
                     value: '',
                     listeners: {
-                        change: 'eventKey'
+                        keypress: 'eventKey'
                     }
                 },
             ]
