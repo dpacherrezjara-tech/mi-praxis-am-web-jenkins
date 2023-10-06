@@ -129,7 +129,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     {text: 'Processor', dataIndex: 'desc_PROCTYPE', width: 120},
                     {text: 'ADM<br>Status', dataIndex: 'a4501STADM', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
-                            metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#F0D094;";
                             return value.trim()===''?'':'Suggested';
                         }
                     }
