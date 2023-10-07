@@ -122,7 +122,15 @@ public class AuditTWDAO {
         double TOT51 = 0, TOT52 = 0, TOT53 = 0, TOT54 = 0, TOT55 = 0, TOT56 = 0, TOT57 = 0, TOT58 = 0, TOT59 = 0, TOT60 = 0;;
         double TOT61 = 0, TOT62 = 0, TOT63 = 0;
         SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP02561(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        if ("UK".equals(filter.cmbSELECTED)) {
+            String strSql_REAL = "";
 
+            strSql_REAL = "IFNULL((SELECT RTRIM(A1721FRCA) FROM PRAXIS.A1721 B WHERE B.A1721CCUST  = A1672.A1672CCUST AND B.A1721CIA = A1672.A1672CIA AND B.A1721FORMA = A1672.A1672FORMA AND B.A1721SERIE = A1672.A1672SERIE AND A1721SEQ = A1672SEQ AND A1721TIPO = 'ER' FETCH FIRST ROWS ONLY), '') AS A1721FRCA," +
+                          "PRAXIS.F01_PX449_USO(A1672.A1672CCUST, A1672.A1672CIA, A1672.A1672FORMA , A1672.A1672SERIE,A1672.A1672SEQ) AS USED   ";
+                    
+
+            filter.strSelectA = filter.strSelectA.trim() + "," + strSql_REAL;
+        }
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();

@@ -1260,7 +1260,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         win.setValue('lblTicketNumber', me01.beanResultSet01.fileA720.A720CIAI+' '+me01.beanResultSet01.fileA720.A720FORMAI+' '+me01.beanResultSet01.fileA720.A720SERIEI);
                         
                         //<editor-fold defaultstate="collapsed" desc="mostrarData">
-                        var paramsConjuntion, paramsResultSet02, paramsResultSet03, paramsResultSet04, paramsResultSet05, paramsResultSet06, paramsResultSet07, paramsResultSet08, paramsResultSet09, paramsResultSet10, paramsResultSet11, paramsResultSet12, paramsResultSet13, paramsResultSet14, paramsResultSet15;
+                        var paramsConjuntion, paramsResultSet02, paramsResultSet03, paramsResultSet04, paramsResultSet05, paramsResultSet06, paramsResultSet07, paramsResultSet08, paramsResultSet09, paramsResultSet10, paramsResultSet11, paramsResultSet12, paramsResultSet13, paramsResultSet14, paramsResultSet15, paramsResultSet23;
                         var strFareConstruction, strEndorsementAndRestrictions, strIssuedInExchangeFor, strReasonForIssuance, strTKtInConnexion, strRelated, strA1531VFOP, bolA730CUPON1, bolA730CUPON2, bolA730CUPON3, bolA730CUPON4, intTAXES, intRemainingFare=0, intRemainingSurcharge=0, intRemainingCommision=0;
                         var n;
 
@@ -1580,6 +1580,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         console.log(me01.filterTKT.lstResultSet12);
                         console.log(me01.filterTKT.lstResultSet13);
                         console.log(me01.filterTKT.lstResultSet15);
+                        console.log(me01.filterTKT.lstResultSet23);
                         
                         // <editor-fold defaultstate="collapsed" desc="gridDataTktRealUses">
                         //Ext.getCmp(prototype.id+'-gridDataTktRealUses').getStore().removeAll();
@@ -3161,6 +3162,32 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         TTRAX : paramsResultSet14.fileA2033.TTRAX
                                     });
                                 }
+                            }
+                        };
+                        if(me01.filterTKT.lstResultSet23.length > 0){
+                            for(var i23 = 0; i23 < me01.filterTKT.lstResultSet23.length; i23++){
+                                paramsResultSet23 = me01.filterTKT.lstResultSet23[i23];
+                                    strTKTIND = (paramsResultSet23.fileA1692.SERIE.length === 6) ? paramsResultSet23.fileA1692.SERIE.substr(4, 2) : '';
+                                    //me01.filterTKT.VP_A1716SEQF = paramsResultSet23.fileA1692.SEQ.trim();
+                                    me01.gridDataTktRealUsesAC.push({
+                                        TKTIND : strTKTIND,
+                                        STATUS : paramsResultSet23.fileA1692.STVAL,
+                                        CIA : paramsResultSet23.fileA1692.CCIA,
+                                        FOR : paramsResultSet23.fileA1692.FORMA,
+                                        SER : paramsResultSet23.fileA1692.SERIE,
+                                        SEQ : paramsResultSet23.fileA1692.SEQ.trim(),
+                                        SEQRO : paramsResultSet23.fileA1692.SEQRO.trim(),
+                                        CPN : paramsResultSet23.fileA1692.CUPON,
+                                        ORI : paramsResultSet23.fileA1692.CDEPART,
+                                        DES : paramsResultSet23.fileA1692.CARRIVA,
+                                        AL: paramsResultSet23.fileA1692.CARR,
+                                        FLIGHT : paramsResultSet23.fileA1692.NFLIGHT,
+                                        DATE : paramsResultSet23.fileA1692.DFLIGHT,
+                                        STAT : 'EMDS',
+                                        AMOUNT : Ext.util.Format.number(paramsResultSet23.fileA1692.VCPN, '0,000.00'),
+                                        CRCY : paramsResultSet23.fileA1692.MDACP,
+//                                        FARE : paramsResultSet23.fileA1692.FBASE
+                                    });
                             }
                         }
                         // </editor-fold>
