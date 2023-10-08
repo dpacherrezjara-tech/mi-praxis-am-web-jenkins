@@ -725,8 +725,8 @@ public class ProMasterTicketDAO {
                                                                                 rs22 = cstmt01.getResultSet();
                                                                                 while (rs22.next()) {
                                                                                     objRtn22 = new PX040S01A720ResultSet22();
-                                                                                    objRtn22.fileA4121.SCARDN = rs22.getString("SCARDN").trim();
-                                                                                    objRtn22.fileA4121.SAUTHOC = rs22.getString("SAUTHOC").trim();
+                                                                                    //objRtn22.fileA4121.SCARDN = rs22.getString("SCARDN").trim();
+                                                                                    //objRtn22.fileA4121.SAUTHOC = rs22.getString("SAUTHOC").trim();
                                                                                     filter.lstResultSet22.add(objRtn22);
                                                                                 }
                                                                             }

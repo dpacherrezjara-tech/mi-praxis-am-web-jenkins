@@ -979,6 +979,18 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                         },
                                         {
                                             xtype: 'button',
+                                            id: prototype.id + '-btnDeliveryARC',
+                                            margin: '0 0 0 30',
+                                            text: '<strong style="color:white;">Delivery ARC<strong>',
+                                            cls: 'x-btn-sent',
+                                            overCls: 'x-btn-sent-over',
+                                            width: 95,
+                                            listeners: {
+                                                click: 'btnDeliveryARC_clickHandler'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
                                             id: prototype.id + '-btnUsage',
                                             hidden: true,
                                             margin: '0 0 0 30',

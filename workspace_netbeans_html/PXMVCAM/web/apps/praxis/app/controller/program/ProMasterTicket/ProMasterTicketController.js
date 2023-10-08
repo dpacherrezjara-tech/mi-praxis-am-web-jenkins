@@ -610,6 +610,17 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             this.searchDelivery(bean);
 	}
     },
+    btnDeliveryARC_clickHandler: function () {
+        var bean = {};
+	bean.TDNR = win.getValue('txtFilterTicketCia').trim() + win.getValue('txtFilterTicketFormSer').trim();
+	bean.FUENTE = win.getValue('lblSource').trim().substr(0,3);
+        console.log('btnDeliveryARC_clickHandler');
+        if(bean.TDNR !== '' && bean.FUENTE !== ''){
+            bean.A720TKVOID = this.gloA720TKVOID;
+            console.log(bean);
+            this.searchDeliveryARC(bean);
+	}
+    },
     btnPayment_clickHandler: function () {
         var beanA2289 = {};
         beanA2289.IN_CIA = win.getValue('txtFilterTicketCia');
@@ -1112,6 +1123,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             Ext.getCmp(prototype.id+'-btnAccounting').hide();
             //Ext.getCmp(prototype.id+'-btnProrrate').hide();
             Ext.getCmp(prototype.id+'-btnDelivery').hide();
+            Ext.getCmp(prototype.id+'-btnDeliveryARC').hide();
             Ext.getCmp(prototype.id+'-btnUsage').hide();
             Ext.getCmp(prototype.id+'-btnHistory').hide();
             Ext.getCmp(prototype.id+'-btnPayment').hide();
@@ -1304,6 +1316,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             //Ext.getCmp(prototype.id+'-btnFacsimil').disable(true);
                             Ext.getCmp(prototype.id+'-btnProrrate').disable(true);
                             Ext.getCmp(prototype.id+'-btnDelivery').disable(true);
+                            Ext.getCmp(prototype.id+'-btnDeliveryARC').disable(true);
                             Ext.getCmp(prototype.id+'-btnPayment').disable(true);
                             Ext.getCmp(prototype.id+'-btnPNR').disable(true);
                             Ext.getCmp(prototype.id+'-btnRFTX').disable(true);
@@ -1323,6 +1336,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             //Ext.getCmp(prototype.id+'-btnFacsimil').enable(true);
                             Ext.getCmp(prototype.id+'-btnProrrate').enable(true);
                             Ext.getCmp(prototype.id+'-btnDelivery').enable(true);
+                            Ext.getCmp(prototype.id+'-btnDeliveryARC').enable(true);
                             //Ext.getCmp(prototype.id+'-btnFacsimil0').disable(true);
                             Ext.getCmp(prototype.id+'-btnDelivery0').disable(true);                            
                         } else {
@@ -1331,6 +1345,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             //Ext.getCmp(prototype.id+'-btnFacsimil').enable(true);
                             Ext.getCmp(prototype.id+'-btnProrrate').hide();
                             Ext.getCmp(prototype.id+'-btnDelivery').enable(true);
+                            Ext.getCmp(prototype.id+'-btnDeliveryARC').enable(true);
                             //Ext.getCmp(prototype.id+'-btnFacsimil0').hide();
                             Ext.getCmp(prototype.id+'-btnDelivery0').hide();
                             Ext.getCmp(prototype.id+'-btnPayment').hide();  
@@ -3746,6 +3761,37 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         
     },
     //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="searchDeliveryARC">
+    searchDeliveryARC: function (bean) {
+        prototype.url = URL_VIEWTICKET;
+        console.log(prototype.ProrrateoNew.url + '/searchDeliveryARC');
+        var me1 = this;
+        Ext.Ajax.request({
+            url: prototype.ProrrateoNew.url + '/searchDeliveryARC',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(bean)},
+            success: function (response, opts) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    var texto = res.strTextoBSP;
+                    if(texto !== ''){
+                        Ext.create('Ext.Praxis.view.screens.CtrlDeliveryARCForm', {
+                            id: 'CtrlDeliveryARCForm',
+                            params: {
+                                strTexto: texto,
+                                strVoid: me1.gloA720TKVOID
+                            }
+                        }).show();
+                    }
+                } else global.Msg({msg: "Bad Request"});
+            },
+            failure: function (response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
+    },
+    //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchDelivery">
     searchDelivery: function (bean) {
         prototype.url = URL_VIEWTICKET;
@@ -3999,7 +4045,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         //win.enabled('btnFacsimil', false);
         win.enabled('btnProrrate', false);
         win.enabled('btnDelivery', false);
-        
+        win.enabled('btnDeliveryARC', false);
         win.enabled('btnPayment', false);
         win.enabled('btnPNR', false);
         

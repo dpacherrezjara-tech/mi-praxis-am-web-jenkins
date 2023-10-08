@@ -57,6 +57,10 @@ public class ProrrateoNewLogic {
         return ProrrateoNewDAO.searchDelivery(ccust, filter, fuente);
     }
     
+    public String searchDeliveryARC(String ccust, FACSIMILFilter filter, String fuente) throws SQLException, Exception {
+        return ProrrateoNewDAO.searchDeliveryARC(ccust, filter, fuente);
+    }
+    
     public List<FACSIMILFilter> searchA720(String TDNR, String VTR) throws SQLException, Exception {
         return ProrrateoNewDAO.searchA720(TDNR, VTR);
     }

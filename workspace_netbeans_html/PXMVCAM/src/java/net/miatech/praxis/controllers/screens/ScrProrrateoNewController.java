@@ -379,4 +379,32 @@ public class ScrProrrateoNewController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    
+    @RequestMapping(value = "searchDeliveryARC")
+    public @ResponseBody
+    String searchDeliveryARC(ModelMap map, HttpServletRequest request) {
+        FACSIMILFilter filter = new FACSIMILFilter();
+        String strTexto = "";
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            INF020 cliente = this.serverSession.getServerSession().getUserView().getCustomerInfo();
+            
+            ProrrateoNewLogic logic = new ProrrateoNewLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            strTexto = logic.searchDeliveryARC(cliente.CCUST, filter, "B");
+
+            
+            map.put("success", true);
+            map.put("strTextoBSP", strTexto);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
 }

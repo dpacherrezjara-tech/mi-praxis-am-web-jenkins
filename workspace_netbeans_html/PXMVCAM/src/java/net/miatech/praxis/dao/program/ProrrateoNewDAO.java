@@ -6,6 +6,7 @@ import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.AS400Structure;
 import com.ibm.as400.access.ProgramCall;
 import com.ibm.as400.access.ProgramParameter;
+import java.io.File;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +17,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 import net.miatech.beans.A1692Filter;
 import net.miatech.beans.A720Filter;
 import net.miatech.beans.FACSIMILFilter;
@@ -3218,6 +3220,76 @@ public class ProrrateoNewDAO {
         return strTEXTO;
     }
 
+    public String searchDeliveryARC(String ccust, FACSIMILFilter filter, String fuente) throws SQLException, Exception {
+        CallableStatement cs = null;
+        ResultSet rst = null;
+        String strSQL;
+        String strTEXTO = "";
+        Connection cnx = null;
+        String ubica = "";
+        String A4470NFILE = "";
+        try {
+            
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP05160(?,?)}"; //Cambio ROLLING
+            
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = cnx.prepareCall(strSQL);
+            cs.setString(1, ccust);
+            cs.setString(2, filter.TDNR.trim());
+
+            cs.execute();
+            
+            rst = cs.getResultSet();
+            
+            while (rst.next()) {
+                ubica= rst.getString("A4470UBICA").trim();
+                A4470NFILE = rst.getString("A4470NFILE").trim();
+            }
+
+            try {
+                rst.close();
+                String root =  ubica + A4470NFILE;
+                File myObj = new File(root);
+                Scanner myReader = new Scanner(myObj);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    System.out.println(data);
+                    strTEXTO += data  + "\n";
+                }
+                myReader.close();
+ 
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+            try {
+                cs.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            // =================
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+        }
+        return strTEXTO;
+    }
+    
     public List<FACSIMILFilter> loadSQP00778(String ccust, FACSIMILFilter filter) throws SQLException, Exception {
         List<FACSIMILFilter> lstRtn = new ArrayList<FACSIMILFilter>(0);
         FACSIMILFilter objRtn;
