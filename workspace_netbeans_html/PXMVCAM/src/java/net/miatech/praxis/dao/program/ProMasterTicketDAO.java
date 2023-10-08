@@ -26,6 +26,7 @@ import net.miatech.beans.PX040S01A720ResultSet13;
 import net.miatech.beans.PX040S01A720ResultSet14;
 import net.miatech.beans.PX040S01A720ResultSet15;
 import net.miatech.beans.PX040S01A720ResultSet22;
+import net.miatech.beans.PX040S01A720ResultSet23;
 import net.miatech.beans.PX040S02A720Filter;
 import net.miatech.beans.SQP00250Filter;
 import net.miatech.beans.SQP00697Filter;
@@ -66,12 +67,13 @@ public class ProMasterTicketDAO {
         PX040S01A720ResultSet14 objRtn14;
         PX040S01A720ResultSet15 objRtn15;
         PX040S01A720ResultSet22 objRtn22;
-
+        PX040S01A720ResultSet23 objRtn23;
+        
         PreparedStatement pstmt01 = null, pstmt02 = null;
         ResultSet rstst01 = null, rstst02 = null;
-        
+
         CallableStatement cstmt01 = null;
-        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null, rs16 = null, rs22 = null;
+        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null, rs16 = null, rs22 = null, rs23 = null;
         //<editor-fold defaultstate="collapsed" desc="{...} SQL Sentences">
         String SQLQRY01 = "SELECT"
                 + "   A720CIAI,A720FORMAI,A720SERIEI"
@@ -152,7 +154,7 @@ public class ProMasterTicketDAO {
                     objRtn.fileA720.A720CIAI = rs01.getString("A720CIAI");
                     objRtn.fileA720.A720FORMAI = rs01.getString("A720FORMAI");
                     objRtn.fileA720.A720SERIEI = rs01.getString("A720SERIEI");
-                    
+
                     objRtn.fileA720.A720AIRLIN = rs01.getString("A720AIRLIN");
                     objRtn.fileA720.A720GRUPO = rs01.getString("A720GRUPO");
                     objRtn.fileA720.A720ORIG = rs01.getString("A720ORIG");
@@ -178,11 +180,11 @@ public class ProMasterTicketDAO {
 
                     objRtn.fileA1530.A1530FUENT = rs01.getString("A1530FUENT");
                     objRtn.fileA1530.A1530PSVTA = rs01.getString("A1530PSVTA");
-                    
+
                     //-----
-                    objRtn.fileA1530.A1530IDFIL = rs01.getString("A1530IDFIL");                    
+                    objRtn.fileA1530.A1530IDFIL = rs01.getString("A1530IDFIL");
                     objRtn.fileA1530.A1530GRUPO = rs01.getString("A1530GRUPO");
-                    
+
                     
                     objRtn.fileA720.A720SASI = rs01.getString("A720SASI");
                     objRtn.fileA720.A720TICAP = rs01.getString("A720TICAP");
@@ -355,10 +357,10 @@ public class ProMasterTicketDAO {
                     objRtn.fileA720.A1672_MEMORAISED = rs01.getInt("A1672_MEMORAISED");
                     objRtn.fileA720.A1672_PREME = rs01.getString("A1672_PREME");
                     objRtn.fileA720.A2548_NMEMO = (rs01.getObject("A2548_NMEMO")==null ? "": rs01.getString("A2548_NMEMO"));
-                    
+
                     objRtn.fileA720.A1530FECCO = rs01.getString("A1530FECCO");
                     objRtn.fileA720.A4373_TOT = rs01.getInt("A4373_TOT");
-                    
+
                     
                     objRtn.fileA720.A2289_ESTADO = rs01.getString("CHG").trim();
                     filter.lstResultSet01.add(objRtn);
@@ -613,7 +615,7 @@ public class ProMasterTicketDAO {
                                                             objRtn11.fileA1692.A4373CUPN2 = rs11.getString("A4373CUPN2");
                                                             objRtn11.fileA1692.A4373CUPN3 = rs11.getString("A4373CUPN3");
                                                             objRtn11.fileA1692.A4373CUPN4 = rs11.getString("A4373CUPN4");
-                                                            
+
                                                             filter.lstResultSet11.add(objRtn11);
                                                         }
                                                         if (cstmt01.getMoreResults()) {
@@ -717,9 +719,35 @@ public class ProMasterTicketDAO {
                                                                             filter.lstResultSet15.add(objRtn15);
                                                                         }
                                                                         if (cstmt01.getMoreResults()) {
-                                                                            rs16 = cstmt01.getResultSet();
-                                                                            while (rs16.next()) {
+                                                                            rs23 = cstmt01.getResultSet();
+                                                                            while (rs23.next()) {
+                                                                                objRtn23 = new PX040S01A720ResultSet23();
+                                                                                objRtn23.fileA1692.CCIA = rs23.getString("CCIA");
+                                                                                objRtn23.fileA1692.FORMA = rs23.getString("FORMA");
+                                                                                objRtn23.fileA1692.SERIE = rs23.getString("SERIE");
+                                                                                objRtn23.fileA1692.CUPON = rs23.getString("CUPON");
+                                                                                objRtn23.fileA1692.SEQ = rs23.getString("SEQ");
+                                                                                objRtn23.fileA1692.SEQRO = "00";
+                                                                                objRtn23.fileA1692.CDEPART = rs23.getString("CDEPART");
+                                                                                objRtn23.fileA1692.CARRIVA = rs23.getString("CARRIVA");
+                                                                                objRtn23.fileA1692.CARR = rs23.getString("CARR");
+                                                                                objRtn23.fileA1692.NFLIGHT = rs23.getString("NFLIGHT");
+                                                                                objRtn23.fileA1692.DFLIGHT = rs23.getString("DFLIGHT");
+                                                                                objRtn23.fileA1692.CLAS = rs23.getString("CLAS");
+                                                                                objRtn23.fileA1692.FBASE = rs23.getString("FBASE");
+                                                                                objRtn23.fileA1692.VCPN = rs23.getDouble("VCPN");
+                                                                                objRtn23.fileA1692.MDACP = rs23.getString("MDACP");
                                                                                 
+                                                                                objRtn23.fileA1692.STVAL = rs23.getString("STVAL");
+                                                                                if (objRtn23.fileA1692.STVAL.equals("0")) {
+                                                                                    objRtn23.fileA1692.STVAL = "Venta sin Uso";
+                                                                                } else if (objRtn23.fileA1692.STVAL.equals("1")) {
+                                                                                    objRtn23.fileA1692.STVAL = "Uso sin Venta";
+                                                                                } else if (objRtn23.fileA1692.STVAL.equals("2")) {
+                                                                                    objRtn23.fileA1692.STVAL = "MATCH";
+                                                                                }
+                                                                                
+                                                                                filter.lstResultSet23.add(objRtn23);
                                                                             }
                                                                             if (cstmt01.getMoreResults()) {
                                                                                 rs22 = cstmt01.getResultSet();
@@ -805,7 +833,7 @@ public class ProMasterTicketDAO {
         }
         return filter;
     }
-    
+
     @Deprecated
     public List<PX040S01A720Filter> SQP04422(PX040S01A720Filter filter) throws SQLException, Exception {
         PX040S01A720ResultSet01 objRtn;
@@ -813,29 +841,26 @@ public class ProMasterTicketDAO {
         List<PX040S01A720Filter> lstPX040S01A720Filter = new ArrayList<PX040S01A720Filter>();
         PreparedStatement pstmt01 = null, pstmt02 = null;
         ResultSet rstst01 = null, rstst02 = null;
-        
+
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null;
         String SQLQRY01 = "SELECT";
 
         //<editor-fold defaultstate="collapsed" desc="{...} SQL Sentences">
-        if(filter.IN_CIA.equals("139"))
-        {
+        if (filter.IN_CIA.equals("139")) {
             SQLQRY01 = "SELECT"
-                + "   A720CIA,A720FORMA,A720SERIE, A720SEQ "
-                + " FROM PRAXIS.A720 WHERE"
-                + "   A720AIRLIN=? AND A720CIA=? AND A720FORMA=? AND A720SERIE=?"
-                + " UNION"
-                + " SELECT  A720CIA,A720FORMA,A720SERIE, A720SEQ "
-                + " FROM PRAXIS.A720HST WHERE"
-                + "   A720AIRLIN=? AND A720CIA=? AND A720FORMA=? AND A720SERIE=?";
-        }
-        else
-        {
+                    + "   A720CIA,A720FORMA,A720SERIE, A720SEQ "
+                    + " FROM PRAXIS.A720 WHERE"
+                    + "   A720AIRLIN=? AND A720CIA=? AND A720FORMA=? AND A720SERIE=?"
+                    + " UNION"
+                    + " SELECT  A720CIA,A720FORMA,A720SERIE, A720SEQ "
+                    + " FROM PRAXIS.A720HST WHERE"
+                    + "   A720AIRLIN=? AND A720CIA=? AND A720FORMA=? AND A720SERIE=?";
+        } else {
             SQLQRY01 = "SELECT"
-                + "   A720CIA,A720FORMA,A720SERIE, A720SEQ "
-                + " FROM PRAXIS.A3200 WHERE"
-                + "   A720AIRLIN=? AND A720CIA=? AND A720FORMA=? AND A720SERIE=?";
+                    + "   A720CIA,A720FORMA,A720SERIE, A720SEQ "
+                    + " FROM PRAXIS.A3200 WHERE"
+                    + "   A720AIRLIN=? AND A720CIA=? AND A720FORMA=? AND A720SERIE=?";
         }
         //</editor-fold>
         Connection cnx = null;
@@ -859,7 +884,7 @@ public class ProMasterTicketDAO {
                     pX040S01A720Filter.IN_SERIE = rstst01.getString("A720SERIE");
                     pX040S01A720Filter.IN_SEQ = rstst01.getString("A720SEQ");
                     lstPX040S01A720Filter.add(pX040S01A720Filter);
-                }                
+                }
             }
             else
             {
@@ -878,9 +903,9 @@ public class ProMasterTicketDAO {
                     lstPX040S01A720Filter.add(pX040S01A720Filter);
                 }
             }
-            
+
         } finally {
-            
+
         }
         return lstPX040S01A720Filter;
     }
@@ -939,7 +964,7 @@ public class ProMasterTicketDAO {
     };
         
             
-            
+           
     @Deprecated
     public List<PX040S01A1716Filter> loadPX040S01A1716(PX040S01A1716Filter filter) throws SQLException, Exception {
         List<PX040S01A1716Filter> lstRtn = new ArrayList<PX040S01A1716Filter>(0);
@@ -1643,11 +1668,11 @@ public class ProMasterTicketDAO {
                                                                 objRtn.A1716IDCON = rs13.getString("A3875IDCON");
 
                                                                 objRtn.TCOL = rs13.getString("TCOL");
-    //                                                            
-    //                                                             if(objRtn.A1716CIA.length() >= 5 && objRtn.A1716CIA.substring(0, 5).equals("TOTAL")){
-    //
-    //                                                             }
-    //                                                            
+                                                                //                                                            
+                                                                //                                                             if(objRtn.A1716CIA.length() >= 5 && objRtn.A1716CIA.substring(0, 5).equals("TOTAL")){
+                                                                //
+                                                                //                                                             }
+                                                                //                                                            
                                                                 if (objRtn.A1716MODO.isEmpty() || objRtn.A1716MODO.equals("---------")) {
                                                                     objRtn.A1716MODO = objRtn.A1716CIA; //Format example: "TOTAL AR S100-499:".
                                                                 }
@@ -1694,11 +1719,11 @@ public class ProMasterTicketDAO {
                                                                     objRtn.A1716IDCON = rs14.getString("A3875IDCON");
 
                                                                     objRtn.TCOL = rs14.getString("TCOL");
-        //                                                            
-        //                                                             if(objRtn.A1716CIA.length() >= 5 && objRtn.A1716CIA.substring(0, 5).equals("TOTAL")){
-        //
-        //                                                             }
-        //                                                            
+                                                                    //                                                            
+                                                                    //                                                             if(objRtn.A1716CIA.length() >= 5 && objRtn.A1716CIA.substring(0, 5).equals("TOTAL")){
+                                                                    //
+                                                                    //                                                             }
+                                                                    //                                                            
                                                                     if (objRtn.A1716MODO.isEmpty() || objRtn.A1716MODO.equals("---------")) {
                                                                         objRtn.A1716MODO = objRtn.A1716CIA; //Format example: "TOTAL AR S100-499:".
                                                                     }
@@ -1706,116 +1731,173 @@ public class ProMasterTicketDAO {
                                                                     lstRtn.add(objRtn);
                                                                 }
                                                                 if (cstmt01.getMoreResults()) {
-                                                                        rs15 = cstmt01.getResultSet();
-                                                                        while (rs15.next()) {
-                                                                            objRtn = new PX040S01A1716Filter();
-                                                                            objRtn.A1716CCUST = rs15.getString("A4070CCUST");
-                                                                            objRtn.A1716CIA = rs15.getString("A4070CIA");
-                                                                            objRtn.A1716FORMA = rs15.getString("A4070FORMA");
-                                                                            objRtn.A1716SERIE = rs15.getString("A4070SERIE");
-                                                                            objRtn.A1716CUPON = rs15.getString("A4070CUPON");
-                                                                            objRtn.A1716SEQT = rs15.getString("A4070SEQT");
-                                                                            objRtn.A1716SEQ = rs15.getString("A4070SEQ");
+                                                                    rs15 = cstmt01.getResultSet();
+                                                                    while (rs15.next()) {
+                                                                        objRtn = new PX040S01A1716Filter();
+                                                                        objRtn.A1716CCUST = rs15.getString("A4070CCUST");
+                                                                        objRtn.A1716CIA = rs15.getString("A4070CIA");
+                                                                        objRtn.A1716FORMA = rs15.getString("A4070FORMA");
+                                                                        objRtn.A1716SERIE = rs15.getString("A4070SERIE");
+                                                                        objRtn.A1716CUPON = rs15.getString("A4070CUPON");
+                                                                        objRtn.A1716SEQT = rs15.getString("A4070SEQT");
+                                                                        objRtn.A1716SEQ = rs15.getString("A4070SEQ");
 
-                                                                            objRtn.A1716MODO = rs15.getString("A4070MODO");
-                                                                            objRtn.A1716FUENT = rs15.getString("A4070FUENT");
-                                                                            objRtn.A1716SUBFU = rs15.getString("A4070SUBFU");
-                                                                            objRtn.A1716FP = rs15.getString("A4070FP");
+                                                                        objRtn.A1716MODO = rs15.getString("A4070MODO");
+                                                                        objRtn.A1716FUENT = rs15.getString("A4070FUENT");
+                                                                        objRtn.A1716SUBFU = rs15.getString("A4070SUBFU");
+                                                                        objRtn.A1716FP = rs15.getString("A4070FP");
 
-                                                                            objRtn.A1716FUENT = rs15.getString("A4070FUENT");
-                                                                            objRtn.A1716ESTAD = rs15.getString("A4070ESTAD");
-                                                                            objRtn.A1716FFILE = rs15.getString("A4070FFILE");
-                                                                            objRtn.A1716FPRO = rs15.getString("A4070FPRO");
-                                                                            objRtn.A1716GRUPO = rs15.getString("A4070GRUPO");
-                                                                            objRtn.A1716CUR = rs15.getString("A4070CUR");
-                                                                            objRtn.A1716ACTIV = rs15.getDouble("A4070ACTIV");
-                                                                            objRtn.A1716PASIV = rs15.getDouble("A4070PASIV");
-                                                                            objRtn.A1716CURRV = rs15.getString("A4070CURRV");
-                                                                            objRtn.A1716ACTRV = rs15.getDouble("A4070ACTRV");
-                                                                            objRtn.A1716PASRV = rs15.getDouble("A4070PASRV");
-                                                                            objRtn.A1716CUENT = rs15.getString("A4070CUENT");
-                                                                            objRtn.A1716SUBCU = rs15.getString("A4070SUBCU");
-                                                                            objRtn.A1716IDFIL = rs15.getString("A4070IDFIL");
-                                                                            objRtn.A1716TIDOC = rs15.getString("A4070TIDOC");
-                                                                            objRtn.A1716ORIG = rs15.getString("A4070ORIG");
-                                                                            objRtn.A1716FCONT = rs15.getString("A4070FCONT");
+                                                                        objRtn.A1716FUENT = rs15.getString("A4070FUENT");
+                                                                        objRtn.A1716ESTAD = rs15.getString("A4070ESTAD");
+                                                                        objRtn.A1716FFILE = rs15.getString("A4070FFILE");
+                                                                        objRtn.A1716FPRO = rs15.getString("A4070FPRO");
+                                                                        objRtn.A1716GRUPO = rs15.getString("A4070GRUPO");
+                                                                        objRtn.A1716CUR = rs15.getString("A4070CUR");
+                                                                        objRtn.A1716ACTIV = rs15.getDouble("A4070ACTIV");
+                                                                        objRtn.A1716PASIV = rs15.getDouble("A4070PASIV");
+                                                                        objRtn.A1716CURRV = rs15.getString("A4070CURRV");
+                                                                        objRtn.A1716ACTRV = rs15.getDouble("A4070ACTRV");
+                                                                        objRtn.A1716PASRV = rs15.getDouble("A4070PASRV");
+                                                                        objRtn.A1716CUENT = rs15.getString("A4070CUENT");
+                                                                        objRtn.A1716SUBCU = rs15.getString("A4070SUBCU");
+                                                                        objRtn.A1716IDFIL = rs15.getString("A4070IDFIL");
+                                                                        objRtn.A1716TIDOC = rs15.getString("A4070TIDOC");
+                                                                        objRtn.A1716ORIG = rs15.getString("A4070ORIG");
+                                                                        objRtn.A1716FCONT = rs15.getString("A4070FCONT");
 
-                                                                            objRtn.A1716TITU = rs15.getString("A4070TITU");
+                                                                        objRtn.A1716TITU = rs15.getString("A4070TITU");
 
-                                                                            objRtn.A1716COPE = rs15.getString("A4070COPE");
-                                                                            objRtn.A1716PROV = rs15.getString("A4070PROV");
+                                                                        objRtn.A1716COPE = rs15.getString("A4070COPE");
+                                                                        objRtn.A1716PROV = rs15.getString("A4070PROV");
 
-                                                                            objRtn.A1716IDCON = rs15.getString("A4070IDCON");
+                                                                        objRtn.A1716IDCON = rs15.getString("A4070IDCON");
 
-                                                                            objRtn.TCOL = rs15.getString("TCOL");
-                                                        //                    
-                                                        //                     if(objRtn.A1716CIA.length() >= 5 && objRtn.A1716CIA.substring(0, 5).equals("TOTAL")){
-                                                        //
-                                                        //                     }
-                                                        //                    
-                                                                            if (objRtn.A1716MODO.isEmpty() || objRtn.A1716MODO.equals("---------")) {
-                                                                                objRtn.A1716MODO = objRtn.A1716CIA; //Format example: "TOTAL AR S100-499:".
-                                                                            }
-
-                                                                            lstRtn.add(objRtn);
+                                                                        objRtn.TCOL = rs15.getString("TCOL");
+                                                                        //                    
+                                                                        //                     if(objRtn.A1716CIA.length() >= 5 && objRtn.A1716CIA.substring(0, 5).equals("TOTAL")){
+                                                                        //
+                                                                        //                     }
+                                                                        //                    
+                                                                        if (objRtn.A1716MODO.isEmpty() || objRtn.A1716MODO.equals("---------")) {
+                                                                            objRtn.A1716MODO = objRtn.A1716CIA; //Format example: "TOTAL AR S100-499:".
                                                                         }
+
+                                                                        lstRtn.add(objRtn);
                                                                     }
+                                                                }
 
-                                                                    if (cstmt01.getMoreResults()) {
-                                                                        rs16 = cstmt01.getResultSet();
-                                                                        while (rs16.next()) {
-                                                                            objRtn = new PX040S01A1716Filter();
-                                                                            objRtn.A1716CCUST = rs16.getString("A4217CCUST");
-                                                                            objRtn.A1716CIA = rs16.getString("A4217CIA");
-                                                                            objRtn.A1716FORMA = rs16.getString("A4217FORMA");
-                                                                            objRtn.A1716SERIE = rs16.getString("A4217SERIE");
-                                                                            objRtn.A1716CUPON = rs16.getString("A4217CUPON");
-                                                                            objRtn.A1716SEQT = rs16.getString("A4217SEQT");
-                                                                            objRtn.A1716SEQ = rs16.getString("A4217SEQ");
 
-                                                                            objRtn.A1716MODO = rs16.getString("A4217MODO");
-                                                                            objRtn.A1716FUENT = rs16.getString("A4217FUENT");
-                                                                            objRtn.A1716SUBFU = rs16.getString("A4217SUBFU");
-                                                                            objRtn.A1716FP = rs16.getString("A4217FP");
+                                                                if (cstmt01.getMoreResults()) {
+                                                                    rs16 = cstmt01.getResultSet();
+                                                                    while (rs16.next()) {
+                                                                        objRtn = new PX040S01A1716Filter();
+                                                                        objRtn.A1716CCUST = rs16.getString("A4183CCUST");
+                                                                        objRtn.A1716CIA = rs16.getString("A4183CIA");
+                                                                        objRtn.A1716FORMA = rs16.getString("A4183FORMA");
+                                                                        objRtn.A1716SERIE = rs16.getString("A4183SERIE");
+                                                                        objRtn.A1716CUPON = rs16.getString("A4183CUPON");
+                                                                        objRtn.A1716SEQT = rs16.getString("A4183SEQT");
+                                                                        objRtn.A1716SEQ = rs16.getString("A4183SEQ");
 
-                                                                            objRtn.A1716FUENT = rs16.getString("A4217FUENT");
-                                                                            objRtn.A1716ESTAD = rs16.getString("A4217ESTAD");
-                                                                            objRtn.A1716FFILE = rs16.getString("A4217FFILE");
-                                                                            objRtn.A1716FPRO = rs16.getString("A4217FPRO");
-                                                                            objRtn.A1716GRUPO = rs16.getString("A4217GRUPO");
-                                                                            objRtn.A1716CUR = rs16.getString("A4217CUR");
-                                                                            objRtn.A1716ACTIV = rs16.getDouble("A4217ACTIV");
-                                                                            objRtn.A1716PASIV = rs16.getDouble("A4217PASIV");
-                                                                            objRtn.A1716CURRV = rs16.getString("A4217CURRV");
-                                                                            objRtn.A1716ACTRV = rs16.getDouble("A4217ACTRV");
-                                                                            objRtn.A1716PASRV = rs16.getDouble("A4217PASRV");
-                                                                            objRtn.A1716CUENT = rs16.getString("A4217CUENT");
-                                                                            objRtn.A1716SUBCU = rs16.getString("A4217SUBCU");
-                                                                            objRtn.A1716IDFIL = rs16.getString("A4217IDFIL");
-                                                                            objRtn.A1716TIDOC = rs16.getString("A4217TIDOC");
-                                                                            objRtn.A1716ORIG = rs16.getString("A4217ORIG");
-                                                                            objRtn.A1716FCONT = rs16.getString("A4217FCONT");
+                                                                        objRtn.A1716MODO = rs16.getString("A4183MODO");
+                                                                        objRtn.A1716FUENT = rs16.getString("A4183FUENT");
+                                                                        objRtn.A1716SUBFU = rs16.getString("A4183SUBFU");
+                                                                        objRtn.A1716FP = rs16.getString("A4183FP");
 
-                                                                            objRtn.A1716TITU = rs16.getString("A4217TITU");
+                                                                        //objRtn.A1716FUENT = rs15.getString("A4070FUENT");
+                                                                        objRtn.A1716ESTAD = rs16.getString("A4183ESTAD");
+                                                                        objRtn.A1716FFILE = rs16.getString("A4183FFILE");
+                                                                        objRtn.A1716FPRO = rs16.getString("A4183FPRO");
+                                                                        objRtn.A1716GRUPO = rs16.getString("A4183GRUPO");
+                                                                        objRtn.A1716CUR = rs16.getString("A4183CUR");
+                                                                        objRtn.A1716ACTIV = rs16.getDouble("A4183ACTIV");
+                                                                        objRtn.A1716PASIV = rs16.getDouble("A4183PASIV");
+                                                                        objRtn.A1716CURRV = rs16.getString("A4183CURRV");
+                                                                        objRtn.A1716ACTRV = rs16.getDouble("A4183ACTRV");
+                                                                        objRtn.A1716PASRV = rs16.getDouble("A4183PASRV");
+                                                                        objRtn.A1716CUENT = rs16.getString("A4183CUENT");
+                                                                        objRtn.A1716SUBCU = rs16.getString("A4183SUBCU");
+                                                                        objRtn.A1716IDFIL = rs16.getString("A4183IDFIL");
+                                                                        objRtn.A1716TIDOC = rs16.getString("A4183TIDOC");
+                                                                        objRtn.A1716TDOC = rs16.getString("A4183TDOC");
+                                                                        objRtn.A1716ORIG = rs16.getString("A4183ORIG");
+                                                                        objRtn.A1716FCONT = rs16.getString("A4183FCONT");
 
-                                                                            objRtn.A1716COPE = rs16.getString("A4217COPE");
-                                                                            objRtn.A1716PROV = rs16.getString("A4217PROV");
+                                                                        objRtn.A1716TITU = rs16.getString("A4183TITU");
 
-                                                                            objRtn.A1716IDCON = rs16.getString("A4217IDCON");
+                                                                        objRtn.A1716COPE = rs16.getString("A4183COPE");
+                                                                        objRtn.A1716PROV = rs16.getString("A4183PROV");
 
-                                                                            objRtn.TCOL = rs16.getString("TCOL");
-                                                        //                    
-                                                        //                     if(objRtn.A1716CIA.length() >= 5 && objRtn.A1716CIA.substring(0, 5).equals("TOTAL")){
-                                                        //
-                                                        //                     }
-                                                        //                    
-                                                                            if (objRtn.A1716MODO.isEmpty() || objRtn.A1716MODO.equals("---------")) {
-                                                                                objRtn.A1716MODO = objRtn.A1716CIA; //Format example: "TOTAL AR S100-499:".
-                                                                            }
+                                                                        objRtn.A1716IDCON = rs16.getString("A4183IDCON");
 
-                                                                            lstRtn.add(objRtn);
+                                                                        objRtn.TCOL = rs16.getString("TCOL");
+                                                                        //                    
+                                                                        //                     if(objRtn.A1716CIA.length() >= 5 && objRtn.A1716CIA.substring(0, 5).equals("TOTAL")){
+                                                                        //
+                                                                        //                     }
+                                                                        //                    
+                                                                        if (objRtn.A1716MODO.isEmpty() || objRtn.A1716MODO.equals("---------")) {
+                                                                            objRtn.A1716MODO = objRtn.A1716CIA; //Format example: "TOTAL AR S100-499:".
                                                                         }
+
+                                                                        lstRtn.add(objRtn);
                                                                     }
+                                                                }
+                                                                if (cstmt01.getMoreResults()) {
+                                                                    rs17 = cstmt01.getResultSet();
+                                                                    while (rs17.next()) {
+                                                                        objRtn = new PX040S01A1716Filter();
+                                                                        objRtn.A1716CCUST = rs17.getString("A4217CCUST");
+                                                                        objRtn.A1716CIA = rs17.getString("A4217CIA");
+                                                                        objRtn.A1716FORMA = rs17.getString("A4217FORMA");
+                                                                        objRtn.A1716SERIE = rs17.getString("A4217SERIE");
+                                                                        objRtn.A1716CUPON = rs17.getString("A4217CUPON");
+                                                                        objRtn.A1716SEQT = rs17.getString("A4217SEQT");
+                                                                        objRtn.A1716SEQ = rs17.getString("A4217SEQ");
+
+                                                                        objRtn.A1716MODO = rs17.getString("A4217MODO");
+                                                                        objRtn.A1716FUENT = rs17.getString("A4217FUENT");
+                                                                        objRtn.A1716SUBFU = rs17.getString("A4217SUBFU");
+                                                                        objRtn.A1716FP = rs17.getString("A4217FP");
+
+                                                                        objRtn.A1716FUENT = rs17.getString("A4217FUENT");
+                                                                        objRtn.A1716ESTAD = rs17.getString("A4217ESTAD");
+                                                                        objRtn.A1716FFILE = rs17.getString("A4217FFILE");
+                                                                        objRtn.A1716FPRO = rs17.getString("A4217FPRO");
+                                                                        objRtn.A1716GRUPO = rs17.getString("A4217GRUPO");
+                                                                        objRtn.A1716CUR = rs17.getString("A4217CUR");
+                                                                        objRtn.A1716ACTIV = rs17.getDouble("A4217ACTIV");
+                                                                        objRtn.A1716PASIV = rs17.getDouble("A4217PASIV");
+                                                                        objRtn.A1716CURRV = rs17.getString("A4217CURRV");
+                                                                        objRtn.A1716ACTRV = rs17.getDouble("A4217ACTRV");
+                                                                        objRtn.A1716PASRV = rs17.getDouble("A4217PASRV");
+                                                                        objRtn.A1716CUENT = rs17.getString("A4217CUENT");
+                                                                        objRtn.A1716SUBCU = rs17.getString("A4217SUBCU");
+                                                                        objRtn.A1716IDFIL = rs17.getString("A4217IDFIL");
+                                                                        objRtn.A1716TIDOC = rs17.getString("A4217TIDOC");
+                                                                        objRtn.A1716ORIG = rs17.getString("A4217ORIG");
+                                                                        objRtn.A1716FCONT = rs17.getString("A4217FCONT");
+
+                                                                        objRtn.A1716TITU = rs17.getString("A4217TITU");
+
+                                                                        objRtn.A1716COPE = rs17.getString("A4217COPE");
+                                                                        objRtn.A1716PROV = rs17.getString("A4217PROV");
+
+                                                                        objRtn.A1716IDCON = rs17.getString("A4217IDCON");
+
+                                                                        objRtn.TCOL = rs17.getString("TCOL");
+                                                                        //                    
+                                                                        //                     if(objRtn.A1716CIA.length() >= 5 && objRtn.A1716CIA.substring(0, 5).equals("TOTAL")){
+                                                                        //
+                                                                        //                     }
+                                                                        //                    
+                                                                        if (objRtn.A1716MODO.isEmpty() || objRtn.A1716MODO.equals("---------")) {
+                                                                            objRtn.A1716MODO = objRtn.A1716CIA; //Format example: "TOTAL AR S100-499:".
+                                                                        }
+
+                                                                        lstRtn.add(objRtn);
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                     }
@@ -1833,7 +1915,7 @@ public class ProMasterTicketDAO {
         }
                 
         catch (Exception e) {
-           logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
        }
                 
         finally {
@@ -1947,7 +2029,7 @@ public class ProMasterTicketDAO {
         }
         return lstRtn;
     }
-    
+
     public List<A720> loadPX040S02A720(PX040S02A720Filter filter) throws SQLException, Exception {
         List<A720> lstRtn = new ArrayList<A720>(0);
         A720 objRtn;
@@ -2059,7 +2141,7 @@ public class ProMasterTicketDAO {
         }
         return lstRtn;
     }
-    
+
     public List<SQP00697Filter> loadSQP00697(SQP00697Filter filter) throws SQLException, Exception {
         List<SQP00697Filter> lstRtn = new ArrayList<SQP00697Filter>(0);
         SQP00697Filter objRtn;
@@ -2068,13 +2150,12 @@ public class ProMasterTicketDAO {
         ResultSet rs01 = null;
 
         String SQLCLL01 = "";
-       
-        SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}"; 
-        if(filter.IN_TFILTER == 1 && !"139".equals(filter.IN_TEXT.substring(0, 3)))
-        {
-            SQLCLL01 = "{CALL SQP04574(?,?,?,?,?,?,?,?,?)}"; 
+
+        SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}";
+        if (filter.IN_TFILTER == 1 && !"139".equals(filter.IN_TEXT.substring(0, 3))) {
+            SQLCLL01 = "{CALL SQP04574(?,?,?,?,?,?,?,?,?)}";
         }
-        
+
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -2138,7 +2219,7 @@ public class ProMasterTicketDAO {
         }
         return lstRtn;
     }
-    
+
     private void setClose() {
 
         if (rst != null) {
@@ -2168,7 +2249,7 @@ public class ProMasterTicketDAO {
         System.runFinalization();
         System.gc();
     }
-    
+
     public List<SQP00250Filter> loadSQP00250(SQP00250Filter filter) throws SQLException, Exception {
 
         List<SQP00250Filter> lstRtn = new ArrayList<SQP00250Filter>(0);
@@ -2269,7 +2350,7 @@ public class ProMasterTicketDAO {
         }
         return lstRtn;
     }
-    
+
     public List<A714> loadS0001A714(A714 filter) throws SQLException, Exception {
 
         List<A714> lstRtn = new ArrayList<A714>(0);
@@ -2357,7 +2438,7 @@ public class ProMasterTicketDAO {
         }
         return lstRtn;
     }
-    
+
     public List<SQP03658Filter> loadSQP03658(SQP03658Filter filter) throws SQLException, Exception {
 
         List<SQP03658Filter> lstRtn = new ArrayList<SQP03658Filter>(0);
@@ -2464,7 +2545,7 @@ public class ProMasterTicketDAO {
         }
         return lstRtn;
     }
-    
+
     public PX040S01A720Filter loadSQP02665(PX040S01A720Filter filter) throws SQLException, Exception {
         PX040S01A720ResultSet01 objRtn;
         PX040S01A720ResultSet02 objRtn02;
@@ -2480,7 +2561,7 @@ public class ProMasterTicketDAO {
 
         PreparedStatement pstmt01 = null, pstmt02 = null;
         ResultSet rstst01 = null, rstst02 = null;
-        
+
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null;
         //<editor-fold defaultstate="collapsed" desc="{...} SQL Sentences">
@@ -3031,14 +3112,14 @@ public class ProMasterTicketDAO {
                                                                     objRtn13.fileA1200.RUTA_FROM = rs13.getString("RUTA_FROM");
                                                                     objRtn13.fileA1200.RUTA_TO = rs13.getString("RUTA_TO");
                                                                     objRtn13.fileA1200.CARR = rs13.getString("CARR");
-                                                                    
+
                                                                     //ISR
                                                                     try{
                                                                         objRtn13.fileA1200.FECR = rs13.getString("FLIGHT");
                                                                     }catch(SQLException ex){
                                                                         //No es ISR
                                                                     }
-                                                                    
+
                                                                     objRtn13.fileA1200.DFLIGHT = rs13.getString("DFLIGHT");
                                                                     objRtn13.fileA1200.FBASIS = rs13.getString("FBASIS");
                                                                     objRtn13.fileA1200.GROSS = rs13.getDouble("GROSS");
@@ -3109,7 +3190,7 @@ public class ProMasterTicketDAO {
                 }
                 //</editor-fold>
             }
-            
+
         } catch (SQLException ex) {
             String err = ex.getMessage();
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + ex.getMessage(), ex);
