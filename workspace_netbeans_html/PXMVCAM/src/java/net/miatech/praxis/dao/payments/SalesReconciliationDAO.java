@@ -457,30 +457,4 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         filter.setPageOut(spRes);
         return filter;
     }
-
-    @Override
-    public SQP05141Filter loadSQP05141Filter(SQP05141Filter filter) throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05141")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4332Filter.class));
-        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        Map<String, Object> spRes = jdbcCall.execute(params);
-        filter.setResponse((List<A4332Filter>) spRes.get("result"));
-        return filter;
-    }
-
-    @Override
-    public SQP05142Filter loadSQP05142Filter(SQP05142Filter filter) throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05142")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4332Filter.class));
-        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        Map<String, Object> spRes = jdbcCall.execute(params);
-        filter.setResponse((List<A4332Filter>) spRes.get("result"));
-        return filter;
-    }
-    
-    
 }

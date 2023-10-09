@@ -12,7 +12,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
         {
             xtype: 'combobox',
             fieldLabel: 'Search By',
-            padding: '10 5 10 10',
+            margin: '30 10 10 10',
+            labelStyle: 'text-align: left;font-weight:bold',
             id: prototype.id + '-cmbFiltersBT',
             store: Ext.create('Ext.data.SimpleStore', {
                 fields: ['code', 'name'],
@@ -103,9 +104,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     width: 150,
                                     value: new Date(new Date().getFullYear(), 0, 1),
                                     listeners: {
-                                        change: 'onChangeMonthBtn'
+                                        change: 'onChangeMonthBTBtn'
                                     },
-                                    name: 'month'
+                                    name: 'month',
+                                    id: prototype.id + '-monthfieldFromBT'
                                 },
                                 {
                                     xtype: 'monthfield',
@@ -118,9 +120,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     width: 130,
                                     value: new Date(),
                                     listeners: {
-                                        change: 'onChangeMonthBtn'
+                                        change: 'onChangeMonthBTBtn'
                                     },
-                                    name: 'month'
+                                    name: 'month',
+                                    id: prototype.id + '-monthfieldToBT'
                                 },
                                 {
                                     xtype: 'combo',
@@ -281,11 +284,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     editable: false, // Deshabilita la edición del campo
                                     labelWidth: 50,
                                     width: 150,
-                                    value: new Date(new Date().getFullYear(), 0, 1),
+                                    value: new Date(anioActual, mesActual, 1),
                                     validator: 'validaFecha',
                                     listeners: {
-                                        change: 'onChangeFechaBtn'
-                                    }
+                                        change: 'onChangeDateBTBtn'
+                                    },
+                                    id: prototype.id + '-datefieldFromBT'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -296,11 +300,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     editable: false, // Deshabilita la edición del campo
                                     labelWidth: 30,
                                     width: 130,
-                                    value: new Date(),
+                                    value: fechaActual,
                                     validator: 'validaFecha',
                                     listeners: {
-                                        change: 'onChangeFechaBtn'
-                                    }
+                                        change: 'onChangeDateBTBtn'
+                                    },
+                                    id: prototype.id + '-datefieldToBT'
                                 },
                                 {
                                     xtype: 'combo',

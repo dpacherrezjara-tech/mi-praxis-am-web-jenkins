@@ -12,7 +12,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
         {
             xtype: 'combobox',
             fieldLabel: 'Search By',
-            padding: '10 5 10 10',
+            margin: '30 10 10 10',
+            labelStyle: 'text-align: left;font-weight:bold',
             id: prototype.id + '-cmbFiltersBP',
             store: Ext.create('Ext.data.SimpleStore', {
                 fields: ['code', 'name'],
@@ -103,9 +104,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     width: 150,
                                     value: new Date(new Date().getFullYear(), 0, 1),
                                     listeners: {
-                                        change: 'onChangeMonthBtn'
+                                        change: 'onChangeMonthBPBtn'
                                     },
-                                    name: 'month'
+                                    name: 'month',
+                                    id: prototype.id + '-monthfieldFromBP'
                                 },
                                 {
                                     xtype: 'monthfield',
@@ -118,9 +120,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     width: 130,
                                     value: new Date(),
                                     listeners: {
-                                        change: 'onChangeMonthBtn'
+                                        change: 'onChangeMonthBPBtn'
                                     },
-                                    name: 'month'
+                                    name: 'month',
+                                    id: prototype.id + '-monthfieldToBP'
                                 },
                                 {
                                     xtype: 'combo',
@@ -224,7 +227,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                 labelAlign: 'right',
                                 hidden: false
                             },
-                            items:[
+                            items: [
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Status',
@@ -235,7 +238,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                             ['', 'All'],
                                             ['0', 'Stand By'],
                                             ['1', 'Match'],
-                                            ['2', 'Sales Without Settl.'],
                                             ['3', 'Settl. Without Sales'],
                                             ['4', 'Match Diff.'],
                                             ['5', 'Match Manual'],
@@ -254,7 +256,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbCerrorSum',
+                                    id: prototype.id + '-cmbCerror',
                                     fieldLabel: 'Error Code',
                                     name: 'IN_CERROR',
                                     labelWidth: 80,
@@ -268,7 +270,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Adj. Code',
-                                    id: prototype.id + '-cmbCodadjuSum',
+                                    id: prototype.id + '-cmbCodadju',
                                     name: 'IN_CODADJU',
                                     labelWidth: 70,
                                     width: 230,
@@ -341,11 +343,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     editable: false, // Deshabilita la edición del campo
                                     labelWidth: 50,
                                     width: 150,
-                                    value: new Date(new Date().getFullYear(), 0, 1),
+                                    value: new Date(anioActual, mesActual, 1),
                                     validator: 'validaFecha',
                                     listeners: {
-                                        change: 'onChangeFechaBtn'
-                                    }
+                                        change: 'onChangeDateBPBtn'
+                                    },
+                                    id: prototype.id + '-datefieldFromBP'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -356,11 +359,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     editable: false, // Deshabilita la edición del campo
                                     labelWidth: 30,
                                     width: 130,
-                                    value: new Date(),
+                                    value: fechaActual,
                                     validator: 'validaFecha',
                                     listeners: {
-                                        change: 'onChangeFechaBtn'
-                                    }
+                                        change: 'onChangeDateBPBtn'
+                                    },
+                                    id: prototype.id + '-datefieldToBP'
                                 },
                                 {
                                     xtype: 'combo',
@@ -559,7 +563,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbCerror',
+                                    id: prototype.id + '-cmbCerrorb',
                                     fieldLabel: 'Error Code',
                                     name: 'IN_CERROR',
                                     labelWidth: 80,
@@ -573,7 +577,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Adj. Code',
-                                    id: prototype.id + '-cmbCodadju',
+                                    id: prototype.id + '-cmbCodadjub',
                                     name: 'IN_CODADJU',
                                     labelWidth: 70,
                                     width: 230,

@@ -102,6 +102,8 @@ public class ExportUtils {
                     switch (dataType) {
                         case "Integer":
                         case "int":
+                        case "Long":
+                        case "long":
                             cell.setCellValue(Integer.parseInt(obj.toString()));
                             break;
                         case "Double":
