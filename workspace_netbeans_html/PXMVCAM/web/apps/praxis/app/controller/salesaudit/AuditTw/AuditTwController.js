@@ -1402,7 +1402,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.AuditTw.AuditTwController', {
                 Ext.getCmp(prototype.id + '-campo64').setText("ENDORSEMENT");
                 
                 Ext.getCmp(prototype.id + '-campo65').show();
-                Ext.getCmp(prototype.id + '-campo65').setText("USED");
+                Ext.getCmp(prototype.id + '-campo65').setText("INDIC CPN");
+                
+                Ext.getCmp(prototype.id + '-campo66').show();
+                Ext.getCmp(prototype.id + '-campo66').setText("USED");
         }
 //        if (check && (numColumns>0)) {
         if (numColumns>0) {
@@ -1964,6 +1967,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.AuditTw.AuditTwController', {
             columns.push(data);
         var data = {
                 dataIndex: "column65",
+                text: 'INDIC CPN',
+                align : "left",
+                type : "string",
+                width : 100,
+                level : 1
+            };
+            columns.push(data);    
+        var data = {
+                dataIndex: "column66",
                 text: 'USED',
                 align : "left",
                 type : "string",

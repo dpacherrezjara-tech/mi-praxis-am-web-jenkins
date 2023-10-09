@@ -11,7 +11,6 @@ import net.miatech.praxis.exceptions.SpringException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import net.miatech.beans.A4474Filter;
 import net.miatech.beans.PX040S01A1716Filter;
 import net.miatech.beans.PX040S01A720Filter;
 import net.miatech.beans.PX040S01A720ResultSet01;
@@ -712,10 +711,6 @@ public class ProMasterTicketDAO {
                                                                             objRtn15.fileA1747.MDACP = rs15.getString("MDACP");
                                                                             objRtn15.fileA1747.TIPOC = rs15.getString("TIPOC");
                                                                             objRtn15.fileA1747.TUA = rs15.getString("TUA");
-                                                                            objRtn15.fileA1747.A4373CUPN1 = rs15.getString("A4373CUPN1");
-                                                                            objRtn15.fileA1747.A4373CUPN2 = rs15.getString("A4373CUPN2");
-                                                                            objRtn15.fileA1747.A4373CUPN3 = rs15.getString("A4373CUPN3");
-                                                                            objRtn15.fileA1747.A4373CUPN4 = rs15.getString("A4373CUPN4");
                                                                             filter.lstResultSet15.add(objRtn15);
                                                                         }
                                                                         if (cstmt01.getMoreResults()) {
@@ -753,8 +748,8 @@ public class ProMasterTicketDAO {
                                                                                 rs22 = cstmt01.getResultSet();
                                                                                 while (rs22.next()) {
                                                                                     objRtn22 = new PX040S01A720ResultSet22();
-                                                                                    //objRtn22.fileA4121.SCARDN = rs22.getString("SCARDN").trim();
-                                                                                    //objRtn22.fileA4121.SAUTHOC = rs22.getString("SAUTHOC").trim();
+//                                                                                    objRtn22.fileA4121.SCARDN = rs22.getString("SCARDN").trim();
+//                                                                                    objRtn22.fileA4121.SAUTHOC = rs22.getString("SAUTHOC").trim();
                                                                                     filter.lstResultSet22.add(objRtn22);
                                                                                 }
                                                                             }
@@ -909,62 +904,7 @@ public class ProMasterTicketDAO {
         }
         return lstPX040S01A720Filter;
     }
-    
-    
-    
-    public List<A4474Filter> loadSQP05045(A4474Filter filter) throws SQLException, Exception {
-        List<A4474Filter> lstRtn = new ArrayList<A4474Filter>(0);
-        A4474Filter objRtn;
 
-        CallableStatement cstmt01 = null;
-        ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL PRAXIS.SQP05045(?,?,?,?,?,?,?,?,?)}"; // CAMBIAMOS SP PRAXIS.PX040S01A1716
-        //String SQLCLL01 = "{CALL PRAXIS.SQP00362(?,?,?,?)}";
-        Connection cnx = null;
-        try {
-            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cstmt01 = cnx.prepareCall(SQLCLL01);
-
-            cstmt01.setString(1, filter.VP_A1716CCUST);
-            cstmt01.setString(2, filter.VP_A1716CIA);
-            cstmt01.setString(3, filter.VP_A1716FORMA);
-            cstmt01.setString(4, filter.VP_A1716SERIE);
-            cstmt01.setString(5, filter.VP_A1716SEQT);
-//            
-            cstmt01.setString(6, filter.VP_A1716SEQR);
-            cstmt01.setString(7, filter.VP_A1716SEQF);
-            cstmt01.setString(8, filter.VP_A1716SEQI);
-            cstmt01.setString(9, filter.VP_A1716SEQA);
-            cstmt01.execute();
-
-            rs01 = cstmt01.getResultSet();
-            while (rs01.next()) {
-                objRtn = new A4474Filter();
-                objRtn.A4474CCUST = rs01.getString("A4474CCUST");
-                objRtn.A4474CIA = rs01.getString("A4474CIA");
-                objRtn.A4474FORMA = rs01.getString("A4474FORMA");
-                objRtn.A4474SERIE = rs01.getString("A4474SERIE");
-                objRtn.A4474SEQT = rs01.getString("A4474SEQT");
-                objRtn.A4474SQREG = rs01.getString("A4474SQREG");
-                objRtn.A4474FPROC = rs01.getString("A4474FPROC");
-                objRtn.A4474MODO = rs01.getString("A4474MODO");
-                objRtn.A4474SEQRO = rs01.getString("A4474SEQRO");
-                objRtn.A4474UREGI = rs01.getString("A4474UREGI");
-
-                objRtn.A4474FREGI = rs01.getString("A4474FREGI");
-                objRtn.A4474HREGI = rs01.getString("A4474HREGI");
-
-                lstRtn.add(objRtn);
-            }
-        } 
-        catch(Exception e){
-            
-        };
-        return lstRtn;
-    };
-        
-            
-           
     @Deprecated
     public List<PX040S01A1716Filter> loadPX040S01A1716(PX040S01A1716Filter filter) throws SQLException, Exception {
         List<PX040S01A1716Filter> lstRtn = new ArrayList<PX040S01A1716Filter>(0);
@@ -1786,7 +1726,6 @@ public class ProMasterTicketDAO {
                                                                     }
                                                                 }
 
-
                                                                 if (cstmt01.getMoreResults()) {
                                                                     rs16 = cstmt01.getResultSet();
                                                                     while (rs16.next()) {
@@ -2190,7 +2129,6 @@ public class ProMasterTicketDAO {
                 objRtn.A1531MFOP = rs01.getString("A1531MFOP");
                 objRtn.A1531CAPL = rs01.getString("A1531CAPL");
                 objRtn.A720SEQ = rs01.getString("A720SEQ");
-                objRtn.A720TKVOID = rs01.getString("A720TKVOID");
                 //objRtn.SCARDN = rs01.getString("SCARDN");
                 //objRtn.SAUTHOC = rs01.getString("SAUTHOC");
                 lstRtn.add(objRtn);
