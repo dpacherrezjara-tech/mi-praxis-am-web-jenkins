@@ -1,6 +1,9 @@
 package net.miatech.praxis.controllers.payments;
 //<editor-fold defaultstate="collapsed" desc="Imports">
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
 import net.miatech.praxis.payment.A4507;
@@ -600,7 +603,7 @@ public class SalesReconciliationBPOController {
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();
             //headers
-            Object[] headers = new Object[22];
+            Object[] headers = new Object[25];
             headers[0] = "Sale Date";
             headers[1] = "IATA";
             headers[2] = "Source";
@@ -620,12 +623,15 @@ public class SalesReconciliationBPOController {
             headers[16] = "Auth Code";
             headers[17] = "Amount";
             headers[18] = "Currency";
-            headers[19] = "Status";
-            headers[20] = "Processor";
-            headers[21] = "ADM St.";
+            headers[19] = "Expected Date";
+            headers[20] = "Processing Date";
+            headers[21] = "Difference";
+            headers[22] = "Status";
+            headers[23] = "Processor";
+            headers[24] = "ADM St.";
             data.add(headers);
             for (A4496Filter obj : filter.getResponse()) {
-                Object[] row = new Object[22];
+                Object[] row = new Object[25];
                 row[0] = obj.getA4496FECVT();
                 row[1] = obj.getA4496AGENT();
                 row[2] = obj.getA4496FUENT();
@@ -645,9 +651,12 @@ public class SalesReconciliationBPOController {
                 row[16] = obj.getA4501CAPL();
                 row[17] = obj.getA4501VFOP();
                 row[18] = obj.getA4501MFOP();
-                row[19] = convertStatus(obj.getA4501STVAL());
-                row[20] = obj.getDESC_PROCTYPE();
-                row[21] = obj.getA4501STADM();
+                row[19] = obj.getPROCDATE();
+                row[20] = obj.getA4501PRDA();
+                row[21] = restaFechas(obj.getPROCDATE(),obj.getA4501PRDA());
+                row[22] = convertStatus(obj.getA4501STVAL());
+                row[23] = obj.getDESC_PROCTYPE();
+                row[24] = obj.getA4501STADM();
                 data.add(row);
             }
             return exportUtils.createExcel(data, controllerName + " - ByTicket " + Functions.getFechaActual());
@@ -800,6 +809,28 @@ public class SalesReconciliationBPOController {
                 break;
         }
         return valor;
+    }
+    
+    private static long restaFechas(String fecha1Str,String fecha2Str){
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyyMMdd");
+        Date fecha1 = null;
+        Date fecha2 = null;
+        try {
+            fecha1 = formatoFecha.parse(fecha1Str);
+            if (!fecha2Str.isEmpty()) {
+                fecha2 = formatoFecha.parse(fecha2Str);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        
+        if (fecha1 != null && fecha2 != null) {
+            long diferenciaEnMilisegundos = fecha2.getTime() - fecha1.getTime();
+            long diferenciaEnDias = diferenciaEnMilisegundos / (1000 * 60 * 60 * 24);
+            return diferenciaEnDias;
+        } else {
+            return 0;
+        }
     }
 //</editor-fold>
 
