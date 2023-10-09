@@ -122,7 +122,8 @@ public class AuditTWDAO {
             String strSql_REAL = "";
 
             strSql_REAL = "IFNULL((SELECT RTRIM(A1721FRCA) FROM PRAXIS.A1721 B WHERE B.A1721CCUST  = A1672.A1672CCUST AND B.A1721CIA = A1672.A1672CIA AND B.A1721FORMA = A1672.A1672FORMA AND B.A1721SERIE = A1672.A1672SERIE AND A1721SEQ = A1672SEQ AND A1721TIPO = 'ER' FETCH FIRST ROWS ONLY), '') AS A1721FRCA,"
-                    + "PRAXIS.F01_PX449_USO(A1672.A1672CCUST, A1672.A1672CIA, A1672.A1672FORMA , A1672.A1672SERIE,A1672.A1672SEQ) AS USED   ";
+                    + "IFNULL((SELECT RTRIM(A720CPUI) FROM PRAXIS.A720 C WHERE C.A720AIRLIN  = A1672.A1672CCUST AND C.A720CIA = A1672.A1672CIA AND C.A720FORMA = A1672.A1672FORMA AND C.A720SERIE = A1672.A1672SERIE FETCH FIRST ROWS ONLY), '''') AS A720CPUI,"
+                    + "PRAXIS.F01_PX449_USO(A1672.A1672CCUST, A1672.A1672CIA, A1672.A1672FORMA , A1672.A1672SERIE,A1672.A1672SEQ) AS USED";
 
             filter.strSelectA = filter.strSelectA.trim() + "," + strSql_REAL;
         }
@@ -263,7 +264,8 @@ public class AuditTWDAO {
 
                     if ("UK".equals(filter.cmbSELECTED)) {
                         obj.column64 = rst.getString("A1721FRCA");
-                        obj.column65 = rst.getString("USED");
+                        obj.column65 = rst.getString("A720CPUI");
+                        obj.column66 = rst.getString("USED");
                     }
 
                     if (filter.RN > 7) {
