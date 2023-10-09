@@ -1970,7 +1970,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.AuditTw.AuditTwController', {
                 text: 'INDIC CPN',
                 align : "left",
                 type : "string",
-                width : 70,
+                width : 100,
                 level : 1
             };
             columns.push(data);    
