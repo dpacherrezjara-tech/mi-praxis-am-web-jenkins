@@ -57,7 +57,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                     store: Ext.create('Ext.data.SimpleStore', {
                         fields: ['code', 'name'],
                         data: [
-                            ['GETMEX00', 'GetNet MX'],
+                            ['GETMEX00', 'Getnet MX'],
                             ['AMEX', 'American Express']
                         ]
                     })

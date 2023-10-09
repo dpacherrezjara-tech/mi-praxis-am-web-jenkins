@@ -24,7 +24,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Options', {
                                 margin: '0 5 0 5' // Margen entre los botones
                             },
                             items: [
-                                //{boxLabel: '<b style="color:#148D28;">Summary</b>', name: 'opcion', inputValue: 'U', width: 90},
                                 {boxLabel: '<b style="color:#148D28;">Settlement</b>', name: 'opcion', inputValue: 'S', width: 90},
                                 {boxLabel: '<b style="color:#148D28;">By Payment</b>', name: 'opcion', inputValue: 'P', checked: true, width: 100},
                                 {boxLabel: '<b style="color:#148D28;">By Ticket</b>', name: 'opcion', inputValue: 'T', width: 80}

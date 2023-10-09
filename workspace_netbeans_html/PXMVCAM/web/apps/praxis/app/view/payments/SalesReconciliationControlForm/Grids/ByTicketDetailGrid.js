@@ -109,6 +109,41 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     }
                 },
                 columns: [
+                    {text: 'Expected<br>Date', dataIndex: 'procdate', width: 80},
+                    {text: 'Processing<br>Date', dataIndex: 'a4501PRDA', width: 80},
+                    {text: 'Difference', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#F0D094;";
+                            const fecha1Str = record.data.a4501PRDA.trim();
+                            const fecha2Str = record.data.procdate; // Puedes dejar esto como una cadena vacía o null
+
+                            if (!fecha2Str) {
+                              value = 0;
+                            } else {
+                              const fecha1 = new Date(
+                                parseInt(fecha1Str.substring(0, 4)),
+                                parseInt(fecha1Str.substring(4, 6)) - 1,
+                                parseInt(fecha1Str.substring(6, 8))
+                              );
+
+                              const fecha2 = new Date(
+                                parseInt(fecha2Str.substring(0, 4)),
+                                parseInt(fecha2Str.substring(4, 6)) - 1,
+                                parseInt(fecha2Str.substring(6, 8))
+                              );
+
+                              if (isNaN(fecha1.getTime()) || isNaN(fecha2.getTime())) {
+                                value = 0;
+                              } else {
+                                const diferenciaEnMilisegundos = fecha1 - fecha2;
+                                const diferenciaEnDias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
+
+                                value = diferenciaEnDias;
+                              }
+                            }
+                            return value;
+                        }
+                    },
                     {text: 'Status', dataIndex: 'a4501STVAL', minWidth: 100, width: 100, autoSizeColumn: true,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";

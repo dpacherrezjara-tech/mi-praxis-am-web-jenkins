@@ -40,6 +40,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     },
     changePerspective: function () {
         const me = this;
+        const userName = $('#menuUser').text();
         const match = ["1", "5", "6", "7"];
         const status = me.bean.stval;
         const {tgrosamoun, svfops} = me.bean;
@@ -72,7 +73,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             desglose.setDisabled(false);
             scanner.hide();
             me.showStandBy(false);
-            btnReverse.show();
+            if (userName.slice(0, 3) === 'SAP') {
+                btnReverse.show();
+            } else if (userName === 'PLOPEZT' || userName === 'IMONTOYAT') {
+                btnReverse.show();
+            } else {
+                btnReverse.hide();
+            }
             btnUpdate.hide();
             btnMSI.show();
             me.setDesgloseGrid();

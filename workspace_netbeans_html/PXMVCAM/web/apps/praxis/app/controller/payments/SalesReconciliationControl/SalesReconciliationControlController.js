@@ -39,10 +39,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.setComboStore({cmp: cmbProctypeSettl, data: procesadores,
                 valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
 
-            const cmbProctypeSumm = Ext.getCmp(prototype.id + '-cmbProctypeSumm');
-            me.setComboStore({cmp: cmbProctypeSumm, data: procesadores,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
-
             const cmbPaises = Ext.getCmp(prototype.id + '-cmbPaisesBP');
             me.setComboStore({cmp: cmbPaises, data: data.paises,
                 valueField: 'code', displayField: 'name', value: ''});
@@ -71,12 +67,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.setComboStore({cmp: cmbCodadju, data: data.codadju,
                 valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
 
-            const cmbCerrorSum = Ext.getCmp(prototype.id + '-cmbCerrorSum');
-            me.setComboStore({cmp: cmbCerrorSum, data: errores,
+            const cmbCerrorb = Ext.getCmp(prototype.id + '-cmbCerrorb');
+            me.setComboStore({cmp: cmbCerrorb, data: errores,
                 valueField: 'code', displayField: 'name', value: ''});
 
-            const cmbCodadjuSum = Ext.getCmp(prototype.id + '-cmbCodadjuSum');
-            me.setComboStore({cmp: cmbCodadjuSum, data: data.codadju,
+            const cmbCodadjub = Ext.getCmp(prototype.id + '-cmbCodadjub');
+            me.setComboStore({cmp: cmbCodadjub, data: data.codadju,
                 valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
 
             const cmbMdasBT = Ext.getCmp(prototype.id + '-cmbMonedaBT');
@@ -235,17 +231,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 searchParams: params
             });
             mainPanel.add(panelSettl);
-        } else if (rb === 'U') {
-            win.lblUser_toolTip('Estructura: A4332');
-            const mainPanel = Ext.getCmp(prototype.id + '-mainContentSumm');
-            mainPanel.removeAll();
-            let params = me.formatSummaryParams();
-            const panelSettl = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SummaryGrid', {
-                id: prototype.id + '-SummaryGrid-1',
-                url: me.url,
-                searchParams: params
-            });
-            mainPanel.add(panelSettl);
         }
     },
     onChangeModule: function (radiogroup, newValue, oldValue) {
@@ -254,34 +239,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             Ext.getCmp(prototype.id + '-filtersByPayment-1').show();
             Ext.getCmp(prototype.id + '-filtersByTicket-1').hide();
             Ext.getCmp(prototype.id + '-filtersSettl-1').hide();
-            Ext.getCmp(prototype.id + '-filtersSumm-1').hide();
             Ext.getCmp(prototype.id + '-mainContent').show();
             Ext.getCmp(prototype.id + '-mainContent2').hide();
             Ext.getCmp(prototype.id + '-mainContentSettl').hide();
-            Ext.getCmp(prototype.id + '-mainContentSumm').hide();
         } else if (opt === 'T') {
             Ext.getCmp(prototype.id + '-filtersByTicket-1').show();
             Ext.getCmp(prototype.id + '-filtersByPayment-1').hide();
             Ext.getCmp(prototype.id + '-filtersSettl-1').hide();
-            Ext.getCmp(prototype.id + '-filtersSumm-1').hide();
             Ext.getCmp(prototype.id + '-mainContent2').show();
             Ext.getCmp(prototype.id + '-mainContent').hide();
             Ext.getCmp(prototype.id + '-mainContentSettl').hide();
-            Ext.getCmp(prototype.id + '-mainContentSumm').hide();
         } else if (opt === 'S') {
             Ext.getCmp(prototype.id + '-filtersSettl-1').show();
             Ext.getCmp(prototype.id + '-mainContentSettl').show();
-            Ext.getCmp(prototype.id + '-filtersByPayment-1').hide();
-            Ext.getCmp(prototype.id + '-mainContent').hide();
-            Ext.getCmp(prototype.id + '-filtersByTicket-1').hide();
-            Ext.getCmp(prototype.id + '-mainContent2').hide();
-            Ext.getCmp(prototype.id + '-filtersSumm-1').hide();
-            Ext.getCmp(prototype.id + '-mainContentSumm').hide();
-        } else if (opt === 'U') {
-            Ext.getCmp(prototype.id + '-filtersSumm-1').show();
-            Ext.getCmp(prototype.id + '-mainContentSumm').show();
-            Ext.getCmp(prototype.id + '-filtersSettl-1').hide();
-            Ext.getCmp(prototype.id + '-mainContentSettl').hide();
             Ext.getCmp(prototype.id + '-filtersByPayment-1').hide();
             Ext.getCmp(prototype.id + '-mainContent').hide();
             Ext.getCmp(prototype.id + '-filtersByTicket-1').hide();
@@ -315,7 +285,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         if (obj.getValue() === 'S') {
             filtroSumm.show();
             filtroFil.hide();
-            //this.onClickSearchBtn();
         } else {
             filtroFil.show();
             filtroSumm.hide();
@@ -329,7 +298,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         if (obj.getValue() === 'S') {
             filtroSumm.show();
             filtroFil.hide();
-            //this.onClickSearchBtn();
         } else {
             filtroFil.show();
             filtroSumm.hide();
@@ -366,8 +334,85 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">
-    onChangeFechaBtn: function (obj) {
-
+    onChangeMonthBPBtn: function (obj) {
+        let option = obj.id.split('-').at(-1);
+        const from = Ext.getCmp(prototype.id + '-monthfieldFromBP');
+        const to = Ext.getCmp(prototype.id + '-monthfieldToBP');
+        const opts = {
+            'monthfieldFromBP': () => {
+                to.setValue(from.getValue());
+            },
+            'monthfieldToBP': () => {
+                if(to.getValue() < from.getValue()){
+                    from.setValue(to.getValue());
+                }
+            }
+        };
+        opts[option]();
+    },
+    onChangeMonthBTBtn: function (obj) {
+        let option = obj.id.split('-').at(-1);
+        const from = Ext.getCmp(prototype.id + '-monthfieldFromBT');
+        const to = Ext.getCmp(prototype.id + '-monthfieldToBT');
+        const opts = {
+            'monthfieldFromBT': () => {
+                to.setValue(from.getValue());
+            },
+            'monthfieldToBT': () => {
+                if(to.getValue() < from.getValue()){
+                    from.setValue(to.getValue());
+                }
+            }
+        };
+        opts[option]();
+    },
+    onChangeDateBPBtn: function (obj) {
+        let option = obj.id.split('-').at(-1);
+        const from = Ext.getCmp(prototype.id + '-datefieldFromBP');
+        const to = Ext.getCmp(prototype.id + '-datefieldToBP');
+        const opts = {
+            'datefieldFromBP': () => {
+                to.setValue(from.getValue());
+            },
+            'datefieldToBP': () => {
+                if(to.getValue() < from.getValue()){
+                    from.setValue(to.getValue());
+                }
+            }
+        };
+        opts[option]();
+    },
+    onChangeDateBTBtn: function (obj) {
+        let option = obj.id.split('-').at(-1);
+        const from = Ext.getCmp(prototype.id + '-datefieldFromBT');
+        const to = Ext.getCmp(prototype.id + '-datefieldToBT');
+        const opts = {
+            'datefieldFromBT': () => {
+                to.setValue(from.getValue());
+            },
+            'datefieldToBT': () => {
+                if(to.getValue() < from.getValue()){
+                    from.setValue(to.getValue());
+                }
+            }
+        };
+        opts[option]();
+    },
+    onChangeDateSTBtn: function (obj) {
+        let option = obj.id.split('-').at(-1);
+        const from = Ext.getCmp(prototype.id + '-datefieldFromST');
+        const to = Ext.getCmp(prototype.id + '-datefieldToST');
+        const opts = {
+            'datefieldFromST': () => {
+                to.setValue(from.getValue());
+            },
+            'datefieldToST': () => {
+                if(to.getValue() < from.getValue()){
+                    from.setValue(to.getValue());
+                }
+            }
+        };
+        opts[option]();
     },
     validaFecha: function (value) {
         // Validar la fecha aquí

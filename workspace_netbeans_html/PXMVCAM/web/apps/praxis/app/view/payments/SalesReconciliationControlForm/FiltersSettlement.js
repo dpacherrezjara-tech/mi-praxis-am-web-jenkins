@@ -63,11 +63,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                             editable: false, // Deshabilita la edición del campo
                             labelWidth: 50,
                             width: 150,
-                            value: new Date(new Date().getFullYear(), 0, 1),
-                            validator: 'validaFecha',
+                            value: new Date(anioActual, mesActual, 1),
                             listeners: {
-                                change: 'onChangeFechaBtn'
-                            }
+                                change: 'onChangeDateSTBtn'
+                            },
+                            id: prototype.id + '-datefieldFromST'
                         },
                         {
                             xtype: 'datefield',
@@ -78,11 +78,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                             editable: false, // Deshabilita la edición del campo
                             labelWidth: 30,
                             width: 130,
-                            value: new Date(),
-                            validator: 'validaFecha',
+                            value: fechaActual,
                             listeners: {
-                                change: 'onChangeFechaBtn'
-                            }
+                                change: 'onChangeDateSTBtn'
+                            },
+                            id: prototype.id + '-datefieldToST'
                         },
                         {
                             xtype: 'combo',

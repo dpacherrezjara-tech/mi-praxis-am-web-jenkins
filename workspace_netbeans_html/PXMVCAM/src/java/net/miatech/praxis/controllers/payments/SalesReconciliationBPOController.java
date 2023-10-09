@@ -1,5 +1,5 @@
 package net.miatech.praxis.controllers.payments;
-
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
@@ -49,7 +49,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+//</editor-fold>
 /**
  *
  * @author Dvicente
@@ -65,25 +65,24 @@ public class SalesReconciliationBPOController {
     @Autowired
     private ExportUtils exportUtils;
 
-    private final String controllerName = "SalesReconciliationBPO";
+    private final String controllerName = "SalesReconciliation";
 
     @RequestMapping(value = "loadFilters")
     public ResponseEntity<?> loadFilters(ModelMap model) {
         try {
             System.out.println("---------------SalesReconciliationBPO:loadFilters-------------");
-            SQP05004Filter filter = new SQP05004Filter();
-            filter.setKEY1("PK");
-            filter.setKEY2("PROCTYPE");
             model.put("paises", logic.getPaises());
             model.put("monedas", logic.getMonedas());
+            SQP05004Filter filter = new SQP05004Filter();
+            filter.setKEY1("CC");
+            model.put("creditcards", logic.getSQP05004Filter(filter).getLst());
+            filter.setKEY1("PK");
+            filter.setKEY2("PROCTYPE");
             model.put("procesadores", logic.getSQP05004Filter(filter).getLst());
             filter.setKEY2("86");
             model.put("cerror", logic.getSQP05004Filter(filter).getLst());
             filter.setKEY2("89");
             model.put("codadju", logic.getSQP05004Filter(filter).getLst());
-            filter.setKEY1("CC");
-            filter.setKEY2("");
-            model.put("creditcards", logic.getSQP05004Filter(filter).getLst());
             System.out.println("Total: " + model.size());
             return new ResponseEntity<>(model, HttpStatus.OK);
         } catch (Exception e) {
@@ -131,79 +130,6 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
-    @RequestMapping(value = "downloadTransactionsBatch")
-    public ResponseEntity<?> downloadTransactionsBatch(){
-        try {
-            System.out.println("---------------SalesReconciliationBPO:downloadTransactionsBatch-------------");
-            SQP05147Filter filter = logic.loadSQP05147Filter();
-            System.out.println("Total: " + filter.getResponse().size());
-            List<Object[]> data = new ArrayList<>();
-            //headers
-            Object[] headers = new Object[25];
-            headers[0] = "Processing Date";
-            headers[1] = "Payment Date";
-            headers[2] = "Processor";
-            headers[3] = "Country";
-            headers[4] = "Payment Merchant ID";
-            headers[5] = "Status Sett. vs Sales";
-            headers[6] = "Doc. Type";
-            headers[7] = "Void";
-            headers[8] = "Sales Merchant ID";
-            headers[9] = "Description";
-            headers[10] = "Sale Date";
-            headers[11] = "Card Number";
-            headers[12] = "Auth Code";
-            headers[13] = "Installment Plan";
-            headers[14] = "Installment Number";
-            headers[15] = "Ticket";
-            headers[16] = "PNR";
-            headers[17] = "Currency";
-            headers[18] = "Transaction Amount";
-            headers[19] = "Error Code";
-            headers[20] = "Description";
-            headers[21] = "Adju. Code";
-            headers[22] = "Description";
-            headers[23] = "User Update";
-            headers[24] = "Date Update";
-            data.add(headers);
-            for (A4507 obj : filter.getResponse()) {
-                Object[] row = new Object[25];
-                row[0] = obj.getPRDA();
-                row[1] = obj.getPAYDATE();
-                row[2] = obj.getDESC_PROCTYPE();
-                row[3] = obj.getSCOUNTRY();
-                row[4] = obj.getPMERCHID();
-                row[5] = convertStatus(obj.getSTVAL());
-                row[6] = obj.getTRANSTYPE();
-                row[7] = obj.getFVOID();
-                row[8] = obj.getSMERCHID();
-                row[9] = obj.getDES_SMERCHANT();
-                row[10] = obj.getSDATE();
-                row[11] = obj.getSCARDN();
-                row[12] = obj.getSAUTHOC();
-                row[13] = obj.getNBRINSTA();
-                row[14] = obj.getINSTANBR();
-                row[15] = obj.getTICKET();
-                row[16] = obj.getSPNR();
-                //row[17] = obj.getInvoirn();
-                row[17] = obj.getSCURRENCY();
-                row[18] = obj.getTGROSAMOUN();
-                row[19] = obj.getCERROR();
-                row[20] = obj.getDESC_CERROR();
-                row[21] = obj.getCODADJU();
-                row[22] = obj.getDESC_CODADJU();
-                row[23] = obj.getUSUP();
-                row[24] = obj.getFEUP();
-                data.add(row);
-            }
-            return exportUtils.createExcel(data, controllerName + " - BatchTrnx " + Functions.getFechaActual());
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-    
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Mantenimiento By Payment">
@@ -328,7 +254,199 @@ public class SalesReconciliationBPOController {
 
     //</editor-fold>
     
-    //<editor-fold defaultstate="collapsed" desc="Exceles">
+    //<editor-fold defaultstate="collapsed" desc="MSI Tracking">
+    @RequestMapping(value = "loadMSITrackingInfo")
+    public ResponseEntity<?> loadMSITrackingInfo(@ModelAttribute SQP05061Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : loadMSITrackingInfo-------------");
+        try {
+            SQP05061Filter filter = logic.loadSQP05061Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "maintenanceReverseMSITracking", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> maintenanceReverseMSITracking(@RequestBody SQP05063Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : maintenanceReverseMSITracking-------------");
+        try {
+            SQP05063Filter filter = logic.loadSQP05063Filter(params);
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "maintenanceMSITracking", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> maintenanceMSITracking(@RequestBody SQP05065Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : maintenanceMSITracking-------------");
+        try {
+            SQP05065Filter filter = logic.loadSQP05065Filter(params);
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Chargeback Tracking">
+    @RequestMapping(value = "loadChargebackTrackingInfo")
+    public ResponseEntity<?> loadChargebackTrackingInfo(@ModelAttribute SQP05081Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : loadChargebackTrackingInfo-------------");
+        try {
+            SQP05081Filter filter = logic.loadSQP05081Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @RequestMapping(value = "maintenanceChargebackTracking", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> maintenanceChargebackTracking(@RequestBody SQP05077Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : maintenanceChargebackTracking-------------");
+        try {
+            SQP05077Filter filter = logic.loadSQP05077Filter(params);
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="By Ticket">
+    @RequestMapping(value = "loadByTicketSummary")
+    public ResponseEntity<?> loadByTicketSummary(@ModelAttribute SQP05088Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:loadByTicketSummary-------------");
+        try {
+            SQP05088Filter filter = logic.loadSQP05088Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "loadByTicketDetail")
+    public ResponseEntity<?> loadByTicketDetail(@ModelAttribute SQP05089Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:loadByTicketSummary-------------");
+        try {
+            SQP05089Filter filter = logic.loadSQP05089Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Mantenimiento By Ticket">
+    @RequestMapping(value = "loadByTicketConciliationInfo")
+    public ResponseEntity<?> loadByTicketConciliationInfo(@ModelAttribute SQP05126Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:loadByTicketConciliationInfo-------------");
+        try {
+            SQP05126Filter filter = logic.loadSQP05126Filter(params);
+            System.out.println("Ticket found: "
+                    + filter.getResponse().getA4496CIA()
+                    + filter.getResponse().getA4496FORMA()
+                    + filter.getResponse().getA4496SERIE());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "ticketConciliationStandBy")
+    public ResponseEntity<?> ticketConciliationStandBy(@ModelAttribute SQP05128Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:ticketConciliationStandBy-------------");
+        try {
+            SQP05128Filter filter = logic.loadSQP05128Filter(params);
+            System.out.println("Response: " + filter.getSQLMSG());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "ticketConciliationReverseStandBy")
+    public ResponseEntity<?> ticketConciliationReverseStandBy(@ModelAttribute SQP05129Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:ticketConciliationReverseStandBy-------------");
+        try {
+            SQP05129Filter filter = logic.loadSQP05129Filter(params);
+            System.out.println("Response: " + filter.getSQLMSG());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "ticketConciliationGenerateAdm", method = RequestMethod.POST)
+    public ResponseEntity<?> ticketConciliationGenerateAdm(@RequestBody SQP05130Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:ticketConciliationGenerateAdm-------------");
+        try {
+            SQP05130Filter filter = logic.loadSQP05130Filter(params);
+            System.out.println("Response: " + filter.getSQLMSG());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "ticketConciliationReverseADM")
+    public ResponseEntity<?> ticketConciliationReverseADM(@ModelAttribute SQP05132Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:ticketConciliationReverseADM-------------");
+        try {
+            SQP05132Filter filter = logic.loadSQP05132Filter(params);
+            System.out.println("Response: " + filter.getSQLMSG());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Settlement">
+    @RequestMapping(value = "loadSettlementSummary")
+    public ResponseEntity<?> loadSettlementSummary(@ModelAttribute SQP05133Filter params){
+        System.out.println("---------------SalesReconciliationBPO:loadSettlementSummary-------------");
+        try {
+            SQP05133Filter filter = logic.loadSQP05133Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "loadSettlementDetail")
+    public ResponseEntity<?> loadSettlementDetail(@ModelAttribute SQP05134Filter params){
+        System.out.println("---------------SalesReconciliationBPO:loadSettlementDetail-------------");
+        try {
+            SQP05134Filter filter = logic.loadSQP05134Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+//</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Descarga Exceles">
     @RequestMapping(value = "downloadByPaymentDetail")
     public ResponseEntity<?> downloadByPaymentDetail(@ModelAttribute SQP05060Filter params) {
         try {
@@ -396,6 +514,78 @@ public class SalesReconciliationBPOController {
                 data.add(row);
             }
             return exportUtils.createExcel(data, controllerName + " - ByPayment " + Functions.getFechaActual());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "downloadTransactionsBatch")
+    public ResponseEntity<?> downloadTransactionsBatch(){
+        try {
+            System.out.println("---------------SalesReconciliationBPO:downloadTransactionsBatch-------------");
+            SQP05147Filter filter = logic.loadSQP05147Filter();
+            System.out.println("Total: " + filter.getResponse().size());
+            List<Object[]> data = new ArrayList<>();
+            //headers
+            Object[] headers = new Object[25];
+            headers[0] = "Processing Date";
+            headers[1] = "Payment Date";
+            headers[2] = "Processor";
+            headers[3] = "Country";
+            headers[4] = "Payment Merchant ID";
+            headers[5] = "Status Sett. vs Sales";
+            headers[6] = "Doc. Type";
+            headers[7] = "Void";
+            headers[8] = "Sales Merchant ID";
+            headers[9] = "Description";
+            headers[10] = "Sale Date";
+            headers[11] = "Card Number";
+            headers[12] = "Auth Code";
+            headers[13] = "Installment Plan";
+            headers[14] = "Installment Number";
+            headers[15] = "Ticket";
+            headers[16] = "PNR";
+            headers[17] = "Currency";
+            headers[18] = "Transaction Amount";
+            headers[19] = "Error Code";
+            headers[20] = "Description";
+            headers[21] = "Adju. Code";
+            headers[22] = "Description";
+            headers[23] = "User Update";
+            headers[24] = "Date Update";
+            data.add(headers);
+            for (A4507 obj : filter.getResponse()) {
+                Object[] row = new Object[25];
+                row[0] = obj.getPRDA();
+                row[1] = obj.getPAYDATE();
+                row[2] = obj.getDESC_PROCTYPE();
+                row[3] = obj.getSCOUNTRY();
+                row[4] = obj.getPMERCHID();
+                row[5] = convertStatus(obj.getSTVAL());
+                row[6] = obj.getTRANSTYPE();
+                row[7] = obj.getFVOID();
+                row[8] = obj.getSMERCHID();
+                row[9] = obj.getDES_SMERCHANT();
+                row[10] = obj.getSDATE();
+                row[11] = obj.getSCARDN();
+                row[12] = obj.getSAUTHOC();
+                row[13] = obj.getNBRINSTA();
+                row[14] = obj.getINSTANBR();
+                row[15] = obj.getTICKET();
+                row[16] = obj.getSPNR();
+                //row[17] = obj.getInvoirn();
+                row[17] = obj.getSCURRENCY();
+                row[18] = obj.getTGROSAMOUN();
+                row[19] = obj.getCERROR();
+                row[20] = obj.getDESC_CERROR();
+                row[21] = obj.getCODADJU();
+                row[22] = obj.getDESC_CODADJU();
+                row[23] = obj.getUSUP();
+                row[24] = obj.getFEUP();
+                data.add(row);
+            }
+            return exportUtils.createExcel(data, controllerName + " - BatchTrnx " + Functions.getFechaActual());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -578,225 +768,6 @@ public class SalesReconciliationBPOController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-//</editor-fold>
-    
-    //<editor-fold defaultstate="collapsed" desc="MSI Tracking">
-    @RequestMapping(value = "loadMSITrackingInfo")
-    public ResponseEntity<?> loadMSITrackingInfo(@ModelAttribute SQP05061Filter params) {
-        System.out.println("-------------- SalesReconciliationBPO : loadMSITrackingInfo-------------");
-        try {
-            SQP05061Filter filter = logic.loadSQP05061Filter(params);
-            System.out.println("Total: " + filter.getResponse().size());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @RequestMapping(value = "maintenanceReverseMSITracking", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> maintenanceReverseMSITracking(@RequestBody SQP05063Filter params) {
-        System.out.println("-------------- SalesReconciliationBPO : maintenanceReverseMSITracking-------------");
-        try {
-            SQP05063Filter filter = logic.loadSQP05063Filter(params);
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @RequestMapping(value = "maintenanceMSITracking", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> maintenanceMSITracking(@RequestBody SQP05065Filter params) {
-        System.out.println("-------------- SalesReconciliationBPO : maintenanceMSITracking-------------");
-        try {
-            SQP05065Filter filter = logic.loadSQP05065Filter(params);
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    //</editor-fold>
-
-    //<editor-fold defaultstate="collapsed" desc="ChargeBackTracking">
-    @RequestMapping(value = "loadChargebackTrackingInfo")
-    public ResponseEntity<?> loadChargebackTrackingInfo(@ModelAttribute SQP05081Filter params) {
-        System.out.println("-------------- SalesReconciliationBPO : loadChargebackTrackingInfo-------------");
-        try {
-            SQP05081Filter filter = logic.loadSQP05081Filter(params);
-            System.out.println("Total: " + filter.getResponse().size());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @RequestMapping(value = "maintenanceChargebackTracking", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> maintenanceChargebackTracking(@RequestBody SQP05077Filter params) {
-        System.out.println("-------------- SalesReconciliationBPO : maintenanceChargebackTracking-------------");
-        try {
-            SQP05077Filter filter = logic.loadSQP05077Filter(params);
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    //</editor-fold>
-
-    //<editor-fold defaultstate="collapsed" desc="By Ticket">
-    @RequestMapping(value = "loadByTicketSummary")
-    public ResponseEntity<?> loadByTicketSummary(@ModelAttribute SQP05088Filter params) {
-        System.out.println("---------------SalesReconciliationBPO:loadByTicketSummary-------------");
-        try {
-            SQP05088Filter filter = logic.loadSQP05088Filter(params);
-            System.out.println("Total: " + filter.getResponse().size());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
-    @RequestMapping(value = "loadByTicketDetail")
-    public ResponseEntity<?> loadByTicketDetail(@ModelAttribute SQP05089Filter params) {
-        System.out.println("---------------SalesReconciliationBPO:loadByTicketSummary-------------");
-        try {
-            SQP05089Filter filter = logic.loadSQP05089Filter(params);
-            System.out.println("Total: " + filter.getResponse().size());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
-    @RequestMapping(value = "loadByTicketConciliationInfo")
-    public ResponseEntity<?> loadByTicketConciliationInfo(@ModelAttribute SQP05126Filter params) {
-        System.out.println("---------------SalesReconciliationBPO:loadByTicketConciliationInfo-------------");
-        try {
-            SQP05126Filter filter = logic.loadSQP05126Filter(params);
-            System.out.println("Ticket found: "
-                    + filter.getResponse().getA4496CIA()
-                    + filter.getResponse().getA4496FORMA()
-                    + filter.getResponse().getA4496SERIE());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
-    @RequestMapping(value = "ticketConciliationStandBy")
-    public ResponseEntity<?> ticketConciliationStandBy(@ModelAttribute SQP05128Filter params) {
-        System.out.println("---------------SalesReconciliationBPO:ticketConciliationStandBy-------------");
-        try {
-            SQP05128Filter filter = logic.loadSQP05128Filter(params);
-            System.out.println("Response: " + filter.getSQLMSG());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
-    @RequestMapping(value = "ticketConciliationReverseStandBy")
-    public ResponseEntity<?> ticketConciliationReverseStandBy(@ModelAttribute SQP05129Filter params) {
-        System.out.println("---------------SalesReconciliationBPO:ticketConciliationReverseStandBy-------------");
-        try {
-            SQP05129Filter filter = logic.loadSQP05129Filter(params);
-            System.out.println("Response: " + filter.getSQLMSG());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
-    @RequestMapping(value = "ticketConciliationGenerateAdm", method = RequestMethod.POST)
-    public ResponseEntity<?> ticketConciliationGenerateAdm(@RequestBody SQP05130Filter params) {
-        System.out.println("---------------SalesReconciliationBPO:ticketConciliationGenerateAdm-------------");
-        try {
-            SQP05130Filter filter = logic.loadSQP05130Filter(params);
-            System.out.println("Response: " + filter.getSQLMSG());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
-    @RequestMapping(value = "ticketConciliationReverseADM")
-    public ResponseEntity<?> ticketConciliationReverseADM(@ModelAttribute SQP05132Filter params) {
-        System.out.println("---------------SalesReconciliationBPO:ticketConciliationReverseADM-------------");
-        try {
-            SQP05132Filter filter = logic.loadSQP05132Filter(params);
-            System.out.println("Response: " + filter.getSQLMSG());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
-//</editor-fold>
-    
-    //<editor-fold defaultstate="collapsed" desc="Settlement">
-    @RequestMapping(value = "loadSettlementSummary")
-    public ResponseEntity<?> loadSettlementSummary(@ModelAttribute SQP05133Filter params){
-        System.out.println("---------------SalesReconciliationBPO:loadSettlementSummary-------------");
-        try {
-            SQP05133Filter filter = logic.loadSQP05133Filter(params);
-            System.out.println("Total: " + filter.getResponse().size());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-    
-    @RequestMapping(value = "loadSettlementDetail")
-    public ResponseEntity<?> loadSettlementDetail(@ModelAttribute SQP05134Filter params){
-        System.out.println("---------------SalesReconciliationBPO:loadSettlementDetail-------------");
-        try {
-            SQP05134Filter filter = logic.loadSQP05134Filter(params);
-            System.out.println("Total: " + filter.getResponse().size());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-//</editor-fold>
-    
-    //<editor-fold defaultstate="collapsed" desc="Summary">
-    @RequestMapping(value = "loadSummary")
-    public ResponseEntity<?> loadSummary(@ModelAttribute SQP05141Filter params){
-        System.out.println("---------------SalesReconciliationBPO:loadSummary-------------");
-        try {
-            SQP05141Filter filter = logic.loadSQP05141Filter(params);
-            System.out.println("Total: " + filter.getResponse().size());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-    
-    @RequestMapping(value = "loadSummaryDetail")
-    public ResponseEntity<?> loadSummary(@ModelAttribute SQP05142Filter params){
-        System.out.println("---------------SalesReconciliationBPO:loadSummaryDetail-------------");
-        try {
-            SQP05142Filter filter = logic.loadSQP05142Filter(params);
-            System.out.println("Total: " + filter.getResponse().size());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
 //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Funciones">
