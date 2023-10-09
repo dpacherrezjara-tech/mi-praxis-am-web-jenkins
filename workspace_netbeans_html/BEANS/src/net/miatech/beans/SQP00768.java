@@ -46,6 +46,8 @@ public class SQP00768 {
     public int orden = 0;
     public String strCodReasons = "";
     
+    public String cmbSELECTED = "";
+    
     public String strCampo = "";
     public int strAscDesc = 0;
     public boolean chkGroup=false;

@@ -972,7 +972,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.AuditTw.AuditTwController', {
         var strOrderBy = this.createOrderBy();
         var strOrderByEtiquetas = me.orderbyEtiquetas;
 //        var check = Ext.getCmp(prototype.id + '-chkSelGB').checked;
-
+        var cmbSELECTED = Ext.getCmp(prototype.id + '-cmbFunction').getValue();
+        
         me.searchParams = {
             IN_FECHA_FROM: IN_FECHA_FROM,
             IN_FECHA_TO: IN_FECHA_TO,
@@ -989,7 +990,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.AuditTw.AuditTwController', {
             strSelect: '',
             strSelectA: '',
             strSelectN: '',
-            RN: ''
+            RN: '',
+            cmbSELECTED: cmbSELECTED
         };
 
 
