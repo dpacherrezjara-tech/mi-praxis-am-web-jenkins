@@ -344,44 +344,45 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     }
                 });
     },
-    MaintenanceA4331: function (params) {
+    MaintenanceA4331: async function (params) {
         const me = this;
         me.view.mask('Loading...');
-        fetch(me.url + '/maintenanceErrorTransactionBPO', {
+        const res = await fetch(me.url + '/maintenanceErrorTransactionBPO', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(params)
-        }).then(async res => {
-            if (res.ok) {
-                const data = await res.json();
-                const {status, response} = data;
-                if (status === 1) {
-                    Ext.toast({
-                        html: `<b>${response}</b>`,
-                        title: 'Notification',
-                        align: 't',
-                        closable: true,
-                        width: 300,
-                        timeout: 10000 // 10 segundos
-                    });
-                } else {
-                    Ext.MessageBox.show({
-                        title: 'Error',
-                        message: response || 'Error in Update',
-                        icon: Ext.MessageBox.ERROR,
-                        buttons: Ext.MessageBox.OK
-                    });
-                }
-            } else {
-                global.Msg({msg: 'Error'});
-                me.view.close();
-            }
-            me.reloadErrorGrid();
-            me.view.unmask();
-            me.afterRender();
         });
+        if (res.ok) {
+            const data = await res.json();
+            const {status, response} = data;
+            if (status === 1) {
+                Ext.toast({
+                    html: `<b>${response}</b>`,
+                    title: 'Notification',
+                    align: 't',
+                    closable: true,
+                    width: 300,
+                    timeout: 10000 // 10 segundos
+                });
+            } else {
+                Ext.MessageBox.show({
+                    title: 'Error',
+                    message: response || 'Error in Update',
+                    icon: Ext.MessageBox.ERROR,
+                    buttons: Ext.MessageBox.OK
+                });
+            }
+        } else {
+            global.Msg({msg: 'Error'});
+            me.view.close();
+            return;
+        }
+        me.reloadErrorGrid();
+        me.view.unmask();
+        me.afterRender();
+        
     },
     reverseTransaction: function () {
         const me = this;
@@ -835,8 +836,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     })).map(o => {
             //nueva validacion de fuente
             o.FUENTE = o.FUENTE === 'ASR' ? 'S' : o.FUENTE.slice(0, 1);
-            if(codADJU==='03'){
-                o.TRNCU = o.TRNCO;
+            if (o.STMANUAL === 'Adjustment' && o.CERROR === '03') {
+                o.TRNCU = o.TRNCO || '';
             }
             return o;
         });
