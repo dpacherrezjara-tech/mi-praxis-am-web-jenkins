@@ -25,6 +25,7 @@ import net.miatech.praxis.payment.filter.SQP05063Filter;
 import net.miatech.praxis.payment.filter.SQP05065Filter;
 import net.miatech.praxis.payment.filter.SQP05072Filter;
 import net.miatech.praxis.payment.filter.SQP05074Filter;
+import net.miatech.praxis.payment.filter.SQP05075Filter;
 import net.miatech.praxis.payment.filter.SQP05077Filter;
 import net.miatech.praxis.payment.filter.SQP05081Filter;
 import net.miatech.praxis.payment.filter.SQP05088Filter;
@@ -88,6 +89,19 @@ public class SalesReconciliationBPOController {
             model.put("codadju", logic.getSQP05004Filter(filter).getLst());
             System.out.println("Total: " + model.size());
             return new ResponseEntity<>(model, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "loadTicketUses")
+    public ResponseEntity<?> loadTicketUses(@ModelAttribute SQP05075Filter params){
+        System.out.println("---------------SalesReconciliationBPO:loadTicketUses-------------");
+        try {
+            SQP05075Filter filter = logic.loadSQP05075Filter(params);
+            System.out.println("Ticket found: " + filter.getOUT_USOS());
+            return new ResponseEntity<>(filter,HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

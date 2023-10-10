@@ -271,6 +271,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             cmbCard.show();
         }
     },
+    onChangeCreditCardBTSum: function (obj) {
+        const me = this;
+        const cmbCard = Ext.getCmp(prototype.id + '-cmbCreditCardBTSum');
+        if (obj.getValue() === '') {
+            cmbCard.hide();
+        } else {
+            const data = me.creditcards.filter(x => x.a4451cant1 === parseInt(obj.getValue()));
+            me.setComboStore({cmp: cmbCard, data: data,
+                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+            cmbCard.show();
+        }
+    },
     onClickProcessBtn: function () {
         const processWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransactionProcessDataEntry', {
             id: prototype.id + '-TransactionProcessDataEntry-1'

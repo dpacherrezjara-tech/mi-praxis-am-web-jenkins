@@ -11,7 +11,7 @@ public class SQP05088Filter {
     private String IN_CCUST,
             IN_DATE,IN_TDATE,IN_DATEFROM,IN_DATETO,
             IN_TRNCU,IN_AGENT,IN_SCOUNTRY,IN_FVOID,
-            IN_STVAL;
+            IN_STVAL,IN_TCARD,IN_CCARD,IN_FUENT,IN_SFUEN;
     private List<A4331SRFilter> response = new ArrayList<>();
 
     public String getIN_CCUST() {
@@ -101,5 +101,36 @@ public class SQP05088Filter {
     public void setResponse(List<A4331SRFilter> response) {
         this.response = response;
     }
-    
+
+    public String getIN_TCARD() {
+        return IN_TCARD;
+    }
+
+    public void setIN_TCARD(String IN_TCARD) {
+        this.IN_TCARD = IN_TCARD;
+    }
+
+    public String getIN_CCARD() {
+        return IN_CCARD;
+    }
+
+    public void setIN_CCARD(String IN_CCARD) {
+        this.IN_CCARD = IN_CCARD;
+    }
+
+    public String getIN_FUENT() {
+        return IN_FUENT;
+    }
+
+    public void setIN_FUENT(String IN_FUENT) {
+        this.IN_FUENT = IN_FUENT;
+    }
+
+    public String getIN_SFUEN() {
+        return IN_SFUEN;
+    }
+
+    public void setIN_SFUEN(String IN_SFUEN) {
+        this.IN_SFUEN = IN_SFUEN;
+    }
 }

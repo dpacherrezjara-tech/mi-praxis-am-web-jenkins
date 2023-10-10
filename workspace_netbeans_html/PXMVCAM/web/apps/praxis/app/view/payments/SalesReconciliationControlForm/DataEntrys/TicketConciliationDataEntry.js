@@ -70,7 +70,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     items: [
                                         {
                                             fieldLabel: 'Ticket',
-                                            //name: 'a4496TRNCU',
                                             id: prototype.idDE + '-ticketNumber',
                                             width: 200,
                                             labelWidth: 80
@@ -82,10 +81,41 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             labelWidth: 35
                                         },
                                         {
+                                            xtype: 'button',
+                                            text: 'Uses',
+                                            margin: '5 2 5 2',
+                                            width: 60,
+                                            iconCls: 'prx-icon-search',
+                                            tooltip: 'Show Uses',
+                                            listeners: {
+                                                click: 'onSearchUses'
+                                            }
+                                        },
+                                        {
                                             fieldLabel: 'Pax Name',
                                             name: 'a4496PAX',
                                             width: 300,
                                             labelWidth: 75
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.idDE + '-panelVoid',
+                                            flex: 1,
+                                            layout: {
+                                                type: 'hbox',
+                                                pack: 'end'
+                                            },
+                                            bodyStyle: 'background: transparent;"',
+                                            border: false,
+                                            hidden: true,
+                                            items: [
+                                                {
+                                                    xtype: 'label',
+                                                    width: 'auto',
+                                                    text: 'VOID',
+                                                    style: 'color:red;font-weight:bold;font-size:18px;'
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
@@ -108,11 +138,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             name: 'agent_NAME',
                                             width: 300,
                                             labelWidth: 80
-                                        }
-                                    ]
-                                },
-                                {
-                                    items: [
+                                        },
                                         {
                                             fieldLabel: 'Transaction',
                                             name: 'a4496TRNCU',
@@ -124,12 +150,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             name: 'a4496TIPOD',
                                             width: 130,
                                             labelWidth: 70
-                                        },
+                                        }
+                                    ]
+                                },
+                                {
+                                    items: [
                                         {
                                             fieldLabel: 'Source',
                                             name: 'a4496FUENT',
-                                            width: 115,
-                                            labelWidth: 55
+                                            width: 135,
+                                            labelWidth: 80
                                         },
                                         {
                                             fieldLabel: 'Channel',
@@ -153,6 +183,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             fieldLabel: 'PNR',
                                             name: 'a4496PNR',
                                             width: 125,
+                                            labelWidth: 45
+                                        },
+                                        {
+                                            fieldLabel: 'RFIC',
+                                            name: 'a4496RFIC',
+                                            width: 75,
+                                            labelWidth: 45
+                                        },
+                                        {
+                                            fieldLabel: 'RFIS',
+                                            name: 'a4496RFIS1',
+                                            width: 85,
                                             labelWidth: 45
                                         }
                                     ]
@@ -539,6 +581,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             width: '100%',
                             margin: '5 5 5 5',
                             id: prototype.idDE + '-panelPending',
+                            bodyStyle: 'background: transparent;"',
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'
@@ -546,8 +589,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             items: [
                                 {
                                     xtype: 'label',
+                                    flex: 1,
                                     margin: '0 8 0 0',
-                                    style: 'color:red;font-weight:bold;font-size:16px;',
+                                    padding: '5',
+                                    style: 'color:#080808;font-weight:bold;font-size:16px;font-style:italic;background:#DF8E46;text-align:center;',
                                     text: 'PENDING CONCILIATION'
                                 }
                             ]
@@ -578,7 +623,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     listeners: {
                                         click: 'onADMClick'
                                     }
-
                                 },
                                 {
                                     xtype: 'button',
