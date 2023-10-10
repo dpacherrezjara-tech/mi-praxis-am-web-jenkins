@@ -22,18 +22,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             const data = await res.json();
             me.limpiaObjetoPX(data.response);
             me.bean = data.response;
+            console.log(me.bean);
             mainForm.reset();
-            const {a4496CIA, a4496FORMA, a4496SERIE,a4501STVAL,a4501STADM,bpo_COMEN,adm_COMEN} = data.response;
+            const {a4496CIA, a4496FORMA, a4496SERIE, a4501STVAL, a4501STADM, bpo_COMEN, adm_COMEN, a4496TKVOI} = data.response;
+            if (a4496TKVOI === 'V') {
+                Ext.getCmp(prototype.idDE + '-panelVoid').show();
+            } else {
+                Ext.getCmp(prototype.idDE + '-panelVoid').hide();
+            }
             Ext.getCmp(prototype.idDE + '-ticketNumber').setValue(a4496CIA + ' ' + a4496FORMA + a4496SERIE);
             Ext.getCmp(prototype.idDE + '-bpocoment').setValue(bpo_COMEN);
             Ext.getCmp(prototype.idDE + '-ADM-BPOCOMEN').setValue(adm_COMEN);
             me.setADMInfo();
             mainForm.setValues(data.response);
-            me.changePerspective(a4501STVAL,a4501STADM);
+            me.changePerspective(a4501STVAL, a4501STADM);
         }
         me.view.unmask();
     },
-    changePerspective: function (status,adm) {
+    changePerspective: function (status, adm) {
         const match = ['1', '5', '6', '7'];
         if (match.some(x => status === x)) {
             Ext.getCmp(prototype.idDE + '-liquiInfo').show();
@@ -49,20 +55,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             Ext.getCmp(prototype.idDE + '-revStandBy').show();
         } else {
             Ext.getCmp(prototype.idDE + '-liquiInfo').hide();
-            if(adm===''){
+            if (adm === '') {
                 Ext.getCmp(prototype.idDE + '-panelOptions').show();
                 Ext.getCmp(prototype.idDE + '-panelADM').hide();
                 Ext.getCmp(prototype.idDE + '-hideADM').show();
                 Ext.getCmp(prototype.idDE + '-sendADM').show();
                 Ext.getCmp(prototype.idDE + '-reverseADM').hide();
-            }else{
+            } else {
                 Ext.getCmp(prototype.idDE + '-panelOptions').hide();
                 Ext.getCmp(prototype.idDE + '-panelADM').show();
                 Ext.getCmp(prototype.idDE + '-hideADM').hide();
                 Ext.getCmp(prototype.idDE + '-sendADM').hide();
                 Ext.getCmp(prototype.idDE + '-reverseADM').show();
             }
-            
+
             Ext.getCmp(prototype.idDE + '-panelPending').show();
             Ext.getCmp(prototype.idDE + '-panelStandBy').hide();
             Ext.getCmp(prototype.idDE + '-hideStandBy').show();
@@ -71,9 +77,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         }
         this.view.center();
     },
-    setADMInfo:function(){
+    setADMInfo: function () {
         const obj = this.bean;
-        Ext.getCmp(prototype.idDE + '-ADM-TKT').setValue(obj.a4501CIA+obj.a4501FORMA+obj.a4501SERIE);
+        Ext.getCmp(prototype.idDE + '-ADM-TKT').setValue(obj.a4501CIA + obj.a4501FORMA + obj.a4501SERIE);
         let valor = Ext.util.Format.number(obj.a4501VFOP, '0,000.00');
         Ext.getCmp(prototype.idDE + '-ADM-AMT').setValue(valor);
         Ext.getCmp(prototype.idDE + '-ADM-MDA').setValue(obj.a4501MFOP);
@@ -87,68 +93,60 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         Ext.getCmp(prototype.idDE + '-panelOptions').show();
         Ext.getCmp(prototype.idDE + '-panelStandBy').hide();
     },
-    onChangeStandBy: function () {
+    onChangeStandBy: async function () {
         const me = this;
         me.view.mask('Loading...');
         const comment = Ext.getCmp(prototype.idDE + '-bpocoment').getValue();
         let params = me.formatStandByParams(comment);
-        fetch(`${me.url}/ticketConciliationStandBy?${new URLSearchParams(params)}`)
-                .then(async res => {
-                    if (res.ok) {
-                        const data = await res.json();
-                        const {sqlres, sqlmsg} = data;
-                        if (sqlres === 1) {
-                            Ext.toast({
-                                html: `<b>${sqlmsg}</b>`,
-                                title: 'Notification',
-                                align: 't',
-                                closable: true,
-                                width: 300,
-                                timeout: 10000 // 10 segundos
-                            });
-                            me.afterRender();
-                            Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
-                        }
-                    } else {
-                        throw new Error('Error in request');
-                    }
-                }).catch(err => {
-            console.error(err);
+        const res = fetch(`${me.url}/ticketConciliationStandBy?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const {sqlres, sqlmsg} = data;
+            if (sqlres === 1) {
+                Ext.toast({
+                    html: `<b>${sqlmsg}</b>`,
+                    title: 'Notification',
+                    align: 't',
+                    closable: true,
+                    width: 300,
+                    timeout: 10000 // 10 segundos
+                });
+                me.afterRender();
+                Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+            }
+        } else {
             global.Msg({msg: 'Error'});
             me.view.close();
-        });
+            return;
+        }
         me.view.unmask();
     },
-    onReverseStandBy: function () {
+    onReverseStandBy: async function () {
         const me = this;
         me.view.mask('Loading...');
         const comment = Ext.getCmp(prototype.idDE + '-bpocoment').getValue();
         let params = me.formatRevStandByParams();
-        fetch(`${me.url}/ticketConciliationReverseStandBy?${new URLSearchParams(params)}`)
-                .then(async res => {
-                    if (res.ok) {
-                        const data = await res.json();
-                        const {sqlres, sqlmsg} = data;
-                        if (sqlres === 1) {
-                            Ext.toast({
-                                html: `<b>${sqlmsg}</b>`,
-                                title: 'Notification',
-                                align: 't',
-                                closable: true,
-                                width: 300,
-                                timeout: 10000 // 10 segundos
-                            });
-                            me.afterRender();
-                            Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
-                        }
-                    } else {
-                        throw new Error('Error in request');
-                    }
-                }).catch(err => {
-            console.error(err);
+        const res = await fetch(`${me.url}/ticketConciliationReverseStandBy?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const {sqlres, sqlmsg} = data;
+            if (sqlres === 1) {
+                Ext.toast({
+                    html: `<b>${sqlmsg}</b>`,
+                    title: 'Notification',
+                    align: 't',
+                    closable: true,
+                    width: 300,
+                    timeout: 10000 // 10 segundos
+                });
+                me.afterRender();
+                Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+            }
+        } else {
             global.Msg({msg: 'Error'});
             me.view.close();
-        });
+            return;
+        }
         me.view.unmask();
     },
     onADMClick: function () {
@@ -179,7 +177,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
                     }
                 });
     },
-    onReverseADM:function(btn){
+    onReverseADM: function (btn) {
         const me = this;
         let params = me.formatRevAdmParams();
         console.log(params);
@@ -223,15 +221,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
                 });
                 me.afterRender();
                 Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
-            }else{
-                global.Msg({msg:'Error'});
+            } else {
+                global.Msg({msg: 'Error'});
             }
-        }else{
-            global.Msg({msg:'Error'});
+        } else {
+            global.Msg({msg: 'Error'});
         }
         me.view.unmask();
     },
-    reverseADM: async function(params){
+    reverseADM: async function (params) {
         const me = this;
         me.view.mask('Loading...');
         const res = await fetch(`${me.url}/ticketConciliationReverseADM?${new URLSearchParams(params)}`);
@@ -249,13 +247,38 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
                 });
                 me.afterRender();
                 Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
-            }else{
-                global.Msg({msg:'Error'});
+            } else {
+                global.Msg({msg: 'Error'});
             }
-        }else{
-            global.Msg({msg:'Error'});
+        } else {
+            global.Msg({msg: 'Error'});
         }
         me.view.unmask();
+    },
+    onSearchUses: function () {
+        const me = this;
+        const {a4496CIA, a4496FORMA, a4496SERIE, a4496SEQ, a4496CPUI,
+            a4496RUTA0, a4496RUTA1, a4496RUTA2, a4496RUTA3, a4496RUTA4} = me.bean;
+        let cpui = (a4496CPUI + '    ').slice(0, 4);
+        let itin = (a4496RUTA0 + '   ').slice(0, 3) +
+                (a4496RUTA1 + '   ').slice(0, 3) +
+                (a4496RUTA2 + '   ').slice(0, 3) +
+                (a4496RUTA3 + '   ').slice(0, 3) +
+                (a4496RUTA4 + '   ').slice(0, 3);
+        let params = {
+            IN_CIA: a4496CIA,
+            IN_FORMA: a4496FORMA,
+            IN_SERIE: a4496SERIE,
+            IN_SEQ: a4496SEQ,
+            IN_CPUI: cpui,
+            IN_ITIN: itin
+        };
+        console.log(params);
+        const usageWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.CouponsUsagesDataEntry', {
+            id: prototype.idDE + '-CouponsUsagesDataEntry-1',
+            searchParams: params
+        });
+        usageWin.show();
     },
     //</editor-fold>
 
@@ -301,8 +324,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             IN_SEQ: obj.a4501SEQ,
             IN_TDOC: obj.a4501TDOC,
             IN_CORRL: obj.a4501CORRL,
-            IN_TRNCU:obj.a4496TRNCU,
-            IN_PRDA:obj.a4496FPROC,
+            IN_TRNCU: obj.a4496TRNCU,
+            IN_PRDA: obj.a4496FPROC,
             IN_FUENTE: obj.a4496FUENT,
             IN_CANAL: obj.a4496SFUEN,
             IN_AGENT: obj.a4496AGENT,
@@ -318,7 +341,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         };
         return params;
     },
-    formatRevAdmParams:function(){
+    formatRevAdmParams: function () {
         const obj = this.bean;
         let params = {
             IN_CCUST: obj.a4501CCUST,
@@ -328,7 +351,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             IN_SEQ: obj.a4501SEQ,
             IN_TDOC: obj.a4501TDOC,
             IN_CORRL: obj.a4501CORRL,
-            IN_PRDA:obj.a4496FPROC
+            IN_PRDA: obj.a4496FPROC
         };
         return params;
     },

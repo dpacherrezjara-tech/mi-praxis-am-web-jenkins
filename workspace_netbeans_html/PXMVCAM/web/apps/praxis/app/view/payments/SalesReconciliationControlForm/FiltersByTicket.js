@@ -155,12 +155,57 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                         data: [
                                             ['', 'All'],
                                             ['SALE', 'Sale'],
-                                            ['RFND', 'Refund'],
-                                            ['EXCH', 'Exchange']
+                                            ['RFND', 'Refund']
                                         ]
                                     }),
                                     labelWidth: 80,
                                     width: 180,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Source',
+                                    name: 'IN_FUENT',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['ASR', 'ASR'],
+                                            ['BSP', 'BSP'],
+                                            ['ARC', 'ARC'],
+                                            ['MAN', 'Manual']
+                                        ]
+                                    }),
+                                    labelWidth: 60,
+                                    width: 150,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Channel',
+                                    name: 'IN_SFUEN',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['CCT', 'CCT'],
+                                            ['FRA', 'FRA'],
+                                            ['ATO', 'ATO'],
+                                            ['CTO', 'CTO'],
+                                            ['WEB', 'WEB'],
+                                            ['GSA', 'GSA']
+                                        ]
+                                    }),
+                                    labelWidth: 60,
+                                    width: 150,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -177,6 +222,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     uncheckedValue: '', // Establecer el valor cuando esté desmarcado como una cadena vacía
                                     listeners: {
                                         change: function (checkbox, newValue) {}
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'IATA',
+                                    labelWidth: 50,
+                                    width: 140,
+                                    name: 'IN_SAGENT',
+                                    maxLength: 8, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
                                     }
                                 }
                             ]
@@ -217,6 +275,47 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     width: 180,
                                     displayField: 'name',
                                     valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Card Type',
+                                    name: 'IN_TCARD',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['2', 'Master Card'],
+                                            ['1', 'Visa'],
+                                            ['3', 'American Express'],
+                                            ['5', 'Dinners Club'],
+                                            ['6', 'UATP'],
+                                            ['4', 'Boomers']
+                                        ]
+                                    }),
+                                    labelWidth: 65,
+                                    width: 190,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    listeners: {
+                                        change: 'onChangeCreditCardBTSum'
+                                    },
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    id: prototype.id + '-cmbCreditCardBTSum',
+                                    fieldLabel: 'Card Code',
+                                    name: 'IN_CCARD',
+                                    labelWidth: 65,
+                                    width: 210,
+                                    hidden: true,
+                                    displayField: 'a4451desc1',
+                                    valueField: 'a4451key3',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
@@ -358,8 +457,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                         data: [
                                             ['', 'All'],
                                             ['SALE', 'Sale'],
-                                            ['RFND', 'Refund'],
-                                            ['EXCH', 'Exchange']
+                                            ['RFND', 'Refund']
                                         ]
                                     }),
                                     labelWidth: 80,

@@ -10,7 +10,7 @@ public class ByTicketFilter extends A4496{
     
     //campos agregados
     private String AGENT_NAME,PROC_NAME,DES_MERCHANT,DES_SMERCHANT,
-            DESC_CERROR,DESC_CODADJU,BPO_COMEN,ADM_COMEN;
+            DESC_CERROR,DESC_CODADJU,BPO_COMEN,ADM_COMEN,PROCDATE;
 
     public String getAGENT_NAME() {
         return AGENT_NAME;
@@ -74,6 +74,14 @@ public class ByTicketFilter extends A4496{
 
     public void setADM_COMEN(String ADM_COMEN) {
         this.ADM_COMEN = ADM_COMEN;
+    }
+
+    public String getPROCDATE() {
+        return PROCDATE;
+    }
+
+    public void setPROCDATE(String PROCDATE) {
+        this.PROCDATE = PROCDATE;
     }
     
     //<editor-fold defaultstate="collapsed" desc="Campos LIQUI">
