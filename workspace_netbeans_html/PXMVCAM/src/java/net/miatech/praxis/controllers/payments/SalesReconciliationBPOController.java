@@ -433,6 +433,33 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    
+    @RequestMapping(value = "ticketConciliationForceMatch")
+    public ResponseEntity<?> ticketConciliationForceMatch(@ModelAttribute SQP05141Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:ticketConciliationForceMatch-------------");
+        try {
+            SQP05141Filter filter = logic.loadSQP05141Filter(params);
+            System.out.println("Response: " + filter.getSQLMSG());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "ticketConciliationRevForceMatch")
+    public ResponseEntity<?> ticketConciliationRevForceMatch(@ModelAttribute SQP05142Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:ticketConciliationRevForceMatch-------------");
+        try {
+            SQP05142Filter filter = logic.loadSQP05142Filter(params);
+            System.out.println("Response: " + filter.getSQLMSG());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Settlement">

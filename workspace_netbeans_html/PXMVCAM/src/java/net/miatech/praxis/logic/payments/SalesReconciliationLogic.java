@@ -97,6 +97,9 @@ public interface SalesReconciliationLogic {
     SQP05130Filter loadSQP05130Filter(SQP05130Filter filter) throws Exception;
     //Reversa ADM
     SQP05132Filter loadSQP05132Filter(SQP05132Filter filter) throws Exception;
+    //Force Match VOID
+    SQP05141Filter loadSQP05141Filter(SQP05141Filter filter) throws Exception;
+    SQP05142Filter loadSQP05142Filter(SQP05142Filter filter) throws Exception;
     
     //Settlement
     SQP05133Filter loadSQP05133Filter(SQP05133Filter filter) throws Exception;

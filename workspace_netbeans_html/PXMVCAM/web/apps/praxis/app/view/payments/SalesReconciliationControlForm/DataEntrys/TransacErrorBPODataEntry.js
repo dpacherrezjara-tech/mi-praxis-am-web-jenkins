@@ -1483,6 +1483,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                     {
                                                         sortable: false,
                                                         xtype: 'actioncolumn',
+                                                        width: 45,
+                                                        text: 'Uses',
+                                                        align: 'center',
+                                                        items: [
+                                                            {
+                                                                iconCls: 'prx-icon-search',
+                                                                tooltip: 'Show Usages',
+                                                                handler: 'onShowUsages'
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        sortable: false,
+                                                        xtype: 'actioncolumn',
                                                         width: 40,
                                                         text: 'Del.',
                                                         //id: prototype.id + '-gridColumnDelete',

@@ -344,44 +344,45 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     }
                 });
     },
-    MaintenanceA4331: function (params) {
+    MaintenanceA4331: async function (params) {
         const me = this;
         me.view.mask('Loading...');
-        fetch(me.url + '/maintenanceErrorTransactionBPO', {
+        const res = await fetch(me.url + '/maintenanceErrorTransactionBPO', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(params)
-        }).then(async res => {
-            if (res.ok) {
-                const data = await res.json();
-                const {status, response} = data;
-                if (status === 1) {
-                    Ext.toast({
-                        html: `<b>${response}</b>`,
-                        title: 'Notification',
-                        align: 't',
-                        closable: true,
-                        width: 300,
-                        timeout: 10000 // 10 segundos
-                    });
-                } else {
-                    Ext.MessageBox.show({
-                        title: 'Error',
-                        message: response || 'Error in Update',
-                        icon: Ext.MessageBox.ERROR,
-                        buttons: Ext.MessageBox.OK
-                    });
-                }
-            } else {
-                global.Msg({msg: 'Error'});
-                me.view.close();
-            }
-            me.reloadErrorGrid();
-            me.view.unmask();
-            me.afterRender();
         });
+        if (res.ok) {
+            const data = await res.json();
+            const {status, response} = data;
+            if (status === 1) {
+                Ext.toast({
+                    html: `<b>${response}</b>`,
+                    title: 'Notification',
+                    align: 't',
+                    closable: true,
+                    width: 300,
+                    timeout: 10000 // 10 segundos
+                });
+            } else {
+                Ext.MessageBox.show({
+                    title: 'Error',
+                    message: response || 'Error in Update',
+                    icon: Ext.MessageBox.ERROR,
+                    buttons: Ext.MessageBox.OK
+                });
+            }
+        } else {
+            global.Msg({msg: 'Error'});
+            me.view.close();
+            return;
+        }
+        me.reloadErrorGrid();
+        me.view.unmask();
+        me.afterRender();
+        
     },
     reverseTransaction: function () {
         const me = this;
@@ -566,6 +567,31 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             obj: me.bean
         });
         dataEntryCHBK.show();
+    },
+    onShowUsages:function(grid, rowIndex, colIndex){
+        let obj = grid.getStore().getAt(rowIndex);
+        const {ccia, forma, serie, seq, cpui,
+            ruta0, ruta1, ruta2, ruta3, ruta4} = obj.data;
+        let fcpui = (cpui + '    ').slice(0, 4);
+        let itin = (ruta0 + '   ').slice(0, 3) +
+                (ruta1 + '   ').slice(0, 3) +
+                (ruta2 + '   ').slice(0, 3) +
+                (ruta3 + '   ').slice(0, 3) +
+                (ruta4 + '   ').slice(0, 3);
+        let params = {
+            IN_CIA: ccia,
+            IN_FORMA: forma,
+            IN_SERIE: serie,
+            IN_SEQ: seq,
+            IN_CPUI: fcpui,
+            IN_ITIN: itin
+        };
+        console.log(params);
+        const usageWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.CouponsUsagesDataEntry', {
+            id: prototype.idDE + '-CouponsUsagesDataEntry-1',
+            searchParams: params
+        });
+        usageWin.show();
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Grillas Scaneo">
@@ -835,8 +861,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     })).map(o => {
             //nueva validacion de fuente
             o.FUENTE = o.FUENTE === 'ASR' ? 'S' : o.FUENTE.slice(0, 1);
-            if(codADJU==='03'){
-                o.TRNCU = o.TRNCO;
+            if (o.STMANUAL === 'Adjustment' && o.CERROR === '03') {
+                o.TRNCU = o.TRNCO || '';
             }
             return o;
         });
