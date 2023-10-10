@@ -98,6 +98,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             labelWidth: 75
                                         },
                                         {
+                                            fieldLabel: 'Expected Date',
+                                            name: 'procdate',
+                                            fieldStyle:'text-align:center;background: #C0EDB3;',
+                                            width: 180,
+                                            labelWidth: 100
+                                        },
+                                        {
                                             xtype: 'panel',
                                             id: prototype.idDE + '-panelVoid',
                                             flex: 1,
@@ -616,8 +623,33 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             items: [
                                 {
 
+                                    text: 'Forced Match',
+                                    id: prototype.idDE + '-forcedMatchVoid',
+                                    width: 130,
+                                    hidden: true,
+                                    iconCls: 'prx-icon-reload',
+                                    tooltip: 'Forced Match',
+                                    listeners: {
+                                        click: 'onForceMatch'
+                                    }
+                                },
+                                {
+
+                                    text: 'Reverse Match',
+                                    id: prototype.idDE + '-revForcedMatchVoid',
+                                    width: 140,
+                                    hidden: true,
+                                    iconCls: 'prx-icon-reload',
+                                    tooltip: 'Reverse Match',
+                                    listeners: {
+                                        click: 'onReverseForceMatch'
+                                    }
+                                },
+                                {
+
                                     text: 'ADM',
                                     width: 60,
+                                    id: prototype.idDE + '-addAdm',
                                     iconCls: 'prx-icon-add',
                                     tooltip: 'Add ADM',
                                     listeners: {
@@ -626,6 +658,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 },
                                 {
                                     xtype: 'button',
+                                    id: prototype.idDE + '-showStandBy',
                                     text: 'Stand By',
                                     width: 100,
                                     iconCls: 'prx-icon-bpo-comment',

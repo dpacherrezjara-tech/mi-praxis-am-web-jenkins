@@ -568,6 +568,31 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         });
         dataEntryCHBK.show();
     },
+    onShowUsages:function(grid, rowIndex, colIndex){
+        let obj = grid.getStore().getAt(rowIndex);
+        const {ccia, forma, serie, seq, cpui,
+            ruta0, ruta1, ruta2, ruta3, ruta4} = obj.data;
+        let fcpui = (cpui + '    ').slice(0, 4);
+        let itin = (ruta0 + '   ').slice(0, 3) +
+                (ruta1 + '   ').slice(0, 3) +
+                (ruta2 + '   ').slice(0, 3) +
+                (ruta3 + '   ').slice(0, 3) +
+                (ruta4 + '   ').slice(0, 3);
+        let params = {
+            IN_CIA: ccia,
+            IN_FORMA: forma,
+            IN_SERIE: serie,
+            IN_SEQ: seq,
+            IN_CPUI: fcpui,
+            IN_ITIN: itin
+        };
+        console.log(params);
+        const usageWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.CouponsUsagesDataEntry', {
+            id: prototype.idDE + '-CouponsUsagesDataEntry-1',
+            searchParams: params
+        });
+        usageWin.show();
+    },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Grillas Scaneo">
     setBPOGrid: function (data) {

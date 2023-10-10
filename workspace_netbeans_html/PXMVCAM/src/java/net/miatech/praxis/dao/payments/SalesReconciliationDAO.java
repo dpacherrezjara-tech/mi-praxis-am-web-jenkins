@@ -138,7 +138,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 + "FREGLA,CERROR,FORCESCAN,OBSERV,STMANUAL,"
                 + "FUENTE,FVOID,CARDTYPE,SAGENT,SCARDCOD,SCURRENCY,SCOUNTRY,SDATE,SPNR,GRUPO,CODEPR,CANAL,"
                 + "CIAP,FORMAP,SERIEP,RUTA0,RUTA1,RUTA2,RUTA3,RUTA4,FVLO1,FVLO2,FVLO3,FVLO4,"
-                + "TOTCUP,CPUI,PAX,FLAG,STDOC,"
+                + "TOTCUP,CPUI,PAX,FLAG,STDOC,TCORR,"
                 + "NBRLIQUID,CODCHGBACK,CHGBNUM,TGROSAMOUN) "
                 + "VALUES"
                 + "(:CCUST,:AREFNBR,:CCIA,:FORMA,:SERIE,:SEQ,:CORRL,:TDOC,:PRDA,:SVFOPS,:SCARDN,:SAUTHOC,"
@@ -146,7 +146,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 + ":FREGLA,:CERROR,:FORCESCAN,:OBSERV,:STMANUAL,"
                 + ":FUENTE,:FVOID,:CARDTYPE,:SAGENT,:SCARDCOD,:SCURRENCY,:SCOUNTRY,:SDATE,:SPNR,:GRUPO,:CODEPR,:CANAL,"
                 + ":CIAP,:FORMAP,:SERIEP,:RUTA0,:RUTA1,:RUTA2,:RUTA3,:RUTA4,:FVLO1,:FVLO2,:FVLO3,:FVLO4,"
-                + ":TOTCUP,:CPUI,:PAX,:FLAG,:STDOC,"
+                + ":TOTCUP,:CPUI,:PAX,:FLAG,:STDOC,:TCORR,"
                 + ":NBRLIQUID,:CODCHGBACK,:CHGBNUM,:TGROSAMOUN)";
         BeanPropertySqlParameterSource[] insertParams = new BeanPropertySqlParameterSource[filter.getDetail().size()];
         for (int i = 0; i < filter.getDetail().size(); i++) {
@@ -432,6 +432,32 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
         return filter;
     }
+
+    @Override
+    public SQP05141Filter loadSQP05141Filter(SQP05141Filter filter) throws Exception {
+        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05141");
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = jdbcCall.execute(params);
+        filter.setSQLRES((Integer) spRes.get("SQLRES"));
+        filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        return filter;
+    }
+
+    @Override
+    public SQP05142Filter loadSQP05142Filter(SQP05142Filter filter) throws Exception {
+        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05142");
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = jdbcCall.execute(params);
+        filter.setSQLRES((Integer) spRes.get("SQLRES"));
+        filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        return filter;
+    }
+    
+    
 
     @Override
     public SQP05133Filter loadSQP05133Filter(SQP05133Filter filter) throws Exception {

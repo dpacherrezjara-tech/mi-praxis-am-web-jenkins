@@ -24,26 +24,39 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             me.bean = data.response;
             console.log(me.bean);
             mainForm.reset();
-            const {a4496CIA, a4496FORMA, a4496SERIE, a4501STVAL, a4501STADM, bpo_COMEN, adm_COMEN, a4496TKVOI} = data.response;
-            if (a4496TKVOI === 'V') {
-                Ext.getCmp(prototype.idDE + '-panelVoid').show();
-            } else {
-                Ext.getCmp(prototype.idDE + '-panelVoid').hide();
-            }
+            const {a4496CIA, a4496FORMA, a4496SERIE, a4501STVAL, a4501STADM,
+                bpo_COMEN, adm_COMEN, a4496TKVOI, a4501PRTP,procdate} = data.response;
             Ext.getCmp(prototype.idDE + '-ticketNumber').setValue(a4496CIA + ' ' + a4496FORMA + a4496SERIE);
             Ext.getCmp(prototype.idDE + '-bpocoment').setValue(bpo_COMEN);
             Ext.getCmp(prototype.idDE + '-ADM-BPOCOMEN').setValue(adm_COMEN);
             me.setADMInfo();
             mainForm.setValues(data.response);
-            me.changePerspective(a4501STVAL, a4501STADM);
+            me.changePerspective(a4501STVAL, a4501STADM, a4496TKVOI, a4501PRTP,procdate);
         }
         me.view.unmask();
     },
-    changePerspective: function (status, adm) {
+    changePerspective: function (status, adm, fvoid, procesador,procdate) {
         const match = ['1', '5', '6', '7'];
+        if (fvoid === 'V') {
+            Ext.getCmp(prototype.idDE + '-panelVoid').show();
+        } else {
+            Ext.getCmp(prototype.idDE + '-panelVoid').hide();
+        }
+        const actualdate = Ext.Date.format(new Date(), 'Ymd');
+        //console.log(actualdate,' ',procdate,' ',actualdate>procdate);
+        
         if (match.some(x => status === x)) {
-            Ext.getCmp(prototype.idDE + '-liquiInfo').show();
-            Ext.getCmp(prototype.idDE + '-panelOptions').hide();
+            if (status === '6' && fvoid === 'V' && procesador.trim() === '') {
+                Ext.getCmp(prototype.idDE + '-liquiInfo').hide();
+                Ext.getCmp(prototype.idDE + '-panelOptions').show();
+                Ext.getCmp(prototype.idDE + '-revForcedMatchVoid').show();
+                Ext.getCmp(prototype.idDE + '-forcedMatchVoid').hide();
+                Ext.getCmp(prototype.idDE + '-addAdm').hide();
+                Ext.getCmp(prototype.idDE + '-showStandBy').hide();
+            } else {
+                Ext.getCmp(prototype.idDE + '-liquiInfo').show();
+                Ext.getCmp(prototype.idDE + '-panelOptions').hide();
+            }
             Ext.getCmp(prototype.idDE + '-panelPending').hide();
             Ext.getCmp(prototype.idDE + '-panelStandBy').hide();
         } else if (status === '0') {
@@ -55,6 +68,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             Ext.getCmp(prototype.idDE + '-revStandBy').show();
         } else {
             Ext.getCmp(prototype.idDE + '-liquiInfo').hide();
+            Ext.getCmp(prototype.idDE + '-addAdm').show();
+            Ext.getCmp(prototype.idDE + '-showStandBy').show();
             if (adm === '') {
                 Ext.getCmp(prototype.idDE + '-panelOptions').show();
                 Ext.getCmp(prototype.idDE + '-panelADM').hide();
@@ -68,7 +83,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
                 Ext.getCmp(prototype.idDE + '-sendADM').hide();
                 Ext.getCmp(prototype.idDE + '-reverseADM').show();
             }
-
+            if (fvoid === 'V'&&actualdate>procdate) {
+                Ext.getCmp(prototype.idDE + '-forcedMatchVoid').show();
+            } else {
+                Ext.getCmp(prototype.idDE + '-forcedMatchVoid').hide();
+            }
+            Ext.getCmp(prototype.idDE + '-revForcedMatchVoid').hide();
             Ext.getCmp(prototype.idDE + '-panelPending').show();
             Ext.getCmp(prototype.idDE + '-panelStandBy').hide();
             Ext.getCmp(prototype.idDE + '-hideStandBy').show();
@@ -255,6 +275,98 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         }
         me.view.unmask();
     },
+    onForceMatch: function (btn) {
+        const me = this;
+        let params = me.formatForcedMatchVoidParams();
+        console.log(params);
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to Forced Match?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            me.forceMatchVoid(params);
+                        }
+                    }
+                });
+    },
+    onReverseForceMatch: function (btn) {
+        const me = this;
+        let params = me.formatForcedMatchVoidParams();
+        console.log(params);
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to reverse Forced Match?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            me.RevForceMatchVoid(params);
+                        }
+                    }
+                });
+    },
+    forceMatchVoid: async function (params) {
+        const me = this;
+        me.view.mask('Loading...');
+        const res = await fetch(`${me.url}/ticketConciliationForceMatch?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const {sqlres, sqlmsg} = data;
+            if (sqlres === 1) {
+                Ext.toast({
+                    html: `<b>${sqlmsg}</b>`,
+                    title: 'Notification',
+                    align: 't',
+                    closable: true,
+                    width: 300,
+                    timeout: 10000 // 10 segundos
+                });
+                me.afterRender();
+                Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+            } else {
+                global.Msg({msg: 'Error'});
+            }
+        } else {
+            global.Msg({msg: 'Error'});
+        }
+        me.view.unmask();
+    },
+    RevForceMatchVoid: async function (params) {
+        const me = this;
+        me.view.mask('Loading...');
+        const res = await fetch(`${me.url}/ticketConciliationRevForceMatch?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const {sqlres, sqlmsg} = data;
+            if (sqlres === 1) {
+                Ext.toast({
+                    html: `<b>${sqlmsg}</b>`,
+                    title: 'Notification',
+                    align: 't',
+                    closable: true,
+                    width: 300,
+                    timeout: 10000 // 10 segundos
+                });
+                me.afterRender();
+                Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+            } else {
+                global.Msg({msg: 'Error'});
+            }
+        } else {
+            global.Msg({msg: 'Error'});
+        }
+        me.view.unmask();
+    },
     onSearchUses: function () {
         const me = this;
         const {a4496CIA, a4496FORMA, a4496SERIE, a4496SEQ, a4496CPUI,
@@ -352,6 +464,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             IN_TDOC: obj.a4501TDOC,
             IN_CORRL: obj.a4501CORRL,
             IN_PRDA: obj.a4496FPROC
+        };
+        return params;
+    },
+    formatForcedMatchVoidParams: function () {
+        const obj = this.bean;
+        let params = {
+            IN_CCUST: obj.a4501CCUST,
+            IN_CIA: obj.a4501CIA,
+            IN_FORMA: obj.a4501FORMA,
+            IN_SERIE: obj.a4501SERIE,
+            IN_SEQ: obj.a4501SEQ,
+            IN_TDOC: obj.a4501TDOC,
+            IN_CORRL: obj.a4501CORRL
         };
         return params;
     },

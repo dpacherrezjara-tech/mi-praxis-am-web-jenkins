@@ -12,7 +12,7 @@ public class ScannerFilter {
             CIAP,FORMAP,SERIEP,
             RUTA0,RUTA1,RUTA2,RUTA3,RUTA4,
             FVLO1,FVLO2,FVLO3,FVLO4,
-            TOTCUP,CPUI,PAX,FLAG,STDOC;
+            TOTCUP,CPUI,PAX,FLAG,STDOC,TCORR;
     private Double SVFOPS,TGROSAMOUN;
     private Integer DUPLICATES;
 
@@ -334,5 +334,13 @@ public class ScannerFilter {
 
     public void setSTDOC(String STDOC) {
         this.STDOC = STDOC;
+    }
+
+    public String getTCORR() {
+        return TCORR;
+    }
+
+    public void setTCORR(String TCORR) {
+        this.TCORR = TCORR;
     }
 }

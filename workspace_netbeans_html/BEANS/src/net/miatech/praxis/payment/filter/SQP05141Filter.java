@@ -1,15 +1,13 @@
 package net.miatech.praxis.payment.filter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  * @author Dvicente
  */
 public class SQP05141Filter {
-    private String IN_CCUST,IN_DATEFROM,IN_DATETO,IN_PROCTYPE;
-    private List<A4332Filter> response = new ArrayList<>();
+    private String IN_CCUST,IN_CIA,IN_FORMA,IN_SERIE,IN_SEQ,IN_TDOC,IN_CORRL;
+    private Integer SQLRES;
+    private String SQLMSG;
 
     public String getIN_CCUST() {
         return IN_CCUST;
@@ -19,35 +17,67 @@ public class SQP05141Filter {
         this.IN_CCUST = IN_CCUST;
     }
 
-    public String getIN_DATEFROM() {
-        return IN_DATEFROM;
+    public String getIN_CIA() {
+        return IN_CIA;
     }
 
-    public void setIN_DATEFROM(String IN_DATEFROM) {
-        this.IN_DATEFROM = IN_DATEFROM;
+    public void setIN_CIA(String IN_CIA) {
+        this.IN_CIA = IN_CIA;
     }
 
-    public String getIN_DATETO() {
-        return IN_DATETO;
+    public String getIN_FORMA() {
+        return IN_FORMA;
     }
 
-    public void setIN_DATETO(String IN_DATETO) {
-        this.IN_DATETO = IN_DATETO;
+    public void setIN_FORMA(String IN_FORMA) {
+        this.IN_FORMA = IN_FORMA;
     }
 
-    public String getIN_PROCTYPE() {
-        return IN_PROCTYPE;
+    public String getIN_SERIE() {
+        return IN_SERIE;
     }
 
-    public void setIN_PROCTYPE(String IN_PROCTYPE) {
-        this.IN_PROCTYPE = IN_PROCTYPE;
+    public void setIN_SERIE(String IN_SERIE) {
+        this.IN_SERIE = IN_SERIE;
     }
 
-    public List<A4332Filter> getResponse() {
-        return response;
+    public String getIN_SEQ() {
+        return IN_SEQ;
     }
 
-    public void setResponse(List<A4332Filter> response) {
-        this.response = response;
+    public void setIN_SEQ(String IN_SEQ) {
+        this.IN_SEQ = IN_SEQ;
+    }
+
+    public String getIN_TDOC() {
+        return IN_TDOC;
+    }
+
+    public void setIN_TDOC(String IN_TDOC) {
+        this.IN_TDOC = IN_TDOC;
+    }
+
+    public String getIN_CORRL() {
+        return IN_CORRL;
+    }
+
+    public void setIN_CORRL(String IN_CORRL) {
+        this.IN_CORRL = IN_CORRL;
+    }
+
+    public Integer getSQLRES() {
+        return SQLRES;
+    }
+
+    public void setSQLRES(Integer SQLRES) {
+        this.SQLRES = SQLRES;
+    }
+
+    public String getSQLMSG() {
+        return SQLMSG;
+    }
+
+    public void setSQLMSG(String SQLMSG) {
+        this.SQLMSG = SQLMSG;
     }
 }

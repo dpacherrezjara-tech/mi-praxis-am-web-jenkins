@@ -11,7 +11,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class X3169 {
 
-        private String CCUST;
+    private String CCUST;
 
     public void setCCUST(String CCUST) {
         this.CCUST = CCUST;
@@ -311,6 +311,16 @@ public class X3169 {
         return CORRL;
     }
 
+    private String TCORR;
+
+    public String getTCORR() {
+        return TCORR;
+    }
+
+    public void setTCORR(String TCORR) {
+        this.TCORR = TCORR;
+    }
+    
     private String FVOID;
 
     public void setFVOID(String FVOID) {
