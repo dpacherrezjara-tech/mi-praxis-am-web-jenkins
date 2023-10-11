@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.Grids.MainGrid', {
     maxHeight: prototype.height,
     minHeight: 200,
     height: 'auto',
-    width: 1000,
+    width: 1200,
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -104,7 +104,9 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.Grids.MainGrid', {
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     return value + '%';
                 }
-            }
+            },
+            {text: 'Date<br>Created', dataIndex: 'fecr', width: 80},
+            {text: 'Date<br>Update', dataIndex: 'feup', width: 80}
             //</editor-fold>
         ]
     },

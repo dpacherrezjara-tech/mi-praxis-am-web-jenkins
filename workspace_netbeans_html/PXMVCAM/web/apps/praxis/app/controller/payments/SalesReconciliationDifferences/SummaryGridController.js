@@ -1,6 +1,7 @@
 Ext.define('Ext.Praxis.controller.payments.SalesReconciliationDifferences.SummaryGridController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.SummaryGridController',
+    url: CONTEXTPATH + '/SalesReconciliationDiff',
     init: function (view) {
 //        if (view.backButton) {
 //            let tbar = view.getDockedItems('toolbar[dock="top"]')[0];
@@ -56,6 +57,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationDifferences.Summar
         params.IN_PMERCHID = 'M';
         console.log(params);
         return params;
+    },
+    downloadExcel:function(btn){
+        const me = this;
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to download?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            global.getFile(`${me.url}/downloadSummary?${new URLSearchParams(me.view.searchParams)}`);
+                        }
+                    }
+                });
     }
 });
 

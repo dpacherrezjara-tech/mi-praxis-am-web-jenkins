@@ -79,7 +79,7 @@ public class PaymentsCommissionsController {
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();
             //headers
-            Object[] headers = new Object[9];
+            Object[] headers = new Object[11];
             headers[0] = "Type";
             headers[1] = "Card Type";
             headers[2] = "Installments";
@@ -89,6 +89,8 @@ public class PaymentsCommissionsController {
             headers[6] = "Expiry Date";
             headers[7] = "% Commission";
             headers[8] = "VAT";
+            headers[9] = "Date Created";
+            headers[10] = "Date Updated";
             data.add(headers);
             for (A4508Filter obj : filter.getResponse()) {
                 Object[] row = new Object[9];
@@ -101,6 +103,8 @@ public class PaymentsCommissionsController {
                 row[6] = obj.getFECTO();
                 row[7] = obj.getRATCNAC() + "%";
                 row[8] = obj.getRATEIVA() + "%";
+                row[8] = obj.getFECR();
+                row[8] = obj.getFEUP();
                 data.add(row);
             }
             return exportUtils.createExcel(data, controllerName + " - " + Functions.getFechaActual());
