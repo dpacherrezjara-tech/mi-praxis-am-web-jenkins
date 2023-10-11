@@ -2,7 +2,7 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.CommissionDataEnt
     extend: 'Ext.app.ViewController',
     alias: 'controller.CommissionDataEntryController',
     fecha: new Date(),
-    url: prototype.url,
+    url: CONTEXTPATH + '/PaymentsCommissions',
     init: function (view) {
     },
     afterRender: async function (obj, e) {
