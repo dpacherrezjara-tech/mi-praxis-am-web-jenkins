@@ -116,7 +116,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                         items: [
                             {text: 'Ticket', dataIndex: 'ticket', width: 140},
                             {text: 'Doc.<br>Type', dataIndex: 'tipod', width: 55},
-                            {text: 'Coupon<br>Number', dataIndex: 'coupon', width: 80},
+                            {text: 'Coupon<br>Number', dataIndex: 'coupon', width: 75},
                             {text: 'Start<br>Location', dataIndex: 'origin', width: 80},
                             {text: 'End<br>Location', dataIndex: 'destiny', width: 80},
                             {
