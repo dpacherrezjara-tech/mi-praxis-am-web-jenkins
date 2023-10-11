@@ -370,7 +370,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
     onSearchUses: function () {
         const me = this;
         const {a4496CIA, a4496FORMA, a4496SERIE, a4496SEQ, a4496CPUI,
-            a4496RUTA0, a4496RUTA1, a4496RUTA2, a4496RUTA3, a4496RUTA4} = me.bean;
+            a4496RUTA0, a4496RUTA1, a4496RUTA2, a4496RUTA3, a4496RUTA4, a4496TIPOD} = me.bean;
         let cpui = (a4496CPUI + '    ').slice(0, 4);
         let itin = (a4496RUTA0 + '   ').slice(0, 3) +
                 (a4496RUTA1 + '   ').slice(0, 3) +
@@ -388,7 +388,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         console.log(params);
         const usageWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.CouponsUsagesDataEntry', {
             id: prototype.idDE + '-CouponsUsagesDataEntry-1',
-            searchParams: params
+            searchParams: params,
+            doctype: a4496TIPOD
         });
         usageWin.show();
     },
