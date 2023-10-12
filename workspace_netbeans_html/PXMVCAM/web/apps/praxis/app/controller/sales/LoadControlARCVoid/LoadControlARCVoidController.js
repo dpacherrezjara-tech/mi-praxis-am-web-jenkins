@@ -105,7 +105,7 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlARCVoid.LoadControlARCVoidCon
                 this.setValue('txtIDFile', this.IdFile);
                 this.beanErrorFormat.IN_IDFIL = '000000000' + this.getValue("txtIDFile");;
                 this.beanErrorFormat.IN_IDFIL = this.beanErrorFormat.IN_IDFIL.substr(this.beanErrorFormat.IN_IDFIL.length - 9);
-                this.beanErrorFormat.IN_FUENT = 'VAR';
+                this.beanErrorFormat.IN_FUENT = 'ARC';
                 this.searchIdFile(this.beanErrorFormat);
                 break;
         }
@@ -134,7 +134,7 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlARCVoid.LoadControlARCVoidCon
             this.bean.IN_A1698FFILE = '';
             this.bean.IN_A1698HFILE = '';
             this.bean.IN_A1698FREGI = '';
-            this.bean.IN_A1698SOURC = 'VAR';
+            this.bean.IN_A1698SOURC = 'ARC';
             if ( tipo_fil === '2' ) {
                 this.bean.IN_A1698PAIS = this.getValue("txtA1698PAIS");
                 this.bean.IN_A1698BANK  = this.getValue("txtA1698BANK");
@@ -179,7 +179,7 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlARCVoid.LoadControlARCVoidCon
             this.beanError.IN_A1697FFILE = '';
             this.beanError.IN_A1697HFILE = '';
             this.beanError.IN_A1697FREGI = '';
-            this.beanError.IN_A1697SOURC = 'VAR';
+            this.beanError.IN_A1697SOURC = 'ARC';
             if ( tipo_fil === '2' ) {
                 this.beanError.IN_A1697PAIS = this.getValue("txtA1698PAIS");
                 this.beanError.IN_A1697BANK  = this.getValue("txtA1698BANK");
