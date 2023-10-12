@@ -400,52 +400,82 @@ public class CouponsEstimatedValueController extends BaseController {
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
-        
+
         System.out.println("PendingAccountingCoupons : getTXT");
         String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
-        
+
         try {
             List<A1692Filter> listaData = this.getList(request, true);
-            
-            int len = listaData.size();
-            Integer vi = 0;            
-            String fileName = "PendingAccountingCoupons - " + Functions.getFechaActual() + ".txt" ;
-            File file = new File(rutaFile + "\\" + fileName + ".txt");
-            
-            if (file.exists())
-                file.delete();
-            
-            PrintWriter writer = new PrintWriter(file, "UTF-8");
-            String cadena;
-            cadena = "Tickets|Seq|Status|Flight Date|VCR Date|Flight Number|City Pair|Leg Sec.|Zone|Carrier|Fare Basis|Class|Sales Value Flag|Sales Value USD|Estimated Value USD|Exch. Rate|Estimated Value MXN|Create Date|Flag";
-            writer.println("" + cadena );
 
-            for (vi = 0; vi < len; vi++) {
-                cadena = "";
-                cadena += "" + listaData.get(vi).strTicket + "|";
-                cadena += "" + listaData.get(vi).SEQ + "|";
-                cadena += "" + listaData.get(vi).strDescSTVAL + "|";
-                cadena += "" + listaData.get(vi).strFormatDate2 + "|";
-                cadena += "" + listaData.get(vi).strFormatDate + "|";
-                cadena += "" + listaData.get(vi).NFLIGHT + "|";
-                cadena += "" + listaData.get(vi).strDescripcion + "|";
-                cadena += "" + listaData.get(vi).LEGSEQ + "|";
-                cadena += "" + listaData.get(vi).ZONA + "|";
-                cadena += "" + listaData.get(vi).CARR + "|";
-                cadena += "" + listaData.get(vi).FBASE + "|";
-                cadena += "" + listaData.get(vi).CLAS + "|";
-                cadena += "" + listaData.get(vi).strFVAL + "|";
-                cadena += "" + listaData.get(vi).VCPN + "|";
-                cadena += "" + listaData.get(vi).VCPMX + "|";
-                cadena += "" + listaData.get(vi).TCMUS + "|";
-                cadena += "" + listaData.get(vi).VCPUS + "|";
-                cadena += "" + listaData.get(vi).strFormatFVTA + "|";
-                cadena += "" + listaData.get(vi).strDescSTNEW;
-                cadena = cadena.replaceAll("null", "");
-                writer.println("" + cadena);
+            int len = listaData.size();
+            Integer vi = 0;
+            String fileName = "PendingAccountingCoupons - " + Functions.getFechaActual() + ".txt";
+            File file = new File(rutaFile + "\\" + fileName + ".txt");
+
+            if (file.exists()) {
+                file.delete();
             }
-            writer.flush();
-            writer.close();
+
+            if (listaData.get(0).IN_TYPE.equals("S")) {
+                PrintWriter writer = new PrintWriter(file, "UTF-8");
+                String cadena;
+                cadena = "Tickets|Seq|Status|Flight Date|RFIC|Reason Code|Free Description|Carrier|Sales Flag|Sales USD|Estimated USD|Exch.Rate|Estimated MXN|Create Date";
+                writer.println("" + cadena);
+
+                for (vi = 0; vi < len; vi++) {
+                    cadena = "";
+                    cadena += "" + listaData.get(vi).strTicket + "|";
+                    cadena += "" + listaData.get(vi).SEQ + "|";
+                    cadena += "" + listaData.get(vi).strDescSTVAL + "|";
+                    cadena += "" + listaData.get(vi).strFormatDate2 + "|";
+                    cadena += "" + listaData.get(vi).RFIC + "|";
+                    cadena += "" + listaData.get(vi).RECODE + "|";
+                    cadena += "" + listaData.get(vi).DESC_RECODE + "|";
+                    cadena += "" + listaData.get(vi).CARR + "|";
+                    cadena += "" + listaData.get(vi).strFVAL + "|";
+                    cadena += "" + listaData.get(vi).VCPN + "|";
+                    cadena += "" + listaData.get(vi).VCPMX + "|";
+                    cadena += "" + listaData.get(vi).TCMUS + "|";
+                    cadena += "" + listaData.get(vi).VCPUS + "|";
+                    cadena += "" + listaData.get(vi).strFormatFVTA + "|";
+                    cadena = cadena.replaceAll("null", "");
+                    writer.println("" + cadena);
+                }
+                writer.flush();
+                writer.close();
+            } else {
+                PrintWriter writer = new PrintWriter(file, "UTF-8");
+                String cadena;
+                cadena = "Tickets|Seq|Status|Flight Date|VCR Date|Flight Number|City Pair|Leg Sec.|Zone|Carrier|Fare Basis|Class|Sales Value Flag|Sales Value USD|Estimated Value USD|Exch. Rate|Estimated Value MXN|Create Date|Flag";
+                writer.println("" + cadena);
+
+                for (vi = 0; vi < len; vi++) {
+                    cadena = "";
+                    cadena += "" + listaData.get(vi).strTicket + "|";
+                    cadena += "" + listaData.get(vi).SEQ + "|";
+                    cadena += "" + listaData.get(vi).strDescSTVAL + "|";
+                    cadena += "" + listaData.get(vi).strFormatDate2 + "|";
+                    cadena += "" + listaData.get(vi).strFormatDate + "|";
+                    cadena += "" + listaData.get(vi).NFLIGHT + "|";
+                    cadena += "" + listaData.get(vi).strDescripcion + "|";
+                    cadena += "" + listaData.get(vi).LEGSEQ + "|";
+                    cadena += "" + listaData.get(vi).ZONA + "|";
+                    cadena += "" + listaData.get(vi).CARR + "|";
+                    cadena += "" + listaData.get(vi).FBASE + "|";
+                    cadena += "" + listaData.get(vi).CLAS + "|";
+                    cadena += "" + listaData.get(vi).strFVAL + "|";
+                    cadena += "" + listaData.get(vi).VCPN + "|";
+                    cadena += "" + listaData.get(vi).VCPMX + "|";
+                    cadena += "" + listaData.get(vi).TCMUS + "|";
+                    cadena += "" + listaData.get(vi).VCPUS + "|";
+                    cadena += "" + listaData.get(vi).strFormatFVTA + "|";
+                    cadena += "" + listaData.get(vi).strDescSTNEW;
+                    cadena = cadena.replaceAll("null", "");
+                    writer.println("" + cadena);
+                }
+                writer.flush();
+                writer.close();
+            }
 
             response.setContentType("application/text");
             response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + ".txt" + "\"");

@@ -78,7 +78,10 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Filters', {
                             emptyText: 'All',
                             labelWidth: 50,
                             width: 120,
-                            anchor: '100%'
+                            anchor: '100%',
+                            listeners: {
+                                select: 'selectComboFromYear'
+                            }
                         },
                         {
                             xtype: 'combo',
@@ -95,7 +98,10 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Filters', {
                             emptyText: 'All',
                             labelWidth: 0,
                             width: 60,
-                            anchor: '100%'
+                            anchor: '100%',
+                            listeners: {
+                                select: 'selectComboFromMonth'
+                            }
                         },
                         {xtype: 'tbspacer', width: 15},
                         {
@@ -131,7 +137,10 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Filters', {
                             emptyText: 'All',
                             labelWidth: 0,
                             width: 60,
-                            anchor: '100%'
+                            anchor: '100%',
+                            listeners: {
+                                select: 'selectComboToMonth'
+                            }
                         },
                         {xtype: 'tbspacer', width: 20},
                         {
