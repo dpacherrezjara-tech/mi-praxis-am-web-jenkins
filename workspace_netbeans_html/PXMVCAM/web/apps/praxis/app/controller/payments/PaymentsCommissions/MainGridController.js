@@ -2,7 +2,7 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.MainGridControlle
     extend: 'Ext.app.ViewController',
     alias: 'controller.MainGridController',
     fecha: new Date(),
-    url: prototype.url,
+    url: CONTEXTPATH + '/PaymentsCommissions',
     init: function (view) {
         if (view.backButton) {
             let tbar = view.getDockedItems('toolbar[dock="top"]')[0];
@@ -60,7 +60,7 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.MainGridControlle
         Ext.Msg.show(
                 {
                     title: '.:PRAXIS:.',
-                    msg: 'Are you sure to update record?',
+                    msg: 'Are you sure to download?',
                     buttons: Ext.MessageBox.YESNO,
                     scope: this,
                     animateTarget: btn,

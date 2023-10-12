@@ -382,7 +382,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         me.reloadErrorGrid();
         me.view.unmask();
         me.afterRender();
-        
+
     },
     reverseTransaction: function () {
         const me = this;
@@ -568,10 +568,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         });
         dataEntryCHBK.show();
     },
-    onShowUsages:function(grid, rowIndex, colIndex){
+    onShowUsages: function (grid, rowIndex, colIndex) {
         let obj = grid.getStore().getAt(rowIndex);
         const {ccia, forma, serie, seq, cpui,
-            ruta0, ruta1, ruta2, ruta3, ruta4} = obj.data;
+            ruta0, ruta1, ruta2, ruta3, ruta4, stdoc} = obj.data;
         let fcpui = (cpui + '    ').slice(0, 4);
         let itin = (ruta0 + '   ').slice(0, 3) +
                 (ruta1 + '   ').slice(0, 3) +
@@ -589,7 +589,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         console.log(params);
         const usageWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.CouponsUsagesDataEntry', {
             id: prototype.idDE + '-CouponsUsagesDataEntry-1',
-            searchParams: params
+            searchParams: params,
+            doctype: stdoc
         });
         usageWin.show();
     },

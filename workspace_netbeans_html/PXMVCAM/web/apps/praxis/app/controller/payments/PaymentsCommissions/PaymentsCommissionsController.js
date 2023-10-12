@@ -2,7 +2,7 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.PaymentsCommissio
     extend: 'Ext.app.ViewController',
     alias: 'controller.PaymentsCommissionsController',
     fecha: new Date(),
-    url: prototype.url,
+    url: CONTEXTPATH + '/PaymentsCommissions',
     init: function (view) {
         prototype.id = 'PaymentsCommissions';
         prototype.url = CONTEXTPATH + '/PaymentsCommissions';

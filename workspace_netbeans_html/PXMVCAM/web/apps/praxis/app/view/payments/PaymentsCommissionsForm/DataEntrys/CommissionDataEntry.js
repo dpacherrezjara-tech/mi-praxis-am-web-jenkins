@@ -212,6 +212,83 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.DataEntrys.Commissi
                                     hideTrigger: true
                                 }
                             ]
+                        },
+                        {
+                            xtype: 'fieldset',
+                            title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:10px;">Control Data</span>',
+                            layout: {
+                                type: 'vbox',
+                                pack: 'center'
+                            },
+                            border: true,
+                            margin: '5 5 5 5',
+                            width: '100%',
+                            style: {
+                                backgroundColor: '#EEF3F9' // Cambiar el color de fondo a gris claro (#f0f0f0)
+                            },
+                            defaults: {
+                                xtype: 'panel',
+                                layout: {
+                                    type: 'hbox',
+                                    pack: 'center'
+                                },
+                                width: '100%',
+                                border: false,
+                                bodyStyle: 'background: transparent',
+                                defaults: {
+                                    xtype: 'textfield',
+                                    margin: '5 8 5 8',
+                                    labelStyle: 'text-align:left;font-weight: bolder;',
+                                    fieldStyle: 'text-align:center;',
+                                    editable: false
+                                }
+                            },
+                            items: [
+                                {
+                                    items: [
+                                        {
+                                            labelWidth: 75,
+                                            width: 175,
+                                            fieldLabel: 'User Crt.',
+                                            name: 'uscr'
+                                        },
+                                        {
+                                            labelWidth: 75,
+                                            width: 175,
+                                            fieldLabel: 'Date Crt.',
+                                            name: 'fecr'
+                                        },
+                                        {
+                                            labelWidth: 75,
+                                            width: 175,
+                                            fieldLabel: 'Hour Crt.',
+                                            name: 'hocr'
+                                        }
+                                    ]
+                                },
+                                {
+                                    items: [
+                                        {
+                                            labelWidth: 75,
+                                            width: 175,
+                                            fieldLabel: 'User Upd.',
+                                            name: 'usup'
+                                        },
+                                        {
+                                            labelWidth: 75,
+                                            width: 175,
+                                            fieldLabel: 'Date Upd.',
+                                            name: 'feup'
+                                        },
+                                        {
+                                            labelWidth: 75,
+                                            width: 175,
+                                            fieldLabel: 'Hour Upd.',
+                                            name: 'houp'
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }

@@ -65,11 +65,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                 {
                     xtype: 'button',
                     id: prototype.id + '-processDownloadResult',
-                    hidden: true,
+                    //hidden: true,
                     margin: '5 5 5 5',
                     iconCls: 'prx-icon-excel',
                     scale: 'small',
-                    tooltip: 'Export result to Excel',
+                    tooltip: 'Export last result to Excel',
                     listeners: {
                         click: 'downloadExcel'
                     }
