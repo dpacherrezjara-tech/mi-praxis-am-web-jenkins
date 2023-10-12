@@ -92,7 +92,7 @@ public class CouponsEstimatedValueDAO {
             cstmt01.setString(8, filter.IN_ZONA); //ZONA
             cstmt01.setString(9, filter.IN_STVAL); //STOCL
             cstmt01.setString(10, filter.IN_NFLIGHT); //STVAL
-            cstmt01.setString(11, filter.IN_TYPE); //Tipo de consulta (FLOWN o EMD)
+            cstmt01.setString(11, filter.IN_TYPE); //Tipo de consulta (FLOWN o EMD o EMDS)
             cstmt01.setString(12, filter.IN_FVAL);
             cstmt01.setInt(13, filter.page.PAGNUM);
             cstmt01.setInt(14, filter.page.PAGROW);
@@ -123,6 +123,7 @@ public class CouponsEstimatedValueDAO {
 
                     objRtn = new A1692Filter();
 
+                    objRtn.IN_TYPE = filter.IN_TYPE;
                     objRtn.CCIA = rs01.getString("CCIA").trim();
                     objRtn.FORMA = rs01.getString("FORMA").trim();
                     objRtn.SERIE = rs01.getString("SERIE").trim();
@@ -149,7 +150,13 @@ public class CouponsEstimatedValueDAO {
                     }else{
                      objRtn.strFVAL= "NO"; 
                     }
-
+                    
+                    if ("S".equals(filter.IN_TYPE)) {
+                        objRtn.RFIC = rs01.getString("RFIC");
+                        objRtn.RECODE = rs01.getString("RECODE");
+                        objRtn.DESC_RECODE = rs01.getString("DESC_RECODE");
+                    }
+                    
                     /*objRtn.STVAL = rs01.getString("STVAL").trim();
                      if(rs01.getString("STVAL").trim().equals("7")){
                      objRtn.strDescSTVAL = "Pending-Value";       

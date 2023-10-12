@@ -78,6 +78,7 @@ public class A1692Filter extends A1692 {
     public String STATUS = "" ; 
     //A1818
     public String RECODE = "";
+    public String DESC_RECODE = "";
     public String RFIC = "";
     public String TKTASO = "";
     public String TEMD = "";
