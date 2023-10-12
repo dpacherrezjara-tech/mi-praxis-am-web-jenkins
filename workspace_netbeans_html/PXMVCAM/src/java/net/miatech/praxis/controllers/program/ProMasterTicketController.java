@@ -63,12 +63,15 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.stream.StreamResult;
+import net.miatech.beans.A4471Filter;
 import net.miatech.beans.A4474Filter;
 import net.miatech.beans.PX0094S01A007Filter;
 import static net.miatech.praxis.controllers.tnu.AtlUsageNoSaleController.zipFile;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.exceptions.SpringLog;
 import net.miatech.praxis.logic.LoadDataLogic;
+import net.miatech.praxis.logic.program.ProrrateoNewLogic;
+import net.miatech.praxis.spring.INF020;
 import net.sabre.miatech.praxis.SabreRecordLocator;
 import net.sabre.miatech.praxis.SabreRecordLocatorSoap;
 import net.sabre.miatech.praxis.TicketREQ;
@@ -509,6 +512,34 @@ public class ProMasterTicketController extends BaseController {
             map.put("strTexto", "File not found for ticket: " + TKT);
         } catch (IOException e) {
             map.put("strTexto", e.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "searchDeliveryARC")
+    public @ResponseBody
+    String searchDeliveryARC(ModelMap map, HttpServletRequest request) {
+        A4471Filter filter = new A4471Filter();
+        String strTexto = "";
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            INF020 cliente = this.serverSession.getServerSession().getUserView().getCustomerInfo();
+            
+            ProrrateoNewLogic logic = new ProrrateoNewLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            A4471Filter beansA4471 = logic.searchDeliveryARC(cliente.CCUST, filter, "B");
+
+            
+            map.put("success", true);
+            map.put("data", beansA4471);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
         }
         return new Gson().toJson(map);
     }

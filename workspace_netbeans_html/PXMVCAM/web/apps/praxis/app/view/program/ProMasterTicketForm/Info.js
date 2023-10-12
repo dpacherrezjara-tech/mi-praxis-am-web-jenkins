@@ -967,21 +967,9 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                         },
                                         {
                                             xtype: 'button',
-                                            id: prototype.id + '-btnDelivery',
-                                            margin: '0 0 0 30',
-                                            text: '<strong style="color:white;">Delivery<strong>',
-                                            cls: 'x-btn-sent',
-                                            overCls: 'x-btn-sent-over',
-                                            width: 80,
-                                            listeners: {
-                                                click: 'btnDelivery_clickHandler'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'button',
                                             id: prototype.id + '-btnDeliveryARC',
                                             margin: '0 0 0 30',
-                                            text: '<strong style="color:white;">Delivery ARC<strong>',
+                                            text: '<strong style="color:white;">Delivery<strong>',
                                             cls: 'x-btn-sent',
                                             overCls: 'x-btn-sent-over',
                                             width: 95,
@@ -1070,7 +1058,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                             listeners: {
                                                 click: 'btnRFTX_clickHandler'
                                             }
-                                        } 
+                                        }
                                     ]
                                 }
                                 // </editor-fold>
@@ -1487,7 +1475,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                             ]
                         }
                     ]
-                }
+                } 
             ]
         },
         {
@@ -1623,7 +1611,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                   
             ]
         },
-        // </editor-fold>  
+        // </editor-fold> 
         {
             xtype: 'panel',
             id: prototype.id + '-vskData',

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import net.miatech.beans.A1692Filter;
+import net.miatech.beans.A4471Filter;
 import net.miatech.beans.FACSIMILFilter;
 import net.miatech.beans.S0007A720Filter;
 import net.miatech.beans.spring.implement.IServerSession;
@@ -57,7 +58,11 @@ public class ProrrateoNewLogic {
         return ProrrateoNewDAO.searchDelivery(ccust, filter, fuente);
     }
     
-    public String searchDeliveryARC(String ccust, FACSIMILFilter filter, String fuente) throws SQLException, Exception {
+    public String searchDeliveryARC1(String ccust, FACSIMILFilter filter, String fuente) throws SQLException, Exception {
+        return ProrrateoNewDAO.searchDeliveryARC1(ccust, filter, fuente);
+    }
+    
+    public A4471Filter searchDeliveryARC(String ccust, A4471Filter filter, String fuente) throws SQLException, Exception {
         return ProrrateoNewDAO.searchDeliveryARC(ccust, filter, fuente);
     }
     

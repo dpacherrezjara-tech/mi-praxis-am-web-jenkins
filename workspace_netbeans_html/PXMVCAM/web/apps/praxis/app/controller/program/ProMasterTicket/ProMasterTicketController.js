@@ -2,6 +2,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     extend: 'Ext.app.ViewController',
     alias: 'controller.ProMasterTicketController',
     dataEntry: Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {id: 'DataEntryProMasterTicketForm'} ),
+    dataEntryDelivery: Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryDeliveryARC', {id: 'DataEntryDeliveryARCForm'} ),
     dataEntryADM: Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryADM', {id: 'DataEntryADMProMasterTicketForm'} ),             
     ACT_VIEW_BY_TKT: 'ACT_VIEW_BY_TKT',
     ACT_VIEW_BY_TKT_ADM: 'ACT_VIEW_BY_TKT_ADM',
@@ -13,6 +14,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     params: {},
     bean: {},
     beanSabre: {},
+    
     filterPax: {},
     beanResultSet01: {},
     actionCode: win.DE_ACT_VIEW,
@@ -26,6 +28,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
 //    TicketNumber: '',
     beanAccounting: {},
     gloA720TKVOID: '',
+    gloA720ORIG: '',
     filterTKT: {},
     filterTKTSeq: {},
     URL_VIEWTICKET : '',
@@ -49,6 +52,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     afterRender: function() {
         console.log(me);
         this.startDisplay();
+        prototype.pdarc = 'DataEntryDeliveryARC';
+
     },
     startDisplay: function() {
         console.log('PERMC');
@@ -223,13 +228,13 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         console.log(data);
         var me01 = this;
         if(data.STAT === 'EXCH' || data.STAT === 'EXCH-VOID'){
-            /*var ScrTKTForm = Ext.create('Ext.Praxis.view.screens.ScrTKTForm', { id: 'ScrTKTForm' });
+            var ScrTKTForm = Ext.create('Ext.Praxis.view.screens.ScrTKTForm', { id: 'ScrTKTForm' });
             var controller = ScrTKTForm.getController();
             controller.VP_DOCUMENTO = data.FOR + data.SER;
             controller.VP_CIA = data.CIA;
             controller.VP_SEQ = '00';
             controller.actionCode = 'V';
-            ScrTKTForm.show();*/
+            ScrTKTForm.show();
             console.log(data.SEQ+data.CIA+data.FOR + data.SER);
             var strSEQ = data.SEQ===''? '00':data.SEQ;
             var strCIA = data.CIA;
@@ -612,14 +617,27 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     },
     btnDeliveryARC_clickHandler: function () {
         var bean = {};
+        bean.FUENTE= "";
 	bean.TDNR = win.getValue('txtFilterTicketCia').trim() + win.getValue('txtFilterTicketFormSer').trim();
 	bean.FUENTE = win.getValue('lblSource').trim().substr(0,3);
+        bean.A720TKVOID = this.gloA720TKVOID;
         console.log('btnDeliveryARC_clickHandler');
-        if(bean.TDNR !== '' && bean.FUENTE !== ''){
+        console.log("bean.A720TKVOID");
+        console.log(bean.A720TKVOID);
+        console.log("bean.A720ORIG");
+        console.log(bean.FUENTE);
+        
+        if(bean.TDNR !== '' && bean.A720TKVOID === 'V' && bean.FUENTE === 'ARC'  ){
+            console.log("DELIVERY ARC");
             bean.A720TKVOID = this.gloA720TKVOID;
             console.log(bean);
             this.searchDeliveryARC(bean);
 	}
+        else if(bean.TDNR !== '' && bean.FUENTE !== ''){
+            console.log("DELIVERY");
+            console.log(bean);
+            this.searchDelivery(bean);
+        }
     },
     btnPayment_clickHandler: function () {
         var beanA2289 = {};
@@ -841,8 +859,6 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             this.beanAccounting.VP_A1716SEQI = this.filterTKT.VP_A1716SEQI;	
             this.beanAccounting.VP_A1716SEQA = this.filterTKT.VP_A1716SEQA;	
             
-            //this.loadPurge(this.beanAccounting);
-            
             Ext.getCmp(prototype.id+'-vskDataPurge').hide();
             Ext.getCmp(prototype.id+'-vskDataPurge').hide();
             this.loadAccountig(this.beanAccounting);
@@ -1039,7 +1055,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             Ext.getCmp(prototype.id+'-gridDataAccounting').hide();
             this.loadTicketSeq(this.bean);
         }
-        else {    
+        else {
             Ext.getCmp(prototype.id+'-btnPurge').hide();
             Ext.getCmp(prototype.id+'-vskDataPurge').hide();
             Ext.getCmp(prototype.id+'-gridDataAccounting').hide();
@@ -1068,34 +1084,6 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         controller.actionCode = win.getValue('cbxSelectBy');
         controller.startDisplay();
         this.dataEntry.show();
-        
-        
-        /*var DataEntryLog = Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {id: 'DataEntryProMasterTicketForm'} );
-        console.log('DataEntryLog');
-        console.log(DataEntryLog);
-        var controller = DataEntryLog.getController();
-        controller.ticketNumber = "";
-        controller.actionCode = this.actionCode2;
-        controller.startDisplay();
-        DataEntryLog.show();*/
-        
-        /*if(typeof Ext.getCmp(prototype.id+'-DataEntryProMasterTicketForm') !== 'undefined'){
-            console.log('DataEntryProMasterTicketForm-undefined');
-            Ext.getCmp(prototype.id+'-DataEntryProMasterTicketForm').destroy();
-        }
-        if(this.dataEntry.getController()===null)
-        {
-            var option = Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {id: 'DataEntryProMasterTicketForm'} );
-            option.show();
-        }
-        else
-        {
-            var controller = this.dataEntry.getController();
-            controller.ticketNumber = "";
-            controller.actionCode = this.actionCode2;
-            controller.startDisplay();
-            this.dataEntry.show();            
-        }*/
     },
     imgFilter_clickHandler: function () {
         var option = Ext.getCmp(prototype.id+'-contentFilter');
@@ -1122,7 +1110,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             Ext.getCmp(prototype.id+'-btnTicket').hide();
             Ext.getCmp(prototype.id+'-btnAccounting').hide();
             //Ext.getCmp(prototype.id+'-btnProrrate').hide();
-            Ext.getCmp(prototype.id+'-btnDelivery').hide();
+            //Ext.getCmp(prototype.id+'-btnDelivery').hide();
             Ext.getCmp(prototype.id+'-btnDeliveryARC').hide();
             Ext.getCmp(prototype.id+'-btnUsage').hide();
             Ext.getCmp(prototype.id+'-btnHistory').hide();
@@ -1291,7 +1279,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         win.setValue('lblTicketNumber', me01.beanResultSet01.fileA720.A720CIAI+' '+me01.beanResultSet01.fileA720.A720FORMAI+' '+me01.beanResultSet01.fileA720.A720SERIEI);
                         
                         //<editor-fold defaultstate="collapsed" desc="mostrarData">
-                        var paramsConjuntion, paramsResultSet02, paramsResultSet03, paramsResultSet04, paramsResultSet05, paramsResultSet06, paramsResultSet07, paramsResultSet08, paramsResultSet09, paramsResultSet10, paramsResultSet11, paramsResultSet12, paramsResultSet13, paramsResultSet14, paramsResultSet15, paramsResultSet23;
+                        var paramsConjuntion, paramsResultSet02, paramsResultSet03, paramsResultSet04, paramsResultSet05, paramsResultSet06, paramsResultSet07, paramsResultSet08, paramsResultSet09, paramsResultSet10, paramsResultSet11, paramsResultSet12, paramsResultSet13, paramsResultSet14, paramsResultSet15;
                         var strFareConstruction, strEndorsementAndRestrictions, strIssuedInExchangeFor, strReasonForIssuance, strTKtInConnexion, strRelated, strA1531VFOP, bolA730CUPON1, bolA730CUPON2, bolA730CUPON3, bolA730CUPON4, intTAXES, intRemainingFare=0, intRemainingSurcharge=0, intRemainingCommision=0;
                         var n;
 
@@ -1315,7 +1303,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             Ext.getCmp(prototype.id+'-btnAccounting').disable(true);
                             //Ext.getCmp(prototype.id+'-btnFacsimil').disable(true);
                             Ext.getCmp(prototype.id+'-btnProrrate').disable(true);
-                            Ext.getCmp(prototype.id+'-btnDelivery').disable(true);
+                            //Ext.getCmp(prototype.id+'-btnDelivery').disable(true);
                             Ext.getCmp(prototype.id+'-btnDeliveryARC').disable(true);
                             Ext.getCmp(prototype.id+'-btnPayment').disable(true);
                             Ext.getCmp(prototype.id+'-btnPNR').disable(true);
@@ -1335,7 +1323,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             Ext.getCmp(prototype.id+'-btnAccounting').enable(true);
                             //Ext.getCmp(prototype.id+'-btnFacsimil').enable(true);
                             Ext.getCmp(prototype.id+'-btnProrrate').enable(true);
-                            Ext.getCmp(prototype.id+'-btnDelivery').enable(true);
+                            //Ext.getCmp(prototype.id+'-btnDelivery').enable(true);
                             Ext.getCmp(prototype.id+'-btnDeliveryARC').enable(true);
                             //Ext.getCmp(prototype.id+'-btnFacsimil0').disable(true);
                             Ext.getCmp(prototype.id+'-btnDelivery0').disable(true);                            
@@ -1344,7 +1332,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             Ext.getCmp(prototype.id+'-btnAccounting').enable(true);
                             //Ext.getCmp(prototype.id+'-btnFacsimil').enable(true);
                             Ext.getCmp(prototype.id+'-btnProrrate').hide();
-                            Ext.getCmp(prototype.id+'-btnDelivery').enable(true);
+                            //Ext.getCmp(prototype.id+'-btnDelivery').enable(true);
                             Ext.getCmp(prototype.id+'-btnDeliveryARC').enable(true);
                             //Ext.getCmp(prototype.id+'-btnFacsimil0').hide();
                             Ext.getCmp(prototype.id+'-btnDelivery0').hide();
@@ -1614,7 +1602,6 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         console.log(me01.filterTKT.lstResultSet12);
                         console.log(me01.filterTKT.lstResultSet13);
                         console.log(me01.filterTKT.lstResultSet15);
-                        console.log(me01.filterTKT.lstResultSet23);
                         
                         // <editor-fold defaultstate="collapsed" desc="gridDataTktRealUses">
                         //Ext.getCmp(prototype.id+'-gridDataTktRealUses').getStore().removeAll();
@@ -3205,32 +3192,6 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                     });
                                 }
                             }
-                        };
-                        if(me01.filterTKT.lstResultSet23.length > 0){
-                            for(var i23 = 0; i23 < me01.filterTKT.lstResultSet23.length; i23++){
-                                paramsResultSet23 = me01.filterTKT.lstResultSet23[i23];
-                                    strTKTIND = (paramsResultSet23.fileA1692.SERIE.length === 6) ? paramsResultSet23.fileA1692.SERIE.substr(4, 2) : '';
-                                    //me01.filterTKT.VP_A1716SEQF = paramsResultSet23.fileA1692.SEQ.trim();
-                                    me01.gridDataTktRealUsesAC.push({
-                                        TKTIND : strTKTIND,
-                                        STATUS : paramsResultSet23.fileA1692.STVAL,
-                                        CIA : paramsResultSet23.fileA1692.CCIA,
-                                        FOR : paramsResultSet23.fileA1692.FORMA,
-                                        SER : paramsResultSet23.fileA1692.SERIE,
-                                        SEQ : paramsResultSet23.fileA1692.SEQ.trim(),
-                                        SEQRO : paramsResultSet23.fileA1692.SEQRO.trim(),
-                                        CPN : paramsResultSet23.fileA1692.CUPON,
-                                        ORI : paramsResultSet23.fileA1692.CDEPART,
-                                        DES : paramsResultSet23.fileA1692.CARRIVA,
-                                        AL: paramsResultSet23.fileA1692.CARR,
-                                        FLIGHT : paramsResultSet23.fileA1692.NFLIGHT,
-                                        DATE : paramsResultSet23.fileA1692.DFLIGHT,
-                                        STAT : 'EMDS',
-                                        AMOUNT : Ext.util.Format.number(paramsResultSet23.fileA1692.VCPN, '0,000.00'),
-                                        CRCY : paramsResultSet23.fileA1692.MDACP,
-//                                        FARE : paramsResultSet23.fileA1692.FBASE
-                                    });
-                            }
                         }
                         // </editor-fold>
                 //        var srt:Sort = new Sort();
@@ -3534,7 +3495,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         Ext.getCmp(prototype.id+'-btnAccounting').enable(true);
                         //Ext.getCmp(prototype.id+'-btnFacsimil').enable(true);
                         Ext.getCmp(prototype.id+'-btnProrrate').enable(true);
-                        Ext.getCmp(prototype.id+'-btnDelivery').enable(true);
+                        //Ext.getCmp(prototype.id+'-btnDelivery').enable(true);
+                        Ext.getCmp(prototype.id+'-btnDeliveryARC').enable(true);
                         Ext.getCmp(prototype.id+'-gridDataTkt').enable(true);
                         Ext.getCmp(prototype.id+'-btnPayment').enable(true);
                         Ext.getCmp(prototype.id+'-btnPNR').enable(true);
@@ -3760,11 +3722,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                 console.log('server-side failure with status code '+response.status);
             }
         });
-        
-
-        
     },
     //</editor-fold>
+
     //<editor-fold defaultstate="collapsed" desc="get_AccountingPurge">
     get_AccountingPurge: function () {
         
@@ -3788,8 +3748,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         
     },
     //</editor-fold>
+
     //<editor-fold defaultstate="collapsed" desc="searchDeliveryARC">
-    searchDeliveryARC: function (bean) {
+    searchDeliveryARC1: function (bean) {
         prototype.url = URL_VIEWTICKET;
         console.log(prototype.ProrrateoNew.url + '/searchDeliveryARC');
         var me1 = this;
@@ -3818,8 +3779,21 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             }
         });
     },
+    
+    searchDeliveryARC: function (bean) {
+        prototype.url = URL_VIEWTICKET;
+        console.log(prototype.ProrrateoNew.url + '/searchDeliveryARC');
+        var me1 = this;
+        var controller = this.dataEntryDelivery.getController();
+        controller.Ticket_TDNR = bean.TDNR;
+        controller.Ticket_FUENTE = bean.FUENTE;
+        //controller.startDisplay();
+        this.dataEntryDelivery.show();
+    },
+    
+    
     //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="searchDelivery">
+    //    //<editor-fold defaultstate="collapsed" desc="searchDelivery">
     searchDelivery: function (bean) {
         prototype.url = URL_VIEWTICKET;
         console.log(prototype.ProrrateoNew.url + '/searchDelivery');
@@ -4071,8 +4045,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         win.enabled('btnAccounting', false);
         //win.enabled('btnFacsimil', false);
         win.enabled('btnProrrate', false);
-        win.enabled('btnDelivery', false);
+        //win.enabled('btnDelivery', false);
         win.enabled('btnDeliveryARC', false);
+        
         win.enabled('btnPayment', false);
         win.enabled('btnPNR', false);
         

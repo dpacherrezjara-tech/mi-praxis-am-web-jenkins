@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.miatech.beans.FACSIMILFilter;
+import net.miatech.beans.A4471Filter;
 import net.miatech.beans.S0007A720Filter;
 import net.miatech.beans.spring.UserView;
 import net.miatech.praxis.BSPF104;
@@ -380,9 +381,9 @@ public class ScrProrrateoNewController extends BaseController {
         return new Gson().toJson(map);
     }
     
-    @RequestMapping(value = "searchDeliveryARC")
+    @RequestMapping(value = "searchDeliveryARCDetail")
     public @ResponseBody
-    String searchDeliveryARC(ModelMap map, HttpServletRequest request) {
+    String searchDeliveryARCDetail(ModelMap map, HttpServletRequest request) {
         FACSIMILFilter filter = new FACSIMILFilter();
         String strTexto = "";
         try {
@@ -393,11 +394,39 @@ public class ScrProrrateoNewController extends BaseController {
             
             ProrrateoNewLogic logic = new ProrrateoNewLogic();
             logic.setSession(this.serverSession.getServerSession());
-            strTexto = logic.searchDeliveryARC(cliente.CCUST, filter, "B");
+            strTexto = logic.searchDeliveryARC1(cliente.CCUST, filter, "B");
 
             
             map.put("success", true);
             map.put("strTextoBSP", strTexto);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "searchDeliveryARC")
+    public @ResponseBody
+    String searchDeliveryARC(ModelMap map, HttpServletRequest request) {
+        A4471Filter filter = new A4471Filter();
+        String strTexto = "";
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            INF020 cliente = this.serverSession.getServerSession().getUserView().getCustomerInfo();
+            
+            ProrrateoNewLogic logic = new ProrrateoNewLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            A4471Filter beansA4471 = logic.searchDeliveryARC(cliente.CCUST, filter, "B");
+
+            
+            map.put("success", true);
+            map.put("data", beansA4471);
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
