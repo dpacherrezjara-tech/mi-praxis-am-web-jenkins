@@ -826,14 +826,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const codADJU = (Ext.getCmp(prototype.idDE + '-codAdjustment').getValue() || '').trim();
         const observADJU = Ext.getCmp(prototype.idDE + '-observAdjustment').getValue();
         //diferencia conciliacion manual
+        const sumScanner = parseFloat(gridBPO.sum('svfops').toFixed(2));
+        const sumAdju = parseFloat(gridADJU.sum('svfops').toFixed(2));
+        let sumDesglose = sumScanner + sumAdju;
+        console.log('Suma Desglose BPO: ',sumDesglose);
         let difference = 0;
         if (me.bean.transtype === 'CHBK') {
             //suma en caso de ser Chargeback
-            difference = obj.tgrosamoun + (gridBPO.sum('svfops') + gridADJU.sum('svfops'));
+            difference = obj.tgrosamoun + sumDesglose;
         } else {
-            difference = obj.tgrosamoun - (gridBPO.sum('svfops') + gridADJU.sum('svfops'));
+            difference = obj.tgrosamoun - sumDesglose;
         }
-
+        
         //obtiene detalle para desglosado
         const details = [
             ...gridBPO.data.items.map(x => ({STMANUAL: 'Sales', ...x.data})),
@@ -889,7 +893,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         params.IN_CODADJU = codADJU;
         params.IN_FVOID = conteo_void > 0 ? 'V' : '';
         params.IN_QTYTKT = details.length;
-        params.IN_SVFOPS = gridBPO.sum('svfops') + gridADJU.sum('svfops');
+        params.IN_SVFOPS = sumDesglose;
         console.log(params);
         return params;
     },
