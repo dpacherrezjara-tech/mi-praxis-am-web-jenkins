@@ -308,28 +308,29 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
 
                 me.bean = {};
                 me.bean.IN_TIPO = '1';
-                var date = me.beanEMD.IN_DATE
+                var date = '';
                 var stval = '';
                 var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
                 if (txtTicket.trim().length > 0) {
                     if (txtTicket.trim().length === 13) {
                         me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+                        var beanString = JSON.stringify(me.bean);
+                        paramsDetailEMD = {
+                            beanString: beanString,
+                            bean: me.bean
+                        };
+                        this.setGridData(date, stval);
                     } else {
                         global.Msg({msg: 'Ticket Number must contain 13 digits.'});
                     }
                 } else {
-                    me.bean.IN_DATE = me.beanEMD.IN_DATE;
-                    me.bean.IN_STVAL = me.beanEMD.IN_STVAL;
+//                    me.bean.IN_DATE = me.beanEMD.IN_DATE;
+//                    me.bean.IN_STVAL = me.beanEMD.IN_STVAL;
+                    console.log('entro al main');
+                    this.setFormatParameter();
+                    this.setMainData();
                 }
-                var beanString = JSON.stringify(me.bean);
-                paramsDetailEMD = {
-                    beanString: beanString,
-                    bean: me.bean
-                };
-                this.setGridData(date, stval);
             }
-
-
         }
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
@@ -379,7 +380,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
 
         me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
         me.beanEMD.IN_COUNTRY = rowData.data.IN_COUNTRY;
-        if(me.beanEMD.IN_COUNTRY === ''){
+        if (me.beanEMD.IN_COUNTRY === '') {
             me.beanEMD.IN_COUNTRY = Ext.getCmp(prototype.id + '-cmbSCOUNTRY').getValue();
             console.log(me.beanEMD.IN_COUNTRY);
         }
@@ -677,23 +678,28 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     },
     btnBack_click: function (obj, e) {
 
-
-        if (me.drillDown.length > 0) {
-            me.panelActual = me.drillDown.pop();
-            global.selectedChild(me.childs, prototype.id + me.panelActual);
-            me.setWidthPie();
-
-            this.getPaggin();
-            if (me.pagginActual !== '') {
-                var pag = Ext.getCmp(prototype.id + me.pagginActual);
-                var pagData = pag.getPageData();
-                Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-            }
+        if (me.panelActual === 'panelGridData') {
+            console.log('back');
+            this.btnSearch_click();
         } else {
-            global.showMenu();
+            if (me.drillDown.length > 0) {
+                me.panelActual = me.drillDown.pop();
+                global.selectedChild(me.childs, prototype.id + me.panelActual);
+                me.setWidthPie();
+
+                this.getPaggin();
+                if (me.pagginActual !== '') {
+                    var pag = Ext.getCmp(prototype.id + me.pagginActual);
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                }
+            } else {
+                global.showMenu();
+            }
         }
+
     },
     btnClear_click: function (obj, e) {
 //        Ext.getCmp(prototype.id + '-cmbCode').setValue('');

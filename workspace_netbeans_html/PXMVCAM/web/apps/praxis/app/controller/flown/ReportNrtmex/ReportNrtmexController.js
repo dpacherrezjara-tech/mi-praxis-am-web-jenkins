@@ -98,14 +98,10 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
             this.btnSearch_click();
         }
     },
-    filterTicketEMD: function (e, eOpts) {
+    filterTicketNRT: function (e, eOpts) {
         var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
         if (eOpts.getKey() === 13) {
-            if (txtTicket.trim().length === 13 || txtTicket.trim().length === 0) {
-                this.btnSearch_click();
-            } else {
-                global.Msg({msg: 'Ticket Number must contain 13 digits.'});
-            }
+            this.btnSearch_click();
         }
     },
     onUpperValue: function (field, newValue, oldValue) {
@@ -150,7 +146,7 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
 //        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
 
-         var cmbSearch = Ext.getCmp(prototype.id + '-cmbSearch');
+        var cmbSearch = Ext.getCmp(prototype.id + '-cmbSearch');
         cmbSearch.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
             fields: ['code', 'name'],
@@ -187,12 +183,13 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         me.bean = {};
         me.bean.IN_DATE_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
         me.bean.IN_DATE_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
+        me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
         var TYPE = Ext.getCmp(prototype.id + '-cmbSearch').getValue();
-        if(TYPE === '0'){
+        if (TYPE === '0') {
             me.bean.IN_TYPE = 'DFLIGHT';
-        }else if(TYPE === '1'){
+        } else if (TYPE === '1') {
             me.bean.IN_TYPE = 'DSALES';
-        }else if(TYPE === '2'){
+        } else if (TYPE === '2') {
             me.bean.IN_TYPE = 'FCONT';
         }
 
@@ -204,29 +201,28 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         };
     },
     btnSearch_click: function (obj, e) {
+        
+        
+        me.beanNM = {};
+        me.beanNM.IN_TIPO = '1';
+        var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
 
-//        var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
-//        if (txtTicket.trim().length > 0) {
-//            if (txtTicket.trim().length === 13) {
-//                me.bean = {};
-//                me.bean.IN_TIPO = '1';
-//                me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
-//                me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
-//                var beanString = JSON.stringify(me.bean);
-//                searchParams = {
-//                    beanString: beanString,
-//                    bean: me.bean
-//                };
-//                this.setGridData();
-//            } else {
-//                global.Msg({msg: 'Ticket Number must contain 13 digits.'});
-//            }
-//        } else {
-//            Ext.getCmp(prototype.id + '-txtTICKET').hide();
-        this.setFormatParameter();
-        this.setGridMainData();
+        if (txtTicket.trim().length === 13) {
 
-//        }
+            me.beanNM.IN_TICKET = txtTicket;
+            console.log(this.beanNM);
+            me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
+         
+            this.setGridData();
+
+        } else if (txtTicket.trim().length === 0) {
+
+            this.setFormatParameter();
+            this.setGridMainData();
+
+        } else {
+            global.Msg({msg: 'Ticket Number must contain 13 digits.'});
+        }
 
     },
     // <editor-fold defaultstate="collapsed" desc="setGridMainData">

@@ -124,30 +124,13 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Filters', {
                     id: prototype.id + '-txtTICKET',
                     fieldStyle: 'text-align:center',
                     enforceMaxLength: true,
-                    hidden: false,
                     maskRe: /[0-9]/,
                     maxLength: 15,
                     labelWidth: 60,
                     width: 190,
                     enableKeyEvents: true,
                     listeners: {
-                        keypress: 'filterTicket'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    fieldLabel: 'Ticket:',
-                    id: prototype.id + '-txtTICKET',
-                    fieldStyle: 'text-align:center',
-                    enforceMaxLength: true,
-                    hidden: true,
-                    maskRe: /[0-9]/,
-                    maxLength: 15,
-                    labelWidth: 60,
-                    width: 190,
-                    enableKeyEvents: true,
-                    listeners: {
-                        keypress: 'filterTicketEMD'
+                        keypress: 'filterTicketNRT'
                     }
                 },
             ]

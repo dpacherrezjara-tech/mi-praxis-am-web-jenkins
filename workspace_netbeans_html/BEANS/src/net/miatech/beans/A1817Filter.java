@@ -76,8 +76,12 @@ public class A1817Filter extends A1817 {
     public String FARECAL = "";
     public String ARGUME = "";
     public String STATAX = "";
+    public String CDTAX = "";
     public String MONTAX = "";
     public double VALTAX = 0;
+    public String CDTAXS = "";
+    public String MONTAXS = "";
+    public double VALTAXS = 0;
     public String RESTAX = "";
     public double TOT_TAXAMOUNT = 0;
     public int TOT_QTYPAX = 0;
