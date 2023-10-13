@@ -48,7 +48,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.DetailGri
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
-                            //global.getFile(`${me.url}/downloadMasterCommissions?${new URLSearchParams(me.view.searchParams)}`);
+                            global.getFile(`${me.url}/downloadTrnxDesglose?${new URLSearchParams(me.view.searchParams)}`);
                         }
                     }
                 });

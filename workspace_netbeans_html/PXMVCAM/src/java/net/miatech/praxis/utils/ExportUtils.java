@@ -62,6 +62,7 @@ public class ExportUtils {
             headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
             headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setWrapText(true);
             headerStyle.setFont(headerFont);
 
             bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
@@ -82,18 +83,13 @@ public class ExportUtils {
                 ch.setCellStyle(headerStyle);
                 cols++;
             }
-            
-            for(int c=0;c<cols;c++){
-                //sheet.autoSizeColumn(c,false);
-                sheet.setColumnWidth(c, 16 * 256);
-            }
-            
+
             for (int i = 1; i < data.size(); i++) {
                 Row row = sheet.createRow(i);
                 for (int x = 0; x < data.get(i).length; x++) {
                     Cell cell = row.createCell(x);
                     Object obj = data.get(i)[x];
-                    if(obj==null){
+                    if (obj == null) {
                         cell.setCellValue("");
                         cell.setCellStyle(bodyStyle);
                         continue;
@@ -121,6 +117,15 @@ public class ExportUtils {
                     cell.setCellStyle(bodyStyle);
                 }
             }
+
+            for (int c = 0; c < cols; c++) {
+                sheet.autoSizeColumn(c, false);
+                int defaultWidth = 15 * 256;
+                if (sheet.getColumnWidth(c) < defaultWidth) {
+                    sheet.setColumnWidth(c, defaultWidth);
+                }
+            }
+
             try (FileOutputStream fos = new FileOutputStream(file)) {
                 workbook.write(fos);
             }
@@ -132,7 +137,7 @@ public class ExportUtils {
                 zos.putNextEntry(entrada1);
                 zos.write(FileUtils.readFileToByteArray(file));
                 zos.closeEntry();
-                
+
                 zos.finish();
             }
 
