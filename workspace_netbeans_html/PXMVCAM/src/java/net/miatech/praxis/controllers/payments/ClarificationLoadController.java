@@ -270,7 +270,8 @@ public class ClarificationLoadController extends BaseController {
             fs.close();
 
 //            br = new BufferedReader(new FileReader(strArchivo));
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(strArchivo), "ISO-8859-1"));
+//            br = new BufferedReader(new InputStreamReader(new FileInputStream(strArchivo), "ISO-8859-1"));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(strArchivo), "UTF-8"));
             String line = br.readLine();
 
             int cont = 0;
@@ -433,8 +434,9 @@ public class ClarificationLoadController extends BaseController {
                 }
 
                 if (fields[0].contains("Fecha transacci")) {
-                    listaExcelString.add(line);
-                    System.out.println(cont + " : " + line);
+                    int empieza = fields[0].indexOf("Fecha transacci");
+                    listaExcelString.add(line.substring(empieza));
+                    System.out.println(cont + " : " + line.substring(empieza));
                     inicio = true;
                 }
                 /*1049484887,007646056,483030XXXXXX8324,031506,30/09/2022,09/12/2022,2031.00,74524222273122738524986,20221128,29/11/2022,,,,*/
