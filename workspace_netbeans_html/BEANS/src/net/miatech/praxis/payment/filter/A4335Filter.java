@@ -11,7 +11,7 @@ public class A4335Filter extends A4335{
     //total del a4331
     private Double SVFOPS_TOTAL;
     //datos de contabilidad mp
-    private String LIQ_STCON,LIQ_IDCON,LIQ_FCON;
+    private String LIQ_STCON,LIQ_IDCON,LIQ_FCON,DESC_CODADJU;
 
     public String getRN() {
         return RN;
@@ -60,5 +60,12 @@ public class A4335Filter extends A4335{
     public void setTKT(String TKT) {
         this.TKT = TKT;
     }
-    
+
+    public String getDESC_CODADJU() {
+        return DESC_CODADJU;
+    }
+
+    public void setDESC_CODADJU(String DESC_CODADJU) {
+        this.DESC_CODADJU = DESC_CODADJU;
+    }
 }
