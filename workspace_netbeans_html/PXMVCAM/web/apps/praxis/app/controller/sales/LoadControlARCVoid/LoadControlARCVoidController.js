@@ -247,12 +247,12 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlARCVoid.LoadControlARCVoidCon
     //<editor-fold defaultstate="collapsed" desc="search">
     search: function(bean, opt) {
         if (opt === 'XLS') {
-            this.exportExcel('/getXLSX?beanString=' + encodeURI(JSON.stringify(bean)));
+            this.exportExcel('/getXLSXVoid?beanString=' + encodeURI(JSON.stringify(bean)));
             return;
         }
         var storeGridDatas = Ext.create('Ext.Praxis.store.sales.GridData', {
             proxy: {
-                url: prototype.url+'/search'
+                url: prototype.url+'/searchVoid'
             },
             listeners: {
                 beforeload: function(obj) {
@@ -350,12 +350,12 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlARCVoid.LoadControlARCVoidCon
     //<editor-fold defaultstate="collapsed" desc="loadError">
     loadError: function(beanError, opt) {
         if (opt === 'XLS') {
-            this.exportExcel('/getXLSX_err?beanString=' + encodeURI(JSON.stringify(beanError)));
+            this.exportExcel('/getXLSX_errVoid?beanString=' + encodeURI(JSON.stringify(beanError)));
             return;
         }
         var storeGridDatas = Ext.create('Ext.Praxis.store.sales.LoadControlARCVoid.GridDataError', {
             proxy: {
-                url: prototype.url+'/loadError'
+                url: prototype.url+'/loadErrorVoid'
             },
             listeners: {
                 beforeload: function(obj) {
