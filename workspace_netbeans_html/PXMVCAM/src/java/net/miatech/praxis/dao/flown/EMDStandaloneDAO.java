@@ -547,7 +547,7 @@ public class EMDStandaloneDAO {
                     } else if (bean.STVAL.equals("2")) {
                         bean.descSTVAL = "MATCH";
                     }
-
+                  
                     //Totales
 //                    bean.totVFOP = VFOP;
                     bean.USCR = rst.getString("USCR");

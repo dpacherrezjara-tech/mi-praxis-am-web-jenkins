@@ -189,14 +189,15 @@ public class ReportNrtmexController extends BaseController {
             }
             PrintWriter writer = new PrintWriter(file, "UTF-8");
             String cadena;
-            cadena = "Period|Ticket|Flight Date|Orig|Dest|Service Clas|Carr|Stock|Poliza Date|Equip|Matric|Qty Pax|Period Oper|Date Oper|Fare Basis|Type|Name|PNR|PNR Locator|Birthday|Doc.Type|Doc.Nbr|Country|Transact|Comments|Tax Amount|Ruta";
+            cadena = "Period|Ticket|Flight Date|Flight Nbr|Orig|Dest|Service Clas|Carr|Stock|Poliza Date|Equip|Matric|Qty Pax|Period Oper|Date Oper|Fare Basis|Type|Name|PNR|PNR Locator|Birthday|Doc.Type|Doc.Nbr|Country|Transact|Comments|Tax Amount|Ruta";
             writer.println("" + cadena);
             for (vi = 0; vi < len; vi++) {
                 cadena = "";
                 //FLIGHT INFORMATION
-                cadena += "" + listaData.get(vi).strFormatDate + "|";
+                cadena += "" + listaData.get(vi).strFormatDate2 + "|";
                 cadena += "" + listaData.get(vi).strTicket + "|";
                 cadena += "" + listaData.get(vi).strFormatDate2 + "|";
+                cadena += "" + listaData.get(vi).NFLIGHT + "|";
                 cadena += "" + listaData.get(vi).ORIG + "|";
                 cadena += "" + listaData.get(vi).DEST + "|";
                 cadena += "" + listaData.get(vi).CLAS + "|";

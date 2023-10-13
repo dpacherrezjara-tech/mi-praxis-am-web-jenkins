@@ -89,7 +89,8 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Options', {
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnExcel',
-                            iconCls: 'prx-icon-excel',
+                            iconCls: 'prx-icon-image-file',
+//                            iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel'
                         },
                         {
