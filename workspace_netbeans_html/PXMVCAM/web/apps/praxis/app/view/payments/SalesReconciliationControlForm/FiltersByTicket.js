@@ -706,7 +706,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     labelWidth: 60,
                                     width: 250,
                                     name: 'IN_PAX',
-                                    maskRe: /[A-Za-z]/, // Expresión regular para permitir solo letras
+                                    maskRe: /[A-Za-z%]/, // Expresión regular para permitir solo letras
                                     maxLength: 100,
                                     enforceMaxLength: true,
                                     listeners: {
