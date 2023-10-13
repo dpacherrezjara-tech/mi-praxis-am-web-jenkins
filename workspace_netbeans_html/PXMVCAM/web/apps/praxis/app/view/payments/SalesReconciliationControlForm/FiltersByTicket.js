@@ -689,13 +689,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     xtype: 'textfield',
                                     fieldLabel: 'Amount',
                                     labelWidth: 60,
-                                    width: 160,
+                                    width: 150,
                                     name: 'IN_AMOUNT',
                                     maxLength: 15,
                                     enforceMaxLength: true,
                                     maskRe: /[0-9\.]/, // Máscara para números y punto decimal
                                     regex: /^\d+(\.\d{1,2})?$/, // Validación para permitir hasta 2 decimales
                                     regexText: 'Invalid Amount', // Mensaje de error personalizado
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Pax Name',
+                                    labelWidth: 60,
+                                    width: 250,
+                                    name: 'IN_PAX',
+                                    maskRe: /[A-Za-z]/, // Expresión regular para permitir solo letras
+                                    maxLength: 100,
+                                    enforceMaxLength: true,
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
