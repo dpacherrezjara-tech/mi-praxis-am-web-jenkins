@@ -149,7 +149,7 @@ public class ExportUtils {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
             headers.setContentDispositionFormData("attachment", prefix + ".zip");
-            return new ResponseEntity<byte[]>(baos.toByteArray(), headers, HttpStatus.OK);
+            return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
         }
     }
 }

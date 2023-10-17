@@ -60,6 +60,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
             });
             Ext.getCmp(prototype.idUse + '-gridUsagesSabre').setStore(store);
         } else {
+            console.error(res);
             global.Msg({msg: 'Not Found'});
         }
         me.view.unmask();
