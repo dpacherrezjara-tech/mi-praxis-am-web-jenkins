@@ -12,7 +12,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         const me = this;
         me.view.mask('Loading...');
         const params = me.view.searchParams;
-        const mainForm = Ext.getCmp(prototype.idDE + '-mainForm').getForm();
+        const mainForm = Ext.getCmp(prototype.idDE2 + '-mainForm').getForm();
         const res = await fetch(`${me.url}/loadByTicketConciliationInfo?${new URLSearchParams(params)}`)
                 .catch(err => {
                     console.error(err);
@@ -26,9 +26,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             mainForm.reset();
             const {a4496CIA, a4496FORMA, a4496SERIE, a4501STVAL, a4501STADM,
                 bpo_COMEN, adm_COMEN, a4496TKVOI, a4501PRTP,procdate} = data.response;
-            Ext.getCmp(prototype.idDE + '-ticketNumber').setValue(a4496CIA + ' ' + a4496FORMA + a4496SERIE);
-            Ext.getCmp(prototype.idDE + '-bpocoment').setValue(bpo_COMEN);
-            Ext.getCmp(prototype.idDE + '-ADM-BPOCOMEN').setValue(adm_COMEN);
+            Ext.getCmp(prototype.idDE2 + '-ticketNumber').setValue(a4496CIA + ' ' + a4496FORMA + a4496SERIE);
+            Ext.getCmp(prototype.idDE2 + '-bpocoment').setValue(bpo_COMEN);
+            Ext.getCmp(prototype.idDE2 + '-ADM-BPOCOMEN').setValue(adm_COMEN);
             me.setADMInfo();
             mainForm.setValues(data.response);
             me.changePerspective(a4501STVAL, a4501STADM, a4496TKVOI, a4501PRTP,procdate);
@@ -38,85 +38,85 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
     changePerspective: function (status, adm, fvoid, procesador,procdate) {
         const match = ['1', '5', '6', '7'];
         if (fvoid === 'V') {
-            Ext.getCmp(prototype.idDE + '-panelVoid').show();
+            Ext.getCmp(prototype.idDE2 + '-panelVoid').show();
         } else {
-            Ext.getCmp(prototype.idDE + '-panelVoid').hide();
+            Ext.getCmp(prototype.idDE2 + '-panelVoid').hide();
         }
         const actualdate = Ext.Date.format(new Date(), 'Ymd');
         //console.log(actualdate,' ',procdate,' ',actualdate>procdate);
         
         if (match.some(x => status === x)) {
             if (status === '6' && fvoid === 'V' && procesador.trim() === '') {
-                Ext.getCmp(prototype.idDE + '-liquiInfo').hide();
-                Ext.getCmp(prototype.idDE + '-panelOptions').show();
-                Ext.getCmp(prototype.idDE + '-revForcedMatchVoid').show();
-                Ext.getCmp(prototype.idDE + '-forcedMatchVoid').hide();
-                Ext.getCmp(prototype.idDE + '-addAdm').hide();
-                Ext.getCmp(prototype.idDE + '-showStandBy').hide();
+                Ext.getCmp(prototype.idDE2 + '-liquiInfo').hide();
+                Ext.getCmp(prototype.idDE2 + '-panelOptions').show();
+                Ext.getCmp(prototype.idDE2 + '-revForcedMatchVoid').show();
+                Ext.getCmp(prototype.idDE2 + '-forcedMatchVoid').hide();
+                Ext.getCmp(prototype.idDE2 + '-addAdm').hide();
+                Ext.getCmp(prototype.idDE2 + '-showStandBy').hide();
             } else {
-                Ext.getCmp(prototype.idDE + '-liquiInfo').show();
-                Ext.getCmp(prototype.idDE + '-panelOptions').hide();
+                Ext.getCmp(prototype.idDE2 + '-liquiInfo').show();
+                Ext.getCmp(prototype.idDE2 + '-panelOptions').hide();
             }
-            Ext.getCmp(prototype.idDE + '-panelPending').hide();
-            Ext.getCmp(prototype.idDE + '-panelStandBy').hide();
+            Ext.getCmp(prototype.idDE2 + '-panelPending').hide();
+            Ext.getCmp(prototype.idDE2 + '-panelStandBy').hide();
         } else if (status === '0') {
-            Ext.getCmp(prototype.idDE + '-liquiInfo').hide();
-            Ext.getCmp(prototype.idDE + '-panelPending').show();
-            Ext.getCmp(prototype.idDE + '-panelOptions').hide();
-            Ext.getCmp(prototype.idDE + '-panelStandBy').show();
-            Ext.getCmp(prototype.idDE + '-hideStandBy').hide();
-            Ext.getCmp(prototype.idDE + '-revStandBy').show();
+            Ext.getCmp(prototype.idDE2 + '-liquiInfo').hide();
+            Ext.getCmp(prototype.idDE2 + '-panelPending').show();
+            Ext.getCmp(prototype.idDE2 + '-panelOptions').hide();
+            Ext.getCmp(prototype.idDE2 + '-panelStandBy').show();
+            Ext.getCmp(prototype.idDE2 + '-hideStandBy').hide();
+            Ext.getCmp(prototype.idDE2 + '-revStandBy').show();
         } else {
-            Ext.getCmp(prototype.idDE + '-liquiInfo').hide();
-            Ext.getCmp(prototype.idDE + '-addAdm').show();
-            Ext.getCmp(prototype.idDE + '-showStandBy').show();
+            Ext.getCmp(prototype.idDE2 + '-liquiInfo').hide();
+            Ext.getCmp(prototype.idDE2 + '-addAdm').show();
+            Ext.getCmp(prototype.idDE2 + '-showStandBy').show();
             if (adm === '') {
-                Ext.getCmp(prototype.idDE + '-panelOptions').show();
-                Ext.getCmp(prototype.idDE + '-panelADM').hide();
-                Ext.getCmp(prototype.idDE + '-hideADM').show();
-                Ext.getCmp(prototype.idDE + '-sendADM').show();
-                Ext.getCmp(prototype.idDE + '-reverseADM').hide();
+                Ext.getCmp(prototype.idDE2 + '-panelOptions').show();
+                Ext.getCmp(prototype.idDE2 + '-panelADM').hide();
+                Ext.getCmp(prototype.idDE2 + '-hideADM').show();
+                Ext.getCmp(prototype.idDE2 + '-sendADM').show();
+                Ext.getCmp(prototype.idDE2 + '-reverseADM').hide();
             } else {
-                Ext.getCmp(prototype.idDE + '-panelOptions').hide();
-                Ext.getCmp(prototype.idDE + '-panelADM').show();
-                Ext.getCmp(prototype.idDE + '-hideADM').hide();
-                Ext.getCmp(prototype.idDE + '-sendADM').hide();
-                Ext.getCmp(prototype.idDE + '-reverseADM').show();
+                Ext.getCmp(prototype.idDE2 + '-panelOptions').hide();
+                Ext.getCmp(prototype.idDE2 + '-panelADM').show();
+                Ext.getCmp(prototype.idDE2 + '-hideADM').hide();
+                Ext.getCmp(prototype.idDE2 + '-sendADM').hide();
+                Ext.getCmp(prototype.idDE2 + '-reverseADM').show();
             }
             if (fvoid === 'V'&&actualdate>procdate) {
-                Ext.getCmp(prototype.idDE + '-forcedMatchVoid').show();
+                Ext.getCmp(prototype.idDE2 + '-forcedMatchVoid').show();
             } else {
-                Ext.getCmp(prototype.idDE + '-forcedMatchVoid').hide();
+                Ext.getCmp(prototype.idDE2 + '-forcedMatchVoid').hide();
             }
-            Ext.getCmp(prototype.idDE + '-revForcedMatchVoid').hide();
-            Ext.getCmp(prototype.idDE + '-panelPending').show();
-            Ext.getCmp(prototype.idDE + '-panelStandBy').hide();
-            Ext.getCmp(prototype.idDE + '-hideStandBy').show();
-            Ext.getCmp(prototype.idDE + '-revStandBy').hide();
-            Ext.getCmp(prototype.idDE + '-bpocoment').setValue('');
+            Ext.getCmp(prototype.idDE2 + '-revForcedMatchVoid').hide();
+            Ext.getCmp(prototype.idDE2 + '-panelPending').show();
+            Ext.getCmp(prototype.idDE2 + '-panelStandBy').hide();
+            Ext.getCmp(prototype.idDE2 + '-hideStandBy').show();
+            Ext.getCmp(prototype.idDE2 + '-revStandBy').hide();
+            Ext.getCmp(prototype.idDE2 + '-bpocoment').setValue('');
         }
         this.view.center();
     },
     setADMInfo: function () {
         const obj = this.bean;
-        Ext.getCmp(prototype.idDE + '-ADM-TKT').setValue(obj.a4501CIA + obj.a4501FORMA + obj.a4501SERIE);
+        Ext.getCmp(prototype.idDE2 + '-ADM-TKT').setValue(obj.a4501CIA + obj.a4501FORMA + obj.a4501SERIE);
         let valor = Ext.util.Format.number(obj.a4501VFOP, '0,000.00');
-        Ext.getCmp(prototype.idDE + '-ADM-AMT').setValue(valor);
-        Ext.getCmp(prototype.idDE + '-ADM-MDA').setValue(obj.a4501MFOP);
+        Ext.getCmp(prototype.idDE2 + '-ADM-AMT').setValue(valor);
+        Ext.getCmp(prototype.idDE2 + '-ADM-MDA').setValue(obj.a4501MFOP);
     },
     //<editor-fold defaultstate="collapsed" desc="Handlers">
     onOpenComments: function () {
-        Ext.getCmp(prototype.idDE + '-panelOptions').hide();
-        Ext.getCmp(prototype.idDE + '-panelStandBy').show();
+        Ext.getCmp(prototype.idDE2 + '-panelOptions').hide();
+        Ext.getCmp(prototype.idDE2 + '-panelStandBy').show();
     },
     onCancelStandBy: function () {
-        Ext.getCmp(prototype.idDE + '-panelOptions').show();
-        Ext.getCmp(prototype.idDE + '-panelStandBy').hide();
+        Ext.getCmp(prototype.idDE2 + '-panelOptions').show();
+        Ext.getCmp(prototype.idDE2 + '-panelStandBy').hide();
     },
     onChangeStandBy: async function () {
         const me = this;
         me.view.mask('Loading...');
-        const comment = Ext.getCmp(prototype.idDE + '-bpocoment').getValue();
+        const comment = Ext.getCmp(prototype.idDE2 + '-bpocoment').getValue();
         let params = me.formatStandByParams(comment);
         const res = fetch(`${me.url}/ticketConciliationStandBy?${new URLSearchParams(params)}`);
         if (res.ok) {
@@ -144,7 +144,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
     onReverseStandBy: async function () {
         const me = this;
         me.view.mask('Loading...');
-        const comment = Ext.getCmp(prototype.idDE + '-bpocoment').getValue();
+        const comment = Ext.getCmp(prototype.idDE2 + '-bpocoment').getValue();
         let params = me.formatRevStandByParams();
         const res = await fetch(`${me.url}/ticketConciliationReverseStandBy?${new URLSearchParams(params)}`);
         if (res.ok) {
@@ -170,12 +170,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         me.view.unmask();
     },
     onADMClick: function () {
-        Ext.getCmp(prototype.idDE + '-panelOptions').hide();
-        Ext.getCmp(prototype.idDE + '-panelADM').show();
+        Ext.getCmp(prototype.idDE2 + '-panelOptions').hide();
+        Ext.getCmp(prototype.idDE2 + '-panelADM').show();
     },
     onCancelADM: function () {
-        Ext.getCmp(prototype.idDE + '-panelOptions').show();
-        Ext.getCmp(prototype.idDE + '-panelADM').hide();
+        Ext.getCmp(prototype.idDE2 + '-panelOptions').show();
+        Ext.getCmp(prototype.idDE2 + '-panelADM').hide();
     },
     onSendADM: function (btn) {
         const me = this;
@@ -387,7 +387,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         };
         console.log(params);
         const usageWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.CouponsUsagesDataEntry', {
-            id: prototype.idDE + '-CouponsUsagesDataEntry-2',
+            id: prototype.idDE2 + '-CouponsUsagesDataEntry-2',
             searchParams: params,
             doctype: a4496TIPOD
         });
@@ -428,7 +428,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
     },
     formatAdmParams: function () {
         const obj = this.bean;
-        const observ = Ext.getCmp(prototype.idDE + '-ADM-BPOCOMEN').getValue();
+        const observ = Ext.getCmp(prototype.idDE2 + '-ADM-BPOCOMEN').getValue();
         let params = {
             IN_CCUST: obj.a4501CCUST,
             IN_CIA: obj.a4501CIA,

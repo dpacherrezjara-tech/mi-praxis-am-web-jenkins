@@ -1,4 +1,4 @@
-prototype.idDE = prototype.id + '-TicketConciliationDataEntry';
+prototype.idDE2 = prototype.id + '-TicketConciliationDataEntry';
 
 Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TicketConciliationDataEntry', {
     extend: 'Ext.window.Window',
@@ -27,7 +27,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
             items: [
                 {
                     xtype: 'form',
-                    id: prototype.idDE + '-mainForm',
+                    id: prototype.idDE2 + '-mainForm',
                     layout: {
                         type: 'vbox',
                         pack: 'center'
@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     items: [
                                         {
                                             fieldLabel: 'Ticket',
-                                            id: prototype.idDE + '-ticketNumber',
+                                            id: prototype.idDE2 + '-ticketNumber',
                                             width: 200,
                                             labelWidth: 80
                                         },
@@ -106,7 +106,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         },
                                         {
                                             xtype: 'panel',
-                                            id: prototype.idDE + '-panelVoid',
+                                            id: prototype.idDE2 + '-panelVoid',
                                             flex: 1,
                                             layout: {
                                                 type: 'hbox',
@@ -303,7 +303,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                         {
                             xtype: 'fieldset',
                             hidden: true,
-                            id: prototype.idDE + '-liquiInfo',
+                            id: prototype.idDE2 + '-liquiInfo',
                             title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:12px;">Liquidation Information</span>',
                             layout: {
                                 type: 'vbox',
@@ -540,7 +540,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         },
                                         {
                                             fieldLabel: 'Difference',
-                                            id: prototype.idDE + '-difference',
+                                            id: prototype.idDE2 + '-difference',
                                             width: 165,
                                             labelWidth: 80,
                                             value: '0.00',
@@ -587,7 +587,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             border: false,
                             width: '100%',
                             margin: '5 5 5 5',
-                            id: prototype.idDE + '-panelPending',
+                            id: prototype.idDE2 + '-panelPending',
                             bodyStyle: 'background: transparent;"',
                             layout: {
                                 type: 'hbox',
@@ -611,7 +611,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             border: false,
                             width: '100%',
                             margin: '5 5 5 5',
-                            id: prototype.idDE + '-panelOptions',
+                            id: prototype.idDE2 + '-panelOptions',
                             layout: {
                                 type: 'hbox',
                                 pack: 'end'
@@ -624,7 +624,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 {
 
                                     text: 'Forced Match',
-                                    id: prototype.idDE + '-forcedMatchVoid',
+                                    id: prototype.idDE2 + '-forcedMatchVoid',
                                     width: 130,
                                     hidden: true,
                                     iconCls: 'prx-icon-reload',
@@ -636,7 +636,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 {
 
                                     text: 'Reverse Match',
-                                    id: prototype.idDE + '-revForcedMatchVoid',
+                                    id: prototype.idDE2 + '-revForcedMatchVoid',
                                     width: 140,
                                     hidden: true,
                                     iconCls: 'prx-icon-reload',
@@ -649,7 +649,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
 
                                     text: 'ADM',
                                     width: 60,
-                                    id: prototype.idDE + '-addAdm',
+                                    id: prototype.idDE2 + '-addAdm',
                                     iconCls: 'prx-icon-add',
                                     tooltip: 'Add ADM',
                                     listeners: {
@@ -658,7 +658,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idDE + '-showStandBy',
+                                    id: prototype.idDE2 + '-showStandBy',
                                     text: 'Stand By',
                                     width: 100,
                                     iconCls: 'prx-icon-bpo-comment',
@@ -673,7 +673,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                         {
                             xtype: 'fieldset',
                             hidden: true,
-                            id: prototype.idDE + '-panelStandBy',
+                            id: prototype.idDE2 + '-panelStandBy',
                             title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:12px;">Stand By</span>',
                             layout: {
                                 type: 'hbox',
@@ -692,7 +692,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             },
                             items: [
                                 {
-                                    id: prototype.idDE + '-bpocoment',
+                                    id: prototype.idDE2 + '-bpocoment',
                                     fieldLabel: 'BPO Comment',
                                     labelWidth: 100,
                                     maxLength: 100,
@@ -701,7 +701,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idDE + '-addStandBy',
+                                    id: prototype.idDE2 + '-addStandBy',
                                     width: 25,
                                     iconCls: 'prx-icon-image-update',
                                     tooltip: 'Update Stand By',
@@ -711,7 +711,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idDE + '-revStandBy',
+                                    id: prototype.idDE2 + '-revStandBy',
                                     width: 25,
                                     iconCls: 'prx-icon-update',
                                     hidden: true,
@@ -722,7 +722,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idDE + '-hideStandBy',
+                                    id: prototype.idDE2 + '-hideStandBy',
                                     width: 25,
                                     iconCls: 'prx-icon-cancel-action',
                                     tooltip: 'Cancel',
@@ -736,7 +736,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                         {
                             xtype: 'fieldset',
                             hidden: true,
-                            id: prototype.idDE + '-panelADM',
+                            id: prototype.idDE2 + '-panelADM',
                             title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:12px;">ADM</span>',
                             layout: {
                                 type: 'vbox',
@@ -787,7 +787,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             value: '03'
                                         },
                                         {
-                                            id: prototype.idDE + '-ADM-BPOCOMEN',
+                                            id: prototype.idDE2 + '-ADM-BPOCOMEN',
                                             fieldLabel: 'BPO Comment',
                                             labelWidth: 100,
                                             maxLength: 100,
@@ -800,27 +800,27 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 {
                                     items: [
                                         {
-                                            id: prototype.idDE + '-ADM-TKT',
+                                            id: prototype.idDE2 + '-ADM-TKT',
                                             fieldLabel: 'Ticket',
                                             labelWidth: 90,
                                             width: 210,
                                             editable: false
                                         },
                                         {
-                                            id: prototype.idDE + '-ADM-AMT',
+                                            id: prototype.idDE2 + '-ADM-AMT',
                                             fieldLabel: 'Amount',
                                             labelWidth: 70,
                                             width: 160,
                                             editable: false
                                         },
                                         {
-                                            id: prototype.idDE + '-ADM-MDA',
+                                            id: prototype.idDE2 + '-ADM-MDA',
                                             width: 50,
                                             editable: false
                                         },
                                         {
                                             xtype: 'button',
-                                            id: prototype.idDE + '-sendADM',
+                                            id: prototype.idDE2 + '-sendADM',
                                             width: 25,
                                             iconCls: 'prx-icon-new',
                                             tooltip: 'Send ADM',
@@ -830,7 +830,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         },
                                         {
                                             xtype: 'button',
-                                            id: prototype.idDE + '-hideADM',
+                                            id: prototype.idDE2 + '-hideADM',
                                             width: 25,
                                             iconCls: 'prx-icon-cancel-action',
                                             tooltip: 'Cancel',
@@ -840,7 +840,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         },
                                         {
                                             xtype: 'button',
-                                            id: prototype.idDE + '-reverseADM',
+                                            id: prototype.idDE2 + '-reverseADM',
                                             width: 25,
                                             hidden: true,
                                             iconCls: 'prx-icon-reload',
@@ -932,7 +932,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
             items: [
                 {
                     text: 'Cancel',
-                    id: prototype.idDE + '-btn-cancel',
+                    id: prototype.idDE2 + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'
