@@ -29,8 +29,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                     pack: 'end'
                 },
                 defaults: {
-                    scale: 'medium'
+                    scale: 'small'
                 }, items: [
+                    {
+                        xtype: 'button',
+                        width: 25,
+                        iconCls: 'prx-icon-reload',
+                        tooltip: 'Reload',
+                        listeners: {
+                            click: 'reloadGrids'
+                        }
+                    },
                     {
                         xtype: 'checkbox',
                         fieldLabel: 'Sabre',

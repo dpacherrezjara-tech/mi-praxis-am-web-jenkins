@@ -8,12 +8,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
     },
     afterRender: async function (obj, e) {
         const me = this;
-        me.view.mask('Loading...');
         await me.loadPraxisUsages();
-        me.view.unmask();
     },
     loadPraxisUsages: async function () {
         const me = this;
+        me.view.mask('Loading...');
         const res = await fetch(`${me.url}/loadTicketUses?${new URLSearchParams(me.view.searchParams)}`);
         if (res.ok) {
             const data = await res.json();
@@ -32,6 +31,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
             });
             Ext.getCmp(prototype.idUse + '-gridUsages').setStore(store);
         }
+        me.view.unmask();
     },
     loadSabreUsages: async function () {
         const me = this;
@@ -80,6 +80,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
         } else {
             Ext.getCmp(prototype.idUse + '-gridUsages').show();
             Ext.getCmp(prototype.idUse + '-gridUsagesSabre').hide();
+        }
+    },
+    reloadGrids: function () {
+        const me = this;
+        const sabreGrid = Ext.getCmp(prototype.idUse + '-gridUsagesSabre');
+        if (sabreGrid.isVisible()) {
+            me.loadSabreUsages();
+        } else {
+            me.loadPraxisUsages();
         }
     }
 });
