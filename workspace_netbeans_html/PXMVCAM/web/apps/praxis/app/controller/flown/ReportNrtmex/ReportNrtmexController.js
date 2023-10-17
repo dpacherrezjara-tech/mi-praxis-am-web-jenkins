@@ -243,8 +243,10 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
                 }, listeners: {
                     beforeload: function (obj) {
                         obj.proxy.extraParams = searchParams;
+                        Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                     },
                     load: function (obj) {
+                        Ext.getCmp(prototype.id + '-contentInfo').unmask('Loading...');
                         if (obj.data.length === 0) {
                             global.Msg({
                                 msg: 'Data not found.'
@@ -363,9 +365,11 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
                     url: prototype.url + '/search'
                 }, listeners: {
                     beforeload: function (obj) {
+                        Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                         obj.proxy.extraParams = me.paramsDetailNM;
                     },
                     load: function (obj) {
+                        Ext.getCmp(prototype.id + '-contentInfo').unmask('Loading...');
                         var pag = Ext.getCmp(prototype.id + '-paggin');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -489,10 +493,10 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
             url: prototype.url + '/download',
             method: 'POST',
             timeout: 60000000,
-            beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...'),
+//            beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...'),
             params: me.paramsDetail,
             success: function (response, options) {
-                Ext.getCmp(prototype.id + '-gridData').unmask('Loading...');
+//                Ext.getCmp(prototype.id + '-gridData').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
 
                 var resultByte = res.bytes;
