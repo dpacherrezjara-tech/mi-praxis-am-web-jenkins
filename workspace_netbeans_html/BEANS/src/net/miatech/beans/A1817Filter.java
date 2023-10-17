@@ -146,12 +146,26 @@ public class A1817Filter extends A1817 {
     public int TOT_QTYEMDCT = 0;
 
     //NRT-MEX
+    public int QTYTOTAL = 0;
     public int QTYPEND = 0;
     public int QTYCONC = 0;
+    public int QTYPAY = 0;
+    public int QTYNOPAY = 0;
     public int QTYTOT = 0;
     public int QTYAPLI = 0;
+    public int QTYNOAPLI = 0;
     public int QTYEXON = 0;
     public int QTYTAT = 0;
+    
+    public int TOT_QTYTOTAL = 0;
+    public int TOT_QTYCONC = 0;
+    public int TOT_QTYPAY = 0;
+    public int TOT_QTYNOPAY = 0;
+    public int TOT_QTYTOT = 0;
+    public int TOT_QTYAPLI = 0;
+    public int TOT_QTYNOAPLI = 0;
+    public int TOT_QTYEXON = 0;
+    public int TOT_QTYTAT = 0;
     
     public Pagination page = new Pagination();
 }

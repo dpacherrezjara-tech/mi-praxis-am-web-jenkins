@@ -54,8 +54,7 @@ public class ReportNrtmexDAO {
         hm.put("R", "Refund");
         hm.put(" ", "Without Use");
 
-        double TOT_TAXAMOUNT = 0;
-        int TOT_QTYPAX = 0;
+        int TOT_QTYTOTAL = 0,TOT_QTYPEND = 0,TOT_QTYCONC = 0,TOT_QTYPAY = 0,TOT_QTYNOPAY = 0,TOT_QTYAPLI = 0,TOT_QTYNOAPLI = 0,TOT_QTYEXON = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -92,8 +91,16 @@ public class ReportNrtmexDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
-//                TOT_TAXAMOUNT  = rst.getDouble("TAXAMOUNT");
-//                TOT_QTYPAX  = rst.getInt("QTYPAX");
+                TOT_QTYTOTAL = rst.getInt("QTYTOTAL");
+                TOT_QTYPEND = rst.getInt("QTYPEND");
+                
+                TOT_QTYCONC = rst.getInt("QTYCONC");
+                TOT_QTYPAY = rst.getInt("QTYPAY");
+                TOT_QTYNOPAY = rst.getInt("QTYNOPAY");
+
+                TOT_QTYAPLI = rst.getInt("QTYAPLI");
+                TOT_QTYNOAPLI = rst.getInt("QTYNOAPLI");
+                TOT_QTYEXON = rst.getInt("QTYEXON");
             }
             rst.close();
 
@@ -108,12 +115,25 @@ public class ReportNrtmexDAO {
                     bean.DFLIGHT = rst.getString("DFLIGHT");
                     bean.strFormatDate = Functions.getMonthConvert(bean.DFLIGHT);
 
+                    bean.QTYTOTAL = rst.getInt("QTYTOTAL");
                     bean.QTYPEND = rst.getInt("QTYPEND");
                     bean.QTYCONC = rst.getInt("QTYCONC");
-                    bean.QTYTOT = bean.QTYPEND + bean.QTYCONC;
+                    bean.QTYPAY = rst.getInt("QTYPAY");
+                    bean.QTYNOPAY = rst.getInt("QTYNOPAY");
 
                     bean.QTYAPLI = rst.getInt("QTYAPLI");
+                    bean.QTYNOAPLI = rst.getInt("QTYNOAPLI");
                     bean.QTYEXON = rst.getInt("QTYEXON");
+                    //TOTALES 
+                    bean.TOT_QTYTOTAL = TOT_QTYTOTAL;
+                    bean.TOT_QTYPEND = TOT_QTYPEND;
+                    bean.TOT_QTYCONC = TOT_QTYCONC;
+                    bean.TOT_QTYPAY = TOT_QTYPAY;
+                    bean.TOT_QTYNOPAY = TOT_QTYNOPAY;
+
+                    bean.TOT_QTYAPLI = TOT_QTYAPLI;
+                    bean.TOT_QTYNOAPLI = TOT_QTYNOAPLI;
+                    bean.TOT_QTYEXON = TOT_QTYEXON;
 
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;
@@ -231,6 +251,15 @@ public class ReportNrtmexDAO {
                     bean.SERIEP = rst.getString("SERIEP");
                     bean.SEQROP = rst.getString("SEQROP");
                     bean.STVAL = rst.getString("STVAL");
+                    
+                    if (bean.STVAL.equals("0")) {
+                        bean.descSTVAL = "Venta sin Uso";
+                    } else if (bean.STVAL.equals("1")) {
+                        bean.descSTVAL = "Uso sin Venta";
+                    } else if (bean.STVAL.equals("2")) {
+                        bean.descSTVAL = "MATCH";
+                    }
+                    
                     bean.DFLIGHT = rst.getString("DFLIGHT");
                     bean.strFormatDate2 = Functions.getMonthConvert(bean.DFLIGHT);
                     bean.NFLIGHT = rst.getString("NFLIGHT");
