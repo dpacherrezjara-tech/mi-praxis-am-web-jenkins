@@ -47,7 +47,6 @@ import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.Functions;
 import net.sabre.miatech.praxis.TicketRES;
-import net.sabre.miatech.praxis.TicketingDocumentServiceCouponTicket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -130,9 +129,16 @@ public class SalesReconciliationBPOController {
                     throw new Exception(response.getOPResult().getErrorDescription());
                 }
                 System.out.println(response.getOPResult().getErrorDescription() + " " + ticket);
-                List<TicketingDocumentServiceCouponTicket> lst = new ArrayList<>();
+                List<?> lst = new ArrayList<>();
                 if (response.getTicketDataType().getTicket() != null) {
+                    //ticcket
                     lst = response.getTicketDataType().getTicket().getServiceCoupon();
+                }else if (response.getTicketDataType().getElectronicMiscDocument()!=null){
+                    //emd
+                    lst = response.getTicketDataType()
+                            .getElectronicMiscDocument()
+                            .getMiscellaneous()
+                            .get(0).getServiceCoupon();
                 }
                 return new ResponseEntity<>(lst, HttpStatus.OK);
             } else {

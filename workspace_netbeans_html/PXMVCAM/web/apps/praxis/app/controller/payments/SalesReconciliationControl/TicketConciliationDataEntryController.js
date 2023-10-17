@@ -387,7 +387,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         };
         console.log(params);
         const usageWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.CouponsUsagesDataEntry', {
-            id: prototype.idDE + '-CouponsUsagesDataEntry-1',
+            id: prototype.idDE + '-CouponsUsagesDataEntry-2',
             searchParams: params,
             doctype: a4496TIPOD
         });

@@ -10,6 +10,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
         const me = this;
         await me.loadPraxisUsages();
     },
+    validateDocType: function (doctype) {
+        const validDocs = ['TKT', 'EMD'];
+        let result = validDocs.some(x => doctype === x);
+        return result;
+    },
     loadPraxisUsages: async function () {
         const me = this;
         me.view.mask('Loading...');
@@ -31,6 +36,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
             });
             Ext.getCmp(prototype.idUse + '-gridUsages').setStore(store);
         }
+        let valid = me.validateDocType(me.view.doctype.slice(0, 3));
+        if (!valid) {
+            Ext.toast({
+                html: '<b>Invalid Document</b>',
+                iconCls: 'prx-icon-incomplete',
+                title: 'Error',
+                align: 't',
+                slideInDuration: 300,
+                minWidth: 250
+            });
+            me.view.close();
+            return;
+        }
         me.view.unmask();
     },
     loadSabreUsages: async function () {
@@ -47,8 +65,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
                         ticket: ticketParam,
                         tipod: me.view.doctype,
                         coupon: x.coupon,
-                        origin: x.startLocation.value,
-                        destiny: x.endLocation.value,
+                        origin: x.startLocation ? x.startLocation.value : '',
+                        destiny: x.endLocation ? x.endLocation.value : '',
                         oldstatus: x.previousStatus,
                         status: x.currentStatus
                     }));
