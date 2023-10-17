@@ -44,11 +44,9 @@ import net.miatech.praxis.payment.filter.SQP05141Filter;
 import net.miatech.praxis.payment.filter.SQP05142Filter;
 import net.miatech.praxis.payment.filter.SQP05147Filter;
 import net.miatech.praxis.utils.ExportUtils;
+import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.Functions;
-import net.sabre.miatech.praxis.SabreRecordLocator;
-import net.sabre.miatech.praxis.TicketREQ;
 import net.sabre.miatech.praxis.TicketRES;
-import net.sabre.miatech.praxis.TicketingDocumentServiceCouponTicket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -78,6 +76,9 @@ public class SalesReconciliationBPOController {
 
     @Autowired
     private ExportUtils exportUtils;
+    
+    @Autowired
+    private SabreWebService sabreWebService;
 
     private final String controllerName = "SalesReconciliation";
 
@@ -123,26 +124,32 @@ public class SalesReconciliationBPOController {
         System.out.println("---------------SalesReconciliationBPO:loadSabreUses-------------");
         try {
             if (ticket != null && ticket.length() == 13) {
-                TicketREQ ticketREQ = new TicketREQ();
-                //ticketREQ.setTicketNumber("1392140086751");
-                ticketREQ.setTicketNumber(ticket);
-                TicketRES response = new SabreRecordLocator().getSabreRecordLocatorSoap().getTicket(ticketREQ);
+                TicketRES response = sabreWebService.getTicketInfo(ticket);
                 if (!"00".equals(response.getOPResult().getErrorCode())) {
                     throw new Exception(response.getOPResult().getErrorDescription());
                 }
                 System.out.println(response.getOPResult().getErrorDescription() + " " + ticket);
-                List<TicketingDocumentServiceCouponTicket> lst = new ArrayList<>();
+                List<?> lst = new ArrayList<>();
                 if (response.getTicketDataType().getTicket() != null) {
+                    //ticcket
                     lst = response.getTicketDataType().getTicket().getServiceCoupon();
+                }else if (response.getTicketDataType().getElectronicMiscDocument()!=null){
+                    //emd
+                    lst = response.getTicketDataType()
+                            .getElectronicMiscDocument()
+                            .getMiscellaneous()
+                            .get(0).getServiceCoupon();
                 }
                 return new ResponseEntity<>(lst, HttpStatus.OK);
             } else {
                 System.out.println("Invalid Ticket Number: " + ticket);
+                throw new Exception("Invalid Ticket Number: " + ticket);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        
     }
 
     //<editor-fold defaultstate="collapsed" desc="By payment">
@@ -931,10 +938,7 @@ public class SalesReconciliationBPOController {
                 if (username.startsWith("SAP") && password.equals("miatech1")) {
                     // Las credenciales son válidas
                     System.out.println("Autorizado...");
-                    TicketREQ ticketREQ = new TicketREQ();
-                    //ticketREQ.setTicketNumber("1392140086751");
-                    ticketREQ.setTicketNumber(ticket);
-                    TicketRES response = new SabreRecordLocator().getSabreRecordLocatorSoap().getTicket(ticketREQ);
+                    TicketRES response = sabreWebService.getTicketInfo(ticket);
                     return new ResponseEntity<>(response, HttpStatus.OK);
                 } else {
                     // Las credenciales son inválidas

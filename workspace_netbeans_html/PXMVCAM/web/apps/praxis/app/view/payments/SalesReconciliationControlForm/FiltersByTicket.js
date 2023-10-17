@@ -450,7 +450,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                 },
                                 {
                                     xtype: 'combobox',
-                                    fieldLabel: 'Doc. Type',
+                                    fieldLabel: 'Document',
                                     name: 'IN_TRNCU',
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
@@ -460,8 +460,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                             ['RFND', 'Refund']
                                         ]
                                     }),
-                                    labelWidth: 80,
-                                    width: 180,
+                                    labelWidth: 70,
+                                    width: 160,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -483,7 +483,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                         ]
                                     }),
                                     labelWidth: 60,
-                                    width: 150,
+                                    width: 130,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -507,7 +507,31 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                         ]
                                     }),
                                     labelWidth: 60,
-                                    width: 150,
+                                    width: 130,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Doc. Type',
+                                    name: 'IN_TIPOD',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['TKT', 'TKT'],
+                                            ['EMD', 'EMD'],
+                                            ['VOU', 'VOU'],
+                                            ['EXB', 'EXB'],
+                                            ['MD50', 'MD50'],
+                                            ['CCR', 'CCR']
+                                        ]
+                                    }),
+                                    labelWidth: 70,
+                                    width: 140,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',

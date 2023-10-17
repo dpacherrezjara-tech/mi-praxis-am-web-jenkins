@@ -1,4 +1,4 @@
-prototype.idDE = prototype.id + '-TransacErrorBPODataEntry';
+prototype.idDE = prototype.id + '-TicketConciliationDataEntry';
 
 Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TicketConciliationDataEntry', {
     extend: 'Ext.window.Window',

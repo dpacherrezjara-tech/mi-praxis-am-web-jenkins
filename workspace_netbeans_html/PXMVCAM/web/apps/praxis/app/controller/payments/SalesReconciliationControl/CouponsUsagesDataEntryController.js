@@ -8,12 +8,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
     },
     afterRender: async function (obj, e) {
         const me = this;
-        me.view.mask('Loading...');
         await me.loadPraxisUsages();
-        me.view.unmask();
+    },
+    validateDocType: function (doctype) {
+        const validDocs = ['TKT', 'EMD'];
+        let result = validDocs.some(x => doctype === x);
+        return result;
     },
     loadPraxisUsages: async function () {
         const me = this;
+        me.view.mask('Loading...');
         const res = await fetch(`${me.url}/loadTicketUses?${new URLSearchParams(me.view.searchParams)}`);
         if (res.ok) {
             const data = await res.json();
@@ -32,6 +36,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
             });
             Ext.getCmp(prototype.idUse + '-gridUsages').setStore(store);
         }
+        let valid = me.validateDocType(me.view.doctype.slice(0, 3));
+        if (!valid) {
+            Ext.toast({
+                html: '<b>Invalid Document</b>',
+                iconCls: 'prx-icon-incomplete',
+                title: 'Error',
+                align: 't',
+                slideInDuration: 300,
+                minWidth: 250
+            });
+            me.view.close();
+            return;
+        }
+        me.view.unmask();
     },
     loadSabreUsages: async function () {
         const me = this;
@@ -47,8 +65,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
                         ticket: ticketParam,
                         tipod: me.view.doctype,
                         coupon: x.coupon,
-                        origin: x.startLocation.value,
-                        destiny: x.endLocation.value,
+                        origin: x.startLocation ? x.startLocation.value : '',
+                        destiny: x.endLocation ? x.endLocation.value : '',
                         oldstatus: x.previousStatus,
                         status: x.currentStatus
                     }));
@@ -60,6 +78,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
             });
             Ext.getCmp(prototype.idUse + '-gridUsagesSabre').setStore(store);
         } else {
+            console.error(res);
             global.Msg({msg: 'Not Found'});
         }
         me.view.unmask();
@@ -79,6 +98,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
         } else {
             Ext.getCmp(prototype.idUse + '-gridUsages').show();
             Ext.getCmp(prototype.idUse + '-gridUsagesSabre').hide();
+        }
+    },
+    reloadGrids: function () {
+        const me = this;
+        const sabreGrid = Ext.getCmp(prototype.idUse + '-gridUsagesSabre');
+        if (sabreGrid.isVisible()) {
+            me.loadSabreUsages();
+        } else {
+            me.loadPraxisUsages();
         }
     }
 });
