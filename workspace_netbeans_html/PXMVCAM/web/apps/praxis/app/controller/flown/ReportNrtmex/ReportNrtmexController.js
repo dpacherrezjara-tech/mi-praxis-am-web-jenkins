@@ -275,7 +275,7 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.beanNM.DATE = rowData.data.DFLIGHT;
         this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
-        this.beanNM.DRILL = "P";
+        this.beanNM.DRILL = "PE";
         console.log(this.beanNM);
         me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
         this.setGridData();
@@ -286,7 +286,29 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.beanNM.DATE = rowData.data.DFLIGHT;
         this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
-        this.beanNM.DRILL = "C";
+        this.beanNM.DRILL = "CO";
+        console.log(this.beanNM);
+        me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
+        this.setGridData();
+    },
+    onGridDetailPA: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.beanNM.DATE = rowData.data.DFLIGHT;
+        this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
+        this.beanNM.DRILL = "PA";
+        console.log(this.beanNM);
+        me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
+        this.setGridData();
+    },
+    onGridDetailNP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.beanNM.DATE = rowData.data.DFLIGHT;
+        this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
+        this.beanNM.DRILL = "NP";
         console.log(this.beanNM);
         me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
         this.setGridData();
@@ -297,7 +319,7 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.beanNM.DATE = rowData.data.DFLIGHT;
         this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
-        this.beanNM.DRILL = "A";
+        this.beanNM.DRILL = "AP";
         console.log(this.beanNM);
         me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
         this.setGridData();
@@ -308,7 +330,7 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.beanNM.DATE = rowData.data.DFLIGHT;
         this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
-        this.beanNM.DRILL = "N";
+        this.beanNM.DRILL = "NA";
         console.log(this.beanNM);
         me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
         this.setGridData();
@@ -319,7 +341,7 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.beanNM.DATE = rowData.data.DFLIGHT;
         this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
-        this.beanNM.DRILL = "E";
+        this.beanNM.DRILL = "EX";
         console.log(this.beanNM);
         me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
         this.setGridData();
@@ -364,60 +386,6 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
     },
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="setGridDataDetEMD">
-    onGridDetEMD: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-
-        me.drillDown.push(me.panelActual);
-        me.panelActual = '-panelGridDataDetEMD';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-
-        this.beanNM.DSALES = rowData.data.DSALES;
-        this.beanNM.strFormatDate = rowData.data.strFormatDate;
-        console.log(this.beanNM);
-
-        me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
-        this.setGridDataDetEMD();
-    },
-    setGridDataDetEMD: function () {
-        win.lblUser_toolTip("Estructura: A3757");
-        me.panelActual = '-panelGridDataDetEMD';
-//        me.setWidthPie();
-        var msj = this.validateFields();
-        if (msj !== '') {
-            global.Msg({msg: msj
-            });
-        } else {
-            var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
-                proxy: {
-                    url: prototype.url + '/searchDetail'
-                }, listeners: {
-                    beforeload: function (obj) {
-                        obj.proxy.extraParams = me.paramsDetailNM;
-                    },
-                    load: function (obj, obj2, success, response, obj5) {
-                        var res = Ext.JSON.decode(response._response.responseText);
-                        console.log(res.data);
-                        if (res.success) {
-                            if (obj.data.length > 0) {
-                                var obj = obj.data.items[0].data;
-                                Ext.getCmp(prototype.id + '-gridDataDetEMD').setTitle('<center style="font-size:12px;"> Sale Date ' + obj.strFormatDate + '</center>');
-
-
-                            } else {
-                                global.Msg({msg: 'Data not found'});
-                            }
-                        } else
-                            global.clear();
-                    }
-                }
-            });
-
-//            console.log(storeGridDatas);
-            global.clear();
-            Ext.getCmp(prototype.id + '-gridDataDetEMD').bindStore(storeGridDatas);
-        }
-    },
-    // </editor-fold>
     validateFields: function () {
         var msj = '';
         var bean = searchParams.bean;
@@ -501,6 +469,9 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
 
         this.setFormatParameter();
         switch (me.panelActual) {
+            case  '-panelGridMainData':
+                global.getFile(prototype.url + '/getXLSXMain?beanString=' + searchParams.beanString);
+                break;
             case  '-panelGridData':
                 global.getFile(prototype.url + '/downloadText?beanString=' + searchParams.beanString);
                 break;
