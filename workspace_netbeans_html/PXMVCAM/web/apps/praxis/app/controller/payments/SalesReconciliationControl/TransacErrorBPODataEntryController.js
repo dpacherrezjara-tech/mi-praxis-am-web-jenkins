@@ -60,7 +60,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         Ext.getCmp(prototype.idDE + '-panelAdjustments').hide();
         const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments').getStore();
         gridAdju.removeAll();
-        gridAdju.sync();
         Ext.getCmp(prototype.idDE + '-codAdjustment').setValue('');
         Ext.getCmp(prototype.idDE + '-observAdjustment').setValue('');
 
