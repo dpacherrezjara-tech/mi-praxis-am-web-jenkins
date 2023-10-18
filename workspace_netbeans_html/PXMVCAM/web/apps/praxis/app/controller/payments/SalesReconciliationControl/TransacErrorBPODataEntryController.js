@@ -58,7 +58,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const adjucoment = Ext.getCmp(prototype.idDE + '-bpoComments2');
 
         Ext.getCmp(prototype.idDE + '-panelAdjustments').hide();
-        Ext.getCmp(prototype.idDE + '-gridAdjustments').getStore().removeAll();
+        const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments').getStore();
+        gridAdju.removeAll();
         Ext.getCmp(prototype.idDE + '-codAdjustment').setValue('');
         Ext.getCmp(prototype.idDE + '-observAdjustment').setValue('');
 
@@ -231,9 +232,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         panelAdju.hide();
         const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments');
         gridAdju.getStore().removeAll();
+        gridAdju.getView().refresh();
         const cmbAdju = Ext.getCmp(prototype.idDE + '-codAdjustment');
         cmbAdju.setValue('');
         Ext.getCmp(prototype.idDE + '-observAdjustment').setValue('');
+        this.view.center();
     },
     onChangeStandBy: function () {
         const me = this;
@@ -500,7 +503,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         });
 
     },
-    onAddDuplicated: function () {
+    onAddDuplicated: async function () {
         const me = this;
         const scannerPanel = Ext.getCmp(prototype.idDE + '-scannerPanel');
         const adjuPanel = Ext.getCmp(prototype.idDE + '-panelAdjustments');
@@ -526,29 +529,65 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             scannerPanel.unmask();
             return;
         }
-        const adjuStore = Ext.getCmp(prototype.idDE + '-gridAdjustments').getStore();
+        const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments');
+        const adjuStore = gridAdju.getStore();
         adjuStore.removeAll();
-        const dataStore = adjuStore.getData().getRange();
-        fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`)
-                .then(async res => {
-                    if (res.ok) {
-                        const data = await res.json();
-                        if (data.response.length === 0) {
-                            global.Msg({msg: 'Not Found'});
-                            return;
-                        }
-                        const adju = {
-                            ...data.response.at(0)
-                        };
-                        adju.trncu = 'ADJU';
-                        adju.svfops = me.bean.tgrosamoun;
-                        adjuStore.insert(0, adju);
-                        adjuPanel.show();
-                        console.log(data.response.at(0));
-                    }
-                }).then(() => {
-            scannerPanel.unmask();
-        });
+        const res = await fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            if (data.response.length === 0) {
+                global.Msg({msg: 'Not Found'});
+                return;
+            }
+            const adju = {
+                ...data.response.at(0)
+            };
+            adju.trncu = 'ADJU';
+            adju.svfops = me.bean.tgrosamoun;
+            adjuStore.insert(0, adju);
+            gridAdju.getView().refresh();
+            adjuPanel.show();
+            me.view.center();
+            console.log(data.response.at(0));
+        }
+        scannerPanel.unmask();
+    },
+    onAddDuplicatedGrid: async function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
+        const blockedPanel = Ext.getCmp(prototype.idDE + '-tabBlocked');
+        blockedPanel.mask('Loading...');
+        const adjuPanel = Ext.getCmp(prototype.idDE + '-panelAdjustments');
+        const obj = record.data;
+        let params = {
+            IN_CCUST: '139',
+            IN_TDOC: me.bean.tdoc,
+            IN_TRANSTYPE: me.bean.transtype,
+            IN_TICKET: obj.ccia + obj.forma + obj.serie,
+            IN_SAGENT: obj.sagent,
+            IN_SDATE: obj.sdate
+        };
+        const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments');
+        const adjuStore = gridAdju.getStore();
+        adjuStore.removeAll();
+        const res = await fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            if (data.response.length === 0) {
+                global.Msg({msg: 'Not Found'});
+                return;
+            }
+            const adju = {
+                ...data.response.at(0)
+            };
+            adju.trncu = 'ADJU';
+            adju.svfops = me.bean.tgrosamoun;
+            adjuStore.insert(0, adju);
+            gridAdju.getView().refresh();
+            adjuPanel.show();
+            me.view.center();
+            console.log(data.response.at(0));
+        }
+        blockedPanel.unmask();
     },
     onClickChbkTracking: function () {
         const me = this;
@@ -829,7 +868,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const sumScanner = parseFloat(gridBPO.sum('svfops').toFixed(2));
         const sumAdju = parseFloat(gridADJU.sum('svfops').toFixed(2));
         let sumDesglose = sumScanner + sumAdju;
-        console.log('Suma Desglose BPO: ',sumDesglose);
+        console.log('Suma Desglose BPO: ', sumDesglose);
         let difference = 0;
         if (me.bean.transtype === 'CHBK') {
             //suma en caso de ser Chargeback
@@ -837,7 +876,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         } else {
             difference = obj.tgrosamoun - sumDesglose;
         }
-        
+
         //obtiene detalle para desglosado
         const details = [
             ...gridBPO.data.items.map(x => ({STMANUAL: 'Sales', ...x.data})),

@@ -1686,6 +1686,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                     },
                                                     {
                                                         text: 'Agent', dataIndex: 'sagent', width: 75
+                                                    },
+                                                    {
+                                                        sortable: false,
+                                                        xtype: 'actioncolumn',
+                                                        width: 45,
+                                                        text: 'Dupl.',
+                                                        align: 'center',
+                                                        items: [
+                                                            {
+                                                                iconCls: 'prx-icon-add',
+                                                                tooltip: 'Add Duplicated',
+                                                                handler: 'onAddDuplicatedGrid'
+                                                            }
+                                                        ]
                                                     }
                                                 ]
                                             }
@@ -2079,6 +2093,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 id: prototype.idDE + '-observAdjustment',
                                                 width: 450,
                                                 labelWidth: 80,
+                                                maxLength: 13,
+                                                enforceMaxLength: true,
                                                 fieldLabel: 'Observation'
                                             },
                                             {
@@ -2095,8 +2111,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     plugins: {
                                         // Agrega el plugin de edición para habilitar la edición en la columna
                                         ptype: 'cellediting',
-                                        clicksToEdit: 2 // 1 clic para editar
+                                        clicksToEdit: 2, // 1 clic para editar
+                                        listeners: {
+                                            edit: function (editor, context) {
+                                                context.grid.getView().refresh();
+                                            }
+                                        }
                                     },
+                                    model: null,
                                     columns: {
                                         defaults: {
                                             align: 'center',
@@ -2162,7 +2184,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                     hideTrigger: true, // Oculta las flechas para incrementar/decrementar
                                                     keyNavEnabled: false, // Desactiva la navegación con teclado
                                                     mouseWheelEnabled: false, // Desactiva la rueda del mouse para cambiar el valor
-                                                    maskRe: /[0-9]/
+                                                    //maskRe: /[0-9]/
                                                 },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#F0FA8F";
