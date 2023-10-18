@@ -228,7 +228,7 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
     // <editor-fold defaultstate="collapsed" desc="setGridMainData">
     setGridMainData: function (obj, val) {
         console.log("URL : " + prototype.url + '/searchMain');
-        win.lblUser_toolTip("Estructura: A4479");
+        win.lblUser_toolTip("Estructura: A4504");
         me.panelActual = '-panelGridMainData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         me.setWidthPie();
@@ -351,7 +351,7 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setGridData: function (obj, val) {
         console.log("URL : " + prototype.url + '/search');
-        win.lblUser_toolTip("Estructura: A4479");
+        win.lblUser_toolTip("Estructura: A4503");
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         me.setWidthPie();
