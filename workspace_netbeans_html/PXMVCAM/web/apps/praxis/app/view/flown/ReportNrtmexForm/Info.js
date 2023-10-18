@@ -415,7 +415,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Used Tax',
+                                            {text: 'Audit Tax',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
