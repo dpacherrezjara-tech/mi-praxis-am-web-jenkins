@@ -23,11 +23,4 @@ public class ReportNrtmexLogic {
         return ReportNrtmexDAO.loadPX529SQP04932(filter);
     }
     
-    public List<A1817Filter> loadPX529SQP04924(A1817Filter filter) throws SQLException, Exception {
-        return ReportNrtmexDAO.loadPX529SQP04924(filter);
-    }
-    
-    public String loadPX529SQP04925(A1817Filter filter, String option) throws SQLException, Exception {
-        return ReportNrtmexDAO.loadPX529SQP04925(filter, option);
-    }
 }

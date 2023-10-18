@@ -267,9 +267,6 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                         },
                                         items: [
                                             {text: 'Period', dataIndex: 'strFormatDate2', width: 80,
-//                                                        listeners: {
-//                                                            click: 'onGridDetEMD'
-//                                                        },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     value = '<b>' + value + '</b>';

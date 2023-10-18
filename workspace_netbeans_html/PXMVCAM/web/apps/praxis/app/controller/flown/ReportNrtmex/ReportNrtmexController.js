@@ -477,7 +477,7 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
                 global.getFile(prototype.url + '/getXLSXMain?beanString=' + searchParams.beanString);
                 break;
             case  '-panelGridData':
-                global.getFile(prototype.url + '/downloadText?beanString=' + searchParams.beanString);
+                global.getFile(prototype.url + '/downloadText?beanString=' + me.paramsDetailNM.beanString);
                 break;
             default:
                 global.Msg(
