@@ -2093,7 +2093,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 id: prototype.idDE + '-observAdjustment',
                                                 width: 450,
                                                 labelWidth: 80,
-                                                maxLength: 13,
+                                                maxLength: 100,
                                                 enforceMaxLength: true,
                                                 fieldLabel: 'Observation'
                                             },
