@@ -111,7 +111,6 @@ public class ReportNrtmexController extends BaseController {
         return lst;
     }
 
-    
     @RequestMapping(value = "search")
     public @ResponseBody
     String search(ModelMap map, HttpServletRequest request) {
@@ -521,7 +520,5 @@ public class ReportNrtmexController extends BaseController {
         }
     }
 
-    
-    
 }
 
