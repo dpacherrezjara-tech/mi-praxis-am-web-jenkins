@@ -91,7 +91,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             click: 'onGridDetail'
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#";
+                                                            metaData.style = "text-align:right;background-color:#a3d5ff";
                                                             value = '<b>' + value + '</b>';
                                                             return '<a href="#flown-report-nrtmex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         },
@@ -106,7 +106,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             click: 'onGridDetailPE'
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#";
+                                                            metaData.style = "text-align:right;background-color:#a3d5ff";
                                                             value = '<b>' + value + '</b>';
                                                             return '<a href="#flown-report-nrtmex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         },
@@ -130,7 +130,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             click: 'onGridDetailCO'
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#";
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5";
                                                             value = '<b>' + value + '</b>';
                                                             return '<a href="#flown-report-nrtmex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         },
@@ -145,7 +145,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             click: 'onGridDetailPA'
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#";
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5";
                                                             value = '<b>' + value + '</b>';
                                                             return '<a href="#flown-report-nrtmex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         },
@@ -160,7 +160,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             click: 'onGridDetailNP'
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#";
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5";
                                                             value = '<b>' + value + '</b>';
                                                             return '<a href="#flown-report-nrtmex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         },
@@ -273,7 +273,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     value = '<b>' + value + '</b>';
-                                                    return '<a href="#flown-emd-standalone-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return '<a href="#flown-report-nrtmex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 },
                                             },
                                             {text: 'Flight Information',
@@ -290,7 +290,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             value = '<b>' + value + '</b>';
-                                                            return '<a href="#flown-emd-standalone-form" style="color:#057ECB">' + value + '</a>';
+                                                            return '<a href="#flown-report-nrtmex-form" style="color:#057ECB">' + value + '</a>';
                                                         },
                                                     },
                                                     {text: 'Status', dataIndex: 'descSTVAL', width: 100,
