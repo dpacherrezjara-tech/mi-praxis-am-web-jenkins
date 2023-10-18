@@ -165,7 +165,7 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
 
         prototypeProgram.view = 'flown-report-nrtmex-form';
         prototypeProgram.nprog = 'PX00000634';
-        prototypeProgram.title = 'Report Nrtmex';
+        prototypeProgram.title = 'Report NRT-MEX';
         prototypeProgram.modulo = '';
 
         var beanProMasterTicket = {};
