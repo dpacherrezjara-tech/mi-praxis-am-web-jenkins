@@ -239,7 +239,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             padding: '10 0 0 0',
                             border: false,
-                            height: 570,
+                            height: 585,
                             width: 1695,
                             layout: {
                                 type: 'vbox',
@@ -251,7 +251,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                     id: prototype.id + '-gridData',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: false,
-                                    height: 555,
+                                    height: 560,
                                     width: 1685,
                                     columnLines: true,
 //                                    features: [{
@@ -302,13 +302,13 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Orig', dataIndex: 'CDEPART', width: 40,
+                                                    {text: 'Orig', dataIndex: 'CDEPART', width: 40,hidden:true,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Dest', dataIndex: 'CARRIVA', width: 45,
+                                                    {text: 'Dest', dataIndex: 'CARRIVA', width: 45,hidden:true,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             return value;
@@ -338,7 +338,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Equip', dataIndex: 'EQUIPO', width: 50,
+                                                    {text: 'Equip', dataIndex: 'EQUIPO', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
                                                             return value;
@@ -374,7 +374,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Fare<br>Basis', dataIndex: 'FBASE', width: 75,
+                                                    {text: 'Fare<br>Basis', dataIndex: 'FBASE', width: 95,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;background-color:#";
                                                             return value;

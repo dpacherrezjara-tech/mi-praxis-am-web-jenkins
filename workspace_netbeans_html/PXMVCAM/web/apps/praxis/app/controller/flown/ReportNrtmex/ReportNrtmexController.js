@@ -267,9 +267,11 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         this.beanNM.DATE = rowData.data.DFLIGHT;
         this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
         this.beanNM.DRILL = "";
+        var drill = "";
+        var date = rowData.data.strFormatDate;
         console.log(this.beanNM);
         me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
-        this.setGridData();
+        this.setGridData(drill,date);
     },
     onGridDetailPE: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
@@ -278,9 +280,11 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         this.beanNM.DATE = rowData.data.DFLIGHT;
         this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
         this.beanNM.DRILL = "PE";
+        var drill = "PE";
+        var date = rowData.data.strFormatDate;
         console.log(this.beanNM);
         me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
-        this.setGridData();
+        this.setGridData(drill,date);
     },
     onGridDetailCO: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
@@ -289,9 +293,11 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         this.beanNM.DATE = rowData.data.DFLIGHT;
         this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
         this.beanNM.DRILL = "CO";
+        var drill = "CO";
+        var date = rowData.data.strFormatDate;
         console.log(this.beanNM);
         me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
-        this.setGridData();
+        this.setGridData(drill,date);
     },
     onGridDetailPA: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
@@ -300,9 +306,11 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         this.beanNM.DATE = rowData.data.DFLIGHT;
         this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
         this.beanNM.DRILL = "PA";
+        var drill = "PA";
+        var date = rowData.data.strFormatDate;
         console.log(this.beanNM);
         me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
-        this.setGridData();
+        this.setGridData(drill,date);
     },
     onGridDetailNP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
@@ -311,9 +319,11 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         this.beanNM.DATE = rowData.data.DFLIGHT;
         this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
         this.beanNM.DRILL = "NP";
+        var drill = "NP";
+        var date = rowData.data.strFormatDate;
         console.log(this.beanNM);
         me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
-        this.setGridData();
+        this.setGridData(drill,date);
     },
     onGridDetailAP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
@@ -322,9 +332,11 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         this.beanNM.DATE = rowData.data.DFLIGHT;
         this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
         this.beanNM.DRILL = "AP";
+        var drill = "AP";
+        var date = rowData.data.strFormatDate;
         console.log(this.beanNM);
         me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
-        this.setGridData();
+        this.setGridData(drill,date);
     },
     onGridDetailNA: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
@@ -333,9 +345,11 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         this.beanNM.DATE = rowData.data.DFLIGHT;
         this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
         this.beanNM.DRILL = "NA";
+        var drill = "NA";
+        var date = rowData.data.strFormatDate;
         console.log(this.beanNM);
         me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
-        this.setGridData();
+        this.setGridData(drill,date);
     },
     onGridDetailEX: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
@@ -344,12 +358,41 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         this.beanNM.DATE = rowData.data.DFLIGHT;
         this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
         this.beanNM.DRILL = "EX";
+        var drill = "EX";
+        var date = rowData.data.strFormatDate;
         console.log(this.beanNM);
         me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
-        this.setGridData();
+        this.setGridData(drill,date);
     },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
-    setGridData: function (obj, val) {
+    setGridData: function (drill,date) {
+        
+        if(drill === 'PE'){
+            drill = 'Pending';
+        }else if(drill === 'CO'){
+            drill = 'Conciliated';
+        }else if(drill === 'PA'){
+            drill = 'Pay';
+        }else if(drill === 'NP'){
+            drill = 'Not Payed';
+        }else if(drill === 'AP'){
+            drill = 'Applied';
+        }else if(drill === 'NA'){
+            drill = 'Not Applied';
+        }else if(drill === 'EX'){
+            drill = 'Exonerated';
+        }
+        
+        if (date !== '') {
+            if (drill !== '') {
+                Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Transaction Date :' + date + ' - ' + drill + '</center>');
+            } else {
+                Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Transaction Date :' + date + '</center>');
+            }
+        } else {
+            Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;">' + '</center>');
+        }
+        
         console.log("URL : " + prototype.url + '/search');
         win.lblUser_toolTip("Estructura: A4503");
         me.panelActual = '-panelGridData';
