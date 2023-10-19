@@ -809,11 +809,10 @@ public class EMDStandaloneController extends BaseController {
             Cell CH1_20 = row1.createCell(20);
             Cell CH1_21 = row1.createCell(21);
             Cell CH1_22 = row1.createCell(22);
-            Cell CH1_23 = row1.createCell(23);
 
             CH1_0.setCellValue("Transaction Information");
             CH1_8.setCellValue("Sales Information");
-            CH1_22.setCellValue("Poliza");
+            CH1_21.setCellValue("Poliza");
             
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -838,12 +837,11 @@ public class EMDStandaloneController extends BaseController {
             CH1_20.setCellStyle(headerStyle);
             CH1_21.setCellStyle(headerStyle);
             CH1_22.setCellStyle(headerStyle);
-            CH1_23.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 7));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 21));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 23));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 20));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 22));
             ++vj;
             //============================================
 
@@ -872,7 +870,6 @@ public class EMDStandaloneController extends BaseController {
             Cell CH2_20 = row2.createCell(20);
             Cell CH2_21 = row2.createCell(21);
             Cell CH2_22 = row2.createCell(22);
-            Cell CH2_23 = row2.createCell(23);
 
             CH2_0.setCellValue("Transaction");
             CH2_1.setCellValue("Ticket");
@@ -888,16 +885,17 @@ public class EMDStandaloneController extends BaseController {
             CH2_11.setCellValue("Orig");
             CH2_12.setCellValue("Dest");
             CH2_13.setCellValue("Fare");
-            CH2_14.setCellValue("RBD");
-            CH2_15.setCellValue("Pax");
-            CH2_16.setCellValue("Pax");
-            CH2_17.setCellValue("Oper.");
-            CH2_18.setCellValue("Carrier");
-            CH2_19.setCellValue("Valuation");
-            CH2_20.setCellValue("Curr.");
-            CH2_21.setCellValue("Total");
-            CH2_22.setCellValue("Date");
-            CH2_23.setCellValue("Id");
+//            CH2_14.setCellValue("RBD");
+//            CH2_15.setCellValue("Pax");
+            CH2_14.setCellValue("Pax");
+//            CH2_17.setCellValue("Oper.");
+            CH2_15.setCellValue("Carrier");
+            CH2_16.setCellValue("Valuation");
+            CH2_17.setCellValue("Curr.");
+            CH2_18.setCellValue("Total");
+            CH2_19.setCellValue("YQ value");
+            CH2_21.setCellValue("Date");
+            CH2_22.setCellValue("Id");
             
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -922,7 +920,6 @@ public class EMDStandaloneController extends BaseController {
             CH2_20.setCellStyle(headerStyle);
             CH2_21.setCellStyle(headerStyle);
             CH2_22.setCellStyle(headerStyle);
-            CH2_23.setCellStyle(headerStyle);
            
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 0));//USED
@@ -935,20 +932,21 @@ public class EMDStandaloneController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 8, 8));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 9, 9));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 10, 10));//DATE
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 10, 10));//SALE
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 12, 12));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 13, 13));//FARE BASIS
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 14, 14));
+//            sheet.addMergedRegion(new CellRangeAddress(1, 2, 14, 14));
+//            sheet.addMergedRegion(new CellRangeAddress(1, 2, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 14, 14));//PAX TYPE
+//            sheet.addMergedRegion(new CellRangeAddress(1, 2, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 15, 15));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 16, 16));//PAX TYPE
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 16, 16));//VALUATION
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 17, 17));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 18, 18));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 19, 19));//VALUATION
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 20, 20));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 21, 21));//TOTAL
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 18, 18));//TOTAL
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 19, 20));//YQ
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 21, 21));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 22, 22));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 23, 23));
             ++vj;
             //============================================
             
@@ -983,9 +981,11 @@ public class EMDStandaloneController extends BaseController {
             CH3_6.setCellValue("Code");
             CH3_10.setCellValue("Date");
             CH3_13.setCellValue("Basis");
-            CH3_16.setCellValue("Type");
-            CH3_19.setCellValue("Date");
-            CH3_21.setCellValue("Value");
+            CH3_14.setCellValue("Type");
+            CH3_16.setCellValue("Date");
+            CH3_18.setCellValue("Value");
+            CH3_19.setCellValue("16%");
+            CH3_20.setCellValue("0%");
             
             CH3_0.setCellStyle(headerStyle);
             CH3_1.setCellStyle(headerStyle);
@@ -1010,16 +1010,17 @@ public class EMDStandaloneController extends BaseController {
             CH3_20.setCellStyle(headerStyle);
             CH3_21.setCellStyle(headerStyle);
             CH3_22.setCellStyle(headerStyle);
-            CH3_23.setCellStyle(headerStyle);
            
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 10, 10));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 18, 18));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 19, 19));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 21, 21));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 20, 20));
             ++vj;
             //============================================
 
@@ -1049,7 +1050,6 @@ public class EMDStandaloneController extends BaseController {
                 Cell rcell20 = row1.createCell(20);
                 Cell rcell21 = row1.createCell(21);
                 Cell rcell22 = row1.createCell(22);
-                Cell rcell23 = row1.createCell(23);
 
                 rcell0.setCellValue(listaData.get(vi).strFormatDate);
                 rcell1.setCellValue(listaData.get(vi).strTicket);
@@ -1065,16 +1065,18 @@ public class EMDStandaloneController extends BaseController {
                 rcell11.setCellValue(listaData.get(vi).ORIG);
                 rcell12.setCellValue(listaData.get(vi).DEST);
                 rcell13.setCellValue(listaData.get(vi).FBASE);
-                rcell14.setCellValue(listaData.get(vi).RBD);
-                rcell15.setCellValue(listaData.get(vi).QTYPAX);
-                rcell16.setCellValue(listaData.get(vi).TPAX);
-                rcell17.setCellValue(listaData.get(vi).TOPUS);
-                rcell18.setCellValue(listaData.get(vi).CARR);
-                rcell19.setCellValue(listaData.get(vi).descFECVAL);
-                rcell20.setCellValue(listaData.get(vi).CURRENCY);
-                rcell21.setCellValue(listaData.get(vi).VCPN);
-                rcell22.setCellValue(listaData.get(vi).descFCONT);
-                rcell23.setCellValue(listaData.get(vi).IDCON);
+//                rcell14.setCellValue(listaData.get(vi).RBD);
+//                rcell15.setCellValue(listaData.get(vi).QTYPAX);
+                rcell14.setCellValue(listaData.get(vi).TPAX);
+//                rcell17.setCellValue(listaData.get(vi).TOPUS);
+                rcell15.setCellValue(listaData.get(vi).CARR);
+                rcell16.setCellValue(listaData.get(vi).descFECVAL);
+                rcell17.setCellValue(listaData.get(vi).CURRENCY);
+                rcell18.setCellValue(listaData.get(vi).VCPN);
+                rcell19.setCellValue(listaData.get(vi).TN16);
+                rcell20.setCellValue(listaData.get(vi).TN00);
+                rcell21.setCellValue(listaData.get(vi).descFCONT);
+                rcell22.setCellValue(listaData.get(vi).IDCON);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1105,7 +1107,6 @@ public class EMDStandaloneController extends BaseController {
             Cell CH1_20_T = rowTotal.createCell(20);
             Cell CH1_21_T = rowTotal.createCell(21);
             Cell CH1_22_T = rowTotal.createCell(22);
-            Cell CH1_23_T = rowTotal.createCell(23);
 
 //            CH1_0_T.setCellValue("");
 //            CH1_1_T.setCellValue("");
@@ -1134,7 +1135,6 @@ public class EMDStandaloneController extends BaseController {
             CH1_20_T.setCellStyle(totalStyle);
             CH1_21_T.setCellStyle(totalStyle);
             CH1_22_T.setCellStyle(totalStyle);
-            CH1_23_T.setCellStyle(totalStyle);
             
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
@@ -1159,7 +1159,6 @@ public class EMDStandaloneController extends BaseController {
             sheet.autoSizeColumn(20, true);
             sheet.autoSizeColumn(21, true);
             sheet.autoSizeColumn(22, true);
-            sheet.autoSizeColumn(23, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");

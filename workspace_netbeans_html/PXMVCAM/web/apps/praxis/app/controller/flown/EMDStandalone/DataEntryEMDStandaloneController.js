@@ -74,6 +74,8 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         this.setValue('de-txtTOTAL', this.beanResult.VCPN);
         this.setValue('de-txtFCONT', this.beanResult.FCONT);
         this.setValue('de-txtIDCON', this.beanResult.IDCON);
+        this.setValue('de-txtTN16', this.beanResult.TN16);
+        this.setValue('de-txtTN00', this.beanResult.TN00);
 
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
@@ -127,6 +129,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         if (beanTemp.VCPN === '') {
             beanTemp.VCPN = 0;
         }
+        beanTemp.TN16 = this.getValue("de-txtTN16").trim();
+        beanTemp.TN00 = this.getValue("de-txtTN00").trim();
+        
         beanTemp.FCONT = this.getValue("de-txtFCONT").trim();
         beanTemp.FECVAL = this.getValue("de-txtFECVAL").trim();
         beanTemp.IDCON = this.getValue("de-txtIDCON").trim();

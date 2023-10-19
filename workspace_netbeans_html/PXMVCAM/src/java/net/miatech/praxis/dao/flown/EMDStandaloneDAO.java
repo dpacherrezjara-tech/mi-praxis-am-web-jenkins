@@ -547,7 +547,10 @@ public class EMDStandaloneDAO {
                     } else if (bean.STVAL.equals("2")) {
                         bean.descSTVAL = "MATCH";
                     }
-                  
+                    
+                    bean.TN16 = rst.getString("TN16");
+                    bean.TN00 = rst.getString("TN00");
+                    
                     //Totales
 //                    bean.totVFOP = VFOP;
                     bean.USCR = rst.getString("USCR");
@@ -653,7 +656,7 @@ public class EMDStandaloneDAO {
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04925(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04925(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -687,9 +690,11 @@ public class EMDStandaloneDAO {
             cstmt.setString(25, filter.FECVAL.trim());
             cstmt.setString(26, filter.CURRENCY.trim());
             cstmt.setDouble(27, filter.VCPN);
-            cstmt.setString(28, session.getUserView().getUserInfo().USR);
-            cstmt.setString(29, Functions.getFechaActual());
-            cstmt.setString(30, Functions.getHoraActual());
+            cstmt.setString(28, filter.TN16);
+            cstmt.setString(29, filter.TN00);
+            cstmt.setString(30, session.getUserView().getUserInfo().USR);
+            cstmt.setString(31, Functions.getFechaActual());
+            cstmt.setString(32, Functions.getHoraActual());
 
             cstmt.execute();
 

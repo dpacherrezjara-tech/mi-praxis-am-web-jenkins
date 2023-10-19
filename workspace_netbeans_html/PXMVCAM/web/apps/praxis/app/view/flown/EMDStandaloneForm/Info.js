@@ -257,8 +257,8 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             padding: '1',
                             border: false,
-                            height: 575,
-                            width: 1790,
+                            height: 582,
+                            width: 1775,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -269,8 +269,8 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                     id: prototype.id + '-gridData',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: false,
-                                    height: 575,
-                                    width: 1775,
+                                    height: 580,
+                                    width: 1760,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -394,13 +394,13 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'RBD', dataIndex: 'RBD', width: 40,
+                                                    {text: 'RBD', dataIndex: 'RBD', width: 40, hidden: true,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Pax', dataIndex: 'QTYPAX', width: 40,
+                                                    {text: 'Pax', dataIndex: 'QTYPAX', width: 40, hidden: true,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -418,7 +418,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Oper.', dataIndex: 'TOPUS', width: 50,
+                                                    {text: 'Oper.', dataIndex: 'TOPUS', width: 50, hidden: true,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#E0F0FF";
                                                             return value;
@@ -449,6 +449,29 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         },
+                                                    },
+                                                    {text: 'YQ Value',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: '16%', dataIndex: 'TN16', width: 55,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#E0F0FF";
+                                                                    value = Ext.util.Format.number(value, '00.00');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: '0%', dataIndex: 'TN00', width: 55,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#E0F0FF";
+                                                                    value = Ext.util.Format.number(value, '00.00');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                        ]
                                                     },
                                                 ]
                                             },
