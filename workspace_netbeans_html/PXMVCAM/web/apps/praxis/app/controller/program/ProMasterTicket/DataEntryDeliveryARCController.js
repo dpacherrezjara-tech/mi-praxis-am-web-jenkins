@@ -8,16 +8,13 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryDeliveryARCCo
     init: function () {
     },
     afterRender: function() {
-        /*this.p = this.view.params;
-        //this.getDataInputs(this.p.rec);
-        console.log(this.p.data);
-        var cia = this.p.data.A4471CIA;
-        var forma = this.p.data.A4471FORMA;
-        var serie = this.p.data.A4471SERIE;
-        var TDNR = cia+forma+serie
-        console.log(TDNR);
-        */
+        console.log("afterrender");
+        this.searchDeliveryARC();
+    },
+    searchDeliveryARC: function(){
         var bean = {};
+        console.log("flotante");
+        console.log(this.Ticket_TDNR);
         bean.TDNR = this.Ticket_TDNR;
         console.log(prototype.url+'/searchDeliveryARC');
         
@@ -44,7 +41,6 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryDeliveryARCCo
         });
         global.clear();
         Ext.getCmp(prototype.id+'-1-gridDeliveryData').bindStore(storeGridDatas);
-        
     },
     startDisplay: function () {
         win.visible('1-boxSearchFilter', true);

@@ -12,7 +12,7 @@ Ext.define('Ext.Praxis.view.screens.CtrlDeliveryARCForm', {
     title: 'Delivery ARC Information',
     header: true,
     width: 1080,//1180
-    height: 600,//428
+    height: 800,//428
     border: false,
     resizable: false,
     layout: {
@@ -31,7 +31,7 @@ Ext.define('Ext.Praxis.view.screens.CtrlDeliveryARCForm', {
             items: [
                 {
                     xtype: 'panel',
-                    height: 380,
+                    height: 800,
                     border: false,
                     layout: {
                         type: 'vbox',
@@ -46,7 +46,7 @@ Ext.define('Ext.Praxis.view.screens.CtrlDeliveryARCForm', {
                                 hideInactive:false
                             },
                             width: 1040,//1140
-                            height: 500,//260
+                            height: 600,//260
                             border: false,
                             bodyStyle: 'background: transparent',
 //                            bodyStyle: "background-image:url(resources/img/icon/999x999/VOID_03_r1_c1.png) !important;background-repeat: no-repeat;background-position: center;",

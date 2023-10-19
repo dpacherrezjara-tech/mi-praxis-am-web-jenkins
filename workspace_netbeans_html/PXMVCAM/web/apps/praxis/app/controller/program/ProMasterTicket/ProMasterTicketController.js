@@ -626,6 +626,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         console.log(bean.A720TKVOID);
         console.log("bean.A720ORIG");
         console.log(bean.FUENTE);
+        console.log(bean);
         
         if(bean.TDNR !== '' && bean.A720TKVOID === 'V' && bean.FUENTE === 'ARC'  ){
             console.log("DELIVERY ARC");
@@ -1039,6 +1040,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     // <editor-fold defaultstate="collapsed" desc="Options">
     imgSearch_clickHandler: function (obj, e) {
         this.limpiarData();
+        console.log("Filtros ...");
+        console.log(win.getValue('txtFilterTicketFormSer').trim());
+        console.log(win.getValue('txtFilterTicketCia').trim());
         //this.bean = {};
         if (win.getValue('txtFilterTicketCia').trim().length === 3 && win.getValue('txtFilterTicketFormSer').trim().length === 10) {
             this.bean.IN_CIA = win.getValue('txtFilterTicketCia').trim();
@@ -3787,7 +3791,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         var controller = this.dataEntryDelivery.getController();
         controller.Ticket_TDNR = bean.TDNR;
         controller.Ticket_FUENTE = bean.FUENTE;
-        //controller.startDisplay();
+        controller.searchDeliveryARC();
         this.dataEntryDelivery.show();
     },
     
