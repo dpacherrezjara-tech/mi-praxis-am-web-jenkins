@@ -6,7 +6,7 @@
 prototype.widthContenedor = 1300;
 prototype.widthGrid = '100%';
 prototype.id01 = 'LoadControlReport';
-
+// commit
 Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.LoadControlReportForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.LoadControlReportForm',
