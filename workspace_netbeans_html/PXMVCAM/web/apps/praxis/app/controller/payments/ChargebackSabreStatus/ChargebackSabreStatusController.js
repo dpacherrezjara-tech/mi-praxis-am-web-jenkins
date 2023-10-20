@@ -82,31 +82,21 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.ChargebackSabre
         }
     },
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">
-    onChangeFechaBtn: function (obj) {
-        const me = this;
-        let combo2 = null;
-        try {
-            let valor1 = Ext.Date.format(obj.getValue(), 'Ymd');
-            //valor1 = parseInt(valor1);
-            const opts = {
-                'dateTo': () => {
-                    combo2 = me.getCmp({id: '-dateFrom'});
-                    let valor2 = Ext.Date.format(combo2.getValue(), 'Ymd');
-                    //valor2 = parseInt(valor2);
-                    if (valor1 >= valor2 && valor2 !== '') {
-                        return;
-                    }
-                    combo2.setValue(obj.getValue());
-                },
-                'dateFrom': () => {
-                    combo2 = me.getCmp({id: '-dateTo'});
-                    combo2.setValue(obj.getValue());
+    onChangeDateBtn: function (obj) {
+        let option = obj.id.split('-').at(-1);
+        const from = Ext.getCmp(prototype.id + '-dateFrom');
+        const to = Ext.getCmp(prototype.id + '-dateTo');
+        const opts = {
+            'dateFrom': () => {
+                to.setValue(from.getValue());
+            },
+            'dateTo': () => {
+                if (to.getValue() < from.getValue()) {
+                    from.setValue(to.getValue());
                 }
-            };
-            opts[obj.id.split('-').at(-1)]();
-        } catch {
-            return;
-        }
+            }
+        };
+        opts[option]();
     },
     validaFecha: function (value) {
         // Validar la fecha aquí
