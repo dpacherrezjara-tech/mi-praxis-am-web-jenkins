@@ -60,7 +60,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.Reconcili
         }
         return params;
     },
-    onChangeDateBtn: function () {
+    onChangeDateBtn: function (obj) {
         let option = obj.id.split('-').at(-1);
         const from = Ext.getCmp(prototype.id + '-datefieldFrom');
         const to = Ext.getCmp(prototype.id + '-datefieldTo');

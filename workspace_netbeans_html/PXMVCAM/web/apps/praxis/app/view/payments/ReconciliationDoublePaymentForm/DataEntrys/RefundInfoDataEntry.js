@@ -20,7 +20,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.DataEntrys.
     items: [
         {
             xtype: 'form',
-            id: prototype.idDE + 'mainForm',
+            id: prototype.idDE + '-mainForm',
             layout: {
                 type: 'vbox',
                 pack: 'center'
@@ -115,7 +115,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.DataEntrys.
                                             };
                                             field.setRawValue(opts[newValue] || 'Pending');
                                         }
-                                    }
+                                    },
+                                    value: 'Pending'
                                 },
                                 {
                                     fieldLabel: 'Acc. Date',
@@ -127,7 +128,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.DataEntrys.
                                     fieldLabel: 'ID',
                                     name: 'idconl',
                                     labelWidth: 120,
-                                    width: 480
+                                    width: 480,
+                                    fieldStyle: 'text-align:left;'
                                 }
                             ]
                         }
@@ -305,15 +307,52 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.DataEntrys.
                     ]
                 },
                 {
+                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">BPO Information</span>',
+                    items: [
+                        {
+                            items: [
+                                {
+                                    fieldLabel: 'Adjustment Code',
+                                    labelWidth: 120,
+                                    width: 230,
+                                    name: 'codadju'
+                                },
+                                {
+                                    fieldLabel: 'Description',
+                                    labelWidth: 120,
+                                    width: 230,
+                                    name: 'desc_ADJU'
+                                },
+                                {
+                                    fieldLabel: 'Comment',
+                                    name: 'adjucoment',
+                                    labelWidth: 120,
+                                    width: 480,
+                                    fieldStyle: 'text-align:left;'
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
                     title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Refund Bank Information</span>',
                     items: [
                         {
                             items: [
                                 {
                                     fieldLabel: 'Status',
-                                    id: prototype.idDE + '-txtStrefund',
+                                    name: 'strfnd',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 230,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            const opts = {
+                                                '1': 'Processed'
+                                            };
+                                            field.setRawValue(opts[newValue] || 'Pending');
+                                        }
+                                    },
+                                    value: 'Pending'
                                 },
                                 {
                                     fieldLabel: 'Date',

@@ -14,15 +14,14 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.RefundInf
     },
     getData: async function (view) {
         const me = this;
-        const form = Ext.getCmp(prototype.idDE + 'mainForm').getForm();
+        const form = Ext.getCmp(prototype.idDE + '-mainForm').getForm();
         const res = await fetch(`${me.url}/loadTrnxInfo?${new URLSearchParams(view.searchParams)}`);
         if (res.ok) {
             const data = await res.json();
             me.limpiaObjetoPX(data.response);
             me.bean = data.response;
-            console.log(me.bean);
+            console.log('bean',me.bean);
             form.reset();
-            Ext.getCmp(prototype.idDE + '-txtStrefund').setValue(me.bean.strfnd === '1' ? 'Processed' : 'Pending');
             form.setValues(me.bean);
             form.isValid();
         }
@@ -48,7 +47,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.RefundInf
     updateRecord: async function () {
         const me = this;
         me.view.mask('Loading...');
-        const form = Ext.getCmp(prototype.idDE + 'mainForm').getForm();
+        const form = Ext.getCmp(prototype.idDE + '-mainForm').getForm();
         let params = me.formatUpdateParams(me.bean, me.requestObjectSP(form.getValues()));
         console.log(params);
         if (form.isValid()) {

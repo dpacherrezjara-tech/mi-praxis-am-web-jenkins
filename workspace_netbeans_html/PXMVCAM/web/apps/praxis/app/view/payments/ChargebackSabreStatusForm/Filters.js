@@ -80,7 +80,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Filters', {
                                     value: new Date(new Date().getFullYear(), 0, 1),
                                     validator: 'validaFecha',
                                     listeners: {
-                                        change: 'onChangeFechaBtn'
+                                        change: 'onChangeDateBtn'
                                     }
                                 },
                                 {
@@ -96,7 +96,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Filters', {
                                     value: new Date(),
                                     validator: 'validaFecha',
                                     listeners: {
-                                        change: 'onChangeFechaBtn'
+                                        change: 'onChangeDateBtn'
                                     }
                                 }
                             ]
