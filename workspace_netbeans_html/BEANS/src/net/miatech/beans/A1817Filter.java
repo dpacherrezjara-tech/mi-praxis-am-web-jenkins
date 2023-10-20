@@ -101,6 +101,9 @@ public class A1817Filter extends A1817 {
     public double VFOP = 0;
     public String TDOC = "";
     public String strDesc1 = "";
+    public String TN16 = "";
+    public String TN00 = "";
+    
     public long QCPNDIFF = 0;
     //totales
     public long totQCPNOAL = 0;

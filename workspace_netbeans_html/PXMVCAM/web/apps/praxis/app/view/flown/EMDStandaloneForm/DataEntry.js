@@ -556,6 +556,48 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                         },
                                     ]
                                 },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    bodyStyle: 'background:#efe5e5;',
+                                    margin: '10 2 2 8',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            text: 'YQ Value 16%',
+                                            hidden: false,
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 100
+
+                                        },
+                                        {xtype: 'tbspacer', width: 7},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtTN16',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            fieldStyle: 'text-align:center;',
+                                            width: 100,
+                                        },
+                                        {xtype: 'tbspacer', width: 20},
+                                        {
+                                            xtype: 'label',
+                                            text: 'YQ Value 0%',
+                                            hidden: false,
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 100
+
+                                        },
+                                        {xtype: 'tbspacer', width: 7},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtTN00',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            fieldStyle: 'text-align:center;',
+                                            width: 100,
+                                        },
+                                    ]
+                                },
                             ]
                         },
                     ]
