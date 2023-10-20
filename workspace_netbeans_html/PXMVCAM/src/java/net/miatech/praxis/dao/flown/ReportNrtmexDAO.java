@@ -181,7 +181,7 @@ public class ReportNrtmexDAO {
         hm.put("R", "Refund");
         hm.put(" ", "Without Use");
 
-        double TOT_TAXAMOUNT = 0;
+        double TOT_TAXAMOUNT = 0,TOT_VALTAX = 0,TOT_VALTAXS = 0;
         int TOT_QTYPAX = 0;
 
         CallableStatement cstmt = null;
@@ -222,6 +222,8 @@ public class ReportNrtmexDAO {
             while (rst.next()) {
                 TOT_TAXAMOUNT = rst.getDouble("TAXAMOUNT");
                 TOT_QTYPAX = rst.getInt("QTYPAX");
+                TOT_VALTAXS = rst.getDouble("VALTAXS");
+                TOT_VALTAX = rst.getDouble("VALTAX");
             }
             rst.close();
 
@@ -279,7 +281,9 @@ public class ReportNrtmexDAO {
                     bean.TPAX = rst.getString("TPAX");
                     bean.FECVTA = rst.getString("FECVTA");
                     bean.strFormatDate6 = Functions.getMonthConvert(bean.FHTRANS);
-
+                    bean.DAUDTAX = rst.getString("DAUDTAX");
+                    bean.strFormatDate7 = Functions.getMonthConvert(bean.DAUDTAX);
+                    
                     bean.CDTAXS = rst.getString("CDTAXS").trim();
                     bean.MONTAXS = rst.getString("MONTAXS").trim();
                     bean.VALTAXS = rst.getDouble("VALTAXS");
@@ -309,7 +313,9 @@ public class ReportNrtmexDAO {
 //                    bean.RUTA  = rst.getString("RUTA");
                     //TOTALES
 //                    bean.TOT_TAXAMOUNT  = TOT_TAXAMOUNT;
-//                    bean.TOT_QTYPAX  = TOT_QTYPAX;
+                    bean.TOT_QTYPAX  = TOT_QTYPAX;
+                    bean.TOT_VALTAXS  = TOT_VALTAXS;
+                    bean.TOT_VALTAX  = TOT_VALTAX;
 
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;

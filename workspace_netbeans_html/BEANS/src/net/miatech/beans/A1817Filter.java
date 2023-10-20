@@ -24,6 +24,7 @@ public class A1817Filter extends A1817 {
     public String strFormatDate4 = "";
     public String strFormatDate5 = "";
     public String strFormatDate6 = "";
+    public String strFormatDate7 = "";
     public String IN_TKT = "";
     public String IN_SEQRO = "";
     public String strTicket = "";
@@ -85,6 +86,8 @@ public class A1817Filter extends A1817 {
     public String RESTAX = "";
     public double TOT_TAXAMOUNT = 0;
     public int TOT_QTYPAX = 0;
+    public double TOT_VALTAXS = 0;
+    public double TOT_VALTAX = 0;
     public double VCPN = 0;
     public String RFIC = "";
     public String RECODE = "";

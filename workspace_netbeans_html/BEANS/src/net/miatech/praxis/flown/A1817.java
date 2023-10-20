@@ -19,6 +19,7 @@ public class A1817 {
     public String FCONT = "";
     public String FHTRANS = "";
     public String FECVTA = "";
+    public String DAUDTAX = "";
     public String descDFLIGHT = "";
     public String TEMD = "";
     // INFORMATION FLIGHT OCR  
