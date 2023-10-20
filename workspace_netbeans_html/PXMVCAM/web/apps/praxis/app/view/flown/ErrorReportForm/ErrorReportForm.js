@@ -3,26 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
-
-prototype.id = 'ErrorReportForm';
-prototype.url = CONTEXTPATH + '/ErrorReport';
-
-Ext.define('Ext.Praxis.view.flown.ErrorReportForm.ErrorReportForm', {
+prototype.widthContenedor = 1300;
+prototype.widthGrid = '100%';
+prototype.id01 = 'LoadControlReport';
+// commit
+Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.LoadControlReportForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.ErrorReportForm',
+    alias: 'widget.LoadControlReportForm',
     requires: [
-        'Ext.Praxis.view.flown.ErrorReportForm.Options',
-        'Ext.Praxis.view.flown.ErrorReportForm.Filters',
-        'Ext.Praxis.view.flown.ErrorReportForm.Info',
-        'Ext.Praxis.controller.flown.ErrorReport.ErrorReportController'
+        'Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportController',
+        'Ext.Praxis.view.sales.LoadControlReportForm.Options',
+        'Ext.Praxis.view.sales.LoadControlReportForm.Filters',
+        'Ext.Praxis.view.sales.LoadControlReportForm.Info'
     ],
-    controller: 'ErrorReportController',
+    controller: 'LoadControlReportController',
+    id: prototype.id + '-ContenedorMain',
     layout: {
         type: 'fit'
     },
-    padding: '0 0 0 0',
     border: false,
     defaults: {
         border: false
@@ -47,7 +45,6 @@ Ext.define('Ext.Praxis.view.flown.ErrorReportForm.ErrorReportForm', {
                         {
                             xtype: 'panel',
                             region: 'center',
-//                          width: 900,
                             layout: 'border',
                             items: [
                                 {
@@ -60,42 +57,47 @@ Ext.define('Ext.Praxis.view.flown.ErrorReportForm.ErrorReportForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1200,
+                                        width: prototype.widthContenedor,
                                         align: 'center'
                                     },
                                     items: [
                                         {
                                             xtype: prototype.id + '-options'
-                                        }
-                                        ,
+                                        },
                                         {
                                             xtype: prototype.id + '-filters',
                                             id: prototype.id + '-contentFilter'
-                                        }
-                                        ,
+                                        },
                                         {
                                             xtype: 'panel',
-                                            height: 650,
+                                            id: prototype.id + '-panel-contenedor-grid',
+                                            height: 600,
                                             layout: 'fit',
                                             items: [
+                                                // <editor-fold defaultstate="collapsed" desc="setGridData">
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.id + '-centerC-panel01',
-                                                    layout: 'border',
+                                                    id: prototype.id + '-contenedor-grid',
                                                     align: 'center',
+                                                    layout: 'hbox',
                                                     border: true,
-                                                    defaults: {
-                                                        border: true
-                                                    },
-                                                    bodyStyle: 'background-color: white;',
+                                                    bodyStyle: 'background: transparent',
                                                     items: [
                                                         {
-                                                            region: 'center',
-                                                            xtype: prototype.id + '-info',
-                                                            id: prototype.id + '-contentInfo'
+                                                            xtype: 'fieldset',
+                                                            border: true,
+                                                            width: '100%',
+                                                            padding: '1 1 1 1',
+                                                            layout: 'vbox',
+                                                            items: [
+                                                                {
+                                                                    xtype: prototype.id + '-info'
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
+                                                // </editor-fold>                                                 
                                             ]
                                         }
                                     ]
@@ -107,7 +109,7 @@ Ext.define('Ext.Praxis.view.flown.ErrorReportForm.ErrorReportForm', {
             ]
         }
     ]
-});
 
+});
 
 
