@@ -394,6 +394,11 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             metaData.style = "text-align:center;background-color:#9CD2FF";
                                                             return value;
                                                         },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_STOTAL, '0,000') + '<b>';
+                                                        }
                                                     },
                                                     {text: 'Currency', dataIndex: 'MONTAXS', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -427,6 +432,11 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             metaData.style = "text-align:center;background-color:#d5f4d5";
                                                             return value;
                                                         },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_ATOTAL, '0,000') + '<b>';
+                                                        }
                                                     },
                                                     {text: 'Currency', dataIndex: 'MONTAX', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {

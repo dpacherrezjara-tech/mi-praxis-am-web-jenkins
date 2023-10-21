@@ -182,7 +182,7 @@ public class ReportNrtmexDAO {
         hm.put(" ", "Without Use");
 
         double TOT_TAXAMOUNT = 0,TOT_VALTAX = 0,TOT_VALTAXS = 0;
-        int TOT_QTYPAX = 0;
+        int TOT_QTYPAX = 0,TOT_STOTAL = 0,TOT_ATOTAL = 0 ;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -224,6 +224,8 @@ public class ReportNrtmexDAO {
                 TOT_QTYPAX = rst.getInt("QTYPAX");
                 TOT_VALTAXS = rst.getDouble("VALTAXS");
                 TOT_VALTAX = rst.getDouble("VALTAX");
+                TOT_STOTAL = rst.getInt("STOTAL");
+                TOT_ATOTAL = rst.getInt("ATOTAL");
             }
             rst.close();
 
@@ -316,6 +318,8 @@ public class ReportNrtmexDAO {
                     bean.TOT_QTYPAX  = TOT_QTYPAX;
                     bean.TOT_VALTAXS  = TOT_VALTAXS;
                     bean.TOT_VALTAX  = TOT_VALTAX;
+                    bean.TOT_STOTAL  = TOT_STOTAL;
+                    bean.TOT_ATOTAL  = TOT_ATOTAL;
 
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;

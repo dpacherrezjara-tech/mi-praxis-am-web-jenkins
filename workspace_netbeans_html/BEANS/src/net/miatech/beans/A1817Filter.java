@@ -88,6 +88,8 @@ public class A1817Filter extends A1817 {
     public int TOT_QTYPAX = 0;
     public double TOT_VALTAXS = 0;
     public double TOT_VALTAX = 0;
+    public double TOT_STOTAL = 0;
+    public double TOT_ATOTAL = 0;
     public double VCPN = 0;
     public String RFIC = "";
     public String RECODE = "";
