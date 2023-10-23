@@ -53,6 +53,125 @@ public class ProMasterTicketDAO {
         session = ss;
     }
 
+    public List<PX040S01A720Filter> SQP05174(PX040S01A720Filter filter) throws SQLException, Exception {
+        List<PX040S01A720Filter> lstRtn = new ArrayList(0);
+        PX040S01A720Filter objRtn;
+
+        String strSQL = "{CALL " + session.getMainLibrary() + ".SQP05174(?,?,?,?,?,?)}";
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = cnx.prepareCall(strSQL);
+            cs.setString("A720AIRLIN", session.getUserView().getCustomerInfo().CCUST);
+            cs.setString("A720CIA", filter.IN_CIA);
+            cs.setString("A720FORMA", filter.IN_FORMA);
+            cs.setString("A720SERIE", filter.IN_SERIE);
+            cs.setString("A720SEQ", filter.IN_SEQ);
+            cs.setString("VP_TARJETA", filter.SCARDN);
+            cs.execute();
+
+            rst = cs.getResultSet();
+            while (rst.next()) {
+                objRtn = new PX040S01A720Filter();
+                objRtn.IN_CIA = filter.IN_CIA;
+                objRtn.IN_FORMA = filter.IN_FORMA;
+                objRtn.IN_SERIE = filter.IN_SERIE;
+                objRtn.IN_SEQ = filter.IN_SEQ;
+                objRtn.SCARDN = filter.SCARDN;
+                objRtn.IN_STVAL = rst.getString("STVAL").trim();
+                lstRtn.add(objRtn);
+            }
+            if (lstRtn.isEmpty()) {
+                objRtn = new PX040S01A720Filter();
+                objRtn.IN_CIA = filter.IN_CIA;
+                objRtn.IN_FORMA = filter.IN_FORMA;
+                objRtn.IN_SERIE = filter.IN_SERIE;
+                objRtn.IN_SEQ = filter.IN_SEQ;
+                objRtn.SCARDN = filter.SCARDN;
+                objRtn.IN_STVAL = "";
+                lstRtn.add(objRtn);
+            }
+        } finally {
+            setClose();
+        }
+
+        return lstRtn;
+    }
+
+    public List<PX040S01A720Filter> SQP05175(PX040S01A720Filter filter) throws SQLException, Exception {
+        List<PX040S01A720Filter> lstRtn = new ArrayList(0);
+        PX040S01A720Filter objRtn;
+
+        String strSQL = "{CALL " + session.getMainLibrary() + ".SQP05175(?,?,?,?,?)}";
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = cnx.prepareCall(strSQL);
+            cs.setString("A720AIRLIN", session.getUserView().getCustomerInfo().CCUST);
+            cs.setString("A720CIA", filter.IN_CIA);
+            cs.setString("A720FORMA", filter.IN_FORMA);
+            cs.setString("A720SERIE", filter.IN_SERIE);
+            cs.setString("A720SEQ", filter.IN_SEQ);
+            cs.execute();
+
+            rst = cs.getResultSet();
+            while (rst.next()) {
+                objRtn = new PX040S01A720Filter();
+                objRtn.IN_CIA = filter.IN_CIA;
+                objRtn.IN_FORMA = filter.IN_FORMA;
+                objRtn.IN_SERIE = filter.IN_SERIE;
+                objRtn.IN_SEQ = filter.IN_SEQ;
+                objRtn.TICKET = filter.IN_CIA + filter.IN_FORMA + filter.IN_SERIE;
+                objRtn.PRDA = rst.getString("PRDA").trim();
+                objRtn.PAYDATE = rst.getString("PAYDATE").trim();
+                objRtn.DESCMER = rst.getString("DESCMER").trim();
+                objRtn.TRNCU = rst.getString("TRNCU").trim();
+                objRtn.STVAL = rst.getString("STVAL").trim();
+                objRtn.SMERCHID = rst.getString("SMERCHID").trim();
+                objRtn.SMERCHDESCR = rst.getString("DESCR").trim();
+                objRtn.COMPLEMENT = rst.getString("COMPLEMENT").trim();
+                objRtn.SCARDN = rst.getString("SCARDN").trim();
+                objRtn.SAUTHOC = rst.getString("SAUTHOC").trim();
+                objRtn.INSTANBR = rst.getString("INSTANBR").trim();
+                objRtn.INVOIRN = rst.getString("INVOIRN").trim();
+                objRtn.SCURRENCY = rst.getString("SCURRENCY").trim();
+                objRtn.SVFOPS = rst.getString("SVFOPS").trim().substring(0, rst.getString("SVFOPS").trim().length()-4);
+                objRtn.TGROSAMOUN = rst.getString("TGROSAMOUN").trim().substring(0, rst.getString("TGROSAMOUN").trim().length()-4);
+                objRtn.DESCADJU = rst.getString("DESCADJU").trim();
+                lstRtn.add(objRtn);
+            }
+            if (lstRtn.isEmpty()) {
+                objRtn = new PX040S01A720Filter();
+                objRtn.IN_CIA = filter.IN_CIA;
+                objRtn.IN_FORMA = filter.IN_FORMA;
+                objRtn.IN_SERIE = filter.IN_SERIE;
+                objRtn.IN_SEQ = filter.IN_SEQ;
+                objRtn.TICKET = "";
+                objRtn.PRDA = "";
+                objRtn.PAYDATE = "";
+                objRtn.DESCMER = "";
+                objRtn.TRNCU = "";
+                objRtn.STVAL = "";
+                objRtn.SMERCHID = "";
+                objRtn.SMERCHDESCR = "";
+                objRtn.COMPLEMENT = "";
+                objRtn.SCARDN = "";
+                objRtn.SAUTHOC = "";
+                objRtn.INSTANBR = "";
+                objRtn.INVOIRN = "";
+                objRtn.SCURRENCY = "";
+                objRtn.SVFOPS = "";
+                objRtn.TGROSAMOUN = "";
+                objRtn.DESCADJU = "";
+                lstRtn.add(objRtn);
+            }
+        } finally {
+            setClose();
+        }
+
+        return lstRtn;
+    }
+
     @Deprecated
     public PX040S01A720Filter loadPX040S01A720(PX040S01A720Filter filter) throws SQLException, Exception {
         PX040S01A720ResultSet01 objRtn;
@@ -95,20 +214,20 @@ public class ProMasterTicketDAO {
         String strA720CIA = null, strA720FORMA = null, strA720SERIE = null, strA720SEQ = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            if(filter.IN_SEQ.isEmpty()){
+            if (filter.IN_SEQ.isEmpty()) {
                 pstmt01 = cnx.prepareStatement(SQLQRY01);
                 pstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
                 pstmt01.setString(2, filter.IN_CIA);
                 pstmt01.setString(3, filter.IN_FORMA);
                 pstmt01.setString(4, filter.IN_SERIE);
                 rstst01 = pstmt01.executeQuery();
-                while(rstst01.next()){
+                while (rstst01.next()) {
                     intCountA720++;
                     strV_CIA = rstst01.getString("A720CIAI");
                     strV_FORMA = rstst01.getString("A720FORMAI");
                     strV_SERIE = rstst01.getString("A720SERIEI");
                 }
-                if(intCountA720 == 1){
+                if (intCountA720 == 1) {
                     intCountA720 = 0;
                     pstmt02 = cnx.prepareStatement(SQLQRY02);
                     pstmt02.setString(1, session.getUserView().getCustomerInfo().CCUST);
@@ -116,14 +235,14 @@ public class ProMasterTicketDAO {
                     pstmt02.setString(3, strV_FORMA);
                     pstmt02.setString(4, strV_SERIE);
                     rstst02 = pstmt02.executeQuery();
-                    while(rstst02.next()){
+                    while (rstst02.next()) {
                         intCountA720++;
                         strA720CIA = rstst02.getString("A720CIA");
                         strA720FORMA = rstst02.getString("A720FORMA");
                         strA720SERIE = rstst02.getString("A720SERIE");
                         strA720SEQ = rstst02.getString("A720SEQ");
                     }
-                    if(intCountA720 == 1){
+                    if (intCountA720 == 1) {
                         filter.IN_CIA = strA720CIA;
                         filter.IN_FORMA = strA720FORMA;
                         filter.IN_SERIE = strA720SERIE;
@@ -131,7 +250,7 @@ public class ProMasterTicketDAO {
                     }
                 }
             }
-            if(!filter.IN_SEQ.isEmpty()){
+            if (!filter.IN_SEQ.isEmpty()) {
                 //<editor-fold defaultstate="collapsed" desc="{...} Call Store">
                 cstmt01 = cnx.prepareCall(SQLCLL01);
 
@@ -185,7 +304,6 @@ public class ProMasterTicketDAO {
                     objRtn.fileA1530.A1530IDFIL = rs01.getString("A1530IDFIL");
                     objRtn.fileA1530.A1530GRUPO = rs01.getString("A1530GRUPO");
 
-                    
                     objRtn.fileA720.A720SASI = rs01.getString("A720SASI");
                     objRtn.fileA720.A720TICAP = rs01.getString("A720TICAP");
 
@@ -356,12 +474,11 @@ public class ProMasterTicketDAO {
                     objRtn.fileA720.A1672_AUDITED = rs01.getInt("A1672_AUDITED");
                     objRtn.fileA720.A1672_MEMORAISED = rs01.getInt("A1672_MEMORAISED");
                     objRtn.fileA720.A1672_PREME = rs01.getString("A1672_PREME");
-                    objRtn.fileA720.A2548_NMEMO = (rs01.getObject("A2548_NMEMO")==null ? "": rs01.getString("A2548_NMEMO"));
+                    objRtn.fileA720.A2548_NMEMO = (rs01.getObject("A2548_NMEMO") == null ? "" : rs01.getString("A2548_NMEMO"));
 
                     objRtn.fileA720.A1530FECCO = rs01.getString("A1530FECCO");
                     objRtn.fileA720.A4373_TOT = rs01.getInt("A4373_TOT");
 
-                    
                     objRtn.fileA720.A2289_ESTADO = rs01.getString("CHG").trim();
                     filter.lstResultSet01.add(objRtn);
                 }
@@ -715,6 +832,7 @@ public class ProMasterTicketDAO {
                                                                             filter.lstResultSet15.add(objRtn15);
                                                                         }
                                                                         if (cstmt01.getMoreResults()) {
+
                                                                             rs23 = cstmt01.getResultSet();
                                                                             while (rs23.next()) {
                                                                                 objRtn23 = new PX040S01A720ResultSet23();
@@ -862,7 +980,7 @@ public class ProMasterTicketDAO {
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            if(filter.IN_CIA.equals("139")){
+            if (filter.IN_CIA.equals("139")) {
                 pstmt01 = cnx.prepareStatement(SQLQRY01);
                 pstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
                 pstmt01.setString(2, filter.IN_CIA);
@@ -873,7 +991,7 @@ public class ProMasterTicketDAO {
                 pstmt01.setString(7, filter.IN_FORMA);
                 pstmt01.setString(8, filter.IN_SERIE);
                 rstst01 = pstmt01.executeQuery();
-                while(rstst01.next()){
+                while (rstst01.next()) {
                     pX040S01A720Filter = new PX040S01A720Filter();
                     pX040S01A720Filter.IN_CIA = rstst01.getString("A720CIA");
                     pX040S01A720Filter.IN_FORMA = rstst01.getString("A720FORMA");
@@ -881,16 +999,14 @@ public class ProMasterTicketDAO {
                     pX040S01A720Filter.IN_SEQ = rstst01.getString("A720SEQ");
                     lstPX040S01A720Filter.add(pX040S01A720Filter);
                 }
-            }
-            else
-            {
+            } else {
                 pstmt01 = cnx.prepareStatement(SQLQRY01);
                 pstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
                 pstmt01.setString(2, filter.IN_CIA);
                 pstmt01.setString(3, filter.IN_FORMA);
                 pstmt01.setString(4, filter.IN_SERIE);
                 rstst01 = pstmt01.executeQuery();
-                while(rstst01.next()){
+                while (rstst01.next()) {
                     pX040S01A720Filter = new PX040S01A720Filter();
                     pX040S01A720Filter.IN_CIA = rstst01.getString("A720CIA");
                     pX040S01A720Filter.IN_FORMA = rstst01.getString("A720FORMA");
@@ -1903,13 +2019,9 @@ public class ProMasterTicketDAO {
                 }
             }
             //</editor-fold>
-        }
-                
-        catch (Exception e) {
+        } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-       }
-                
-        finally {
+        } finally {
             if (rs01 != null) {
                 try {
                     rs01.close();
@@ -2143,6 +2255,8 @@ public class ProMasterTicketDAO {
         String SQLCLL01 = "";
 
         SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}";
+        //SQLCLL01 = "{CALL LIBSAP53.SQP00697(?,?,?,?,?,?,?,?,?)}"; 
+
         if (filter.IN_TFILTER == 1 && !"139".equals(filter.IN_TEXT.substring(0, 3))) {
             SQLCLL01 = "{CALL SQP04574(?,?,?,?,?,?,?,?,?)}";
         }
@@ -2172,7 +2286,7 @@ public class ProMasterTicketDAO {
                 objRtn.TICKET = rs01.getString("TICKET");
                 objRtn.A1531NREF = rs01.getString("A1531NREF");
                 objRtn.A720CIUVTA = rs01.getString("A720CIUVTA");
-                objRtn.A720AGENTE  = rs01.getString("A720AGENTE");
+                objRtn.A720AGENTE = rs01.getString("A720AGENTE");
                 objRtn.A720FECVTA = Functions.getMonthConvertDate(rs01.getString("A720FECVTA"));
                 objRtn.A720TARIFA = rs01.getDouble("A720TARIFA");
                 objRtn.A720MONEDA = rs01.getString("A720MONEDA");
@@ -2185,11 +2299,11 @@ public class ProMasterTicketDAO {
                 //objRtn.SAUTHOC = rs01.getString("SAUTHOC");
                 lstRtn.add(objRtn);
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-        }catch(Exception e){
+        } catch (Exception e) {
             logError.error("Exception -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-        }finally {
+        } finally {
             if (rs01 != null) {
                 try {
                     rs01.close();
@@ -2578,20 +2692,20 @@ public class ProMasterTicketDAO {
         String strA720CIA = null, strA720FORMA = null, strA720SERIE = null, strA720SEQ = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            if(filter.IN_SEQ.isEmpty()){
+            if (filter.IN_SEQ.isEmpty()) {
                 pstmt01 = cnx.prepareStatement(SQLQRY01);
                 pstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
                 pstmt01.setString(2, filter.IN_CIA);
                 pstmt01.setString(3, filter.IN_FORMA);
                 pstmt01.setString(4, filter.IN_SERIE);
                 rstst01 = pstmt01.executeQuery();
-                while(rstst01.next()){
+                while (rstst01.next()) {
                     intCountA720++;
                     strV_CIA = rstst01.getString("A720CIAI");
                     strV_FORMA = rstst01.getString("A720FORMAI");
                     strV_SERIE = rstst01.getString("A720SERIEI");
                 }
-                if(intCountA720 == 1){
+                if (intCountA720 == 1) {
                     intCountA720 = 0;
                     pstmt02 = cnx.prepareStatement(SQLQRY02);
                     pstmt02.setString(1, session.getUserView().getCustomerInfo().CCUST);
@@ -2599,14 +2713,14 @@ public class ProMasterTicketDAO {
                     pstmt02.setString(3, strV_FORMA);
                     pstmt02.setString(4, strV_SERIE);
                     rstst02 = pstmt02.executeQuery();
-                    while(rstst02.next()){
+                    while (rstst02.next()) {
                         intCountA720++;
                         strA720CIA = rstst02.getString("A720CIA");
                         strA720FORMA = rstst02.getString("A720FORMA");
                         strA720SERIE = rstst02.getString("A720SERIE");
                         strA720SEQ = rstst02.getString("A720SEQ");
                     }
-                    if(intCountA720 == 1){
+                    if (intCountA720 == 1) {
                         filter.IN_CIA = strA720CIA;
                         filter.IN_FORMA = strA720FORMA;
                         filter.IN_SERIE = strA720SERIE;
@@ -2614,7 +2728,7 @@ public class ProMasterTicketDAO {
                     }
                 }
             }
-            if(!filter.IN_SEQ.isEmpty()){
+            if (!filter.IN_SEQ.isEmpty()) {
                 //<editor-fold defaultstate="collapsed" desc="{...} Call Store">
                 cstmt01 = cnx.prepareCall(SQLCLL01);
 
@@ -3053,7 +3167,7 @@ public class ProMasterTicketDAO {
                                                             objRtn11.fileA1692.SERIE = rs11.getString("SERIE");
                                                             objRtn11.fileA1692.CUPON = rs11.getString("CUPON");
                                                             objRtn11.fileA1692.SEQ = rs11.getString("SEQ");
-                                                            objRtn11.fileA1692.SEQRO =  "00"; // = rs11.getString("SEQRO");
+                                                            objRtn11.fileA1692.SEQRO = "00"; // = rs11.getString("SEQRO");
                                                             objRtn11.fileA1692.CDEPART = rs11.getString("CDEPART");
                                                             objRtn11.fileA1692.CARRIVA = rs11.getString("CARRIVA");
                                                             objRtn11.fileA1692.CARR = rs11.getString("CARR");
@@ -3104,9 +3218,9 @@ public class ProMasterTicketDAO {
                                                                     objRtn13.fileA1200.CARR = rs13.getString("CARR");
 
                                                                     //ISR
-                                                                    try{
+                                                                    try {
                                                                         objRtn13.fileA1200.FECR = rs13.getString("FLIGHT");
-                                                                    }catch(SQLException ex){
+                                                                    } catch (SQLException ex) {
                                                                         //No es ISR
                                                                     }
 
