@@ -27,12 +27,23 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
             },
             items: [
                 {
-                    xtype: 'label',
-                    html: '<strong style="color:#000;">Search:</strong>',
-                    align: 'left',
-                    fieldStyle: 'text-align: left;',
-                    padding: '8px 5px 0px 15px',
-                    hidden: false
+                    xtype: 'combo',
+                    id: prototype.id + '-cmbSearch',
+                    fieldLabel: '<strong style="color:#000;">Search By</strong>',
+                    labelAlign: 'right',
+                    queryMode: 'local',
+                    editable: false,
+                    triggerAction: 'all',
+                    autoSelect: false,
+                    enableKeyEvents: true,
+                    caseSensitive: true,
+                    value: 'Open',
+                    valueField: 'code',
+                    displayField: 'name',
+                    emptyText: 'All',
+                    labelWidth: 100,
+                    width: 250,
+                    anchor: '100%'
                 },
                 {
                     xtype: 'combo',

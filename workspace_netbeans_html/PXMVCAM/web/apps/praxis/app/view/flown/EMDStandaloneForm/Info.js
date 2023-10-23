@@ -76,7 +76,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Transaction<br>Date', dataIndex: 'strFormatDate', width: 100,
+                                                    {text: 'Date',id: prototype.id + '-strFormatDate', dataIndex: 'strFormatDate', width: 100,
                                                         listeners: {
                                                             click: 'onGridDataMidle'
                                                         },
@@ -180,7 +180,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Transaction<br>Date', dataIndex: 'strFormatDate', width: 100,
+                                                    {text: 'Date',id: prototype.id + '-strDateMidle', dataIndex: 'strFormatDate', width: 100,
                                                         listeners: {
                                                             click: 'onGridData'
                                                         },
@@ -283,14 +283,14 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Transaction Information',
+                                            {text: 'Used Information',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Transaction<br>Date', dataIndex: 'strFormatDate', width: 100,
+                                                    {text: 'Date',id: prototype.id + '-strDateDetail', dataIndex: 'strFormatDate', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#E6FFE6";
                                                             value = '<b>' + value + '</b>';
