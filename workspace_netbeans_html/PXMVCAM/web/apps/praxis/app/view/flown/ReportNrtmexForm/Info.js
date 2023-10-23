@@ -239,7 +239,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             padding: '10 0 0 0',
                             border: false,
-                            height: 585,
+                            height: 595,
                             width: 1695,
                             layout: {
                                 type: 'vbox',
@@ -251,13 +251,13 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                     id: prototype.id + '-gridData',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: false,
-                                    height: 560,
+                                    height: 583,
                                     width: 1685,
                                     columnLines: true,
-//                                    features: [{
-//                                            ftype: 'summary',
-//                                            dock: 'bottom'
-//                                        }],
+                                    features: [{
+                                            ftype: 'summary'
+//                                            dock: 'bottom'  
+                                        }],
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -350,18 +350,18 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Qty<br>Pax', dataIndex: 'QTYPAX', width: 40,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOT_QTYPAX, '0,000') + '<b>';
-                                                        }
-                                                    },
+//                                                    {text: 'Qty<br>Pax', dataIndex: 'QTYPAX', width: 40,
+//                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            metaData.style = "text-align:right;background-color:#";
+//                                                            value = Ext.util.Format.number(value, '0,000');
+//                                                            return value;
+//                                                        },
+//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+//                                                            metaData.style = 'text-align:right; margin-right:3px ';
+//                                                            return '<b>' + Ext.util.Format.number(data.TOT_QTYPAX, '0,000') + '<b>';
+//                                                        }
+//                                                    },
                                                     {text: 'Period<br>Oper', dataIndex: 'strFormatDate4', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#";
@@ -389,11 +389,16 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Code<br>Tax', dataIndex: 'CDTAXS', width: 50,
+                                                    {text: 'Code', dataIndex: 'CDTAXS', width: 50,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#9CD2FF";
                                                             return value;
                                                         },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_STOTAL, '0,000') + '<b>';
+                                                        }
                                                     },
                                                     {text: 'Currency', dataIndex: 'MONTAXS', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -401,17 +406,17 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Tax<br>Amount', dataIndex: 'VALTAXS', width: 90,
+                                                    {text: 'Amount', dataIndex: 'VALTAXS', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#9CD2FF";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         },
-//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-//                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
-//                                                            metaData.style = 'text-align:right; margin-right:3px ';
-//                                                            return '<b>' + Ext.util.Format.number(data.TOT_TAXAMOUNT, '0,000.00') + '<b>';
-//                                                        }
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_VALTAXS, '0,000.00') + '<b>';
+                                                        }
                                                     },
                                                 ]
                                             },
@@ -422,11 +427,16 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Code<br>Tax', dataIndex: 'CDTAX', width: 50,
+                                                    {text: 'Code', dataIndex: 'CDTAX', width: 50,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#d5f4d5";
                                                             return value;
                                                         },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_ATOTAL, '0,000') + '<b>';
+                                                        }
                                                     },
                                                     {text: 'Currency', dataIndex: 'MONTAX', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -434,17 +444,23 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             return value;
                                                         },
                                                     },
-                                                    {text: 'Tax<br>Amount', dataIndex: 'VALTAX', width: 90,
+                                                    {text: 'Amount', dataIndex: 'VALTAX', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#d5f4d5";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         },
-//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-//                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
-//                                                            metaData.style = 'text-align:right; margin-right:3px ';
-//                                                            return '<b>' + Ext.util.Format.number(data.TOT_TAXAMOUNT, '0,000.00') + '<b>';
-//                                                        }
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_VALTAX, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Date', dataIndex: 'strFormatDate7', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#d5f4d5";
+                                                            return value;
+                                                        },
                                                     },
                                                 ]
                                             },
