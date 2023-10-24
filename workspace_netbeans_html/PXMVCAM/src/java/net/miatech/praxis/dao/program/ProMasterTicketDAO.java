@@ -841,7 +841,7 @@ public class ProMasterTicketDAO {
                                                                                 objRtn23.fileA1692.SERIE = rs23.getString("SERIE");
                                                                                 objRtn23.fileA1692.CUPON = rs23.getString("CUPON");
                                                                                 objRtn23.fileA1692.SEQ = rs23.getString("SEQ");
-                                                                                objRtn23.fileA1692.SEQRO = "00";
+                                                                                objRtn23.fileA1692.SEQRO = rs23.getString("SEQRO");
                                                                                 objRtn23.fileA1692.CDEPART = rs23.getString("CDEPART");
                                                                                 objRtn23.fileA1692.CARRIVA = rs23.getString("CARRIVA");
                                                                                 objRtn23.fileA1692.CARR = rs23.getString("CARR");
