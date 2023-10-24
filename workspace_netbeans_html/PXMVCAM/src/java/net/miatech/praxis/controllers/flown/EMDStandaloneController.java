@@ -426,7 +426,14 @@ public class EMDStandaloneController extends BaseController {
             Cell CH2_3 = row2.createCell(3);
             Cell CH2_4 = row2.createCell(4);
 
-            CH2_0.setCellValue("Transaction");
+            if(listaData.get(0).IN_TIPO.equals("0")){
+                CH2_0.setCellValue("Used");
+            }else if(listaData.get(0).IN_TIPO.equals("1")){
+                CH2_0.setCellValue("Valuation");
+            }else if(listaData.get(0).IN_TIPO.equals("2")){
+                CH2_0.setCellValue("Accounting");
+            }
+            
             CH2_1.setCellValue("Total EMDS");
             CH2_2.setCellValue("EMDS Concili.");
             CH2_3.setCellValue("Total");
@@ -622,7 +629,14 @@ public class EMDStandaloneController extends BaseController {
             Cell CH2_3 = row2.createCell(3);
             Cell CH2_4 = row2.createCell(4);
 
-            CH2_0.setCellValue("Transaction");
+            if(listaData.get(0).IN_TIPO.equals("0")){
+                CH2_0.setCellValue("Used");
+            }else if(listaData.get(0).IN_TIPO.equals("1")){
+                CH2_0.setCellValue("Valuation");
+            }else if(listaData.get(0).IN_TIPO.equals("2")){
+                CH2_0.setCellValue("Accounting");
+            }
+            
             CH2_1.setCellValue("Total EMDS");
             CH2_2.setCellValue("EMDS Concili.");
             CH2_3.setCellValue("Total");
@@ -871,7 +885,14 @@ public class EMDStandaloneController extends BaseController {
             Cell CH2_21 = row2.createCell(21);
             Cell CH2_22 = row2.createCell(22);
 
-            CH2_0.setCellValue("Transaction");
+            if(listaData.get(0).IN_TIPO.equals("0")){
+                CH2_0.setCellValue("Used");
+            }else if(listaData.get(0).IN_TIPO.equals("1")){
+                CH2_0.setCellValue("Valuation");
+            }else if(listaData.get(0).IN_TIPO.equals("2")){
+                CH2_0.setCellValue("Accounting");
+            }
+            
             CH2_1.setCellValue("Ticket");
             CH2_2.setCellValue("Seq");
             CH2_3.setCellValue("Roll");

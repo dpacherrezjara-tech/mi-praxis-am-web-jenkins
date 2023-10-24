@@ -18,6 +18,7 @@ public class A1817Filter extends A1817 {
     public String DRILL = "";
     public String IN_FECHA_FROM = "";
     public String IN_FECHA_TO = "";
+    public String strDate = "";
     public String strFormatDate = "";
     public String strFormatDate2 = "";
     public String strFormatDate3 = "";

@@ -108,8 +108,8 @@ public class EMDStandaloneDAO {
                     bean = new A1817Filter();
                     bean.IN_TIPO = filter.IN_TIPO.trim();
                     bean.IN_COUNTRY = filter.IN_COUNTRY.trim();
-                    bean.DFLIGHT = rst.getString("DFLIGHT");
-                    bean.strFormatDate = Functions.getMonthConvert(bean.DFLIGHT);
+                    bean.strDate = rst.getString("strDate");
+                    bean.strFormatDate = Functions.getMonthConvert(bean.strDate);
                     bean.QTYUSED = rst.getInt("QTYUSED");
                     bean.QTYCONCI = rst.getInt("QTYCONCI");
                     bean.QTYPEND = rst.getInt("QTYPEND");
@@ -219,8 +219,8 @@ public class EMDStandaloneDAO {
                     bean = new A1817Filter();
                     bean.IN_TIPO = filter.IN_TIPO.trim();
                     bean.IN_COUNTRY = filter.IN_COUNTRY.trim();
-                    bean.DFLIGHT = rst.getString("DFLIGHT");
-                    bean.strFormatDate = Functions.getMonthConvert(bean.DFLIGHT);
+                    bean.strDate = rst.getString("strDate");
+                    bean.strFormatDate = Functions.getMonthConvert(bean.strDate);
                     bean.QTYUSED = rst.getInt("QTYUSED");
                     bean.QTYCONCI = rst.getInt("QTYCONCI");
                     bean.QTYPEND = rst.getInt("QTYPEND");
@@ -504,8 +504,8 @@ public class EMDStandaloneDAO {
                     bean = new A1817Filter();
                     bean.IN_TIPO = filter.IN_TIPO.trim();
                     bean.IN_COUNTRY = filter.IN_COUNTRY.trim();
-                    bean.DFLIGHT = rst.getString("DFLIGHT");
-                    bean.strFormatDate = Functions.getMonthConvert(bean.DFLIGHT);
+                    bean.strDate = rst.getString("strDate");
+                    bean.strFormatDate = Functions.getMonthConvert(bean.strDate);
                     bean.SCOUNTRY = rst.getString("PSVVTA");
                     bean.AGENTE = rst.getString("AGTIA");
 //                    bean.strDescAgente = rst.getString("desAGENTE");
