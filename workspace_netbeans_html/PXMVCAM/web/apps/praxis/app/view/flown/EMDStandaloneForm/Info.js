@@ -160,7 +160,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: false,
                                     height: 550,
-                                    width: 520,
+                                    width: 533,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
