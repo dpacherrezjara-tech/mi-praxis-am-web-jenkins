@@ -3410,7 +3410,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                 }
                             }
                         }
-                        //me01.loadSTVAL(me01.bean);
+                        me01.loadSTVAL(me01.bean);
                         strA1531VFOP = 0;
                         if (me01.filterTKT.lstResultSet08.length > 0) {
                             for (var i8 = 0; i8 < me01.filterTKT.lstResultSet08.length; i8++) {
