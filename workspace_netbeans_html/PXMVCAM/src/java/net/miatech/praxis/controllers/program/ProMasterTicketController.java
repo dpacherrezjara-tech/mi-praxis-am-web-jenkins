@@ -132,9 +132,60 @@ public class ProMasterTicketController extends BaseController {
             List<PX040S01A720Filter> filterTKT = new ArrayList<PX040S01A720Filter>();
             if (!filter.IN_CIA.equals("") && !filter.IN_FORMA.trim().equals("") && !filter.IN_SERIE.trim().equals("") ){
                 filterTKT = logic.SQP04422(filter);
+//                for (PX040S01A720Filter f: filterTKT){
+//                    f.IN_STVAL = logic.SQP05174(f).get(0).IN_STVAL;
+//                }
             }
             map.put("success", true);
             map.put("filterTKTSeq", filterTKT);
+        } catch (Exception e) {
+            map.put("success", false);
+            new SpringLog(e.getMessage());
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/loadSTVAL")
+    public @ResponseBody
+    String loadSTVAL(ModelMap map, HttpServletRequest request) {
+        PX040S01A720Filter filter = new PX040S01A720Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            logic = new ProMasterTicketLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            List<PX040S01A720Filter> filterTKT = new ArrayList<PX040S01A720Filter>();
+            if (!filter.IN_CIA.equals("") && !filter.IN_FORMA.trim().equals("") && !filter.IN_SERIE.trim().equals("") ){
+                filterTKT = logic.SQP05174(filter);
+            }
+            map.put("success", true);
+            map.put("filterTKTSTVAL", filterTKT);
+        } catch (Exception e) {
+            map.put("success", false);
+            new SpringLog(e.getMessage());
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/loadPayment")
+    public @ResponseBody
+    String loadPayment(ModelMap map, HttpServletRequest request) {
+        PX040S01A720Filter filter = new PX040S01A720Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            logic = new ProMasterTicketLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            List<PX040S01A720Filter> filterTKT = new ArrayList<PX040S01A720Filter>();
+            if (!filter.IN_CIA.equals("") && !filter.IN_FORMA.trim().equals("") && !filter.IN_SERIE.trim().equals("") ){
+                filterTKT = logic.SQP05175(filter);
+            }
+            map.put("success", true);
+            map.put("filterPayment", filterTKT);
         } catch (Exception e) {
             map.put("success", false);
             new SpringLog(e.getMessage());
