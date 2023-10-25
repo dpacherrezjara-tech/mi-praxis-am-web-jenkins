@@ -230,5 +230,13 @@
         <group name="PRAXIS AM WEB HTML">
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/WEB-INF/configs/CFGI0001.properties</file>
         </group>
+        <group name="PRAXIS AM HTML">
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/WEB-INF/configs/CFGI0001.properties</file>
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/program/ProMasterTicket/ProMasterTicketController.js</file>
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/program/ProMasterTicketLogic.java</file>
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/program/ProMasterTicketController.java</file>
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/program/ProMasterTicketForm/Info.js</file>
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/program/ProMasterTicketDAO.java</file>
+        </group>
     </open-files>
 </project-private>

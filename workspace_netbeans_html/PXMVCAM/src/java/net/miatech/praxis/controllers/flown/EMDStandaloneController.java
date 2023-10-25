@@ -437,7 +437,7 @@ public class EMDStandaloneController extends BaseController {
             CH2_1.setCellValue("Total EMDS");
             CH2_2.setCellValue("EMDS Concili.");
             CH2_3.setCellValue("Total");
-            CH2_4.setCellValue("Contabilizados");
+            CH2_4.setCellValue("Accounted");
             
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -640,7 +640,7 @@ public class EMDStandaloneController extends BaseController {
             CH2_1.setCellValue("Total EMDS");
             CH2_2.setCellValue("EMDS Concili.");
             CH2_3.setCellValue("Total");
-            CH2_4.setCellValue("Contabilizados");
+            CH2_4.setCellValue("Accounted");
             
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);

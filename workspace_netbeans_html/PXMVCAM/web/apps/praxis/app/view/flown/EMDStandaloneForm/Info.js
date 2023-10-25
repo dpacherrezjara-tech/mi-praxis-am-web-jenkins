@@ -122,7 +122,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                             return '<b>' + Ext.util.Format.number(data.TOT_QTYPEND, '0,000') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'Contabilizados', dataIndex: 'QTYPOLIZA', width: 100,
+                                                    {text: 'Accounted', dataIndex: 'QTYPOLIZA', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -160,7 +160,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: false,
                                     height: 550,
-                                    width: 520,
+                                    width: 533,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -232,7 +232,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                             return '<b>' + Ext.util.Format.number(data.TOT_QTYPEND, '0,000') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'Contabilizados', dataIndex: 'QTYPOLIZA', width: 100,
+                                                    {text: 'Accounted', dataIndex: 'QTYPOLIZA', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#";
                                                             value = Ext.util.Format.number(value, '0,000');
