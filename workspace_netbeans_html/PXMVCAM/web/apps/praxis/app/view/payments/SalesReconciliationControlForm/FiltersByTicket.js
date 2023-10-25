@@ -717,8 +717,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     name: 'IN_AMOUNT',
                                     maxLength: 15,
                                     enforceMaxLength: true,
-                                    maskRe: /[0-9\.]/, // Máscara para números y punto decimal
-                                    regex: /^\d+(\.\d{1,2})?$/, // Validación para permitir hasta 2 decimales
+                                    maskRe:  /[0-9\.\-]/, // Máscara para números y punto decimal
+                                    regex: /^[-]?\d+(\.\d{1,2})?$/, // Validación para permitir hasta 2 decimales
                                     regexText: 'Invalid Amount', // Mensaje de error personalizado
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'

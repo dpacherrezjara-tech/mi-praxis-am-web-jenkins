@@ -380,7 +380,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                     };
                                                     field.setRawValue(opts[newValue] || 'Pending');
                                                 }
-                                            }
+                                            },
+                                            value: 'Pending'
                                         },
                                         {xtype: 'tbspacer', width: 30},
                                         {
@@ -1371,7 +1372,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             xtype: 'tabpanel',
                             id: prototype.idDE + '-tabMain',
                             minHeight: 120,
-                            maxHeight: 210,
+                            maxHeight: 250,
                             width: 1060,
                             height: 'auto',
                             border: false,
@@ -1769,7 +1770,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             autoScroll: true,
                                             minHeight: 100,
                                             height: 'auto',
-                                            maxHeight: 150,
+                                            maxHeight: 230,
                                             width: '100%',
                                             emptyText: 'No cards available',
                                             columns: {
@@ -1905,7 +1906,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             autoScroll: true,
                                             minHeight: 100,
                                             height: 'auto',
-                                            maxHeight: 150,
+                                            maxHeight: 230,
                                             width: '100%',
                                             emptyText: 'No cards available',
                                             columns: {
@@ -1981,7 +1982,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         text: 'Sale<br>Date', width: 80, dataIndex: 'sentdate'
                                                     },
                                                     {
-                                                        text: 'Usages', width: 80,
+                                                        text: 'Status<br>Reverse', width: 90, dataIndex: 'reversa',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if (value === 'Y'){
+                                                                value = 'Reversed';
+                                                            }else{
+                                                                value = 'Pending';
+                                                            }
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Usages', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             const {usopxcp1, usopxcp2, usopxcp3, usopxcp4} = record.data;
                                                             const usages = usopxcp1 + usopxcp2 + usopxcp3 + usopxcp4;

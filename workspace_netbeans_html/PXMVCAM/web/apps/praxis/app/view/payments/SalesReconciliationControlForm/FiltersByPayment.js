@@ -417,12 +417,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                             ['', 'All'],
                                             ['SALE', 'Sale'],
                                             ['RFND', 'Refund'],
+                                            ['ACHBK', 'All Chargeback'],
                                             ['CHBK', 'Chargeback'],
+                                            ['RCHBK', 'Rev. Chargeback'],
                                             ['ADJU', 'Adjustment']
                                         ]
                                     }),
                                     labelWidth: 80,
-                                    width: 180,
+                                    width: 200,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -609,8 +611,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     name: 'IN_AMOUNT',
                                     maxLength: 15,
                                     enforceMaxLength: true,
-                                    maskRe: /[0-9\.]/, // Máscara para números y punto decimal
-                                    regex: /^\d+(\.\d{1,2})?$/, // Validación para permitir hasta 2 decimales
+                                    maskRe:  /[0-9\.\-]/, // Máscara para números y punto decimal
+                                    regex: /^[-]?\d+(\.\d{1,2})?$/, // Validación para permitir hasta 2 decimales
                                     regexText: 'Invalid Amount', // Mensaje de error personalizado
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'

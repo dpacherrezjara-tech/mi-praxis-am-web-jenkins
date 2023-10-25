@@ -43,6 +43,7 @@ import net.miatech.praxis.payment.filter.SQP05134Filter;
 import net.miatech.praxis.payment.filter.SQP05141Filter;
 import net.miatech.praxis.payment.filter.SQP05142Filter;
 import net.miatech.praxis.payment.filter.SQP05147Filter;
+import net.miatech.praxis.payment.filter.SQP05182Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.Functions;
@@ -372,6 +373,19 @@ public class SalesReconciliationBPOController {
         System.out.println("-------------- SalesReconciliationBPO : maintenanceChargebackTracking-------------");
         try {
             SQP05077Filter filter = logic.loadSQP05077Filter(params);
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    @RequestMapping(value = "loadChargebackTrackingBrowser")
+    public ResponseEntity<?> loadChargebackTrackingBrowser(@ModelAttribute SQP05182Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : loadChargebackTrackingBrowser-------------");
+        try {
+            SQP05182Filter filter = logic.loadSQP05182Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
             return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

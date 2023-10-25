@@ -74,6 +74,63 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
                     }
                 });
     },
+    onChangeView: function (checkbox, newValue) {
+        if (newValue) {
+            Ext.getCmp(prototype.idCHBK + '-gridCHBKTracking').hide();
+            Ext.getCmp(prototype.idCHBK + '-panelCHBKBrowser').show();
+        } else {
+            Ext.getCmp(prototype.idCHBK + '-gridCHBKTracking').show();
+            Ext.getCmp(prototype.idCHBK + '-panelCHBKBrowser').hide();
+        }
+        this.view.center();
+    },
+    onSearchBrowser: function () {
+        this.loadBrowserGrid();
+    },
+    onSelectBrowser: function (rowModel, record, index) {
+        this.loadDesgloseGrid(record.data);
+    },
+    loadBrowserGrid: async function () {
+        const me = this;
+        const formParams = Ext.getCmp(prototype.idCHBK + '-formCHBKBrowser').getForm();
+        const browserGrid = Ext.getCmp(prototype.idCHBK + '-gridCHBKBrowser');
+        let params = {
+            IN_CCUST: '139',
+            IN_SCARDN: me.view.searchParams.IN_SCARDN,
+            ...formParams.getValues()
+        };
+        browserGrid.getView().mask('Loading...');
+        const res = await fetch(`${me.url}/loadChargebackTrackingBrowser?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const store = Ext.create('Ext.data.Store', {
+                data: data.response
+            });
+            browserGrid.setStore(store);
+            browserGrid.bindStore(store);
+        }
+        browserGrid.getView().unmask();
+    },
+    loadDesgloseGrid: async function (obj) {
+        let params = {
+            IN_CCUST: '139',
+            IN_TDOC: obj.tdoc,
+            IN_PRDA: obj.prda,
+            IN_AREFNBR: obj.arefnbr
+        };
+        const desgloseGrid = Ext.getCmp(prototype.idCHBK + '-gridDesgloseCHBK');
+        desgloseGrid.getView().mask('Loading...');
+        const res = await fetch(`${me.url}/loadErrorTransactionBPODesgloseCHBK?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const store = Ext.create('Ext.data.Store', {
+                data: data.response
+            });
+            desgloseGrid.setStore(store);
+            desgloseGrid.bindStore(store);
+        }
+        desgloseGrid.getView().unmask();
+    },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Maintenance">
     maintenanceCHBKTracking: async function (grid, seleccionados) {
@@ -82,8 +139,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
         const gridDet = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
         grid.getView().mask('Loading...');
         console.log(seleccionados);
-        let normal = seleccionados.find(x => x.data.tgrosamoun<0);
-        let reverse = seleccionados.find(x => x.data.tgrosamoun>0);
+        let normal = seleccionados.find(x => x.data.tgrosamoun < 0);
+        let reverse = seleccionados.find(x => x.data.tgrosamoun > 0);
         if (normal && reverse) {
             let params = {
                 IN_CCUST: '139',
@@ -119,14 +176,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
             grid.getView().unmask();
         } else {
             Ext.toast({
-                    html: `<b>Invalid Transactions</b>`,
-                    title: 'Notification',
-                    align: 't',
-                    closable: true,
-                    iconCls: 'prx-icon-image-log',
-                    width: 300,
-                    timeout: 10000 // 10 segundos
-                });
+                html: `<b>Invalid Transactions</b>`,
+                title: 'Notification',
+                align: 't',
+                closable: true,
+                iconCls: 'prx-icon-image-log',
+                width: 300,
+                timeout: 10000 // 10 segundos
+            });
             grid.getView().unmask();
         }
     },

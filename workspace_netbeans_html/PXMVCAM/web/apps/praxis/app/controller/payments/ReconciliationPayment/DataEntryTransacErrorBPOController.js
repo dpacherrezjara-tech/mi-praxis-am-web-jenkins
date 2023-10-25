@@ -179,6 +179,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
             global.Msg({msg: 'Error on scan'});
         }
         panelScan.unmask();
+        me.view.center();
     },
     //<editor-fold defaultstate="collapsed" desc="Handlers">
     reloadGridBPO: function () {
