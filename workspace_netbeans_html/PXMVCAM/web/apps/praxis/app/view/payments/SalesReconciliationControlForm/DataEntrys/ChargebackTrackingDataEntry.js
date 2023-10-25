@@ -8,7 +8,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
     controller: 'ChargebackTrackingDataEntryController',
     title: 'Chargeback Tracking - Form',
     header: true,
-    height: 400,
     width: 1550,
     resizable: false,
     layout: 'fit',
@@ -19,131 +18,518 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
     },
     items: [
         {
-            xtype: 'grid',
-            border: false,
-            id: prototype.idCHBK + '-gridCHBKTracking',
-            viewConfig: {
-                stripeRows: true,
-                enableTextSelection: true,
-                markDirty: false,
-                listeners: {
-                    refresh: function (dataview) {
-                        Ext.each(dataview.panel.columns, function (column) {
-                            if (column.autoSizeColumn === true)
-                                column.autoSize();
-                        });
-                    }
-                }
-            },
-            columnLines: true,
-            autoScroll: true,
-            minHeight: 180,
-            height: 'auto',
-            maxHeight: 400,
+            xtype: 'panel',
             width: '100%',
-            selModel: {
-                type: 'checkboxmodel',
-                checkboxSelect: false,
-                checkOnly: true, // Solo permitir selección a través de casillas de verificación
-                listeners: {
-                    selectionchange: function (sm, seleccionados) {
-                        if (seleccionados.length > 2) {
-                            // Desseleccionar los registros adicionales si se supera el límite de 3
-                            sm.deselect(seleccionados.slice(2));
-                        }
-                    },
-                    beforedeselect: function (selModel, record, index) {
-                        if (record.data.main) {
-                            return false;
-                        }
-                    },
-                    beforeselect: function (selModel, record, index) {
-                        if(record.data.stval==='6'){
-                            return false;
+            layout: {
+                type: 'vbox',
+                pack: 'center'
+            },
+            border: false,
+            tbar: {
+                layout: {
+                    pack: 'end'
+                },
+                defaults: {
+                    scale: 'small'
+                }, items: [
+                    {
+                        xtype: 'checkbox',
+                        fieldLabel: 'Parcial Conciliation',
+                        labelStyle: 'font-weight:bold;text-align:right;',
+                        labelWidth: 200,
+                        width: 270,
+                        listeners: {
+                            change: 'onChangeView'
                         }
                     }
-                }
+                ]
             },
-            columns: {
-                defaults: {
-                    align: 'center',
-                    menuDisabled: true,
-                    sortable: true
-                },
-                items: [
-                    {
-                        text: 'Ref. Number', dataIndex: 'arefnbr', width: 150, hidden: true,
-                        renderer: function (value, metaData, record, rowIndex, colIndex) {
-                            metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+            items: [
+                //<editor-fold defaultstate="collapsed" desc="Total Conciliation">
+                {
+                    xtype: 'grid',
+                    border: false,
+                    id: prototype.idCHBK + '-gridCHBKTracking',
+                    viewConfig: {
+                        stripeRows: true,
+                        enableTextSelection: true,
+                        markDirty: false,
+                        listeners: {
+                            refresh: function (dataview) {
+                                Ext.each(dataview.panel.columns, function (column) {
+                                    if (column.autoSizeColumn === true)
+                                        column.autoSize();
+                                });
+                            }
                         }
                     },
-                    {text: 'Processing<br>Date', dataIndex: 'prda', width: 80},
-                    {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
-                    {text: 'PNR', dataIndex: 'spnr', width: 70},
-                    {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
-                    {text: 'Error Description', dataIndex: 'des_CERROR', width: 180, autoSizeColumn: true},
-                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 180, autoSizeColumn: true},
-                    {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 90},
-                    {
-                        text: 'Status', dataIndex: 'stval', width: 120,
-                        renderer: function (value, metaData, record, rowIndex, colIndex) {
-                            metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
-                            const opts = {
-                                '0': 'Stand By',
-                                '1': 'Match',
-                                '2': 'Sales Without Settl.',
-                                '3': 'Settl. Without Sales',
-                                '4': 'Match Diff.',
-                                '5': 'Match Manual',
-                                '6': 'Forced Match',
-                                '7': 'Compensation Match',
-                                '8': 'Pending RFND'
-                            };
-                            return opts[value] || '';
+                    columnLines: true,
+                    autoScroll: true,
+                    minHeight: 180,
+                    height: 'auto',
+                    maxHeight: 400,
+                    width: '100%',
+                    selModel: {
+                        type: 'checkboxmodel',
+                        checkboxSelect: false,
+                        checkOnly: true, // Solo permitir selección a través de casillas de verificación
+                        listeners: {
+                            selectionchange: function (sm, seleccionados) {
+                                if (seleccionados.length > 2) {
+                                    // Desseleccionar los registros adicionales si se supera el límite de 3
+                                    sm.deselect(seleccionados.slice(2));
+                                }
+                            },
+                            beforedeselect: function (selModel, record, index) {
+                                if (record.data.main) {
+                                    return false;
+                                }
+                            },
+                            beforeselect: function (selModel, record, index) {
+                                if (record.data.stval === '6') {
+                                    return false;
+                                }
+                            }
                         }
                     },
-                    {
-                        text: 'Installment', width: 120,
+                    columns: {
                         defaults: {
                             align: 'center',
                             menuDisabled: true,
-                            sortable: true,
-                            renderer: function (value, metaData, record, rowIndex, colIndex) {
-                                metaData.style = "text-align:center;background-color:#F0D094;";
-                                return value;
-                            }
+                            sortable: true
                         },
-                        columns: [
-                            {text: 'Plan', dataIndex: 'nbrinsta', width: 60},
-                            {text: 'Number', dataIndex: 'instanbr', width: 60}
+                        items: [
+                            {
+                                text: 'Ref. Number', dataIndex: 'arefnbr', width: 150, hidden: true,
+                                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                    metaData.style = "text-align:center;font-weight:bold;";
+                                    return value;
+                                }
+                            },
+                            {text: 'Processing<br>Date', dataIndex: 'prda', width: 80},
+                            {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
+                            {text: 'PNR', dataIndex: 'spnr', width: 70},
+                            {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
+                            {text: 'Error Description', dataIndex: 'des_CERROR', width: 180, autoSizeColumn: true},
+                            {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 180, autoSizeColumn: true},
+                            {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 90},
+                            {
+                                text: 'Status', dataIndex: 'stval', width: 120,
+                                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                    metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
+                                    const opts = {
+                                        '0': 'Stand By',
+                                        '1': 'Match',
+                                        '2': 'Sales Without Settl.',
+                                        '3': 'Settl. Without Sales',
+                                        '4': 'Match Diff.',
+                                        '5': 'Match Manual',
+                                        '6': 'Forced Match',
+                                        '7': 'Compensation Match',
+                                        '8': 'Pending RFND'
+                                    };
+                                    return opts[value] || '';
+                                }
+                            },
+                            {
+                                text: 'Installment', width: 120,
+                                defaults: {
+                                    align: 'center',
+                                    menuDisabled: true,
+                                    sortable: true,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        metaData.style = "text-align:center;background-color:#F0D094;";
+                                        return value;
+                                    }
+                                },
+                                columns: [
+                                    {text: 'Plan', dataIndex: 'nbrinsta', width: 60},
+                                    {text: 'Number', dataIndex: 'instanbr', width: 60}
+                                ]
+                            },
+                            {text: 'Curr', dataIndex: 'scurrency', width: 60},
+                            {
+                                text: 'Transac.<br>Amount', dataIndex: 'tgrosamoun', width: 120,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'Sales<br>Amount', dataIndex: 'svfops', width: 120,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'Card Number', dataIndex: 'scardn', width: 130
+                            },
+                            {
+                                text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 75
+                            }
                         ]
-                    },
-                    {text: 'Curr', dataIndex: 'scurrency', width: 60},
-                    {
-                        text: 'Transac.<br>Amount', dataIndex: 'tgrosamoun', width: 120,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "text-align:right;background-color:#B2DAFA";
-                            value = Ext.util.Format.number(value, '0,000.00');
-                            return value;
-                        }
-                    },
-                    {
-                        text: 'Sales<br>Amount', dataIndex: 'svfops', width: 120,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "text-align:right;background-color:#B2DAFA";
-                            value = Ext.util.Format.number(value, '0,000.00');
-                            return value;
-                        }
-                    },
-                    {
-                        text: 'Card Number', dataIndex: 'scardn', width: 130
-                    },
-                    {
-                        text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 75
                     }
-                ]
-            }
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Parcial Conciliation">
+                {
+                    xtype: 'panel',
+                    id: prototype.idCHBK + '-panelCHBKBrowser',
+                    hidden: true,
+                    width: '100%',
+                    layout: {
+                        type: 'vbox',
+                        pack: 'center'
+                    },
+                    border: false,
+                    items: [
+                        //<editor-fold defaultstate="collapsed" desc="Inputs">
+                        {
+                            xtype: 'form',
+                            id: prototype.idCHBK + '-formCHBKBrowser',
+                            width: '100%',
+                            layout: {
+                                type: 'vbox',
+                                pack: 'center'
+                            },
+                            border: false,
+                            items: [
+                                {
+                                    xtype: 'fieldset',
+                                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Chargeback Browser</span>',
+                                    layout: {
+                                        type: 'hbox',
+                                        pack: 'left'
+                                    },
+                                    border: true,
+                                    margin: '5 5 5 5',
+                                    width: '100%',
+                                    style: {
+                                        backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
+                                    },
+                                    defaults: {
+                                        xtype: 'textfield',
+                                        margin: '5 8 5 8',
+                                        labelStyle: 'text-align:left;font-weight: bolder;',
+                                        fieldStyle: 'text-align:center;',
+                                        editable: false
+                                    },
+                                    items: [
+                                        {
+                                            fieldLabel: 'Card Number',
+                                            name: 'creditcard',
+                                            labelWidth: 100,
+                                            width: 240
+                                        },
+                                        {
+                                            fieldLabel: 'From',
+                                            name: 'IN_DATEFROM',
+                                            labelWidth: 40,
+                                            width: 150,
+                                            xtype: 'datefield',
+                                            format: 'Ymd', // Formato de fecha deseado
+                                            submitFormat: 'Ymd', // Formato de fecha para enviar al servidor
+                                            allowBlank: false, // No permite fechas vacías
+                                            maxLength: 8, // Máximo de 10 caracteres
+                                            minLength: 8,
+                                            enforceMaxLength: true,
+                                            value: new Date()
+                                        },
+                                        {
+                                            fieldLabel: 'To',
+                                            name: 'IN_DATETO',
+                                            labelWidth: 40,
+                                            width: 150,
+                                            xtype: 'datefield',
+                                            format: 'Ymd', // Formato de fecha deseado
+                                            submitFormat: 'Ymd', // Formato de fecha para enviar al servidor
+                                            allowBlank: false, // No permite fechas vacías
+                                            maxLength: 8, // Máximo de 10 caracteres
+                                            minLength: 8,
+                                            enforceMaxLength: true,
+                                            value: new Date()
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            width: 25,
+                                            iconCls: 'prx-icon-search',
+                                            tooltip: 'Search',
+                                            listeners: {
+                                                click: 'onSearchBrowser'
+                                            }
+
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        //</editor-fold>
+                        //<editor-fold defaultstate="collapsed" desc="Browser">
+                        {
+                            xtype: 'grid',
+                            border: false,
+                            id: prototype.idCHBK + '-gridCHBKBrowser',
+                            viewConfig: {
+                                stripeRows: true,
+                                enableTextSelection: true,
+                                markDirty: false,
+                                listeners: {
+                                    refresh: function (dataview) {
+                                        Ext.each(dataview.panel.columns, function (column) {
+                                            if (column.autoSizeColumn === true)
+                                                column.autoSize();
+                                        });
+                                    }
+                                }
+                            },
+                            columnLines: true,
+                            autoScroll: true,
+                            emptyText: 'No cards available',
+                            minHeight: 150,
+                            height: 'auto',
+                            maxHeight: 210,
+                            width: '100%',
+                            selModel: {
+                                type: 'checkboxmodel',
+                                mode: 'SINGLE',
+                                checkboxSelect: false,
+                                checkOnly: true, // Solo permitir selección a través de casillas de verificación
+                                listeners: {
+                                    beforeselect: function (selModel, record, index) {
+                                        if (record.data.stval === '6') {
+                                            return false;
+                                        }
+                                    },
+                                    select: 'onSelectBrowser'
+                                }
+                            },
+                            columns: {
+                                defaults: {
+                                    align: 'center',
+                                    menuDisabled: true,
+                                    sortable: true
+                                },
+                                items: [
+                                    {text: 'Processing<br>Date', dataIndex: 'prda', width: 80},
+                                    {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
+                                    {text: 'PNR', dataIndex: 'spnr', width: 70},
+                                    {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
+                                    {text: 'Error Description', dataIndex: 'des_CERROR', width: 200, autoSizeColumn: true},
+                                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 200, autoSizeColumn: true},
+                                    {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 90},
+                                    {
+                                        text: 'Status', dataIndex: 'stval', width: 120,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                            metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
+                                            const opts = {
+                                                '0': 'Stand By',
+                                                '1': 'Match',
+                                                '2': 'Sales Without Settl.',
+                                                '3': 'Settl. Without Sales',
+                                                '4': 'Match Diff.',
+                                                '5': 'Match Manual',
+                                                '6': 'Forced Match',
+                                                '7': 'Compensation Match',
+                                                '8': 'Pending RFND'
+                                            };
+                                            return opts[value] || '';
+                                        }
+                                    },
+                                    {
+                                        text: 'Installment', width: 120,
+                                        defaults: {
+                                            align: 'center',
+                                            menuDisabled: true,
+                                            sortable: true,
+                                            renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                                metaData.style = "text-align:center;background-color:#F0D094;";
+                                                return value;
+                                            }
+                                        },
+                                        columns: [
+                                            {text: 'Plan', dataIndex: 'nbrinsta', width: 60},
+                                            {text: 'Number', dataIndex: 'instanbr', width: 60}
+                                        ]
+                                    },
+                                    {text: 'Curr', dataIndex: 'scurrency', width: 60},
+                                    {
+                                        text: 'Transac.<br>Amount', dataIndex: 'tgrosamoun', width: 120,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                                            value = Ext.util.Format.number(value, '0,000.00');
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Sales<br>Amount', dataIndex: 'svfops', width: 120,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                                            value = Ext.util.Format.number(value, '0,000.00');
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Card Number', dataIndex: 'scardn', width: 130
+                                    },
+                                    {
+                                        text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 75
+                                    }
+                                ]
+                            },
+
+                        },
+                        //</editor-fold>
+                        //<editor-fold defaultstate="collapsed" desc="Desglose CHBK">
+                        {
+                            xtype: 'grid',
+                            border: false,
+                            id: prototype.idCHBK + '-gridDesgloseCHBK',
+                            viewConfig: {
+                                stripeRows: true,
+                                enableTextSelection: true,
+                                markDirty: false
+                            },
+                            columnLines: true,
+                            autoScroll: true,
+                            minHeight: 150,
+                            height: 'auto',
+                            maxHeight: 180,
+                            width: '100%',
+                            emptyText: 'No cards available',
+                            selModel: {
+                                type: 'checkboxmodel',
+                                mode: 'MULTI',
+                                checkboxSelect: false,
+                                checkOnly: true
+                            },
+                            columns: {
+                                defaults: {
+                                    align: 'center',
+                                    menuDisabled: true,
+                                    sortable: true
+                                },
+                                items: [
+                                    {
+                                        text: 'Status', width: 90,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            const {stval} = record.data;
+                                            const opts = {
+                                                '5': 'Chargeback',
+                                                '6': 'Reverse Chbk'
+                                            };
+                                            return opts[stval] || '';
+                                        }
+                                    },
+                                    {
+                                        text: 'Credit Card',
+                                        defaults: {
+                                            align: 'center',
+                                            menuDisabled: true,
+                                            sortable: true
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Cod', dataIndex: 'codebank', width: 45
+                                            },
+                                            {
+                                                text: 'Number', dataIndex: 'cardnbr', width: 130
+                                            },
+                                            {
+                                                text: 'Auth', dataIndex: 'authnbr', width: 55
+                                            },
+                                            {
+                                                text: 'Curr', dataIndex: 'mfop', width: 50
+                                            },
+                                            {
+                                                text: 'Amount', dataIndex: 'vfop', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                }
+                                            },
+                                            {
+                                                text: 'Auth<br>Amount', dataIndex: 'autamount', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: 'Doc.<br>Type', width: 70, dataIndex: 'tpdoc'
+                                    },
+                                    {
+                                        text: 'Ticket', width: 120,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "background-color:#FCF6DC;font-weight:bold;";
+                                            const {ccia, forma, serie} = record.data;
+                                            const ticket = ccia + forma + serie;
+                                            return ticket;
+                                        }
+                                    },
+                                    {
+                                        text: 'PNR', width: 70, dataIndex: 'pnr'
+                                    },
+                                    {
+                                        text: 'Sale<br>Date', width: 80, dataIndex: 'sentdate'
+                                    },
+                                    {
+                                        text: 'Status<br>Reverse', width: 90, dataIndex: 'reversa',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            if (value === 'Y') {
+                                                value = 'Reversed';
+                                            } else {
+                                                value = 'Pending';
+                                            }
+                                            return value;
+                                        }
+                                    }
+                                ]
+                            },
+                            bbar: {
+                                xtype: 'panel',
+                                border: false,
+                                width: '100%',
+                                layout: {
+                                    type: 'hbox',
+                                    pack: 'end'
+                                }, // Distribución horizontal
+                                defaults: {
+                                    xtype: 'textfield',
+                                    margin: '3 5 3 5',
+                                    labelStyle: 'text-align:right;font-weight: bolder;',
+                                    fieldStyle: 'text-align:right;',
+                                    editable: false
+                                },
+                                items: [
+                                    {
+                                        id: prototype.idCHBK + '-totTickets',
+                                        fieldLabel: 'Total Tickets',
+                                        submitValue: false,
+                                        labelWidth: 100,
+                                        width: 150,
+                                        value: '0'
+                                    },
+                                    {
+                                        id: prototype.idCHBK + '-totAmount',
+                                        fieldLabel: 'Sum Amount',
+                                        submitValue: false,
+                                        labelWidth: 100,
+                                        width: 180,
+                                        value: '0.00'
+                                    }
+                                ]
+                            }
+                        }
+                        //</editor-fold>
+                    ]
+                }
+                //</editor-fold>
+            ]
         }
     ],
     dockedItems: [

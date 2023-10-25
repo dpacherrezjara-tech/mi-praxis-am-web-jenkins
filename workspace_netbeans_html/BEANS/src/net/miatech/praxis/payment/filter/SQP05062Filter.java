@@ -10,7 +10,7 @@ import java.util.List;
 public class SQP05062Filter {
 
     private String IN_CCUST, IN_TDOC, IN_TRANSTYPE, IN_SCARDN, IN_SAUTHOC,
-            IN_SDATE, IN_SPNR, IN_TICKET, IN_SAGENT;
+            IN_SDATE, IN_SPNR, IN_TICKET, IN_SAGENT, IN_SMERCHID;
 
     private List<ScannerFilter> response = new ArrayList<>();
 
@@ -92,5 +92,13 @@ public class SQP05062Filter {
 
     public void setIN_TDOC(String IN_TDOC) {
         this.IN_TDOC = IN_TDOC;
+    }
+
+    public String getIN_SMERCHID() {
+        return IN_SMERCHID;
+    }
+
+    public void setIN_SMERCHID(String IN_SMERCHID) {
+        this.IN_SMERCHID = IN_SMERCHID;
     }
 }

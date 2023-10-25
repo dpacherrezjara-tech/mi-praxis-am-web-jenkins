@@ -46,6 +46,7 @@ import net.miatech.praxis.payment.filter.SQP05134Filter;
 import net.miatech.praxis.payment.filter.SQP05141Filter;
 import net.miatech.praxis.payment.filter.SQP05142Filter;
 import net.miatech.praxis.payment.filter.SQP05147Filter;
+import net.miatech.praxis.payment.filter.SQP05182Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -305,6 +306,20 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
         return filter;
     }
+
+    @Override
+    public SQP05182Filter loadSQP05182Filter(SQP05182Filter filter) throws Exception {
+        SimpleJdbcCall spCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05182")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331NEWFilter.class));
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = spCall.execute(params);
+        filter.setResponse((List<A4331NEWFilter>) spRes.get("result"));
+        return filter;
+    }
+    
+    
 
     @Override
     public SQP05081Filter loadSQP05081Filter(SQP05081Filter filter) throws Exception {

@@ -431,7 +431,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const scannerForm = Ext.getCmp(prototype.idDE + '-scannerForm').getForm();
         scannerForm.reset();
     },
-    onAddCreditCardClick: function () {
+    onAddCreditCardClick: async function () {
         const me = this;
         const scannerPanel = Ext.getCmp(prototype.idDE + '-scannerPanel');
         scannerPanel.mask('Loading...');
@@ -445,6 +445,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             IN_CCUST: '139',
             IN_TRANSTYPE: me.bean.transtype,
             IN_TDOC: me.bean.tdoc,
+            IN_SMERCHID: me.bean.smerchid,
             ...scannerForm.getValues()
         };
         if (params.creditcard.at(0) !== '' && params.creditcard.at(1) !== '') {
@@ -459,49 +460,45 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const forceScan = Ext.getCmp(prototype.idDE + '-chkForceBlock').getValue();
         const bpoStore = Ext.getCmp(prototype.idDE + '-gridBPO').getStore();
         const dataStore = bpoStore.getData().getRange();
-        fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`)
-                .then(async res => {
-                    if (res.ok) {
-                        const data = await res.json();
-                        let added = 0;
-                        let repeats = 0;
-                        data.response.forEach(obj => {
-                            let repetido = dataStore.some(d =>
-                                d.data.ccia === obj.ccia &&
-                                        d.data.forma === obj.forma &&
-                                        d.data.serie === obj.serie
-                            );
-                            if (!repetido) {
-                                if (obj.duplicates === 0) {
-                                    bpoStore.insert(0, obj);
-                                    added++;
-                                } else if (obj.duplicates > 0 && forceScan) {
-                                    bpoStore.insert(0, obj);
-                                    added++;
-                                } else {
-                                    repeats++;
-                                }
-                            } else {
-                                repeats++;
-                            }
-                        });
-                        Ext.getCmp(prototype.idDE + '-totTickets').setValue(bpoStore.getCount());
-                        Ext.getCmp(prototype.idDE + '-totAmount')
-                                .setValue(Ext.util.Format.number(bpoStore.sum('svfops'), '0,000.00'));
-
-                        Ext.toast({
-                            html: `<b>Se añadieron ${added} tickets.<br> ${repeats} Repetidos o bloqueados.</b>`,
-                            title: 'Notification',
-                            align: 't',
-                            closable: true,
-                            width: 300,
-                            timeout: 10000 // 10 segundos
-                        });
+        const res = await fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            let added = 0;
+            let repeats = 0;
+            data.response.forEach(obj => {
+                let repetido = dataStore.some(d =>
+                    d.data.ccia === obj.ccia &&
+                            d.data.forma === obj.forma &&
+                            d.data.serie === obj.serie
+                );
+                if (!repetido) {
+                    if (obj.duplicates === 0) {
+                        bpoStore.insert(0, obj);
+                        added++;
+                    } else if (obj.duplicates > 0 && forceScan) {
+                        bpoStore.insert(0, obj);
+                        added++;
+                    } else {
+                        repeats++;
                     }
-                }).then(() => {
-            scannerPanel.unmask();
-        });
+                } else {
+                    repeats++;
+                }
+            });
+            Ext.getCmp(prototype.idDE + '-totTickets').setValue(bpoStore.getCount());
+            Ext.getCmp(prototype.idDE + '-totAmount')
+                    .setValue(Ext.util.Format.number(bpoStore.sum('svfops'), '0,000.00'));
 
+            Ext.toast({
+                html: `<b>${added} Tickets were added.<br> ${repeats} Repeated or blocked.</b>`,
+                title: 'Notification',
+                align: 't',
+                closable: true,
+                width: 300,
+                timeout: 10000 // 10 segundos
+            });
+        }
+        scannerPanel.unmask();
     },
     onAddDuplicated: async function () {
         const me = this;
