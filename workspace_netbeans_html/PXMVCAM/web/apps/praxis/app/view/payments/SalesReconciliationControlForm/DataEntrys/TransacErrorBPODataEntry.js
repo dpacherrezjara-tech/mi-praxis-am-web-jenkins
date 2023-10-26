@@ -1770,7 +1770,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             autoScroll: true,
                                             minHeight: 100,
                                             height: 'auto',
-                                            maxHeight: 230,
+                                            maxHeight: 210,
                                             width: '100%',
                                             emptyText: 'No cards available',
                                             columns: {
@@ -1906,7 +1906,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             autoScroll: true,
                                             minHeight: 100,
                                             height: 'auto',
-                                            maxHeight: 230,
+                                            maxHeight: 210,
                                             width: '100%',
                                             emptyText: 'No cards available',
                                             columns: {
@@ -1936,7 +1936,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Cod', dataIndex: 'codebank', width: 45
+                                                                text: 'Cod', dataIndex: 'scarcod', width: 45
                                                             },
                                                             {
                                                                 text: 'Number', dataIndex: 'cardnbr', width: 130
@@ -1964,10 +1964,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         ]
                                                     },
                                                     {
-                                                        text: 'Doc.<br>Type', width: 70, dataIndex: 'tpdoc'
+                                                        text: 'Doc.<br>Type', width: 65, dataIndex: 'tpdoc'
                                                     },
                                                     {
-                                                        text: 'Ticket', width: 120,
+                                                        text: 'Ticket', width: 110,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background-color:#FCF6DC;font-weight:bold;";
                                                             const {ccia, forma, serie} = record.data;
@@ -1976,7 +1976,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         }
                                                     },
                                                     {
-                                                        text: 'PNR', width: 60, dataIndex: 'pnr'
+                                                        text: 'PNR', width: 70, dataIndex: 'pnr'
                                                     },
                                                     {
                                                         text: 'Sale<br>Date', width: 80, dataIndex: 'sentdate'
@@ -1993,7 +1993,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         }
                                                     },
                                                     {
-                                                        text: 'Usages', width: 65,
+                                                        text: 'Usages', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             const {usopxcp1, usopxcp2, usopxcp3, usopxcp4} = record.data;
                                                             const usages = usopxcp1 + usopxcp2 + usopxcp3 + usopxcp4;

@@ -44,6 +44,7 @@ import net.miatech.praxis.payment.filter.SQP05141Filter;
 import net.miatech.praxis.payment.filter.SQP05142Filter;
 import net.miatech.praxis.payment.filter.SQP05147Filter;
 import net.miatech.praxis.payment.filter.SQP05182Filter;
+import net.miatech.praxis.payment.filter.SQP05183Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.Functions;
@@ -386,6 +387,18 @@ public class SalesReconciliationBPOController {
         try {
             SQP05182Filter filter = logic.loadSQP05182Filter(params);
             System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    @RequestMapping(value = "maintenanceChargebackManual", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> maintenanceChargebackManual(@RequestBody SQP05183Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : maintenanceChargebackManual-------------");
+        try {
+            SQP05183Filter filter = logic.loadSQP05183Filter(params);
             return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
