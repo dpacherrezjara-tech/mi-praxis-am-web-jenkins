@@ -34,7 +34,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                 }, items: [
                     {
                         xtype: 'checkbox',
-                        fieldLabel: 'Parcial Conciliation',
+                        id: prototype.idCHBK + '-chkChangeView',
+                        fieldLabel: 'Manual Conciliation',
                         labelStyle: 'font-weight:bold;text-align:right;',
                         labelWidth: 200,
                         width: 270,
@@ -99,20 +100,69 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                             sortable: true
                         },
                         items: [
-                            {
-                                text: 'Ref. Number', dataIndex: 'arefnbr', width: 150, hidden: true,
-                                renderer: function (value, metaData, record, rowIndex, colIndex) {
-                                    metaData.style = "text-align:center;font-weight:bold;";
-                                    return value;
-                                }
-                            },
                             {text: 'Processing<br>Date', dataIndex: 'prda', width: 80},
                             {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
-                            {text: 'PNR', dataIndex: 'spnr', width: 70},
+                            {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 90},
                             {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
+                            {
+                                text: 'Transaction Information',
+                                defaults: {
+                                    align: 'center',
+                                    menuDisabled: true,
+                                    sortable: true,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                        metaData.style = "text-align:center;background-color:#F0D094";
+                                        return value;
+                                    }
+                                },
+                                columns: [
+                                    {
+                                        text: 'Card Number', dataIndex: 'scardn', width: 130
+                                    },
+                                    {
+                                        text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 70
+                                    },
+                                    {text: 'Curr', dataIndex: 'scurrency', width: 60},
+                                    {
+                                        text: 'Transac.<br>Amount', dataIndex: 'tgrosamoun', width: 100,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#F0D094;font-weight:bolder;";
+                                            value = Ext.util.Format.number(value, '0,000.00');
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Sales<br>Amount', dataIndex: 'svfops', width: 100,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#F0D094;font-weight:bolder;";
+                                            value = Ext.util.Format.number(value, '0,000.00');
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Installment',
+                                        defaults: {
+                                            align: 'center',
+                                            menuDisabled: true,
+                                            sortable: true,
+                                            renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                                metaData.style = "text-align:center;background-color:#F0D094;";
+                                                return value;
+                                            }
+                                        },
+                                        columns: [
+                                            {text: 'Plan', dataIndex: 'nbrinsta', width: 60},
+                                            {text: 'Number', dataIndex: 'instanbr', width: 60}
+                                        ]
+                                    },
+                                    {text: 'PNR', dataIndex: 'spnr', width: 70},
+                                    {
+                                        text: 'Qty<br>Tkts', dataIndex: 'qtytkt', width: 40
+                                    }
+                                ]
+                            },
                             {text: 'Error Description', dataIndex: 'des_CERROR', width: 180, autoSizeColumn: true},
                             {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 180, autoSizeColumn: true},
-                            {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 90},
                             {
                                 text: 'Status', dataIndex: 'stval', width: 120,
                                 renderer: function (value, metaData, record, rowIndex, colIndex) {
@@ -130,45 +180,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                     };
                                     return opts[value] || '';
                                 }
-                            },
-                            {
-                                text: 'Installment', width: 120,
-                                defaults: {
-                                    align: 'center',
-                                    menuDisabled: true,
-                                    sortable: true,
-                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
-                                        metaData.style = "text-align:center;background-color:#F0D094;";
-                                        return value;
-                                    }
-                                },
-                                columns: [
-                                    {text: 'Plan', dataIndex: 'nbrinsta', width: 60},
-                                    {text: 'Number', dataIndex: 'instanbr', width: 60}
-                                ]
-                            },
-                            {text: 'Curr', dataIndex: 'scurrency', width: 60},
-                            {
-                                text: 'Transac.<br>Amount', dataIndex: 'tgrosamoun', width: 120,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "text-align:right;background-color:#B2DAFA";
-                                    value = Ext.util.Format.number(value, '0,000.00');
-                                    return value;
-                                }
-                            },
-                            {
-                                text: 'Sales<br>Amount', dataIndex: 'svfops', width: 120,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "text-align:right;background-color:#B2DAFA";
-                                    value = Ext.util.Format.number(value, '0,000.00');
-                                    return value;
-                                }
-                            },
-                            {
-                                text: 'Card Number', dataIndex: 'scardn', width: 130
-                            },
-                            {
-                                text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 75
                             }
                         ]
                     }
@@ -219,10 +230,41 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                     },
                                     items: [
                                         {
+                                            fieldLabel: 'Processor',
+                                            name: 'desc_PROC',
+                                            labelWidth: 80,
+                                            width: 230
+                                        },
+                                        {
                                             fieldLabel: 'Card Number',
-                                            name: 'creditcard',
+                                            name: 'scardn',
                                             labelWidth: 100,
                                             width: 240
+                                        },
+                                        {
+                                            fieldLabel: 'Ticket',
+                                            name: 'ticket',
+                                            labelWidth: 60,
+                                            width: 180
+                                        },
+                                        {
+                                            fieldLabel: 'PNR',
+                                            name: 'spnr',
+                                            labelWidth: 50,
+                                            width: 120
+                                        },
+                                        {
+                                            fieldLabel: 'Transac. Amt',
+                                            name: 'tgrosamoun',
+                                            labelWidth: 100,
+                                            fieldStyle: 'text-align:right;background: #C0EDB3;',
+                                            width: 200,
+                                            listeners: {
+                                                change: function (field, newValue) {
+                                                    field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
+                                                }
+                                            },
+                                            value: '0.00'
                                         },
                                         {
                                             fieldLabel: 'From',
@@ -271,6 +313,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                         {
                             xtype: 'grid',
                             border: false,
+                            margin: '5 5 5 5',
                             id: prototype.idCHBK + '-gridCHBKBrowser',
                             viewConfig: {
                                 stripeRows: true,
@@ -287,10 +330,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                             },
                             columnLines: true,
                             autoScroll: true,
-                            emptyText: 'No cards available',
+                            emptyText: 'No tickets available',
                             minHeight: 150,
                             height: 'auto',
-                            maxHeight: 210,
+                            maxHeight: 200,
                             width: '100%',
                             selModel: {
                                 type: 'checkboxmodel',
@@ -315,11 +358,78 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                 items: [
                                     {text: 'Processing<br>Date', dataIndex: 'prda', width: 80},
                                     {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
-                                    {text: 'PNR', dataIndex: 'spnr', width: 70},
-                                    {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
-                                    {text: 'Error Description', dataIndex: 'des_CERROR', width: 200, autoSizeColumn: true},
-                                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 200, autoSizeColumn: true},
+                                    {text: 'Processor', dataIndex: 'desc_PROCTYPE', width: 145},
                                     {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 90},
+                                    {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
+                                    {
+                                        text: 'Transaction Information',
+                                        defaults: {
+                                            align: 'center',
+                                            menuDisabled: true,
+                                            sortable: true,
+                                            renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                metaData.style = "text-align:center;background-color:#F0D094";
+                                                return value;
+                                            }
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Card Number', dataIndex: 'scardn', width: 130
+                                            },
+                                            {
+                                                text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 70
+                                            },
+                                            {text: 'Curr', dataIndex: 'scurrency', width: 60},
+                                            {
+                                                text: 'Transac.<br>Amount', dataIndex: 'tgrosamoun', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#F0D094;font-weight:bolder;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Sales<br>Amount', dataIndex: 'svfops', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#F0D094;font-weight:bolder;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Installment',
+                                                defaults: {
+                                                    align: 'center',
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                                        metaData.style = "text-align:center;background-color:#F0D094;";
+                                                        return value;
+                                                    }
+                                                },
+                                                columns: [
+                                                    {text: 'Plan', dataIndex: 'nbrinsta', width: 60},
+                                                    {text: 'Number', dataIndex: 'instanbr', width: 60}
+                                                ]
+                                            },
+                                            {text: 'Ticket', dataIndex: 'ticket', width: 110},
+                                            {text: 'PNR', dataIndex: 'spnr', width: 70},
+                                            {
+                                                text: 'Qty<br>Tkts', dataIndex: 'qtytkt', width: 40
+                                            }
+                                        ]
+
+                                    },
+                                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', flex: 1,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            var data = record.data;
+                                            metaData.style = "text-align:left;";
+                                            if (value.trim() !== '') {
+                                                metaData.tdAttr = 'data-qtip="' + data.desc_CODADJU + '"';
+                                            }
+                                            return value;
+                                        }
+                                    },
                                     {
                                         text: 'Status', dataIndex: 'stval', width: 120,
                                         renderer: function (value, metaData, record, rowIndex, colIndex) {
@@ -337,48 +447,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                             };
                                             return opts[value] || '';
                                         }
-                                    },
-                                    {
-                                        text: 'Installment', width: 120,
-                                        defaults: {
-                                            align: 'center',
-                                            menuDisabled: true,
-                                            sortable: true,
-                                            renderer: function (value, metaData, record, rowIndex, colIndex) {
-                                                metaData.style = "text-align:center;background-color:#F0D094;";
-                                                return value;
-                                            }
-                                        },
-                                        columns: [
-                                            {text: 'Plan', dataIndex: 'nbrinsta', width: 60},
-                                            {text: 'Number', dataIndex: 'instanbr', width: 60}
-                                        ]
-                                    },
-                                    {text: 'Curr', dataIndex: 'scurrency', width: 60},
-                                    {
-                                        text: 'Transac.<br>Amount', dataIndex: 'tgrosamoun', width: 120,
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;background-color:#B2DAFA";
-                                            value = Ext.util.Format.number(value, '0,000.00');
-                                            return value;
-                                        }
-                                    },
-                                    {
-                                        text: 'Sales<br>Amount', dataIndex: 'svfops', width: 120,
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;background-color:#B2DAFA";
-                                            value = Ext.util.Format.number(value, '0,000.00');
-                                            return value;
-                                        }
-                                    },
-                                    {
-                                        text: 'Card Number', dataIndex: 'scardn', width: 130
-                                    },
-                                    {
-                                        text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 75
                                     }
                                 ]
-                            },
+                            }
 
                         },
                         //</editor-fold>
@@ -386,7 +457,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                         {
                             xtype: 'grid',
                             border: false,
+                            title: 'Tickets Information',
                             id: prototype.idCHBK + '-gridDesgloseCHBK',
+                            margin: '5 5 5 5',
                             viewConfig: {
                                 stripeRows: true,
                                 enableTextSelection: true,
@@ -396,14 +469,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                             autoScroll: true,
                             minHeight: 150,
                             height: 'auto',
-                            maxHeight: 180,
+                            maxHeight: 210,
                             width: '100%',
                             emptyText: 'No cards available',
                             selModel: {
                                 type: 'checkboxmodel',
                                 mode: 'MULTI',
                                 checkboxSelect: false,
-                                checkOnly: true
+                                checkOnly: true,
+                                listeners: {
+                                    select: 'onSelectDesglose',
+                                    deselect: 'onDeselectDesglose',
+                                    beforeselect: function (selModel, record, index) {
+                                        if (record.data.reversa === 'Y') {
+                                            return false;
+                                        }
+                                    }
+                                }
                             },
                             columns: {
                                 defaults: {
@@ -412,6 +494,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                     sortable: true
                                 },
                                 items: [
+                                    {
+                                        text: 'RN',
+                                        xtype: 'rownumberer', // Columna de número de fila
+                                        width: 40 // Ancho de la columna de número de fila (ajusta según tus necesidades)
+                                    },
                                     {
                                         text: 'Status', width: 90,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -432,16 +519,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                         },
                                         columns: [
                                             {
-                                                text: 'Cod', dataIndex: 'codebank', width: 45
+                                                text: 'Cod', dataIndex: 'scarcod', width: 45
                                             },
                                             {
-                                                text: 'Number', dataIndex: 'cardnbr', width: 130
+                                                text: 'Number', dataIndex: 'cardnbr', width: 150
                                             },
                                             {
-                                                text: 'Auth', dataIndex: 'authnbr', width: 55
+                                                text: 'Auth', dataIndex: 'authnbr', width: 65
                                             },
                                             {
-                                                text: 'Curr', dataIndex: 'mfop', width: 50
+                                                text: 'Curr', dataIndex: 'mfop', width: 60
                                             },
                                             {
                                                 text: 'Amount', dataIndex: 'vfop', width: 100,
@@ -463,6 +550,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                         text: 'Doc.<br>Type', width: 70, dataIndex: 'tpdoc'
                                     },
                                     {
+                                        text: 'Sale<br>Date', width: 80, dataIndex: 'sentdate'
+                                    },
+                                    {
                                         text: 'Ticket', width: 120,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "background-color:#FCF6DC;font-weight:bold;";
@@ -472,10 +562,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                         }
                                     },
                                     {
-                                        text: 'PNR', width: 70, dataIndex: 'pnr'
+                                        text: 'PNR', width: 80, dataIndex: 'pnr'
                                     },
                                     {
-                                        text: 'Sale<br>Date', width: 80, dataIndex: 'sentdate'
+                                        text: 'Agent', width: 90, dataIndex: 'agente'
+                                    },
+                                    {
+                                        text: 'Invoice', width: 110, dataIndex: 'folio'
+                                    },
+                                    {
+                                        text: 'Ref. Number', width: 110, dataIndex: 'numrefer'
                                     },
                                     {
                                         text: 'Status<br>Reverse', width: 90, dataIndex: 'reversa',
@@ -553,6 +649,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                     iconCls: 'prx-icon-update',
                     listeners: {
                         click: 'onUpdateCHBK'
+                    }
+                },
+                {
+                    text: 'Update Manual',
+                    hidden: true,
+                    id: prototype.idCHBK + '-btn-update-man',
+                    iconCls: 'prx-icon-update',
+                    listeners: {
+                        click: 'onUpdateCHBKMan'
                     }
                 },
                 {
