@@ -60,6 +60,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
             global.Msg({msg: 'Invalid Selected'});
             return;
         }
+        const match = ['1', '5', '6', '7'];
+        let pendiente = true;
+        seleccionados.forEach(x => {
+            if (match.some(b => b === x.data.stval)) {
+                pendiente = false;
+            }
+        });
+        if (!pendiente) {
+            global.Msg({msg: 'Transactions must be pending'});
+            return;
+        }
+        
         Ext.Msg.show(
                 {
                     title: '.:PRAXIS:.',
@@ -108,9 +120,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         const gridDet = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
         grid.getView().mask('Loading...');
         console.log(seleccionados);
-        const match = ['1', '5', '6', '7'];
-        let sale = seleccionados.find(x => x.data.transtype.trim() === 'SALE'&& match.some(b => x.data.stval !== b));
-        let refund = seleccionados.find(x => x.data.transtype.trim() === 'RFND' && match.some(b => x.data.stval !== b));
+        let sale = seleccionados.find(x => x.data.transtype.trim() === 'SALE');
+        let refund = seleccionados.find(x => x.data.transtype.trim() === 'RFND');
         if (sale && refund) {
             let params = {
                 IN_CCUST: '139',
@@ -146,14 +157,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
             grid.getView().unmask();
         } else {
             Ext.toast({
-                    html: `<b>Invalid Transactions</b>`,
-                    title: 'Notification',
-                    align: 't',
-                    closable: true,
-                    iconCls: 'prx-icon-image-log',
-                    width: 300,
-                    timeout: 10000 // 10 segundos
-                });
+                html: `<b>Invalid Transactions</b>`,
+                title: 'Notification',
+                align: 't',
+                closable: true,
+                iconCls: 'prx-icon-image-log',
+                width: 300,
+                timeout: 10000 // 10 segundos
+            });
             grid.getView().unmask();
         }
     },
