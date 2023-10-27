@@ -26,17 +26,25 @@ public class A1817Filter extends A1817 {
     public String strFormatDate5 = "";
     public String strFormatDate6 = "";
     public String strFormatDate7 = "";
+    public String strFormatDate8 = "";
     public String IN_TKT = "";
     public String IN_SEQRO = "";
     public String strTicket = "";
+    
+    public String RESULT = "";
+    public String ROUTF = "";
     
     public String CODE = "";
     public String NAME = "";
     public String DSALES = "";
     public String FVTA = "";
     public String FECVAL = "";
+    public String FCONTS = "";
+    public String DVCR = "";
     public String descFVTA = "";
     public String descFECVAL = "";
+    public String descFCONTS = "";
+    public String descDVCR = "";
     public String descFCONT = "";
     public String IN_TIPO = "";
     public String IN_DATE = "";

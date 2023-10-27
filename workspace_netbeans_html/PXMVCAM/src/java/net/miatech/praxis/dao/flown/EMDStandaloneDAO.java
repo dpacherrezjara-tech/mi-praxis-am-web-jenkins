@@ -505,6 +505,7 @@ public class EMDStandaloneDAO {
                     bean.IN_TIPO = filter.IN_TIPO.trim();
                     bean.IN_COUNTRY = filter.IN_COUNTRY.trim();
                     bean.strDate = rst.getString("strDate");
+                    bean.DFLIGHT = rst.getString("DFLIGHT");
                     bean.strFormatDate = Functions.getMonthConvert(bean.strDate);
                     bean.SCOUNTRY = rst.getString("PSVVTA");
                     bean.AGENTE = rst.getString("AGTIA");
@@ -547,6 +548,10 @@ public class EMDStandaloneDAO {
                     } else if (bean.STVAL.equals("2")) {
                         bean.descSTVAL = "MATCH";
                     }
+                    bean.DVCR = rst.getString("DVCR");
+                    bean.descDVCR = Functions.getMonthConvert(bean.DVCR);
+                    bean.FCONTS = rst.getString("FCONTS");
+                    bean.descFCONTS = Functions.getMonthConvert(bean.FCONTS);
                     
                     bean.TN16 = rst.getString("TN16");
                     bean.TN00 = rst.getString("TN00");
@@ -656,7 +661,7 @@ public class EMDStandaloneDAO {
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04925(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04925(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -692,9 +697,11 @@ public class EMDStandaloneDAO {
             cstmt.setDouble(27, filter.VCPN);
             cstmt.setString(28, filter.TN16);
             cstmt.setString(29, filter.TN00);
-            cstmt.setString(30, session.getUserView().getUserInfo().USR);
-            cstmt.setString(31, Functions.getFechaActual());
-            cstmt.setString(32, Functions.getHoraActual());
+            cstmt.setString(30, filter.DVCR.trim());
+            cstmt.setString(31, filter.FCONTS.trim());
+            cstmt.setString(32, session.getUserView().getUserInfo().USR);
+            cstmt.setString(33, Functions.getFechaActual());
+            cstmt.setString(34, Functions.getHoraActual());
 
             cstmt.execute();
 

@@ -285,6 +285,10 @@ public class ReportNrtmexDAO {
                     bean.strFormatDate6 = Functions.getMonthConvert(bean.FHTRANS);
                     bean.DAUDTAX = rst.getString("DAUDTAX");
                     bean.strFormatDate7 = Functions.getMonthConvert(bean.DAUDTAX);
+                    bean.FCONT = rst.getString("FCONT");
+                    bean.strFormatDate8 = Functions.getMonthConvert(bean.FCONT);
+                    bean.RESULT = rst.getString("RESULT");
+                    bean.ROUTF = rst.getString("ROUTF");
                     
                     bean.CDTAXS = rst.getString("CDTAXS").trim();
                     bean.MONTAXS = rst.getString("MONTAXS").trim();

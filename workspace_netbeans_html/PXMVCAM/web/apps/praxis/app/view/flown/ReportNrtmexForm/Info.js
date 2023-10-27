@@ -380,6 +380,18 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                             return value;
                                                         },
                                                     },
+                                                    {text: 'Poliza<br>Date', dataIndex: 'FCONT', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#";
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {text: 'Routing', dataIndex: 'ROUTF', width: 200,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#";
+                                                            return value;
+                                                        },
+                                                    },
                                                 ]
                                             },
                                             {text: 'Sales Tax',
@@ -457,6 +469,12 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
                                                         }
                                                     },
                                                     {text: 'Date', dataIndex: 'strFormatDate7', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#d5f4d5";
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {text: 'Result', dataIndex: 'RESULT', width: 120,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#d5f4d5";
                                                             return value;

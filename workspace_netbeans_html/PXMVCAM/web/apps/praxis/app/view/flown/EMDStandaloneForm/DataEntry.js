@@ -7,8 +7,8 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
     controller: 'DataEntryEMDStandaloneController',
     title: 'EMDStandalone - Data Entry Form',
     header: true,
-    height: 650,
-    width: 800,
+    height: 680,
+    width: 750,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -41,7 +41,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                             items: [
                                 {
                                     xtype: 'label',
-                                    text: 'Transaction Information',
+                                    text: 'Used Information',
                                     style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                                     bodyStyle: 'background:#E5ECEF;',
                                     fontSize: '11',
@@ -169,7 +169,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                     items: [
                                         {
                                             xtype: 'label',
-                                            text: 'Date',
+                                            text: 'Used Date',
                                             fontSize: 15,
                                             textAlign: 'center',
                                             paddingLeft: 3,
@@ -235,7 +235,33 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             id: prototype.id + '-de-txtFDESCRIP',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:left;',
-                                            width: 150,
+                                            width: 120,
+                                        },
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    bodyStyle: 'background:#efe5e5;',
+                                    margin: '10 2 2 8',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            text: 'VCR Date',
+                                            fontSize: 15,
+                                            textAlign: 'center',
+                                            paddingLeft: 3,
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 80,
+                                        },
+                                        {xtype: 'tbspacer', width: 7},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtDVCR',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            fieldStyle: 'text-align:center;',
+                                            width: 100,
                                         },
                                     ]
                                 },
@@ -495,6 +521,23 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             fieldStyle: 'text-align:center;',
                                             width: 100,
                                         },
+                                        {xtype: 'tbspacer', width: 20},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Accounting Date',
+                                            hidden: false,
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 100
+
+                                        },
+                                        {xtype: 'tbspacer', width: 7},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtFCONTS',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            fieldStyle: 'text-align:center;',
+                                            width: 100,
+                                        },
                                     ]
                                 },
                                 {
@@ -668,7 +711,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             id: prototype.id + '-de-txtIDCON',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:center;',
-                                            width: 100,
+                                            width: 270,
                                         },
                                     ]
                                 },
