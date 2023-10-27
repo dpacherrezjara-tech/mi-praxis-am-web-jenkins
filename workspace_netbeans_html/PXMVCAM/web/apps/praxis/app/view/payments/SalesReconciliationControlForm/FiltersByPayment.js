@@ -417,8 +417,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                             ['', 'All'],
                                             ['SALE', 'Sale'],
                                             ['RFND', 'Refund'],
-                                            ['ACHBK', 'All Chargeback'],
-                                            ['CHBK', 'Chargeback'],
+                                            ['CHBK', 'All Chargeback'],
+                                            ['NCHBK', 'Chargeback'],
                                             ['RCHBK', 'Rev. Chargeback'],
                                             ['ADJU', 'Adjustment']
                                         ]
