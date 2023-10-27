@@ -54,10 +54,11 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         this.setValue('de-txtCUPON', this.beanResult.CUPON);
         this.setValue('de-txtSEQ', this.beanResult.SEQ);
         this.setValue('de-txtSEQROL', this.beanResult.SEQRO);
-        this.setValue('de-txtDFLIGHT', this.beanResult.DFLIGHT);
+        this.setValue('de-txtDFLIGHT', this.beanResult.strDate);
         this.setValue('de-txtRFIC', this.beanResult.RFIC);
         this.setValue('de-txtRECODE', this.beanResult.RECODE);
         this.setValue('de-txtFDESCRIP', this.beanResult.DESC_RECODE);
+        this.setValue('de-txtDVCR', this.beanResult.DVCR);
         this.setValue('de-txtCOUNTRY', this.beanResult.SCOUNTRY);
         this.setValue('de-txtAGENT', this.beanResult.AGENTE);
         this.setValue('de-txtFVTA', this.beanResult.FVTA);
@@ -69,6 +70,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         this.setValue('de-txtPTYPE', this.beanResult.TPAX);
         this.setValue('de-txtOPER', this.beanResult.TOPUS);
         this.setValue('de-txtCARRIER', this.beanResult.CARR);
+        this.setValue('de-txtFCONTS', this.beanResult.FCONTS);
         this.setValue('de-txtFECVAL', this.beanResult.FECVAL);
         this.setValue('de-txtCURRENCY', this.beanResult.CURRENCY);
         this.setValue('de-txtTOTAL', this.beanResult.VCPN);
@@ -100,7 +102,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
-
+        console.log(beanTemp);
         beanTemp.STVAL = this.getValue("de-cmbSTATUS").trim();
         beanTemp.TICKET = this.getValue("de-txtTICKET").trim();
         beanTemp.CUPON = this.getValue("de-txtCUPON").trim();
@@ -110,6 +112,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         beanTemp.RFIC = this.getValue("de-txtRFIC").trim();
         beanTemp.RECODE = this.getValue("de-txtRECODE").trim();
         beanTemp.DESC_RECODE = this.getValue("de-txtFDESCRIP").trim();
+        beanTemp.DVCR = this.getValue("de-txtDVCR").trim();
         beanTemp.SCOUNTRY = this.getValue("de-txtCOUNTRY").trim();
         beanTemp.AGENTE = this.getValue("de-txtAGENT").trim();
         beanTemp.FVTA = this.getValue("de-txtFVTA").trim();
@@ -124,6 +127,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         beanTemp.TPAX = this.getValue("de-txtPTYPE").trim();
         beanTemp.TOPUS = this.getValue("de-txtOPER").trim();
         beanTemp.CARR = this.getValue("de-txtCARRIER").trim();
+        beanTemp.FCONTS = this.getValue("de-txtFCONTS").trim();
         beanTemp.CURRENCY = this.getValue("de-txtCURRENCY").trim();
         beanTemp.VCPN = this.getValue("de-txtTOTAL").trim();
         if (beanTemp.VCPN === '') {
@@ -146,7 +150,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
     getData: function () {
 
         var IN_TICKET = meDE.bean.data.strTicket.substr(0, 3) + meDE.bean.data.strTicket.substr(4, 4) + meDE.bean.data.strTicket.substr(8, 6);
-        var IN_TIPO = '1';
+        var IN_TIPO = meDE.bean.data.IN_TIPO;
         var IN_DATE = '';
         var IN_STVAL = '';
 

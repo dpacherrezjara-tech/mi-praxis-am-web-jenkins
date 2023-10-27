@@ -322,6 +322,13 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                             return value;
                                                         },
                                                     },
+                                                    {text: 'VCR<br>Date', dataIndex: 'descDVCR', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#E6FFE6";
+                                                            value = '<b>' + value + '</b>';
+                                                            return value;
+                                                        },
+                                                    },
                                                     {text: 'Status', dataIndex: 'descSTVAL', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#E6FFE6";
@@ -427,6 +434,13 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
                                                     {text: 'Carrier', dataIndex: 'CARR', width: 55,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#E0F0FF";
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {text: 'Accounting<br>Date', dataIndex: 'descFCONTS', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#E0F0FF";
+                                                            value = '<b>' + value + '</b>';
                                                             return value;
                                                         },
                                                     },

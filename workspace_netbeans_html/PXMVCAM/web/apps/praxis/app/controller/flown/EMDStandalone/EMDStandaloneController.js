@@ -99,45 +99,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         }
     },
     filterTicketEMD: function (e, eOpts) {
-        var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
-        if (eOpts.getKey() === 13) {
-            if (txtTicket.trim().length === 13) {
-                if (me.panelActual === '-panelGridDataMain') {
-                    var date = '';
-                    var stval = '';
-                } else {
-                    var date = me.beanEMD.IN_DATE
-                    var stval = '';
-                }
-                me.bean = {};
-                me.bean.IN_TIPO = Ext.getCmp(prototype.id + '-cmbSearch').getValue();
-                me.bean.IN_DATE = me.beanEMD.IN_DATE;
-                me.bean.IN_STVAL = me.beanEMD.IN_STVAL;
-
-                var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
-                if (txtTicket.trim().length > 0) {
-                    if (txtTicket.trim().length === 13) {
-                        me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
-                    } else {
-                        global.Msg({msg: 'Ticket Number must contain 13 digits.'});
-                    }
-                }
-                var beanString = JSON.stringify(me.bean);
-                paramsDetailEMD = {
-                    beanString: beanString,
-                    bean: me.bean
-                };
-                this.setGridData(date, stval);
-
-            } else if (txtTicket.trim().length === 0) {
-
-                this.setFormatParameter();
-                this.setMainData();
-
-            } else {
-                global.Msg({msg: 'Ticket Number must contain 13 digits.'});
-            }
-        }
+        this.btnSearch_click();
     },
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
