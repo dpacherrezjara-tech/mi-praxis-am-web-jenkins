@@ -6924,6 +6924,499 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                         }
                     ]
                 },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-boxFORE',
+                    width: '100%',
+//                    height: 750,
+                    hidden: true,
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        bodyStyle: 'background: transparent;',
+                        border: false,
+                        align: 'center',
+                        margin: "10 15 0 0"  // (top, right, bottom, left)
+                    },
+                    items: [
+                        //grid data 
+                        {
+                            xtype: 'grid',
+                            id: prototype.id + '-gridFORE',
+                            columnLines: true,
+                            autoScroll: true,
+                            width: 1480,
+//                            width: '100%',
+                            //height: 480,
+                            height: 400,
+                            features: [{
+                                    ftype: 'summary',
+//                                                    dock: 'bottom'
+                                }],
+                            columns: {
+                                items: [
+                                    {text: 'Sales<br>Date', dataIndex: 'FVTA', width: 65, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center";
+                                            return value;
+                                        },
+                                    },
+                                    {
+                                        text: 'Month 1',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Flight<br>Date', dataIndex: 'DFLIGHT1', width: 65, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Coupons', dataIndex: 'QTYFLY1', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY1, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: 'Amount', dataIndex: 'FLYAMO1', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_FLYAMO1, '0,000') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Month 2',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Flight<br>Date', dataIndex: 'DFLIGHT2', width: 65, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Coupons', dataIndex: 'QTYFLY2', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY2, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: 'Amount', dataIndex: 'FLYAMO2', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_FLYAMO2, '0,000') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Month 3',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Flight<br>Date', dataIndex: 'DFLIGHT3', width: 65, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Coupons', dataIndex: 'QTYFLY3', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY3, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: 'Amount', dataIndex: 'FLYAMO3', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_FLYAMO3, '0,000') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Month 4',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Flight<br>Date', dataIndex: 'DFLIGHT4', width: 65, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Coupons', dataIndex: 'QTYFLY4', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY4, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: 'Amount', dataIndex: 'FLYAMO4', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_FLYAMO4, '0,000') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Month 5',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Flight<br>Date', dataIndex: 'DFLIGHT5', width: 65, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Coupons', dataIndex: 'QTYFLY5', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY5, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: 'Amount', dataIndex: 'FLYAMO5', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_FLYAMO5, '0,000') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Month 6',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Flight<br>Date', dataIndex: 'DFLIGHT6', width: 65, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Coupons', dataIndex: 'QTYFLY6', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY6, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: 'Amount', dataIndex: 'FLYAMO6', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_FLYAMO6, '0,000') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Month 7',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Flight<br>Date', dataIndex: 'DFLIGHT7', width: 65, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Coupons', dataIndex: 'QTYFLY7', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY7, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: 'Amount', dataIndex: 'FLYAMO7', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_FLYAMO7, '0,000') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Month 8',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Flight<br>Date', dataIndex: 'DFLIGHT8', width: 65, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Coupons', dataIndex: 'QTYFLY8', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY8, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: 'Amount', dataIndex: 'FLYAMO8', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_FLYAMO8, '0,000') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Month 9',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Flight<br>Date', dataIndex: 'DFLIGHT9', width: 65, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Coupons', dataIndex: 'QTYFLY9', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY9, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: 'Amount', dataIndex: 'FLYAMO9', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_FLYAMO9, '0,000') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Month 10',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Flight<br>Date', dataIndex: 'DFLIGHT10', width: 65, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Coupons', dataIndex: 'QTYFLY10', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY10, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: 'Amount', dataIndex: 'FLYAMO10', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_FLYAMO10, '0,000') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Month 11',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Flight<br>Date', dataIndex: 'DFLIGHT11', width: 65, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Coupons', dataIndex: 'QTYFLY11', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY11, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: 'Amount', dataIndex: 'FLYAMO11', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_FLYAMO11, '0,000') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Month 12',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Flight<br>Date', dataIndex: 'DFLIGHT12', width: 65, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center";
+                                                    return value;
+                                                },
+                                            },
+                                            {text: 'Coupons', dataIndex: 'QTYFLY12', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY12, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: 'Amount', dataIndex: 'FLYAMO12', width: 90,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#d5f0f4;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_FLYAMO12, '0,000') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    },
+                                ]
+                            },
+                            viewConfig: {
+                                stripeRows: true,
+                                enableTextSelection: true
+                            }
+                        }
+                    ]
+                },
 //                {
 //                    xtype: 'panel',
 //                    id: prototype.id + '-boxTNUVS',

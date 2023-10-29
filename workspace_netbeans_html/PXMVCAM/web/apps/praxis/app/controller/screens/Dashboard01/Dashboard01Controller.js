@@ -117,6 +117,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         Ext.getCmp(prototype.id + '-cmbDateFromYear_SPA').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateToYear_SPA').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromYearNTU').bindStore(storeComboDataYear);
+        Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').bindStore(storeComboDataYear);
+        Ext.getCmp(prototype.id + '-cmbDateToYear_FORE').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromYear_IATA').bindStore(storeComboDataYear);
 
         var storeComboDataMonth = win.getStoreMonth(true);
@@ -134,6 +136,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         Ext.getCmp(prototype.id + '-cmbDateFromMonth_SPA').bindStore(storeComboDataMonth1);
         Ext.getCmp(prototype.id + '-cmbDateToMonth_SPA').bindStore(storeComboDataMonth1);
         Ext.getCmp(prototype.id + '-cmbDateFromMonthNTU').bindStore(storeComboDataMonth);
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').bindStore(storeComboDataMonth);
+        Ext.getCmp(prototype.id + '-cmbDateToMonth_FORE').bindStore(storeComboDataMonth);
 
         var storeComboDataDay = win.getStoreDays(true);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
@@ -162,7 +166,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
                 ['21', "TNU"],
                 ['18', "Comparison by Years"],
                 ['19', "Comparison by Days"],
-                ['20', "Transaction"]
+                ['20', "Transaction"],
+                ['22', "Forecast by Month"],
             ]
         }));
         cmbSelectBy.setValue("1");
@@ -342,11 +347,15 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         me.screen_actual = prototype.id + '-SalesAnalysis_tab';
         this.setValue('cmbDateFromYear', new Date().getFullYear());
         this.setValue('cmbDateFromYearNTU', new Date().getFullYear());
+        this.setValue('cmbDateFromYear_FORE', new Date().getFullYear());
+        this.setValue('cmbDateToYear_FORE', new Date().getFullYear());
         this.setValue('cmbDateToYear', new Date().getFullYear());
         this.setValue('cmbDateFromMonth', '');
         this.setValue('cmbDateFromMonthNTU', '');
+        this.setValue('cmbDateFromMonth_FORE', '');
         this.setValue('cmbDateFromDay', '');
         this.setValue('cmbDateToMonth', '');
+        this.setValue('cmbDateToMonth_FORE', '');
         this.setValue('cmbDateToDay', '');
 
         //FLOWN
@@ -401,6 +410,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
     cbxDateFromYear_changeHandler: function () {
         switch (me.screen_actual) {
             case  prototype.id + '-SalesAnalysis_tab':
+                this.setValue('cmbDateToYear_FORE', this.getValue("cmbDateFromYear_FORE"));
+                break
             case  prototype.id + '-ScrDBIataControl_tab':
                 this.setValue('cmbDateToYear', this.getValue("cmbDateFromYear"));
                 break
@@ -425,6 +436,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
     cbxDateFromMonth_changeHandler: function () {
         switch (me.screen_actual) {
             case  prototype.id + '-SalesAnalysis_tab':
+                this.setValue('cmbDateToMonth_FORE', this.getValue("cmbDateFromMonth_FORE"));
+                break
             case  prototype.id + '-ScrDBIataControl_tab':
                 this.setValue('cmbDateToMonth', this.getValue("cmbDateFromMonth"));
                 break

@@ -12,6 +12,7 @@ package net.miatech.praxis.interline;
 public class IMF117 {
 
     public String CCUST = "";
+    public String DSALES = "";
     public String DCONT = "";
     public String COUNTRYS = "";
     public String CURRENC = "";
