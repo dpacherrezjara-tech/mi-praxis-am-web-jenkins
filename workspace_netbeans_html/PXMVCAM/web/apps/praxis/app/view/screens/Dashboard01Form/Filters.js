@@ -387,6 +387,113 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                         // </editor-fold>
                                         {xtype: 'tbspacer', width: 20},
                                     ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-cmbFOREFilters',
+                                    width: 'auto',
+                                    layout: 'hbox',
+                                    hidden: true,
+                                    border: false,
+                                    bodyStyle: 'background-color: #E3EAF9;',
+                                    items: [
+                                        // <editor-fold defaultstate="collapsed" desc="Combo Date">
+                                        {
+                                            xtype: 'label',
+                                            html: '<strong style="color:#000;">Sales Date</strong>',
+                                            align: 'left',
+                                            fieldStyle: 'text-align: center;',
+                                            padding: '3px 30px 0px 5px',
+                                            hidden: false
+                                        },
+                                        {
+                                            xtype: 'label',
+                                            html: 'From:',
+                                            fieldStyle: 'text-align: center;',
+                                            padding: '3px 7px 0px 0px'
+                                        },
+                                        {xtype: 'tbspacer', width: 4},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbDateFromYear_FORE',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            forceSelection: true,
+                                            caseSensitive: false,
+                                            editable: false,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 75,
+                                            typeAhead: true,
+                                            listConfig: {maxHeight: 111},
+                                            listeners: {
+                                                change: 'cbxDateFromYear_changeHandler'
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 4},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbDateFromMonth_FORE',
+                                            labelAlign: 'right',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            editable: false,
+                                            autoSelect: false,
+                                            forceSelection: true,
+                                            enableKeyEvents: true,
+                                            caseSensitive: false,
+                                            typeAhead: true,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 65,
+                                            listeners: {
+                                                change: 'cbxDateFromMonth_changeHandler'
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 15},
+                                        {
+                                            xtype: 'label',
+                                            html: 'To:',
+                                            fieldStyle: 'text-align: center;',
+                                            padding: '3px 7px 0px 0px'
+                                        },
+                                        {xtype: 'tbspacer', width: 4},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbDateToYear_FORE',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            forceSelection: true,
+                                            caseSensitive: false,
+                                            editable: false,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 75,
+                                            typeAhead: true,
+                                            listConfig: {maxHeight: 111},
+                                            listeners: {
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 4},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbDateToMonth_FORE',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            caseSensitive: false,
+                                            forceSelection: true,
+                                            editable: false,
+                                            typeAhead: true,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 65,
+                                            listeners: {
+                                            }
+                                        },
+                                        // </editor-fold>
+                                    ]
                                 }
                             ]
                         }

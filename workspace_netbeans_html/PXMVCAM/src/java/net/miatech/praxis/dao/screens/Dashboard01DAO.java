@@ -9787,6 +9787,162 @@ public class Dashboard01DAO {
 
         return lstRtn;
     }
+    
+    public List<IMF117Filter> loadPX226SQP05097(IMF117Filter filter) throws Exception {
+        List<IMF117Filter> lstRtn = new ArrayList<IMF117Filter>(0);
+        IMF117Filter objRtn;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        long QTYFLY1 = 0,QTYFLY2 = 0,QTYFLY3 = 0,QTYFLY4 = 0,QTYFLY5 = 0,QTYFLY6 = 0,QTYFLY7 = 0,QTYFLY8 = 0,QTYFLY9 = 0,QTYFLY10 = 0,QTYFLY11 = 0,QTYFLY12 = 0;
+        double FLYAMO1 = 0,FLYAMO2 = 0,FLYAMO3 = 0,FLYAMO4 = 0,FLYAMO5 = 0,FLYAMO6 = 0,FLYAMO7 = 0,FLYAMO8 = 0,FLYAMO9 = 0,FLYAMO10 = 0,FLYAMO11 = 0,FLYAMO12 = 0;
+        String SQLCLL01 = "{CALL SQP05097(?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM_FORE);
+            cstmt01.setString(3, filter.IN_FECHA_TO_FORE);
+            cstmt01.setString(4, filter.IN_TIPO);
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                QTYFLY1 = rs01.getLong("QTYFLY1");
+                FLYAMO1 = rs01.getDouble("FLYAMO1");
+                QTYFLY2 = rs01.getLong("QTYFLY2");
+                FLYAMO2 = rs01.getDouble("FLYAMO2");
+                QTYFLY3 = rs01.getLong("QTYFLY3");
+                FLYAMO3 = rs01.getDouble("FLYAMO3");
+                QTYFLY4 = rs01.getLong("QTYFLY4");
+                FLYAMO4 = rs01.getDouble("FLYAMO4");
+                QTYFLY5 = rs01.getLong("QTYFLY5");
+                FLYAMO5 = rs01.getDouble("FLYAMO5");
+                QTYFLY6 = rs01.getLong("QTYFLY6");
+                FLYAMO6 = rs01.getDouble("FLYAMO6");
+                QTYFLY7 = rs01.getLong("QTYFLY7");
+                FLYAMO7 = rs01.getDouble("FLYAMO7");
+                QTYFLY8 = rs01.getLong("QTYFLY8");
+                FLYAMO8 = rs01.getDouble("FLYAMO8");
+                QTYFLY9 = rs01.getLong("QTYFLY9");
+                FLYAMO9 = rs01.getDouble("FLYAMO9");
+                QTYFLY10 = rs01.getLong("QTYFLY10");
+                FLYAMO10 = rs01.getDouble("FLYAMO10");
+                QTYFLY11 = rs01.getLong("QTYFLY11");
+                FLYAMO11 = rs01.getDouble("FLYAMO11");
+                QTYFLY12 = rs01.getLong("QTYFLY12");
+                FLYAMO12 = rs01.getDouble("FLYAMO12");
+            }
+
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new IMF117Filter();
+                    objRtn.CCUST = rs01.getString("CCUST").trim();
+                    objRtn.DSALES = rs01.getString("DSALES");
+                    objRtn.DFLIGHT1 = rs01.getString("DFLIGHT1");
+                    objRtn.QTYFLY1 = rs01.getLong("QTYFLY1");
+                    objRtn.FLYAMO1 = rs01.getDouble("FLYAMO1");
+                    
+                    objRtn.DFLIGHT2 = rs01.getString("DFLIGHT2");
+                    objRtn.QTYFLY2 = rs01.getLong("QTYFLY2");
+                    objRtn.FLYAMO2 = rs01.getDouble("FLYAMO2");
+                   
+                    objRtn.DFLIGHT3 = rs01.getString("DFLIGHT2");
+                    objRtn.QTYFLY3 = rs01.getLong("QTYFLY3");
+                    objRtn.FLYAMO3 = rs01.getDouble("FLYAMO3");
+                    
+                    objRtn.DFLIGHT4 = rs01.getString("DFLIGHT4");
+                    objRtn.QTYFLY4 = rs01.getLong("QTYFLY4");
+                    objRtn.FLYAMO4 = rs01.getDouble("FLYAMO4");
+                    
+                    objRtn.DFLIGHT5 = rs01.getString("DFLIGHT5");
+                    objRtn.QTYFLY5 = rs01.getLong("QTYFLY5");
+                    objRtn.FLYAMO5 = rs01.getDouble("FLYAMO5");
+                    
+                    objRtn.DFLIGHT6 = rs01.getString("DFLIGHT6");
+                    objRtn.QTYFLY6 = rs01.getLong("QTYFLY6");
+                    objRtn.FLYAMO6 = rs01.getDouble("FLYAMO6");
+                    
+                    objRtn.DFLIGHT7 = rs01.getString("DFLIGHT7");
+                    objRtn.QTYFLY7 = rs01.getLong("QTYFLY7");
+                    objRtn.FLYAMO7 = rs01.getDouble("FLYAMO7");
+                    
+                    objRtn.DFLIGHT8 = rs01.getString("DFLIGHT8");
+                    objRtn.QTYFLY8 = rs01.getLong("QTYFLY8");
+                    objRtn.FLYAMO8 = rs01.getDouble("FLYAMO8");
+                    
+                    objRtn.DFLIGHT9 = rs01.getString("DFLIGHT9");
+                    objRtn.QTYFLY9 = rs01.getLong("QTYFLY9");
+                    objRtn.FLYAMO9 = rs01.getDouble("FLYAMO9");
+                    
+                    objRtn.DFLIGHT10 = rs01.getString("DFLIGHT10");
+                    objRtn.QTYFLY10 = rs01.getLong("QTYFLY10");
+                    objRtn.FLYAMO10 = rs01.getDouble("FLYAMO10");
+                    
+                    objRtn.DFLIGHT11 = rs01.getString("DFLIGHT11");
+                    objRtn.QTYFLY11 = rs01.getLong("QTYFLY11");
+                    objRtn.FLYAMO11 = rs01.getDouble("FLYAMO11");
+                                        
+                    objRtn.DFLIGHT12 = rs01.getString("DFLIGHT12");
+                    objRtn.QTYFLY12 = rs01.getLong("QTYFLY12");
+                    objRtn.FLYAMO12 = rs01.getDouble("FLYAMO12");
+                    
+                    objRtn.TOT_QTYFLY1 = QTYFLY1;
+                    objRtn.TOT_FLYAMO1 = FLYAMO1;
+                    objRtn.TOT_QTYFLY2 = QTYFLY2;
+                    objRtn.TOT_FLYAMO2 = FLYAMO2;
+                    objRtn.TOT_QTYFLY3 = QTYFLY3;
+                    objRtn.TOT_FLYAMO3 = FLYAMO3;
+                    objRtn.TOT_QTYFLY4 = QTYFLY4;
+                    objRtn.TOT_FLYAMO4 = FLYAMO4;
+                    objRtn.TOT_QTYFLY5 = QTYFLY5;
+                    objRtn.TOT_FLYAMO5 = FLYAMO5;
+                    objRtn.TOT_QTYFLY6 = QTYFLY6;
+                    objRtn.TOT_FLYAMO6 = FLYAMO6;
+                    objRtn.TOT_QTYFLY7 = QTYFLY7;
+                    objRtn.TOT_FLYAMO7 = FLYAMO7;
+                    objRtn.TOT_QTYFLY8 = QTYFLY8;
+                    objRtn.TOT_FLYAMO8 = FLYAMO8;
+                    objRtn.TOT_QTYFLY9 = QTYFLY9;
+                    objRtn.TOT_FLYAMO9 = FLYAMO9;
+                    objRtn.TOT_QTYFLY10 = QTYFLY10;
+                    objRtn.TOT_FLYAMO10 = FLYAMO10;
+                    objRtn.TOT_QTYFLY11 = QTYFLY11;
+                    objRtn.TOT_FLYAMO11 = FLYAMO11;
+                    objRtn.TOT_QTYFLY12 = QTYFLY12;
+                    objRtn.TOT_FLYAMO12 = FLYAMO12;
+                    
+                    
+                    lstRtn.add(objRtn);
+                }
+            }
+
+        } catch (Exception ex) {
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
 
 //    public List<IMF117Filter> loadPX228S01A1890(IMF117Filter filter) throws Exception{
 //        List<IMF117Filter> lstRtn = new ArrayList<>(0);
