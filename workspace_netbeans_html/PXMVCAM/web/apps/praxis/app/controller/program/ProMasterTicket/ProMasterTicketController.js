@@ -3183,7 +3183,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         AL: paramsResultSet23.fileA1692.CARR,
                                         FLIGHT : paramsResultSet23.fileA1692.NFLIGHT,
                                         DATE : paramsResultSet23.fileA1692.DFLIGHT,
-                                        STAT : 'EMDS',
+                                        STAT : 'EMD-USED',
                                         AMOUNT : Ext.util.Format.number(paramsResultSet23.fileA1692.VCPN, '0,000.00'),
                                         CRCY : paramsResultSet23.fileA1692.MDACP,
 //                                        FARE : paramsResultSet23.fileA1692.FBASE

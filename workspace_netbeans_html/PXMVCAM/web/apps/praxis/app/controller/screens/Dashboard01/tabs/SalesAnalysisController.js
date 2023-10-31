@@ -208,7 +208,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 Ext.getCmp(prototype.id + '-cmbFOREFilters').show();
 
                 this.loadFORE();
-                break;    
+                break;
         }
     },
     setFormatParameter: function () {
@@ -1921,7 +1921,6 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 },
                 load: function (obj) {
 //                    Ext.getBody().unmask('Loading...');
-                    console.log('hay data');
                     console.log(obj.data.items[0]);
 
                     if (obj.data.length === 0) {
@@ -2126,6 +2125,14 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         this.setFormatParameter();
         if (Ext.getCmp(prototype.id + '-boxSalesByTransaction').isVisible()) {
             global.getFile(prototype.url + '/getXLSXSalesByTransaction?beanString=' + meFChart.searchParams);
+        }
+//         else if (Ext.getCmp(prototype.id + '-boxFORE').isVisible()) {
+//            global.getFile(prototype.url + '/getXLSXForecast?beanString=' + meFChart.searchParams);
+//        } 
+        else {
+            global.Msg(
+                    {msg: 'Under Construction'
+                    });
         }
     },
     goURLpost: function (method, parms, columns) {

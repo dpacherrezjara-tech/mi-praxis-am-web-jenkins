@@ -143,6 +143,11 @@ public class IMF117Filter extends IMF117 {
     public long QTYFLY12 = 0;
     public double FLYAMO12 = 0;
     
+    public long QTYSALE = 0;
+    public double AMOSALE = 0;
+    public long QTYFLOWN = 0;
+    public double AMOFLOWN = 0;
+    
     public long TOT_QTYFLY1 = 0;
     public double TOT_FLYAMO1 = 0;
     public long TOT_QTYFLY2 = 0;
@@ -167,6 +172,10 @@ public class IMF117Filter extends IMF117 {
     public double TOT_FLYAMO11 = 0;
     public long TOT_QTYFLY12 = 0;
     public double TOT_FLYAMO12 = 0;
+    public long TOT_QTYSALE = 0;
+    public double TOT_AMOSALE = 0;
+    public long TOT_QTYFLOWN = 0;
+    public double TOT_AMOFLOWN = 0;
     
     public String PERIODO = "";
     public String ORDEN = "";
