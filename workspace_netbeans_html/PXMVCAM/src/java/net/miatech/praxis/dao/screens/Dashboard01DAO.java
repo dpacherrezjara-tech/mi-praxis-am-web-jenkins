@@ -9793,8 +9793,8 @@ public class Dashboard01DAO {
         IMF117Filter objRtn;
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        long QTYFLY1 = 0,QTYFLY2 = 0,QTYFLY3 = 0,QTYFLY4 = 0,QTYFLY5 = 0,QTYFLY6 = 0,QTYFLY7 = 0,QTYFLY8 = 0,QTYFLY9 = 0,QTYFLY10 = 0,QTYFLY11 = 0,QTYFLY12 = 0;
-        double FLYAMO1 = 0,FLYAMO2 = 0,FLYAMO3 = 0,FLYAMO4 = 0,FLYAMO5 = 0,FLYAMO6 = 0,FLYAMO7 = 0,FLYAMO8 = 0,FLYAMO9 = 0,FLYAMO10 = 0,FLYAMO11 = 0,FLYAMO12 = 0;
+        long TOT_QTYFLY1 = 0,TOT_QTYFLY2 = 0,TOT_QTYFLY3 = 0,TOT_QTYFLY4 = 0,TOT_QTYFLY5 = 0,TOT_QTYFLY6 = 0,TOT_QTYFLY7 = 0,TOT_QTYFLY8 = 0,TOT_QTYFLY9 = 0,TOT_QTYFLY10 = 0,TOT_QTYFLY11 = 0,TOT_QTYFLY12 = 0,TOT_QTYSALE = 0,TOT_QTYFLOWN = 0;
+        double TOT_FLYAMO1 = 0,TOT_FLYAMO2 = 0,TOT_FLYAMO3 = 0,TOT_FLYAMO4 = 0,TOT_FLYAMO5 = 0,TOT_FLYAMO6 = 0,TOT_FLYAMO7 = 0,TOT_FLYAMO8 = 0,TOT_FLYAMO9 = 0,TOT_FLYAMO10 = 0,TOT_FLYAMO11 = 0,TOT_FLYAMO12 = 0,TOT_AMOSALE = 0,TOT_AMOFLOWN = 0;
         String SQLCLL01 = "{CALL SQP05097(?,?,?,?)}";
         Connection cnx = null;
         try {
@@ -9810,30 +9810,34 @@ public class Dashboard01DAO {
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
-                QTYFLY1 = rs01.getLong("QTYFLY1");
-                FLYAMO1 = rs01.getDouble("FLYAMO1");
-                QTYFLY2 = rs01.getLong("QTYFLY2");
-                FLYAMO2 = rs01.getDouble("FLYAMO2");
-                QTYFLY3 = rs01.getLong("QTYFLY3");
-                FLYAMO3 = rs01.getDouble("FLYAMO3");
-                QTYFLY4 = rs01.getLong("QTYFLY4");
-                FLYAMO4 = rs01.getDouble("FLYAMO4");
-                QTYFLY5 = rs01.getLong("QTYFLY5");
-                FLYAMO5 = rs01.getDouble("FLYAMO5");
-                QTYFLY6 = rs01.getLong("QTYFLY6");
-                FLYAMO6 = rs01.getDouble("FLYAMO6");
-                QTYFLY7 = rs01.getLong("QTYFLY7");
-                FLYAMO7 = rs01.getDouble("FLYAMO7");
-                QTYFLY8 = rs01.getLong("QTYFLY8");
-                FLYAMO8 = rs01.getDouble("FLYAMO8");
-                QTYFLY9 = rs01.getLong("QTYFLY9");
-                FLYAMO9 = rs01.getDouble("FLYAMO9");
-                QTYFLY10 = rs01.getLong("QTYFLY10");
-                FLYAMO10 = rs01.getDouble("FLYAMO10");
-                QTYFLY11 = rs01.getLong("QTYFLY11");
-                FLYAMO11 = rs01.getDouble("FLYAMO11");
-                QTYFLY12 = rs01.getLong("QTYFLY12");
-                FLYAMO12 = rs01.getDouble("FLYAMO12");
+                TOT_QTYFLY1 = rs01.getLong("QTYFLY1");
+                TOT_FLYAMO1 = rs01.getDouble("FLYAMO1");
+                TOT_QTYFLY2 = rs01.getLong("QTYFLY2");
+                TOT_FLYAMO2 = rs01.getDouble("FLYAMO2");
+                TOT_QTYFLY3 = rs01.getLong("QTYFLY3");
+                TOT_FLYAMO3 = rs01.getDouble("FLYAMO3");
+                TOT_QTYFLY4 = rs01.getLong("QTYFLY4");
+                TOT_FLYAMO4 = rs01.getDouble("FLYAMO4");
+                TOT_QTYFLY5 = rs01.getLong("QTYFLY5");
+                TOT_FLYAMO5 = rs01.getDouble("FLYAMO5");
+                TOT_QTYFLY6 = rs01.getLong("QTYFLY6");
+                TOT_FLYAMO6 = rs01.getDouble("FLYAMO6");
+                TOT_QTYFLY7 = rs01.getLong("QTYFLY7");
+                TOT_FLYAMO7 = rs01.getDouble("FLYAMO7");
+                TOT_QTYFLY8 = rs01.getLong("QTYFLY8");
+                TOT_FLYAMO8 = rs01.getDouble("FLYAMO8");
+                TOT_QTYFLY9 = rs01.getLong("QTYFLY9");
+                TOT_FLYAMO9 = rs01.getDouble("FLYAMO9");
+                TOT_QTYFLY10 = rs01.getLong("QTYFLY10");
+                TOT_FLYAMO10 = rs01.getDouble("FLYAMO10");
+                TOT_QTYFLY11 = rs01.getLong("QTYFLY11");
+                TOT_FLYAMO11 = rs01.getDouble("FLYAMO11");
+                TOT_QTYFLY12 = rs01.getLong("QTYFLY12");
+                TOT_FLYAMO12 = rs01.getDouble("FLYAMO12");
+                TOT_QTYSALE = rs01.getLong("QTYSALE");
+                TOT_AMOSALE = rs01.getDouble("AMOSALE");
+                TOT_QTYFLOWN = rs01.getLong("QTYFLOWN");
+                TOT_AMOFLOWN = rs01.getDouble("AMOFLOWN");
             }
 
             rs01.close();
@@ -9843,6 +9847,7 @@ public class Dashboard01DAO {
                     objRtn = new IMF117Filter();
                     objRtn.CCUST = rs01.getString("CCUST").trim();
                     objRtn.DSALES = rs01.getString("DSALES");
+                    objRtn.CURRENC = rs01.getString("CURRENCY");
                     objRtn.DFLIGHT1 = rs01.getString("DFLIGHT1");
                     objRtn.QTYFLY1 = rs01.getLong("QTYFLY1");
                     objRtn.FLYAMO1 = rs01.getDouble("FLYAMO1");
@@ -9851,7 +9856,7 @@ public class Dashboard01DAO {
                     objRtn.QTYFLY2 = rs01.getLong("QTYFLY2");
                     objRtn.FLYAMO2 = rs01.getDouble("FLYAMO2");
                    
-                    objRtn.DFLIGHT3 = rs01.getString("DFLIGHT2");
+                    objRtn.DFLIGHT3 = rs01.getString("DFLIGHT3");
                     objRtn.QTYFLY3 = rs01.getLong("QTYFLY3");
                     objRtn.FLYAMO3 = rs01.getDouble("FLYAMO3");
                     
@@ -9891,31 +9896,41 @@ public class Dashboard01DAO {
                     objRtn.QTYFLY12 = rs01.getLong("QTYFLY12");
                     objRtn.FLYAMO12 = rs01.getDouble("FLYAMO12");
                     
-                    objRtn.TOT_QTYFLY1 = QTYFLY1;
-                    objRtn.TOT_FLYAMO1 = FLYAMO1;
-                    objRtn.TOT_QTYFLY2 = QTYFLY2;
-                    objRtn.TOT_FLYAMO2 = FLYAMO2;
-                    objRtn.TOT_QTYFLY3 = QTYFLY3;
-                    objRtn.TOT_FLYAMO3 = FLYAMO3;
-                    objRtn.TOT_QTYFLY4 = QTYFLY4;
-                    objRtn.TOT_FLYAMO4 = FLYAMO4;
-                    objRtn.TOT_QTYFLY5 = QTYFLY5;
-                    objRtn.TOT_FLYAMO5 = FLYAMO5;
-                    objRtn.TOT_QTYFLY6 = QTYFLY6;
-                    objRtn.TOT_FLYAMO6 = FLYAMO6;
-                    objRtn.TOT_QTYFLY7 = QTYFLY7;
-                    objRtn.TOT_FLYAMO7 = FLYAMO7;
-                    objRtn.TOT_QTYFLY8 = QTYFLY8;
-                    objRtn.TOT_FLYAMO8 = FLYAMO8;
-                    objRtn.TOT_QTYFLY9 = QTYFLY9;
-                    objRtn.TOT_FLYAMO9 = FLYAMO9;
-                    objRtn.TOT_QTYFLY10 = QTYFLY10;
-                    objRtn.TOT_FLYAMO10 = FLYAMO10;
-                    objRtn.TOT_QTYFLY11 = QTYFLY11;
-                    objRtn.TOT_FLYAMO11 = FLYAMO11;
-                    objRtn.TOT_QTYFLY12 = QTYFLY12;
-                    objRtn.TOT_FLYAMO12 = FLYAMO12;
+                    objRtn.QTYSALE = rs01.getLong("QTYSALE");
+                    objRtn.AMOSALE = rs01.getDouble("AMOSALE");
                     
+                    objRtn.QTYFLOWN = rs01.getLong("QTYFLOWN");
+                    objRtn.AMOFLOWN = rs01.getDouble("AMOFLOWN");
+                    
+                    objRtn.TOT_QTYFLY1 = TOT_QTYFLY1;
+                    objRtn.TOT_FLYAMO1 = TOT_FLYAMO1;
+                    objRtn.TOT_QTYFLY2 = TOT_QTYFLY2;
+                    objRtn.TOT_FLYAMO2 = TOT_FLYAMO2;
+                    objRtn.TOT_QTYFLY3 = TOT_QTYFLY3;
+                    objRtn.TOT_FLYAMO3 = TOT_FLYAMO3;
+                    objRtn.TOT_QTYFLY4 = TOT_QTYFLY4;
+                    objRtn.TOT_FLYAMO4 = TOT_FLYAMO4;
+                    objRtn.TOT_QTYFLY5 = TOT_QTYFLY5;
+                    objRtn.TOT_FLYAMO5 = TOT_FLYAMO5;
+                    objRtn.TOT_QTYFLY6 = TOT_QTYFLY6;
+                    objRtn.TOT_FLYAMO6 = TOT_FLYAMO6;
+                    objRtn.TOT_QTYFLY7 = TOT_QTYFLY7;
+                    objRtn.TOT_FLYAMO7 = TOT_FLYAMO7;
+                    objRtn.TOT_QTYFLY8 = TOT_QTYFLY8;
+                    objRtn.TOT_FLYAMO8 = TOT_FLYAMO8;
+                    objRtn.TOT_QTYFLY9 = TOT_QTYFLY9;
+                    objRtn.TOT_FLYAMO9 = TOT_FLYAMO9;
+                    objRtn.TOT_QTYFLY10 = TOT_QTYFLY10;
+                    objRtn.TOT_FLYAMO10 = TOT_FLYAMO10;
+                    objRtn.TOT_QTYFLY11 = TOT_QTYFLY11;
+                    objRtn.TOT_FLYAMO11 = TOT_FLYAMO11;
+                    objRtn.TOT_QTYFLY12 = TOT_QTYFLY12;
+                    objRtn.TOT_FLYAMO12 = TOT_FLYAMO12;
+                    
+                    objRtn.TOT_QTYSALE = TOT_QTYSALE;
+                    objRtn.TOT_AMOSALE = TOT_AMOSALE;
+                    objRtn.TOT_QTYFLOWN = TOT_QTYFLOWN;
+                    objRtn.TOT_AMOFLOWN = TOT_AMOFLOWN;
                     
                     lstRtn.add(objRtn);
                 }
