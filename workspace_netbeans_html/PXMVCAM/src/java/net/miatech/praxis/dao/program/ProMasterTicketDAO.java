@@ -718,8 +718,24 @@ public class ProMasterTicketDAO {
                                                                             filter.lstResultSet15.add(objRtn15);
                                                                         }
                                                                         if (cstmt01.getMoreResults()) {
-                                                                            rs16 = cstmt01.getResultSet();
-                                                                            while (rs16.next()) {
+                                                                            rs23 = cstmt01.getResultSet();
+                                                                            while (rs23.next()) {
+                                                                                objRtn23 = new PX040S01A720ResultSet23();
+                                                                                objRtn23.fileA1692.CCIA = rs23.getString("CCIA");
+                                                                                objRtn23.fileA1692.FORMA = rs23.getString("FORMA");
+                                                                                objRtn23.fileA1692.SERIE = rs23.getString("SERIE");
+                                                                                objRtn23.fileA1692.CUPON = rs23.getString("CUPON");
+                                                                                objRtn23.fileA1692.SEQ = rs23.getString("SEQ");
+                                                                                objRtn23.fileA1692.SEQRO = rs23.getString("SEQRO");
+                                                                                objRtn23.fileA1692.CDEPART = rs23.getString("CDEPART");
+                                                                                objRtn23.fileA1692.CARRIVA = rs23.getString("CARRIVA");
+                                                                                objRtn23.fileA1692.CARR = rs23.getString("CARR");
+                                                                                objRtn23.fileA1692.NFLIGHT = rs23.getString("NFLIGHT");
+                                                                                objRtn23.fileA1692.DFLIGHT = rs23.getString("DFLIGHT");
+                                                                                objRtn23.fileA1692.CLAS = rs23.getString("CLAS");
+                                                                                objRtn23.fileA1692.FBASE = rs23.getString("FBASE");
+                                                                                objRtn23.fileA1692.VCPN = rs23.getDouble("VCPN");
+                                                                                objRtn23.fileA1692.MDACP = rs23.getString("MDACP");
                                                                                 
                                                                             }
                                                                             if (cstmt01.getMoreResults()) {

@@ -4,9 +4,9 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
     fecha: new Date(),
     childs: '5',
     bean: '',
-    beanEMD: {},
+    beanNM: {},
     beanLog: {},
-    beanEMDTicket: {},
+    beanNMTicket: {},
     paginActual: '',
     drillDown: [],
     lstCountry: [],
@@ -17,8 +17,8 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
     me: '',
     searchParams: {},
     paramsDetail: {},
-    paramsDetailEMD: {},
-    paramsDetailEMDTicket: {},
+    paramsDetailNM: {},
+    paramsDetailNMTicket: {},
     paramsDetailTicketLog: {},
     dataObtain: {},
     init: function (view) {
@@ -26,7 +26,7 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         prototype.id = 'ReportNrtmexForm';
         prototype.url = CONTEXTPATH + '/ReportNrtmex';
         this.childs = Ext.getCmp(prototype.id + '-panelMain').items.items;
-        me.panelActual = '-panelGridData';
+        me.panelActual = '-panelGridMainData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.obtainData();
 
@@ -98,14 +98,10 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
             this.btnSearch_click();
         }
     },
-    filterTicketEMD: function (e, eOpts) {
+    filterTicketNRT: function (e, eOpts) {
         var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
         if (eOpts.getKey() === 13) {
-            if (txtTicket.trim().length === 13 || txtTicket.trim().length === 0) {
-                this.btnSearch_click();
-            } else {
-                global.Msg({msg: 'Ticket Number must contain 13 digits.'});
-            }
+            this.btnSearch_click();
         }
     },
     onUpperValue: function (field, newValue, oldValue) {
@@ -150,27 +146,26 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
 //        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
 
-//         var cmbSTVAL = Ext.getCmp(prototype.id + '-cmbSTVAL');
-//        cmbSTVAL.bindStore(Ext.create('Ext.data.ArrayStore', {
-//            autoLoad: false,
-//            fields: ['code', 'name'],
-//            data: [
-//                ["", "All"],
-//                ["0", "Venta sin Uso"],
-//                ["1", "Uso sin Venta"],
-//                ["2", "MATCH"]
-//            ]
-//        }));
-//        cmbSTVAL.setValue("");
+        var cmbSearch = Ext.getCmp(prototype.id + '-cmbSearch');
+        cmbSearch.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["0", "Flight Date"],
+                ["1", "Sale Date"],
+                ["2", "Contab Date"]
+            ]
+        }));
+        cmbSearch.setValue("0");
 
     },
     viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         var strTkt = rowData.data.strTicket;
-        
+
         prototypeProgram.view = 'flown-report-nrtmex-form';
         prototypeProgram.nprog = 'PX00000634';
-        prototypeProgram.title = 'Report Nrtmex';
+        prototypeProgram.title = 'Report NRT-MEX';
         prototypeProgram.modulo = '';
 
         var beanProMasterTicket = {};
@@ -188,9 +183,15 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         me.bean = {};
         me.bean.IN_DATE_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
         me.bean.IN_DATE_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
-//        me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
-        me.bean.IN_TIPO = '1';
         me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
+        var TYPE = Ext.getCmp(prototype.id + '-cmbSearch').getValue();
+        if (TYPE === '0') {
+            me.bean.IN_TYPE = 'DFLIGHT';
+        } else if (TYPE === '1') {
+            me.bean.IN_TYPE = 'DSALES';
+        } else if (TYPE === '2') {
+            me.bean.IN_TYPE = 'FCONT';
+        }
 
         console.log(me.bean);
         var beanString = JSON.stringify(me.bean);
@@ -200,35 +201,200 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
         };
     },
     btnSearch_click: function (obj, e) {
+        
+        
+        me.beanNM = {};
+        me.beanNM.IN_TIPO = '1';
+        var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
 
-//        var txtTicket = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
-//        if (txtTicket.trim().length > 0) {
-//            if (txtTicket.trim().length === 13) {
-//                me.bean = {};
-//                me.bean.IN_TIPO = '1';
-//                me.bean.IN_TICKET = Ext.getCmp(prototype.id + '-txtTICKET').getValue();
-//                me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
-//                var beanString = JSON.stringify(me.bean);
-//                searchParams = {
-//                    beanString: beanString,
-//                    bean: me.bean
-//                };
-//                this.setGridData();
-//            } else {
-//                global.Msg({msg: 'Ticket Number must contain 13 digits.'});
-//            }
-//        } else {
-//            Ext.getCmp(prototype.id + '-txtTICKET').hide();
-            this.setFormatParameter();
+        if (txtTicket.trim().length === 13) {
+
+            me.beanNM.IN_TICKET = txtTicket;
+            console.log(this.beanNM);
+            me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
+         
             this.setGridData();
-            
-//        }
+
+        } else if (txtTicket.trim().length === 0) {
+
+            this.setFormatParameter();
+            this.setGridMainData();
+
+        } else {
+            global.Msg({msg: 'Ticket Number must contain 13 digits.'});
+        }
 
     },
-    // <editor-fold defaultstate="collapsed" desc="setGridData">
-    setGridData: function (obj, val) {
+    // <editor-fold defaultstate="collapsed" desc="setGridMainData">
+    setGridMainData: function (obj, val) {
         console.log("URL : " + prototype.url + '/searchMain');
-        win.lblUser_toolTip("Estructura: A4479");
+        win.lblUser_toolTip("Estructura: A4504");
+        me.panelActual = '-panelGridMainData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        me.setWidthPie();
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.flown.AccountedAmountsInvoiced.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchMain'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = searchParams;
+                        Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    },
+                    load: function (obj) {
+                        Ext.getCmp(prototype.id + '-contentInfo').unmask('Loading...');
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+                }
+            });
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridMainData').bindStore(storeGridDatas);
+        }
+    },
+    // </editor-fold>
+    onGridDetail: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.beanNM.DATE = rowData.data.DFLIGHT;
+        this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
+        this.beanNM.DRILL = "";
+        var drill = "";
+        var date = rowData.data.strFormatDate;
+        console.log(this.beanNM);
+        me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
+        this.setGridData(drill,date);
+    },
+    onGridDetailPE: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.beanNM.DATE = rowData.data.DFLIGHT;
+        this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
+        this.beanNM.DRILL = "PE";
+        var drill = "PE";
+        var date = rowData.data.strFormatDate;
+        console.log(this.beanNM);
+        me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
+        this.setGridData(drill,date);
+    },
+    onGridDetailCO: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.beanNM.DATE = rowData.data.DFLIGHT;
+        this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
+        this.beanNM.DRILL = "CO";
+        var drill = "CO";
+        var date = rowData.data.strFormatDate;
+        console.log(this.beanNM);
+        me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
+        this.setGridData(drill,date);
+    },
+    onGridDetailPA: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.beanNM.DATE = rowData.data.DFLIGHT;
+        this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
+        this.beanNM.DRILL = "PA";
+        var drill = "PA";
+        var date = rowData.data.strFormatDate;
+        console.log(this.beanNM);
+        me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
+        this.setGridData(drill,date);
+    },
+    onGridDetailNP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.beanNM.DATE = rowData.data.DFLIGHT;
+        this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
+        this.beanNM.DRILL = "NP";
+        var drill = "NP";
+        var date = rowData.data.strFormatDate;
+        console.log(this.beanNM);
+        me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
+        this.setGridData(drill,date);
+    },
+    onGridDetailAP: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.beanNM.DATE = rowData.data.DFLIGHT;
+        this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
+        this.beanNM.DRILL = "AP";
+        var drill = "AP";
+        var date = rowData.data.strFormatDate;
+        console.log(this.beanNM);
+        me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
+        this.setGridData(drill,date);
+    },
+    onGridDetailNA: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.beanNM.DATE = rowData.data.DFLIGHT;
+        this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
+        this.beanNM.DRILL = "NA";
+        var drill = "NA";
+        var date = rowData.data.strFormatDate;
+        console.log(this.beanNM);
+        me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
+        this.setGridData(drill,date);
+    },
+    onGridDetailEX: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.beanNM.DATE = rowData.data.DFLIGHT;
+        this.beanNM.IN_TYPE = rowData.data.IN_TYPE;
+        this.beanNM.DRILL = "EX";
+        var drill = "EX";
+        var date = rowData.data.strFormatDate;
+        console.log(this.beanNM);
+        me.paramsDetailNM.beanString = JSON.stringify(this.beanNM);
+        this.setGridData(drill,date);
+    },
+    // <editor-fold defaultstate="collapsed" desc="setGridData">
+    setGridData: function (drill,date) {
+        
+        if(drill === 'PE'){
+            drill = 'Pending';
+        }else if(drill === 'CO'){
+            drill = 'Conciliated';
+        }else if(drill === 'PA'){
+            drill = 'Pay';
+        }else if(drill === 'NP'){
+            drill = 'Not Payed';
+        }else if(drill === 'AP'){
+            drill = 'Applied';
+        }else if(drill === 'NA'){
+            drill = 'Not Applied';
+        }else if(drill === 'EX'){
+            drill = 'Exonerated';
+        }
+        
+        if (date !== '') {
+            if (drill !== '') {
+                Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Transaction Date :' + date + ' - ' + drill + '</center>');
+            } else {
+                Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;"> Transaction Date :' + date + '</center>');
+            }
+        } else {
+            Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;">' + '</center>');
+        }
+        
+        console.log("URL : " + prototype.url + '/search');
+        win.lblUser_toolTip("Estructura: A4503");
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         me.setWidthPie();
@@ -242,14 +408,16 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
                     url: prototype.url + '/search'
                 }, listeners: {
                     beforeload: function (obj) {
-                        obj.proxy.extraParams = searchParams;
+                        Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                        obj.proxy.extraParams = me.paramsDetailNM;
                     },
                     load: function (obj) {
-//                        var pag = Ext.getCmp(prototype.id + '-paggin');
-//                        var pagData = pag.getPageData();
-//                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-//                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-//                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                        Ext.getCmp(prototype.id + '-contentInfo').unmask('Loading...');
+                        var pag = Ext.getCmp(prototype.id + '-paggin');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
                         if (obj.data.length === 0) {
                             global.Msg({
                                 msg: 'Data not found.'
@@ -263,121 +431,8 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
         }
     },
-//    onGridData: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-//        Ext.getCmp(prototype.id + '-txtTICKET').show();
-//        me.drillDown.push(me.panelActual);
-//        me.panelActual = '-panelGridData';
-//        global.selectedChild(me.childs, prototype.id + me.panelActual);
-//        
-//        me.beanEMD = {};
-//        
-//        me.beanEMD.IN_DATE = rowData.data.DFLIGHT;
-//        me.beanEMD.IN_TIPO = '1';
-//        console.log(me.beanEMD);
-//        var beanString = JSON.stringify(me.beanEMD);
-//        paramsDetailEMD = {
-//            beanString: beanString,
-//            bean: me.beanEMD
-//        };
-////        this.beanEMD.strFormatDate = rowData.data.strFormatDate;
-////        console.log(this.beanEMD);
-//
-////        me.paramsDetailEMD.beanString = JSON.stringify(this.beanEMD);
-//        this.setGridData();
-//    },
-//    setGridData: function (obj, val) {
-//        console.log("URL : " + prototype.url + '/search');
-//        win.lblUser_toolTip("Estructura: A4479");
-//        me.panelActual = '-panelGridData';
-//        global.selectedChild(me.childs, prototype.id + me.panelActual);
-//        me.setWidthPie();
-//        var msj = this.validateFields();
-//        if (msj !== '') {
-//            global.Msg({msg: msj
-//            });
-//        } else {
-//            var storeGridDatas = Ext.create('Ext.Praxis.store.flown.AccountedAmountsInvoiced.GridData', {
-//                proxy: {
-//                    url: prototype.url + '/search'
-//                }, listeners: {
-//                    beforeload: function (obj) {
-//                        obj.proxy.extraParams = paramsDetailEMD;
-//                    },
-//                    load: function (obj) {
-//                        var pag = Ext.getCmp(prototype.id + '-paggin');
-//                        var pagData = pag.getPageData();
-//                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-//                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-//                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-//                        if (obj.data.length === 0) {
-//                            global.Msg({
-//                                msg: 'Data not found.'
-//                            });
-//                        }
-//                    }
-//                }
-//            });
-//            global.clear();
-//            Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
-//            Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
-//        }
-//    },
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="setGridDataDetEMD">
-    onGridDetEMD: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-
-        me.drillDown.push(me.panelActual);
-        me.panelActual = '-panelGridDataDetEMD';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-
-        this.beanEMD.DSALES = rowData.data.DSALES;
-        this.beanEMD.strFormatDate = rowData.data.strFormatDate;
-        console.log(this.beanEMD);
-
-        me.paramsDetailEMD.beanString = JSON.stringify(this.beanEMD);
-        this.setGridDataDetEMD();
-    },
-    setGridDataDetEMD: function () {
-        win.lblUser_toolTip("Estructura: A3757");
-        me.panelActual = '-panelGridDataDetEMD';
-//        me.setWidthPie();
-        var msj = this.validateFields();
-        if (msj !== '') {
-            global.Msg({msg: msj
-            });
-        } else {
-            var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
-                proxy: {
-                    url: prototype.url + '/searchDetail'
-                }, listeners: {
-                    beforeload: function (obj) {
-                        obj.proxy.extraParams = me.paramsDetailEMD;
-                    },
-                    load: function (obj, obj2, success, response, obj5) {
-                        var res = Ext.JSON.decode(response._response.responseText);
-                        console.log(res.data);
-                        if (res.success) {
-                            if (obj.data.length > 0) {
-                                var obj = obj.data.items[0].data;
-                                Ext.getCmp(prototype.id + '-gridDataDetEMD').setTitle('<center style="font-size:12px;"> Sale Date ' + obj.strFormatDate + '</center>');
-
-
-                            } else {
-                                global.Msg({msg: 'Data not found'});
-                            }
-                        } else
-                            global.clear();
-                    }
-                }
-            });
-
-//            console.log(storeGridDatas);
-            global.clear();
-            Ext.getCmp(prototype.id + '-gridDataDetEMD').bindStore(storeGridDatas);
-        }
-    },
-    // </editor-fold>
     validateFields: function () {
         var msj = '';
         var bean = searchParams.bean;
@@ -461,20 +516,11 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
 
         this.setFormatParameter();
         switch (me.panelActual) {
+            case  '-panelGridMainData':
+                global.getFile(prototype.url + '/getXLSXMain?beanString=' + searchParams.beanString);
+                break;
             case  '-panelGridData':
-                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
-                break;
-            case  '-panelGridDataDetEMD':
-                global.getFile(prototype.url + '/getXLSXDetail?beanString=' + me.paramsDetailEMD.beanString);
-                break;
-            case  '-panelGridDataDetEMDTicket':
-                global.getFile(prototype.url + '/getXLSXDetailTicket?beanString=' + me.paramsDetailEMDTicket.beanString);
-                break;
-            case  '-panelGridDataLog':
-                global.getFile(prototype.url + '/getXLSXLog?beanString=' + searchParams.beanString);
-                break;
-            case  '-panelGridDataDetTicketLog':
-                global.getFile(prototype.url + '/getXLSXTicketLog?beanString=' + me.paramsDetailTicketLog.beanString);
+                global.getFile(prototype.url + '/downloadText?beanString=' + me.paramsDetailNM.beanString);
                 break;
             default:
                 global.Msg(
@@ -490,10 +536,10 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
             url: prototype.url + '/download',
             method: 'POST',
             timeout: 60000000,
-            beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...'),
+//            beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...'),
             params: me.paramsDetail,
             success: function (response, options) {
-                Ext.getCmp(prototype.id + '-gridData').unmask('Loading...');
+//                Ext.getCmp(prototype.id + '-gridData').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
 
                 var resultByte = res.bytes;

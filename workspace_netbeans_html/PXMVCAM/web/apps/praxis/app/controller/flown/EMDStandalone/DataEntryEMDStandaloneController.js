@@ -51,18 +51,31 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         this.setValue('de-txtCUPON', this.beanResult.CUPON);//Cortar
         this.setValue('de-txtSEQ', this.beanResult.SEQ);
         this.setValue('de-txtSEQROL', this.beanResult.SEQRO);
-        this.setValue('de-txtORIG', this.beanResult.ORIG);
-        this.setValue('de-txtDEST', this.beanResult.DEST);
-        this.setValue('de-txtSDATE', this.beanResult.strFormatDate);
-        this.setValue('de-txtCOUNTRY', this.beanResult.SCOUNTRY);
-        this.setValue('de-txtAGENT', this.beanResult.AGENTE);
+        this.setValue('de-txtDFLIGHT', this.beanResult.strDate);
         this.setValue('de-txtRFIC', this.beanResult.RFIC);
         this.setValue('de-txtRECODE', this.beanResult.RECODE);
         this.setValue('de-txtFDESCRIP', this.beanResult.DESC_RECODE);
-        this.setValue('de-txtRDATE', this.beanResult.descRDATE);
-        this.setValue('de-txtFCONT', this.beanResult.descFCONT);
+        this.setValue('de-txtDVCR', this.beanResult.DVCR);
+        this.setValue('de-txtCOUNTRY', this.beanResult.SCOUNTRY);
+        this.setValue('de-txtAGENT', this.beanResult.AGENTE);
+        this.setValue('de-txtFVTA', this.beanResult.FVTA);
+        this.setValue('de-txtORIG', this.beanResult.ORIG);
+        this.setValue('de-txtDEST', this.beanResult.DEST);
+        this.setValue('de-txtFBASE', this.beanResult.FBASE);
+        this.setValue('de-txtRBD', this.beanResult.RBD);
+        this.setValue('de-txtPAX', this.beanResult.QTYPAX);
+        this.setValue('de-txtPTYPE', this.beanResult.TPAX);
+        this.setValue('de-txtOPER', this.beanResult.TOPUS);
+        this.setValue('de-txtCARRIER', this.beanResult.CARR);
+        this.setValue('de-txtFCONTS', this.beanResult.FCONTS);
+        this.setValue('de-txtFECVAL', this.beanResult.FECVAL);
+        this.setValue('de-txtCURRENCY', this.beanResult.CURRENCY);
+        this.setValue('de-txtTOTAL', this.beanResult.VCPN);
+        this.setValue('de-txtFCONT', this.beanResult.FCONT);
         this.setValue('de-txtIDCON', this.beanResult.IDCON);
-        
+        this.setValue('de-txtTN16', this.beanResult.TN16);
+        this.setValue('de-txtTN00', this.beanResult.TN00);
+
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
         this.setValue('txtHOCR', this.beanResult.HOCR);
@@ -86,7 +99,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
-        
+        console.log(beanTemp);
         beanTemp.STVAL = this.getValue("de-cmbSTATUS").trim();
         beanTemp.TICKET = this.getValue("de-txtTICKET").trim();
         beanTemp.CUPON = this.getValue("de-txtCUPON").trim();
@@ -101,10 +114,32 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         beanTemp.RFIC = this.getValue("de-txtRFIC").trim();
         beanTemp.RECODE = this.getValue("de-txtRECODE").trim();
         beanTemp.DESC_RECODE = this.getValue("de-txtFDESCRIP").trim();
-//        beanTemp.RDATE = this.getValue("de-txtRDATE").trim();
-        beanTemp.RDATE = this.beanResult.RDATE;
-//        beanTemp.FCONT = this.getValue("de-txtFCONT").trim();
-        beanTemp.FCONT = this.beanResult.FCONT;
+        beanTemp.DVCR = this.getValue("de-txtDVCR").trim();
+        beanTemp.SCOUNTRY = this.getValue("de-txtCOUNTRY").trim();
+        beanTemp.AGENTE = this.getValue("de-txtAGENT").trim();
+        beanTemp.FVTA = this.getValue("de-txtFVTA").trim();
+        beanTemp.ORIG = this.getValue("de-txtORIG").trim();
+        beanTemp.DEST = this.getValue("de-txtDEST").trim();
+        beanTemp.FBASE = this.getValue("de-txtFBASE").trim();
+        beanTemp.RBD = this.getValue("de-txtRBD").trim();
+        beanTemp.QTYPAX = this.getValue("de-txtPAX").trim();
+        if (beanTemp.QTYPAX === '') {
+            beanTemp.QTYPAX = 0;
+        }
+        beanTemp.TPAX = this.getValue("de-txtPTYPE").trim();
+        beanTemp.TOPUS = this.getValue("de-txtOPER").trim();
+        beanTemp.CARR = this.getValue("de-txtCARRIER").trim();
+        beanTemp.FCONTS = this.getValue("de-txtFCONTS").trim();
+        beanTemp.CURRENCY = this.getValue("de-txtCURRENCY").trim();
+        beanTemp.VCPN = this.getValue("de-txtTOTAL").trim();
+        if (beanTemp.VCPN === '') {
+            beanTemp.VCPN = 0;
+        }
+        beanTemp.TN16 = this.getValue("de-txtTN16").trim();
+        beanTemp.TN00 = this.getValue("de-txtTN00").trim();
+        
+        beanTemp.FCONT = this.getValue("de-txtFCONT").trim();
+        beanTemp.FECVAL = this.getValue("de-txtFECVAL").trim();
         beanTemp.IDCON = this.getValue("de-txtIDCON").trim();
 
         beanTemp.USCR = this.getValue("txtUSCR").trim();
@@ -115,8 +150,20 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         beanTemp.HOUP = this.getValue("txtHOUP").trim();
     },
     getData: function () {
-        meDE.bean.data.IN_TICKET = meDE.bean.data.strTicket.substr(0, 3) +  meDE.bean.data.strTicket.substr(4, 4) + meDE.bean.data.strTicket.substr(8, 6);
-        var beanString = JSON.stringify(meDE.bean.data);
+
+        var IN_TICKET = meDE.bean.data.strTicket.substr(0, 3) + meDE.bean.data.strTicket.substr(4, 4) + meDE.bean.data.strTicket.substr(8, 6);
+        var IN_TIPO = meDE.bean.data.IN_TIPO;
+        var IN_DATE = '';
+        var IN_STVAL = '';
+
+
+        paramsDetailEMDs = {
+            IN_TIPO: IN_TIPO,
+            IN_DATE: IN_DATE,
+            IN_STVAL: IN_STVAL,
+            IN_TICKET: IN_TICKET
+        };
+        var beanString = JSON.stringify(paramsDetailEMDs);
         console.log(beanString);
         Ext.Ajax.request({
             url: prototype.url + '/search',
