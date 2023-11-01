@@ -26,6 +26,7 @@ import net.miatech.beans.PX040S01A720ResultSet13;
 import net.miatech.beans.PX040S01A720ResultSet14;
 import net.miatech.beans.PX040S01A720ResultSet15;
 import net.miatech.beans.PX040S01A720ResultSet22;
+import net.miatech.beans.PX040S01A720ResultSet23;
 import net.miatech.beans.PX040S02A720Filter;
 import net.miatech.beans.SQP00250Filter;
 import net.miatech.beans.SQP00697Filter;
@@ -66,12 +67,13 @@ public class ProMasterTicketDAO {
         PX040S01A720ResultSet14 objRtn14;
         PX040S01A720ResultSet15 objRtn15;
         PX040S01A720ResultSet22 objRtn22;
+        PX040S01A720ResultSet23 objRtn23;
 
         PreparedStatement pstmt01 = null, pstmt02 = null;
         ResultSet rstst01 = null, rstst02 = null;
         
         CallableStatement cstmt01 = null;
-        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null, rs16 = null, rs22 = null;
+        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null, rs16 = null, rs22 = null, rs23 = null;;
         //<editor-fold defaultstate="collapsed" desc="{...} SQL Sentences">
         String SQLQRY01 = "SELECT"
                 + "   A720CIAI,A720FORMAI,A720SERIEI"
