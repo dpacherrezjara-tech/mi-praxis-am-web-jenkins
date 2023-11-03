@@ -9847,52 +9847,65 @@ public class Dashboard01DAO {
                     objRtn = new IMF117Filter();
                     objRtn.CCUST = rs01.getString("CCUST").trim();
                     objRtn.DSALES = rs01.getString("DSALES");
-                    objRtn.CURRENC = rs01.getString("CURRENCY");
+                    objRtn.CURRENC = rs01.getString("CURRENC");
+                    
                     objRtn.DFLIGHT1 = rs01.getString("DFLIGHT1");
+                    objRtn.DFLIGHT1 = Functions.getMonthConvert(objRtn.DFLIGHT1);
                     objRtn.QTYFLY1 = rs01.getLong("QTYFLY1");
                     objRtn.FLYAMO1 = rs01.getDouble("FLYAMO1");
                     
                     objRtn.DFLIGHT2 = rs01.getString("DFLIGHT2");
+                    objRtn.DFLIGHT2 = Functions.getMonthConvert(objRtn.DFLIGHT2);
                     objRtn.QTYFLY2 = rs01.getLong("QTYFLY2");
                     objRtn.FLYAMO2 = rs01.getDouble("FLYAMO2");
                    
                     objRtn.DFLIGHT3 = rs01.getString("DFLIGHT3");
+                    objRtn.DFLIGHT3 = Functions.getMonthConvert(objRtn.DFLIGHT3);
                     objRtn.QTYFLY3 = rs01.getLong("QTYFLY3");
                     objRtn.FLYAMO3 = rs01.getDouble("FLYAMO3");
                     
                     objRtn.DFLIGHT4 = rs01.getString("DFLIGHT4");
+                    objRtn.DFLIGHT4 = Functions.getMonthConvert(objRtn.DFLIGHT4);
                     objRtn.QTYFLY4 = rs01.getLong("QTYFLY4");
                     objRtn.FLYAMO4 = rs01.getDouble("FLYAMO4");
                     
                     objRtn.DFLIGHT5 = rs01.getString("DFLIGHT5");
+                    objRtn.DFLIGHT5 = Functions.getMonthConvert(objRtn.DFLIGHT5);
                     objRtn.QTYFLY5 = rs01.getLong("QTYFLY5");
                     objRtn.FLYAMO5 = rs01.getDouble("FLYAMO5");
                     
                     objRtn.DFLIGHT6 = rs01.getString("DFLIGHT6");
+                    objRtn.DFLIGHT6 = Functions.getMonthConvert(objRtn.DFLIGHT6);
                     objRtn.QTYFLY6 = rs01.getLong("QTYFLY6");
                     objRtn.FLYAMO6 = rs01.getDouble("FLYAMO6");
                     
                     objRtn.DFLIGHT7 = rs01.getString("DFLIGHT7");
+                    objRtn.DFLIGHT7 = Functions.getMonthConvert(objRtn.DFLIGHT7);
                     objRtn.QTYFLY7 = rs01.getLong("QTYFLY7");
                     objRtn.FLYAMO7 = rs01.getDouble("FLYAMO7");
                     
                     objRtn.DFLIGHT8 = rs01.getString("DFLIGHT8");
+                    objRtn.DFLIGHT8 = Functions.getMonthConvert(objRtn.DFLIGHT8);
                     objRtn.QTYFLY8 = rs01.getLong("QTYFLY8");
                     objRtn.FLYAMO8 = rs01.getDouble("FLYAMO8");
                     
                     objRtn.DFLIGHT9 = rs01.getString("DFLIGHT9");
+                    objRtn.DFLIGHT9 = Functions.getMonthConvert(objRtn.DFLIGHT9);
                     objRtn.QTYFLY9 = rs01.getLong("QTYFLY9");
                     objRtn.FLYAMO9 = rs01.getDouble("FLYAMO9");
                     
                     objRtn.DFLIGHT10 = rs01.getString("DFLIGHT10");
+                    objRtn.DFLIGHT10 = Functions.getMonthConvert(objRtn.DFLIGHT10);
                     objRtn.QTYFLY10 = rs01.getLong("QTYFLY10");
                     objRtn.FLYAMO10 = rs01.getDouble("FLYAMO10");
                     
                     objRtn.DFLIGHT11 = rs01.getString("DFLIGHT11");
+                    objRtn.DFLIGHT11 = Functions.getMonthConvert(objRtn.DFLIGHT11);
                     objRtn.QTYFLY11 = rs01.getLong("QTYFLY11");
                     objRtn.FLYAMO11 = rs01.getDouble("FLYAMO11");
                                         
                     objRtn.DFLIGHT12 = rs01.getString("DFLIGHT12");
+                    objRtn.DFLIGHT12 = Functions.getMonthConvert(objRtn.DFLIGHT12);
                     objRtn.QTYFLY12 = rs01.getLong("QTYFLY12");
                     objRtn.FLYAMO12 = rs01.getDouble("FLYAMO12");
                     

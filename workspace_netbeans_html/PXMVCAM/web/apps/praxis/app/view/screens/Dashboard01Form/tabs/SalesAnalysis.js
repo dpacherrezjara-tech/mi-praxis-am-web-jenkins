@@ -7040,13 +7040,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                         columns: [
                                             {text: 'Flight<br>Date', dataIndex: 'DFLIGHT1', width: 65, align: 'center',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    metaData.style = "background:#c0dffa;text-align:center";
                                                     return value;
                                                 },
                                             },
                                             {text: 'Coupons', dataIndex: 'QTYFLY1', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background:#;text-align:right";
+                                                    metaData.style = "background:#c0dffa;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -7058,7 +7058,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             },
                                             {text: 'Amount', dataIndex: 'FLYAMO1', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background:#;text-align:right";
+                                                    metaData.style = "background:#c0dffa;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -7114,13 +7114,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                         columns: [
                                             {text: 'Flight<br>Date', dataIndex: 'DFLIGHT3', width: 65, align: 'center',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    metaData.style = "background:#c0dffa;text-align:center";
                                                     return value;
                                                 },
                                             },
                                             {text: 'Coupons', dataIndex: 'QTYFLY3', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background:#;text-align:right";
+                                                    metaData.style = "background:#c0dffa;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -7132,7 +7132,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             },
                                             {text: 'Amount', dataIndex: 'FLYAMO3', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background:#;text-align:right";
+                                                    metaData.style = "background:#c0dffa;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -7188,13 +7188,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                         columns: [
                                             {text: 'Flight<br>Date', dataIndex: 'DFLIGHT5', width: 65, align: 'center',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    metaData.style = "background:#c0dffa;text-align:center";
                                                     return value;
                                                 },
                                             },
                                             {text: 'Coupons', dataIndex: 'QTYFLY5', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background:#;text-align:right";
+                                                    metaData.style = "background:#c0dffa;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -7206,7 +7206,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             },
                                             {text: 'Amount', dataIndex: 'FLYAMO5', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background:#;text-align:right";
+                                                    metaData.style = "background:#c0dffa;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -7262,13 +7262,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                         columns: [
                                             {text: 'Flight<br>Date', dataIndex: 'DFLIGHT7', width: 65, align: 'center',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    metaData.style = "background:#c0dffa;text-align:center";
                                                     return value;
                                                 },
                                             },
                                             {text: 'Coupons', dataIndex: 'QTYFLY7', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background:#;text-align:right";
+                                                    metaData.style = "background:#c0dffa;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -7280,7 +7280,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             },
                                             {text: 'Amount', dataIndex: 'FLYAMO7', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background:#;text-align:right";
+                                                    metaData.style = "background:#c0dffa;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -7336,13 +7336,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                         columns: [
                                             {text: 'Flight<br>Date', dataIndex: 'DFLIGHT9', width: 65, align: 'center',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    metaData.style = "background:#c0dffa;text-align:center";
                                                     return value;
                                                 },
                                             },
                                             {text: 'Coupons', dataIndex: 'QTYFLY9', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background:#;text-align:right";
+                                                    metaData.style = "background:#c0dffa;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -7354,7 +7354,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             },
                                             {text: 'Amount', dataIndex: 'FLYAMO9', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background:#;text-align:right";
+                                                    metaData.style = "background:#c0dffa;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -7410,13 +7410,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                         columns: [
                                             {text: 'Flight<br>Date', dataIndex: 'DFLIGHT11', width: 65, align: 'center',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    metaData.style = "background:#c0dffa;text-align:center";
                                                     return value;
                                                 },
                                             },
                                             {text: 'Coupons', dataIndex: 'QTYFLY11', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background:#;text-align:right";
+                                                    metaData.style = "background:#c0dffa;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -7428,7 +7428,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             },
                                             {text: 'Amount', dataIndex: 'FLYAMO11', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background:#;text-align:right";
+                                                    metaData.style = "background:#c0dffa;text-align:right";
                                                     return Ext.util.Format.number(value, '0,000');
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
