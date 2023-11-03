@@ -1209,7 +1209,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             win.focus('cbxFilterTicket');
                             break;
                     }
-                } else global.Msg({ msg: "Bad Request" });
+                } else global.Msg({ msg: "Bad Request 1" });
             },
             failure: function(response, opts) {
                 Ext.getBody().unmask();
@@ -3542,7 +3542,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                     
                     }
                     Ext.getCmp(prototype.id+'-gridDataAccounting').el.setStyle({height: '100%'});
-                } else global.Msg({ msg: "Bad Request" });
+                } else global.Msg({ msg: "Bad Request 2" });
             },
             failure: function(response, opts) {
                 Ext.getBody().unmask();
@@ -3598,7 +3598,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             //global.Msg({ msg: "It's rolling" });
                             me01.imgBrowser_clickHandler();
                         }
-                } else global.Msg({ msg: "Bad Request" });
+                } else global.Msg({ msg: "Bad Request 3" });
             },
             failure: function(response, opts) {
                 Ext.getBody().unmask();
@@ -3674,7 +3674,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         
                         console.log(res.resFecVta);
                     }
-                    else global.Msg({msg: "Bad Request"});
+                    else global.Msg({msg: "Bad Request 4"});
                 },
                 failure: function (response, opts) {
                     Ext.getBody().unmask();
@@ -3727,7 +3727,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                     );
                                 };
                             } 
-                            else global.Msg({msg: "Bad Request"});
+                            else global.Msg({msg: "Bad Request 5"});
                         },
                         failure: function (response, opts) {
                             Ext.getBody().unmask();
@@ -3736,7 +3736,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                     });
                     //
                 } 
-                else global.Msg({msg: "Bad Request"});
+                else global.Msg({msg: "Bad Request 6"});
             },
             failure: function (response, opts) {
                 Ext.getBody().unmask();
@@ -3793,7 +3793,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             }
                         }).show();
                     }
-                } else global.Msg({msg: "Bad Request"});
+                } else global.Msg({msg: "Bad Request 7"});
             },
             failure: function (response, opts) {
                 console.log('server-side failure with status code ' + response.status);
@@ -3848,7 +3848,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                     } else {
                         global.Msg({msg: 'An error has ocurred. Please contact our System Department'});
                     }
-                } else global.Msg({msg: "Bad Request"});
+                } else global.Msg({msg: "Bad Request 8"});
                 global.clear();
             },
             failure: function(response, opts) {
