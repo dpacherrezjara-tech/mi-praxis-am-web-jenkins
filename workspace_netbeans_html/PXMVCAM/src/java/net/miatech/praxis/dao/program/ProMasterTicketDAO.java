@@ -739,6 +739,17 @@ public class ProMasterTicketDAO {
                                                                                 objRtn23.fileA1692.VCPN = rs23.getDouble("VCPN");
                                                                                 objRtn23.fileA1692.MDACP = rs23.getString("MDACP");
                                                                                 
+                                                                                objRtn23.fileA1692.STVAL = rs23.getString("STVAL");
+                                                                                if (objRtn23.fileA1692.STVAL.equals("0")) {
+                                                                                    objRtn23.fileA1692.STVAL = "Venta sin Uso";
+                                                                                } else if (objRtn23.fileA1692.STVAL.equals("1")) {
+                                                                                    objRtn23.fileA1692.STVAL = "Uso sin Venta";
+                                                                                } else if (objRtn23.fileA1692.STVAL.equals("2")) {
+                                                                                    objRtn23.fileA1692.STVAL = "MATCH";
+                                                                                }
+                                                                                
+                                                                                filter.lstResultSet23.add(objRtn23);
+                                                                                
                                                                             }
                                                                             if (cstmt01.getMoreResults()) {
                                                                                 rs22 = cstmt01.getResultSet();
@@ -1831,6 +1842,61 @@ public class ProMasterTicketDAO {
                                                                             lstRtn.add(objRtn);
                                                                         }
                                                                     }
+                                                                    if (cstmt01.getMoreResults()) {
+                                                                    rs17 = cstmt01.getResultSet();
+                                                                    while (rs17.next()) {
+                                                                        objRtn = new PX040S01A1716Filter();
+                                                                        objRtn.A1716CCUST = rs17.getString("A4217CCUST");
+                                                                        objRtn.A1716CIA = rs17.getString("A4217CIA");
+                                                                        objRtn.A1716FORMA = rs17.getString("A4217FORMA");
+                                                                        objRtn.A1716SERIE = rs17.getString("A4217SERIE");
+                                                                        objRtn.A1716CUPON = rs17.getString("A4217CUPON");
+                                                                        objRtn.A1716SEQT = rs17.getString("A4217SEQT");
+                                                                        objRtn.A1716SEQ = rs17.getString("A4217SEQ");
+
+                                                                        objRtn.A1716MODO = rs17.getString("A4217MODO");
+                                                                        objRtn.A1716FUENT = rs17.getString("A4217FUENT");
+                                                                        objRtn.A1716SUBFU = rs17.getString("A4217SUBFU");
+                                                                        objRtn.A1716FP = rs17.getString("A4217FP");
+
+                                                                        objRtn.A1716FUENT = rs17.getString("A4217FUENT");
+                                                                        objRtn.A1716ESTAD = rs17.getString("A4217ESTAD");
+                                                                        objRtn.A1716FFILE = rs17.getString("A4217FFILE");
+                                                                        objRtn.A1716FPRO = rs17.getString("A4217FPRO");
+                                                                        objRtn.A1716GRUPO = rs17.getString("A4217GRUPO");
+                                                                        objRtn.A1716CUR = rs17.getString("A4217CUR");
+                                                                        objRtn.A1716ACTIV = rs17.getDouble("A4217ACTIV");
+                                                                        objRtn.A1716PASIV = rs17.getDouble("A4217PASIV");
+                                                                        objRtn.A1716CURRV = rs17.getString("A4217CURRV");
+                                                                        objRtn.A1716ACTRV = rs17.getDouble("A4217ACTRV");
+                                                                        objRtn.A1716PASRV = rs17.getDouble("A4217PASRV");
+                                                                        objRtn.A1716CUENT = rs17.getString("A4217CUENT");
+                                                                        objRtn.A1716SUBCU = rs17.getString("A4217SUBCU");
+                                                                        objRtn.A1716IDFIL = rs17.getString("A4217IDFIL");
+                                                                        objRtn.A1716TIDOC = rs17.getString("A4217TIDOC");
+                                                                        objRtn.A1716ORIG = rs17.getString("A4217ORIG");
+                                                                        objRtn.A1716FCONT = rs17.getString("A4217FCONT");
+
+                                                                        objRtn.A1716TITU = rs17.getString("A4217TITU");
+
+                                                                        objRtn.A1716COPE = rs17.getString("A4217COPE");
+                                                                        objRtn.A1716PROV = rs17.getString("A4217PROV");
+
+                                                                        objRtn.A1716IDCON = rs17.getString("A4217IDCON");
+
+                                                                        objRtn.TCOL = rs17.getString("TCOL");
+                                                                        //                    
+                                                                        //                     if(objRtn.A1716CIA.length() >= 5 && objRtn.A1716CIA.substring(0, 5).equals("TOTAL")){
+                                                                        //
+                                                                        //                     }
+                                                                        //                    
+                                                                        if (objRtn.A1716MODO.isEmpty() || objRtn.A1716MODO.equals("---------")) {
+                                                                            objRtn.A1716MODO = objRtn.A1716CIA; //Format example: "TOTAL AR S100-499:".
+                                                                        }
+
+                                                                        lstRtn.add(objRtn);
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                     }

@@ -3193,7 +3193,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             for(var i23 = 0; i23 < me01.filterTKT.lstResultSet23.length; i23++){
                                 paramsResultSet23 = me01.filterTKT.lstResultSet23[i23];
                                     strTKTIND = (paramsResultSet23.fileA1692.SERIE.length === 6) ? paramsResultSet23.fileA1692.SERIE.substr(4, 2) : '';
-                                    //me01.filterTKT.VP_A1716SEQF = paramsResultSet23.fileA1692.SEQ.trim();
+                                    me01.filterTKT.VP_A1716SEQF = paramsResultSet23.fileA1692.SEQ.trim();
                                     me01.gridDataTktRealUsesAC.push({
                                         TKTIND : strTKTIND,
                                         STATUS : paramsResultSet23.fileA1692.STVAL,
