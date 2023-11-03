@@ -5,9 +5,12 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
     meDE: '',
     actionCode: '',
     bean: {},
+    beanEMDS: {},
     beanResult: {},
     lstCountry: [],
     searchParams: {},
+    paramsDetail: {},
+    paramsDetailEMDs: {},
     lstA1852: {},
     dataObtain: {},
     copia: '',
@@ -48,7 +51,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         console.log(meDE.beanResult);
         this.setValue('de-cmbSTATUS', this.beanResult.STVAL);
         this.setValue('de-txtTICKET', this.beanResult.CCIA + this.beanResult.FORMA + this.beanResult.SERIE);
-        this.setValue('de-txtCUPON', this.beanResult.CUPON);//Cortar
+        this.setValue('de-txtCUPON', this.beanResult.CUPON);
         this.setValue('de-txtSEQ', this.beanResult.SEQ);
         this.setValue('de-txtSEQROL', this.beanResult.SEQRO);
         this.setValue('de-txtDFLIGHT', this.beanResult.strDate);
@@ -105,12 +108,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         beanTemp.CUPON = this.getValue("de-txtCUPON").trim();
         beanTemp.SEQ = this.getValue("de-txtSEQ").trim();
         beanTemp.SEQRO = this.getValue("de-txtSEQROL").trim();
-        beanTemp.ORIG = this.getValue("de-txtORIG").trim();
-        beanTemp.DEST = this.getValue("de-txtDEST").trim();
-//        beanTemp.SDATE = this.getValue("de-txtSDATE").trim();
-        beanTemp.DSALES = this.beanResult.DSALES;
-        beanTemp.SCOUNTRY = this.getValue("de-txtCOUNTRY").trim();
-        beanTemp.AGENTE = this.getValue("de-txtAGENT").trim();
+        beanTemp.DFLIGHT = this.getValue("de-txtDFLIGHT").trim();
         beanTemp.RFIC = this.getValue("de-txtRFIC").trim();
         beanTemp.RECODE = this.getValue("de-txtRECODE").trim();
         beanTemp.DESC_RECODE = this.getValue("de-txtFDESCRIP").trim();
@@ -212,9 +210,30 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
     },
     onUpdateClick: function (btn) {
 //        var msj = this.validateDates();
+        var msj = '';
+        var RFIC = this.getValue("de-txtRFIC");
+        var RECODE = this.getValue("de-txtRECODE");
+//        var msj = '';
 
-//        if (msj === '') {
-            Ext.Msg.show(
+        paramsDetail = {
+            RFIC: RFIC,
+            RECODE: RECODE
+        };
+        var beanString = JSON.stringify(paramsDetail);
+        Ext.Ajax.request({
+            url: prototype.url + '/validateRFIC',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+            params: {beanString: beanString},
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                meDE.beanResult = res.data[0];
+                var total = res.total;
+               
+                if(total !== 0){
+                    Ext.Msg.show(
                     {
                         title: '.:PRAXIS:.',
                         msg: 'Are you sure to update?',
@@ -226,32 +245,53 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
                         fn: function (btn) {
                             if (btn === 'yes') {
                                 var beanTemp = {};
-                                this.llenarData(beanTemp);
+                                meDE.llenarData(beanTemp);
                                 beanTemp.option = 'U';
                                 beanTemp.beanString = JSON.stringify(beanTemp);
-                                this.MaintenanceA4479(beanTemp);
+                                meDE.MaintenanceA4479(beanTemp);
                             }
                         }
                     });
-//        } else {
-//            global.Msg({msg: msj});
-//        }
-
+                }else{
+                    msj = 'RFIC or Reason Code do not exist';
+                    global.Msg({msg: msj});
+                }         
+            }
+        });
     },
     validateDates: function () {
-//        var DATINI = this.getValue("de-txtINI");
-//        var DATFIN = this.getValue("de-txtFIN");
-//        var msj = '';
-//
-//        if (DATINI.length === 8 && DATFIN.length === 8) {
-//            if (DATFIN < DATINI) {
-//                msj = 'Error in dates';
-//            }
-//        } else {
-//            msj = 'Error in date lenghts'
-//        }
-//
-//        return msj;
+        var RFIC = this.getValue("de-txtRFIC");
+        var RECODE = this.getValue("de-txtRECODE");
+        var msj = '';
+
+        paramsDetail = {
+            RFIC: RFIC,
+            RECODE: RECODE
+        };
+        var beanString = JSON.stringify(paramsDetail);
+        
+        Ext.Ajax.request({
+            url: prototype.url + '/validateRFIC',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+            params: {beanString: beanString},
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                meDE.beanResult = res.data[0];
+                console.log(meDE.beanResult);
+                if (meDE.beanResult !== null) {
+                    msj = 'A'
+                }else{
+                    msj = 'RFIC or Reason Code do not exist'
+                }
+                
+                
+            }
+        });
+
+        return msj;
     },
     onDeleteClick: function (btn) {
         Ext.Msg.show({
@@ -310,7 +350,11 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
 //        return msjResult;
     },
     DeshabilitarCampoClave: function () {
-//        Ext.getCmp(prototype.id + '-de-txtCodeTable').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-de-txtTICKET').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-de-txtCUPON').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-de-txtSEQ').setReadOnly(true);
+
+        Ext.getCmp(prototype.id + '-de-txtFDESCRIP').setReadOnly(true);
     },
     setearCamposClave: function () {
 //        Ext.getCmp(prototype.id + '-de-txtCodeTable').setValue('89');
