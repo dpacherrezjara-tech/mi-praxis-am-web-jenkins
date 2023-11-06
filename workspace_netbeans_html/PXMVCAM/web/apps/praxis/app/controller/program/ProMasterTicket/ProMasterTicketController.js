@@ -3185,8 +3185,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         TTRANS : paramsResultSet14.fileA2033.TTRANS,
                                         TTRAX : paramsResultSet14.fileA2033.TTRAX
                                     });
-                                }
                             }
+                        }
                         };
                         if(me01.filterTKT.lstResultSet23.length > 0){
                             for(var i23 = 0; i23 < me01.filterTKT.lstResultSet23.length; i23++){
@@ -3207,9 +3207,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         AL: paramsResultSet23.fileA1692.CARR,
                                         FLIGHT : paramsResultSet23.fileA1692.NFLIGHT,
                                         DATE : paramsResultSet23.fileA1692.DFLIGHT,
-                                        STAT : 'EMDS',
+                                        STAT : 'EMD-USED',
                                         AMOUNT : Ext.util.Format.number(paramsResultSet23.fileA1692.VCPN, '0,000.00'),
-                                        CRCY : paramsResultSet23.fileA1692.MDACP,
+                                        CRCY : paramsResultSet23.fileA1692.MDACP
 //                                        FARE : paramsResultSet23.fileA1692.FBASE
                                     });
                             }

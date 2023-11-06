@@ -1384,7 +1384,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataTktRealUses',
-                                    width: 800,
+                                    width: 806,
                                     columnLines: true,
                                     columns: {
                                         defaults: {
