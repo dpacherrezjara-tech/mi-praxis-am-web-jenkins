@@ -21,6 +21,7 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.ReportNrtmexController', {
     paramsDetailNMTicket: {},
     paramsDetailTicketLog: {},
     dataObtain: {},
+    
     init: function (view) {
         me = this;
         prototype.id = 'ReportNrtmexForm';

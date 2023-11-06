@@ -9,6 +9,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Info', {
         border: false
     },
     style: 'margin: 1px;',
+    
     items: [
         {
             region: 'center',

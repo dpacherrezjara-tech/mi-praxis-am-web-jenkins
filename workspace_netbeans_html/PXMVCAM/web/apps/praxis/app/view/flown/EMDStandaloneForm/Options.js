@@ -6,6 +6,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Options', {
         type: 'hbox',
         pack: 'end'
     },
+    
     items: [
         {
             xtype: 'panel',

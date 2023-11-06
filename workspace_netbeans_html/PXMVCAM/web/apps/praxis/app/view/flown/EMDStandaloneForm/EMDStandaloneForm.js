@@ -20,6 +20,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.EMDStandaloneForm', {
     defaults: {
         border: false
     },
+    
     items: [
         {
             id: prototype.id + '-xpanel',

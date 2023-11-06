@@ -6,6 +6,7 @@ Ext.define('Ext.Praxis.view.flown.ReportNrtmexForm.Options', {
         type: 'hbox',
         pack: 'end'
     },
+    
     items: [
         {
             xtype: 'panel',

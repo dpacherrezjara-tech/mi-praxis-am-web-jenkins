@@ -5,6 +5,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Filters', {
     bodyStyle: 'background-color: #E3EAF9;',
     padding: '2px 0px 1px 0px',
     layout: 'column',
+    
     items: [
         {
             xtype: 'form',

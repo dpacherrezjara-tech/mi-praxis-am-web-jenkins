@@ -18,7 +18,7 @@ import net.miatech.praxis.dao.program.ProMasterTicketDAO;
 // </editor-fold>
 /**
  *
- * @author gsanchez
+ * @author gsanche
  */
 public class ProMasterTicketLogic {
 
