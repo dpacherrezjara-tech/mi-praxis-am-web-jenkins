@@ -12,6 +12,7 @@ Ext.define('Ext.Praxis.controller.flown.ReportNrtmex.DataEntryReportNrtmexContro
     dataObtain: {},
     copia: '',
     // </editor-fold>
+    
     init: function (view) {
         prototype.id = 'ReportNrtmexForm';
         prototype.url = CONTEXTPATH + '/ReportNrtmex';
