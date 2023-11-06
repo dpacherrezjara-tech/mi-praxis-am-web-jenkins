@@ -80,7 +80,7 @@ import org.xml.sax.InputSource;
 // </editor-fold>
 /**
  *
- * @author gsanchez
+ * @author gsanche
  */
 @Controller
 @Scope("request")

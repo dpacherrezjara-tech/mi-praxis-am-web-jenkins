@@ -1,5 +1,4 @@
 package net.miatech.praxis.dao.flown;
-
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -16,6 +16,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
     defaults: {
         border: false
     },
+    
     items: [
         {
             xtype: 'form',

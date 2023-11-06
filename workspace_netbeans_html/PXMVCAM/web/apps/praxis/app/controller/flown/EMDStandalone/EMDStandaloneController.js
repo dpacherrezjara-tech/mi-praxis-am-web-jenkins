@@ -21,6 +21,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     paramsDetailEMDTicket: {},
     paramsDetailTicketLog: {},
     dataObtain: {},
+    
     init: function (view) {
         me = this;
         prototype.id = 'EMDStandaloneForm';

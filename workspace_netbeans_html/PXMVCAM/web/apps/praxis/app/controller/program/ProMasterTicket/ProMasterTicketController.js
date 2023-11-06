@@ -31,7 +31,6 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     URL_VIEWTICKET : '',
     gridDataMemoAC: [],
     gridDataTktRealUsesAC: [],
-    
     TKT_RESULT_01 : {},
     
     init: function (view) {

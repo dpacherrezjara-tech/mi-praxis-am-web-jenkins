@@ -9,6 +9,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.Info', {
         border: false
     },
     style: 'margin: 1px;',
+    
     items: [
         {
             region: 'center',
