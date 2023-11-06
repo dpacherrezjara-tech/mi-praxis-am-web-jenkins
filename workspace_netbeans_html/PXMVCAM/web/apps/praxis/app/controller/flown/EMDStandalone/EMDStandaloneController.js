@@ -311,7 +311,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setMainData: function (obj, val) {
         console.log("URL : " + prototype.url + '/searchMain');
-        win.lblUser_toolTip("Estructura: A4479");
+        win.lblUser_toolTip("Estructura: A4478");
         me.panelActual = '-panelGridDataMain';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         me.setWidthPie();
@@ -462,8 +462,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         };
         this.setGridData(date, stval);
     },
-    //VENTAS
-    onGridData1: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onGridDataDetailConcliliated: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         Ext.getCmp(prototype.id + '-txtTICKET').show();
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridData';
@@ -589,7 +588,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         this.setGridDataDetEMD();
     },
     setGridDataDetEMD: function () {
-        win.lblUser_toolTip("Estructura: A3757");
+        win.lblUser_toolTip("Estructura: A4479");
         me.panelActual = '-panelGridDataDetEMD';
 //        me.setWidthPie();
         var msj = this.validateFields();
@@ -680,9 +679,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
 
     },
     btnClear_click: function (obj, e) {
-        Ext.getCmp(prototype.id + '-cmbCode').setValue('');
-        Ext.getCmp(prototype.id + '-cmbCountry').setValue('');
-        Ext.getCmp(prototype.id + '-cmbBank').setValue('');
+//        Ext.getCmp(prototype.id + '-cmbCode').setValue('');
+//        Ext.getCmp(prototype.id + '-cmbCountry').setValue('');
+//        Ext.getCmp(prototype.id + '-cmbBank').setValue('');
 
     },
     btnExcel_click: function (obj, e) {
@@ -717,7 +716,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
                 break;
             case  '-panelMidleGridData':
                 global.getFile(prototype.url + '/getXLSXMidle?beanString=' + paramsDetailEMD.beanString);
-                break;    
+                break;
             case  '-panelGridData':
                 global.getFile(prototype.url + '/getXLSX?beanString=' + paramsDetailEMD.beanString);
                 break;
@@ -790,7 +789,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
     },
     setWidthPie: function () {
         console.log(me.panelActual);
-        if (me.panelActual === '-panelGridData' ) {
+        if (me.panelActual === '-panelGridData') {
             var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
             Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
             Ext.getCmp(prototype.id + '-pie').setVisible(true);
