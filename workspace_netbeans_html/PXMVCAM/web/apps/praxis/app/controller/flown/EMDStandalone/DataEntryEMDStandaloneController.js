@@ -26,6 +26,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
 //        console.log(this.p);
 //        this.obtainData();
     },
+    
     afterRender: function () {
 //        console.log('afterRender');
         this.obtainData();
