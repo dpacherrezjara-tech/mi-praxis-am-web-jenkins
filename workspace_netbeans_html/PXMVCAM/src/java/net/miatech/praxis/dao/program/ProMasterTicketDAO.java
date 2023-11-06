@@ -38,7 +38,7 @@ import org.apache.log4j.Logger;
 //</editor-fold>
 /**
  *
- * @author gsanchez
+ * @author gsanche
  */
 public class ProMasterTicketDAO {
 

@@ -12,6 +12,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
         width: prototype.widthContenedor,
         bodyStyle: 'background: transparent;'
     },
+    
     items: [
         {
             xtype: 'panel',
