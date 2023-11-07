@@ -968,14 +968,14 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                         },
                                         {
                                             xtype: 'button',
-                                            id: prototype.id + '-btnDelivery',
+                                            id: prototype.id + '-btnDeliveryARC',
                                             margin: '0 0 0 30',
                                             text: '<strong style="color:white;">Delivery<strong>',
                                             cls: 'x-btn-sent',
                                             overCls: 'x-btn-sent-over',
-                                            width: 80,
+                                            width: 95,
                                             listeners: {
-                                                click: 'btnDelivery_clickHandler'
+                                                click: 'btnDeliveryARC_clickHandler'
                                             }
                                         },
                                         {
@@ -1478,7 +1478,6 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                     ]
                 } 
             ]
-            
         },
         {
             xtype: 'panel',
@@ -2765,7 +2764,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                                                     value: '',
                                                                                     readOnly: true,
                                                                                     fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;',
-                                                                                    width: 90
+                                                                                    width: 120
                                                                                 }
                                                                             ]
                                                                         },
@@ -2791,7 +2790,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                                                     value: '',
                                                                                     readOnly: true,
                                                                                     fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;',
-                                                                                    width: 90
+                                                                                    width: 120
                                                                                 }
                                                                             ]
                                                                         }
