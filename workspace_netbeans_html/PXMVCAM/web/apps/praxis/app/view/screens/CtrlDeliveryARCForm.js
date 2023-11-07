@@ -58,6 +58,7 @@ Ext.define('Ext.Praxis.view.screens.CtrlDeliveryARCForm', {
                                     xtype: 'textarea',
                                     width: '100%',
                                     height: '100%',
+                                    readOnly:true,
                                     id: prototype.DeliveryOrig.id+'-txtTexto',
                                     fieldStyle: 'overflow:scroll; overflow-wrap: normal; white-space:pre; letter-spacing:0.8px; line-height:19.9px; background-color:transparent;text-align:left; color:#2D476A; font-size:11px; font-family:"Courier New";',
                                     margin: '5',
