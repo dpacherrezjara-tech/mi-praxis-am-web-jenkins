@@ -1,5 +1,4 @@
 prototype.widthContenedor = 1770;
-prototype.pdarc = 'DataEntryGrupo';
 Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.ProMasterTicketForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.ProMasterTicketForm',

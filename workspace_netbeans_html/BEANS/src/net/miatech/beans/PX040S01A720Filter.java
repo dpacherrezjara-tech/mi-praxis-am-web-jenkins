@@ -25,29 +25,10 @@ public class PX040S01A720Filter {
     public String VP_A1716SEQF = "";
     public String VP_A1716SEQI = "";
     public String VP_A1716SEQA = "";
-
+    
     public String IN_CIA_REF ="";
     public String IN_FORMA_REF ="";
     public String IN_SERIE_REF ="";
-
-    public String IN_STVAL = "";
-    public String TICKET = "";
-    public String PRDA = "";
-    public String PAYDATE = "";
-    public String DESCMER = "";
-    public String TRNCU = "";
-    public String STVAL = "";
-    public String SMERCHID = "";
-    public String SMERCHDESCR = "";
-    public String COMPLEMENT = "";
-    public String SCARDN = "";
-    public String SAUTHOC = "";
-    public String INSTANBR = "";
-    public String INVOIRN = "";
-    public String SCURRENCY = "";
-    public String SVFOPS = "";
-    public String TGROSAMOUN = "";
-    public String DESCADJU = "";
     
     public List<PX040S01A720ResultSet01> lstResultSet01 = new ArrayList<PX040S01A720ResultSet01>(0);
     public List<PX040S01A720ResultSet02> lstResultSet02 = new ArrayList<PX040S01A720ResultSet02>(0);
@@ -71,7 +52,7 @@ public class PX040S01A720Filter {
     public A725 fileA725 = new A725();
     public A1716 fileA1716 = new A1716();
     public A1725 fileA1725 = new A1725();
-
+    
     public A1533 fileA1533 = new A1533();
 }
 

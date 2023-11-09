@@ -27,15 +27,7 @@ public class ProMasterTicketLogic {
     public void setSession(IServerSession ss) {
         objDAO.setSession(ss);
     }
-    
-    public List<PX040S01A720Filter> SQP05174(PX040S01A720Filter filter) throws SQLException, Exception {
-        return objDAO.SQP05174(filter);
-    }
-    
-    public List<PX040S01A720Filter> SQP05175(PX040S01A720Filter filter) throws SQLException, Exception {
-        return objDAO.SQP05175(filter);
-    }
-    
+
     @Deprecated
     public PX040S01A720Filter loadPX040S01A720(PX040S01A720Filter filter) throws SQLException, Exception {
         return objDAO.loadPX040S01A720(filter);
@@ -50,11 +42,11 @@ public class ProMasterTicketLogic {
     public List<PX040S01A1716Filter> loadPX040S01A1716(PX040S01A1716Filter filter) throws SQLException, Exception {
         return objDAO.loadPX040S01A1716(filter);
     }
-    
+
     public List<A4474Filter> loadSQP05045(A4474Filter filter) throws SQLException, Exception {
         return objDAO.loadSQP05045(filter);
     }
-            
+    
     public List<A720> loadPX040S02A720(PX040S02A720Filter filter) throws SQLException, Exception {
         return objDAO.loadPX040S02A720(filter);
     }
