@@ -9795,159 +9795,118 @@ public class Dashboard01DAO {
         ResultSet rs01 = null;
         long TOT_QTYFLY1 = 0,TOT_QTYFLY2 = 0,TOT_QTYFLY3 = 0,TOT_QTYFLY4 = 0,TOT_QTYFLY5 = 0,TOT_QTYFLY6 = 0,TOT_QTYFLY7 = 0,TOT_QTYFLY8 = 0,TOT_QTYFLY9 = 0,TOT_QTYFLY10 = 0,TOT_QTYFLY11 = 0,TOT_QTYFLY12 = 0,TOT_QTYSALE = 0,TOT_QTYFLOWN = 0;
         double TOT_FLYAMO1 = 0,TOT_FLYAMO2 = 0,TOT_FLYAMO3 = 0,TOT_FLYAMO4 = 0,TOT_FLYAMO5 = 0,TOT_FLYAMO6 = 0,TOT_FLYAMO7 = 0,TOT_FLYAMO8 = 0,TOT_FLYAMO9 = 0,TOT_FLYAMO10 = 0,TOT_FLYAMO11 = 0,TOT_FLYAMO12 = 0,TOT_AMOSALE = 0,TOT_AMOFLOWN = 0;
-        String SQLCLL01 = "{CALL SQP05097(?,?,?,?)}";
+        String SQLCLL01 = "{CALL SQP05098(?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.IN_FECHA_FROM_FORE);
-            cstmt01.setString(3, filter.IN_FECHA_TO_FORE);
-            cstmt01.setString(4, filter.IN_TIPO);
+//            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(1, filter.IN_FECHA_FROM_FORE);
+//            cstmt01.setString(3, filter.IN_FECHA_TO_FORE);
+//            cstmt01.setString(4, filter.IN_TIPO);
 
             cstmt01.execute();
 
-            rs01 = cstmt01.getResultSet();
-            while (rs01.next()) {
-                TOT_QTYFLY1 = rs01.getLong("QTYFLY1");
-                TOT_FLYAMO1 = rs01.getDouble("FLYAMO1");
-                TOT_QTYFLY2 = rs01.getLong("QTYFLY2");
-                TOT_FLYAMO2 = rs01.getDouble("FLYAMO2");
-                TOT_QTYFLY3 = rs01.getLong("QTYFLY3");
-                TOT_FLYAMO3 = rs01.getDouble("FLYAMO3");
-                TOT_QTYFLY4 = rs01.getLong("QTYFLY4");
-                TOT_FLYAMO4 = rs01.getDouble("FLYAMO4");
-                TOT_QTYFLY5 = rs01.getLong("QTYFLY5");
-                TOT_FLYAMO5 = rs01.getDouble("FLYAMO5");
-                TOT_QTYFLY6 = rs01.getLong("QTYFLY6");
-                TOT_FLYAMO6 = rs01.getDouble("FLYAMO6");
-                TOT_QTYFLY7 = rs01.getLong("QTYFLY7");
-                TOT_FLYAMO7 = rs01.getDouble("FLYAMO7");
-                TOT_QTYFLY8 = rs01.getLong("QTYFLY8");
-                TOT_FLYAMO8 = rs01.getDouble("FLYAMO8");
-                TOT_QTYFLY9 = rs01.getLong("QTYFLY9");
-                TOT_FLYAMO9 = rs01.getDouble("FLYAMO9");
-                TOT_QTYFLY10 = rs01.getLong("QTYFLY10");
-                TOT_FLYAMO10 = rs01.getDouble("FLYAMO10");
-                TOT_QTYFLY11 = rs01.getLong("QTYFLY11");
-                TOT_FLYAMO11 = rs01.getDouble("FLYAMO11");
-                TOT_QTYFLY12 = rs01.getLong("QTYFLY12");
-                TOT_FLYAMO12 = rs01.getDouble("FLYAMO12");
-                TOT_QTYSALE = rs01.getLong("QTYSALE");
-                TOT_AMOSALE = rs01.getDouble("AMOSALE");
-                TOT_QTYFLOWN = rs01.getLong("QTYFLOWN");
-                TOT_AMOFLOWN = rs01.getDouble("AMOFLOWN");
-            }
+//            rs01 = cstmt01.getResultSet();
+//            while (rs01.next()) {
+//                TOT_QTYFLY1 = rs01.getLong("CPN1");
+//                TOT_FLYAMO1 = rs01.getDouble("AMT1");
+//                TOT_QTYFLY2 = rs01.getLong("CPN2");
+//                TOT_FLYAMO2 = rs01.getDouble("AMT2");
+//                TOT_QTYFLY3 = rs01.getLong("CPN3");
+//                TOT_FLYAMO3 = rs01.getDouble("AMT3");
+//                TOT_QTYFLY4 = rs01.getLong("CPN4");
+//                TOT_FLYAMO4 = rs01.getDouble("AMT4");
+//                TOT_QTYFLY5 = rs01.getLong("CPN5");
+//                TOT_FLYAMO5 = rs01.getDouble("AMT5");
+//                TOT_QTYFLY6 = rs01.getLong("CPN6");
+//                TOT_FLYAMO6 = rs01.getDouble("AMT6");
+                
+//                TOT_QTYSALE = rs01.getLong("QTYSALE");
+//                TOT_AMOSALE = rs01.getDouble("AMOSALE");
+//                TOT_QTYFLOWN = rs01.getLong("QTYFLOWN");
+//                TOT_AMOFLOWN = rs01.getDouble("AMOFLOWN");
+//            }
 
-            rs01.close();
-            if (cstmt01.getMoreResults()) {
+//            rs01.close();
+//            if (cstmt01.getMoreResults()) {
                 rs01 = cstmt01.getResultSet();
                 while (rs01.next()) {
                     objRtn = new IMF117Filter();
-                    objRtn.CCUST = rs01.getString("CCUST").trim();
-                    objRtn.DSALES = rs01.getString("DSALES");
-                    objRtn.CURRENC = rs01.getString("CURRENC");
+//                    objRtn.CCUST = rs01.getString("CCUST").trim();
+//                    objRtn.DSALES = rs01.getString("DSALES");
+//                    objRtn.CURRENC = rs01.getString("CURRENC");
                     
-                    objRtn.DFLIGHT1 = rs01.getString("DFLIGHT1");
+                    objRtn.DFLIGHT1 = rs01.getString("FVLO1");
                     objRtn.DFLIGHT1 = Functions.getMonthConvert(objRtn.DFLIGHT1);
-                    objRtn.QTYFLY1 = rs01.getLong("QTYFLY1");
-                    objRtn.FLYAMO1 = rs01.getDouble("FLYAMO1");
+                    objRtn.DSALES1 = rs01.getString("VTA1");
+                    objRtn.DSALES1 = Functions.getMonthConvert(objRtn.DSALES1);
+                    objRtn.QTYFLY1 = rs01.getLong("CPN1");
+                    objRtn.FLYAMO1 = rs01.getDouble("AMT1");
+                    objRtn.QTYS1 = rs01.getLong("QTYS1");
+                    objRtn.AMOS1 = rs01.getDouble("AMOS1");
+                    objRtn.QTYF1 = rs01.getLong("QTYF1");
+                    objRtn.AMOF1 = rs01.getDouble("AMOF1");
                     
-                    objRtn.DFLIGHT2 = rs01.getString("DFLIGHT2");
+                    objRtn.DFLIGHT2 = rs01.getString("FVLO2");
                     objRtn.DFLIGHT2 = Functions.getMonthConvert(objRtn.DFLIGHT2);
-                    objRtn.QTYFLY2 = rs01.getLong("QTYFLY2");
-                    objRtn.FLYAMO2 = rs01.getDouble("FLYAMO2");
+                    objRtn.DSALES2 = rs01.getString("VTA2");
+                    objRtn.DSALES2 = Functions.getMonthConvert(objRtn.DSALES2);
+                    objRtn.QTYFLY2 = rs01.getLong("CPN2");
+                    objRtn.FLYAMO2 = rs01.getDouble("AMT2");
+                    objRtn.QTYS2 = rs01.getLong("QTYS2");
+                    objRtn.AMOS2 = rs01.getDouble("AMOS2");
+                    objRtn.QTYF2 = rs01.getLong("QTYF2");
+                    objRtn.AMOF2 = rs01.getDouble("AMOF2");
                    
-                    objRtn.DFLIGHT3 = rs01.getString("DFLIGHT3");
+                    objRtn.DFLIGHT3 = rs01.getString("FVLO3");
                     objRtn.DFLIGHT3 = Functions.getMonthConvert(objRtn.DFLIGHT3);
-                    objRtn.QTYFLY3 = rs01.getLong("QTYFLY3");
-                    objRtn.FLYAMO3 = rs01.getDouble("FLYAMO3");
+                    objRtn.DSALES3 = rs01.getString("VTA3");
+                    objRtn.DSALES3 = Functions.getMonthConvert(objRtn.DSALES3);
+                    objRtn.QTYFLY3 = rs01.getLong("CPN3");
+                    objRtn.FLYAMO3 = rs01.getDouble("AMT3");
+                    objRtn.QTYS3 = rs01.getLong("QTYS3");
+                    objRtn.AMOS3 = rs01.getDouble("AMOS3");
+                    objRtn.QTYF3 = rs01.getLong("QTYF3");
+                    objRtn.AMOF3 = rs01.getDouble("AMOF3");
                     
-                    objRtn.DFLIGHT4 = rs01.getString("DFLIGHT4");
+                    objRtn.DFLIGHT4 = rs01.getString("FVLO4");
                     objRtn.DFLIGHT4 = Functions.getMonthConvert(objRtn.DFLIGHT4);
-                    objRtn.QTYFLY4 = rs01.getLong("QTYFLY4");
-                    objRtn.FLYAMO4 = rs01.getDouble("FLYAMO4");
+                    objRtn.DSALES4 = rs01.getString("VTA4");
+                    objRtn.DSALES4 = Functions.getMonthConvert(objRtn.DSALES4);
+                    objRtn.QTYFLY4 = rs01.getLong("CPN4");
+                    objRtn.FLYAMO4 = rs01.getDouble("AMT4");
+                    objRtn.QTYS4 = rs01.getLong("QTYS4");
+                    objRtn.AMOS4 = rs01.getDouble("AMOS4");
+                    objRtn.QTYF4 = rs01.getLong("QTYF4");
+                    objRtn.AMOF4 = rs01.getDouble("AMOF4");
                     
-                    objRtn.DFLIGHT5 = rs01.getString("DFLIGHT5");
+                    objRtn.DFLIGHT5 = rs01.getString("FVLO5");
                     objRtn.DFLIGHT5 = Functions.getMonthConvert(objRtn.DFLIGHT5);
-                    objRtn.QTYFLY5 = rs01.getLong("QTYFLY5");
-                    objRtn.FLYAMO5 = rs01.getDouble("FLYAMO5");
+                    objRtn.DSALES5 = rs01.getString("VTA5");
+                    objRtn.DSALES5 = Functions.getMonthConvert(objRtn.DSALES5);
+                    objRtn.QTYFLY5 = rs01.getLong("CPN5");
+                    objRtn.FLYAMO5 = rs01.getDouble("AMT5");
+                    objRtn.QTYS5 = rs01.getLong("QTYS5");
+                    objRtn.AMOS5 = rs01.getDouble("AMOS5");
+                    objRtn.QTYF5 = rs01.getLong("QTYF5");
+                    objRtn.AMOF5 = rs01.getDouble("AMOF5");
                     
-                    objRtn.DFLIGHT6 = rs01.getString("DFLIGHT6");
+                    objRtn.DFLIGHT6 = rs01.getString("FVLO6");
                     objRtn.DFLIGHT6 = Functions.getMonthConvert(objRtn.DFLIGHT6);
-                    objRtn.QTYFLY6 = rs01.getLong("QTYFLY6");
-                    objRtn.FLYAMO6 = rs01.getDouble("FLYAMO6");
-                    
-                    objRtn.DFLIGHT7 = rs01.getString("DFLIGHT7");
-                    objRtn.DFLIGHT7 = Functions.getMonthConvert(objRtn.DFLIGHT7);
-                    objRtn.QTYFLY7 = rs01.getLong("QTYFLY7");
-                    objRtn.FLYAMO7 = rs01.getDouble("FLYAMO7");
-                    
-                    objRtn.DFLIGHT8 = rs01.getString("DFLIGHT8");
-                    objRtn.DFLIGHT8 = Functions.getMonthConvert(objRtn.DFLIGHT8);
-                    objRtn.QTYFLY8 = rs01.getLong("QTYFLY8");
-                    objRtn.FLYAMO8 = rs01.getDouble("FLYAMO8");
-                    
-                    objRtn.DFLIGHT9 = rs01.getString("DFLIGHT9");
-                    objRtn.DFLIGHT9 = Functions.getMonthConvert(objRtn.DFLIGHT9);
-                    objRtn.QTYFLY9 = rs01.getLong("QTYFLY9");
-                    objRtn.FLYAMO9 = rs01.getDouble("FLYAMO9");
-                    
-                    objRtn.DFLIGHT10 = rs01.getString("DFLIGHT10");
-                    objRtn.DFLIGHT10 = Functions.getMonthConvert(objRtn.DFLIGHT10);
-                    objRtn.QTYFLY10 = rs01.getLong("QTYFLY10");
-                    objRtn.FLYAMO10 = rs01.getDouble("FLYAMO10");
-                    
-                    objRtn.DFLIGHT11 = rs01.getString("DFLIGHT11");
-                    objRtn.DFLIGHT11 = Functions.getMonthConvert(objRtn.DFLIGHT11);
-                    objRtn.QTYFLY11 = rs01.getLong("QTYFLY11");
-                    objRtn.FLYAMO11 = rs01.getDouble("FLYAMO11");
-                                        
-                    objRtn.DFLIGHT12 = rs01.getString("DFLIGHT12");
-                    objRtn.DFLIGHT12 = Functions.getMonthConvert(objRtn.DFLIGHT12);
-                    objRtn.QTYFLY12 = rs01.getLong("QTYFLY12");
-                    objRtn.FLYAMO12 = rs01.getDouble("FLYAMO12");
-                    
-                    objRtn.QTYSALE = rs01.getLong("QTYSALE");
-                    objRtn.AMOSALE = rs01.getDouble("AMOSALE");
-                    
-                    objRtn.QTYFLOWN = rs01.getLong("QTYFLOWN");
-                    objRtn.AMOFLOWN = rs01.getDouble("AMOFLOWN");
-                    
-                    objRtn.TOT_QTYFLY1 = TOT_QTYFLY1;
-                    objRtn.TOT_FLYAMO1 = TOT_FLYAMO1;
-                    objRtn.TOT_QTYFLY2 = TOT_QTYFLY2;
-                    objRtn.TOT_FLYAMO2 = TOT_FLYAMO2;
-                    objRtn.TOT_QTYFLY3 = TOT_QTYFLY3;
-                    objRtn.TOT_FLYAMO3 = TOT_FLYAMO3;
-                    objRtn.TOT_QTYFLY4 = TOT_QTYFLY4;
-                    objRtn.TOT_FLYAMO4 = TOT_FLYAMO4;
-                    objRtn.TOT_QTYFLY5 = TOT_QTYFLY5;
-                    objRtn.TOT_FLYAMO5 = TOT_FLYAMO5;
-                    objRtn.TOT_QTYFLY6 = TOT_QTYFLY6;
-                    objRtn.TOT_FLYAMO6 = TOT_FLYAMO6;
-                    objRtn.TOT_QTYFLY7 = TOT_QTYFLY7;
-                    objRtn.TOT_FLYAMO7 = TOT_FLYAMO7;
-                    objRtn.TOT_QTYFLY8 = TOT_QTYFLY8;
-                    objRtn.TOT_FLYAMO8 = TOT_FLYAMO8;
-                    objRtn.TOT_QTYFLY9 = TOT_QTYFLY9;
-                    objRtn.TOT_FLYAMO9 = TOT_FLYAMO9;
-                    objRtn.TOT_QTYFLY10 = TOT_QTYFLY10;
-                    objRtn.TOT_FLYAMO10 = TOT_FLYAMO10;
-                    objRtn.TOT_QTYFLY11 = TOT_QTYFLY11;
-                    objRtn.TOT_FLYAMO11 = TOT_FLYAMO11;
-                    objRtn.TOT_QTYFLY12 = TOT_QTYFLY12;
-                    objRtn.TOT_FLYAMO12 = TOT_FLYAMO12;
-                    
-                    objRtn.TOT_QTYSALE = TOT_QTYSALE;
-                    objRtn.TOT_AMOSALE = TOT_AMOSALE;
-                    objRtn.TOT_QTYFLOWN = TOT_QTYFLOWN;
-                    objRtn.TOT_AMOFLOWN = TOT_AMOFLOWN;
+                    objRtn.DSALES6 = rs01.getString("VTA6");
+                    objRtn.DSALES6 = Functions.getMonthConvert(objRtn.DSALES6);
+                    objRtn.QTYFLY6 = rs01.getLong("CPN6");
+                    objRtn.FLYAMO6 = rs01.getDouble("AMT6");
+                    objRtn.QTYS6 = rs01.getLong("QTYS6");
+                    objRtn.AMOS6 = rs01.getDouble("AMOS6");
+                    objRtn.QTYF6 = rs01.getLong("QTYF6");
+                    objRtn.AMOF6 = rs01.getDouble("AMOF6");
                     
                     lstRtn.add(objRtn);
                 }
-            }
+//            }
 
         } catch (Exception ex) {
         } finally {
