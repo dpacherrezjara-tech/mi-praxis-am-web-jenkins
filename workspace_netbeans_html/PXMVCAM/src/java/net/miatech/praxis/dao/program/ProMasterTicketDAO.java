@@ -187,7 +187,6 @@ public class ProMasterTicketDAO {
         PX040S01A720ResultSet15 objRtn15;
         PX040S01A720ResultSet22 objRtn22;
         PX040S01A720ResultSet23 objRtn23;
-        
         PreparedStatement pstmt01 = null, pstmt02 = null;
         ResultSet rstst01 = null, rstst02 = null;
 
@@ -832,7 +831,6 @@ public class ProMasterTicketDAO {
                                                                             filter.lstResultSet15.add(objRtn15);
                                                                         }
                                                                         if (cstmt01.getMoreResults()) {
-
                                                                             rs23 = cstmt01.getResultSet();
                                                                             while (rs23.next()) {
                                                                                 objRtn23 = new PX040S01A720ResultSet23();
@@ -851,6 +849,17 @@ public class ProMasterTicketDAO {
                                                                                 objRtn23.fileA1692.FBASE = rs23.getString("FBASE");
                                                                                 objRtn23.fileA1692.VCPN = rs23.getDouble("VCPN");
                                                                                 objRtn23.fileA1692.MDACP = rs23.getString("MDACP");
+                                                                                
+                                                                                objRtn23.fileA1692.STVAL = rs23.getString("STVAL");
+                                                                                if (objRtn23.fileA1692.STVAL.equals("0")) {
+                                                                                    objRtn23.fileA1692.STVAL = "Venta sin Uso";
+                                                                                } else if (objRtn23.fileA1692.STVAL.equals("1")) {
+                                                                                    objRtn23.fileA1692.STVAL = "Uso sin Venta";
+                                                                                } else if (objRtn23.fileA1692.STVAL.equals("2")) {
+                                                                                    objRtn23.fileA1692.STVAL = "MATCH";
+                                                                                }
+                                                                                
+                                                                                filter.lstResultSet23.add(objRtn23);
                                                                                 
                                                                                 objRtn23.fileA1692.STVAL = rs23.getString("STVAL");
                                                                                 if (objRtn23.fileA1692.STVAL.equals("0")) {
@@ -1949,8 +1958,8 @@ public class ProMasterTicketDAO {
 
                                                                         lstRtn.add(objRtn);
                                                                     }
-                                                                }
-                                                                if (cstmt01.getMoreResults()) {
+
+                                                                    if (cstmt01.getMoreResults()) {
                                                                     rs17 = cstmt01.getResultSet();
                                                                     while (rs17.next()) {
                                                                         objRtn = new PX040S01A1716Filter();
@@ -2019,6 +2028,7 @@ public class ProMasterTicketDAO {
                 }
             }
             //</editor-fold>
+            }
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
         } finally {

@@ -3205,8 +3205,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         TTRANS: paramsResultSet14.fileA2033.TTRANS,
                                         TTRAX: paramsResultSet14.fileA2033.TTRAX
                                     });
-                                }
                             }
+                        }
                         };
 						if(me01.filterTKT.lstResultSet23.length > 0){
                             for(var i23 = 0; i23 < me01.filterTKT.lstResultSet23.length; i23++){
@@ -3229,7 +3229,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         DATE : paramsResultSet23.fileA1692.DFLIGHT,
                                         STAT : 'EMD-USED',
                                         AMOUNT : Ext.util.Format.number(paramsResultSet23.fileA1692.VCPN, '0,000.00'),
-                                        CRCY : paramsResultSet23.fileA1692.MDACP,
+                                        CRCY : paramsResultSet23.fileA1692.MDACP
 //                                        FARE : paramsResultSet23.fileA1692.FBASE
                                     });
                             }
@@ -3595,38 +3595,36 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                     //win.setValue('txtFilterTicketSeq', '');
                     console.log(res.filterTKTSeq);
                     me01.filterTKTSeq = res.filterTKTSeq;
-                    if (me01.filterTKTSeq.length === 0 && win.getValue('txtFilterTicketCia').trim().length === 3 && win.getValue('txtFilterTicketFormSer').trim().length === 10)
-                    {
-                        me01.bean.IN_CIA = win.getValue('txtFilterTicketCia').trim();
-                        me01.bean.IN_FORMA = win.getValue('txtFilterTicketFormSer').trim().substr(0, 4);
-                        me01.bean.IN_SERIE = win.getValue('txtFilterTicketFormSer').trim().substr(4, 6);
-                        me01.bean.IN_SEQ = "00";
-                        console.log(me01.bean);
-                        me01.loadTicket(me01.bean);
-                        Ext.getCmp(prototype.id + '-lblCupon').hide();
-                        me01.controlLight();
-                    } else if (me01.filterTKTSeq.length === 1) {
-                        //this.execSearch();
-                        console.log(me01.filterTKTSeq[0]);
-                        me01.bean.IN_CIA = me01.filterTKTSeq[0].IN_CIA;
-                        me01.bean.IN_FORMA = me01.filterTKTSeq[0].IN_FORMA;
-                        me01.bean.IN_SERIE = me01.filterTKTSeq[0].IN_SERIE;
-                        me01.bean.IN_SEQ = me01.filterTKTSeq[0].IN_SEQ;
-                        console.log(me01.bean);
-                        me01.loadTicket(me01.bean);
-                        Ext.getCmp(prototype.id + '-lblCupon').hide();
-//                        if (me01.bean.IN_STVAL !== "") {
-//                            Ext.getCmp(prototype.id + '-lblMP1').setValue(me01.bean.IN_STVAL);
-//                        }
 
-                        me01.controlLight();
-                    } else
-                    {
-                        //global.Msg({ msg: "It's rolling" });
-                        me01.imgBrowser_clickHandler();
-                    }
-                } else
-                    global.Msg({msg: "Bad Request 3"});
+                        if(me01.filterTKTSeq.length === 0 && win.getValue('txtFilterTicketCia').trim().length === 3 && win.getValue('txtFilterTicketFormSer').trim().length ===10)
+                        {
+                            me01.bean.IN_CIA = win.getValue('txtFilterTicketCia').trim();
+                            me01.bean.IN_FORMA  = win.getValue('txtFilterTicketFormSer').trim().substr(0, 4);
+                            me01.bean.IN_SERIE = win.getValue('txtFilterTicketFormSer').trim().substr(4, 6);
+                            me01.bean.IN_SEQ = "00";
+                            console.log(me01.bean);
+                            me01.loadTicket(me01.bean);
+                            Ext.getCmp(prototype.id+'-lblCupon').hide();
+                            me01.controlLight();
+                        }
+                        else if(me01.filterTKTSeq.length === 1){
+                            //this.execSearch();
+                            console.log(me01.filterTKTSeq[0]);
+                            me01.bean.IN_CIA = me01.filterTKTSeq[0].IN_CIA;
+                            me01.bean.IN_FORMA  = me01.filterTKTSeq[0].IN_FORMA;
+                            me01.bean.IN_SERIE = me01.filterTKTSeq[0].IN_SERIE;
+                            me01.bean.IN_SEQ = me01.filterTKTSeq[0].IN_SEQ;
+                            console.log(me01.bean);
+                            me01.loadTicket(me01.bean);
+                            Ext.getCmp(prototype.id+'-lblCupon').hide();
+                            me01.controlLight();
+                        }
+                        else
+                        {
+                            //global.Msg({ msg: "It's rolling" });
+                            me01.imgBrowser_clickHandler();
+                        }
+                } else global.Msg({ msg: "Bad Request 3" });
             },
             failure: function (response, opts) {
                 Ext.getBody().unmask();
@@ -3889,7 +3887,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             }
                         }).show();
                     }
-                } else global.Msg({msg: "Bad Request"});
+                } else global.Msg({msg: "Bad Request 7"});
             },
             failure: function (response, opts) {
                 console.log('server-side failure with status code ' + response.status);
@@ -3989,8 +3987,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                     } else {
                         global.Msg({msg: 'An error has ocurred. Please contact our System Department'});
                     }
-                } else
-                    global.Msg({msg: "Bad Request"});
+                } else global.Msg({msg: "Bad Request 8"});
                 global.clear();
             },
             failure: function (response, opts) {
