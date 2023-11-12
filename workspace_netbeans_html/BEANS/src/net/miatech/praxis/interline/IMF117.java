@@ -13,6 +13,12 @@ public class IMF117 {
 
     public String CCUST = "";
     public String DSALES = "";
+    public String DSALES1 = "";
+    public String DSALES2 = "";
+    public String DSALES3 = "";
+    public String DSALES4 = "";
+    public String DSALES5 = "";
+    public String DSALES6 = "";
     public String DCONT = "";
     public String COUNTRYS = "";
     public String CURRENC = "";

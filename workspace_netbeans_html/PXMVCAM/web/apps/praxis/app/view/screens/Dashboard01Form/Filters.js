@@ -454,6 +454,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                         {
                                             xtype: 'label',
                                             html: 'To:',
+                                            hidden:true,
                                             fieldStyle: 'text-align: center;',
                                             padding: '3px 7px 0px 0px'
                                         },
@@ -470,6 +471,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                             editable: false,
                                             valueField: 'code', displayField: 'name',
                                             width: 75,
+                                            hidden:true,
                                             typeAhead: true,
                                             listConfig: {maxHeight: 111},
                                             listeners: {
@@ -487,6 +489,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                             forceSelection: true,
                                             editable: false,
                                             typeAhead: true,
+                                            hidden:true,
                                             valueField: 'code', displayField: 'name',
                                             width: 65,
                                             listeners: {
