@@ -91,7 +91,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             //transacciones stand by    
         } else if (status === '0') {
             bpo.setDisabled(false);
-            blocked.setDisabled(false);
+            blocked.setDisabled(true);
             desglose.setDisabled(true);
             scanner.hide();
             me.showStandBy(true);
@@ -99,7 +99,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             btnUpdate.hide();
             btnMSI.show();
             adjucoment.hide();
-            me.scanCreditCard(me.bean);
+            me.scanStandBy(me.bean);
 
             //transacciones pendientes
         } else {
@@ -190,6 +190,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         }
         panelScan.unmask();
     },
+    scanStandBy: async function (obj) {
+        const me = this;
+        const panelScan = Ext.getCmp(prototype.idDE + '-tabMain');
+        panelScan.mask('Scanning...');
+        let scanParams = me.formatScanSbParams(obj);
+        panelScan.setActiveTab('A');
+        const res = await fetch(`${me.url}/loadErrorTransactionStandByScanner?${new URLSearchParams(scanParams)}`);
+        if (res.ok) {
+            const data = await res.json();
+            console.log(data);
+            me.setBPOGrid(data.response);
+            me.setBlockedGrid(data.response);
+        } else {
+            global.Msg({msg: 'Error on scan'});
+        }
+        panelScan.unmask();
+    },
     //<editor-fold defaultstate="collapsed" desc="Handlers">
     reloadGridBPO: function () {
         const me = this;
@@ -238,30 +255,36 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         Ext.getCmp(prototype.idDE + '-observAdjustment').setValue('');
         this.view.center();
     },
-    onChangeStandBy: function () {
+    onChangeStandBy: async function () {
         const me = this;
         me.view.mask('Loading...');
         const bpoComent = Ext.getCmp(prototype.idDE + '-bpocoment');
         //console.log(mainForm.getValues());
         let params = me.formatStandByParams(me.bean, bpoComent.getValue());
-        fetch(`${me.url}/errorTransactionBPOsetStandBy?${new URLSearchParams(params)}`)
-                .then(async res => {
-                    if (res.ok) {
-                        const data = await res.json();
-                        const {sqlres, sqlmsg} = data;
-                        Ext.toast({
-                            html: `<b>${sqlmsg}</b>`,
-                            title: 'Notification',
-                            align: 't',
-                            closable: true,
-                            width: 300,
-                            timeout: 10000 // 10 segundos
-                        });
-                        me.view.unmask();
-                    } else {
-                        global.Msg({msg: 'Error.'});
-                    }
-                }).then(() => me.afterRender());
+        console.log(params);
+        const res = await fetch(`${me.url}/errorTransactionBPOsetStandBy`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        });
+        if (res.ok) {
+            const data = await res.json();
+            const {sqlres, sqlmsg} = data;
+            Ext.toast({
+                html: `<b>${sqlmsg}</b>`,
+                title: 'Notification',
+                align: 't',
+                closable: true,
+                width: 300,
+                timeout: 10000 // 10 segundos
+            });
+            me.view.unmask();
+            me.afterRender();
+        } else {
+            global.Msg({msg: 'Error.'});
+        }
     },
     onReverseStandBy: function () {
         const me = this;
@@ -586,6 +609,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         }
         blockedPanel.unmask();
     },
+    onClickMSITracking: function () {
+        const me = this;
+        let params = {
+            IN_CCUST: '139',
+            IN_TGROSAMOUN: me.bean.tgrosamoun
+        };
+        if (me.bean.proctype === 'BANORTE00') {
+            params.IN_SCARDN = `${me.bean.scardn.slice(0, 6)}%${me.bean.scardn.slice(-2)}%`;
+        } else {
+            params.IN_SCARDN = `${me.bean.scardn.slice(0, 6)}%${me.bean.scardn.slice(-4)}%`;
+        }
+        const dataEntryMSI = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry', {
+            id: prototype.idDE + '-MSITrackingDataEntry',
+            searchParams: params,
+            obj: me.bean
+        });
+        dataEntryMSI.show();
+    },
     onClickChbkTracking: function () {
         const me = this;
         let params = {
@@ -733,24 +774,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     }
                 });
     },
-    onClickMSITracking: function () {
-        const me = this;
-        let params = {
-            IN_CCUST: '139',
-            IN_TGROSAMOUN: me.bean.tgrosamoun
-        };
-        if (me.bean.proctype === 'BANORTE00') {
-            params.IN_SCARDN = `${me.bean.scardn.slice(0, 6)}%${me.bean.scardn.slice(-2)}%`;
-        } else {
-            params.IN_SCARDN = `${me.bean.scardn.slice(0, 6)}%${me.bean.scardn.slice(-4)}%`;
-        }
-        const dataEntryMSI = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry', {
-            id: prototype.idDE + '-MSITrackingDataEntry',
-            searchParams: params,
-            obj: me.bean
-        });
-        dataEntryMSI.show();
-    },
     onFilterBPOGrid: async function () {
         const obj = this.bean;
         const grid = Ext.getCmp(prototype.idDE + '-gridBPO');
@@ -830,6 +853,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         };
         return params;
     },
+    formatScanSbParams: function (obj) {
+        let params = {
+            IN_CCUST: obj.ccust,
+            IN_PRDA: obj.prda,
+            IN_AREFNBR: obj.arefnbr,
+            IN_TDOC: obj.tdoc,
+            IN_TRANSTYPE: obj.transtype
+        };
+        return params;
+    },
     formatDesgloseParams: function (obj) {
         let params = {
             IN_CCUST: obj.ccust,
@@ -841,6 +874,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         return params;
     },
     formatStandByParams: function (obj, comment) {
+        const me = this;
+        const gridBPO = Ext.getCmp(prototype.idDE + '-gridBPO').getStore();
+        const details = [...gridBPO.data.items.map(x => me.requestObjectPX(x.data))]
+                .map(x=>({
+                    CCUST: 139,
+                    AREFNBR: obj.arefnbr,
+                    PRDA: obj.prda,
+                    TDOC: obj.tdoc,
+                    ...x
+                }));
         let params = {
             IN_CCUST: obj.ccust,
             IN_PRDA: obj.prda,
@@ -848,7 +891,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             IN_AREFNBR: obj.arefnbr,
             IN_PROCTYPE: obj.proctype,
             IN_PROCTYPESQ: obj.proctypesq,
-            IN_OBSERV: comment
+            IN_OBSERV: comment,
+            detail: details
         };
         return params;
     },

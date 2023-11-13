@@ -78,7 +78,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
                     msg: 'Are you sure to update?',
                     buttons: Ext.MessageBox.YESNO,
                     scope: this,
-                    animateTarget: btn,
                     icon: Ext.MessageBox.QUESTION,
                     modal: true,
                     fn: function (btn) {
@@ -102,7 +101,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
                     msg: 'Are you sure to update?',
                     buttons: Ext.MessageBox.YESNO,
                     scope: this,
-                    animateTarget: btn,
                     icon: Ext.MessageBox.QUESTION,
                     modal: true,
                     fn: function (btn) {

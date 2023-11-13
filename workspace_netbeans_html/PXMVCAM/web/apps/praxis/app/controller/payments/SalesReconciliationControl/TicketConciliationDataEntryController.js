@@ -25,9 +25,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             console.log(me.bean);
             mainForm.reset();
             const {a4496CIA, a4496FORMA, a4496SERIE, a4501STVAL, a4501STADM,
-                bpo_COMEN, adm_COMEN, a4496TKVOI, a4501PRTP,procdate} = data.response;
+                bpo_COMEN, bpo_COMEN2, adm_COMEN, a4496TKVOI, a4501PRTP,procdate} = data.response;
             Ext.getCmp(prototype.idDE2 + '-ticketNumber').setValue(a4496CIA + ' ' + a4496FORMA + a4496SERIE);
-            Ext.getCmp(prototype.idDE2 + '-bpocoment').setValue(bpo_COMEN);
+            Ext.getCmp(prototype.idDE2 + '-bpocoment').setValue(bpo_COMEN2!==''?bpo_COMEN2:bpo_COMEN);
             Ext.getCmp(prototype.idDE2 + '-ADM-BPOCOMEN').setValue(adm_COMEN);
             me.setADMInfo();
             mainForm.setValues(data.response);
@@ -118,7 +118,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         me.view.mask('Loading...');
         const comment = Ext.getCmp(prototype.idDE2 + '-bpocoment').getValue();
         let params = me.formatStandByParams(comment);
-        const res = fetch(`${me.url}/ticketConciliationStandBy?${new URLSearchParams(params)}`);
+        const res = await fetch(`${me.url}/ticketConciliationStandBy?${new URLSearchParams(params)}`);
         if (res.ok) {
             const data = await res.json();
             const {sqlres, sqlmsg} = data;

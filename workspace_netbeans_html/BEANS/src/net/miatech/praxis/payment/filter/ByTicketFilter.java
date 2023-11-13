@@ -10,7 +10,7 @@ public class ByTicketFilter extends A4496{
     
     //campos agregados
     private String AGENT_NAME,PROC_NAME,DES_MERCHANT,DES_SMERCHANT,
-            DESC_CERROR,DESC_CODADJU,BPO_COMEN,ADM_COMEN,PROCDATE;
+            DESC_CERROR,DESC_CODADJU,BPO_COMEN,BPO_COMEN2,ADM_COMEN,PROCDATE;
 
     public String getAGENT_NAME() {
         return AGENT_NAME;
@@ -66,6 +66,14 @@ public class ByTicketFilter extends A4496{
 
     public void setBPO_COMEN(String BPO_COMEN) {
         this.BPO_COMEN = BPO_COMEN;
+    }
+
+    public String getBPO_COMEN2() {
+        return BPO_COMEN2;
+    }
+
+    public void setBPO_COMEN2(String BPO_COMEN2) {
+        this.BPO_COMEN2 = BPO_COMEN2;
     }
 
     public String getADM_COMEN() {

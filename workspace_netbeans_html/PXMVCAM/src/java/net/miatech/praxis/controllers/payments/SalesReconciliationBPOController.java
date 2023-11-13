@@ -45,9 +45,11 @@ import net.miatech.praxis.payment.filter.SQP05142Filter;
 import net.miatech.praxis.payment.filter.SQP05147Filter;
 import net.miatech.praxis.payment.filter.SQP05182Filter;
 import net.miatech.praxis.payment.filter.SQP05183Filter;
+import net.miatech.praxis.payment.filter.SQP05187Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.Functions;
+import net.sabre.miatech.praxis.ReclocRES;
 import net.sabre.miatech.praxis.TicketRES;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -251,6 +253,20 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @RequestMapping(value = "loadErrorTransactionStandByScanner")
+    public ResponseEntity<?> loadErrorTransactionStandByScanner(@ModelAttribute SQP05187Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : loadErrorTransactionStandByScanner-------------");
+        try {
+            params.setResponse(new ArrayList<>());
+            SQP05187Filter filter = logic.loadSQP05187Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @RequestMapping(value = "loadErrorTransactionBPODesglose")
     public ResponseEntity<?> loadErrorTransactionBPODesglose(@ModelAttribute SQP05055Filter params) {
@@ -277,9 +293,9 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @RequestMapping(value = "errorTransactionBPOsetStandBy")
-    public ResponseEntity<?> errorTransactionBPOsetStandBy(@ModelAttribute SQP05056Filter params) {
+    
+    @RequestMapping(value = "errorTransactionBPOsetStandBy", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> errorTransactionBPOsetStandBy(@RequestBody SQP05056Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : errorTransactionBPOsetStandBy-------------");
         try {
             SQP05056Filter filter = logic.loadSQP05056Filter(params);
@@ -966,6 +982,44 @@ public class SalesReconciliationBPOController {
                     // Las credenciales son válidas
                     System.out.println("Autorizado...");
                     TicketRES response = sabreWebService.getTicketInfo(ticket);
+                    return new ResponseEntity<>(response, HttpStatus.OK);
+                } else {
+                    // Las credenciales son inválidas
+                    throw new Exception("No Autorizado");
+                }
+            }else{
+                throw new Exception("Necesita Credenciales");
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(
+                    Collections.singletonMap("Message", e.getMessage()),
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping(value = "testPnrSabre/{pnr}")
+    public ResponseEntity<?> testPnrSabre(@PathVariable String pnr, @RequestHeader("Authorization") String authHeader) {
+        System.out.println("---------------SalesReconciliationBPO:testPNRSabre-------------");
+        try {
+            if (authHeader != null && authHeader.startsWith("Basic ")) {
+                // El encabezado de autenticación está presente y comienza con "Basic "
+                // Extraer y decodificar las credenciales
+                String base64Credentials = authHeader.substring(6);
+                String credentials = new String(Base64.getDecoder().decode(base64Credentials));
+
+                // Las credenciales ahora están en el formato usuario:contraseña
+                // Puedes dividirlas si es necesario
+                String[] userPass = credentials.split(":");
+                String username = userPass[0];
+                String password = userPass[1];
+
+                // Realiza acciones basadas en las credenciales
+                // Por ejemplo, verifica la autenticación
+                if (username.startsWith("SAP") && password.equals("miatech1")) {
+                    // Las credenciales son válidas
+                    System.out.println("Autorizado...");
+                    ReclocRES response = sabreWebService.getReclocInfo(pnr);
                     return new ResponseEntity<>(response, HttpStatus.OK);
                 } else {
                     // Las credenciales son inválidas
