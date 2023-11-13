@@ -9846,8 +9846,10 @@ public class Dashboard01DAO {
                     objRtn.FLYAMO1 = rs01.getDouble("AMT1");
                     objRtn.QTYS1 = rs01.getLong("QTYS1");
                     objRtn.AMOS1 = rs01.getDouble("AMOS1");
+                    objRtn.QTYS1_PERCENT = (objRtn.QTYS1 > 0) ? ((objRtn.QTYFLY1 * 100.00) / objRtn.QTYS1) : 0;
                     objRtn.QTYF1 = rs01.getLong("QTYF1");
                     objRtn.AMOF1 = rs01.getDouble("AMOF1");
+                    objRtn.QTYF1_PERCENT = (objRtn.QTYF1 > 0) ? ((objRtn.QTYFLY1 * 100.00) / objRtn.QTYF1) : 0;
                     
                     objRtn.DFLIGHT2 = rs01.getString("FVLO2");
                     objRtn.DFLIGHT2 = Functions.getMonthConvert(objRtn.DFLIGHT2);
@@ -9857,9 +9859,11 @@ public class Dashboard01DAO {
                     objRtn.FLYAMO2 = rs01.getDouble("AMT2");
                     objRtn.QTYS2 = rs01.getLong("QTYS2");
                     objRtn.AMOS2 = rs01.getDouble("AMOS2");
+                    objRtn.QTYS2_PERCENT = (objRtn.QTYS2 > 0) ? ((objRtn.QTYFLY2 * 100.00) / objRtn.QTYS2) : 0;
                     objRtn.QTYF2 = rs01.getLong("QTYF2");
                     objRtn.AMOF2 = rs01.getDouble("AMOF2");
-                   
+                    objRtn.QTYF2_PERCENT = (objRtn.QTYF2 > 0) ? ((objRtn.QTYFLY2 * 100.00) / objRtn.QTYF2) : 0;
+                    
                     objRtn.DFLIGHT3 = rs01.getString("FVLO3");
                     objRtn.DFLIGHT3 = Functions.getMonthConvert(objRtn.DFLIGHT3);
                     objRtn.DSALES3 = rs01.getString("VTA3");
@@ -9868,8 +9872,10 @@ public class Dashboard01DAO {
                     objRtn.FLYAMO3 = rs01.getDouble("AMT3");
                     objRtn.QTYS3 = rs01.getLong("QTYS3");
                     objRtn.AMOS3 = rs01.getDouble("AMOS3");
+                    objRtn.QTYS3_PERCENT = (objRtn.QTYS3 > 0) ? ((objRtn.QTYFLY3 * 100.00) / objRtn.QTYS3) : 0;
                     objRtn.QTYF3 = rs01.getLong("QTYF3");
                     objRtn.AMOF3 = rs01.getDouble("AMOF3");
+                    objRtn.QTYF3_PERCENT = (objRtn.QTYF3 > 0) ? ((objRtn.QTYFLY3 * 100.00) / objRtn.QTYF3) : 0;
                     
                     objRtn.DFLIGHT4 = rs01.getString("FVLO4");
                     objRtn.DFLIGHT4 = Functions.getMonthConvert(objRtn.DFLIGHT4);
@@ -9879,8 +9885,10 @@ public class Dashboard01DAO {
                     objRtn.FLYAMO4 = rs01.getDouble("AMT4");
                     objRtn.QTYS4 = rs01.getLong("QTYS4");
                     objRtn.AMOS4 = rs01.getDouble("AMOS4");
+                    objRtn.QTYS4_PERCENT = (objRtn.QTYS4 > 0) ? ((objRtn.QTYFLY4 * 100.00) / objRtn.QTYS4) : 0;
                     objRtn.QTYF4 = rs01.getLong("QTYF4");
                     objRtn.AMOF4 = rs01.getDouble("AMOF4");
+                    objRtn.QTYF4_PERCENT = (objRtn.QTYF4 > 0) ? ((objRtn.QTYFLY4 * 100.00) / objRtn.QTYF4) : 0;
                     
                     objRtn.DFLIGHT5 = rs01.getString("FVLO5");
                     objRtn.DFLIGHT5 = Functions.getMonthConvert(objRtn.DFLIGHT5);
@@ -9890,8 +9898,10 @@ public class Dashboard01DAO {
                     objRtn.FLYAMO5 = rs01.getDouble("AMT5");
                     objRtn.QTYS5 = rs01.getLong("QTYS5");
                     objRtn.AMOS5 = rs01.getDouble("AMOS5");
+                    objRtn.QTYS5_PERCENT = (objRtn.QTYS5 > 0) ? ((objRtn.QTYFLY5 * 100.00) / objRtn.QTYS5) : 0;
                     objRtn.QTYF5 = rs01.getLong("QTYF5");
                     objRtn.AMOF5 = rs01.getDouble("AMOF5");
+                    objRtn.QTYF5_PERCENT = (objRtn.QTYF5 > 0) ? ((objRtn.QTYFLY5 * 100.00) / objRtn.QTYF5) : 0;
                     
                     objRtn.DFLIGHT6 = rs01.getString("FVLO6");
                     objRtn.DFLIGHT6 = Functions.getMonthConvert(objRtn.DFLIGHT6);
@@ -9901,8 +9911,10 @@ public class Dashboard01DAO {
                     objRtn.FLYAMO6 = rs01.getDouble("AMT6");
                     objRtn.QTYS6 = rs01.getLong("QTYS6");
                     objRtn.AMOS6 = rs01.getDouble("AMOS6");
+                    objRtn.QTYS6_PERCENT = (objRtn.QTYS6 > 0) ? ((objRtn.QTYFLY6 * 100.00) / objRtn.QTYS6) : 0;
                     objRtn.QTYF6 = rs01.getLong("QTYF6");
                     objRtn.AMOF6 = rs01.getDouble("AMOF6");
+                    objRtn.QTYF6_PERCENT = (objRtn.QTYF6 > 0) ? ((objRtn.QTYFLY6 * 100.00) / objRtn.QTYF6) : 0;
                     
                     lstRtn.add(objRtn);
                 }
