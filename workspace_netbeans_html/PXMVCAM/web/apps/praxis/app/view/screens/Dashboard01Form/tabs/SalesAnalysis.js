@@ -6992,7 +6992,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                     menuDisabled: true, sortable: false, align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Coupons', dataIndex: 'QTYFLY1', width: 90,
+                                                    {text: 'Coupons', dataIndex: 'QTYFLY1', width: 87,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background:#;text-align:right";
                                                             return Ext.util.Format.number(value, '0,000');
@@ -7001,6 +7001,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                             var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.QTYF1, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: '%', dataIndex: 'QTYS1_PERCENT', width: 55,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            console.log(data);
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF1_PERCENT, '0,000') + '%' + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -7062,7 +7074,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                     menuDisabled: true, sortable: false, align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Coupons', dataIndex: 'QTYFLY2', width: 90,
+                                                    {text: 'Coupons', dataIndex: 'QTYFLY2', width: 87,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background:#bbe4fc;text-align:right";
                                                             return Ext.util.Format.number(value, '0,000');
@@ -7071,6 +7083,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                             var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.QTYF2, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: '%', dataIndex: 'QTYS2_PERCENT', width: 55,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#bbe4fc;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            console.log(data);
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF2_PERCENT, '0,000') + '%' + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -7132,7 +7156,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                     menuDisabled: true, sortable: false, align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Coupons', dataIndex: 'QTYFLY3', width: 90,
+                                                    {text: 'Coupons', dataIndex: 'QTYFLY3', width: 87,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background:#;text-align:right";
                                                             return Ext.util.Format.number(value, '0,000');
@@ -7141,7 +7165,19 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                             var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             console.log(data);
-                                                            return '<b>' + Ext.util.Format.number(data.QTYF3[0], '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF3, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: '%', dataIndex: 'QTYS3_PERCENT', width: 55,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            console.log(data);
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF3_PERCENT, '0,000') + '%' + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -7203,7 +7239,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                     menuDisabled: true, sortable: false, align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Coupons', dataIndex: 'QTYFLY4', width: 90,
+                                                    {text: 'Coupons', dataIndex: 'QTYFLY4', width: 87,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background:#bbe4fc;text-align:right";
                                                             return Ext.util.Format.number(value, '0,000');
@@ -7212,6 +7248,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                             var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.QTYF4, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: '%', dataIndex: 'QTYS4_PERCENT', width: 55,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#bbe4fc;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            console.log(data);
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF4_PERCENT, '0,000') + '%' + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -7273,7 +7321,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                     menuDisabled: true, sortable: false, align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Coupons', dataIndex: 'QTYFLY5', width: 90,
+                                                    {text: 'Coupons', dataIndex: 'QTYFLY5', width: 87,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background:#;text-align:right";
                                                             return Ext.util.Format.number(value, '0,000');
@@ -7282,6 +7330,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                             var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.QTYF5, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: '%', dataIndex: 'QTYS5_PERCENT', width: 55,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            console.log(data);
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF5_PERCENT, '0,000') + '%' + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -7311,6 +7371,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                     {
                                         text: 'Sixt Month',
                                         id: prototype.id + '-month6',
+                                        hidden:true,
                                         defaults: {
                                             menuDisabled: true, sortable: false, align: 'center'
                                         },
@@ -7343,7 +7404,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                     menuDisabled: true, sortable: false, align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Coupons', dataIndex: 'QTYFLY6', width: 90,
+                                                    {text: 'Coupons', dataIndex: 'QTYFLY6', width: 87,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background:#bbe4fc;text-align:right";
                                                             return Ext.util.Format.number(value, '0,000');
@@ -7352,6 +7413,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                             var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.QTYF6, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: '%', dataIndex: 'QTYS6_PERCENT', width: 55,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#bbe4fc;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            console.log(data);
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF6_PERCENT, '0,000') + '%' + '<b>';
                                                         }
                                                     },
                                                 ]

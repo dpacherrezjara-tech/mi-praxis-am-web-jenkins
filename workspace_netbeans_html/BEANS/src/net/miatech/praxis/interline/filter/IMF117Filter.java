@@ -173,6 +173,18 @@ public class IMF117Filter extends IMF117 {
     public long QTYF6 = 0;
     public double AMOF6 = 0;
     
+    public double QTYS1_PERCENT = 0;
+    public double QTYS2_PERCENT = 0;
+    public double QTYS3_PERCENT = 0;
+    public double QTYS4_PERCENT = 0;
+    public double QTYS5_PERCENT = 0;
+    public double QTYS6_PERCENT = 0;
+    public double QTYF1_PERCENT = 0;
+    public double QTYF2_PERCENT = 0;
+    public double QTYF3_PERCENT = 0;
+    public double QTYF4_PERCENT = 0;
+    public double QTYF5_PERCENT = 0;
+    public double QTYF6_PERCENT = 0;
     
     public String PERIODO = "";
     public String ORDEN = "";
