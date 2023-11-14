@@ -48,6 +48,7 @@ import net.miatech.praxis.payment.filter.SQP05142Filter;
 import net.miatech.praxis.payment.filter.SQP05147Filter;
 import net.miatech.praxis.payment.filter.SQP05182Filter;
 import net.miatech.praxis.payment.filter.SQP05183Filter;
+import net.miatech.praxis.payment.filter.SQP05187Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -200,6 +201,18 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
     }
 
     @Override
+    public SQP05187Filter loadSQP05187Filter(SQP05187Filter filter) throws Exception {
+        SimpleJdbcCall spCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05187")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(ScannerFilter.class));
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = spCall.execute(params);
+        filter.setResponse(((List<ScannerFilter>) spRes.get("result")));
+        return filter;
+    }
+
+    @Override
     public SQP05055Filter loadSQP05055Filter(SQP05055Filter filter) throws Exception {
         SimpleJdbcCall spCall = jdbcUtils.getJdbcCall()
                 .withSchemaName(LIBRARY)
@@ -213,6 +226,18 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
 
     @Override
     public SQP05056Filter loadSQP05056Filter(SQP05056Filter filter) throws Exception {
+        NamedParameterJdbcTemplate npjt = jdbcUtils.getNamedParameter();
+        //,CARDTYPE,SCARDCOD,FVOID
+        final String sql = "INSERT INTO PRAXISMP.X3169 (CCUST,AREFNBR,CCIA,FORMA,SERIE,SEQ,CORRL,TDOC,PRDA,"
+                + "TRNCU,SDATE,TCORR) "
+                + "VALUES"
+                + "(:CCUST,:AREFNBR,:CCIA,:FORMA,:SERIE,:SEQ,:CORRL,:TDOC,:PRDA,"
+                + ":TRNCU,:SDATE,:TCORR)";
+        BeanPropertySqlParameterSource[] insertParams = new BeanPropertySqlParameterSource[filter.getDetail().size()];
+        for (int i = 0; i < filter.getDetail().size(); i++) {
+            insertParams[i] = new BeanPropertySqlParameterSource(filter.getDetail().get(i));
+        }
+        npjt.batchUpdate(sql, insertParams);
         SimpleJdbcCall spCall = jdbcUtils.getJdbcCall()
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05056");
