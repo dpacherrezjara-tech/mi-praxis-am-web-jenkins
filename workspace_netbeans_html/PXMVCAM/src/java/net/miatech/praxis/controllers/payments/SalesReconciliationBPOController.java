@@ -258,7 +258,6 @@ public class SalesReconciliationBPOController {
     public ResponseEntity<?> loadErrorTransactionStandByScanner(@ModelAttribute SQP05187Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : loadErrorTransactionStandByScanner-------------");
         try {
-            params.setResponse(new ArrayList<>());
             SQP05187Filter filter = logic.loadSQP05187Filter(params);
             System.out.println("Total: " + filter.getResponse().size());
             return new ResponseEntity<>(filter, HttpStatus.OK);
