@@ -262,6 +262,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         }
         me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
         me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
+        me.bean.IN_FECHA_FROM_FORE = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').getValue();
+        me.bean.IN_FECHA_TO_FORE = Ext.getCmp(prototype.id + '-cmbDateToYear_FORE').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth_FORE').getValue();
         me.bean.strYearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + '';
         me.bean.strMonthFrom = Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + '';
         me.bean.strYearTo = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + '';
@@ -1933,61 +1935,107 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                         console.log(Objtemp);
                         var espacios = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
                         var espacios2 = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
-                        if (Objtemp.DSALES1 !== '') {
+                        if (Objtemp.DSALES1 !== '' && Objtemp.DFLIGHT1 !== '') {
+                            console.log('Entra a 1');
+                            Ext.getCmp(prototype.id + '-gridFORE').setWidth(312);
+                            Ext.getCmp(prototype.id + '-displayFORE').setWidth(312);
                             Ext.getCmp(prototype.id + '-month1').show();
-                            Ext.getCmp(prototype.id + '-month1').setText(espacios + Objtemp.DSALES1 + espacios +  espacios2 + 'USD');
+                            Ext.getCmp(prototype.id + '-month1').setText(espacios + Objtemp.DSALES1 + espacios + espacios2 + 'USD');
                             Ext.getCmp(prototype.id + '-cpn1').setText(Ext.util.Format.number(Objtemp.QTYS1, '0,000'));
                             Ext.getCmp(prototype.id + '-amo1').setText(Ext.util.Format.number(Objtemp.AMOS1, '0,000'));
-                        }else{
-//                            Ext.getCmp(prototype.id + '-month1').hide();
-//                            Ext.getCmp(prototype.id + '-gridFORE').setWidth();
-                        }
-                        if (Objtemp.DSALES2 !== '') {
-                            Ext.getCmp(prototype.id + '-month2').show();
-                            Ext.getCmp(prototype.id + '-month2').setText(espacios + Objtemp.DSALES2 + espacios +  espacios2 + 'USD');
-                            Ext.getCmp(prototype.id + '-cpn2').setText(Ext.util.Format.number(Objtemp.QTYS2, '0,000'));
-                            Ext.getCmp(prototype.id + '-amo2').setText(Ext.util.Format.number(Objtemp.AMOS2, '0,000'));
-                        }else{
+                            if (Objtemp.DSALES2 !== '' && Objtemp.DFLIGHT2 !== '') {
+                                console.log('Entra a 2');
+                                Ext.getCmp(prototype.id + '-gridFORE').setWidth(624);
+                                Ext.getCmp(prototype.id + '-displayFORE').setWidth(624);
+                                Ext.getCmp(prototype.id + '-month2').show();
+                                Ext.getCmp(prototype.id + '-month2').setText(espacios + Objtemp.DSALES2 + espacios + espacios2 + 'USD');
+                                Ext.getCmp(prototype.id + '-cpn2').setText(Ext.util.Format.number(Objtemp.QTYS2, '0,000'));
+                                Ext.getCmp(prototype.id + '-amo2').setText(Ext.util.Format.number(Objtemp.AMOS2, '0,000'));
+                                if (Objtemp.DSALES3 !== '' && Objtemp.DFLIGHT3 !== '') {
+                                    console.log('Entra a 3');
+                                    Ext.getCmp(prototype.id + '-gridFORE').setWidth(936);
+                                    Ext.getCmp(prototype.id + '-displayFORE').setWidth(936);
+                                    Ext.getCmp(prototype.id + '-month3').show();
+                                    Ext.getCmp(prototype.id + '-month3').setText(espacios + Objtemp.DSALES3 + espacios + espacios2 + 'USD');
+                                    Ext.getCmp(prototype.id + '-cpn3').setText(Ext.util.Format.number(Objtemp.QTYS3, '0,000'));
+                                    Ext.getCmp(prototype.id + '-amo3').setText(Ext.util.Format.number(Objtemp.AMOS3, '0,000'));
+                                    if (Objtemp.DSALES4 !== '' && Objtemp.DFLIGHT4 !== '') {
+                                        console.log('Entra a 4');
+                                        Ext.getCmp(prototype.id + '-gridFORE').setWidth(1248);
+                                        Ext.getCmp(prototype.id + '-displayFORE').setWidth(1248);
+                                        Ext.getCmp(prototype.id + '-month4').show();
+                                        Ext.getCmp(prototype.id + '-month4').setText(espacios + Objtemp.DSALES4 + espacios + espacios2 + 'USD');
+                                        Ext.getCmp(prototype.id + '-cpn4').setText(Ext.util.Format.number(Objtemp.QTYS4, '0,000'));
+                                        Ext.getCmp(prototype.id + '-amo4').setText(Ext.util.Format.number(Objtemp.AMOS4, '0,000'));
+                                        if (Objtemp.DSALES5 !== '' && Objtemp.DFLIGHT5 !== '') {
+                                            console.log('Entra a 5');
+                                            Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+                                            Ext.getCmp(prototype.id + '-displayFORE').setWidth(1560);
+                                            Ext.getCmp(prototype.id + '-month5').show();
+                                            Ext.getCmp(prototype.id + '-month5').setText(espacios + Objtemp.DSALES5 + espacios + espacios2 + 'USD');
+                                            Ext.getCmp(prototype.id + '-cpn5').setText(Ext.util.Format.number(Objtemp.QTYS5, '0,000'));
+                                            Ext.getCmp(prototype.id + '-amo5').setText(Ext.util.Format.number(Objtemp.AMOS5, '0,000'));
+                                        } else {
+                                            Ext.getCmp(prototype.id + '-month5').hide();
+                                        }
+                                    } else {
+                                        Ext.getCmp(prototype.id + '-month4').hide();
+                                        Ext.getCmp(prototype.id + '-month5').hide();
+                                    }
+                                } else {
+                                    Ext.getCmp(prototype.id + '-month3').hide();
+                                    Ext.getCmp(prototype.id + '-month4').hide();
+                                    Ext.getCmp(prototype.id + '-month5').hide();
+                                }
+                            } else {
+                                Ext.getCmp(prototype.id + '-month2').hide();
+                                Ext.getCmp(prototype.id + '-month3').hide();
+                                Ext.getCmp(prototype.id + '-month4').hide();
+                                Ext.getCmp(prototype.id + '-month5').hide();
+                            }
+                        } else {
+                            Ext.getCmp(prototype.id + '-gridFORE').setWidth(0);
+                            Ext.getCmp(prototype.id + '-displayFORE').setWidth(0);
+                            Ext.getCmp(prototype.id + '-month1').hide();
                             Ext.getCmp(prototype.id + '-month2').hide();
-                        }
-                        if (Objtemp.DSALES3 !== '') {
-                            Ext.getCmp(prototype.id + '-month3').show();
-                            Ext.getCmp(prototype.id + '-month3').setText(espacios + Objtemp.DSALES3 + espacios +  espacios2 + 'USD');
-                            Ext.getCmp(prototype.id + '-cpn3').setText(Ext.util.Format.number(Objtemp.QTYS3, '0,000'));
-                            Ext.getCmp(prototype.id + '-amo3').setText(Ext.util.Format.number(Objtemp.AMOS3, '0,000'));
-                        }else{
                             Ext.getCmp(prototype.id + '-month3').hide();
-                        }
-                        if (Objtemp.DSALES4 !== '') {
-                            Ext.getCmp(prototype.id + '-month4').show();
-                            Ext.getCmp(prototype.id + '-month4').setText(espacios + Objtemp.DSALES4 + espacios +  espacios2 + 'USD');
-                            Ext.getCmp(prototype.id + '-cpn4').setText(Ext.util.Format.number(Objtemp.QTYS4, '0,000'));
-                            Ext.getCmp(prototype.id + '-amo4').setText(Ext.util.Format.number(Objtemp.AMOS4, '0,000'));
-                        }else{
                             Ext.getCmp(prototype.id + '-month4').hide();
-                        }
-                        if (Objtemp.DSALES5 !== '') {
-                            Ext.getCmp(prototype.id + '-month5').show();
-                            Ext.getCmp(prototype.id + '-month5').setText(espacios + Objtemp.DSALES5 + espacios +  espacios2 + 'USD');
-                            Ext.getCmp(prototype.id + '-cpn5').setText(Ext.util.Format.number(Objtemp.QTYS5, '0,000'));
-                            Ext.getCmp(prototype.id + '-amo5').setText(Ext.util.Format.number(Objtemp.AMOS5, '0,000'));
-                        }else{
                             Ext.getCmp(prototype.id + '-month5').hide();
                         }
-//                        if (Objtemp.DSALES6 !== '') {
-//                            Ext.getCmp(prototype.id + '-month6').show();
-//                            Ext.getCmp(prototype.id + '-month6').setText(espacios + Objtemp.DSALES6 + espacios +  espacios2 + 'USD');
-//                            Ext.getCmp(prototype.id + '-cpn6').setText(Ext.util.Format.number(Objtemp.QTYS6, '0,000'));
-//                            Ext.getCmp(prototype.id + '-amo6').setText(Ext.util.Format.number(Objtemp.AMOS6, '0,000'));
-//                        }else{
-//                            Ext.getCmp(prototype.id + '-month6').hide();
-//                        }
                     }
                 }
             }
         });
         Ext.getCmp(prototype.id + '-gridFORE').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridFORE').setStore(storeGridDatas);
+        this.loadFOREGraph();
+    },
+    loadFOREGraph: function () {
+        win.lblUser_toolTip("Estructura: A4521");
+        me.panelActual = '-boxFORE';
+        this.showGrid('-boxFORE');
+        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+            proxy: {
+                url: prototype.url + '/loadFOREGraph'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+                },
+                load: function (obj) {
+                    console.log(obj.data.items[0]);
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+
+                    }
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-displayFORE').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayFORE').setStore(storeGridDatas);
     },
 //    loadTNUVS: function () {
 //        win.lblUser_toolTip("Estructura: ");
@@ -2178,6 +2226,16 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         this.setFormatParameter();
         if (Ext.getCmp(prototype.id + '-boxSalesByTransaction').isVisible()) {
             global.getFile(prototype.url + '/getXLSXSalesByTransaction?beanString=' + meFChart.searchParams);
+        }
+        if (Ext.getCmp(prototype.id + '-boxFORE').isVisible()) {
+            me.bean.IN_FECHA_FROM_FORE = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').getValue();
+            var beanString = JSON.stringify(me.bean);
+            searchParams = {
+                beanString: beanString,
+                bean: me.bean
+            };
+            console.log(searchParams);
+            global.getFile(prototype.url + '/getXLSXFORE?beanString=' + searchParams.beanString);
         }
 //         else if (Ext.getCmp(prototype.id + '-boxFORE').isVisible()) {
 //            global.getFile(prototype.url + '/getXLSXForecast?beanString=' + meFChart.searchParams);
