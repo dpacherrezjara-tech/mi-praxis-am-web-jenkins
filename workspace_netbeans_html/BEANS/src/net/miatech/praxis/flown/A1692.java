@@ -65,6 +65,7 @@ public class A1692 {
     public int QTYPAX = 0;
     
     public String FCONT = "";
+    public String A1964FCONT = "";
     public String IDCON = "";
     
     public double VCPN0 = 0;

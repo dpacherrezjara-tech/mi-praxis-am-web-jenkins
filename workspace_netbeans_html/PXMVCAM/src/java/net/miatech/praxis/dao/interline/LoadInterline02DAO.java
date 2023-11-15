@@ -1899,7 +1899,9 @@ public class LoadInterline02DAO {
                     objRtn.CUPON = rs01.getString("CUPON");
                     objRtn.strTicket = rs01.getString("CCIA") + " " + rs01.getString("FORMA") + rs01.getString("SERIE") + " " + rs01.getString("CUPON");
                     objRtn.FCONT = rs01.getString("FCONT");
+                    objRtn.A1964FCONT = rs01.getString("A1964FCONT");
                     objRtn.strFormatDate2 = Functions.getMonthConvert(objRtn.FCONT);
+                    objRtn.A1964FCONT = Functions.getMonthConvert(objRtn.A1964FCONT);
                     objRtn.ZONA = rs01.getString("ZONA");
                     objRtn.CDEPART = rs01.getString("CDEPART");
                     objRtn.CARRIVA = rs01.getString("CARRIVA");

@@ -47,7 +47,7 @@ Ext.define('Ext.Praxis.view.interline.FlownOALForm.FlownOALForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1300,
+                                        width: 1380,
                                         align: 'center'
                                     },
                                     items: [
