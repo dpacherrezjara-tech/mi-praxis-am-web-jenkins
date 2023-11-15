@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9785,6 +9786,220 @@ public class Dashboard01DAO {
             pasarGarbageCollector();
         }
 
+        return lstRtn;
+    }
+    
+    public List<IMF117Filter> loadPX226SQP05097(IMF117Filter filter) throws Exception {
+        List<IMF117Filter> lstRtn = new ArrayList<IMF117Filter>(0);
+        IMF117Filter objRtn;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        long TOT_QTYFLY1 = 0,TOT_QTYFLY2 = 0,TOT_QTYFLY3 = 0,TOT_QTYFLY4 = 0,TOT_QTYFLY5 = 0,TOT_QTYFLY6 = 0,TOT_QTYFLY7 = 0,TOT_QTYFLY8 = 0,TOT_QTYFLY9 = 0,TOT_QTYFLY10 = 0,TOT_QTYFLY11 = 0,TOT_QTYFLY12 = 0,TOT_QTYSALE = 0,TOT_QTYFLOWN = 0;
+        double TOT_FLYAMO1 = 0,TOT_FLYAMO2 = 0,TOT_FLYAMO3 = 0,TOT_FLYAMO4 = 0,TOT_FLYAMO5 = 0,TOT_FLYAMO6 = 0,TOT_FLYAMO7 = 0,TOT_FLYAMO8 = 0,TOT_FLYAMO9 = 0,TOT_FLYAMO10 = 0,TOT_FLYAMO11 = 0,TOT_FLYAMO12 = 0,TOT_AMOSALE = 0,TOT_AMOFLOWN = 0;
+        DecimalFormat dfi = new DecimalFormat("#.##");
+        DecimalFormat dfn = new DecimalFormat("###,###,###");
+        String SQLCLL01 = "{CALL SQP05098(?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+//            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(1, filter.IN_FECHA_FROM_FORE);
+//            cstmt01.setString(3, filter.IN_FECHA_TO_FORE);
+//            cstmt01.setString(4, filter.IN_TIPO);
+
+            cstmt01.execute();
+
+//            rs01 = cstmt01.getResultSet();
+//            while (rs01.next()) {
+//                TOT_QTYFLY1 = rs01.getLong("CPN1");
+//                TOT_FLYAMO1 = rs01.getDouble("AMT1");
+//                TOT_QTYFLY2 = rs01.getLong("CPN2");
+//                TOT_FLYAMO2 = rs01.getDouble("AMT2");
+//                TOT_QTYFLY3 = rs01.getLong("CPN3");
+//                TOT_FLYAMO3 = rs01.getDouble("AMT3");
+//                TOT_QTYFLY4 = rs01.getLong("CPN4");
+//                TOT_FLYAMO4 = rs01.getDouble("AMT4");
+//                TOT_QTYFLY5 = rs01.getLong("CPN5");
+//                TOT_FLYAMO5 = rs01.getDouble("AMT5");
+//                TOT_QTYFLY6 = rs01.getLong("CPN6");
+//                TOT_FLYAMO6 = rs01.getDouble("AMT6");
+                
+//                TOT_QTYSALE = rs01.getLong("QTYSALE");
+//                TOT_AMOSALE = rs01.getDouble("AMOSALE");
+//                TOT_QTYFLOWN = rs01.getLong("QTYFLOWN");
+//                TOT_AMOFLOWN = rs01.getDouble("AMOFLOWN");
+//            }
+
+//            rs01.close();
+//            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new IMF117Filter();
+//                    objRtn.CCUST = rs01.getString("CCUST").trim();
+//                    objRtn.DSALES = rs01.getString("DSALES");
+//                    objRtn.CURRENC = rs01.getString("CURRENC");
+                    
+                    objRtn.DFLIGHT1 = rs01.getString("FVLO1");
+                    objRtn.DFLIGHT1 = Functions.getMonthConvert(objRtn.DFLIGHT1);
+                    objRtn.DSALES1 = rs01.getString("VTA1");
+                    objRtn.DSALES1 = Functions.getMonthConvert(objRtn.DSALES1);
+                    objRtn.QTYFLY1 = rs01.getLong("CPN1");
+                    objRtn.FLYAMO1 = rs01.getDouble("AMT1");
+                    objRtn.QTYS1 = rs01.getLong("QTYS1");
+                    objRtn.AMOS1 = rs01.getDouble("AMOS1");
+                    objRtn.QTYS1_PERCENT = (objRtn.QTYS1 > 0) ? ((objRtn.QTYFLY1 * 100.00) / objRtn.QTYS1) : 0;
+                    objRtn.QTYS1_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS1_PERCENT));
+                    objRtn.QTYF1 = rs01.getLong("QTYF1");
+                    objRtn.AMOF1 = rs01.getDouble("AMOF1");
+                    objRtn.QTYF1_PERCENT = (objRtn.QTYF1 > 0) ? ((objRtn.QTYFLY1 * 100.00) / objRtn.QTYF1) : 0;
+                    objRtn.QTYF1_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF1_PERCENT));
+                    
+                    objRtn.DFLIGHT2 = rs01.getString("FVLO2");
+                    objRtn.DFLIGHT2 = Functions.getMonthConvert(objRtn.DFLIGHT2);
+                    objRtn.DSALES2 = rs01.getString("VTA2");
+                    objRtn.DSALES2 = Functions.getMonthConvert(objRtn.DSALES2);
+                    objRtn.QTYFLY2 = rs01.getLong("CPN2");
+                    objRtn.FLYAMO2 = rs01.getDouble("AMT2");
+                    objRtn.QTYS2 = rs01.getLong("QTYS2");
+                    objRtn.AMOS2 = rs01.getDouble("AMOS2");
+                    objRtn.QTYS2_PERCENT = (objRtn.QTYS2 > 0) ? ((objRtn.QTYFLY2 * 100.00) / objRtn.QTYS2) : 0;
+                    objRtn.QTYS2_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS2_PERCENT));
+                    objRtn.QTYF2 = rs01.getLong("QTYF2");
+                    objRtn.AMOF2 = rs01.getDouble("AMOF2");
+                    objRtn.QTYF2_PERCENT = (objRtn.QTYF2 > 0) ? ((objRtn.QTYFLY2 * 100.00) / objRtn.QTYF2) : 0;
+                    objRtn.QTYF2_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF2_PERCENT));
+                    
+                    objRtn.DFLIGHT3 = rs01.getString("FVLO3");
+                    objRtn.DFLIGHT3 = Functions.getMonthConvert(objRtn.DFLIGHT3);
+                    objRtn.DSALES3 = rs01.getString("VTA3");
+                    objRtn.DSALES3 = Functions.getMonthConvert(objRtn.DSALES3);
+                    objRtn.QTYFLY3 = rs01.getLong("CPN3");
+                    objRtn.FLYAMO3 = rs01.getDouble("AMT3");
+                    objRtn.QTYS3 = rs01.getLong("QTYS3");
+                    objRtn.AMOS3 = rs01.getDouble("AMOS3");
+                    objRtn.QTYS3_PERCENT = (objRtn.QTYS3 > 0) ? ((objRtn.QTYFLY3 * 100.00) / objRtn.QTYS3) : 0;
+                    objRtn.QTYS3_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS3_PERCENT));
+                    objRtn.QTYF3 = rs01.getLong("QTYF3");
+                    objRtn.AMOF3 = rs01.getDouble("AMOF3");
+                    objRtn.QTYF3_PERCENT = (objRtn.QTYF3 > 0) ? ((objRtn.QTYFLY3 * 100.00) / objRtn.QTYF3) : 0;
+                    objRtn.QTYF3_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF3_PERCENT));
+                    
+                    objRtn.DFLIGHT4 = rs01.getString("FVLO4");
+                    objRtn.DFLIGHT4 = Functions.getMonthConvert(objRtn.DFLIGHT4);
+                    objRtn.DSALES4 = rs01.getString("VTA4");
+                    objRtn.DSALES4 = Functions.getMonthConvert(objRtn.DSALES4);
+                    objRtn.QTYFLY4 = rs01.getLong("CPN4");
+                    objRtn.FLYAMO4 = rs01.getDouble("AMT4");
+                    objRtn.QTYS4 = rs01.getLong("QTYS4");
+                    objRtn.AMOS4 = rs01.getDouble("AMOS4");
+                    objRtn.QTYS4_PERCENT = (objRtn.QTYS4 > 0) ? ((objRtn.QTYFLY4 * 100.00) / objRtn.QTYS4) : 0;
+                    objRtn.QTYS4_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS4_PERCENT));
+                    objRtn.QTYF4 = rs01.getLong("QTYF4");
+                    objRtn.AMOF4 = rs01.getDouble("AMOF4");
+                    objRtn.QTYF4_PERCENT = (objRtn.QTYF4 > 0) ? ((objRtn.QTYFLY4 * 100.00) / objRtn.QTYF4) : 0;
+                    objRtn.QTYF4_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF4_PERCENT));
+                    
+                    objRtn.DFLIGHT5 = rs01.getString("FVLO5");
+                    objRtn.DFLIGHT5 = Functions.getMonthConvert(objRtn.DFLIGHT5);
+                    objRtn.DSALES5 = rs01.getString("VTA5");
+                    objRtn.DSALES5 = Functions.getMonthConvert(objRtn.DSALES5);
+                    objRtn.QTYFLY5 = rs01.getLong("CPN5");
+                    objRtn.FLYAMO5 = rs01.getDouble("AMT5");
+                    objRtn.QTYS5 = rs01.getLong("QTYS5");
+                    objRtn.AMOS5 = rs01.getDouble("AMOS5");
+                    objRtn.QTYS5_PERCENT = (objRtn.QTYS5 > 0) ? ((objRtn.QTYFLY5 * 100.00) / objRtn.QTYS5) : 0;
+                    objRtn.QTYS5_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS5_PERCENT));
+                    objRtn.QTYF5 = rs01.getLong("QTYF5");
+                    objRtn.AMOF5 = rs01.getDouble("AMOF5");
+                    objRtn.QTYF5_PERCENT = (objRtn.QTYF5 > 0) ? ((objRtn.QTYFLY5 * 100.00) / objRtn.QTYF5) : 0;
+                    objRtn.QTYF5_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF5_PERCENT));
+                   
+                    objRtn.DFLIGHT6 = rs01.getString("FVLO6");
+                    objRtn.DFLIGHT6 = Functions.getMonthConvert(objRtn.DFLIGHT6);
+                    objRtn.DSALES6 = rs01.getString("VTA6");
+                    objRtn.DSALES6 = Functions.getMonthConvert(objRtn.DSALES6);
+                    objRtn.QTYFLY6 = rs01.getLong("CPN6");
+                    objRtn.FLYAMO6 = rs01.getDouble("AMT6");
+                    objRtn.QTYS6 = rs01.getLong("QTYS6");
+                    objRtn.AMOS6 = rs01.getDouble("AMOS6");
+                    objRtn.QTYS6_PERCENT = (objRtn.QTYS6 > 0) ? ((objRtn.QTYFLY6 * 100.00) / objRtn.QTYS6) : 0;
+                    objRtn.QTYS6_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS6_PERCENT));
+                    objRtn.QTYF6 = rs01.getLong("QTYF6");
+                    objRtn.AMOF6 = rs01.getDouble("AMOF6");
+                    objRtn.QTYF6_PERCENT = (objRtn.QTYF6 > 0) ? ((objRtn.QTYFLY6 * 100.00) / objRtn.QTYF6) : 0;
+                    objRtn.QTYF6_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF6_PERCENT));
+                    
+                    lstRtn.add(objRtn);
+                }
+//            }
+
+        } catch (Exception ex) {
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+    
+    public List<IMF117Filter> loadPX226SQP05097Graph(IMF117Filter filter) throws Exception {
+        List<IMF117Filter> lstRtn = new ArrayList<IMF117Filter>(0);
+        IMF117Filter objRtn;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL SQP05098Graph(?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, filter.IN_FECHA_FROM_FORE);
+            cstmt01.execute();
+
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new IMF117Filter();
+                    objRtn.DSALES = rs01.getString("DSALES");
+                    objRtn.DSALES = Functions.getMonthConvert(objRtn.DSALES);
+                    objRtn.QTYSALE = rs01.getLong("QTYSALE");
+                    objRtn.QTYFLOWN = rs01.getLong("QTYFLOWN");
+                    lstRtn.add(objRtn);
+                }
+        } catch (Exception ex) {
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
         return lstRtn;
     }
 
