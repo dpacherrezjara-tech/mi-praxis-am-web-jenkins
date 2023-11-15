@@ -180,7 +180,7 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
             fields: ['code', 'name'],
             data: [
                 ["F", "FLOWN"],
-                ["E", "EMDA"],
+                ["E", "EMD"],
                 ["S", "EMDS"],
 
             ]}));

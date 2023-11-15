@@ -100,7 +100,9 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
         }
     },
     filterTicketEMD: function (e, eOpts) {
-        this.btnSearch_click();
+        if (eOpts.getKey() === 13) {
+            this.btnSearch_click();
+        }
     },
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
