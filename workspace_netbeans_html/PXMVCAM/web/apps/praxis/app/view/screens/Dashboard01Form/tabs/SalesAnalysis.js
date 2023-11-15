@@ -118,7 +118,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                         //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-                                                        //                                                            console.log(data);
+                                                        //                                                            
                                                         //                                                            metaData.style = 'text-align:right; margin-right:3px ';
                                                         //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
                                                         //                                                        }
@@ -406,7 +406,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
 //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
 //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-//                                                            console.log(data);
+//                                                            
 //                                                            metaData.style = 'text-align:right; margin-right:3px ';
 //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
 //                                                        }
@@ -420,7 +420,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
 //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
 //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-//                                                            console.log(data);
+//                                                            
 //                                                            metaData.style = 'text-align:right; margin-right:3px ';
 //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
 //                                                        }
@@ -434,7 +434,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
 //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
 //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-//                                                            console.log(data);
+//                                                            
 //                                                            metaData.style = 'text-align:right; margin-right:3px ';
 //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
 //                                                        }
@@ -448,7 +448,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
 //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
 //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-//                                                            console.log(data);
+//                                                            
 //                                                            metaData.style = 'text-align:right; margin-right:3px ';
 //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
 //                                                        }
@@ -462,7 +462,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
 //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
 //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-//                                                            console.log(data);
+//                                                            
 //                                                            metaData.style = 'text-align:right; margin-right:3px ';
 //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
 //                                                        }
@@ -485,7 +485,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                         //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-                                                        //                                                            console.log(data);
+                                                        //                                                            
                                                         //                                                            metaData.style = 'text-align:right; margin-right:3px ';
                                                         //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
                                                         //                                                        }
@@ -616,7 +616,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
 //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
 //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-//                                                            console.log(data);
+//                                                            
 //                                                            metaData.style = 'text-align:right; margin-right:3px ';
 //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
 //                                                        }
@@ -630,7 +630,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
 //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
 //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-//                                                            console.log(data);
+//                                                            
 //                                                            metaData.style = 'text-align:right; margin-right:3px ';
 //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
 //                                                        }
@@ -644,7 +644,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
 //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
 //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-//                                                            console.log(data);
+//                                                            
 //                                                            metaData.style = 'text-align:right; margin-right:3px ';
 //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
 //                                                        }
@@ -658,7 +658,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
 //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
 //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-//                                                            console.log(data);
+//                                                            
 //                                                            metaData.style = 'text-align:right; margin-right:3px ';
 //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
 //                                                        }
@@ -672,7 +672,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
 //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
 //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-//                                                            console.log(data);
+//                                                            
 //                                                            metaData.style = 'text-align:right; margin-right:3px ';
 //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
 //                                                        }
@@ -695,7 +695,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                         //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-                                                        //                                                            console.log(data);
+                                                        //                                                            
                                                         //                                                            metaData.style = 'text-align:right; margin-right:3px ';
                                                         //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
                                                         //                                                        }
@@ -826,7 +826,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                         //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-                                                        //                                                            console.log(data);
+                                                        //                                                            
                                                         //                                                            metaData.style = 'text-align:right; margin-right:3px ';
                                                         //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
                                                         //                                                        }
@@ -1109,7 +1109,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 }
 //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
 //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-//                                                            console.log(data);
+//                                                            
 //                                                            metaData.style = 'text-align:right; margin-right:3px ';
 //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
 //                                                        }
@@ -1384,7 +1384,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                         //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-                                                        //                                                            console.log(data);
+                                                        //                                                            
                                                         //                                                            metaData.style = 'text-align:right; margin-right:3px ';
                                                         //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
                                                         //                                                        }
@@ -1398,7 +1398,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                         //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-                                                        //                                                            console.log(data);
+                                                        //                                                            
                                                         //                                                            metaData.style = 'text-align:right; margin-right:3px ';
                                                         //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
                                                         //                                                        }
@@ -1412,7 +1412,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                         //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-                                                        //                                                            console.log(data);
+                                                        //                                                            
                                                         //                                                            metaData.style = 'text-align:right; margin-right:3px ';
                                                         //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
                                                         //                                                        }
@@ -1426,7 +1426,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                         //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-                                                        //                                                            console.log(data);
+                                                        //                                                            
                                                         //                                                            metaData.style = 'text-align:right; margin-right:3px ';
                                                         //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
                                                         //                                                        }
@@ -1440,7 +1440,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                         //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-                                                        //                                                            console.log(data);
+                                                        //                                                            
                                                         //                                                            metaData.style = 'text-align:right; margin-right:3px ';
                                                         //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
                                                         //                                                        }
@@ -1456,7 +1456,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
 //                                                },
 ////                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
 ////                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-////                                                            console.log(data);
+////                                                            
 ////                                                            metaData.style = 'text-align:right; margin-right:3px ';
 ////                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
 ////                                                        }
@@ -1480,7 +1480,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         //                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                         //                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore();
-                                                        //                                                            console.log(data);
+                                                        //                                                            
                                                         //                                                            metaData.style = 'text-align:right; margin-right:3px ';
                                                         //                                                            return '<b>' + Ext.util.Format.number(data.lngTotQMATCH, '0,000') + '<b>';
                                                         //                                                        }
@@ -5592,7 +5592,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-GridtotalMonth_1').getStore().getData().items[0].data;
-                                                            console.log(data);
+
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totISCI_LY, '0,000') + '<b>';
                                                         }
@@ -5668,7 +5668,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-GridtotalMonth_2').getStore().getData().items[0].data;
-                                                            console.log(data);
+
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totISCI_LY, '0,000') + '<b>';
                                                         }
@@ -5743,7 +5743,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-GridtotalMonth_3').getStore().getData().items[0].data;
-                                                            console.log(data);
+
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totISCI_LY, '0,000') + '<b>';
                                                         }
@@ -5953,7 +5953,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-GridtotalMonth_1day').getStore().getData().items[0].data;
-                                                            console.log(data);
+
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totISCI_LY, '0,000') + '<b>';
                                                         }
@@ -6030,7 +6030,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-GridtotalMonth_2day').getStore().getData().items[0].data;
-                                                            console.log(data);
+
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totISCI_LY, '0,000') + '<b>';
                                                         }
@@ -6107,7 +6107,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-GridtotalMonth_3day').getStore().getData().items[0].data;
-                                                            console.log(data);
+
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totISCI_LY, '0,000') + '<b>';
                                                         }
@@ -6362,7 +6362,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-GridSalesByTransaction').getStore().getData().items[0].data;
-                                                            console.log(data);
+
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.TOTAL_SALETKT, '0,000') + '<b>';
                                                         }
@@ -6404,7 +6404,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-GridSalesByTransaction').getStore().getData().items[0].data;
-                                                            console.log(data);
+
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.TOTAL_EXCHTKT, '0,000') + '<b>';
                                                         }
@@ -6435,7 +6435,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-GridSalesByTransaction').getStore().getData().items[0].data;
-                                                            console.log(data);
+
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.TOTAL_RFNDTKT, '0,000') + '<b>';
                                                         }
@@ -6466,7 +6466,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-GridSalesByTransaction').getStore().getData().items[0].data;
-                                                            console.log(data);
+
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.TOTAL_AADMTKT, '0,000') + '<b>';
                                                         }
@@ -6497,7 +6497,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-GridSalesByTransaction').getStore().getData().items[0].data;
-                                                            console.log(data);
+
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.TOTAL_AACMTKT, '0,000') + '<b>';
                                                         }
@@ -6680,7 +6680,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridTNURE').getStore().getData().items[0].data;
-                                                    console.log(data);
+
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.TOTAL_QCPNS, '0,000') + '<b>';
                                                 }
@@ -6711,7 +6711,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridTNURE').getStore().getData().items[0].data;
-                                                    console.log(data);
+
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.TOTAL_QCPNV, '0,000') + '<b>';
                                                 }
@@ -6742,7 +6742,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridTNURE').getStore().getData().items[0].data;
-                                                    console.log(data);
+
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.TOTAL_QCPNR, '0,000') + '<b>';
                                                 }
@@ -6773,7 +6773,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridTNURE').getStore().getData().items[0].data;
-                                                    console.log(data);
+
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.TOTAL_QCPNE, '0,000') + '<b>';
                                                 }
@@ -6804,7 +6804,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridTNURE').getStore().getData().items[0].data;
-                                                    console.log(data);
+
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.TOTAL_QCPNI, '0,000') + '<b>';
                                                 }
@@ -6835,7 +6835,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridTNURE').getStore().getData().items[0].data;
-                                                    console.log(data);
+
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.TOTAL_QCPNC, '0,000') + '<b>';
                                                 }
@@ -6866,7 +6866,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridTNURE').getStore().getData().items[0].data;
-                                                    console.log(data);
+
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.TOTAL_QCPNM, '0,000') + '<b>';
                                                 }
@@ -6897,7 +6897,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridTNURE').getStore().getData().items[0].data;
-                                                    console.log(data);
+
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.TOTAL_QCPNP, '0,000') + '<b>';
                                                 }
@@ -6922,6 +6922,647 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                 enableTextSelection: true
                             }
                         }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-boxFORE',
+                    width: '100%',
+//                    height: 750,
+                    hidden: true,
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        bodyStyle: 'background: transparent;',
+                        border: false,
+                        align: 'center',
+                        margin: "10 15 0 0"  // (top, right, bottom, left)
+                    },
+                    items: [
+                        //grid data 
+                        {
+                            xtype: 'grid',
+                            id: prototype.id + '-gridFORE',
+                            columnLines: true,
+                            autoScroll: true,
+                            width: 1560,
+//                            width: '100%',
+                            height: 400,
+                            features: [{
+                                    ftype: 'summary',
+//                                                    dock: 'bottom'
+                                }],
+                            columns: {
+                                items: [
+                                    {
+                                        text: 'First Month',
+                                        id: prototype.id + '-month1',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Sales',
+                                                id: prototype.id + '-sales1',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Flight<br>Date', dataIndex: 'DFLIGHT1', width: 70, align: 'center',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:center; margin-right:3px ';
+//                                                            return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY1, '0,000') + '<b>';
+                                                            return '<b>' + 'Flight' + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Coupons',
+                                                id: prototype.id + '-cpn1',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Coupons', dataIndex: 'QTYFLY1', width: 87,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF1, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: '%', dataIndex: 'QTYS1_PERCENT', width: 55,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            console.log(data);
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF1_PERCENT, '0,000') + '%' + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Amount',
+                                                id: prototype.id + '-amo1',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Amount', dataIndex: 'FLYAMO1', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.AMOF1, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Second Month',
+                                        id: prototype.id + '-month2',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Sales',
+                                                id: prototype.id + '-sales2',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Flight<br>Date', dataIndex: 'DFLIGHT2', width: 70, align: 'center',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#bbe4fc;text-align:center";
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:center; margin-right:3px ';
+//                                                            return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY1, '0,000') + '<b>';
+                                                            return '<b>' + 'Flight' + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Coupons',
+                                                id: prototype.id + '-cpn2',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Coupons', dataIndex: 'QTYFLY2', width: 87,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#bbe4fc;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF2, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: '%', dataIndex: 'QTYS2_PERCENT', width: 55,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#bbe4fc;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            console.log(data);
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF2_PERCENT, '0,000') + '%' + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Amount',
+                                                id: prototype.id + '-amo2',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Amount', dataIndex: 'FLYAMO2', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#bbe4fc;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.AMOF2, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Thyrd Month',
+                                        id: prototype.id + '-month3',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Sales',
+                                                id: prototype.id + '-sales3',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Flight<br>Date', dataIndex: 'DFLIGHT3', width: 70, align: 'center',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:center; margin-right:3px ';
+//                                                            return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY1, '0,000') + '<b>';
+                                                            return '<b>' + 'Flight' + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Coupons',
+                                                id: prototype.id + '-cpn3',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Coupons', dataIndex: 'QTYFLY3', width: 87,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            console.log(data);
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF3, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: '%', dataIndex: 'QTYS3_PERCENT', width: 55,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            console.log(data);
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF3_PERCENT, '0,000') + '%' + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Amount',
+                                                id: prototype.id + '-amo3',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Amount', dataIndex: 'FLYAMO3', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.AMOF3, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Fourty Month',
+                                        id: prototype.id + '-month4',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Sales',
+                                                id: prototype.id + '-sales4',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Flight<br>Date', dataIndex: 'DFLIGHT4', width: 70, align: 'center',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#bbe4fc;text-align:center";
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:center; margin-right:3px ';
+//                                                            return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY1, '0,000') + '<b>';
+                                                            return '<b>' + 'Flight' + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Coupons',
+                                                id: prototype.id + '-cpn4',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Coupons', dataIndex: 'QTYFLY4', width: 87,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#bbe4fc;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF4, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: '%', dataIndex: 'QTYS4_PERCENT', width: 55,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#bbe4fc;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            console.log(data);
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF4_PERCENT, '0,000') + '%' + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Amount',
+                                                id: prototype.id + '-amo4',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Amount', dataIndex: 'FLYAMO4', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#bbe4fc;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.AMOF4, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        text: 'Quint Month',
+                                        id: prototype.id + '-month5',
+                                        defaults: {
+                                            menuDisabled: true, sortable: false, align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Sales',
+                                                id: prototype.id + '-sales5',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Flight<br>Date', dataIndex: 'DFLIGHT5', width: 70, align: 'center',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:center; margin-right:3px ';
+//                                                            return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY1, '0,000') + '<b>';
+                                                            return '<b>' + 'Flight' + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Coupons',
+                                                id: prototype.id + '-cpn5',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Coupons', dataIndex: 'QTYFLY5', width: 87,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF5, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: '%', dataIndex: 'QTYS5_PERCENT', width: 55,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            console.log(data);
+                                                            return '<b>' + Ext.util.Format.number(data.QTYF5_PERCENT, '0,000') + '%' + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Amount',
+                                                id: prototype.id + '-amo5',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Amount', dataIndex: 'FLYAMO5', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.AMOF5, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    },
+//                                    {
+//                                        text: 'Sixt Month',
+//                                        id: prototype.id + '-month6',
+//                                        hidden: true,
+//                                        defaults: {
+//                                            menuDisabled: true, sortable: false, align: 'center'
+//                                        },
+//                                        columns: [
+//                                            {
+//                                                text: 'Sales',
+//                                                id: prototype.id + '-sales6',
+//                                                defaults: {
+//                                                    menuDisabled: true, sortable: false, align: 'center'
+//                                                },
+//                                                columns: [
+//                                                    {text: 'Flight<br>Date', dataIndex: 'DFLIGHT6', width: 70, align: 'center',
+//                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            metaData.style = "background:#bbe4fc;text-align:center";
+//                                                            return value;
+//                                                        },
+//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+//                                                            metaData.style = 'text-align:center; margin-right:3px ';
+////                                                            return '<b>' + Ext.util.Format.number(data.TOT_QTYFLY1, '0,000') + '<b>';
+//                                                            return '<b>' + 'Flight' + '<b>';
+//                                                        }
+//                                                    },
+//                                                ]
+//                                            },
+//                                            {
+//                                                text: 'Coupons',
+//                                                id: prototype.id + '-cpn6',
+//                                                defaults: {
+//                                                    menuDisabled: true, sortable: false, align: 'center'
+//                                                },
+//                                                columns: [
+//                                                    {text: 'Coupons', dataIndex: 'QTYFLY6', width: 87,
+//                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            metaData.style = "background:#bbe4fc;text-align:right";
+//                                                            return Ext.util.Format.number(value, '0,000');
+//                                                        },
+//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+//                                                            metaData.style = 'text-align:right; margin-right:3px ';
+//                                                            return '<b>' + Ext.util.Format.number(data.QTYF6, '0,000') + '<b>';
+//                                                        }
+//                                                    },
+//                                                    {text: '%', dataIndex: 'QTYS6_PERCENT', width: 55,
+//                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            metaData.style = "background:#bbe4fc;text-align:right";
+//                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
+//                                                        },
+//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+//                                                            metaData.style = 'text-align:right; margin-right:3px ';
+//                                                            console.log(data);
+//                                                            return '<b>' + Ext.util.Format.number(data.QTYF6_PERCENT, '0,000') + '%' + '<b>';
+//                                                        }
+//                                                    },
+//                                                ]
+//                                            },
+//                                            {
+//                                                text: 'Amount',
+//                                                id: prototype.id + '-amo6',
+//                                                defaults: {
+//                                                    menuDisabled: true, sortable: false, align: 'center'
+//                                                },
+//                                                columns: [
+//                                                    {text: 'Amount', dataIndex: 'FLYAMO6', width: 100,
+//                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            metaData.style = "background:#bbe4fc;text-align:right";
+//                                                            return Ext.util.Format.number(value, '0,000');
+//                                                        },
+//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+//                                                            metaData.style = 'text-align:right; margin-right:3px ';
+//                                                            return '<b>' + Ext.util.Format.number(data.AMOF6, '0,000') + '<b>';
+//                                                        }
+//                                                    },
+//                                                ]
+//                                            },
+//                                        ]
+//                                    },
+                                ]
+                            },
+                            viewConfig: {
+                                stripeRows: true,
+                                enableTextSelection: true
+                            }
+                        },
+                        {
+                            xtype: 'panel',
+//                            id: prototype.id + '-panelDisplaySAChart40',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            padding: '5 0 0 5',
+                            border: true,
+                            layout: {
+                                type: 'vbox'
+                            },
+                            items: [
+                                {
+                                    xtype: 'cartesian',
+                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                    id: prototype.id + '-displayFORE',
+                                    width: 1560,
+                                    border: false,
+                                    height: 200,
+                                    background: '#E0F8F7',
+//                                    captions: {
+//                                        title: {
+//                                            text: 'Bank Date',
+//                                            alignTo: 'chart'
+//                                        }
+//                                    },
+                                    animation: {
+                                        duration: 200
+                                    },
+                                    interactions: ['itemhighlight'],
+//                                    legend: {
+//                                        docked: 'bottom',
+//                                        background: '#E3EAEF'
+//                                    },
+                                    axes: [{
+                                            type: 'numeric3d',
+                                            position: 'left',
+//                                            fields: ['QTYFLY1', 'QTYFLY2', 'QTYFLY3', 'QTYFLY4', 'QTYFLY5', 'QTYFLY6'],
+                                            grid: true,
+                                            title: '',
+//                                                            minimum: 30,
+//                                                            maximum: 110,
+                                            //title: 'Millions of USD',
+                                            renderer: function (obj, value) {
+                                                if (value > 1) {
+                                                    return  ' ' + Ext.util.Format.number(value);
+                                                } else {
+                                                    return '0';
+                                                }
+                                            }
+                                        }, {
+                                            type: 'category3d',
+                                            position: 'bottom',
+//                                                            fields: 'strFormatDate',
+                                            grid: true,
+                                            title: {
+                                                text: '',
+                                                translationX: -30
+                                            }
+                                        }],
+                                    series: [{
+                                            type: 'bar3d',
+                                            stacked: false,
+                                            title: ['Qty'],
+                                            xField: 'DSALES',
+                                            yField: ['QTYSALE','QTYFLOWN'],
+                                            colors: ['#00b5fc', '#3acc00'],
+                                            highlight: true,
+                                            style: {
+                                                inGroupGapWidth: -7,
+//                                                minGapWidth: 1,
+//                                                maxBarWidth: 1200
+                                            },
+                                            label: {
+                                                field: ['QTYSALE','QTYFLOWN'],
+//                                                display: 'insideEnd',
+                                                display: 'outside',
+                                                calloutLine: {
+                                                    length: 10,
+                                                    width: 0,
+                                                    color: '#FFFFFF',
+                                                },
+                                                renderer: function (value, b, callout) {
+                                                    callout.calloutVertical = false;
+                                                    if (value === 100) {
+                                                        return Ext.util.Format.number(value, '0,000');
+                                                    } else {
+                                                        return Ext.util.Format.number(value, '0,000.00');
+                                                    }
+                                                }
+                                            },
+                                            tooltip: {
+                                                trackMouse: true,
+                                                height: 28,
+                                                renderer: function (toolTip, record, ctx) {
+                                                    var label = '';
+                                                    if (ctx.field === 'QTYSALE') {
+                                                        label = 'Qty';
+                                                    }
+                                                    toolTip.setHtml(label + ' :  ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
+                                                }
+                                            }
+                                        }]
+                                }
+                            ]
+                        }
+
                     ]
                 },
 //                {
