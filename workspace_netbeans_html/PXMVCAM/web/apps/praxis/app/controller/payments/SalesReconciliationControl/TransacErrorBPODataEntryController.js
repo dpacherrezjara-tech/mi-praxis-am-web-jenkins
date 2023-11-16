@@ -908,7 +908,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         //diferencia conciliacion manual
         const sumScanner = parseFloat(gridBPO.sum('svfops').toFixed(2));
         const sumAdju = parseFloat(gridADJU.sum('svfops').toFixed(2));
-        let sumDesglose = sumScanner + sumAdju;
+        let sumDesglose = (sumScanner + sumAdju).toFixed(2);
         console.log('Suma Desglose BPO: ', sumDesglose);
         let difference = 0;
         if (me.bean.transtype === 'CHBK') {
