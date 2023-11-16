@@ -7,7 +7,7 @@ import net.miatech.praxis.payment.A4331NEW;
  * @author Dvicente
  */
 public class A4331NEWFilter extends A4331NEW{
-    private String DESC_ERROR,DES_MERCHANT,DES_SMERCHANT,DES_CERROR,DESC_CODADJU,DESC_PROCTYPE;
+    private String DESC_ERROR,DES_MERCHANT,DES_SMERCHANT,DES_CERROR,DESC_CODADJU,DESC_PROCTYPE,BPOCOMENT,ADJUCOMENT;
     private A4331NSUMFilter summary;
 
     public String getDESC_ERROR() {
@@ -65,5 +65,20 @@ public class A4331NEWFilter extends A4331NEW{
     public void setSummary(A4331NSUMFilter summary) {
         this.summary = summary;
     }
-    
+
+    public String getBPOCOMENT() {
+        return BPOCOMENT;
+    }
+
+    public void setBPOCOMENT(String BPOCOMENT) {
+        this.BPOCOMENT = BPOCOMENT;
+    }
+
+    public String getADJUCOMENT() {
+        return ADJUCOMENT;
+    }
+
+    public void setADJUCOMENT(String ADJUCOMENT) {
+        this.ADJUCOMENT = ADJUCOMENT;
+    }
 }
