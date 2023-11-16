@@ -919,8 +919,11 @@ public class SalesReconciliationBPOController {
     private static String convertStatus(String stval) {
         String valor = "";
         switch (stval) {
-            case "1":
+            case "0":
                 valor = "Stand By";
+                break;
+            case "1":
+                valor = "Match";
                 break;
             case "2":
                 valor = "Sales without Settl.";
