@@ -583,7 +583,7 @@ public class SalesReconciliationBPOController {
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();
             //headers
-            Object[] headers = new Object[26];
+            Object[] headers = new Object[27];
             headers[0] = "Processing Date";
             headers[1] = "Payment Date";
             headers[2] = "Processor";
@@ -610,9 +610,10 @@ public class SalesReconciliationBPOController {
             headers[23] = "Description";
             headers[24] = "User Update";
             headers[25] = "Date Update";
+            headers[26] = "BPO Comment";
             data.add(headers);
             for (A4331NEWFilter obj : filter.getResponse()) {
-                Object[] row = new Object[26];
+                Object[] row = new Object[27];
                 row[0] = obj.getPrda();
                 row[1] = obj.getPaydate();
                 row[2] = obj.getDESC_PROCTYPE();
@@ -639,6 +640,11 @@ public class SalesReconciliationBPOController {
                 row[23] = obj.getDESC_CODADJU();
                 row[24] = obj.getUsup();
                 row[25] = obj.getFeup();
+                if (obj.getBPOCOMENT().isEmpty()) {
+                    row[26] = obj.getADJUCOMENT();
+                }else{
+                    row[26] = obj.getBPOCOMENT();
+                }
                 data.add(row);
             }
             return exportUtils.createExcel(data, controllerName + " - ByPayment " + Functions.getFechaActual());
@@ -728,7 +734,7 @@ public class SalesReconciliationBPOController {
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();
             //headers
-            Object[] headers = new Object[25];
+            Object[] headers = new Object[26];
             headers[0] = "Sale Date";
             headers[1] = "IATA";
             headers[2] = "Source";
@@ -754,9 +760,10 @@ public class SalesReconciliationBPOController {
             headers[22] = "Status";
             headers[23] = "Processor";
             headers[24] = "ADM St.";
+            headers[25] = "BPO Comment";
             data.add(headers);
             for (A4496Filter obj : filter.getResponse()) {
-                Object[] row = new Object[25];
+                Object[] row = new Object[26];
                 row[0] = obj.getA4496FECVT();
                 row[1] = obj.getA4496AGENT();
                 row[2] = obj.getA4496FUENT();
@@ -782,6 +789,11 @@ public class SalesReconciliationBPOController {
                 row[22] = convertStatus(obj.getA4501STVAL());
                 row[23] = obj.getDESC_PROCTYPE();
                 row[24] = obj.getA4501STADM();
+                if(obj.getA4501STADM().trim().isEmpty()){
+                    row[25] = !obj.getBPO_COMEN2().isEmpty()?obj.getBPO_COMEN2():obj.getBPO_COMEN();
+                }else{
+                    row[25] = obj.getADM_COMEN();
+                }
                 data.add(row);
             }
             return exportUtils.createExcel(data, controllerName + " - ByTicket " + Functions.getFechaActual());
@@ -941,11 +953,10 @@ public class SalesReconciliationBPOController {
         Date fecha2 = null;
         try {
             fecha1 = formatoFecha.parse(fecha1Str);
-            if (!fecha2Str.isEmpty()) {
+            if (!fecha2Str.trim().isEmpty()) {
                 fecha2 = formatoFecha.parse(fecha2Str);
             }
         } catch (ParseException e) {
-            e.printStackTrace();
         }
 
         if (fecha1 != null && fecha2 != null) {

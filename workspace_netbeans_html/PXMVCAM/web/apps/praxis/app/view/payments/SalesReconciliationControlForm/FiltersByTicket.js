@@ -147,6 +147,27 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     value: ''
                                 },
                                 {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbMonedabBT',
+                                    name: 'IN_SCURRENCY',
+                                    queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    fieldLabel: 'Currency',
+                                    labelWidth: 70,
+                                    labelAlign: 'right',
+                                    width: 140,
+                                    typeAhead: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: ''
+                                },
+                                {
                                     xtype: 'combobox',
                                     fieldLabel: 'Doc. Type',
                                     name: 'IN_TRNCU',
@@ -166,6 +187,48 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     editable: false,
                                     value: ''
                                 },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Status',
+                                    name: 'IN_STVAL',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['0', 'Stand By'],
+                                            ['1', 'Match'],
+                                            ['2', 'Sales Without Settl.'],
+                                            ['4', 'Match Diff.'],
+                                            ['5', 'Match Manual'],
+                                            ['6', 'Forced Match'],
+                                            ['7', 'Compensation Match']
+                                        ]
+                                    }),
+                                    labelWidth: 55,
+                                    width: 180,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                }
+                            ]
+                        }
+                        ,
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5 1 5 1',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items: [
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Source',
@@ -236,48 +299,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
-                                }
-                            ]
-                        }
-                        ,
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            bodyStyle: 'background: transparent',
-                            defaults: {
-                                fieldStyle: 'text-align: center;',
-                                padding: '5 1 5 1',
-                                anchor: '100%',
-                                hiddenLabel: false,
-                                labelAlign: 'right',
-                                hidden: false
-                            },
-                            items: [
-                                {
-                                    xtype: 'combobox',
-                                    fieldLabel: 'Status',
-                                    name: 'IN_STVAL',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['', 'All'],
-                                            ['0', 'Stand By'],
-                                            ['1', 'Match'],
-                                            ['2', 'Sales Without Settl.'],
-                                            ['4', 'Match Diff.'],
-                                            ['5', 'Match Manual'],
-                                            ['6', 'Forced Match'],
-                                            ['7', 'Compensation Match']
-                                        ]
-                                    }),
-                                    labelWidth: 55,
-                                    width: 180,
-                                    displayField: 'name',
-                                    valueField: 'code',
-                                    queryMode: 'local',
-                                    editable: false,
-                                    value: ''
                                 },
                                 {
                                     xtype: 'combobox',
