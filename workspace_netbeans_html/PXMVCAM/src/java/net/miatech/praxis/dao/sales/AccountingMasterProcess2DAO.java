@@ -329,7 +329,7 @@ public class AccountingMasterProcess2DAO {
         
         Connection cnx = null;
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".QRY_REVERTIR_FLOWN(?,?)}"; 
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP05186(?,?)}"; 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  
             cs = cnx.prepareCall(strSQL);
             cs.setString(1, filter.IN_FECHA_PROCESO);            
