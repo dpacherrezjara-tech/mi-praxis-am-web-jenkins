@@ -352,7 +352,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         this.setValue('cmbDateToYear', new Date().getFullYear());
         this.setValue('cmbDateFromMonth', '');
         this.setValue('cmbDateFromMonthNTU', '');
-        this.setValue('cmbDateFromMonth_FORE', '06');
+        this.setValue('cmbDateFromMonth_FORE', '01');
         this.setValue('cmbDateFromDay', '');
         this.setValue('cmbDateToMonth', '');
         this.setValue('cmbDateToMonth_FORE', '');
