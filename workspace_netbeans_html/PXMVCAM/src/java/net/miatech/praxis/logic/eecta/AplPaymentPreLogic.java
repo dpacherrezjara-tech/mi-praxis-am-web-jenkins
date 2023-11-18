@@ -10,13 +10,13 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.eecta.AplPaymentPreDAO;
 import net.miatech.praxis.eecta.SQP03943Filter;
-import net.miatech.praxis.eecta.SQP03951Filter;
 import net.miatech.praxis.eecta.SQP03952Filter;
 import net.miatech.praxis.eecta.SQP04053Filter;
 import net.miatech.praxis.eecta.SQP04059Filter;
 import net.miatech.praxis.eecta.SQP05193Filter;
 import net.miatech.praxis.eecta.SQP05194Filter;
 import net.miatech.praxis.eecta.SQP05195Filter;
+import net.miatech.praxis.eecta.SQP05196Filter;
 
 /**
  *
@@ -34,8 +34,8 @@ public class AplPaymentPreLogic {
         return objDAO.getSQP05193Filter(filter);
     }
 
-    public List<SQP03951Filter> getSQP03951Filter(SQP03951Filter filter) throws SQLException, Exception {
-        return objDAO.getSQP03951Filter(filter);
+    public List<SQP05196Filter> getSQP05196Filter(SQP05196Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP05196Filter(filter);
     }
 
     public SQP03952Filter setSQP03952Filter(SQP03952Filter filter) throws SQLException, Exception {

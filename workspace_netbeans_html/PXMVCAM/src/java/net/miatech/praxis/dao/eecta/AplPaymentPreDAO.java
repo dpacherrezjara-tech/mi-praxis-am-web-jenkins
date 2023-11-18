@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.eecta.SQP03943Filter;
-import net.miatech.praxis.eecta.SQP03951Filter;
 import net.miatech.praxis.eecta.SQP03952Filter;
 import net.miatech.praxis.eecta.SQP04053Filter;
 import net.miatech.praxis.eecta.SQP04059Filter;
 import net.miatech.praxis.eecta.SQP05193Filter;
 import net.miatech.praxis.eecta.SQP05194Filter;
 import net.miatech.praxis.eecta.SQP05195Filter;
+import net.miatech.praxis.eecta.SQP05196Filter;
  import org.apache.log4j.Logger;
 
 /**
@@ -139,58 +139,58 @@ public class AplPaymentPreDAO {
 
         return lstRtn;
     }
-    public List<SQP03951Filter> getSQP03951Filter(SQP03951Filter filter) throws SQLException, Exception {
-        List<SQP03951Filter> lstRtn = new ArrayList<SQP03951Filter>(0);
-        SQP03951Filter objRtn;
+    public List<SQP05196Filter> getSQP05196Filter(SQP05196Filter filter) throws SQLException, Exception {
+        List<SQP05196Filter> lstRtn = new ArrayList<SQP05196Filter>(0);
+        SQP05196Filter objRtn;
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null, rs02 = null;
-        String SQLCLL01 = "{CALL PXUATP.SQP03951(?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXUATP.SQP05196(?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.VP_A3958NRRPT);
-            cstmt01.setString(3, filter.VP_A3958CDCLI);
+            cstmt01.setString(2, filter.VP_A4246NRRPT);
+            cstmt01.setString(3, filter.VP_A4246CDCLI);
             cstmt01.setString(4, filter.VP_TFILTTRO);
             cstmt01.setString(5, filter.VP_PARAM1);
             cstmt01.execute();
             
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
-                objRtn = new SQP03951Filter();
-                objRtn.A3958CCUST =  rs01.getString("A3958CCUST");
-                objRtn.TICKET_NUMBER = rs01.getString("A3958CIA")+rs01.getString("A3958FORMA")+rs01.getString("A3958SERIE");
-                objRtn.A3958CIA = rs01.getString("A3958CIA");
-                objRtn.A3958FORMA = rs01.getString("A3958FORMA");
-                objRtn.A3958SERIE = rs01.getString("A3958SERIE");
-                objRtn.A3958SEQ = rs01.getString("A3958SEQ");
-                objRtn.A3958NRRPT = rs01.getString("A3958NRRPT");
-                objRtn.A3958SQRPT = rs01.getString("A3958SQRPT");
-                objRtn.A3958CDCLI = rs01.getString("A3958CDCLI");
-                objRtn.A3958SOLER = rs01.getString("A3958SOLER");
-                objRtn.A3958GESTR = rs01.getString("A3958GESTR");
-                objRtn.A3958CFDI = rs01.getString("A3958CFDI");
-                objRtn.A3958RFC = rs01.getString("A3958RFC");
-                objRtn.A3958FECTB = rs01.getString("A3958FECTB");
-                objRtn.A3958GRUPO = rs01.getString("A3958GRUPO");
-                objRtn.A3958FPROC = rs01.getString("A3958FPROC");
-                objRtn.A3958TRNCU = rs01.getString("A3958TRNCU");
-                objRtn.A3958FARE = rs01.getDouble("A3958FARE");
-                objRtn.A3958IVA = rs01.getDouble("A3958IVA");
-                objRtn.A3958TUA = rs01.getDouble("A3958TUA");
-                objRtn.A3958YR = rs01.getDouble("A3958YR");
-                objRtn.A3958YQ = rs01.getDouble("A3958YQ");
-                objRtn.A3958OTR = rs01.getDouble("A3958OTR");
-                objRtn.A3958TOT = rs01.getDouble("A3958TOT");
-                objRtn.A3958PAX = rs01.getString("A3958PAX");
-                objRtn.A3958IDCON = rs01.getString("A3958IDCON");
-                objRtn.A3958FCONT = rs01.getString("A3958FCONT");     
-                objRtn.A3958TOTAP = rs01.getDouble("A3958TOTAP"); 
-                objRtn.A3958TAJUS = rs01.getDouble("A3958TAJUS"); 
-                objRtn.A3958SALDP = rs01.getDouble("A3958SALDP");
-                objRtn.A3958STSPG = rs01.getString("A3958STSPG");                
+                objRtn = new SQP05196Filter();
+                objRtn.A4246CCUST =  rs01.getString("A4246CCUST");
+                objRtn.TICKET_NUMBER = rs01.getString("A4246CIA")+rs01.getString("A4246FORMA")+rs01.getString("A4246SERIE");
+                objRtn.A4246CIA = rs01.getString("A4246CIA");
+                objRtn.A4246FORMA = rs01.getString("A4246FORMA");
+                objRtn.A4246SERIE = rs01.getString("A4246SERIE");
+                objRtn.A4246SEQ = rs01.getString("A4246SEQ");
+                objRtn.A4246NRRPT = rs01.getString("A4246NRRPT");
+                objRtn.A4246SQRPT = rs01.getString("A4246SQRPT");
+                objRtn.A4246CDCLI = rs01.getString("A4246CDCLI");
+                objRtn.A4246SOLER = rs01.getString("A4246SOLER");
+                objRtn.A4246GESTR = rs01.getString("A4246GESTR");
+                objRtn.A4246CFDI = rs01.getString("A4246CFDI");
+                objRtn.A4246RFC = rs01.getString("A4246RFC");
+                objRtn.A4246FECTB = rs01.getString("A4246FECTB");
+                objRtn.A4246GRUPO = rs01.getString("A4246GRUPO");
+                objRtn.A4246FPROC = rs01.getString("A4246FPROC");
+                objRtn.A4246TRNCU = rs01.getString("A4246TRNCU");
+                objRtn.A4246FARE = rs01.getDouble("A4246FARE");
+                objRtn.A4246IVA = rs01.getDouble("A4246IVA");
+                objRtn.A4246TUA = rs01.getDouble("A4246TUA");
+                objRtn.A4246YR = rs01.getDouble("A4246YR");
+                objRtn.A4246YQ = rs01.getDouble("A4246YQ");
+                objRtn.A4246OTR = rs01.getDouble("A4246OTR");
+                objRtn.A4246TOT = rs01.getDouble("A4246TOT");
+                objRtn.A4246PAX = rs01.getString("A4246PAX");
+                objRtn.A4246IDCON = rs01.getString("A4246IDCON");
+                objRtn.A4246FCONT = rs01.getString("A4246FCONT");     
+                objRtn.A4246TOTAP = rs01.getDouble("A4246TOTAP"); 
+                objRtn.A4246TAJUS = rs01.getDouble("A4246TAJUS"); 
+                objRtn.A4246SALDP = rs01.getDouble("A4246SALDP");
+                objRtn.A4246STSPG = rs01.getString("A4246STSPG");                
                 lstRtn.add(objRtn);
             }
 

@@ -264,7 +264,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplicacionVentaPre.AplicacionVentaPreCon
     winDataEntry01:function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;       
-        Ext.create('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBoletoEntry', {
+        Ext.create('Ext.Praxis.view.eecta.AplicacionVentaPreForm.AplPaymentBoletoEntry', {
             id: prototype.id + '-AplPaymentBoletoEntry',
             params: {
                 action: action,

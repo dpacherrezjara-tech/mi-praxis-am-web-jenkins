@@ -21,13 +21,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.eecta.SQP03943Filter;
-import net.miatech.praxis.eecta.SQP03951Filter;
 import net.miatech.praxis.eecta.SQP03952Filter;
 import net.miatech.praxis.eecta.SQP04053Filter;
 import net.miatech.praxis.eecta.SQP04059Filter;
 import net.miatech.praxis.eecta.SQP05193Filter;
 import net.miatech.praxis.eecta.SQP05194Filter;
 import net.miatech.praxis.eecta.SQP05195Filter;
+import net.miatech.praxis.eecta.SQP05196Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.AplPaymentPreLogic;
 import net.miatech.utils.Functions;
@@ -105,16 +105,16 @@ public class AplPaymentPreController extends BaseController {
     @RequestMapping(value = "/search_detalle_boleto"/*, method = RequestMethod.POST*/)
     public @ResponseBody
     String search_detalle_boleto(ModelMap map, HttpServletRequest request) {
-        List<SQP03951Filter> listaData;
-        SQP03951Filter filter;
-        filter = new SQP03951Filter();
+        List<SQP05196Filter> listaData;
+        SQP05196Filter filter;
+        filter = new SQP05196Filter();
         filter.page.TOTROW = -1;
         filter.page.START = 0;
         filter.page.LIMIT = 0;
         try {
                         
-            filter.VP_A3958CDCLI = request.getParameter("VP_A3958CDCLI");
-            filter.VP_A3958NRRPT = request.getParameter("VP_A3958NRRPT");
+            filter.VP_A4246CDCLI = request.getParameter("VP_A4246CDCLI");
+            filter.VP_A4246NRRPT = request.getParameter("VP_A4246NRRPT");
             filter.VP_TFILTTRO = request.getParameter("VP_TFILTTRO");
             filter.VP_PARAM1 = request.getParameter("VP_PARAM1");
             
@@ -124,7 +124,7 @@ public class AplPaymentPreController extends BaseController {
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
             logic = new AplPaymentPreLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
-            listaData = logic.getSQP03951Filter(filter);
+            listaData = logic.getSQP05196Filter(filter);
 
             map.put("success", true);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
