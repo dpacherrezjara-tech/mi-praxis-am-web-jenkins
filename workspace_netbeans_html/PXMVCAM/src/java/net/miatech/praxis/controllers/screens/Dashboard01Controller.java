@@ -1277,7 +1277,8 @@ public class Dashboard01Controller extends BaseController {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
             List<IMF117Filter> listaData = this.getListFORE(request, true);
-            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+            List<IMF117Filter> listaData1 = this.getListFOREDown(request, true);
+            System.out.println("Tamaño de lista devuelta Fore: " + listaData.size() + " + lista Fore Down: " +  listaData1.size());
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Report");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
@@ -1337,7 +1338,10 @@ public class Dashboard01Controller extends BaseController {
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
             Integer vi = 0;
             Integer vj = 0;
+            Integer vk = 0;
+            Integer vl = 0;
             Iterator iter = listaData.iterator();
+            Iterator iter1 = listaData1.iterator();
             // ====== CREANDO TITULOS ======================================
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -1735,34 +1739,34 @@ public class Dashboard01Controller extends BaseController {
             Cell CH1_19_T = rowTotal.createCell(19);
 
             if (!listaData.get(0).DSALES1.equals("")) {
-                CH1_0_T.setCellValue("Flight");
-                CH1_1_T.setCellValue(listaData.get(0).QTYF1);
-                CH1_2_T.setCellValue(listaData.get(0).QTYF1_PERCENT);
-                CH1_3_T.setCellValue(listaData.get(0).AMOF1);
+                CH1_0_T.setCellValue("Total");
+                CH1_1_T.setCellValue(listaData.get(0).TOT_CPN1);
+                CH1_2_T.setCellValue(listaData.get(0).TOT_QTYS1_PERCENT);
+                CH1_3_T.setCellValue(listaData.get(0).TOT_AMT1);
             }
             if (!listaData.get(0).DSALES2.equals("")) {
-                CH1_4_T.setCellValue("Flight");
-                CH1_5_T.setCellValue(listaData.get(0).QTYF2);
-                CH1_6_T.setCellValue(listaData.get(0).QTYF2_PERCENT);
-                CH1_7_T.setCellValue(listaData.get(0).AMOF2);
+                CH1_4_T.setCellValue("Total");
+                CH1_5_T.setCellValue(listaData.get(0).TOT_CPN2);
+                CH1_6_T.setCellValue(listaData.get(0).TOT_QTYS2_PERCENT);
+                CH1_7_T.setCellValue(listaData.get(0).TOT_AMT2);
             }
             if (!listaData.get(0).DSALES3.equals("")) {
-                CH1_8_T.setCellValue("Flight");
-                CH1_9_T.setCellValue(listaData.get(0).QTYF3);
-                CH1_10_T.setCellValue(listaData.get(0).QTYF3_PERCENT);
-                CH1_11_T.setCellValue(listaData.get(0).AMOF3);
+                CH1_8_T.setCellValue("Total");
+                CH1_9_T.setCellValue(listaData.get(0).TOT_CPN3);
+                CH1_10_T.setCellValue(listaData.get(0).TOT_QTYS3_PERCENT);
+                CH1_11_T.setCellValue(listaData.get(0).TOT_AMT3);
             }
             if (!listaData.get(0).DSALES4.equals("")) {
-                CH1_12_T.setCellValue("Flight");
-                CH1_13_T.setCellValue(listaData.get(0).QTYF4);
-                CH1_14_T.setCellValue(listaData.get(0).QTYF4_PERCENT);
-                CH1_15_T.setCellValue(listaData.get(0).AMOF4);
+                CH1_12_T.setCellValue("Total");
+                CH1_13_T.setCellValue(listaData.get(0).TOT_CPN4);
+                CH1_14_T.setCellValue(listaData.get(0).TOT_QTYS4_PERCENT);
+                CH1_15_T.setCellValue(listaData.get(0).TOT_AMT4);
             }
             if (!listaData.get(0).DSALES5.equals("")) {
-                CH1_16_T.setCellValue("Flight");
-                CH1_17_T.setCellValue(listaData.get(0).QTYF5);
-                CH1_18_T.setCellValue(listaData.get(0).QTYF5_PERCENT);
-                CH1_19_T.setCellValue(listaData.get(0).AMOF5);
+                CH1_16_T.setCellValue("Total");
+                CH1_17_T.setCellValue(listaData.get(0).TOT_CPN5);
+                CH1_18_T.setCellValue(listaData.get(0).TOT_QTYS5_PERCENT);
+                CH1_19_T.setCellValue(listaData.get(0).TOT_AMT5);
             }
 
             if (!listaData.get(0).DSALES1.equals("")) {
@@ -1794,6 +1798,210 @@ public class Dashboard01Controller extends BaseController {
                 CH1_17_T.setCellStyle(totalStyle);
                 CH1_18_T.setCellStyle(totalStyle);
                 CH1_19_T.setCellStyle(totalStyle);
+            }
+
+            //---------------------------------------------------
+            //---------------------------------------------------
+            //---------------------------------------------------
+            //---------------------------------------------------
+            //---------------------------------------------------
+            vk = vj + 2;
+            // ======  Nivel 1 ==========
+            Row row11 = sheet.createRow(vk);
+            Cell CH1_01D = row11.createCell(0);
+            Cell CH1_11D = row11.createCell(1);
+            Cell CH1_21D = row11.createCell(2);
+            Cell CH1_31D = row11.createCell(3);
+            Cell CH1_41D = row11.createCell(4);
+            Cell CH1_51D = row11.createCell(5);
+            Cell CH1_61D = row11.createCell(6);
+            Cell CH1_71D = row11.createCell(7);
+            Cell CH1_81D = row11.createCell(8);
+            Cell CH1_91D = row11.createCell(9);
+            Cell CH1_101D = row11.createCell(10);
+            Cell CH1_111D = row11.createCell(11);
+            Cell CH1_121D = row11.createCell(12);
+            Cell CH1_131D = row11.createCell(13);
+            Cell CH1_141D = row11.createCell(14);
+            Cell CH1_151D = row11.createCell(15);
+            Cell CH1_161D = row11.createCell(16);
+            Cell CH1_171D = row11.createCell(17);
+            Cell CH1_181D = row11.createCell(18);
+            Cell CH1_191D = row11.createCell(19);
+
+            if (!listaData.get(0).DSALES1.equals("")) {
+                CH1_01D.setCellValue("Used");
+                CH1_11D.setCellValue("Coupons");
+                CH1_21D.setCellValue("%");
+                CH1_31D.setCellValue("Amount");
+            }
+            if (!listaData.get(0).DSALES2.equals("")) {
+                CH1_41D.setCellValue("Used");
+                CH1_51D.setCellValue("Coupons");
+                CH1_61D.setCellValue("%");
+                CH1_71D.setCellValue("Amount");
+            }
+            if (!listaData.get(0).DSALES3.equals("")) {
+                CH1_81D.setCellValue("Used");
+                CH1_91D.setCellValue("Coupons");
+                CH1_101D.setCellValue("%");
+                CH1_111D.setCellValue("Amount");
+            }
+            if (!listaData.get(0).DSALES4.equals("")) {
+                CH1_121D.setCellValue("Used");
+                CH1_131D.setCellValue("Coupons");
+                CH1_141D.setCellValue("%");
+                CH1_151D.setCellValue("Amount");
+            }
+            if (!listaData.get(0).DSALES5.equals("")) {
+                CH1_161D.setCellValue("Used");
+                CH1_171D.setCellValue("Coupons");
+                CH1_181D.setCellValue("%");
+                CH1_191D.setCellValue("Amount");
+            }
+
+            if (!listaData.get(0).DSALES1.equals("")) {
+                CH1_01D.setCellStyle(headerStyle);
+                CH1_11D.setCellStyle(headerStyle);
+                CH1_21D.setCellStyle(headerStyle);
+                CH1_31D.setCellStyle(headerStyle);
+            }
+            if (!listaData.get(0).DSALES2.equals("")) {
+                CH1_41D.setCellStyle(headerStyle);
+                CH1_51D.setCellStyle(headerStyle);
+                CH1_61D.setCellStyle(headerStyle);
+                CH1_71D.setCellStyle(headerStyle);
+            }
+            if (!listaData.get(0).DSALES3.equals("")) {
+                CH1_81D.setCellStyle(headerStyle);
+                CH1_91D.setCellStyle(headerStyle);
+                CH1_101D.setCellStyle(headerStyle);
+                CH1_111D.setCellStyle(headerStyle);
+            }
+            if (!listaData.get(0).DSALES4.equals("")) {
+                CH1_121D.setCellStyle(headerStyle);
+                CH1_131D.setCellStyle(headerStyle);
+                CH1_141D.setCellStyle(headerStyle);
+                CH1_151D.setCellStyle(headerStyle);
+            }
+            if (!listaData.get(0).DSALES5.equals("")) {
+                CH1_161D.setCellStyle(headerStyle);
+                CH1_171D.setCellStyle(headerStyle);
+                CH1_181D.setCellStyle(headerStyle);
+                CH1_191D.setCellStyle(headerStyle);
+            }
+
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 17, 17));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 18, 18));
+            sheet.addMergedRegion(new CellRangeAddress(17, 17, 19, 19));
+            ++vk;
+            //============================================
+
+            while (iter1.hasNext()) {
+                row11 = sheet.createRow(vk);
+                Cell rcell00D = row11.createCell(0);
+                Cell rcell11D = row11.createCell(1);
+                Cell rcell21D = row11.createCell(2);
+                Cell rcell31D = row11.createCell(3);
+                Cell rcell41D = row11.createCell(4);
+                Cell rcell51D = row11.createCell(5);
+                Cell rcell61D = row11.createCell(6);
+                Cell rcell71D = row11.createCell(7);
+                Cell rcell81D = row11.createCell(8);
+                Cell rcell91D = row11.createCell(9);
+                Cell rcell101D = row11.createCell(10);
+                Cell rcell111D = row11.createCell(11);
+                Cell rcell121D = row11.createCell(12);
+                Cell rcell131D = row11.createCell(13);
+                Cell rcell141D = row11.createCell(14);
+                Cell rcell151D = row11.createCell(15);
+                Cell rcell161D = row11.createCell(16);
+                Cell rcell171D = row11.createCell(17);
+                Cell rcell181D = row11.createCell(18);
+                Cell rcell191D = row11.createCell(19);
+
+                if (!listaData.get(0).DSALES1.equals("")) {
+                    rcell00D.setCellValue(listaData1.get(vl).USED1);
+                    rcell11D.setCellValue(listaData1.get(vl).CPNS1);
+                    rcell21D.setCellValue(listaData1.get(vl).QTYS1_PERCENT);
+                    rcell31D.setCellValue(listaData1.get(vl).AMON1);
+                }
+                if (!listaData.get(0).DSALES2.equals("")) {
+                    rcell41D.setCellValue(listaData1.get(vl).USED2);
+                    rcell51D.setCellValue(listaData1.get(vl).CPNS2);
+                    rcell61D.setCellValue(listaData1.get(vl).QTYS2_PERCENT);
+                    rcell71D.setCellValue(listaData1.get(vl).AMON2);
+                }
+                if (!listaData.get(0).DSALES3.equals("")) {
+                    rcell81D.setCellValue(listaData1.get(vl).USED3);
+                    rcell91D.setCellValue(listaData1.get(vl).CPNS3);
+                    rcell101D.setCellValue(listaData1.get(vl).QTYS3_PERCENT);
+                    rcell111D.setCellValue(listaData1.get(vl).AMON3);
+                }
+                if (!listaData.get(0).DSALES4.equals("")) {
+                    rcell121D.setCellValue(listaData1.get(vl).USED4);
+                    rcell131D.setCellValue(listaData1.get(vl).CPNS4);
+                    rcell141D.setCellValue(listaData1.get(vl).QTYS4_PERCENT);
+                    rcell151D.setCellValue(listaData1.get(vl).AMON4);
+                }
+                if (!listaData.get(0).DSALES5.equals("")) {
+                    rcell161D.setCellValue(listaData1.get(vl).USED5);
+                    rcell171D.setCellValue(listaData1.get(vl).CPNS5);
+                    rcell181D.setCellValue(listaData1.get(vl).QTYS5_PERCENT);
+                    rcell191D.setCellValue(listaData1.get(vl).AMON5);
+                }
+
+                if (!listaData.get(0).DSALES1.equals("")) {
+                    rcell00D.setCellStyle(bodyStyle);
+                    rcell11D.setCellStyle(bodyStyle);
+                    rcell21D.setCellStyle(bodyStyle);
+                    rcell31D.setCellStyle(bodyStyle);
+                }
+                if (!listaData.get(0).DSALES2.equals("")) {
+                    rcell41D.setCellStyle(totalStyleSALE);
+                    rcell51D.setCellStyle(totalStyleSALE);
+                    rcell61D.setCellStyle(totalStyleSALE);
+                    rcell71D.setCellStyle(totalStyleSALE);
+                }
+                if (!listaData.get(0).DSALES3.equals("")) {
+                    rcell81D.setCellStyle(bodyStyle);
+                    rcell91D.setCellStyle(bodyStyle);
+                    rcell101D.setCellStyle(bodyStyle);
+                    rcell111D.setCellStyle(bodyStyle);
+                }
+                if (!listaData.get(0).DSALES4.equals("")) {
+                    rcell121D.setCellStyle(totalStyleSALE);
+                    rcell131D.setCellStyle(totalStyleSALE);
+                    rcell141D.setCellStyle(totalStyleSALE);
+                    rcell151D.setCellStyle(totalStyleSALE);
+                }
+                if (!listaData.get(0).DSALES5.equals("")) {
+                    rcell161D.setCellStyle(bodyStyle);
+                    rcell171D.setCellStyle(bodyStyle);
+                    rcell181D.setCellStyle(bodyStyle);
+                    rcell191D.setCellStyle(bodyStyle);
+                }
+
+                iter1.next();
+                ++vl;
+                ++vk;
             }
 
             sheet.autoSizeColumn(0, true);
@@ -5553,7 +5761,59 @@ public class Dashboard01Controller extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX226SQP05097(filter);
+            lst = logic.loadPX226SQP05098(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "loadFOREDown")
+    public @ResponseBody
+    String loadFOREDown(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : loadFOREDown-------------");
+
+        map.put("success", true);
+        List<IMF117Filter> lst = this.getListFOREDown(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<IMF117Filter> getListFOREDown(HttpServletRequest request, Boolean bExcel) {
+
+        List<IMF117Filter> lst = new ArrayList<>(0);
+        IMF117Filter filter = new IMF117Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF117Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX226SQP05098Down(filter);
 
         } catch (Exception e) {
             throw new SpringException(e);
@@ -5605,7 +5865,7 @@ public class Dashboard01Controller extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX226SQP05097Graph(filter);
+            lst = logic.loadPX226SQP05098Graph(filter);
 
         } catch (Exception e) {
             throw new SpringException(e);

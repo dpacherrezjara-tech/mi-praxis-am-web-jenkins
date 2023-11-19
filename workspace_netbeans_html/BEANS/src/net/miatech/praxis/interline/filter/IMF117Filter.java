@@ -186,6 +186,39 @@ public class IMF117Filter extends IMF117 {
     public double QTYF5_PERCENT = 0;
     public double QTYF6_PERCENT = 0;
     
+    public double TOT_QTYS1_PERCENT = 0;
+    public double TOT_QTYS2_PERCENT = 0;
+    public double TOT_QTYS3_PERCENT = 0;
+    public double TOT_QTYS4_PERCENT = 0;
+    public double TOT_QTYS5_PERCENT = 0;
+    
+    public long TOT_CPN1 = 0;
+    public long TOT_CPN2 = 0;
+    public long TOT_CPN3 = 0;
+    public long TOT_CPN4 = 0;
+    public long TOT_CPN5 = 0;
+    public double TOT_AMT1 = 0;
+    public double TOT_AMT2 = 0;
+    public double TOT_AMT3 = 0;
+    public double TOT_AMT4 = 0;
+    public double TOT_AMT5 = 0;
+    
+    public String USED1 = "";
+    public String USED2 = "";
+    public String USED3 = "";
+    public String USED4 = "";
+    public String USED5 = "";
+    public long CPNS1 = 0;
+    public long CPNS2 = 0;
+    public long CPNS3 = 0;
+    public long CPNS4 = 0;
+    public long CPNS5 = 0;
+    public double AMON1 = 0;
+    public double AMON2 = 0;
+    public double AMON3 = 0;
+    public double AMON4 = 0;
+    public double AMON5 = 0;
+    
     public String PERIODO = "";
     public String ORDEN = "";
     public String CODIGO = "";

@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Dashboard01Form', {
                                                 },
                                                 {
                                                     xtype: 'panel',
-                                                    height: 710,//820
+                                                    height: 820,//820
                                                     layout: 'fit',
                                                     items: [
                                                         {
