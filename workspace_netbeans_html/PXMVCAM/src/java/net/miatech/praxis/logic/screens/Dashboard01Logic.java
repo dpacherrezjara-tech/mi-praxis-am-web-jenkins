@@ -349,12 +349,16 @@ public class Dashboard01Logic {
     
     //* ***************************Forecast*******************************
     
-    public List<IMF117Filter> loadPX226SQP05097(IMF117Filter filter) throws Exception {
-        return Dashboard01DAO.loadPX226SQP05097(filter);
+    public List<IMF117Filter> loadPX226SQP05098(IMF117Filter filter) throws Exception {
+        return Dashboard01DAO.loadPX226SQP05098(filter);
     }
     
-    public List<IMF117Filter> loadPX226SQP05097Graph(IMF117Filter filter) throws Exception {
-        return Dashboard01DAO.loadPX226SQP05097Graph(filter);
+    public List<IMF117Filter> loadPX226SQP05098Down(IMF117Filter filter) throws Exception {
+        return Dashboard01DAO.loadPX226SQP05098Down(filter);
+    }
+    
+    public List<IMF117Filter> loadPX226SQP05098Graph(IMF117Filter filter) throws Exception {
+        return Dashboard01DAO.loadPX226SQP05098Graph(filter);
     }
     
 //    public List<IMF117Filter> loadPX228S01A1890(IMF117Filter filter) throws Exception {
