@@ -6950,7 +6950,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                             autoScroll: true,
                             width: 1560,
 //                            width: '100%',
-                            height: 385,
+                            height: 405,
                             features: [{
                                     ftype: 'summary',
 //                                                    dock: 'bottom'
@@ -7539,7 +7539,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                         {
                             xtype: 'panel',
                             bodyStyle: 'background-color: #E3EAEF;',
-                            padding: '5 0 0 5',
+                            padding: '0 0 0 5',
                             border: true,
                             layout: {
                                 type: 'vbox'
@@ -7551,7 +7551,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                     id: prototype.id + '-displayFORE',
                                     width: 1560,
                                     border: false,
-                                    height: 200,
+                                    height: 180,
                                     background: '#E0F8F7',
 //                                    captions: {
 //                                        title: {
