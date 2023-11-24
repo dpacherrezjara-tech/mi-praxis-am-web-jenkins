@@ -15,6 +15,7 @@ import net.miatech.praxis.payment.filter.A4335Filter;
 import net.miatech.praxis.payment.filter.A4482Filter;
 import net.miatech.praxis.payment.filter.A4496Filter;
 import net.miatech.praxis.payment.filter.ByTicketFilter;
+import net.miatech.praxis.payment.filter.ProductionFilter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05048Filter;
@@ -49,6 +50,8 @@ import net.miatech.praxis.payment.filter.SQP05147Filter;
 import net.miatech.praxis.payment.filter.SQP05182Filter;
 import net.miatech.praxis.payment.filter.SQP05183Filter;
 import net.miatech.praxis.payment.filter.SQP05187Filter;
+import net.miatech.praxis.payment.filter.SQP05202Filter;
+import net.miatech.praxis.payment.filter.SQP05203Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -552,6 +555,30 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setOUT_USOS((String) spRes.get("OUT_USOS"));
+        return filter;
+    }
+
+    @Override
+    public SQP05202Filter loadSQP05202Filter(SQP05202Filter filter) throws Exception {
+        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05202")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(ProductionFilter.class));
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = jdbcCall.execute(params);
+        filter.setResponse((List<ProductionFilter>) spRes.get("result"));
+        return filter;
+    }
+
+    @Override
+    public SQP05203Filter loadSQP05203Filter(SQP05203Filter filter) throws Exception {
+        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
+                .withSchemaName(LIBRARY)
+                .withProcedureName("SQP05203")
+                .returningResultSet("result", new BeanPropertyRowMapper<>(ProductionFilter.class));
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> spRes = jdbcCall.execute(params);
+        filter.setResponse((List<ProductionFilter>) spRes.get("result"));
         return filter;
     }
     

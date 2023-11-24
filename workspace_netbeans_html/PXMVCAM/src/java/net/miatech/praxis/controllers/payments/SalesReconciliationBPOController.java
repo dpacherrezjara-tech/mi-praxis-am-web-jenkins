@@ -46,6 +46,8 @@ import net.miatech.praxis.payment.filter.SQP05147Filter;
 import net.miatech.praxis.payment.filter.SQP05182Filter;
 import net.miatech.praxis.payment.filter.SQP05183Filter;
 import net.miatech.praxis.payment.filter.SQP05187Filter;
+import net.miatech.praxis.payment.filter.SQP05202Filter;
+import net.miatech.praxis.payment.filter.SQP05203Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.Functions;
@@ -102,6 +104,8 @@ public class SalesReconciliationBPOController {
             model.put("cerror", logic.getSQP05004Filter(filter).getLst());
             filter.setKEY2("89");
             model.put("codadju", logic.getSQP05004Filter(filter).getLst());
+            filter.setKEY2("ADMIN");
+            model.put("admins", logic.getSQP05004Filter(filter).getLst());
             System.out.println("Total: " + model.size());
             return new ResponseEntity<>(model, HttpStatus.OK);
         } catch (Exception e) {
@@ -972,6 +976,34 @@ public class SalesReconciliationBPOController {
     }
 //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Produccion">
+    @RequestMapping(value = "loadProductionBp")
+    public ResponseEntity<?> loadProductionBp(@ModelAttribute SQP05202Filter filter) {
+        try {
+            System.out.println("---------------SalesReconciliationBPO:loadProductionBp-------------");
+            filter = logic.loadSQP05202Filter(filter);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "loadProductionBpDetail")
+    public ResponseEntity<?> loadProductionBpDetail(@ModelAttribute SQP05203Filter filter) {
+        try {
+            System.out.println("---------------SalesReconciliationBPO:loadProductionBpDetail-------------");
+            filter = logic.loadSQP05203Filter(filter);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+//</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="WS Pruebas JSON">
     @RequestMapping(value = "testTicketSabre/{ticket}")
     public ResponseEntity<?> testTicketSabre(@PathVariable String ticket, @RequestHeader("Authorization") String authHeader) {

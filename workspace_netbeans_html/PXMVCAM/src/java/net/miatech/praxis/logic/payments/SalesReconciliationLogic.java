@@ -37,6 +37,8 @@ import net.miatech.praxis.payment.filter.SQP05147Filter;
 import net.miatech.praxis.payment.filter.SQP05182Filter;
 import net.miatech.praxis.payment.filter.SQP05183Filter;
 import net.miatech.praxis.payment.filter.SQP05187Filter;
+import net.miatech.praxis.payment.filter.SQP05202Filter;
+import net.miatech.praxis.payment.filter.SQP05203Filter;
 
 /**
  *
@@ -114,4 +116,8 @@ public interface SalesReconciliationLogic {
     
     //BUSCADOR DE USOS
     SQP05075Filter loadSQP05075Filter(SQP05075Filter filter) throws Exception;
+    
+    //Produccion BPO
+    SQP05202Filter loadSQP05202Filter(SQP05202Filter filter) throws Exception;
+    SQP05203Filter loadSQP05203Filter(SQP05203Filter filter) throws Exception;
 }

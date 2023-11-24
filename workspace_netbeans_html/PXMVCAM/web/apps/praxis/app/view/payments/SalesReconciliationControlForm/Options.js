@@ -8,6 +8,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Options', {
     },
     items: [
         {
+            xtype: 'button',
+            id: prototype.id + '-btnProduction',
+            text: 'BPO Production',
+            margin: '5 5 5 5',
+            width: 120,
+            tooltip: 'Show Production',
+            hidden: true,
+            listeners: {
+                click: 'onClickProduction'
+            }
+        },
+        {
             xtype: 'panel',
             border: true,
             items: [
@@ -57,7 +69,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Options', {
                             id: prototype.id + '-btnProcess',
                             iconCls: 'prx-icon-image-process',
                             tooltip: 'Process',
-                            hidden:true,
+                            hidden: true,
                             listeners: {
                                 click: 'onClickProcessBtn'
                             }

@@ -12,7 +12,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     afterRender: async function (obj, e) {
         const me = this;
         await me.fillFilters();
-        me.showProcessBtn();
     },
     fillFilters: async function () {
         const me = this;
@@ -26,6 +25,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const monedas = data.monedas.map(x => ({code: x.a006PAIS, name: `${x.a006PAIS}`}));
             const errores = data.cerror.map(x => ({name: `${x.a4451key3.trim()} - ${x.a4451desc1}`, code: x.a4451key3}));
             me.creditcards = data.creditcards;
+            me.users = data.admins.map(x => ({username: x.a4451key3.trimEnd()}));
             //<editor-fold defaultstate="collapsed" desc="Combos">
             const cmbProcesadores = Ext.getCmp(prototype.id + '-cmbProctype');
             me.setComboStore({cmp: cmbProcesadores, data: procesadores,
@@ -78,28 +78,41 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const cmbMdasBT = Ext.getCmp(prototype.id + '-cmbMonedaBT');
             me.setComboStore({cmp: cmbMdasBT, data: monedas,
                 valueField: 'code', displayField: 'name', value: ''});
-            
+
             const cmbMdasbBT = Ext.getCmp(prototype.id + '-cmbMonedabBT');
             me.setComboStore({cmp: cmbMdasbBT, data: monedas,
                 valueField: 'code', displayField: 'name', value: ''});
             //</editor-fold>
+            me.showProcessBtn(me.users);
+            me.showProductionBtn(me.users);
         }
         filterPanel.unmask();
     },
-    showProcessBtn: function () {
+    showProcessBtn: function (users) {
         const userName = $('#menuUser').text();
         const btn = Ext.getCmp(prototype.id + '-btnProcess');
         const activeFilter = Ext.getCmp(prototype.id + '-filtersByPayment-1');
         if (activeFilter.isVisible()) {
             if (userName.slice(0, 3) === 'SAP') {
                 btn.show();
-            } else if (userName === 'PLOPEZT' || userName === 'IMONTOYAT') {
+            } else if (users.includes(userName)) {
                 btn.show();
             } else {
                 btn.hide();
             }
         } else {
             btn.hide();
+        }
+    },
+    showProductionBtn: function (users) {
+        const userName = $('#menuUser').text();
+        const btnProduction = Ext.getCmp(prototype.id + '-btnProduction');
+        if (userName.slice(0, 3) === 'SAP') {
+            btnProduction.show();
+        } else if (users.includes(userName)) {
+            btnProduction.show();
+        } else {
+            btnProduction.hide();
         }
     },
     //<editor-fold defaultstate="collapsed" desc="Format Params">
@@ -340,6 +353,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             Ext.getCmp(prototype.id + '-filtersSettlement-1').getForm().reset();
         }
     },
+    onClickProduction: function () {
+        const productionWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.BPOProductionDataEntry', {
+            id: prototype.id + '-BPOProductionDataEntry-1'
+        });
+        productionWin.show();
+    },
     onClickBackBtn: function (obj) {
         window.location.href = CONTEXTPATH;
     },
@@ -359,7 +378,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 to.setValue(from.getValue());
             },
             'monthfieldToBP': () => {
-                if(to.getValue() < from.getValue()){
+                if (to.getValue() < from.getValue()) {
                     from.setValue(to.getValue());
                 }
             }
@@ -375,7 +394,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 to.setValue(from.getValue());
             },
             'monthfieldToBT': () => {
-                if(to.getValue() < from.getValue()){
+                if (to.getValue() < from.getValue()) {
                     from.setValue(to.getValue());
                 }
             }
@@ -391,7 +410,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 to.setValue(from.getValue());
             },
             'datefieldToBP': () => {
-                if(to.getValue() < from.getValue()){
+                if (to.getValue() < from.getValue()) {
                     from.setValue(to.getValue());
                 }
             }
@@ -407,7 +426,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 to.setValue(from.getValue());
             },
             'datefieldToBT': () => {
-                if(to.getValue() < from.getValue()){
+                if (to.getValue() < from.getValue()) {
                     from.setValue(to.getValue());
                 }
             }
@@ -423,7 +442,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 to.setValue(from.getValue());
             },
             'datefieldToST': () => {
-                if(to.getValue() < from.getValue()){
+                if (to.getValue() < from.getValue()) {
                     from.setValue(to.getValue());
                 }
             }
