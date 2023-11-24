@@ -25,7 +25,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const monedas = data.monedas.map(x => ({code: x.a006PAIS, name: `${x.a006PAIS}`}));
             const errores = data.cerror.map(x => ({name: `${x.a4451key3.trim()} - ${x.a4451desc1}`, code: x.a4451key3}));
             me.creditcards = data.creditcards;
-            me.users = data.admins.map(x => ({username: x.a4451key3.trimEnd()}));
+            me.users = data.admins.map(x => x.a4451key3.trimEnd());
             //<editor-fold defaultstate="collapsed" desc="Combos">
             const cmbProcesadores = Ext.getCmp(prototype.id + '-cmbProctype');
             me.setComboStore({cmp: cmbProcesadores, data: procesadores,
