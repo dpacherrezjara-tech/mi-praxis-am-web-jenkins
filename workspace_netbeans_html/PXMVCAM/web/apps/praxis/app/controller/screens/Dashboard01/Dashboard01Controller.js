@@ -94,6 +94,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             '#Dashboard01Form-btnBack_chartFlown': {
                 click: this.btnDisplay_click
             },
+            '#Dashboard01Form-btnDisplayHide': {
+                click: this.btnDisplayHide
+            },
         });
 
 //        this.setStoreData();
@@ -392,7 +395,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         if (month < 10) {
             month = '0' + month;
         }
-        
+
         Ext.getCmp(prototype.id + '-cmbDateFromMonth_SPA').setValue('01');
         Ext.getCmp(prototype.id + '-cmbDateToMonth_SPA').setValue('01');
 
@@ -680,6 +683,13 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             panelChart.hide();
         }
     },
+    btnDisplayHide: function () {
+        var component = this.getComponentByTab();
+        if (component !== null) {
+            var controller = component.getController();
+            controller.btnDisplayHides();
+        }
+    },
     showCurrentChart: function () {
         var isOK = false;
         this.hidePanelsChart();
@@ -703,7 +713,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
                 Ext.getCmp(prototype.id + '-panelChartSpa').show();
                 isOK = true;
                 meSPA.inicio();
-                break;    
+                break;
         }
 
         return isOK;

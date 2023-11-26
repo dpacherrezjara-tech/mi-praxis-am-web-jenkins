@@ -12,6 +12,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
             xtype: 'panel',
             border: true,
             width: 150,
+            id: prototype.id + '-OptionsOp2',
             items: [
                 {
                     xtype: 'toolbar',
@@ -43,6 +44,16 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
 //                            listeners: {
 //                                click: 'btnDisplay_click'
 //                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnDisplayHide2',
+                            icon: 'resources/img/botones/chart.png',
+                            tooltip: 'Show/Hide display Bar',
+                            hidden:true,
+                            listeners: {
+                                click: 'btnDisplayHide'
+                            }
                         },
                         {
                             xtype: 'button',
@@ -319,6 +330,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
         {
             xtype: 'panel',
             width: 150,
+            id: prototype.id + '-OptionsOp',
             border: true,
             items: [
                 {
@@ -349,6 +361,16 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                             tooltip: 'Display Charts',
 //                            listeners: {
 //                                click: 'btnDisplay_click'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnDisplayHide',
+                            icon: 'resources/img/botones/chart.png',
+                            tooltip: 'Show/Hide display Bar',
+                            hidden:true,
+//                            listeners: {
+//                                click: 'btnDisplayHide'
 //                            }
                         },
                         {
