@@ -7550,6 +7550,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                     // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
                                     id: prototype.id + '-displayFORE',
                                     width: 1560,
+                                    hidden:true,
                                     border: false,
                                     height: 180,
                                     background: '#E0F8F7',
