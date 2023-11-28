@@ -104,6 +104,7 @@ public class IMF117Filter extends IMF117 {
     
     //FORECAST
     public String IN_FECHA_FROM_FORE = "";
+    public String IN_FECHA_FROM_FORE_1 = "";
     public String IN_FECHA_TO_FORE = "";
     public String IN_YEAR = "";
     

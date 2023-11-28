@@ -7639,6 +7639,324 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                         }
                     ]
                 },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-boxSal_Fore',
+                    margin: '0 0 0 0',
+                    hidden: true,
+                    width: 1500,
+                    border: false,
+                    layout: {
+                        type: 'vbox',
+                        pack: 'center'
+                    },
+                    bodyStyle: 'background-color: transparent;',
+                    items: [
+                        {
+                                    xtype: 'panel',
+                                    hidden: false,
+                                    margin: '10 0 0 10',
+                                    border: false,
+                                    width: 200,
+//                                    height: 350,
+                                    layout: {
+                                        type: 'vbox',
+                                        aling: 'center'
+                                    },
+                                    bodyStyle: 'background-color: transparent;',
+                                    items: [
+                                        {
+                                            xtype: 'radiogroup',
+                                            id: prototype.id + '-BoxForeOptions',
+                                            fieldLabel: '',
+                                            horizontal: true,
+                                            items: [
+                                                {boxLabel: '<strong style="color:#3399FF" >Total</strong>', name: 'rb', inputValue: 'rbc1', width: 120},
+                                                {boxLabel: '<strong style="color:#3399FF" >Zones</strong>', name: 'rb', inputValue: 'rbc2', width: 120},
+                                                
+                                                {xtype: 'tbspacer', width: 50},
+                                            ],
+                                            listeners: {
+                                                change: 'chooseFore_clickHandler'
+                                            }
+                                        }
+                                    ]
+                                },
+                        {
+                            xtype: 'panel',
+                            layout: {
+                                type: 'hbox',
+                                align: 'center'
+                            },
+                            border: false,
+                            bodyStyle: 'background-color: transparent;',
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    hidden: false,
+                                    margin: '10 0 0 0',
+                                    border: false,
+                                    width: 200,
+                                    height: 350,
+                                    layout: {
+                                        type: 'vbox',
+                                        aling: 'center'
+                                    },
+                                    bodyStyle: 'background-color: transparent;',
+                                    items: [
+                                    ]
+                                },
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataFore',
+                                    width: 500,
+                                    height: 350,
+                                    columnLines: true,
+                                    margin: "5 0 0 0",
+                                    border: false,
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Sales<br>Date', dataIndex: 'DSALES', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "";
+                                                    value = '<b>' + value + '</b>';
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Sales',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Coupons', dataIndex: 'QTYSALE', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataFore').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_QTYSALE, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Amount', dataIndex: 'AMOSALE', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataFore').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_AMOSALE, '0,000') + '<b>';
+                                                        }
+                                                    },
+//                                                    {text: '%', dataIndex: 'QTYS1_PERCENT', width: 55,
+//                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            metaData.style = "background:#;text-align:right";
+//                                                            return Ext.util.Format.number(value, '0,000.00') + '%';
+//                                                        },
+//                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                                                            var data = Ext.getCmp(prototype.id + '-gridFORE').getStore().getData().items[0].data;
+//                                                            metaData.style = 'text-align:right; margin-right:3px ';
+//                                                            console.log(data);
+//                                                            return '<b>' + Ext.util.Format.number(data.TOT_QTYS1_PERCENT, '0,000') + '%' + '<b>';
+//                                                        }
+//                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Used Flown',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Coupons', dataIndex: 'QTYFLOWN', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataFore').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_QTYFLOWN, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Amount', dataIndex: 'AMOFLOWN', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataFore').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_AMOFLOWN, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    xtype: 'polar',
+                                    id: prototype.id + '-displayPolarFore',
+                                    width: 500,
+                                    border: true,
+                                    margin: '0 0 0 20',
+                                    innerPadding: 80,
+                                    height: 350,
+                                    background: '#E0F8F7',
+                                    captions: {
+                                        title: {
+//                                                    text: 'Total Coupons',
+                                            alignTo: 'chart'
+                                        }
+                                    },
+                                    animation: {
+                                        duration: 200
+                                    },
+                                    interactions: ['rotate', 'itemhighlight'],
+//                                            legend: {
+//                                                docked: 'bottom',
+//                                                background: '#E3EAEF',
+//                                            },
+                                    series: [{
+                                            type: 'pie3d',
+                                            angleField: 'QTY',
+                                            colors: ['#00b5fc', '#3acc00','#fcbd00'],
+                                            stacked: false,
+                                            title: ['Sales', 'Flown', 'Pending'],
+//                                            donut: 20,
+                                            label: {
+                                                field: 'strDescriptionQTY',
+                                                calloutLine: false,
+                                                renderer: function (value, b, callout) {
+                                                    callout.calloutWidth = 1;
+                                                    return value;
+                                                }
+                                            },
+                                            highlight: true,
+                                            tooltip: {
+                                                trackMouse: true,
+                                                height: 28,
+                                                renderer: function (toolTip, record, ctx) {
+                                                    var label = '';
+                                                    label = record.get('strDescription');
+                                                    if (label === 'Sales') {
+                                                        label = 'Sales';
+                                                    } else if (label === 'Flown') {
+                                                        label = 'Flown';
+                                                    } else if (label === 'Pending') {
+                                                        label = 'Pending';
+                                                    }
+                                                    toolTip.setHtml('Total ' + label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                }
+                                            }
+                                        }]
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            hidden: false,
+                            margin: '10 0 0 50',
+                            border: false,
+                            layout: {
+                                type: 'vbox',
+                                aling: 'center'
+                            },
+                            bodyStyle: 'background-color: transparent;',
+                            items: [
+                                {
+                                    xtype: 'cartesian',
+                                    id: prototype.id + '-displayForeGraph',
+                                    width: 1400,
+                                    border: false,
+                                    height: 290,
+                                    background: '#E0F8F7',
+                                    captions: {
+                                        title: {
+                                            text: 'Total Coupons',
+                                            alignTo: 'chart'
+                                        }
+                                    },
+                                    animation: {
+                                        duration: 200
+                                    },
+                                    interactions: ['itemhighlight'],
+                                    legend: {
+                                        docked: 'bottom',
+                                        background: '#E3EAEF'
+                                    },
+                                    axes: [{
+                                            type: 'numeric3d',
+                                            position: 'left',
+                                            fields: ['QTYSALE', 'QTYFLOWN'],
+                                            grid: true,
+                                            title: '',
+                                            renderer: function (obj, value) {
+                                                if (value > 1) {
+                                                    if ((value / 1000).toString().length > 3) {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0') + 'M';
+                                                    } else {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                    }
+                                                } else {
+                                                    return '';
+                                                }
+                                            }
+                                        }, {
+                                            type: 'category3d',
+                                            position: 'bottom',
+//                                                            fields: 'strFormatDate',
+                                            grid: true,
+                                            title: {
+//                                                text: 'Month',
+                                                translationX: -30
+                                            }
+                                        }],
+                                    series: [{
+                                            type: 'bar3d',
+                                            stacked: false,
+                                            title: ['Sales', 'Flown'],
+                                            xField: 'DSALES',
+                                            yField: ['QTYSALE', 'QTYFLOWN'],
+                                            colors: ['#00b5fc', '#3acc00'],
+                                            highlight: true,
+                                            style: {
+                                                inGroupGapWidth: -7,
+                                                minGapWidth: 2,
+                                                maxBarWidth: 1200
+                                            },
+                                            tooltip: {
+                                                trackMouse: true,
+                                                height: 28,
+                                                renderer: function (toolTip, record, ctx) {
+                                                    var label = '';
+                                                    if (ctx.field === 'QTYSALE') {
+                                                        label = 'sales';
+                                                    } else if (ctx.field === 'QTYFLOWN') {
+                                                        label = 'flown';
+                                                    }
+                                                    toolTip.setHtml('Qty ' + label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                }
+                                            }
+                                        }]
+                                }
+                            ]
+                        }
+                    ]
+                },
 //                {
 //                    xtype: 'panel',
 //                    id: prototype.id + '-boxTNUVS',
