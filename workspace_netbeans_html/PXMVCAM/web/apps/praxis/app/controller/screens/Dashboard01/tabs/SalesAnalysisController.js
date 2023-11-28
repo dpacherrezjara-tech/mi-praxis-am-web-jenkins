@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 //        global.selectedChild(me.childs, prototype.id + me.panelActual);
 //        console.log(me.childs);
         me.drillDown.push(me.boxActual);
-
+        
         this.control({
 //            //   -------------------Eventos Genericos --------------------
 //            '#Dashboard01Form-xpanel': {
@@ -113,20 +113,136 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 
         console.log('1-----------------------SalesAnalysisController - afterweeeeeeeeeeee');
     },
-//    btnDisplayHides: function () {
-//        var elemento = Ext.getCmp(prototype.id + '-displayFORE');
-//
-//        if (elemento) {
-//            // Verificar si el elemento está visible y cambiar su visibilidad
-//            if (elemento.isVisible()) {
-//                elemento.hide();
-//            } else {
-//                elemento.show();
-//            }
-//        } else {
-//            console.error("No se encontró ningún elemento con el ID especificado.");
-//        }
-//    },
+    btnDisplayHides: function () {
+        var elemento2 = Ext.getCmp(prototype.id + '-boxFORE');
+        var elemento = Ext.getCmp(prototype.id + '-boxSal_Fore');
+        if (elemento) {
+            // Verificar si el elemento está visible y cambiar su visibilidad
+            if (elemento.isVisible()) {
+                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').show()
+                elemento.hide();
+                elemento2.show();
+            } else {
+                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').hide()
+                Ext.getCmp(prototype.id + '-BoxForeOptions').items.items[0].setValue(true);
+                elemento.show();
+                elemento2.hide();
+                this.setFormatParameter();
+                var valueRadio = Ext.getCmp(prototype.id + '-BoxForeOptions').getValue().rb;
+
+                switch (valueRadio) {
+                    case 'rbc1':   //Total
+                        this.loadForeChart();
+                        break;
+                    case 'rbc2':   //Channels
+//                        this.loadChannelsChart();
+                        global.Msg({msg: 'Under Construction'});
+                        break;
+                }
+            }
+        } else {
+            console.error("No se encontró ningún elemento con el ID especificado.");
+        }
+    },
+    btnDisplayBack: function () {
+        var elemento = Ext.getCmp(prototype.id + '-boxFORE');
+        var elemento2 = Ext.getCmp(prototype.id + '-boxSal_Fore');
+        if (elemento) {
+            // Verificar si el elemento está visible y cambiar su visibilidad
+            if (elemento.isVisible()) {
+                //NADINE
+            } else {
+                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').show()
+                elemento.show();
+                elemento2.hide();
+            }
+        } else {
+            console.error("No se encontró ningún elemento con el ID especificado.");
+        }
+    },
+    chooseFore_clickHandler: function (obj, rb_new, rb_old, func) {
+        
+        var valueRadio = rb_new.rb;
+//        this.hidePanelGraficos();
+        this.setFormatParameter();
+
+        switch (valueRadio) {
+            case 'rbc1':    //Total
+                Ext.getCmp(prototype.id + '-boxSal_Fore').show();
+                this.loadForeChart();
+                break;
+            case 'rbc2':    //Zones
+//                Ext.getCmp(prototype.id + '-boxSal_Channels_1').show();
+//                this.loadChannelsChart();
+                global.Msg({msg: 'Under Construction'});
+                break;
+            
+        }
+    },
+    hidePanelGraficos: function () {
+        Ext.getCmp(prototype.id + '-boxSal_Fore').hide();
+//        Ext.getCmp(prototype.id + '-boxSal_Channels_1').hide();
+    },
+    loadForeChart: function () {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+            proxy: {
+                url: prototype.url + '/loadForeChart'
+            }, listeners: {
+                beforeload: function (obj) {
+//                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+                },
+                load: function (obj) {
+//                    Ext.getBody().unmask('Loading...');
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        var tickets = obj.data.items[0].data;
+
+                        Ext.getCmp(prototype.id + '-displayPolarFore').setTitle('<center style="font-size:14px;">' + 'Total ' + tickets.IN_YEAR + ' Coupons Qty' + '</center>');
+
+                        var lstQtys = [];
+
+                        var objTicket1 = {};
+                        objTicket1.QTY = tickets.TOT_QTYSALE;
+                        var descriptionsQTY1 = 'Sales: ' + Ext.util.Format.number(objTicket1.QTY, '0,000') + '';
+                        objTicket1.strDescription = 'Sales';
+                        objTicket1.strDescriptionQTY = descriptionsQTY1;
+                        lstQtys.push(objTicket1);
+
+                        var objTicket2 = {};
+                        objTicket2.QTY = tickets.TOT_QTYFLOWN;
+                        var descriptionsQTY2 = 'Flown: ' + Ext.util.Format.number(objTicket2.QTY, '0,000') + '';
+                        objTicket2.strDescription = 'Flown';
+                        objTicket2.strDescriptionQTY = descriptionsQTY2;
+                        lstQtys.push(objTicket2);
+
+                        var objTicket3 = {};
+                        objTicket3.QTY = tickets.TOT_QTYSALE - tickets.TOT_QTYFLOWN;
+                        var descriptionsQTY3 = 'Pending: ' + Ext.util.Format.number(objTicket3.QTY, '0,000') + '';
+                        objTicket3.strDescription = 'Pending';
+                        objTicket3.strDescriptionQTY = descriptionsQTY3;
+                        lstQtys.push(objTicket3);
+
+                        var storeGridQtys = Ext.create('Ext.data.Store', {
+                            data: lstQtys,
+                            autoLoad: true
+                        });
+
+                        Ext.getCmp(prototype.id + '-displayPolarFore').bindStore(storeGridQtys);
+//                        Ext.getCmp(prototype.id + '-displayPolarFore').bindStore(storeGridQtys);
+                    }
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDataFore').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayForeGraph').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataFore').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayForeGraph').setStore(storeGridDatas);
+    },
     inicio: function () {
 //        this.hidePagination_clickHandler();
         meSales.drillDown = [];
@@ -136,10 +252,14 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         Ext.getCmp(prototype.id + '-cmbSalesRelleno').show();
         Ext.getCmp(prototype.id + '-cmbTNUFilters').hide();
         Ext.getCmp(prototype.id + '-cmbFOREFilters').hide();
-//        Ext.getCmp(prototype.id + '-btnDisplayHide').hide();
-//        Ext.getCmp(prototype.id + '-btnDisplayHide2').hide();
-//        Ext.getCmp(prototype.id + '-OptionsOp').setWidth(150);
-//        Ext.getCmp(prototype.id + '-OptionsOp2').setWidth(150);
+        Ext.getCmp(prototype.id + '-btnDisplayFore').hide();
+        Ext.getCmp(prototype.id + '-btnDisplayFore_2').hide();
+        Ext.getCmp(prototype.id + '-btnDisplay').show();
+        Ext.getCmp(prototype.id + '-btnDisplay_2').show();
+        Ext.getCmp(prototype.id + '-btnBack').show();
+        Ext.getCmp(prototype.id + '-btnBack_2').show();
+        Ext.getCmp(prototype.id + '-boxSal_Fore').hide();
+
         var opcion = "1";
 
         console.log(gloSelOpt);
@@ -225,10 +345,13 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 GROUPBY = 'FORECAST';
                 Ext.getCmp(prototype.id + '-cmbSalesRelleno').hide();
                 Ext.getCmp(prototype.id + '-cmbFOREFilters').show();
-//                Ext.getCmp(prototype.id + '-btnDisplayHide').show();
-//                Ext.getCmp(prototype.id + '-btnDisplayHide2').show();
-//                Ext.getCmp(prototype.id + '-OptionsOp').setWidth(180);
-//                Ext.getCmp(prototype.id + '-OptionsOp2').setWidth(180);
+                Ext.getCmp(prototype.id + '-btnDisplayFore').show();
+                Ext.getCmp(prototype.id + '-btnDisplayFore_2').show();
+                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').show();
+                Ext.getCmp(prototype.id + '-btnDisplay').hide();
+                Ext.getCmp(prototype.id + '-btnDisplay_2').hide();
+                Ext.getCmp(prototype.id + '-btnBack').hide();
+                Ext.getCmp(prototype.id + '-btnBack_2').hide();
                 this.loadFORE();
                 break;
         }
@@ -277,6 +400,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
         } else if (gloSelOpt === '22') {
             me.bean.IN_FECHA_FROM_FORE = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').getValue();
+            me.bean.IN_FECHA_FROM_FORE_1 = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue();
             me.bean.IN_FECHA_TO_FORE = Ext.getCmp(prototype.id + '-cmbDateToYear_FORE').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth_FORE').getValue();
         } else {
             me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
@@ -319,14 +443,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 //    },
 
     search: function () {
-        console.log('searchParams');
-        console.log('searchParams');
-        console.log('searchParams');
         this.setFormatParameter();
-        console.log(searchParams);
-        console.log('searchParams');
-        console.log('searchParams');
-        console.log('searchParams');
         win.lblUser_toolTip("Estructura: IMF080");
         this.showGrid('-boxMainData');
 //        me.panelActual = '-boxMainData';
@@ -2152,35 +2269,34 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         });
         Ext.getCmp(prototype.id + '-gridFORE2').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridFORE2').setStore(storeGridDatas);
-        this.loadFOREGraph();
     },
-    loadFOREGraph: function () {
-        win.lblUser_toolTip("Estructura: A4521");
-        me.panelActual = '-boxFORE';
-        this.showGrid('-boxFORE');
-        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
-            proxy: {
-                url: prototype.url + '/loadFOREGraph'
-            }, listeners: {
-                beforeload: function (obj) {
-                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
-                },
-                load: function (obj) {
-                    console.log(obj.data.items[0]);
-
-                    if (obj.data.length === 0) {
-                        global.Msg({
-                            msg: 'Data not found.'
-                        });
-                    } else {
-
-                    }
-                }
-            }
-        });
-        Ext.getCmp(prototype.id + '-displayFORE').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-displayFORE').setStore(storeGridDatas);
-    },
+//    loadFOREGraph: function () {
+//        win.lblUser_toolTip("Estructura: A4521");
+//        me.panelActual = '-boxFORE';
+//        this.showGrid('-boxFORE');
+//        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+//            proxy: {
+//                url: prototype.url + '/loadFOREGraph'
+//            }, listeners: {
+//                beforeload: function (obj) {
+//                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+//                },
+//                load: function (obj) {
+//                    console.log(obj.data.items[0]);
+//
+//                    if (obj.data.length === 0) {
+//                        global.Msg({
+//                            msg: 'Data not found.'
+//                        });
+//                    } else {
+//
+//                    }
+//                }
+//            }
+//        });
+//        Ext.getCmp(prototype.id + '-displayFORE').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-displayFORE').setStore(storeGridDatas);
+//    },
 //    loadTNUVS: function () {
 //        win.lblUser_toolTip("Estructura: ");
 //         
