@@ -10091,6 +10091,74 @@ public class Dashboard01DAO {
         }
         return lstRtn;
     }
+    
+    public List<IMF117Filter> loadPX226SQP05098Chart(IMF117Filter filter) throws Exception {
+        List<IMF117Filter> lstRtn = new ArrayList<IMF117Filter>(0);
+        IMF117Filter objRtn;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        long QTYSALE = 0,QTYFLOWN = 0;
+        double AMOSALE = 0,AMOFLOWN = 0;
+        String SQLCLL01 = "{CALL SQP05098Chart(?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, filter.IN_FECHA_FROM_FORE);
+            cstmt01.execute();
+
+            
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                QTYSALE = rs01.getLong("QTYSALE");
+                QTYFLOWN = rs01.getLong("QTYFLOWN");
+                AMOSALE = rs01.getDouble("AMOSALE");
+                AMOFLOWN = rs01.getDouble("AMOFLOWN");
+            }
+
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new IMF117Filter();
+                    objRtn.IN_YEAR = filter.IN_FECHA_FROM_FORE;
+                    objRtn.DSALES = rs01.getString("DSALES");
+                    objRtn.DSALES = Functions.getMonthConvert(objRtn.DSALES);
+                    objRtn.QTYSALE = rs01.getLong("QTYSALE");
+                    objRtn.QTYFLOWN = rs01.getLong("QTYFLOWN");
+                    objRtn.AMOSALE = rs01.getDouble("AMOSALE");
+                    objRtn.AMOFLOWN = rs01.getDouble("AMOFLOWN");
+                    
+                    objRtn.TOT_QTYSALE = QTYSALE;
+                    objRtn.TOT_QTYFLOWN = QTYFLOWN;
+                    objRtn.TOT_AMOSALE = AMOSALE;
+                    objRtn.TOT_AMOFLOWN = AMOFLOWN;
+                    
+                    lstRtn.add(objRtn);
+                }
+            }    
+        } catch (Exception ex) {
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lstRtn;
+    }
 
 //    public List<IMF117Filter> loadPX228S01A1890(IMF117Filter filter) throws Exception{
 //        List<IMF117Filter> lstRtn = new ArrayList<>(0);

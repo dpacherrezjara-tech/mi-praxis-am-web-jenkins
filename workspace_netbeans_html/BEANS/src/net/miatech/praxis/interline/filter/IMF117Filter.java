@@ -105,6 +105,7 @@ public class IMF117Filter extends IMF117 {
     //FORECAST
     public String IN_FECHA_FROM_FORE = "";
     public String IN_FECHA_TO_FORE = "";
+    public String IN_YEAR = "";
     
     public String DFLIGHT1 = "";
     public long QTYFLY1 = 0;
@@ -147,6 +148,11 @@ public class IMF117Filter extends IMF117 {
     public double AMOSALE = 0;
     public long QTYFLOWN = 0;
     public double AMOFLOWN = 0;
+    
+    public long TOT_QTYSALE = 0;
+    public double TOT_AMOSALE = 0;
+    public long TOT_QTYFLOWN = 0;
+    public double TOT_AMOFLOWN = 0;
     
     public long QTYS1 = 0;
     public double AMOS1 = 0;

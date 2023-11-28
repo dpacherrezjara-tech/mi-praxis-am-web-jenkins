@@ -81,6 +81,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
             case 'rbc5' :  //Cabin
                 this.loadAgentChart_3();
                 break;
+            case 'rbc7' :  //Forecast
+                this.loadForeChart();
+                break;
         }
     },
     setFormatParameter: function () {
@@ -89,6 +92,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
         meSChart.beanChart_F = {};
 
         meSChart.beanChart.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateYear_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthFrom_Chart').getValue();
+        meSChart.beanChart.IN_FECHA_FROM_FORE = Ext.getCmp(prototype.id + '-cmbDateYear_Chart').getValue();
         meSChart.beanChart.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateYear_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthTo_Chart').getValue();
 
         meSChart.beanChart_F.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateYear_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthFrom_Chart').getValue();
@@ -125,6 +129,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
         Ext.getCmp(prototype.id + '-boxSal_Countries_2').hide();
         Ext.getCmp(prototype.id + '-boxSal_Agent').hide();
         Ext.getCmp(prototype.id + '-boxSal_Agent_Used').hide();
+        Ext.getCmp(prototype.id + '-boxSal_Fore').hide();
     },
     loadCountryOfSale: function () {
 
@@ -273,7 +278,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
 
                             me.lstTotales = res.lstTotales;
                             var listaTotalesC = Ext.clone(res.lstTotales);
-                            
+
                             for (var i = 0; i < listaTotalesC.length; i++) {
                                 listaTotalesC[i].totQKMS = 100;
                                 var label = listaTotalesC[i].TYPE;
@@ -283,7 +288,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
                                 listaTotalesC[i].VENDOR = label + ', ' + Ext.util.Format.number(listaTotalesC[i].Perc2, '0,000') + '%';
 
                             }
-                            
+
                             for (var i = 0; i < me.lstTotales.length; i++) {
                                 me.lstTotales[i].totQKMS = 100;
                                 var label = me.lstTotales[i].TYPE;
@@ -304,7 +309,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
                                 }
                                 item_t = {};
                             }
-                            
+
                             for (var j = 0; j < lstTot_Temp.length; j++) {
 
                                 item_pie = lstTot_Temp[j];
@@ -648,7 +653,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
         });
     },
     chooseChart_clickHandler: function (obj, rb_new, rb_old, func) {
-
+        Ext.getCmp(prototype.id + '-chkUso').show();
+        Ext.getCmp(prototype.id + '-cmbDateMonthFrom_Chart').show();
+        Ext.getCmp(prototype.id + '-TO').show();
+        Ext.getCmp(prototype.id + '-cmbDateMonthTo_Chart').show()
         var valueRadio = rb_new.rb;
         this.hidePanelGraficos();
         this.setFormatParameter();
@@ -677,6 +685,14 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
             case 'rbc5':    //Agent
                 Ext.getCmp(prototype.id + '-boxSal_Agent').show();
                 this.loadAgentChart_3();
+                break;
+            case 'rbc7':    //Forecast
+                Ext.getCmp(prototype.id + '-boxSal_Fore').show();
+                Ext.getCmp(prototype.id + '-chkUso').hide();
+                Ext.getCmp(prototype.id + '-cmbDateMonthFrom_Chart').hide();
+                Ext.getCmp(prototype.id + '-TO').hide();
+                Ext.getCmp(prototype.id + '-cmbDateMonthTo_Chart').hide();
+                this.loadForeChart();
                 break;
         }
     },
@@ -867,6 +883,60 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
         Ext.getCmp(prototype.id + '-ChtSalesAnalysis30MSBC').bindStore(storeChtSalesAnalysis30MSBC);
 
     },
+    loadForeChart: function () {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+            proxy: {
+                url: prototype.url + '/loadForeChart'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: meSChart.searchParams}
+                },
+                load: function (obj) {
+                    Ext.getBody().unmask('Loading...');
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        var tickets = obj.data.items[0].data;
+
+                        Ext.getCmp(prototype.id + '-displayPolarFore').setTitle('<center style="font-size:14px;">' + 'Total ' + tickets.IN_YEAR + ' Coupons' + '</center>');
+
+                        var lstQtys = [];
+
+                        var objTicket1 = {};
+                        objTicket1.QTY = tickets.TOT_QTYSALE;
+                        var descriptionsQTY1 = 'Sales: ' + Ext.util.Format.number(objTicket1.QTY, '0,000') + ' QTY';
+                        objTicket1.strDescription = 'Sales';
+                        objTicket1.strDescriptionQTY = descriptionsQTY1;
+                        lstQtys.push(objTicket1);
+
+                        var objTicket2 = {};
+                        objTicket2.QTY = tickets.TOT_QTYFLOWN;
+                        var descriptionsQTY2 = 'Flown: ' + Ext.util.Format.number(objTicket2.QTY, '0,000') + ' QTY';
+                        objTicket2.strDescription = 'Flown';
+                        objTicket2.strDescriptionQTY = descriptionsQTY2;
+                        lstQtys.push(objTicket2);
+
+                        var storeGridQtys = Ext.create('Ext.data.Store', {
+                            data: lstQtys,
+                            autoLoad: true
+                        });
+
+                        Ext.getCmp(prototype.id + '-displayPolarFore').bindStore(storeGridQtys);
+//                        Ext.getCmp(prototype.id + '-displayPolarFore').bindStore(storeGridQtys);
+                    }
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDataFore').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayForeGraph').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataFore').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayForeGraph').setStore(storeGridDatas);
+    },
+
     //To render
     getDouble: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right';
