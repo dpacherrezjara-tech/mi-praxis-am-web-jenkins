@@ -361,6 +361,10 @@ public class Dashboard01Logic {
         return Dashboard01DAO.loadPX226SQP05098Graph(filter);
     }
     
+    public List<IMF117Filter> loadPX226SQP05098Chart(IMF117Filter filter) throws Exception {
+        return Dashboard01DAO.loadPX226SQP05098Chart(filter);
+    }
+    
 //    public List<IMF117Filter> loadPX228S01A1890(IMF117Filter filter) throws Exception {
 //        return Dashboard01DAO.loadPX228S01A1890(filter);
 //    }
