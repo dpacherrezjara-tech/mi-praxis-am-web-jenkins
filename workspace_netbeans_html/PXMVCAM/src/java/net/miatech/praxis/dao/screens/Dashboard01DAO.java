@@ -10105,7 +10105,7 @@ public class Dashboard01DAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.setString(1, filter.IN_FECHA_FROM_FORE);
+            cstmt01.setString(1, filter.IN_FECHA_FROM_FORE_1);
             cstmt01.execute();
 
             
@@ -10122,7 +10122,7 @@ public class Dashboard01DAO {
                 rs01 = cstmt01.getResultSet();
                 while (rs01.next()) {
                     objRtn = new IMF117Filter();
-                    objRtn.IN_YEAR = filter.IN_FECHA_FROM_FORE;
+                    objRtn.IN_YEAR = filter.IN_FECHA_FROM_FORE_1;
                     objRtn.DSALES = rs01.getString("DSALES");
                     objRtn.DSALES = Functions.getMonthConvert(objRtn.DSALES);
                     objRtn.QTYSALE = rs01.getLong("QTYSALE");

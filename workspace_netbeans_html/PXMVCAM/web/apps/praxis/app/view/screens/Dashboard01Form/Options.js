@@ -47,6 +47,15 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnDisplayFore_2',
+                            icon: 'resources/img/botones/FalseChart.png',
+                            tooltip: 'Display Charts',
+//                            listeners: {
+//                                click: 'btnDisplay_click'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnExcel_2',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel',
@@ -81,6 +90,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                             listeners: {
                                 click: 'imgBack_clickHandler'
                             }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnBackFake_2',
+                            iconCls: 'prx-icon-back',
+                            tooltip: 'Back',
                         }
                     ]
                 }
@@ -355,6 +370,15 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnDisplayFore',
+                            icon: 'resources/img/botones/FalseChart.png',
+                            tooltip: 'Display Charts',
+//                            listeners: {
+//                                click: 'btnDisplay_click'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel',
@@ -389,6 +413,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                             listeners: {
                                 click: 'imgBack_clickHandler'
                             }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnBackFake',
+                            iconCls: 'prx-icon-back',
+                            tooltip: 'Back',
                         }
                     ]
                 }

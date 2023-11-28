@@ -94,8 +94,17 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             '#Dashboard01Form-btnBack_chartFlown': {
                 click: this.btnDisplay_click
             },
-            '#Dashboard01Form-btnDisplayHide': {
-                click: this.btnDisplayHide
+            '#Dashboard01Form-btnDisplayFore': {
+                click: this.btnDisplayFore
+            },
+            '#Dashboard01Form-btnDisplayFore_2': {
+                click: this.btnDisplayFore
+            },
+            '#Dashboard01Form-btnBackFake': {
+                click: this.btnDisplayBackFore
+            },
+            '#Dashboard01Form-btnBackFake_2': {
+                click: this.btnDisplayBackFore
             },
         });
 
@@ -683,11 +692,18 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             panelChart.hide();
         }
     },
-    btnDisplayHide: function () {
+    btnDisplayFore: function () {
         var component = this.getComponentByTab();
         if (component !== null) {
             var controller = component.getController();
             controller.btnDisplayHides();
+        }
+    },
+    btnDisplayBackFore: function () {
+        var component = this.getComponentByTab();
+        if (component !== null) {
+            var controller = component.getController();
+            controller.btnDisplayBack();
         }
     },
     showCurrentChart: function () {
