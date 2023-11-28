@@ -47,16 +47,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnDisplayHide2',
-                            icon: 'resources/img/botones/chart.png',
-                            tooltip: 'Show/Hide display Bar',
-                            hidden:true,
-                            listeners: {
-                                click: 'btnDisplayHide'
-                            }
-                        },
-                        {
-                            xtype: 'button',
                             id: prototype.id + '-btnExcel_2',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel',
@@ -361,16 +351,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                             tooltip: 'Display Charts',
 //                            listeners: {
 //                                click: 'btnDisplay_click'
-//                            }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnDisplayHide',
-                            icon: 'resources/img/botones/chart.png',
-                            tooltip: 'Show/Hide display Bar',
-                            hidden:true,
-//                            listeners: {
-//                                click: 'btnDisplayHide'
 //                            }
                         },
                         {

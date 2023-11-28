@@ -113,20 +113,20 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 
         console.log('1-----------------------SalesAnalysisController - afterweeeeeeeeeeee');
     },
-    btnDisplayHides: function () {
-        var elemento = Ext.getCmp(prototype.id + '-displayFORE');
-
-        if (elemento) {
-            // Verificar si el elemento está visible y cambiar su visibilidad
-            if (elemento.isVisible()) {
-                elemento.hide();
-            } else {
-                elemento.show();
-            }
-        } else {
-            console.error("No se encontró ningún elemento con el ID especificado.");
-        }
-    },
+//    btnDisplayHides: function () {
+//        var elemento = Ext.getCmp(prototype.id + '-displayFORE');
+//
+//        if (elemento) {
+//            // Verificar si el elemento está visible y cambiar su visibilidad
+//            if (elemento.isVisible()) {
+//                elemento.hide();
+//            } else {
+//                elemento.show();
+//            }
+//        } else {
+//            console.error("No se encontró ningún elemento con el ID especificado.");
+//        }
+//    },
     inicio: function () {
 //        this.hidePagination_clickHandler();
         meSales.drillDown = [];
@@ -136,10 +136,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         Ext.getCmp(prototype.id + '-cmbSalesRelleno').show();
         Ext.getCmp(prototype.id + '-cmbTNUFilters').hide();
         Ext.getCmp(prototype.id + '-cmbFOREFilters').hide();
-        Ext.getCmp(prototype.id + '-btnDisplayHide').hide();
-        Ext.getCmp(prototype.id + '-btnDisplayHide2').hide();
-        Ext.getCmp(prototype.id + '-OptionsOp').setWidth(150);
-        Ext.getCmp(prototype.id + '-OptionsOp2').setWidth(150);
+//        Ext.getCmp(prototype.id + '-btnDisplayHide').hide();
+//        Ext.getCmp(prototype.id + '-btnDisplayHide2').hide();
+//        Ext.getCmp(prototype.id + '-OptionsOp').setWidth(150);
+//        Ext.getCmp(prototype.id + '-OptionsOp2').setWidth(150);
         var opcion = "1";
 
         console.log(gloSelOpt);
@@ -225,10 +225,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 GROUPBY = 'FORECAST';
                 Ext.getCmp(prototype.id + '-cmbSalesRelleno').hide();
                 Ext.getCmp(prototype.id + '-cmbFOREFilters').show();
-                Ext.getCmp(prototype.id + '-btnDisplayHide').show();
-                Ext.getCmp(prototype.id + '-btnDisplayHide2').show();
-                Ext.getCmp(prototype.id + '-OptionsOp').setWidth(180);
-                Ext.getCmp(prototype.id + '-OptionsOp2').setWidth(180);
+//                Ext.getCmp(prototype.id + '-btnDisplayHide').show();
+//                Ext.getCmp(prototype.id + '-btnDisplayHide2').show();
+//                Ext.getCmp(prototype.id + '-OptionsOp').setWidth(180);
+//                Ext.getCmp(prototype.id + '-OptionsOp2').setWidth(180);
                 this.loadFORE();
                 break;
         }

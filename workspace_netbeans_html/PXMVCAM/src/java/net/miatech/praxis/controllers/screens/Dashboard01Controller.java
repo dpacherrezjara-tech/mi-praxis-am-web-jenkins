@@ -5872,6 +5872,43 @@ public class Dashboard01Controller extends BaseController {
         }
         return lst;
     }
+    
+    
+    //******************** Chart Forecast *******************************************
+    @RequestMapping(value = "loadForeChart")
+    public @ResponseBody
+    String loadForeChart(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<IMF117Filter> lstData;
+        IMF117Filter filter = new IMF117Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX226SQP05098Chart(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("data", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
 
 //    @RequestMapping(value = "loadTNUVS")
 //    public @ResponseBody
