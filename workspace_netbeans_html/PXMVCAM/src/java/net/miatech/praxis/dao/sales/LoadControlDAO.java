@@ -357,6 +357,51 @@ public class LoadControlDAO {
         return lstRtn;
     }
     
+    public List<PX019S01A1348Filter> loadSQP05150( PX019S01A1348Filter filter) throws SQLException, Exception {
+        List<PX019S01A1348Filter> lstRtn = new ArrayList<PX019S01A1348Filter>(0);
+        PX019S01A1348Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL SQP05150(?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(1, Types.INTEGER);
+            cstmt01.registerOutParameter(2, Types.INTEGER);
+            cstmt01.registerOutParameter(3, Types.INTEGER);
+            cstmt01.registerOutParameter(4, Types.INTEGER);
+            
+            cstmt01.setInt(1, filter.page.PAGNUM);
+            cstmt01.setInt(2, filter.page.PAGROW);
+            cstmt01.setInt(3, filter.page.TOTPAG);
+            cstmt01.setInt(4, filter.page.TOTROW);
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(1);
+            filter.page.PAGROW = cstmt01.getInt(2);
+            filter.page.TOTPAG = cstmt01.getInt(3);
+            filter.page.TOTROW = cstmt01.getInt(4);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new PX019S01A1348Filter();
+                objRtn.DELIVERY = rs01.getString("DELIVERY");
+                objRtn.page.PAGNUM = filter.page.PAGNUM;
+                objRtn.page.PAGROW = filter.page.PAGROW;
+                objRtn.page.TOTPAG = filter.page.TOTPAG;
+                objRtn.page.TOTROW = filter.page.TOTROW;
+                lstRtn.add(objRtn);
+            }
+        } finally {
+            if (rs01 != null) try { rs01.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }            
+            if (cstmt01 != null) try { cstmt01.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }            
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lstRtn;
+    }
+    
     public PX074S02PRO9878Filter loadPX074S02PRO9878(PX074S02PRO9878Filter filter) throws SQLException, Exception {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
@@ -474,11 +519,59 @@ public class LoadControlDAO {
         }
         return filter;
     }
+    
+    public PX037S06PRO9822Filter loadSQP05149(PX037S06PRO9822Filter filter) throws SQLException, Exception {
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL SQP05149(?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(2, Types.INTEGER);
+            cstmt01.registerOutParameter(3, Types.CHAR);
+            
+            cstmt01.setString(1, filter.IN_PROGRAM);
+            cstmt01.execute();
 
+            filter.OU_QTYREG = cstmt01.getInt(2);
+            filter.OU_STATUS = cstmt01.getString(3);
+        } finally {
+            if (rs01 != null) try { rs01.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }            
+            if (cstmt01 != null) try { cstmt01.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }            
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return filter;
+    }
+    
     public PX037S07PRO9876Filter loadPX037S07PRO9876(PX037S07PRO9876Filter filter) throws SQLException, Exception {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         String SQLCLL01 = "{CALL PX037S07PRO9876(?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(4, Types.CHAR);
+            
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_PROGRAM);
+            cstmt01.setInt(3, filter.IN_NROID);
+            cstmt01.execute();
+
+            filter.OU_STATUS = cstmt01.getString(4);
+        } finally {
+            if (rs01 != null) try { rs01.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }
+            if (cstmt01 != null) try { cstmt01.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }            
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return filter;
+    }
+    
+    public PX037S07PRO9876Filter loadSQP05148(PX037S07PRO9876Filter filter) throws SQLException, Exception {
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL SQP05148(?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cstmt01 = cnx.prepareCall(SQLCLL01);
