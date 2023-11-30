@@ -33,7 +33,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.DataEntry
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbModule').setValue(rec.get('A4306MODULCO'));
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbType').setValue(rec.get('A4306TYPECO'));
 
-
+                Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406LABL').setValue(rec.get('A4306LABL'));
+                Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406PROP').setValue(rec.get('A4306PROP'));
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406REGIS').setValue(rec.get('A4306REGIS'));
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406FREGI').setValue(rec.get('A4306FREGI'));
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406HREGI').setValue(rec.get('A4306HREGI'));
@@ -51,6 +52,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.DataEntry
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbStatus').setValue('');
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbModule').setValue('');
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbType').setValue('');
+                Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406LABL').setValue('');
+                Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406PROP').setValue('');
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406REGIS').setValue('');
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406FREGI').setValue('');
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406HREGI').setValue('');
@@ -73,16 +76,16 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.DataEntry
 
         CmbModule.bindStore(Ext.create('Ext.data.Store', {
             data: [
-                {"code": "", "name": "SELECT"},
-                {"code": "SAL", "name": "SALE"},
-                {"code": "FLO", "name": "FLOWN"},
-                {"code": "IXC", "name": "IXC"},
-                {"code": "IXP", "name": "IXP"},
+                {"code": "", "name": "ALL"},
+                {"code": "PSALES", "name": "SALE"},
+                {"code": "PFLOWN", "name": "FLOWN"},
+                {"code": "PARINT", "name": "IXC"},
+                {"code": "PAPINT", "name": "IXP"},
                 {"code": "DIS", "name": "DISC"},
-                {"code": "ADJ", "name": "ADJ"},
-                {"code": "ADM", "name": "ADM's/ACM's"},
-                {"code": "PLM", "name": "PLM"},
-                {"code": "FOP", "name": "COM. FOP"},
+                {"code": "PADJMAN", "name": "ADJ"},
+                {"code": "PADM", "name": "ADM's/ACM's"},
+                {"code": "PPLM", "name": "PLM"},
+                {"code": "PFOP", "name": "COM. FOP"},
                 {"code": "COM", "name": "COM. CONS."}
             ]
         }));
@@ -127,6 +130,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.DataEntry
             me.beanTMP.A4306CORER = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtmailAirline').getValue();
             me.beanTMP.A4306CORRL = '';
             me.beanTMP.A4306FLAG = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbStatus').getValue();
+            me.beanTMP.A4306LABL = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406LABL').getValue();
+            me.beanTMP.A4306PROP = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406PROP').getValue();
             
             if (me.beanTMP.A4306MODUL === '') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Module');
@@ -191,6 +196,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.DataEntry
             me.beanTMP.A4306CORER = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtmailAirline').getValue();
             me.beanTMP.A4306CORRL = rec.get('A4306CORRL');
             me.beanTMP.A4306FLAG = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbStatus').getValue();
+            me.beanTMP.A4306LABL = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406LABL').getValue();
+            me.beanTMP.A4306PROP = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406PROP').getValue();
 
             if (me.beanTMP.A4306MODUL === '') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Module');

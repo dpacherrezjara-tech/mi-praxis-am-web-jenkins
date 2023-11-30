@@ -52,15 +52,15 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.Accountin
         CmbModule.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
-                {"code": "SAL", "name": "SALE"},
-                {"code": "FLO", "name": "FLOWN"},
-                {"code": "IXC", "name": "IXC"},
-                {"code": "IXP", "name": "IXP"},
+                {"code": "PSALES", "name": "SALE"},
+                {"code": "PFLOWN", "name": "FLOWN"},
+                {"code": "PARINT", "name": "IXC"},
+                {"code": "PAPINT", "name": "IXP"},
                 {"code": "DIS", "name": "DISC"},
-                {"code": "ADJ", "name": "ADJ"},
-                {"code": "ADM", "name": "ADM's/ACM's"},
-                {"code": "PLM", "name": "PLM"},
-                {"code": "FOP", "name": "COM. FOP"},
+                {"code": "PADJMAN", "name": "ADJ"},
+                {"code": "PADM", "name": "ADM's/ACM's"},
+                {"code": "PPLM", "name": "PLM"},
+                {"code": "PFOP", "name": "COM. FOP"},
                 {"code": "COM", "name": "COM. CONS."}
             ]
         }));
@@ -107,7 +107,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.Accountin
     setStoresGrids: function () {
         var grid00 = Ext.getCmp(prototype.idAccoEmailMain + '-grid');
 
-        var store00 = Ext.create('Ext.data.Store', {
+        var store00 = Ext.create('Ext.Praxis.store.sales.AccountingEmailMaintenance.GridData', {
             storeId: prototype.idAccoEmailMain + '-store-grid00',
             pageSize: 20,
             proxy: {
@@ -133,6 +133,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.Accountin
         me.bean.IN_TYPE = Ext.getCmp(prototype.idAccoEmailMain + '-CmbType').getValue();
         me.bean.IN_EMAIL = Ext.getCmp(prototype.idAccoEmailMain + '-txtEmail').getValue();
         me.bean.IN_STATUS = Ext.getCmp(prototype.idAccoEmailMain + '-CmbStatus').getValue();
+        me.bean.IN_LABL = Ext.getCmp(prototype.idAccoEmailMain + '-txtLabl').getValue();
         me.bean.pexcel = 0;
 
         me.Search(me.bean, obj === true ? obj : false);

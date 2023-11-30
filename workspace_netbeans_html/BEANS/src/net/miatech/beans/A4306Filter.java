@@ -18,6 +18,7 @@ public class A4306Filter extends A4306 {
     public String IN_EMAIL = "";
     public String IN_STATUS = "";
     public String IN_OPCION = "";
+    public String IN_LABL = "";
 
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();
     public DBException dbException = new DBException();

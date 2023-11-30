@@ -2,7 +2,7 @@
 prototype.idAccoEmailMain = 'AccountingEmailMaintenanceForm';
 prototype.idDataEntryEmailcatalogReportForm = 'DataEntryEmailcatalogReportwin';
 prototype.url = CONTEXTPATH + '/AccountingEmailMaintenanceForm';
-prototype.widthWindow = 800;
+prototype.widthWindow = 1010;
 prototype.heightWindow = 768;
 
 Ext.define('Ext.Praxis.view.sales.AccountingEmailMaintenanceForm.AccountingEmailMaintenanceForm', {
@@ -199,6 +199,17 @@ Ext.define('Ext.Praxis.view.sales.AccountingEmailMaintenanceForm.AccountingEmail
                                             }
                                         },
                                         {
+                                            xtype: 'textfield',
+                                            id: prototype.idAccoEmailMain + '-txtLabl',
+                                            width: 200,
+                                            labelWidth: 40,
+                                            enableKeyEvents: true,
+                                            fieldLabel: 'Label',
+                                            listeners: {
+                                                specialkey: 'onSearchkey'
+                                            }
+                                        },
+                                        {
                                             xtype: 'combo',
                                             id: prototype.idAccoEmailMain + '-CmbStatus',
                                             fieldLabel: 'Status',
@@ -249,6 +260,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingEmailMaintenanceForm.AccountingEmail
                                     {text: 'Type', dataIndex: 'A4306TYPE', align: 'center', width: 75},
                                     {text: 'Email', dataIndex: 'A4306CORER', width: 370, align: 'left', renderer: 'onRendererColumn'},
                                     {text: 'Status', dataIndex: 'A4306FLAG', width: 120, renderer: 'onRendererColumnStatus'},
+                                    {text: 'Label', dataIndex: 'A4306LABL', align: 'center', width: 120},
+                                    {text: 'Property', dataIndex: 'A4306PROP', align: 'center', width: 120},
                                     {text: '', dataIndex: '', width: 60, renderer: 'onRendererColumnOnTime'},
                                     {
                                         sortable: false,

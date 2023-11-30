@@ -66,6 +66,7 @@ public class AccountingEmailMaintenanceFormController extends BaseController {
             filter.IN_TYPE = request.getParameter("IN_TYPE");
             filter.IN_EMAIL = request.getParameter("IN_EMAIL");
             filter.IN_STATUS = request.getParameter("IN_STATUS");
+            filter.IN_LABL = request.getParameter("IN_LABL");
 
             if (!bExcel) {
                 filter.page.PAGROW = 20;
