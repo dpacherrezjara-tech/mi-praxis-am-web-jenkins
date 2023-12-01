@@ -119,7 +119,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         if (elemento) {
             // Verificar si el elemento está visible y cambiar su visibilidad
             if (elemento.isVisible()) {
-                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').show()
+//                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').show()
                 elemento.hide();
                 elemento2.show();
             } else {
@@ -152,7 +152,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             if (elemento.isVisible()) {
                 //NADINE
             } else {
-                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').show()
+//                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').show()
                 elemento.show();
                 elemento2.hide();
             }
@@ -347,7 +347,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 Ext.getCmp(prototype.id + '-cmbFOREFilters').show();
                 Ext.getCmp(prototype.id + '-btnDisplayFore').show();
                 Ext.getCmp(prototype.id + '-btnDisplayFore_2').show();
-                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').show();
+//                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').show();
                 Ext.getCmp(prototype.id + '-btnDisplay').hide();
                 Ext.getCmp(prototype.id + '-btnDisplay_2').hide();
                 Ext.getCmp(prototype.id + '-btnBack').hide();

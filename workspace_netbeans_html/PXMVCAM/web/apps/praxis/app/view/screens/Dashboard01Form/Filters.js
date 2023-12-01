@@ -444,6 +444,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                             enableKeyEvents: true,
                                             caseSensitive: false,
                                             typeAhead: true,
+                                            hidden:true,
                                             valueField: 'code', displayField: 'name',
                                             width: 65,
                                             listeners: {
