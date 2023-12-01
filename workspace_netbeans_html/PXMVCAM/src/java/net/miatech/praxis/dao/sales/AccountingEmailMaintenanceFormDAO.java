@@ -158,8 +158,8 @@ public class AccountingEmailMaintenanceFormDAO {
             cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
             cs.setString("IN_FREGI", Functions.getFechaActual());
             cs.setString("IN_HREGI", Functions.getHoraActual());
-            cs.setString("IN_PROP", filter.A4306LABL);
-            cs.setString("IN_LABL", filter.A4306PROP);
+            cs.setString("IN_PROP", filter.A4306PROP);
+            cs.setString("IN_LABL", filter.A4306LABL);
             cs.execute();
             rst = cs.getResultSet();
 
