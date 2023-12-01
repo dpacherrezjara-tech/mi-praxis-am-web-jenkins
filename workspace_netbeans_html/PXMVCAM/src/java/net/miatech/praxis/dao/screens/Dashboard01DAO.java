@@ -9794,8 +9794,8 @@ public class Dashboard01DAO {
         IMF117Filter objRtn;
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        long CPN1 = 0,CPN2 = 0,CPN3 = 0,CPN4 = 0,CPN5 = 0;
-        double AMT1 = 0,AMT2 = 0,AMT3 = 0,AMT4 = 0,AMT5 = 0;
+        long CPN1 = 0,CPN2 = 0,CPN3 = 0,CPN4 = 0,CPN5 = 0,CPN6 = 0,CPN7 = 0,CPN8 = 0,CPN9 = 0,CPN10 = 0,CPN11 = 0,CPN12 = 0;
+        double AMT1 = 0,AMT2 = 0,AMT3 = 0,AMT4 = 0,AMT5 = 0,AMT6 = 0,AMT7 = 0,AMT8 = 0,AMT9 = 0,AMT10 = 0,AMT11 = 0,AMT12 = 0;
         DecimalFormat dfi = new DecimalFormat("#.##");
         DecimalFormat dfn = new DecimalFormat("###,###,###");
         String SQLCLL01 = "{CALL SQP05098(?)}";
@@ -9815,11 +9815,25 @@ public class Dashboard01DAO {
                 CPN3 = rs01.getLong("CPN3");
                 CPN4 = rs01.getLong("CPN4");
                 CPN5 = rs01.getLong("CPN5");
+                CPN6 = rs01.getLong("CPN6");
+                CPN7 = rs01.getLong("CPN7");
+                CPN8 = rs01.getLong("CPN8");
+                CPN9 = rs01.getLong("CPN9");
+                CPN10 = rs01.getLong("CPN10");
+                CPN11 = rs01.getLong("CPN11");
+                CPN12 = rs01.getLong("CPN12");
                 AMT1 = rs01.getDouble("AMT1");
                 AMT2 = rs01.getDouble("AMT2");
                 AMT3 = rs01.getDouble("AMT3");
                 AMT4 = rs01.getDouble("AMT4");
                 AMT5 = rs01.getDouble("AMT5");
+                AMT6 = rs01.getDouble("AMT6");
+                AMT7 = rs01.getDouble("AMT7");
+                AMT8 = rs01.getDouble("AMT8");
+                AMT9 = rs01.getDouble("AMT9");
+                AMT10 = rs01.getDouble("AMT10");
+                AMT11 = rs01.getDouble("AMT11");
+                AMT12 = rs01.getDouble("AMT12");
             }
 
             rs01.close();
@@ -9902,6 +9916,111 @@ public class Dashboard01DAO {
                     objRtn.AMOF5 = rs01.getDouble("AMOF5");
                     objRtn.QTYF5_PERCENT = (objRtn.QTYF5 > 0) ? ((objRtn.QTYFLY5 * 100.00) / objRtn.QTYF5) : 0;
                     objRtn.QTYF5_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF5_PERCENT));
+                    
+                    objRtn.DFLIGHT6 = rs01.getString("FVLO6");
+                    objRtn.DFLIGHT6 = Functions.getMonthConvert(objRtn.DFLIGHT6);
+                    objRtn.DSALES6 = rs01.getString("VTA6");
+                    objRtn.DSALES6 = Functions.getMonthConvert(objRtn.DSALES6);
+                    objRtn.QTYFLY6 = rs01.getLong("CPN6");
+                    objRtn.FLYAMO6 = rs01.getDouble("AMT6");
+                    objRtn.QTYS6 = rs01.getLong("QTYS6");
+                    objRtn.AMOS6 = rs01.getDouble("AMOS6");
+                    objRtn.QTYS6_PERCENT = (objRtn.QTYS6 > 0) ? ((objRtn.QTYFLY6 * 100.00) / objRtn.QTYS6) : 0;
+                    objRtn.QTYS6_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS6_PERCENT));
+                    objRtn.QTYF6 = rs01.getLong("QTYF6");
+                    objRtn.AMOF6 = rs01.getDouble("AMOF6");
+                    objRtn.QTYF6_PERCENT = (objRtn.QTYF6 > 0) ? ((objRtn.QTYFLY6 * 100.00) / objRtn.QTYF6) : 0;
+                    objRtn.QTYF6_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF6_PERCENT));
+                    
+                    objRtn.DFLIGHT7 = rs01.getString("FVLO7");
+                    objRtn.DFLIGHT7 = Functions.getMonthConvert(objRtn.DFLIGHT7);
+                    objRtn.DSALES7 = rs01.getString("VTA7");
+                    objRtn.DSALES7 = Functions.getMonthConvert(objRtn.DSALES7);
+                    objRtn.QTYFLY7 = rs01.getLong("CPN7");
+                    objRtn.FLYAMO7 = rs01.getDouble("AMT7");
+                    objRtn.QTYS7 = rs01.getLong("QTYS7");
+                    objRtn.AMOS7 = rs01.getDouble("AMOS7");
+                    objRtn.QTYS7_PERCENT = (objRtn.QTYS7 > 0) ? ((objRtn.QTYFLY7 * 100.00) / objRtn.QTYS7) : 0;
+                    objRtn.QTYS7_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS7_PERCENT));
+                    objRtn.QTYF7 = rs01.getLong("QTYF7");
+                    objRtn.AMOF7 = rs01.getDouble("AMOF7");
+                    objRtn.QTYF7_PERCENT = (objRtn.QTYF7 > 0) ? ((objRtn.QTYFLY7 * 100.00) / objRtn.QTYF7) : 0;
+                    objRtn.QTYF7_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF7_PERCENT));
+                    
+                    objRtn.DFLIGHT8 = rs01.getString("FVLO8");
+                    objRtn.DFLIGHT8 = Functions.getMonthConvert(objRtn.DFLIGHT8);
+                    objRtn.DSALES8 = rs01.getString("VTA8");
+                    objRtn.DSALES8 = Functions.getMonthConvert(objRtn.DSALES8);
+                    objRtn.QTYFLY8 = rs01.getLong("CPN8");
+                    objRtn.FLYAMO8 = rs01.getDouble("AMT8");
+                    objRtn.QTYS8 = rs01.getLong("QTYS8");
+                    objRtn.AMOS8 = rs01.getDouble("AMOS8");
+                    objRtn.QTYS8_PERCENT = (objRtn.QTYS8 > 0) ? ((objRtn.QTYFLY8 * 100.00) / objRtn.QTYS8) : 0;
+                    objRtn.QTYS8_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS8_PERCENT));
+                    objRtn.QTYF8 = rs01.getLong("QTYF8");
+                    objRtn.AMOF8 = rs01.getDouble("AMOF8");
+                    objRtn.QTYF8_PERCENT = (objRtn.QTYF8 > 0) ? ((objRtn.QTYFLY8 * 100.00) / objRtn.QTYF8) : 0;
+                    objRtn.QTYF8_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF8_PERCENT));
+                    
+                    objRtn.DFLIGHT9 = rs01.getString("FVLO9");
+                    objRtn.DFLIGHT9 = Functions.getMonthConvert(objRtn.DFLIGHT9);
+                    objRtn.DSALES9 = rs01.getString("VTA9");
+                    objRtn.DSALES9 = Functions.getMonthConvert(objRtn.DSALES9);
+                    objRtn.QTYFLY9 = rs01.getLong("CPN9");
+                    objRtn.FLYAMO9 = rs01.getDouble("AMT9");
+                    objRtn.QTYS9 = rs01.getLong("QTYS9");
+                    objRtn.AMOS9 = rs01.getDouble("AMOS9");
+                    objRtn.QTYS9_PERCENT = (objRtn.QTYS9 > 0) ? ((objRtn.QTYFLY9 * 100.00) / objRtn.QTYS9) : 0;
+                    objRtn.QTYS9_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS9_PERCENT));
+                    objRtn.QTYF9 = rs01.getLong("QTYF9");
+                    objRtn.AMOF9 = rs01.getDouble("AMOF9");
+                    objRtn.QTYF9_PERCENT = (objRtn.QTYF9 > 0) ? ((objRtn.QTYFLY9 * 100.00) / objRtn.QTYF9) : 0;
+                    objRtn.QTYF9_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF9_PERCENT));
+                    
+                    objRtn.DFLIGHT10 = rs01.getString("FVLO10");
+                    objRtn.DFLIGHT10 = Functions.getMonthConvert(objRtn.DFLIGHT10);
+                    objRtn.DSALES10 = rs01.getString("VTA10");
+                    objRtn.DSALES10 = Functions.getMonthConvert(objRtn.DSALES10);
+                    objRtn.QTYFLY10 = rs01.getLong("CPN10");
+                    objRtn.FLYAMO10 = rs01.getDouble("AMT10");
+                    objRtn.QTYS10 = rs01.getLong("QTYS10");
+                    objRtn.AMOS10 = rs01.getDouble("AMOS10");
+                    objRtn.QTYS10_PERCENT = (objRtn.QTYS10 > 0) ? ((objRtn.QTYFLY10 * 100.00) / objRtn.QTYS10) : 0;
+                    objRtn.QTYS10_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS10_PERCENT));
+                    objRtn.QTYF10 = rs01.getLong("QTYF10");
+                    objRtn.AMOF10 = rs01.getDouble("AMOF10");
+                    objRtn.QTYF10_PERCENT = (objRtn.QTYF10 > 0) ? ((objRtn.QTYFLY10 * 100.00) / objRtn.QTYF10) : 0;
+                    objRtn.QTYF10_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF10_PERCENT));
+                    
+                    objRtn.DFLIGHT11 = rs01.getString("FVLO11");
+                    objRtn.DFLIGHT11 = Functions.getMonthConvert(objRtn.DFLIGHT11);
+                    objRtn.DSALES11 = rs01.getString("VTA11");
+                    objRtn.DSALES11 = Functions.getMonthConvert(objRtn.DSALES11);
+                    objRtn.QTYFLY11 = rs01.getLong("CPN11");
+                    objRtn.FLYAMO11 = rs01.getDouble("AMT11");
+                    objRtn.QTYS11 = rs01.getLong("QTYS11");
+                    objRtn.AMOS11 = rs01.getDouble("AMOS11");
+                    objRtn.QTYS11_PERCENT = (objRtn.QTYS11 > 0) ? ((objRtn.QTYFLY11 * 100.00) / objRtn.QTYS11) : 0;
+                    objRtn.QTYS11_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS11_PERCENT));
+                    objRtn.QTYF11 = rs01.getLong("QTYF11");
+                    objRtn.AMOF11 = rs01.getDouble("AMOF11");
+                    objRtn.QTYF11_PERCENT = (objRtn.QTYF11 > 0) ? ((objRtn.QTYFLY11 * 100.00) / objRtn.QTYF11) : 0;
+                    objRtn.QTYF11_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF11_PERCENT));
+                    
+                    objRtn.DFLIGHT12 = rs01.getString("FVLO12");
+                    objRtn.DFLIGHT12 = Functions.getMonthConvert(objRtn.DFLIGHT12);
+                    objRtn.DSALES12 = rs01.getString("VTA12");
+                    objRtn.DSALES12 = Functions.getMonthConvert(objRtn.DSALES12);
+                    objRtn.QTYFLY12 = rs01.getLong("CPN12");
+                    objRtn.FLYAMO12 = rs01.getDouble("AMT12");
+                    objRtn.QTYS12 = rs01.getLong("QTYS12");
+                    objRtn.AMOS12 = rs01.getDouble("AMOS12");
+                    objRtn.QTYS12_PERCENT = (objRtn.QTYS12 > 0) ? ((objRtn.QTYFLY12 * 100.00) / objRtn.QTYS12) : 0;
+                    objRtn.QTYS12_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS12_PERCENT));
+                    objRtn.QTYF12 = rs01.getLong("QTYF12");
+                    objRtn.AMOF12 = rs01.getDouble("AMOF12");
+                    objRtn.QTYF12_PERCENT = (objRtn.QTYF12 > 0) ? ((objRtn.QTYFLY12 * 100.00) / objRtn.QTYF12) : 0;
+                    objRtn.QTYF12_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYF12_PERCENT));
                    
                     //TOTALES
                     objRtn.TOT_CPN1 = CPN1;
@@ -9909,11 +10028,25 @@ public class Dashboard01DAO {
                     objRtn.TOT_CPN3 = CPN3;
                     objRtn.TOT_CPN4 = CPN4;
                     objRtn.TOT_CPN5 = CPN5;
+                    objRtn.TOT_CPN6 = CPN6;
+                    objRtn.TOT_CPN7 = CPN7;
+                    objRtn.TOT_CPN8 = CPN8;
+                    objRtn.TOT_CPN9 = CPN9;
+                    objRtn.TOT_CPN10 = CPN10;
+                    objRtn.TOT_CPN11 = CPN11;
+                    objRtn.TOT_CPN12 = CPN12;
                     objRtn.TOT_AMT1 = AMT1;
                     objRtn.TOT_AMT2 = AMT2;
                     objRtn.TOT_AMT3 = AMT3;
                     objRtn.TOT_AMT4 = AMT4;
                     objRtn.TOT_AMT5 = AMT5;
+                    objRtn.TOT_AMT6 = AMT6;
+                    objRtn.TOT_AMT7 = AMT7;
+                    objRtn.TOT_AMT8 = AMT8;
+                    objRtn.TOT_AMT9 = AMT9;
+                    objRtn.TOT_AMT10 = AMT10;
+                    objRtn.TOT_AMT11 = AMT11;
+                    objRtn.TOT_AMT12 = AMT12;
                     objRtn.TOT_QTYS1_PERCENT = (objRtn.QTYS1 > 0) ? ((objRtn.TOT_CPN1 * 100.00) / objRtn.QTYS1) : 0;
                     objRtn.TOT_QTYS1_PERCENT = Double.parseDouble(dfi.format(objRtn.TOT_QTYS1_PERCENT));
                     objRtn.TOT_QTYS2_PERCENT = (objRtn.QTYS2 > 0) ? ((objRtn.TOT_CPN2 * 100.00) / objRtn.QTYS2) : 0;
@@ -9924,6 +10057,20 @@ public class Dashboard01DAO {
                     objRtn.TOT_QTYS4_PERCENT = Double.parseDouble(dfi.format(objRtn.TOT_QTYS4_PERCENT));
                     objRtn.TOT_QTYS5_PERCENT = (objRtn.QTYS5 > 0) ? ((objRtn.TOT_CPN5 * 100.00) / objRtn.QTYS5) : 0;
                     objRtn.TOT_QTYS5_PERCENT = Double.parseDouble(dfi.format(objRtn.TOT_QTYS5_PERCENT));
+                    objRtn.TOT_QTYS6_PERCENT = (objRtn.QTYS6 > 0) ? ((objRtn.TOT_CPN6 * 100.00) / objRtn.QTYS6) : 0;
+                    objRtn.TOT_QTYS6_PERCENT = Double.parseDouble(dfi.format(objRtn.TOT_QTYS6_PERCENT));
+                    objRtn.TOT_QTYS7_PERCENT = (objRtn.QTYS7 > 0) ? ((objRtn.TOT_CPN7 * 100.00) / objRtn.QTYS7) : 0;
+                    objRtn.TOT_QTYS7_PERCENT = Double.parseDouble(dfi.format(objRtn.TOT_QTYS7_PERCENT));
+                    objRtn.TOT_QTYS8_PERCENT = (objRtn.QTYS8 > 0) ? ((objRtn.TOT_CPN8 * 100.00) / objRtn.QTYS8) : 0;
+                    objRtn.TOT_QTYS8_PERCENT = Double.parseDouble(dfi.format(objRtn.TOT_QTYS8_PERCENT));
+                    objRtn.TOT_QTYS9_PERCENT = (objRtn.QTYS9 > 0) ? ((objRtn.TOT_CPN9 * 100.00) / objRtn.QTYS9) : 0;
+                    objRtn.TOT_QTYS9_PERCENT = Double.parseDouble(dfi.format(objRtn.TOT_QTYS9_PERCENT));
+                    objRtn.TOT_QTYS10_PERCENT = (objRtn.QTYS10 > 0) ? ((objRtn.TOT_CPN10 * 100.00) / objRtn.QTYS10) : 0;
+                    objRtn.TOT_QTYS10_PERCENT = Double.parseDouble(dfi.format(objRtn.TOT_QTYS10_PERCENT));
+                    objRtn.TOT_QTYS11_PERCENT = (objRtn.QTYS11 > 0) ? ((objRtn.TOT_CPN11 * 100.00) / objRtn.QTYS11) : 0;
+                    objRtn.TOT_QTYS11_PERCENT = Double.parseDouble(dfi.format(objRtn.TOT_QTYS11_PERCENT));
+                    objRtn.TOT_QTYS12_PERCENT = (objRtn.QTYS12 > 0) ? ((objRtn.TOT_CPN12 * 100.00) / objRtn.QTYS12) : 0;
+                    objRtn.TOT_QTYS12_PERCENT = Double.parseDouble(dfi.format(objRtn.TOT_QTYS12_PERCENT));
                     
                     lstRtn.add(objRtn);
                 }
@@ -10019,6 +10166,69 @@ public class Dashboard01DAO {
                     objRtn.AMON5 = rs01.getDouble("AMON5");
                     objRtn.QTYS5_PERCENT = (objRtn.QTYS5 > 0) ? ((objRtn.CPNS5 * 100.00) / objRtn.QTYS5) : 0;
                     objRtn.QTYS5_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS5_PERCENT));
+                    
+                    objRtn.DSALES6 = rs01.getString("VTA6");
+                    objRtn.DSALES6 = Functions.getMonthConvert(objRtn.DSALES6);
+                    objRtn.USED6 = rs01.getString("USED6");
+                    objRtn.CPNS6 = rs01.getLong("CPNS6");
+                    objRtn.QTYS6 = rs01.getLong("QTYS6");
+                    objRtn.AMON6 = rs01.getDouble("AMON6");
+                    objRtn.QTYS6_PERCENT = (objRtn.QTYS6 > 0) ? ((objRtn.CPNS6 * 100.00) / objRtn.QTYS6) : 0;
+                    objRtn.QTYS6_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS6_PERCENT));
+                    
+                    objRtn.DSALES7 = rs01.getString("VTA7");
+                    objRtn.DSALES7 = Functions.getMonthConvert(objRtn.DSALES7);
+                    objRtn.USED7 = rs01.getString("USED7");
+                    objRtn.CPNS7 = rs01.getLong("CPNS7");
+                    objRtn.QTYS7 = rs01.getLong("QTYS7");
+                    objRtn.AMON7 = rs01.getDouble("AMON7");
+                    objRtn.QTYS7_PERCENT = (objRtn.QTYS7 > 0) ? ((objRtn.CPNS7 * 100.00) / objRtn.QTYS7) : 0;
+                    objRtn.QTYS7_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS7_PERCENT));
+                    
+                    objRtn.DSALES8 = rs01.getString("VTA8");
+                    objRtn.DSALES8 = Functions.getMonthConvert(objRtn.DSALES8);
+                    objRtn.USED8 = rs01.getString("USED8");
+                    objRtn.CPNS8 = rs01.getLong("CPNS8");
+                    objRtn.QTYS8 = rs01.getLong("QTYS8");
+                    objRtn.AMON8 = rs01.getDouble("AMON8");
+                    objRtn.QTYS8_PERCENT = (objRtn.QTYS8 > 0) ? ((objRtn.CPNS8 * 100.00) / objRtn.QTYS8) : 0;
+                    objRtn.QTYS8_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS8_PERCENT));
+                    
+                    objRtn.DSALES9 = rs01.getString("VTA9");
+                    objRtn.DSALES9 = Functions.getMonthConvert(objRtn.DSALES9);
+                    objRtn.USED9 = rs01.getString("USED9");
+                    objRtn.CPNS9 = rs01.getLong("CPNS9");
+                    objRtn.QTYS9 = rs01.getLong("QTYS9");
+                    objRtn.AMON9 = rs01.getDouble("AMON9");
+                    objRtn.QTYS9_PERCENT = (objRtn.QTYS9 > 0) ? ((objRtn.CPNS9 * 100.00) / objRtn.QTYS9) : 0;
+                    objRtn.QTYS9_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS9_PERCENT));
+                    
+                    objRtn.DSALES10 = rs01.getString("VTA10");
+                    objRtn.DSALES10 = Functions.getMonthConvert(objRtn.DSALES10);
+                    objRtn.USED10 = rs01.getString("USED10");
+                    objRtn.CPNS10 = rs01.getLong("CPNS10");
+                    objRtn.QTYS10 = rs01.getLong("QTYS10");
+                    objRtn.AMON10 = rs01.getDouble("AMON10");
+                    objRtn.QTYS10_PERCENT = (objRtn.QTYS10 > 0) ? ((objRtn.CPNS10 * 100.00) / objRtn.QTYS10) : 0;
+                    objRtn.QTYS10_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS10_PERCENT));
+                    
+                    objRtn.DSALES11 = rs01.getString("VTA11");
+                    objRtn.DSALES11 = Functions.getMonthConvert(objRtn.DSALES11);
+                    objRtn.USED11 = rs01.getString("USED11");
+                    objRtn.CPNS11 = rs01.getLong("CPNS11");
+                    objRtn.QTYS11 = rs01.getLong("QTYS11");
+                    objRtn.AMON11 = rs01.getDouble("AMON11");
+                    objRtn.QTYS11_PERCENT = (objRtn.QTYS11 > 0) ? ((objRtn.CPNS11 * 100.00) / objRtn.QTYS11) : 0;
+                    objRtn.QTYS11_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS11_PERCENT));
+                    
+                    objRtn.DSALES12 = rs01.getString("VTA12");
+                    objRtn.DSALES12 = Functions.getMonthConvert(objRtn.DSALES12);
+                    objRtn.USED12 = rs01.getString("USED12");
+                    objRtn.CPNS12 = rs01.getLong("CPNS12");
+                    objRtn.QTYS12 = rs01.getLong("QTYS12");
+                    objRtn.AMON12 = rs01.getDouble("AMON12");
+                    objRtn.QTYS12_PERCENT = (objRtn.QTYS12 > 0) ? ((objRtn.CPNS12 * 100.00) / objRtn.QTYS12) : 0;
+                    objRtn.QTYS12_PERCENT = Double.parseDouble(dfi.format(objRtn.QTYS12_PERCENT));
                     
                     lstRtn.add(objRtn);
                 }

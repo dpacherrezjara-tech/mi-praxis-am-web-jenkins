@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 //        global.selectedChild(me.childs, prototype.id + me.panelActual);
 //        console.log(me.childs);
         me.drillDown.push(me.boxActual);
-        
+
         this.control({
 //            //   -------------------Eventos Genericos --------------------
 //            '#Dashboard01Form-xpanel': {
@@ -161,7 +161,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         }
     },
     chooseFore_clickHandler: function (obj, rb_new, rb_old, func) {
-        
+
         var valueRadio = rb_new.rb;
 //        this.hidePanelGraficos();
         this.setFormatParameter();
@@ -176,7 +176,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 //                this.loadChannelsChart();
                 global.Msg({msg: 'Under Construction'});
                 break;
-            
+
         }
     },
     hidePanelGraficos: function () {
@@ -2048,6 +2048,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         Ext.getCmp(prototype.id + '-gridTNURE').setStore(storeGridDatas);
     },
     loadFORE: function () {
+
         win.lblUser_toolTip("Estructura: A4521");
 
         me.panelActual = '-boxFORE';
@@ -2074,11 +2075,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                         console.log(Objtemp);
                         var espacios = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
                         var espacios2 = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+
                         if (Objtemp.DSALES1 !== '' && Objtemp.DFLIGHT1 !== '') {
+
                             console.log('Entra a 1');
                             Ext.getCmp(prototype.id + '-gridFORE').setWidth(312);
                             Ext.getCmp(prototype.id + '-gridFORE2').setWidth(312);
-                            Ext.getCmp(prototype.id + '-displayFORE').setWidth(312);
                             Ext.getCmp(prototype.id + '-month1').show();
                             Ext.getCmp(prototype.id + '-month1').setText(espacios + Objtemp.DSALES1 + espacios + espacios2 + 'USD');
                             Ext.getCmp(prototype.id + '-cpn1').setText(Ext.util.Format.number(Objtemp.QTYS1, '0,000'));
@@ -2088,11 +2090,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                             Ext.getCmp(prototype.id + '-Coupons1').show();
                             Ext.getCmp(prototype.id + '-Por1').show();
                             Ext.getCmp(prototype.id + '-Amount1').show();
+
                             if (Objtemp.DSALES2 !== '' && Objtemp.DFLIGHT2 !== '') {
+
                                 console.log('Entra a 2');
                                 Ext.getCmp(prototype.id + '-gridFORE').setWidth(624);
                                 Ext.getCmp(prototype.id + '-gridFORE2').setWidth(624);
-                                Ext.getCmp(prototype.id + '-displayFORE').setWidth(624);
                                 Ext.getCmp(prototype.id + '-month2').show();
                                 Ext.getCmp(prototype.id + '-month2').setText(espacios + Objtemp.DSALES2 + espacios + espacios2 + 'USD');
                                 Ext.getCmp(prototype.id + '-cpn2').setText(Ext.util.Format.number(Objtemp.QTYS2, '0,000'));
@@ -2102,11 +2105,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                                 Ext.getCmp(prototype.id + '-Coupons2').show();
                                 Ext.getCmp(prototype.id + '-Por2').show();
                                 Ext.getCmp(prototype.id + '-Amount2').show();
+
                                 if (Objtemp.DSALES3 !== '' && Objtemp.DFLIGHT3 !== '') {
+
                                     console.log('Entra a 3');
                                     Ext.getCmp(prototype.id + '-gridFORE').setWidth(936);
                                     Ext.getCmp(prototype.id + '-gridFORE2').setWidth(936);
-                                    Ext.getCmp(prototype.id + '-displayFORE').setWidth(936);
                                     Ext.getCmp(prototype.id + '-month3').show();
                                     Ext.getCmp(prototype.id + '-month3').setText(espacios + Objtemp.DSALES3 + espacios + espacios2 + 'USD');
                                     Ext.getCmp(prototype.id + '-cpn3').setText(Ext.util.Format.number(Objtemp.QTYS3, '0,000'));
@@ -2116,11 +2120,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                                     Ext.getCmp(prototype.id + '-Coupons3').show();
                                     Ext.getCmp(prototype.id + '-Por3').show();
                                     Ext.getCmp(prototype.id + '-Amount3').show();
+
                                     if (Objtemp.DSALES4 !== '' && Objtemp.DFLIGHT4 !== '') {
+
                                         console.log('Entra a 4');
                                         Ext.getCmp(prototype.id + '-gridFORE').setWidth(1248);
                                         Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1248);
-                                        Ext.getCmp(prototype.id + '-displayFORE').setWidth(1248);
                                         Ext.getCmp(prototype.id + '-month4').show();
                                         Ext.getCmp(prototype.id + '-month4').setText(espacios + Objtemp.DSALES4 + espacios + espacios2 + 'USD');
                                         Ext.getCmp(prototype.id + '-cpn4').setText(Ext.util.Format.number(Objtemp.QTYS4, '0,000'));
@@ -2130,11 +2135,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                                         Ext.getCmp(prototype.id + '-Coupons4').show();
                                         Ext.getCmp(prototype.id + '-Por4').show();
                                         Ext.getCmp(prototype.id + '-Amount4').show();
+
                                         if (Objtemp.DSALES5 !== '' && Objtemp.DFLIGHT5 !== '') {
+
                                             console.log('Entra a 5');
                                             Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
                                             Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
-                                            Ext.getCmp(prototype.id + '-displayFORE').setWidth(1560);
                                             Ext.getCmp(prototype.id + '-month5').show();
                                             Ext.getCmp(prototype.id + '-month5').setText(espacios + Objtemp.DSALES5 + espacios + espacios2 + 'USD');
                                             Ext.getCmp(prototype.id + '-cpn5').setText(Ext.util.Format.number(Objtemp.QTYS5, '0,000'));
@@ -2144,98 +2150,696 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                                             Ext.getCmp(prototype.id + '-Coupons5').show();
                                             Ext.getCmp(prototype.id + '-Por5').show();
                                             Ext.getCmp(prototype.id + '-Amount5').show();
+
+                                            if (Objtemp.DSALES6 !== '' && Objtemp.DFLIGHT6 !== '') {
+
+                                                console.log('Entra a 6');
+                                                Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+                                                Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+                                                Ext.getCmp(prototype.id + '-month6').show();
+                                                Ext.getCmp(prototype.id + '-month6').setText(espacios + Objtemp.DSALES6 + espacios + espacios2 + 'USD');
+                                                Ext.getCmp(prototype.id + '-cpn6').setText(Ext.util.Format.number(Objtemp.QTYS6, '0,000'));
+                                                Ext.getCmp(prototype.id + '-amo6').setText(Ext.util.Format.number(Objtemp.AMOS6, '0,000'));
+                                                //Agrupacion por GrilladDown
+                                                Ext.getCmp(prototype.id + '-Used6').show();
+                                                Ext.getCmp(prototype.id + '-Coupons6').show();
+                                                Ext.getCmp(prototype.id + '-Por6').show();
+                                                Ext.getCmp(prototype.id + '-Amount6').show();
+
+                                                if (Objtemp.DSALES7 !== '' && Objtemp.DFLIGHT7 !== '') {
+
+                                                    console.log('Entra a 7');
+                                                    Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+                                                    Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+                                                    Ext.getCmp(prototype.id + '-month7').show();
+                                                    Ext.getCmp(prototype.id + '-month7').setText(espacios + Objtemp.DSALES7 + espacios + espacios2 + 'USD');
+                                                    Ext.getCmp(prototype.id + '-cpn7').setText(Ext.util.Format.number(Objtemp.QTYS7, '0,000'));
+                                                    Ext.getCmp(prototype.id + '-amo7').setText(Ext.util.Format.number(Objtemp.AMOS7, '0,000'));
+                                                    //Agrupacion por GrilladDown
+                                                    Ext.getCmp(prototype.id + '-Used7').show();
+                                                    Ext.getCmp(prototype.id + '-Coupons7').show();
+                                                    Ext.getCmp(prototype.id + '-Por7').show();
+                                                    Ext.getCmp(prototype.id + '-Amount7').show();
+
+                                                    if (Objtemp.DSALES8 !== '' && Objtemp.DFLIGHT8 !== '') {
+
+                                                        console.log('Entra a 8');
+                                                        Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+                                                        Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+                                                        Ext.getCmp(prototype.id + '-month8').show();
+                                                        Ext.getCmp(prototype.id + '-month8').setText(espacios + Objtemp.DSALES8 + espacios + espacios2 + 'USD');
+                                                        Ext.getCmp(prototype.id + '-cpn8').setText(Ext.util.Format.number(Objtemp.QTYS8, '0,000'));
+                                                        Ext.getCmp(prototype.id + '-amo8').setText(Ext.util.Format.number(Objtemp.AMOS8, '0,000'));
+                                                        //Agrupacion por GrilladDown
+                                                        Ext.getCmp(prototype.id + '-Used8').show();
+                                                        Ext.getCmp(prototype.id + '-Coupons8').show();
+                                                        Ext.getCmp(prototype.id + '-Por8').show();
+                                                        Ext.getCmp(prototype.id + '-Amount8').show();
+
+                                                        if (Objtemp.DSALES9 !== '' && Objtemp.DFLIGHT9 !== '') {
+
+                                                            console.log('Entra a 9');
+                                                            Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+                                                            Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+                                                            Ext.getCmp(prototype.id + '-month9').show();
+                                                            Ext.getCmp(prototype.id + '-month9').setText(espacios + Objtemp.DSALES9 + espacios + espacios2 + 'USD');
+                                                            Ext.getCmp(prototype.id + '-cpn9').setText(Ext.util.Format.number(Objtemp.QTYS9, '0,000'));
+                                                            Ext.getCmp(prototype.id + '-amo9').setText(Ext.util.Format.number(Objtemp.AMOS9, '0,000'));
+                                                            //Agrupacion por GrilladDown
+                                                            Ext.getCmp(prototype.id + '-Used9').show();
+                                                            Ext.getCmp(prototype.id + '-Coupons9').show();
+                                                            Ext.getCmp(prototype.id + '-Por9').show();
+                                                            Ext.getCmp(prototype.id + '-Amount9').show();
+
+                                                            if (Objtemp.DSALES10 !== '' && Objtemp.DFLIGHT10 !== '') {
+
+                                                                console.log('Entra a 10');
+                                                                Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+                                                                Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+                                                                Ext.getCmp(prototype.id + '-month10').show();
+                                                                Ext.getCmp(prototype.id + '-month10').setText(espacios + Objtemp.DSALES10 + espacios + espacios2 + 'USD');
+                                                                Ext.getCmp(prototype.id + '-cpn10').setText(Ext.util.Format.number(Objtemp.QTYS10, '0,000'));
+                                                                Ext.getCmp(prototype.id + '-amo10').setText(Ext.util.Format.number(Objtemp.AMOS10, '0,000'));
+                                                                //Agrupacion por GrilladDown
+                                                                Ext.getCmp(prototype.id + '-Used10').show();
+                                                                Ext.getCmp(prototype.id + '-Coupons10').show();
+                                                                Ext.getCmp(prototype.id + '-Por10').show();
+                                                                Ext.getCmp(prototype.id + '-Amount10').show();
+
+                                                                if (Objtemp.DSALES11 !== '' && Objtemp.DFLIGHT11 !== '') {
+
+                                                                    console.log('Entra a 11');
+                                                                    Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+                                                                    Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+                                                                    Ext.getCmp(prototype.id + '-month11').show();
+                                                                    Ext.getCmp(prototype.id + '-month11').setText(espacios + Objtemp.DSALES11 + espacios + espacios2 + 'USD');
+                                                                    Ext.getCmp(prototype.id + '-cpn11').setText(Ext.util.Format.number(Objtemp.QTYS11, '0,000'));
+                                                                    Ext.getCmp(prototype.id + '-amo11').setText(Ext.util.Format.number(Objtemp.AMOS11, '0,000'));
+                                                                    //Agrupacion por GrilladDown
+                                                                    Ext.getCmp(prototype.id + '-Used11').show();
+                                                                    Ext.getCmp(prototype.id + '-Coupons11').show();
+                                                                    Ext.getCmp(prototype.id + '-Por11').show();
+                                                                    Ext.getCmp(prototype.id + '-Amount11').show();
+
+                                                                    if (Objtemp.DSALES12 !== '' && Objtemp.DFLIGHT12 !== '') {
+
+                                                                        console.log('Entra a 12');
+                                                                        Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+                                                                        Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+                                                                        Ext.getCmp(prototype.id + '-month12').show();
+                                                                        Ext.getCmp(prototype.id + '-month12').setText(espacios + Objtemp.DSALES12 + espacios + espacios2 + 'USD');
+                                                                        Ext.getCmp(prototype.id + '-cpn12').setText(Ext.util.Format.number(Objtemp.QTYS12, '0,000'));
+                                                                        Ext.getCmp(prototype.id + '-amo12').setText(Ext.util.Format.number(Objtemp.AMOS12, '0,000'));
+                                                                        //Agrupacion por GrilladDown
+                                                                        Ext.getCmp(prototype.id + '-Used12').show();
+                                                                        Ext.getCmp(prototype.id + '-Coupons12').show();
+                                                                        Ext.getCmp(prototype.id + '-Por12').show();
+                                                                        Ext.getCmp(prototype.id + '-Amount12').show();
+
+                                                                    } else {
+
+                                                                        Ext.getCmp(prototype.id + '-month12').hide();
+                                                                        //Agrupacion por GrilladDown
+                                                                        Ext.getCmp(prototype.id + '-Used12').hide();
+                                                                        Ext.getCmp(prototype.id + '-Coupons12').hide();
+                                                                        Ext.getCmp(prototype.id + '-Por12').hide();
+                                                                        Ext.getCmp(prototype.id + '-Amount12').hide();
+                                                                    }
+
+                                                                } else {
+
+                                                                    Ext.getCmp(prototype.id + '-month11').hide();
+                                                                    //Agrupacion por GrilladDown
+                                                                    Ext.getCmp(prototype.id + '-Used11').hide();
+                                                                    Ext.getCmp(prototype.id + '-Coupons11').hide();
+                                                                    Ext.getCmp(prototype.id + '-Por11').hide();
+                                                                    Ext.getCmp(prototype.id + '-Amount11').hide();
+
+                                                                    Ext.getCmp(prototype.id + '-month12').hide();
+                                                                    //Agrupacion por GrilladDown
+                                                                    Ext.getCmp(prototype.id + '-Used12').hide();
+                                                                    Ext.getCmp(prototype.id + '-Coupons12').hide();
+                                                                    Ext.getCmp(prototype.id + '-Por12').hide();
+                                                                    Ext.getCmp(prototype.id + '-Amount12').hide();
+                                                                }
+
+                                                            } else {
+
+                                                                Ext.getCmp(prototype.id + '-month10').hide();
+                                                                //Agrupacion por GrilladDown
+                                                                Ext.getCmp(prototype.id + '-Used10').hide();
+                                                                Ext.getCmp(prototype.id + '-Coupons10').hide();
+                                                                Ext.getCmp(prototype.id + '-Por10').hide();
+                                                                Ext.getCmp(prototype.id + '-Amount10').hide();
+
+                                                                Ext.getCmp(prototype.id + '-month11').hide();
+                                                                //Agrupacion por GrilladDown
+                                                                Ext.getCmp(prototype.id + '-Used11').hide();
+                                                                Ext.getCmp(prototype.id + '-Coupons11').hide();
+                                                                Ext.getCmp(prototype.id + '-Por11').hide();
+                                                                Ext.getCmp(prototype.id + '-Amount11').hide();
+
+                                                                Ext.getCmp(prototype.id + '-month12').hide();
+                                                                //Agrupacion por GrilladDown
+                                                                Ext.getCmp(prototype.id + '-Used12').hide();
+                                                                Ext.getCmp(prototype.id + '-Coupons12').hide();
+                                                                Ext.getCmp(prototype.id + '-Por12').hide();
+                                                                Ext.getCmp(prototype.id + '-Amount12').hide();
+                                                            }
+
+                                                        } else {
+
+                                                            Ext.getCmp(prototype.id + '-month9').hide();
+                                                            //Agrupacion por GrilladDown
+                                                            Ext.getCmp(prototype.id + '-Used9').hide();
+                                                            Ext.getCmp(prototype.id + '-Coupons9').hide();
+                                                            Ext.getCmp(prototype.id + '-Por9').hide();
+                                                            Ext.getCmp(prototype.id + '-Amount9').hide();
+
+                                                            Ext.getCmp(prototype.id + '-month10').hide();
+                                                            //Agrupacion por GrilladDown
+                                                            Ext.getCmp(prototype.id + '-Used10').hide();
+                                                            Ext.getCmp(prototype.id + '-Coupons10').hide();
+                                                            Ext.getCmp(prototype.id + '-Por10').hide();
+                                                            Ext.getCmp(prototype.id + '-Amount10').hide();
+
+                                                            Ext.getCmp(prototype.id + '-month11').hide();
+                                                            //Agrupacion por GrilladDown
+                                                            Ext.getCmp(prototype.id + '-Used11').hide();
+                                                            Ext.getCmp(prototype.id + '-Coupons11').hide();
+                                                            Ext.getCmp(prototype.id + '-Por11').hide();
+                                                            Ext.getCmp(prototype.id + '-Amount11').hide();
+
+                                                            Ext.getCmp(prototype.id + '-month12').hide();
+                                                            //Agrupacion por GrilladDown
+                                                            Ext.getCmp(prototype.id + '-Used12').hide();
+                                                            Ext.getCmp(prototype.id + '-Coupons12').hide();
+                                                            Ext.getCmp(prototype.id + '-Por12').hide();
+                                                            Ext.getCmp(prototype.id + '-Amount12').hide();
+                                                        }
+
+                                                    } else {
+
+                                                        Ext.getCmp(prototype.id + '-month8').hide();
+                                                        //Agrupacion por GrilladDown
+                                                        Ext.getCmp(prototype.id + '-Used8').hide();
+                                                        Ext.getCmp(prototype.id + '-Coupons8').hide();
+                                                        Ext.getCmp(prototype.id + '-Por8').hide();
+                                                        Ext.getCmp(prototype.id + '-Amount8').hide();
+
+                                                        Ext.getCmp(prototype.id + '-month9').hide();
+                                                        //Agrupacion por GrilladDown
+                                                        Ext.getCmp(prototype.id + '-Used9').hide();
+                                                        Ext.getCmp(prototype.id + '-Coupons9').hide();
+                                                        Ext.getCmp(prototype.id + '-Por9').hide();
+                                                        Ext.getCmp(prototype.id + '-Amount9').hide();
+
+                                                        Ext.getCmp(prototype.id + '-month10').hide();
+                                                        //Agrupacion por GrilladDown
+                                                        Ext.getCmp(prototype.id + '-Used10').hide();
+                                                        Ext.getCmp(prototype.id + '-Coupons10').hide();
+                                                        Ext.getCmp(prototype.id + '-Por10').hide();
+                                                        Ext.getCmp(prototype.id + '-Amount10').hide();
+
+                                                        Ext.getCmp(prototype.id + '-month11').hide();
+                                                        //Agrupacion por GrilladDown
+                                                        Ext.getCmp(prototype.id + '-Used11').hide();
+                                                        Ext.getCmp(prototype.id + '-Coupons11').hide();
+                                                        Ext.getCmp(prototype.id + '-Por11').hide();
+                                                        Ext.getCmp(prototype.id + '-Amount11').hide();
+
+                                                        Ext.getCmp(prototype.id + '-month12').hide();
+                                                        //Agrupacion por GrilladDown
+                                                        Ext.getCmp(prototype.id + '-Used12').hide();
+                                                        Ext.getCmp(prototype.id + '-Coupons12').hide();
+                                                        Ext.getCmp(prototype.id + '-Por12').hide();
+                                                        Ext.getCmp(prototype.id + '-Amount12').hide();
+                                                    }
+
+                                                } else {
+
+                                                    Ext.getCmp(prototype.id + '-month7').hide();
+                                                    //Agrupacion por GrilladDown
+                                                    Ext.getCmp(prototype.id + '-Used7').hide();
+                                                    Ext.getCmp(prototype.id + '-Coupons7').hide();
+                                                    Ext.getCmp(prototype.id + '-Por7').hide();
+                                                    Ext.getCmp(prototype.id + '-Amount7').hide();
+
+                                                    Ext.getCmp(prototype.id + '-month8').hide();
+                                                    //Agrupacion por GrilladDown
+                                                    Ext.getCmp(prototype.id + '-Used8').hide();
+                                                    Ext.getCmp(prototype.id + '-Coupons8').hide();
+                                                    Ext.getCmp(prototype.id + '-Por8').hide();
+                                                    Ext.getCmp(prototype.id + '-Amount8').hide();
+
+                                                    Ext.getCmp(prototype.id + '-month9').hide();
+                                                    //Agrupacion por GrilladDown
+                                                    Ext.getCmp(prototype.id + '-Used9').hide();
+                                                    Ext.getCmp(prototype.id + '-Coupons9').hide();
+                                                    Ext.getCmp(prototype.id + '-Por9').hide();
+                                                    Ext.getCmp(prototype.id + '-Amount9').hide();
+
+                                                    Ext.getCmp(prototype.id + '-month10').hide();
+                                                    //Agrupacion por GrilladDown
+                                                    Ext.getCmp(prototype.id + '-Used10').hide();
+                                                    Ext.getCmp(prototype.id + '-Coupons10').hide();
+                                                    Ext.getCmp(prototype.id + '-Por10').hide();
+                                                    Ext.getCmp(prototype.id + '-Amount10').hide();
+
+                                                    Ext.getCmp(prototype.id + '-month11').hide();
+                                                    //Agrupacion por GrilladDown
+                                                    Ext.getCmp(prototype.id + '-Used11').hide();
+                                                    Ext.getCmp(prototype.id + '-Coupons11').hide();
+                                                    Ext.getCmp(prototype.id + '-Por11').hide();
+                                                    Ext.getCmp(prototype.id + '-Amount11').hide();
+
+                                                    Ext.getCmp(prototype.id + '-month12').hide();
+                                                    //Agrupacion por GrilladDown
+                                                    Ext.getCmp(prototype.id + '-Used12').hide();
+                                                    Ext.getCmp(prototype.id + '-Coupons12').hide();
+                                                    Ext.getCmp(prototype.id + '-Por12').hide();
+                                                    Ext.getCmp(prototype.id + '-Amount12').hide();
+                                                }
+
+                                            } else {
+
+                                                Ext.getCmp(prototype.id + '-month6').hide();
+                                                //Agrupacion por GrilladDown
+                                                Ext.getCmp(prototype.id + '-Used6').hide();
+                                                Ext.getCmp(prototype.id + '-Coupons6').hide();
+                                                Ext.getCmp(prototype.id + '-Por6').hide();
+                                                Ext.getCmp(prototype.id + '-Amount6').hide();
+
+                                                Ext.getCmp(prototype.id + '-month7').hide();
+                                                //Agrupacion por GrilladDown
+                                                Ext.getCmp(prototype.id + '-Used7').hide();
+                                                Ext.getCmp(prototype.id + '-Coupons7').hide();
+                                                Ext.getCmp(prototype.id + '-Por7').hide();
+                                                Ext.getCmp(prototype.id + '-Amount7').hide();
+
+                                                Ext.getCmp(prototype.id + '-month8').hide();
+                                                //Agrupacion por GrilladDown
+                                                Ext.getCmp(prototype.id + '-Used8').hide();
+                                                Ext.getCmp(prototype.id + '-Coupons8').hide();
+                                                Ext.getCmp(prototype.id + '-Por8').hide();
+                                                Ext.getCmp(prototype.id + '-Amount8').hide();
+
+                                                Ext.getCmp(prototype.id + '-month9').hide();
+                                                //Agrupacion por GrilladDown
+                                                Ext.getCmp(prototype.id + '-Used9').hide();
+                                                Ext.getCmp(prototype.id + '-Coupons9').hide();
+                                                Ext.getCmp(prototype.id + '-Por9').hide();
+                                                Ext.getCmp(prototype.id + '-Amount9').hide();
+
+                                                Ext.getCmp(prototype.id + '-month10').hide();
+                                                //Agrupacion por GrilladDown
+                                                Ext.getCmp(prototype.id + '-Used10').hide();
+                                                Ext.getCmp(prototype.id + '-Coupons10').hide();
+                                                Ext.getCmp(prototype.id + '-Por10').hide();
+                                                Ext.getCmp(prototype.id + '-Amount10').hide();
+
+                                                Ext.getCmp(prototype.id + '-month11').hide();
+                                                //Agrupacion por GrilladDown
+                                                Ext.getCmp(prototype.id + '-Used11').hide();
+                                                Ext.getCmp(prototype.id + '-Coupons11').hide();
+                                                Ext.getCmp(prototype.id + '-Por11').hide();
+                                                Ext.getCmp(prototype.id + '-Amount11').hide();
+
+                                                Ext.getCmp(prototype.id + '-month12').hide();
+                                                //Agrupacion por GrilladDown
+                                                Ext.getCmp(prototype.id + '-Used12').hide();
+                                                Ext.getCmp(prototype.id + '-Coupons12').hide();
+                                                Ext.getCmp(prototype.id + '-Por12').hide();
+                                                Ext.getCmp(prototype.id + '-Amount12').hide();
+                                            }
+
                                         } else {
+
                                             Ext.getCmp(prototype.id + '-month5').hide();
                                             //Agrupacion por GrilladDown
                                             Ext.getCmp(prototype.id + '-Used5').hide();
                                             Ext.getCmp(prototype.id + '-Coupons5').hide();
                                             Ext.getCmp(prototype.id + '-Por5').hide();
                                             Ext.getCmp(prototype.id + '-Amount5').hide();
+
+                                            Ext.getCmp(prototype.id + '-month6').hide();
+                                            //Agrupacion por GrilladDown
+                                            Ext.getCmp(prototype.id + '-Used6').hide();
+                                            Ext.getCmp(prototype.id + '-Coupons6').hide();
+                                            Ext.getCmp(prototype.id + '-Por6').hide();
+                                            Ext.getCmp(prototype.id + '-Amount6').hide();
+
+                                            Ext.getCmp(prototype.id + '-month7').hide();
+                                            //Agrupacion por GrilladDown
+                                            Ext.getCmp(prototype.id + '-Used7').hide();
+                                            Ext.getCmp(prototype.id + '-Coupons7').hide();
+                                            Ext.getCmp(prototype.id + '-Por7').hide();
+                                            Ext.getCmp(prototype.id + '-Amount7').hide();
+
+                                            Ext.getCmp(prototype.id + '-month8').hide();
+                                            //Agrupacion por GrilladDown
+                                            Ext.getCmp(prototype.id + '-Used8').hide();
+                                            Ext.getCmp(prototype.id + '-Coupons8').hide();
+                                            Ext.getCmp(prototype.id + '-Por8').hide();
+                                            Ext.getCmp(prototype.id + '-Amount8').hide();
+
+                                            Ext.getCmp(prototype.id + '-month9').hide();
+                                            //Agrupacion por GrilladDown
+                                            Ext.getCmp(prototype.id + '-Used9').hide();
+                                            Ext.getCmp(prototype.id + '-Coupons9').hide();
+                                            Ext.getCmp(prototype.id + '-Por9').hide();
+                                            Ext.getCmp(prototype.id + '-Amount9').hide();
+
+                                            Ext.getCmp(prototype.id + '-month10').hide();
+                                            //Agrupacion por GrilladDown
+                                            Ext.getCmp(prototype.id + '-Used10').hide();
+                                            Ext.getCmp(prototype.id + '-Coupons10').hide();
+                                            Ext.getCmp(prototype.id + '-Por10').hide();
+                                            Ext.getCmp(prototype.id + '-Amount10').hide();
+
+                                            Ext.getCmp(prototype.id + '-month11').hide();
+                                            //Agrupacion por GrilladDown
+                                            Ext.getCmp(prototype.id + '-Used11').hide();
+                                            Ext.getCmp(prototype.id + '-Coupons11').hide();
+                                            Ext.getCmp(prototype.id + '-Por11').hide();
+                                            Ext.getCmp(prototype.id + '-Amount11').hide();
+
+                                            Ext.getCmp(prototype.id + '-month12').hide();
+                                            //Agrupacion por GrilladDown
+                                            Ext.getCmp(prototype.id + '-Used12').hide();
+                                            Ext.getCmp(prototype.id + '-Coupons12').hide();
+                                            Ext.getCmp(prototype.id + '-Por12').hide();
+                                            Ext.getCmp(prototype.id + '-Amount12').hide();
                                         }
+
                                     } else {
+
                                         Ext.getCmp(prototype.id + '-month4').hide();
-                                        Ext.getCmp(prototype.id + '-month5').hide();
                                         //Agrupacion por GrilladDown
                                         Ext.getCmp(prototype.id + '-Used4').hide();
                                         Ext.getCmp(prototype.id + '-Coupons4').hide();
                                         Ext.getCmp(prototype.id + '-Por4').hide();
                                         Ext.getCmp(prototype.id + '-Amount4').hide();
+
+                                        Ext.getCmp(prototype.id + '-month5').hide();
+                                        //Agrupacion por GrilladDown
                                         Ext.getCmp(prototype.id + '-Used5').hide();
                                         Ext.getCmp(prototype.id + '-Coupons5').hide();
                                         Ext.getCmp(prototype.id + '-Por5').hide();
                                         Ext.getCmp(prototype.id + '-Amount5').hide();
+
+                                        Ext.getCmp(prototype.id + '-month6').hide();
+                                        //Agrupacion por GrilladDown
+                                        Ext.getCmp(prototype.id + '-Used6').hide();
+                                        Ext.getCmp(prototype.id + '-Coupons6').hide();
+                                        Ext.getCmp(prototype.id + '-Por6').hide();
+                                        Ext.getCmp(prototype.id + '-Amount6').hide();
+
+                                        Ext.getCmp(prototype.id + '-month7').hide();
+                                        //Agrupacion por GrilladDown
+                                        Ext.getCmp(prototype.id + '-Used7').hide();
+                                        Ext.getCmp(prototype.id + '-Coupons7').hide();
+                                        Ext.getCmp(prototype.id + '-Por7').hide();
+                                        Ext.getCmp(prototype.id + '-Amount7').hide();
+
+                                        Ext.getCmp(prototype.id + '-month8').hide();
+                                        //Agrupacion por GrilladDown
+                                        Ext.getCmp(prototype.id + '-Used8').hide();
+                                        Ext.getCmp(prototype.id + '-Coupons8').hide();
+                                        Ext.getCmp(prototype.id + '-Por8').hide();
+                                        Ext.getCmp(prototype.id + '-Amount8').hide();
+
+                                        Ext.getCmp(prototype.id + '-month9').hide();
+                                        //Agrupacion por GrilladDown
+                                        Ext.getCmp(prototype.id + '-Used9').hide();
+                                        Ext.getCmp(prototype.id + '-Coupons9').hide();
+                                        Ext.getCmp(prototype.id + '-Por9').hide();
+                                        Ext.getCmp(prototype.id + '-Amount9').hide();
+
+                                        Ext.getCmp(prototype.id + '-month10').hide();
+                                        //Agrupacion por GrilladDown
+                                        Ext.getCmp(prototype.id + '-Used10').hide();
+                                        Ext.getCmp(prototype.id + '-Coupons10').hide();
+                                        Ext.getCmp(prototype.id + '-Por10').hide();
+                                        Ext.getCmp(prototype.id + '-Amount10').hide();
+
+                                        Ext.getCmp(prototype.id + '-month11').hide();
+                                        //Agrupacion por GrilladDown
+                                        Ext.getCmp(prototype.id + '-Used11').hide();
+                                        Ext.getCmp(prototype.id + '-Coupons11').hide();
+                                        Ext.getCmp(prototype.id + '-Por11').hide();
+                                        Ext.getCmp(prototype.id + '-Amount11').hide();
+
+                                        Ext.getCmp(prototype.id + '-month12').hide();
+                                        //Agrupacion por GrilladDown
+                                        Ext.getCmp(prototype.id + '-Used12').hide();
+                                        Ext.getCmp(prototype.id + '-Coupons12').hide();
+                                        Ext.getCmp(prototype.id + '-Por12').hide();
+                                        Ext.getCmp(prototype.id + '-Amount12').hide();
                                     }
+
                                 } else {
+
                                     Ext.getCmp(prototype.id + '-month3').hide();
-                                    Ext.getCmp(prototype.id + '-month4').hide();
-                                    Ext.getCmp(prototype.id + '-month5').hide();
                                     //Agrupacion por GrilladDown
                                     Ext.getCmp(prototype.id + '-Used3').hide();
                                     Ext.getCmp(prototype.id + '-Coupons3').hide();
                                     Ext.getCmp(prototype.id + '-Por3').hide();
                                     Ext.getCmp(prototype.id + '-Amount3').hide();
+
+                                    Ext.getCmp(prototype.id + '-month4').hide();
+                                    //Agrupacion por GrilladDown
                                     Ext.getCmp(prototype.id + '-Used4').hide();
                                     Ext.getCmp(prototype.id + '-Coupons4').hide();
                                     Ext.getCmp(prototype.id + '-Por4').hide();
                                     Ext.getCmp(prototype.id + '-Amount4').hide();
+
+                                    Ext.getCmp(prototype.id + '-month5').hide();
+                                    //Agrupacion por GrilladDown
                                     Ext.getCmp(prototype.id + '-Used5').hide();
                                     Ext.getCmp(prototype.id + '-Coupons5').hide();
                                     Ext.getCmp(prototype.id + '-Por5').hide();
                                     Ext.getCmp(prototype.id + '-Amount5').hide();
+
+                                    Ext.getCmp(prototype.id + '-month6').hide();
+                                    //Agrupacion por GrilladDown
+                                    Ext.getCmp(prototype.id + '-Used6').hide();
+                                    Ext.getCmp(prototype.id + '-Coupons6').hide();
+                                    Ext.getCmp(prototype.id + '-Por6').hide();
+                                    Ext.getCmp(prototype.id + '-Amount6').hide();
+
+                                    Ext.getCmp(prototype.id + '-month7').hide();
+                                    //Agrupacion por GrilladDown
+                                    Ext.getCmp(prototype.id + '-Used7').hide();
+                                    Ext.getCmp(prototype.id + '-Coupons7').hide();
+                                    Ext.getCmp(prototype.id + '-Por7').hide();
+                                    Ext.getCmp(prototype.id + '-Amount7').hide();
+
+                                    Ext.getCmp(prototype.id + '-month8').hide();
+                                    //Agrupacion por GrilladDown
+                                    Ext.getCmp(prototype.id + '-Used8').hide();
+                                    Ext.getCmp(prototype.id + '-Coupons8').hide();
+                                    Ext.getCmp(prototype.id + '-Por8').hide();
+                                    Ext.getCmp(prototype.id + '-Amount8').hide();
+
+                                    Ext.getCmp(prototype.id + '-month9').hide();
+                                    //Agrupacion por GrilladDown
+                                    Ext.getCmp(prototype.id + '-Used9').hide();
+                                    Ext.getCmp(prototype.id + '-Coupons9').hide();
+                                    Ext.getCmp(prototype.id + '-Por9').hide();
+                                    Ext.getCmp(prototype.id + '-Amount9').hide();
+
+                                    Ext.getCmp(prototype.id + '-month10').hide();
+                                    //Agrupacion por GrilladDown
+                                    Ext.getCmp(prototype.id + '-Used10').hide();
+                                    Ext.getCmp(prototype.id + '-Coupons10').hide();
+                                    Ext.getCmp(prototype.id + '-Por10').hide();
+                                    Ext.getCmp(prototype.id + '-Amount10').hide();
+
+                                    Ext.getCmp(prototype.id + '-month11').hide();
+                                    //Agrupacion por GrilladDown
+                                    Ext.getCmp(prototype.id + '-Used11').hide();
+                                    Ext.getCmp(prototype.id + '-Coupons11').hide();
+                                    Ext.getCmp(prototype.id + '-Por11').hide();
+                                    Ext.getCmp(prototype.id + '-Amount11').hide();
+
+                                    Ext.getCmp(prototype.id + '-month12').hide();
+                                    //Agrupacion por GrilladDown
+                                    Ext.getCmp(prototype.id + '-Used12').hide();
+                                    Ext.getCmp(prototype.id + '-Coupons12').hide();
+                                    Ext.getCmp(prototype.id + '-Por12').hide();
+                                    Ext.getCmp(prototype.id + '-Amount12').hide();
                                 }
+
                             } else {
+
                                 Ext.getCmp(prototype.id + '-month2').hide();
-                                Ext.getCmp(prototype.id + '-month3').hide();
-                                Ext.getCmp(prototype.id + '-month4').hide();
-                                Ext.getCmp(prototype.id + '-month5').hide();
                                 //Agrupacion por GrilladDown
                                 Ext.getCmp(prototype.id + '-Used2').hide();
                                 Ext.getCmp(prototype.id + '-Coupons2').hide();
                                 Ext.getCmp(prototype.id + '-Por2').hide();
                                 Ext.getCmp(prototype.id + '-Amount2').hide();
+
+                                Ext.getCmp(prototype.id + '-month3').hide();
+                                //Agrupacion por GrilladDown
                                 Ext.getCmp(prototype.id + '-Used3').hide();
                                 Ext.getCmp(prototype.id + '-Coupons3').hide();
                                 Ext.getCmp(prototype.id + '-Por3').hide();
                                 Ext.getCmp(prototype.id + '-Amount3').hide();
+
+                                Ext.getCmp(prototype.id + '-month4').hide();
+                                //Agrupacion por GrilladDown
                                 Ext.getCmp(prototype.id + '-Used4').hide();
                                 Ext.getCmp(prototype.id + '-Coupons4').hide();
                                 Ext.getCmp(prototype.id + '-Por4').hide();
                                 Ext.getCmp(prototype.id + '-Amount4').hide();
+
+                                Ext.getCmp(prototype.id + '-month5').hide();
+                                //Agrupacion por GrilladDown
                                 Ext.getCmp(prototype.id + '-Used5').hide();
                                 Ext.getCmp(prototype.id + '-Coupons5').hide();
                                 Ext.getCmp(prototype.id + '-Por5').hide();
                                 Ext.getCmp(prototype.id + '-Amount5').hide();
+
+                                Ext.getCmp(prototype.id + '-month6').hide();
+                                //Agrupacion por GrilladDown
+                                Ext.getCmp(prototype.id + '-Used6').hide();
+                                Ext.getCmp(prototype.id + '-Coupons6').hide();
+                                Ext.getCmp(prototype.id + '-Por6').hide();
+                                Ext.getCmp(prototype.id + '-Amount6').hide();
+
+                                Ext.getCmp(prototype.id + '-month7').hide();
+                                //Agrupacion por GrilladDown
+                                Ext.getCmp(prototype.id + '-Used7').hide();
+                                Ext.getCmp(prototype.id + '-Coupons7').hide();
+                                Ext.getCmp(prototype.id + '-Por7').hide();
+                                Ext.getCmp(prototype.id + '-Amount7').hide();
+
+                                Ext.getCmp(prototype.id + '-month8').hide();
+                                //Agrupacion por GrilladDown
+                                Ext.getCmp(prototype.id + '-Used8').hide();
+                                Ext.getCmp(prototype.id + '-Coupons8').hide();
+                                Ext.getCmp(prototype.id + '-Por8').hide();
+                                Ext.getCmp(prototype.id + '-Amount8').hide();
+
+                                Ext.getCmp(prototype.id + '-month9').hide();
+                                //Agrupacion por GrilladDown
+                                Ext.getCmp(prototype.id + '-Used9').hide();
+                                Ext.getCmp(prototype.id + '-Coupons9').hide();
+                                Ext.getCmp(prototype.id + '-Por9').hide();
+                                Ext.getCmp(prototype.id + '-Amount9').hide();
+
+                                Ext.getCmp(prototype.id + '-month10').hide();
+                                //Agrupacion por GrilladDown
+                                Ext.getCmp(prototype.id + '-Used10').hide();
+                                Ext.getCmp(prototype.id + '-Coupons10').hide();
+                                Ext.getCmp(prototype.id + '-Por10').hide();
+                                Ext.getCmp(prototype.id + '-Amount10').hide();
+
+                                Ext.getCmp(prototype.id + '-month11').hide();
+                                //Agrupacion por GrilladDown
+                                Ext.getCmp(prototype.id + '-Used11').hide();
+                                Ext.getCmp(prototype.id + '-Coupons11').hide();
+                                Ext.getCmp(prototype.id + '-Por11').hide();
+                                Ext.getCmp(prototype.id + '-Amount11').hide();
+
+                                Ext.getCmp(prototype.id + '-month12').hide();
+                                //Agrupacion por GrilladDown
+                                Ext.getCmp(prototype.id + '-Used12').hide();
+                                Ext.getCmp(prototype.id + '-Coupons12').hide();
+                                Ext.getCmp(prototype.id + '-Por12').hide();
+                                Ext.getCmp(prototype.id + '-Amount12').hide();
+
                             }
+
                         } else {
+
                             Ext.getCmp(prototype.id + '-gridFORE').setWidth(0);
                             Ext.getCmp(prototype.id + '-gridFORE2').setWidth(0);
-                            Ext.getCmp(prototype.id + '-displayFORE').setWidth(0);
+
                             Ext.getCmp(prototype.id + '-month1').hide();
-                            Ext.getCmp(prototype.id + '-month2').hide();
-                            Ext.getCmp(prototype.id + '-month3').hide();
-                            Ext.getCmp(prototype.id + '-month4').hide();
-                            Ext.getCmp(prototype.id + '-month5').hide();
                             //Agrupacion por GrilladDown
                             Ext.getCmp(prototype.id + '-Used1').hide();
                             Ext.getCmp(prototype.id + '-Coupons1').hide();
                             Ext.getCmp(prototype.id + '-Por1').hide();
                             Ext.getCmp(prototype.id + '-Amount1').hide();
+
+                            Ext.getCmp(prototype.id + '-month2').hide();
+                            //Agrupacion por GrilladDown
                             Ext.getCmp(prototype.id + '-Used2').hide();
                             Ext.getCmp(prototype.id + '-Coupons2').hide();
                             Ext.getCmp(prototype.id + '-Por2').hide();
                             Ext.getCmp(prototype.id + '-Amount2').hide();
+
+                            Ext.getCmp(prototype.id + '-month3').hide();
+                            //Agrupacion por GrilladDown
                             Ext.getCmp(prototype.id + '-Used3').hide();
                             Ext.getCmp(prototype.id + '-Coupons3').hide();
                             Ext.getCmp(prototype.id + '-Por3').hide();
                             Ext.getCmp(prototype.id + '-Amount3').hide();
+
+                            Ext.getCmp(prototype.id + '-month4').hide();
+                            //Agrupacion por GrilladDown
                             Ext.getCmp(prototype.id + '-Used4').hide();
                             Ext.getCmp(prototype.id + '-Coupons4').hide();
                             Ext.getCmp(prototype.id + '-Por4').hide();
                             Ext.getCmp(prototype.id + '-Amount4').hide();
+
+                            Ext.getCmp(prototype.id + '-month5').hide();
+                            //Agrupacion por GrilladDown
                             Ext.getCmp(prototype.id + '-Used5').hide();
                             Ext.getCmp(prototype.id + '-Coupons5').hide();
                             Ext.getCmp(prototype.id + '-Por5').hide();
                             Ext.getCmp(prototype.id + '-Amount5').hide();
+
+                            Ext.getCmp(prototype.id + '-month6').hide();
+                            //Agrupacion por GrilladDown
+                            Ext.getCmp(prototype.id + '-Used6').hide();
+                            Ext.getCmp(prototype.id + '-Coupons6').hide();
+                            Ext.getCmp(prototype.id + '-Por6').hide();
+                            Ext.getCmp(prototype.id + '-Amount6').hide();
+
+                            Ext.getCmp(prototype.id + '-month7').hide();
+                            //Agrupacion por GrilladDown
+                            Ext.getCmp(prototype.id + '-Used7').hide();
+                            Ext.getCmp(prototype.id + '-Coupons7').hide();
+                            Ext.getCmp(prototype.id + '-Por7').hide();
+                            Ext.getCmp(prototype.id + '-Amount7').hide();
+
+                            Ext.getCmp(prototype.id + '-month8').hide();
+                            //Agrupacion por GrilladDown
+                            Ext.getCmp(prototype.id + '-Used8').hide();
+                            Ext.getCmp(prototype.id + '-Coupons8').hide();
+                            Ext.getCmp(prototype.id + '-Por8').hide();
+                            Ext.getCmp(prototype.id + '-Amount8').hide();
+
+                            Ext.getCmp(prototype.id + '-month9').hide();
+                            //Agrupacion por GrilladDown
+                            Ext.getCmp(prototype.id + '-Used9').hide();
+                            Ext.getCmp(prototype.id + '-Coupons9').hide();
+                            Ext.getCmp(prototype.id + '-Por9').hide();
+                            Ext.getCmp(prototype.id + '-Amount9').hide();
+
+                            Ext.getCmp(prototype.id + '-month10').hide();
+                            //Agrupacion por GrilladDown
+                            Ext.getCmp(prototype.id + '-Used10').hide();
+                            Ext.getCmp(prototype.id + '-Coupons10').hide();
+                            Ext.getCmp(prototype.id + '-Por10').hide();
+                            Ext.getCmp(prototype.id + '-Amount10').hide();
+
+                            Ext.getCmp(prototype.id + '-month11').hide();
+                            //Agrupacion por GrilladDown
+                            Ext.getCmp(prototype.id + '-Used11').hide();
+                            Ext.getCmp(prototype.id + '-Coupons11').hide();
+                            Ext.getCmp(prototype.id + '-Por11').hide();
+                            Ext.getCmp(prototype.id + '-Amount11').hide();
+
+                            Ext.getCmp(prototype.id + '-month12').hide();
+                            //Agrupacion por GrilladDown
+                            Ext.getCmp(prototype.id + '-Used12').hide();
+                            Ext.getCmp(prototype.id + '-Coupons12').hide();
+                            Ext.getCmp(prototype.id + '-Por12').hide();
+                            Ext.getCmp(prototype.id + '-Amount12').hide();
                         }
                     }
                 }
@@ -2269,34 +2873,62 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         });
         Ext.getCmp(prototype.id + '-gridFORE2').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridFORE2').setStore(storeGridDatas);
+//        this.funcionScroll();
     },
-//    loadFOREGraph: function () {
-//        win.lblUser_toolTip("Estructura: A4521");
-//        me.panelActual = '-boxFORE';
-//        this.showGrid('-boxFORE');
-//        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
-//            proxy: {
-//                url: prototype.url + '/loadFOREGraph'
-//            }, listeners: {
-//                beforeload: function (obj) {
-//                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
-//                },
-//                load: function (obj) {
-//                    console.log(obj.data.items[0]);
+//    funcionScroll: function () {
+//        var grilla1 = document.getElementById('gridFORE');
+//        var grilla2 = document.getElementById('gridFORE2');
 //
-//                    if (obj.data.length === 0) {
-//                        global.Msg({
-//                            msg: 'Data not found.'
-//                        });
-//                    } else {
-//
-//                    }
-//                }
-//            }
+//        // Ajustar el valor de desplazamiento de ambas grillas al mismo tiempo
+//        grilla1.addEventListener('scroll', function () {
+//            grilla2.scrollLeft = grilla1.scrollLeft;
 //        });
-//        Ext.getCmp(prototype.id + '-displayFORE').bindStore(storeGridDatas);
-//        Ext.getCmp(prototype.id + '-displayFORE').setStore(storeGridDatas);
+//
+//        grilla2.addEventListener('scroll', function () {
+//            grilla1.scrollLeft = grilla2.scrollLeft;
+//        });
 //    },
+//    funcionScroll: function () {
+//    var me = this;
+//
+//    // Espera al evento afterrender del componente
+//    me.on('afterrender', function () {
+//        console.log('funcaaa');
+//
+//        Ext.defer(function () {
+//            var grilla1 = Ext.getCmp(me.id + '-gridFORE');
+//            var grilla2 = Ext.getCmp(me.id + '-gridFORE2');
+//
+//            function sincronizarDesplazamiento(grillaOrigen, grillaDestino) {
+//                console.log('funcaaa1');
+//                var scrollLeft = grillaOrigen.getScrollable().getScrollX();
+//                grillaDestino.getScrollable().scrollTo('left', scrollLeft);
+//            }
+//
+//            // Verificamos que las grillas estén completamente renderizadas
+//            if (grilla1 && grilla2 && grilla1.getScrollable() && grilla2.getScrollable()) {
+//                // Sincroniza las grillas al renderizarlas
+//                sincronizarDesplazamiento(grilla1, grilla2);
+//
+//                // Agrega un listener para sincronizar el desplazamiento al desplazar la primera grilla
+//                grilla1.getScrollable().on('scroll', function () {
+//                    console.log('funcaaa2');
+//                    sincronizarDesplazamiento(grilla1, grilla2);
+//                });
+//
+//                // Agrega un listener para sincronizar el desplazamiento al desplazar la segunda grilla
+//                grilla2.getScrollable().on('scroll', function () {
+//                    console.log('funcaaa3');
+//                    sincronizarDesplazamiento(grilla2, grilla1);
+//                });
+//            } else {
+//                console.error('Alguna de las grillas no fue encontrada o no está completamente renderizada en el documento.');
+//            }
+//        }, 1);
+//    });
+//},
+
+
 //    loadTNUVS: function () {
 //        win.lblUser_toolTip("Estructura: ");
 //         
