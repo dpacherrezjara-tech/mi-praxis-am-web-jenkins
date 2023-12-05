@@ -133,8 +133,7 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
                 }
             };
             opts[obj.id.split('-').at(-1)]();
-        } catch (Exception) {
-            console.log(Exception);
+        } catch (err){
             return;
         }
     },
