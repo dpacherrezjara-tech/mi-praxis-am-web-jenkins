@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
     controller: 'CreditCardFilterDataEntryController',
     title: 'Credit Card Filter - Form',
     header: true,
-    width: 930,
+    width: 1000,
     resizable: true,
     layout: 'fit',
     modal: true,
@@ -52,7 +52,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                 ]
                             }),
                             labelWidth: 80,
-                            width: 240,
+                            width: 230,
                             displayField: 'name',
                             valueField: 'code',
                             queryMode: 'local',
@@ -144,7 +144,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                             autoScroll: true,
                             minHeight: 400,
                             flex: 1,
-                            maxHeight: 525,
+                            maxHeight: 530,
                             margin: '5 5 5 5',
                             viewConfig: {
                                 stripeRows: true,
@@ -165,13 +165,80 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                     },
                                     {text: 'Processing<br>Date', dataIndex: 'prda', width: 80},
                                     {text: 'Processor', dataIndex: 'desc_PROCTYPE', flex: 1},
-                                    {text: 'Country', dataIndex: 'scountry', width: 80},
-                                    {text: 'Card Number', dataIndex: 'scardn', width: 200},
-                                    {text: 'Qty', dataIndex: 'qty', width: 80}
+                                    {text: 'Country', dataIndex: 'scountry', width: 70},
+                                    {text: 'Card Number', dataIndex: 'scardn', width: 170},
+                                    {
+                                        text: 'Qty<br>Sale', dataIndex: 'qty_SALE', width: 80,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                            metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
+                                            metaData.style += "font-weight:bolder;color:#057ECB;";
+                                            return value;
+                                        },
+                                        listeners: {
+                                            click: 'onSearchTranstypeCC'
+                                        }
+                                    },
+                                    {
+                                        text: 'Qty<br>Refund', dataIndex: 'qty_RFND', width: 80,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                            metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
+                                            metaData.style += "font-weight:bolder;color:#057ECB;";
+                                            return value;
+                                        },
+                                        listeners: {
+                                            click: 'onSearchTranstypeCC'
+                                        }
+                                    },
+                                    {
+                                        text: 'Qty<br>Chargeback', dataIndex: 'qty_CHBK', width: 80,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                            metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
+                                            metaData.style += "font-weight:bolder;color:#057ECB;";
+                                            return value;
+                                        },
+                                        listeners: {
+                                            click: 'onSearchTranstypeCC'
+                                        }
+                                    },
+                                    {
+                                        text: 'Qty<br>Adjustment', dataIndex: 'qty_ADJU', width: 80,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                            metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
+                                            metaData.style += "font-weight:bolder;color:#057ECB;";
+                                            return value;
+                                        },
+                                        listeners: {
+                                            click: 'onSearchTranstypeCC'
+                                        }
+                                    },
+                                    {
+                                        text: 'Qty<br>Void', dataIndex: 'qty_VOID', width: 80,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                            metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
+                                            metaData.style += "font-weight:bolder;color:#057ECB;";
+                                            return value;
+                                        },
+                                        listeners: {
+                                            click: 'onSearchVoidCC'
+                                        }
+                                    },
+                                    {
+                                        text: 'Qty', dataIndex: 'qty', width: 80,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                            const obj = record.data;
+                                            metaData.tdAttr = 'data-qtip="' +
+                                                    'MATCH: ' + obj.qty_MATCH + '<br>' +
+                                                    'PENDING: ' + obj.qty_PENDING
+                                                    + '"';
+                                            metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
+                                            metaData.style += "font-weight:bolder;color:#057ECB;background-color:#C0EDB3;";
+                                            return `<b>${value}</b>`;
+                                        },
+                                        listeners: {
+                                            click: 'onSearchCreditCard'
+                                        }
+                                    }
                                 ]
-                            },
-                            listeners: {
-                                itemdblclick: 'onSearchCreditCard'
                             },
                             bbar: {
                                 xtype: 'pagingtoolbar',

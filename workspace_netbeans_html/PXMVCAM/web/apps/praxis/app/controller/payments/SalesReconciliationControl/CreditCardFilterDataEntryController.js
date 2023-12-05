@@ -56,27 +56,79 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CreditCard
         });
         gridSumm.setStore(store);
     },
-    onSearchCreditCard: function (grid, record, item, index, e, eOpts) {
-        const obj = record.data;
+    onSearchCreditCard: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const obj = Object.assign({},record.data);
+        obj.fvoid = '';
+        obj.cellIndex = cellIndex;
         Ext.getCmp(prototype.id + '-cmbFiltersBP').setValue('F');
         const detailFilter = Ext.getCmp(prototype.id + '-formFiltersBP-2').getForm();
         detailFilter.reset();
+        let params = this.formatBrowserParams(obj);
+        console.log('Parametros: ', params);
+        detailFilter.setValues(params);
+        const btnSearch = Ext.getCmp(prototype.id + '-btnSearch');
+        btnSearch.fireEvent('click');
+        this.view.close();
+    },
+    onSearchTranstypeCC: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const obj = Object.assign({},record.data);
+        obj.fvoid = '';
+        obj.cellIndex = cellIndex;
+        let valorCelda = td.textContent || td.innerText;
+        if (valorCelda === '0') {
+            global.Msg({msg: 'No data'});
+            return;
+        }
+        Ext.getCmp(prototype.id + '-cmbFiltersBP').setValue('F');
+        const detailFilter = Ext.getCmp(prototype.id + '-formFiltersBP-2').getForm();
+        detailFilter.reset();
+        let params = this.formatBrowserParams(obj);
+        console.log('Parametros: ', params);
+        detailFilter.setValues(params);
+        const btnSearch = Ext.getCmp(prototype.id + '-btnSearch');
+        btnSearch.fireEvent('click');
+        this.view.close();
+    },
+    onSearchVoidCC: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const obj = Object.assign({},record.data);
+        obj.fvoid = 'V';
+        obj.cellIndex = cellIndex;
+        let valorCelda = td.textContent || td.innerText;
+        if (valorCelda === '0') {
+            global.Msg({msg: 'No data'});
+            return;
+        }
+        Ext.getCmp(prototype.id + '-cmbFiltersBP').setValue('F');
+        const detailFilter = Ext.getCmp(prototype.id + '-formFiltersBP-2').getForm();
+        detailFilter.reset();
+        let params = this.formatBrowserParams(obj);
+        console.log('Parametros: ', params);
+        detailFilter.setValues(params);
+        const btnSearch = Ext.getCmp(prototype.id + '-btnSearch');
+        btnSearch.fireEvent('click');
+        this.view.close();
+    },
+    formatBrowserParams:function(obj){
+        const opts = {
+            5: 'SALE',
+            6: 'RFND',
+            7: 'CHBK',
+            8: 'ADJU'
+        };
         let params = {
             IN_DATE: 'PRDA',
             IN_DATEFROM: obj.prda,
             IN_DATETO: obj.prda,
             IN_PROCTYPE: obj.proctype.trim(),
             IN_SCOUNTRY: obj.scountry.trim(),
+            IN_TRANSTYPE: opts[obj.cellIndex]?opts[obj.cellIndex]:'',
+            IN_FVOID: obj.fvoid,
             creditcard: obj.scardn.slice(0, 6),
             creditcard2: obj.proctype.trim() === 'BANORTE00' ?
                     obj.scardn.trim().slice(-2) :
                     obj.scardn.trim().slice(-4)
         };
-        console.log('Parametros: ', params);
-        detailFilter.setValues(params);
-        const btnSearch = Ext.getCmp(prototype.id + '-btnSearch');
-        btnSearch.fireEvent('click');
-        this.view.close();
+        return params;
     },
     formatParams: function (form) {
         const initParams = this.view.searchParams;
