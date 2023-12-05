@@ -541,7 +541,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                 },
                                 {
                                     xtype: 'textfield',
-                                    name: 'creditcard',
+                                    name: 'creditcard2',
                                     width: 50,
                                     maxLength: 4, // Límite máximo de caracteres
                                     maskRe: /[0-9]/, // Expresión regular para permitir solo números
