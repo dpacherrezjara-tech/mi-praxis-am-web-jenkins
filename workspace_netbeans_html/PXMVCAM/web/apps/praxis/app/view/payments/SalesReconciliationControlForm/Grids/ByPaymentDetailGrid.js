@@ -213,17 +213,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
         items: [
             {
                 xtype: 'button',
-                id: prototype.id + '-groupCreditCard-1',
-                hidden: true,
-                iconCls: 'prx-icon-update',
-                scale: 'small',
-                tooltip: 'Group Credit Cards',
-                listeners: {
-                    click: 'groupByCreditCard'
-                }
-            },
-            {
-                xtype: 'button',
                 iconCls: 'prx-icon-excel',
                 scale: 'small',
                 tooltip: 'Export to Excel',

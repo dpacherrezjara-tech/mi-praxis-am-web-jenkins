@@ -48,7 +48,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                             store: Ext.create('Ext.data.SimpleStore', {
                                 fields: ['code', 'name'],
                                 data: [
-                                    ['FEUP', 'Worked Date']
+                                    ['FEUP', 'Date Worked']
                                 ]
                             }),
                             labelWidth: 80,

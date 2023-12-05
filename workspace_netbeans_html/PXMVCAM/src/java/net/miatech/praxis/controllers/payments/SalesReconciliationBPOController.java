@@ -48,7 +48,6 @@ import net.miatech.praxis.payment.filter.SQP05183Filter;
 import net.miatech.praxis.payment.filter.SQP05187Filter;
 import net.miatech.praxis.payment.filter.SQP05202Filter;
 import net.miatech.praxis.payment.filter.SQP05203Filter;
-import net.miatech.praxis.payment.filter.SQP05206Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.Functions;
@@ -996,21 +995,6 @@ public class SalesReconciliationBPOController {
         try {
             System.out.println("---------------SalesReconciliationBPO:loadProductionBpDetail-------------");
             filter = logic.loadSQP05203Filter(filter);
-            System.out.println("Total: " + filter.getResponse().size());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-//</editor-fold>
-    
-    //<editor-fold defaultstate="collapsed" desc="Credit Card Filter">
-    @RequestMapping(value = "loadCreditCardFilter")
-    public ResponseEntity<?> loadCreditCardFilter(@ModelAttribute SQP05206Filter params) {
-        System.out.println("---------------SalesReconciliationBPO:loadCreditCardFilter-------------");
-        try {
-            SQP05206Filter filter = logic.loadSQP05206Filter(params);
             System.out.println("Total: " + filter.getResponse().size());
             return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {

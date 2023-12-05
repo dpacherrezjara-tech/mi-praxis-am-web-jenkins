@@ -15,7 +15,6 @@ import net.miatech.praxis.payment.filter.A4335Filter;
 import net.miatech.praxis.payment.filter.A4482Filter;
 import net.miatech.praxis.payment.filter.A4496Filter;
 import net.miatech.praxis.payment.filter.ByTicketFilter;
-import net.miatech.praxis.payment.filter.CreditCardFilter;
 import net.miatech.praxis.payment.filter.ProductionFilter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
@@ -53,7 +52,6 @@ import net.miatech.praxis.payment.filter.SQP05183Filter;
 import net.miatech.praxis.payment.filter.SQP05187Filter;
 import net.miatech.praxis.payment.filter.SQP05202Filter;
 import net.miatech.praxis.payment.filter.SQP05203Filter;
-import net.miatech.praxis.payment.filter.SQP05206Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -583,18 +581,6 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         filter.setResponse((List<ProductionFilter>) spRes.get("result"));
         return filter;
     }
-
-    @Override
-    public SQP05206Filter loadSQP05206Filter(SQP05206Filter filter) throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05206")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(CreditCardFilter.class));
-        filter.setPage();
-        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        Map<String, Object> spRes = jdbcCall.execute(params);
-        filter.setResponse((List<CreditCardFilter>) spRes.get("result"));
-        filter.setPageOut(spRes);
-        return filter;
-    }
+    
+    
 }

@@ -12,7 +12,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
         this.getData({view: view});
     },
     getData: function ( {view}) {
-        const me = this;
         let store = Ext.create('Ext.data.Store', {
             loadMask: true,
             pageSize: 20,
@@ -37,8 +36,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
                         //console.log(records);
                         if (records.length === 0) {
                             global.Msg({msg: 'Data not Found'});
-                        } else {
-                            me.showButtonCreditCard();
                         }
                     }
                 }
@@ -75,24 +72,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
                         }
                     }
                 });
-    },
-    showButtonCreditCard: function () {
-        const filter = Ext.getCmp(prototype.id + '-cmbFiltersBP');
-        const btnCreditCard = Ext.getCmp(prototype.id + '-groupCreditCard-1');
-        if (filter.getValue() === 'F') {
-            btnCreditCard.show();
-        } else {
-            btnCreditCard.hide();
-        }
-    },
-    groupByCreditCard: function () {
-        const formFilter = Ext.getCmp(prototype.id + '-formFiltersBP-2').getForm();
-        console.log('Parametros',formFilter.getValues());
-        const winCreditCard = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.CreditCardFilterDataEntry', {
-            id: prototype.id + '-CreditCardFilterDataEntry-1',
-            searchParams: formFilter.getValues()
-        });
-        winCreditCard.show();
     }
 });
 

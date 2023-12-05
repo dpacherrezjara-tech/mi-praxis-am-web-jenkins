@@ -135,8 +135,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             IN_CCUST: '139',
             ...obj
         };
-        if (obj.creditcard !== '' && obj.creditcard2 !== '') {
-            params.IN_SCARDN = `${obj.creditcard}%${obj.creditcard2}%`;
+        if (obj.creditcard.at(0) !== '' && obj.creditcard.at(1) !== '') {
+            params.IN_SCARDN = `${obj.creditcard.at(0)}%${obj.creditcard.at(1)}%`;
         }
         return params;
     },
