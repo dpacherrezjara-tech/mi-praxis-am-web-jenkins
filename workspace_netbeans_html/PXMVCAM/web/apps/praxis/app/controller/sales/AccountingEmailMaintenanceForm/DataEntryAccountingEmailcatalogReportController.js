@@ -33,7 +33,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.DataEntry
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbModule').setValue(rec.get('A4306MODULCO'));
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbType').setValue(rec.get('A4306TYPECO'));
 
-
+                Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406LABL').setValue(rec.get('A4306LABL'));
+                Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406PROP').setValue(rec.get('A4306PROP'));
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406REGIS').setValue(rec.get('A4306REGIS'));
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406FREGI').setValue(rec.get('A4306FREGI'));
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406HREGI').setValue(rec.get('A4306HREGI'));
@@ -51,6 +52,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.DataEntry
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbStatus').setValue('');
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbModule').setValue('');
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbType').setValue('');
+                Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406LABL').setValue('');
+                Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406PROP').setValue('');
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406REGIS').setValue('');
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406FREGI').setValue('');
                 Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406HREGI').setValue('');
@@ -73,17 +76,50 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.DataEntry
 
         CmbModule.bindStore(Ext.create('Ext.data.Store', {
             data: [
-                {"code": "", "name": "SELECT"},
-                {"code": "SAL", "name": "SALE"},
-                {"code": "FLO", "name": "FLOWN"},
-                {"code": "IXC", "name": "IXC"},
-                {"code": "IXP", "name": "IXP"},
-                {"code": "DIS", "name": "DISC"},
-                {"code": "ADJ", "name": "ADJ"},
-                {"code": "ADM", "name": "ADM's/ACM's"},
-                {"code": "PLM", "name": "PLM"},
-                {"code": "FOP", "name": "COM. FOP"},
-                {"code": "COM", "name": "COM. CONS."}
+                {"code": "", "name": "ALL"},
+                {"code": "ADM", "name": "ADMs"},
+                {"code": "AUDIT", "name": "AUDITs"},
+                {"code": "BI", "name": "BI"},
+                {"code": "CADUCOS", "name": "Caducos Accounting SOA"},
+                {"code": "FLOWN", "name": "Flown Accounting SOA"},
+                {"code": "FOB", "name": "FOB Accounting SOA"},
+                {"code": "INTACC", "name": "INTACC"},
+                {"code": "INTAP", "name": "IXP Accounting SOA"},
+                {"code": "INTAR", "name": "IXC Accounting SOA"},
+                {"code": "INVOICE", "name": "Invoice Accounting SOA"},
+                {"code": "IVA", "name": "IVA Accounting SOA"},
+                {"code": "PADJMAFLOWN", "name": "ADJ MAN Flown Accounting"},
+                {"code": "PADJMAIXC", "name": "ADJ MAN IXC Accounting"},
+                {"code": "PADJMAIXP", "name": "ADJ MAN IXP Accounting"},
+                {"code": "PADJMAN", "name": " PADJMAN"},
+                {"code": "PADJMASALES", "name": "ADJ MAN Sales Accounting"},
+                {"code": "PADJMVFLOWN", "name": "ADJ MASSIVE Flown Accounting"},
+                {"code": "PADJMVIXC", "name": "ADJ MASSIVE IXC Accounting"},
+                {"code": "PADJMVIXP", "name": "ADJ MASSIVE IXP Accounting"},
+                {"code": "PADJMVSALES", "name": "ADJ MASSIVE Sales Accounting"},
+                {"code": "PADM", "name": "ADM Accounting"},
+                {"code": "PAPINT", "name": "IXP Accounting"},
+                {"code": "PARINT", "name": "IXC Accounting"},
+                {"code": "PAUTFM", "name": " PAUTFM"},
+                {"code": "PCADUCOS", "name": "Caducos Accounting"},
+                {"code": "PFLOWN", "name": "Flown Accounting"},
+                {"code": "PINVOICE", "name": "Invoice Accounting"},
+                {"code": "PIXCEST", "name": "IXC Accounting (Estimated)"},
+                {"code": "PIXPEST", "name": "IXP Accounting (Estimated)"},
+                {"code": "PLMAP", "name": "PLM AP Accounting SOA"},
+                {"code": "PLMGLAR", "name": "PLM GL/AR Accounting SOA"},
+                {"code": "PLMINIT", "name": "PLMINIT"},
+                {"code": "PPLM", "name": "PLM Accounting"},
+                {"code": "PPLMAP", "name": "PLM AP Accounting"},
+                {"code": "PPLMGLAR", "name": "PLM GL/AR Accounting"},
+                {"code": "PPLMIVA", "name": "PLM IVA Accounting"},
+                {"code": "PRFTX", "name": "Refund Tax Accounting"},
+                {"code": "PSALES", "name": "Sales Accounting"},
+                {"code": "PSALESD", "name": "Sales Error Accounting"},
+                {"code": "SALES", "name": "Sales Accounting SOA"},
+                {"code": "SOA", "name": " SOA"},
+                {"code": "TC", "name": "Tipos de Cambio"},
+                {"code": "UATP", "name": "UATP"}
             ]
         }));
 
@@ -91,7 +127,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.DataEntry
             data: [
                 {"code": "", "name": "SELECT"},
                 {"code": "MI", "name": "MIATECH"},
-                {"code": "AM", "name": "AM"}
+                {"code": "AM", "name": "AEROMEXICO"},
+                {"code": "WS", "name": "SOA"},
+                {"code": "ER", "name": "ERROR"}
             ]
         }));
 
@@ -127,6 +165,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.DataEntry
             me.beanTMP.A4306CORER = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtmailAirline').getValue();
             me.beanTMP.A4306CORRL = '';
             me.beanTMP.A4306FLAG = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbStatus').getValue();
+            me.beanTMP.A4306LABL = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406LABL').getValue();
+            me.beanTMP.A4306PROP = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406PROP').getValue();
             
             if (me.beanTMP.A4306MODUL === '') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Module');
@@ -191,6 +231,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.DataEntry
             me.beanTMP.A4306CORER = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtmailAirline').getValue();
             me.beanTMP.A4306CORRL = rec.get('A4306CORRL');
             me.beanTMP.A4306FLAG = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-CmbStatus').getValue();
+            me.beanTMP.A4306LABL = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406LABL').getValue();
+            me.beanTMP.A4306PROP = Ext.getCmp(prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406PROP').getValue();
 
             if (me.beanTMP.A4306MODUL === '') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Module');

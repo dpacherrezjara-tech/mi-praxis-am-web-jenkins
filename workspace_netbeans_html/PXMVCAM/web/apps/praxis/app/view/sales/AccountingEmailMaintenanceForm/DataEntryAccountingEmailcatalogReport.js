@@ -91,10 +91,25 @@ Ext.define('Ext.Praxis.view.sales.AccountingEmailMaintenanceForm.DataEntryAccoun
                     ]
                 },
                 {
+                    xtype: 'textfield',
+                    id: prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406LABL',
+                    fieldLabel: 'Label',
+                    labelWidth: 100,
+                    width: 770,
+                    flex: 1
+                },
+                {
+                    xtype: 'textfield',
+                    id: prototype.ididDataEntryEmailcatalogReportForm + '-txtA3406PROP',
+                    fieldLabel: 'Properties',
+                    labelWidth: 100,
+                    width: 770,
+                    flex: 1
+                },
+                {
                     xtype: 'panel',
                     layout: 'hbox',
                     items: [
-
                         {
                             xtype: 'textareafield',
                             id: prototype.ididDataEntryEmailcatalogReportForm + '-txtmailAirline',

@@ -52,16 +52,50 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.Accountin
         CmbModule.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
-                {"code": "SAL", "name": "SALE"},
-                {"code": "FLO", "name": "FLOWN"},
-                {"code": "IXC", "name": "IXC"},
-                {"code": "IXP", "name": "IXP"},
-                {"code": "DIS", "name": "DISC"},
-                {"code": "ADJ", "name": "ADJ"},
-                {"code": "ADM", "name": "ADM's/ACM's"},
-                {"code": "PLM", "name": "PLM"},
-                {"code": "FOP", "name": "COM. FOP"},
-                {"code": "COM", "name": "COM. CONS."}
+                {"code": "ADM", "name": "ADMs"},
+                {"code": "AUDIT", "name": "AUDITs"},
+                {"code": "BI", "name": "BI"},
+                {"code": "CADUCOS", "name": "Caducos Accounting SOA"},
+                {"code": "FLOWN", "name": "Flown Accounting SOA"},
+                {"code": "FOB", "name": "FOB Accounting SOA"},
+                {"code": "INTACC", "name": "INTACC"},
+                {"code": "INTAP", "name": "IXP Accounting SOA"},
+                {"code": "INTAR", "name": "IXC Accounting SOA"},
+                {"code": "INVOICE", "name": "Invoice Accounting SOA"},
+                {"code": "IVA", "name": "IVA Accounting SOA"},
+                {"code": "PADJMAFLOWN", "name": "ADJ MAN Flown Accounting"},
+                {"code": "PADJMAIXC", "name": "ADJ MAN IXC Accounting"},
+                {"code": "PADJMAIXP", "name": "ADJ MAN IXP Accounting"},
+                {"code": "PADJMAN", "name": " PADJMAN"},
+                {"code": "PADJMASALES", "name": "ADJ MAN Sales Accounting"},
+                {"code": "PADJMVFLOWN", "name": "ADJ MASSIVE Flown Accounting"},
+                {"code": "PADJMVIXC", "name": "ADJ MASSIVE IXC Accounting"},
+                {"code": "PADJMVIXP", "name": "ADJ MASSIVE IXP Accounting"},
+                {"code": "PADJMVSALES", "name": "ADJ MASSIVE Sales Accounting"},
+                {"code": "PADM", "name": "ADM Accounting"},
+                {"code": "PAPINT", "name": "IXP Accounting"},
+                {"code": "PARINT", "name": "IXC Accounting"},
+                {"code": "PAUTFM", "name": " PAUTFM"},
+                {"code": "PCADUCOS", "name": "Caducos Accounting"},
+                {"code": "PFLOWN", "name": "Flown Accounting"},
+                {"code": "PINVOICE", "name": "Invoice Accounting"},
+                {"code": "PIXCEST", "name": "IXC Accounting (Estimated)"},
+                {"code": "PIXPEST", "name": "IXP Accounting (Estimated)"},
+                {"code": "PLMAP", "name": "PLM AP Accounting SOA"},
+                {"code": "PLMGLAR", "name": "PLM GL/AR Accounting SOA"},
+                {"code": "PLMINIT", "name": "PLMINIT"},
+                {"code": "PPLM", "name": "PLM Accounting"},
+                {"code": "PPLMAP", "name": "PLM AP Accounting"},
+                {"code": "PPLMGLAR", "name": "PLM GL/AR Accounting"},
+                {"code": "PPLMIVA", "name": "PLM IVA Accounting"},
+                {"code": "PRFTX", "name": "Refund Tax Accounting"},
+                {"code": "PSALES", "name": "Sales Accounting"},
+                {"code": "PSALESD", "name": "Sales Error Accounting"},
+                {"code": "SALES", "name": "Sales Accounting SOA"},
+                {"code": "SOA", "name": " SOA"},
+                {"code": "TC", "name": "Tipos de Cambio"},
+                {"code": "UATP", "name": "UATP"}
+
             ]
         }));
 
@@ -69,7 +103,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.Accountin
             data: [
                 {"code": "", "name": "ALL"},
                 {"code": "MI", "name": "MIATECH"},
-                {"code": "AM", "name": "AM"}
+                {"code": "AM", "name": "AEROMEXICO"},
+                {"code": "WS", "name": "SOA"},
+                {"code": "ER", "name": "ERROR"}
             ]
         }));
 
@@ -107,7 +143,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.Accountin
     setStoresGrids: function () {
         var grid00 = Ext.getCmp(prototype.idAccoEmailMain + '-grid');
 
-        var store00 = Ext.create('Ext.data.Store', {
+        var store00 = Ext.create('Ext.Praxis.store.sales.AccountingEmailMaintenance.GridData', {
             storeId: prototype.idAccoEmailMain + '-store-grid00',
             pageSize: 20,
             proxy: {
@@ -133,6 +169,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingEmailMaintenanceForm.Accountin
         me.bean.IN_TYPE = Ext.getCmp(prototype.idAccoEmailMain + '-CmbType').getValue();
         me.bean.IN_EMAIL = Ext.getCmp(prototype.idAccoEmailMain + '-txtEmail').getValue();
         me.bean.IN_STATUS = Ext.getCmp(prototype.idAccoEmailMain + '-CmbStatus').getValue();
+        me.bean.IN_LABL = Ext.getCmp(prototype.idAccoEmailMain + '-txtLabl').getValue();
         me.bean.pexcel = 0;
 
         me.Search(me.bean, obj === true ? obj : false);

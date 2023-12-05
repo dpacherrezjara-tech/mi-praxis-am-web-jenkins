@@ -53,34 +53,35 @@ public class AccountingEmailMaintenanceFormDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04653(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04653(?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
             cstmt01.registerOutParameter(8, Types.INTEGER);
             cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_MODULE);
             cstmt01.setString(3, filter.IN_TYPE);
             cstmt01.setString(4, filter.IN_EMAIL);
             cstmt01.setString(5, filter.IN_STATUS);
+            cstmt01.setString(6, filter.IN_LABL);
 
-            cstmt01.setInt(6, filter.page.PAGNUM);
-            cstmt01.setInt(7, filter.page.PAGROW);
-            cstmt01.setInt(8, filter.page.TOTPAG);
-            cstmt01.setInt(9, filter.page.TOTROW);
+            cstmt01.setInt(7, filter.page.PAGNUM);
+            cstmt01.setInt(8, filter.page.PAGROW);
+            cstmt01.setInt(9, filter.page.TOTPAG);
+            cstmt01.setInt(10, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(6);
-            filter.page.PAGROW = cstmt01.getInt(7);
-            filter.page.TOTPAG = cstmt01.getInt(8);
-            filter.page.TOTROW = cstmt01.getInt(9);
+            filter.page.PAGNUM = cstmt01.getInt(7);
+            filter.page.PAGROW = cstmt01.getInt(8);
+            filter.page.TOTPAG = cstmt01.getInt(9);
+            filter.page.TOTROW = cstmt01.getInt(10);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -102,6 +103,8 @@ public class AccountingEmailMaintenanceFormDAO {
                 objRtn.A4306REVIS = rs01.getString("A4306REVIS").trim();
                 objRtn.A4306FREVI = rs01.getString("A4306FREVI").trim();
                 objRtn.A4306HREVI = rs01.getString("A4306HREVI").trim();
+                objRtn.A4306PROP = rs01.getString("A4306PROP").trim();
+                objRtn.A4306LABL = rs01.getString("A4306LABL").trim();
                 
                 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
@@ -142,7 +145,7 @@ public class AccountingEmailMaintenanceFormDAO {
 
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04654(?,?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04654(?,?,?,?,?,?,?,?,?,?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
             cs.setString("IN_OPCION", filter.IN_OPCION);
@@ -155,6 +158,8 @@ public class AccountingEmailMaintenanceFormDAO {
             cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
             cs.setString("IN_FREGI", Functions.getFechaActual());
             cs.setString("IN_HREGI", Functions.getHoraActual());
+            cs.setString("IN_PROP", filter.A4306PROP);
+            cs.setString("IN_LABL", filter.A4306LABL);
             cs.execute();
             rst = cs.getResultSet();
 
