@@ -106,6 +106,18 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             '#Dashboard01Form-btnBackFake_2': {
                 click: this.btnDisplayBackFore
             },
+            '#Dashboard01Form--btn-pag-previous_FORE1': {
+                click: this.RETRO1
+            },
+            '#Dashboard01Form--btn-pag-next_FORE1': {
+                click: this.POST1
+            },
+            '#Dashboard01Form--btn-pag-previous_FORE2': {
+                click: this.RETRO2
+            },
+            '#Dashboard01Form--btn-pag-next_FORE2': {
+                click: this.POST2
+            },
         });
 
 //        this.setStoreData();
@@ -704,6 +716,36 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         if (component !== null) {
             var controller = component.getController();
             controller.btnDisplayBack();
+        }
+    },
+    RETRO1: function () {
+        
+        var component = this.getComponentByTab();
+        if (component !== null) {
+            var controller = component.getController();
+            controller.RETRO1();
+        }
+    },
+    RETRO2: function () {
+        
+        var component = this.getComponentByTab();
+        if (component !== null) {
+            var controller = component.getController();
+            controller.RETRO2();
+        }
+    },
+    POST1: function () {
+        var component = this.getComponentByTab();
+        if (component !== null) {
+            var controller = component.getController();
+            controller.POST1();
+        }
+    },
+    POST2: function () {
+        var component = this.getComponentByTab();
+        if (component !== null) {
+            var controller = component.getController();
+            controller.POST2();
         }
     },
     showCurrentChart: function () {
