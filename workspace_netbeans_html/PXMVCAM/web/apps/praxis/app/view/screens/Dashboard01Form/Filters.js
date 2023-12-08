@@ -444,6 +444,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                             enableKeyEvents: true,
                                             caseSensitive: false,
                                             typeAhead: true,
+                                            hidden: true,
                                             valueField: 'code', displayField: 'name',
                                             width: 65,
                                             listeners: {
@@ -454,7 +455,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                         {
                                             xtype: 'label',
                                             html: 'To:',
-                                            hidden:true,
+                                            hidden: true,
                                             fieldStyle: 'text-align: center;',
                                             padding: '3px 7px 0px 0px'
                                         },
@@ -471,7 +472,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                             editable: false,
                                             valueField: 'code', displayField: 'name',
                                             width: 75,
-                                            hidden:true,
+                                            hidden: true,
                                             typeAhead: true,
                                             listConfig: {maxHeight: 111},
                                             listeners: {
@@ -489,13 +490,53 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                             forceSelection: true,
                                             editable: false,
                                             typeAhead: true,
-                                            hidden:true,
+                                            hidden: true,
                                             valueField: 'code', displayField: 'name',
                                             width: 65,
                                             listeners: {
                                             }
                                         },
                                         // </editor-fold>
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-previous_FORE1',
+                                            iconCls: 'prx-icon-pagination-previous',
+                                            tooltip: 'Previous Page',
+                                            hidden:true,
+                                            listeners: {
+                                                click: 'RETRO1'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-previous_FORE2',
+                                            iconCls: 'prx-icon-pagination-previous',
+                                            tooltip: 'Previous Page',
+                                            hidden:true,
+                                            listeners: {
+                                                click: 'RETRO2'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-next_FORE1',
+                                            iconCls: 'prx-icon-pagination-next',
+                                            tooltip: 'Next Page',
+                                            hidden:true,
+                                            listeners: {
+                                                click: 'POST1'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-next_FORE2',
+                                            iconCls: 'prx-icon-pagination-next',
+                                            tooltip: 'Next Page',
+                                            hidden:true,
+                                            listeners: {
+                                                click: 'POST2'
+                                            }
+                                        },
                                     ]
                                 }
                             ]
