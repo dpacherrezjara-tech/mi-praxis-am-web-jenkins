@@ -241,6 +241,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingEmailMaintenanceForm.AccountingEmail
                     },
                     border: true,
                     bodyStyle: 'background-color: #E3EAF9;',
+                    autoScroll: true,
                     defaults: {
                         border: false,
                         padding: '0px 5px 0px 5px'
@@ -251,8 +252,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingEmailMaintenanceForm.AccountingEmail
                             xtype: 'grid',
                             id: prototype.idAccoEmailMain + '-grid',
                             columnLines: true,
-                            autoScroll: true,
-                            width: 1400,
+                            width: 1155,
                             height: 520,
                             columns: {
                                 items: [
