@@ -17,6 +17,7 @@ import net.miatech.praxis.eecta.SQP04527Filter;
 import net.miatech.praxis.eecta.SQP04587Filter;
 import net.miatech.praxis.eecta.SQP04588Filter;
 import net.miatech.praxis.eecta.SQP04589Filter;
+import net.miatech.praxis.eecta.SQP04666Filter;
 import org.apache.log4j.Logger;
 
 /**
@@ -105,6 +106,13 @@ public class CatalogoContratosPreDAO {
                 objRtn.A4241FECAC = rs01.getString("A4241FECAC");
                 objRtn.A4241HORAC = rs01.getString("A4241HORAC");
                 objRtn.A3953RSOCI = rs01.getString("A3953RSOCI");
+                //news
+                objRtn.A4241FECTB  = rs01.getString("A4241FECTB");
+                objRtn.A4241UIDAN  = rs01.getString("A4241UIDAN");
+                objRtn.A4241UIDBF  = rs01.getString("A4241UIDBF");
+                objRtn.A4241STATB  = rs01.getString("A4241STATB");
+                objRtn.A4241STDE  = rs01.getString("A4241STDE");
+                objRtn.A4241RMSG  = rs01.getString("A4241RMSG");
                 
                 // saldos
                 objRtn.A4242IDANT = rs01.getInt("A4242IDANT");
@@ -313,6 +321,43 @@ public class CatalogoContratosPreDAO {
             objRtn.dbException.MESSAGE = cstmt01.getString(22);
             objRtn.OU_A4241ID = cstmt01.getString(23);
 
+        } finally {
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return objRtn;
+    }
+    
+    public SQP04666Filter setSQP04666Filter(SQP04666Filter filter) throws SQLException, Exception {
+        SQP04666Filter objRtn;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL PXUATP.SQP04666(?,?,?,?,?,?,?)}";
+        Connection cnx = null;
+        ResultSet rst = null;
+        cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+        try {
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(6, Types.VARCHAR);
+            cstmt01.registerOutParameter(7, Types.VARCHAR);                        
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setInt(2, filter.VP_IDANT);
+            cstmt01.setString(3, filter.VP_FDESDE);
+            cstmt01.setString(4, filter.VP_FHASTA);
+            cstmt01.setString(5, filter.VP_CDCLI);            
+            cstmt01.execute();
+            
+            objRtn = new SQP04666Filter();
+            objRtn.dbException.SQLCODE = cstmt01.getString(6);
+            objRtn.dbException.MESSAGE = cstmt01.getString(7);
+            
         } finally {
             if (cstmt01 != null) {
                 try {

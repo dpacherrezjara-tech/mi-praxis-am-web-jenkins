@@ -20,7 +20,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         var grid01 = Ext.getCmp(prototype.id + '-gridData-uatp');
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataUatp', {});
         grid01.setStore(storeGridDatas);
-              
+
 
         this.get_ClearField();
         var p = this.view.params;
@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 //Ext.getCmp(prototype.id + '-btnDet-contrato').hide();
-                Ext.getCmp(prototype.id + '-btn-save').show();                
+                Ext.getCmp(prototype.id + '-btn-save').show();
                 //this.handlerEvent_setDisabled(true);
                 Ext.getCmp(prototype.id + '-A4241CDCLI').focus();
                 break;
@@ -37,7 +37,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                 this.getDataInputs();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 Ext.getCmp(prototype.id + '-btn-update').show();
-               // Ext.getCmp(prototype.id + '-btnDet-contrato').show();                
+                // Ext.getCmp(prototype.id + '-btnDet-contrato').show();                
                 this.handlerEvent_setDisabled(false);
                 break;
         }
@@ -47,16 +47,17 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         //Ext.getCmp(prototype.id + '-file').setDisabled(bflag);
         //Ext.getCmp(prototype.id + '-btn-upload').setDisabled(bflag);
     },
-    set_calcular_beneficio:function(){
-                     
+    set_calcular_beneficio: function () {
+
         var A4241TOTAN = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOTAN').getValue().replace(",", "").replace(",", ""));
-        var A4241PORBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241PORBF').getValue().replace(",", "").replace(",", "")); 
-        if( Ext.Number.parseFloat(A4241PORBF) === 0 )return;
-        
-        var A4241TOTBF = Ext.Number.parseFloat(A4241TOTAN * A4241PORBF) / 100; 
+        var A4241PORBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241PORBF').getValue().replace(",", "").replace(",", ""));
+        if (Ext.Number.parseFloat(A4241PORBF) === 0)
+            return;
+
+        var A4241TOTBF = Ext.Number.parseFloat(A4241TOTAN * A4241PORBF) / 100;
         var A4241TOT = Ext.Number.parseFloat(A4241TOTAN + A4241TOTBF);
-        Ext.getCmp(prototype.id + '-A4241TOTBF').setValue( Ext.util.Format.number(A4241TOTBF, '0,000.00'));
-        Ext.getCmp(prototype.id + '-A4241TOT').setValue( Ext.util.Format.number(A4241TOT, '0,000.00'));        
+        Ext.getCmp(prototype.id + '-A4241TOTBF').setValue(Ext.util.Format.number(A4241TOTBF, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4241TOT').setValue(Ext.util.Format.number(A4241TOT, '0,000.00'));
     },
     getDataInputs: function () {
         var p = this.view.params;
@@ -65,57 +66,62 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         Ext.getCmp(prototype.id + '-A4241IDANT').setValue(data.A4241IDANT);
         Ext.getCmp(prototype.id + '-A4241CDCLI').setValue(data.A4241CDCLI);
         Ext.getCmp(prototype.id + '-A3953RSOCI').setValue(data.A3953RSOCI.trim());
-        Ext.getCmp(prototype.id + '-A4241FEC').setValue(data.A4241FEC);        
+        Ext.getCmp(prototype.id + '-A4241FEC').setValue(data.A4241FEC);
         Ext.getCmp(prototype.id + '-A4241TOTAN').setValue(Ext.util.Format.number(data.A4241TOTAN, '0,000.00'));
-        Ext.getCmp(prototype.id + '-A4241PORBF').setValue(Ext.util.Format.number(data.A4241PORBF, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4241TOTBF').setValue(Ext.util.Format.number(data.A4241TOTBF, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4241TOT').setValue(Ext.util.Format.number(data.A4241TOT, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4241MDA').setValue(data.A4241MDA);        
-        Ext.getCmp(prototype.id + '-A4241CONTR').setValue(data.A4241CONTR);        
-        Ext.getCmp(prototype.id + '-A4241REF').setValue(data.A4241REF);        
-        Ext.getCmp(prototype.id + '-A4241ORDN').setValue(data.A4241ORDN);        
+        Ext.getCmp(prototype.id + '-A4241PORBF').setValue(Ext.util.Format.number(data.A4241PORBF, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4241TOTBF').setValue(Ext.util.Format.number(data.A4241TOTBF, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4241TOT').setValue(Ext.util.Format.number(data.A4241TOT, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4241MDA').setValue(data.A4241MDA);
+        Ext.getCmp(prototype.id + '-A4241CONTR').setValue(data.A4241CONTR);
+        Ext.getCmp(prototype.id + '-A4241REF').setValue(data.A4241REF);
+        Ext.getCmp(prototype.id + '-A4241ORDN').setValue(data.A4241ORDN);
         //saldos
-        Ext.getCmp(prototype.id + '-A4242TOTAN').setValue(Ext.util.Format.number(data.A4242TOTAN, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4242TOTBF').setValue(Ext.util.Format.number(data.A4242TOTBF, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4242TOT').setValue(Ext.util.Format.number(data.A4242TOT, '0,000.00'));        
-        
-        Ext.getCmp(prototype.id + '-A4242VTAAN').setValue(Ext.util.Format.number(data.A4242VTAAN, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4242VTABF').setValue(Ext.util.Format.number(data.A4242VTABF, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4242TOTAP').setValue(Ext.util.Format.number(data.A4242TOTAP, '0,000.00'));        
-                
-        Ext.getCmp(prototype.id + '-A4242SALAN').setValue(Ext.util.Format.number(data.A4242SALAN, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4242SALBF').setValue(Ext.util.Format.number(data.A4242SALBF, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4242SALDO').setValue(Ext.util.Format.number(data.A4242SALDO, '0,000.00')); 
-        
+        Ext.getCmp(prototype.id + '-A4242TOTAN').setValue(Ext.util.Format.number(data.A4242TOTAN, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4242TOTBF').setValue(Ext.util.Format.number(data.A4242TOTBF, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4242TOT').setValue(Ext.util.Format.number(data.A4242TOT, '0,000.00'));
+
+        Ext.getCmp(prototype.id + '-A4242VTAAN').setValue(Ext.util.Format.number(data.A4242VTAAN, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4242VTABF').setValue(Ext.util.Format.number(data.A4242VTABF, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4242TOTAP').setValue(Ext.util.Format.number(data.A4242TOTAP, '0,000.00'));
+
+        Ext.getCmp(prototype.id + '-A4242SALAN').setValue(Ext.util.Format.number(data.A4242SALAN, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4242SALBF').setValue(Ext.util.Format.number(data.A4242SALBF, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4242SALDO').setValue(Ext.util.Format.number(data.A4242SALDO, '0,000.00'));
+
         //control data
-        
-        Ext.getCmp(prototype.id + '-A4241USRIN').setValue(data.A4241USRIN);        
-        Ext.getCmp(prototype.id + '-A4241FECIN').setValue(data.A4241FECIN);        
-        Ext.getCmp(prototype.id + '-A4241HORIN').setValue(data.A4241HORIN);        
+
+        Ext.getCmp(prototype.id + '-A4241USRIN').setValue(data.A4241USRIN);
+        Ext.getCmp(prototype.id + '-A4241FECIN').setValue(data.A4241FECIN);
+        Ext.getCmp(prototype.id + '-A4241HORIN').setValue(data.A4241HORIN);
         //--
-        Ext.getCmp(prototype.id + '-A4241USRAC').setValue(data.A4241USRAC);        
-        Ext.getCmp(prototype.id + '-A4241FECAC').setValue(data.A4241FECAC);        
-        Ext.getCmp(prototype.id + '-A4241HORAC').setValue(data.A4241HORAC);        
-        
-        Ext.getCmp(prototype.id + '-A4241FECDE').setValue(data.A4241FECDE); 
-        Ext.getCmp(prototype.id + '-A4241FECHA').setValue(data.A4241FECHA); 
-        Ext.getCmp(prototype.id + '-A4241FECRC').setValue(data.A4241FECRC); 
-        Ext.getCmp(prototype.id + '-A4241NUMRC').setValue(data.A4241NUMRC); 
-        Ext.getCmp(prototype.id + '-A4241IDRCB').setValue(data.A4241IDRCB);                 
+        Ext.getCmp(prototype.id + '-A4241USRAC').setValue(data.A4241USRAC);
+        Ext.getCmp(prototype.id + '-A4241FECAC').setValue(data.A4241FECAC);
+        Ext.getCmp(prototype.id + '-A4241HORAC').setValue(data.A4241HORAC);
+
+        Ext.getCmp(prototype.id + '-A4241FECDE').setValue(data.A4241FECDE);
+        Ext.getCmp(prototype.id + '-A4241FECHA').setValue(data.A4241FECHA);
+        Ext.getCmp(prototype.id + '-A4241FECRC').setValue(data.A4241FECRC);
+        Ext.getCmp(prototype.id + '-A4241NUMRC').setValue(data.A4241NUMRC);
+        Ext.getCmp(prototype.id + '-A4241IDRCB').setValue(data.A4241IDRCB);
+        //datos de facturacion
+        Ext.getCmp(prototype.id + '-A4241UIDAN').setValue(data.A4241UIDAN);        
+        if (data.A4241STATB === '1' ){
+            Ext.getCmp(prototype.id + '-btn-facturar').setDisabled(true);
+        }      
         this.search_uatp();
-        
+
     },
     getDataEntryValues: function (strOption) {
         var VP_ACTION = strOption;
         var VL_A4241IDANT = Ext.getCmp(prototype.id + '-A4241IDANT').getValue();
-        var VL_A4241FEC = Ext.util.Format.date(Ext.getCmp(prototype.id + '-A4241FEC').getValue(), 'Ymd');         
-        var VL_A4241TOTAN = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOTAN').getValue().replace(",", "").replace(",", ""));        
+        var VL_A4241FEC = Ext.util.Format.date(Ext.getCmp(prototype.id + '-A4241FEC').getValue(), 'Ymd');
+        var VL_A4241TOTAN = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOTAN').getValue().replace(",", "").replace(",", ""));
         var VL_A4241MDA = Ext.getCmp(prototype.id + '-A4241MDA').getValue();
-        var VL_A4241PORBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241PORBF').getValue().replace(",", "").replace(",", ""));        
-        var VL_A4241TOTBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOTBF').getValue().replace(",", "").replace(",", ""));        
-        var VL_A4241TOT = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOT').getValue().replace(",", "").replace(",", ""));                
-        var VL_A4241ORDN = Ext.getCmp(prototype.id + '-A4241ORDN').getValue();        
-        var VL_A4241CONTR = Ext.getCmp(prototype.id + '-A4241CONTR').getValue();        
+        var VL_A4241PORBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241PORBF').getValue().replace(",", "").replace(",", ""));
+        var VL_A4241TOTBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOTBF').getValue().replace(",", "").replace(",", ""));
+        var VL_A4241TOT = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOT').getValue().replace(",", "").replace(",", ""));
+        var VL_A4241ORDN = Ext.getCmp(prototype.id + '-A4241ORDN').getValue();
+        var VL_A4241CONTR = Ext.getCmp(prototype.id + '-A4241CONTR').getValue();
         var VL_A4241REF = Ext.getCmp(prototype.id + '-A4241REF').getValue();
         var VL_A4241FECDE = Ext.util.Format.date(Ext.getCmp(prototype.id + '-A4241FECDE').getValue(), 'Ymd');
         var VL_A4241FECHA = Ext.util.Format.date(Ext.getCmp(prototype.id + '-A4241FECHA').getValue(), 'Ymd');
@@ -124,7 +130,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         var VL_A4241FECRC = Ext.util.Format.date(Ext.getCmp(prototype.id + '-A4241FECRC').getValue(), 'Ymd');
         var VL_A4241NUMRC = Ext.getCmp(prototype.id + '-A4241NUMRC').getValue();
         var VL_A4241CDCLI = Ext.getCmp(prototype.id + '-A4241CDCLI').getValue();
-        
+
         return {
             VP_ACTION: VP_ACTION,
             A4241IDANT: VL_A4241IDANT,
@@ -138,14 +144,14 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             A4241CONTR: VL_A4241CONTR,
             A4241REF: VL_A4241REF,
             A4241FECDE: VL_A4241FECDE,
-            A4241FECHA: VL_A4241FECHA,            
+            A4241FECHA: VL_A4241FECHA,
             A4241STSPG: VL_A4241STSPG,
             A4241IDRCB: VL_A4241IDRCB,
             A4241FECRC: VL_A4241FECRC,
             A4241NUMRC: VL_A4241NUMRC,
             A4241CDCLI: VL_A4241CDCLI
         };
-    },    
+    },
     onSaveClick: function (btn) {
         var p = this.view.params;
         var strOption = p.action;
@@ -191,8 +197,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                 "A4244UATP": rec.data.A4244UATP,
                 "A4244TIPO": rec.data.A4244TIPO,
                 "A4244ITEM": rec.data.A4244ITEM
-                //"A4244MDA": rec.data.A4244MDA,
-                //"A4244VENTA": rec.data.A4244VENTA                
+                        //"A4244MDA": rec.data.A4244MDA,
+                        //"A4244VENTA": rec.data.A4244VENTA                
             });
         });
 
@@ -209,8 +215,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                 "A4244UATP": rec.data.A4244UATP,
                 "A4244TIPO": rec.data.A4244TIPO,
                 "A4244ITEM": rec.data.A4244ITEM
-                //"A4244MDA": rec.data.A4244MDA,
-                //"A4244VENTA": rec.data.A4244VENTA  
+                        //"A4244MDA": rec.data.A4244MDA,
+                        //"A4244VENTA": rec.data.A4244VENTA  
             });
         });
 
@@ -222,13 +228,13 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                 bFlag_Nbr_uatp = true;
             lstuatp.push({
                 "crudState": "U", //rec.crudState,
-               // "A4244CCUST": rec.data.A4244CCUST,
-               // "A4244CDCLI": rec.data.A4244CDCLI,
+                // "A4244CCUST": rec.data.A4244CCUST,
+                // "A4244CDCLI": rec.data.A4244CDCLI,
                 "A4244UATP": rec.data.A4244UATP,
                 "A4244TIPO": rec.data.A4244TIPO,
                 "A4244ITEM": rec.data.A4244ITEM
-               // "A4244MDA": rec.data.A4244MDA,
-               // "A4244VENTA": rec.data.A4244VENTA  
+                        // "A4244MDA": rec.data.A4244MDA,
+                        // "A4244VENTA": rec.data.A4244VENTA  
             });
         });
 
@@ -263,7 +269,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                     fn: function () {
                         //culmino PROCESO
                         //console.log(objRtn.dbException.SQLCODE);
-                        if(objRtn.dbException.SQLCODE === '0')return;                        
+                        if (objRtn.dbException.SQLCODE === '0')
+                            return;
                         Ext.getCmp(prototype.id + '-A4241IDANT').setValue(objRtn.OU_A4241ID);
                         //carga logo(pendiente)
                         me.search_uatp(); //cargar desde la base de datos para generar STORE.                        
@@ -282,6 +289,45 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             }
         });
 
+    },
+    onInvoice: function () {
+        var me = this;
+        var VL_A4241IDANT = Ext.getCmp(prototype.id + '-A4241IDANT').getValue();
+        var VL_FDESDE = '';
+        var VP_FHASTA = '';
+        var VP_CDCLI = '';
+
+        Ext.Ajax.request({
+            url: this.url + '/setPreCompraInvoice',
+            method: 'POST',
+            timeout: 60000000,
+            params: {
+                beanString: JSON.stringify({
+                    VP_IDANT: VL_A4241IDANT,
+                    VP_FDESDE: VL_FDESDE,
+                    VP_FHASTA: VP_FHASTA,
+                    VP_CDCLI: VP_CDCLI
+                })
+            },
+            beforerequest: Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').mask('Loading...', ''),
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                var objRtn = res.objRtn;
+                Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').unmask('Loading...', '');
+                global.Msg({
+                    msg: objRtn.dbException.MESSAGE,
+                    icon: objRtn.dbException.SQLCODE,
+                    fn: function () {
+                        //culmino PROCESO
+                        console.log(objRtn.dbException);
+                        if (objRtn.dbException.SQLCODE === '0')
+                            return;
+                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').close();
+                    }
+                });
+            }
+        });
     },
     onUpdateClick: function (btn) {
         var p = this.view.params;
@@ -329,6 +375,30 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
     onCancelClick: function (btn) {
         Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').close();
     },
+    onFacturarClick: function () {
+
+        var VL_A4241IDANT = Ext.getCmp(prototype.id + '-A4241IDANT').getValue();
+        console.log(VL_A4241IDANT);
+        if ( parseInt(VL_A4241IDANT) === 0) {
+            global.Msg({
+                msg: 'Id Contrato no valido'
+            });
+            return;
+        }
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to send to invoice?',
+            scope: this,
+            buttons: Ext.MessageBox.YESNO,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    this.onInvoice();
+                }
+            }
+        });
+    },
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
@@ -338,7 +408,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
     validateForm: function (params) {
 //        console.log(params);
         var mensaje = "";
-        
+
         if (params.A4241CDCLI === '') {
             mensaje = 'INGRESAR EL CLIENTE';
             Ext.getCmp(prototype.id + '-A4241CDCLI').focus();
@@ -349,7 +419,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             Ext.getCmp(prototype.id + '-A4241FEC').focus();
             return mensaje;
         }
-        if ( parseFloat(params.A4241TOTAN) === 0 ) {
+        if (parseFloat(params.A4241TOTAN) === 0) {
             mensaje = 'INGRESAR MONTO ANTICIPO';
             Ext.getCmp(prototype.id + '-A4241TOTAN').focus();
             return mensaje;
@@ -359,7 +429,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             Ext.getCmp(prototype.id + '-A4241MDA').focus();
             return mensaje;
         }
-        if (parseFloat(params.A4241PORBF) === 0 || params.A4241PORBF === null ) {
+        if (parseFloat(params.A4241PORBF) === 0 || params.A4241PORBF === null) {
             mensaje = 'INGRESAR % BENEFICIO';
             Ext.getCmp(prototype.id + '-A4241PORBF').focus();
             return mensaje;
@@ -376,41 +446,41 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         Ext.getCmp(prototype.id + '-A4241IDANT').setValue('0');
         Ext.getCmp(prototype.id + '-A4241CDCLI').setValue('');
         Ext.getCmp(prototype.id + '-A3953RSOCI').setValue('');
-        Ext.getCmp(prototype.id + '-A4241FEC').setValue('');        
+        Ext.getCmp(prototype.id + '-A4241FEC').setValue('');
         Ext.getCmp(prototype.id + '-A4241TOTAN').setValue(Ext.util.Format.number(0, '0,000.00'));
-        Ext.getCmp(prototype.id + '-A4241PORBF').setValue(Ext.util.Format.number(0, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4241TOTBF').setValue(Ext.util.Format.number(0, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4241TOT').setValue(Ext.util.Format.number(0, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4241MDA').setValue('');        
-        Ext.getCmp(prototype.id + '-A4241CONTR').setValue('');        
-        Ext.getCmp(prototype.id + '-A4241REF').setValue('');        
+        Ext.getCmp(prototype.id + '-A4241PORBF').setValue(Ext.util.Format.number(0, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4241TOTBF').setValue(Ext.util.Format.number(0, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4241TOT').setValue(Ext.util.Format.number(0, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4241MDA').setValue('');
+        Ext.getCmp(prototype.id + '-A4241CONTR').setValue('');
+        Ext.getCmp(prototype.id + '-A4241REF').setValue('');
         Ext.getCmp(prototype.id + '-A4241ORDN').setValue('');
-        Ext.getCmp(prototype.id + '-A4241IDRCB').setValue('0');        
+        Ext.getCmp(prototype.id + '-A4241IDRCB').setValue('0');
         //saldos
-        Ext.getCmp(prototype.id + '-A4242TOTAN').setValue(Ext.util.Format.number(0, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4242TOTBF').setValue(Ext.util.Format.number(0, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4242TOT').setValue(Ext.util.Format.number(0, '0,000.00'));  
-        
-        Ext.getCmp(prototype.id + '-A4242VTAAN').setValue(Ext.util.Format.number(0, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4242VTABF').setValue(Ext.util.Format.number(0, '0,000.00'));        
+        Ext.getCmp(prototype.id + '-A4242TOTAN').setValue(Ext.util.Format.number(0, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4242TOTBF').setValue(Ext.util.Format.number(0, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4242TOT').setValue(Ext.util.Format.number(0, '0,000.00'));
+
+        Ext.getCmp(prototype.id + '-A4242VTAAN').setValue(Ext.util.Format.number(0, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4242VTABF').setValue(Ext.util.Format.number(0, '0,000.00'));
         Ext.getCmp(prototype.id + '-A4242TOTAP').setValue(Ext.util.Format.number(0, '0,000.00'));
-        Ext.getCmp(prototype.id + '-A4242SALAN').setValue(Ext.util.Format.number(0, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4242SALBF').setValue(Ext.util.Format.number(0, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-A4242SALDO').setValue(Ext.util.Format.number(0, '0,000.00'));         
+        Ext.getCmp(prototype.id + '-A4242SALAN').setValue(Ext.util.Format.number(0, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4242SALBF').setValue(Ext.util.Format.number(0, '0,000.00'));
+        Ext.getCmp(prototype.id + '-A4242SALDO').setValue(Ext.util.Format.number(0, '0,000.00'));
         //control data        
-        Ext.getCmp(prototype.id + '-A4241USRIN').setValue('');        
-        Ext.getCmp(prototype.id + '-A4241FECIN').setValue('');        
-        Ext.getCmp(prototype.id + '-A4241HORIN').setValue('');                
-        Ext.getCmp(prototype.id + '-A4241USRAC').setValue('');        
-        Ext.getCmp(prototype.id + '-A4241FECAC').setValue('');        
-        Ext.getCmp(prototype.id + '-A4241HORAC').setValue('');      
+        Ext.getCmp(prototype.id + '-A4241USRIN').setValue('');
+        Ext.getCmp(prototype.id + '-A4241FECIN').setValue('');
+        Ext.getCmp(prototype.id + '-A4241HORIN').setValue('');
+        Ext.getCmp(prototype.id + '-A4241USRAC').setValue('');
+        Ext.getCmp(prototype.id + '-A4241FECAC').setValue('');
+        Ext.getCmp(prototype.id + '-A4241HORAC').setValue('');
     },
-       
+
     /*
      * lista UATP's
      */
     searchUATPCliente: function () {
-        var bean = {};        
+        var bean = {};
         bean.VP_CDCLI = Ext.getCmp(prototype.id + '-A4241CDCLI').getValue();
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataUatp', {
             proxy: {
@@ -420,7 +490,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
                 beforeload: function (obj) {
                     obj.proxy.extraParams = bean;
                 },
-                load: function (obj, obj2, success, obj4, obj5) {                    
+                load: function (obj, obj2, success, obj4, obj5) {
                     if (obj.data.length === 0) {
                         global.Msg({
                             msg: 'Data not found uatp'
@@ -441,7 +511,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         Ext.getCmp(prototype.id + '-gridData-uatp').setStore(storeGridDatas);
     },
     search_uatp: function () {
-        var bean = {};        
+        var bean = {};
         bean.VP_IDANT = Ext.getCmp(prototype.id + '-A4241IDANT').getValue();
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataUatp', {
             proxy: {
@@ -482,7 +552,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         panel.add(gridPanel);
         Ext.getCmp(prototype.id + '-gridData-uatp').setStore(storeGridDatas);
     },
-    
+
     onClickAdd_uatp: function () {
         var grid01 = Ext.getCmp(prototype.id + '-gridData-uatp');
 //        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataUatp',{});
@@ -512,14 +582,13 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             }
         });
     },
-    
-    onBuscarCliente:function(){
+    onBuscarCliente: function () {
         var me = this;
-        var bean = {};        
+        var bean = {};
         bean.VP_OPCION = "3";
-        bean.VP_CDCLI = Ext.getCmp(prototype.id+'-A4241CDCLI').getValue();
-        bean.VP_PARAM1 = "P";  
-        if (bean.VP_CDCLI === ""){
+        bean.VP_CDCLI = Ext.getCmp(prototype.id + '-A4241CDCLI').getValue();
+        bean.VP_PARAM1 = "P";
+        if (bean.VP_CDCLI === "") {
             global.Msg({msg: 'Ingrese Código de Cliente'});
             return;
         }
@@ -530,35 +599,35 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             params: bean,
             beforerequest: Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').mask('Buscando cliente...', ''),
             success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);                
+                var res = Ext.JSON.decode(response.responseText);
                 Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').unmask('Loading...', '');
                 if (res.total === 0) {
-                        Ext.getCmp(prototype.id + '-A4241CDCLI').setValue('');
-                        Ext.getCmp(prototype.id + '-A3953RSOCI').setValue('');
-                        global.Msg({
-                            msg: 'No se econtro cliente'
-                        });
+                    Ext.getCmp(prototype.id + '-A4241CDCLI').setValue('');
+                    Ext.getCmp(prototype.id + '-A3953RSOCI').setValue('');
+                    global.Msg({
+                        msg: 'No se econtro cliente'
+                    });
                     return;
-                }                                
+                }
                 //console.log(res.data[0].A3953RSOCI);
                 Ext.getCmp(prototype.id + '-A4241CDCLI').setValue(res.data[0].A3953CDCLI);
                 Ext.getCmp(prototype.id + '-A3953RSOCI').setValue(res.data[0].A3953RSOCI);
                 // me.searchUATPCliente(); REVISAR
             }
-        });   
+        });
     },
-    OnEventbuscarCliente: function(obj, e, eOpts) {
+    OnEventbuscarCliente: function (obj, e, eOpts) {
         if (e.getKey() === e.ENTER) {
             this.onBuscarCliente();
         }
     },
     PadLeft: function (number, width) {
         width -= number.toString().length;
-        if (width > 0){
+        if (width > 0) {
             return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
         }
         return number + ""; // siempre devuelve tipo cadena
-    },    
+    },
     /*
      * 
      * @param {type} objGrid
@@ -587,7 +656,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         var Removed = Ext.getCmp(objGrid).getStore().getRemovedRecords();
         //console.log(Removed);
         return Removed;
-    }    
+    }
 });
 
 
