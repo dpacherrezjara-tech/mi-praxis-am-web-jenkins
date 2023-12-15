@@ -250,6 +250,7 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlARCVoid.LoadControlARCVoidCon
             this.exportExcel('/getXLSXVoid?beanString=' + encodeURI(JSON.stringify(bean)));
             return;
         }
+        
         var storeGridDatas = Ext.create('Ext.Praxis.store.sales.GridData', {
             proxy: {
                 url: prototype.url+'/searchVoid'

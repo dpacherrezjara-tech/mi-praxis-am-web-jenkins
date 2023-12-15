@@ -1424,6 +1424,13 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             default:
                                 win.setValue('lblQuotationType', me01.beanResultSet01.fileA720.A720TICAP);
                         }
+                        var bean = {};
+                        bean.TDNR = win.getValue('txtFilterTicketCia').trim() + win.getValue('txtFilterTicketFormSer').trim();
+                        bean.FUENTE = win.getValue('lblSource').trim().substr(0,3);
+                        if(bean.TDNR !== '' && bean.FUENTE !== ''){
+                            bean.A720TKVOID = me01.gloA720TKVOID;
+                            me01.searchEMD(bean);
+                        }
                         win.setValue('lblIssuedInExchangeFor', strIssuedInExchangeFor);
                         win.setValue('lblOriDes', me01.beanResultSet01.fileA720.A720ACCO + '-' + me01.beanResultSet01.fileA720.A720ACCD);
                         win.setValue('lblDocumentType', me01.beanResultSet01.fileA720.A720TDOC);
@@ -3933,6 +3940,43 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                     }
                 } else
                     global.Msg({msg: "Bad Request"});
+            },
+            failure: function (response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
+    },
+	searchEMD: function (bean) {
+        prototype.url = URL_VIEWTICKET;
+        console.log(prototype.ProrrateoNew.url + '/searchDelivery');
+        var me1 = this;
+        Ext.Ajax.request({
+            url: prototype.ProrrateoNew.url + '/searchDelivery',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(bean)},
+            success: function (response, opts) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    var texto = res.strTextoBSP;
+                    var lines = texto.split(/\r?\n|\r|\n/g);
+                    lines.forEach((line, n) => {
+                        //console.log(line);
+                        if(line.split(" ")[1]==='45'){
+                            var res = line.split(" ");
+                            win.setValue('lblCompensatedTicket', Number(res[2]));
+                            //console.log(res[2]);
+                        }
+                        if(line.split(" ")[1]==='70'){
+                            var res = line.split("   ");
+                            console.log(res[9]);
+                            console.log(res[11]);
+                            win.setValue('lblDocumentTypeCod', res[9]);
+                            win.setValue('lblDocumentTypeCon', res[11]);
+                            //res.forEach((line2, n) => console.log(line2))
+                        }
+                    });
+                } else global.Msg({msg: "Bad Request 7"});
             },
             failure: function (response, opts) {
                 console.log('server-side failure with status code ' + response.status);
