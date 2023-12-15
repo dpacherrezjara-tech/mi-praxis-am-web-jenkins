@@ -1256,6 +1256,33 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                     ]
                                 }
                             ]
+                        },
+                        {xtype: 'tbspacer', width: 30},
+                        // <editor-fold defaultstate="collapsed" desc="Compensated Ticket">
+                        {
+                            xtype: 'panel',
+                            layout: 'vbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                anchor: '100%',
+                                width: 185
+                            },
+                            items: [
+                                {
+                                    xtype: 'label',
+                                    text: 'Compensated Ticket',
+                                    style: 'font-weight:bold;text-align:center;color:#0B333C;',
+                                    padding: '4 0 5 0'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-lblCompensatedTicket',
+                                    value: '',
+                                    readOnly: true,
+                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;'
+                                }
+                            ]
                         }
                     ]
                 },
