@@ -1,7 +1,7 @@
 package net.miatech.praxis.logic.payments;
 
 import java.util.List;
-import net.miatech.praxis.payment.A3152MP;
+import net.miatech.praxis.payment.entities.A3152;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05135Filter;
 import net.miatech.praxis.payment.filter.SQP05155Filter;
@@ -14,7 +14,7 @@ import net.miatech.praxis.payment.filter.SQP05158Filter;
  */
 public interface PaymentsCommissionsLogic {
     
-    List<A3152MP> getPaises() throws Exception;
+    List<A3152> getPaises() throws Exception;
     SQP05004Filter loadSQP05004Filter(SQP05004Filter filter) throws Exception;
     SQP05155Filter loadSQP05155Filter(SQP05155Filter filter) throws Exception;
     SQP05156Filter loadSQP05156Filter(SQP05156Filter filter) throws Exception;

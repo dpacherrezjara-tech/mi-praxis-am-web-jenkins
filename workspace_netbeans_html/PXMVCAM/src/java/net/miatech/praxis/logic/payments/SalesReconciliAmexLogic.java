@@ -11,13 +11,13 @@ import net.miatech.beans.A1691Filter;
 import net.miatech.beans.SQP00697Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.SalesReconciliAmexDAO;
-import net.miatech.praxis.payment.filter.A4113Filter;
-import net.miatech.praxis.payment.filter.A4114Filter;
-import net.miatech.praxis.payment.filter.A4115Filter;
-import net.miatech.praxis.payment.filter.A4116Filter;
-import net.miatech.praxis.payment.filter.A4117Filter;
-import net.miatech.praxis.payment.filter.A4118Filter;
-import net.miatech.praxis.payment.filter.A4124Filter;
+import net.miatech.praxis.payment.old.A4113Filter;
+import net.miatech.praxis.payment.old.A4114Filter;
+import net.miatech.praxis.payment.old.A4115Filter;
+import net.miatech.praxis.payment.old.A4116Filter;
+import net.miatech.praxis.payment.old.A4117Filter;
+import net.miatech.praxis.payment.old.A4118Filter;
+import net.miatech.praxis.payment.old.A4124Filter;
 
 /**
  *

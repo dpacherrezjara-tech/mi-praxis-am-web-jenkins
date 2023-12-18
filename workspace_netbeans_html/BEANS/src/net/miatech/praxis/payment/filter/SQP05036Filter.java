@@ -16,7 +16,7 @@ public class SQP05036Filter {
     private String IN_TDOC;
     private String IN_PNR;
     private String IN_IDCON;
-    private List<A4331ATSumFilter> response =  new ArrayList<>();
+    private List<A4331AT1Filter> response =  new ArrayList<>();
 
     public String getIN_TFECHA() {
         return IN_TFECHA;
@@ -74,11 +74,11 @@ public class SQP05036Filter {
         this.IN_PNR = IN_PNR;
     }
 
-    public List<A4331ATSumFilter> getResponse() {
+    public List<A4331AT1Filter> getResponse() {
         return response;
     }
 
-    public void setResponse(List<A4331ATSumFilter> response) {
+    public void setResponse(List<A4331AT1Filter> response) {
         this.response = response;
     }
 

@@ -2,7 +2,7 @@ package net.miatech.praxis.payment.filter;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.miatech.praxis.payment.X3169;
+import net.miatech.praxis.payment.entities.X3169;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 

@@ -1,7 +1,7 @@
 package net.miatech.praxis.logic.payments;
 
 import java.util.List;
-import net.miatech.praxis.payment.A4480MP;
+import net.miatech.praxis.payment.entities.A4480MP;
 import net.miatech.praxis.payment.errordtos.VN0002PG;
 import net.miatech.praxis.payment.errordtos.VN0002PG_UP;
 import net.miatech.praxis.payment.filter.SQP05004Filter;

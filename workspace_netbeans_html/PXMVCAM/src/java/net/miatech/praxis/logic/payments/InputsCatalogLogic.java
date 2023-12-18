@@ -4,11 +4,11 @@ import net.miatech.praxis.logic.interline.*;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
-import net.miatech.praxis.payment.filter.A2358Filter;
+import net.miatech.praxis.payment.old.A2358Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.InputsCatalogDAO;
 import net.miatech.praxis.interline.filter.SFI021Filter;
-import net.miatech.praxis.payment.A2358;
+import net.miatech.praxis.payment.old.A2358;
 
 public class InputsCatalogLogic {
 

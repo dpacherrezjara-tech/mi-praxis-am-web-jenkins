@@ -7,7 +7,7 @@ package net.miatech.praxis.payment.filter;
 
 import net.miatech.beans.DBException;
 import net.miatech.beans.Pagination;
-import net.miatech.praxis.payment.A4497;
+import net.miatech.praxis.payment.entities.A4497;
 
 /**
  *

@@ -14,12 +14,12 @@ import net.miatech.beans.SQP00697Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.classes.CurrentSession;
 import static net.miatech.praxis.dao.payments.SalesReconciliAmexDAO.pasarGarbageCollector;
-import net.miatech.praxis.payment.A4451;
-import net.miatech.praxis.payment.A4451MP;
-import net.miatech.praxis.payment.filter.A4116Filter;
+import net.miatech.praxis.payment.entities.A4451;
+import net.miatech.praxis.payment.entities.A4451MP;
+import net.miatech.praxis.payment.old.A4116Filter;
+import net.miatech.praxis.payment.old.A4331Filter;
 import net.miatech.praxis.payment.filter.A4331Filter;
-import net.miatech.praxis.payment.filter.A4331NEWFilter;
-import net.miatech.praxis.payment.filter.A4331NSUMFilter;
+import net.miatech.praxis.payment.filter.A4331SFilter;
 import net.miatech.praxis.payment.filter.A4335Filter;
 import net.miatech.praxis.payment.filter.SQP04955Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
@@ -373,14 +373,14 @@ public class ReconciliationDoublePaymentDAO {
            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(this.getConnection())
                     .withSchemaName("PRAXISMP")
                     .withProcedureName("SQP04955")
-                    .returningResultSet("summary", new BeanPropertyRowMapper<>(A4331NSUMFilter.class))
-                    .returningResultSet("result", new BeanPropertyRowMapper<>(A4331NEWFilter.class));
+                    .returningResultSet("summary", new BeanPropertyRowMapper<>(A4331SFilter.class))
+                    .returningResultSet("result", new BeanPropertyRowMapper<>(A4331Filter.class));
             filter.setPage();
             SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
             Map<String, Object> obj = jdbcCall.execute(params);
-            List<A4331NSUMFilter> summary = (List<A4331NSUMFilter>) obj.get("summary");
-            filter.setResponse((List<A4331NEWFilter>) obj.get("result"));
-            for(A4331NEWFilter bean : filter.getResponse()){
+            List<A4331SFilter> summary = (List<A4331SFilter>) obj.get("summary");
+            filter.setResponse((List<A4331Filter>) obj.get("result"));
+            for(A4331Filter bean : filter.getResponse()){
                 bean.setSummary(summary.get(0));
             }
             filter.setPageOut(obj);

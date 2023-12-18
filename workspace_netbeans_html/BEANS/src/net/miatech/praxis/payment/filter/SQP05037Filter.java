@@ -11,7 +11,7 @@ public class SQP05037Filter {
     private String IN_TFECHA,FECHA_FROM
             ,IN_PROCTYPE,IN_PROCTYPESQ,IN_MDA,IN_TDOC,IN_PNR,IN_IDCON;
     
-    private List<A4331ATTreeFilter> response = new ArrayList<>();
+    private List<A4331AT2Filter> response = new ArrayList<>();
 
     public String getIN_TFECHA() {
         return IN_TFECHA;
@@ -69,11 +69,11 @@ public class SQP05037Filter {
         this.IN_PNR = IN_PNR;
     }
 
-    public List<A4331ATTreeFilter> getResponse() {
+    public List<A4331AT2Filter> getResponse() {
         return response;
     }
 
-    public void setResponse(List<A4331ATTreeFilter> response) {
+    public void setResponse(List<A4331AT2Filter> response) {
         this.response = response;
     }
 

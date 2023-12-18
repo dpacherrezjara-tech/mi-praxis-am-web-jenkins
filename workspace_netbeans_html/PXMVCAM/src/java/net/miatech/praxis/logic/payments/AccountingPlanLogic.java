@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.AccountingPlanDAO;
-import net.miatech.praxis.payment.filter.A2356Filter;
+import net.miatech.praxis.payment.old.A2356Filter;
 
 /**
  *

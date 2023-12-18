@@ -11,13 +11,13 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import net.miatech.praxis.payment.filter.A2358Filter;
+import net.miatech.praxis.payment.old.A2358Filter;
 import net.miatech.beans.ReportEmdDetailsA1530Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.interline.filter.SFI021Filter;
 import net.miatech.praxis.interline.filter.WRF016Filter;
-import net.miatech.praxis.payment.A2358;
+import net.miatech.praxis.payment.old.A2358;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 

@@ -1,6 +1,6 @@
 package net.miatech.praxis.payment.filter;
 
-import net.miatech.praxis.payment.A4482;
+import net.miatech.praxis.payment.entities.A4482;
 
 /**
  *

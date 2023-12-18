@@ -2,7 +2,7 @@ package net.miatech.praxis.payment.filter;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.miatech.praxis.payment.CustomPageImpl;
+import net.miatech.praxis.payment.entities.CustomPageImpl;
 
 /**
  *
@@ -11,7 +11,7 @@ import net.miatech.praxis.payment.CustomPageImpl;
 public class SQP05163Filter extends CustomPageImpl{
     private String IN_CCUST,IN_DATE,IN_DATEFROM,IN_DATETO,IN_TGRID,IN_PNR,IN_SCARDN,IN_SAUTHOC,IN_STRFND,
             IN_PROCTYPE,IN_SMERCHID,IN_TKT,IN_SCOUNTRY,IN_PCURRENCY;
-    private List<A4331NEWFilter> response = new ArrayList<>();
+    private List<A4331Filter> response = new ArrayList<>();
 
     public String getIN_CCUST() {
         return IN_CCUST;
@@ -125,11 +125,11 @@ public class SQP05163Filter extends CustomPageImpl{
         this.IN_PCURRENCY = IN_PCURRENCY;
     }
 
-    public List<A4331NEWFilter> getResponse() {
+    public List<A4331Filter> getResponse() {
         return response;
     }
 
-    public void setResponse(List<A4331NEWFilter> response) {
+    public void setResponse(List<A4331Filter> response) {
         this.response = response;
     }
 }

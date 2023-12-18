@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
-import net.miatech.praxis.payment.A4507;
-import net.miatech.praxis.payment.filter.A4331NEWFilter;
+import net.miatech.praxis.payment.entities.A4507;
+import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4496Filter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
@@ -617,7 +617,7 @@ public class SalesReconciliationBPOController {
             headers[25] = "Date Update";
             headers[26] = "BPO Comment";
             data.add(headers);
-            for (A4331NEWFilter obj : filter.getResponse()) {
+            for (A4331Filter obj : filter.getResponse()) {
                 Object[] row = new Object[27];
                 row[0] = obj.getPrda();
                 row[1] = obj.getPaydate();
@@ -858,7 +858,7 @@ public class SalesReconciliationBPOController {
             headers[36] = "Rule";
             headers[37] = "Flag Complement";
             data.add(headers);
-            for (A4331NEWFilter obj : filter.getResponse()) {
+            for (A4331Filter obj : filter.getResponse()) {
                 Object[] row = new Object[38];
                 row[0] = obj.getPrda();
                 row[1] = obj.getPaydate();

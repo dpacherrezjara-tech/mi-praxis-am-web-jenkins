@@ -5,7 +5,7 @@ import java.util.List;
 import net.miatech.beans.SQP00697Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.SalesAdjustmentDAO;
-import net.miatech.praxis.payment.filter.A4116Filter;
+import net.miatech.praxis.payment.old.A4116Filter;
 
 public class SalesAdjustmentLogic {
 

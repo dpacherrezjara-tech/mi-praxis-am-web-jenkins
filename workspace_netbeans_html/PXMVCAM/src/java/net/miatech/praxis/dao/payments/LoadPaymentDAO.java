@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import net.miatech.praxis.Sales.A4373;
 //import net.miatech.praxis.payment.A2289;
-import net.miatech.praxis.payment.filter.A2289Filter;
-import net.miatech.praxis.payment.filter.A4168Filter;
+import net.miatech.praxis.payment.old.A2289Filter;
+import net.miatech.praxis.payment.old.A4168Filter;
 import org.apache.log4j.Logger;
 import net.miatech.utils.Functions;
 

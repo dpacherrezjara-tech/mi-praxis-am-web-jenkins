@@ -10,8 +10,8 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import net.miatech.praxis.payment.filter.A4164Filter;
-import net.miatech.praxis.payment.filter.A2370Filter;
+import net.miatech.praxis.payment.old.A4164Filter;
+import net.miatech.praxis.payment.old.A2370Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 

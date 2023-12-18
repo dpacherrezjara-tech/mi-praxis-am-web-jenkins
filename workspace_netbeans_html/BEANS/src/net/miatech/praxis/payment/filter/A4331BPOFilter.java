@@ -1,12 +1,12 @@
 package net.miatech.praxis.payment.filter;
 
-import net.miatech.praxis.payment.A4331NEW;
+import net.miatech.praxis.payment.entities.A4331;
 
 /**
  *
  * @author Dvicente
  */
-public class A4331BPOFilter extends A4331NEW{
+public class A4331BPOFilter extends A4331{
     private String DESC_PROC,DESC_ERROR,DESC_ADJU,SMERCHIDF,DESC_PMERCHID,DESC_SMERCHID,BPOCOMENT,ADJUCOMENT;
 
     public String getDESC_PROC() {

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import net.miatech.beans.SQP00697Filter;
 import net.miatech.praxis.logic.payments.SalesComplementLogic;
-import net.miatech.praxis.payment.A3152MP;
+import net.miatech.praxis.payment.entities.A3152;
 import net.miatech.praxis.payment.filter.A4453Filter;
 import net.miatech.praxis.payment.filter.A4454Filter;
 import net.miatech.praxis.payment.filter.SQP04979Filter;
@@ -149,7 +149,7 @@ public class SalesComplementController {
     public ResponseEntity<?> loadPaises(){
         try {
             System.out.println("-------------Sales Complement: Load Paises---------------");
-            List<A3152MP> result = logic.getPaises();
+            List<A3152> result = logic.getPaises();
             return new ResponseEntity<>(result,HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

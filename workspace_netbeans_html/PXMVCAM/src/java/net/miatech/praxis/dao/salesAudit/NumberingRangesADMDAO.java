@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import net.miatech.beans.SaleAudit.A2563Filter;
 import net.miatech.beans.SaleAudit.A2665Filter;
-import net.miatech.praxis.payment.filter.A2290Filter;
-import net.miatech.praxis.payment.filter.A2370Filter;
+import net.miatech.praxis.payment.old.A2290Filter;
+import net.miatech.praxis.payment.old.A2370Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 

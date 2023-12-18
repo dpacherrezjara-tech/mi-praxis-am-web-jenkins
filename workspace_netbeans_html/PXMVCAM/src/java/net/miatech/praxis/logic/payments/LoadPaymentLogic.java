@@ -6,8 +6,8 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.Sales.A4373;
 import net.miatech.praxis.dao.payments.LoadPaymentDAO;
-import net.miatech.praxis.payment.filter.A2289Filter;
-import net.miatech.praxis.payment.filter.A4168Filter;
+import net.miatech.praxis.payment.old.A2289Filter;
+import net.miatech.praxis.payment.old.A4168Filter;
 
 // </editor-fold>
 /**

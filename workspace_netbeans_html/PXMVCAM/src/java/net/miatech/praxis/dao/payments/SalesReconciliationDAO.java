@@ -3,13 +3,13 @@ package net.miatech.praxis.dao.payments;
 import java.util.List;
 import java.util.Map;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
-import net.miatech.praxis.payment.A006;
-import net.miatech.praxis.payment.A3152MP;
-import net.miatech.praxis.payment.A4451MP;
-import net.miatech.praxis.payment.A4507;
+import net.miatech.praxis.payment.entities.A006;
+import net.miatech.praxis.payment.entities.A3152;
+import net.miatech.praxis.payment.entities.A4451MP;
+import net.miatech.praxis.payment.entities.A4507;
 import net.miatech.praxis.payment.filter.A4331BPOFilter;
-import net.miatech.praxis.payment.filter.A4331NEWFilter;
-import net.miatech.praxis.payment.filter.A4331SETTLFilter;
+import net.miatech.praxis.payment.filter.A4331Filter;
+import net.miatech.praxis.payment.filter.A4331STFilter;
 import net.miatech.praxis.payment.filter.A4331SRFilter;
 import net.miatech.praxis.payment.filter.A4335Filter;
 import net.miatech.praxis.payment.filter.A4482Filter;
@@ -92,12 +92,12 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
     }
 
     @Override
-    public List<A3152MP> getPaises() throws Exception {
+    public List<A3152> getPaises() throws Exception {
         SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05016")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A3152MP.class));
-        return ((List<A3152MP>) jdbcCall.execute().get("result"));
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A3152.class));
+        return ((List<A3152>) jdbcCall.execute().get("result"));
     }
 
     @Override
@@ -125,11 +125,11 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05060")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331NEWFilter.class));
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331Filter.class));
         filter.setPage();
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> obj = jdbcCall.execute(params);
-        filter.setResponse((List<A4331NEWFilter>) obj.get("result"));
+        filter.setResponse((List<A4331Filter>) obj.get("result"));
         filter.setPageOut(obj);
         return filter;
     }
@@ -282,10 +282,10 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SimpleJdbcCall spCall = jdbcUtils.getJdbcCall()
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05061")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331NEWFilter.class));
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331Filter.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
-        filter.setResponse((List<A4331NEWFilter>) spRes.get("result"));
+        filter.setResponse((List<A4331Filter>) spRes.get("result"));
         return filter;
     }
 
@@ -343,10 +343,10 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SimpleJdbcCall spCall = jdbcUtils.getJdbcCall()
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05182")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331NEWFilter.class));
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331Filter.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
-        filter.setResponse((List<A4331NEWFilter>) spRes.get("result"));
+        filter.setResponse((List<A4331Filter>) spRes.get("result"));
         return filter;
     }
 
@@ -377,10 +377,10 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SimpleJdbcCall spCall = jdbcUtils.getJdbcCall()
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05081")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331NEWFilter.class));
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331Filter.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
-        filter.setResponse((List<A4331NEWFilter>) spRes.get("result"));
+        filter.setResponse((List<A4331Filter>) spRes.get("result"));
         return filter;
     }
 
@@ -528,10 +528,10 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05133")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331SETTLFilter.class));
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331STFilter.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = jdbcCall.execute(params);
-        filter.setResponse((List<A4331SETTLFilter>) spRes.get("result"));
+        filter.setResponse((List<A4331STFilter>) spRes.get("result"));
         return filter;
     }
 
@@ -540,11 +540,11 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05134")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331NEWFilter.class));
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331Filter.class));
         filter.setPage();
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = jdbcCall.execute(params);
-        filter.setResponse((List<A4331NEWFilter>) spRes.get("result"));
+        filter.setResponse((List<A4331Filter>) spRes.get("result"));
         filter.setPageOut(spRes);
         return filter;
     }

@@ -10,7 +10,7 @@ import java.util.List;
 public class SQP05182Filter {
     private String IN_CCUST,IN_SCARDN,IN_DATEFROM,IN_DATETO;
 
-    private List<A4331NEWFilter> response = new ArrayList<>();
+    private List<A4331Filter> response = new ArrayList<>();
     
     public String getIN_CCUST() {
         return IN_CCUST;
@@ -44,11 +44,11 @@ public class SQP05182Filter {
         this.IN_DATETO = IN_DATETO;
     }
 
-    public List<A4331NEWFilter> getResponse() {
+    public List<A4331Filter> getResponse() {
         return response;
     }
 
-    public void setResponse(List<A4331NEWFilter> response) {
+    public void setResponse(List<A4331Filter> response) {
         this.response = response;
     }
 }

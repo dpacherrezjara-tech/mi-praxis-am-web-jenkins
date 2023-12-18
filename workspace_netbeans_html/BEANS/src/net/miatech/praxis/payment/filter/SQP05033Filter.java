@@ -3,7 +3,7 @@ package net.miatech.praxis.payment.filter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import net.miatech.praxis.payment.CustomPageImpl;
+import net.miatech.praxis.payment.entities.CustomPageImpl;
 
 /**
  *

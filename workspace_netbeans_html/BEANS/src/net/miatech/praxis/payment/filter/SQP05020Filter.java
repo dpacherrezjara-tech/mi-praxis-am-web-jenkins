@@ -2,7 +2,7 @@ package net.miatech.praxis.payment.filter;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.miatech.praxis.payment.A4481MP;
+import net.miatech.praxis.payment.entities.A4481MP;
 
 /**
  *

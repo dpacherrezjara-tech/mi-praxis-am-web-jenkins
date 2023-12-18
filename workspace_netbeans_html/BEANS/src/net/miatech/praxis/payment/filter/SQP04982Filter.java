@@ -3,7 +3,7 @@ package net.miatech.praxis.payment.filter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import net.miatech.praxis.payment.CustomPageImpl;
+import net.miatech.praxis.payment.entities.CustomPageImpl;
 
 /**
  *

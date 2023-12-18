@@ -12,9 +12,9 @@ import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.ReconciliationDoublePaymentLogic;
 import net.miatech.praxis.logic.payments.SalesReconciliAmexLogic;
-import net.miatech.praxis.payment.filter.A4116Filter;
+import net.miatech.praxis.payment.old.A4116Filter;
+import net.miatech.praxis.payment.old.A4331Filter;
 import net.miatech.praxis.payment.filter.A4331Filter;
-import net.miatech.praxis.payment.filter.A4331NEWFilter;
 import net.miatech.praxis.payment.filter.SQP04955Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05043Filter;
@@ -103,7 +103,7 @@ public class ReconciliationDoublePaymentController extends BaseController {
             header[19] = "Refund Bank Agent";
             header[20] = "Refund Bank Auth";
             data.add(header);
-            for(A4331NEWFilter obj : filter.getResponse()){
+            for(A4331Filter obj : filter.getResponse()){
                 Object[] row = new Object[21];
                 row[0] = obj.getPaydate();
                 row[1] = obj.getPmerchid();

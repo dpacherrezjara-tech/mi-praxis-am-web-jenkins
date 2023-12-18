@@ -11,9 +11,9 @@ import java.util.List;
 import net.miatech.beans.PX520S01A051Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.flown.CodesAncillariesDAO;
-import net.miatech.praxis.payment.filter.A2280Filter;
-import net.miatech.praxis.payment.filter.A2353Filter;
-import net.miatech.praxis.payment.filter.A2354Filter;
+import net.miatech.praxis.payment.old.A2280Filter;
+import net.miatech.praxis.payment.old.A2353Filter;
+import net.miatech.praxis.payment.old.A2354Filter;
 
 /**
  *
