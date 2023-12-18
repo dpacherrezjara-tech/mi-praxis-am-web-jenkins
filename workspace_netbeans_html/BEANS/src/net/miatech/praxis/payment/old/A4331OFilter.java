@@ -14,7 +14,7 @@ import net.miatech.praxis.payment.old.A4331;
  *
  * @author ggutierrez
  */
-public class A4331Filter extends A4331 {
+public class A4331OFilter extends A4331 {
 
     public String RN = "";
     public String IN_DATEFROM = "";
@@ -303,7 +303,7 @@ public class A4331Filter extends A4331 {
     public String STIME = "";
     public String SCARCOD = "";
     
-    public List<A4331Filter> lstSendManual = new ArrayList<A4331Filter>(0);
+    public List<A4331OFilter> lstSendManual = new ArrayList<A4331OFilter>(0);
 
     public Pagination page = new Pagination();
     

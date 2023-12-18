@@ -13,7 +13,7 @@ import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.ReconciliationDoublePaymentLogic;
 import net.miatech.praxis.logic.payments.SalesReconciliAmexLogic;
 import net.miatech.praxis.payment.old.A4116Filter;
-import net.miatech.praxis.payment.old.A4331Filter;
+import net.miatech.praxis.payment.old.A4331OFilter;
 import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.SQP04955Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
@@ -164,17 +164,17 @@ public class ReconciliationDoublePaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : getAdjustmentCodes-------------");
 
         map.put("success", true);
-        List<A4331Filter> lst = this.getListGetAdjustmentCodes(request, false);
+        List<A4331OFilter> lst = this.getListGetAdjustmentCodes(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4331Filter> getListGetAdjustmentCodes(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331OFilter> getListGetAdjustmentCodes(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4331Filter> lst = new ArrayList<>(0);
-        A4331Filter filter = new A4331Filter();
+        List<A4331OFilter> lst = new ArrayList<>(0);
+        A4331OFilter filter = new A4331OFilter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -183,7 +183,7 @@ public class ReconciliationDoublePaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4331Filter.class);
+            filter = gson.fromJson(beanString, A4331OFilter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -215,17 +215,17 @@ public class ReconciliationDoublePaymentController extends BaseController {
         System.out.println("-------------- ReconciliationPayment : searchDetTktSettlement-------------");
 
         map.put("success", true);
-        List<A4331Filter> lst = this.getListDetTktSettlement(request, false);
+        List<A4331OFilter> lst = this.getListDetTktSettlement(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
 
-    public List<A4331Filter> getListDetTktSettlement(HttpServletRequest request, Boolean bExcel) {
+    public List<A4331OFilter> getListDetTktSettlement(HttpServletRequest request, Boolean bExcel) {
 
-        List<A4331Filter> lst = new ArrayList<>(0);
-        A4331Filter filter = new A4331Filter();
+        List<A4331OFilter> lst = new ArrayList<>(0);
+        A4331OFilter filter = new A4331OFilter();
         Gson gson = new Gson();
         String beanString = "";
 
@@ -234,7 +234,7 @@ public class ReconciliationDoublePaymentController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A4331Filter.class);
+            filter = gson.fromJson(beanString, A4331OFilter.class);
 
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -267,12 +267,12 @@ public class ReconciliationDoublePaymentController extends BaseController {
         System.out.println("-------------- Sales Reconciliation by AMEX : searchTransactionErrorDetail-------------");
 
         Gson gson = new Gson();
-        A4331Filter filter = new A4331Filter();
-        A4331Filter result = new A4331Filter();
-        List<A4331Filter> lstInfo = new ArrayList<A4331Filter>(0);
+        A4331OFilter filter = new A4331OFilter();
+        A4331OFilter result = new A4331OFilter();
+        List<A4331OFilter> lstInfo = new ArrayList<A4331OFilter>(0);
 
         String beanString = request.getParameter("beanString");
-        filter = gson.fromJson(beanString, A4331Filter.class);
+        filter = gson.fromJson(beanString, A4331OFilter.class);
 
         logic = new ReconciliationDoublePaymentLogic();
         logic.setSession(this.serverSession.getServerSession());

@@ -12,12 +12,9 @@ import java.util.Map;
 import net.miatech.beans.SQP00697Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.classes.CurrentSession;
-import static net.miatech.praxis.dao.payments.SalesReconciliAmexDAO.pasarGarbageCollector;
-import net.miatech.praxis.payment.entities.A4451;
 import net.miatech.praxis.payment.entities.A4451MP;
 import net.miatech.praxis.payment.old.A4116Filter;
-import net.miatech.praxis.payment.old.A4331Filter;
+import net.miatech.praxis.payment.old.A4331OFilter;
 import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4331SFilter;
 import net.miatech.praxis.payment.filter.A4335Filter;
@@ -26,7 +23,6 @@ import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05043Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -390,13 +386,13 @@ public class ReconciliationDoublePaymentDAO {
         return filter;
     }
 
-    public List<A4331Filter> loadPX606SQP04470(A4331Filter filter) throws SQLException, Exception {
+    public List<A4331OFilter> loadPX606SQP04470(A4331OFilter filter) throws SQLException, Exception {
 
-        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
-        A4331Filter beanTkt;
+        List<A4331OFilter> lstTkts = new ArrayList<A4331OFilter>(0);
+        A4331OFilter beanTkt;
 
-        A4331Filter objRtn;
-        objRtn = new A4331Filter();
+        A4331OFilter objRtn;
+        objRtn = new A4331OFilter();
         objRtn.CODE = "";
         objRtn.NAME = "None";
         lstTkts.add(objRtn);
@@ -418,7 +414,7 @@ public class ReconciliationDoublePaymentDAO {
 
             while (rst.next()) {
 
-                beanTkt = new A4331Filter();
+                beanTkt = new A4331OFilter();
 
                 beanTkt.CODE = rst.getString("CODE").trim();
                 beanTkt.NAME = rst.getString("NAME").trim();
@@ -468,10 +464,10 @@ public class ReconciliationDoublePaymentDAO {
         return numero_a_cambiar;
     }
 
-    public List<A4331Filter> loadPX606SQP04698(A4331Filter filter) throws SQLException, Exception {
+    public List<A4331OFilter> loadPX606SQP04698(A4331OFilter filter) throws SQLException, Exception {
 
-        List<A4331Filter> lstTkts = new ArrayList<A4331Filter>(0);
-        A4331Filter beanTkt;
+        List<A4331OFilter> lstTkts = new ArrayList<A4331OFilter>(0);
+        A4331OFilter beanTkt;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "Pending");
@@ -591,7 +587,7 @@ public class ReconciliationDoublePaymentDAO {
                 rst = cstmt.getResultSet();
                 while (rst.next()) {
 
-                    beanTkt = new A4331Filter();
+                    beanTkt = new A4331OFilter();
                     beanTkt.IN_DATE = filter.IN_DATE.trim();
                     beanTkt.IN_MERCHID = filter.IN_MERCHID.trim();
                     beanTkt.IN_PCURRENCY = filter.IN_PCURRENCY.trim();
@@ -771,9 +767,9 @@ public class ReconciliationDoublePaymentDAO {
         return lstTkts;
     }
 
-    public A4331Filter loadPX606SQP04720(A4331Filter filter) throws SQLException, Exception {
+    public A4331OFilter loadPX606SQP04720(A4331OFilter filter) throws SQLException, Exception {
 
-        A4331Filter objRtn = new A4331Filter();
+        A4331OFilter objRtn = new A4331OFilter();
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 

@@ -40,6 +40,9 @@ import net.miatech.praxis.payment.filter.SQP05187Filter;
 import net.miatech.praxis.payment.filter.SQP05202Filter;
 import net.miatech.praxis.payment.filter.SQP05203Filter;
 import net.miatech.praxis.payment.filter.SQP05206Filter;
+import net.miatech.praxis.payment.filter.SQP05217Filter;
+import net.miatech.praxis.payment.filter.SQP05218Filter;
+import net.miatech.praxis.payment.filter.SQP05219Filter;
 
 /**
  *
@@ -125,5 +128,8 @@ public interface SalesReconciliationLogic {
     //Conteo de tarjetas por fecha
     SQP05206Filter loadSQP05206Filter(SQP05206Filter filter) throws Exception;
     
-    
+    //Formulario de insercion tarjeta de credito y ticket
+    SQP05217Filter loadSQP05217Filter(SQP05217Filter filter) throws Exception;
+    SQP05218Filter loadSQP05218Filter(SQP05218Filter filter) throws Exception;
+    SQP05219Filter loadSQP05219Filter(SQP05219Filter filter) throws Exception;
 }
