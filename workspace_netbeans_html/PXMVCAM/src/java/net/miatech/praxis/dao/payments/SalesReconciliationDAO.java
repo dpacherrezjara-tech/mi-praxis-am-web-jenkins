@@ -78,7 +78,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Dvicente
  */
 @Service
-@Scope("session")
+@Scope("request")
 public class SalesReconciliationDAO implements SalesReconciliationLogic {
 
     @Autowired

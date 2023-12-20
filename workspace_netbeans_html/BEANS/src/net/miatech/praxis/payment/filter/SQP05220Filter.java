@@ -10,57 +10,57 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SQP05220Filter {
-    private String IN_A4501CCUST,IN_A4501CIA,IN_A4501FORMA,IN_A4501SERIE,IN_A4501SEQ,
-            IN_A4501TDOC,IN_A4501CFOP,IN_A4501TFOP,IN_A4501TTARJ,IN_A4501MFOP,IN_A4501NREF,
+    private String IN_A4496CCUST,IN_A4496CIA,IN_A4496FORMA,IN_A4496SERIE,IN_A4496SEQ,
+            IN_A4496TDOC,IN_A4501CFOP,IN_A4501TFOP,IN_A4501TTARJ,IN_A4501MFOP,IN_A4501NREF,
             IN_A4501CAPL;
     private Double IN_A4501VFOP;
 
-    public String getIN_A4501CCUST() {
-        return IN_A4501CCUST;
+    public String getIN_A4496CCUST() {
+        return IN_A4496CCUST;
     }
 
-    public void setIN_A4501CCUST(String IN_A4501CCUST) {
-        this.IN_A4501CCUST = IN_A4501CCUST;
+    public void setIN_A4496CCUST(String IN_A4496CCUST) {
+        this.IN_A4496CCUST = IN_A4496CCUST;
     }
 
-    public String getIN_A4501CIA() {
-        return IN_A4501CIA;
+    public String getIN_A4496CIA() {
+        return IN_A4496CIA;
     }
 
-    public void setIN_A4501CIA(String IN_A4501CIA) {
-        this.IN_A4501CIA = IN_A4501CIA;
+    public void setIN_A4496CIA(String IN_A4496CIA) {
+        this.IN_A4496CIA = IN_A4496CIA;
     }
 
-    public String getIN_A4501FORMA() {
-        return IN_A4501FORMA;
+    public String getIN_A4496FORMA() {
+        return IN_A4496FORMA;
     }
 
-    public void setIN_A4501FORMA(String IN_A4501FORMA) {
-        this.IN_A4501FORMA = IN_A4501FORMA;
+    public void setIN_A4496FORMA(String IN_A4496FORMA) {
+        this.IN_A4496FORMA = IN_A4496FORMA;
     }
 
-    public String getIN_A4501SERIE() {
-        return IN_A4501SERIE;
+    public String getIN_A4496SERIE() {
+        return IN_A4496SERIE;
     }
 
-    public void setIN_A4501SERIE(String IN_A4501SERIE) {
-        this.IN_A4501SERIE = IN_A4501SERIE;
+    public void setIN_A4496SERIE(String IN_A4496SERIE) {
+        this.IN_A4496SERIE = IN_A4496SERIE;
     }
 
-    public String getIN_A4501SEQ() {
-        return IN_A4501SEQ;
+    public String getIN_A4496SEQ() {
+        return IN_A4496SEQ;
     }
 
-    public void setIN_A4501SEQ(String IN_A4501SEQ) {
-        this.IN_A4501SEQ = IN_A4501SEQ;
+    public void setIN_A4496SEQ(String IN_A4496SEQ) {
+        this.IN_A4496SEQ = IN_A4496SEQ;
     }
 
-    public String getIN_A4501TDOC() {
-        return IN_A4501TDOC;
+    public String getIN_A4496TDOC() {
+        return IN_A4496TDOC;
     }
 
-    public void setIN_A4501TDOC(String IN_A4501TDOC) {
-        this.IN_A4501TDOC = IN_A4501TDOC;
+    public void setIN_A4496TDOC(String IN_A4496TDOC) {
+        this.IN_A4496TDOC = IN_A4496TDOC;
     }
 
     public String getIN_A4501CFOP() {
@@ -118,4 +118,6 @@ public class SQP05220Filter {
     public void setIN_A4501VFOP(Double IN_A4501VFOP) {
         this.IN_A4501VFOP = IN_A4501VFOP;
     }
+
+    
 }

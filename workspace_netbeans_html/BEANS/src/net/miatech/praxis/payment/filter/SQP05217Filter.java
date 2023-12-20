@@ -9,41 +9,41 @@ import net.miatech.praxis.payment.entities.A4496;
  * @author Dvicente
  */
 public class SQP05217Filter {
-    private String IN_CCUST,IN_CIA,IN_FORMA,IN_SERIE,SQLMSG;
+    private String IN_A4496CCUST,IN_A4496CIA,IN_A4496FORMA,IN_A4496SERIE,SQLMSG;
     private Integer SQLRES;
     
     List<A4496> response = new ArrayList<>();
 
-    public String getIN_CCUST() {
-        return IN_CCUST;
+    public String getIN_A4496CCUST() {
+        return IN_A4496CCUST;
     }
 
-    public void setIN_CCUST(String IN_CCUST) {
-        this.IN_CCUST = IN_CCUST;
+    public void setIN_A4496CCUST(String IN_A4496CCUST) {
+        this.IN_A4496CCUST = IN_A4496CCUST;
     }
 
-    public String getIN_CIA() {
-        return IN_CIA;
+    public String getIN_A4496CIA() {
+        return IN_A4496CIA;
     }
 
-    public void setIN_CIA(String IN_CIA) {
-        this.IN_CIA = IN_CIA;
+    public void setIN_A4496CIA(String IN_A4496CIA) {
+        this.IN_A4496CIA = IN_A4496CIA;
     }
 
-    public String getIN_FORMA() {
-        return IN_FORMA;
+    public String getIN_A4496FORMA() {
+        return IN_A4496FORMA;
     }
 
-    public void setIN_FORMA(String IN_FORMA) {
-        this.IN_FORMA = IN_FORMA;
+    public void setIN_A4496FORMA(String IN_A4496FORMA) {
+        this.IN_A4496FORMA = IN_A4496FORMA;
     }
 
-    public String getIN_SERIE() {
-        return IN_SERIE;
+    public String getIN_A4496SERIE() {
+        return IN_A4496SERIE;
     }
 
-    public void setIN_SERIE(String IN_SERIE) {
-        this.IN_SERIE = IN_SERIE;
+    public void setIN_A4496SERIE(String IN_A4496SERIE) {
+        this.IN_A4496SERIE = IN_A4496SERIE;
     }
 
     public String getSQLMSG() {
@@ -69,4 +69,6 @@ public class SQP05217Filter {
     public void setResponse(List<A4496> response) {
         this.response = response;
     }
+
+    
 }

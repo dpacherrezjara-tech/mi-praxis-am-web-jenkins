@@ -259,6 +259,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             Ext.getCmp(prototype.id + '-mainContent').show();
             Ext.getCmp(prototype.id + '-mainContent2').hide();
             Ext.getCmp(prototype.id + '-mainContentSettl').hide();
+            Ext.getCmp(prototype.id + '-btnAddTicket').hide();
         } else if (opt === 'T') {
             Ext.getCmp(prototype.id + '-filtersByTicket-1').show();
             Ext.getCmp(prototype.id + '-filtersByPayment-1').hide();
@@ -266,6 +267,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             Ext.getCmp(prototype.id + '-mainContent2').show();
             Ext.getCmp(prototype.id + '-mainContent').hide();
             Ext.getCmp(prototype.id + '-mainContentSettl').hide();
+            Ext.getCmp(prototype.id + '-btnAddTicket').show();
         } else if (opt === 'S') {
             Ext.getCmp(prototype.id + '-filtersSettl-1').show();
             Ext.getCmp(prototype.id + '-mainContentSettl').show();
@@ -273,6 +275,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             Ext.getCmp(prototype.id + '-mainContent').hide();
             Ext.getCmp(prototype.id + '-filtersByTicket-1').hide();
             Ext.getCmp(prototype.id + '-mainContent2').hide();
+            Ext.getCmp(prototype.id + '-btnAddTicket').hide();
         }
         this.showProcessBtn();
     },
@@ -358,6 +361,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             id: prototype.id + '-BPOProductionDataEntry-1'
         });
         productionWin.show();
+    },
+    onClickAddTicketBtn: function () {
+        const addticketWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.AddTicketDataEntry', {
+            id: prototype.id + '-AddTicketDataEntry-1'
+        });
+        addticketWin.show();
     },
     onClickBackBtn: function (obj) {
         window.location.href = CONTEXTPATH;
