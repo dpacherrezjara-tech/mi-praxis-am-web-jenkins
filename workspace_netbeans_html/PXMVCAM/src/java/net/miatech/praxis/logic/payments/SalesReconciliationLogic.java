@@ -1,8 +1,8 @@
 package net.miatech.praxis.logic.payments;
 
 import java.util.List;
-import net.miatech.praxis.payment.A006;
-import net.miatech.praxis.payment.A3152MP;
+import net.miatech.praxis.payment.entities.A006;
+import net.miatech.praxis.payment.entities.A3152;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05048Filter;
@@ -40,6 +40,9 @@ import net.miatech.praxis.payment.filter.SQP05187Filter;
 import net.miatech.praxis.payment.filter.SQP05202Filter;
 import net.miatech.praxis.payment.filter.SQP05203Filter;
 import net.miatech.praxis.payment.filter.SQP05206Filter;
+import net.miatech.praxis.payment.filter.SQP05217Filter;
+import net.miatech.praxis.payment.filter.SQP05218Filter;
+import net.miatech.praxis.payment.filter.SQP05219Filter;
 
 /**
  *
@@ -50,7 +53,7 @@ public interface SalesReconciliationLogic {
     //storeds para listado de payments
     SQP05059Filter getSQP05059Filter(SQP05059Filter filter) throws Exception;
 
-    List<A3152MP> getPaises() throws Exception;
+    List<A3152> getPaises() throws Exception;
     List<A006> getMonedas() throws Exception;
 
     SQP05004Filter getSQP05004Filter(SQP05004Filter filter) throws Exception;
@@ -124,4 +127,9 @@ public interface SalesReconciliationLogic {
     
     //Conteo de tarjetas por fecha
     SQP05206Filter loadSQP05206Filter(SQP05206Filter filter) throws Exception;
+    
+    //Formulario de insercion tarjeta de credito y ticket
+    SQP05217Filter loadSQP05217Filter(SQP05217Filter filter) throws Exception;
+    SQP05218Filter loadSQP05218Filter(SQP05218Filter filter) throws Exception;
+    SQP05219Filter loadSQP05219Filter(SQP05219Filter filter) throws Exception;
 }

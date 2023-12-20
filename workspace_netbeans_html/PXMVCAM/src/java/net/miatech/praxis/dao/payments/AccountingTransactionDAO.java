@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 import net.miatech.praxis.classes.CurrentSession;
 import net.miatech.praxis.logic.payments.AccountingTransactionLogic;
-import net.miatech.praxis.payment.A4451MP;
-import net.miatech.praxis.payment.filter.A4183NEWFilter;
-import net.miatech.praxis.payment.filter.A4331ATSumFilter;
-import net.miatech.praxis.payment.filter.A4331ATTreeFilter;
-import net.miatech.praxis.payment.filter.A4331NEWFilter;
+import net.miatech.praxis.payment.entities.A4451MP;
+import net.miatech.praxis.payment.filter.A4183Filter;
+import net.miatech.praxis.payment.filter.A4331AT1Filter;
+import net.miatech.praxis.payment.filter.A4331AT2Filter;
+import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4335Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05036Filter;
@@ -51,10 +51,10 @@ public class AccountingTransactionDAO implements AccountingTransactionLogic{
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(this.getConnection())
                 .withSchemaName("PRAXISMP")
                 .withProcedureName("SQP05036")
-                .returningResultSet("result", new BeanPropertyRowMapper(A4331ATSumFilter.class));
+                .returningResultSet("result", new BeanPropertyRowMapper(A4331AT1Filter.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> obj = jdbcCall.execute(params);
-        filter.setResponse((List<A4331ATSumFilter>) obj.get("result"));
+        filter.setResponse((List<A4331AT1Filter>) obj.get("result"));
         return filter;
     }
 
@@ -74,10 +74,10 @@ public class AccountingTransactionDAO implements AccountingTransactionLogic{
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(this.getConnection())
                 .withSchemaName("PRAXISMP")
                 .withProcedureName("SQP05037")
-                .returningResultSet("result", new BeanPropertyRowMapper(A4331ATTreeFilter.class));
+                .returningResultSet("result", new BeanPropertyRowMapper(A4331AT2Filter.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> obj = jdbcCall.execute(params);
-        filter.setResponse((List<A4331ATTreeFilter>) obj.get("result"));
+        filter.setResponse((List<A4331AT2Filter>) obj.get("result"));
         return filter;
     }
 
@@ -86,11 +86,11 @@ public class AccountingTransactionDAO implements AccountingTransactionLogic{
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(this.getConnection())
                         .withSchemaName("PRAXISMP")
                         .withProcedureName("SQP05041")
-                        .returningResultSet("result", new BeanPropertyRowMapper(A4331NEWFilter.class));
+                        .returningResultSet("result", new BeanPropertyRowMapper(A4331Filter.class));
         filter.setPage();
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> obj = jdbcCall.execute(params);
-        filter.setResponse((List<A4331NEWFilter>) obj.get("result"));
+        filter.setResponse((List<A4331Filter>) obj.get("result"));
         filter.setPageOut(obj);
         return filter;
     }
@@ -100,10 +100,10 @@ public class AccountingTransactionDAO implements AccountingTransactionLogic{
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(this.getConnection())
                         .withSchemaName("PRAXISMP")
                         .withProcedureName("SQP05042")
-                        .returningResultSet("result", new BeanPropertyRowMapper(A4183NEWFilter.class));
+                        .returningResultSet("result", new BeanPropertyRowMapper(A4183Filter.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> obj = jdbcCall.execute(params);
-        filter.setResponse((List<A4183NEWFilter>) obj.get("result"));
+        filter.setResponse((List<A4183Filter>) obj.get("result"));
         return filter;
     }
 

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @author Dvicente
  */
 @Component
-@Scope("session")
+@Scope("request")
 public class JdbcUtils {
     
     @Autowired
@@ -23,8 +23,7 @@ public class JdbcUtils {
     
     public JdbcTemplate getJdbcTemplate() throws Exception {
         Connection cnx = session.getServerSession().getCNXIBMDB2().getIBMDB2Connection();
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(cnx, false));
-        return jdbcTemplate;
+        return new JdbcTemplate(new SingleConnectionDataSource(cnx, false));
     }
     
     public NamedParameterJdbcTemplate getNamedParameter() throws Exception {
@@ -33,5 +32,10 @@ public class JdbcUtils {
     
     public SimpleJdbcCall getJdbcCall()throws Exception{
         return new SimpleJdbcCall(this.getJdbcTemplate());
+    }
+    
+    public void closeConnection() throws Exception{
+        Connection cnx = session.getServerSession().getCNXIBMDB2().getIBMDB2Connection();
+        cnx.close();
     }
 }

@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import net.miatech.beans.A1686Filter;
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.payment.filter.A2331Filter;
+import net.miatech.praxis.payment.old.A2331Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 

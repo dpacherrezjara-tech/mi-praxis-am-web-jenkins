@@ -3,8 +3,8 @@ package net.miatech.praxis.dao.payments;
 import java.util.List;
 import java.util.Map;
 import net.miatech.praxis.logic.payments.PaymentsCommissionsLogic;
-import net.miatech.praxis.payment.A3152MP;
-import net.miatech.praxis.payment.A4451MP;
+import net.miatech.praxis.payment.entities.A3152;
+import net.miatech.praxis.payment.entities.A4451MP;
 import net.miatech.praxis.payment.filter.A4508Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05135Filter;
@@ -61,12 +61,12 @@ public class PaymentsCommissionsDAO implements PaymentsCommissionsLogic {
     }
 
     @Override
-    public List<A3152MP> getPaises() throws Exception {
+    public List<A3152> getPaises() throws Exception {
         SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05016")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A3152MP.class));
-        return ((List<A3152MP>) jdbcCall.execute().get("result"));
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A3152.class));
+        return ((List<A3152>) jdbcCall.execute().get("result"));
     }
 
     @Override

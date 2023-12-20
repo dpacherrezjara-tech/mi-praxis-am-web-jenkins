@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.payment.A2281;
-import net.miatech.praxis.payment.filter.A2280Filter;
-import net.miatech.praxis.payment.filter.A2357Filter;
+import net.miatech.praxis.payment.old.A2281;
+import net.miatech.praxis.payment.old.A2280Filter;
+import net.miatech.praxis.payment.old.A2357Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 

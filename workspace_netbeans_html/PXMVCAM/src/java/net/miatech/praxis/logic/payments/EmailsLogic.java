@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.EmailsDAO;
-import net.miatech.praxis.payment.filter.A4171Filter;
-import net.miatech.praxis.payment.filter.A4172Filter;
+import net.miatech.praxis.payment.old.A4171Filter;
+import net.miatech.praxis.payment.old.A4172Filter;
 
 public class EmailsLogic {
 

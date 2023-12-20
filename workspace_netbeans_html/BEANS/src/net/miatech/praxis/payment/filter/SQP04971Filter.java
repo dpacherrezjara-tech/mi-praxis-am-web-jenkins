@@ -3,7 +3,7 @@ package net.miatech.praxis.payment.filter;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.libmiatec.A006;
-import net.miatech.praxis.payment.A4451;
+import net.miatech.praxis.payment.entities.A4451;
 
 /**
  *

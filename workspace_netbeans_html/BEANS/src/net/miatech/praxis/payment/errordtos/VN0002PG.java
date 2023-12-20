@@ -1,6 +1,6 @@
 package net.miatech.praxis.payment.errordtos;
 
-import net.miatech.praxis.payment.A4453;
+import net.miatech.praxis.payment.entities.A4453;
 
 /**
  *

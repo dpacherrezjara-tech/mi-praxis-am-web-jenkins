@@ -1,7 +1,7 @@
 package net.miatech.praxis.payment.filter;
 
 import java.math.BigDecimal;
-import net.miatech.praxis.payment.A4455;
+import net.miatech.praxis.payment.entities.A4455;
 
 /**
  *

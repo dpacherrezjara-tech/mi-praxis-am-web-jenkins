@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.LoadConciliationTestDAO;
-import net.miatech.praxis.payment.filter.A4164Filter;
-import net.miatech.praxis.payment.filter.A2370Filter;
+import net.miatech.praxis.payment.old.A4164Filter;
+import net.miatech.praxis.payment.old.A2370Filter;
 
 // </editor-fold>
 /**

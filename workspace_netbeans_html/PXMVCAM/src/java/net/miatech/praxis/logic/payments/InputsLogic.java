@@ -16,11 +16,11 @@ import net.miatech.praxis.dao.interline.ReasonCodeReportDAO;
 import net.miatech.praxis.dao.payments.BanksCatalogDAO;
 import net.miatech.praxis.dao.payments.InputsDAO;
 import net.miatech.praxis.interline.filter.SFI021Filter;
-import net.miatech.praxis.payment.A2281;
-import net.miatech.praxis.payment.A2359;
-import net.miatech.praxis.payment.filter.A2280Filter;
-import net.miatech.praxis.payment.filter.A2287Filter;
-import net.miatech.praxis.payment.filter.A2290Filter;
+import net.miatech.praxis.payment.old.A2281;
+import net.miatech.praxis.payment.old.A2359;
+import net.miatech.praxis.payment.old.A2280Filter;
+import net.miatech.praxis.payment.old.A2287Filter;
+import net.miatech.praxis.payment.old.A2290Filter;
 
 /**
  *

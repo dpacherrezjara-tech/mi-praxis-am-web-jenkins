@@ -21,10 +21,10 @@ import net.miatech.praxis.A005;
 import net.miatech.praxis.A051;
 import net.miatech.praxis.flown.A2826;
 import net.miatech.praxis.interline.filter.A1852Filter;
-import net.miatech.praxis.payment.A2280;
-import net.miatech.praxis.payment.A2287;
-import net.miatech.praxis.payment.filter.A2280Filter;
-import net.miatech.praxis.payment.filter.A2357Filter;
+import net.miatech.praxis.payment.old.A2280;
+import net.miatech.praxis.payment.old.A2287;
+import net.miatech.praxis.payment.old.A2280Filter;
+import net.miatech.praxis.payment.old.A2357Filter;
 import static net.miatech.utils.Functions.pasarGarbageCollector;
 import org.apache.log4j.Logger;
 // </editor-fold>

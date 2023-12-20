@@ -3,11 +3,11 @@ package net.miatech.praxis.dao.payments;
 import java.util.List;
 import java.util.Map;
 import net.miatech.praxis.logic.payments.SalesReconciliationDoublePayLogic;
-import net.miatech.praxis.payment.A006;
-import net.miatech.praxis.payment.A3152MP;
-import net.miatech.praxis.payment.A4451MP;
+import net.miatech.praxis.payment.entities.A006;
+import net.miatech.praxis.payment.entities.A3152;
+import net.miatech.praxis.payment.entities.A4451MP;
 import net.miatech.praxis.payment.filter.A4331BPOFilter;
-import net.miatech.praxis.payment.filter.A4331NEWFilter;
+import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4335Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05052Filter;
@@ -37,12 +37,12 @@ public class SalesReconciliationDoublePayDAO implements SalesReconciliationDoubl
     private static final String LIBRARY = "PRAXISMP";
     
     @Override
-    public List<A3152MP> getPaises() throws Exception {
+    public List<A3152> getPaises() throws Exception {
         SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05016")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A3152MP.class));
-        return ((List<A3152MP>) jdbcCall.execute().get("result"));
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A3152.class));
+        return ((List<A3152>) jdbcCall.execute().get("result"));
     }
 
     @Override
@@ -70,11 +70,11 @@ public class SalesReconciliationDoublePayDAO implements SalesReconciliationDoubl
         SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05163")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331NEWFilter.class));
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331Filter.class));
         filter.setPage();
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String,Object> spRes = jdbcCall.execute(params);
-        filter.setResponse((List<A4331NEWFilter>) spRes.get("result"));
+        filter.setResponse((List<A4331Filter>) spRes.get("result"));
         filter.setPageOut(spRes);
         return filter;
     }

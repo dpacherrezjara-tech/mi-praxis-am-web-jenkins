@@ -3,7 +3,7 @@ package net.miatech.praxis.controllers.payments;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.praxis.logic.payments.SalesReconciliationDoublePayLogic;
-import net.miatech.praxis.payment.filter.A4331NEWFilter;
+import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4335Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05052Filter;
@@ -145,7 +145,7 @@ public class SalesReconciliationDoublePayController {
             headers[23] = "Adju Code";
             headers[24] = "Description";
             data.add(headers);
-            for (A4331NEWFilter obj : filter.getResponse()) {
+            for (A4331Filter obj : filter.getResponse()) {
                 Object[] row = new Object[25];
                 row[0] = obj.getPrda();
                 row[1] = obj.getPaydate();

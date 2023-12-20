@@ -3,8 +3,8 @@ package net.miatech.praxis.payment.filter;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.Pagination;
-import net.miatech.praxis.payment.A4305;
-import net.miatech.praxis.payment.A4344;
+import net.miatech.praxis.payment.entities.A4305;
+import net.miatech.praxis.payment.entities.A4344;
 
 /**
  *

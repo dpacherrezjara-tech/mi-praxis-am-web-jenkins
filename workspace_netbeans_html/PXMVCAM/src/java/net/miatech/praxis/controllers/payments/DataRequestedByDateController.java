@@ -20,7 +20,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.DataRequestedByDateLogic;
-import net.miatech.praxis.payment.filter.A2331Filter;
+import net.miatech.praxis.payment.old.A2331Filter;
 import net.miatech.beans.A3676Filter;
 import net.miatech.beans.SQP00697Filter;
 import net.miatech.utils.Functions;

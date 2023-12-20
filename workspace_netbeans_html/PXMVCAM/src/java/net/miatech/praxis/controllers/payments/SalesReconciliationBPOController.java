@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
-import net.miatech.praxis.payment.A4507;
-import net.miatech.praxis.payment.filter.A4331NEWFilter;
+import net.miatech.praxis.payment.entities.A4507;
+import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4496Filter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
@@ -49,6 +49,9 @@ import net.miatech.praxis.payment.filter.SQP05187Filter;
 import net.miatech.praxis.payment.filter.SQP05202Filter;
 import net.miatech.praxis.payment.filter.SQP05203Filter;
 import net.miatech.praxis.payment.filter.SQP05206Filter;
+import net.miatech.praxis.payment.filter.SQP05217Filter;
+import net.miatech.praxis.payment.filter.SQP05218Filter;
+import net.miatech.praxis.payment.filter.SQP05219Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.Functions;
@@ -617,7 +620,7 @@ public class SalesReconciliationBPOController {
             headers[25] = "Date Update";
             headers[26] = "BPO Comment";
             data.add(headers);
-            for (A4331NEWFilter obj : filter.getResponse()) {
+            for (A4331Filter obj : filter.getResponse()) {
                 Object[] row = new Object[27];
                 row[0] = obj.getPrda();
                 row[1] = obj.getPaydate();
@@ -858,7 +861,7 @@ public class SalesReconciliationBPOController {
             headers[36] = "Rule";
             headers[37] = "Flag Complement";
             data.add(headers);
-            for (A4331NEWFilter obj : filter.getResponse()) {
+            for (A4331Filter obj : filter.getResponse()) {
                 Object[] row = new Object[38];
                 row[0] = obj.getPrda();
                 row[1] = obj.getPaydate();
@@ -1013,6 +1016,46 @@ public class SalesReconciliationBPOController {
             SQP05206Filter filter = logic.loadSQP05206Filter(params);
             System.out.println("Total: " + filter.getResponse().size());
             return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+//</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Mantenimiento Tarjetas">
+    @RequestMapping(value = "loadTicket")
+    public ResponseEntity<?> loadTicket(@ModelAttribute SQP05217Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:loadTicket-------------");
+        try {
+            SQP05217Filter filter = logic.loadSQP05217Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "loadFopInformation")
+    public ResponseEntity<?> loadFopInformation(@ModelAttribute SQP05218Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:loadFopInformation-------------");
+        try {
+            SQP05218Filter filter = logic.loadSQP05218Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "insertTicketRecord", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> loadFopInformation(@RequestBody SQP05219Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:insertTicketRecord-------------");
+        try {
+            logic.loadSQP05219Filter(params);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

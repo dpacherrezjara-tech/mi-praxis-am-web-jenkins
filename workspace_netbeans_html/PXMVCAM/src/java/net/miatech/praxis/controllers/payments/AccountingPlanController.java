@@ -21,7 +21,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.AccountingPlanLogic;
-import net.miatech.praxis.payment.filter.A2356Filter;
+import net.miatech.praxis.payment.old.A2356Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;

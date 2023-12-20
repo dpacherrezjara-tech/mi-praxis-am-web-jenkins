@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class SQP05042Filter {
     private String IN_AREFNBR;
-    private List<A4183NEWFilter> response = new ArrayList<>();
+    private List<A4183Filter> response = new ArrayList<>();
 
     public String getIN_AREFNBR() {
         return IN_AREFNBR;
@@ -19,11 +19,11 @@ public class SQP05042Filter {
         this.IN_AREFNBR = IN_AREFNBR;
     }
 
-    public List<A4183NEWFilter> getResponse() {
+    public List<A4183Filter> getResponse() {
         return response;
     }
 
-    public void setResponse(List<A4183NEWFilter> response) {
+    public void setResponse(List<A4183Filter> response) {
         this.response = response;
     }
     

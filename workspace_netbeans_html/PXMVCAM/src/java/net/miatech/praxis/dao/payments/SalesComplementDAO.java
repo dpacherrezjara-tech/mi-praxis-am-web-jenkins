@@ -12,8 +12,8 @@ import net.miatech.beans.SQP00697Filter;
 import net.miatech.praxis.classes.CurrentSession;
 import static net.miatech.praxis.dao.payments.SalesComplementAmexDAO.pasarGarbageCollector;
 import net.miatech.praxis.logic.payments.SalesComplementLogic;
-import net.miatech.praxis.payment.A3152MP;
-import net.miatech.praxis.payment.A4451MP;
+import net.miatech.praxis.payment.entities.A3152;
+import net.miatech.praxis.payment.entities.A4451MP;
 import net.miatech.praxis.payment.filter.A4453Filter;
 import net.miatech.praxis.payment.filter.A4454Filter;
 import net.miatech.praxis.payment.filter.A4455Filter;
@@ -239,12 +239,12 @@ public class SalesComplementDAO implements SalesComplementLogic {
     }
 
     @Override
-    public List<A3152MP> getPaises() throws Exception {
+    public List<A3152> getPaises() throws Exception {
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(this.getConnection())
                 .withSchemaName("PRAXISMP")
                 .withProcedureName("SQP05016")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A3152MP.class));
-        return ((List<A3152MP>) jdbcCall.execute().get("result"));
+                .returningResultSet("result", new BeanPropertyRowMapper<>(A3152.class));
+        return ((List<A3152>) jdbcCall.execute().get("result"));
     }
 
 }
