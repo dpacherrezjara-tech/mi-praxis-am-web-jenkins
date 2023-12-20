@@ -85,9 +85,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             //</editor-fold>
             me.showProcessBtn(me.users);
             me.showProductionBtn(me.users);
+            me.showAddTicketBtn(me.users);
         }
         filterPanel.unmask();
     },
+    //<editor-fold defaultstate="collapsed" desc="Option Buttons">
     showProcessBtn: function (users) {
         const userName = $('#menuUser').text();
         const btn = Ext.getCmp(prototype.id + '-btnProcess');
@@ -115,6 +117,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             btnProduction.hide();
         }
     },
+    showAddTicketBtn: function (users) {
+        const userName = $('#menuUser').text();
+        const btn = Ext.getCmp(prototype.id + '-btnAddTicket');
+        const activeFilter = Ext.getCmp(prototype.id + '-filtersByTicket-1');
+        if (activeFilter.isVisible()) {
+            if (userName.slice(0, 3) === 'SAP') {
+                btn.show();
+            } else if (users.includes(userName)) {
+                btn.show();
+            } else {
+                btn.hide();
+            }
+        } else {
+            btn.hide();
+        }
+    },
+    //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Format Params">
     formatByPaymentSummaryParams: function () {
         const formFilters = Ext.getCmp(prototype.id + '-formFiltersBP-1').getForm();
@@ -251,6 +270,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         }
     },
     onChangeModule: function (radiogroup, newValue, oldValue) {
+        const me = this;
         const opt = newValue.opcion;
         if (opt === 'P') {
             Ext.getCmp(prototype.id + '-filtersByPayment-1').show();
@@ -259,7 +279,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             Ext.getCmp(prototype.id + '-mainContent').show();
             Ext.getCmp(prototype.id + '-mainContent2').hide();
             Ext.getCmp(prototype.id + '-mainContentSettl').hide();
-            Ext.getCmp(prototype.id + '-btnAddTicket').hide();
         } else if (opt === 'T') {
             Ext.getCmp(prototype.id + '-filtersByTicket-1').show();
             Ext.getCmp(prototype.id + '-filtersByPayment-1').hide();
@@ -267,7 +286,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             Ext.getCmp(prototype.id + '-mainContent2').show();
             Ext.getCmp(prototype.id + '-mainContent').hide();
             Ext.getCmp(prototype.id + '-mainContentSettl').hide();
-            Ext.getCmp(prototype.id + '-btnAddTicket').show();
         } else if (opt === 'S') {
             Ext.getCmp(prototype.id + '-filtersSettl-1').show();
             Ext.getCmp(prototype.id + '-mainContentSettl').show();
@@ -275,9 +293,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             Ext.getCmp(prototype.id + '-mainContent').hide();
             Ext.getCmp(prototype.id + '-filtersByTicket-1').hide();
             Ext.getCmp(prototype.id + '-mainContent2').hide();
-            Ext.getCmp(prototype.id + '-btnAddTicket').hide();
         }
-        this.showProcessBtn();
+        this.showAddTicketBtn(me.users);
+        this.showProcessBtn(me.users);
     },
     onChangeCreditCardBT: function (obj) {
         const me = this;

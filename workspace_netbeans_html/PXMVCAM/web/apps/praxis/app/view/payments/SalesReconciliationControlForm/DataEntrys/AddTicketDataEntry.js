@@ -430,7 +430,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.A
                                                             //maskRe: /[0-9]/
                                                 }
                                             },
-                                            {text: 'Currency', dataIndex: 'IN_A4501MDA', width: 80},
+                                            {text: 'Currency', dataIndex: 'IN_A4501MFOP', width: 80},
                                             {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',

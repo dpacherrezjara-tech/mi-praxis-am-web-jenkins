@@ -55,7 +55,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AddTicketD
             IN_A4501NREF: '',
             IN_A4501CAPL: '',
             IN_A4501VFOP: 0,
-            IN_A4501MDA: mda
+            IN_A4501MFOP: mda
         };
         store.add(obj);
         grid.setStore(store);
@@ -116,8 +116,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AddTicketD
         txtSerie.setReadOnly(false);
         Ext.getCmp(prototype.idTicket + '-mainForm').getForm().reset();
     },
-    onSaveTicket: function () {
+    onSaveTicket: async function () {
         const me = this;
+        me.view.mask('Loading...');
         const mainForm = Ext.getCmp(prototype.idTicket + '-mainForm').getForm();
         if (!mainForm.isValid()) {
             global.Msg({
@@ -153,8 +154,25 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AddTicketD
             });
             return;
         }
-
-        me.formatParameters(mainForm, fopStore);
+        let params = me.formatParameters(mainForm, fopStore);
+        const res = await fetch(`${me.url}/insertTicketRecord`,{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        });
+        if(res.ok){
+            global.Msg({
+                msg: 'Ticket added<br>Successfully'
+            });
+            me.view.close();
+        }else{
+            global.Msg({
+                msg: 'Error inserting Ticket'
+            });
+        }
+        me.view.unmask();
     },
     formatParameters: function (form, store) {
         const me = this;
