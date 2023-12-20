@@ -39,8 +39,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AddTicketD
                 panelInfo.show();
                 cancelBtn.show();
                 saveBtn.show();
-                txtForma.setReadOnly(false);
-                txtSerie.setReadOnly(false);
+                txtForma.setReadOnly(true);
+                txtSerie.setReadOnly(true);
             }
         }
     },
@@ -104,6 +104,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AddTicketD
         }
     },
     onCancelBtn: function () {
+        const grid = Ext.getCmp(prototype.idTicket + '-gridFops');
         const panelInfo = Ext.getCmp(prototype.idTicket + '-ticketInfo');
         const saveBtn = Ext.getCmp(prototype.idTicket + '-saveTicketBtn');
         const cancelBtn = Ext.getCmp(prototype.idTicket + '-btnCancel');
@@ -114,6 +115,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AddTicketD
         cancelBtn.hide();
         txtForma.setReadOnly(false);
         txtSerie.setReadOnly(false);
+        grid.getStore().removeAll();
         Ext.getCmp(prototype.idTicket + '-mainForm').getForm().reset();
     },
     onSaveTicket: async function () {
@@ -124,6 +126,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AddTicketD
             global.Msg({
                 msg: 'Invalid Parameters'
             });
+            me.view.unmask();
             return;
         }
         const fopStore = Ext.getCmp(prototype.idTicket + '-gridFops').getStore();
@@ -131,6 +134,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AddTicketD
             global.Msg({
                 msg: 'Invalid FOP'
             });
+            me.view.unmask();
             return;
         } else {
             let isValid = true;
@@ -145,6 +149,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AddTicketD
                 global.Msg({
                     msg: 'Invalid parameters'
                 });
+                me.view.unmask();
                 return;
             }
         }
@@ -152,6 +157,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AddTicketD
             global.Msg({
                 msg: 'Invalid Amounts'
             });
+            me.view.unmask();
             return;
         }
         let params = me.formatParameters(mainForm, fopStore);
