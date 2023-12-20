@@ -88,36 +88,36 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.Info02', {
                                     {
                                         text: 'Información Facturación',
                                         columns: [
-//                                            {
-//                                                xtype: 'actioncolumn',
-//                                                text: 'XML',
-//                                                sortable: false,
-//                                                width: 40,
-//                                                align: 'center',
-//                                                locked: false,
-//                                                items: [
-//                                                    {
-//                                                        iconCls: 'prx-icon-download',
-//                                                        tooltip: 'XML'
-//                                                        //handler: 'onDetailClick_viewXml'
-//                                                    }
-//                                                ]
-//                                            },
-//                                            {
-//                                                xtype: 'actioncolumn',
-//                                                text: 'PDF',
-//                                                sortable: false,
-//                                                width: 40,
-//                                                align: 'center',
-//                                                locked: false,
-//                                                items: [
-//                                                    {
-//                                                        iconCls: 'prx-icon-download',
-//                                                        tooltip: 'DESCARGAR PDF'
-//                                                        //handler: 'onDetailClick_viewXml'
-//                                                    }
-//                                                ]
-//                                            },
+                                            {
+                                                xtype: 'actioncolumn',
+                                                text: 'PDF',
+                                                sortable: false,
+                                                width: 40,
+                                                align: 'center',
+                                                locked: false,
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-download',
+                                                        tooltip: 'Descargar documento PDF',
+                                                        handler: 'onPreDonwloadDocumentPDFClick'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                xtype: 'actioncolumn',
+                                                text: 'XML',
+                                                sortable: false,
+                                                width: 40,
+                                                align: 'center',
+                                                locked: false,
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-download',
+                                                        tooltip: 'Descargar documento XML',
+                                                        handler: 'onPreDonwloadDocumentXMLClick'
+                                                    }
+                                                ]
+                                            },
                                             {text: 'Estado', dataIndex: 'A4250STDE', width: 90, align: 'left'},
                                             {text: 'CDFI', dataIndex: 'A4250CFDI', width: 150, align: 'left'},
                                             {text: 'Fecha', dataIndex: 'A4250FECTB', width: 70, align: 'center'},

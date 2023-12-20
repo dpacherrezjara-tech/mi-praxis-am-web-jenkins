@@ -826,14 +826,14 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                     items: [
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-YYYY',
+                                            id: prototype.id + '-A4241UIDBF',
                                             fieldLabel: 'UUID N.C', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             //labelWidth: 70,
                                             width: 400,
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
                                             maxLength: 50,
-                                            disabled: true,
+                                            readOnly: true,
                                             listeners: {
                                                 //change: 'onUpperValue',
                                                 keypress: function (obj, e) {

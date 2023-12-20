@@ -104,7 +104,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         Ext.getCmp(prototype.id + '-A4241NUMRC').setValue(data.A4241NUMRC);
         Ext.getCmp(prototype.id + '-A4241IDRCB').setValue(data.A4241IDRCB);
         //datos de facturacion
-        Ext.getCmp(prototype.id + '-A4241UIDAN').setValue(data.A4241UIDAN);        
+        Ext.getCmp(prototype.id + '-A4241UIDAN').setValue(data.A4241UIDAN); 
+        Ext.getCmp(prototype.id + '-A4241UIDBF').setValue(data.A4241UIDBF); 
         if (data.A4241STATB === '1' ){
             Ext.getCmp(prototype.id + '-btn-facturar').setDisabled(true);
         }      
