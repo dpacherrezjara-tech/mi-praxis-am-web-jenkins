@@ -64,11 +64,21 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGrid', {
                                             }
                                         ]
                                     },
-                                    {text: 'Id', dataIndex: 'A4241IDANT', align: 'left', width: 50,locked: true},
-                                    {text: 'Date', dataIndex: 'A4241FEC', align: 'left', width: 70,locked: true},
-                                    {text: 'Customer code', dataIndex: 'A4241CDCLI', align: 'left', width: 85,locked: true},
-                                    {text: 'Customer name', dataIndex: 'A3953RSOCI', align: 'left', width: 300,locked: true},
-                                    {text: 'Curr.', dataIndex: 'A4241MDA', width: 60, align: 'left'},
+                                    {text: 'Id', dataIndex: 'A4241IDANT', align: 'left', width: 50, locked: true},
+                                    {text: 'Date', dataIndex: 'A4241FEC', align: 'left', width: 70, locked: true},
+                                    {text: 'Customer<br>Code', dataIndex: 'A4241CDCLI', align: 'left', width: 85, locked: true},
+                                    {text: 'Customer Name', dataIndex: 'A3953RSOCI', align: 'left', width: 250, locked: true},
+                                    {
+                                        text: 'Invoice', dataIndex: 'A4241STATB', align: 'center', width: 60, locked: true,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            metaData.tdStyle = 'font-weight:bold;';
+                                            var html = '<img src="resources/img/semaforo/Circle_Silver.png" title="Pendiente" >';
+                                            if (record.get('A4241STATB') === '1')
+                                                var html = '<img src="resources/img/semaforo/Circle_Green.png" title="Facturado" >';
+                                            return html;
+                                        }
+                                    },
+                                    {text: 'Curr.', dataIndex: 'A4241MDA', width: 50, align: 'left'},
                                     {text: 'Amount<br>Prepaid', dataIndex: 'A4241TOTAN', width: 110, align: 'right',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             return Ext.util.Format.number(value, '0,000.00');
@@ -95,7 +105,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGrid', {
                                         columns: [
                                             {text: 'Available<br>balance', dataIndex: 'A4242SALDO', width: 100, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    metaData.tdStyle = 'font-weight:bold;';                                                    
+                                                    metaData.tdStyle = 'font-weight:bold;';
                                                     return Ext.util.Format.number(value, '0,000.00');
                                                 }
                                             },

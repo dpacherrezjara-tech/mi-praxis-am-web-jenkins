@@ -86,8 +86,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         bean.VP_OPCION = Ext.getCmp(prototype.id + '-cmbfiltro').getValue();
         bean.VP_CDCLI = Ext.getCmp(prototype.id + '-txtCDCLI').getValue();
         bean.VP_PARAM = Ext.getCmp(prototype.id + '-txtPARAM1').getValue();
-        bean.VP_FECHA1 = "";
-        bean.VP_FECHA2 = "";
+        bean.VP_FECHA1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');        
+        bean.VP_FECHA2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridData', {
             proxy: {

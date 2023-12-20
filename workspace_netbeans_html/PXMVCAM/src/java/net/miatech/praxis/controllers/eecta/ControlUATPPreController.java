@@ -11,12 +11,18 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.eecta.SQP03347Filter;
@@ -28,7 +34,9 @@ import net.miatech.praxis.eecta.SQP05189Filter;
 import net.miatech.praxis.eecta.SQP05190Filter;
 import net.miatech.praxis.eecta.SQP05191Filter;
 import net.miatech.praxis.eecta.SQP05192Filter;
+import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.ControlUATPPreLogic;
+import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONValue;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -408,5 +416,70 @@ public class ControlUATPPreController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-
+    
+    /*API descarga Documento facturas/xml
+     */
+    @RequestMapping(value = "getPreDonwloadInvoice")
+    public @ResponseBody
+    void getDonwloadDocumentInvoice(HttpServletRequest request, HttpServletResponse response) {
+//        String rutaTemp = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD_DJANGO").toString(); // NO USAR 
+        String rutaTemp = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();         
+        try {            
+            String vl_document_path = request.getParameter("document_path");
+            
+            String[] arrOfStr  = vl_document_path.split("/", 3);
+            System.out.println("" + Arrays.toString(arrOfStr) );
+//            /miatech-aeromexico-factura-files/XML_TIMBRADOS/2023/IND/11/11/F_SALE_1392139323882_88357093-176B-52CF-B1CD-111D8B6BB3CD.pdf
+//            [, miatech-aeromexico-factura-files/XML_TIMBRADOS/2023/IND/12/19/F_SALE_1392142671733_DFB73134-E0A7-5B72-BD75-3ABA2EEF1425.pdf]
+            String vl_bucket = arrOfStr[1];
+            String vl_key = arrOfStr[2];
+            Unirest.setTimeouts(3600000, 3600000);           
+            HashMap bodyData = new HashMap<>();      
+            
+            //bodyData.put("server_database", serverSession.getServerSession().getPropertySession().get("SERVER_DJANGO").toString());            
+            bodyData.put("vp_bucket", vl_bucket); //"miatech-aeromexico-factura-files"                
+            bodyData.put("vp_key", vl_key);       //"masivo/miatech-result-file-complemento/2021110510.xml"                
+            bodyData.put("vp_path_tmp", rutaTemp );                
+            
+            String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+            //String urlREST = "http://127.0.0.1:5557";
+            String urlAPI  = "/api/praxis/facturacion_pre_descarga_factura/";  
+            HttpResponse<JsonNode> responseAPI = Unirest.post(urlREST + urlAPI )
+                    .header("content-type", "application/json") 
+                    .header("cache-control", "no-cache")
+                    .body(new Gson().toJson(bodyData))
+                    .asJson();
+            
+            String error_code = responseAPI.getBody().getObject().get("RESPONSE").toString();
+            String error_msg = responseAPI.getBody().getObject().get("MESSAGE_TEXT").toString();
+            String file_path = responseAPI.getBody().getObject().get("FILEPATH").toString();
+            String file_name = responseAPI.getBody().getObject().get("FILENAME").toString();
+            
+            String fileNameDownload = file_path +"\\"+ file_name;
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + file_name  + "\"");
+            InputStream is = new FileInputStream( fileNameDownload );
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();            
+// ZIP            
+//            response.setContentType("application/zip");
+//            response.setHeader("Content-Disposition", "attachment;filename=\"" + rutaFile + "\\" + filename + ".zip" + "\"");
+//            InputStream is = new FileInputStream(rutaFile + "\\" + filename + ".zip");
+//            IOUtils.copy(is, response.getOutputStream());
+//            response.flushBuffer();
+            
+            delete_fichero(fileNameDownload);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);            
+        }
+    }
+    
+    public Boolean delete_fichero( String fileName ) {
+        //String path = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        String sFichero = fileName; //path + "\\" + fileName + ".pdf";
+        File f = new File(sFichero);
+        f.delete();
+        return true;
+    }
 }

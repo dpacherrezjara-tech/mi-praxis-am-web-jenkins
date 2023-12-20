@@ -361,9 +361,55 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATPPre.ControlUATPPreUUIDControl
         if (e.getKey() === e.ENTER) {
             this.search_det_loadbatch();
         }
+    },
+    onPreDonwloadDocumentPDFClick: function( grid, rowIndex, colIndex )
+    {  
+        //console.log(vp_document_id); 
+        var store = grid.getStore();
+        var rec = store.getAt(rowIndex);                   
+        var document_path = rec.get('A4250PPDF');
+        if(document_path === ''){
+            global.Msg({msg: 'El documento no esta facturado'});
+            return;
+        }
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: '¿Descargar factura?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {                        
+                    global.getFile(prototype.url + '/getPreDonwloadInvoice?document_path='+document_path);                        
+                }
+            }
+        });
+    },
+    onPreDonwloadDocumentXMLClick: function( grid, rowIndex, colIndex )
+    {  
+        //console.log(vp_document_id); 
+        var store = grid.getStore();
+        var rec = store.getAt(rowIndex);                   
+        var document_path = rec.get('A4250PXML');
+         if(document_path === ''){
+            global.Msg({msg: 'El documento no esta facturado'});
+            return;
+        }
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: '¿Descargar archivo XML ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {                        
+                    global.getFile(prototype.url + '/getPreDonwloadInvoice?document_path='+document_path);                        
+                }
+            }
+        });
     }
-
-
 });
 
 

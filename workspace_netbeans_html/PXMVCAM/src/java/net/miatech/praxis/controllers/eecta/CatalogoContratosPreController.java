@@ -16,6 +16,7 @@ import net.miatech.praxis.eecta.SQP04527Filter;
 import net.miatech.praxis.eecta.SQP04587Filter;
 import net.miatech.praxis.eecta.SQP04588Filter;
 import net.miatech.praxis.eecta.SQP04589Filter;
+import net.miatech.praxis.eecta.SQP04666Filter;
 import net.miatech.praxis.logic.eecta.CatalogoContratosPreLogic;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -162,5 +163,31 @@ public class CatalogoContratosPreController extends BaseController {
         return new Gson().toJson(map);
 
     }
+    
+    @RequestMapping(value = "setPreCompraInvoice", method = RequestMethod.POST)
+    public @ResponseBody
+    String setPreCompraInvoice(ModelMap map, HttpServletRequest request) {
+        SQP04666Filter objRtn = new SQP04666Filter();
+        logic = new CatalogoContratosPreLogic();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            SQP04666Filter filter = new SQP04666Filter();
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            objRtn = logic.setSQP04666Filter(filter);
+            map.put("success", true);
+            map.put("objRtn", objRtn);
+            
+        } catch (Exception ex) {
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = ex.toString();
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+
+    }
+    
 
 }
