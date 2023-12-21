@@ -191,5 +191,6 @@ public class A2331Filter extends A2331 {
     
     public Pagination page = new Pagination();
 
-    
+    public String MSGERR = "";
+    public Double totVFOP = 0.00;
 }

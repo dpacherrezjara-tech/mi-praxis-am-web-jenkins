@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.payment.filter.A2331Filter;
-import net.miatech.praxis.payment.filter.A3757Filter;
+import net.miatech.praxis.payment.old.A2331Filter;
+import net.miatech.praxis.payment.old.A3757Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -326,7 +326,7 @@ public class EMDTrackingPaymentDAO {
                 while (rst.next()) {
 
                     bean = new A3757Filter();
-                    bean.strFormatDate22 = filter.strFormatDate2;
+                    bean.strFormatDate2 = filter.strFormatDate2;
                     bean.DSALES = rst.getString("FVTA");
                     bean.strFormatDate2 = Functions.getMonthConvert(bean.DSALES);
                     bean.CCIAA  = rst.getString("CCIAA");
