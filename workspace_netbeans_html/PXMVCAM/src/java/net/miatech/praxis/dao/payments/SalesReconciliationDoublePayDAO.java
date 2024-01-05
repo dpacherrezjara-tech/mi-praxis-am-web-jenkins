@@ -20,7 +20,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
 
 /**
@@ -38,80 +37,62 @@ public class SalesReconciliationDoublePayDAO implements SalesReconciliationDoubl
     
     @Override
     public List<A3152> getPaises() throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05016")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A3152.class));
-        return ((List<A3152>) jdbcCall.execute().get("result"));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05016", 
+                new BeanPropertyRowMapper<>(A3152.class));
+        return ((List<A3152>) obj.get("result"));
     }
 
     @Override
     public List<A006> getMonedas() throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05159")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A006.class));
-        return ((List<A006>) jdbcCall.execute().get("result"));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05159", 
+                new BeanPropertyRowMapper<>(A006.class));
+        return ((List<A006>) obj.get("result"));
     }
 
     @Override
     public SQP05004Filter getSQP05004Filter(SQP05004Filter filter) throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05004")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4451MP.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        filter.setLst((List<A4451MP>) jdbcCall.execute(params).get("result"));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05004", params,
+                new BeanPropertyRowMapper<>(A4451MP.class));
+        filter.setLst((List<A4451MP>) obj.get("result"));
         return filter;
     }
 
     @Override
     public SQP05163Filter loadSQP05163Filter(SQP05163Filter filter) throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05163")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331Filter.class));
         filter.setPage();
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        Map<String,Object> spRes = jdbcCall.execute(params);
-        filter.setResponse((List<A4331Filter>) spRes.get("result"));
-        filter.setPageOut(spRes);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05163", params,
+                new BeanPropertyRowMapper<>(A4331Filter.class));
+        filter.setResponse((List<A4331Filter>) obj.get("result"));
+        filter.setPageOut(obj);
         return filter;
     }
 
     @Override
     public SQP05164Filter loadSQP05164Filter(SQP05164Filter filter) throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05164");
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        Map<String,Object> spRes = jdbcCall.execute(params);
-        filter.setSQLRES((Integer) spRes.get("SQLRES"));
-        filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05164", params);
+        filter.setSQLRES((Integer) obj.get("SQLRES"));
+        filter.setSQLMSG((String) obj.get("SQLMSG"));
         return filter;
     }
 
     @Override
     public SQP05052Filter loadSQP05052Filter(SQP05052Filter filter) throws Exception {
-        SimpleJdbcCall spCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05052")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4331BPOFilter.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        Map<String, Object> spRes = spCall.execute(params);
-        filter.setResponse(((List<A4331BPOFilter>) spRes.get("result")).get(0));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05052", params,
+                new BeanPropertyRowMapper<>(A4331BPOFilter.class));
+        filter.setResponse(((List<A4331BPOFilter>) obj.get("result")).get(0));
         return filter;
     }
     
     @Override
     public SQP05165Filter loadSQP05165Filter(SQP05165Filter filter) throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05165")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4335Filter.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        Map<String,Object> spRes = jdbcCall.execute(params);
-        filter.setResponse((List<A4335Filter>) spRes.get("result"));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05165", params,
+                new BeanPropertyRowMapper<>(A4335Filter.class));
+        filter.setResponse((List<A4335Filter>) obj.get("result"));
         return filter;
     }
     
