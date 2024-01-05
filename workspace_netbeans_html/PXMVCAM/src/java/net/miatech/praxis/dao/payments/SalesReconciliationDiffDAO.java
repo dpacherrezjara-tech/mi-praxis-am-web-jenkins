@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,25 +33,19 @@ public class SalesReconciliationDiffDAO implements SalesReconciliationDiffLogic 
 
     @Override
     public SQP05153Filter loadSQP05153Filter(SQP05153Filter filter) throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05153")
-                .returningResultSet("result", new BeanPropertyRowMapper(A4511Filter.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        Map<String, Object> obj = jdbcCall.execute(params);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05153", params,
+                new BeanPropertyRowMapper<>(A4511Filter.class));
         filter.setResponse((List<A4511Filter>) obj.get("result"));
         return filter;
     }
 
     @Override
     public SQP05154Filter loadSQP05154Filter(SQP05154Filter filter) throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05154")
-                .returningResultSet("result", new BeanPropertyRowMapper(A4511Filter.class));
         filter.setPage();
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        Map<String, Object> obj = jdbcCall.execute(params);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05154", params,
+                new BeanPropertyRowMapper<>(A4511Filter.class));
         filter.setResponse((List<A4511Filter>) obj.get("result"));
         filter.setPageOut(obj);
         return filter;
@@ -60,31 +53,24 @@ public class SalesReconciliationDiffDAO implements SalesReconciliationDiffLogic 
 
     @Override
     public List<A3152> getPaises() throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05016")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A3152.class));
-        return ((List<A3152>) jdbcCall.execute().get("result"));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05016",
+                new BeanPropertyRowMapper<>(A3152.class));
+        return ((List<A3152>) obj.get("result"));
     }
 
     @Override
     public SQP05004Filter loadSQP05004Filter(SQP05004Filter filter) throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05004")
-                .returningResultSet("result", new BeanPropertyRowMapper<>(A4451MP.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        filter.setLst((List<A4451MP>) jdbcCall.execute(params).get("result"));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05004", params,
+                new BeanPropertyRowMapper<>(A4451MP.class));
+        filter.setLst((List<A4451MP>) obj.get("result"));
         return filter;
     }
 
     @Override
     public void loadSQP05152Filter(SQP05152Filter filter) throws Exception {
-        SimpleJdbcCall jdbcCall = jdbcUtils.getJdbcCall()
-                .withSchemaName(LIBRARY)
-                .withProcedureName("SQP05152");
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        jdbcCall.execute(params);
+        jdbcUtils.executeSQP(LIBRARY, "SQP05152", params);
     }
 
     
