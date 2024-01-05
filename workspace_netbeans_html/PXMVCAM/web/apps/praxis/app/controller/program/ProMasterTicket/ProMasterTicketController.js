@@ -4132,6 +4132,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         win.setValue('lblDocumentType', '');
         win.setValue('lblDocumentTypeCod', '');
         win.setValue('lblDocumentTypeCon', '');
+        win.setValue('lblCompensatedTicket', '');
         win.setValue('chkOverCommision', false);
         win.setValue('chkAccounted', false);
         win.setValue('chkElectronicticket', false);
