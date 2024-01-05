@@ -87,7 +87,7 @@ public class InputsTMZDAO implements InputsTmzLogic {
                 for (Map<String, String> f : res.getLstFechas()) {
                     String fechaAgrupada = f.get("prda");
                     if (!fechaPorProcesador.containsKey(fechaAgrupada)) {
-                        fechaPorProcesador.put(fechaAgrupada, new ArrayList<>());
+                        fechaPorProcesador.put(fechaAgrupada, new ArrayList<Map<String, String>>());
                     }
                     fechaPorProcesador.get(fechaAgrupada).add(f);
                 }
