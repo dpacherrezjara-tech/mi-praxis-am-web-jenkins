@@ -95,6 +95,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> obj = jdbcCall.execute(params);
         filter.setResponse((List<A4331SRFilter>) obj.get("result"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -104,7 +105,9 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05016")
                 .returningResultSet("result", new BeanPropertyRowMapper<>(A3152.class));
-        return ((List<A3152>) jdbcCall.execute().get("result"));
+        List<A3152> res = (List<A3152>) jdbcCall.execute().get("result");
+        jdbcUtils.closeConnection();
+        return res;
     }
 
     @Override
@@ -113,7 +116,9 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 .withSchemaName(LIBRARY)
                 .withProcedureName("SQP05159")
                 .returningResultSet("result", new BeanPropertyRowMapper<>(A006.class));
-        return ((List<A006>) jdbcCall.execute().get("result"));
+        List<A006> res = (List<A006>) jdbcCall.execute().get("result");
+        jdbcUtils.closeConnection();
+        return res;
     }
 
     @Override
@@ -124,6 +129,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 .returningResultSet("result", new BeanPropertyRowMapper<>(A4451MP.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         filter.setLst((List<A4451MP>) jdbcCall.execute(params).get("result"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -138,6 +144,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> obj = jdbcCall.execute(params);
         filter.setResponse((List<A4331Filter>) obj.get("result"));
         filter.setPageOut(obj);
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -173,6 +180,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = spCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -185,6 +193,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = spCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -197,6 +206,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
         filter.setResponse(((List<A4331BPOFilter>) spRes.get("result")).get(0));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -209,6 +219,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
         filter.setResponse(((List<ScannerFilter>) spRes.get("result")));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -221,6 +232,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
         filter.setResponse(((List<ScannerFilter>) spRes.get("result")));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -233,6 +245,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
         filter.setResponse(((List<A4335Filter>) spRes.get("result")));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -257,6 +270,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = spCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -269,6 +283,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = spCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -281,6 +296,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
         filter.setResponse((List<ScannerFilter>) spRes.get("result"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -293,6 +309,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
         filter.setResponse((List<A4331Filter>) spRes.get("result"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -305,6 +322,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = spCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -317,6 +335,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = spCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -329,6 +348,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
         filter.setResponse((List<A4482Filter>) spRes.get("result"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -342,6 +362,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = spCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -354,6 +375,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
         filter.setResponse((List<A4331Filter>) spRes.get("result"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -376,6 +398,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = spCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -388,6 +411,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = spCall.execute(params);
         filter.setResponse((List<A4331Filter>) spRes.get("result"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -400,6 +424,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> obj = jdbcCall.execute(params);
         filter.setResponse((List<A4331SRFilter>) obj.get("result"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -414,6 +439,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> obj = jdbcCall.execute(params);
         filter.setResponse((List<A4496Filter>) obj.get("result"));
         filter.setPageOut(obj);
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -425,6 +451,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> obj = jdbcCall.execute(params);
         filter.setVP_CANT((Integer) obj.get("VP_CANT"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -437,6 +464,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> obj = jdbcCall.execute();
         SQP05147Filter filter = new SQP05147Filter();
         filter.setResponse((List<A4507>) obj.get("result"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -452,6 +480,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         if (spRes.size() > 0) {
             filter.setResponse(spRes.get(0));
         }
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -464,6 +493,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -476,6 +506,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -489,6 +520,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -501,6 +533,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -513,6 +546,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -525,6 +559,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setSQLRES((Integer) spRes.get("SQLRES"));
         filter.setSQLMSG((String) spRes.get("SQLMSG"));
+        jdbcUtils.closeConnection();
         return filter;
     }
     
@@ -539,6 +574,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setResponse((List<A4331STFilter>) spRes.get("result"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -553,6 +589,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setResponse((List<A4331Filter>) spRes.get("result"));
         filter.setPageOut(spRes);
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -564,6 +601,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setOUT_USOS((String) spRes.get("OUT_USOS"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -576,6 +614,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setResponse((List<ProductionFilter>) spRes.get("result"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -588,6 +627,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setResponse((List<ProductionFilter>) spRes.get("result"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -602,6 +642,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setResponse((List<CreditCardFilter>) spRes.get("result"));
         filter.setPageOut(spRes);
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -619,6 +660,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         if(filter.getSQLRES()>0){
             filter.setResponse(response);
         }
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -631,6 +673,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> spRes = jdbcCall.execute(params);
         filter.setResponse((List<A4501>) spRes.get("result"));
+        jdbcUtils.closeConnection();
         return filter;
     }
 
@@ -648,6 +691,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
             SqlParameterSource fparams = new BeanPropertySqlParameterSource(fop);
             fopsCall.execute(fparams);
         }
+        jdbcUtils.closeConnection();
         return filter;
     }
 }
