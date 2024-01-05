@@ -4,8 +4,6 @@ package net.miatech.praxis.controllers.payments;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
@@ -55,7 +53,6 @@ import net.miatech.praxis.payment.filter.SQP05219Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.Functions;
-import net.sabre.miatech.praxis.ReclocRES;
 import net.sabre.miatech.praxis.TicketRES;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -67,7 +64,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 //</editor-fold>
@@ -1060,84 +1056,6 @@ public class SalesReconciliationBPOController {
             System.out.println("Error: " + e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-//</editor-fold>
-    
-    //<editor-fold defaultstate="collapsed" desc="WS Pruebas JSON">
-    @RequestMapping(value = "testTicketSabre/{ticket}")
-    public ResponseEntity<?> testTicketSabre(@PathVariable String ticket, @RequestHeader("Authorization") String authHeader) {
-        System.out.println("---------------SalesReconciliationBPO:testTicketSabre-------------");
-        try {
-            if (authHeader != null && authHeader.startsWith("Basic ")) {
-                // El encabezado de autenticación está presente y comienza con "Basic "
-                // Extraer y decodificar las credenciales
-                String base64Credentials = authHeader.substring(6);
-                String credentials = new String(Base64.getDecoder().decode(base64Credentials));
-
-                // Las credenciales ahora están en el formato usuario:contraseña
-                // Puedes dividirlas si es necesario
-                String[] userPass = credentials.split(":");
-                String username = userPass[0];
-                String password = userPass[1];
-
-                // Realiza acciones basadas en las credenciales
-                // Por ejemplo, verifica la autenticación
-                if (username.startsWith("SAP") && password.equals("miatech1")) {
-                    // Las credenciales son válidas
-                    System.out.println("Autorizado...");
-                    TicketRES response = sabreWebService.getTicketInfo(ticket);
-                    return new ResponseEntity<>(response, HttpStatus.OK);
-                } else {
-                    // Las credenciales son inválidas
-                    throw new Exception("No Autorizado");
-                }
-            }else{
-                throw new Exception("Necesita Credenciales");
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return new ResponseEntity<>(
-                    Collections.singletonMap("Message", e.getMessage()),
-                    HttpStatus.BAD_REQUEST);
-        }
-    }
-    
-    @RequestMapping(value = "testPnrSabre/{pnr}")
-    public ResponseEntity<?> testPnrSabre(@PathVariable String pnr, @RequestHeader("Authorization") String authHeader) {
-        System.out.println("---------------SalesReconciliationBPO:testPNRSabre-------------");
-        try {
-            if (authHeader != null && authHeader.startsWith("Basic ")) {
-                // El encabezado de autenticación está presente y comienza con "Basic "
-                // Extraer y decodificar las credenciales
-                String base64Credentials = authHeader.substring(6);
-                String credentials = new String(Base64.getDecoder().decode(base64Credentials));
-
-                // Las credenciales ahora están en el formato usuario:contraseña
-                // Puedes dividirlas si es necesario
-                String[] userPass = credentials.split(":");
-                String username = userPass[0];
-                String password = userPass[1];
-
-                // Realiza acciones basadas en las credenciales
-                // Por ejemplo, verifica la autenticación
-                if (username.startsWith("SAP") && password.equals("miatech1")) {
-                    // Las credenciales son válidas
-                    System.out.println("Autorizado...");
-                    ReclocRES response = sabreWebService.getReclocInfo(pnr);
-                    return new ResponseEntity<>(response, HttpStatus.OK);
-                } else {
-                    // Las credenciales son inválidas
-                    throw new Exception("No Autorizado");
-                }
-            }else{
-                throw new Exception("Necesita Credenciales");
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return new ResponseEntity<>(
-                    Collections.singletonMap("Message", e.getMessage()),
-                    HttpStatus.BAD_REQUEST);
-        }
     }
 //</editor-fold>
 }
