@@ -363,6 +363,11 @@ public class ProMasterTicketDAO {
                     
                     
                     objRtn.fileA720.A2289_ESTADO = rs01.getString("CHG").trim();
+                    
+                    objRtn.fileA720.A720VRIC = rs01.getString("A720VRIC").trim();
+                    objRtn.fileA720.EMDCONCEP = rs01.getString("EMDCONCEP").trim();
+                    objRtn.fileA720.COMPTKT = rs01.getString("COMPTKT").trim();
+                    
                     filter.lstResultSet01.add(objRtn);
                 }
                 if (cstmt01.getMoreResults()) {
