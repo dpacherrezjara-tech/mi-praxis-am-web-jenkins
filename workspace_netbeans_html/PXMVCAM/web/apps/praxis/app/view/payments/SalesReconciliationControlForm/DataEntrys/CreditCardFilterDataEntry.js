@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
     controller: 'CreditCardFilterDataEntryController',
     title: 'Credit Card Filter - Form',
     header: true,
-    width: 1000,
+    width: 1025,
     resizable: true,
     layout: 'fit',
     modal: true,
@@ -115,6 +115,32 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                             listeners: {
                                 specialkey: 'onEnterKeyPress'
                             }
+                        },
+                        {
+                            xtype: 'combobox',
+                            fieldLabel: 'Status',
+                            name: 'IN_STVAL',
+                            store: Ext.create('Ext.data.SimpleStore', {
+                                fields: ['code', 'name'],
+                                data: [
+                                    ['', 'All'],
+                                    ['0', 'Stand By'],
+                                    ['1', 'Match'],
+                                    ['3', 'Settl. Without Sales'],
+                                    ['4', 'Match Diff.'],
+                                    ['5', 'Match Manual'],
+                                    ['6', 'Forced Match'],
+                                    ['7', 'Compensation Match'],
+                                    ['8', 'Pending RFND']
+                                ]
+                            }),
+                            labelWidth: 55,
+                            width: 180,
+                            displayField: 'name',
+                            valueField: 'code',
+                            queryMode: 'local',
+                            editable: false,
+                            value: ''
                         },
                         {
                             xtype: 'button',
