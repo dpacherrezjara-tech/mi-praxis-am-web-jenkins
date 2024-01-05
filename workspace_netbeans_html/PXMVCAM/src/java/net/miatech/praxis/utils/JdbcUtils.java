@@ -23,7 +23,7 @@ public class JdbcUtils {
     
     public JdbcTemplate getJdbcTemplate() throws Exception {
         Connection cnx = session.getServerSession().getCNXIBMDB2().getIBMDB2Connection();
-        return new JdbcTemplate(new SingleConnectionDataSource(cnx, false));
+        return new JdbcTemplate(new SingleConnectionDataSource(cnx,true));
     }
     
     public NamedParameterJdbcTemplate getNamedParameter() throws Exception {
