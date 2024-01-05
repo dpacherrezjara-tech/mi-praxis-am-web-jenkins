@@ -1252,6 +1252,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                 if (res.success) {
                     win.setValue('txtFilterTicketSeq', '');
                     me01.filterTKT = res.filterTKT;
+                    console.log(me01.beanResultSet01);
+                    
                     if (me01.filterTKT.IN_SEQ.length === 0) {
                         var controller = me01.dataEntry.getController();
                         controller.ticketNumber = win.getValue('txtFilterTicketCia').trim() + win.getValue('txtFilterTicketFormSer').trim();
@@ -1300,15 +1302,18 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             me01.beanResultSet01 = me01.filterTKT.lstResultSet01[0];
                         }
                         console.log('BEGIN beanResultSet01');
-                        console.log(me01.beanResultSet01);
+                        console.log(me01.beanResultSet01.fileA720.EMDCONCEP);
                         console.log('END beanResultSet01');
                         me01.gloA720TKVOID = me01.beanResultSet01.fileA720.A720TKVOID;
                         console.log('BEGIN CLEAN VOID');
                         Ext.getCmp(prototype.id + '-info-panel').el.setStyle({backgroundImage: ''});
                         console.log('END CLEAN VOID');
-                        if (me01.gloA720TKVOID === 'V') {
-                            //            idFacsimil.addChild(image);
-                            //            with(image){x=0; y=0}
+                        win.setValue('lblCompensatedTicket', me01.beanResultSet01.fileA720.COMPTKT);
+                        win.setValue('lblDocumentTypeCod', me01.beanResultSet01.fileA720.A720VRIC);
+                        win.setValue('lblDocumentTypeCon', me01.beanResultSet01.fileA720.EMDCONCEP);
+                        if(me01.gloA720TKVOID === 'V'){
+                //            idFacsimil.addChild(image);
+                //            with(image){x=0; y=0}
                             console.log('BEGIN VOID');
                             Ext.getCmp(prototype.id + '-info-panel').el.setStyle({backgroundImage: 'url(resources/img/icon/999x999/VOID_03_r1_c1.png)'});
                             console.log('END VOID');
@@ -1429,13 +1434,13 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         bean.FUENTE = win.getValue('lblSource').trim().substr(0,3);
                         if(bean.TDNR !== '' && bean.FUENTE !== ''){
                             bean.A720TKVOID = me01.gloA720TKVOID;
-                            me01.searchEMD(bean);
+
                         }
                         win.setValue('lblIssuedInExchangeFor', strIssuedInExchangeFor);
                         win.setValue('lblOriDes', me01.beanResultSet01.fileA720.A720ACCO + '-' + me01.beanResultSet01.fileA720.A720ACCD);
                         win.setValue('lblDocumentType', me01.beanResultSet01.fileA720.A720TDOC);
-                        win.setValue('lblDocumentTypeCod', me01.beanResultSet01.fileA720.A720TDOC_COD);
-                        win.setValue('lblDocumentTypeCon', me01.beanResultSet01.fileA720.A720TDOC_CON);
+                        //win.setValue('lblDocumentTypeCod', me01.beanResultSet01.fileA720.A720TDOC_COD);
+                        //win.setValue('lblDocumentTypeCon', me01.beanResultSet01.fileA720.A720TDOC_CON);
                         win.setValue('chkOverCommision', false);
                         win.setValue('chkAccounted', (me01.beanResultSet01.fileA1530.A1530FCONT !== '') ? true : false);
                         win.setValue('chkElectronicticket', (me01.beanResultSet01.fileA720.A720ETKT === 'E') ? true : false);
