@@ -1,0 +1,140 @@
+Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeController', {
+    extend: 'Ext.app.ViewController',
+    alias: 'controller.ATSummaryTreeController',
+    init: function (view) {
+    },
+    afterRender: async function (obj, e) {
+        this.getData();
+    },
+    getData: async function () {
+        const me = this;
+        const view = this.view;
+        const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
+        mainPanel.mask('Loading...');
+        const res = await fetch(`${view.url}/loadSummaryTree?${new URLSearchParams(view.searchParams)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const tdate = view.tdate;
+            //let keyDate = tdate === 'P' ? 'paydate' : 'sdate'; // old
+            let keyDate = tdate === 'P' ? 'prda' : 'sdate'; //new
+            //console.log(me.groupBy({data: data.response, key: keydate}));
+            console.log(data.response.at(0));
+            let firstObj = data.response.at((0));
+            view.setTitle(`${view.title} - ${firstObj.proc_DESC} (${firstObj.scurrency})`);
+            //<editor-fold defaultstate="collapsed" desc="Tree Store">
+            const tree = Object.entries(me.groupBy({data: data.response, key: keyDate})).map(obj => {
+                let procdesc = obj.at(1)[0].proc_DESC || '';
+                let childs = obj.at(1).map(x => {
+                    return {
+                        type: 'detail',
+                        date: x[keyDate],
+                        leaf: true,
+                        tdate: tdate,
+                        ...x
+                    };
+                });
+                return {
+                    date: obj.at(0),
+                    type: 'header',
+                    scurrency: view.searchParams.IN_MDA,
+                    proc_DESC: procdesc,
+                    accounted: me.sumBy({data: obj.at(1), key: 'accounted'}),
+                    qty_ACCOUNTED: me.sumBy({data: obj.at(1), key: 'qty_ACCOUNTED'}),
+                    pending: me.sumBy({data: obj.at(1), key: 'pending'}),
+                    qty_PENDING: me.sumBy({data: obj.at(1), key: 'qty_PENDING'}),
+                    total: me.sumBy({data: obj.at(1), key: 'total'}),
+                    qty_TOTAL: me.sumBy({data: obj.at(1), key: 'qty_TOTAL'}),
+                    children: childs,
+                    expanded: false,
+                    tdate: tdate
+                };
+            });
+            const storeTree = Ext.create('Ext.data.TreeStore', {
+                root: {text: '.', expanded: false, children: tree}
+            });
+            //</editor-fold>
+            Ext.getCmp(prototype.idTree + '-colFechaP').setText(tdate === 'P' ? 'Processing Date' : 'Sale Date');
+            Ext.getCmp(prototype.idTree + '-colFechaH').setText(tdate === 'P' ? 'Sale Date' : 'Processing Date');
+            me.view.setStore(storeTree);
+        }
+        mainPanel.unmask();
+    },
+    onClickAccounted: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
+        const view = me.view;
+        if (record.data.qty_ACCOUNTED === 0) {
+            global.Msg({msg: 'No data'});
+            return;
+        }
+        me.showGridDetail(me.formatParameters({type: 'C', obj: record.data}));
+    },
+    onClickPending: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
+        if (record.data.qty_PENDING === 0) {
+            global.Msg({msg: 'No data'});
+            return;
+        }
+        me.showGridDetail(me.formatParameters({type: 'P', obj: record.data}));
+    },
+    onClickTotal: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
+        if(record.data.type==='header'){
+            if(cellIndex===1){
+                return;
+            }
+        }
+        if (record.data.qty_TOTAL === 0) {
+            global.Msg({msg: 'No data'});
+            return;
+        }
+        me.showGridDetail(me.formatParameters({type: 'A', obj: record.data}));
+    },
+    showGridDetail:function(params){
+        const me = this;
+        const view = me.view;
+        const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
+        const drillDown = mainPanel.items.items;
+        drillDown.at(-1).hide();
+        const panelDetail = Ext.create('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid', {
+            id: prototype.id + '-detailGrid01',
+            searchParams: params,
+            url: view.url
+        });
+        mainPanel.add(panelDetail);
+    },
+    formatParameters: function ( {type, obj}) {
+        const me = this;
+        const view = me.view;
+        const viewParams = view.searchParams;
+        let params = {
+            FECHA_FROM_P: obj.date,
+            //FECHA_FROM_H: viewParams.IN_TFECHA === 'P' ? obj['sdate'] : obj['paydate'],
+            FECHA_FROM_H: viewParams.IN_TFECHA === 'P' ? obj['sdate'] : obj['prda'],
+            IN_STCONL: type,
+            ...viewParams
+        };
+        console.log('Detail Params: ',params);
+        return params;
+    },
+    //<editor-fold defaultstate="collapsed" desc="Utilitarios">
+    groupBy: function ( {data, key}){
+        let grouped = data.reduce((groups, item) => {
+            let obj = item[key];
+            if (!groups[obj]) {
+                groups[obj] = [];
+            }
+            groups[obj].push(item);
+            return groups;
+        }, {});
+        return grouped;
+    },
+    sumBy: function ( {data, key}){
+        let sum = data.reduce(function (total, item) {
+            return total + item[key];
+        }, 0);
+        return sum;
+    }
+    //</editor-fold>
+});
+
+

@@ -24,6 +24,8 @@ public class A4306 {
     public String A4306FREVI = "";
     public String A4306HREVI = "";
     public String A4306MODULCO = "";
+    public String A4306PROP = "";
+    public String A4306LABL = "";
     public String A4306TYPECO = "";
 
     public String getA4306MODULCO() {

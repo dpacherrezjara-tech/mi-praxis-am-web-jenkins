@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.MiscellaneousPaymentDAO;
-import net.miatech.praxis.payment.A4169;
-import net.miatech.praxis.payment.filter.A4169Filter;
+import net.miatech.praxis.payment.old.A4169;
+import net.miatech.praxis.payment.old.A4169Filter;
 
 public class MiscellaneousPaymentLogic {
 

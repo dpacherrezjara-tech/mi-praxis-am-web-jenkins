@@ -1,21 +1,25 @@
-
 prototype.id = 'ReconciliationDoublePaymentForm';
-prototype.url = CONTEXTPATH + '/ReconciliationDoublePayment';
+prototype.url = CONTEXTPATH + '/SalesReconciliationDoublePay';
+prototype.width = 1850;
+prototype.height = 630;
+fechaActual = new Date(),mesActual = fechaActual.getMonth(),anioActual = fechaActual.getFullYear();
+
 
 Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.ReconciliationDoublePaymentForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.ReconciliationDoublePaymentForm',
     requires: [
+        'Ext.Praxis.controller.payments.ReconciliationDoublePayment.ReconciliationDoublePaymentController',
         'Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Options',
         'Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Filters',
-        'Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Info',
-        'Ext.Praxis.controller.payments.ReconciliationDoublePayment.ReconciliationDoublePaymentController'
+        'Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Grids.MainGrid',
+        'Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Grids.DetailGrid',
+        'Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.DataEntrys.RefundInfoDataEntry'
     ],
     controller: 'ReconciliationDoublePaymentController',
     layout: {
         type: 'fit'
     },
-    padding: '0 0 0 0',
     border: false,
     defaults: {
         border: false
@@ -32,17 +36,12 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Reconciliat
                     border: false,
                     bodyCls: 'colorFondo',
                     layout: 'fit',
-//                    defaults: {
-//                        border: false,
-//                        autoScroll: true
-//                    },
                     items: [
                         {
                             xtype: 'panel',
                             region: 'center',
-                            width: 1800,
+                            width: prototype.width,
                             layout: 'border',
-                            
                             items: [
                                 {
                                     region: 'center',
@@ -54,51 +53,41 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Reconciliat
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1800,
+                                        width: prototype.width,
                                         align: 'center'
                                     },
                                     items: [
                                         {
                                             xtype: prototype.id + '-options'
-                                        }
-                                        ,
+                                        },
                                         {
-                                            xtype: prototype.id + '-filters',
                                             id: prototype.id + '-contentFilter',
-                                            hidden: false
-                                        }
-                                        ,
-                                        {
                                             xtype: 'panel',
-                                            height: 600,
-                                            width: 1800,
-                                            layout: 'fit',
+                                            border: false,
+                                            defaults: {
+                                                width: prototype.width,
+                                                align: 'center'
+                                            },
                                             items: [
                                                 {
-                                                    xtype: 'panel',
-                                                    id: prototype.id + '-centerC-panel01',
-                                                    width: 1800,
-                                                    layout: 'border',
-                                                    align: 'center',
-                                                    border: true,
-                                                    defaults: {
-                                                        border: false
-                                                    },
-                                                    bodyStyle: 'background-color: white;',
-                                                    items: [
-                                                        {
-                                                            region: 'center',
-                                                            xtype: prototype.id + '-info',
-                                                            id: prototype.id + '-contentInfo'
-                                                        }
-                                                    ]
+                                                    xtype: prototype.id + '-filters'
+                                                    //id: prototype.id + '-filtersdp-1'
                                                 }
                                             ]
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-mainContent',
+                                            height: prototype.height,
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            layout: {
+                                                type: 'vbox',
+                                                align: 'center'
+                                            }
                                         }
-                                   ]
+                                    ]
                                 }
                             ]
-                            
                         }
                     ]
                 }

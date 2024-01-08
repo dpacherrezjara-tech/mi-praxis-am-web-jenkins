@@ -32,7 +32,6 @@ public class A2559Filter extends A2559{
     public Double DFQ = 0.0;
     public Double DCAMB = 0.0;
     public String IN_FLAG = "";
-    public String STATUS = "";
     
     public String IN_FLOWN_FINI = "";
     public String IN_FLOWN_FFIN = "";
@@ -41,6 +40,7 @@ public class A2559Filter extends A2559{
     public String IN_BILLING_DATEFINI = "";
     public String IN_BILLING_DATEFFIN = "";
     public String IN_PERIOD = "";
+    public String STATUS = "";
     
     public Pagination page = new Pagination();
 }

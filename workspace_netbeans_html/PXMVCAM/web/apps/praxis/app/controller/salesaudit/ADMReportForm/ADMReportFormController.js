@@ -110,7 +110,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReportForm.ADMReportFormControll
                 {"code": "MA", "name": "MANUAL"},
                 {"code": "QR", "name": "QUERYS"},
                 {"code": "MS", "name": "MASSIVE"},
-                {"code": "UP", "name": "UPFRONT"}
+                {"code": "UP", "name": "UPFRONT"},
+                {"code": "MP", "name": "PAYMENT CONCILIATION"}
             ]
         }));
 
@@ -399,6 +400,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReportForm.ADMReportFormControll
                 break;
             case 'MA':
                 value = 'Manual';
+                break;
+            case 'MP':
+                value = 'PAYMENT CONCILIATION';
                 break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';

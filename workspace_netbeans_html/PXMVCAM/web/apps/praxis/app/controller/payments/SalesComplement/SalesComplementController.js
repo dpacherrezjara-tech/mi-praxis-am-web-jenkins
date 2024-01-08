@@ -7,6 +7,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
     searchUrl: null,
     gridType: 'P',
     init: function (view) {
+        prototype.id = 'SalesComplementForm';
+        prototype.url = CONTEXTPATH + '/SalesComplement';
     },
     afterRender: async function (obj, e) {
         const me = this;
@@ -30,12 +32,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
 
         const dataCmb = await this.getMasterTableInfo();
         const dataPaises = await fetch(`${me.url}/loadPaises`)
-                .then(async res => {return await res.json();})
-                .catch(err=>{
-                    console.error('Error en Load Paises: ',err);
+                .then(async res => {
+                    return await res.json();
+                })
+                .catch(err => {
+                    console.error('Error en Load Paises: ', err);
                     return [];
                 });
-                
+
         //<editor-fold defaultstate="collapsed" desc="Funciones Store">
         const setComboArrayStore = ({id, value, data, key}) => {
             const cmb = me.getCmp({id: id});
@@ -46,16 +50,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
         };
         const setComboStore = ({id, value, data, key, display}) => {
             const cmb = me.getCmp({id: id});
-            let store = me.createComboStore({data: data.filter(x => x.a4451key2.trim() === key), 
-                valueField:'a4451key3', 
-                displayField:display});
+            let store = me.createComboStore({data: data.filter(x => x.a4451key2.trim() === key),
+                valueField: 'a4451key3',
+                displayField: display});
             cmb.suspendEvents(false);
             cmb.bindStore(store);
             cmb.setValue(value);
             cmb.resumeEvents();
         };
         //</editor-fold>
-        
+
         //<editor-fold defaultstate="collapsed" desc="Combos Fechas">
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
@@ -77,19 +81,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
         setComboArrayStore({id: '-cmbFecFiltro', value: 'SDATE', data: dataCmb, key: 'CMBDATE'});
         setComboArrayStore({id: '-cmbFindByFAMEX', value: 'X', data: dataCmb, key: 'CMBCVA'});
         setComboArrayStore({id: '-cmbFindBySTVAL', value: 'X', data: dataCmb, key: 'CMBCVS'});
-        setComboStore({id: '-cmbFindByCreditCard', value: '', data: dataCmb, key: 'CMBTARJ',display:'a4451desc1'});
+        setComboStore({id: '-cmbFindByCreditCard', value: '', data: dataCmb, key: 'CMBTARJ', display: 'a4451desc1'});
 
-        setComboStore({id: '-cmbFindByPlusgrade', value: '', data: dataCmb, key: 'MERCHPLUS',display:'a4451desc2'});
-        setComboStore({id: '-cmbFindByLigas', value: '', data: dataCmb, key: 'MERCHLIG',display:'a4451desc2'});
-        setComboStore({id: '-cmbFindByTablet', value: '', data: dataCmb, key: 'MERCHTAB',display:'a4451desc2'});
-        
-        
-        const cmbPaises = me.getCmp({id:'-cmbFindByCountry'});
+        setComboStore({id: '-cmbFindByPlusgrade', value: '', data: dataCmb, key: 'MERCHPLUS', display: 'a4451desc2'});
+        setComboStore({id: '-cmbFindByLigas', value: '', data: dataCmb, key: 'MERCHLIG', display: 'a4451desc2'});
+        setComboStore({id: '-cmbFindByTablet', value: '', data: dataCmb, key: 'MERCHTAB', display: 'a4451desc2'});
+
+
+        const cmbPaises = me.getCmp({id: '-cmbFindByCountry'});
         cmbPaises.suspendEvents(false);
-        cmbPaises.bindStore(me.createComboStore({data:dataPaises, valueField:'code', displayField:'name'}));
+        cmbPaises.bindStore(me.createComboStore({data: dataPaises, valueField: 'code', displayField: 'name'}));
         cmbPaises.setValue('');
         cmbPaises.resumeEvents();
-        
+
         Ext.getCmp(prototype.id + '-txtTKT').setValue('');
         Ext.getCmp(prototype.id + '-txtOPERATNBR').setValue('');
         Ext.getCmp(prototype.id + '-txtAuth').setValue('');
@@ -119,22 +123,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
         const opt = Ext.getCmp(prototype.id + '-radiogroupTypeX').getValue().rbgTypeX;
 
         //botones constantes
-        const btnOpenbr = me.getCmp({id:'-txtOPERATNBR'}),
-                cmbLigas = me.getCmp({id:'-cmbFindByLigas'}),
-                cmbTablet = me.getCmp({id:'-cmbFindByTablet'}),
-                cmbPlusgrade = me.getCmp({id:'-cmbFindByPlusgrade'}),
-                cmbPais = me.getCmp({id:'-cmbFindByCountry'}),
-                cmbCardt = me.getCmp({id:'-cmbFindByCreditCard'});
+        const btnOpenbr = me.getCmp({id: '-txtOPERATNBR'}),
+                cmbLigas = me.getCmp({id: '-cmbFindByLigas'}),
+                cmbTablet = me.getCmp({id: '-cmbFindByTablet'}),
+                cmbPlusgrade = me.getCmp({id: '-cmbFindByPlusgrade'}),
+                cmbPais = me.getCmp({id: '-cmbFindByCountry'}),
+                cmbCardt = me.getCmp({id: '-cmbFindByCreditCard'});
 
         //filters value
         let ccust = '139',
                 date = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue(),
                 datefrom = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() +
-                    Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() +
-                    Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue(),
+                Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue(),
                 dateto = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
-                    Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + 
-                    Ext.getCmp(prototype.id + '-cmbDateToDay').getValue(),
+                Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateToDay').getValue(),
                 famex = Ext.getCmp(prototype.id + '-cmbFindByFAMEX').getValue(),
                 stval = Ext.getCmp(prototype.id + '-cmbFindBySTVAL').getValue(),
                 tkt = Ext.getCmp(prototype.id + '-txtTKT').getValue(),
@@ -322,7 +326,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             return;
         }
         prototypeProgram.view = 'payments-sales-complement-form';
-        prototypeProgram.nprog = 'PX00000627'
+        prototypeProgram.nprog = 'PX00000627';
         prototypeProgram.title = 'Sales Complement';
         prototypeProgram.modulo = '';
 
@@ -350,9 +354,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
         } else {
             panelFilter.show();
         }
-    },
-    onClickExcelBtn: function (obj) {
-        alert('Funcion en Construccion');
     },
     onChangeFechaBtn: function (obj) {
         const me = this;
@@ -400,6 +401,25 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
         opts[obj.id.split('-').at(-1)]();
         //console.log(obj.getValue());
     },
+    onClickExcelBtn: function () {
+        const me = this;
+        let params = Object.assign({}, me.searchParams);
+        params.excel = true;
+        const opts = {
+            'P': () => {
+                global.getFile(`${me.url}/downloadPlusgradeInfo?${new URLSearchParams(params)}`);
+            },
+            'L': () => {
+                global.getFile(`${me.url}/downloadLigasInfo?${new URLSearchParams(params)}`);
+            },
+            'T': () => {
+                global.getFile(`${me.url}/downloadTabletInfo?${new URLSearchParams(params)}`);
+            }
+        };
+        if (opts[me.gridType]) {
+            opts[me.gridType]();
+        }
+    },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){
         return Ext.getCmp(prototype.id + id);
@@ -436,13 +456,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
         return Ext.create('Ext.data.Store', {
             autoLoad: true,
             data: data,
-            pageSize:20
+            pageSize: 20
         });
     },
-    parseInt: function(number){
-        if(number && number !== ''){
+    parseInt: function (number) {
+        if (number && number !== '') {
             return parseInt(number);
-        };
+        }
+        ;
         return number;
     }
     //</editor-fold>

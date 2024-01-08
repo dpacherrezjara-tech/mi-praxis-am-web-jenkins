@@ -10,8 +10,8 @@ import net.miatech.beans.SaleAudit.A2665Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.LoadConciliationDAO;
 import net.miatech.praxis.dao.salesAudit.NumberingRangesADMDAO;
-import net.miatech.praxis.payment.filter.A2290Filter;
-import net.miatech.praxis.payment.filter.A2370Filter;
+import net.miatech.praxis.payment.old.A2290Filter;
+import net.miatech.praxis.payment.old.A2370Filter;
 
 // </editor-fold>
 /**

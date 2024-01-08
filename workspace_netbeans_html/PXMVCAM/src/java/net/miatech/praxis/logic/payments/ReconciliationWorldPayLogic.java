@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.ReconciliationWorldPayDAO;
-import net.miatech.praxis.payment.filter.A4040Filter;
-import net.miatech.praxis.payment.filter.A4041Filter;
-import net.miatech.praxis.payment.filter.A4042Filter;
+import net.miatech.praxis.payment.old.A4040Filter;
+import net.miatech.praxis.payment.old.A4041Filter;
+import net.miatech.praxis.payment.old.A4042Filter;
 
 /**
  *

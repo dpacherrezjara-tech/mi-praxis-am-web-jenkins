@@ -1,19 +1,19 @@
 Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.'+prototype.id+'-filters',
+    alias: 'widget.' + prototype.id + '-filters',
     border: true,
     bodyStyle: 'background-color: #E3EAF9;',
     padding: '2px 0px 1px 0px',
-    layout: 'column',
+    layout: 'vbox',
     items: [
-        {   
+        {
             id: prototype.id + '-Filters3_1',
             xtype: 'form',
             border: false,
             bodyStyle: 'background: transparent',
             padding: '2px 5px 1px 5px',
             layout: 'column',
-            defaults:  {
+            defaults: {
 //                labelStyle: 'font-weight:bold;',
                 fieldStyle: 'text-align: center;',
                 padding: '5px 1px 5px 1px',
@@ -142,66 +142,17 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
                     emptyText: 'All',
                     width: 70,
                     anchor: '100%'
-                },
-                {
-                    xtype: 'datefield',
-                    fieldLabel: 'Create Date ',
-                    id: prototype.id+'-txtDateField',
-                    autoSelect: false,
-                    format: 'Y/m/d',
-                    invalidText: 'Type the date in the format: YYYY/MM/DD',
-                    selectOnFocus: true,
-                    enableKeyEvents: true,
-                    minValue: new Date(1990, 00, 01),
-                    maskRe: /[0-9/]/,
-                    editable: false,
-                    valueField: 'code',
-                    displayField: 'name',
-                    labelWidth: 150,
-                    enforceMaxLength: true,
-                    maxLength: 10,
-                    width: 250,
-                    hidden: true,
-                    hiddenLabel: false
-                },
-                {
-                    xtype: 'combo',
-                    fieldLabel: '<strong style="color:red;font-size:13px;"></strong>  Country',
-                    id: prototype.id+'-cmbCountry',           
-                    queryMode: 'local',
-                    triggerAction: 'all',
-                    autoSelect: false,
-                    enableKeyEvents: true,
-                    autocomplete: true,
-                    allowBlank: true,
-                    readOnly: false,
-                    editable: false,
-                    valueField: 'A006PAIS',
-                    displayField: 'A006NOMBRE',
-                    width: 308,
-                    labelWidth: 120,
-                    hidden: true,
-                    hiddenLabel: false
-                },
-                {xtype: 'tbspacer', width: 60},
-                {
-                    xtype: 'checkboxfield',
-                    id: prototype.id + '-chkLOG',
-                    width: 200,
-                    boxLabel: '<b>Log</b>',
-                    hidden: true,
-                    inputValue: '0'
                 }
             ]
         },
-        {   
+        {
             id: prototype.id + '-Filters3_2',
             xtype: 'form',
             border: false,
             bodyStyle: 'background: transparent',
-            margin: '10px 10px 0px 820px',
+            margin: '5 10 5 10',
             layout: 'column',
-            defaults:  {
+            defaults: {
                 labelStyle: 'font-weight:bold;',
                 fieldStyle: 'text-align: center;',
                 anchor: '100%',
@@ -211,22 +162,12 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
                 hidden: false,
                 selectOnFocus: true
             },
-            items: [ 
-                {
-                    xtype: 'checkboxfield',
-                    id: prototype.id + '-chkCITY',
-                    width: 200,
-                    boxLabel: '<b>Missing Countries</b>',
-                    hidden: true,
-                    inputValue: '1',
-                    listeners: {
-                        change: 'btn_ChangechkCITY'
-                    }
-                },
+            items: [
+                
                 {
                     xtype: 'combo',
                     fieldLabel: 'Group By',
-                    id: prototype.id+'-cmbVISTA',           
+                    id: prototype.id + '-cmbVISTA',
                     triggerAction: 'all',
                     enableKeyEvents: true,
                     caseSensitive: true,
@@ -237,17 +178,14 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
                     width: 170,
                     labelWidth: 70,
                     fieldStyle: 'text-align: left;',
-                    hidden: false,
-//                    listeners:{
-//                        select: 'btnSearch_click',
-//                        change: 'ChangeVista_clickHandler'
+                    hidden: false
 //                    }
                 },
                 {
                     xtype: 'combo',
                     fieldLabel: 'Source',
-                    id: prototype.id+'-cmbFUENTE',
-                    enableKeyEvents: true,                    
+                    id: prototype.id + '-cmbFUENTE',
+                    enableKeyEvents: true,
                     readOnly: false,
                     editable: false,
                     valueField: 'a051KEY2',
@@ -255,17 +193,65 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
                     labelWidth: 50,
                     width: 250,
                     margin: '0px 0px 0px 20px',
-                    hidden: false,
+                    hidden: true,
                     fieldStyle: 'text-align: left;',
                     emptyText: 'All',
                     queryMode: 'local',
+                    triggerAction: 'all'
+                },
+                {
+                    xtype: 'combo',
+                    fieldLabel: '<strong style="font-size:13px;">File Type</strong>',
+                    id: prototype.id + '-cmbFileType',
+                    queryMode: 'local',
                     triggerAction: 'all',
+                    autoSelect: false,
+                    enableKeyEvents: true,
+                    //autocomplete: true,
+                    allowBlank: true,
+                    readOnly: false,
+                    editable: false,
+                    valueField: 'code',
+                    displayField: 'name',
+                    width: 250,
+                    labelWidth: 120,
+                    hidden: true,
+                    hiddenLabel: false,
+                    store: Ext.create('Ext.data.Store', {
+                        data: [
+                            {code: 'P', name: 'Processors'},
+                            {code: 'C', name: 'Complements'}
+                        ]
+                    }),
+                    value:'P',
                     listeners:{
-                        select: 'btnSearch_click'
+                        change:'onChangeFileType'
                     }
-                }           
+                },
+                {
+                    xtype: 'combo',
+                    fieldLabel: 'Source',
+                    id: prototype.id + '-cmbFUENTE-det-PROC',
+                    enableKeyEvents: true,
+                    readOnly: false,
+                    editable: false,
+                    valueField: 'a051KEY2',
+                    displayField: 'a051DESCR1',
+                    labelWidth: 50,
+                    width: 250,
+                    margin: '0px 0px 0px 20px',
+                    hidden: true,
+                    fieldStyle: 'text-align: left;',
+                    //emptyText: 'All',
+                    queryMode: 'local',
+                    triggerAction: 'all',
+                    listeners: {
+                        select: 'onClickSearchBtn'
+                    }
+                }
+                
             ]
-        } 
+        }
 
     ]
 });

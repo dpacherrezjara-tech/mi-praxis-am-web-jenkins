@@ -29,7 +29,7 @@ import java.io.FileOutputStream;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import net.miatech.praxis.payment.filter.A2331Filter;
+import net.miatech.praxis.payment.old.A2331Filter;
 import net.miatech.utils.Functions;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

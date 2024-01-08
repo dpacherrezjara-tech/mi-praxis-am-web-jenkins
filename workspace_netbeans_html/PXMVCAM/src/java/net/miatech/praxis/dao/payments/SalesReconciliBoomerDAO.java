@@ -17,8 +17,8 @@ import net.miatech.beans.PX040S01A1716Filter;
 import net.miatech.beans.SQP00697Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.payment.filter.A2318Filter;
-import net.miatech.praxis.payment.filter.A2324Filter;
+import net.miatech.praxis.payment.old.A2318Filter;
+import net.miatech.praxis.payment.old.A2324Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 

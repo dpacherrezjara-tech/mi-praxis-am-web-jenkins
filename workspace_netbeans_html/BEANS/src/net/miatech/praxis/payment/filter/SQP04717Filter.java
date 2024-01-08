@@ -5,7 +5,7 @@
 package net.miatech.praxis.payment.filter;
 
 import net.miatech.beans.Pagination;
-import net.miatech.praxis.payment.A4298;
+import net.miatech.praxis.payment.entities.A4298;
 
 /**
  *

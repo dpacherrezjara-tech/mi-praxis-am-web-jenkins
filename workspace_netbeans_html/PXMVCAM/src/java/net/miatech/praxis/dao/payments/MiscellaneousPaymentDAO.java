@@ -11,10 +11,10 @@ import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
 import static net.miatech.praxis.dao.payments.BanksCatalogDAO.pasarGarbageCollector;
-import net.miatech.praxis.payment.A2281;
-import net.miatech.praxis.payment.A4169;
-import net.miatech.praxis.payment.filter.A2280Filter;
-import net.miatech.praxis.payment.filter.A4169Filter;
+import net.miatech.praxis.payment.old.A2281;
+import net.miatech.praxis.payment.old.A4169;
+import net.miatech.praxis.payment.old.A2280Filter;
+import net.miatech.praxis.payment.old.A4169Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 

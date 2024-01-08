@@ -29,5 +29,4 @@ public class A2600 {
     public String A2600CUR = "";
     public String A2600CERR = "";
     public String STATUS = "";
-
 }

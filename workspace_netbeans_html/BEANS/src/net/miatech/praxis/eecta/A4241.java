@@ -37,5 +37,12 @@ public class A4241 {
     public String A4241USRAC = "";
     public String A4241FECAC = "";
     public String A4241HORAC = "";
+    //news DATOS DE FACTURACION(TIMBRADO)
+    public String A4241FECTB = "";
+    public String A4241UIDAN = "";
+    public String A4241UIDBF = "";
+    public String A4241STATB = "";
+    public String A4241STDE = "";
+    public String A4241RMSG = "";
 
 }

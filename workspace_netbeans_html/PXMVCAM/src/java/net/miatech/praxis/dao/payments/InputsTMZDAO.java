@@ -12,20 +12,24 @@ import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.classes.CurrentSession;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.logic.payments.InputsTmzLogic;
-import net.miatech.praxis.payment.A4305;
-import net.miatech.praxis.payment.A4344;
-import net.miatech.praxis.payment.A4451;
-import net.miatech.praxis.payment.CalendarTmz;
+import net.miatech.praxis.payment.entities.A4305;
+import net.miatech.praxis.payment.entities.A4344;
+import net.miatech.praxis.payment.entities.A4451;
+import net.miatech.praxis.payment.entities.CalendarTmz;
 import net.miatech.praxis.payment.filter.SQP04971Filter;
 import net.miatech.praxis.payment.filter.SQP04972Filter;
 import net.miatech.praxis.payment.filter.SQP04974Filter;
 import net.miatech.praxis.payment.filter.SQP04975Filter;
 import net.miatech.praxis.payment.filter.SQP04976Filter;
+import net.miatech.praxis.payment.filter.SQP05033Filter;
+import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.stereotype.Service;
@@ -40,35 +44,27 @@ public class InputsTMZDAO implements InputsTmzLogic {
 
     @Autowired
     private CurrentSession session;
+    
+    @Autowired
+    private JdbcUtils jdbcUtils;
 
-    private JdbcTemplate getConnection() throws Exception {
-        Connection cnx = session.getServerSession().getCNXIBMDB2().getIBMDB2Connection();
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(cnx, false));
-        return jdbcTemplate;
-    }
+    private static final String LIBRARY = "PRAXISMP";
+
 
     @Override
     public SQP04971Filter getSQP04971Filter(SQP04971Filter filter) {
-        SQP04971Filter res = new SQP04971Filter();
         try {
-            JdbcTemplate jdbcTemplate = this.getConnection();
-            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                    .withSchemaName("PRAXISMP")
-                    .withProcedureName("SQP04971")
-                    .returningResultSet("result", new BeanPropertyRowMapper<>(A4451.class));
-            MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("TIPO", filter.getTIPO());
-            params.addValue("STATUS", filter.getSTATUS());
-            Map<String, Object> obj = jdbcCall.execute(params);
-            res.setLstFuentes((List<A4451>) obj.get("result"));
-
+            SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+            Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP04971", params,
+                new BeanPropertyRowMapper<>(A4451.class));
+            filter.setLstFuentes((List<A4451>) obj.get("result"));
             MasterDAO masterDAO = new MasterDAO();
             masterDAO.setSession((IServerSession) session.getServerSession());
-            res.setLstPaises(masterDAO.loadPaises());
+            filter.setLstPaises(masterDAO.loadPaises());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-        return res;
+        return filter;
 
     }
 
@@ -77,15 +73,8 @@ public class InputsTMZDAO implements InputsTmzLogic {
         List<CalendarTmz> result = new ArrayList<>();
         try {
             SQP04972Filter res = new SQP04972Filter();
-            JdbcTemplate jdbcTemplate = this.getConnection();
-            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                    .withSchemaName("PRAXISMP")
-                    .withProcedureName("SQP04972");
-            MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("TIPO", filter.getTIPO());
-            params.addValue("FROM_YEAR", filter.getFROM_YEAR());
-            params.addValue("CCUST", filter.getCCUST());
-            Map<String, Object> obj = jdbcCall.execute(params);
+            SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+            Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP04972", params);
             res.setSTS((String) obj.get("STS"));
             if (res.getSTS().equals("1")) {
                 //obtiene listado de fechas activas
@@ -158,16 +147,15 @@ public class InputsTMZDAO implements InputsTmzLogic {
     public List<SQP04974Filter> getSQP04974Filter(SQP04974Filter filter) {
         List<SQP04974Filter> res = new ArrayList<>();
         try {
-            JdbcTemplate jdbcTemplate = this.getConnection();
-            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                    .withSchemaName("PRAXISMP")
-                    .withProcedureName("SQP04974")
-                    .returningResultSet("result", new BeanPropertyRowMapper<>(SQP04974Filter.class));
-            MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("TIPO", filter.getTIPO());
-            params.addValue("FECHA_FROM", filter.getFECHA_FROM());
-            params.addValue("FECHA_TO", filter.getFECHA_TO());
-            Map<String, Object> obj = jdbcCall.execute(params);
+            String procedure = "";
+            if(filter.getTIPO().equals("P")){
+                procedure= "SQP04974";
+            }else{
+                procedure= "SQP05030";
+            }
+            SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+            Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, procedure, params,
+                new BeanPropertyRowMapper<>(SQP04974Filter.class));
             res = (List<SQP04974Filter>) obj.get("result");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -179,16 +167,9 @@ public class InputsTMZDAO implements InputsTmzLogic {
     public List<SQP04975Filter> getSQP04975Filter(SQP04975Filter filter) {
         List<SQP04975Filter> res = new ArrayList<>();
         try {
-            JdbcTemplate jdbcTemplate = this.getConnection();
-            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                    .withSchemaName("PRAXISMP")
-                    .withProcedureName("SQP04975")
-                    .returningResultSet("result", new BeanPropertyRowMapper<>(SQP04975Filter.class));
-            MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("TIPO", filter.getTIPO());
-            params.addValue("FECHA_FROM", filter.getFECHA_FROM());
-            params.addValue("CCUST", filter.getCCUST());
-            Map<String, Object> obj = jdbcCall.execute(params);
+            SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+            Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP04975", params,
+                new BeanPropertyRowMapper<>(SQP04975Filter.class));
             filter.setSTS((String) obj.get("STS"));
             if (filter.getSTS().equals("1")) {
                 res = (List<SQP04975Filter>) obj.get("result");
@@ -203,15 +184,17 @@ public class InputsTMZDAO implements InputsTmzLogic {
     public SQP04976Filter getSQP04976Filter(SQP04976Filter filter) {
         //SQP04976Filter res = new SQP04976Filter();
         try {
-            JdbcTemplate jdbcTemplate = this.getConnection();
+            JdbcTemplate jdbcTemplate = jdbcUtils.getJdbcTemplate();
             SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                     .withSchemaName("PRAXISMP")
                     .withProcedureName("SQP04976");
 
             if (filter.getTIPO().equals("0")) {
                 jdbcCall.returningResultSet("result", new BeanPropertyRowMapper<>(A4305.class));
-            } else {
+            }else if(filter.getTIPO().equals("1")){
                 jdbcCall.returningResultSet("result", new BeanPropertyRowMapper<>(A4344.class));
+            }else {
+                jdbcCall.returningResultSet("result", new BeanPropertyRowMapper<>(A4305.class));
             }
             MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("PROCESADOR", filter.getPROCESADOR());
@@ -235,19 +218,41 @@ public class InputsTMZDAO implements InputsTmzLogic {
                 page.TOTROW = (int) obj.get("IO_TOTROW");
                 filter.setPage(page);
                 //</editor-fold>
-                if (filter.getTIPO().equals("0")) {
-                    List<A4305> lstReceived = (List<A4305>) obj.get("result");
-                    filter.setLstReceived(lstReceived);
-                    filter.setTotal(lstReceived.size()>0?filter.getPage().TOTROW:0);
-                } else {
-                    List<A4344> lstLoaded = (List<A4344>) obj.get("result");
-                    filter.setLstLoaded(lstLoaded);
-                    filter.setTotal(lstLoaded.size()>0?filter.getPage().TOTROW:0);
+                switch (filter.getTIPO()) {
+                    case "0":
+                        List<A4305> lstReceived = (List<A4305>) obj.get("result");
+                        filter.setLstReceived(lstReceived);
+                        filter.setTotal(!lstReceived.isEmpty()?filter.getPage().TOTROW:0);
+                        break;
+                    case "1":
+                        List<A4344> lstLoaded = (List<A4344>) obj.get("result");
+                        filter.setLstLoaded(lstLoaded);
+                        filter.setTotal(!lstLoaded.isEmpty()?filter.getPage().TOTROW:0);
+                        break;
+                    default:
+                        List<A4305> lstExonerados = (List<A4305>) obj.get("result");
+                        filter.setLstExonerados(lstExonerados);
+                        filter.setTotal(!lstExonerados.isEmpty()?filter.getPage().TOTROW:0);
+                        break;
                 }
-                
             }
+            jdbcUtils.closeConnection(jdbcCall);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+        }
+        return filter;
+    }
+
+    @Override
+    public SQP05033Filter getSQP05033Filter(SQP05033Filter filter) {
+        try {
+            filter.setPage();
+            SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+            Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05033", params);
+            filter.setLst((List<Map<String, Object>>) obj.get("#result-set-1"));
+            filter.setPageOut(obj);
+        } catch (Exception e) {
+            System.out.println("Error SQP05033Filter: " + e.getMessage());
         }
         return filter;
     }

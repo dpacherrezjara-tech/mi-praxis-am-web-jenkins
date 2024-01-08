@@ -24,7 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.apache.log4j.Logger;
 import net.miatech.praxis.logic.payments.FirstDataLogic;
-import net.miatech.praxis.payment.filter.A2338Filter;
+import net.miatech.praxis.payment.old.A2338Filter;
 import net.miatech.utils.Functions;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMethod;

@@ -13,7 +13,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.ReconciliationPaymentTicketLogic;
 import net.miatech.praxis.payment.filter.A4337Filter;
-import net.miatech.praxis.payment.filter.A2370Filter;
+import net.miatech.praxis.payment.old.A2370Filter;
 import net.miatech.utils.Functions;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;

@@ -12,7 +12,7 @@ import net.miatech.beans.SQP00697Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
 import static net.miatech.praxis.dao.payments.SalesReconciliAmexDAO.pasarGarbageCollector;
-import net.miatech.praxis.payment.filter.A4116Filter;
+import net.miatech.praxis.payment.old.A4116Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 

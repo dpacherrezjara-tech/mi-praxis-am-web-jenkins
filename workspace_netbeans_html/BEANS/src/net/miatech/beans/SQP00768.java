@@ -59,6 +59,9 @@ public class SQP00768 {
     public String column5 = "";
     public String column6 = "";
     public String column7 = "";
+    
+    public String A1721FRCA = "";
+    
     public String column8 = "";
     public String column9 = "";
     public String column10 = "";

@@ -4,415 +4,303 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Filters', {
     border: true,
     bodyStyle: 'background-color: #E3EAF9;',
     padding: '2px 0px 1px 0px',
-    layout: 'column',
+    layout: 'hbox',
     items: [
         {
             xtype: 'panel',
             border: false,
             bodyStyle: 'background: transparent',
             height: 'auto',
-            margin: '0 0 0 0 ',
+            margin: '0 0 0 0',
             layout: {
                 type: 'vbox',
                 align: 'center'
             },
             items: [
+                //<editor-fold defaultstate="collapsed" desc="Browser">
                 {
                     xtype: 'form',
-                    padding: '2px 5px 1px 5px',
                     border: false,
+                    id: prototype.id + '-formFilters',
                     bodyStyle: 'background: transparent',
-                    margin: '0 0 0 40px',
-                    layout: 'column',
+                    layout: 'vbox',
                     defaults: {
                         fieldStyle: 'text-align: center;',
-                        padding: '5px 1px 5px 1px',
-                        anchor: '100%',
-                        hiddenLabel: false,
-                        labelAlign: 'center',
-                        hidden: false
-                    },
-                    items: [
-                        
-                        {xtype: 'tbspacer', width: 250},
-                        {
-                            xtype: 'label',
-                            html: '<strong style="color:#000;">Search By:</strong>',
-                            align: 'left',
-                            fieldStyle: 'text-align: left;',
-                            padding: '8px 20px 0px 5px',
-                            hidden: false
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateSel',
-                            triggerAction: 'all',
-                            enableKeyEvents: true,
-                            readOnly: false,
-                            editable: true,
-                            valueField: 'code',
-                            displayField: 'name',
-                            fieldStyle: 'text-align: left;',
-                            width: 100,
-                            hidden: false
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateFromYear',
-                            fieldLabel: 'From',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            editable: false,
-                            triggerAction: 'all',
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            hidden: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            emptyText: 'All',
-                            labelWidth: 60,
-                            width: 140,
-                            anchor: '100%'
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateFromMonth',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            hidden: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            emptyText: 'All',
-                            width: 70,
-                            anchor: '100%'
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateFromDay',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            hidden: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            emptyText: 'All',
-                            width: 70,
-                            anchor: '100%'
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateToYear',
-                            fieldLabel: 'To',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            editable: false,
-                            triggerAction: 'all',
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            hidden: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            emptyText: 'All',
-                            labelWidth: 60,
-                            width: 150,
-                            anchor: '100%'
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateToMonth',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            hidden: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            emptyText: 'All',
-                            width: 70,
-                            anchor: '100%'
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateToDay',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            hidden: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            emptyText: 'All',
-                            width: 70,
-                            anchor: '100%'
-                        }, 
-                        {xtype: 'tbspacer', width: 20},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbErrorCode',
-                            fieldLabel: 'Error Code',
-                            triggerAction: 'all',
-                            enableKeyEvents: true,
-                            readOnly: false,
-                            editable: true,
-                            valueField: 'CODE',
-                            displayField: 'NAME',
-                            fieldStyle: 'text-align: left;',
-                            labelWidth: 100,
-                            width: 300,
-                            hidden: true,
-                            listeners: {
-                                change: 'btnSearch_click'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 20},
-                        {
-                            xtype: 'label',
-                            text: 'PNR:',
-                            padding: '8px 1px 2px 1px',
-                            width: 50
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtPNR',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[a-zA-Z]/,
-                            maxLength: 6,
-                            width: 100,
-                            enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'eventKey'
-                            }
-                        },
-                    ]
-                },
-                {
-                    xtype: 'form',
-                    padding: '2px 5px 1px 5px',
-                    id: prototype.id + '-frmQueueError',
-                    border: false,
-                    bodyStyle: 'background: transparent',
-                    margin: '0 0 0 40px',
-                    hidden: false,
-                    layout: 'column',
-                    defaults: {
-                        fieldStyle: 'text-align: center;',
-                        padding: '5px 1px 5px 1px',
+                        padding: '5 1 5 1',
                         anchor: '100%',
                         hiddenLabel: false,
                         labelAlign: 'right',
                         hidden: false
                     },
                     items: [
-                        {xtype: 'tbspacer', width: 20},
                         {
-                            xtype: 'label',
-                            text: 'Credit Card:',
-                            padding: '8px 1px 2px 1px',
-                            width: 70
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5 1 5 1',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items: [
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Search By',
+                                    name: 'IN_DATE',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['PRDA', 'Processing Date'],
+                                            ['PAYDATE', 'Payment Date']
+                                        ]
+                                    }),
+                                    labelWidth: 80,
+                                    width: 210,
+                                    labelStyle: 'font-weight: bold;',
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: 'PAYDATE'
+                                },
+                                {
+                                    xtype: 'datefield',
+                                    name: 'IN_DATEFROM',
+                                    fieldLabel: 'From',
+                                    format: 'Ymd',
+                                    editable: false, // Deshabilita la edición del campo
+                                    labelWidth: 50,
+                                    width: 150,
+                                    value: new Date(anioActual, mesActual, 1),
+                                    validator: 'validaFecha',
+                                    listeners: {
+                                        change: 'onChangeDateBtn'
+                                    },
+                                    id: prototype.id + '-datefieldFrom'
+                                },
+                                {
+                                    xtype: 'datefield',
+                                    name: 'IN_DATETO',
+                                    fieldLabel: 'To',
+                                    format: 'Ymd',
+                                    altFormats: 'm',
+                                    editable: false, // Deshabilita la edición del campo
+                                    labelWidth: 30,
+                                    width: 130,
+                                    value: fechaActual,
+                                    validator: 'validaFecha',
+                                    listeners: {
+                                        change: 'onChangeDateBtn'
+                                    },
+                                    id: prototype.id + '-datefieldTo'
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Type:',
+                                    name: 'IN_TGRID',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['DP', 'Double Payment'],
+                                            ['V', 'Void']
+                                            
+                                        ]
+                                    }),
+                                    labelWidth: 60,
+                                    width: 200,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: 'DP'
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbProctype',
+                                    name: 'IN_PROCTYPE',
+                                    labelWidth: 70,
+                                    width: 250,
+                                    valueField: 'a4451key3',
+                                    displayField: 'a4451desc1',
+                                    fieldLabel: 'Processor',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    allowBlank: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    labelAlign: 'right',
+                                    typeAhead: true,
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbPaises',
+                                    name: 'IN_SCOUNTRY',
+                                    queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    fieldLabel: 'Country',
+                                    labelWidth: 65,
+                                    labelAlign: 'right',
+                                    width: 230,
+                                    typeAhead: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbMoneda',
+                                    name: 'IN_PCURRENCY',
+                                    queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    fieldLabel: 'Currency',
+                                    labelWidth: 70,
+                                    labelAlign: 'right',
+                                    width: 140,
+                                    typeAhead: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: ''
+                                }
+                            ]
                         },
                         {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtCC1',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[0-9]/,
-                            maxLength: 6,
-                            width: 80,
-                            enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'eventKey'
-                            }
-                        },
-                        {
-                            xtype: 'label',
-                            text: '******',
-                            padding: '8px 1px 2px 1px',
-                            width: 40
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtCC2',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[0-9]/,
-                            maxLength: 4,
-                            width: 60,
-                            enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'eventKey'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 20},
-                        {
-                            xtype: 'label',
-                            text: 'Auth:',
-                            padding: '8px 1px 2px 1px',
-                            width: 50,
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtAuth',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[0-9]/,
-                            maxLength: 6,
-                            width: 100,
-                            enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'eventKey'
-                            }
-                        },
-                        {
-                            xtype: 'combo',
-                            fieldLabel: 'Document:',
-                            id: prototype.id + '-cmbTDOC',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            valueField: 'code',
-                            displayField: 'name',
-                            readOnly: false,
-                            editable: true,
-                            emptyText: 'All',
-                            //maxLength: 3,
-                            labelWidth: 100,
-                            width: 200,
-                            hiddenLabel: false,
-                            hidden: true,
-                            value: '',
-                            listeners: {
-                                change: 'btnSearch_click'
-                            }
-                        },
-                        {
-                            xtype: 'combo',
-                            fieldLabel: 'Refund Bank:',
-                            id: prototype.id + '-cmbSTRFND',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            valueField: 'code',
-                            displayField: 'name',
-                            readOnly: false,
-                            editable: true,
-                            emptyText: 'All',
-                            //maxLength: 3,
-                            labelWidth: 100,
-                            width: 200,
-                            hiddenLabel: false,
-                            value: '',
-                            listeners: {
-                                change: 'btnSearch_click'
-                            }
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbProT',
-                            fieldLabel: 'Proc Type',
-                            triggerAction: 'all',
-                            enableKeyEvents: true,
-                            readOnly: false,
-                            editable: true,
-                            valueField: 'code',
-                            displayField: 'name',
-                            fieldStyle: 'text-align: left;',
-                            labelWidth: 70,
-                            width: 200,
-                            hidden: false
-                        },
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'label',
-                            text: 'Merch:',
-                            padding: '8px 1px 2px 1px',
-                            width: 40
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtMERCHError',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[0-9]/,
-                            maxLength: 15,
-                            width: 80,
-                            enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'eventKey'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'label',
-                            text: 'TKT:',
-                            padding: '8px 1px 2px 1px',
-                            width: 30
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtTKT',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[0-9]/,
-//                            maxLength: 6,
-                            width: 95,
-                            enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'eventKey'
-                            }
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbCurr',
-                            fieldLabel: 'Currency:',
-                            triggerAction: 'all',
-                            enableKeyEvents: true,
-                            readOnly: false,
-                            editable: true,
-                            valueField: 'code',
-                            displayField: 'name',
-                            fieldStyle: 'text-align: left;',
-                            labelWidth: 70,
-                            width: 200,
-                            hidden: false
-                        },
-                        {
-                            xtype: 'combo',
-                            fieldLabel: 'Country:',
-                            id: prototype.id + '-cmbSCOUNTRY',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            valueField: 'CODE',
-                            displayField: 'NAME',
-                            readOnly: false,
-                            editable: true,
-                            emptyText: 'All',
-                            //maxLength: 3,
-                            labelWidth: 60,
-                            width: 130,
-                            hiddenLabel: false,
-                            value: '',
-                            listeners: {
-                                //change: 'rbChangeType'
-                            }
-                        },
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5 1 5 1',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Ticket',
+                                    labelWidth: 60,
+                                    width: 160,
+                                    name: 'IN_TKT',
+                                    maxLength: 13, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'PNR',
+                                    labelWidth: 40,
+                                    width: 120,
+                                    name: 'IN_PNR',
+                                    maxLength: 8, // Límite máximo de caracteres
+                                    maskRe: /[a-zA-Z0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Card Number',
+                                    labelWidth: 80,
+                                    width: 150,
+                                    name: 'creditcard',
+                                    maxLength: 6, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: '*****(*)'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    name: 'creditcard',
+                                    width: 50,
+                                    maxLength: 4, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Auth',
+                                    labelWidth: 40,
+                                    width: 100,
+                                    name: 'IN_SAUTHOC',
+                                    maxLength: 6, // Límite máximo de caracteres
+                                    maskRe: /[a-zA-Z0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Merchant',
+                                    labelWidth: 70,
+                                    width: 185,
+                                    name: 'IN_SMERCHID',
+                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
+                                    maxLength: 15, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Refund Bank',
+                                    name: 'IN_STRFND',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['1', 'Processed'],
+                                            ['2', 'Pending']
+                                            
+                                        ]
+                                    }),
+                                    labelWidth: 80,
+                                    width: 180,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                }
+                            ]
+                        }
                     ]
                 }
+                //</editor-fold>
             ]
         }
     ]

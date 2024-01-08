@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.payment.A2364;
+import net.miatech.praxis.payment.old.A2364;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 

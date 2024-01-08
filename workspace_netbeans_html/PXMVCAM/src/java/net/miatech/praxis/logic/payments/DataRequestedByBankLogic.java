@@ -11,11 +11,11 @@ import java.util.List;
 import net.miatech.beans.A1691Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.DataRequestedByBankDAO;
-import net.miatech.praxis.payment.ExcelChargeBack;
-import net.miatech.praxis.payment.filter.A2280Filter;
-import net.miatech.praxis.payment.filter.A2290Filter;
-import net.miatech.praxis.payment.filter.A2331Filter;
-import net.miatech.praxis.payment.filter.A2345Filter;
+import net.miatech.praxis.payment.old.ExcelChargeBack;
+import net.miatech.praxis.payment.old.A2280Filter;
+import net.miatech.praxis.payment.old.A2290Filter;
+import net.miatech.praxis.payment.old.A2331Filter;
+import net.miatech.praxis.payment.old.A2345Filter;
 
 public class DataRequestedByBankLogic {
 

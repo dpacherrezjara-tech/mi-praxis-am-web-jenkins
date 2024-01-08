@@ -20,7 +20,7 @@ import net.miatech.praxis.logic.interline.LoadInterline02Logic;
 import net.miatech.praxis.logic.payments.LoadPayment02Logic;
 import net.miatech.praxis.logic.program.LoadFacsimilLogic;
 import net.miatech.praxis.logic.program.ProrrateoNewLogic;
-import net.miatech.praxis.payment.filter.A2290Filter;
+import net.miatech.praxis.payment.old.A2290Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;

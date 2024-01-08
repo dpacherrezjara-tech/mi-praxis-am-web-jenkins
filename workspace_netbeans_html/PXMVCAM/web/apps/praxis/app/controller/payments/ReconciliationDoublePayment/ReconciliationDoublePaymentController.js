@@ -2,641 +2,167 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationDoublePayment.Reconcili
     extend: 'Ext.app.ViewController',
     alias: 'controller.ReconciliationDoublePaymentController',
     fecha: new Date(),
-    childs: '5',
-    bean: '',
-    paginActual: '',
-    drillDown: [],
-    lstCountry: [],
-    lstBank: [],
-    gridActual: '',
-    panelActual: '',
-    fileName: '',
-    me: '',
-    searchParams: {},
-    paramsDetail: {},
-    beanSettlementTktsDetail: {},
-    paramsDetailDetTktSettlement: {},
-    dataObtain: {},
+    url: CONTEXTPATH + '/SalesReconciliationDoublePay',
     init: function (view) {
-        me = this;
-        prototype.id = 'ReconciliationDoublePaymentForm';
-        prototype.url = CONTEXTPATH + '/ReconciliationDoublePayment';
-        this.childs = Ext.getCmp(prototype.id + '-panelMain').items.items;
-        me.panelActual = '-boxAdjustment';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
+    },
+    afterRender: async function (obj, e) {
+        const me = this;
+        await me.fillFilters();
+    },
+    fillFilters: async function () {
+        const me = this;
+        const filterPanel = Ext.getCmp(prototype.id + '-contentFilter');
+        filterPanel.mask('Loading Filters...');
+        const res = await fetch(`${me.url}/loadFilters`);
+        if (res.ok) {
+            const data = await res.json();
+            console.log(data);
+            const procesadores = data.procesadores;
+            const monedas = data.monedas.map(x => ({code: x.a006PAIS, name: `${x.a006PAIS}`}));
+            //<editor-fold defaultstate="collapsed" desc="Combos">
+            const cmbProcesadores = Ext.getCmp(prototype.id + '-cmbProctype');
+            me.setComboStore({cmp: cmbProcesadores, data: procesadores,
+                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
 
-        this.control({
-//            //   -------------------Eventos Genericos --------------------
-            '#ReconciliationDoublePaymentForm-xpanel': {
-                afterrender: this.xpanel_afterrender
-            },
-            '#ReconciliationDoublePaymentForm-btnSearch': {
-                click: this.btnSearch_click
-            },
-            '#ReconciliationDoublePaymentForm-btnClear': {
-                click: this.btnClear_click
-            },
-            '#ReconciliationDoublePaymentForm-btnExcel': {
-                click: this.btnExcel_click
-            },
-            '#ReconciliationDoublePaymentForm-btnFilter': {
-                click: this.btnFilter_click
-            },
-            '#ReconciliationDoublePaymentForm-btnAdd': {
-                click: this.btnAdd_click
-            },
-            '#ReconciliationDoublePaymentForm-btnBack': {
-                click: this.btnBack_click
-            },
-            '#ReconciliationDoublePaymentForm-btn-pag-first': {
-                click: this.pagFirst
-            },
-            '#ReconciliationDoublePaymentForm-btn-pag-previous': {
-                click: this.pagPrevious
-            },
-            '#ReconciliationDoublePaymentForm-btn-pag-next': {
-                click: this.pagNext
-            },
-            '#ReconciliationDoublePaymentForm-btn-pag-last': {
-                click: this.pagLast
-            }
-//            //-----------------Eventos Especificos -------------------    
-//
-//
-        });
-    },
-    xpanel_afterrender: function (obj, e) {
-        this.obtainData();
-        this.btnSearch_click();
-    },
-    eventKey: function (e, eOpts) {
-        if (eOpts.getKey() === 13) {
-            this.btnSearch_click();
+            const cmbPaises = Ext.getCmp(prototype.id + '-cmbPaises');
+            me.setComboStore({cmp: cmbPaises, data: data.paises,
+                valueField: 'code', displayField: 'name', value: ''});
+
+            const cmbMdas = Ext.getCmp(prototype.id + '-cmbMoneda');
+            me.setComboStore({cmp: cmbMdas, data: monedas,
+                valueField: 'code', displayField: 'name', value: ''});
+            //</editor-fold>
         }
+        filterPanel.unmask();
     },
-    onUpperValue: function (field, newValue, oldValue) {
-        field.setValue(newValue.toUpperCase());
-    },
-    onChangeCmbType: function (obj, value) {
-
-        Ext.getCmp(prototype.id + '-panelFilter1').hide();
-        Ext.getCmp(prototype.id + '-panelFilter2').hide();
-        Ext.getCmp(prototype.id + '-panelFilter3').hide();
-        Ext.getCmp(prototype.id + '-panelFilter4').hide();
-        Ext.getCmp(prototype.id + '-panelFilter5').hide();
-        Ext.getCmp(prototype.id + '-panelFilter6').hide();
-        Ext.getCmp(prototype.id + '-panelFilter7').hide();
-        Ext.getCmp(prototype.id + '-panelFilter8').hide();
-
-        if (value !== '') {
-            Ext.getCmp(prototype.id + '-panelFilter' + value).show();
-        }
-
-    },
-    obtainData: function () {
-
-        var month = this.fecha.getMonth() + 1;
-
-        if (month < 10) {
-            month = '0' + month;
-        }
-
-        var storeComboDataYear = win.getStoreYear(false);
-        var storeComboDataMonth = win.getStoreMonth(true);
-        var storeComboDataDay = win.getStoreDays(true);
-
-        //month = '05';
-
-        Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
-        Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
-
-        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
-        Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
-
-
-        Ext.getCmp(prototype.id + '-cmbDateToYear').bindStore(storeComboDataYear);
-        Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(storeComboDataMonth);
-        Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
-
-        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
-        Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
-        
-        var cmbCurr = Ext.getCmp(prototype.id + '-cmbCurr');
-        cmbCurr.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["ARS", "ARS"],
-                ["CAD", "CAD"],
-                ["CLP", "CLP"],
-                ["EUR", "EUR"],
-                ["GBP", "GBP"],
-                ["JPY", "JPY"],
-                ["MXN", "MXN"],
-                ["USD", "USD"],
-            ]
-        }));
-        cmbCurr.setValue("");
-
-        var cmbDateSel = Ext.getCmp(prototype.id + '-cmbDateSel');
-        cmbDateSel.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                // ["PRDA", "Processing Date"],
-                ["PAYDATE", "Payment Date"]
-            ]
-        }));
-        cmbDateSel.setValue("PAYDATE");
-
-        var cmbTDOC = Ext.getCmp(prototype.id + '-cmbTDOC');
-        cmbTDOC.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["S", "Sales"],
-                ["R", "Refund"]
-            ]
-        }));
-
-        var cmbSTRFND = Ext.getCmp(prototype.id + '-cmbSTRFND');
-        cmbSTRFND.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["0", "Pending"],
-                ["1", "Processed"]
-            ]
-        }));
-
-        var cmbProT = Ext.getCmp(prototype.id + '-cmbProT');
-        cmbProT.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["AMEX", "Amex"],
-                ["FIRSTD00", "First Data"],
-                ["PRISMA", "Prisma"],
-                ["WP00", "WorldPay"],
-                ["GETMEX00", "GetNetMex"],
-                ["ATCAN00", "Atcan"],
-            ]
-        }));
-        cmbProT.setValue("");
-
-        Ext.getCmp(prototype.id + '-cmbTDOC').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-cmbTDOC').setValue('');
-        Ext.getCmp(prototype.id + '-cmbTDOC').resumeEvents();
-
-        Ext.getCmp(prototype.id + '-cmbSTRFND').suspendEvents(false);
-        Ext.getCmp(prototype.id + '-cmbSTRFND').setValue('');
-        Ext.getCmp(prototype.id + '-cmbSTRFND').resumeEvents();
-
-        this.obtainGetCountries();
-
-        //me.obtainGetAdjustmentCode();
-    },
-    obtainGetAdjustmentCode: function () {
-        Ext.Ajax.request({
-            url: prototype.url + '/getAdjustmentCodes',
-            method: 'POST',
-            timeout: 60000000,
-            params: {beanString: JSON.stringify(this.dataObtain)},
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {
-                    Ext.getCmp(prototype.id + '-cmbErrorCode').bindStore(
-                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                            );
-                    Ext.getCmp(prototype.id + '-cmbErrorCode').setValue('');
-                } else
-                    global.Msg({msg: res.sesion});
-            }
+    onClickSearchBtn: function () {
+        const me = this;
+        let params = me.formatMainGridParams();
+        console.log(params);
+        const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
+        mainPanel.removeAll();
+        const panelTree = Ext.create('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.Grids.MainGrid', {
+            id: prototype.id + '-MainGrid-1',
+            url: me.url,
+            searchParams: params
         });
+        mainPanel.add(panelTree);
     },
-    obtainGetCountries: function () {
-        Ext.Ajax.request({
-            url: 'ReconciliationPayment' + '/getCountries',
-            method: 'POST',
-            timeout: 60000000,
-            params: {beanString: JSON.stringify(this.dataObtain)},
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {
-                    Ext.getCmp(prototype.id + '-cmbSCOUNTRY').bindStore(
-                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                            );
-                    Ext.getCmp(prototype.id + '-cmbSCOUNTRY').setValue('');
-                } else
-                    global.Msg({msg: res.sesion});
-            }
-        });
-    },
-    obtainGetCurrencies: function () {
-        Ext.Ajax.request({
-            url: 'ReconciliationPayment' + '/getCurrencies',
-            method: 'POST',
-            timeout: 60000000,
-            params: {beanString: JSON.stringify(this.dataObtain)},
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {
-                    Ext.getCmp(prototype.id + '-cmbCurr').bindStore(
-                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                            );
-                    Ext.getCmp(prototype.id + '-cmbCurr').setValue('');
-                } else
-                    global.Msg({msg: res.sesion});
-            }
-        });
-    },
-    setFormatParameter: function () {
-
-        me.bean = {};
-        me.bean.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
-        me.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
-        me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        me.bean.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
-        me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
-        me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
-        me.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCC1').getValue();
-        me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
-        me.bean.IN_SAUTHOC = Ext.getCmp(prototype.id + '-txtAuth').getValue();
-        me.bean.IN_STRFND = Ext.getCmp(prototype.id + '-cmbSTRFND').getValue();
-        me.bean.IN_PROCTYPE = Ext.getCmp(prototype.id + '-cmbProT').getValue();
-        me.bean.IN_MERCH_ERR = Ext.getCmp(prototype.id + '-txtMERCHError').getValue();
-        me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTKT').getValue();
-        me.bean.IN_SCOUNTRY = Ext.getCmp(prototype.id + '-cmbSCOUNTRY').getValue();
-        me.bean.IN_PCURRENCY = Ext.getCmp(prototype.id + '-cmbCurr').getValue();
-
-        var beanString = JSON.stringify(me.bean);
-
-        searchParams = {
-            bean: me.bean,
-            beanString: beanString
+    formatMainGridParams: function () {
+        const formFilters = Ext.getCmp(prototype.id + '-formFilters').getForm();
+        const obj = formFilters.getValues();
+        let params = {
+            IN_CCUST: '139',
+            ...obj
         };
-        console.log(searchParams);
-    },
-    btnSearch_click: function (obj, e) {
-        this.setFormatParameter();
-        this.setGridData();
-    },
-    // <editor-fold defaultstate="collapsed" desc="setGridData">
-
-    setGridData: function () {
-        win.lblUser_toolTip("Estructura: A2281");
-        me.panelActual = '-boxAdjustment';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-        me.setWidthPie();
-        var msj = this.validateFields();
-        if (msj !== '') {
-            global.Msg({msg: msj
-            });
-        } else {
-            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
-                proxy: {
-                    url: prototype.url + '/searchAdjustment'
-                }, listeners: {
-                    beforeload: function (obj) {
-                        obj.proxy.extraParams = searchParams
-                        Ext.getCmp(prototype.id + '-boxAdjustment').mask('Loading...');
-                    },
-                    load: function (obj) {
-                        Ext.getCmp(prototype.id + '-boxAdjustment').unmask();
-//                        console.log(obj.data);
-                        var pag = Ext.getCmp(prototype.id + '-paggin');
-                        var pagData = pag.getPageData();
-                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-                        if (obj.data.length === 0) {
-                            global.Msg({
-                                msg: 'Data not found.'
-                            });
-                        }
-                    }
-                }
-            });
-
-//            console.log(storeGridDatas);
-            global.clear();
-            Ext.getCmp(prototype.id + '-gridAdjustment').bindStore(storeGridDatas);
-            Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+        if (obj.creditcard.at(0) !== '' && obj.creditcard.at(1) !== '') {
+            params.IN_SCARDN = `${obj.creditcard.at(0)}%${obj.creditcard.at(1)}%`;
         }
+        return params;
     },
-    // </editor-fold>
-    onTktsDetail: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        if (rowData.data.QTYTKT === 0) {
-            return
-        }
-        me.drillDown.push(me.panelActual);
-        me.panelActual = '-boxDetailTktSettlement';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-
-        this.beanSettlementTktsDetail.DATE = rowData.data.DATE;
-        this.beanSettlementTktsDetail.IN_DATE = rowData.data.IN_DATE;
-        this.beanSettlementTktsDetail.MERCHID = rowData.data.MERCHID;
-        this.beanSettlementTktsDetail.SPNR = rowData.data.SPNR;
-        this.beanSettlementTktsDetail.ISREFNBR = rowData.data.ISREFNBR;
-        this.beanSettlementTktsDetail.IN_PCURRENCY = rowData.data.IN_PCURRENCY;
-        this.beanSettlementTktsDetail.IN_TGROSAMOUN = rowData.data.TGROSAMOUN;
-        this.beanSettlementTktsDetail.IN_descSTVAL = rowData.data.descSTVAL;
-        this.beanSettlementTktsDetail.IN_TRANSDATE = rowData.data.TRANSDATE;
-        this.beanSettlementTktsDetail.IN_AXPRODAT = rowData.data.AXPRODAT;
-        this.beanSettlementTktsDetail.IN_FREGLA = rowData.data.FREGLA;
-        this.beanSettlementTktsDetail.IN_SCARDN = rowData.data.SCARDN;
-        this.beanSettlementTktsDetail.IN_SAUTHOC = rowData.data.SAUTHOC;
-        this.beanSettlementTktsDetail.IN_IDITEMT = rowData.data.IDITEMT;
-        this.beanSettlementTktsDetail.IN_IDITEMS = rowData.data.IDITEMS;
-        this.beanSettlementTktsDetail.AREFNBR = rowData.data.AREFNBR;
-        this.beanSettlementTktsDetail.TDOC = rowData.data.TDOC;
-
-        me.paramsDetailDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
-        this.setGridDataDetTktSettlement();
-    },
-    setGridDataDetTktSettlement: function () {
-        win.lblUser_toolTip("Estructura: A4121");
-        me.setWidthPie();
-        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
-            proxy: {
-                url: prototype.url + '/searchDetTktSettlement'
-            }, listeners: {
-                beforeload: function (obj) {
-                    obj.proxy.extraParams = me.paramsDetailDetTktSettlement;
-                },
-                load: function (obj) {
-                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    var pag = Ext.getCmp(prototype.id + '-paggin2');
-                    var pagData = pag.getPageData();
-                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-
-                    if (obj.data.length === 0) {
-                        global.Msg({
-                            msg: 'Data not found.'
-                        });
-                    } else {
-                        console.log(obj);
-                        var data = obj.data.items[0].data;
-                        console.log(data);
-                        Ext.getCmp(prototype.id + '-gridDetailTktSettlement').setTitle('<center style="font-size:12px;">' + 'TICKET: ' + data.IN_ISREFNBR + ' - Currency: ' + ' ' + data.IN_PCURRENCY + ' - ' + data.IN_descSTVAL + '</center>');
-                        if (data.IN_DATE === "PAYDATE") {
-                            Ext.getCmp(prototype.id + '-detSettTktDate').setText('Payment');
-                        } else {
-                            Ext.getCmp(prototype.id + '-detSettTktDate').setText('Processing');
-                        }
-                    }
-                }
-            }
-        });
-
-        global.clear();
-        Ext.getCmp(prototype.id + '-gridDetailTktSettlement').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-gridDetailTktSettlement').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
-    },
-    validateFields: function () {
-        var msj = '';
-        var bean = searchParams.bean;
-
-        return msj;
-    },
-    btnAdd_click: function () {
-        this.winDataEntry('I');
-    },
-    onEditClick: function (grid, rowIndex, colIndex) {
-        var rec = grid.getStore().getAt(rowIndex);
-        var all = grid.getStore();
-        this.winDataEntry('U', rec, all, rowIndex);
-    },
-    winDataEntry: function (action, rec, all, rowIndex) {
-        action = action === null || action === undefined ? 'U' : action;
-        rec = rec === null || rec === undefined ? {} : rec;
-
-        Ext.create('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.DataEntry', {
-            id: prototype.id + '-dataEntry',
-            params: {
-                action: action,
-                rec: rec,
-                all: all,
-                rowIndex: rowIndex
-            }
-        }).show();
-    },
-    btnBack_click: function (obj, e) {
-
-        if (me.drillDown.length > 0) {
-            me.panelActual = me.drillDown.pop();
-            global.selectedChild(me.childs, prototype.id + me.panelActual);
-            me.setWidthPie();
-
-            this.getPaggin();
-            if (me.pagginActual !== '') {
-                var pag = Ext.getCmp(prototype.id + me.pagginActual);
-                var pagData = pag.getPageData();
-                Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-            }
-        } else {
-            global.showMenu();
-        }
-    },
-    btnClear_click: function (obj, e) {
-        Ext.getCmp(prototype.id + '-cmbCode').setValue('');
-        Ext.getCmp(prototype.id + '-cmbCountry').setValue('');
-        Ext.getCmp(prototype.id + '-cmbBank').setValue('');
-        Ext.getCmp(prototype.id + '-txtMERCHError').setValue('');
-    },
-    btnExcel_click: function (obj, e) {
-
-        this.setFormatParameter();
-        var msj = this.validateFields();
-        if (msj !== '') {
-            global.Msg({msg: msj
-            });
-        } else {
-            Ext.Msg.show({
-                title: '.:PRAXIS:.',
-                msg: 'Download Excel ?',
-                buttons: Ext.MessageBox.OKCANCEL,
-                scope: this,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function (btn) {
-                    if (btn === 'ok') {
-                        this.exportExcel();
-                    }
-                }
-            });
-        }
-    },
-    exportExcel: function () {
-
-        this.setFormatParameter();
-        switch (me.panelActual) {
-            case  '-panelGridData':
-                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
-                break;
-            default:
-                global.Msg(
-                        {msg: 'Under Construction'
-                        });
-        }
-
-    },
-    onDownloadFile: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        me.paramsDetail.beanString = JSON.stringify(rowData.data);
-        me.fileName = rowData.data.A2536NAMEF;
-        Ext.Ajax.request({
-            url: prototype.url + '/download',
-            method: 'POST',
-            timeout: 60000000,
-            beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...'),
-            params: me.paramsDetail,
-            success: function (response, options) {
-                Ext.getCmp(prototype.id + '-gridData').unmask('Loading...');
-                var res = Ext.JSON.decode(response.responseText);
-
-                var resultByte = res.bytes;
-                var bytes = new Uint8Array(resultByte); // pass your byte response to this constructor
-                var blob = new Blob([bytes], {type: "application/png"});// change resultByte to bytes
-
-                var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = me.fileName;
-                link.click();
-            }
-        });
-
-    },
-    btnFilter_click: function (obj) {
-        var option = Ext.getCmp(prototype.id + '-contentFilter');
-        if (option.isVisible()) {
-            option.setVisible(false);
-        } else {
-            option.setVisible(true);
-        }
-    },
-    setWidthPie: function () {
-        var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
-        Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
-    },
-    setWidthPie: function () {
-        console.log(me.panelActual);
-        if (me.panelActual === '-boxAdjustment') {
-            var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
-            Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
-            Ext.getCmp(prototype.id + '-pie').setVisible(true);
-        } else {
-            Ext.getCmp(prototype.id + '-pie').setVisible(false);
-        }
-    },
-            getPaggin: function () {
-                me.pagginActual = '';
-                switch (me.panelActual) {
-                    case  '-boxAdjustment':
-                        me.pagginActual = '-paggin';
-                        break;
-                }
+    onChangeDateBtn: function (obj) {
+        let option = obj.id.split('-').at(-1);
+        const from = Ext.getCmp(prototype.id + '-datefieldFrom');
+        const to = Ext.getCmp(prototype.id + '-datefieldTo');
+        const opts = {
+            'datefieldFrom': () => {
+                to.setValue(from.getValue());
             },
-    /*     
-     * Funciones para la paginacion     
-     */
-    pagFirst: function (obj, e) {
-        this.getPaggin();
-        var pag = Ext.getCmp(prototype.id + me.pagginActual);
-        pag.moveFirst();
-    }, pagPrevious: function (obj, e) {
-        this.getPaggin();
-        var pag = Ext.getCmp(prototype.id + me.pagginActual);
-        pag.movePrevious();
-    },
-    pagNext: function (obj, e) {
-        this.getPaggin();
-        var pag = Ext.getCmp(prototype.id + me.pagginActual);
-        pag.moveNext();
-    },
-    pagLast: function (obj, e) {
-        this.getPaggin();
-        var pag = Ext.getCmp(prototype.id + me.pagginActual);
-        pag.moveLast();
-    },
-    getInt: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        metaData.style = 'text-align:right';
-        return Ext.util.Format.number(value, '0,000');
-    },
-    getDouble: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        metaData.style = 'text-align:right';
-        return Ext.util.Format.number(value, '0,000.00');
-    },
-    getText: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        metaData.style = 'text-align:left';
-        return value;
-    },
-    getDoubleColor1: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        metaData.style = 'text-align:right;background:#F2FAFC';
-        return Ext.util.Format.number(value, '0,000.00');
-    },
-    getDoubleColor2: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        metaData.style = 'text-align:right;background:#DFF0ED';
-        return Ext.util.Format.number(value, '0,000.00');
-    },
-    getDoubleColor3: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        metaData.style = 'text-align:right;background:#FCF5F2';
-        return Ext.util.Format.number(value, '0,000.00');
-    },
-    viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-
-        var strTkt = rowData.data.ISREFNBR;
-
-        prototypeProgram.view = 'payments-reconciliation-double-payment-form';
-        prototypeProgram.nprog = 'PX00000622';
-        prototypeProgram.title = 'Reconciliation Double Payment';
-        prototypeProgram.modulo = '';
-
-        var beanProMasterTicket = {};
-
-        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
-        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
-        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
-
-        console.log(beanProMasterTicket);
-
-        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
-    },
-    onViewPNR: function (a, b, c, d, e, rowData) {
-//        var rec = grid.getStore().getAt(rowIndex);
-        rowData.data.PNR = rowData.data.INVORNBR;
-        this.winDataEntryPNR('', rowData);
-    },
-    onViewPNRbySPNR: function (a, b, c, d, e, rowData) {
-
-//        var rec = grid.getStore().getAt(rowIndex);
-        rowData.data.PNR = rowData.data.SPNR;
-        this.winDataEntryPNR('', rowData);
-    },
-    winDataEntryPNR: function (action, rec, all, rowIndex) {
-        action = action === null || action === undefined ? 'U' : action;
-        rec = rec === null || rec === undefined ? {} : rec;
-
-        Ext.create('Ext.Praxis.view.payments.ReconciliationDoublePaymentForm.DataEntryPnr', {
-            id: prototype.id + '-dataEntryPnr',
-            params: {
-                action: action,
-                rec: rec,
-                all: all,
-                rowIndex: rowIndex
+            'datefieldTo': () => {
+                if (to.getValue() < from.getValue()) {
+                    from.setValue(to.getValue());
+                }
             }
-        }).show();
+        };
+        opts[option]();
     },
-}
-);
+    onClickBackBtn: function (obj) {
+        window.location.href = CONTEXTPATH;
+    },
+    onEnterKeyPress: function (field, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onClickSearchBtn();
+        }
+    },
+    onClickFilterBtn: function () {
+        const panelFilters = Ext.getCmp(prototype.id + '-contentFilter');
+        if (panelFilters.isVisible())
+            panelFilters.hide();
+        else
+            panelFilters.show();
+    },
+    onClickClearBtn: function () {
+        const filter = Ext.getCmp(prototype.id + '-formFilters');
+        filter.getForm().reset();
+    },
+    //<editor-fold defaultstate="collapsed" desc="Utilitarios">
+    getCmp: function ( {id}){
+        return Ext.getCmp(prototype.id + id);
+    },
+    setComboStore: function ( {cmp, data, valueField, displayField, value}){
+        const me = this;
+        cmp.suspendEvents(false);
+        cmp.bindStore(me.createComboStore({data: data
+            , valueField: valueField, displayField: displayField}));
+        cmp.setValue(value);
+        cmp.resumeEvents();
+    },
+    createComboStore: function ( {data, valueField, displayField}) {
+        //crea record vacio
+        let allRecord = {};
+        allRecord[displayField] = 'All';
+        allRecord[valueField] = '';
+        //limpia record de data
+        data.forEach(obj => {
+            for (let attr in obj) {
+                if (typeof obj[attr] === 'string') {
+                    obj[attr] = obj[attr].trimEnd();
+                }
+            }
+        });
+        //crea Store
+        let store = this.createStore({data: data});
+        //inserta record vacio
+        store.insert(0, allRecord);
+        //console.log('store creado',store);
+        return store;
+    },
+    createArrayStore: function ( {data}){
+        const store = new Ext.data.SimpleStore({
+            fields: ['code', 'name'],
+            data: data.map(x => {
+                return [x.code, x.name];
+            })
+        });
+        return store;
+    },
+    createStore: function ( {data}){
+        return Ext.create('Ext.data.Store', {
+            autoLoad: true,
+            data: data,
+            pageSize: 20
+        });
+    },
+    parseInt: function (number) {
+        if (number && number !== '') {
+            return parseInt(number);
+        }
+        ;
+        return number;
+    },
+    getDistinct: function (lst, key) {
+        let valoresVistos = {};
+        // Filtra el array para eliminar duplicados según la columna "nombre"
+        let resultado = lst.filter(function (item) {
+            if (valoresVistos[item[key]]) {
+                // Si el valor ya se ha visto, exclúyelo
+                return false;
+            }
+            // Si es la primera vez que se ve, márcalo como visto y manténlo en el resultado
+            valoresVistos[item[key]] = true;
+            return true;
+        });
+        return resultado;
+    }
+    //</editor-fold>
+});
