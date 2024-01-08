@@ -9,7 +9,7 @@ import net.miatech.praxis.payment.entities.CustomPageImpl;
  * @author Dvicente
  */
 public class SQP05206Filter extends CustomPageImpl{
-    private String IN_CCUST,IN_FROM,IN_TO,IN_PROCTYPE,IN_SCOUNTRY,IN_SCARDN;
+    private String IN_CCUST,IN_FROM,IN_TO,IN_PROCTYPE,IN_SCOUNTRY,IN_SCARDN,IN_STVAL;
     
     private List<CreditCardFilter> response = new ArrayList<>();
 
@@ -59,6 +59,14 @@ public class SQP05206Filter extends CustomPageImpl{
 
     public void setIN_SCARDN(String IN_SCARDN) {
         this.IN_SCARDN = IN_SCARDN;
+    }
+
+    public String getIN_STVAL() {
+        return IN_STVAL;
+    }
+
+    public void setIN_STVAL(String IN_STVAL) {
+        this.IN_STVAL = IN_STVAL;
     }
 
     public List<CreditCardFilter> getResponse() {

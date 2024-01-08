@@ -167,7 +167,7 @@ public class SalesComplementDAO implements SalesComplementLogic {
                     .addValue("IN_CAPL", "");
 
             // Ejecutar la llamada al procedimiento almacenado y obtener el resultado
-            Map<String, Object> result = jdbcUtils.executeSQP(LIBRARY, "SQP00697", inParams);
+            Map<String, Object> result = jdbcUtils.executeSQP("PRAXIS", "SQP00697", inParams);
             List<Map<String, Object>> rs = (List<Map<String, Object>>) result.get("#result-set-1");
             for (Map<String, Object> item : rs) {
                 SQP00697Filter objRtn = new SQP00697Filter();

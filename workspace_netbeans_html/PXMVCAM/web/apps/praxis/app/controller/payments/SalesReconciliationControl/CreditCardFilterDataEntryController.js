@@ -115,6 +115,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CreditCard
             7: 'CHBK',
             8: 'ADJU'
         };
+        const stval = Ext.getCmp(prototype.idCcardf + '-formFilters')
+                .getForm().getValues().IN_STVAL;
         let params = {
             IN_DATE: 'PRDA',
             IN_DATEFROM: obj.prda,
@@ -123,6 +125,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CreditCard
             IN_SCOUNTRY: obj.scountry.trim(),
             IN_TRANSTYPE: opts[obj.cellIndex]?opts[obj.cellIndex]:'',
             IN_FVOID: obj.fvoid,
+            IN_STVAL: stval,
             creditcard: obj.scardn.slice(0, 6),
             creditcard2: obj.proctype.trim() === 'BANORTE00' ?
                     obj.scardn.trim().slice(-2) :
