@@ -40,6 +40,7 @@ public class A2559Filter extends A2559{
     public String IN_BILLING_DATEFINI = "";
     public String IN_BILLING_DATEFFIN = "";
     public String IN_PERIOD = "";
+    public String STATUS = "";
     
     public Pagination page = new Pagination();
 }
