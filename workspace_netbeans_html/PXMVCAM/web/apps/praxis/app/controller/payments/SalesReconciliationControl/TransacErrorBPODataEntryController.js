@@ -35,6 +35,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             const storeAdju = Ext.create('Ext.data.Store', {
                 data: data.codadju
             });
+            me.users = data.admins.map(x => x.a4451key3.trimEnd());
             cmbAdju.setStore(storeAdju);
         }
     },
@@ -76,7 +77,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             me.showStandBy(false);
             if (userName.slice(0, 3) === 'SAP') {
                 btnReverse.show();
-            } else if (userName === 'PLOPEZT' || userName === 'IMONTOYAT') {
+            } else if (me.users.includes(userName)) {
                 btnReverse.show();
             } else {
                 btnReverse.hide();
