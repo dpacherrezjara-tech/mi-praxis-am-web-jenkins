@@ -669,4 +669,8 @@ public class A720 {
     public String A720DESTC4 = "";
     public String A720TTARJ = "";
     public String A720NREF = "";
+    
+    
+    public String EMDCONCEP ="";
+    public String COMPTKT ="";
 }
