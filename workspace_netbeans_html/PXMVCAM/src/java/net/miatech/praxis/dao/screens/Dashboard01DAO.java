@@ -9711,6 +9711,7 @@ public class Dashboard01DAO {
                     objRtn.CCUST = rs01.getString("CCUST").trim();
                     objRtn.CURR = rs01.getString("CURR");
                     objRtn.FVTA = rs01.getString("FVTA");
+                    objRtn.strFormatDate = Functions.getMonthConvert(objRtn.FVTA);
                     objRtn.QCPNS = rs01.getLong("QCPNS");
                     objRtn.AMTS = rs01.getDouble("AMTS");
                     objRtn.QCPNV = rs01.getLong("QCPNV");
