@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
+    Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-SalesAnalysis',
     requires: [
@@ -6655,7 +6655,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                 }],
                             columns: {
                                 items: [
-                                    {text: 'Sales<br>Date', dataIndex: 'FVTA', width: 65, align: 'center',
+                                    {text: 'Sales<br>Date', dataIndex: 'strFormatDate', width: 65, align: 'center',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center";
                                             return value;
