@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 }
             },
             {
-                text: 'Processor', dataIndex: 'desc_PROCTYPE', width: 200,
+                text: 'Processor', dataIndex: 'desc_PROCTYPE', flex: 1,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     return value;
                 }
@@ -68,7 +68,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 }
             },
             {
-                text: 'GROSS<br>Amount', dataIndex: 'tgrosampay', width: 100,
+                text: 'GROSS<br>Amount', dataIndex: 'tgrosampay', width: 130,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:right;background-color:#B2DAFA";
                     value = Ext.util.Format.number(value, '0,000.00');
@@ -188,7 +188,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 ]
             },
             {
-                text: 'Net Amount<br>to Receive AM', dataIndex: 'netamoun', width: 100,
+                text: 'Net Amount<br>to Receive AM', 
+                dataIndex: 'netamoun', 
+                width: 130,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:right;background-color:#B2DAFA";
                     value = Ext.util.Format.number(value, '0,000.00');
