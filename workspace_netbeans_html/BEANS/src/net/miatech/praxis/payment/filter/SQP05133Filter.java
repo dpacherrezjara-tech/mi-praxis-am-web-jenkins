@@ -9,7 +9,8 @@ import java.util.List;
  */
 public class SQP05133Filter {
     private String IN_CCUST,IN_DATEFROM,IN_DATETO,IN_DATE,IN_MERCHANT,
-            IN_STVAL,IN_PNR,IN_TRANSTYPE,IN_PROCTYPE,IN_SCOUNTRY,IN_SCURRENCY,IN_SCARDN,IN_SAUTHOC;
+            IN_STVAL,IN_PNR,IN_TRANSTYPE,IN_PROCTYPE,IN_SCOUNTRY,IN_SCURRENCY,IN_SCARDN,IN_SAUTHOC,
+            IN_PMERCHID;
     private List<A4331STFilter> response = new ArrayList<>();
 
     public String getIN_CCUST() {
@@ -114,6 +115,14 @@ public class SQP05133Filter {
 
     public void setIN_SAUTHOC(String IN_SAUTHOC) {
         this.IN_SAUTHOC = IN_SAUTHOC;
+    }
+
+    public String getIN_PMERCHID() {
+        return IN_PMERCHID;
+    }
+
+    public void setIN_PMERCHID(String IN_PMERCHID) {
+        this.IN_PMERCHID = IN_PMERCHID;
     }
 
     public List<A4331STFilter> getResponse() {

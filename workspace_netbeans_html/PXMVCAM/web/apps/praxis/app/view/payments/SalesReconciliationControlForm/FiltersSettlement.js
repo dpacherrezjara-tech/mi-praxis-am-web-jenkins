@@ -225,6 +225,35 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                             }
                         }
                     ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    border: false,
+                    bodyStyle: 'background: transparent',
+                    defaults: {
+                        fieldStyle: 'text-align: center;',
+                        padding: '5 1 5 1',
+                        anchor: '100%',
+                        hiddenLabel: false,
+                        labelAlign: 'right',
+                        hidden: false
+                    },
+                    items:[
+                        {
+                            xtype: 'textfield',
+                            fieldLabel: 'Sale Merchant',
+                            labelWidth: 100,
+                            width: 200,
+                            name: 'IN_PMERCHID',
+                            maxLength: 15, // Límite máximo de caracteres
+                            maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                            enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                            listeners: {
+                                specialkey: 'onEnterKeyPress'
+                            }
+                        }
+                    ]
                 }
             ]
         }
