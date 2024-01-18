@@ -40,7 +40,7 @@ public class AccountingMasterProcess2DAO {
         A1955Filter objRtn;
         int PAGINIT = 1, totPAGS = 0, totRowsPag = filter.page.PAGROW, totRows = -1;
 
-        strSQL = "{CALL PRAXIS.SQP00892(?,?,?,?,?,?,?,?,?)}";
+        strSQL = "{CALL LIBSAP55.SQP00892(?,?,?,?,?,?,?,?,?)}";
         try {
             
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -165,7 +165,7 @@ public class AccountingMasterProcess2DAO {
     public String accountMaintance(A1955Filter filter, String strOption) throws SQLException, Exception {
         String STR_RESULT = "";
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP00902(?,?,?,?,?,?,?,?,?)}"; 
+            strSQL = "{CALL LIBSAP55.SQP05071(?,?,?,?,?,?,?,?,?)}"; 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  
             cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);

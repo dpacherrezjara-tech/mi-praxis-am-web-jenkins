@@ -42,6 +42,10 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
         
         switch (strModulo) {
             case 'PSALES':
+            case 'PSALESARC':
+            case 'PSALESASR':
+            case 'PSALESBSP':
+            case 'PSALESMAN':
             case 'PPSALES':
             case 'PADJMA':
             case '':
@@ -86,7 +90,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
         Ext.getCmp(prototype.id+'-cbxModulo').setReadOnly(true);
         
         switch (rec.get('A1955MODUL')) {
-            case 'PSALES': case 'PFLOWN': case 'PADJMA': case "PPSALES" :  
+            case 'PSALES': case 'PSALESARC':  case 'PSALESASR':  case 'PSALESBSP':  case 'PSALESMAN': case 'PFLOWN': case 'PADJMA': case "PPSALES" :  
                 Ext.getCmp(prototype.id+'-boxFecha').show();
                 //Ext.getCmp(prototype.id+'-boxPeriodo').hide();
                 Ext.getCmp(prototype.id+'-boxCaducos').hide();
@@ -129,6 +133,10 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
         if (this.validaRequiredFields()) {
             switch (this.getValue('cbxModulo')) {
                 case "PSALES" : 
+                case "PSALESARC" : 
+                case "PSALESASR" : 
+                case "PSALESBSP" : 
+                case "PSALESMAN" : 
                 case "PCADUCOS" : 
                 case "PADJMA" : 
                     Ext.Msg.show({
@@ -179,6 +187,10 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
     onDeleteClick: function(btn){        
         switch (this.getValue('cbxModulo')) {
             case "PSALES" : 
+            case "PSALESARC" : 
+            case "PSALESASR" : 
+            case "PSALESBSP" :
+            case "PSALESMAN" :
                 dataentryParams = {};
                 dataentryParams.IN_MODULO = 'SALES';
                 dataentryParams.IN_FECHA_PROCESO = this.p.rec.get('A1955FPROC');
@@ -231,7 +243,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
             return false;
         } else {
             switch (cbxModulo) {
-                case "PSALES" : case "PFLOWN": case "PADJMA" : case "PPSALES" :                           
+                case "PSALES" : case "PSALESARC" :  case "PSALESASR" : case "PSALESBSP" : case "PSALESMAN" : case "PFLOWN": case "PADJMA" : case "PPSALES" :                           
                     if (this.getValue('txtProcessDate')==='' || this.getValue('txtProcessDate') === null) {
                         this.msjAlert='Enter correct data';
                         return false;
@@ -374,7 +386,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
         var A1955MODUL = this.getValue('cbxModulo');
         
         switch (this.getValue('cbxModulo')) {
-            case "PSALES" : case "PFLOWN": case "PADJMA" : case "PPSALES" :
+            case "PSALES" : case "PSALESARC" : case "PSALESASR" : case "PSALESBSP" : case "PSALESMAN" : case "PFLOWN": case "PADJMA" : case "PPSALES" :
                 IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtProcessDate').getValue(), 'Ymd');
                 break;
             /*case "PAPINT" : case "PARINT" :
