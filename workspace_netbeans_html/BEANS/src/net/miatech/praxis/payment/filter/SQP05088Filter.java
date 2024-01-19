@@ -10,7 +10,7 @@ import java.util.List;
 public class SQP05088Filter {
     private String IN_CCUST,
             IN_DATE,IN_TDATE,IN_DATEFROM,IN_DATETO,
-            IN_TRNCU,IN_AGENT,IN_SCOUNTRY,IN_FVOID,
+            IN_TRNCU,IN_SAGENT,IN_SCOUNTRY,IN_FVOID,
             IN_STVAL,IN_TCARD,IN_CCARD,IN_FUENT,IN_SFUEN,IN_SCURRENCY;
     private List<A4331SRFilter> response = new ArrayList<>();
 
@@ -62,12 +62,12 @@ public class SQP05088Filter {
         this.IN_TRNCU = IN_TRNCU;
     }
 
-    public String getIN_AGENT() {
-        return IN_AGENT;
+    public String getIN_SAGENT() {
+        return IN_SAGENT;
     }
 
-    public void setIN_AGENT(String IN_AGENT) {
-        this.IN_AGENT = IN_AGENT;
+    public void setIN_SAGENT(String IN_SAGENT) {
+        this.IN_SAGENT = IN_SAGENT;
     }
 
     public String getIN_SCOUNTRY() {
