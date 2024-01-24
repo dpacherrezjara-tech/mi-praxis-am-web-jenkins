@@ -15,26 +15,25 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
         if (res.ok) {
             const data = await res.json();
             const tdate = view.tdate;
-            //let keyDate = tdate === 'P' ? 'paydate' : 'sdate'; // old
-            let keyDate = tdate === 'P' ? 'prda' : 'sdate'; //new
-            //console.log(me.groupBy({data: data.response, key: keydate}));
+            const keyDate = 'fecha';
             console.log(data.response.at(0));
             let firstObj = data.response.at((0));
-            view.setTitle(`${view.title} - ${firstObj.proc_DESC} (${firstObj.scurrency})`);
+            view.setTitle(`${view.title} - ${firstObj.proc_DESC} (${view.searchParams.IN_MDA})`);
             //<editor-fold defaultstate="collapsed" desc="Tree Store">
             const tree = Object.entries(me.groupBy({data: data.response, key: keyDate})).map(obj => {
                 let procdesc = obj.at(1)[0].proc_DESC || '';
                 let childs = obj.at(1).map(x => {
                     return {
                         type: 'detail',
-                        date: x[keyDate],
+                        fecha: x[keyDate],
                         leaf: true,
                         tdate: tdate,
+                        scurrency: view.searchParams.IN_MDA,
                         ...x
                     };
                 });
                 return {
-                    date: obj.at(0),
+                    fecha: obj.at(0),
                     type: 'header',
                     scurrency: view.searchParams.IN_MDA,
                     proc_DESC: procdesc,
@@ -54,7 +53,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
             });
             //</editor-fold>
             Ext.getCmp(prototype.idTree + '-colFechaP').setText(tdate === 'P' ? 'Processing Date' : 'Sale Date');
-            Ext.getCmp(prototype.idTree + '-colFechaH').setText(tdate === 'P' ? 'Sale Date' : 'Processing Date');
+            Ext.getCmp(prototype.idTree + '-colFechaH').setText(tdate === 'P' ? 'FLEX ID' : 'PRAXIS ID');
             me.view.setStore(storeTree);
         }
         mainPanel.unmask();
@@ -105,14 +104,12 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
     formatParameters: function ( {type, obj}) {
         const me = this;
         const view = me.view;
-        const viewParams = view.searchParams;
         let params = {
-            FECHA_FROM_P: obj.date,
-            //FECHA_FROM_H: viewParams.IN_TFECHA === 'P' ? obj['sdate'] : obj['paydate'],
-            FECHA_FROM_H: viewParams.IN_TFECHA === 'P' ? obj['sdate'] : obj['prda'],
             IN_STCONL: type,
-            ...viewParams
+            ...view.searchParams
         };
+        params.IN_IDCON = obj.idflex;
+        params.FECHA_FROM = obj.fecha;
         console.log('Detail Params: ',params);
         return params;
     },

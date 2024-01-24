@@ -44,6 +44,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.DetailGridContr
     setColumnasFecha: function ( {type}){
         const fechap = Ext.getCmp(prototype.id + '-det-fechap');
         const fechah = Ext.getCmp(prototype.id + '-det-fechah');
+        const colIdflex = Ext.getCmp(prototype.id + '-colIDFlex');
         if (type === 'P') {
             //fechap.setText('Payment<br>Date');
             //fechap.setConfig('dataIndex', 'paydate');
@@ -51,6 +52,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.DetailGridContr
             fechap.setConfig('dataIndex', 'prda');
             fechah.setText('Sale<br>Date');
             fechah.setConfig('dataIndex', 'sdate');
+            colIdflex.setText('FLEX ID');
         } else {
             fechap.setText('Sale<br>Date');
             fechap.setConfig('dataIndex', 'sdate');
@@ -58,13 +60,14 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.DetailGridContr
 //            fechah.setConfig('dataIndex', 'paydate');
             fechah.setText('Processing<br>Date');
             fechah.setConfig('dataIndex', 'prda');
+            colIdflex.setText('PRAXIS ID');
         }
         this.view.getView().refresh();
     },
     onClickAccountingDetail: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        if(record.data.idconl.trim()===''){
+        if (record.data.idflex.trim() === '') {
             global.Msg({
-               msg:'Empty ID' 
+                msg: 'Empty ID'
             });
             return;
         }
@@ -82,13 +85,16 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.DetailGridContr
     formatSearchParams: function (obj) {
         //console.log(obj);
         return {
+            IN_CCUST: '139',
+            IN_TDOC: obj.tdoc,
+            IN_PRDA: obj.prda,
             IN_AREFNBR: obj.arefnbr
         };
     },
     onClickTickets: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        if(record.data.qtytkt ===0){
+        if (record.data.qtytkt === 0) {
             global.Msg({
-                msg:'No Data'
+                msg: 'No Data'
             });
             return;
         }
@@ -104,7 +110,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.DetailGridContr
         mainPanel.add(ticketPanel);
     },
     onClickTicketInfo: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        if(record.data.ticket.trim()===''){
+        if (record.data.ticket.trim() === '') {
             return;
         }
         const obj = record.data.ticket;
