@@ -47,24 +47,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
         mainPanel.add(summaryGrid);
     },
     formatParameters: function () {
-        let tfecha = Ext.getCmp(prototype.id + '-cmbDate');
-        let from = Ext.getCmp(prototype.id + '-dateFrom');
-        let to = Ext.getCmp(prototype.id + '-dateTo');
-        let procesador = Ext.getCmp(prototype.id + '-cmbProcessor');
-        let mda = Ext.getCmp(prototype.id + '-cmbMDA');
-        let tdoc = Ext.getCmp(prototype.id + '-cmbTDOC');
-        let pnr = Ext.getCmp(prototype.id + '-txtPNR');
-        let idcon = Ext.getCmp(prototype.id + '-txtIDAC');
-        return {
-            IN_TFECHA: tfecha.getValue(),
-            FECHA_FROM: Ext.Date.format(from.getValue(), 'Ym') + '01',
-            FECHA_TO: Ext.Date.format(to.getValue(), 'Ym') + '31',
-            IN_PROCESADOR: procesador.getValue(),
-            IN_MDA: mda.getValue(),
-            IN_TDOC: tdoc.getValue(),
-            IN_PNR: pnr.getValue(),
-            IN_IDCON: idcon.getValue()
-        };
+        let formFilterts = Ext.getCmp(prototype.id + '-panelFilters').getForm().getValues();
+        console.log('Summary Grid Filters: ',formFilterts);
+        return formFilterts;
     },
     onClickFilterBtn:function(){
         const panelFilters = Ext.getCmp(prototype.id + '-contentFilter');
@@ -76,15 +61,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
     onClickClearBtn:function(){
         prototype.id = 'AccountingTransactionForm';
         prototype.url = CONTEXTPATH + '/AccountingTransaction';
-        Ext.getCmp(prototype.id + '-txtPNR').setValue('');
-        Ext.getCmp(prototype.id + '-txtIDAC').setValue('');
-        Ext.getCmp(prototype.id + '-cmbMDA').setValue('');
-        Ext.getCmp(prototype.id + '-cmbDate').setValue('P');
-        
-        Ext.getCmp(prototype.id + '-dateFrom').setValue(new Date(new Date().getFullYear(), 0, 1));
-        Ext.getCmp(prototype.id + '-dateTo').setValue(new Date());
-        
-        Ext.getCmp(prototype.id + '-cmbTDOC').setValue('SALE');
+        Ext.getCmp(prototype.id + '-panelFilters').getForm().reset();
     },
     onClickBackBtn: function (obj) {
         window.location.href = CONTEXTPATH;

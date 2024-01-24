@@ -34,7 +34,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                 xtype: 'treecolumn',
                 text: '',
                 id: prototype.idTree + '-colFechaP',
-                dataIndex: 'date',
+                dataIndex: 'fecha',
                 width: 150,
                 enableTextSelection: false,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
@@ -52,15 +52,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
             {
                 text: '...',
                 id: prototype.idTree + '-colFechaH',
-                width: 120,
+                width: 350,
+                //flex: 1,
+                dataIndex: 'idflex',
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
-                    // console.log(record.data);
-                    if (record.data.tdate === 'P') {
-                        value = record.data.sdate;                        
-                    } else {
-                        //value = record.data.paydate;
-                        value = record.data.prda;                      
-                    }
                     switch (record.data.type) {
                         case 'header':
                             metaData.style = "font-weight:bold;color:#0000FF;";
