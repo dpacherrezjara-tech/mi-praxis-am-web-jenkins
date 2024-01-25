@@ -110,6 +110,14 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         this.setValue('de-txtDIRCLIT1', this.beanResult.DIRCLIT1);
         this.setValue('de-txtDIRCLIT2', this.beanResult.DIRCLIT2);
         this.setValue('de-txtCODCLIT2', this.beanResult.CODCLIT2);
+        
+        this.setValue('de-FECHAINI', this.beanResult.FECHAINI);
+        this.setValue('de-FECHAFIN', this.beanResult.FECHAFIN);
+        this.setValue('de-cmbCODAGRUP', this.beanResult.CODAGRUP.slice(0,2));
+        
+        if(this.beanResult.CODAGRUP.slice(0,2) ==='GR'){
+            this.setValue('de-cmbNBRAGRUP', this.beanResult.CODAGRUP.slice(2,3));
+        }
 
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
@@ -138,6 +146,30 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         beanTemp.DIRCLIT2 = this.getValue("de-txtDIRCLIT2");
         beanTemp.CODCLIT2 = this.getValue("de-txtCODCLIT2");
 
+        beanTemp.FECHAINI = Ext.Date.format(this.getValue("de-FECHAINI"), 'Ymd');
+        beanTemp.FECHAFIN = Ext.Date.format(this.getValue("de-FECHAFIN"), 'Ymd');
+        
+        let nbr = this.getValue("de-cmbNBRAGRUP").trim();
+        let code = this.getValue("de-cmbCODAGRUP").trim();
+        switch (code) {
+            case 'PR':
+                beanTemp.CODAGRUP = code;
+                beanTemp.DESCAGRUP = 'PROCESO';
+                break;
+            case 'IN':
+                beanTemp.CODAGRUP = code;
+                beanTemp.DESCAGRUP = 'INDIVIDUAL';
+                break;
+            case 'GR':
+                beanTemp.CODAGRUP = code + nbr;
+                beanTemp.DESCAGRUP = 'Grupo ' + nbr;
+                break;
+            default:
+                beanTemp.CODAGRUP = '';
+                beanTemp.DESCAGRUP = '';
+                break;
+        }
+
         beanTemp.USCR = this.getValue("txtUSCR").trim();
         beanTemp.FECR = this.getValue("txtFECR").trim();
         beanTemp.HOCR = this.getValue("txtHOCR").trim();
@@ -163,7 +195,8 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             listaNueva.push(beanNuevo);
         }
         beanTemp.lstDetalle = listaNueva;
-
+        
+        console.log('Data: ',beanTemp);
     },
     getData: function () {
 //        console.log('getData');
@@ -403,6 +436,14 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             Ext.getCmp(prototype.id + '-lbldes2').hide();
         } else {
             Ext.getCmp(prototype.id + '-lbldes2').show();
+        }
+    },
+    onChangeCodAgrup:function(obj){
+        const cmbGrupos = Ext.getCmp(prototype.id + '-de-cmbNBRAGRUP');
+        if(obj.value === 'GR'){
+            cmbGrupos.show();
+        }else{
+            cmbGrupos.hide();
         }
     },
     getIATAList: function () {
