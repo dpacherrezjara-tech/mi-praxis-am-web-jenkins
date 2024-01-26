@@ -1430,6 +1430,103 @@ var LarSyrExt = function () {
             }
         }
     };
+    
+    this.AccessControlMaganerByMode = function(p) {
+        if(userAccess.length>0)
+        {
+            console.log("BEGIN AccessControlMaganer");
+            console.log(p.action);            
+
+            if(p.action=='I')
+            {
+                if(Ext.getCmp(prototype.id+'-btn-save')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-btn-save').hidden)
+                        {
+                                if(accessSelect.PERMC==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-btn-save').hide();
+                                }
+                        }
+
+                }
+
+                if(Ext.getCmp(prototype.id+'-btn-update')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-btn-update').hidden)
+                        {
+                                if(accessSelect.PERMM==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-btn-update').hide();
+                                }
+                        }
+                }
+
+                if(Ext.getCmp(prototype.id+'-btn-delete')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-btn-delete').hidden)
+                        {
+                                if(accessSelect.PERME==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-btn-delete').hide();
+                                }
+                        }
+
+                }
+            }
+            else if (p.action=='U')
+            {
+				console.log("BEGIN AccessControlMaganer save");
+                if(Ext.getCmp(prototype.id+'-btn-save')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-btn-save').hidden)
+                        {
+                                if(accessSelect.PERMM==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-btn-save').hide();
+                                }
+                        }
+
+                }
+				
+				console.log("BEGIN AccessControlMaganer update");
+                if(Ext.getCmp(prototype.id+'-btn-update')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-btn-update').hidden)
+                        {
+                                if(accessSelect.PERMM==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-btn-update').hide();
+                                }
+                        }
+                }
+				
+				console.log("BEGIN AccessControlMaganer DataEntry update");
+				if(Ext.getCmp(prototype.id+'-DataEntry-btn-update')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-DataEntry-btn-update').hidden)
+                        {
+                                if(accessSelect.PERMM==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-DataEntry-btn-update').hide();
+                                }
+                        }
+                }
+
+                if(Ext.getCmp(prototype.id+'-btn-delete')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-btn-delete').hidden)
+                        {
+                                if(accessSelect.PERME==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-btn-delete').hide();
+                                }
+                        }
+
+                }
+            }
+        }
+    };
     this.PX_UTILS_URL = 'js/praxis.ui-1.0/praxis.utils-1.0.js';
 };
 
