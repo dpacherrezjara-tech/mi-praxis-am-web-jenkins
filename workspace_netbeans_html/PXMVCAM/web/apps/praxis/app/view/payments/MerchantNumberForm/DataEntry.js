@@ -105,7 +105,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     }
                                 },
                                 ,
-                                {xtype: 'tbspacer', width: 105}
+                                        {xtype: 'tbspacer', width: 105}
                             ]
                         },
                         {
@@ -209,7 +209,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     readOnly: false,
                                     width: 290
                                 },
-                                
+
                                 {xtype: 'tbspacer', width: 50}
                             ]
                         },
@@ -323,8 +323,8 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     displayField: 'name',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
-                                    listeners:{
-                                        change:'onChangeStatusCmb'
+                                    listeners: {
+                                        change: 'onChangeStatusCmb'
                                     }
                                 },
                                 {xtype: 'tbspacer', width: 30},
@@ -360,6 +360,106 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                 {xtype: 'tbspacer', width: 50},
                                 {xtype: 'tbspacer', width: 136},
                                 {xtype: 'tbspacer', width: 5}
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '4 2 4 20',
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: 'Accounting Group',
+                                    fontSize: 15,
+                                    textAlign: 'center',
+                                    paddingLeft: 3,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 130
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:red;',
+                                    width: 20,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Mandatory Field'
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'combobox',
+                                    id: prototype.id + '-de-cmbCODAGRUP',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'None'],
+                                            ['PR', 'PROCESO'],
+                                            ['IN', 'INDIVIDUAL'],
+                                            ['GR', 'GRUPO']
+                                        ]
+                                    }),
+                                    width: 130,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: '',
+                                    listeners: {
+                                        change: 'onChangeCodAgrup'
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'combobox',
+                                    id: prototype.id + '-de-cmbNBRAGRUP',
+                                    hidden: true,
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['1', 'Grupo 1'],
+                                            ['2', 'Grupo 2'],
+                                            ['3', 'Grupo 3'],
+                                            ['4', 'Grupo 4'],
+                                            ['5', 'Grupo 5'],
+                                            ['6', 'Grupo 6'],
+                                            ['7', 'Grupo 7'],
+                                            ['8', 'Grupo 8'],
+                                            ['9', 'Grupo 9']
+                                        ]
+                                    }),
+                                    width: 130,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: '1'
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'datefield',
+                                    fieldLabel: 'Validity',
+                                    labelStyle:'font-weight:bold;color:#0B333C;',
+                                    format: 'Ymd',
+                                    editable: true, 
+                                    labelWidth: 50,
+                                    width: 130,
+                                    value: new Date(),
+                                    id: prototype.id + '-de-FECHAINI'
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'datefield',
+                                    fieldLabel: 'To',
+                                    format: 'Ymd',
+                                    editable: true,
+                                    labelWidth: 20,
+                                    width: 100,
+                                    value: '99991231',
+                                    id: prototype.id + '-de-FECHAFIN'
+                                }
                             ]
                         },
                         {
