@@ -48,6 +48,13 @@ Ext.define('Ext.Praxis.view.discharges.CouponRegistrationForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnExcel',
+                            iconCls: 'prx-icon-excel',
+                            tooltip: 'Export to Excel',
+                            text: 'Export'
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnClear',
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options',
