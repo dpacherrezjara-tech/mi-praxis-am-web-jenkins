@@ -30,6 +30,9 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
             '#CouponRegistrationForm-btnClear': {
                 click: this.btnClear_click
             },
+            '#CouponRegistrationForm-btnExcel': {
+                click: this.btnExcel_click
+            },
             '#CouponRegistrationForm-btnFilter': {
                 click: this.btnFilter_click
             },
@@ -107,10 +110,12 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
                 Ext.getCmp(prototype.id + '-txtFDesde').show();
                 Ext.getCmp(prototype.id + '-txtFHasta').show();
                 Ext.getCmp(prototype.id + '-cmbType').show();
+                Ext.getCmp(prototype.id + '-btnExcel').show();
                 break;
             case '3':
                 Ext.getCmp(prototype.id + '-txtTicket').show();
                 Ext.getCmp(prototype.id + '-txtCia').show();
+                Ext.getCmp(prototype.id + '-btnExcel').hide();
                 break;
         }
     },
@@ -571,6 +576,29 @@ Ext.define('Ext.Praxis.controller.discharges.CouponRegistration.CouponRegistrati
         });
         parentContainer.add(detailPanel);
         parentContainer.unmask();
+    },
+    btnExcel_click: function(obj, e) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {
+                    this.exportExcel();
+                }
+            }
+        });
+    },
+    exportExcel: function() {
+        this.setSummaryParameter();
+        global.getFile(prototype.url + '/getXLSX?TFECHA=' + summaryParams.TFECHA
+                        + '&TIPO=' + summaryParams.TIPO
+                        + '&FINICIO=' + summaryParams.FINICIO
+                        + '&FFIN=' + summaryParams.FFIN);
+        //global.getFile(prototype.url + '/searchSummaryXLSX?' + new URLSearchParams(summaryParams));
     },
     //<editor-fold defaultstate="collapsed" desc="botones">
     btnSearch_click: function (obj, e) {
