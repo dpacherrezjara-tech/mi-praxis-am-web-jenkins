@@ -61,9 +61,6 @@ public class AccountedAmountsInvoicedDAO {
 
         Connection cnx = null;
         try {
-            if (filter.page.PAGNUM > 0) {
-                PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
-            }
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
@@ -87,9 +84,9 @@ public class AccountedAmountsInvoicedDAO {
             cstmt01.setString(11, filter.IN_BILLING_DATEFFIN);
             cstmt01.setString(12, filter.IN_PERIOD);
             
-            cstmt01.setInt(13, PAGINIT);
-            cstmt01.setInt(14, totRowsPag);
-            cstmt01.setInt(15, totRows);
+            cstmt01.setInt(13, filter.page.PAGNUM);
+            cstmt01.setInt(14, filter.page.PAGROW);
+            cstmt01.setInt(15, filter.page.TOTPAG);
             cstmt01.setInt(16, filter.page.TOTROW);
             cstmt01.setString(17, filter.IN_A2559MODO);
 
@@ -99,28 +96,6 @@ public class AccountedAmountsInvoicedDAO {
             filter.page.PAGROW = cstmt01.getInt(14);
             filter.page.TOTPAG = cstmt01.getInt(15);
             filter.page.TOTROW = cstmt01.getInt(16);
-
-            if (filter.page.TOTROW > 0 && filter.page.TOTROW == cstmt01.getInt(14)) {
-                totRows = filter.page.TOTROW;
-                totPAGS = filter.page.TOTPAG;
-            } else {
-                try {
-                    totRows = cstmt01.getInt(16);
-                    int total = (int) (totRows / 20);
-                    int resto = (totRows % 20);
-
-                    if (resto > 0) {
-                        totPAGS = total + 1;
-                    } else {
-                        totPAGS = total;
-                    }
-
-                } catch (Exception e) {
-                    totPAGS = totRows / totRowsPag;
-                }
-            }
-
-            filter.page.TOTPAG = totPAGS;
 
             rs01 = cstmt01.getResultSet();
 
@@ -158,7 +133,7 @@ public class AccountedAmountsInvoicedDAO {
                 objRtn.DCAMB = rs01.getDouble("DCAMB");
                 objRtn.STATUS = rs01.getString("STATUS").trim();
 
-                objRtn.page.PAGNUM = filter.page.PAGNUM / filter.page.PAGROW + 1;
+                objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
                 objRtn.page.TOTROW = filter.page.TOTROW;
