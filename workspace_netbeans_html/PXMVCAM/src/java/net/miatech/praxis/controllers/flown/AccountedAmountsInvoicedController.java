@@ -7,8 +7,12 @@ package net.miatech.praxis.controllers.flown;
 
 import com.google.gson.Gson;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import org.apache.commons.io.IOUtils;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -263,7 +267,7 @@ public class AccountedAmountsInvoicedController extends BaseController {
             CH1_26.setCellStyle(headerStyle);
             CH1_27.setCellStyle(headerStyle);
             CH1_28.setCellStyle(headerStyle);
-            
+
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
@@ -278,13 +282,13 @@ public class AccountedAmountsInvoicedController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 12, 12));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 13, 13));
-            
+
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 18));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 23));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 28));
             ++vj;
             //          ========================================================
-            
+
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
             Cell CH2_0 = row2.createCell(0);
@@ -395,7 +399,7 @@ public class AccountedAmountsInvoicedController extends BaseController {
 
             ++vj;
             //============================================
-            
+
             while (iter.hasNext()) {
 
                 row = sheet.createRow(vj);
@@ -442,34 +446,33 @@ public class AccountedAmountsInvoicedController extends BaseController {
                 rcell9.setCellValue(listaData.get(vi).A2559FACT);
                 rcell10.setCellValue(listaData.get(vi).A2559FCONT);
                 rcell11.setCellValue(listaData.get(vi).A2559FACTU);
-                
+
                 rcell12.setCellValue(listaData.get(vi).A2559FCOIC);
                 rcell13.setCellValue(listaData.get(vi).A2559TUSO);
-                
+
                 rcell14.setCellValue(listaData.get(vi).A2559PFARE);
                 rcell15.setCellValue(listaData.get(vi).A2559PTAX);
                 rcell16.setCellValue(listaData.get(vi).A2559PISC);
                 rcell17.setCellValue(listaData.get(vi).A2559YQ);
                 rcell18.setCellValue(listaData.get(vi).A2559TCAMB);
-                
+
                 rcell19.setCellValue(listaData.get(vi).A2559FFARE);
                 rcell20.setCellValue(listaData.get(vi).A2559FTAX);
                 rcell21.setCellValue(listaData.get(vi).A2559FISC);
                 rcell22.setCellValue(listaData.get(vi).A2559FYQ);
                 rcell23.setCellValue(listaData.get(vi).A2559TCAMF);
-                
+
                 rcell24.setCellValue(listaData.get(vi).A2559DFARE);
                 rcell25.setCellValue(listaData.get(vi).A2559DTAX);
                 rcell26.setCellValue(listaData.get(vi).A2559DISC);
                 rcell27.setCellValue(listaData.get(vi).DFQ);
                 rcell28.setCellValue(listaData.get(vi).DCAMB);
-                
 
                 iter.next();
                 ++vi;
                 ++vj;
             }
-            
+
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(2, true);
@@ -499,7 +502,7 @@ public class AccountedAmountsInvoicedController extends BaseController {
             sheet.autoSizeColumn(26, true);
             sheet.autoSizeColumn(27, true);
             sheet.autoSizeColumn(28, true);
-            
+
             /**
              * fileNameDownload = Nombre de descarga
              */
@@ -514,5 +517,78 @@ public class AccountedAmountsInvoicedController extends BaseController {
             throw new SpringException(e);
         }
 
+    }
+
+    @RequestMapping(value = "getTXT")
+    public @ResponseBody
+    void getXLSX(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("Accounted amounts vs invoiced amounts : getTXT");
+        String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+
+        try {
+            List<A2559Filter> listaData = this.getList(request, true);
+
+            int len = listaData.size();
+            Integer vi = 0;
+            String fileName = "Accounted amounts vs invoiced amounts - " + Functions.getFechaActual() + ".txt";
+            File file = new File(rutaFile + "\\" + fileName + ".txt");
+
+            if (file.exists()) {
+                file.delete();
+            }
+
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+            String cadena;
+            cadena = "Nbr|Cia|Form|Serial|Coupon|Valuation Date|Flight Date|Clearing Date|Period|Airline Code|Accounting Date|Invoice Number|Accounting Date IXC|Source Code|Status 9|Acc. Fare|Acc. TAX|Acc. ISC|Acc. YQ|Acc. TC|Inv. Fare|Inv. TAX|Inv. ISC|Inv. YQ|Inv. TC|Diff. Fare|Diff. TAX|Diff. ISC|Diff. YQ|Diff. TC";
+            writer.println("" + cadena);
+
+            for (vi = 0; vi < len; vi++) {
+                cadena = "";
+                cadena += "" + listaData.get(vi).RN + "|";
+                cadena += "" + listaData.get(vi).A2559CIA + "|";
+                cadena += "" + listaData.get(vi).A2559FORMA + "|";
+                cadena += "" + listaData.get(vi).A2559SERIE + "|";
+                cadena += "" + listaData.get(vi).A2559CUPON + "|";
+                cadena += "" + listaData.get(vi).A2559FFILE + "|";
+                cadena += "" + listaData.get(vi).A2559FPRO + "|";
+                cadena += "" + listaData.get(vi).A2559FCLEA + "|";
+                cadena += "" + listaData.get(vi).A2559PERID + "|";
+                cadena += "" + listaData.get(vi).A2559FACT + "|";
+                cadena += "" + listaData.get(vi).A2559FCONT + "|";
+                cadena += "" + listaData.get(vi).A2559FACTU + "|";
+                cadena += "" + listaData.get(vi).A2559FCOIC + "|";
+                cadena += "" + listaData.get(vi).A2559TUSO + "|";
+                cadena += "" + listaData.get(vi).STATUS + "|";
+                cadena += "" + listaData.get(vi).A2559PFARE + "|";
+                cadena += "" + listaData.get(vi).A2559PTAX + "|";
+                cadena += "" + listaData.get(vi).A2559PISC + "|";
+                cadena += "" + listaData.get(vi).A2559YQ + "|";
+                cadena += "" + listaData.get(vi).A2559TCAMB + "|";
+                cadena += "" + listaData.get(vi).A2559FFARE + "|";
+                cadena += "" + listaData.get(vi).A2559FTAX + "|";
+                cadena += "" + listaData.get(vi).A2559FISC + "|";
+                cadena += "" + listaData.get(vi).A2559FYQ + "|";
+                cadena += "" + listaData.get(vi).A2559TCAMF + "|";
+                cadena += "" + listaData.get(vi).A2559DFARE + "|";
+                cadena += "" + listaData.get(vi).A2559DTAX + "|";
+                cadena += "" + listaData.get(vi).A2559DISC + "|";
+                cadena += "" + listaData.get(vi).DFQ + "|";
+                cadena += "" + listaData.get(vi).DCAMB ;
+                cadena = cadena.replaceAll("null", "");
+                writer.println("" + cadena);
+            }
+            writer.flush();
+            writer.close();
+
+            response.setContentType("application/text");
+            response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + ".txt" + "\"");
+            InputStream is = new FileInputStream(rutaFile + "\\" + fileName + ".txt");
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
     }
 }

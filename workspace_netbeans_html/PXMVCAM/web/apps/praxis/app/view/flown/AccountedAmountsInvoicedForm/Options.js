@@ -88,6 +88,12 @@ Ext.define('Ext.Praxis.view.flown.AccountedAmountsInvoicedForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnTxt',
+                            icon: 'resources/img/botones/txt.png',
+                            tooltip: 'Export to Txt'
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnClear',
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options'
