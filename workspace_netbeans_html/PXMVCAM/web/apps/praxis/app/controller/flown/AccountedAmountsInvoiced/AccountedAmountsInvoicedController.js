@@ -33,6 +33,9 @@ Ext.define('Ext.Praxis.controller.flown.AccountedAmountsInvoiced.AccountedAmount
             '#AccountedAmountsInvoicedForm-btnExcel': {
                 click: this.btnExcel_click
             },
+            '#AccountedAmountsInvoicedForm-btnTxt': {
+                click: this.btnTxt_click
+            },
             '#AccountedAmountsInvoicedForm-btnBack': {
                 click: this.btnBack_click
             },
@@ -198,6 +201,21 @@ Ext.define('Ext.Praxis.controller.flown.AccountedAmountsInvoiced.AccountedAmount
             }
         });
     },
+    btnTxt_click: function(obj, e) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download TXT ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {
+                    this.exportTxt();
+                }
+            }
+        });
+    },
     exportExcel: function() {
         this.setParams();
         global.getFile(prototype.url + '/getXLSX?IN_A2559CCUST=' + searchParams.IN_A2559CCUST
@@ -205,9 +223,33 @@ Ext.define('Ext.Praxis.controller.flown.AccountedAmountsInvoiced.AccountedAmount
                 + '&IN_FFIN=' + searchParams.IN_FFIN
                 + '&IN_A2559MODO=' + searchParams.IN_A2559MODO
                 + '&IN_PARAM=' + searchParams.IN_PARAM
+                + '&IN_FLOWN_FINI=' + searchParams.IN_FLOWN_FINI
+                + '&IN_FLOWN_FFIN=' + searchParams.IN_FLOWN_FFIN
+                + '&IN_FLIGHT_FINI=' + searchParams.IN_FLIGHT_FINI
+                + '&IN_FLIGHT_FFIN=' + searchParams.IN_FLIGHT_FFIN
+                + '&IN_BILLING_DATEFINI=' + searchParams.IN_BILLING_DATEFINI
+                + '&IN_BILLING_DATEFFIN=' + searchParams.IN_BILLING_DATEFFIN
+                + '&IN_PERIOD=' + searchParams.IN_PERIOD
+                + '&IN_FLAG=' + searchParams.IN_FLAG
                 );
-    }
-    ,
+    },    
+    exportTxt: function() {
+        this.setParams();
+        global.getFile(prototype.url + '/getTXT?IN_A2559CCUST=' + searchParams.IN_A2559CCUST
+                + '&IN_FINI=' + searchParams.IN_FINI
+                + '&IN_FFIN=' + searchParams.IN_FFIN
+                + '&IN_A2559MODO=' + searchParams.IN_A2559MODO
+                + '&IN_PARAM=' + searchParams.IN_PARAM
+                + '&IN_FLOWN_FINI=' + searchParams.IN_FLOWN_FINI
+                + '&IN_FLOWN_FFIN=' + searchParams.IN_FLOWN_FFIN
+                + '&IN_FLIGHT_FINI=' + searchParams.IN_FLIGHT_FINI
+                + '&IN_FLIGHT_FFIN=' + searchParams.IN_FLIGHT_FFIN
+                + '&IN_BILLING_DATEFINI=' + searchParams.IN_BILLING_DATEFINI
+                + '&IN_BILLING_DATEFFIN=' + searchParams.IN_BILLING_DATEFFIN
+                + '&IN_PERIOD=' + searchParams.IN_PERIOD
+                + '&IN_FLAG=' + searchParams.IN_FLAG
+                );
+    },
     btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
         if (option.isVisible()) {
