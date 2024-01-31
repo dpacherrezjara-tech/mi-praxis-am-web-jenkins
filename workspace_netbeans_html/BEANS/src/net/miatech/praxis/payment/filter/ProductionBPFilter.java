@@ -4,7 +4,7 @@ package net.miatech.praxis.payment.filter;
  *
  * @author Dvicente
  */
-public class ProductionFilter {
+public class ProductionBPFilter {
     private String USUP,FEUP,TRANSTYPE,PROCTYPE,PROCTYPESQ,SCOUNTRY,STVAL,DESC_PROCTYPE;
     private Integer QTRN;
 
