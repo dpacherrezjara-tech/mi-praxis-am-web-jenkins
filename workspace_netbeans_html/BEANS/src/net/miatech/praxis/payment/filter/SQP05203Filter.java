@@ -8,8 +8,8 @@ import java.util.List;
  * @author Dvicente
  */
 public class SQP05203Filter {
-    private String IN_CCUST,IN_USUP,IN_FEUP,IN_TRANSTYPE,IN_STVAL;
-    private List<ProductionFilter> response = new ArrayList<>();
+    private String IN_CCUST,IN_USUP,IN_FEUP,IN_TRANSTYPE,IN_STVAL,IN_ORIG;
+    private List<?> response = new ArrayList<>();
 
     public String getIN_CCUST() {
         return IN_CCUST;
@@ -51,11 +51,19 @@ public class SQP05203Filter {
         this.IN_STVAL = IN_STVAL;
     }
 
-    public List<ProductionFilter> getResponse() {
+    public List<?> getResponse() {
         return response;
     }
 
-    public void setResponse(List<ProductionFilter> response) {
+    public void setResponse(List<?> response) {
         this.response = response;
+    }
+
+    public String getIN_ORIG() {
+        return IN_ORIG;
+    }
+
+    public void setIN_ORIG(String IN_ORIG) {
+        this.IN_ORIG = IN_ORIG;
     }
 }

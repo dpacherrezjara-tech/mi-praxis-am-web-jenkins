@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
     controller: 'BPOProductionDataEntryController',
     title: 'BPO Production - Form',
     header: true,
-    width: 1120,
+    width: 1300,
     resizable: true,
     layout: 'fit',
     modal: true,
@@ -129,6 +129,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                         },
                         {
                             xtype: 'combobox',
+                            fieldLabel: 'Origin',
+                            name: 'IN_ORIG',
+                            value: 'P',
+                            width: 155,
+                            labelWidth: 55,
+                            store: Ext.create('Ext.data.SimpleStore', {
+                                fields: ['code', 'name'],
+                                data: [
+                                    ['P', 'By Payment'],
+                                    ['T', 'By Ticket']
+                                ]
+                            }),
+                            displayField: 'name',
+                            valueField: 'code',
+                            queryMode: 'local',
+                            editable: false,
+                            listeners:{
+                                change:'onChangeOrigin'
+                            }
+                        },
+                        {
+                            xtype: 'combobox',
                             fieldLabel: 'Doc. Type',
                             name: 'IN_TRANSTYPE',
                             store: Ext.create('Ext.data.SimpleStore', {
@@ -158,6 +180,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                             tooltip: 'Search',
                             listeners: {
                                 click: 'onClickSearchBtn'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.idDeProd + '-btnExcel',
+                            height: 25,
+                            width: 25,
+                            margin: '4 4 4 4',
+                            iconCls: 'prx-icon-excel',
+                            tooltip: 'Export',
+                            listeners: {
+                                click: 'onExportExcelBtn'
                             }
                         }
                     ]
@@ -262,6 +296,80 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                                     },
                                     {
                                         text: 'Qty', dataIndex: 'qtrn', width: 80,
+                                        summaryType: 'sum',
+                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            return '<b>' + value + '<b>';
+                                        }
+                                    }
+                                ]
+                            },
+                            features: [
+                                {
+                                    ftype: 'summary' // Agrega la característica de resumen al grid
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'grid',
+                            title: 'Detail',
+                            titleAlign: 'center',
+                            id: prototype.idDeProd + '-gridDetail2',
+                            hidden:true,
+                            minHeight: 180,
+                            maxHeight: 200,
+                            flex: 1,
+                            margin: '5 5 5 5',
+                            viewConfig: {
+                                stripeRows: true,
+                                enableTextSelection: true,
+                                markDirty: false
+                            },
+                            autoScroll: true,
+                            columnLines: true,
+                            columns: {
+                                defaults: {
+                                    align: 'center',
+                                    menuDisabled: true,
+                                    sortable: true
+                                },
+                                items: [
+                                    {text: 'Fop Type', dataIndex: 'a4501TFOP', width: 100,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                            metaData.style = "text-align:center;font-weight:bold;";
+                                            const opts = {
+                                                'CC': 'Credit Card',
+                                                'CA': 'Cash'
+                                            };
+                                            return opts[value] || '';
+                                        }
+                                    },
+                                    {text: 'Processor', dataIndex: 'desc_PROCTYPE', flex: 1},
+                                    {
+                                        text: 'Card Name', dataIndex: 'desc_TARJ', flex:1
+                                    },
+                                    {
+                                        text: 'Sale Date', dataIndex: 'a4496FECVT', width: 100
+                                    },
+                                    {
+                                        text: 'Status', dataIndex: 'a4501STVAL', width: 120,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                            metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
+                                            const opts = {
+                                                '0': 'Stand By',
+                                                '1': 'Match',
+                                                '2': 'Sales Without Settl.',
+                                                '3': 'Settl. Without Sales',
+                                                '4': 'Match Diff.',
+                                                '5': 'Match Manual',
+                                                '6': 'Forced Match',
+                                                '7': 'Compensation Match',
+                                                '8': 'Pending RFND'
+                                            };
+                                            return opts[value] || '';
+                                        }
+                                    },
+                                    {
+                                        text: 'Qty', dataIndex: 'qtkt', width: 80,
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             return '<b>' + value + '<b>';

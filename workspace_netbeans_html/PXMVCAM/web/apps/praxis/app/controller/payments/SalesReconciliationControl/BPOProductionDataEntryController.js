@@ -14,9 +14,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.BPOProduct
     getSummary: async function () {
         const me = this;
         const formFilter = Ext.getCmp(prototype.idDeProd + '-formFilters').getForm();
-        const gridSumm = Ext.getCmp(prototype.idDeProd + '-gridSummary');
-        const gridDetail = Ext.getCmp(prototype.idDeProd + '-gridDetail');
         let params = me.formatParams(formFilter);
+        
+        const gridSumm = Ext.getCmp(prototype.idDeProd + '-gridSummary');
+        let gridDetail = {};
+        
+        if(params.IN_ORIG==='P'){
+            gridDetail = Ext.getCmp(prototype.idDeProd + '-gridDetail');
+            Ext.getCmp(prototype.idDeProd + '-gridDetail2').hide();
+        }else{
+            gridDetail = Ext.getCmp(prototype.idDeProd + '-gridDetail2');
+            Ext.getCmp(prototype.idDeProd + '-gridDetail').hide();
+        }
+        gridDetail.show();
         gridSumm.getView().mask('Loading...');
         const res = await fetch(`${me.url}/loadProductionBp?${new URLSearchParams(params)}`);
         if (res.ok) {
@@ -33,8 +43,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.BPOProduct
     },
     getDetail: async function (rec) {
         const me = this;
-        const gridDetail = Ext.getCmp(prototype.idDeProd + '-gridDetail');
         let params = me.formatDetailParams(rec);
+        let gridDetail = {};
+        let title = '';
+        if(params.IN_ORIG==='P'){
+            title = 'By Payment';
+            gridDetail = Ext.getCmp(prototype.idDeProd + '-gridDetail');
+            Ext.getCmp(prototype.idDeProd + '-gridDetail2').hide();
+        }else{
+            title = 'By Ticket';
+            gridDetail = Ext.getCmp(prototype.idDeProd + '-gridDetail2');
+            Ext.getCmp(prototype.idDeProd + '-gridDetail').hide();
+        }
+        gridDetail.show();
         gridDetail.getView().mask('Loading...');
         const res = await fetch(`${me.url}/loadProductionBpDetail?${new URLSearchParams(params)}`);
         if (res.ok) {
@@ -42,7 +63,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.BPOProduct
             let detStore = Ext.create('Ext.data.Store', {
                 data: data.response
             });
-            gridDetail.setTitle(`Detail - ${params.IN_USUP} - ${params.IN_FEUP}`);
+            gridDetail.setTitle(`Detail ${title} - ${params.IN_USUP} - ${params.IN_FEUP}`);
             gridDetail.setStore(detStore);
             gridDetail.bindStore(detStore);
         }
@@ -65,9 +86,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.BPOProduct
             IN_USUP: obj.get('usup'),
             IN_FEUP: obj.get('feup'),
             IN_TRANSTYPE: filterVal.IN_TRANSTYPE,
-            IN_STVAL: filterVal.IN_STVAL
+            IN_STVAL: filterVal.IN_STVAL,
+            IN_ORIG: filterVal.IN_ORIG
         };
         return params;
+    },
+    onChangeOrigin:function(){
+        this.getSummary();
+    },
+    onExportExcelBtn:function(){
+        const formFilter = Ext.getCmp(prototype.idDeProd + '-formFilters').getForm();
+        let params = this.formatParams(formFilter);
+        global.getFile(`${this.url}/downloadProduction?${new URLSearchParams(params)}`);
     }
 });
 

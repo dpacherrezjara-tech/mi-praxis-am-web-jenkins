@@ -558,6 +558,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             const data = await res.json();
             if (data.response.length === 0) {
                 global.Msg({msg: 'Not Found'});
+                scannerPanel.unmask();
                 return;
             }
             const adju = {

@@ -50,6 +50,7 @@ import net.miatech.praxis.payment.filter.SQP05206Filter;
 import net.miatech.praxis.payment.filter.SQP05217Filter;
 import net.miatech.praxis.payment.filter.SQP05218Filter;
 import net.miatech.praxis.payment.filter.SQP05219Filter;
+import net.miatech.praxis.payment.filter.SQP05247Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.Functions;
@@ -82,7 +83,7 @@ public class SalesReconciliationBPOController {
 
     @Autowired
     private ExportUtils exportUtils;
-    
+
     @Autowired
     private SabreWebService sabreWebService;
 
@@ -141,7 +142,7 @@ public class SalesReconciliationBPOController {
                 if (response.getTicketDataType().getTicket() != null) {
                     //ticcket
                     lst = response.getTicketDataType().getTicket().getServiceCoupon();
-                }else if (response.getTicketDataType().getElectronicMiscDocument()!=null){
+                } else if (response.getTicketDataType().getElectronicMiscDocument() != null) {
                     //emd
                     lst = response.getTicketDataType()
                             .getElectronicMiscDocument()
@@ -155,9 +156,9 @@ public class SalesReconciliationBPOController {
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        
+
     }
 
     //<editor-fold defaultstate="collapsed" desc="By payment">
@@ -257,7 +258,7 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @RequestMapping(value = "loadErrorTransactionStandByScanner")
     public ResponseEntity<?> loadErrorTransactionStandByScanner(@ModelAttribute SQP05187Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : loadErrorTransactionStandByScanner-------------");
@@ -296,7 +297,7 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @RequestMapping(value = "errorTransactionBPOsetStandBy", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> errorTransactionBPOsetStandBy(@RequestBody SQP05056Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : errorTransactionBPOsetStandBy-------------");
@@ -399,7 +400,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
     @RequestMapping(value = "loadChargebackTrackingBrowser")
     public ResponseEntity<?> loadChargebackTrackingBrowser(@ModelAttribute SQP05182Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : loadChargebackTrackingBrowser-------------");
@@ -412,7 +413,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
     @RequestMapping(value = "maintenanceChargebackManual", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> maintenanceChargebackManual(@RequestBody SQP05183Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : maintenanceChargebackManual-------------");
@@ -646,7 +647,7 @@ public class SalesReconciliationBPOController {
                 row[25] = obj.getFeup();
                 if (obj.getBPOCOMENT().isEmpty()) {
                     row[26] = obj.getADJUCOMENT();
-                }else{
+                } else {
                     row[26] = obj.getBPOCOMENT();
                 }
                 data.add(row);
@@ -793,9 +794,9 @@ public class SalesReconciliationBPOController {
                 row[22] = convertStatus(obj.getA4501STVAL());
                 row[23] = obj.getDESC_PROCTYPE();
                 row[24] = obj.getA4501STADM();
-                if(obj.getA4501STADM().trim().isEmpty()){
-                    row[25] = !obj.getBPO_COMEN2().isEmpty()?obj.getBPO_COMEN2():obj.getBPO_COMEN();
-                }else{
+                if (obj.getA4501STADM().trim().isEmpty()) {
+                    row[25] = !obj.getBPO_COMEN2().isEmpty() ? obj.getBPO_COMEN2() : obj.getBPO_COMEN();
+                } else {
                     row[25] = obj.getADM_COMEN();
                 }
                 data.add(row);
@@ -989,7 +990,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "loadProductionBpDetail")
     public ResponseEntity<?> loadProductionBpDetail(@ModelAttribute SQP05203Filter filter) {
         try {
@@ -1002,8 +1003,112 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    @RequestMapping(value = "downloadProduction")
+    public ResponseEntity<?> downloadProduction(@ModelAttribute SQP05247Filter filter) {
+        try {
+            System.out.println("---------------SalesReconciliationBPO:downloadProduction-------------");
+            filter = logic.loadSQP05247Filter(filter);
+            System.out.println("Total: " + filter.getResponse().size());
+            List<Object[]> data = new ArrayList<>();
+            String title = "";
+            
+            if (filter.getIN_ORIG().equals("P")) {
+                //headers
+                Object[] headers = new Object[16];
+                headers[0] = "Worked Date";
+                headers[1] = "Username";
+                headers[2] = "Doc. Type";
+                headers[3] = "Processor";
+                headers[4] = "Country";
+                headers[5] = "Processing Date";
+                headers[6] = "Status";
+                headers[7] = "Card Number";
+                headers[8] = "Auth Code";
+                headers[9] = "Amount";
+                headers[10] = "Currency";
+                headers[11] = "PNR";
+                headers[12] = "Qty Tkts";
+                headers[13] = "Ticket";
+                headers[14] = "Adjustment";
+                headers[15] = "BPO Comment";
+                data.add(headers);
+                for (Object line : filter.getResponse()) {
+                    A4331Filter obj = (A4331Filter) line;
+                    Object[] row = new Object[16];
+                    row[0] = obj.getFeup();
+                    row[1] = obj.getUsup();
+                    row[2] = obj.getTranstype();
+                    row[3] = obj.getDESC_PROCTYPE();
+                    row[4] = obj.getScountry();
+                    row[5] = obj.getPrda();
+                    row[6] = convertStatus(obj.getStval());
+                    row[7] = obj.getScardn();
+                    row[8] = obj.getSauthoc();
+                    row[9] = obj.getTgrosamoun();
+                    row[10] = obj.getScurrency();
+                    row[11] = obj.getSpnr();
+                    row[12] = obj.getQtytkt();
+                    row[13] = obj.getTicket();
+                    row[14] = obj.getCodadju();
+                    row[15] = obj.getBPOCOMENT();
+                    data.add(row);
+                }
+                title = controllerName + " - ByPayment Production ";
+            } else {
+                //headers
+                Object[] headers = new Object[15];
+                headers[0] = "Worked Date";
+                headers[1] = "Username";
+                headers[2] = "Doc. Type";
+                headers[3] = "Processor";
+                headers[4] = "Country";
+                headers[5] = "Sale Date";
+                headers[6] = "Status";
+                headers[7] = "Card Number";
+                headers[8] = "Auth Code";
+                headers[9] = "Amount";
+                headers[10] = "Currency";
+                headers[11] = "PNR";
+                headers[12] = "Card Type";
+                headers[13] = "Ticket";
+                headers[14] = "BPO Comment";
+                headers[15] = "ADM Comment";
+                data.add(headers);
+                for (Object line : filter.getResponse()) {
+                    A4496Filter obj = (A4496Filter) line;
+                    Object[] row = new Object[15];
+                    row[0] = obj.getA4501FEUP();
+                    row[1] = obj.getA4501USUP();
+                    row[2] = obj.getA4496TRNCU();
+                    row[3] = obj.getDESC_PROCTYPE();
+                    row[4] = obj.getA4496PAIS();
+                    row[5] = obj.getA4496FECVT();
+                    row[6] = convertStatus(obj.getA4501STVAL());
+                    row[7] = obj.getA4501NREF();
+                    row[8] = obj.getA4501CAPL();
+                    row[9] = obj.getA4501VFOP();
+                    row[10] = obj.getA4501MFOP();
+                    row[11] = obj.getA4496PNR();
+                    row[12] = obj.getDESC_TARJ();
+                    row[13] = obj.getTICKET();
+                    row[14] = obj.getBPO_COMEN().trim().isEmpty()?
+                            obj.getBPO_COMEN2():
+                            obj.getBPO_COMEN();
+                    row[15] = obj.getADM_COMEN();
+                    data.add(row);
+                }
+                title = controllerName + " - ByTicket Production ";
+            }
+
+            return exportUtils.createExcel(data, title + Functions.getFechaActual());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Credit Card Filter">
     @RequestMapping(value = "loadCreditCardFilter")
     public ResponseEntity<?> loadCreditCardFilter(@ModelAttribute SQP05206Filter params) {
@@ -1018,7 +1123,7 @@ public class SalesReconciliationBPOController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Mantenimiento Tarjetas">
     @RequestMapping(value = "loadTicket")
     public ResponseEntity<?> loadTicket(@ModelAttribute SQP05217Filter params) {
@@ -1032,7 +1137,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "loadFopInformation")
     public ResponseEntity<?> loadFopInformation(@ModelAttribute SQP05218Filter params) {
         System.out.println("---------------SalesReconciliationBPO:loadFopInformation-------------");
@@ -1045,7 +1150,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "insertTicketRecord", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> loadFopInformation(@RequestBody SQP05219Filter params) {
         System.out.println("---------------SalesReconciliationBPO:insertTicketRecord-------------");

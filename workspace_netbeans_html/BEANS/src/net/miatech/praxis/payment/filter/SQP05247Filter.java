@@ -7,10 +7,11 @@ import java.util.List;
  *
  * @author Dvicente
  */
-public class SQP05202Filter {
+public class SQP05247Filter {
     private String IN_CCUST,IN_USUP,IN_FECFROM,IN_FECTO,
             IN_TRANSTYPE,IN_STVAL,IN_ORIG;
-    private List<ProductionBPFilter> response = new ArrayList<>();
+    
+    private List<?> response = new ArrayList<>();
 
     public String getIN_CCUST() {
         return IN_CCUST;
@@ -56,6 +57,10 @@ public class SQP05202Filter {
         return IN_STVAL;
     }
 
+    public void setIN_STVAL(String IN_STVAL) {
+        this.IN_STVAL = IN_STVAL;
+    }
+
     public String getIN_ORIG() {
         return IN_ORIG;
     }
@@ -63,17 +68,14 @@ public class SQP05202Filter {
     public void setIN_ORIG(String IN_ORIG) {
         this.IN_ORIG = IN_ORIG;
     }
-    
-    public void setIN_STVAL(String IN_STVAL) {
-        this.IN_STVAL = IN_STVAL;
-    }
 
-    public List<ProductionBPFilter> getResponse() {
+    public List<?> getResponse() {
         return response;
     }
 
-    public void setResponse(List<ProductionBPFilter> response) {
+    public void setResponse(List<?> response) {
         this.response = response;
     }
+     
     
 }
