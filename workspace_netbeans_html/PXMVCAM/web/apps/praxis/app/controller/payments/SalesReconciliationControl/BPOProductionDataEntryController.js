@@ -93,7 +93,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.BPOProduct
     },
     onChangeOrigin:function(){
         this.getSummary();
+    },
+    onExportExcelBtn:function(){
+        const formFilter = Ext.getCmp(prototype.idDeProd + '-formFilters').getForm();
+        let params = this.formatParams(formFilter);
+        global.getFile(`${this.url}/downloadProduction?${new URLSearchParams(params)}`);
     }
-    
 });
 

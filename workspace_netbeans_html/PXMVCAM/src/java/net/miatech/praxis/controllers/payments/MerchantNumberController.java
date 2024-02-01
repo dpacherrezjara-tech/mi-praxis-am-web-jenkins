@@ -22,7 +22,9 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.MerchantNumberLogic;
+import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
 import net.miatech.praxis.payment.entities.A4202;
+import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.old.A2354Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
@@ -37,7 +39,10 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +61,22 @@ public class MerchantNumberController extends BaseController {
     private static final Logger logError = Logger.getLogger("errorLog");
     private MerchantNumberLogic logic;
     private MasterDAO masterDAO;
+    
+    @Autowired
+    private SalesReconciliationLogic srlogic;
+    
+    @RequestMapping(value = "loadFilters")
+    public ResponseEntity<?> loadFilters(ModelMap model) {
+        try {
+            System.out.println("---------------MerchantNumber:loadFilters-------------");
+            model.put("paises", srlogic.getPaises());
+            model.put("monedas", srlogic.getMonedas());
+            return new ResponseEntity<>(model, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public String index(ModelMap map) {

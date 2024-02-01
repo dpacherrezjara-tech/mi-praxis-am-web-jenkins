@@ -22,8 +22,13 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
 //        console.log(this.p);
 //        this.obtainData();
     },
-    afterRender: function () {
+    afterRender: async function () {
 //        console.log('afterRender');
+        const res = await fetch(`${CONTEXTPATH}/MerchantNumber/loadFilters`);
+        const data = await res.json();
+        const cmbPaises = Ext.getCmp(prototype.id + '-de-cmbSCOUNTRY');
+            this.setComboStore({cmp: cmbPaises, data: data.paises,
+                valueField: 'code', displayField: 'name', value: ''});
         switch (this.actionCode) {
             case 'I':
                 var cmbUNIOPE = Ext.getCmp(prototype.id + '-de-cmbUNIOPE');
@@ -63,21 +68,21 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
                     ]
                 }));
                 cmbCANAL.setValue('');
-                var cmbSCOUNTRY = Ext.getCmp(prototype.id + '-de-cmbSCOUNTRY');
-                cmbSCOUNTRY.bindStore(Ext.create('Ext.data.ArrayStore', {
-                    autoLoad: false,
-                    fields: ['code', 'name'],
-                    data: [
-                        ["", "none"],
-                        ["US", "US - UNITED STATES"],
-                        ["CA", "CA - CANADA"],
-                        ["AR", "AR - ARGENTINA"],
-                        ["JP", "JP - JAPAN"],
-                        ["ES", "ES - SPAIN"],
-                        ["MX", "MX - MEXICO"],
-                    ]
-                }));
-                cmbSCOUNTRY.setValue('');
+//                var cmbSCOUNTRY = Ext.getCmp(prototype.id + '-de-cmbSCOUNTRY');
+//                cmbSCOUNTRY.bindStore(Ext.create('Ext.data.ArrayStore', {
+//                    autoLoad: false,
+//                    fields: ['code', 'name'],
+//                    data: [
+//                        ["", "none"],
+//                        ["US", "US - UNITED STATES"],
+//                        ["CA", "CA - CANADA"],
+//                        ["AR", "AR - ARGENTINA"],
+//                        ["JP", "JP - JAPAN"],
+//                        ["ES", "ES - SPAIN"],
+//                        ["MX", "MX - MEXICO"],
+//                    ]
+//                }));
+//                cmbSCOUNTRY.setValue('');
                 Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
@@ -238,20 +243,20 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             ]
         }));
 
-        var cmbSCOUNTRY = Ext.getCmp(prototype.id + '-de-cmbSCOUNTRY');
-        cmbSCOUNTRY.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "none"],
-                ["US", "US - UNITED STATES"],
-                ["CA", "CA - CANADA"],
-                ["AR", "AR - ARGENTINA"],
-                ["JP", "JP - JAPAN"],
-                ["ES", "ES - SPAIN"],
-                ["MX", "MX - MEXICO"],
-            ]
-        }));
+//        var cmbSCOUNTRY = Ext.getCmp(prototype.id + '-de-cmbSCOUNTRY');
+//        cmbSCOUNTRY.bindStore(Ext.create('Ext.data.ArrayStore', {
+//            autoLoad: false,
+//            fields: ['code', 'name'],
+//            data: [
+//                ["", "none"],
+//                ["US", "US - UNITED STATES"],
+//                ["CA", "CA - CANADA"],
+//                ["AR", "AR - ARGENTINA"],
+//                ["JP", "JP - JAPAN"],
+//                ["ES", "ES - SPAIN"],
+//                ["MX", "MX - MEXICO"],
+//            ]
+//        }));
 
 
         var beanString = JSON.stringify(meDE.bean.data);
@@ -606,6 +611,41 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         if (e.getKey() === e.ENTER) {
 //            this.btnSearch_click();
         }
+    },
+    setComboStore: function ( {cmp, data, valueField, displayField, value}){
+        const me = this;
+        cmp.suspendEvents(false);
+        cmp.bindStore(me.createComboStore({data: data
+            , valueField: valueField, displayField: displayField}));
+        cmp.setValue(value);
+        cmp.resumeEvents();
+    },
+    createComboStore: function ( {data, valueField, displayField}) {
+        //crea record vacio
+        let allRecord = {};
+        allRecord[displayField] = 'None';
+        allRecord[valueField] = '';
+        //limpia record de data
+        data.forEach(obj => {
+            for (let attr in obj) {
+                if (typeof obj[attr] === 'string') {
+                    obj[attr] = obj[attr].trimEnd();
+                }
+            }
+        });
+        //crea Store
+        let store = this.createStore({data: data});
+        //inserta record vacio
+        store.insert(0, allRecord);
+        //console.log('store creado',store);
+        return store;
+    },
+    createStore: function ( {data}){
+        return Ext.create('Ext.data.Store', {
+            autoLoad: true,
+            data: data,
+            pageSize: 20
+        });
     }
 // </editor-fold>
 

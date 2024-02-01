@@ -86,6 +86,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                         },
                         {
                             xtype: 'combo',
+                            id: prototype.id + '-cmbProctypeSettl',
+                            name: 'IN_PROCTYPE',
+                            labelWidth: 70,
+                            width: 250,
+                            valueField: 'a4451key3',
+                            displayField: 'a4451desc1',
+                            fieldLabel: 'Processor',
+                            queryMode: 'local',
+                            editable: false,
+                            allowBlank: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            labelAlign: 'right',
+                            typeAhead: true,
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            value: ''
+                        },
+                        {
+                            xtype: 'combo',
                             id: prototype.id + '-cmbPaisesSettl',
                             name: 'IN_SCOUNTRY',
                             queryMode: 'local',
@@ -107,20 +127,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                         },
                         {
                             xtype: 'combo',
-                            id: prototype.id + '-cmbProctypeSettl',
-                            name: 'IN_PROCTYPE',
-                            labelWidth: 70,
-                            width: 250,
-                            valueField: 'a4451key3',
-                            displayField: 'a4451desc1',
-                            fieldLabel: 'Processor',
+                            id: prototype.id + '-cmbMonedabST',
+                            name: 'IN_SCURRENCY',
                             queryMode: 'local',
-                            editable: false,
                             allowBlank: true,
+                            forceSelection: true,
+                            selectOnFocus: true,
                             caseSensitive: false,
                             autoSelect: true,
+                            fieldLabel: 'Currency',
+                            labelWidth: 70,
                             labelAlign: 'right',
+                            width: 140,
                             typeAhead: true,
+                            valueField: 'code',
+                            displayField: 'name',
                             enableKeyEvents: true,
                             triggerAction: 'all',
                             value: ''
@@ -148,6 +169,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                             value: ''
                         },
 
+                        
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    border: false,
+                    bodyStyle: 'background: transparent',
+                    defaults: {
+                        fieldStyle: 'text-align: center;',
+                        padding: '5 1 5 1',
+                        anchor: '100%',
+                        hiddenLabel: false,
+                        labelAlign: 'right',
+                        hidden: false
+                    },
+                    items: [
                         {
                             xtype: 'textfield',
                             fieldLabel: 'Card Number',
@@ -223,28 +261,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                             listeners: {
                                 specialkey: 'onEnterKeyPress'
                             }
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    border: false,
-                    bodyStyle: 'background: transparent',
-                    defaults: {
-                        fieldStyle: 'text-align: center;',
-                        padding: '5 1 5 1',
-                        anchor: '100%',
-                        hiddenLabel: false,
-                        labelAlign: 'right',
-                        hidden: false
-                    },
-                    items:[
+                        },
                         {
                             xtype: 'textfield',
-                            fieldLabel: 'Sale Merchant',
-                            labelWidth: 100,
-                            width: 200,
+                            fieldLabel: 'Merchant',
+                            labelWidth: 70,
+                            width: 170,
                             name: 'IN_PMERCHID',
                             maxLength: 15, // Límite máximo de caracteres
                             maskRe: /[0-9]/, // Expresión regular para permitir solo números
