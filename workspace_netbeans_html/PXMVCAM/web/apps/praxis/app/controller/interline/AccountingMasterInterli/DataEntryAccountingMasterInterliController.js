@@ -16,26 +16,28 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterInterli.DataEntryAcc
     },
     afterRender: function() {
         meDE.PERMISO = win.validateAccess(this.objPermiso, this.actionCode);
-        
+        var p = this.view.params;
         Ext.getCmp(prototype.id + '-btn-save').hide();
         Ext.getCmp(prototype.id + '-btn-update').hide();
         Ext.getCmp(prototype.id + '-btn-delete').hide();
         switch (this.actionCode) {
-            case 'A':
-                if(meDE.PERMISO){
+            case 'I':
+                //if(meDE.PERMISO){
                     Ext.getCmp(prototype.id + '-btn-save').show();
-                }
+                //}
                 break;
-            case 'M':
-                if(meDE.PERMISO){
+            case 'U':
+                //if(meDE.PERMISO){
                     Ext.getCmp(prototype.id + '-btn-update').show();
                     Ext.getCmp(prototype.id + '-btn-delete').show();
-                }
+                //}
                 this.mostrarData();
                 break;
         }
         this.focus('txtA1740TITRA');
         // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(p);
+
     },
     Handler_Change_DocumentType: function() {
         var TypeDocument = this.getValue("txtA1740TITRA");

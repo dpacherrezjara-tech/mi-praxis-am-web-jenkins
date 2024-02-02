@@ -21,6 +21,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkReasonsRFND.DataEntryBsplink
      * Se ejecuta luego de haber cargado todos los componentes
      */
     afterRender: function(){
+        this.p = this.view.params;
         switch(String(this.view.params.action)){
             case 'U':
                 var rec = this.view.params.rec;
@@ -59,6 +60,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkReasonsRFND.DataEntryBsplink
                 Ext.getCmp(prototype.id01+'-btn-update').hide();
                 Ext.getCmp(prototype.id01+'-btn-delete').hide();
         }
+        
+        global.AccessControlManagerByModeById(this.p, prototype.id01);
+        
     },
     onCloseClick: function (obj) {
         Ext.getCmp(prototype.id01 + '-win').close();

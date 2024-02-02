@@ -30,6 +30,8 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionGSA.DataEntryInvoiceCom
                 this.focus('txtA1826GSA2');
                 break;
         }
+        
+        global.AccessControlMaganerByMode(this.p);
     },
     onValidaCodeGSABlur: function(cmp) {
         var VP_OPTION = 'G';

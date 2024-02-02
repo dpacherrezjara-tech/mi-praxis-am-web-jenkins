@@ -104,7 +104,7 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.IATACalendarController'
     onEditClick: function(grid, rowIndex, colIndex) {
         var store = grid.getStore();
         var data = store.getAt(rowIndex).data;
-        this.winDataEntry('M', data);
+        this.winDataEntry('U', data);
     },
     winDataEntry: function(action, data) {
         action = action === null || action === undefined ? 'V' : action;
@@ -112,7 +112,7 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.IATACalendarController'
         Ext.create('Ext.Praxis.view.interline.IATACalendarForm.DataEntry', {
             id: 'DataEntryIATACalendarForm',
             params: {
-                actionCode: action,
+                action: action,
                 bean: data,
                 objPermiso: me.objPermiso
             }
@@ -158,7 +158,7 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.IATACalendarController'
     imgChart_clickHandler: function() {
     },
     btnAdd_click: function () {
-        this.winDataEntry('A');
+        this.winDataEntry('I');
     },
     imgBack_clickHandler: function() {
         global.showMenu();

@@ -41,7 +41,7 @@ Ext.define('Ext.Praxis.controller.flown.AircraftMaster.AircraftMasterController'
         Ext.create('Ext.Praxis.view.flown.AircraftMasterForm.DataEntry', {
             id: prototype.id + '-dataEntry',
             params: {
-                actionCode: action,
+                action: action,
                 rec: rec
             }
         }).show();

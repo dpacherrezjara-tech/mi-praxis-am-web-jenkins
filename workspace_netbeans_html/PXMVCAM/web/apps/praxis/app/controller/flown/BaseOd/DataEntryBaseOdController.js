@@ -34,7 +34,8 @@ Ext.define('Ext.Praxis.controller.flown.BaseOd.DataEntryBaseOdController', {
                 //Ext.getCmp(prototype.id + '-txtA1007CTATO').focus();
                 break;
         }
-        global.AccessControlMaganer();
+        //global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
 
     },
     getDataInputs: function (rec) {

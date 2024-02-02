@@ -39,6 +39,7 @@ Ext.define('Ext.Praxis.controller.flown.CodesAncillaries.DataEntryCodesAncillari
                 break;
         }
         // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     },
     obtainData: function () {
 

@@ -46,6 +46,7 @@ Ext.define('Ext.Praxis.controller.flown.ZoneMasterFile.DataEntryZoneMasterFileCo
                 break;
         }
         // global.AccessControlMaganer();
+        global.AccessControlManagerByModeById(p, 'vZoneMasterFile');
     },
     setStoreData: function() {
         var Zone = Ext.getCmp('vZoneMasterFile-Zone');
