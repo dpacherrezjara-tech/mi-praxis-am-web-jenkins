@@ -872,17 +872,6 @@ public class ProMasterTicketDAO {
                                                                                 }
                                                                                 
                                                                                 filter.lstResultSet23.add(objRtn23);
-                                                                                
-                                                                                objRtn23.fileA1692.STVAL = rs23.getString("STVAL");
-                                                                                if (objRtn23.fileA1692.STVAL.equals("0")) {
-                                                                                    objRtn23.fileA1692.STVAL = "Venta sin Uso";
-                                                                                } else if (objRtn23.fileA1692.STVAL.equals("1")) {
-                                                                                    objRtn23.fileA1692.STVAL = "Uso sin Venta";
-                                                                                } else if (objRtn23.fileA1692.STVAL.equals("2")) {
-                                                                                    objRtn23.fileA1692.STVAL = "MATCH";
-                                                                                }
-                                                                                
-                                                                                filter.lstResultSet23.add(objRtn23);
                                                                             }
                                                                             if (cstmt01.getMoreResults()) {
                                                                                 rs22 = cstmt01.getResultSet();
