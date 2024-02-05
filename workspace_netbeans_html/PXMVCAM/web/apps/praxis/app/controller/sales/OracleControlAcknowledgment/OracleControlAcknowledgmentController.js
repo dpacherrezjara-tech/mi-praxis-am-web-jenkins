@@ -65,11 +65,14 @@ Ext.define('Ext.Praxis.controller.sales.OracleControlAcknowledgment.OracleContro
             }
 
         });
+        // New Function
+        
     },
     xpanel_afterrender: function(obj, e) {
         this.setStoreData();
         //this.showGridActual();
         //this.btnSearch_click();
+        global.AccessControlManagerExport(prototype.id+'-btnExcel');
     },
     onUpperValue: function(field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());

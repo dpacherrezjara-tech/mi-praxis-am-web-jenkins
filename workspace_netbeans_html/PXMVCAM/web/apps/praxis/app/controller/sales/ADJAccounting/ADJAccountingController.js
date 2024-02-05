@@ -220,7 +220,7 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.ADJAccountingController', 
     winDataNewEntry: function () {
         // MODO ES ESCRITURA
         var me = this;
-        me.winDataEntry('ES');
+        me.winDataEntry('I');
     },
     onDetailClick: function (gridadj, rowIndex, colIndex) {
         // MODO ES ESCRITURA LE MODO LECTURA

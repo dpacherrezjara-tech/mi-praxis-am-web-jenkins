@@ -25,6 +25,7 @@ Ext.define('Ext.Praxis.controller.sales.CalendarASR.DataEntryCalendarASRControll
                 break;
         }
         // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     },
     getDataInputs: function(rec) {
 

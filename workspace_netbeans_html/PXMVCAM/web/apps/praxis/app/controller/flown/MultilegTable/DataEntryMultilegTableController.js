@@ -53,6 +53,7 @@ Ext.define('Ext.Praxis.controller.flown.MultilegTable.DataEntryMultilegTableCont
                 break;
         }
         // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(p);
     },
     getAirports: function() {
         aeropuertos = Ext.create('Ext.data.ArrayStore', {

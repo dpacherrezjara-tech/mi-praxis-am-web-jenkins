@@ -31,6 +31,7 @@ Ext.define('Ext.Praxis.controller.sales.CodeShared.DataEntryCodeSharedController
                 break;
         }
         // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     },
     // <editor-fold defaultstate="collapsed" desc="mostrarData">
     mostrarData: function(rec) {
