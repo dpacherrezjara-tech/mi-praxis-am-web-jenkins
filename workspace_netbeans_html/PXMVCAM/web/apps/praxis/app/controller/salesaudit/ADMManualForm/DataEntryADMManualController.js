@@ -26,7 +26,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
      * Se ejecuta luego de haber cargado todos los componentes
      */
     afterRender: function () {
-
+        this.p = this.view.params;
         //Ext.getCmp(prototype.id01 + '-win').setHeight(Ext.getCmp(prototype.id01 + '-win').getHeight() + 30);
         this.setObtenerCombo();
         this.onLoadCmbStatus();
@@ -34,6 +34,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         Ext.getCmp(prototype.id01 + '-btn-close').show();
         //this.onLoadData();
         this.setStoresGrids();
+        global.AccessControlManagerByModeById(this.p, prototype.id01);
     },
     setObtenerCombo: function () {
         var cmbCountry = Ext.getCmp(prototype.id01 + '-txtCountry');

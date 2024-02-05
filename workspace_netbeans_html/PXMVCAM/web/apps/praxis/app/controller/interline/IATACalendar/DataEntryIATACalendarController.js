@@ -10,24 +10,24 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.DataEntryIATACalendarCo
         this.objPermiso = this.p.objPermiso;
     },
     afterRender: function(){
-        meEntry.PERMISO = win.validateAccess(this.objPermiso, this.p.actionCode);
-        Ext.getCmp(prototype.id + '-btnSave').hide();
-        Ext.getCmp(prototype.id + '-btnUpdate').hide();
-        Ext.getCmp(prototype.id + '-btnDelete').hide();
-        
-        switch (this.p.actionCode) {
-            case "A":
+        meEntry.PERMISO = win.validateAccess(this.objPermiso, this.p.action);
+        Ext.getCmp(prototype.id + '-btn-save').hide();
+        Ext.getCmp(prototype.id + '-btn-update').hide();
+        Ext.getCmp(prototype.id + '-btn-delete').hide();
+        this.p = this.view.params;
+        switch (this.p.action) {
+            case "I":
                 this.HabilitarCampoClave();
-                if(meEntry.PERMISO){
-                    Ext.getCmp(prototype.id + '-btnSave').show();
-                }
+                //if(meEntry.PERMISO){
+                    Ext.getCmp(prototype.id + '-btn-save').show();
+                //}
                 break;
-            case "M":
+            case "U":
                 this.DeshabilitarCampoClave();
                 this.mostrarData();
-                if(meEntry.PERMISO){
-                    Ext.getCmp(prototype.id + '-btnUpdate').show();
-                }
+                //if(meEntry.PERMISO){
+                    Ext.getCmp(prototype.id + '-btn-update').show();
+                //}
 //                Ext.getCmp(prototype.id + '-btnSave').hide();
 //                Ext.getCmp(prototype.id + '-btnUpdate').hide();
 //                Ext.getCmp(prototype.id + '-btnDelete').hide();
@@ -35,12 +35,13 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.DataEntryIATACalendarCo
             case "V":
                 this.DeshabilitarCampos();
                 this.mostrarData();
-                Ext.getCmp(prototype.id + '-btnSave').hide();
-                Ext.getCmp(prototype.id + '-btnUpdate').hide();
-                Ext.getCmp(prototype.id + '-btnDelete').hide();
+                Ext.getCmp(prototype.id + '-btn-save').hide();
+                Ext.getCmp(prototype.id + '-btn-update').hide();
+                Ext.getCmp(prototype.id + '-btn-delete').hide();
                 break;
         }
         // global.AccessControlMaganer();
+        global.AccessControlManagerByModeById(this.p, prototype.id);
     },
     //<editor-fold defaultstate="collapsed" desc="toolbar">
     onSaveClick: function () {

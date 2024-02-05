@@ -968,7 +968,7 @@ Ext.define('Ext.Praxis.view.flown.AircraftMasterForm.DataEntry', {
             items: [
                 {
                     text: 'Save',
-                    id: prototype.id + '-btnSave',
+                    id: prototype.id + '-btn-save',
                     iconCls: 'prx-icon-save',
                     hidden: true,
                     listeners: {
@@ -977,7 +977,7 @@ Ext.define('Ext.Praxis.view.flown.AircraftMasterForm.DataEntry', {
                 },
                 {
                     text: 'Update',
-                    id: prototype.id + '-btnUpdate',
+                    id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
                     hidden: true,
                     listeners: {
@@ -986,7 +986,7 @@ Ext.define('Ext.Praxis.view.flown.AircraftMasterForm.DataEntry', {
                 },
                 {
                     text: 'Delete',
-                    id: prototype.id + '-btnDelete',
+                    id: prototype.id + '-btn-delete',
                     iconCls: 'prx-icon-delete',
                     hidden: true,
                     listeners: {
@@ -995,7 +995,7 @@ Ext.define('Ext.Praxis.view.flown.AircraftMasterForm.DataEntry', {
                 },
                 {
                     text: 'Cancel',
-                    id: prototype.id + '-btnCancel',
+                    id: prototype.id + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'btnCancel_clickHandler'

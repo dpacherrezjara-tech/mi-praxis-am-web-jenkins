@@ -35,6 +35,7 @@ Ext.define('Ext.Praxis.controller.sales.PercentCommission.DataEntryPercentCommis
                 break;
         }
 
+        global.AccessControlMaganerByMode(p);
 
     },
     getDataInputs: function() {

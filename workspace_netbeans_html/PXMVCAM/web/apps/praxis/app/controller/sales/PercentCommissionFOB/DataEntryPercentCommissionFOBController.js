@@ -33,6 +33,8 @@ Ext.define('Ext.Praxis.controller.sales.PercentCommissionFOB.DataEntryPercentCom
                 Ext.getCmp(prototype.id + '-btn-delete').show();
                 break;
         }
+        
+        global.AccessControlMaganerByMode(p);
 
 
     },

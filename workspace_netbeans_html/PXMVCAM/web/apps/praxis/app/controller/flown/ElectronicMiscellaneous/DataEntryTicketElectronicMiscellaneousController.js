@@ -33,6 +33,7 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
                 break;
         }
         // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     },
     onFocusLeaveOpe: function(obj) {
         console.log(obj.getValue());
