@@ -132,7 +132,8 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     id: prototype.id + '-de-txtDESCR',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:left;',
-                                    maxChars: '40',
+                                    maxLength:40,
+                                    enforceMaxLength: true,
                                     width: 520
                                 },
                                 {xtype: 'tbspacer', width: 50}
@@ -162,7 +163,8 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     id: prototype.id + '-de-txtRSOCIAL',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:left;',
-                                    maxChars: '40',
+                                    maxLength: 40,
+                                    enforceMaxLength: true,
                                     width: 520
                                 },
                                 {xtype: 'tbspacer', width: 50}
