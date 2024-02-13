@@ -10,7 +10,7 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.A003;
 import net.miatech.praxis.dao.payments.MerchantNumberDAO;
-import net.miatech.praxis.payment.entities.A4202;
+import net.miatech.praxis.payment.old.A4202;
 import net.miatech.praxis.payment.old.A2280Filter;
 import net.miatech.praxis.payment.old.A2354Filter;
 

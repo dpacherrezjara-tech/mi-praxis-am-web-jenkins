@@ -10,7 +10,7 @@ import net.miatech.praxis.payment.entities.CustomPageImpl;
  */
 public class SQP05060Filter extends CustomPageImpl{
     private String IN_CCUST,IN_DATE,IN_MONTH,IN_DATEFROM,IN_DATETO,IN_PROCTYPE,IN_PROCTYPESQ,
-            IN_PMERCHID,IN_TRANSTYPE,IN_SCOUNTRY,IN_FVOID,IN_TICKET,IN_SCARDN,IN_SAUTHOC,IN_SPNR,
+            IN_SMERCHID,IN_TRANSTYPE,IN_SCOUNTRY,IN_FVOID,IN_TICKET,IN_SCARDN,IN_SAUTHOC,IN_SPNR,
             IN_TYPE,IN_STVAL,IN_CERROR,IN_CODADJU,IN_AREFNBR;
     private Double IN_AMOUNT;
     
@@ -72,12 +72,12 @@ public class SQP05060Filter extends CustomPageImpl{
         this.IN_PROCTYPESQ = IN_PROCTYPESQ;
     }
 
-    public String getIN_PMERCHID() {
-        return IN_PMERCHID;
+    public String getIN_SMERCHID() {
+        return IN_SMERCHID;
     }
 
-    public void setIN_PMERCHID(String IN_PMERCHID) {
-        this.IN_PMERCHID = IN_PMERCHID;
+    public void setIN_SMERCHID(String IN_SMERCHID) {
+        this.IN_SMERCHID = IN_SMERCHID;
     }
 
     public String getIN_TRANSTYPE() {

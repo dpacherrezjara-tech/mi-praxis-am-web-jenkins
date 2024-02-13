@@ -23,7 +23,7 @@ import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.MerchantNumberLogic;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
-import net.miatech.praxis.payment.entities.A4202;
+import net.miatech.praxis.payment.old.A4202;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.old.A2354Filter;
 import net.miatech.utils.Functions;

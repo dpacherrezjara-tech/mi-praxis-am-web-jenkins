@@ -7,7 +7,6 @@ package net.miatech.praxis.payment.old;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.Pagination;
-import net.miatech.praxis.payment.entities.A4202;
 
 /**
  *

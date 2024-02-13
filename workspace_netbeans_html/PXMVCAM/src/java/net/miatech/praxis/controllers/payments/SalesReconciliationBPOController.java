@@ -739,7 +739,7 @@ public class SalesReconciliationBPOController {
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();
             //headers
-            Object[] headers = new Object[26];
+            Object[] headers = new Object[27];
             headers[0] = "Sale Date";
             headers[1] = "IATA";
             headers[2] = "Source";
@@ -760,15 +760,16 @@ public class SalesReconciliationBPOController {
             headers[17] = "Amount";
             headers[18] = "Currency";
             headers[19] = "Expected Date";
-            headers[20] = "Processing Date";
+            headers[20] = "Payment Date";
             headers[21] = "Difference";
-            headers[22] = "Status";
-            headers[23] = "Processor";
-            headers[24] = "ADM St.";
-            headers[25] = "BPO Comment";
+            headers[22] = "Processing Date";
+            headers[23] = "Status";
+            headers[24] = "Processor";
+            headers[25] = "ADM St.";
+            headers[26] = "BPO Comment";
             data.add(headers);
             for (A4496Filter obj : filter.getResponse()) {
-                Object[] row = new Object[26];
+                Object[] row = new Object[27];
                 row[0] = obj.getA4496FECVT();
                 row[1] = obj.getA4496AGENT();
                 row[2] = obj.getA4496FUENT();
@@ -789,15 +790,16 @@ public class SalesReconciliationBPOController {
                 row[17] = obj.getA4501VFOP();
                 row[18] = obj.getA4501MFOP();
                 row[19] = obj.getPROCDATE();
-                row[20] = obj.getA4501PRDA();
-                row[21] = restaFechas(obj.getPROCDATE(), obj.getA4501PRDA());
-                row[22] = convertStatus(obj.getA4501STVAL());
-                row[23] = obj.getDESC_PROCTYPE();
-                row[24] = obj.getA4501STADM();
+                row[20] = obj.getPAYDATE();
+                row[21] = restaFechas(obj.getPROCDATE(), obj.getPAYDATE());
+                row[22] = obj.getA4501PRDA();
+                row[23] = convertStatus(obj.getA4501STVAL());
+                row[24] = obj.getDESC_PROCTYPE();
+                row[25] = obj.getA4501STADM();
                 if (obj.getA4501STADM().trim().isEmpty()) {
-                    row[25] = !obj.getBPO_COMEN2().isEmpty() ? obj.getBPO_COMEN2() : obj.getBPO_COMEN();
+                    row[26] = !obj.getBPO_COMEN2().isEmpty() ? obj.getBPO_COMEN2() : obj.getBPO_COMEN();
                 } else {
-                    row[25] = obj.getADM_COMEN();
+                    row[26] = obj.getADM_COMEN();
                 }
                 data.add(row);
             }
