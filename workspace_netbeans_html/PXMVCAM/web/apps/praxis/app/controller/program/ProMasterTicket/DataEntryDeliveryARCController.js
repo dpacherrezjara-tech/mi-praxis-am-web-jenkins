@@ -20,7 +20,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryDeliveryARCCo
         
         var storeGridDatas = Ext.create('Ext.Praxis.store.program.GridDeliveryData', {
             proxy: {
-                url: prototype.ProrrateoNew.url + '/searchDeliveryARC',
+                url: prototype.url+'/searchDeliveryARC'
             },
             listeners: {
                 beforeload: function (obj) {

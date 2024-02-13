@@ -60,6 +60,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntry',{
                                 data: [
                                     ["", "(Select)"],
                                     ["PSALES", "Sales Accounting"],
+                                    ["PSALESARC", "Sales Accounting ARC"],
+                                    ["PSALESASR", "Sales Accounting ASR"],
+                                    ["PSALESBSP", "Sales Accounting BSP"],
+                                    ["PSALESMAN", "Sales Accounting MAN"],
                                     ["PADJMA", "Manual Adjustment"],
                                     ["PCADUCOS", "Caducos"],
                                     ["PPSALES", "Sales Accounting Pending"]
