@@ -8,7 +8,7 @@ import net.miatech.praxis.payment.entities.A4496;
  */
 public class A4496Filter extends A4496{
     private String DESC_PROCTYPE,DESC_TARJ,TICKET;
-    private String PROCDATE;
+    private String PROCDATE,PAYDATE;
     private String BPO_COMEN,BPO_COMEN2,ADM_COMEN;
 
     public String getDESC_PROCTYPE() {
@@ -65,5 +65,13 @@ public class A4496Filter extends A4496{
 
     public void setTICKET(String TICKET) {
         this.TICKET = TICKET;
+    }
+
+    public String getPAYDATE() {
+        return PAYDATE;
+    }
+
+    public void setPAYDATE(String PAYDATE) {
+        this.PAYDATE = PAYDATE;
     }
 }

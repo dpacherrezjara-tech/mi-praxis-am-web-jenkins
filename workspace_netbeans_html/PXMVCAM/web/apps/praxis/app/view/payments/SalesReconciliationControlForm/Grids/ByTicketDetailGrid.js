@@ -110,11 +110,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                 },
                 columns: [
                     {text: 'Expected<br>Date', dataIndex: 'procdate', width: 80},
-                    {text: 'Processing<br>Date', dataIndex: 'a4501PRDA', width: 80},
+                    {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
                     {text: 'Difference', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;background-color:#F0D094;";
-                            const fecha1Str = record.data.a4501PRDA.trim();
+                            const fecha1Str = record.data.paydate.trim();
                             const fecha2Str = record.data.procdate; // Puedes dejar esto como una cadena vacía o null
 
                             if (!fecha2Str) {
@@ -141,6 +141,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                                 value = diferenciaEnDias;
                               }
                             }
+                            return value;
+                        }
+                    },
+                    {text: 'Processing<br>Date', dataIndex: 'a4501PRDA', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                             return value;
                         }
                     },

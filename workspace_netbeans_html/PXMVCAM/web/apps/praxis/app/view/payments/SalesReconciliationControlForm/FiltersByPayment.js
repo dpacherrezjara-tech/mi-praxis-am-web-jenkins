@@ -591,10 +591,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                 },
                                 {
                                     xtype: 'textfield',
-                                    fieldLabel: 'Merchant',
+                                    fieldLabel: 'S. Merchant',
                                     labelWidth: 70,
                                     width: 185,
-                                    name: 'IN_PMERCHID',
+                                    name: 'IN_SMERCHID',
                                     //allowBlank: false, // Puedes configurar esto para requerir un valor
                                     maxLength: 15, // Límite máximo de caracteres
                                     maskRe: /[0-9]/, // Expresión regular para permitir solo números
