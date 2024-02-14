@@ -325,6 +325,9 @@ public class ADMManualFormController extends BaseController {
         String razones = "";
         String taxes = "";
         boolean iboolean;
+        int contrazo=0;
+        int contaxes=0;
+         
         SQP00911Filter filter = new SQP00911Filter();
         ArrayList<A2560Filter> gridDataRazones = new ArrayList<A2560Filter>();
         ArrayList<A1673Filter> gridDataTaxes = new ArrayList<A1673Filter>();
@@ -340,14 +343,12 @@ public class ADMManualFormController extends BaseController {
                 JsonObject gsonObj = obj.getAsJsonObject();
                 A1673Filter data = new A1673Filter();
                 taxes = taxes + "|" + gsonObj.get("A1673CDTAX").getAsString() + "$" + gsonObj.get("A1673TXMIA").getAsString() + "$" + gsonObj.get("A1673CDATO").getAsString(); //
-
-                //gridDataTaxes.add(data);
             }
             //LISTA DE TKT
             for (JsonElement obj : gsonRazo) {
                 JsonObject gsonObj = obj.getAsJsonObject();
                 A2560Filter data = new A2560Filter();
-                razones += razones + "|" + gsonObj.get("A2560CODRZ").getAsString() + "$" + gsonObj.get("A2560FAMIL").getAsString() + "$" + gsonObj.get("A2560ERROR").getAsString();
+                razones = razones + "|" + gsonObj.get("A2560CODRZ").getAsString() + "$" + gsonObj.get("A2560FAMIL").getAsString() + "$" + gsonObj.get("A2560ERROR").getAsString();
             }
 
             logic = new ADMManualFormLogic();
