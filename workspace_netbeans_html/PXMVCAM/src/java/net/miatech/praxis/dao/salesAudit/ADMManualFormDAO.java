@@ -464,6 +464,7 @@ public class ADMManualFormDAO {
                 objRtn = new A1673Filter();
 
                 objRtn.A1673CDTAX = rs01.getString("A1673CDTAX");
+                objRtn.A1673CDATO ="";
                 objRtn.A1673TXORI = rs01.getDouble("A1673TXORI");
                 objRtn.A1673TXMIA = rs01.getDouble("A1673TXORI");
                 objRtn.A1673TXDIF = 0.00;
@@ -673,7 +674,7 @@ public class ADMManualFormDAO {
 
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL PXSAUDIT.SQP03403(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
+            String SQLCLL01 = "{CALL PXSAUDIT.SQP03403(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
@@ -728,6 +729,8 @@ public class ADMManualFormDAO {
             cs.setString("IN_A2548EQUI", filter.A2548EQUI);
             cs.setString("IN_A2548ICIA", filter.A2548ICIA);
             cs.setString("IN_A2548CLIE", filter.A2548CLIE);
+            cs.setString("IN_A2548PNR", filter.A2548PNR);
+            cs.setString("IN_A2548EPR", filter.A2548EPR);
             
             cs.setString("IN_LSTATaxes", lstaTaxes);
             cs.setString("IN_LSTARazones", lstaRazones);
