@@ -34,7 +34,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         Ext.getCmp(prototype.id01 + '-btn-close').show();
         //this.onLoadData();
         this.setStoresGrids();
-        global.AccessControlManagerByModeById(this.p, prototype.id01);
+        //global.AccessControlManagerByModeById(this.p, prototype.id01);
     },
     setObtenerCombo: function () {
         var cmbCountry = Ext.getCmp(prototype.id01 + '-txtCountry');
@@ -200,6 +200,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         var CmboType4 = Ext.getCmp(prototype.id01 + '-CmboType4');
         var CmboType5 = Ext.getCmp(prototype.id01 + '-CmboType5');
         var CmboADMAssoci = Ext.getCmp(prototype.id01 + '-CmboADMAssoci');
+        Ext.getCmp(prototype.id01 + '-txtPNR').setValue('');
+        Ext.getCmp(prototype.id01 + '-txtEPR').setValue('');         
         switch (String(newValue)) {
             case 'ADM':
                 CmboType1.show();
@@ -1095,6 +1097,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         var txtObservation = Ext.getCmp(prototype.id01 + '-txtObservation').getValue();
         var CmboADMAssoci = Ext.getCmp(prototype.id01 + '-CmboADMAssoci').getValue();
         
+        var txtPNR = Ext.getCmp(prototype.id01 + '-txtPNR').getValue();
+        var txtEPR = Ext.getCmp(prototype.id01 + '-txtEPR').getValue();
+        
         //alert(ComboSource);
         
         if(ComboSource===null){
@@ -1125,6 +1130,18 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         if (Ext.String.trim(ComboSource) === 'ASR') {
             if (ComboChannel === '') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Select Channel');
+                bvalida = false;
+            }
+            if(txtPNR==='') {
+                Ext.Msg.alert('.: PRAXIS :.', 'Enter PNR');
+                bvalida = false;
+            }
+            if(txtEPR==='') {
+                Ext.Msg.alert('.: PRAXIS :.', 'Enter EPR');
+                bvalida = false;
+            }
+            if(ComboArea!=='DI') {
+                Ext.Msg.alert('.: PRAXIS :.', 'You must select the direct sales area for the ASR source');
                 bvalida = false;
             }
         }
@@ -1310,7 +1327,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                         var txtExchange = Ext.getCmp(prototype.id01 + '-txtExchange').getValue();
                         var txtObservation = Ext.getCmp(prototype.id01 + '-txtObservation').getValue();
                         var CmboADMAssoci = Ext.getCmp(prototype.id01 + '-CmboADMAssoci').getValue();
-
+                        // 
+                        var txtPNR = Ext.getCmp(prototype.id01 + '-txtPNR').getValue();
+                        var txtEPR = Ext.getCmp(prototype.id01 + '-txtEPR').getValue(); 
                         //FARRE
                         var txtFAREAero = Ext.getCmp(prototype.id01 + '-txtFAREAero').getValue().replace(new RegExp(',', 'g'), '');
                         var txtFAREAGENT = Ext.getCmp(prototype.id01 + '-txtFAREAGENT').getValue().replace(new RegExp(',', 'g'), '');
@@ -1348,6 +1367,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                             var bean = Ext.getCmp(prototype.id01 + '-gridrazon').getStore().data.items[i].data;
                             lstRazones.push(bean);
                         }
+                        
                         var lstTaxes = new Array();
                         //if (CmboTransaction !== 'ADM' && CmboTransaction !== 'ACM' && CmboTransaction !== 'NTC' && CmboTransaction !== 'NTD') {
                         var gridtax = Ext.getCmp(prototype.id01 + '-gridtaxAGENT');
@@ -1378,7 +1398,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                         me.beanGuardar.A2548TVTA = VL_TVTA;
                         me.beanGuardar.A2548OBSER = txtObservation;
                         me.beanGuardar.A2548ASOCI = CmboADMAssoci;
-                        
+                        me.beanGuardar.A2548PNR=txtPNR;
+                        me.beanGuardar.A2548EPR=txtEPR;
                         /*Para la CTA*/
                         me.beanGuardar.A2548CIA = txtA1740CIA;
                         me.beanGuardar.A2548UNID = txtA1740UNIDA;
@@ -1420,7 +1441,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                         me.beanGuardar.A2548TCARD = txtSubTotalCharge === '' ? 0 : txtSubTotalCharge;
                         me.beanGuardar.A2548TTAMD = txtSubTotalChargeIva === '' ? 0 : txtSubTotalChargeIva;
                         me.beanGuardar.A2548NETO = txtTotal === '' ? 0 : txtTotal;
-
+                        //
                         var mask = new Ext.LoadMask(Ext.getCmp(prototype.id01 + '-form'), {
                             msg: 'Please Wait....'
                         });

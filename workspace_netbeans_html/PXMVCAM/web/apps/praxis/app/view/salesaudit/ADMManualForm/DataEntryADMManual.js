@@ -395,8 +395,26 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                         },
                         {
                             xtype: 'textfield',
+                            id: prototype.id01 + '-txtEPR',
+                            fieldLabel: 'EPR',
+                            maxLength: 6,
+                            enforceMaxLength: 6,
+                            labelWidth: 20,
+                            width: 100
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtPNR', 
+                            fieldLabel: 'PNR',
+                            maxLength: 6,
+                            enforceMaxLength: 6,
+                            labelWidth: 20,
+                            width: 100
+                        },
+                        {
+                            xtype: 'textfield',
                             id: prototype.id01 + '-txtAdrres',
-                            fieldLabel: 'Addres',
+                            fieldLabel: 'Addres',hidden:true,
                             labelWidth: 45,
                             width: 300,
                             readOnly: true
