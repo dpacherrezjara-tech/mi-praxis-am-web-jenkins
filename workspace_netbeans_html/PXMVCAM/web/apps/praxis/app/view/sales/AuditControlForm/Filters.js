@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.view.sales.AuditControlForm.Filters', {
                             id: prototype.id + '-txtSEQ',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
-                            maxLength: 8,
+                            maxLength: 10,
                             width: 80
                         },
                         { xtype: 'tbspacer', width: 30 },
