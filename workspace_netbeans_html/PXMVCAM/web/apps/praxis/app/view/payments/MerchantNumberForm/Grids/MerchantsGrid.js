@@ -172,6 +172,20 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Grids.MerchantsGrid', {
                         handler: 'onEditClick'
                     }
                 ]
+            },
+            {
+                sortable: false,
+                xtype: 'actioncolumn',
+                width: 40,
+                text: 'Del',
+                align: 'center',
+                items: [
+                    {
+                        iconCls: 'prx-icon-image-trash',
+                        tooltip: 'Delete',
+                        handler: 'onDeleteClick'
+                    }
+                ]
             }
             //</editor-fold>
         ]

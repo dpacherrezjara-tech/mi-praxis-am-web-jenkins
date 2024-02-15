@@ -138,6 +138,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                             labelWidth: 120,
                             width: 240,
                             maxLength: 17,
+                            allowBlank: false,
                             enforceMaxLength: true,
                             maskRe: /[0-9]/
                         }

@@ -51,6 +51,8 @@ import net.miatech.praxis.payment.filter.SQP05217Filter;
 import net.miatech.praxis.payment.filter.SQP05218Filter;
 import net.miatech.praxis.payment.filter.SQP05219Filter;
 import net.miatech.praxis.payment.filter.SQP05247Filter;
+import net.miatech.praxis.payment.filter.SQP05259Filter;
+import net.miatech.praxis.payment.filter.SQP05261Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.Functions;
@@ -368,6 +370,31 @@ public class SalesReconciliationBPOController {
         try {
             SQP05065Filter filter = logic.loadSQP05065Filter(params);
             return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @RequestMapping(value = "loadMSITrackingManualInfo")
+    public ResponseEntity<?> loadMSITrackingManualInfo(@ModelAttribute SQP05259Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : loadMSITrackingManualInfo-------------");
+        try {
+            SQP05259Filter filter = logic.loadSQP05259Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @RequestMapping(value = "maintenanceConcilTransacMan", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> maintenanceMSITracking(@RequestBody SQP05261Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : maintenanceConcilTransacMan-------------");
+        try {
+            logic.loadSQP05261Filter(params);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
