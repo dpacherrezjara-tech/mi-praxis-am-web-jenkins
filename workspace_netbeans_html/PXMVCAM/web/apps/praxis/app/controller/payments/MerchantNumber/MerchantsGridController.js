@@ -1,6 +1,7 @@
 Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantsGridController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.MerchantsGridController',
+    url: CONTEXTPATH + '/MerchantNumberTmz',
     init: function (view) {
     },
     afterRender: async function (obj, e) {
@@ -49,6 +50,55 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantsGridControlle
             obj: record.data
         });
         dataEntry.show();
+    },
+    onDeleteClick: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const merchant = record.data.merchn;
+
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to delete?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            this.deleteMerchantNumber(merchant);
+                        }
+                    }
+                });
+    },
+    deleteMerchantNumber: async function (merchant) {
+        const me = this;
+
+        let params = {
+            IN_MERCHN: merchant,
+            IN_CCUST: '139',
+            IN_CHOPTION: 'D'
+        };
+
+        const res = await fetch(`${me.url}/maintenanceMerchant`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        });
+
+        if (res.ok) {
+            global.Msg({msg: 'Deleted Successfull'});
+            Ext.getCmp(prototype.id + '-MerchantsGrid-1').getStore().load();
+        } else {
+            const msg = await res.text();
+            console.error('Error: ' + msg);
+            Ext.MessageBox.show({
+                title: 'Error',
+                message: 'Error!<br>Check Console for more<br>Information.',
+                icon: Ext.MessageBox.ERROR,
+                buttons: Ext.MessageBox.OK
+            });
+        }
     },
     formatEditParams: function (rec) {
         let params = {
