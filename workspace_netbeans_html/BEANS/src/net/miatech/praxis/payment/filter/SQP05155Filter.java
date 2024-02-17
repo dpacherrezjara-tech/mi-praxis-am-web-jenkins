@@ -9,7 +9,8 @@ import net.miatech.praxis.payment.entities.CustomPageImpl;
  * @author Dvicente
  */
 public class SQP05155Filter extends CustomPageImpl{
-    private String IN_CCUST,IN_DATE,IN_DATEFROM,IN_DATETO,IN_TIPO,IN_PROCTYPE,IN_PAIS,IN_TTARJ;
+    private String IN_CCUST,IN_TIPO,IN_PROCTYPE,IN_PAIS,IN_TTARJ,
+            IN_CODEBANK,IN_CODECARD,IN_CODEBIN;
     private List<A4508Filter> response = new ArrayList<>();
 
     public String getIN_CCUST() {
@@ -18,30 +19,6 @@ public class SQP05155Filter extends CustomPageImpl{
 
     public void setIN_CCUST(String IN_CCUST) {
         this.IN_CCUST = IN_CCUST;
-    }
-
-    public String getIN_DATE() {
-        return IN_DATE;
-    }
-
-    public void setIN_DATE(String IN_DATE) {
-        this.IN_DATE = IN_DATE;
-    }
-
-    public String getIN_DATEFROM() {
-        return IN_DATEFROM;
-    }
-
-    public void setIN_DATEFROM(String IN_DATEFROM) {
-        this.IN_DATEFROM = IN_DATEFROM;
-    }
-
-    public String getIN_DATETO() {
-        return IN_DATETO;
-    }
-
-    public void setIN_DATETO(String IN_DATETO) {
-        this.IN_DATETO = IN_DATETO;
     }
 
     public String getIN_TIPO() {
@@ -83,4 +60,29 @@ public class SQP05155Filter extends CustomPageImpl{
     public void setResponse(List<A4508Filter> response) {
         this.response = response;
     }
+
+    public String getIN_CODEBANK() {
+        return IN_CODEBANK;
+    }
+
+    public void setIN_CODEBANK(String IN_CODEBANK) {
+        this.IN_CODEBANK = IN_CODEBANK;
+    }
+
+    public String getIN_CODECARD() {
+        return IN_CODECARD;
+    }
+
+    public void setIN_CODECARD(String IN_CODECARD) {
+        this.IN_CODECARD = IN_CODECARD;
+    }
+
+    public String getIN_CODEBIN() {
+        return IN_CODEBIN;
+    }
+
+    public void setIN_CODEBIN(String IN_CODEBIN) {
+        this.IN_CODEBIN = IN_CODEBIN;
+    }
+    
 }

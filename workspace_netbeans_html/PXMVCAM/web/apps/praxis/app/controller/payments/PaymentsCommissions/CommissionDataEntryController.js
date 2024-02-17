@@ -19,12 +19,19 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.CommissionDataEnt
         if (res.ok) {
             const data = await res.json();
             const{procesq, paises} = data;
+            const monedas = data.monedas.map(x => ({code: x.a006PAIS, name: `${x.a006PAIS}`}));
             const cmbProcesadores = Ext.getCmp(prototype.idDE + '-cmbProctypesq');
             me.setComboStore({cmp: cmbProcesadores, data: procesq,
                 valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
             const cmbPaises = Ext.getCmp(prototype.idDE + '-cmbPaises');
             me.setComboStore({cmp: cmbPaises, data: data.paises,
                 valueField: 'code', displayField: 'name', value: ''});
+            const cmbMonedas = Ext.getCmp(prototype.idDE + '-cmbMonedas');
+            me.setComboStore({cmp: cmbMonedas, data: monedas,
+                valueField: 'code', displayField: 'name', value: ''});
+            const cmbBancos = Ext.getCmp(prototype.idDE + '-cmbBanks');
+            me.setComboStore({cmp: cmbBancos, data: data.banks,
+                valueField: 'a4559CODE', displayField: 'a4559DESC', value: ''});
         }
     },
     openPerspective: async function (mode) {
@@ -35,12 +42,26 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.CommissionDataEnt
             },
             'U': async () => {
                 const form = Ext.getCmp(prototype.idDE + 'mainForm').getForm();
+                form.reset();
                 await me.getData(me.view.objID);
+                //console.log(me.bean);
                 form.setValues(me.bean);
                 Ext.getCmp(prototype.idDE + '-btn-update').show();
             }
         };
         await opts[mode]();
+    },
+    onChangeType: function (obj) {
+        const val = obj.getValue();
+        if (val === 'BIN') {
+            Ext.getCmp(prototype.idDE + '-bankInfo').show();
+            Ext.getCmp(prototype.idDE + '-binInfo').show();
+            Ext.getCmp(prototype.idDE + '-binAmtInfo').show();
+        } else {
+            Ext.getCmp(prototype.idDE + '-bankInfo').hide();
+            Ext.getCmp(prototype.idDE + '-binInfo').hide();
+            Ext.getCmp(prototype.idDE + '-binAmtInfo').hide();
+        }
     },
     onAddClick: function (btn) {
         const me = this;
@@ -95,7 +116,7 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.CommissionDataEnt
         }
 
     },
-    onUpdateClick:function(btn){
+    onUpdateClick: function (btn) {
         const me = this;
         Ext.Msg.show(
                 {
@@ -113,7 +134,7 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.CommissionDataEnt
                     }
                 });
     },
-    updateRecord:async function(){
+    updateRecord: async function () {
         const me = this;
         me.view.mask('Loading...');
         const form = Ext.getCmp(prototype.idDE + 'mainForm').getForm();
@@ -177,7 +198,7 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.CommissionDataEnt
     createComboStore: function ( {data, valueField, displayField}) {
         //crea record vacio
         let allRecord = {};
-        allRecord[displayField] = 'All';
+        allRecord[displayField] = 'None';
         allRecord[valueField] = '';
         //limpia record de data
         data.forEach(obj => {

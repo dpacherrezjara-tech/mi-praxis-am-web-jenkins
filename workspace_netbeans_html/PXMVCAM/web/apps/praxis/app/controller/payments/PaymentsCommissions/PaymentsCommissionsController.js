@@ -11,6 +11,7 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.PaymentsCommissio
     },
     afterRender: async function (obj, e) {
         await this.fillFilters();
+        this.onClickSearchBtn();
     },
     fillFilters: async function () {
         const me = this;
@@ -26,6 +27,9 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.PaymentsCommissio
             const cmbPaises = Ext.getCmp(prototype.id + '-cmbPaises');
             me.setComboStore({cmp: cmbPaises, data: data.paises,
                 valueField: 'code', displayField: 'name', value: ''});
+            const cmbBancos = Ext.getCmp(prototype.id + '-cmbBanks');
+            me.setComboStore({cmp: cmbBancos, data: data.banks,
+                valueField: 'a4559CODE', displayField: 'a4559DESC', value: ''});
         }
         filterPanel.unmask();
     },
@@ -70,6 +74,21 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.PaymentsCommissio
             panelFilters.hide();
         else
             panelFilters.show();
+    },
+    onChangeType:function(obj){
+        const val = obj.getValue();
+        if(val === 'BIN'){
+            Ext.getCmp(prototype.id + '-cmbBanks').show();
+            Ext.getCmp(prototype.id + '-cmbCards').show();
+            Ext.getCmp(prototype.id + '-txtBin').show();
+        }else{
+            Ext.getCmp(prototype.id + '-cmbBanks').hide();
+            Ext.getCmp(prototype.id + '-cmbBanks').setValue('');
+            Ext.getCmp(prototype.id + '-cmbCards').hide();
+            Ext.getCmp(prototype.id + '-cmbCards').setValue('');
+            Ext.getCmp(prototype.id + '-txtBin').hide();
+            Ext.getCmp(prototype.id + '-txtBin').setValue('');
+        }
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">

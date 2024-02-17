@@ -86,6 +86,66 @@ public class A4508 {
         return COUNTRY;
     }
 
+    private String CODEBANK;
+
+    public void setCODEBANK(String CODEBANK) {
+        this.CODEBANK = CODEBANK;
+    }
+
+    public String getCODEBANK() {
+        return CODEBANK;
+    }
+
+    private String CODECARD;
+
+    public void setCODECARD(String CODECARD) {
+        this.CODECARD = CODECARD;
+    }
+
+    public String getCODECARD() {
+        return CODECARD;
+    }
+
+    private String CODEBIN;
+
+    public void setCODEBIN(String CODEBIN) {
+        this.CODEBIN = CODEBIN;
+    }
+
+    public String getCODEBIN() {
+        return CODEBIN;
+    }
+
+    private String DESCBIN;
+
+    public void setDESCBIN(String DESCBIN) {
+        this.DESCBIN = DESCBIN;
+    }
+
+    public String getDESCBIN() {
+        return DESCBIN;
+    }
+
+    private Double MINAMT;
+
+    public void setMINAMT(Double MINAMT) {
+        this.MINAMT = MINAMT;
+    }
+
+    public Double getMINAMT() {
+        return MINAMT;
+    }
+
+    private String CURRAMT;
+
+    public void setCURRAMT(String CURRAMT) {
+        this.CURRAMT = CURRAMT;
+    }
+
+    public String getCURRAMT() {
+        return CURRAMT;
+    }
+
     private String FECFROM;
 
     public void setFECFROM(String FECFROM) {

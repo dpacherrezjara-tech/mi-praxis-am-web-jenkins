@@ -10,9 +10,10 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SQP05156Filter {
-    private String IN_CCUST,IN_FECFROM,IN_FECTO,IN_CODIGO,IN_PROCTYPESQ,IN_COUNTRY,IN_TIPOTARJ;
+    private String IN_CCUST,IN_FECFROM,IN_FECTO,IN_CODIGO,IN_PROCTYPESQ,IN_COUNTRY,IN_TIPOTARJ,
+            IN_CODEBANK,IN_CODECARD,IN_CODEBIN,IN_DESCBIN,IN_CURRAMT;
     private Integer IN_CUOTAS;
-    private Double IN_RATCNAC,IN_RATEIVA;
+    private Double IN_RATCNAC,IN_RATEIVA,IN_MINAMT;
     
     private Integer SQLRES;
     private String SQLMSG;
@@ -111,5 +112,53 @@ public class SQP05156Filter {
 
     public void setSQLMSG(String SQLMSG) {
         this.SQLMSG = SQLMSG;
+    }
+
+    public String getIN_CODEBANK() {
+        return IN_CODEBANK;
+    }
+
+    public void setIN_CODEBANK(String IN_CODEBANK) {
+        this.IN_CODEBANK = IN_CODEBANK;
+    }
+
+    public String getIN_CODECARD() {
+        return IN_CODECARD;
+    }
+
+    public void setIN_CODECARD(String IN_CODECARD) {
+        this.IN_CODECARD = IN_CODECARD;
+    }
+
+    public String getIN_CODEBIN() {
+        return IN_CODEBIN;
+    }
+
+    public void setIN_CODEBIN(String IN_CODEBIN) {
+        this.IN_CODEBIN = IN_CODEBIN;
+    }
+
+    public Double getIN_MINAMT() {
+        return IN_MINAMT;
+    }
+
+    public void setIN_MINAMT(Double IN_MINAMT) {
+        this.IN_MINAMT = IN_MINAMT;
+    }
+
+    public String getIN_DESCBIN() {
+        return IN_DESCBIN;
+    }
+
+    public void setIN_DESCBIN(String IN_DESCBIN) {
+        this.IN_DESCBIN = IN_DESCBIN;
+    }
+
+    public String getIN_CURRAMT() {
+        return IN_CURRAMT;
+    }
+
+    public void setIN_CURRAMT(String IN_CURRAMT) {
+        this.IN_CURRAMT = IN_CURRAMT;
     }
 }

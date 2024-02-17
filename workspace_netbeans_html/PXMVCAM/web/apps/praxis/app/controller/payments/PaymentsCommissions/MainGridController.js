@@ -72,8 +72,52 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.MainGridControlle
                         }
                     }
                 });
-    }
+    },
+    deleteCommission: async function (id) {
+        const me = this;
+        let params = {
+            IN_CCUST: '139',
+            IN_ID: id
+        };
+        const res = await fetch(`${me.url}/deleteCommission`, {
+            body: JSON.stringify(params),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (res.ok) {
+            Ext.toast({
+                html: `<b>Delete Successfully</b>`,
+                title: 'Notification',
+                align: 't',
+                closable: true,
+                width: 300,
+                timeout: 5000 // 10 segundos
+            });
+            Ext.getCmp(prototype.id + '-MainGrid-1').getStore().load();
+        } else {
+            global.Msg({msg: 'Error'});
+        }
+    },
+    onDeleteClick: async function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const id = record.data.id;
 
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to delete?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            this.deleteCommission(id);
+                        }
+                    }
+                });
+    }
 });
 
 
