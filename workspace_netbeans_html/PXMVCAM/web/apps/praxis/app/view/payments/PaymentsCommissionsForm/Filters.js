@@ -37,54 +37,6 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.Filters', {
                     items: [
                         {
                             xtype: 'combobox',
-                            fieldLabel: 'Date',
-                            name: 'IN_DATE',
-                            store: Ext.create('Ext.data.SimpleStore', {
-                                fields: ['code', 'name'],
-                                data: [
-                                    ['FECFROM', 'Validity Date'],
-                                    ['FECR', 'Created Date']
-                                ]
-                            }),
-                            labelWidth: 50,
-                            width: 180,
-                            displayField: 'name',
-                            valueField: 'code',
-                            queryMode: 'local',
-                            editable: false,
-                            value: 'FECFROM'
-                        },
-                        {
-                            xtype: 'datefield',
-                            name: 'IN_DATEFROM',
-                            fieldLabel: 'From',
-                            format: 'Ymd',
-                            editable: false, // Deshabilita la edición del campo
-                            labelWidth: 50,
-                            width: 150,
-                            value: new Date(new Date().getFullYear(), 0, 1),
-                            validator: 'validaFecha',
-                            listeners: {
-                                change: 'onChangeFechaBtn'
-                            }
-                        },
-                        {
-                            xtype: 'datefield',
-                            name: 'IN_DATETO',
-                            fieldLabel: 'To',
-                            format: 'Ymd',
-                            altFormats: 'm',
-                            editable: false, // Deshabilita la edición del campo
-                            labelWidth: 30,
-                            width: 130,
-                            value: new Date(),
-                            validator: 'validaFecha',
-                            listeners: {
-                                change: 'onChangeFechaBtn'
-                            }
-                        },
-                        {
-                            xtype: 'combobox',
                             fieldLabel: 'Type',
                             name: 'IN_TIPO',
                             store: Ext.create('Ext.data.SimpleStore', {
@@ -92,7 +44,8 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.Filters', {
                                 data: [
                                     ['', 'All'],
                                     ['COM', 'Base Comm.'],
-                                    ['MSI', 'MSI Comm.']
+                                    ['MSI', 'MSI Comm.'],
+                                    ['BIN', 'Bank Comm.']
                                 ]
                             }),
                             labelWidth: 50,
@@ -101,7 +54,10 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.Filters', {
                             valueField: 'code',
                             queryMode: 'local',
                             editable: false,
-                            value: ''
+                            value: '',
+                            listeners: {
+                                change: 'onChangeType'
+                            }
                         },
                         {
                             xtype: 'combo',
@@ -163,6 +119,67 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.Filters', {
                             queryMode: 'local',
                             editable: false,
                             value: ''
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbBanks',
+                            hidden: true,
+                            name: 'IN_CODEBANK',
+                            queryMode: 'local',
+                            allowBlank: true,
+                            forceSelection: true,
+                            selectOnFocus: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            fieldLabel: 'Bank',
+                            labelWidth: 65,
+                            labelAlign: 'right',
+                            width: 230,
+                            typeAhead: true,
+                            valueField: 'a4559CODE',
+                            displayField: 'a4559DESC',
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            value: '',
+                            editable: true
+                        },
+                        {
+                            xtype: 'combobox',
+                            fieldLabel: 'Card Code',
+                            hidden: true,
+                            id: prototype.id + '-cmbCards',
+                            name: 'IN_CODECARD',
+                            store: Ext.create('Ext.data.SimpleStore', {
+                                fields: ['code', 'name'],
+                                data: [
+                                    ['', 'All'],
+                                    ['1', 'Visa'],
+                                    ['2', 'MasterCard'],
+                                    ['3', 'American Express']
+                                ]
+                            }),
+                            labelWidth: 80,
+                            width: 200,
+                            displayField: 'name',
+                            valueField: 'code',
+                            queryMode: 'local',
+                            editable: false,
+                            value: ''
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtBin',
+                            hidden: true,
+                            fieldLabel: 'BIN',
+                            labelWidth: 40,
+                            width: 100,
+                            name: 'IN_BIN',
+                            maxLength: 6, // Límite máximo de caracteres
+                            maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                            enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                            listeners: {
+                                specialkey: 'onEnterKeyPress'
+                            }
                         }
                     ]
                 }

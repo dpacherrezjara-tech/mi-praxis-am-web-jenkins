@@ -1,27 +1,22 @@
-Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.MainGridController', {
+Ext.define('Ext.Praxis.controller.payments.BankEmissorCatalog.BanksGridController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.MainGridController',
-    fecha: new Date(),
-    url: CONTEXTPATH + '/PaymentsCommissions',
+    alias: 'controller.BanksGridController',
+    url: CONTEXTPATH + '/BankEmissorCatalog',
     init: function (view) {
-        if (view.backButton) {
-            let tbar = view.getDockedItems('toolbar[dock="top"]')[0];
-            tbar.items.items[1].show();
-        }
     },
     afterRender: async function (obj, e) {
         const me = this;
         const view = me.view;
         this.getData({view: view});
     },
-    getData: async function ( {view}) {
+    getData: function ( {view}) {
         let store = Ext.create('Ext.data.Store', {
             loadMask: true,
             pageSize: 20,
             proxy: {
                 type: 'ajax',
                 enablePaging: true,
-                url: `${view.url}/loadMasterCommissions`,
+                url: `${view.url}/loadBanks`,
                 extraParams: view.searchParams,
                 timeout: 600000,
                 reader: {
@@ -44,64 +39,20 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.MainGridControlle
                 }
             }
         });
-        ;
         view.setStore(store);
     },
     onEditClick: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        const newWindow = Ext.create('Ext.Praxis.view.payments.PaymentsCommissionsForm.DataEntrys.CommissionDataEntry', {
-            id: prototype.id + '-CommissionDataEntry-1',
-            mode: 'U',
-            objID: record.data.id
-        });
-        newWindow.show();
-    },
-    downloadExcel: function (btn) {
         const me = this;
-        Ext.Msg.show(
-                {
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to download?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    animateTarget: btn,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-                            global.getFile(`${me.url}/downloadMasterCommissions?${new URLSearchParams(me.view.searchParams)}`);
-                        }
-                    }
-                });
-    },
-    deleteCommission: async function (id) {
-        const me = this;
-        let params = {
-            IN_CCUST: '139',
-            IN_ID: id
-        };
-        const res = await fetch(`${me.url}/deleteCommission`, {
-            body: JSON.stringify(params),
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.BankEmissorCatalogForm.DataEntrys.BankMaintenanceDataEntry', {
+            id: prototype.id + '-BankMaintenanceDataEntry-1',
+            option: 'U',
+            searchParams: me.formatEditParams(record.data),
+            obj: record.data
         });
-        if (res.ok) {
-            Ext.toast({
-                html: `<b>Delete Successfully</b>`,
-                title: 'Notification',
-                align: 't',
-                closable: true,
-                width: 300,
-                timeout: 5000 // 10 segundos
-            });
-            Ext.getCmp(prototype.id + '-MainGrid-1').getStore().load();
-        } else {
-            global.Msg({msg: 'Error'});
-        }
+        dataEntry.show();
     },
-    onDeleteClick: async function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        const id = record.data.id;
+    onDeleteClick: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const bank = record.data.a4559CODE;
 
         Ext.Msg.show(
                 {
@@ -113,7 +64,64 @@ Ext.define('Ext.Praxis.controller.payments.PaymentsCommissions.MainGridControlle
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
-                            this.deleteCommission(id);
+                            this.deleteBank(bank);
+                        }
+                    }
+                });
+    },
+    deleteBank: async function (bank) {
+        const me = this;
+
+        let params = {
+            IN_A4559CODE: bank,
+            IN_A4559CCUST: '139',
+            IN_OPTION: 'D'
+        };
+
+        const res = await fetch(`${me.url}/maintenanceBank`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        });
+
+        if (res.ok) {
+            global.Msg({msg: 'Deleted Successfull'});
+            Ext.getCmp(prototype.id + '-BanksGrid-1').getStore().load();
+        } else {
+            const msg = await res.text();
+            console.error('Error: ' + msg);
+            Ext.MessageBox.show({
+                title: 'Error',
+                message: 'Error!<br>Check Console for more<br>Information.',
+                icon: Ext.MessageBox.ERROR,
+                buttons: Ext.MessageBox.OK
+            });
+        }
+    },
+    formatEditParams: function (rec) {
+        let params = {
+            IN_CCUST: '139',
+            IN_CODE: rec.a4559CODE
+        };
+        return params;
+    },
+    downloadExcel: function () {
+        const view = this.view;
+        let params = Object.assign({}, view.searchParams);
+        params.excel = true;
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Download Excel?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            global.getFile(`${view.url}/downloadBanks?${new URLSearchParams(params)}`);
                         }
                     }
                 });

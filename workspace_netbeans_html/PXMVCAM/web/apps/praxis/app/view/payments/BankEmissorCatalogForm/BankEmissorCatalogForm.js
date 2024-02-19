@@ -1,19 +1,20 @@
-prototype.id = 'PaymentsCommissions';
-prototype.url = CONTEXTPATH + '/PaymentsCommissions';
-prototype.width = 1700;
+prototype.id = 'BankEmissorCatalogForm';
+prototype.url = CONTEXTPATH + '/BankEmissorCatalog';
+prototype.width = 1850;
 prototype.height = 630;
+fechaActual = new Date(),mesActual = fechaActual.getMonth(),anioActual = fechaActual.getFullYear();
 
-Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.PaymentsCommissionsForm', {
+Ext.define('Ext.Praxis.view.payments.BankEmissorCatalogForm.BankEmissorCatalogForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.PaymentsCommissionsForm',
+    alias: 'widget.BankEmissorCatalogForm',
     requires: [
-        'Ext.Praxis.controller.payments.PaymentsCommissions.PaymentsCommissionsController',
-        'Ext.Praxis.view.payments.PaymentsCommissionsForm.Grids.MainGrid',
-        'Ext.Praxis.view.payments.PaymentsCommissionsForm.Filters',
-        'Ext.Praxis.view.payments.PaymentsCommissionsForm.Options',
-        'Ext.Praxis.view.payments.PaymentsCommissionsForm.DataEntrys.CommissionDataEntry'
+        'Ext.Praxis.controller.payments.BankEmissorCatalog.BankEmissorCatalogController',
+        'Ext.Praxis.view.payments.BankEmissorCatalogForm.Options',
+        'Ext.Praxis.view.payments.BankEmissorCatalogForm.Filters',
+        'Ext.Praxis.view.payments.BankEmissorCatalogForm.Grids.BanksGrid'
+        //'Ext.Praxis.view.payments.BankEmissorCatalogForm.DataEntrys.BankMaintenanceDataEntry'
     ],
-    controller: 'PaymentsCommissionsController',
+    controller: 'BankEmissorCatalogController',
     layout: {
         type: 'fit'
     },
@@ -67,8 +68,7 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.PaymentsCommissions
                                             },
                                             items: [
                                                 {
-                                                    xtype: prototype.id + '-filters',
-                                                    id: prototype.id + '-filters'
+                                                    xtype: prototype.id + '-filters'
                                                 }
                                             ]
                                         },
