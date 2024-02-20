@@ -400,6 +400,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         this.setValue("txtVYQ0", this.getFormatNumber(bean.VYQ0));
         this.setValue("txtVYQ16", this.getFormatNumber(bean.VYQ16));
         
+        Ext.getCmp(prototype.id+'-cmbSTVAL').enable(false);
+        if(bean.STVAL!=='5'){
+            Ext.getCmp(prototype.id+'-cmbSTVAL').enable(true);
+        }
         //Sólo son editables si la información que viene es vacía (A pedido de Javier Toledo)
         if(bean.CDOC === '' && bean.TDOC === '' && bean.PSVVTA === ''
 		&& bean.AGTIA === '' && bean.FVTA === '' && bean.TVTA === '' 
