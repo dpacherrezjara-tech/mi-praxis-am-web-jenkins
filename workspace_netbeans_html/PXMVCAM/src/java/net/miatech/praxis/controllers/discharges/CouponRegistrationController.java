@@ -15,14 +15,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.PX549S01A1747Filter;
 import net.miatech.beans.SQP04905Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.discharges.CouponRegistrationLogic;
+import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.utils.Functions;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -32,9 +35,13 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,6 +49,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,7 +63,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Scope("request")
 @RequestMapping("/CouponRegistration")
 public class CouponRegistrationController extends BaseController {
-
+    
+    @Autowired
+    private ExportUtils exportUtils;
+    
     private static final Logger logError = Logger.getLogger("errorLog");
     private CouponRegistrationLogic logic;
 
@@ -118,7 +129,61 @@ public class CouponRegistrationController extends BaseController {
 
         return lst;
     }
-
+    
+    //@RequestMapping(value = "getXLSX")
+    //public @ResponseBody
+    //void getXLSX(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "getXLSX")
+    public ResponseEntity<?> getXLSX(@ModelAttribute SQP04905Filter params){
+        logic = new CouponRegistrationLogic();
+        logic.setSession(this.serverSession.getServerSession());
+        try {
+            System.out.println("---------------SalesReconciliationBPO:downloadByPaymentDetail-------------");
+            List<SQP04905Filter> filter = logic.loadSQP04905Filter(params);
+            //System.out.println("Total: " + filter.getResponse().size());
+            List<Object[]> data = new ArrayList<>();
+            //headers
+            Object[] headers = new Object[5];
+            if(params.getTFECHA().equals("1"))
+                headers[0] = "Accounting Date";
+            else{
+                headers[0] = "Sale Date";
+            }
+            headers[1] = "Discharge Type Date";
+            headers[2] = "Nbr of Documents";
+            headers[3] = "Fare Amount";
+            headers[4] = "YQ Amount";
+            data.add(headers);
+            for (SQP04905Filter obj : filter) {
+                Object[] row = new Object[5];
+                if(params.getTFECHA().equals("1"))
+                    row[0] = obj.getFCONT();
+                else{
+                    row[0] = obj.getFVTA();
+                }
+                switch(obj.getTIPOC()){
+                    case "1": row[1] = "NATURAL"; break;
+                    case "2": row[1] = "ETHNIC"; break;
+                    case "3": row[1] = "NON REFUNDABLE"; break;
+                    case "6": row[1] = "NO SHOW"; break;
+                    case "7": row[1] = "RAC474"; break;
+                    case "8": row[1] = "RFTX"; break;
+                    case "9": row[1] = "ANCILLARIE NATURAL"; break;
+                    case "10": row[1] = "ANCILLARIE NO SHOW"; break;
+                    case "11": row[1] = "ANCILLARIE RAC474"; break;
+                }
+                row[2] = obj.getTDOCS();
+                row[3] = obj.getTFARE();
+                row[4] = obj.getTYQ();
+                data.add(row);
+            }
+            return exportUtils.createExcel(data, "Coupon Registration" + Functions.getFechaActual());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
     @RequestMapping(value = "downloadExcel")
     public ResponseEntity<byte[]> descargarExcelDetail(HttpServletRequest request) {
         String nombreFile = request.getParameter("nameFile");

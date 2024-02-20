@@ -929,6 +929,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.ADMManualFormControll
     onAddClick: function () {
         var win = new Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual({
             params: {
+                action: "I",
                 url01: prototype.url
             }
         });

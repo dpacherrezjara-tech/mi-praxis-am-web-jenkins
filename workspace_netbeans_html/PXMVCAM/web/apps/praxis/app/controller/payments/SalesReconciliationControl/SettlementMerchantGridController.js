@@ -51,6 +51,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
         params.IN_DATETO = obj.paydate ? obj.paydate : obj.prda;
         params.IN_PROCTYPE = obj.proctype;
         params.IN_SCOUNTRY = obj.scountry;
+        params.IN_SCURRENCY = obj.pcurrency;
         return params;
     }
 });

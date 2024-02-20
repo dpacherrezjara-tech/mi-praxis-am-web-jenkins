@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.Grids.MainGrid', {
     maxHeight: prototype.height,
     minHeight: 200,
     height: 'auto',
-    width: 1200,
+    width: prototype.width,
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -37,30 +37,17 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.Grids.MainGrid', {
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Cols">
             {
-                sortable: false,
-                xtype: 'actioncolumn',
-                width: 40,
-                text: 'Edit',
-                locked: true,
-                align: 'center',
-                items: [
-                    {
-                        iconCls: 'prx-icon-edit',
-                        tooltip: 'Edit',
-                        handler: 'onEditClick'
-                    }
-                ]
-            },
-            {
                 text: 'Type',
                 dataIndex: 'codigo',
                 width: 130,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;font-weight:bolder;";
-                    if (value.trim() === 'COM') {
-                        value = 'Commission';
-                    }
-                    return value;
+                    const opts = {
+                        'COM': 'Base Comm.',
+                        'MSI': 'MSI Comm.',
+                        'BIN': 'Bank Comm.'
+                    };
+                    return opts[value.trim()];
                 }
             },
             {
@@ -105,8 +92,69 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.Grids.MainGrid', {
                     return value + '%';
                 }
             },
+            {text: 'Bank', dataIndex: 'desc_BANK', flex: 1},
+            {text: 'Brand', dataIndex: 'codecard', width: 80,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    const opts = {
+                        '1': 'Visa',
+                        '2': 'MasterCard',
+                        '3': 'American Express'
+                    };
+                    return opts[value.trim()] ? opts[value.trim()] : '';
+                }
+            },
+            {text: 'BIN Code', dataIndex: 'codebin', width: 80},
+            {text: 'BIN Description', dataIndex: 'descbin', width: 120,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    var data = record.data;
+                    metaData.style = "text-align:center;";
+                    metaData.tdAttr = 'data-qtip="' + data.descbin + '"';
+                    return  value;
+                }
+            },
+            {text: 'Min. Amount', dataIndex: 'minamt', width: 120,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                    value = Ext.util.Format.number(value, '0,000.00');
+                    return value;
+                }
+            },
+            {text: 'Currency', dataIndex: 'curramt', width: 80,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "background-color:#B2DAFA";
+                    return value;
+                }
+            },
             {text: 'Date<br>Created', dataIndex: 'fecr', width: 80},
-            {text: 'Date<br>Update', dataIndex: 'feup', width: 80}
+            {text: 'Date<br>Update', dataIndex: 'feup', width: 80},
+            {
+                sortable: false,
+                xtype: 'actioncolumn',
+                width: 40,
+                text: 'Edit',
+                align: 'center',
+                items: [
+                    {
+                        iconCls: 'prx-icon-edit',
+                        tooltip: 'Edit',
+                        handler: 'onEditClick'
+                    }
+                ]
+            },
+            {
+                sortable: false,
+                xtype: 'actioncolumn',
+                width: 40,
+                text: 'Del',
+                align: 'center',
+                items: [
+                    {
+                        iconCls: 'prx-icon-image-trash',
+                        tooltip: 'Delete',
+                        handler: 'onDeleteClick'
+                    }
+                ]
+            }
             //</editor-fold>
         ]
     },

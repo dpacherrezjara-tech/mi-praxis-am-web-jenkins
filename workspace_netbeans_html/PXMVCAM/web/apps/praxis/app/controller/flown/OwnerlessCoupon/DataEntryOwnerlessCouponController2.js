@@ -39,6 +39,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.DataEntryOwnerlessCoupon
                 break;
         }
         // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     },
     setDataStore: function() {
 
