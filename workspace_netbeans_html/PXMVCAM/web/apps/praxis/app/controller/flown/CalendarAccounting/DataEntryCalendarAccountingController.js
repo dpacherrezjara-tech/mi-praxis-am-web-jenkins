@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.controller.flown.CalendarAccounting.DataEntryCalendarAcco
                 break;
         }
         // global.AccessControlMaganer();
-        global.AccessControlMaganerByMode(this.p);
+        global.AccessControlMaganerByMode(p);
     },
     setStoreData: function () {
 
