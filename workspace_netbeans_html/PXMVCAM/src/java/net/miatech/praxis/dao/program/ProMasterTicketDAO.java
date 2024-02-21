@@ -370,6 +370,7 @@ public class ProMasterTicketDAO {
                     objRtn.fileA720.A720TTSCMM = rs01.getDouble("A720TTSCMM");
 
                     objRtn.fileA720.A720TYQ = rs01.getDouble("A720TYQ");
+                    objRtn.fileA720.A720TTYQ = rs01.getDouble("A720TTYQ");
 
                     objRtn.fileA720.A720VALOL1 = rs01.getDouble("A720VALOL1");
                     objRtn.fileA720.A720VALOL2 = rs01.getDouble("A720VALOL2");
