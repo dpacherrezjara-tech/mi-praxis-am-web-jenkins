@@ -404,6 +404,7 @@ public class A720 {
     public double A720TQ = 0d;
     public String A720MDATQ = "";
     public double A720TYQ = 0d;
+    public double A720TTYQ = 0d;
     public String A720MDAYQ = "";
     public double A720YQ = 0d;
     public double A720YQ1 = 0d;

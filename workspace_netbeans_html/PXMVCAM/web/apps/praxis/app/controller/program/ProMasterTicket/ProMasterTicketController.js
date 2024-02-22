@@ -1353,6 +1353,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         me01.beanResultSet01.fileA720.A720TTSCMM = 0;
                         me01.beanResultSet01.fileA720.A720TARIFA = 0;
                         me01.beanResultSet01.fileA720.A720TYQ = 0;
+                        me01.beanResultSet01.fileA720.A720TTYQ = 0;
                         me01.beanResultSet01.fileA720.A720FARE = 0;
                         me01.beanResultSet01.fileA720.A720ETKT = "";
                         me01.beanResultSet01.fileA720.A1672_AUDITED = 0;
@@ -1566,7 +1567,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         win.setValue('lblBatch1', '');
                         win.setValue('lblBatch2', '');
                         win.setValue('lblBalanceBeginingFare', Ext.util.Format.number(me01.beanResultSet01.fileA720.A720FARE, '0,000.00'));
-                        win.setValue('lblBalanceBeginingSurcharge', Ext.util.Format.number(me01.beanResultSet01.fileA720.A720TYQ, '0,000.00'));
+                        win.setValue('lblBalanceBeginingSurcharge', Ext.util.Format.number(me01.beanResultSet01.fileA720.A720TTYQ, '0,000.00'));
                         win.setValue('lblBalanceBeginingCommision', Ext.util.Format.number(me01.beanResultSet01.fileA720.A720TTCOMM+me01.beanResultSet01.fileA720.A720TTSCMM, '0,000.00'));
                         win.setValue('lblBalanceRemainingFare', '0.00');
                         win.setValue('lblBalanceRemainingSurcharge', '0.00');
@@ -3596,7 +3597,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             console.log(me01.beanResultSet01.fileA720.A720FARE);
                             var intBalanceRemainingFare = me01.beanResultSet01.fileA720.A720FARE - intRemainingFare;
                             //var intBalanceRemainingSurcharge:Number = beanResultSet01.fileA720.A720TQ - intRemainingSurcharge;
-                            var intBalanceRemainingSurcharge = me01.beanResultSet01.fileA720.A720TYQ - intRemainingSurcharge;
+                            var intBalanceRemainingSurcharge = me01.beanResultSet01.fileA720.A720TTYQ - intRemainingSurcharge;
                             //var intBalanceRemainingCommision:Number = (beanResultSet01.fileA720.A720COMMIS+beanResultSet01.fileA720.A720TSCM) - intRemainingCommision;
                             var intBalanceRemainingCommision = (me01.beanResultSet01.fileA720.A720TTCOMM+me01.beanResultSet01.fileA720.A720TTSCMM) - intRemainingCommision;
 
