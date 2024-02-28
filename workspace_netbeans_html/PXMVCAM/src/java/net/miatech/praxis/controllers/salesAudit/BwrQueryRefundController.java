@@ -921,7 +921,7 @@ public class BwrQueryRefundController extends BaseController {
     }
 
     public String upload_s3(String IN_PREME) throws SQLException, Exception {
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_SERVICE_AM").toString();
 
         Unirest.setTimeouts(3600000, 3600000);
         HashMap bodyData = new HashMap<>();

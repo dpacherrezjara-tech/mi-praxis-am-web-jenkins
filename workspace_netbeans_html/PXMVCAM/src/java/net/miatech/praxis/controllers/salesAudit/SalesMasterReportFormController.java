@@ -574,7 +574,7 @@ public class SalesMasterReportFormController extends BaseController {
         try {
 
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-            String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+            String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_SERVICE_AM").toString();
 
             String context = "";
             String usr = this.serverSession.getServerSession().getUserView().getUserInfo().USR;
@@ -647,7 +647,7 @@ public class SalesMasterReportFormController extends BaseController {
     }
 
     public String upload_s3(HttpServletRequest request) throws SQLException, Exception {
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_SERVICE_AM").toString();
 
         String context = "";
         String usr = this.serverSession.getServerSession().getUserView().getUserInfo().USR;

@@ -41,7 +41,7 @@ public class PythonWS {
     //</editor-fold>
 
     private String getRestUrl(String endpoint) {
-        String restUrl = this.session.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString() + endpoint;
+        String restUrl = this.session.getServerSession().getPropertySession().get("RUTA_REST_SERVICE_AM").toString() + endpoint;
         System.out.println("ACTIVE URL: " + restUrl);
         return restUrl;
     }
@@ -81,7 +81,7 @@ public class PythonWS {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
+ 
     public @ResponseBody
     Object downloadFilesVisorPython(String endpoint, HashMap body) throws InterruptedException, ExecutionException, JSONException {
         Unirest.setTimeouts(3600000, 3600000);

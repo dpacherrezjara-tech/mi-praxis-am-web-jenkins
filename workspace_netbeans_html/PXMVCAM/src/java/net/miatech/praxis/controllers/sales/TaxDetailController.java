@@ -148,7 +148,7 @@ public class TaxDetailController extends BaseController {
     }
 
     public String upload_s3(ReportTaxA1530Filter filter) throws SQLException, Exception {
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_SERVICE_AM").toString();
         String context = "";//serverSession.getUserView().getUserInfo().CONTEXT;
         String usr = serverSession.getServerSession().getUserView().getUserInfo().USR;
         String pass = serverSession.getServerSession().getUserView().getUserInfo().TOKEN;
