@@ -1645,6 +1645,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         if (me01.filterTKT.lstResultSet02.length > 0) {
                             for (var i2 = 0; i2 < me01.filterTKT.lstResultSet02.length; i2++) {
                                 paramsResultSet02 = me01.filterTKT.lstResultSet02[i2];
+                                console.log("CAMBIO:");
+                                console.log(paramsResultSet02.fileA730);
                                 if (paramsResultSet02.fileA730.A730TYPCP1.trim() !== '' && paramsResultSet02.fileA730.A730TYPCP1.trim() !== 'XX')
                                 {
                                     bolA730CUPON1 = false;
@@ -1742,7 +1744,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             DES: paramsResultSet02.fileA730.A730RUTA1,
                                             AL: paramsResultSet02.fileA730.A730CARRA1,
                                             FLIGHT: paramsResultSet02.fileA730.A730NVLO1,
-                                            DATE: paramsResultSet02.fileA730.A730FECVTA,
+                                            DATE: paramsResultSet02.fileA730.A720FECVTA,
                                             REF: paramsResultSet02.fileA730.A4373CUPN1.trim() === '' ? '' : 'RFTX',
                                             //STAT : 'EXCH',
                                             STAT: paramsResultSet02.fileA730.A720TKVOID === 'V' ? 'EXCH-VOID' : 'EXCH',
