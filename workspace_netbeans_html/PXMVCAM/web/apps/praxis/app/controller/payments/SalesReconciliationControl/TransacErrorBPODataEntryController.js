@@ -839,12 +839,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             cc2 = obj.scardn.trim().slice(-2);
         }
         let scardn = `${cc1}%${cc2}%`;
-        const [inicio, fin] = me.getFechaRango(obj.sdate);
+        //Se agrego fecha de pago como opcional si no existe fecha de venta
+        let fecha = obj.sdate.trim() === '' ? obj.paydate : obj.sdate;
+        const [inicio, fin] = me.getFechaRango(fecha);
         let params = {
             IN_CCUST: obj.ccust,
             IN_SCARDN: scardn,
             IN_SAUTHOC: obj.sauthoc,
-            IN_DATE: obj.sdate,
+            IN_DATE: fecha,
             IN_DATE_F: inicio,
             IN_DATE_T: fin,
             IN_SMERCHID: obj.smerchid,
@@ -879,13 +881,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const me = this;
         const gridBPO = Ext.getCmp(prototype.idDE + '-gridBPO').getStore();
         const details = [...gridBPO.data.items.map(x => me.requestObjectPX(x.data))]
-                .map(x=>({
-                    CCUST: 139,
-                    AREFNBR: obj.arefnbr,
-                    PRDA: obj.prda,
-                    TDOC: obj.tdoc,
-                    ...x
-                }));
+                .map(x => ({
+                        CCUST: 139,
+                        AREFNBR: obj.arefnbr,
+                        PRDA: obj.prda,
+                        TDOC: obj.tdoc,
+                        ...x
+                    }));
         let params = {
             IN_CCUST: obj.ccust,
             IN_PRDA: obj.prda,
@@ -920,7 +922,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         } else {
             difference = totalGross - sumDesglose;
         }
-        console.log('Total Difference: ',difference);
+        console.log('Total Difference: ', difference);
 
         //obtiene detalle para desglosado
         const details = [
