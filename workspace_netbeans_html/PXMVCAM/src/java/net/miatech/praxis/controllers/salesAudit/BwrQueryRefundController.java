@@ -30,6 +30,7 @@ import net.miatech.beans.SaleAudit.A3908Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.BwrQueryRefundLogic;
+import net.miatech.praxis.utils.PythonWS;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -44,7 +45,9 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -62,6 +65,9 @@ public class BwrQueryRefundController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private BwrQueryRefundLogic logic;
+
+    @Autowired
+    private PythonWS pws;
 
     @RequestMapping(value = "SearchQueryRefund")
     public @ResponseBody
@@ -454,7 +460,7 @@ public class BwrQueryRefundController extends BaseController {
             Iterator iter = lst.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15,CH_16;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16;
 
             row = sheet.createRow(vj);
 
@@ -675,6 +681,55 @@ public class BwrQueryRefundController extends BaseController {
 
     @RequestMapping(value = "GetFilesDirectory")
     public @ResponseBody
+    String GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        Object res;
+        try {
+            String v1_urlREST = "/api/util/s3_download_files_visor";
+            String urlREST = "BsplinkRFND/ROBOT/" + "" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
+
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("client", "am");
+            bodyData.put("type", "VISOR");
+            bodyData.put("remote_path", urlREST);
+
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            //("success", true);
+        } catch (Exception e) {
+          throw new SpringException(e);
+        }
+
+        return new Gson().toJson(res);
+    }
+
+    /*
+    @RequestMapping(value = "GetFilesDirectory")
+    public JSONArray DownloadFiles_python(HttpServletRequest request, final HttpServletResponse response) throws Exception {
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        String v1_urlREST = "/api/util/s3_download_files_visor";
+
+        try {
+
+            // ruta del proceso
+            String urlREST = "BsplinkRFND/ROBOT/" + "" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("client", "am");
+            bodyData.put("type", "VISOR");
+            bodyData.put("remote_path", urlREST);
+
+           JSONArray res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            return res;
+
+        } catch (Exception e) {
+            System.out.println("Error Message => " + e.getMessage());
+            //return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new SpringException(e);
+        }
+    }
+     */
+ /*
+    @RequestMapping(value = "GetFilesDirectory")
+    public @ResponseBody
     String GetFilesDirectory(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
         System.out.println("Conexión AWS...");
 
@@ -687,15 +742,10 @@ public class BwrQueryRefundController extends BaseController {
         String IN_COUNTRY = request.getParameter("IN_COUNTRY").toString().trim();
         String IN_DOCUMENT = request.getParameter("IN_DOCUMENT").toString().trim();
 
-        /*
-         Se establece tiempo límite de conexión por 60 min
-         */
+        
         Unirest.setTimeouts(3600000, 3600000);
 
-        /*
-         Preparando parámetros para enviar por body
-         */
-        HashMap bodyData = new HashMap<>();
+                HashMap bodyData = new HashMap<>();
         bodyData.put("IN_OPTION", IN_OPTION);
         bodyData.put("IN_PATH", IN_PATH);
         bodyData.put("IN_DATE", IN_DATE);
@@ -715,7 +765,7 @@ public class BwrQueryRefundController extends BaseController {
 
         return new Gson().toJson(map);
     }
-
+     */
     @RequestMapping(value = "searchLstRFND")
     public @ResponseBody
     String searchLstRFND(ModelMap map, HttpServletRequest request) {
@@ -742,51 +792,84 @@ public class BwrQueryRefundController extends BaseController {
 
     @RequestMapping(value = "SearchRFNDPDI")
     public @ResponseBody
-    String SearchRFNDPDI(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
-
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
-        String path_config = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
-
+    String SearchRFNDPDI(Object map, HttpServletRequest request) throws Exception {
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        Object res;
         A3389Filter filter = new A3389Filter();
+        
+        //IN_DOCUMENT = "2887320996";
         try {
-            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-
             String IN_DOCUMENT = filter.IN_DOCUMET;
-            //IN_DOCUMENT = "2522497772";
+            
+            String v1_urlREST = "/api/util/s3_download_files_visor";
+            System.out.println(v1_urlREST);
+            String urlREST = "BsplinkRFND/PDI/" +("IN_DOCUMENT").trim();
+            System.out.println(urlREST);
 
-            /*
-             Se establece tiempo límite de conexión por 60 min
-             */
-            Unirest.setTimeouts(3600000, 3600000);
-
-            /*
-             Preparando parámetros para enviar por body
-             */
             HashMap bodyData = new HashMap<>();
-            bodyData.put("document", IN_DOCUMENT);
+            bodyData.put("client", "am");
+            bodyData.put("type", "VISOR");
+            bodyData.put("remote_path", urlREST);
+            System.out.println(bodyData);
 
-            HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/bsplink/download/rfnd/pdi/")
-                    .header("content-type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .body(new Gson().toJson(bodyData))
-                    .asJson();
-
-            String body = response.getBody().getObject().get("filetext").toString();
-
-            map.put("success", true);
-            map.put("data", body);
-
-        } catch (SQLException e) {
-            map.put("success", false);
-            map.put("sesion", SESSION_CONTROL);
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            //("success", true);
         } catch (Exception e) {
-            map.put("success", false);
-            map.put("sesion", SESSION_CONTROL);
+          throw new SpringException(e);
         }
 
-        return new Gson().toJson(map);
+        return new Gson().toJson(res);
     }
+    
+    //    @RequestMapping(value = "SearchRFNDPDI")
+//    public @ResponseBody
+//    String SearchRFNDPDI(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
+//
+//        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+//        String path_config = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+//
+//        A3389Filter filter = new A3389Filter();
+//        try {
+//            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+//            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+//
+//            String IN_DOCUMENT = filter.IN_DOCUMET;
+//            //IN_DOCUMENT = "2522497772";
+//
+//            /*
+//             Se establece tiempo límite de conexión por 60 min
+//             */
+//            Unirest.setTimeouts(3600000, 3600000);
+//
+//            /*
+//             Preparando parámetros para enviar por body
+//             */
+//            HashMap bodyData = new HashMap<>();
+//            bodyData.put("document", IN_DOCUMENT);
+//
+//            HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/bsplink/download/rfnd/pdi/")
+//                    .header("content-type", "application/json")
+//                    .header("cache-control", "no-cache")
+//                    .body(new Gson().toJson(bodyData))
+//                    .asJson();
+//
+//            String body = response.getBody().getObject().get("filetext").toString();
+//
+//            map.put("success", true);
+//            map.put("data", body);
+//
+//        } catch (SQLException e) {
+//            map.put("success", false);
+//            map.put("sesion", SESSION_CONTROL);
+//        } catch (Exception e) {
+//            map.put("success", false);
+//            map.put("sesion", SESSION_CONTROL);
+//        }
+//
+//        return new Gson().toJson(map);
+//    }
+    
 
     @RequestMapping(value = "ProcesaMantenimiento")
     public @ResponseBody
@@ -809,22 +892,22 @@ public class BwrQueryRefundController extends BaseController {
         map.put("data", result);
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "searchSabreLst")
     public @ResponseBody
     String searchSabreLst(ModelMap map, HttpServletRequest request) {
         A3908Filter filter = new A3908Filter();
-        String result="";
+        String result = "";
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             BwrQueryRefundLogic logic = new BwrQueryRefundLogic();
             logic.setSession(this.serverSession.getServerSession());
-            if(filter.IN_TIPO.equals("1")){
+            if (filter.IN_TIPO.equals("1")) {
                 result = upload_s3(filter.IN_PREME.trim());
             }
             List<A3908Filter> lst_search = logic.searchSabreLst(filter);
-            
+
             map.put("success", true);
             map.put("data", lst_search);
         } catch (SQLException e) {
@@ -836,9 +919,9 @@ public class BwrQueryRefundController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
-   public String upload_s3(String IN_PREME) throws SQLException, Exception {
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+
+    public String upload_s3(String IN_PREME) throws SQLException, Exception {
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_SERVICE_AM").toString();
 
         Unirest.setTimeouts(3600000, 3600000);
         HashMap bodyData = new HashMap<>();
@@ -851,7 +934,7 @@ public class BwrQueryRefundController extends BaseController {
                 .asJson();
 
         String error_msg = response.getBody().getObject().get("error").toString();
-          // si es error es distinto de cero hay problem 
+        // si es error es distinto de cero hay problem 
         return error_msg;
 
     }

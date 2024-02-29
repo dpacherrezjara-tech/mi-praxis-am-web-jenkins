@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SaleAudit.A3647Filter;
@@ -34,6 +35,7 @@ import net.miatech.beans.SaleAudit.A3669Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.RFNDQueryLogic;
+import net.miatech.praxis.utils.PythonWS;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -47,6 +49,7 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -64,6 +67,8 @@ public class RFNDQueryController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private RFNDQueryLogic logic;
+    @Autowired
+    private PythonWS pws;
 
     @RequestMapping(value = "SearchQueryRefund")
     public @ResponseBody
@@ -1360,7 +1365,30 @@ public class RFNDQueryController extends BaseController {
 
         return new Gson().toJson(map);
     }
+    
+    @RequestMapping(value = "GetFilesDirectory")
+    public @ResponseBody
+    String GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        Object res;
+        try {
+            String v1_urlREST = "/api/util/s3_download_files_visor";
+            String urlREST = "PXRFNDESP" + "/" + request.getParameter("IN_ANIO").trim() + "/" + request.getParameter("IN_PREME").trim();
 
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("client", "am");
+            bodyData.put("type", "VISOR");
+            bodyData.put("remote_path", urlREST);
+
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            //("success", true);
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            throw new SpringException(e);
+        }
+
+        return new Gson().toJson(res);
+    }
+    /*
     @RequestMapping(value = "GetFilesDirectory")
     public @ResponseBody
     String GetFilesDirectory(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
@@ -1375,14 +1403,10 @@ public class RFNDQueryController extends BaseController {
         String IN_PREME = request.getParameter("IN_PREME").trim();
         String IN_DATE = request.getParameter("IN_DATE").trim();
 
-        /*
-         Se establece tiempo límite de conexión por 60 min
-         */
+       
         Unirest.setTimeouts(3600000, 3600000);
 
-        /*
-         Preparando parámetros para enviar por body
-         */
+        
         HashMap bodyData = new HashMap<>();
         bodyData.put("IN_OPTION", IN_OPTION);
         bodyData.put("IN_PATH", IN_PATH);
@@ -1403,5 +1427,5 @@ public class RFNDQueryController extends BaseController {
 
         return new Gson().toJson(map);
     }
-
+     */
 }

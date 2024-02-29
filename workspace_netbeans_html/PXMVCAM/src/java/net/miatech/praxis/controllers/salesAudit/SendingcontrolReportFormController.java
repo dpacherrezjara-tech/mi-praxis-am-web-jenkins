@@ -6,14 +6,8 @@
 package net.miatech.praxis.controllers.salesAudit;
 
 import com.google.gson.Gson;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
-//import com.sun.org.apache.bcel.internal.generic.Type;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,8 +19,8 @@ import net.miatech.beans.SaleAudit.A3949Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.SendingcontrolReportFormLogic;
+import net.miatech.praxis.utils.PythonWS;
 import net.miatech.utils.Functions;
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -39,7 +33,10 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +53,9 @@ public class SendingcontrolReportFormController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private SendingcontrolReportFormLogic logic;
+    
+    @Autowired
+    private PythonWS pws;
 
     @RequestMapping(value = "searchDowloadFiles")
     public @ResponseBody
@@ -195,7 +195,7 @@ public class SendingcontrolReportFormController extends BaseController {
                         break;
                 }
                 CH_05.setCellValue(VL_A3949TYPE);
-                
+
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
                 CH_02.setCellStyle(bodyStyle);
@@ -255,109 +255,76 @@ public class SendingcontrolReportFormController extends BaseController {
     }
 
     @RequestMapping(value = "DownloadFiles_python")
-    public @ResponseBody
-    void DownloadFiles_python(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ResponseEntity<byte[]> DownloadFiles_python(HttpServletRequest request, final HttpServletResponse response) throws Exception {
         A3949Filter filter = new A3949Filter();
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
-        String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
         String vl_PREFIX = "";
-        String vl_urlREST = "";
+        String vl_urlREST = "/api/sending-control-report/downloadfiles";
         switch (filter.IN_TYPE) {
             case "DN":
                 vl_PREFIX = "NONCOMPARATIVE/";
-                vl_urlREST = "/api/bsplink/export_salecomparative/";
                 break;
             case "DC":
                 vl_PREFIX = "COMPARATIVE/";
-                vl_urlREST = "/api/bsplink/export_salecomparative/";
                 break;
             default:
                 vl_PREFIX = "GSA/";
-                vl_urlREST = "/api/bsplink/export_salecomparative/";
                 break;
         }
         try {
-            Unirest.setTimeouts(3600000, 3600000);
+            if (vl_PREFIX.isEmpty()) {
+                throw new NullPointerException("No existe endpoint");
+            }
             HashMap bodyData = new HashMap<>();
             bodyData.put("date_from", filter.IN_DATEFROM);
             bodyData.put("date_to", filter.IN_DATETO);
             bodyData.put("pr_type", filter.IN_TYPE);
             bodyData.put("PREFIX", vl_PREFIX);
-
-            HttpResponse<JsonNode> responses = Unirest.post(urlREST + vl_urlREST)//Sending
-                    .header("content-type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .body(new Gson().toJson(bodyData))
-                    .asJson();
-
-            String error_code = responses.getBody().getObject().get("error_code").toString();
-            String error_msg = responses.getBody().getObject().get("error_msg").toString();
-            String filename = responses.getBody().getObject().get("filename").toString();
-
-            response.setContentType("application/zip");
-            response.setHeader("Content-Disposition", "attachment;filename=\"" + rutaFile + "\\\\" + filename + "\"");
-            InputStream is = new FileInputStream(rutaFile + "\\\\" + filename);
-            IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();
-
+            
+            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(vl_urlREST,bodyData);
+            return res;
         } catch (Exception e) {
-            throw new SpringException(e);
+            System.out.println("Error Message => "+ e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            //throw new SpringException(e);
         }
     }
 
     @RequestMapping(value = "downloadFile")
-    public @ResponseBody
-    void downloadFile(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ResponseEntity<byte[]> downloadFile(HttpServletRequest request, HttpServletResponse response) throws Exception {
         A3949Filter filter = new A3949Filter();
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
-        String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-
         String vl_PREFIX = "";
-        String vl_urlREST = "";
+        String vl_urlREST = "/api/sending-control-report/downloadfilesbyctry";
         switch (filter.IN_TYPE) {
             case "DN":
                 vl_PREFIX = "NONCOMPARATIVE/";
-                vl_urlREST = "/api/bsplink/export_salecomparative_archi/";
                 break;
             case "DC":
                 vl_PREFIX = "COMPARATIVE/";
-                vl_urlREST = "/api/bsplink/export_salecomparative_archi/";
                 break;
             default:
                 vl_PREFIX = "GSA/";
-                vl_urlREST = "/api/bsplink/export_salecomparative_archi/";
                 break;
         }
         try {
-            Unirest.setTimeouts(3600000, 3600000);
+            if (vl_PREFIX.isEmpty()) {
+                throw new NullPointerException("No existe endpoint");
+            }
             HashMap bodyData = new HashMap<>();
             bodyData.put("date_from", filter.IN_DATEFROM);
             bodyData.put("country", filter.IN_COUNTRY);
             bodyData.put("pr_type", filter.IN_TYPE);
             bodyData.put("PREFIX", vl_PREFIX);
 
-            HttpResponse<JsonNode> responses = Unirest.post(urlREST + vl_urlREST)//Sending
-                    .header("content-type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .body(new Gson().toJson(bodyData))
-                    .asJson();
-
-            String error_code = responses.getBody().getObject().get("error_code").toString();
-            String error_msg = responses.getBody().getObject().get("error_msg").toString();
-            String filename = responses.getBody().getObject().get("filename").toString();
-
-            response.setContentType("application/zip");
-            response.setHeader("Content-Disposition", "attachment;filename=\"" + rutaFile + "\\\\" + filename + "\"");
-            InputStream is = new FileInputStream(rutaFile + "\\\\" + filename);
-            IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();
+            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(vl_urlREST,bodyData);
+            return res;
 
         } catch (Exception e) {
-            throw new SpringException(e);
+            System.out.println("Error Message => "+ e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
