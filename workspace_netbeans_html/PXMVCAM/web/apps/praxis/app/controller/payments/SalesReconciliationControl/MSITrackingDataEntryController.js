@@ -226,6 +226,69 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
                     }
                 });
     },
+    onSearchTransaction: function () {
+        const obj = Ext.getCmp(prototype.idMSI + '-filtersManual').getForm().getValues();
+        const grid = Ext.getCmp(prototype.idMSI + '-gridVoidTracking');
+        grid.getView().mask('Loading...');
+        const data = grid.getStore().getData().items;
+        if (data.length === 0) {
+            global.Msg({msg: 'No data in Scanner'});
+            grid.getView().unmask();
+            return;
+        }
+        const existeAuth = data.some(x =>
+            x.data.sauthoc.trim() === obj.IN_SAUTHOC);
+        const existePnr = data.some(x =>
+            x.data.spnr.trim() === obj.IN_SPNR);
+        let foundRegis = {};
+        if (existeAuth) {
+            foundRegis = grid.getStore().queryBy(function (registro) {
+                return registro.get('sauthoc').trim() === obj.IN_SAUTHOC;
+            });
+            grid.getStore().removeAll();
+            foundRegis.items.forEach(x => {
+                grid.getStore().add(x);
+            });
+        } else if (existePnr) {
+            foundRegis = grid.getStore().queryBy(function (registro) {
+                return registro.get('spnr').trim() === obj.IN_SPNR;
+            });
+            grid.getStore().removeAll();
+            foundRegis.items.forEach(x => {
+                grid.getStore().add(x);
+            });
+        }
+        try {
+            let bean = grid.getStore().findRecord('arefnbr', this.view.obj.arefnbr);
+            grid.getSelectionModel().select(bean, true);
+        } catch (err) {
+            console.error('Obj no encontrado: ', err);
+        }
+        grid.getView().unmask();
+    },
+    reloadGrid: function () {
+        this.loadMainTransaction();
+    },
+    //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="SelModel">
+    multiTransacBeforeDeselect: function (selModel, record, index) {
+        if (record.data.main) {
+            return false;
+        }
+    },
+    multiTransacBeforeSelect: function (selModel, record, index) {
+        const match = ['6'];
+        if (match.some(x => record.data.stval === x)) {
+            return false;
+        }
+    },
+    multiTransacChangeSelect: function (selModel, seleccionados) {
+        const sumaTotal = seleccionados.reduce((total, item) => {
+            return total + item.data.tgrosamoun;
+        }, 0);
+        const totalFormat = Ext.util.Format.number(sumaTotal, '0,000.00');
+        Ext.getCmp(prototype.idMSI + '-totalDiff').setValue(totalFormat);
+    },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Format Parameters">
     formatManualParameters: function (sales, refunds) {

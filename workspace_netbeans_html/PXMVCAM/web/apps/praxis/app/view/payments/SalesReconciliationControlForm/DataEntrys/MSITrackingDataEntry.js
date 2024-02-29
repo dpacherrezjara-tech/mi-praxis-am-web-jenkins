@@ -205,17 +205,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                 checkboxSelect: false,
                 checkOnly: true, // Solo permitir selección a través de casillas de verificación
                 listeners: {
-                    beforedeselect: function (selModel, record, index) {
-                        if (record.data.main) {
-                            return false;
-                        }
-                    },
-                    beforeselect: function (selModel, record, index) {
-                        const match = ['6'];
-                        if (match.some(x => record.data.stval === x)) {
-                            return false;
-                        }
-                    }
+                    beforedeselect: 'multiTransacBeforeDeselect',
+                    beforeselect: 'multiTransacBeforeSelect',
+                    selectionchange:'multiTransacChangeSelect'
                 }
             },
             tbar: {
@@ -322,6 +314,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                         listeners: {
                             click: 'onAddTransaction'
                         }
+                    },
+                    {
+                        xtype: 'button',
+                        iconCls: 'prx-icon-search',
+                        margin: '2 2 2 2',
+                        width: 25,
+                        height: 25,
+                        tooltip: 'Search in Grid',
+                        listeners: {
+                            click: 'onSearchTransaction'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        margin: '2 2 2 2',
+                        width: 25,
+                        height: 25,
+                        iconCls: 'prx-icon-reload',
+                        tooltip: 'Reload Grid',
+                        listeners: {
+                            click: 'reloadGrid'
+                        }
                     }
                 ]
 
@@ -334,15 +348,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                 },
                 border: false,
                 width: '100%',
-                defaults: {
-                    fieldStyle: 'text-align: left;',
-                    padding: '5 1 5 1',
-                    margin: '2 10 2 2',
-                    anchor: '100%',
-                    hiddenLabel: false,
-                    labelAlign: 'right',
-                    hidden: false
-                },
                 items: [
                     {
                         xtype: 'textfield',
@@ -352,7 +357,44 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                         labelWidth: 100,
                         width: 500,
                         maxLength: 100, // Límite máximo de caracteres
-                        enforceMaxLength: true
+                        enforceMaxLength: true,
+                        fieldStyle: 'text-align: left;',
+                        padding: '5 1 5 1',
+                        margin: '2 10 2 2',
+                        anchor: '100%',
+                        hiddenLabel: false,
+                        labelAlign: 'right',
+                        hidden: false
+                    },
+                    {
+                        xtype: 'panel',
+                        flex: 1,
+                        border: false,
+                        layout: {
+                            type: 'hbox',
+                            pack: 'end'
+                        },
+                        defaults: {
+                            fieldStyle: 'text-align: right;',
+                            padding: '5 1 5 1',
+                            margin: '2 10 2 2',
+                            anchor: '100%',
+                            hiddenLabel: false,
+                            labelAlign: 'right',
+                            hidden: false,
+                            labelStyle: 'font-weight:bold;'
+                        },
+                        items: [
+                            {
+                                xtype: 'textfield',
+                                id: prototype.idMSI + '-totalDiff',
+                                fieldLabel: 'Adjustment',
+                                value: '0.00',
+                                readOnly: true,
+                                width: 200,
+                                labelWidth: 100
+                            }
+                        ]
                     }
                 ]
             },
@@ -374,8 +416,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                     {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
                     {text: 'PNR', dataIndex: 'spnr', width: 70},
                     {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
-                    {text: 'Error Description', dataIndex: 'des_CERROR', width: 180, autoSizeColumn: true},
-                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 180, autoSizeColumn: true},
+                    {text: 'Error Description', dataIndex: 'des_CERROR', minWidth: 180, width: 180, autoSizeColumn: true},
+                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', minWidth: 180, width: 180, autoSizeColumn: true},
                     {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 90},
                     {
                         text: 'Status', dataIndex: 'stval', width: 120,
