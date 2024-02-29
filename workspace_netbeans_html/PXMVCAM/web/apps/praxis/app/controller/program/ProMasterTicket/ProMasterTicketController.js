@@ -230,13 +230,13 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         console.log(data);
         var me01 = this;
         if(data.STAT === 'EXCH' || data.STAT === 'EXCH-VOID'){
-            var ScrTKTForm = Ext.create('Ext.Praxis.view.screens.ScrTKTForm', { id: 'ScrTKTForm' });
+            /*var ScrTKTForm = Ext.create('Ext.Praxis.view.screens.ScrTKTForm', { id: 'ScrTKTForm' });
             var controller = ScrTKTForm.getController();
             controller.VP_DOCUMENTO = data.FOR + data.SER;
             controller.VP_CIA = data.CIA;
             controller.VP_SEQ = '00';
             controller.actionCode = 'V';
-            ScrTKTForm.show();
+            ScrTKTForm.show();*/
             console.log(data.SEQ+data.CIA+data.FOR + data.SER);
             var strSEQ = data.SEQ===''? '00':data.SEQ;
             var strCIA = data.CIA;
