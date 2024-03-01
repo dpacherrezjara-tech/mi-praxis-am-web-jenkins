@@ -316,6 +316,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
         Object res;
         try {
             String v1_urlREST = "/api/util/s3_download_files_visor";
+            String sesion=serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             String urlREST = "";
             if (request.getParameter("IN_TIPO").trim().equals("AGENCY")) {
                 urlREST = "MYARC/ROBOT/" + "" + request.getParameter("IN_ANIO").trim() + "/" + request.getParameter("IN_PREME").trim() + "/" + request.getParameter("IN_DATE").trim();
@@ -328,7 +329,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
             bodyData.put("type", "VISOR");
             bodyData.put("remote_path", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData,sesion);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
             throw new SpringException(e);
