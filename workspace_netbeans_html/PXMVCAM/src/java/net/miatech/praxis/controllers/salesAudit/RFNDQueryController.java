@@ -51,6 +51,7 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -1349,28 +1350,28 @@ public class RFNDQueryController extends BaseController {
 
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "GetFilesDirectory")
-    public @ResponseBody
-    String GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+    public ResponseEntity<?>//@ResponseBody String
+            GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        Object res;
+        ResponseEntity res;
         try {
             String v1_urlREST = "/api/util/s3_download_files_visor";
             String urlREST = "PXRFNDESP" + "/" + request.getParameter("IN_ANIO").trim() + "/" + request.getParameter("IN_PREME").trim();
-
+            String sesion = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             HashMap bodyData = new HashMap<>();
             bodyData.put("client", "am");
             bodyData.put("type", "VISOR");
             bodyData.put("remote_path", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData, sesion);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
             throw new SpringException(e);
         }
 
-        return new Gson().toJson(res);
+        return res;
     }
     /*
     @RequestMapping(value = "GetFilesDirectory")

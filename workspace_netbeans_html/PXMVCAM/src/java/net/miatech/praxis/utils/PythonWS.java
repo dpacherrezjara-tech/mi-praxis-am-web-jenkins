@@ -26,6 +26,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
+import java.io.*;
+import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import org.springframework.ui.ModelMap;
 
 /**
  *
@@ -81,9 +87,8 @@ public class PythonWS {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
- 
-    public @ResponseBody
-    Object downloadFilesVisorPython(String endpoint, HashMap body) throws InterruptedException, ExecutionException, JSONException {
+
+    public ResponseEntity<?> downloadFilesVisorPython(String endpoint, HashMap body, String sesion) throws InterruptedException, ExecutionException, JSONException {
         Unirest.setTimeouts(3600000, 3600000);
         Future<HttpResponse<JsonNode>> postFuture = Unirest.post(this.getRestUrl(endpoint))//Sending
                 .header("content-type", "application/json")
@@ -92,41 +97,87 @@ public class PythonWS {
                 .asJsonAsync();
 
         HttpResponse<JsonNode> postResponse = postFuture.get();
-        Object obj = postResponse.getBody().getObject();//.getJSONArray("files"); //getString("files");
-        return obj;
+        Object obj = postResponse.getBody().getObject();
+        JSONObject jsonObject = (JSONObject) obj;
+        List<Map<String, String>> resp = new ArrayList<>();
+        //
+        JSONArray ListDatos = (JSONArray) jsonObject.get("files");
+        for (int i = 0; i < ListDatos.length(); i++) {
+            JSONObject datosfor = ListDatos.getJSONObject(i);
+            String url1 = datosfor.getString("url");
+            String extension = datosfor.getString("extension");
+            String[] partes = url1.split("/");
+            //
+            String imageUrl = url1.replace(" ", "%20");
+            String destinationFile = sesion + "\\" + partes[partes.length - 1];
+            String NameFile = partes[partes.length - 1]; 
+            //
+            try {
+
+                URL url = new URL(imageUrl);
+                InputStream inputStream = url.openStream();
+                OutputStream outputStream = new FileOutputStream(destinationFile);
+
+                byte[] buffer = new byte[2048];
+                int length;
+
+                while ((length = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, length);
+                }
+
+                inputStream.close();
+                outputStream.close();
+                // SOBRE ESCRIBIT UN OBJ
+                Map<String, String> objres = new HashMap<>();
+
+                objres.put("extension", extension);
+                objres.put("url", NameFile);
+                resp.add(objres);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        //System.out.println("objets: " + obj);
+        ModelMap mprespta = new ModelMap();
+        mprespta.put("success", true);
+        mprespta.put("data", resp);
+        return new ResponseEntity(mprespta, HttpStatus.OK);
     }
 
     public @ResponseBody
     boolean uploadFilesPython(String endpoint, String ciente, String remote_path, File File1, File File2, File File3) throws InterruptedException, ExecutionException, JSONException, UnirestException {
         boolean retorno = false;
-         JSONObject myObject = null;
+        JSONObject myObject = null;
         Unirest.setTimeouts(3600000, 3600000);
-        if(File3 != null) {
+        if (File3 != null) {
             HttpResponse<String> response = Unirest.post(this.getRestUrl(endpoint))
-                .field("client", ciente)
-                .field("remote_path", remote_path)
-                .field("file", File1)
-                .field("file", File2)
-                .field("file", File3)
-                .asString();           
-             myObject = new JSONObject(response.getBody());
-        }else if(File2!= null){
+                    .field("client", ciente)
+                    .field("remote_path", remote_path)
+                    .field("file", File1)
+                    .field("file", File2)
+                    .field("file", File3)
+                    .asString();
+            myObject = new JSONObject(response.getBody());
+        } else if (File2 != null) {
             HttpResponse<String> response = Unirest.post(this.getRestUrl(endpoint))
-                .field("client", ciente)
-                .field("remote_path", remote_path)
-                .field("file", File1)
-                .field("file", File2)
-                .asString();           
-             myObject = new JSONObject(response.getBody());
-        }else{
+                    .field("client", ciente)
+                    .field("remote_path", remote_path)
+                    .field("file", File1)
+                    .field("file", File2)
+                    .asString();
+            myObject = new JSONObject(response.getBody());
+        } else {
             HttpResponse<String> response = Unirest.post(this.getRestUrl(endpoint))
-                .field("client", ciente)
-                .field("remote_path", remote_path)
-                .field("file", File1)
-                .asString();           
-             myObject = new JSONObject(response.getBody());
+                    .field("client", ciente)
+                    .field("remote_path", remote_path)
+                    .field("file", File1)
+                    .asString();
+            myObject = new JSONObject(response.getBody());
         }
-        
+
         //  myObject.get("message");
         retorno = (boolean) myObject.get("success");
         return retorno;

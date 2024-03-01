@@ -476,6 +476,7 @@ public class PostbillingController extends BaseController {
         Object res;
         try {
             String v1_urlREST = "/api/util/s3_download_files_visor";
+            String sesion=serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             String urlREST = "";
             if (request.getParameter("IN_TYPE").trim().equals("ROBOT")) {
                 urlREST = request.getParameter("IN_MODULO").trim() + "/" + request.getParameter("IN_TYPE").trim() + "/" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim() + "/";
@@ -491,7 +492,7 @@ public class PostbillingController extends BaseController {
             bodyData.put("type", "VISOR");
             bodyData.put("remote_path", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData,sesion);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
             throw new SpringException(e);
