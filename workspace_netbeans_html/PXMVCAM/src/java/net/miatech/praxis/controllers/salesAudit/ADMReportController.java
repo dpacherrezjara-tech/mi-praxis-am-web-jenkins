@@ -987,7 +987,7 @@ public class ADMReportController extends BaseController {
             //List<A3404Filter> gridDataRazones2 =  fromJsonList(request.getParameter("beanlstRazones"), gridDataRazones.getClass());//new Gson().fromJson(request.getParameter("beanlstRazones"), gridDataRazones.getClass());
             ADMReportLogic logic = new ADMReportLogic();
             logic.setSession(this.serverSession.getServerSession());
-            result = "RECORD INSERTED"; //logic.insertLisTracingFile(gridData, listenvio);
+            result = logic.insertLisTracingFile(gridData, listenvio);//"RECORD INSERTED"; //
             if (result.equals("RECORD INSERTED")) {
                 if (!listenvio.A2553ARCHV.equals("") || !listenvio.A2553ARCHV2.equals("") || !listenvio.A2553ARCHV3.equals("")) {
 
