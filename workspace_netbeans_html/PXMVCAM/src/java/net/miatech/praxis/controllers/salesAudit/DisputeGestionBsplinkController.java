@@ -57,6 +57,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
 
 /**
  *
@@ -509,10 +510,10 @@ public class DisputeGestionBsplinkController extends BaseController {
     }
 
     @RequestMapping(value = "GetFilesDirectory")
-    public @ResponseBody
-    String GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+    public ResponseEntity<?>//@ResponseBody String 
+        GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        Object res;
+        ResponseEntity res;
         try {
             String v1_urlREST = "/api/util/s3_download_files_visor";
             String sesion=serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
@@ -534,7 +535,7 @@ public class DisputeGestionBsplinkController extends BaseController {
             throw new SpringException(e);
         }
 
-        return new Gson().toJson(res);
+          return res;
     }
 
     /*@RequestMapping(value = "GetFilesDirectory")

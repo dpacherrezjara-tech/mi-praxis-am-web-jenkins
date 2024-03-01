@@ -792,10 +792,10 @@ public class BwrQueryRefundController extends BaseController {
     }
 
     @RequestMapping(value = "SearchRFNDPDI")
-    public @ResponseBody
-    String SearchRFNDPDI(Object map, HttpServletRequest request) throws Exception {
+    public ResponseEntity<?>//@ResponseBody String 
+        SearchRFNDPDI(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        Object res;
+        ResponseEntity res;
         A3389Filter filter = new A3389Filter();
 
         //IN_DOCUMENT = "2887320996";
@@ -821,7 +821,7 @@ public class BwrQueryRefundController extends BaseController {
             throw new SpringException(e);
         }
 
-        return new Gson().toJson(res);
+         return res;
     }
 
     //    @RequestMapping(value = "SearchRFNDPDI")
