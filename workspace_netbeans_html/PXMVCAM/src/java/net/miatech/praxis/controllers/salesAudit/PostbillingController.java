@@ -53,6 +53,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -470,10 +471,10 @@ public class PostbillingController extends BaseController {
     }
      */
     @RequestMapping(value = "GetFilesDirectory")
-    public @ResponseBody
-    String GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+    public  ResponseEntity<?>//@ResponseBody String 
+        GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        Object res;
+       ResponseEntity res;
         try {
             String v1_urlREST = "/api/util/s3_download_files_visor";
             String sesion=serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
@@ -498,7 +499,7 @@ public class PostbillingController extends BaseController {
             throw new SpringException(e);
         }
 
-        return new Gson().toJson(res);
+        return res;
     }
 
     /* @RequestMapping(value = "GetFilesDirectory")

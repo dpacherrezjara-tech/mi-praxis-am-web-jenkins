@@ -74,7 +74,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkFileV
                 //console.log(data);
 
                 var dataRoot = {text: me.beanTMP.IN_DOCUMENT, filename: '', expanded: true, flag: false, children: []};
-                console.log(res.data);
                 //Ext.Object.each(res.map.files.myArrayList, function (index, value) {
                 Ext.Object.each(res.data, function (index, value) {
                   var vd = value.url.split('/');
