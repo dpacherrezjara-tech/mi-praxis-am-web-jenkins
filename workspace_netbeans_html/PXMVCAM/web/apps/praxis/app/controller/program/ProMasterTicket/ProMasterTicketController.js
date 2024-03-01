@@ -1821,7 +1821,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             DES : paramsResultSet02.fileA730.A730RUTA1,
                                             AL: paramsResultSet02.fileA730.A730CARRA1,
                                             FLIGHT : paramsResultSet02.fileA730.A730NVLO1,
-                                            DATE : paramsResultSet02.fileA730.A730FECVTA,
+                                            DATE : paramsResultSet02.fileA730.A720FECVTA,
                                             REF : paramsResultSet02.fileA730.A4373CUPN1.trim() === '' ? '':'RFTX',
                                             //STAT : 'EXCH',
                                             STAT : paramsResultSet02.fileA730.A720TKVOID ==='V' ? 'EXCH-VOID' : 'EXCH',
