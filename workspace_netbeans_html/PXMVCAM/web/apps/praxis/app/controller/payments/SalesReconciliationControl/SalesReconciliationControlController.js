@@ -82,7 +82,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const cmbMdasbBT = Ext.getCmp(prototype.id + '-cmbMonedabBT');
             me.setComboStore({cmp: cmbMdasbBT, data: monedas,
                 valueField: 'code', displayField: 'name', value: ''});
-            
+
             const cmbMdasbST = Ext.getCmp(prototype.id + '-cmbMonedabST');
             me.setComboStore({cmp: cmbMdasbST, data: monedas,
                 valueField: 'code', displayField: 'name', value: ''});
@@ -158,8 +158,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             IN_CCUST: '139',
             ...obj
         };
-        if (obj.creditcard !== '' && obj.creditcard2 !== '') {
-            params.IN_SCARDN = `${obj.creditcard}%${obj.creditcard2}%`;
+        if (obj.creditcard !== '') {
+            params.IN_SCARDN = `${obj.creditcard || ''}%${obj.creditcard2 || ''}%`;
+        } else if (obj.creditcard2 !== '') {
+            params.IN_SCARDN = `%${obj.creditcard2 || ''}%`;
         }
         return params;
     },
@@ -182,8 +184,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             IN_CCUST: '139',
             ...obj
         };
-        if (obj.creditcard.at(0) !== '' && obj.creditcard.at(1) !== '') {
-            params.IN_SCARDN = `${obj.creditcard.at(0)}%${obj.creditcard.at(1)}%`;
+        if (obj.creditcard.at(0) !== '') {
+            params.IN_SCARDN = `${obj.creditcard.at(0) || ''}%${obj.creditcard.at(1) || ''}%`;
+        } else if (obj.creditcard.at(1) !== '') {
+            params.IN_SCARDN = `%${obj.creditcard.at(1) || ''}%`;
         }
         return params;
     },
