@@ -993,7 +993,7 @@ public class SalesReconciliationBPOController {
             if (!fecha2Str.trim().isEmpty()) {
                 fecha2 = formatoFecha.parse(fecha2Str);
             }
-        } catch (ParseException e) {
+        } catch (ParseException | NullPointerException e) {
         }
 
         if (fecha1 != null && fecha2 != null) {
