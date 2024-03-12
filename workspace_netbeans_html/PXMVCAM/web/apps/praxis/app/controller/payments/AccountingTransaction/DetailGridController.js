@@ -44,23 +44,19 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.DetailGridContr
     setColumnasFecha: function ( {type}){
         const fechap = Ext.getCmp(prototype.id + '-det-fechap');
         const fechah = Ext.getCmp(prototype.id + '-det-fechah');
-        const colIdflex = Ext.getCmp(prototype.id + '-colIDFlex');
+        //const colIdflex = Ext.getCmp(prototype.id + '-colIDFlex');
         if (type === 'P') {
-            //fechap.setText('Payment<br>Date');
-            //fechap.setConfig('dataIndex', 'paydate');
             fechap.setText('Processing<br>Date');
             fechap.setConfig('dataIndex', 'prda');
             fechah.setText('Sale<br>Date');
             fechah.setConfig('dataIndex', 'sdate');
-            colIdflex.setText('FLEX ID');
+            //colIdflex.setText('FLEX ID');
         } else {
             fechap.setText('Sale<br>Date');
             fechap.setConfig('dataIndex', 'sdate');
-//            fechah.setText('Payment<br>Date');
-//            fechah.setConfig('dataIndex', 'paydate');
             fechah.setText('Processing<br>Date');
             fechah.setConfig('dataIndex', 'prda');
-            colIdflex.setText('PRAXIS ID');
+            //colIdflex.setText('PRAXIS ID');
         }
         this.view.getView().refresh();
     },
@@ -128,6 +124,25 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.DetailGridContr
         console.log(beanProMasterTicket);
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },
+    downloadExcel:function(){
+        const view = this.view;
+        let params = Object.assign({},view.searchParams);
+        params.excel = true;
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Download Excel?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            global.getFile(`${view.url}/downloadSummaryTreeDetail?${new URLSearchParams(params)}`);
+                        }
+                    }
+                });
     }
 });
 

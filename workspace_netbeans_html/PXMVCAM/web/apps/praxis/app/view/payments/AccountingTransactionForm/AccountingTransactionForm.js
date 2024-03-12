@@ -1,6 +1,6 @@
 prototype.id = 'AccountingTransactionForm';
 prototype.url = CONTEXTPATH + '/AccountingTransaction';
-prototype.width = 1600;
+prototype.width = 1800;
 
 Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.AccountingTransactionForm', {
     extend: 'Ext.form.Panel',

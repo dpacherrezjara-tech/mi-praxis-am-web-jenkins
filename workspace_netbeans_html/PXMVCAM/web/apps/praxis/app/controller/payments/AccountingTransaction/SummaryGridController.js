@@ -34,7 +34,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryGridCont
         const view = this.view;
 
         let params = me.formatMonthParameters(record.data);
-        console.log('Summary Tree Params: ',params);
+        console.log('Summary Tree Params: ', params);
 
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
         const drillDown = mainPanel.items.items;
@@ -57,8 +57,26 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryGridCont
             IN_MDA: obj.scurrency,
             IN_TDOC: viewParams.IN_TDOC,
             IN_PNR: viewParams.IN_PNR,
-            IN_IDCON: viewParams.IN_IDCON
+            IN_PRAXISID: viewParams.IN_PRAXISID,
+            IN_FLEXID: viewParams.IN_IDFLEX
         };
+    },
+    downloadExcel: function () {
+        const view = this.view;
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Download Excel?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            global.getFile(`${view.url}/downloadSummary?${new URLSearchParams(view.searchParams)}`);
+                        }
+                    }
+                });
     }
 });
 

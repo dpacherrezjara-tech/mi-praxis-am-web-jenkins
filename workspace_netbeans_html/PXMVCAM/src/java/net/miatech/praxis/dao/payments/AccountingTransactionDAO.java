@@ -3,6 +3,7 @@ package net.miatech.praxis.dao.payments;
 import java.util.List;
 import java.util.Map;
 import net.miatech.praxis.logic.payments.AccountingTransactionLogic;
+import net.miatech.praxis.payment.entities.A006;
 import net.miatech.praxis.payment.entities.A4451MP;
 import net.miatech.praxis.payment.filter.A4183Filter;
 import net.miatech.praxis.payment.filter.A4331AT1Filter;
@@ -91,5 +92,12 @@ public class AccountingTransactionDAO implements AccountingTransactionLogic{
         filter.setResponse((List<A4335Filter>) obj.get("result"));
         return filter;
     }
-
+    
+    @Override
+    public List<A006> getMonedas() throws Exception {
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05159",
+                new BeanPropertyRowMapper<>(A006.class));
+        List<A006> res = (List<A006>) obj.get("result");
+        return res;
+    }
 }
