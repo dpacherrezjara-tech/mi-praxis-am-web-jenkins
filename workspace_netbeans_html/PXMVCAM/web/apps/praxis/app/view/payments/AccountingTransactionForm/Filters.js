@@ -135,32 +135,49 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     listeners: {
                                         change: 'onClickSearchBtn'
                                     }
-                                }
-                            ]
-                        },
-                        {
-                            items: [
+                                },
+//                                {
+//                                    xtype: 'combobox',
+//                                    id: prototype.id + '-cmbMDA',
+//                                    fieldLabel: 'Currency',
+//                                    labelWidth: 80,
+//                                    width: 160,
+//                                    displayField: 'name',
+//                                    valueField: 'code',
+//                                    name: 'IN_MDA',
+//                                    store: Ext.create('Ext.data.Store', {
+//                                        data: [
+//                                            {code: '', name: 'All'},
+//                                            {code: 'MXN', name: 'MXN'},
+//                                            {code: 'USD', name: 'USD'},
+//                                            {code: 'CAD', name: 'CAD'},
+//                                            {code: 'ARS', name: 'ARS'},
+//                                            {code: 'CLP', name: 'CLP'},
+//                                            {code: 'JPY', name: 'JPY'}
+//                                        ]
+//                                    }),
+//                                    queryMode: 'local',
+//                                    value: ''
+//                                },
                                 {
-                                    xtype: 'combobox',
-                                    id: prototype.id + '-cmbMDA',
-                                    fieldLabel: 'Currency',
-                                    labelWidth: 80,
-                                    width: 160,
-                                    displayField: 'name',
-                                    valueField: 'code',
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbMoneda',
                                     name: 'IN_MDA',
-                                    store: Ext.create('Ext.data.Store', {
-                                        data: [
-                                            {code: '', name: 'All'},
-                                            {code: 'MXN', name: 'MXN'},
-                                            {code: 'USD', name: 'USD'},
-                                            {code: 'CAD', name: 'CAD'},
-                                            {code: 'ARS', name: 'ARS'},
-                                            {code: 'CLP', name: 'CLP'},
-                                            {code: 'JPY', name: 'JPY'}
-                                        ]
-                                    }),
                                     queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    fieldLabel: 'Currency',
+                                    labelWidth: 70,
+                                    labelAlign: 'right',
+                                    width: 140,
+                                    typeAhead: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
                                     value: ''
                                 },
                                 {
@@ -175,22 +192,41 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     labelWidth: 70,
                                     width: 170,
                                     enableKeyEvents: true,
-                                    listeners: {
-                                        keypress: 'filterPNR'
+                                    listeners:{
+                                        specialkey: 'onEnterKeyPress'
                                     }
-                                },
+                                }
+                            ]
+                        },
+                        {
+                            items: [
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-txtIDAC',
+                                    name: 'IN_PRAXISID',
                                     fieldStyle: 'text-align:center',
-                                    name: 'IN_IDCON',
-//                            enforceMaxLength: true,
-//                            maskRe: /[a-zA-Z]/,
-//                            maxLength: 6,
-                                    fieldLabel: 'ID Accounting',
+                                    fieldLabel: 'PRAXIS ID',
+                                    labelStyle:'font-weight:bold;text-align:right;',
                                     labelWidth: 100,
                                     width: 390,
-                                    enableKeyEvents: true
+                                    enableKeyEvents: true,
+                                    listeners:{
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                 {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtIDFLEX',
+                                    fieldStyle: 'text-align:center',
+                                    labelStyle:'font-weight:bold;text-align:right;',
+                                    name: 'IN_IDFLEX',
+                                    fieldLabel: 'FLEX ID',
+                                    labelWidth: 100,
+                                    width: 390,
+                                    enableKeyEvents: true,
+                                    listeners:{
+                                        specialkey: 'onEnterKeyPress'
+                                    }
                                 }
                             ]
                         }

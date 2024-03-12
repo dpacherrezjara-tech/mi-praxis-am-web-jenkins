@@ -15,7 +15,8 @@ public class SQP05036Filter {
     private String IN_MDA;
     private String IN_TDOC;
     private String IN_PNR;
-    private String IN_IDCON;
+    private String IN_FLEXID;
+    private String IN_PRAXISID;
     private List<A4331AT1Filter> response =  new ArrayList<>();
 
     public String getIN_TFECHA() {
@@ -82,11 +83,19 @@ public class SQP05036Filter {
         this.response = response;
     }
 
-    public String getIN_IDCON() {
-        return IN_IDCON;
+    public String getIN_FLEXID() {
+        return IN_FLEXID;
     }
 
-    public void setIN_IDCON(String IN_IDCON) {
-        this.IN_IDCON = IN_IDCON;
+    public void setIN_FLEXID(String IN_FLEXID) {
+        this.IN_FLEXID = IN_FLEXID;
+    }
+
+    public String getIN_PRAXISID() {
+        return IN_PRAXISID;
+    }
+
+    public void setIN_PRAXISID(String IN_PRAXISID) {
+        this.IN_PRAXISID = IN_PRAXISID;
     }
 }

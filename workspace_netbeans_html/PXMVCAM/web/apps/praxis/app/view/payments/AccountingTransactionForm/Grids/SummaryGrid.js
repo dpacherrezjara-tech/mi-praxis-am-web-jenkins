@@ -10,7 +10,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryGrid
     controller: 'ATSummaryGridController',
     title: 'Accounting Summary',
     titleAlign: 'center',
-    height: 610,
+    minHeight: 210,
+    maxHeight: 610,
     width: 1200,
     viewConfig: {
         stripeRows: true,
@@ -124,33 +125,13 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryGrid
         items: [
             {
                 xtype: 'button',
-                //id: prototype.id + '-btnExcel',
-                //text:'<strong>Excel</strong>',
                 iconCls: 'prx-icon-excel',
                 scale: 'small',
                 tooltip: 'Export to Excel',
                 listeners: {
-                    click: function (obj) {
-                        obj.up().up().downloadGrid();
-                    }
+                    click: 'downloadExcel'
                 }
-            },
-//            {
-//                text: '<strong style="color:white;">Back<strong>',
-//                id: prototype.id + '-detArch-btnBack',
-//                cls: 'x-btn-sent',
-//                width: 100,
-//                scale: 'small',
-//                overCls: 'x-btn-sent-over',
-//                listeners: {
-//                    click: function (btn) {
-//                        const panel = btn.up().up().up();
-//                        const views = panel.items.items;
-//                        views.at(-1).destroy();
-//                        views.at(-1).show();
-//                    }
-//                }
-//            }
+            }
         ]
     },
     bbar: {
