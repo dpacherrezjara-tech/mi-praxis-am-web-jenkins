@@ -702,13 +702,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.ARCRFNDAs
                 if (btn === 'yes') {
                     if (Ext.String.trim(rec.data.A4364CORRL) !== '') {
                         paramsGuardarTAX.IN_OPTION = "1";
-                        paramsGuardarTAX.A3652CIA = Ext.String.trim(rec.data.A3652CIA);
-                        paramsGuardarTAX.A3652FORMA = Ext.String.trim(rec.data.A3652FORMA);
-                        paramsGuardarTAX.A3652SERIE = Ext.String.trim(rec.data.A3652SERIE);
-                        paramsGuardarTAX.A3652SEQ = Ext.String.trim(rec.data.A3652SEQ);
-                        paramsGuardarTAX.A3652CORRL = Ext.String.trim(rec.data.A3652CORRL);
-                        paramsGuardarTAX.A3652PREME = Ext.String.trim(rec.data.A3652PREME);
-                        paramsGuardarTAX.A3652ANIO = Ext.String.trim(rec.data.A3652ANIO);
+                        paramsGuardarTAX.A4363CIA = Ext.String.trim(rec.data.A4364CIA);
+                        paramsGuardarTAX.A4363FORMA = Ext.String.trim(rec.data.A4364FORMA);
+                        paramsGuardarTAX.A4363SERIE = Ext.String.trim(rec.data.A4364SERIE);
+                        paramsGuardarTAX.A4363SEQ = Ext.String.trim(rec.data.A4364SEQ);
+                        paramsGuardarTAX.A4363CORRL = Ext.String.trim(rec.data.A4364CORRL);
+                        paramsGuardarTAX.A4363PREME = Ext.String.trim(rec.data.A4364PREME);
+                        paramsGuardarTAX.A4363ANIO = Ext.String.trim(rec.data.A4364ANIO);
 
                         var mask = new Ext.LoadMask(Ext.getCmp(prototype.idARCDetailTicket + '-form'), {
                             msg: 'Please Wait....'
