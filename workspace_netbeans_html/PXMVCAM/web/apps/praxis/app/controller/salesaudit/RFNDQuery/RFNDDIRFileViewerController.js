@@ -81,12 +81,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDDIRFileViewerControll
 
                 var dataRoot = {text: me.beanTMP.IN_DOCUMENT, filename: '', expanded: true, flag: false, children: []};
 
-                Ext.Object.each(res.map.files.myArrayList, function (index, value) {
-                    var vd = value.map.url.split('/');
+                Ext.Object.each(res.data, function (index, value) {
+                    var vd = value.url.split('/');
                     dataRoot.children.push({
                         leaf: true,
-                        text: vd[5], //value.map.url,
-                        filename: value.map.url,
+                        text: vd[0], //value.map.url,
+                        filename: value.url,
                         flag: true
                     });
                 });

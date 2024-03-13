@@ -57,6 +57,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
 
 /**
  *
@@ -509,12 +510,13 @@ public class DisputeGestionBsplinkController extends BaseController {
     }
 
     @RequestMapping(value = "GetFilesDirectory")
-    public @ResponseBody
-    String GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+    public ResponseEntity<?>//@ResponseBody String 
+        GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        Object res;
+        ResponseEntity res;
         try {
             String v1_urlREST = "/api/util/s3_download_files_visor";
+            String sesion=serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             String urlREST = "";
             if (request.getParameter("IN_TIPO").trim().equals("USRBSP")) {
                 urlREST = "DISPUTAS/ROBOT" + "/" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
@@ -527,13 +529,13 @@ public class DisputeGestionBsplinkController extends BaseController {
             bodyData.put("type", "VISOR");
             bodyData.put("remote_path", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData,sesion);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
             throw new SpringException(e);
         }
 
-        return new Gson().toJson(res);
+          return res;
     }
 
     /*@RequestMapping(value = "GetFilesDirectory")

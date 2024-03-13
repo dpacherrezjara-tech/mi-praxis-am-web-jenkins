@@ -49,6 +49,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -680,26 +681,26 @@ public class BwrQueryRefundController extends BaseController {
     }
 
     @RequestMapping(value = "GetFilesDirectory")
-    public @ResponseBody
-    String GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+    public ResponseEntity<?>//@ResponseBody String
+         GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        Object res;
+        ResponseEntity res;
         try {
             String v1_urlREST = "/api/util/s3_download_files_visor";
             String urlREST = "BsplinkRFND/ROBOT/" + "" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
-
+            String sesion = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             HashMap bodyData = new HashMap<>();
             bodyData.put("client", "am");
             bodyData.put("type", "VISOR");
             bodyData.put("remote_path", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData, sesion);
             //("success", true);
         } catch (Exception e) {
-          throw new SpringException(e);
+            throw new SpringException(e);
         }
 
-        return new Gson().toJson(res);
+        return res;
     }
 
     /*
@@ -791,20 +792,21 @@ public class BwrQueryRefundController extends BaseController {
     }
 
     @RequestMapping(value = "SearchRFNDPDI")
-    public @ResponseBody
-    String SearchRFNDPDI(Object map, HttpServletRequest request) throws Exception {
+    public ResponseEntity<?>//@ResponseBody String 
+        SearchRFNDPDI(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        Object res;
+        ResponseEntity res;
         A3389Filter filter = new A3389Filter();
-        
+
         //IN_DOCUMENT = "2887320996";
         try {
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             String IN_DOCUMENT = filter.IN_DOCUMET;
-            
+
             String v1_urlREST = "/api/util/s3_download_files_visor";
+            String sesion = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             System.out.println(v1_urlREST);
-            String urlREST = "BsplinkRFND/PDI/" +("IN_DOCUMENT").trim();
+            String urlREST = "BsplinkRFND/PDI/" + ("IN_DOCUMENT").trim();
             System.out.println(urlREST);
 
             HashMap bodyData = new HashMap<>();
@@ -813,15 +815,15 @@ public class BwrQueryRefundController extends BaseController {
             bodyData.put("remote_path", urlREST);
             System.out.println(bodyData);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData, sesion);
             //("success", true);
         } catch (Exception e) {
-          throw new SpringException(e);
+            throw new SpringException(e);
         }
 
-        return new Gson().toJson(res);
+         return res;
     }
-    
+
     //    @RequestMapping(value = "SearchRFNDPDI")
 //    public @ResponseBody
 //    String SearchRFNDPDI(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
@@ -869,8 +871,6 @@ public class BwrQueryRefundController extends BaseController {
 //
 //        return new Gson().toJson(map);
 //    }
-    
-
     @RequestMapping(value = "ProcesaMantenimiento")
     public @ResponseBody
     String ProcesaMantenimiento(ModelMap map, HttpServletRequest request) {

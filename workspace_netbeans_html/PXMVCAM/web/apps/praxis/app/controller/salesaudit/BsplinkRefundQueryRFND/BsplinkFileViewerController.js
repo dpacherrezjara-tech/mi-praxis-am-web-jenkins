@@ -65,20 +65,22 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkFileV
             success: function (response, options) {
                 Ext.getCmp(prototype.id05 + '-win').unmask();
                 var res = Ext.JSON.decode(response.responseText);
+                //console.log(res);
                 //me.beanDataima.removeAll();
-                me.beanDataima = res;
+                me.beanDataima = res.data;
+                
                 //console.log(res.map.files.myArrayList);
                 //var data = Ext.JSON.decode(res.data);
                 //console.log(data);
 
                 var dataRoot = {text: me.beanTMP.IN_DOCUMENT, filename: '', expanded: true, flag: false, children: []};
-
-                Ext.Object.each(res.map.files.myArrayList, function (index, value) {
-                  var vd = value.map.url.split('/');
+                //Ext.Object.each(res.map.files.myArrayList, function (index, value) {
+                Ext.Object.each(res.data, function (index, value) {
+                  var vd = value.url.split('/');
                     dataRoot.children.push({
                         leaf: true,
-                        text: vd[5],//value.map.url,
-                        filename: value.map.url,
+                        text: vd[0],//value.map.url,
+                        filename: value.url,
                         flag: true
                     });
                 });
