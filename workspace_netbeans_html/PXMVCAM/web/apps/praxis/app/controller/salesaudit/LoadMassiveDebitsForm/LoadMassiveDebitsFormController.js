@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.LoadMassiveDebitsForm.LoadMassiveDe
                 
                 {"code": "G", "name": "CODE AEROPUERTO DOES NOT EXIST"},
                 {"code": "H", "name": "CODE TAX DOES NOT EXIST"},
-                {"code": "F", "name": "Incorrect area code"},
+                {"code": "F", "name": "INCORRECT AREA CODE"}
 
             ]
         }));
@@ -196,6 +196,18 @@ Ext.define('Ext.Praxis.controller.salesaudit.LoadMassiveDebitsForm.LoadMassiveDe
             case 'M':
                 color = '#CD5C5C';
                 value = 'currency error';
+                break;
+            case 'G':
+                color = '#CD5C5C';
+                value = 'Code aeropuerto does not exist';
+                break;
+            case 'H':
+                color = '#CD5C5C';
+                value = 'Code tax does not exist';
+                break;
+            case 'F':
+                color = '#CD5C5C';
+                value = 'Incorrect area code';
                 break;
 
         }
