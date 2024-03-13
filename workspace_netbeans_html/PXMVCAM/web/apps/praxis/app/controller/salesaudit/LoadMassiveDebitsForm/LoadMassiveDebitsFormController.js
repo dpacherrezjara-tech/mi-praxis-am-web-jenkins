@@ -82,7 +82,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.LoadMassiveDebitsForm.LoadMassiveDe
                 {"code": "C", "name": "UNGREGISTERED CLIENT"},
                 {"code": "E", "name": "REPEATED TICKET"},
                 {"code": "R", "name": "WITH ACM"},
-                {"code": "V", "name": "VOID"}
+                {"code": "V", "name": "VOID"},
+                
+                {"code": "G", "name": "CODE AEROPUERTO DOES NOT EXIST"},
+                {"code": "H", "name": "CODE TAX DOES NOT EXIST"},
+                {"code": "F", "name": "Incorrect area code"},
 
             ]
         }));
