@@ -82,6 +82,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const cmbMdasbBT = Ext.getCmp(prototype.id + '-cmbMonedabBT');
             me.setComboStore({cmp: cmbMdasbBT, data: monedas,
                 valueField: 'code', displayField: 'name', value: ''});
+            
+            const cmbMdasbBP = Ext.getCmp(prototype.id + '-cmbMonedaBP');
+            me.setComboStore({cmp: cmbMdasbBP, data: monedas,
+                valueField: 'code', displayField: 'name', value: ''});
+            
+            const cmbMdasfBP = Ext.getCmp(prototype.id + '-cmbMonedafBP');
+            me.setComboStore({cmp: cmbMdasfBP, data: monedas,
+                valueField: 'code', displayField: 'name', value: ''});
 
             const cmbMdasbST = Ext.getCmp(prototype.id + '-cmbMonedabST');
             me.setComboStore({cmp: cmbMdasbST, data: monedas,

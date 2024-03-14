@@ -5,7 +5,7 @@ package net.miatech.praxis.payment.filter;
  * @author Dvicente
  */
 public class A4331STFilter{
-    private String DESC_PROCTYPE,PAYDATE,PRDA,PCURRENCY,PROCTYPE,PROCTYPESQ,SCOUNTRY,PMERCHID;
+    private String DESC_PROCTYPE,PAYDATE,PRDA,PCURRENCY,SCURRENCY,PROCTYPE,PROCTYPESQ,SCOUNTRY,PMERCHID;
     private Double TGROSAMOUN,ACCEAMOU,
             NETAMOUN,TGROSAMPAY,SFEEAMOU,IVACOM12,SERVICFEEP,OVERCOM12P,ADJUSMENTP,
             TGROSAMPAY_CB,SFEEAMOU_CB,IVACOM12_CB,
@@ -42,6 +42,14 @@ public class A4331STFilter{
 
     public void setPCURRENCY(String PCURRENCY) {
         this.PCURRENCY = PCURRENCY;
+    }
+
+    public String getSCURRENCY() {
+        return SCURRENCY;
+    }
+
+    public void setSCURRENCY(String SCURRENCY) {
+        this.SCURRENCY = SCURRENCY;
     }
 
     public String getPROCTYPE() {

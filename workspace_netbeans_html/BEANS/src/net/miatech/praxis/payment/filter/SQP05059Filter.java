@@ -21,7 +21,8 @@ public class SQP05059Filter {
             IN_FVOID,
             IN_STVAL,
             IN_CERROR,
-            IN_CODADJU;
+            IN_CODADJU,
+            IN_SCURRENCY;
 
     private List<A4331SRFilter> response = new ArrayList<>();
 
@@ -137,5 +138,11 @@ public class SQP05059Filter {
         this.response = response;
     }
 
-    
+    public String getIN_SCURRENCY() {
+        return IN_SCURRENCY;
+    }
+
+    public void setIN_SCURRENCY(String IN_SCURRENCY) {
+        this.IN_SCURRENCY = IN_SCURRENCY;
+    }
 }

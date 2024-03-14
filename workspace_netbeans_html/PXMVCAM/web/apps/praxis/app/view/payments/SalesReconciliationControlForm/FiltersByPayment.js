@@ -167,6 +167,27 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     value: ''
                                 },
                                 {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbMonedaBP',
+                                    name: 'IN_SCURRENCY',
+                                    queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    fieldLabel: 'Currency',
+                                    labelWidth: 70,
+                                    labelAlign: 'right',
+                                    width: 140,
+                                    typeAhead: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: ''
+                                },
+                                {
                                     xtype: 'combobox',
                                     fieldLabel: 'Doc. Type',
                                     name: 'IN_TRANSTYPE',
@@ -199,17 +220,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     listeners: {
                                         change: function (checkbox, newValue) {}
                                     }
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    fieldLabel: 'Merchant',
-                                    labelWidth: 70,
-                                    width: 185,
-                                    name: 'IN_SMERCHID',
-                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
-                                    maxLength: 15, // Límite máximo de caracteres
-                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
-                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
                                 }
                             ]
                         }
@@ -279,6 +289,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Merchant',
+                                    labelWidth: 70,
+                                    width: 185,
+                                    name: 'IN_SMERCHID',
+                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
+                                    maxLength: 15, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
                                 }
                             ]
                         }
@@ -400,6 +421,27 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     labelWidth: 65,
                                     labelAlign: 'right',
                                     width: 230,
+                                    typeAhead: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbMonedafBP',
+                                    name: 'IN_SCURRENCY',
+                                    queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    fieldLabel: 'Currency',
+                                    labelWidth: 70,
+                                    labelAlign: 'right',
+                                    width: 140,
                                     typeAhead: true,
                                     valueField: 'code',
                                     displayField: 'name',
