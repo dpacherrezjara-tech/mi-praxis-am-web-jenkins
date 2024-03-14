@@ -62,7 +62,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 }
             },
             {
-                text: 'Currency', dataIndex: 'pcurrency', width: 70,
+                text: 'Currency', dataIndex: 'scurrency', width: 70,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     return value;
                 }
