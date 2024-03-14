@@ -4031,6 +4031,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
 	win.setValue('lblRelatedTickets2SEQ', '00');
 	win.setValue('lblRelatedTickets3SEQ', '00');
 	win.setValue('lblRelatedTickets4SEQ', '00');
+        win.setValue('lblCompensatedTicket', '');
+        win.setValue('lblCompensatedTicket2', '');
         
         win.enabled('btnTicket', false);
         win.enabled('btnAccounting', false);
