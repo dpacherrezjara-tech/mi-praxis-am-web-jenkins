@@ -1281,6 +1281,27 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                     value: '',
                                     readOnly: true,
                                     fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-lblCompensatedTicket2',
+                                    value: '',
+                                    readOnly: true,
+                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-lblCompensatedTicket3',
+                                    value: '',
+                                    readOnly: true,
+                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-lblCompensatedTicket4',
+                                    value: '',
+                                    readOnly: true,
+                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;'
                                 }
                             ]
                         }

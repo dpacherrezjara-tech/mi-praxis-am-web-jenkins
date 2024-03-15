@@ -1386,6 +1386,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         Ext.getCmp(prototype.id+'-info-panel').el.setStyle({backgroundImage: ''});
                         console.log('END CLEAN VOID');
                         win.setValue('lblCompensatedTicket', me01.beanResultSet01.fileA720.COMPTKT);
+                        win.setValue('lblCompensatedTicket2', me01.beanResultSet01.fileA720.COMPTKT2);
+                        win.setValue('lblCompensatedTicket3', me01.beanResultSet01.fileA720.COMPTKT3);
+                        win.setValue('lblCompensatedTicket4', me01.beanResultSet01.fileA720.COMPTKT4);
                         win.setValue('lblDocumentTypeCod', me01.beanResultSet01.fileA720.A720VRIC);
                         win.setValue('lblDocumentTypeCon', me01.beanResultSet01.fileA720.EMDCONCEP);
                         if(me01.gloA720TKVOID === 'V'){
@@ -4289,6 +4292,10 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
 	win.setValue('lblRelatedTickets2SEQ', '00');
 	win.setValue('lblRelatedTickets3SEQ', '00');
 	win.setValue('lblRelatedTickets4SEQ', '00');
+        win.setValue('lblCompensatedTicket', '');
+        win.setValue('lblCompensatedTicket2', '');
+        win.setValue('lblCompensatedTicket3', '');
+        win.setValue('lblCompensatedTicket4', '');
         
         win.enabled('btnTicket', false);
         win.enabled('btnAccounting', false);

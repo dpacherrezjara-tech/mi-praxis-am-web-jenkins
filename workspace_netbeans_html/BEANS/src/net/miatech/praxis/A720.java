@@ -674,4 +674,8 @@ public class A720 {
     
     public String EMDCONCEP ="";
     public String COMPTKT ="";
+    public String COMPTKT2 ="";
+    public String COMPTKT3 ="";
+    public String COMPTKT4 ="";
+    
 }
