@@ -1,5 +1,6 @@
 package net.miatech.praxis.dao.payments;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
@@ -65,6 +66,7 @@ import net.miatech.praxis.payment.filter.SQP05247Filter;
 import net.miatech.praxis.payment.filter.SQP05259Filter;
 import net.miatech.praxis.payment.filter.SQP05260Filter;
 import net.miatech.praxis.payment.filter.SQP05261Filter;
+import net.miatech.praxis.payment.filter.SQP05276Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +123,32 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         filter.setLst((List<A4451MP>) obj.get("result"));
         return filter;
     }
+
+    @Override
+    public SQP05276Filter loadSQP05276Filter(SQP05276Filter filter) throws Exception {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        List<BeanPropertyRowMapper> mappers = new ArrayList<>();
+        //Son 4 resultset diferentes, pero de la misma clase
+        mappers.add(new BeanPropertyRowMapper(A4451MP.class));
+        mappers.add(new BeanPropertyRowMapper(A4451MP.class));
+        mappers.add(new BeanPropertyRowMapper(A4451MP.class));
+        mappers.add(new BeanPropertyRowMapper(A4451MP.class));
+        mappers.add(new BeanPropertyRowMapper(A3152.class));
+        mappers.add(new BeanPropertyRowMapper(A006.class));
+        mappers.add(new BeanPropertyRowMapper(A4451MP.class));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05276",
+                params, mappers);
+        filter.setCERROR((List<A4451MP>) obj.get("result0"));
+        filter.setCODADJU((List<A4451MP>) obj.get("result1"));
+        filter.setPROCESADORES((List<A4451MP>) obj.get("result2"));
+        filter.setCREDITCARDS((List<A4451MP>) obj.get("result3"));
+        filter.setPAISES((List<A3152>) obj.get("result4"));
+        filter.setMONEDAS((List<A006>) obj.get("result5"));
+        filter.setADMINS((List<A4451MP>) obj.get("result6"));
+        return filter;
+    }
+    
+    
 
     @Override
     public SQP05060Filter getSQP05060Filter(SQP05060Filter filter) throws Exception {

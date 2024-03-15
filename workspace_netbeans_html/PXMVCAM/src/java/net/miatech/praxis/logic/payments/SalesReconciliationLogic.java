@@ -46,6 +46,7 @@ import net.miatech.praxis.payment.filter.SQP05219Filter;
 import net.miatech.praxis.payment.filter.SQP05247Filter;
 import net.miatech.praxis.payment.filter.SQP05259Filter;
 import net.miatech.praxis.payment.filter.SQP05261Filter;
+import net.miatech.praxis.payment.filter.SQP05276Filter;
 
 /**
  *
@@ -60,6 +61,8 @@ public interface SalesReconciliationLogic {
     List<A006> getMonedas() throws Exception;
 
     SQP05004Filter getSQP05004Filter(SQP05004Filter filter) throws Exception;
+    //Constantes Medios de Pago
+    SQP05276Filter loadSQP05276Filter(SQP05276Filter filter) throws Exception;
 
     SQP05060Filter getSQP05060Filter(SQP05060Filter filter) throws Exception;
 
