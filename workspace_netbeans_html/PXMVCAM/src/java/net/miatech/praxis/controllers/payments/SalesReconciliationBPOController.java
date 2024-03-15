@@ -53,6 +53,7 @@ import net.miatech.praxis.payment.filter.SQP05219Filter;
 import net.miatech.praxis.payment.filter.SQP05247Filter;
 import net.miatech.praxis.payment.filter.SQP05259Filter;
 import net.miatech.praxis.payment.filter.SQP05261Filter;
+import net.miatech.praxis.payment.filter.SQP05276Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.Functions;
@@ -95,20 +96,14 @@ public class SalesReconciliationBPOController {
     public ResponseEntity<?> loadFilters(ModelMap model) {
         try {
             System.out.println("---------------SalesReconciliationBPO:loadFilters-------------");
-            model.put("paises", logic.getPaises());
-            model.put("monedas", logic.getMonedas());
-            SQP05004Filter filter = new SQP05004Filter();
-            filter.setKEY1("CC");
-            model.put("creditcards", logic.getSQP05004Filter(filter).getLst());
-            filter.setKEY1("PK");
-            filter.setKEY2("PROCTYPE");
-            model.put("procesadores", logic.getSQP05004Filter(filter).getLst());
-            filter.setKEY2("86");
-            model.put("cerror", logic.getSQP05004Filter(filter).getLst());
-            filter.setKEY2("89");
-            model.put("codadju", logic.getSQP05004Filter(filter).getLst());
-            filter.setKEY2("ADMIN");
-            model.put("admins", logic.getSQP05004Filter(filter).getLst());
+            SQP05276Filter webFilters = logic.loadSQP05276Filter(new SQP05276Filter("1"));
+            model.put("creditcards", webFilters.getCREDITCARDS());
+            model.put("procesadores", webFilters.getPROCESADORES());
+            model.put("cerror", webFilters.getCERROR());
+            model.put("codadju", webFilters.getCODADJU());
+            model.put("paises", webFilters.getPAISES());
+            model.put("monedas", webFilters.getMONEDAS());
+            model.put("admins", webFilters.getADMINS());
             System.out.println("Total: " + model.size());
             return new ResponseEntity<>(model, HttpStatus.OK);
         } catch (Exception e) {
@@ -375,7 +370,7 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @RequestMapping(value = "loadMSITrackingManualInfo")
     public ResponseEntity<?> loadMSITrackingManualInfo(@ModelAttribute SQP05259Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : loadMSITrackingManualInfo-------------");
@@ -388,7 +383,7 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @RequestMapping(value = "maintenanceConcilTransacMan", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> maintenanceMSITracking(@RequestBody SQP05261Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : maintenanceConcilTransacMan-------------");
@@ -1041,7 +1036,7 @@ public class SalesReconciliationBPOController {
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();
             String title = "";
-            
+
             if (filter.getIN_ORIG().equals("P")) {
                 //headers
                 Object[] headers = new Object[16];
@@ -1121,9 +1116,9 @@ public class SalesReconciliationBPOController {
                     row[11] = obj.getA4496PNR();
                     row[12] = obj.getDESC_TARJ();
                     row[13] = obj.getTICKET();
-                    row[14] = obj.getBPO_COMEN().trim().isEmpty()?
-                            obj.getBPO_COMEN2():
-                            obj.getBPO_COMEN();
+                    row[14] = obj.getBPO_COMEN().trim().isEmpty()
+                            ? obj.getBPO_COMEN2()
+                            : obj.getBPO_COMEN();
                     row[15] = obj.getADM_COMEN();
                     data.add(row);
                 }

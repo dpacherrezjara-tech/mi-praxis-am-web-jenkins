@@ -29,15 +29,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             //<editor-fold defaultstate="collapsed" desc="Combos">
             const cmbProcesadores = Ext.getCmp(prototype.id + '-cmbProctype');
             me.setComboStore({cmp: cmbProcesadores, data: procesadores,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
 
             const cmbProcesadoresf = Ext.getCmp(prototype.id + '-cmbProctypef');
             me.setComboStore({cmp: cmbProcesadoresf, data: procesadores,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
 
             const cmbProctypeSettl = Ext.getCmp(prototype.id + '-cmbProctypeSettl');
             me.setComboStore({cmp: cmbProctypeSettl, data: procesadores,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
 
             const cmbPaises = Ext.getCmp(prototype.id + '-cmbPaisesBP');
             me.setComboStore({cmp: cmbPaises, data: data.paises,

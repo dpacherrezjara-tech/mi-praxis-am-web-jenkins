@@ -9,7 +9,8 @@ import java.util.List;
  */
 public class SQP05133Filter {
     private String IN_CCUST,IN_DATEFROM,IN_DATETO,IN_DATE,IN_MERCHANT,
-            IN_STVAL,IN_PNR,IN_TRANSTYPE,IN_PROCTYPE,IN_SCOUNTRY,IN_SCURRENCY,IN_SCARDN,IN_SAUTHOC,
+            IN_STVAL,IN_PNR,IN_TRANSTYPE,IN_PROCTYPE,IN_PROCTYPESQ,IN_SCOUNTRY,IN_SCURRENCY,IN_PCURRENCY,
+            IN_SCARDN,IN_SAUTHOC,
             IN_PMERCHID;
     private List<A4331STFilter> response = new ArrayList<>();
 
@@ -85,6 +86,14 @@ public class SQP05133Filter {
         this.IN_PROCTYPE = IN_PROCTYPE;
     }
 
+    public String getIN_PROCTYPESQ() {
+        return IN_PROCTYPESQ;
+    }
+
+    public void setIN_PROCTYPESQ(String IN_PROCTYPESQ) {
+        this.IN_PROCTYPESQ = IN_PROCTYPESQ;
+    }
+
     public String getIN_SCOUNTRY() {
         return IN_SCOUNTRY;
     }
@@ -99,6 +108,14 @@ public class SQP05133Filter {
 
     public void setIN_SCURRENCY(String IN_SCURRENCY) {
         this.IN_SCURRENCY = IN_SCURRENCY;
+    }
+
+    public String getIN_PCURRENCY() {
+        return IN_PCURRENCY;
+    }
+
+    public void setIN_PCURRENCY(String IN_PCURRENCY) {
+        this.IN_PCURRENCY = IN_PCURRENCY;
     }
 
     public String getIN_SCARDN() {
