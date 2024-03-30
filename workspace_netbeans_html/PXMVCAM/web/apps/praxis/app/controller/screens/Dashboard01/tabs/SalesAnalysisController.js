@@ -463,10 +463,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             url: prototype.url + '/searchTest',
             method: 'POST',
             timeout: 60000000,
-//            beforerequest: Ext.getBody().mask('Loading...'),
+            beforerequest: Ext.getBody().mask('Loading...'),
             params: {beanString: searchParams, dw_excel: false},
             success: function (response, options) {
-//                Ext.getBody().unmask('Loading...');
+                Ext.getBody().unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
                 if (res.lstData.length === 0) {
@@ -505,6 +505,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 }
 
 
+            },
+            failure: function (response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+                Ext.getBody().unmask('Loading...');
             }
         });
 
@@ -1548,6 +1552,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             bean: me.bean
         };
         console.log(searchParams);
+        console.log('RETRO1');
 
         this.loadFORE();
 
@@ -1568,6 +1573,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             bean: me.bean
         };
         console.log(searchParams);
+        console.log('RETRO2');
 
         this.loadFORE();
 
@@ -1588,6 +1594,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             bean: me.bean
         };
         console.log(searchParams);
+        console.log('POST1');
 
         this.loadFORE();
 
@@ -1606,6 +1613,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             bean: me.bean
         };
         console.log(searchParams);
+        console.log('POST2');
 
         this.loadFORE();
 
