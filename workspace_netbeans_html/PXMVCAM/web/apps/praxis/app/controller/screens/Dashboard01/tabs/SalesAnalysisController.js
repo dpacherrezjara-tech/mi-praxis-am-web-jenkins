@@ -463,10 +463,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             url: prototype.url + '/searchTest',
             method: 'POST',
             timeout: 60000000,
-//            beforerequest: Ext.getBody().mask('Loading...'),
+            beforerequest: Ext.getBody().mask('Loading...'),
             params: {beanString: searchParams, dw_excel: false},
             success: function (response, options) {
-//                Ext.getBody().unmask('Loading...');
+                Ext.getBody().unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
                 if (res.lstData.length === 0) {
@@ -505,6 +505,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 }
 
 
+            },
+            failure: function (response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+                Ext.getBody().unmask('Loading...');
             }
         });
 
@@ -1537,7 +1541,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     RETRO1: function () {
 
         Ext.getCmp(prototype.id + '-previous_FORE1').show();
+        Ext.getCmp(prototype.id + '-previous_FORE2').hide();
         Ext.getCmp(prototype.id + '-next_FORE1').show();
+        Ext.getCmp(prototype.id + '-next_FORE2').hide();
         console.log('MUESTRA PAGINA 1');
         this.PAGESS = 'PAG1';
         me.bean = {};
@@ -1555,9 +1561,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     RETRO2: function () {
 
         Ext.getCmp(prototype.id + '-previous_FORE1').show();
-        Ext.getCmp(prototype.id + '-next_FORE1').show();
+        Ext.getCmp(prototype.id + '-next_FORE1').hide();
         Ext.getCmp(prototype.id + '-previous_FORE2').hide();
-        Ext.getCmp(prototype.id + '-next_FORE2').hide();
+        Ext.getCmp(prototype.id + '-next_FORE2').show();
         console.log('MUESTRA PAGINA 2');
         this.PAGESS = 'PAG2';
         me.bean = {};
@@ -1573,10 +1579,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 
     },
     POST1: function () {
-
-        Ext.getCmp(prototype.id + '-previous_FORE1').hide();
+        
+        Ext.getCmp(prototype.id + '-previous_FORE1').show();
         Ext.getCmp(prototype.id + '-next_FORE1').hide();
-        Ext.getCmp(prototype.id + '-previous_FORE2').show();
+        Ext.getCmp(prototype.id + '-previous_FORE2').hide();
         Ext.getCmp(prototype.id + '-next_FORE2').show();
         console.log('MUESTRA PAGINA 2');
         this.PAGESS = 'PAG2';
@@ -1588,7 +1594,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             bean: me.bean
         };
         console.log(searchParams);
-
+        
         this.loadFORE();
 
     },
@@ -1596,6 +1602,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 
         Ext.getCmp(prototype.id + '-previous_FORE2').show();
         Ext.getCmp(prototype.id + '-next_FORE2').show();
+        Ext.getCmp(prototype.id + '-next_FORE1').hide();
+        Ext.getCmp(prototype.id + '-previous_FORE1').hide();
         console.log('MUESTRA PAGINA 3');
         this.PAGESS = 'PAG3';
         me.bean = {};
