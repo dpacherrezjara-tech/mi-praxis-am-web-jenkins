@@ -69,8 +69,8 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousCatalogForm.DataEntrys.Mainten
                             name: 'a4451key3',
                             fieldLabel: 'Key 3',
                             labelWidth: 60,
-                            width: 150,
-                            maxLength: 10,
+                            width: 170,
+                            maxLength: 15,
                             allowBlank: false,
                             enforceMaxLength: true
                         },

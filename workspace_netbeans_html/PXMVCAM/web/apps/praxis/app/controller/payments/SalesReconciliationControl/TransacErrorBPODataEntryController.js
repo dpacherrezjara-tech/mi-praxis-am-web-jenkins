@@ -476,7 +476,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             params.IN_SCARDN = `${params.creditcard.at(0)}%${params.creditcard.at(1)}%`;
         }
         console.log(params);
-        if (!params.hasOwnProperty("IN_SCARDN") && params.IN_TICKET === '') {
+        if (!params.hasOwnProperty("IN_SCARDN") && (params.IN_TICKET === '' && params.IN_SPNR === '')) {
             global.Msg({msg: 'Invalid Parameters'});
             scannerPanel.unmask();
             return;
@@ -845,15 +845,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         let params = {
             IN_CCUST: obj.ccust,
             IN_SCARDN: scardn,
-            IN_SAUTHOC: obj.sauthoc,
             IN_DATE: fecha,
             IN_DATE_F: inicio,
             IN_DATE_T: fin,
             IN_SMERCHID: obj.smerchid,
             IN_SPNR: obj.spnr,
-            IN_FCOMPL: obj.fcompl,
             IN_TDOC: obj.tdoc,
-            IN_TRANSTYPE: obj.transtype
+            IN_TRANSTYPE: obj.transtype,
+            IN_PROCTYPE: obj.proctype,
+            IN_PROCTYPESQ: obj.proctypesq,
+            IN_TICKET: obj.ticket
         };
         return params;
     },

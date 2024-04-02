@@ -32,8 +32,8 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousCatalogForm.Grids.MainGrid', {
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Cols">
             {text: 'Key 1', dataIndex: 'a4451key1', width: 50},
-            {text: 'Key 2', dataIndex: 'a4451key2', width: 100},
-            {text: 'Key 3', dataIndex: 'a4451key3', width: 100},
+            {text: 'Key 2', dataIndex: 'a4451key2', width: 110},
+            {text: 'Key 3', dataIndex: 'a4451key3', width: 140},
             {text: 'Description 1', dataIndex: 'a4451desc1', width: 300},
             {text: 'Description 2', dataIndex: 'a4451desc2', width: 200},
             {text: 'Cant 1', dataIndex: 'a4451cant1', width: 80},

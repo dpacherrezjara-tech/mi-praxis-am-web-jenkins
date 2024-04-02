@@ -8,9 +8,9 @@ import java.util.List;
  * @author Dvicente
  */
 public class SQP05054Filter {
-    private String IN_CCUST,IN_SCARDN,IN_SAUTHOC,
-            IN_DATE,IN_DATE_F,IN_DATE_T,IN_SMERCHID,
-            IN_SPNR,IN_FCOMPL,IN_TDOC,IN_TRANSTYPE;
+    private String IN_CCUST,IN_SCARDN,IN_DATE,IN_DATE_F,IN_DATE_T,
+            IN_PROCTYPE,IN_PROCTYPESQ,IN_SMERCHID,
+            IN_SPNR,IN_TICKET,IN_TDOC,IN_TRANSTYPE;
     
     private List<ScannerFilter> response = new ArrayList<>();
 
@@ -28,14 +28,6 @@ public class SQP05054Filter {
 
     public void setIN_SCARDN(String IN_SCARDN) {
         this.IN_SCARDN = IN_SCARDN;
-    }
-
-    public String getIN_SAUTHOC() {
-        return IN_SAUTHOC;
-    }
-
-    public void setIN_SAUTHOC(String IN_SAUTHOC) {
-        this.IN_SAUTHOC = IN_SAUTHOC;
     }
 
     public String getIN_DATE() {
@@ -62,6 +54,22 @@ public class SQP05054Filter {
         this.IN_DATE_T = IN_DATE_T;
     }
 
+    public String getIN_PROCTYPE() {
+        return IN_PROCTYPE;
+    }
+
+    public void setIN_PROCTYPE(String IN_PROCTYPE) {
+        this.IN_PROCTYPE = IN_PROCTYPE;
+    }
+
+    public String getIN_PROCTYPESQ() {
+        return IN_PROCTYPESQ;
+    }
+
+    public void setIN_PROCTYPESQ(String IN_PROCTYPESQ) {
+        this.IN_PROCTYPESQ = IN_PROCTYPESQ;
+    }
+
     public String getIN_SMERCHID() {
         return IN_SMERCHID;
     }
@@ -78,12 +86,12 @@ public class SQP05054Filter {
         this.IN_SPNR = IN_SPNR;
     }
 
-    public String getIN_FCOMPL() {
-        return IN_FCOMPL;
+    public String getIN_TICKET() {
+        return IN_TICKET;
     }
 
-    public void setIN_FCOMPL(String IN_FCOMPL) {
-        this.IN_FCOMPL = IN_FCOMPL;
+    public void setIN_TICKET(String IN_TICKET) {
+        this.IN_TICKET = IN_TICKET;
     }
 
     public String getIN_TDOC() {
@@ -109,6 +117,5 @@ public class SQP05054Filter {
     public void setResponse(List<ScannerFilter> response) {
         this.response = response;
     }
-    
-    
+
 }
