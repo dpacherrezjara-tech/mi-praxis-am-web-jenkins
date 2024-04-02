@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousCatalogForm.Filters', {
                                     xtype: 'textfield',
                                     fieldLabel: 'KEY 2',
                                     labelWidth: 50,
-                                    width: 120,
+                                    width: 180,
                                     name: 'IN_A4451KEY2',
                                     maxLength: 10, // Límite máximo de caracteres
                                     enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
@@ -76,9 +76,9 @@ Ext.define('Ext.Praxis.view.payments.MiscellaneousCatalogForm.Filters', {
                                     xtype: 'textfield',
                                     fieldLabel: 'KEY 3',
                                     labelWidth: 50,
-                                    width: 120,
+                                    width: 200,
                                     name: 'IN_A4451KEY3',
-                                    maxLength: 10, // Límite máximo de caracteres
+                                    maxLength: 15, // Límite máximo de caracteres
                                     enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
