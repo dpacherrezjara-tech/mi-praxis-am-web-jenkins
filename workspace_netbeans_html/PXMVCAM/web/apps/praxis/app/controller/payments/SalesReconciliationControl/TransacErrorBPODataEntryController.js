@@ -615,6 +615,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const me = this;
         let params = {
             IN_CCUST: '139',
+            IN_PRDA: me.bean.prda,
+            IN_PROCTYPE: me.bean.proctype,
+            IN_PROCTYPESQ: me.bean.proctypesq,
             IN_TGROSAMOUN: me.bean.tgrosamoun
         };
         if (me.bean.proctype === 'BANORTE00') {

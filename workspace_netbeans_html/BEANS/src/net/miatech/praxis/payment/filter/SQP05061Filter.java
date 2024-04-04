@@ -8,7 +8,7 @@ import java.util.List;
  * @author Dvicente
  */
 public class SQP05061Filter {
-    private String IN_CCUST,IN_SCARDN;
+    private String IN_CCUST,IN_PRDA,IN_PROCTYPE,IN_PROCTYPESQ,IN_SCARDN;
     private Double IN_TGROSAMOUN;
     private List<A4331Filter> response = new ArrayList<>();
 
@@ -42,6 +42,30 @@ public class SQP05061Filter {
 
     public void setResponse(List<A4331Filter> response) {
         this.response = response;
+    }
+
+    public String getIN_PRDA() {
+        return IN_PRDA;
+    }
+
+    public void setIN_PRDA(String IN_PRDA) {
+        this.IN_PRDA = IN_PRDA;
+    }
+
+    public String getIN_PROCTYPE() {
+        return IN_PROCTYPE;
+    }
+
+    public void setIN_PROCTYPE(String IN_PROCTYPE) {
+        this.IN_PROCTYPE = IN_PROCTYPE;
+    }
+
+    public String getIN_PROCTYPESQ() {
+        return IN_PROCTYPESQ;
+    }
+
+    public void setIN_PROCTYPESQ(String IN_PROCTYPESQ) {
+        this.IN_PROCTYPESQ = IN_PROCTYPESQ;
     }
     
 }

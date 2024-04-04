@@ -120,6 +120,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
             params.creditcard = me.view.obj.scardn.slice(0, 6);
             params.creditcard2 = me.view.obj.proctype.trim() === 'BANORTE00' ?
                     me.view.obj.scardn.slice(-2) : me.view.obj.scardn.slice(-4);
+            params.IN_SPNR = me.view.obj.spnr.trim();
             formFilters.setValues(params);
             Ext.getCmp(prototype.idMSI + '-gridMSITracking').hide();
             Ext.getCmp(prototype.idMSI + '-gridVoidTracking').show();
@@ -137,7 +138,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
             Ext.getCmp(prototype.idMSI + '-btn-update-man').hide();
         }
 
-
     },
     loadMainTransaction: async function () {
         const me = this;
@@ -145,15 +145,27 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         const grid = Ext.getCmp(prototype.idMSI + '-gridVoidTracking');
         grid.view.mask('Loading...');
         let trncs = [];
-        let scardn = `${obj.scardn.slice(0, 6)}%${obj.proctype.trim() === 'BANORTE00' ?
-                obj.scardn.slice(-2) : obj.scardn.slice(-4)}%`;
+        let procesador = obj.proctype.trim();
+        let scardn = new String(), spnr = new String();
+        //banorte solo usa 2 digitos de autorizacion
+        if (procesador === 'BANORTE00') {
+            scardn = `${obj.scardn.slice(0, 6)}%${obj.scardn.slice(-2)}%`;
+        //ADYEN solo busca con PNR
+        } else if (procesador === 'ADYEN00') {
+            spnr = obj.spnr.trim();
+        } else {
+            scardn = `${obj.scardn.slice(0, 6)}%${obj.scardn.slice(-4)}%`;
+        }
+        let ticket = obj.ticket.trim();
         let params = {
             IN_CCUST: '139',
             IN_PROCTYPE: obj.proctype,
             IN_PROCTYPESQ: obj.proctypesq,
             IN_FROM: me.sumDate(obj.prda, -15),
             IN_TO: me.sumDate(obj.prda, 15),
-            IN_SCARDN: scardn
+            IN_SCARDN: scardn,
+            IN_SPNR: spnr,
+            IN_TICKET:ticket
         };
         const res = await fetch(`${me.url}/loadMSITrackingManualInfo?${new URLSearchParams(params)}`);
         if (res.ok) {
@@ -185,8 +197,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         let obj = Object.assign({}, me.view.obj);
 
         let trncs = [];
-        let scardn = `${obj.scardn.slice(0, 6)}%${obj.proctype.trim() === 'BANORTE00' ?
-                obj.scardn.slice(-2) : obj.scardn.slice(-4)}%`;
+        let procesador = obj.proctype.trim();
+        let scardn = new String();
+        if (procesador === 'BANORTE00') {
+            scardn = `${obj.scardn.slice(0, 6)}%${obj.scardn.slice(-2)}%`;
+        } else {
+            scardn = `${obj.scardn.slice(0, 6)}%${obj.scardn.slice(-4)}%`;
+        }
         let params = {
             IN_CCUST: '139',
             IN_PROCTYPE: obj.proctype,
