@@ -10,6 +10,15 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.FormatDataEntryControlle
         //console.log(me.view);
         me.view.mask('Loading Info...');
         if (me.view.searchParams && me.view.searchUrl) {
+            const procesador = me.view.searchParams.IN_PROCTYPE;
+            if (procesador === 'ADYEN00') {
+                const bin1 = Ext.getCmp(prototype.id + '-de-cardBin-1');
+                const bin2 = Ext.getCmp(prototype.id + '-de-cardBin-2');
+                const auth = Ext.getCmp(prototype.id + '-de-cardAuth');
+                bin1.allowBlank = true;
+                bin2.allowBlank = true;
+                auth.allowBlank = true;
+            }
             const res = await fetch(`${me.view.searchUrl}?${new URLSearchParams(me.view.searchParams)}`);
             if (res.ok) {
                 const data = await res.json();

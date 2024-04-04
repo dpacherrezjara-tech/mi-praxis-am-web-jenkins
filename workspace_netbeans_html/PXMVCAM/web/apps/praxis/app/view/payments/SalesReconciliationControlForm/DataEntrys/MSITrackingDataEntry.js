@@ -105,9 +105,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                     {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
                     {text: 'PNR', dataIndex: 'spnr', width: 70},
                     {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
-                    {text: 'Error Description', dataIndex: 'des_CERROR', width: 180, autoSizeColumn: true},
-                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 180, autoSizeColumn: true},
-                    {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 90},
+                    {text: 'Error Description', dataIndex: 'des_CERROR', width: 180,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            const info = record.data;
+                            if (info.des_CERROR) {
+                                metaData.tdAttr = 'data-qtip="' + info.des_CERROR + '"';
+                            }
+                            return value;
+                        }
+                    },
+                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 180,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            const info = record.data;
+                            if (info.desc_CODADJU) {
+                                metaData.tdAttr = 'data-qtip="' + info.desc_CODADJU + '"';
+                            }
+                            return value;
+                        }},
+                    {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 110},
                     {
                         text: 'Status', dataIndex: 'stval', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
@@ -207,7 +222,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                 listeners: {
                     beforedeselect: 'multiTransacBeforeDeselect',
                     beforeselect: 'multiTransacBeforeSelect',
-                    selectionchange:'multiTransacChangeSelect'
+                    selectionchange: 'multiTransacChangeSelect'
                 }
             },
             tbar: {
@@ -416,9 +431,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                     {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
                     {text: 'PNR', dataIndex: 'spnr', width: 70},
                     {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
-                    {text: 'Error Description', dataIndex: 'des_CERROR', minWidth: 180, width: 180, autoSizeColumn: true},
-                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', minWidth: 180, width: 180, autoSizeColumn: true},
-                    {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 90},
+                    {text: 'Error Description', dataIndex: 'des_CERROR', width: 120,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            const info = record.data;
+                            if (info.des_CERROR) {
+                                metaData.tdAttr = 'data-qtip="' + info.des_CERROR + '"';
+                            }
+                            return value;
+                        }},
+                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 120,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            const info = record.data;
+                            if (info.desc_CODADJU) {
+                                metaData.tdAttr = 'data-qtip="' + info.desc_CODADJU + '"';
+                            }
+                            return value;
+                        }},
+                    {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 140},
                     {
                         text: 'Status', dataIndex: 'stval', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
