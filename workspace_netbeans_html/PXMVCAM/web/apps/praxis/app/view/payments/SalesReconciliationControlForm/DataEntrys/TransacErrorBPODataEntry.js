@@ -625,7 +625,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         {xtype: 'tbspacer', width: 30},
                                         {
                                             xtype: 'label',
-                                            text: 'Diff. Days',
+                                            text: 'Card Type',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             width: 120
                                         },
@@ -633,11 +633,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         {
                                             xtype: 'textfield',
                                             id: prototype.idDE + '-de-txtPASSED_DAYS',
-                                            name: 'passed_DAYS',
+                                            name: 'payplatype',
                                             fieldStyle: 'text-align:center',
                                             enforceMaxLength: true,
                                             readOnly: true,
-                                            width: 100
+                                            width: 100,
+                                            listeners: {
+                                                change: function (field, newValue) {
+                                                    const opts = {
+                                                        'D': 'Debit',
+                                                        'C': 'Credit'
+                                                    };
+                                                    field.setRawValue(opts[newValue] || '');
+                                                }
+                                            }
                                         },
                                         {xtype: 'tbspacer', width: 30},
                                         {
