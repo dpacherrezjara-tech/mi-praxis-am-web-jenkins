@@ -375,7 +375,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 xtype: 'button',
                 iconCls: 'prx-icon-excel',
                 scale: 'small',
-                hidden: true,
+                //hidden: true,
                 tooltip: 'Export to Excel',
                 listeners: {
                     click: 'downloadExcel'

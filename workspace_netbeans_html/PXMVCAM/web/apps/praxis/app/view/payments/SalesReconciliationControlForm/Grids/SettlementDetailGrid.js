@@ -98,6 +98,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
             {text: 'Auth.', dataIndex: 'sauthoc', width: 70},
             {text: 'Installment<br>Plan', dataIndex: 'nbrinsta', width: 90},
             {text: 'Installment<br>Number', dataIndex: 'instanbr', width: 90},
+            {text: 'Currency', dataIndex: 'scurrency', width: 90},
             {
                 text: 'Sales<br>Amount', dataIndex: 'svfops', width: 100,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -107,7 +108,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 }
             },
             {
-                text: 'Transaction<br>Amount', dataIndex: 'tgrosampay', width: 100,
+                text: 'Transaction<br>Amount', dataIndex: 'tgrosamoun', width: 100,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:right;background-color:#B2DAFA";
                     value = Ext.util.Format.number(value, '0,000.00');
@@ -217,12 +218,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                     {text: 'Number', dataIndex: 'chgbnum', width: 110},
                     {text: 'Reason Code', dataIndex: 'codchgback', width: 90},
                     {
-                        text: 'Amount', dataIndex: 'tgrosampay', width: 100,
+                        text: 'Amount', dataIndex: 'tgrosamoun', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;";
-                            const {transtype, tgrosampay} = record.data;
+                            const {transtype, tgrosamoun} = record.data;
                             if (transtype.trim() === 'CHBK') {
-                                value = tgrosampay;
+                                value = tgrosamoun;
                             } else {
                                 value = 0;
                             }
@@ -269,12 +270,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 },
                 columns:[
                     {
-                        text: 'Amount', dataIndex: 'tgrosampay', width: 100,
+                        text: 'Amount', dataIndex: 'tgrosamoun', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;";
-                            const {transtype, tgrosampay} = record.data;
+                            const {transtype, tgrosamoun} = record.data;
                             if (transtype.trim() === 'ADJU') {
-                                value = tgrosampay;
+                                value = tgrosamoun;
                             } else {
                                 value = 0;
                             }
