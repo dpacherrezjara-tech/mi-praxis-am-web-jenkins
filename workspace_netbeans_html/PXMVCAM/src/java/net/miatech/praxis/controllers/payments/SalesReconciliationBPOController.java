@@ -1,6 +1,7 @@
 package net.miatech.praxis.controllers.payments;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 
+import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
 import net.miatech.praxis.payment.entities.A4507;
 import net.miatech.praxis.payment.filter.A4331Filter;
+import net.miatech.praxis.payment.filter.A4331STFilter;
 import net.miatech.praxis.payment.filter.A4496Filter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
@@ -56,6 +58,7 @@ import net.miatech.praxis.payment.filter.SQP05261Filter;
 import net.miatech.praxis.payment.filter.SQP05276Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.SabreWebService;
+import net.miatech.utils.CustomExcelCell;
 import net.miatech.utils.Functions;
 import net.sabre.miatech.praxis.TicketRES;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -937,6 +940,84 @@ public class SalesReconciliationBPOController {
                 data.add(row);
             }
             return exportUtils.createExcel(data, controllerName + " - Settlement " + Functions.getFechaActual());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "downloadSettlementSummary")
+    public ResponseEntity<?> downloadSettlementSummary(@ModelAttribute SQP05133Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:downloadSettlementSummary-------------");
+        try {
+            String title = params.getIN_MERCHANT() != null ? "Merchant " : "Summary ";
+
+            SQP05133Filter filter = logic.loadSQP05133Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            List<List<CustomExcelCell>> data = new ArrayList<>();
+            List<CustomExcelCell> header = new ArrayList<>();
+            header.add(new CustomExcelCell("Processing\nDate"));
+            if (params.getIN_MERCHANT() != null) {
+                header.add(new CustomExcelCell("Merchant"));
+            }
+            header.add(new CustomExcelCell("Processor"));
+            header.add(new CustomExcelCell("Country"));
+            header.add(new CustomExcelCell("Qty\nTransactions"));
+            header.add(new CustomExcelCell("Currency"));
+            header.add(new CustomExcelCell("Total\nAmount"));
+            header.add(new CustomExcelCell("GROSS\nAmount"));
+            header.add(new CustomExcelCell("Comm.\nAmount"));
+            header.add(new CustomExcelCell("Comm.\nVAT"));
+            header.add(new CustomExcelCell("Serv. Fee"));
+            header.add(new CustomExcelCell("Serv. Fee\nVAT"));
+            header.add(new CustomExcelCell("CHBK\nAmount"));
+            header.add(new CustomExcelCell("CHBK\nComm."));
+            header.add(new CustomExcelCell("CHBK\nVAT"));
+            header.add(new CustomExcelCell("ADJU\nAmount"));
+            header.add(new CustomExcelCell("ADJU\nComm."));
+            header.add(new CustomExcelCell("ADJU\nVAT"));
+            header.add(new CustomExcelCell("NET Amount\nTo receive AM"));
+            header.add(new CustomExcelCell("Payment Info.\nCurrency"));
+            header.add(new CustomExcelCell("Payment Info.\nTotal Amount"));
+            header.add(new CustomExcelCell("Payment Info.\nGROSS Amount"));
+            header.add(new CustomExcelCell("Payment Info.\nNET Amount\nTo receive AM"));
+            data.add(header);
+
+            //colores
+            Color c1 = new Color(178, 218, 250);
+            Color c2 = new Color(252, 246, 220);
+            for (A4331STFilter obj : filter.getResponse()) {
+                List<CustomExcelCell> row = new ArrayList<>();
+                row.add(new CustomExcelCell(obj.getPRDA()));
+                if (params.getIN_MERCHANT() != null) {
+                    row.add(new CustomExcelCell(obj.getPMERCHID()));
+                }
+                row.add(new CustomExcelCell(obj.getDESC_PROCTYPE()));
+                row.add(new CustomExcelCell(obj.getSCOUNTRY()));
+                row.add(new CustomExcelCell(obj.getQTYTRN()));
+                row.add(new CustomExcelCell(obj.getSCURRENCY()));
+                row.add(new CustomExcelCell(obj.getTGROSAMOUN(), c1));
+                row.add(new CustomExcelCell(obj.getTGROSAMPAY_WCA(), c1));
+                row.add(new CustomExcelCell(obj.getSFEEAMOU(), c1));
+                row.add(new CustomExcelCell(obj.getIVACOM12(), c1));
+                row.add(new CustomExcelCell(obj.getSERVICFEEP(), c1));
+                row.add(new CustomExcelCell(obj.getOVERCOM12P(), c1));
+                row.add(new CustomExcelCell(obj.getTGROSAMOUN_CB(), c1));
+                row.add(new CustomExcelCell(obj.getSFEEAMOU_CB(), c1));
+                row.add(new CustomExcelCell(obj.getIVACOM12_CB(), c1));
+                row.add(new CustomExcelCell(obj.getTGROSAMOUN_ADJ(), c1));
+                row.add(new CustomExcelCell(obj.getSFEEAMOU_ADJ(), c1));
+                row.add(new CustomExcelCell(obj.getIVACOM12_ADJ(), c1));
+                row.add(new CustomExcelCell(obj.getNETAMOUN(), c1));
+                row.add(new CustomExcelCell(obj.getPCURRENCY(), c2));
+                row.add(new CustomExcelCell(obj.getTGROSAMPAY(), c2));
+                row.add(new CustomExcelCell(obj.getTGROSAMPAY_WCA(), c2));
+                row.add(new CustomExcelCell(obj.getNETOPAY(), c2));
+                data.add(row);
+            }
+
+            return exportUtils.createCustomExcel(data,
+                    controllerName + " - Settlement " + title + Functions.getFechaActual());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
