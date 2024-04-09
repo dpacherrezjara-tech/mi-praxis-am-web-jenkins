@@ -285,7 +285,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                             editable: true,
                             labelWidth: 20,
                             width: 100,
-                            value: '99991231',
+                            value: '',
                             id: prototype.idDE + '-FECHAFIN'
                         }
                     ]

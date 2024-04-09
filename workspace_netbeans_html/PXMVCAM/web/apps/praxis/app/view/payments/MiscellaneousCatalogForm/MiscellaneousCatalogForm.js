@@ -1,17 +1,19 @@
-prototype.id = 'AccountingTransactionForm';
-prototype.url = CONTEXTPATH + '/AccountingTransaction';
-prototype.width = 1800;
+prototype.id = 'MiscellaneousCatalogForm';
+prototype.url = CONTEXTPATH + '/MiscellaneousCatalog';
+prototype.width = 1850;
+prototype.height = 630;
+fechaActual = new Date(),mesActual = fechaActual.getMonth(),anioActual = fechaActual.getFullYear();
 
-Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.AccountingTransactionForm', {
+Ext.define('Ext.Praxis.view.payments.MiscellaneousCatalogForm.MiscellaneousCatalogForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.AccountingTransactionForm',
+    alias: 'widget.MiscellaneousCatalogForm',
     requires: [
-        'Ext.Praxis.controller.payments.AccountingTransaction.AccountingTransactionController',
-        'Ext.Praxis.view.payments.AccountingTransactionForm.Options',
-        'Ext.Praxis.view.payments.AccountingTransactionForm.Filters',
-        'Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryGrid'
+        'Ext.Praxis.controller.payments.MiscellaneousCatalog.MiscellaneousCatalogController',
+        'Ext.Praxis.view.payments.MiscellaneousCatalogForm.Options',
+        'Ext.Praxis.view.payments.MiscellaneousCatalogForm.Filters',
+        'Ext.Praxis.view.payments.MiscellaneousCatalogForm.Grids.MainGrid'
     ],
-    controller: 'AccountingTransactionController',
+    controller: 'MiscellaneousCatalogController',
     layout: {
         type: 'fit'
     },
@@ -56,13 +58,24 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.AccountingTransac
                                             xtype: prototype.id + '-options'
                                         },
                                         {
-                                            xtype: prototype.id + '-filters',
-                                            id: prototype.id + '-contentFilter'
+                                            id: prototype.id + '-contentFilter',
+                                            xtype: 'panel',
+                                            border: false,
+                                            defaults: {
+                                                width: prototype.width,
+                                                align: 'center'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: prototype.id + '-filters'
+                                                }
+                                            ]
                                         },
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-mainContent',
-                                            height:630,
+                                            height: prototype.height,
+                                            bodyStyle: 'background-color: #E3EAF9;',
                                             layout: {
                                                 type: 'vbox',
                                                 align: 'center'

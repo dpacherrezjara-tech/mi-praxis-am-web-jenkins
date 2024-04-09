@@ -9,8 +9,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
     controller: 'ATDetailGridController',
     title: 'Detail',
     titleAlign: 'center',
-    height: 610,
-    width: 1400,
+    minHeight: 310,
+    width: '100%',
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -45,8 +45,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
             {text: 'Status', dataIndex: 'stval', width: 60,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
-                    const sts = ['1','5','6','7'];
-                    return sts.includes(value)?'Match':'Pending';
+                    const sts = ['1', '5', '6', '7'];
+                    return sts.includes(value) ? 'Match' : 'Pending';
                 }
             },
             {
@@ -57,14 +57,20 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
                     align: 'center'
                 },
                 columns: [
-                    {text: '...', dataIndex: 'idflex', width: 330,
+                    {text: 'Flex ID', dataIndex: 'idflex', width: 330,
                         id: prototype.id + '-colIDFlex',
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;background-color:#c0f0af;text-decoration:underline;cursor:pointer;color:#057ECB";
                             return value;
                         },
-                        listeners:{
-                            click:'onClickAccountingDetail'
+                        listeners: {
+                            click: 'onClickAccountingDetail'
+                        }
+                    },
+                    {text: 'PRAXIS ID', dataIndex: 'praxisid', width: 330,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;background-color:#c0f0af;text-decoration:underline;";
+                            return value;
                         }
                     },
                     {text: 'Date', dataIndex: 'fcontl', width: 65,
@@ -77,11 +83,11 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;background-color:#c0f0af";
                             const opts = {
-                                '':'Pending',
+                                '': 'Pending',
                                 '1': 'Accounted',
                                 '2': 'Debug'
                             };
-                            return opts[value.trim()]||'';
+                            return opts[value.trim()] || '';
                         }
                     }
                 ]
@@ -94,7 +100,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
                     align: 'center'
                 },
                 columns: [
-                    {text: 'Number', dataIndex: 'scardn', width: 130,
+                    {text: 'Number', dataIndex: 'scardn', width: 150,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;
@@ -148,9 +154,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
                     click: 'onClickTicketInfo'
                 },
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    if(record.data.ticket.trim()===''){
+                    if (record.data.ticket.trim() === '') {
                         metaData.style = "background-color:#FCF6DC;";
-                    }else{
+                    } else {
                         metaData.style = "background-color:#FCF6DC;font-weight:bold;color:#057ECB;text-decoration:underline;cursor:pointer";
                     }
                     //metaData.style = "text-align:center;background-color:#FCF6DC";
@@ -170,15 +176,11 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
         items: [
             {
                 xtype: 'button',
-                //id: prototype.id + '-btnExcel',
-                //text:'<strong>Excel</strong>',
                 iconCls: 'prx-icon-excel',
                 scale: 'small',
                 tooltip: 'Export to Excel',
                 listeners: {
-                    click: function (obj) {
-                        obj.up().up().downloadGrid();
-                    }
+                    click: 'downloadExcel'
                 }
             },
             {

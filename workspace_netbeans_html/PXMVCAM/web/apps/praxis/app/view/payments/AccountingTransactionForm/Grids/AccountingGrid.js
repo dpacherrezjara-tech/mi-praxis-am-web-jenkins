@@ -7,8 +7,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
     controller: 'ATAccountingGridController',
     title: 'Accounting Detail',
     titleAlign: 'center',
-    height: 610,
-    width: 1200,
+    minHeight: 210,
+    width: '100%',
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -189,7 +189,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     }
                 ]
             },
-            {text: 'Concept', dataIndex: 'a4183titu', width: 240,
+            {text: 'Concept', dataIndex: 'a4183titu', flex: 1,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:left;";
                     return value;
@@ -207,7 +207,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     return value;
                 }
             },
-            {text: 'Jornal <br> Entry', dataIndex: 'a4183idcon', width: 240, autoSizeColumn: true,
+            {text: 'Jornal <br> Entry', dataIndex: 'a4183idcon', width: 250, autoSizeColumn: true,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style += "text-align:center;";
                     return value;
@@ -226,8 +226,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
         items: [
             {
                 xtype: 'button',
-                //id: prototype.id + '-btnExcel',
-                //text:'<strong>Excel</strong>',
                 iconCls: 'prx-icon-excel',
                 scale: 'small',
                 tooltip: 'Export to Excel',

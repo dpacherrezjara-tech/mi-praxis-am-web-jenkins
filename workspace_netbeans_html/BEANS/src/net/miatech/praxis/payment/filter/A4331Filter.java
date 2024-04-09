@@ -8,7 +8,7 @@ import net.miatech.praxis.payment.entities.A4331;
  */
 public class A4331Filter extends A4331{
     private String DESC_ERROR,DES_MERCHANT,DES_SMERCHANT,DES_CERROR,
-            DESC_CODADJU,DESC_PROCTYPE,BPOCOMENT,ADJUCOMENT,IDFLEX;
+            DESC_CODADJU,DESC_PROCTYPE,BPOCOMENT,ADJUCOMENT,IDFLEX,PRAXISID;
     private A4331SFilter summary;
 
     public String getDESC_ERROR() {
@@ -89,5 +89,13 @@ public class A4331Filter extends A4331{
 
     public void setIDFLEX(String IDFLEX) {
         this.IDFLEX = IDFLEX;
+    }
+
+    public String getPRAXISID() {
+        return PRAXISID;
+    }
+
+    public void setPRAXISID(String PRAXISID) {
+        this.PRAXISID = PRAXISID;
     }
 }

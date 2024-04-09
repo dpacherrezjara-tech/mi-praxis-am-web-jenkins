@@ -5,12 +5,13 @@ package net.miatech.praxis.payment.filter;
  * @author Dvicente
  */
 public class A4331STFilter{
-    private String DESC_PROCTYPE,PAYDATE,PRDA,PCURRENCY,PROCTYPE,PROCTYPESQ,SCOUNTRY,PMERCHID;
-    private Double TGROSAMOUN,ACCEAMOU,
-            NETAMOUN,TGROSAMPAY,SFEEAMOU,IVACOM12,SERVICFEEP,OVERCOM12P,ADJUSMENTP,
-            TGROSAMPAY_CB,SFEEAMOU_CB,IVACOM12_CB,
-            TGROSAMPAY_ADJ,SFEEAMOU_ADJ,IVACOM12_ADJ,
+    private String DESC_PROCTYPE,PAYDATE,PRDA,PCURRENCY,SCURRENCY,PROCTYPE,PROCTYPESQ,SCOUNTRY,PMERCHID;
+    private Double TGROSAMOUN,TGROSAMOUN_WCA,ACCEAMOU,TGROSAMPAY,TGROSAMPAY_WCA,
+            NETAMOUN,NETOPAY,SFEEAMOU,IVACOM12,SERVICFEEP,OVERCOM12P,ADJUSMENTP,
+            TGROSAMOUN_CB,SFEEAMOU_CB,IVACOM12_CB,
+            TGROSAMOUN_ADJ,SFEEAMOU_ADJ,IVACOM12_ADJ,
             DISCRATEI,DISCRATE;
+    private Integer QTYTRN;
     
     public String getDESC_PROCTYPE() {
         return DESC_PROCTYPE;
@@ -42,6 +43,14 @@ public class A4331STFilter{
 
     public void setPCURRENCY(String PCURRENCY) {
         this.PCURRENCY = PCURRENCY;
+    }
+
+    public String getSCURRENCY() {
+        return SCURRENCY;
+    }
+
+    public void setSCURRENCY(String SCURRENCY) {
+        this.SCURRENCY = SCURRENCY;
     }
 
     public String getPROCTYPE() {
@@ -84,12 +93,12 @@ public class A4331STFilter{
         this.NETAMOUN = NETAMOUN;
     }
 
-    public Double getTGROSAMPAY() {
-        return TGROSAMPAY;
+    public Double getTGROSAMOUN() {
+        return TGROSAMOUN;
     }
 
-    public void setTGROSAMPAY(Double TGROSAMPAY) {
-        this.TGROSAMPAY = TGROSAMPAY;
+    public void setTGROSAMOUN(Double TGROSAMOUN) {
+        this.TGROSAMOUN = TGROSAMOUN;
     }
 
     public Double getSFEEAMOU() {
@@ -132,12 +141,12 @@ public class A4331STFilter{
         this.ADJUSMENTP = ADJUSMENTP;
     }
 
-    public Double getTGROSAMPAY_CB() {
-        return TGROSAMPAY_CB;
+    public Double getTGROSAMOUN_CB() {
+        return TGROSAMOUN_CB;
     }
 
-    public void setTGROSAMPAY_CB(Double TGROSAMPAY_CB) {
-        this.TGROSAMPAY_CB = TGROSAMPAY_CB;
+    public void setTGROSAMOUN_CB(Double TGROSAMOUN_CB) {
+        this.TGROSAMOUN_CB = TGROSAMOUN_CB;
     }
 
     public Double getSFEEAMOU_CB() {
@@ -156,12 +165,12 @@ public class A4331STFilter{
         this.IVACOM12_CB = IVACOM12_CB;
     }
 
-    public Double getTGROSAMOUN() {
-        return TGROSAMOUN;
+    public Double getTGROSAMPAY() {
+        return TGROSAMPAY;
     }
 
-    public void setTGROSAMOUN(Double TGROSAMOUN) {
-        this.TGROSAMOUN = TGROSAMOUN;
+    public void setTGROSAMPAY(Double TGROSAMPAY) {
+        this.TGROSAMPAY = TGROSAMPAY;
     }
 
     public Double getACCEAMOU() {
@@ -188,12 +197,12 @@ public class A4331STFilter{
         this.DISCRATE = DISCRATE;
     }
 
-    public Double getTGROSAMPAY_ADJ() {
-        return TGROSAMPAY_ADJ;
+    public Double getTGROSAMOUN_ADJ() {
+        return TGROSAMOUN_ADJ;
     }
 
-    public void setTGROSAMPAY_ADJ(Double TGROSAMPAY_ADJ) {
-        this.TGROSAMPAY_ADJ = TGROSAMPAY_ADJ;
+    public void setTGROSAMOUN_ADJ(Double TGROSAMOUN_ADJ) {
+        this.TGROSAMOUN_ADJ = TGROSAMOUN_ADJ;
     }
 
     public Double getSFEEAMOU_ADJ() {
@@ -210,5 +219,37 @@ public class A4331STFilter{
 
     public void setIVACOM12_ADJ(Double IVACOM12_ADJ) {
         this.IVACOM12_ADJ = IVACOM12_ADJ;
+    }
+
+    public Integer getQTYTRN() {
+        return QTYTRN;
+    }
+
+    public void setQTYTRN(Integer QTYTRN) {
+        this.QTYTRN = QTYTRN;
+    }
+
+    public Double getTGROSAMOUN_WCA() {
+        return TGROSAMOUN_WCA;
+    }
+
+    public void setTGROSAMOUN_WCA(Double TGROSAMOUN_WCA) {
+        this.TGROSAMOUN_WCA = TGROSAMOUN_WCA;
+    }
+
+    public Double getNETOPAY() {
+        return NETOPAY;
+    }
+
+    public void setNETOPAY(Double NETOPAY) {
+        this.NETOPAY = NETOPAY;
+    }
+
+    public Double getTGROSAMPAY_WCA() {
+        return TGROSAMPAY_WCA;
+    }
+
+    public void setTGROSAMPAY_WCA(Double TGROSAMPAY_WCA) {
+        this.TGROSAMPAY_WCA = TGROSAMPAY_WCA;
     }
 }

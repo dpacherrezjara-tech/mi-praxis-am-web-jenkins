@@ -5,7 +5,7 @@ package net.miatech.praxis.payment.filter;
  * @author Dvicente
  */
 public class A4331AT2Filter{
-    private String FECHA,IDFLEX,PROC_DESC;
+    private String FECHA,IDFLEX,PRAXISID,PROC_DESC;
     private Double TOTAL,PENDING,ACCOUNTED,TO_DEBUG;
     private Integer RN,QTY_PENDING,QTY_ACCOUNTED,QTY_TO_DEBUG,QTY_TOTAL;
 
@@ -104,5 +104,12 @@ public class A4331AT2Filter{
     public void setIDFLEX(String IDFLEX) {
         this.IDFLEX = IDFLEX;
     }
-    
+
+    public String getPRAXISID() {
+        return PRAXISID;
+    }
+
+    public void setPRAXISID(String PRAXISID) {
+        this.PRAXISID = PRAXISID;
+    }
 }

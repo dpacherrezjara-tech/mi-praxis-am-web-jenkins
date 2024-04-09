@@ -38,6 +38,23 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingGridC
         view.setStore(store);
     },
     downloadExcel: function () {
+        const view = this.view;
+        let params = Object.assign({}, view.searchParams);
+        params.excel = true;
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Download Excel?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            global.getFile(`${view.url}/downloadDetailAccounted?${new URLSearchParams(params)}`);
+                        }
+                    }
+                });
     }
 });
 

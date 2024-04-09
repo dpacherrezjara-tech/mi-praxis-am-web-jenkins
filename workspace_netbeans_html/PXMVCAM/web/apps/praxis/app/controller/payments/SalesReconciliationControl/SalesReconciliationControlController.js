@@ -29,15 +29,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             //<editor-fold defaultstate="collapsed" desc="Combos">
             const cmbProcesadores = Ext.getCmp(prototype.id + '-cmbProctype');
             me.setComboStore({cmp: cmbProcesadores, data: procesadores,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
 
             const cmbProcesadoresf = Ext.getCmp(prototype.id + '-cmbProctypef');
             me.setComboStore({cmp: cmbProcesadoresf, data: procesadores,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
 
             const cmbProctypeSettl = Ext.getCmp(prototype.id + '-cmbProctypeSettl');
             me.setComboStore({cmp: cmbProctypeSettl, data: procesadores,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
 
             const cmbPaises = Ext.getCmp(prototype.id + '-cmbPaisesBP');
             me.setComboStore({cmp: cmbPaises, data: data.paises,
@@ -83,6 +83,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.setComboStore({cmp: cmbMdasbBT, data: monedas,
                 valueField: 'code', displayField: 'name', value: ''});
             
+            const cmbMdasbBP = Ext.getCmp(prototype.id + '-cmbMonedaBP');
+            me.setComboStore({cmp: cmbMdasbBP, data: monedas,
+                valueField: 'code', displayField: 'name', value: ''});
+            
+            const cmbMdasfBP = Ext.getCmp(prototype.id + '-cmbMonedafBP');
+            me.setComboStore({cmp: cmbMdasfBP, data: monedas,
+                valueField: 'code', displayField: 'name', value: ''});
+
             const cmbMdasbST = Ext.getCmp(prototype.id + '-cmbMonedabST');
             me.setComboStore({cmp: cmbMdasbST, data: monedas,
                 valueField: 'code', displayField: 'name', value: ''});
@@ -158,8 +166,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             IN_CCUST: '139',
             ...obj
         };
-        if (obj.creditcard !== '' && obj.creditcard2 !== '') {
-            params.IN_SCARDN = `${obj.creditcard}%${obj.creditcard2}%`;
+        if (obj.creditcard !== '') {
+            params.IN_SCARDN = `${obj.creditcard || ''}%${obj.creditcard2 || ''}%`;
+        } else if (obj.creditcard2 !== '') {
+            params.IN_SCARDN = `%${obj.creditcard2 || ''}%`;
         }
         return params;
     },
@@ -182,8 +192,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             IN_CCUST: '139',
             ...obj
         };
-        if (obj.creditcard.at(0) !== '' && obj.creditcard.at(1) !== '') {
-            params.IN_SCARDN = `${obj.creditcard.at(0)}%${obj.creditcard.at(1)}%`;
+        if (obj.creditcard.at(0) !== '') {
+            params.IN_SCARDN = `${obj.creditcard.at(0) || ''}%${obj.creditcard.at(1) || ''}%`;
+        } else if (obj.creditcard.at(1) !== '') {
+            params.IN_SCARDN = `%${obj.creditcard.at(1) || ''}%`;
         }
         return params;
     },

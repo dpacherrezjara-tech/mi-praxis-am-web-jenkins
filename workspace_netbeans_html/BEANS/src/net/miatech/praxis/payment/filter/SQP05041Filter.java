@@ -10,7 +10,7 @@ import net.miatech.praxis.payment.entities.CustomPageImpl;
  */
 public class SQP05041Filter extends CustomPageImpl{
     private String IN_TFECHA,FECHA_FROM,IN_PROCTYPE,IN_PROCTYPESQ,
-            IN_MDA,IN_TDOC,IN_PNR,IN_STCONL,IN_IDCON;
+            IN_MDA,IN_TDOC,IN_PNR,IN_STCONL,IN_PRAXISID,IN_IDFLEX;
     private List<A4331Filter> response = new ArrayList<>();
     
     public String getIN_TFECHA() {
@@ -77,19 +77,27 @@ public class SQP05041Filter extends CustomPageImpl{
         this.IN_STCONL = IN_STCONL;
     }
 
-    public String getIN_IDCON() {
-        return IN_IDCON;
-    }
-
-    public void setIN_IDCON(String IN_IDCON) {
-        this.IN_IDCON = IN_IDCON;
-    }
-
     public List<A4331Filter> getResponse() {
         return response;
     }
 
     public void setResponse(List<A4331Filter> response) {
         this.response = response;
+    }
+
+    public String getIN_IDFLEX() {
+        return IN_IDFLEX;
+    }
+
+    public void setIN_IDFLEX(String IN_IDFLEX) {
+        this.IN_IDFLEX = IN_IDFLEX;
+    }
+
+    public String getIN_PRAXISID() {
+        return IN_PRAXISID;
+    }
+
+    public void setIN_PRAXISID(String IN_PRAXISID) {
+        this.IN_PRAXISID = IN_PRAXISID;
     }
 }

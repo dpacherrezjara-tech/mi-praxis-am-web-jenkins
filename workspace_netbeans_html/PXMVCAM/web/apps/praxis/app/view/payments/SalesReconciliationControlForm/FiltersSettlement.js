@@ -87,10 +87,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbProctypeSettl',
-                            name: 'IN_PROCTYPE',
+                            name: 'IN_PROCTYPESQ',
                             labelWidth: 70,
                             width: 250,
-                            valueField: 'a4451key3',
+                            valueField: 'a4451key2',
                             displayField: 'a4451desc1',
                             fieldLabel: 'Processor',
                             queryMode: 'local',
