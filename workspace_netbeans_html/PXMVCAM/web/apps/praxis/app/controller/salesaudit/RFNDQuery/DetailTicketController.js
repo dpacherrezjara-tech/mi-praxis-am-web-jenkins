@@ -1460,12 +1460,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
 
                     }
                     vl_netofop = (vl_netofop + parseFloat(gridPAYMENT.getStore().getAt(p).get('A3653TOTAL')));
-
-
-
+                    
                 }
-            }
-            vl_netofop = (txtTotalram - vl_netofop);
+            }           
+            vl_netofop = (txtTotalram - vl_netofop.toFixed(2));
             if (vl_netofop !== 0) {
                 Ext.Msg.alert('.: PRAXIS :.', 'the total fop must be equal to the total refund');
                 bvalida = false;
