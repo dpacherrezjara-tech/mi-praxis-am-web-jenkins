@@ -43,7 +43,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
                     }
                 }
             }
-        });;
+        });
+        ;
         view.setStore(store);
     },
     onClickDate: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
@@ -86,6 +87,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
                         }
                     }
                 });
+    },
+    onClickBPO: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const obj = record.data;
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.SettlementDataEntry', {
+            id: prototype.id + '-SettlementDataEntry-1',
+            obj: obj
+        });
+        dataEntry.show();
     }
 });
 

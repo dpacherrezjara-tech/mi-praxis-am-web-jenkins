@@ -32,6 +32,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Cols">
             {
+                sortable: false,
+                xtype: 'actioncolumn',
+                width: 40,
+                text: 'Det.',
+                locked: true,
+                align: 'center',
+                items: [
+                    {
+                        iconCls: 'prx-icon-detail',
+                        tooltip: 'Open Detail',
+                        handler: 'onClickBPO'
+                    }
+                ]
+            },
+            {
                 text: 'Proccessing<br>Date', width: 85, dataIndex: 'prda'
             },
             {
