@@ -246,7 +246,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX1 **
                              */
                             fileA2552.A2552CODTAX1 = getCellValue(currentRow.getCell(28));
-                            fileA2552.A2552CDATO1= getCellValue(currentRow.getCell(29));
+                            fileA2552.A2552CDATO1 = getCellValue(currentRow.getCell(29));
                             if (!getCellValue(currentRow.getCell(30)).equals("")) {
                                 fileA2552.A2552TAX1 = Float.parseFloat(getCellValue(currentRow.getCell(30)));
                             } else {
@@ -257,7 +257,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX2 **
                              */
                             fileA2552.A2552CODTAX2 = getCellValue(currentRow.getCell(31));
-                            fileA2552.A2552CDATO2= getCellValue(currentRow.getCell(32));
+                            fileA2552.A2552CDATO2 = getCellValue(currentRow.getCell(32));
                             if (!getCellValue(currentRow.getCell(33)).equals("")) {
                                 fileA2552.A2552TAX2 = Float.parseFloat(getCellValue(currentRow.getCell(33)));
                             } else {
@@ -267,7 +267,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX3 **
                              */
                             fileA2552.A2552CODTAX3 = getCellValue(currentRow.getCell(34));
-                            fileA2552.A2552CDATO3= getCellValue(currentRow.getCell(35));
+                            fileA2552.A2552CDATO3 = getCellValue(currentRow.getCell(35));
                             if (!getCellValue(currentRow.getCell(36)).equals("")) {
                                 fileA2552.A2552TAX3 = Float.parseFloat(getCellValue(currentRow.getCell(36)));
                             } else {
@@ -277,7 +277,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX4 **
                              */
                             fileA2552.A2552CODTAX4 = getCellValue(currentRow.getCell(37));
-                            fileA2552.A2552CDATO4= getCellValue(currentRow.getCell(38));
+                            fileA2552.A2552CDATO4 = getCellValue(currentRow.getCell(38));
                             if (!getCellValue(currentRow.getCell(39)).equals("")) {
                                 fileA2552.A2552TAX4 = Float.parseFloat(getCellValue(currentRow.getCell(39)));
                             } else {
@@ -287,7 +287,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX5 **
                              */
                             fileA2552.A2552CODTAX5 = getCellValue(currentRow.getCell(40));
-                            fileA2552.A2552CDATO5= getCellValue(currentRow.getCell(41));
+                            fileA2552.A2552CDATO5 = getCellValue(currentRow.getCell(41));
                             if (!getCellValue(currentRow.getCell(42)).equals("")) {
                                 fileA2552.A2552TAX5 = Float.parseFloat(getCellValue(currentRow.getCell(42)));
                             } else {
@@ -297,7 +297,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX6 **
                              */
                             fileA2552.A2552CODTAX6 = getCellValue(currentRow.getCell(43));
-                            fileA2552.A2552CDATO6= getCellValue(currentRow.getCell(44));
+                            fileA2552.A2552CDATO6 = getCellValue(currentRow.getCell(44));
                             if (!getCellValue(currentRow.getCell(45)).equals("")) {
                                 fileA2552.A2552TAX6 = Float.parseFloat(getCellValue(currentRow.getCell(45)));
                             } else {
@@ -307,7 +307,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX7 **
                              */
                             fileA2552.A2552CODTAX7 = getCellValue(currentRow.getCell(46));
-                            fileA2552.A2552CDATO7= getCellValue(currentRow.getCell(47));
+                            fileA2552.A2552CDATO7 = getCellValue(currentRow.getCell(47));
                             if (!getCellValue(currentRow.getCell(48)).equals("")) {
                                 fileA2552.A2552TAX7 = Float.parseFloat(getCellValue(currentRow.getCell(48)));
                             } else {
@@ -317,7 +317,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX8 **
                              */
                             fileA2552.A2552CODTAX8 = getCellValue(currentRow.getCell(49));
-                            fileA2552.A2552CDATO8= getCellValue(currentRow.getCell(50));
+                            fileA2552.A2552CDATO8 = getCellValue(currentRow.getCell(50));
                             if (!getCellValue(currentRow.getCell(51)).equals("")) {
                                 fileA2552.A2552TAX8 = Float.parseFloat(getCellValue(currentRow.getCell(51)));
                             } else {
@@ -327,7 +327,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX9 **
                              */
                             fileA2552.A2552CODTAX9 = getCellValue(currentRow.getCell(52));
-                            fileA2552.A2552CDATO9= getCellValue(currentRow.getCell(53));
+                            fileA2552.A2552CDATO9 = getCellValue(currentRow.getCell(53));
                             if (!getCellValue(currentRow.getCell(54)).equals("")) {
                                 fileA2552.A2552TAX9 = Float.parseFloat(getCellValue(currentRow.getCell(54)));
                             } else {
@@ -337,7 +337,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX10 **
                              */
                             fileA2552.A2552CODTAX10 = getCellValue(currentRow.getCell(55));
-                            fileA2552.A2552CDATO10= getCellValue(currentRow.getCell(56));
+                            fileA2552.A2552CDATO10 = getCellValue(currentRow.getCell(56));
                             if (!getCellValue(currentRow.getCell(57)).equals("")) {
                                 fileA2552.A2552TAX10 = Float.parseFloat(getCellValue(currentRow.getCell(57)));
                             } else {
@@ -347,7 +347,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX11 **
                              */
                             fileA2552.A2552CODTAX11 = getCellValue(currentRow.getCell(58));
-                            fileA2552.A2552CDATO11= getCellValue(currentRow.getCell(59));
+                            fileA2552.A2552CDATO11 = getCellValue(currentRow.getCell(59));
                             if (!getCellValue(currentRow.getCell(60)).equals("")) {
                                 fileA2552.A2552TAX11 = Float.parseFloat(getCellValue(currentRow.getCell(60)));
                             } else {
@@ -357,7 +357,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX12 **
                              */
                             fileA2552.A2552CODTAX12 = getCellValue(currentRow.getCell(61));
-                            fileA2552.A2552CDATO12= getCellValue(currentRow.getCell(62));
+                            fileA2552.A2552CDATO12 = getCellValue(currentRow.getCell(62));
                             if (!getCellValue(currentRow.getCell(63)).equals("")) {
                                 fileA2552.A2552TAX12 = Float.parseFloat(getCellValue(currentRow.getCell(63)));
                             } else {
@@ -367,7 +367,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX13 **
                              */
                             fileA2552.A2552CODTAX13 = getCellValue(currentRow.getCell(64));
-                            fileA2552.A2552CDATO13= getCellValue(currentRow.getCell(65));
+                            fileA2552.A2552CDATO13 = getCellValue(currentRow.getCell(65));
                             if (!getCellValue(currentRow.getCell(66)).equals("")) {
                                 fileA2552.A2552TAX13 = Float.parseFloat(getCellValue(currentRow.getCell(66)));
                             } else {
@@ -377,7 +377,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX14 **
                              */
                             fileA2552.A2552CODTAX14 = getCellValue(currentRow.getCell(67));
-                            fileA2552.A2552CDATO14= getCellValue(currentRow.getCell(68));
+                            fileA2552.A2552CDATO14 = getCellValue(currentRow.getCell(68));
                             if (!getCellValue(currentRow.getCell(69)).equals("")) {
                                 fileA2552.A2552TAX14 = Float.parseFloat(getCellValue(currentRow.getCell(69)));
                             } else {
@@ -387,7 +387,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX15 **
                              */
                             fileA2552.A2552CODTAX15 = getCellValue(currentRow.getCell(70));
-                            fileA2552.A2552CDATO15= getCellValue(currentRow.getCell(71));
+                            fileA2552.A2552CDATO15 = getCellValue(currentRow.getCell(71));
                             if (!getCellValue(currentRow.getCell(72)).equals("")) {
                                 fileA2552.A2552TAX15 = Float.parseFloat(getCellValue(currentRow.getCell(72)));
                             } else {
@@ -397,7 +397,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX16 **
                              */
                             fileA2552.A2552CODTAX16 = getCellValue(currentRow.getCell(73));
-                            fileA2552.A2552CDATO16= getCellValue(currentRow.getCell(74));
+                            fileA2552.A2552CDATO16 = getCellValue(currentRow.getCell(74));
                             if (!getCellValue(currentRow.getCell(75)).equals("")) {
                                 fileA2552.A2552TAX16 = Float.parseFloat(getCellValue(currentRow.getCell(75)));
                             } else {
@@ -407,7 +407,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX17 **
                              */
                             fileA2552.A2552CODTAX17 = getCellValue(currentRow.getCell(76));
-                            fileA2552.A2552CDATO17= getCellValue(currentRow.getCell(77));
+                            fileA2552.A2552CDATO17 = getCellValue(currentRow.getCell(77));
                             if (!getCellValue(currentRow.getCell(78)).equals("")) {
                                 fileA2552.A2552TAX17 = Float.parseFloat(getCellValue(currentRow.getCell(78)));
                             } else {
@@ -417,7 +417,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX18 **
                              */
                             fileA2552.A2552CODTAX18 = getCellValue(currentRow.getCell(79));
-                            fileA2552.A2552CDATO18= getCellValue(currentRow.getCell(80));
+                            fileA2552.A2552CDATO18 = getCellValue(currentRow.getCell(80));
                             if (!getCellValue(currentRow.getCell(81)).equals("")) {
                                 fileA2552.A2552TAX18 = Float.parseFloat(getCellValue(currentRow.getCell(81)));
                             } else {
@@ -427,7 +427,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX19 **
                              */
                             fileA2552.A2552CODTAX19 = getCellValue(currentRow.getCell(82));
-                            fileA2552.A2552CDATO19= getCellValue(currentRow.getCell(83));
+                            fileA2552.A2552CDATO19 = getCellValue(currentRow.getCell(83));
                             if (!getCellValue(currentRow.getCell(84)).equals("")) {
                                 fileA2552.A2552TAX19 = Float.parseFloat(getCellValue(currentRow.getCell(84)));
                             } else {
@@ -437,15 +437,35 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                              * **TAX20 **
                              */
                             fileA2552.A2552CODTAX20 = getCellValue(currentRow.getCell(85));
-                            fileA2552.A2552CDATO20= getCellValue(currentRow.getCell(86));
+                            fileA2552.A2552CDATO20 = getCellValue(currentRow.getCell(86));
                             if (!getCellValue(currentRow.getCell(87)).equals("")) {
                                 fileA2552.A2552TAX20 = Float.parseFloat(getCellValue(currentRow.getCell(87)));
                             } else {
                                 fileA2552.A2552TAX20 = 0;
                             }
-                            
-                            fileA2552.A2552EPR= getCellValue(currentRow.getCell(88));
-                            fileA2552.A2552PNR= getCellValue(currentRow.getCell(89));
+
+                            fileA2552.A2552EPR = getCellValue(currentRow.getCell(88));
+                            if (fileA2552.A2552FUENT.equals("ASR")) {
+                                if (fileA2552.A2552EPR.equals("")) {
+                                    result = "EPR required";
+                                    break;
+                                }
+                                if (fileA2552.A2552EPR.length() != 6) {
+                                    result = "EPR MUST BE 6 CHARACTERES";
+                                    break;
+                                }
+                            }
+                            fileA2552.A2552PNR = getCellValue(currentRow.getCell(89));
+                            if (fileA2552.A2552FUENT.equals("ASR")) {
+                                if (fileA2552.A2552PNR.equals("")) {
+                                    result = "PNR required";
+                                    break;
+                                }
+                                if (fileA2552.A2552PNR.length() != 6) {
+                                    result = "PNR MUST BE 6 CHARACTERES";
+                                    break;
+                                }
+                            }
 
                             fileA2552.A2552PROVI = 0;
                             fileA2552.A2552PROVIDES = "";
@@ -454,7 +474,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552PROVI3 = 0;
                             fileA2552.A2552PROVIDES3 = "";
                             fileA2552.A2552UBICA = "";
-                            
+
                             DecimalFormat df = new DecimalFormat("#.00");
                             if (df.format(fileA2552.A2552TAX1 + fileA2552.A2552TAX2 + fileA2552.A2552TAX3 + fileA2552.A2552TAX4 + fileA2552.A2552TAX5 + fileA2552.A2552TAX6 + fileA2552.A2552TAX7 + fileA2552.A2552TAX8 + fileA2552.A2552TAX9 + fileA2552.A2552TAX10 + fileA2552.A2552TAX11 + fileA2552.A2552TAX12 + fileA2552.A2552TAX13 + fileA2552.A2552TAX14 + fileA2552.A2552TAX15 + fileA2552.A2552TAX16 + fileA2552.A2552TAX17 + fileA2552.A2552TAX18 + fileA2552.A2552TAX19 + fileA2552.A2552TAX20) == null ? df.format(fileA2552.A2552TAX) != null : !df.format(fileA2552.A2552TAX1 + fileA2552.A2552TAX2 + fileA2552.A2552TAX3 + fileA2552.A2552TAX4 + fileA2552.A2552TAX5 + fileA2552.A2552TAX6 + fileA2552.A2552TAX7 + fileA2552.A2552TAX8 + fileA2552.A2552TAX9 + fileA2552.A2552TAX10 + fileA2552.A2552TAX11 + fileA2552.A2552TAX12 + fileA2552.A2552TAX13 + fileA2552.A2552TAX14 + fileA2552.A2552TAX15 + fileA2552.A2552TAX16 + fileA2552.A2552TAX17 + fileA2552.A2552TAX18 + fileA2552.A2552TAX19 + fileA2552.A2552TAX20).equals(df.format(fileA2552.A2552TAX))) {
                                 result = "The amount of the taxes does not fit the detail";
@@ -682,7 +702,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 } else {
                                     fileA2552.A2552PROVI4 = 0;
                                 }
-                                
+
                                 fileA2552.A2552CTA = "";
                                 fileA2552.A2552TITU = "";
                                 fileA2552.A2552RAZONLIB = "";
@@ -743,8 +763,8 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552TAX19 = 0;
                             fileA2552.A2552CODTAX20 = "";
                             fileA2552.A2552TAX20 = 0;
-                            fileA2552.A2552EPR= "";
-                            fileA2552.A2552PNR= "";
+                            fileA2552.A2552EPR = "";
+                            fileA2552.A2552PNR = "";
 
                         } else if (fileA2552.A2552BASE.equals("UP")) {
                             fileA2552.A2552TRNCO = getCellValue(currentRow.getCell(1));
@@ -829,7 +849,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             } else {
                                 fileA2552.A2552PROVI4 = 0;
                             }
-                            
+
                             if (!getCellValue(currentRow.getCell(14)).equals("")) {
                                 fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(14)));
                             } else {
@@ -910,8 +930,8 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552TAX19 = 0;
                             fileA2552.A2552CODTAX20 = "";
                             fileA2552.A2552TAX20 = 0;
-                            fileA2552.A2552EPR= "";
-                            fileA2552.A2552PNR= "";
+                            fileA2552.A2552EPR = "";
+                            fileA2552.A2552PNR = "";
 
                         } else if (fileA2552.A2552BASE.equals("AP")) {
                             fileA2552.A2552PAVTA = getCellValue(currentRow.getCell(7));
@@ -958,14 +978,14 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             } else {
                                 fileA2552.A2552PROVI3 = 0;
                             }
-                            
+
                             if (!getCellValue(currentRow.getCell(14)).equals("")) {
                                 fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(14)));
                             } else {
                                 fileA2552.A2552PROVI4 = 0;
                             }
                             // fin                           
-                            
+
                             if (!getCellValue(currentRow.getCell(15)).equals("")) {
                                 fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(15)));
                             } else {
@@ -1002,20 +1022,20 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 result = "THE TICKET MUST BE 13 CHARACTERES CIA-FORMA-SERIE " + fileA2552.A2552TKT;
                                 break;
                             }
-                            fileA2552.A2552RAZONLIB ="";// getCellValue(currentRow.getCell(3));
+                            fileA2552.A2552RAZONLIB = "";// getCellValue(currentRow.getCell(3));
                             /*if (!fileA2552.A2552RAZONLIB.equals("")) {
                                 if (fileA2552.A2552RAZONLIB.length() > 135) {
                                     result = "You must enter a reason 135 CHARACTERES" + fileA2552.A2552TKT;
                                     break;
                                 }
                             }*/
-                            fileA2552.A2552CODRAZON =""; //getCellValue(currentRow.getCell(9));
+                            fileA2552.A2552CODRAZON = ""; //getCellValue(currentRow.getCell(9));
                             fileA2552.A2552PERIODO = getCellValue(currentRow.getCell(3));
                             if (fileA2552.A2552PERIODO.equals("")) {
                                 result = "PERIOD required";
                                 break;
                             }
-                            
+
                             fileA2552.A2552FUENT = getCellValue(currentRow.getCell(6));
                             if (fileA2552.A2552FUENT.equals("")) {
                                 result = "Fuente required";
@@ -1034,7 +1054,7 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             String[] parts = fileA2552.A2552PERIODO.split(",");
                             fileA2552.A2552CODRAZON = parts[0];
                             fileA2552.A2552PERIODO = parts[1];
-                            
+
                             fileA2552.A2552SFUEN = "";
                             fileA2552.A2552ITINE = "";
                             fileA2552.A2552FBRI1 = "";
@@ -1086,8 +1106,8 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552TAX19 = 0;
                             fileA2552.A2552CODTAX20 = "";
                             fileA2552.A2552TAX20 = 0;
-                            fileA2552.A2552EPR= "";
-                            fileA2552.A2552PNR= "";
+                            fileA2552.A2552EPR = "";
+                            fileA2552.A2552PNR = "";
 
                         } else if (fileA2552.A2552BASE.equals("RT")) {
                             fileA2552.A2552TRNCO = getCellValue(currentRow.getCell(1));
@@ -1167,13 +1187,13 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             } else {
                                 fileA2552.A2552PROVI3 = 0;
                             }
-                            
+
                             if (!getCellValue(currentRow.getCell(14)).equals("")) {
                                 fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(14)));
                             } else {
                                 fileA2552.A2552PROVI4 = 0;
                             }
-                            
+
                             if (!getCellValue(currentRow.getCell(15)).equals("")) {
                                 fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(15)));
                             } else {
@@ -1263,8 +1283,8 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552TAX19 = 0;
                             fileA2552.A2552CODTAX20 = "";
                             fileA2552.A2552TAX20 = 0;
-                            fileA2552.A2552EPR= "";
-                            fileA2552.A2552PNR= "";
+                            fileA2552.A2552EPR = "";
+                            fileA2552.A2552PNR = "";
 
                         }
                         lstGeneral.add(fileA2552);
