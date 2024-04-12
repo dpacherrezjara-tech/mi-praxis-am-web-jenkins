@@ -1,8 +1,8 @@
 // <editor-fold defaultstate="collapsed" desc="prototype">
 prototype.id = 'EstimatedVarianceForm';
 prototype.url = CONTEXTPATH+'/EstimatedVariance';
-prototype.widthContenedor = 1510;//910
-prototype.widthGrid = 1410;
+prototype.widthContenedor = 1210;//910
+prototype.widthGrid = 1110;
 // </editor-fold>
 
 Ext.define('Ext.Praxis.view.interline.EstimatedVarianceForm.EstimatedVarianceForm', {
