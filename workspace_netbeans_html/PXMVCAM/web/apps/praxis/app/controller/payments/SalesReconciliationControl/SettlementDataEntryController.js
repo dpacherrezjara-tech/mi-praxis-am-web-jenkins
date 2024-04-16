@@ -22,12 +22,47 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
             me.bean = data.response;
             form.reset();
             form.setValues(me.bean);
+            me.setDesgloseGrid();
         }
+    },
+    setDesgloseGrid: async function () {
+        const me = this;
+        const panelDesglose = Ext.getCmp(prototype.idDE3+ '-panelDesglose');
+        panelDesglose.mask('Loading..');
+        let params = me.formatParameters(me.bean);
+        const gridDesglose = Ext.getCmp(prototype.idDE3 + '-gridDesglose');
+        const gridDesgloseCHBK = Ext.getCmp(prototype.idDE3 + '-gridDesgloseCHBK');
+        if (me.bean.transtype === 'CHBK') {
+            gridDesglose.hide();
+            gridDesgloseCHBK.show();
+            const res = await fetch(`${me.url}/loadErrorTransactionBPODesgloseCHBK?${new URLSearchParams(params)}`);
+            if (res.ok) {
+                const data = await res.json();
+                console.log(data);
+                const storeDesglose = Ext.create('Ext.data.Store', {
+                    data: data.response
+                });
+                gridDesgloseCHBK.setStore(storeDesglose);
+            }
+        } else {
+            gridDesglose.show();
+            gridDesgloseCHBK.hide();
+            const res = await fetch(`${me.url}/loadErrorTransactionBPODesglose?${new URLSearchParams(params)}`);
+            if (res.ok) {
+                const data = await res.json();
+                const storeDesglose = Ext.create('Ext.data.Store', {
+                    data: data.response
+                });
+                gridDesglose.setStore(storeDesglose);
+                debugger;
+            }
+        }
+        panelDesglose.unmask();
     },
     //<editor-fold defaultstate="collapsed" desc="Formateo de Parametros">
     formatParameters: function (obj) {
         let params = {
-            IN_CCUST: '139',
+            IN_CCUST: obj.ccust,
             IN_PRDA: obj.prda,
             IN_TDOC: obj.tdoc,
             IN_AREFNBR: obj.arefnbr

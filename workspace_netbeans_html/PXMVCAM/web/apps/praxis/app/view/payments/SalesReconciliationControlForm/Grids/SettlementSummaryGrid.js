@@ -95,7 +95,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 },
                 columns: [
                     {
-                        text: 'Amount', dataIndex: 'sfeeamou', width: 90,
+                        text: 'Amount', dataIndex: 'discamoun', width: 90,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -103,7 +103,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         }
                     },
                     {
-                        text: 'VAT', dataIndex: 'ivacom12', width: 90,
+                        text: 'VAT', dataIndex: 'discamouni', width: 90,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -113,22 +113,32 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 ]
             },
             {
-                text: 'Serv. Fee',
-                dataIndex: 'servicfeep',
-                width: 100,
-                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = "text-align:right;background-color:#B2DAFA";
-                    value = Ext.util.Format.number(value, '0,000.00');
-                    return value;
-                }
-            },
-            {
-                text: 'Serv. Fee<br>VAT', dataIndex: 'overcom12P', width: 100,
-                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = "text-align:right;background-color:#B2DAFA";
-                    value = Ext.util.Format.number(value, '0,000.00');
-                    return value;
-                }
+                text: 'MSI',
+                defaults: {
+                    menuDisabled: true,
+                    sortable: false,
+                    align: 'center'
+                },
+                columns: [
+                    {
+                        text: 'Serv. Fee',
+                        dataIndex: 'servicefee',
+                        width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'Serv. Fee<br>VAT', dataIndex: 'overcom12', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    }
+                ]
             },
             {
                 text: 'Chargeback',
@@ -147,7 +157,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         }
                     },
                     {
-                        text: 'Commission', dataIndex: 'sfeeamou_CB', width: 100,
+                        text: 'Commission', dataIndex: 'discamoun_CB', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -155,7 +165,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         }
                     },
                     {
-                        text: 'VAT', dataIndex: 'ivacom12_CB', width: 100,
+                        text: 'VAT', dataIndex: 'discamouni_CB', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -173,7 +183,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 },
                 columns: [
                     {
-                        text: 'Amount', dataIndex: 'tgrosamoun_ADJ', width: 100,
+                        text: 'Amount', dataIndex: 'adjustment', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -181,7 +191,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         }
                     },
                     {
-                        text: 'Commission', dataIndex: 'sfeeamou_ADJ', width: 100,
+                        text: 'Commission', dataIndex: 'discamoun_ADJ', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -189,7 +199,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         }
                     },
                     {
-                        text: 'VAT', dataIndex: 'ivacom12_ADJ', width: 100,
+                        text: 'VAT', dataIndex: 'discamouni_ADJ', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -199,7 +209,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 ]
             },
             {
-                text: 'Net Amount<br>to Receive AM',
+                text: 'Net Amount',
                 dataIndex: 'netamoun',
                 width: 130,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -238,6 +248,60 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
                         }
+                    },
+                    {
+                        text: 'Commission',
+                        defaults: {
+                            menuDisabled: true,
+                            sortable: false,
+                            align: 'center'
+                        },
+                        columns: [
+                            {
+                                text: 'Amount', dataIndex: 'sfeeamou', width: 90,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;background-color:#FCF6DC";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'VAT', dataIndex: 'ivacom12', width: 90,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;background-color:#FCF6DC";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        text: 'MSI',
+                        defaults: {
+                            menuDisabled: true,
+                            sortable: false,
+                            align: 'center'
+                        },
+                        columns: [
+                            {
+                                text: 'Serv. Fee',
+                                dataIndex: 'servicfeep',
+                                width: 100,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;background-color:#FCF6DC";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'Serv. Fee<br>VAT', dataIndex: 'overcom12P', width: 100,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;background-color:#FCF6DC";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                }
+                            }
+                        ]
                     },
                     {
                         text: 'Net Amount<br>to Receive AM',

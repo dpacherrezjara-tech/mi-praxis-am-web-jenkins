@@ -1005,7 +1005,7 @@ public class SalesReconciliationBPOController {
                 row.add(new CustomExcelCell(obj.getTGROSAMOUN_CB(), c1));
                 row.add(new CustomExcelCell(obj.getSFEEAMOU_CB(), c1));
                 row.add(new CustomExcelCell(obj.getIVACOM12_CB(), c1));
-                row.add(new CustomExcelCell(obj.getTGROSAMOUN_ADJ(), c1));
+                //row.add(new CustomExcelCell(obj.getTGROSAMOUN_ADJ(), c1));
                 row.add(new CustomExcelCell(obj.getSFEEAMOU_ADJ(), c1));
                 row.add(new CustomExcelCell(obj.getIVACOM12_ADJ(), c1));
                 row.add(new CustomExcelCell(obj.getNETAMOUN(), c1));
