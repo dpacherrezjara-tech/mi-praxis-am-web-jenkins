@@ -2,7 +2,7 @@
 prototype.idEmailca = 'EmailcatalogReportForm';
 prototype.url = CONTEXTPATH + '/EmailcatalogReportForm';
 prototype.idEmailcaDataEn = 'DataEntryEmailcatalogReportForm';
-prototype.widthWindow = 1366;
+prototype.widthWindow = 1450;
 prototype.heightWindow = 768;
 
 Ext.define('Ext.Praxis.view.salesaudit.EmailcatalogReportForm.EmailcatalogReportForm', {
@@ -165,7 +165,7 @@ Ext.define('Ext.Praxis.view.salesaudit.EmailcatalogReportForm.EmailcatalogReport
                                             xtype: 'textfield',
                                             id: prototype.idEmailca + '-txtIATA',
                                             width: 150,
-                                             labelWidth: 40,
+                                            labelWidth: 40,
                                             enableKeyEvents: true,
                                             maxLength: 8,
                                             enforceMaxLength: 8,
@@ -173,6 +173,24 @@ Ext.define('Ext.Praxis.view.salesaudit.EmailcatalogReportForm.EmailcatalogReport
                                             maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
                                             listeners: {
                                                 specialkey: 'onSearchkey'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.idEmailca + '-CmbType',
+                                            fieldLabel: 'Type',
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            width: 200,
+                                            labelWidth: 50,
+                                            labelAlign: 'right',
+                                            emptyText: '',
+                                            listConfig: {
+                                                minWidth: 200
+                                            },
+                                            listeners: {
+                                                afterrender: 'onCmbStatusAfterRender'
                                             }
                                         },
                                         {
@@ -218,17 +236,10 @@ Ext.define('Ext.Praxis.view.salesaudit.EmailcatalogReportForm.EmailcatalogReport
                             id: prototype.idEmailca + '-grid',
                             columnLines: true,
                             autoScroll: true,
-                            width: 1400,
+                            width: 1450,
                             height: 520,
                             columns: {
                                 items: [
-                                    {text: 'CCUST', dataIndex: 'A3903CCUST', align: 'center', width: 75},
-                                    {text: 'IATA', dataIndex: 'A3903AGETE', width: 65},
-                                    {text: 'Agency', dataIndex: 'A3903NOMAGENCY', width: 200, align: 'left', renderer: 'onRendererColumn'},
-                                    {text: 'Email<br> Airline', dataIndex: 'A3903CORER', width: 370, align: 'left', renderer: 'onRendererColumn'},
-                                    {text: 'Email <br> Agency', dataIndex: 'A3903COREG', width: 370, align: 'left', renderer: 'onRendererColumn'},
-                                    {text: 'Status', dataIndex: 'A3903FLAG', width: 120, renderer: 'onRendererColumnStatus'},
-                                    {text: 'On time', dataIndex: '', width: 60, renderer: 'onRendererColumnOnTime'},
                                     {
                                         sortable: false,
                                         xtype: 'actioncolumn',
@@ -241,7 +252,15 @@ Ext.define('Ext.Praxis.view.salesaudit.EmailcatalogReportForm.EmailcatalogReport
                                                 handler: 'onEditActionColumnClick'
                                             }
                                         ]
-                                    }
+                                    }, {text: 'CCUST', dataIndex: 'A3903CCUST', align: 'center', width: 75},
+                                    {text: 'IATA', dataIndex: 'A3903AGETE', width: 65},
+                                    {text: 'Agency', dataIndex: 'A3903NOMAGENCY', width: 200, align: 'left', renderer: 'onRendererColumn'},
+                                    {text: 'Type', dataIndex: 'A3903TYPEDES', width: 200, align: 'left'},
+                                    {text: 'Email<br> Airline', dataIndex: 'A3903CORER', width: 370, align: 'left', renderer: 'onRendererColumn'},
+                                    {text: 'Email <br> Agency', dataIndex: 'A3903COREG', width: 370, align: 'left', renderer: 'onRendererColumn'},
+                                    {text: 'Status', dataIndex: 'A3903FLAG', width: 120, renderer: 'onRendererColumnStatus'},
+                                    {text: 'On time', dataIndex: '', width: 60, renderer: 'onRendererColumnOnTime'}
+
                                 ],
                                 defaults: {
                                     sortable: true,
