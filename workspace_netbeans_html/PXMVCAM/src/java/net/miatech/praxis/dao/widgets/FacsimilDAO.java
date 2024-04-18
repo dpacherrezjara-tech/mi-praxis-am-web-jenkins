@@ -105,12 +105,12 @@ public class FacsimilDAO {
                         if (rst.getString("ASR").substring(472 + (i * x30), 475 + (i * x30)).trim().length() > 0) {
                             String regTax = "";
                             if (this.cambia_caracter(rst.getString("ASR").substring(492 + (i * x30), 493 + (i * x30))).trim().length() > 1) {
-                                if (rst.getString("ASR").substring(475 + (i * x30), 480 + (i * x30)).trim().isBlank()) {
+                                if (rst.getString("ASR").substring(475 + (i * x30), 480 + (i * x30)).trim().equals("")) {
                                     regTax = rst.getString("ASR").substring(472 + (i * x30), 475 + (i * x30)) + " " + rst.getString("ASR").substring(475 + (i * x30), 480 + (i * x30)) + "-" + Long.parseLong(rst.getString("ASR").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ASR").substring(491 + (i * x30), 492 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(492 + (i * x30), 493 + (i * x30))).substring(1, 2);
                                     totTax -= Double.valueOf(Long.parseLong(rst.getString("ASR").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ASR").substring(491 + (i * x30), 492 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(492 + (i * x30), 493 + (i * x30))).substring(1, 2));
                                 }
                             } else {
-                                if (rst.getString("ASR").substring(475 + (i * x30), 480 + (i * x30)).trim().isBlank()) {
+                                if (rst.getString("ASR").substring(475 + (i * x30), 480 + (i * x30)).trim().equals("")) {
                                     regTax = rst.getString("ASR").substring(472 + (i * x30), 475 + (i * x30)) + " " + rst.getString("ASR").substring(475 + (i * x30), 480 + (i * x30)) + " " + Long.parseLong(rst.getString("ASR").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ASR").substring(491 + (i * x30), 492 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(492 + (i * x30), 493 + (i * x30)));
                                     totTax += Double.valueOf(Long.parseLong(rst.getString("ASR").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ASR").substring(491 + (i * x30), 492 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(492 + (i * x30), 493 + (i * x30))));
                                 }
@@ -119,12 +119,12 @@ public class FacsimilDAO {
                             if ((rst.getString("ASR").substring(493 + (i * x30), 496 + (i * x30))).trim().length() > 0) {
                                 String regTax2 = "";
                                 if (this.cambia_caracter(rst.getString("ASR").substring(513 + (i * x30), 514 + (i * x30))).trim().length() > 1) {
-                                    if (rst.getString("ASR").substring(496 + (i * x30), 501 + (i * x30)).trim().isBlank()) {
+                                    if (rst.getString("ASR").substring(496 + (i * x30), 501 + (i * x30)).trim().equals("")) {
                                         regTax2 = rst.getString("ASR").substring(493 + (i * x30), 496 + (i * x30)) + " " + rst.getString("ASR").substring(496 + (i * x30), 501 + (i * x30)) + "-" + Long.parseLong(rst.getString("ASR").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ASR").substring(512 + (i * x30), 513 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(513 + (i * x30), 514 + (i * x30))).substring(1, 2);
                                         totTax -= Double.valueOf(Long.parseLong(rst.getString("ASR").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ASR").substring(512 + (i * x30), 513 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(513 + (i * x30), 514 + (i * x30))).substring(1, 2));
                                     }
                                 } else {
-                                    if (rst.getString("ASR").substring(496 + (i * x30), 501 + (i * x30)).trim().isBlank()) {
+                                    if (rst.getString("ASR").substring(496 + (i * x30), 501 + (i * x30)).trim().equals("")) {
                                         regTax2 = rst.getString("ASR").substring(493 + (i * x30), 496 + (i * x30)) + " " + rst.getString("ASR").substring(496 + (i * x30), 501 + (i * x30)) + " " + Long.parseLong(rst.getString("ASR").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ASR").substring(512 + (i * x30), 513 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(513 + (i * x30), 514 + (i * x30)));
                                         totTax += Double.valueOf(Long.parseLong(rst.getString("ASR").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ASR").substring(512 + (i * x30), 513 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(513 + (i * x30), 514 + (i * x30))));
                                     }
