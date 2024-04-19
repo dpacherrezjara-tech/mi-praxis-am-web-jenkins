@@ -417,14 +417,14 @@ Ext.define('Ext.Praxis.view.widgets.facsimil', {
                                         layout: 'hbox',
                                         items: [
                                             {
-                                                xtype:'textarea',
+                                                xtype: 'textarea',
                                                 fieldLabel: 'Taxes',
                                                 id: me.id + '-txtTax1',
                                                 labelWidth: 50,
-                                                autoScroll:true,
-                                                fieldStyle:'font-size: 10px !important;font-family:"Courier New"',
+                                                autoScroll: true,
+                                                fieldStyle: 'font-size: 10px !important;font-family:"Courier New"',
                                                 labelCls: 'cls-facsimil-label',
-                                                readOnly:true,
+                                                readOnly: true,
                                                 flex: 1
                                             }
                                         ]
@@ -670,26 +670,36 @@ Ext.define('Ext.Praxis.view.widgets.facsimil', {
 
         Ext.getCmp(me.id + '-txtFare').setValue(Ext.String.trim(bean.CUTP1) + "" + Ext.util.Format.number(bean.FARE, '0,000.00'));
 
-        if (bean.EQFR.substring(3) > 0) {
-            if (Ext.String.trim(bean.EQFR.substring(0, 3)).length > 0) {
-                Ext.getCmp(me.id + '-txtEqvFare').setValue(Ext.String.trim(bean.EQFR.substring(0, 3)) + '' + Ext.util.Format.number(bean.EQFR.substring(3), '0,000.00'));
+        if (bean.FUENTE === 'ASR') {
+            if (bean.EQFR.trim() !== '') {
+                Ext.getCmp(me.id + '-txtEqvFare').setValue(Ext.String.trim(bean.EQFR.slice(0, 3)) + '' + Ext.util.Format.number(bean.EQFR.slice(3), '0,000.00'));
             } else {
-                Ext.getCmp(me.id + '-txtEqvFare').setValue(Ext.String.trim(bean.CUTP1) + '' + Ext.util.Format.number(bean.EQFR.substring(3), '0,000.00'));
+                Ext.getCmp(me.id + '-txtEqvFare').setValue('');
             }
         } else {
-            Ext.getCmp(me.id + '-txtEqvFare').setValue('');
+            if (bean.EQFR.substring(3) > 0) {
+                if (Ext.String.trim(bean.EQFR.substring(0, 3)).length > 0) {
+                    Ext.getCmp(me.id + '-txtEqvFare').setValue(Ext.String.trim(bean.EQFR.substring(0, 3)) + '' + Ext.util.Format.number(bean.EQFR.substring(3), '0,000.00'));
+                } else {
+                    Ext.getCmp(me.id + '-txtEqvFare').setValue(Ext.String.trim(bean.CUTP1) + '' + Ext.util.Format.number(bean.EQFR.substring(3), '0,000.00'));
+                }
+            } else {
+                Ext.getCmp(me.id + '-txtEqvFare').setValue('');
+            }
         }
+
+
 
         if (bean.lstTaxes.length > 0) {
             let txtTaxes = '';
-            bean.lstTaxes.forEach(tax=>{
+            bean.lstTaxes.forEach(tax => {
                 txtTaxes = txtTaxes + tax + '\n';
             });
             Ext.getCmp(me.id + '-txtTax1').setValue(txtTaxes);
         }
 
         var total = 0;
-        if (this.tiene_numeros(bean.TOTL.substring(0, 3).replace('.','')) === 1) {
+        if (this.tiene_numeros(bean.TOTL.substring(0, 3).replace('.', '')) === 1) {
             total = bean.TOTL;
         } else {
             total = bean.TOTL.substring(3, bean.TOTL.length);
@@ -755,7 +765,7 @@ Ext.define('Ext.Praxis.view.widgets.facsimil', {
                         } else {
                             me.loadDataGrid(res.lstFaximil.lstReg63);
                         }
-                        
+
                     } else {
                         global.Msg({msg: 'Data not Found.'});
                     }
