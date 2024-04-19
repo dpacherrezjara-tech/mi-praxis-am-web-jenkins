@@ -14,33 +14,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
     width: 1065,
     resizable: false,
     layout: 'fit',
-    height: 'auto',
     modal: true,
     border: false,
     defaults: {
         border: false
     },
     items: [
-        {
-            xtype: 'panel',
-            layout: {
-                type: 'hbox',
-                pack: 'end'
-            },
-            flex: 1,
-            id: prototype.idDE + '-specialPanel',
-            border: false,
-            hidden: true,
-            items: [
-                {
-                    xtype: 'label',
-                    width: 'auto',
-                    id: prototype.idDE + '-specialTitle',
-                    margin: '0 8 0 0',
-                    style: 'color:red;font-weight:bold;font-size:16px;'
-                }
-            ]
-        },
         {
             xtype: 'form',
             id: prototype.idDE + '-informationForm',
@@ -81,6 +60,27 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                 }
             },
             items: [
+                {
+                    xtype: 'panel',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'end'
+                    },
+                    defaults: {},
+                    flex: 1,
+                    id: prototype.idDE + '-specialPanel',
+                    border: false,
+                    hidden: true,
+                    items: [
+                        {
+                            xtype: 'label',
+                            width: 'auto',
+                            id: prototype.idDE + '-specialTitle',
+                            margin: '0 4 0 0',
+                            style: 'color:red;font-weight:bold;font-size:16px;'
+                        }
+                    ]
+                },
                 //<editor-fold defaultstate="collapsed" desc="General Information">
                 {
                     title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">General Information</span>',
@@ -91,26 +91,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Processing Date',
                                     name: 'prda',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Processor',
                                     name: 'desc_PROC',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'P. Merchant ID',
                                     name: 'pmerchid',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Sales Merchant ID',
                                     id: prototype.idDE + '-txtSMERCHID',
                                     name: 'smerchidf',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 }
                             ]
                         },
@@ -120,53 +120,53 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Adjustment ID',
                                     name: 'codchgback',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'ID Transaction',
                                     name: 'iditemt',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Inst. Plan',
                                     name: 'nbrinsta',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Invoice Ref.Nbr',
                                     name: 'invoirn',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 }
                             ]
                         },
                         {
                             items: [
                                 {
-                                    fieldLabel: 'ZoneD',
+                                    fieldLabel: 'Zone',
                                     name: 'zone',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Country',
                                     name: 'scountry',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Inst. Number',
                                     name: 'instanbr',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
-                                    fieldLabel: 'Flag Copl.',
+                                    fieldLabel: 'Flag Compl.',
                                     name: 'fcompl',
                                     labelWidth: 120,
-                                    width: 230,
+                                    width: 240,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -194,7 +194,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Status',
                                     name: 'stconl',
                                     labelWidth: 120,
-                                    width: 230,
+                                    width: 240,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -210,12 +210,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Date',
                                     name: 'fcontl',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'ID',
                                     labelWidth: 120,
-                                    width: 400,
+                                    width: 470,
                                     name: 'idconl'
                                 }
                             ]
@@ -233,13 +233,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'History',
                                     name: 'cerrorhst',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Adjustment',
                                     name: 'codadju',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Description',
@@ -255,7 +255,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Flag Selection',
                                     name: 'fselec',
                                     labelWidth: 120,
-                                    width: 230,
+                                    width: 240,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -270,7 +270,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Code',
                                     name: 'cerror',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Description',
@@ -294,20 +294,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Sale Date',
                                     name: 'sdate',
                                     labelWidth: 120,
-                                    width: 230,
+                                    width: 240,
                                     id: prototype.idDE + '-txtSDATE'
                                 },
                                 {
                                     fieldLabel: 'Payment Date',
                                     name: 'paydate',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Card Type',
                                     name: 'payplatype',
                                     labelWidth: 120,
-                                    width: 230,
+                                    width: 240,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -333,25 +333,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Transac. Date',
                                     name: 'transdate',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Ticket',
                                     name: 'ticket',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'PNR',
                                     name: 'spnr',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Auth Code',
                                     name: 'sauthoc',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 }
                             ]
                         }
@@ -368,7 +368,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Status',
                                     name: 'stval',
                                     labelWidth: 120,
-                                    width: 230,
+                                    width: 240,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -391,20 +391,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Currency',
                                     name: 'scurrency',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
 
                                 {
                                     fieldLabel: 'Qty Tkts',
                                     name: 'qtytkt',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Transac. Amount',
                                     name: 'tgrosamoun',
                                     labelWidth: 120,
-                                    width: 230,
+                                    width: 240,
                                     listeners: {
                                         change: function (field, newValue) {
                                             field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
@@ -419,7 +419,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Rule',
                                     name: 'fregla',
                                     labelWidth: 120,
-                                    width: 230,
+                                    width: 240,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -437,20 +437,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Doc. Type',
                                     name: 'transtype',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Void',
                                     name: 'fvoid',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Sale Amount',
                                     name: 'svfops',
                                     id: prototype.idDE + '-txtSVFOPS',
                                     labelWidth: 120,
-                                    width: 230,
+                                    width: 240,
                                     listeners: {
                                         change: function (field, newValue) {
                                             field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
@@ -465,26 +465,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'ADM',
                                     name: 'fadm',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Reverse Policy',
                                     name: 'freversa',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Reversa ADM',
                                     name: 'frevadm',
                                     labelWidth: 120,
-                                    width: 230
+                                    width: 240
                                 },
                                 {
                                     fieldLabel: 'Diff. Amount',
                                     name: 'difference',
                                     id: prototype.idDE + '-txtDifference',
                                     labelWidth: 120,
-                                    width: 230,
+                                    width: 240,
                                     listeners: {
                                         change: function (field, newValue) {
                                             field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
@@ -831,7 +831,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                         align: 'center'
                     },
                     items: [
-
                         {
                             xtype: 'tabpanel',
                             id: prototype.idDE + '-tabMain',
@@ -840,7 +839,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             border: false,
                             margin: '0 1 0 1',
                             bodyStyle: 'background: transparent',
-                            layout: 'fit',
+                            //layout: 'fit',
                             defaults: {
                                 //margin: '0 5 0 5',
                                 height: 'auto',
@@ -1215,12 +1214,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     title: 'Match',
                                     itemId: 'M',
                                     id: prototype.idDE + '-tabDesglose',
-                                    //maxHeight: 160,
                                     items: [
                                         {
                                             xtype: 'grid',
                                             border: false,
                                             id: prototype.idDE + '-gridDesglose',
+                                            maxHeight: 165,
                                             emptyText: 'No cards available',
                                             columns: {
                                                 defaults: {
@@ -1345,18 +1344,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             xtype: 'grid',
                                             border: false,
                                             hidden: true,
+                                            maxHeight: 188,
                                             id: prototype.idDE + '-gridDesgloseCHBK',
-                                            viewConfig: {
-                                                stripeRows: true,
-                                                enableTextSelection: true,
-                                                markDirty: false
-                                            },
-                                            columnLines: true,
-                                            autoScroll: true,
-                                            minHeight: 100,
-                                            height: 'auto',
-                                            maxHeight: 210,
-                                            width: '100%',
                                             emptyText: 'No cards available',
                                             columns: {
                                                 defaults: {
