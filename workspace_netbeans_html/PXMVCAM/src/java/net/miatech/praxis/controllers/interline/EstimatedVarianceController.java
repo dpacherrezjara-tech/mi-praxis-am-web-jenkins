@@ -256,27 +256,27 @@ public class EstimatedVarianceController extends BaseController {
             CH1_02.setCellValue("Estimation Gross");
             Cell CH1_03 = row.createCell(3);
             CH1_03.setCellValue("Estimation ISC");
-            Cell CH1_04 = row.createCell(4);
-            CH1_04.setCellValue("Estimation Tax");
-            Cell CH1_05 = row.createCell(5);
+            //Cell CH1_04 = row.createCell(4);
+            //CH1_04.setCellValue("Estimation Tax");
+            Cell CH1_05 = row.createCell(4);
             CH1_05.setCellValue("Estimation Other");
             //Real Header
-            Cell CH1_06 = row.createCell(6);
+            Cell CH1_06 = row.createCell(5);
             CH1_06.setCellValue("Real Gross");
-            Cell CH1_07 = row.createCell(7);
+            Cell CH1_07 = row.createCell(6);
             CH1_07.setCellValue("Real ISC");
-            Cell CH1_08 = row.createCell(8);
-            CH1_08.setCellValue("Real Tax");
-            Cell CH1_09 = row.createCell(9);
+            //Cell CH1_08 = row.createCell(8);
+            //CH1_08.setCellValue("Real Tax");
+            Cell CH1_09 = row.createCell(7);
             CH1_09.setCellValue("Real Other");
             //Percentage Variation Header
-            Cell CH1_10 = row.createCell(10);
+            Cell CH1_10 = row.createCell(8);
             CH1_10.setCellValue("Percentage Variation Gross");
-            Cell CH1_11 = row.createCell(11);
+            Cell CH1_11 = row.createCell(9);
             CH1_11.setCellValue("Percentage Variation ISC");
-            Cell CH1_12 = row.createCell(12);
-            CH1_12.setCellValue("Percentage Variation Tax");
-            Cell CH1_13 = row.createCell(13);
+            //Cell CH1_12 = row.createCell(12);
+            //CH1_12.setCellValue("Percentage Variation Tax");
+            Cell CH1_13 = row.createCell(10);
             CH1_13.setCellValue("Percentage Variation Other");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
@@ -290,23 +290,23 @@ public class EstimatedVarianceController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
+            //sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
+            //sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
+            //sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
             CH1_02.setCellStyle(headerStyle);
             CH1_03.setCellStyle(headerStyle);
-            CH1_04.setCellStyle(headerStyle);
+            //CH1_04.setCellStyle(headerStyle);
             CH1_05.setCellStyle(headerStyle);
             CH1_06.setCellStyle(headerStyle);
             CH1_07.setCellStyle(headerStyle);
-            CH1_08.setCellStyle(headerStyle);
+            //CH1_08.setCellStyle(headerStyle);
             CH1_09.setCellStyle(headerStyle);
             CH1_10.setCellStyle(headerStyle);
             CH1_11.setCellStyle(headerStyle);
-            CH1_12.setCellStyle(headerStyle);
+            //CH1_12.setCellStyle(headerStyle);
             CH1_13.setCellStyle(headerStyle);
 
             sheet.autoSizeColumn(0, true);
@@ -320,9 +320,9 @@ public class EstimatedVarianceController extends BaseController {
             sheet.autoSizeColumn(8, true);
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
-            sheet.autoSizeColumn(11, true);
-            sheet.autoSizeColumn(12, true);
-            sheet.autoSizeColumn(13, true);
+            //sheet.autoSizeColumn(11, true);
+            //sheet.autoSizeColumn(12, true);
+            //sheet.autoSizeColumn(13, true);
 
             ++vj;
             // </editor-fold>
@@ -335,33 +335,33 @@ public class EstimatedVarianceController extends BaseController {
                 Cell cell51 = row.createCell(1);
                 Cell cell52 = row.createCell(2);
                 Cell cell53 = row.createCell(3);
-                Cell cell54 = row.createCell(4);
-                Cell cell55 = row.createCell(5);
-                Cell cell56 = row.createCell(6);
-                Cell cell57 = row.createCell(7);
-                Cell cell58 = row.createCell(8);
-                Cell cell59 = row.createCell(9);
-                Cell cell60 = row.createCell(10);
-                Cell cell61 = row.createCell(11);
-                Cell cell62 = row.createCell(12);
-                Cell cell63 = row.createCell(13);
+                //Cell cell54 = row.createCell(4);
+                Cell cell55 = row.createCell(4);
+                Cell cell56 = row.createCell(5);
+                Cell cell57 = row.createCell(6);
+                //Cell cell58 = row.createCell(8);
+                Cell cell59 = row.createCell(7);
+                Cell cell60 = row.createCell(8);
+                Cell cell61 = row.createCell(9);
+                //Cell cell62 = row.createCell(12);
+                Cell cell63 = row.createCell(10);
 
                 cell50.setCellValue(listaData.get(vi).LCODE);
                 cell51.setCellValue(listaData.get(vi).DESCRIPTION);
                 //Estimation
                 cell52.setCellValue(listaData.get(vi).EGROSS);
                 cell53.setCellValue(listaData.get(vi).EISC);
-                cell54.setCellValue(listaData.get(vi).ETAX);
+                //cell54.setCellValue(listaData.get(vi).ETAX);
                 cell55.setCellValue(listaData.get(vi).EOTHER);
                 //Real
                 cell56.setCellValue(listaData.get(vi).LGROSS);
                 cell57.setCellValue(listaData.get(vi).LISC);
-                cell58.setCellValue(listaData.get(vi).LTAX);
+                //cell58.setCellValue(listaData.get(vi).LTAX);
                 cell59.setCellValue(listaData.get(vi).LOTHER);
                 //Variance
                 cell60.setCellValue(listaData.get(vi).VGROSS);
                 cell61.setCellValue(listaData.get(vi).VISC);
-                cell62.setCellValue(listaData.get(vi).VTAX);
+                //cell62.setCellValue(listaData.get(vi).VTAX);
                 cell63.setCellValue(listaData.get(vi).VOTHER);
                 
 
@@ -369,15 +369,15 @@ public class EstimatedVarianceController extends BaseController {
                 cell51.setCellStyle(bodyStyle);
                 cell52.setCellStyle(bodyStyle);
                 cell53.setCellStyle(bodyStyle);
-                cell54.setCellStyle(bodyStyle);
+                //cell54.setCellStyle(bodyStyle);
                 cell55.setCellStyle(bodyStyle);
                 cell56.setCellStyle(bodyStyle);
                 cell57.setCellStyle(bodyStyle);
-                cell58.setCellStyle(bodyStyle);
+                //cell58.setCellStyle(bodyStyle);
                 cell59.setCellStyle(bodyStyle);
                 cell60.setCellStyle(bodyStyle);
                 cell61.setCellStyle(bodyStyle);
-                cell62.setCellStyle(bodyStyle);
+                //cell62.setCellStyle(bodyStyle);
                 cell63.setCellStyle(bodyStyle);
 
                 sheet.autoSizeColumn(0, true);
@@ -391,9 +391,9 @@ public class EstimatedVarianceController extends BaseController {
                 sheet.autoSizeColumn(8, true);
                 sheet.autoSizeColumn(9, true);
                 sheet.autoSizeColumn(10, true);
-                sheet.autoSizeColumn(11, true);
-                sheet.autoSizeColumn(12, true);
-                sheet.autoSizeColumn(13, true);
+                //sheet.autoSizeColumn(11, true);
+                //sheet.autoSizeColumn(12, true);
+                //sheet.autoSizeColumn(13, true);
                 // </editor-fold>
                 
                 iter.next();
