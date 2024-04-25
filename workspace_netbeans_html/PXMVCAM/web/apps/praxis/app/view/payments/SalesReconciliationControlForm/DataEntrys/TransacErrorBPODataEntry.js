@@ -36,7 +36,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                     pack: 'center'
                 },
                 border: true,
-                margin: '5 5 5 5',
+                margin: '2 2 2 2',
                 width: '100%',
                 style: {
                     backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
@@ -66,6 +66,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                         type: 'hbox',
                         pack: 'end'
                     },
+                    margin: 0,
                     defaults: {},
                     flex: 1,
                     id: prototype.idDE + '-specialPanel',
@@ -76,7 +77,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             xtype: 'label',
                             width: 'auto',
                             id: prototype.idDE + '-specialTitle',
-                            margin: '0 4 0 0',
+                            //margin: '0 4 0 0',
                             style: 'color:red;font-weight:bold;font-size:16px;'
                         }
                     ]

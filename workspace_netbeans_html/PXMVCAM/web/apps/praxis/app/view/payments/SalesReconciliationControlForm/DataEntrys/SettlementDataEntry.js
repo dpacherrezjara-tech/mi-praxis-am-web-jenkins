@@ -281,8 +281,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                     width: 230
                                 },
                                 {
-                                    fieldLabel: 'Payment Amount',
-                                    name: 'tgrosampay',
+                                    fieldLabel: 'Concil. Amount',
+                                    name: 'svfops',
                                     labelWidth: 120,
                                     width: 230,
                                     listeners: {
@@ -291,12 +291,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                         }
                                     }
                                 },
-                                {
-                                    fieldLabel: 'P. Currency',
-                                    name: 'pcurrency',
-                                    labelWidth: 120,
-                                    width: 230
-                                }
+                                
                             ]
                         },
                         {
@@ -366,12 +361,34 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                             ]
                         },
                         {
-                            layout: {
-                                type: 'hbox',
-                                pack: 'center'
-                            },
+//                            layout: {
+//                                type: 'hbox',
+//                                pack: 'center'
+//                            },
                             items: [
-
+                                {
+                                    fieldLabel: 'Payment Amount',
+                                    name: 'tgrosampay',
+                                    labelWidth: 120,
+                                    width: 230,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
+                                        }
+                                    }
+                                },
+                                {
+                                    fieldLabel: 'P. Currency',
+                                    name: 'pcurrency',
+                                    labelWidth: 120,
+                                    width: 230
+                                },
+                                {
+                                    fieldLabel: 'Exch. Rate',
+                                    name: 'exchrate',
+                                    labelWidth: 120,
+                                    width: 230
+                                },
                                 {
                                     fieldLabel: 'NET Amount',
                                     name: 'netopay',
@@ -421,8 +438,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Rule',
                                     name: 'fregla',
-                                    labelWidth: 60,
-                                    width: 170,
+                                    labelWidth: 50,
+                                    width: 160,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -439,8 +456,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Flag Compl.',
                                     name: 'fcompl',
-                                    labelWidth: 100,
-                                    width: 210,
+                                    labelWidth: 90,
+                                    width: 190,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -455,16 +472,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                     value: 'None'
                                 },
                                 {
-                                    fieldLabel: 'Concil. Amount',
-                                    name: 'svfops',
-                                    labelWidth: 120,
-                                    width: 230,
-                                    listeners: {
-                                        change: function (field, newValue) {
-                                            field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
-                                        }
-                                    }
+                                    fieldLabel: 'Adjustment',
+                                    name: 'codadju',
+                                    labelWidth: 80,
+                                    width: 120
                                 },
+                                {
+                                    fieldLabel: 'Description',
+                                    name: 'desc_ADJU',
+                                    labelWidth: 85,
+                                    width: 200
+                                }
                             ]
                         }
                     ]
