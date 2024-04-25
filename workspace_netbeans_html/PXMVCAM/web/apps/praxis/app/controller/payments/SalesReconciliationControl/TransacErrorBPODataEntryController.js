@@ -237,6 +237,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             return;
         }
         const panelAdju = Ext.getCmp(prototype.idDE + '-panelAdjustments');
+        //debugger;
         panelAdju.show();
 
         const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments');
