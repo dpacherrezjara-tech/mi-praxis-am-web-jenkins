@@ -524,6 +524,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
+                                },
+                                {
+                                    xtype: 'checkbox',
+                                    fieldLabel: 'MSI',
+                                    labelWidth: 40,
+                                    width: 70,
+                                    name: 'IN_NBRINSTA',
+                                    inputValue: '0',
+                                    uncheckedValue: '', // Establecer el valor cuando esté desmarcado como una cadena vacía
+                                    listeners: {
+                                        change: function (checkbox, newValue) {}
+                                    }
                                 }
                             ]
                         },
