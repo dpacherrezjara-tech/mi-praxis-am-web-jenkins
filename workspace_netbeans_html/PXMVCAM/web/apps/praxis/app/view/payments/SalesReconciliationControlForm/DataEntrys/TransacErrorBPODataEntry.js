@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
     controller: 'TransacErrorBPODataEntryController',
     title: 'Transaction Error - Form',
     header: true,
-    width: 1075,
+    width: 1065,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -21,1373 +21,844 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
     },
     items: [
         {
-            xtype: 'panel',
+            xtype: 'form',
+            id: prototype.idDE + '-informationForm',
+            layout: {
+                type: 'vbox',
+                pack: 'center'
+            },
+            border: false,
+            width: '100%',
             defaults: {
-                style: 'margin: 3px;',
-                border: false
+                xtype: 'fieldset',
+                layout: {
+                    type: 'vbox',
+                    pack: 'center'
+                },
+                border: true,
+                margin: '5 5 5 5',
+                width: '100%',
+                style: {
+                    backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
+                },
+                defaults: {
+                    xtype: 'panel',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'left'
+                    },
+                    width: '100%',
+                    border: false,
+                    bodyStyle: 'background: transparent',
+                    defaults: {
+                        xtype: 'textfield',
+                        margin: '5 8 5 8',
+                        labelStyle: 'text-align:left;font-weight: bolder;',
+                        fieldStyle: 'text-align:center;',
+                        editable: false
+                    }
+                }
             },
             items: [
                 {
                     xtype: 'panel',
-                    bodyStyle: 'background: transparent;"',
-                    layout: 'vbox',
-                    width: 1075,
-                    defaults: {
-                        anchor: '100%'
+                    layout: {
+                        type: 'hbox',
+                        pack: 'end'
+                    },
+                    defaults: {},
+                    flex: 1,
+                    id: prototype.idDE + '-specialPanel',
+                    border: false,
+                    hidden: true,
+                    items: [
+                        {
+                            xtype: 'label',
+                            width: 'auto',
+                            id: prototype.idDE + '-specialTitle',
+                            margin: '0 4 0 0',
+                            style: 'color:red;font-weight:bold;font-size:16px;'
+                        }
+                    ]
+                },
+                //<editor-fold defaultstate="collapsed" desc="General Information">
+                {
+                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">General Information</span>',
+                    items: [
+                        {
+                            items: [
+                                {
+                                    fieldLabel: 'Processing Date',
+                                    name: 'prda',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Processor',
+                                    name: 'desc_PROC',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'P. Merchant ID',
+                                    name: 'pmerchid',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Sales Merchant ID',
+                                    id: prototype.idDE + '-txtSMERCHID',
+                                    name: 'smerchidf',
+                                    labelWidth: 120,
+                                    width: 240
+                                }
+                            ]
+                        },
+                        {
+                            items: [
+                                {
+                                    fieldLabel: 'Adjustment ID',
+                                    name: 'codchgback',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'ID Transaction',
+                                    name: 'iditemt',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Inst. Plan',
+                                    name: 'nbrinsta',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Invoice Ref.Nbr',
+                                    name: 'invoirn',
+                                    labelWidth: 120,
+                                    width: 240
+                                }
+                            ]
+                        },
+                        {
+                            items: [
+                                {
+                                    fieldLabel: 'Zone',
+                                    name: 'zone',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Country',
+                                    name: 'scountry',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Inst. Number',
+                                    name: 'instanbr',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Flag Compl.',
+                                    name: 'fcompl',
+                                    labelWidth: 120,
+                                    width: 240,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            const opts = {
+                                                '1': 'Plusgrade',
+                                                '2': 'Ligas',
+                                                '3': 'Tablet',
+                                                '4': 'BPO'
+                                            };
+                                            field.setRawValue(opts[newValue] || '');
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                    ]
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Accounting Information">
+                {
+                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Accounting Information</span>',
+                    items: [
+                        {
+                            items: [
+                                {
+                                    fieldLabel: 'Status',
+                                    name: 'stconl',
+                                    labelWidth: 120,
+                                    width: 240,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            const opts = {
+                                                '1': 'Accounted',
+                                                '2': 'Debug'
+                                            };
+                                            field.setRawValue(opts[newValue] || 'Pending');
+                                        }
+                                    },
+                                    value: 'Pending'
+                                },
+                                {
+                                    fieldLabel: 'Date',
+                                    name: 'fcontl',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'ID',
+                                    labelWidth: 120,
+                                    width: 470,
+                                    name: 'idconl'
+                                }
+                            ]
+                        }
+                    ]
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Error Information">
+                {
+                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Error Information</span>',
+                    items: [
+                        {
+                            items: [
+                                {
+                                    fieldLabel: 'History',
+                                    name: 'cerrorhst',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Adjustment',
+                                    name: 'codadju',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Description',
+                                    name: 'desc_ADJU',
+                                    labelWidth: 120,
+                                    width: 330
+                                }
+                            ]
+                        },
+                        {
+                            items: [
+                                {
+                                    fieldLabel: 'Flag Selection',
+                                    name: 'fselec',
+                                    labelWidth: 120,
+                                    width: 240,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            const opts = {
+                                                'L': 'Load',
+                                                'D': 'Duplicated'
+                                            };
+                                            field.setRawValue(opts[newValue] || '');
+                                        }
+                                    }
+                                },
+                                {
+                                    fieldLabel: 'Code',
+                                    name: 'cerror',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Description',
+                                    name: 'desc_ERROR',
+                                    labelWidth: 120,
+                                    width: 330
+                                }
+                            ]
+                        }
+                    ]
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Sale Information">
+                {
+                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Sale Information</span>',
+                    id: prototype.idDE + '-fsSaleInfo',
+                    items: [
+                        {
+                            items: [
+                                {
+                                    fieldLabel: 'Sale Date',
+                                    name: 'sdate',
+                                    labelWidth: 120,
+                                    width: 240,
+                                    id: prototype.idDE + '-txtSDATE'
+                                },
+                                {
+                                    fieldLabel: 'Payment Date',
+                                    name: 'paydate',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Card Type',
+                                    name: 'payplatype',
+                                    labelWidth: 120,
+                                    width: 240,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            const opts = {
+                                                'D': 'Debit',
+                                                'C': 'Credit'
+                                            };
+                                            field.setRawValue(opts[newValue] || '');
+                                        }
+                                    }
+                                },
+                                {
+                                    fieldLabel: 'Card Number',
+                                    name: 'scardn',
+                                    labelWidth: 120,
+                                    width: 240
+                                }
+
+                            ]
+                        },
+                        {
+                            items: [
+                                {
+                                    fieldLabel: 'Transac. Date',
+                                    name: 'transdate',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Ticket',
+                                    name: 'ticket',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'PNR',
+                                    name: 'spnr',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Auth Code',
+                                    name: 'sauthoc',
+                                    labelWidth: 120,
+                                    width: 240
+                                }
+                            ]
+                        }
+                    ]
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Conciliation">
+                {
+                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Conciliation</span>',
+                    items: [
+                        {
+                            items: [
+                                {
+                                    fieldLabel: 'Status',
+                                    name: 'stval',
+                                    labelWidth: 120,
+                                    width: 240,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            const opts = {
+                                                '0': 'Stand By',
+                                                '1': 'Match',
+                                                '2': 'Sales Without Sett.',
+                                                '3': 'Settl. Without Sales',
+                                                '4': 'Match Diff.',
+                                                '5': 'Match Manual',
+                                                '6': 'Forced Match',
+                                                '7': 'Compensation Match',
+                                                '8': 'Pending RFND'
+                                            };
+                                            field.setRawValue(opts[newValue] || '');
+                                        }
+                                    }
+
+                                },
+                                {
+                                    fieldLabel: 'Currency',
+                                    name: 'scurrency',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+
+                                {
+                                    fieldLabel: 'Qty Tkts',
+                                    name: 'qtytkt',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Transac. Amount',
+                                    name: 'tgrosamoun',
+                                    labelWidth: 120,
+                                    width: 240,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            items: [
+                                {
+                                    fieldLabel: 'Rule',
+                                    name: 'fregla',
+                                    labelWidth: 120,
+                                    width: 240,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            const opts = {
+                                                '1': 'Ticket',
+                                                '2': 'PNR',
+                                                '3': 'C.Card',
+                                                '4': 'Desg. Manual',
+                                                '5': 'Desg. Transac.'
+                                            };
+                                            field.setRawValue(opts[newValue] || '');
+                                        }
+                                    }
+                                },
+                                {
+                                    fieldLabel: 'Doc. Type',
+                                    name: 'transtype',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Void',
+                                    name: 'fvoid',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Sale Amount',
+                                    name: 'svfops',
+                                    id: prototype.idDE + '-txtSVFOPS',
+                                    labelWidth: 120,
+                                    width: 240,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            items: [
+                                {
+                                    fieldLabel: 'ADM',
+                                    name: 'fadm',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Reverse Policy',
+                                    name: 'freversa',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Reversa ADM',
+                                    name: 'frevadm',
+                                    labelWidth: 120,
+                                    width: 240
+                                },
+                                {
+                                    fieldLabel: 'Diff. Amount',
+                                    name: 'difference',
+                                    id: prototype.idDE + '-txtDifference',
+                                    labelWidth: 120,
+                                    width: 240,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Scanner Inputs">
+                {
+                    xtype: 'fieldset',
+                    id: prototype.idDE + '-scannerInputs',
+                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:12px;">Scanner</span>',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'center'
+                    },
+                    border: true,
+                    width: '100%',
+                    style: {
+                        backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
                     },
                     items: [
-                        //<editor-fold defaultstate="collapsed" desc="Descripcion TRNX">
                         {
                             xtype: 'form',
-                            id: prototype.idDE + '-informationForm',
+                            id: prototype.idDE + '-scannerForm',
                             layout: {
                                 type: 'vbox',
                                 pack: 'center'
                             },
+                            width: '100%',
                             border: false,
-                            items: [
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    margin: '4 2 4 8',
-                                    width: '100%',
-                                    defaults: {
-                                        anchor: '100%'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            text: 'General Information',
-                                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
-                                            bodyStyle: 'background:#E5ECEF;',
-                                            fontSize: '11',
-                                            width: 234,
-                                            height: 20
-                                        },
-                                        {
-                                            xtype: 'panel',
-                                            layout: {
-                                                type: 'hbox',
-                                                pack: 'end'
-                                            },
-                                            flex: 1,
-                                            id: prototype.idDE + '-specialPanel',
-                                            border: false,
-                                            hidden: true,
-                                            items: [
-                                                {
-                                                    xtype: 'label',
-                                                    width: 'auto',
-                                                    id: prototype.idDE + '-specialTitle',
-                                                    margin: '0 8 0 0',
-                                                    style: 'color:red;font-weight:bold;font-size:16px;'
-                                                }
-                                            ]
-                                        }
-                                    ]
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                xtype: 'panel',
+                                width: '100%',
+                                bodyStyle: 'background: transparent',
+                                border: false,
+                                layout: {
+                                    type: 'hbox',
+                                    pack: 'center'
                                 },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    bodyStyle: 'background:#efe5e5;',
-                                    margin: '0 2 0 20',
-                                    defaults: {
-                                        anchor: '100%',
-                                        width: 1080
-                                    },
-                                    items: [
-                                        {xtype: 'tbspacer', width: 7, height: 24},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Processing Date',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            //id:prototype.idDE+ '-de-txtPRDA',
-                                            name: 'prda',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Processor',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            //id:prototype.idDE+ '-de-txtPROCTYPE',
-                                            name: 'desc_PROC',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'P. Merchant ID',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            //id:prototype.idDE+ '-de-txtPMERCHID',
-                                            name: 'pmerchid',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            id: prototype.idDE + '-txtFromDateSMERCHID',
-                                            text: 'Sales Merchant ID',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            //id:prototype.idDE+ '-de-txtSMERCHID',
-                                            name: 'smerchidf',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 5}
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    bodyStyle: 'background:#efe5e5;',
-                                    margin: '0 2 0 20',
-                                    items: [
-                                        {xtype: 'tbspacer', width: 7, height: 24},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Adjustment ID',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtADJUID',
-                                            fieldStyle: 'text-align:center',
-                                            name: 'codchgback',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'ID Transaction',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtIDITEMT',
-                                            name: 'iditemt',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Inst. Plan',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtNBRINSTA',
-                                            name: 'nbrinsta',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Invoice Ref.Nbr',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtINVOIRN',
-                                            name: 'invoirn',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 5}
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    bodyStyle: 'background:#efe5e5;',
-                                    margin: '0 2 0 20',
-                                    items: [
-                                        {xtype: 'tbspacer', width: 7, height: 24},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Zone',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtZone',
-                                            name: 'zone',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Country',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtCountry',
-                                            fieldStyle: 'text-align:center',
-                                            name: 'scountry',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Inst. Number',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtINSTANBR',
-                                            fieldStyle: 'text-align:center',
-                                            name: 'instanbr',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Flag Compl.',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtFCOMPL',
-                                            name: 'fcompl',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100,
-                                            listeners: {
-                                                change: function (field, newValue) {
-                                                    const opts = {
-                                                        '1': 'Plusgrade',
-                                                        '2': 'Ligas',
-                                                        '3': 'Tablet',
-                                                        '4': 'BPO'
-                                                    };
-                                                    field.setRawValue(opts[newValue] || '');
-                                                }
-                                            }
-                                        },
-                                        {xtype: 'tbspacer', width: 5}
-                                    ]
-                                },
-                                {
-                                    xtype: 'label',
-                                    text: 'Accounting Information',
-                                    style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
-                                    bodyStyle: 'background:#E5ECEF;',
-                                    fontSize: '11',
-                                    width: 234,
-                                    height: 20,
-                                    margin: '4 2 4 8'
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    bodyStyle: 'background:#efe5e5;',
-                                    margin: '0 2 0 20',
-                                    items: [
-                                        {xtype: 'tbspacer', width: 7, height: 24},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Status',
-                                            textAlign: 'center',
-                                            paddingLeft: 3,
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtSTCONL',
-                                            name: 'stconl',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            readOnly: true,
-                                            fieldStyle: 'text-align:center;',
-                                            width: 105,
-                                            listeners: {
-                                                change: function (field, newValue) {
-                                                    const opts = {
-                                                        '1': 'Accounted',
-                                                        '2': 'Debug'
-                                                    };
-                                                    field.setRawValue(opts[newValue] || 'Pending');
-                                                }
-                                            },
-                                            value: 'Pending'
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Date',
-                                            textAlign: 'center',
-                                            paddingLeft: 3,
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtFCONTL',
-                                            name: 'fcontl',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            fieldStyle: 'text-align:left;',
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'ID',
-                                            textAlign: 'center',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtIDCONL',
-                                            name: 'idconl',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            fieldStyle: 'text-align:left;',
-                                            readOnly: true,
-                                            width: 355
-                                        },
-                                        {xtype: 'tbspacer', width: 5}
-                                    ]
-                                },
-                                {
-                                    xtype: 'label',
-                                    text: 'Error Information',
-                                    style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
-                                    bodyStyle: 'background:#E5ECEF;',
-                                    fontSize: '11',
-                                    width: 280,
-                                    height: 20,
-                                    margin: '4 2 4 8'
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    margin: '0 2 0 20',
-                                    bodyStyle: 'background:#efe5e5;',
-                                    items: [
-                                        {xtype: 'tbspacer', width: 7, height: 24},
-                                        {
-                                            xtype: 'label',
-                                            text: 'History',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-txtCERRORHST',
-                                            name: 'cerrorhst',
-                                            fieldStyle: 'text-align:right',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100,
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Adjustsment',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-txtCERROIN',
-                                            name: 'codadju',
-                                            fieldStyle: 'text-align:right',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Description',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-txtDES_CERROIN',
-                                            name: 'desc_ADJU',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 200
-                                        },
-                                        {xtype: 'tbspacer', width: 5},
-                                        {xtype: 'tbspacer', width: 160}
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    margin: '0 2 0 20',
-                                    bodyStyle: 'background:#efe5e5;',
-                                    items: [
-                                        {xtype: 'tbspacer', width: 7, height: 24},
-                                        {
-                                            xtype: 'label',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            text: 'Flag Selection',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-txtFSELEC',
-                                            name: 'fselec',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100,
-                                            listeners: {
-                                                change: function (field, newValue) {
-                                                    const opts = {
-                                                        'L': 'Load',
-                                                        'D': 'Duplicated'
-                                                    };
-                                                    field.setRawValue(opts[newValue] || '');
-                                                }
-                                            }
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            id: prototype.idDE + '-txtFromDateCERROR',
-                                            text: 'Sett. vs Sales',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-txtCERROR',
-                                            name: 'cerror',
-                                            fieldStyle: 'text-align:right',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Description',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-txtDES_CERROR',
-                                            name: 'desc_ERROR',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 200
-                                        },
-                                        {xtype: 'tbspacer', width: 5},
-                                        {xtype: 'tbspacer', width: 160}
-                                    ]
-                                },
-                                {
-                                    xtype: 'label',
-                                    text: 'Sales Information',
-                                    id: prototype.idDE + '-txtFromDateTITULO',
-                                    style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
-                                    bodyStyle: 'background:#E5ECEF;',
-                                    fontSize: '11',
-                                    width: 234,
-                                    height: 20,
-                                    margin: '4 2 4 8'
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    bodyStyle: 'background:#efe5e5;',
-                                    margin: '0 2 0 20',
-                                    items: [
-                                        {xtype: 'tbspacer', width: 7, height: 24},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Sales Date',
-                                            id: prototype.idDE + '-txtFromDateBSUMDATE',
-                                            textAlign: 'center',
-                                            paddingLeft: 3,
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtSDATE',
-                                            name: 'sdate',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            readOnly: true,
-                                            fieldStyle: 'text-align:center;',
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Payment Date',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtPAYDATE',
-                                            name: 'paydate',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Card Type',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtPASSED_DAYS',
-                                            name: 'payplatype',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100,
-                                            listeners: {
-                                                change: function (field, newValue) {
-                                                    const opts = {
-                                                        'D': 'Debit',
-                                                        'C': 'Credit'
-                                                    };
-                                                    field.setRawValue(opts[newValue] || '');
-                                                }
-                                            }
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Card Account Nbr.',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtSCARDN',
-                                            name: 'scardn',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 105
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    margin: '0 2 0 20',
-                                    bodyStyle: 'background:#efe5e5;',
-                                    items: [
-                                        {xtype: 'tbspacer', width: 7, height: 24},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Transact. Date',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtTRANSDATE',
-                                            name: 'transdate',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'TICKET',
-                                            textAlign: 'center',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtTICKET',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            name: 'ticket',
-                                            fieldStyle: 'text-align:center;',
-                                            editable: false,
-                                            width: 100,
-                                            maskRe: /[0-9]/,
-                                            enforceMaxLength: true,
-                                            maxLength: 13
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'PNR',
-                                            textAlign: 'center',
-                                            paddingLeft: 3,
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtSPNR',
-                                            name: 'spnr',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            fieldStyle: 'text-align:center;',
-                                            editable: false,
-                                            enforceMaxLength: true,
-                                            maxLength: 6,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Approval Code',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtSAUTHOC',
-                                            name: 'sauthoc',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 5}
-                                    ]
-                                },
-                                {
-                                    xtype: 'label',
-                                    text: 'Conciliate',
-                                    style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
-                                    bodyStyle: 'background:#E5ECEF;',
-                                    fontSize: '11',
-                                    width: 280,
-                                    height: 20,
-                                    margin: '4 2 4 8'
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    margin: '0 2 0 20',
-                                    bodyStyle: 'background:#efe5e5;',
-                                    items: [
-                                        {xtype: 'tbspacer', width: 7, height: 24},
-                                        {
-                                            xtype: 'label',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            text: 'Status',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-txtSTVAL',
-                                            name: 'stval',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100,
-                                            listeners: {
-                                                change: function (field, newValue) {
-                                                    const opts = {
-                                                        '0': 'Stand By',
-                                                        '1': 'Match',
-                                                        '2': 'Sales Without Sett.',
-                                                        '3': 'Settl. Without Sales',
-                                                        '4': 'Match Diff.',
-                                                        '5': 'Match Manual',
-                                                        '6': 'Forced Match',
-                                                        '7': 'Compensation Match',
-                                                        '8': 'Pending RFND'
-                                                    };
-                                                    field.setRawValue(opts[newValue] || '');
-                                                }
-                                            }
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Currency',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtPCURRENCY',
-                                            fieldStyle: 'text-align:center',
-                                            name: 'scurrency',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Qty Tkts',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtQTYTKT',
-                                            name: 'qtytkt',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Transact. Amount',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtTGROSAMPAY',
-                                            name: 'tgrosamoun',
-                                            fieldStyle: 'text-align:right',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100,
-                                            listeners: {
-                                                change: function (field, newValue) {
-                                                    field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
-                                                }
-                                            }
-                                        },
-                                        {xtype: 'tbspacer', width: 5}
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    margin: '0 2 0 20',
-                                    bodyStyle: 'background:#efe5e5;',
-                                    items: [
-                                        {xtype: 'tbspacer', width: 7, height: 24},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Rule',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtdescFREGLA',
-                                            name: 'fregla',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100,
-                                            listeners: {
-                                                change: function (field, newValue) {
-                                                    const opts = {
-                                                        '1': 'Ticket',
-                                                        '2': 'PNR',
-                                                        '3': 'C.Card',
-                                                        '4': 'Desg. Manual',
-                                                        '5': 'Desg. Transac.'
-                                                    };
-                                                    field.setRawValue(opts[newValue] || '');
-                                                }
-                                            }
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Doc. Type',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtTRANSTYPE',
-                                            name: 'transtype',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Void',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtFVOID',
-                                            name: 'fvoid',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            id: prototype.idDE + '-txtFromDateSVFOPS',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            text: 'Sales Amount',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtSVFOPS',
-                                            name: 'svfops',
-                                            fieldStyle: 'text-align:right',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100,
-                                            listeners: {
-                                                change: function (field, newValue) {
-                                                    field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
-                                                }
-                                            }
-                                        },
-                                        {xtype: 'tbspacer', width: 5}
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    margin: '0 2 0 20',
-                                    bodyStyle: 'background:#efe5e5;',
-                                    items: [
-                                        {xtype: 'tbspacer', width: 7, height: 24},
-                                        {
-                                            xtype: 'label',
-                                            text: 'ADM',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtFADM',
-                                            name: 'fadm',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Reverse Policy',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtFREVERSA',
-                                            name: 'freversa',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            text: 'Reverse ADM',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtFREVADM',
-                                            name: 'frevadm',
-                                            fieldStyle: 'text-align:center',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 30},
-                                        {
-                                            xtype: 'label',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            text: 'Diff. Amount',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDE + '-de-txtDIFF_AMOUNT',
-                                            name: 'difference',
-                                            fieldStyle: 'text-align:right',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100
-                                        },
-                                        {xtype: 'tbspacer', width: 5}
-                                    ]
+                                defaults: {
+                                    xtype: 'textfield',
+                                    margin: '2 5 2 5',
+                                    labelStyle: 'text-align:right;font-weight: bolder;',
+                                    fieldStyle: 'text-align:center;'
                                 }
-                            ]
-                        },
-                        //</editor-fold>
-                        //<editor-fold defaultstate="collapsed" desc="Scanner Inputs">
-                        {
-                            xtype: 'panel',
-                            width: '98%',
-                            border: false,
-                            id: prototype.idDE + '-scannerPanel',
-                            layout: {
-                                type: 'vbox',
-                                align: 'center'
                             },
                             items: [
                                 {
-                                    xtype: 'fieldset',
-                                    id: prototype.idDE + '-scannerInputs',
-                                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:12px;">Scanner</span>',
-                                    layout: {
-                                        type: 'hbox',
-                                        pack: 'center'
-                                    },
-                                    border: true,
-                                    width: '98%',
-                                    style: {
-                                        backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
-                                    },
                                     items: [
                                         {
-                                            xtype: 'form',
-                                            id: prototype.idDE + '-scannerForm',
-                                            layout: {
-                                                type: 'vbox',
-                                                pack: 'center'
-                                            },
-                                            width: '100%',
-                                            border: false,
-                                            bodyStyle: 'background: transparent',
-                                            defaults: {
-                                                xtype: 'panel',
-                                                width: '100%',
-                                                bodyStyle: 'background: transparent',
-                                                border: false,
-                                                layout: {
-                                                    type: 'hbox',
-                                                    pack: 'center'
-                                                },
-                                                defaults: {
-
-                                                    xtype: 'textfield',
-                                                    margin: '2 5 2 5',
-                                                    labelStyle: 'text-align:right;font-weight: bolder;',
-                                                    fieldStyle: 'text-align:center;'
-                                                }
-                                            },
-                                            items: [
-                                                {
-                                                    items: [
-                                                        {
-                                                            fieldLabel: 'Ticket',
-                                                            name: 'IN_TICKET',
-                                                            labelWidth: 60,
-                                                            width: 155,
-                                                            maskRe: /[0-9]/,
-                                                            maxLength: 13,
-                                                            enforceMaxLength: true,
-                                                            validator: function (value) {
-                                                                if (value.length < 13 && value.length !== 0) {
-                                                                    return 'Invalid Ticket Number';
-                                                                }
-                                                                return true;
-                                                            }
-                                                        },
-                                                        {
-                                                            fieldLabel: 'PNR',
-                                                            name: 'IN_SPNR',
-                                                            labelWidth: 40,
-                                                            width: 120,
-                                                            maxLength: 6,
-                                                            enforceMaxLength: true,
-                                                            maskRe: /[a-zA-Z0-9]/,
-                                                            validator: function (value) {
-                                                                if (value.length < 6 && value.length !== 0) {
-                                                                    return 'Invalid PNR';
-                                                                }
-                                                                return true;
-                                                            },
-                                                            listeners: {
-                                                                change: function (field, newValue, oldValue) {
-                                                                    field.setValue(newValue.toUpperCase());
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            fieldLabel: 'Agent',
-                                                            name: 'IN_SAGENT',
-                                                            labelWidth: 50,
-                                                            width: 130,
-                                                            maskRe: /[0-9]/,
-                                                            maxLength: 10,
-                                                            enforceMaxLength: true
-                                                        },
-                                                        {
-                                                            xtype: 'datefield',
-                                                            fieldLabel: 'Sale Date',
-                                                            name: 'IN_SDATE',
-                                                            labelWidth: 65,
-                                                            width: 145,
-                                                            format: 'Ymd',
-                                                            editable: false,
-                                                            value: new Date()
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            width: 25,
-                                                            iconCls: 'prx-icon-add',
-                                                            tooltip: 'Add',
-                                                            listeners: {
-                                                                click: 'onAddCreditCardClick'
-                                                            }
-
-                                                        },
-                                                        {
-                                                            xtype: 'checkbox',
-                                                            id: prototype.idDE + '-chkForceBlock',
-                                                            //tooltip: 'Force add Blocked',
-                                                            inputValue: true,
-                                                            listeners: {
-                                                                change: function (checkbox, newValue, oldValue, eOpts) {
-                                                                    if (!newValue) {
-                                                                        return;
-                                                                    }
-                                                                    // Mostrar una ventana de confirmación al hacer clic
-                                                                    Ext.Msg.confirm('Confirm', '¿Do you want to force scan?', function (buttonId) {
-                                                                        if (buttonId === 'yes') {
-                                                                            // Continuar con el cambio
-                                                                            checkbox.setValue(newValue);
-                                                                        } else {
-                                                                            // Cancelar el cambio
-                                                                            checkbox.setValue(oldValue);
-                                                                        }
-                                                                    });
-                                                                },
-                                                                render: function (checkbox) {
-                                                                    checkbox.getEl().set({
-                                                                        'data-qtip': 'Force add Blocked'
-                                                                    });
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            width: 25,
-                                                            iconCls: 'prx-icon-clear',
-                                                            tooltip: 'Clean',
-                                                            listeners: {
-                                                                click: 'onClearScannerInputs'
-                                                            }
-
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            width: 25,
-                                                            iconCls: 'prx-icon-search',
-                                                            tooltip: 'Find Exact',
-                                                            listeners: {
-                                                                click: 'onFilterBPOGrid'
-                                                            }
-
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    items: [
-                                                        {
-                                                            fieldLabel: 'C. Card',
-                                                            labelWidth: 55,
-                                                            name: 'creditcard',
-                                                            width: 125,
-                                                            maxLength: 6,
-                                                            enforceMaxLength: true,
-                                                            maskRe: /[0-9]/
-                                                        },
-                                                        {
-                                                            xtype: 'label',
-                                                            text: '*****(*)'
-                                                        },
-                                                        {
-                                                            width: 50,
-                                                            name: 'creditcard',
-                                                            maxLength: 4,
-                                                            enforceMaxLength: true,
-                                                            maskRe: /[0-9]/
-                                                        },
-                                                        {
-                                                            fieldLabel: 'Auth',
-                                                            name: 'IN_SAUTHOC',
-                                                            labelWidth: 45,
-                                                            width: 115,
-                                                            maxLength: 6,
-                                                            enforceMaxLength: true,
-                                                            maskRe: /[a-zA-Z0-9]/
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            width: 110,
-                                                            text: 'Add Duplicated',
-                                                            iconCls: 'prx-icon-add',
-                                                            tooltip: 'Duplicated',
-                                                            listeners: {
-                                                                click: 'onAddDuplicated'
-                                                            }
-
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            width: 110,
-                                                            text: 'MSI Tracking',
-                                                            iconCls: 'prx-icon-update',
-                                                            tooltip: 'Open MSI Tracking',
-                                                            listeners: {
-                                                                click: 'onClickMSITracking'
-                                                            }
-
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            width: 25,
-                                                            iconCls: 'prx-icon-bpo-comment',
-                                                            tooltip: 'Open BPO Comment',
-                                                            listeners: {
-                                                                click: 'onOpenComments'
-                                                            }
-
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                //<editor-fold defaultstate="collapsed" desc="Stand By Comment">
-                                {
-                                    xtype: 'fieldset',
-                                    id: prototype.idDE + '-bpoComments',
-                                    title: 'Stand By Comment',
-                                    hidden: true,
-                                    layout: {
-                                        type: 'hbox',
-                                        align: 'left'
-                                    },
-                                    border: true,
-                                    width: '98%',
-                                    style: {
-                                        backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
-                                    },
-                                    defaults: {
-                                        xtype: 'textfield',
-                                        margin: '3 5 3 5',
-                                        labelStyle: 'text-align:center;font-weight: bolder;'
-                                    },
-                                    items: [
-                                        {
-                                            id: prototype.idDE + '-bpocoment',
-                                            fieldLabel: 'BPO Comment',
-                                            maxLength: 100,
+                                            fieldLabel: 'Ticket',
+                                            name: 'IN_TICKET',
+                                            labelWidth: 60,
+                                            width: 155,
+                                            maskRe: /[0-9]/,
+                                            maxLength: 13,
                                             enforceMaxLength: true,
-                                            labelWidth: 100,
-                                            width: 450
+                                            validator: function (value) {
+                                                if (value.length < 13 && value.length !== 0) {
+                                                    return 'Invalid Ticket Number';
+                                                }
+                                                return true;
+                                            }
+                                        },
+                                        {
+                                            fieldLabel: 'PNR',
+                                            name: 'IN_SPNR',
+                                            labelWidth: 40,
+                                            width: 120,
+                                            maxLength: 6,
+                                            enforceMaxLength: true,
+                                            maskRe: /[a-zA-Z0-9]/,
+                                            validator: function (value) {
+                                                if (value.length < 6 && value.length !== 0) {
+                                                    return 'Invalid PNR';
+                                                }
+                                                return true;
+                                            },
+                                            listeners: {
+                                                change: function (field, newValue, oldValue) {
+                                                    field.setValue(newValue.toUpperCase());
+                                                }
+                                            }
+                                        },
+                                        {
+                                            fieldLabel: 'Agent',
+                                            name: 'IN_SAGENT',
+                                            labelWidth: 50,
+                                            width: 130,
+                                            maskRe: /[0-9]/,
+                                            maxLength: 10,
+                                            enforceMaxLength: true
+                                        },
+                                        {
+                                            xtype: 'datefield',
+                                            fieldLabel: 'Sale Date',
+                                            name: 'IN_SDATE',
+                                            labelWidth: 65,
+                                            width: 145,
+                                            format: 'Ymd',
+                                            editable: false,
+                                            value: new Date()
                                         },
                                         {
                                             xtype: 'button',
-                                            id: prototype.idDE + '-addStandBy',
                                             width: 25,
-                                            iconCls: 'prx-icon-image-update',
-                                            tooltip: 'Update Stand By',
-                                            hidden: true,
+                                            iconCls: 'prx-icon-add',
+                                            tooltip: 'Add',
                                             listeners: {
-                                                click: 'onChangeStandBy'
+                                                click: 'onAddCreditCardClick'
+                                            }
+
+                                        },
+                                        {
+                                            xtype: 'checkbox',
+                                            id: prototype.idDE + '-chkForceBlock',
+                                            //tooltip: 'Force add Blocked',
+                                            inputValue: true,
+                                            listeners: {
+                                                change: function (checkbox, newValue, oldValue, eOpts) {
+                                                    if (!newValue) {
+                                                        return;
+                                                    }
+                                                    // Mostrar una ventana de confirmación al hacer clic
+                                                    Ext.Msg.confirm('Confirm', '¿Do you want to force scan?', function (buttonId) {
+                                                        if (buttonId === 'yes') {
+                                                            // Continuar con el cambio
+                                                            checkbox.setValue(newValue);
+                                                        } else {
+                                                            // Cancelar el cambio
+                                                            checkbox.setValue(oldValue);
+                                                        }
+                                                    });
+                                                },
+                                                render: function (checkbox) {
+                                                    checkbox.getEl().set({
+                                                        'data-qtip': 'Force add Blocked'
+                                                    });
+                                                }
                                             }
                                         },
                                         {
                                             xtype: 'button',
-                                            id: prototype.idDE + '-revStandBy',
                                             width: 25,
-                                            iconCls: 'prx-icon-update',
-                                            hidden: true,
-                                            tooltip: 'Reverse Stand By',
+                                            iconCls: 'prx-icon-clear',
+                                            tooltip: 'Clean',
                                             listeners: {
-                                                click: 'onReverseStandBy'
+                                                click: 'onClearScannerInputs'
                                             }
+
                                         },
                                         {
                                             xtype: 'button',
-                                            id: prototype.idDE + '-hideStandBy',
                                             width: 25,
-                                            iconCls: 'prx-icon-cancel-action',
-                                            tooltip: 'Cancel',
-                                            hidden: true,
+                                            iconCls: 'prx-icon-search',
+                                            tooltip: 'Find Exact',
                                             listeners: {
-                                                click: 'onCancelStandBy'
+                                                click: 'onFilterBPOGrid'
                                             }
+
                                         }
                                     ]
                                 },
-                                //</editor-fold>
-                                //<editor-fold defaultstate="collapsed" desc="Adju Comment">
                                 {
-                                    xtype: 'fieldset',
-                                    id: prototype.idDE + '-bpoComments2',
-                                    title: 'Adjustment Comment',
-                                    hidden: true,
-                                    layout: {
-                                        type: 'hbox',
-                                        align: 'left'
-                                    },
-                                    border: true,
-                                    width: '98%',
-                                    style: {
-                                        backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
-                                    },
-                                    defaults: {
-                                        xtype: 'textfield',
-                                        margin: '3 5 3 5',
-                                        labelStyle: 'text-align:center;font-weight: bolder;'
-                                    },
                                     items: [
                                         {
-                                            id: prototype.idDE + '-adjucoment',
-                                            fieldLabel: 'BPO Comment',
-                                            labelWidth: 100,
-                                            width: 450,
-                                            editable: false
+                                            fieldLabel: 'C. Card',
+                                            labelWidth: 55,
+                                            name: 'creditcard',
+                                            width: 125,
+                                            maxLength: 6,
+                                            enforceMaxLength: true,
+                                            maskRe: /[0-9]/
                                         },
+                                        {
+                                            xtype: 'label',
+                                            text: '*****(*)'
+                                        },
+                                        {
+                                            width: 50,
+                                            name: 'creditcard',
+                                            maxLength: 4,
+                                            enforceMaxLength: true,
+                                            maskRe: /[0-9]/
+                                        },
+                                        {
+                                            fieldLabel: 'Auth',
+                                            name: 'IN_SAUTHOC',
+                                            labelWidth: 45,
+                                            width: 115,
+                                            maxLength: 6,
+                                            enforceMaxLength: true,
+                                            maskRe: /[a-zA-Z0-9]/
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            width: 110,
+                                            text: 'Add Duplicated',
+                                            iconCls: 'prx-icon-add',
+                                            tooltip: 'Duplicated',
+                                            listeners: {
+                                                click: 'onAddDuplicated'
+                                            }
+
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            width: 110,
+                                            text: 'MSI Tracking',
+                                            iconCls: 'prx-icon-update',
+                                            tooltip: 'Open MSI Tracking',
+                                            listeners: {
+                                                click: 'onClickMSITracking'
+                                            }
+
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            width: 25,
+                                            iconCls: 'prx-icon-bpo-comment',
+                                            tooltip: 'Open BPO Comment',
+                                            listeners: {
+                                                click: 'onOpenComments'
+                                            }
+
+                                        }
                                     ]
                                 }
-                                //</editor-fold>
                             ]
+                        }
+                    ]
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Stand By Comment">
+                {
+                    xtype: 'fieldset',
+                    id: prototype.idDE + '-bpoComments',
+                    title: 'Stand By Comment',
+                    hidden: true,
+                    layout: {
+                        type: 'hbox',
+                        align: 'left'
+                    },
+                    border: true,
+                    width: '100%',
+                    style: {
+                        backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
+                    },
+                    defaults: {
+                        xtype: 'textfield',
+                        margin: '3 5 3 5',
+                        labelStyle: 'text-align:center;font-weight: bolder;'
+                    },
+                    items: [
+                        {
+                            id: prototype.idDE + '-bpocoment',
+                            fieldLabel: 'BPO Comment',
+                            maxLength: 100,
+                            enforceMaxLength: true,
+                            labelWidth: 100,
+                            width: 450
                         },
-
-                        //</editor-fold>
+                        {
+                            xtype: 'button',
+                            id: prototype.idDE + '-addStandBy',
+                            width: 25,
+                            iconCls: 'prx-icon-image-update',
+                            tooltip: 'Update Stand By',
+                            hidden: true,
+                            listeners: {
+                                click: 'onChangeStandBy'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.idDE + '-revStandBy',
+                            width: 25,
+                            iconCls: 'prx-icon-update',
+                            hidden: true,
+                            tooltip: 'Reverse Stand By',
+                            listeners: {
+                                click: 'onReverseStandBy'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.idDE + '-hideStandBy',
+                            width: 25,
+                            iconCls: 'prx-icon-cancel-action',
+                            tooltip: 'Cancel',
+                            hidden: true,
+                            listeners: {
+                                click: 'onCancelStandBy'
+                            }
+                        }
+                    ]
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Adju Comment">
+                {
+                    xtype: 'fieldset',
+                    id: prototype.idDE + '-bpoComments2',
+                    title: 'Adjustment Comment',
+                    hidden: true,
+                    layout: {
+                        type: 'hbox',
+                        align: 'left'
+                    },
+                    border: true,
+                    width: '98%',
+                    style: {
+                        backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
+                    },
+                    defaults: {
+                        xtype: 'textfield',
+                        margin: '3 5 3 5',
+                        labelStyle: 'text-align:center;font-weight: bolder;'
+                    },
+                    items: [
+                        {
+                            id: prototype.idDE + '-adjucoment',
+                            fieldLabel: 'BPO Comment',
+                            labelWidth: 100,
+                            width: 450,
+                            editable: false
+                        },
+                    ]
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Tabs Panel">
+                {
+                    xtype: 'panel',
+                    width: '100%',
+                    border: false,
+                    defaults: {},
+                    layout: {
+                        type: 'vbox',
+                        align: 'center'
+                    },
+                    items: [
                         {
                             xtype: 'tabpanel',
                             id: prototype.idDE + '-tabMain',
-                            minHeight: 120,
-                            maxHeight: 250,
-                            width: 1060,
+                            width: '100%',
                             height: 'auto',
                             border: false,
-                            margin: '5 1 5 1',
-                            autoScroll: true,
+                            margin: '0 1 0 1',
                             bodyStyle: 'background: transparent',
+                            //layout: 'fit',
+                            defaults: {
+                                //margin: '0 5 0 5',
+                                height: 'auto',
+                                autoScroll: false,
+                                layout: 'fit',
+                                defaults: {
+                                    width: '100%',
+                                    minHeight: 100,
+                                    maxHeight: 155,
+                                    viewConfig: {
+                                        stripeRows: true,
+                                        enableTextSelection: true,
+                                        markDirty: false
+                                    },
+                                    columnLines: true,
+                                    autoScroll: true,
+                                    height: 'auto'
+                                }
+                            },
                             items: [
                                 //<editor-fold defaultstate="collapsed" desc="BPO Tab">
                                 {
@@ -1399,17 +870,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             xtype: 'grid',
                                             border: false,
                                             id: prototype.idDE + '-gridBPO',
-                                            viewConfig: {
-                                                stripeRows: true,
-                                                enableTextSelection: true,
-                                                markDirty: false
-                                            },
-                                            columnLines: true,
-                                            autoScroll: true,
-                                            minHeight: 100,
-                                            height: 'auto',
-                                            maxHeight: 150,
-                                            width: '100%',
                                             emptyText: 'No cards available',
                                             columns: {
                                                 defaults: {
@@ -1606,17 +1066,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             xtype: 'grid',
                                             border: false,
                                             id: prototype.idDE + '-gridBlocked',
-                                            viewConfig: {
-                                                stripeRows: true,
-                                                enableTextSelection: true,
-                                                markDirty: false
-                                            },
-                                            columnLines: true,
-                                            autoScroll: true,
-                                            minHeight: 100,
-                                            height: 'auto',
-                                            maxHeight: 150,
-                                            width: '100%',
                                             emptyText: 'No cards available',
                                             columns: {
                                                 defaults: {
@@ -1770,17 +1219,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             xtype: 'grid',
                                             border: false,
                                             id: prototype.idDE + '-gridDesglose',
-                                            viewConfig: {
-                                                stripeRows: true,
-                                                enableTextSelection: true,
-                                                markDirty: false
-                                            },
-                                            columnLines: true,
-                                            autoScroll: true,
-                                            minHeight: 100,
-                                            height: 'auto',
-                                            maxHeight: 210,
-                                            width: '100%',
+                                            maxHeight: 165,
                                             emptyText: 'No cards available',
                                             columns: {
                                                 defaults: {
@@ -1905,18 +1344,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             xtype: 'grid',
                                             border: false,
                                             hidden: true,
+                                            maxHeight: 188,
                                             id: prototype.idDE + '-gridDesgloseCHBK',
-                                            viewConfig: {
-                                                stripeRows: true,
-                                                enableTextSelection: true,
-                                                markDirty: false
-                                            },
-                                            columnLines: true,
-                                            autoScroll: true,
-                                            minHeight: 100,
-                                            height: 'auto',
-                                            maxHeight: 210,
-                                            width: '100%',
                                             emptyText: 'No cards available',
                                             columns: {
                                                 defaults: {
@@ -1993,9 +1422,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                     {
                                                         text: 'Status<br>Reverse', width: 90, dataIndex: 'reversa',
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            if (value === 'Y'){
+                                                            if (value === 'Y') {
                                                                 value = 'Reversed';
-                                                            }else{
+                                                            } else {
                                                                 value = 'Pending';
                                                             }
                                                             return value;
@@ -2050,342 +1479,291 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 }
                                 //</editor-fold>
                             ]
-                        }
-                        ,
-                        //<editor-fold defaultstate="collapsed" desc="Adjustment BPO">
-                        {
-                            xtype: 'panel',
-                            id: prototype.idDE + '-panelAdjustments',
-                            width: '98%',
-                            border: false,
-                            hidden: true,
-                            margin: '0 5 0 5',
-                            items: [
-                                {
-                                    xtype: 'grid',
-                                    border: true,
-                                    id: prototype.idDE + '-gridAdjustments',
-                                    viewConfig: {
-                                        stripeRows: true,
-                                        enableTextSelection: true,
-                                        markDirty: false
-                                    },
-                                    margin: '0 5 0 5',
-                                    columnLines: true,
-                                    autoScroll: true,
-                                    height: 50,
-                                    width: '100%',
-                                    hideHeaders: true,
-                                    style: {
-                                        background: '#E6EFD2' // Cambia el fondo del grid
-                                    },
-                                    //bodyStyle: 'background: transparent',
-                                    tbar: {
-                                        xtype: 'panel',
-                                        border: false,
-                                        width: '100%',
-                                        layout: {
-                                            type: 'hbox',
-                                            align: 'left'
-                                        },
-                                        margin: '2 5 2 5',
-                                        bodyStyle: 'background: transparent',
-                                        defaults: {
-                                            margin: '0 5 0 5'
-                                        },
-                                        items: [
-                                            {
-                                                xtype: 'combo',
-                                                id: prototype.idDE + '-codAdjustment',
-                                                name: 'adjucode',
-                                                valueField: 'a4451key3',
-                                                displayField: 'a4451desc1',
-                                                value: '',
-                                                queryMode: 'local',
-                                                emptyText: 'Select',
-                                                editable: false,
-                                                width: 220,
-                                                labelWidth: 80,
-                                                fieldLabel: 'Adju. Type'
-                                            },
-                                            {
-                                                xtype: 'textfield',
-                                                name: 'adjucomment',
-                                                id: prototype.idDE + '-observAdjustment',
-                                                width: 450,
-                                                labelWidth: 80,
-                                                maxLength: 100,
-                                                enforceMaxLength: true,
-                                                fieldLabel: 'Observation'
-                                            },
-                                            {
-                                                xtype: 'button',
-                                                width: 25,
-                                                iconCls: 'prx-icon-image-trash',
-                                                tooltip: 'Delete Adjustment',
-                                                listeners: {
-                                                    click: 'onDeleteAdjustment'
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    plugins: {
-                                        // Agrega el plugin de edición para habilitar la edición en la columna
-                                        ptype: 'cellediting',
-                                        clicksToEdit: 2, // 1 clic para editar
-                                        listeners: {
-                                            edit: function (editor, context) {
-                                                context.grid.getView().refresh();
-                                            }
-                                        }
-                                    },
-                                    model: null,
-                                    columns: {
-                                        defaults: {
-                                            align: 'center',
-                                            menuDisabled: true,
-                                            sortable: false
-                                        },
-                                        items: [
-                                            {text: 'Status', width: 80,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-                                                    value = 'Adjustment';
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Doc.<br>Type', dataIndex: 'trncu', width: 61,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                text: 'Credit Card',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Type', dataIndex: 'scardcod', width: 40,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
-
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {text: 'Number', dataIndex: 'scardn', width: 115,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
-
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {text: 'Approval', dataIndex: 'sauthoc', width: 65,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
-
-                                                            return value;
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {text: 'Curr', dataIndex: 'scurrency', width: 45,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-
-                                                    return value;
-                                                }
-                                            },
-                                            {header: 'Amount', dataIndex: 'svfops', width: 100,
-                                                editor: {
-                                                    xtype: 'numberfield',
-                                                    allowBlank: false,
-                                                    hideTrigger: true, // Oculta las flechas para incrementar/decrementar
-                                                    keyNavEnabled: false, // Desactiva la navegación con teclado
-                                                    mouseWheelEnabled: false, // Desactiva la rueda del mouse para cambiar el valor
-                                                    //maskRe: /[0-9]/
-                                                },
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#F0FA8F";
-
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Sales<br>Date', dataIndex: 'sdate', width: 61,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'PNR', dataIndex: 'spnr', width: 62,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Ticket', width: 112,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background-color:#FCF6DC;font-weight:bold;";
-                                                    const obj = record.data;
-                                                    const ticket = obj.ccia + obj.forma + obj.serie;
-                                                    return ticket;
-                                                }
-                                            },
-                                            {
-                                                text: 'Corrl', dataIndex: 'corrl', width: 50
-                                            },
-                                            {
-                                                text: 'FVoid', dataIndex: 'fvoid', width: 50
-                                            },
-                                            {text: 'Agent', dataIndex: 'sagent', width: 62,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-
-                                                    return value;
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }
-                            ]
-                        }
-                        //</editor-fold>
+                        },
                     ]
                 },
-                // <editor-fold defaultstate="collapsed" desc="ControlData">
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Adjustment">
                 {
-                    xtype: 'label',
-                    text: 'Control Data',
-                    fontSize: '11',
-                    style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
-                    width: 234,
-                    margin: '8 2 4 100'
-                },
-                {
+                    xtype: 'panel',
+                    id: prototype.idDE + '-panelAdjustments',
+                    width: '98%',
+                    border: false,
+                    hidden: true,
+                    margin: '0 5 0 5',
                     items: [
                         {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '8 2 4 100',
-                            defaults: {
-                                labelAlign: 'left'
+                            xtype: 'grid',
+                            border: true,
+                            id: prototype.idDE + '-gridAdjustments',
+                            viewConfig: {
+                                stripeRows: true,
+                                enableTextSelection: true,
+                                markDirty: false
                             },
+                            margin: '0 5 0 5',
+                            columnLines: true,
+                            autoScroll: true,
+                            height: 50,
+                            width: '100%',
+                            hideHeaders: true,
+                            style: {
+                                background: '#E6EFD2' // Cambia el fondo del grid
+                            },
+                            //bodyStyle: 'background: transparent',
+                            tbar: {
+                                xtype: 'panel',
+                                border: false,
+                                width: '100%',
+                                layout: {
+                                    type: 'hbox',
+                                    align: 'left'
+                                },
+                                margin: '2 5 2 5',
+                                bodyStyle: 'background: transparent',
+                                defaults: {
+                                    margin: '0 5 0 5'
+                                },
+                                items: [
+                                    {
+                                        xtype: 'combo',
+                                        id: prototype.idDE + '-codAdjustment',
+                                        name: 'adjucode',
+                                        valueField: 'a4451key3',
+                                        displayField: 'a4451desc1',
+                                        value: '',
+                                        queryMode: 'local',
+                                        emptyText: 'Select',
+                                        editable: false,
+                                        width: 220,
+                                        labelWidth: 80,
+                                        fieldLabel: 'Adju. Type'
+                                    },
+                                    {
+                                        xtype: 'textfield',
+                                        name: 'adjucomment',
+                                        id: prototype.idDE + '-observAdjustment',
+                                        width: 450,
+                                        labelWidth: 80,
+                                        maxLength: 100,
+                                        enforceMaxLength: true,
+                                        fieldLabel: 'Observation'
+                                    },
+                                    {
+                                        xtype: 'button',
+                                        width: 25,
+                                        iconCls: 'prx-icon-image-trash',
+                                        tooltip: 'Delete Adjustment',
+                                        listeners: {
+                                            click: 'onDeleteAdjustment'
+                                        }
+                                    }
+                                ]
+                            },
+                            plugins: {
+                                // Agrega el plugin de edición para habilitar la edición en la columna
+                                ptype: 'cellediting',
+                                clicksToEdit: 2, // 1 clic para editar
+                                listeners: {
+                                    edit: function (editor, context) {
+                                        context.grid.getView().refresh();
+                                    }
+                                }
+                            },
+                            model: null,
+                            columns: {
+                                defaults: {
+                                    align: 'center',
+                                    menuDisabled: true,
+                                    sortable: false
+                                },
+                                items: [
+                                    {text: 'Status', width: 80,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center;";
+                                            value = 'Adjustment';
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'Doc.<br>Type', dataIndex: 'trncu', width: 61,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Credit Card',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Type', dataIndex: 'scardcod', width: 40,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Number', dataIndex: 'scardn', width: 115,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Approval', dataIndex: 'sauthoc', width: 65,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {text: 'Curr', dataIndex: 'scurrency', width: 45,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center;";
+
+                                            return value;
+                                        }
+                                    },
+                                    {header: 'Amount', dataIndex: 'svfops', width: 100,
+                                        editor: {
+                                            xtype: 'numberfield',
+                                            allowBlank: false,
+                                            hideTrigger: true, // Oculta las flechas para incrementar/decrementar
+                                            keyNavEnabled: false, // Desactiva la navegación con teclado
+                                            mouseWheelEnabled: false, // Desactiva la rueda del mouse para cambiar el valor
+                                            //maskRe: /[0-9]/
+                                        },
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#F0FA8F";
+
+                                            value = Ext.util.Format.number(value, '0,000.00');
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'Sales<br>Date', dataIndex: 'sdate', width: 61,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'PNR', dataIndex: 'spnr', width: 62,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center;";
+
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'Ticket', width: 112,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "background-color:#FCF6DC;font-weight:bold;";
+                                            const obj = record.data;
+                                            const ticket = obj.ccia + obj.forma + obj.serie;
+                                            return ticket;
+                                        }
+                                    },
+                                    {
+                                        text: 'Corrl', dataIndex: 'corrl', width: 50
+                                    },
+                                    {
+                                        text: 'FVoid', dataIndex: 'fvoid', width: 50
+                                    },
+                                    {text: 'Agent', dataIndex: 'sagent', width: 62,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center;";
+
+                                            return value;
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Control Data">
+                {
+                    xtype: 'fieldset',
+                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:10px;">Control Data</span>',
+                    layout: {
+                        type: 'vbox',
+                        pack: 'center'
+                    },
+                    border: true,
+                    margin: '5 5 5 5',
+                    width: '100%',
+                    style: {
+                        backgroundColor: '#EEF3F9' // Cambiar el color de fondo a gris claro (#f0f0f0)
+                    },
+                    defaults: {
+                        xtype: 'panel',
+                        layout: {
+                            type: 'hbox',
+                            pack: 'center'
+                        },
+                        width: '100%',
+                        border: false,
+                        bodyStyle: 'background: transparent',
+                        defaults: {
+                            xtype: 'textfield',
+                            margin: '5 8 5 8',
+                            labelStyle: 'text-align:left;font-weight: bolder;',
+                            fieldStyle: 'text-align:center;',
+                            editable: false
+                        }
+                    },
+                    items: [
+                        {
                             items: [
-                                {xtype: 'tbspacer', width: 7},
                                 {
-                                    xtype: 'label',
-                                    text: 'Creator User ',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120,
-                                    height: 20
+                                    labelWidth: 75,
+                                    width: 175,
+                                    fieldLabel: 'User Crt.',
+                                    name: 'uscr'
                                 },
-                                {xtype: 'tbspacer', width: 10},
                                 {
-                                    xtype: 'textfield',
-                                    id: prototype.idDE + '-txtUSCR',
-                                    readOnly: true,
-                                    width: 100
+                                    labelWidth: 75,
+                                    width: 175,
+                                    fieldLabel: 'Date Crt.',
+                                    name: 'fecr'
                                 },
-                                {xtype: 'tbspacer', width: 40},
                                 {
-                                    xtype: 'label',
-                                    text: 'Creation Date',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.idDE + '-txtFECR',
-                                    readOnly: true,
-                                    width: 100
-                                },
-                                {xtype: 'tbspacer', width: 40},
-                                {
-                                    xtype: 'label',
-                                    text: 'Creation Time',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.idDE + '-txtHOCR',
-                                    readOnly: true,
-                                    width: 100
+                                    labelWidth: 75,
+                                    width: 175,
+                                    fieldLabel: 'Hour Crt.',
+                                    name: 'hocr'
                                 }
                             ]
                         },
                         {
-                            xtype: 'panel',
-                            border: false,
-                            layout: 'hbox',
-                            margin: '8 2 4 100',
-                            defaults: {
-                                labelAlign: 'left'
-                            },
                             items: [
-                                {xtype: 'tbspacer', width: 7},
                                 {
-                                    xtype: 'label',
-                                    text: 'User Update',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
+                                    labelWidth: 75,
+                                    width: 175,
+                                    fieldLabel: 'User Upd.',
+                                    name: 'usup'
                                 },
-                                {xtype: 'tbspacer', width: 10},
                                 {
-                                    xtype: 'textfield',
-                                    id: prototype.idDE + '-txtUSUP',
-                                    readOnly: true,
-                                    width: 100,
-                                    listeners: {
-                                        change: 'onUpperValue'
-                                    }
+                                    labelWidth: 75,
+                                    width: 175,
+                                    fieldLabel: 'Date Upd.',
+                                    name: 'feup'
                                 },
-                                {xtype: 'tbspacer', width: 40},
                                 {
-                                    xtype: 'label',
-                                    text: 'Update Date',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.idDE + '-txtFEUP',
-                                    readOnly: true,
-                                    width: 100,
-                                    listeners: {
-                                        change: 'onUpperValue'
-                                    }
-                                },
-                                {xtype: 'tbspacer', width: 40},
-                                {
-                                    xtype: 'label',
-                                    text: 'Update Time',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.idDE + '-txtHOUP',
-                                    readOnly: true,
-                                    width: 100,
-                                    listeners: {
-                                        change: 'onUpperValue'
-                                    }
+                                    labelWidth: 75,
+                                    width: 175,
+                                    fieldLabel: 'Hour Upd.',
+                                    name: 'houp'
                                 }
                             ]
                         }
                     ]
                 }
-                // </editor-fold>
+                //</editor-fold>
             ]
         }
     ],
@@ -2394,7 +1772,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
-            margin: '10 0 10 0',
+            margin: '7 0 7 0',
             layout: {
                 pack: 'center'
             },
