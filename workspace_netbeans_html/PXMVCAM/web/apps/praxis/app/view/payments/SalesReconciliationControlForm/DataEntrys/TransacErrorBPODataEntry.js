@@ -1491,6 +1491,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                     border: false,
                     hidden: true,
                     margin: '0 5 0 5',
+                    defaults:{},
                     items: [
                         {
                             xtype: 'grid',
