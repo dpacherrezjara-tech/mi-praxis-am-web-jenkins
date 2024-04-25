@@ -842,7 +842,7 @@ public class SalesReconciliationBPOController {
             SQP05134Filter filter = logic.loadSQP05134Filter(params);
             System.out.println("Total: " + filter.getResponse().size());
             String procesador = filter.getResponse().get(0).getDESC_PROCTYPE().trim();
-            String title = procesador + "-" + params.getIN_MERCHANT() + "_" + params.getIN_DATEFROM();
+            String title = procesador + "-" + params.getIN_MERCHANT().trim() + "_" + params.getIN_DATEFROM();
             List<List<CustomExcelCell>> data = new ArrayList<>();
             List<CustomExcelCell> header = new ArrayList<>();
             header.add(new CustomExcelCell("Processing\nDate"));
@@ -898,6 +898,9 @@ public class SalesReconciliationBPOController {
                 row.add(new CustomExcelCell(obj.getScountry()));
                 row.add(new CustomExcelCell(obj.getQtytkt()));
                 row.add(new CustomExcelCell(obj.getInvoirn()));
+                row.add(new CustomExcelCell(obj.getSpnr()));
+                row.add(new CustomExcelCell(obj.getTranstype()));
+                row.add(new CustomExcelCell(obj.getIsrefnbr()));
                 row.add(new CustomExcelCell(obj.getScardn()));
                 row.add(new CustomExcelCell(obj.getSauthoc()));
                 row.add(new CustomExcelCell(obj.getInstanbr()));
