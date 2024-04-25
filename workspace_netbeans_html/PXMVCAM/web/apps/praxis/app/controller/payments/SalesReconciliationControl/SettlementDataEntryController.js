@@ -22,12 +22,38 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
             me.bean = data.response;
             form.reset();
             form.setValues(me.bean);
+            me.setExtraInformation(me.bean);
             me.setDesgloseGrid();
+        }
+    },
+    setExtraInformation: function (bean) {
+        let tipo = bean.transtype;
+        let monto = bean.tgrosamoun;
+        let procesador = bean.proctype;
+        const panelChbk = Ext.getCmp(prototype.idDE3 + '-panelChbk');
+        const labelChbk = Ext.getCmp(prototype.idDE3 + '-typeChbk');
+        const txtInvoirn = Ext.getCmp(prototype.idDE3 + '-txtInvoirn');
+        if (tipo === 'CHBK') {
+            panelChbk.show();
+            if (monto > 0) {
+                labelChbk.setValue('Rev. Chargeback');
+            } else {
+                labelChbk.setValue('Chargeback');
+            }
+        } else if (tipo === 'ADJU') {
+            panelChbk.show();
+            labelChbk.setValue('Adjustment');
+        } else {
+            panelChbk.hide();
+        }
+        
+        if(procesador === 'BANORTE00'){
+            txtInvoirn.setValue(bean.pwref);
         }
     },
     setDesgloseGrid: async function () {
         const me = this;
-        const panelDesglose = Ext.getCmp(prototype.idDE3+ '-panelDesglose');
+        const panelDesglose = Ext.getCmp(prototype.idDE3 + '-panelDesglose');
         panelDesglose.mask('Loading..');
         let params = me.formatParameters(me.bean);
         const gridDesglose = Ext.getCmp(prototype.idDE3 + '-gridDesglose');
@@ -54,10 +80,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
                     data: data.response
                 });
                 gridDesglose.setStore(storeDesglose);
-                debugger;
+                //debugger;
             }
         }
         panelDesglose.unmask();
+    },
+    onCancelClick: function () {
+        this.view.close();
     },
     //<editor-fold defaultstate="collapsed" desc="Formateo de Parametros">
     formatParameters: function (obj) {

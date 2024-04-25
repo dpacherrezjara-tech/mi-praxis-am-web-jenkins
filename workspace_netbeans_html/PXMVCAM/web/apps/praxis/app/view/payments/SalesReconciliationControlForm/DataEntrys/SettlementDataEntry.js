@@ -9,7 +9,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
     controller: 'SettlementDataEntryController',
     title: 'Settlement - Form',
     header: true,
-    width: 1075,
+    width: 1050,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -159,6 +159,45 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                     name: 'qtytkt',
                                     labelWidth: 80,
                                     width: 150
+                                },
+                                {
+                                    fieldLabel: 'Invoice Ref. Number',
+                                    name: 'invoirn',
+                                    id: prototype.idDE3 + '-txtInvoirn',
+                                    labelWidth: 130,
+                                    width: 230,
+                                    value: 'None'
+                                }
+                            ]
+                        }
+                    ]
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Chargeback/Adjustment Information">
+                {
+                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Chargeback/Adjustment Information</span>',
+                    hidden: true,
+                    id: prototype.idDE3 + '-panelChbk',
+                    items: [
+                        {
+                            items: [
+                                {
+                                    fieldLabel: 'Type',
+                                    id: prototype.idDE3 + '-typeChbk',
+                                    labelWidth: 120,
+                                    width: 230
+                                },
+                                {
+                                    fieldLabel: 'Number',
+                                    name: 'chgbnum',
+                                    labelWidth: 120,
+                                    width: 300
+                                },
+                                {
+                                    fieldLabel: 'Reason Code',
+                                    name: 'codchgback',
+                                    labelWidth: 120,
+                                    width: 300
                                 }
                             ]
                         }
@@ -185,7 +224,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                             field.setRawValue(opts[newValue] || 'None');
                                         }
                                     },
-                                    value:'None'
+                                    value: 'None'
                                 },
                                 {
                                     fieldLabel: 'Inst. Plan',
@@ -238,10 +277,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Currency',
                                     name: 'scurrency',
-                                    labelWidth: 70,
-                                    width: 140
+                                    labelWidth: 120,
+                                    width: 230
                                 },
-
                                 {
                                     fieldLabel: 'Payment Amount',
                                     name: 'tgrosampay',
@@ -252,28 +290,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                             field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
                                         }
                                     }
-
                                 },
                                 {
                                     fieldLabel: 'P. Currency',
                                     name: 'pcurrency',
-                                    labelWidth: 80,
-                                    width: 150
-                                },
-                                {
-                                    fieldLabel: 'NET Amount',
-                                    name: 'netopay',
-                                    labelWidth: 90,
-                                    fieldStyle: 'background-color:#8AE884;font-weight:bold;text-align:center;',
-                                    width: 200,
-                                    listeners: {
-                                        change: function (field, newValue) {
-                                            field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
-                                        }
-                                    }
-
+                                    labelWidth: 120,
+                                    width: 230
                                 }
-
                             ]
                         },
                         {
@@ -295,22 +318,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                     labelWidth: 120,
                                     width: 230
                                 },
-//                                {
-//                                    fieldLabel: 'MSI Comm',
-//                                    name: 'acceamouc',
-//                                    labelWidth: 120,
-//                                    width: 230
-//                                },
-                                {
-                                    fieldLabel: 'MSI VAT',
-                                    name: 'overcom12',
-                                    labelWidth: 130,
-                                    width: 230
-                                }
-                            ]
-                        },
-                        {
-                            items: [
                                 {
                                     fieldLabel: 'Comm. Rate',
                                     name: 'discrate',
@@ -327,7 +334,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                     name: 'discamoun',
                                     labelWidth: 120,
                                     width: 230
-                                },
+                                }
+                            ]
+                        },
+                        {
+                            items: [
+
                                 {
                                     fieldLabel: 'VAT Rate',
                                     name: 'discratei',
@@ -340,10 +352,38 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                     }
                                 },
                                 {
-                                    fieldLabel: 'Comm. VAT Amount',
+                                    fieldLabel: 'Comm. VAT',
                                     name: 'discamouni',
-                                    labelWidth: 130,
+                                    labelWidth: 120,
                                     width: 230
+                                },
+                                {
+                                    fieldLabel: 'MSI VAT',
+                                    name: 'overcom12',
+                                    labelWidth: 120,
+                                    width: 230
+                                },
+                            ]
+                        },
+                        {
+                            layout: {
+                                type: 'hbox',
+                                pack: 'center'
+                            },
+                            items: [
+
+                                {
+                                    fieldLabel: 'NET Amount',
+                                    name: 'netopay',
+                                    labelWidth: 120,
+                                    fieldStyle: 'background-color:#8AE884;font-weight:bold;text-align:center;',
+                                    width: 230,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
+                                        }
+                                    }
+
                                 }
                             ]
                         }
@@ -441,6 +481,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                     border: false,
                     margin: '5 5 5 5',
                     width: '100%',
+                    title: 'Tickets',
                     defaults: {},
                     items: [
                         //<editor-fold defaultstate="collapsed" desc="SALE/RFND">
@@ -550,13 +591,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                         },
                                         columns: [
                                             {
-                                                text: 'Rate', dataIndex: 'discrate', width: 70,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background-color:#A2C2E2;font-weight:bold;";
-                                                    return value + '%';
-                                                }
-                                            },
-                                            {
                                                 text: 'Amount', dataIndex: 'discamounc', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#A2C2E2;font-weight:bold;";
@@ -564,14 +598,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                                 }
                                             },
                                             {
-                                                text: 'VAT<br>Rate', dataIndex: 'discratei', width: 70,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background-color:#A2C2E2;font-weight:bold;";
-                                                    return value + '%';
-                                                }
-                                            },
-                                            {
-                                                text: 'VAT<br>Amount', dataIndex: 'discamouni', width: 100,
+                                                text: 'VAT', dataIndex: 'discamouni', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#A2C2E2;font-weight:bold;";
                                                     return Ext.util.Format.number(value, '0,000.00');
@@ -802,6 +829,32 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                     ]
                 }
                 //</editor-fold>
+            ]
+        }
+    ],
+    dockedItems: [
+        {
+            xtype: 'toolbar',
+            dock: 'bottom',
+            ui: 'footer',
+            border: false,
+            margin: '7 0 7 0',
+            layout: {
+                pack: 'center'
+            },
+            fieldStyle: 'text-align:center',
+            defaults: {
+                scale: 'medium'
+            },
+            items: [
+                {
+                    text: 'Cancel',
+                    id: prototype.idDE3 + '-btn-cancel',
+                    iconCls: 'prx-icon-cancel',
+                    listeners: {
+                        click: 'onCancelClick'
+                    }
+                }
             ]
         }
     ]

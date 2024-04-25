@@ -161,7 +161,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const addStandBy = Ext.getCmp(prototype.idDE + '-addStandBy');
         const revStandBy = Ext.getCmp(prototype.idDE + '-revStandBy');
         const hideStandBy = Ext.getCmp(prototype.idDE + '-hideStandBy');
-        debugger;
+        //debugger;
         if (show) {
             addStandBy.show();
             revStandBy.show();
