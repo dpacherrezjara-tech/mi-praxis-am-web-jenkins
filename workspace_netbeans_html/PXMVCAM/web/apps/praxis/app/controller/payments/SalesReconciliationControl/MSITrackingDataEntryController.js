@@ -150,7 +150,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         //banorte solo usa 2 digitos de autorizacion
         if (procesador === 'BANORTE00') {
             scardn = `${obj.scardn.slice(0, 6)}%${obj.scardn.slice(-2)}%`;
-        //ADYEN solo busca con PNR
+            //ADYEN solo busca con PNR
         } else if (procesador === 'ADYEN00') {
             spnr = obj.spnr.trim();
         } else {
@@ -165,7 +165,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
             IN_TO: me.sumDate(obj.prda, 15),
             IN_SCARDN: scardn,
             IN_SPNR: spnr,
-            IN_TICKET:ticket
+            IN_TICKET: ticket
         };
         const res = await fetch(`${me.url}/loadMSITrackingManualInfo?${new URLSearchParams(params)}`);
         if (res.ok) {
@@ -215,6 +215,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         const res = await fetch(`${me.url}/loadMSITrackingManualInfo?${new URLSearchParams(params)}`);
         if (res.ok) {
             const data = await res.json();
+            //debugger;
             if (data.response.length > 0) {
                 trncs = data.response;
                 trncs = trncs.filter(x => {

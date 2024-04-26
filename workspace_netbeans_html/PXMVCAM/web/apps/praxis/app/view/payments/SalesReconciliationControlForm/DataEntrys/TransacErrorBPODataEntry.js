@@ -52,7 +52,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                     bodyStyle: 'background: transparent',
                     defaults: {
                         xtype: 'textfield',
-                        margin: '5 8 5 8',
+                        margin: '2 5 2 5',
                         labelStyle: 'text-align:left;font-weight: bolder;',
                         fieldStyle: 'text-align:center;',
                         editable: false

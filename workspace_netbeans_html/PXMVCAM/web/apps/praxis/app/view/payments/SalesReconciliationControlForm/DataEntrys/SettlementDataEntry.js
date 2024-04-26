@@ -34,7 +34,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                     pack: 'center'
                 },
                 border: true,
-                margin: '5 5 5 5',
+                margin: '2 2 2 2',
                 width: '100%',
                 style: {
                     backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                     bodyStyle: 'background: transparent',
                     defaults: {
                         xtype: 'textfield',
-                        margin: '5 8 5 8',
+                        margin: '2 5 2 5',
                         labelStyle: 'text-align:left;font-weight: bolder;',
                         fieldStyle: 'text-align:center;',
                         editable: false
