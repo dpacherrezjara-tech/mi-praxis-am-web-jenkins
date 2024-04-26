@@ -185,13 +185,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                     fieldLabel: 'Type',
                                     id: prototype.idDE3 + '-typeChbk',
                                     labelWidth: 120,
+                                    fieldStyle: 'color:red;font-weight:bold;text-align:center;',
                                     width: 230
                                 },
                                 {
                                     fieldLabel: 'Number',
                                     name: 'chgbnum',
-                                    labelWidth: 120,
-                                    width: 300
+                                    labelWidth: 80,
+                                    width: 260
                                 },
                                 {
                                     fieldLabel: 'Reason Code',
@@ -291,7 +292,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                         }
                                     }
                                 },
-                                
                             ]
                         },
                         {
@@ -516,7 +516,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                             autoScroll: true,
                             minHeight: 100,
                             height: 'auto',
-                            maxHeight: 210,
+                            maxHeight: 150,
                             width: '100%',
                             emptyText: 'No cards available',
                             columns: {
@@ -666,8 +666,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                             columnLines: true,
                             autoScroll: true,
                             minHeight: 100,
-                            height: 'auto',
-                            maxHeight: 210,
+                            //height: 'auto',
+                            maxHeight: 160,
                             width: '100%',
                             emptyText: 'No cards available',
                             columns: {
