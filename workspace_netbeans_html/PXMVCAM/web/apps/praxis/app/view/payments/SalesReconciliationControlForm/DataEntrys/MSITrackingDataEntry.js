@@ -63,6 +63,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
             height: 'auto',
             maxHeight: 400,
             width: '100%',
+            store:[],
             selModel: {
                 type: 'checkboxmodel',
                 checkboxSelect: false,
@@ -215,6 +216,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
             height: 'auto',
             maxHeight: 400,
             width: '100%',
+            store:[],
             selModel: {
                 type: 'checkboxmodel',
                 checkboxSelect: false,

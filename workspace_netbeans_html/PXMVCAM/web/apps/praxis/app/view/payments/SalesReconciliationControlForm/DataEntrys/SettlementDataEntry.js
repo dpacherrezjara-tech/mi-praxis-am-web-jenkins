@@ -34,7 +34,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                     pack: 'center'
                 },
                 border: true,
-                margin: '5 5 5 5',
+                margin: '2 2 2 2',
                 width: '100%',
                 style: {
                     backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                     bodyStyle: 'background: transparent',
                     defaults: {
                         xtype: 'textfield',
-                        margin: '5 8 5 8',
+                        margin: '2 5 2 5',
                         labelStyle: 'text-align:left;font-weight: bolder;',
                         fieldStyle: 'text-align:center;',
                         editable: false
@@ -185,13 +185,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                     fieldLabel: 'Type',
                                     id: prototype.idDE3 + '-typeChbk',
                                     labelWidth: 120,
+                                    fieldStyle: 'color:red;font-weight:bold;text-align:center;',
                                     width: 230
                                 },
                                 {
                                     fieldLabel: 'Number',
                                     name: 'chgbnum',
-                                    labelWidth: 120,
-                                    width: 300
+                                    labelWidth: 80,
+                                    width: 260
                                 },
                                 {
                                     fieldLabel: 'Reason Code',
@@ -281,8 +282,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                     width: 230
                                 },
                                 {
-                                    fieldLabel: 'Payment Amount',
-                                    name: 'tgrosampay',
+                                    fieldLabel: 'Concil. Amount',
+                                    name: 'svfops',
                                     labelWidth: 120,
                                     width: 230,
                                     listeners: {
@@ -291,12 +292,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                         }
                                     }
                                 },
-                                {
-                                    fieldLabel: 'P. Currency',
-                                    name: 'pcurrency',
-                                    labelWidth: 120,
-                                    width: 230
-                                }
                             ]
                         },
                         {
@@ -366,12 +361,34 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                             ]
                         },
                         {
-                            layout: {
-                                type: 'hbox',
-                                pack: 'center'
-                            },
+//                            layout: {
+//                                type: 'hbox',
+//                                pack: 'center'
+//                            },
                             items: [
-
+                                {
+                                    fieldLabel: 'Payment Amount',
+                                    name: 'tgrosampay',
+                                    labelWidth: 120,
+                                    width: 230,
+                                    listeners: {
+                                        change: function (field, newValue) {
+                                            field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
+                                        }
+                                    }
+                                },
+                                {
+                                    fieldLabel: 'P. Currency',
+                                    name: 'pcurrency',
+                                    labelWidth: 120,
+                                    width: 230
+                                },
+                                {
+                                    fieldLabel: 'Exch. Rate',
+                                    name: 'exchrate',
+                                    labelWidth: 120,
+                                    width: 230
+                                },
                                 {
                                     fieldLabel: 'NET Amount',
                                     name: 'netopay',
@@ -421,8 +438,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Rule',
                                     name: 'fregla',
-                                    labelWidth: 60,
-                                    width: 170,
+                                    labelWidth: 50,
+                                    width: 160,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -439,8 +456,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Flag Compl.',
                                     name: 'fcompl',
-                                    labelWidth: 100,
-                                    width: 210,
+                                    labelWidth: 90,
+                                    width: 190,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -455,16 +472,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                     value: 'None'
                                 },
                                 {
-                                    fieldLabel: 'Concil. Amount',
-                                    name: 'svfops',
-                                    labelWidth: 120,
-                                    width: 230,
-                                    listeners: {
-                                        change: function (field, newValue) {
-                                            field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
-                                        }
-                                    }
+                                    fieldLabel: 'Adjustment',
+                                    name: 'codadju',
+                                    labelWidth: 80,
+                                    width: 120
                                 },
+                                {
+                                    fieldLabel: 'Description',
+                                    name: 'desc_ADJU',
+                                    labelWidth: 85,
+                                    width: 200
+                                }
                             ]
                         }
                     ]
@@ -498,7 +516,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                             autoScroll: true,
                             minHeight: 100,
                             height: 'auto',
-                            maxHeight: 210,
+                            maxHeight: 150,
                             width: '100%',
                             emptyText: 'No cards available',
                             columns: {
@@ -648,8 +666,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                             columnLines: true,
                             autoScroll: true,
                             minHeight: 100,
-                            height: 'auto',
-                            maxHeight: 210,
+                            //height: 'auto',
+                            maxHeight: 160,
                             width: '100%',
                             emptyText: 'No cards available',
                             columns: {
