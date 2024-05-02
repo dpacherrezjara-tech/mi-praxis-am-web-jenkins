@@ -1,8 +1,8 @@
 // <editor-fold defaultstate="collapsed" desc="prototype">
 prototype.id = 'AccountingMasterProcess2Form';
 prototype.url = CONTEXTPATH+'/AccountingMasterProcess2';
-prototype.widthContenedor = 1300;//910
-prototype.widthGrid = 863;
+prototype.widthContenedor = 1500;//910
+prototype.widthGrid = 1460;
 // </editor-fold>
 
 Ext.define('Ext.Praxis.view.sales.AccountingMasterProcess2Form.AccountingMasterProcess2Form', {

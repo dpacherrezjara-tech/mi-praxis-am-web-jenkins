@@ -93,10 +93,52 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterProcess2Form.Info', {
                                         }
                                     },
                                     {
+                                        text: 'Creator User', dataIndex: 'A1955USRIN', width: 100,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:left;";
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Creation Date', dataIndex: 'A1955FECIN', width: 100,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:left;";
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Creation Time', dataIndex: 'A1955HORIN', width: 100,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:left;";
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'User Update', dataIndex: 'A1955USRAC', width: 100,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:left;";
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Update Date', dataIndex: 'A1955FECAC', width: 100,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:left;";
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Update Time', dataIndex: 'A1955HORAC', width: 100,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:left;";
+                                            return value;
+                                        }
+                                    },
+                                    {
                                         text: 'Edit',
                                         sortable: false,
                                         xtype: 'actioncolumn',
-                                        width: 90,
+                                        width: 80,
                                         align: 'center',
                                         items: [
                                             {

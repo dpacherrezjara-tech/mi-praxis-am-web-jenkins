@@ -260,6 +260,18 @@ public class AccountingMasterProcess2Controller extends BaseController {
             CH1_04.setCellValue("Proc. Date");
             Cell CH1_05 = row.createCell(5);
             CH1_05.setCellValue("Status");
+            Cell CH1_06 = row.createCell(6);
+            CH1_06.setCellValue("Creator User");
+            Cell CH1_07 = row.createCell(7);
+            CH1_07.setCellValue("Creation Date");
+            Cell CH1_08 = row.createCell(8);
+            CH1_08.setCellValue("Creation Time");
+            Cell CH1_09 = row.createCell(9);
+            CH1_09.setCellValue("User Update");
+            Cell CH1_10 = row.createCell(10);
+            CH1_10.setCellValue("Update Date");
+            Cell CH1_11 = row.createCell(11);
+            CH1_11.setCellValue("Update Time");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -267,6 +279,12 @@ public class AccountingMasterProcess2Controller extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -274,14 +292,26 @@ public class AccountingMasterProcess2Controller extends BaseController {
             CH1_03.setCellStyle(headerStyle);
             CH1_04.setCellStyle(headerStyle);
             CH1_05.setCellStyle(headerStyle);
-
+            CH1_06.setCellStyle(headerStyle);
+            CH1_07.setCellStyle(headerStyle);
+            CH1_08.setCellStyle(headerStyle);
+            CH1_09.setCellStyle(headerStyle);
+            CH1_10.setCellStyle(headerStyle);
+            CH1_11.setCellStyle(headerStyle);
+            
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(2, true);
             sheet.autoSizeColumn(3, true);
             sheet.autoSizeColumn(4, true);
             sheet.autoSizeColumn(5, true);
-
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+            sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
+            
             ++vj;
             // </editor-fold>
             
@@ -295,6 +325,12 @@ public class AccountingMasterProcess2Controller extends BaseController {
                 Cell cell53 = row.createCell(3);
                 Cell cell54 = row.createCell(4);
                 Cell cell55 = row.createCell(5);
+                Cell cell56 = row.createCell(6);
+                Cell cell57 = row.createCell(7);
+                Cell cell58 = row.createCell(8);
+                Cell cell59 = row.createCell(9);
+                Cell cell60 = row.createCell(10);
+                Cell cell61 = row.createCell(11);
 
                 cell50.setCellValue(listaData.get(vi).RN);
                 cell51.setCellValue(listaData.get(vi).A1955ENVIO);
@@ -302,13 +338,25 @@ public class AccountingMasterProcess2Controller extends BaseController {
                 cell53.setCellValue(listaData.get(vi).ACCION);
                 cell54.setCellValue(listaData.get(vi).A1955FPROC);
                 cell55.setCellValue(listaData.get(vi).ESTADO);
-
+                cell56.setCellValue(listaData.get(vi).A1955USRIN);
+                cell57.setCellValue(listaData.get(vi).A1955FECIN);
+                cell58.setCellValue(listaData.get(vi).A1955HORIN);
+                cell59.setCellValue(listaData.get(vi).A1955USRAC);
+                cell60.setCellValue(listaData.get(vi).A1955FECAC);
+                cell61.setCellValue(listaData.get(vi).A1955HORAC);
+                
                 cell50.setCellStyle(bodyStyle);
                 cell51.setCellStyle(bodyStyle);
                 cell52.setCellStyle(bodyStyle);
                 cell53.setCellStyle(bodyStyle);
                 cell54.setCellStyle(bodyStyle);
                 cell55.setCellStyle(bodyStyle);
+                cell56.setCellStyle(bodyStyle);
+                cell57.setCellStyle(bodyStyle);
+                cell58.setCellStyle(bodyStyle);
+                cell59.setCellStyle(bodyStyle);
+                cell60.setCellStyle(bodyStyle);
+                cell61.setCellStyle(bodyStyle);
 
                 sheet.autoSizeColumn(0, true);
                 sheet.autoSizeColumn(1, true);
@@ -316,6 +364,12 @@ public class AccountingMasterProcess2Controller extends BaseController {
                 sheet.autoSizeColumn(3, true);
                 sheet.autoSizeColumn(4, true);
                 sheet.autoSizeColumn(5, true);
+                sheet.autoSizeColumn(6, true);
+                sheet.autoSizeColumn(7, true);
+                sheet.autoSizeColumn(8, true);
+                sheet.autoSizeColumn(9, true);
+                sheet.autoSizeColumn(10, true);
+                sheet.autoSizeColumn(11, true);
                 // </editor-fold>
                 
                 iter.next();
