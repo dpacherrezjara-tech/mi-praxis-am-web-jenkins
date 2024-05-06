@@ -191,6 +191,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             global.Msg({msg: 'Error on scan'});
         }
         panelScan.unmask();
+        me.view.center();
     },
     scanStandBy: async function (obj) {
         const me = this;
@@ -677,6 +678,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             doctype: stdoc
         });
         usageWin.show();
+    },
+    onCenterDataEntry: function () {
+        this.view.center();
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Grillas Scaneo">
