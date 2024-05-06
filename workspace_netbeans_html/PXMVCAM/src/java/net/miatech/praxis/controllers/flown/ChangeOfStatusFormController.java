@@ -50,6 +50,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import java.nio.charset.StandardCharsets;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import net.miatech.praxis.utils.PythonWS;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -62,6 +68,9 @@ public class ChangeOfStatusFormController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private ChangeOfStatusFormLogic logic;
+
+    @Autowired
+    private PythonWS pws;
 
     @RequestMapping(value = "Search")
     public @ResponseBody
@@ -593,74 +602,55 @@ public class ChangeOfStatusFormController extends BaseController {
     void getFileTxt(HttpServletRequest request, HttpServletResponse response) {
      */
     @RequestMapping(value = "getFileTxt")
-    public @ResponseBody
-    String getFileTxt(ModelMap map, HttpServletRequest request, HttpServletResponse responses) throws UnirestException, JSONException {
-        A3676Filter filter = new A3676Filter();
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+        public ResponseEntity<byte[]> getFileTxt(HttpServletRequest request, final HttpServletResponse response) throws Exception {
+            A3676Filter filter = new A3676Filter();
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            String v1_urlREST = "/api/change-of-status/changeofstatus";
+            
 
-        String path_config = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
-        filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+                try {
+                    HashMap bodyData = new HashMap<>();
+                    bodyData.put("IN_OPTION", filter.IN_OPTION.trim());
+                    bodyData.put("IN_CIA", filter.IN_CIA.trim());
+                    bodyData.put("IN_FORMA", filter.IN_FORMA.trim());
+                    bodyData.put("IN_SERIE", filter.IN_SERIE.trim());
+                    bodyData.put("IN_SEQ", filter.IN_SEQ.trim());
+                    bodyData.put("IN_REFERENCE", filter.IN_REFERENCE.trim());
+                    bodyData.put("IN_HORAINI", filter.IN_HORAINI.trim());
+                    bodyData.put("IN_HORAFIN", filter.IN_HORAFIN.trim());
+                    bodyData.put("IN_STATUS", filter.IN_STATUS.trim());
+                    bodyData.put("IN_CURRENCY", filter.IN_CURRENCY.trim());
+                    bodyData.put("IN_COUNTRY", filter.IN_COUNTRY.trim());
+                    bodyData.put("IN_STATUSINI", filter.IN_STATUSINI.trim());
+                    bodyData.put("IN_STATUSFIN", filter.IN_STATUSFIN.trim());
+                    bodyData.put("IN_ORIGEN", filter.IN_ORIGEN.trim());
+                    bodyData.put("IN_LOTE", filter.IN_LOTE.trim());
+                    bodyData.put("IN_DATEFROM", filter.IN_DATEFROM.trim());
+                    bodyData.put("IN_DATETO", filter.IN_DATETO.trim());
+                    
+//                     System.out.println(bodyData);
+                
 
-        //Se establece tiempo límite de conexión por 60 min
-        Unirest.setTimeouts(3600000, 3600000);
-        //Preparando parámetros para enviar por body
-        HashMap bodyData = new HashMap<>();
-        bodyData.put("IN_OPTION", filter.IN_OPTION.trim());
-        bodyData.put("IN_CIA", filter.IN_CIA.trim());
-        bodyData.put("IN_FORMA", filter.IN_FORMA.trim());
-        bodyData.put("IN_SERIE", filter.IN_SERIE.trim());
-        bodyData.put("IN_SEQ", filter.IN_SEQ.trim());
-        bodyData.put("IN_REFERENCE", filter.IN_REFERENCE.trim());
-        bodyData.put("IN_HORAINI", filter.IN_HORAINI.trim());
-        bodyData.put("IN_HORAFIN", filter.IN_HORAFIN.trim());
-        bodyData.put("IN_STATUS", filter.IN_STATUS.trim());
-        bodyData.put("IN_CURRENCY", filter.IN_CURRENCY.trim());
-        bodyData.put("IN_COUNTRY", filter.IN_COUNTRY.trim());
-        bodyData.put("IN_STATUSINI", filter.IN_STATUSINI.trim());
-        bodyData.put("IN_STATUSFIN", filter.IN_STATUSFIN.trim());
-        bodyData.put("IN_ORIGEN", filter.IN_ORIGEN.trim());
-        bodyData.put("IN_LOTE", filter.IN_LOTE.trim());
-        bodyData.put("IN_DATEFROM", filter.IN_DATEFROM.trim());
-        bodyData.put("IN_DATETO", filter.IN_DATETO.trim());
+                ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST,bodyData);
+//                System.out.println(bodyData);
+//                System.out.println(res);
+                
+                String resString = new String(res.getBody(), StandardCharsets.UTF_8);
+                
+                System.out.println("Datos obtenidos:");
+                System.out.println(resString);
+                
+                return res;
+                
 
-        HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/ChangeCouponStatus/download/report001/")
-                .header("content-type", "application/json")
-                .header("cache-control", "no-cache")
-                .body(new Gson().toJson(bodyData))
-                .asJson();
-
-        String error_code = response.getBody().getObject().get("error_code").toString();
-        String error_msg = response.getBody().getObject().get("error_msg").toString();
-        String filename = response.getBody().getObject().get("filename").toString();
-        if (!filename.equals("")) {
-            String strDirectory = path_config + "\\" + filename;
-            //String ruta = "C:\\Users\\zperez\\Downloads\\20190809_ADM_105605.zip" ;
-            responses.setContentType("application/zip");
-            //responses.setContentLength(LENGTH_OF_ZIPDATA);
-            responses.setHeader("Content-Disposition", "attachment;filename=\"" + strDirectory + "\"");
-            try {
-                File f = new File(strDirectory);
-                byte[] arBytes = new byte[(int) f.length()];
-                FileInputStream is = new FileInputStream(f);
-                is.read(arBytes);
-                ServletOutputStream op = responses.getOutputStream();
-                op.write(arBytes);
-                op.flush();
-
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("Error Message => "+ e.getMessage());
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            //throw new SpringException(e);
             }
-        }
-
-        map.put("success", true);
-        //map.put("error_code", error_code);
-        //map.put("error_msg", error_msg);
-        //map.put("filename", filename);
-
-        return new Gson().toJson(map);
     }
 
-    /*@RequestMapping(value = "/getFileTxt")
+/*@RequestMapping(value = "/getFileTxt")
     public @ResponseBody
     void getFileTxt(HttpServletRequest request, HttpServletResponse response) {
         A3676Filter filter = new A3676Filter();
@@ -746,8 +736,8 @@ public class ChangeOfStatusFormController extends BaseController {
             throw new SpringException(e);
         }
     }*/
-    @RequestMapping(value = "SearchControl")
-    public @ResponseBody
+@RequestMapping(value = "SearchControl")
+        public @ResponseBody
     String SearchControl(ModelMap map, HttpServletRequest request) {
         A3676Filter filter = new A3676Filter();
         try {
@@ -773,7 +763,7 @@ public class ChangeOfStatusFormController extends BaseController {
     }
 
     @RequestMapping(value = "/getXLSXCAB")
-    public @ResponseBody
+        public @ResponseBody
     void getXLSXCAB(HttpServletRequest request, HttpServletResponse response) {
         A3676Filter filter = new A3676Filter();
         try {
@@ -933,7 +923,7 @@ public class ChangeOfStatusFormController extends BaseController {
     }
 
     @RequestMapping(value = "/getXLSXCABDET")
-    public @ResponseBody
+        public @ResponseBody
     void getXLSXCABDET(HttpServletRequest request, HttpServletResponse response) {
         A3676Filter filter = new A3676Filter();
         try {
@@ -1166,7 +1156,7 @@ public class ChangeOfStatusFormController extends BaseController {
     }
 
     @RequestMapping(value = "SearchControlEjecu")
-    public @ResponseBody
+        public @ResponseBody
     String SearchControlEjecu(ModelMap map, HttpServletRequest request) {
         A3676Filter filter = new A3676Filter();
         try {
@@ -1192,7 +1182,7 @@ public class ChangeOfStatusFormController extends BaseController {
     }
 
     @RequestMapping(value = "SearchDetaCab")
-    public @ResponseBody
+        public @ResponseBody
     String SearchDetaCab(ModelMap map, HttpServletRequest request) {
         List<A3676Filter> lst;
         A3676Filter filter = new A3676Filter();

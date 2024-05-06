@@ -8,6 +8,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DisputeF
     alias: 'controller.DisputeFileViewerMyarcController',
 
     beanTMP: {},
+    beanDataima: {},
     urlWin01: CONTEXTPATH + '/DisputemanagementMyarcForm',
     urlWin02: '',
 
@@ -15,7 +16,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DisputeF
     IN_ANIO: '',
     IN_PREME: '',
     IN_DOCUMENT: '',
-
+    IN_TIPO: '',
+    IN_CNXPA:'',
     init: function (view) {
         var me = this;
     },
@@ -40,39 +42,44 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DisputeF
 
 
         me.IN_DATE = rec.data.A4138FREGI;
+        me.IN_TIPO = rec.data.A4138TYPE;
         me.IN_ANIO = me.view.params.anio;
         me.IN_PREME = me.view.params.preme;
         me.IN_DOCUMENT = me.view.params.nmemo;
-                
+        me.IN_CNXPA = me.view.params.CNXPA; 
+
         me.beanTMP.IN_OPTION = 1;
         me.beanTMP.IN_PATH = "";
-        // me.beanTMP.IN_PATH = "D:\\PRAXIS_AM_HTML\\PXMVCAM\\web\\resources\\IMGTMPDISPUTE\\";
         me.beanTMP.IN_DATE = me.IN_DATE;
         me.beanTMP.IN_ANIO = me.IN_ANIO;
         me.beanTMP.IN_PREME = me.IN_PREME;
-
+        me.beanTMP.IN_TIPO = me.IN_TIPO;
+        me.beanTMP.IN_CNXPA = me.IN_CNXPA;
+         
         var panel = Ext.getCmp(prototype.idDisputeFileViewerMyarc + '-panel-tree');
         panel.removeAll();
 
         // Ext.getCmp('DisputeFileViewer').mask('Please Wait....');
         Ext.Ajax.request({
-            url:  me.urlWin01+ '/GetFilesDirectory', //prototype.idDisputeFileViewerMyarc + '/GetFilesDirectory',
+            url: me.urlWin01 + '/GetFilesDirectory', //prototype.idDisputeFileViewerMyarc + '/GetFilesDirectory',
             method: 'POST',
             timeout: '300000',
             params: me.beanTMP,
             success: function (response, options) {
                 //   Ext.getCmp('DisputeFileViewer').unmask();
                 var res = Ext.JSON.decode(response.responseText);
-                var data = Ext.JSON.decode(res.data);
+                me.beanDataima = res;
+                // var data = Ext.JSON.decode(res.data);
                 //console.log(data);
 
                 var dataRoot = {text: me.beanTMP.IN_DOCUMENT, filename: '', expanded: true, flag: false, children: []};
 
-                Ext.Object.each(data, function (index, value) {
+                Ext.Object.each(res.data, function (index, value) {
+                    var vd = value.url.split('/');
                     dataRoot.children.push({
                         leaf: true,
-                        text: value.filename,
-                        filename: value.filename,
+                        text: vd[0], //value.map.url,
+                        filename: value.url,
                         flag: true
                     });
                 });
@@ -127,7 +134,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DisputeF
     },
 
     OnTreeItemClick: function (obj, td, cellIndex, record, tr, rowIndex, e, eOpts) {
-        if (cellIndex == 0) {
+        if (cellIndex === 0) {
 
             if (record.get('filename') !== '') {
                 var extensionFile = Ext.util.Format.lowercase(record.get('filename').split('.').pop());
@@ -137,7 +144,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DisputeF
                     panel.update('<div id="' + prototype.idDisputeFileViewerMyarc + '-imageViewerContainer" style="width: 768px; height: 575px;" ></div>');
 
                     // /resources
-                    var curect_file_path = CONTEXTPATH + "/IMGTMPDISPUTE/" + this.IN_ANIO + "/" + this.IN_PREME + "/" + this.IN_DATE + "/" + record.get('filename');
+                    var curect_file_path = record.get('filename');//CONTEXTPATH + "/IMGTMPDISPUTE/" + this.IN_ANIO + "/" + this.IN_PREME + "/" + this.IN_DATE + "/" + record.get('filename');
                     //console.log(curect_file_path);
                     $("#" + prototype.idDisputeFileViewerMyarc + "-imageViewerContainer").verySimpleImageViewer({
                         imageSource: curect_file_path,
@@ -151,7 +158,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DisputeF
                     });
                 } else if (extensionFile === 'pdf') {
                     // /resources
-                    var curect_file_path = CONTEXTPATH + "/IMGTMPDISPUTE/" + this.IN_ANIO + "/" + this.IN_PREME + "/" + this.IN_DATE + "/" + record.get('filename');
+                    var curect_file_path = record.get('filename');//CONTEXTPATH + "/IMGTMPDISPUTE/" + this.IN_ANIO + "/" + this.IN_PREME + "/" + this.IN_DATE + "/" + record.get('filename');
                     //console.log(curect_file_path);
                     var htmlPdf = '<object data="' + curect_file_path + '" style="width: 768px; height: 575px;" type="application/pdf">' +
                             '<embed src="' + curect_file_path + '"  style="width: 768px; height: 575px;" type="application/pdf" />' +
@@ -168,7 +175,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DisputeF
         //console.log(rowIndex);
         var record = grid.getStore().getAt(rowIndex);
         // /resources
-        window.open(CONTEXTPATH + "/IMGTMPDISPUTE/" + this.IN_ANIO + "/" + this.IN_PREME + "/" + this.IN_DATE + "/" + record.get('filename'), '_blank');
+        window.open(record.data.filename, '_blank');
+        // window.open(CONTEXTPATH + "/IMGTMPDISPUTE/" + this.IN_ANIO + "/" + this.IN_PREME + "/" + this.IN_DATE + "/" + record.get('filename'), '_blank');
     },
 
     OnDownloadActionDisabled: function (view, rowIndex, colIndex, item, record) {

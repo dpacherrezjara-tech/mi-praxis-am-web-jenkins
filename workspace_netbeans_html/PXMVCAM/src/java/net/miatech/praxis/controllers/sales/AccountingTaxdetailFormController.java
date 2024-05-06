@@ -117,11 +117,10 @@ public class AccountingTaxdetailFormController extends BaseController {
     }
 
     public String upload_s3(ReportTaxA1530Filter filter) throws SQLException, Exception {
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_SERVICE_AM").toString();
         String context = "";//serverSession.getUserView().getUserInfo().CONTEXT;
         String usr = serverSession.getServerSession().getUserView().getUserInfo().USR;
         String pass = serverSession.getServerSession().getUserView().getUserInfo().TOKEN;
-
 
         /*
          Se establece tiempo límite de conexión por 60 min
@@ -149,7 +148,8 @@ public class AccountingTaxdetailFormController extends BaseController {
         bodyData.put("IN_USER", usr);
         bodyData.put("IN_PWD", pass);
 
-        Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST.trim() + "/api/AccountingTaxdetail/report001/")
+//        Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST.trim() + "/api/AccountingTaxdetail/report001/")
+          Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST.trim() + "/api/accounting-tax-detail/accountingtax")
                 .header("content-type", "application/json")
                 .header("cache-control", "no-cache")
                 .body(new Gson().toJson(bodyData))

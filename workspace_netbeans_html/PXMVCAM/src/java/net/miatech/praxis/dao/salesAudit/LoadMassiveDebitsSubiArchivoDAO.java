@@ -318,7 +318,7 @@ public class LoadMassiveDebitsSubiArchivoDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL PXSAUDIT.SQP01904(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP01904(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         ResultSet rst = null;
         String valida = "Y";
@@ -330,8 +330,8 @@ public class LoadMassiveDebitsSubiArchivoDAO {
             cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
             for (A2552Filter obj : filter) {
                 //INSERTAR DATOS A LA TABLA
-                cstmt01.registerOutParameter(102, Types.VARCHAR);
-                cstmt01.registerOutParameter(103, Types.VARCHAR);
+                cstmt01.registerOutParameter(104, Types.VARCHAR);
+                cstmt01.registerOutParameter(105, Types.VARCHAR);
 
                 cstmt01.setString(1, obj.A2552CCUST);
                 cstmt01.setString(2, obj.A2552BASE);
@@ -436,13 +436,16 @@ public class LoadMassiveDebitsSubiArchivoDAO {
                 cstmt01.setString(98, obj.A2552CDATO19);
                 cstmt01.setString(99, obj.A2552CDATO20);
                 cstmt01.setDouble(100, obj.A2552PROVI4);
-                cstmt01.setString(101, valida);
+                
+                cstmt01.setString(101, obj.A2552EPR);
+                cstmt01.setString(102, obj.A2552PNR);
+                cstmt01.setString(103, valida);
 
                 cstmt01.execute();
                 valida = "N";
-                obj.dbException.SQLCODE = cstmt01.getString(102);
-                obj.dbException.MESSAGE = cstmt01.getString(103);
-                mensaje = obj.dbException.MESSAGE;
+                obj.dbException.SQLCODE = cstmt01.getString(104);
+                obj.dbException.MESSAGE = cstmt01.getString(105);
+                mensaje = obj.dbException.MESSAGE; 
 
                 if (!obj.dbException.SQLCODE.equals("0")) {
                     mensaje = obj.dbException.MESSAGE;

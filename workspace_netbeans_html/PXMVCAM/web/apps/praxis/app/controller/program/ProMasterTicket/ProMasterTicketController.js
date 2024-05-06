@@ -230,13 +230,13 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         console.log(data);
         var me01 = this;
         if(data.STAT === 'EXCH' || data.STAT === 'EXCH-VOID'){
-            var ScrTKTForm = Ext.create('Ext.Praxis.view.screens.ScrTKTForm', { id: 'ScrTKTForm' });
+            /*var ScrTKTForm = Ext.create('Ext.Praxis.view.screens.ScrTKTForm', { id: 'ScrTKTForm' });
             var controller = ScrTKTForm.getController();
             controller.VP_DOCUMENTO = data.FOR + data.SER;
             controller.VP_CIA = data.CIA;
             controller.VP_SEQ = '00';
             controller.actionCode = 'V';
-            ScrTKTForm.show();
+            ScrTKTForm.show();*/
             console.log(data.SEQ+data.CIA+data.FOR + data.SER);
             var strSEQ = data.SEQ===''? '00':data.SEQ;
             var strCIA = data.CIA;
@@ -1279,6 +1279,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         me01.beanResultSet01.fileA720.A720TTSCMM = 0;
                         me01.beanResultSet01.fileA720.A720TARIFA = 0;
                         me01.beanResultSet01.fileA720.A720TYQ = 0;
+                        me01.beanResultSet01.fileA720.A720TTYQ = 0;
                         me01.beanResultSet01.fileA720.A720FARE = 0;
                         me01.beanResultSet01.fileA720.A720ETKT = "";
                         me01.beanResultSet01.fileA720.A1672_AUDITED = 0;
@@ -1309,6 +1310,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         Ext.getCmp(prototype.id + '-info-panel').el.setStyle({backgroundImage: ''});
                         console.log('END CLEAN VOID');
                         win.setValue('lblCompensatedTicket', me01.beanResultSet01.fileA720.COMPTKT);
+                        win.setValue('lblCompensatedTicket2', me01.beanResultSet01.fileA720.COMPTKT2);
+                        win.setValue('lblCompensatedTicket3', me01.beanResultSet01.fileA720.COMPTKT3);
+                        win.setValue('lblCompensatedTicket4', me01.beanResultSet01.fileA720.COMPTKT4);
                         win.setValue('lblDocumentTypeCod', me01.beanResultSet01.fileA720.A720VRIC);
                         win.setValue('lblDocumentTypeCon', me01.beanResultSet01.fileA720.EMDCONCEP);
                         if(me01.gloA720TKVOID === 'V'){
@@ -1488,7 +1492,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         win.setValue('lblBatch1', '');
                         win.setValue('lblBatch2', '');
                         win.setValue('lblBalanceBeginingFare', Ext.util.Format.number(me01.beanResultSet01.fileA720.A720FARE, '0,000.00'));
-                        win.setValue('lblBalanceBeginingSurcharge', Ext.util.Format.number(me01.beanResultSet01.fileA720.A720TYQ, '0,000.00'));
+                        win.setValue('lblBalanceBeginingSurcharge', Ext.util.Format.number(me01.beanResultSet01.fileA720.A720TTYQ, '0,000.00'));
                         win.setValue('lblBalanceBeginingCommision', Ext.util.Format.number(me01.beanResultSet01.fileA720.A720TTCOMM + me01.beanResultSet01.fileA720.A720TTSCMM, '0,000.00'));
                         win.setValue('lblBalanceRemainingFare', '0.00');
                         win.setValue('lblBalanceRemainingSurcharge', '0.00');
@@ -1644,6 +1648,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         if (me01.filterTKT.lstResultSet02.length > 0) {
                             for (var i2 = 0; i2 < me01.filterTKT.lstResultSet02.length; i2++) {
                                 paramsResultSet02 = me01.filterTKT.lstResultSet02[i2];
+                                console.log("CAMBIO:");
+                                console.log(paramsResultSet02.fileA730);
                                 if (paramsResultSet02.fileA730.A730TYPCP1.trim() !== '' && paramsResultSet02.fileA730.A730TYPCP1.trim() !== 'XX')
                                 {
                                     bolA730CUPON1 = false;
@@ -1741,7 +1747,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             DES: paramsResultSet02.fileA730.A730RUTA1,
                                             AL: paramsResultSet02.fileA730.A730CARRA1,
                                             FLIGHT: paramsResultSet02.fileA730.A730NVLO1,
-                                            DATE: paramsResultSet02.fileA730.A730FECVTA,
+                                            DATE: paramsResultSet02.fileA730.A720FECVTA,
                                             REF: paramsResultSet02.fileA730.A4373CUPN1.trim() === '' ? '' : 'RFTX',
                                             //STAT : 'EXCH',
                                             STAT: paramsResultSet02.fileA730.A720TKVOID === 'V' ? 'EXCH-VOID' : 'EXCH',
@@ -3514,7 +3520,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                             console.log(me01.beanResultSet01.fileA720.A720FARE);
                             var intBalanceRemainingFare = me01.beanResultSet01.fileA720.A720FARE - intRemainingFare;
                             //var intBalanceRemainingSurcharge:Number = beanResultSet01.fileA720.A720TQ - intRemainingSurcharge;
-                            var intBalanceRemainingSurcharge = me01.beanResultSet01.fileA720.A720TYQ - intRemainingSurcharge;
+                            var intBalanceRemainingSurcharge = me01.beanResultSet01.fileA720.A720TTYQ - intRemainingSurcharge;
                             //var intBalanceRemainingCommision:Number = (beanResultSet01.fileA720.A720COMMIS+beanResultSet01.fileA720.A720TSCM) - intRemainingCommision;
                             var intBalanceRemainingCommision = (me01.beanResultSet01.fileA720.A720TTCOMM + me01.beanResultSet01.fileA720.A720TTSCMM) - intRemainingCommision;
 
@@ -4206,7 +4212,11 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         win.setValue('lblRelatedTickets2SEQ', '00');
         win.setValue('lblRelatedTickets3SEQ', '00');
         win.setValue('lblRelatedTickets4SEQ', '00');
-
+        win.setValue('lblCompensatedTicket', '');
+        win.setValue('lblCompensatedTicket2', '');
+        win.setValue('lblCompensatedTicket3', '');
+        win.setValue('lblCompensatedTicket4', '');
+        
         win.enabled('btnTicket', false);
         win.enabled('btnAccounting', false);
         //win.enabled('btnFacsimil', false);
