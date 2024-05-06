@@ -192,13 +192,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DetailDispute
             status = Ext.getCmp(prototype.id1 + '-ComboStatus').getValue();
         }
 
+
         me.beanTMP.A2553NMEMO = rec.data.A2548NMEMO;
         me.beanTMP.A2553DESCR = Ext.getCmp(prototype.id1 + '-Argument').getValue();
         me.beanTMP.A2553PAIS = rec.data.A2548PAIS;
         me.beanTMP.A2553STAT = Ext.getCmp(prototype.id1 + '-ComboStatus').getValue();
         me.beanTMP.A2553STAT2 = status;
-        me.beanTMP.A2553ARCHV = Ext.getCmp(prototype.id1 + '-File').getValue();
-        ;
         me.beanTMP.A2553CNXPA = rec.data.A2548CNXPA;
         me.beanTMP.A2553TRNCU = "ADM";
         me.beanTMP.A2553FOLIO = "";//Ext.getCmp(prototype.id1 + '-Folio').getValue();
@@ -278,7 +277,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DetailDispute
         metaData.style = "font-weight:bold !important; color:blue !important; cursor: pointer !important; text-decoration: underline;";
         return '<span onclick="Ext.getCmp(prototype.id1 + \'-PrincipalContenedor\').getController().onWinFileViewerClick(' + rowIndex + ');">' + archivo + '</span>'
     },
-
+    
     /*onWinFileViewerClick: function (rowIndex) {
      var grid = Ext.getCmp(prototype.id1 + '-gridDispuRazon');
      var store = grid.getStore();
@@ -292,7 +291,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DetailDispute
 
 
     onWinFileViewerClick: function (rowIndex) {
-        var me = this;     
+
         var grid = Ext.getCmp(prototype.id1 + '-gridDispuRazon');
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
@@ -300,8 +299,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DetailDispute
         var win = new Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeFileViewer({
             params: {
                 rec: rec,
-                nmemo: Ext.getCmp(prototype.id1 + '-nmemo').getValue(''),
-                CNXPA: me.beanTMP.A2553CNXPA
+                nmemo: Ext.getCmp(prototype.id1 + '-nmemo').getValue('')
             }
         });
         win.show();

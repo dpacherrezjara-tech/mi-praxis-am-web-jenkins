@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
     controller: 'TransacErrorBPODataEntryController',
     title: 'Transaction Error - Form',
     header: true,
-    width: 1055,
+    width: 1065,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -60,14 +60,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                 }
             },
             items: [
-                //<editor-fold defaultstate="collapsed" desc="Chargeback Panel">
                 {
                     xtype: 'panel',
                     layout: {
                         type: 'hbox',
                         pack: 'end'
                     },
-                    margin: '3 10 -2 0',
+                    margin: 0,
                     defaults: {},
                     flex: 1,
                     id: prototype.idDE + '-specialPanel',
@@ -83,7 +82,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                         }
                     ]
                 },
-                //</editor-fold>
                 //<editor-fold defaultstate="collapsed" desc="General Information">
                 {
                     title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">General Information</span>',
@@ -248,7 +246,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Description',
                                     name: 'desc_ADJU',
                                     labelWidth: 120,
-                                    width: 360
+                                    width: 330
                                 }
                             ]
                         },
@@ -267,8 +265,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             };
                                             field.setRawValue(opts[newValue] || '');
                                         }
-                                    },
-                                    value: 'None'
+                                    }
                                 },
                                 {
                                     fieldLabel: 'Code',
@@ -280,7 +277,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Description',
                                     name: 'desc_ERROR',
                                     labelWidth: 120,
-                                    width: 360
+                                    width: 330
                                 }
                             ]
                         }
@@ -409,7 +406,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     name: 'tgrosamoun',
                                     labelWidth: 120,
                                     width: 240,
-                                    fieldStyle: 'text-align:right;',
                                     listeners: {
                                         change: function (field, newValue) {
                                             field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
@@ -456,7 +452,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     id: prototype.idDE + '-txtSVFOPS',
                                     labelWidth: 120,
                                     width: 240,
-                                    fieldStyle: 'text-align:right;',
                                     listeners: {
                                         change: function (field, newValue) {
                                             field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
@@ -490,7 +485,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     name: 'difference',
                                     id: prototype.idDE + '-txtDifference',
                                     labelWidth: 120,
-                                    fieldStyle: 'text-align:right;',
                                     width: 240,
                                     listeners: {
                                         change: function (field, newValue) {
@@ -512,16 +506,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                         type: 'hbox',
                         pack: 'center'
                     },
-                    collapsible: true,
-                    collapsed: true,
                     border: true,
                     width: '100%',
                     style: {
                         backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
-                    },
-                    listeners: {
-                        'expand': 'onCenterDataEntry',
-                        'collapse': 'onCenterDataEntry'
                     },
                     items: [
                         {
@@ -1504,7 +1492,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                     border: false,
                     hidden: true,
                     margin: '0 5 0 5',
-                    defaults: {},
+                    defaults:{},
                     items: [
                         {
                             xtype: 'grid',

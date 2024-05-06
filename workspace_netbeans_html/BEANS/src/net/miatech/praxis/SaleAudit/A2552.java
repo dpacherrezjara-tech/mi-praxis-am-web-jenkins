@@ -36,7 +36,6 @@ public class A2552 {
     public String A2552FBRI4 = "";
     public String A2552ITINE = "";
     public String A2552PNR = "";
-    public String A2552EPR = "";
     public String A2552ARPI = "";
     public String A2552CFOP = "";
     public String A2552TFOP = "";
@@ -174,21 +173,6 @@ public class A2552 {
     public String A2552REGIS = "";
     public String A2552FREGI = "";
 
-    public String getA2552EPR() {
-        return A2552EPR;
-    }
-
-    public void setA2552EPR(String A2552EPR) {
-        this.A2552EPR = A2552EPR;
-    }
-
-    public double getA2552PROVI4() {
-        return A2552PROVI4;
-    }
-
-    public void setA2552PROVI4(double A2552PROVI4) {
-        this.A2552PROVI4 = A2552PROVI4;
-    }
     
     public String getA2552CCUST() {
         return A2552CCUST;

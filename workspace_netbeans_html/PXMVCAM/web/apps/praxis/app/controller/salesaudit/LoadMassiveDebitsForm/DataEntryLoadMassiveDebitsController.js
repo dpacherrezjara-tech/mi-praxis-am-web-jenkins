@@ -167,16 +167,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.LoadMassiveDebitsForm.DataEntryLoad
                             dblMonto += lstNew[e].MONTO;
                         }
                     }
-                    if (lstNew[f].A2552FUENT === 'ASR') {
-                        lstNewMax.push(lstNew[f]);
+                    if (dblMonto < minValue) {
+                        lstNewMin.push(lstNew[f]);
                     } else {
-                        if (dblMonto < minValue) {
-                            lstNewMin.push(lstNew[f]);
-                        } else {
-                            lstNewMax.push(lstNew[f]);
-                        }
+                        lstNewMax.push(lstNew[f]);
                     }
-
                     if (lstNewMax.length > 0) {
                         global.Msg({
                             msg: 'Are you sure to Save?',

@@ -408,7 +408,7 @@ public class PendingGroupingFormController extends BaseController {
         return mensaje;
     }
      public String upload_s3(String TKT, String nomArchivo) throws SQLException, Exception {
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_SERVICE_AM").toString();
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
 
 
         /*

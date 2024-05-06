@@ -8,7 +8,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.PostbillingFileVie
     alias: 'controller.PostbillingFileViewerController',
 
     beanTMP: {},
-    beanDataima: {},
     urlWin01: '',
     urlWin02: '',
 
@@ -30,53 +29,53 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.PostbillingFileVie
         // prototype.id = 'BsplinkFileViewer';
         // prototype.url = CONTEXTPATH + '/BsplinkRefundQueryRFND';
     },
-    getFilesDirectory: function (data, nmemo, country, urlWin01) {
+    getFilesDirectory: function (data, nmemo,country,urlWin01) {
         var me = this;
         this.IN_DATE = data.A3537FREGI;
         this.IN_COUNTRY = country;
-        this.IN_DOCUMENT = nmemo;
+        this.IN_DOCUMENT = nmemo;  
         this.urlWin01 = urlWin01;
-        me.beanTMP.IN_DOCUMENT = nmemo;
+        me.beanTMP.IN_DOCUMENT= nmemo;
         me.beanTMP.IN_OPTION = 1;
         me.beanTMP.IN_PATH = "";
         me.beanTMP.IN_DATE = this.IN_DATE;
         me.beanTMP.IN_COUNTRY = this.IN_COUNTRY;
         //,
-
+        
         me.beanTMP.IN_MODULO = 'POSTBILLING';
         if (data.A3537TYPE === 'AM') {
             me.beanTMP.IN_TYPE = 'WEB';
         } else {
-            me.beanTMP.IN_TYPE = 'ROBOT';
+            me.beanTMP.IN_TYPE = 'ROBOT';            
         }
         me.getBuscarFilesDirectory(me.beanTMP);
     },
-    getFilesDirectory2: function (data, nmemo, country, urlWin01) {
+    getFilesDirectory2: function (data, nmemo,country,urlWin01) {
         var me = this;
         this.IN_DATE = data.A2553FREGI;
         this.IN_COUNTRY = country;
-        this.IN_DOCUMENT = nmemo;
+        this.IN_DOCUMENT = nmemo;  
         this.urlWin01 = urlWin01;
-        me.beanTMP.IN_DOCUMENT = nmemo;
+        me.beanTMP.IN_DOCUMENT= nmemo;
         me.beanTMP.IN_OPTION = 1;
         me.beanTMP.IN_PATH = "";
         me.beanTMP.IN_DATE = this.IN_DATE;
-        me.beanTMP.IN_COUNTRY = this.IN_COUNTRY;
+        me.beanTMP.IN_COUNTRY = this.IN_COUNTRY;        
         if (data.A3537TYPE === 'AM') {
             me.beanTMP.IN_TYPE = 'WEB';
             if (data.ESTADO === 'Disputed Rejected' || data.ESTADO === 'Disputed Accepted') {
                 me.beanTMP.IN_MODULO = 'DISPUTAS';
-            } else {
+            }else{
                 me.beanTMP.IN_MODULO = 'ADM';
             }
         } else {
-            me.beanTMP.IN_TYPE = 'ROBOT';
+            me.beanTMP.IN_TYPE = 'ROBOT';  
             me.beanTMP.IN_MODULO = 'DISPUTAS';
         }
         me.getBuscarFilesDirectory(me.beanTMP);
     },
     getBuscarFilesDirectory: function () {
-        var me = this;
+         var me = this;
         // 
         var panel = Ext.getCmp(prototype.id03 + '-panel-tree');
         panel.removeAll();
@@ -90,19 +89,16 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.PostbillingFileVie
             success: function (response, options) {
                 //   Ext.getCmp('DisputeFileViewer').unmask();
                 var res = Ext.JSON.decode(response.responseText);
-                me.beanDataima = res.data;
-                //console.log(res.map.files.myArrayList);
-                //var data = Ext.JSON.decode(res.data);
+                var data = Ext.JSON.decode(res.data);
                 //console.log(data);
 
                 var dataRoot = {text: me.beanTMP.IN_DOCUMENT, filename: '', expanded: true, flag: false, children: []};
 
-                Ext.Object.each(res.data, function (index, value) {
-                    var vd = value.url.split('/');
+                Ext.Object.each(data, function (index, value) {
                     dataRoot.children.push({
                         leaf: true,
-                        text: vd[0], //value.map.url,
-                        filename: value.url,
+                        text: value.filename,
+                        filename: value.filename,
                         flag: true
                     });
                 });
@@ -145,7 +141,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.PostbillingFileVie
                         enableTextSelection: true,
                         markDirty: true,
                         getRowClass: function (record, rowIndex, rowParams, store) {
-                            if (rowIndex % 2 === 0)
+                            if (rowIndex % 2 == 0)
                                 return 'rowA';
                         }
                     }
@@ -157,7 +153,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.PostbillingFileVie
     },
 
     OnTreeItemClick: function (obj, td, cellIndex, record, tr, rowIndex, e, eOpts) {
-        if (cellIndex === 0) {
+        if (cellIndex == 0) {
 
             if (record.get('filename') !== '') {
                 var extensionFile = Ext.util.Format.lowercase(record.get('filename').split('.').pop());
@@ -167,7 +163,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.PostbillingFileVie
                     panel.update('<div id="' + prototype.id03 + '-imageViewerContainer" style="width: 768px; height: 575px;" ></div>');
 
                     // /resources Postbilling
-                    var curect_file_path = record.get('filename');//CONTEXTPATH + "/IMGTMPDISPUTE/" + this.IN_DATE + "/" + this.IN_COUNTRY + "/" + this.IN_DOCUMENT + "/" + record.get('filename');
+                    var curect_file_path = CONTEXTPATH + "/IMGTMPDISPUTE/" + this.IN_DATE + "/" + this.IN_COUNTRY + "/" + this.IN_DOCUMENT + "/" + record.get('filename');
                     //console.log(curect_file_path);
                     $("#" + prototype.id03 + "-imageViewerContainer").verySimpleImageViewer({
                         imageSource: curect_file_path,
@@ -181,7 +177,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.PostbillingFileVie
                     });
                 } else if (extensionFile === 'pdf') {
                     // /resources
-                    var curect_file_path = record.get('filename');//CONTEXTPATH + "/IMGTMPDISPUTE/" + this.IN_DATE + "/" + this.IN_COUNTRY + "/" + this.IN_DOCUMENT + "/" + record.get('filename');
+                    var curect_file_path = CONTEXTPATH + "/IMGTMPDISPUTE/" + this.IN_DATE + "/" + this.IN_COUNTRY + "/" + this.IN_DOCUMENT + "/" + record.get('filename');
                     //console.log(curect_file_path);
                     var htmlPdf = '<object data="' + curect_file_path + '" style="width: 768px; height: 575px;" type="application/pdf">' +
                             '<embed src="' + curect_file_path + '"  style="width: 768px; height: 575px;" type="application/pdf" />' +
@@ -198,8 +194,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.PostbillingFileVie
         //console.log(rowIndex);
         var record = grid.getStore().getAt(rowIndex);
         // /resources
-        window.open(record.data.filename, '_blank');
-        // window.open(CONTEXTPATH + "/IMGTMPDISPUTE/" + this.IN_DATE + "/" + this.IN_COUNTRY + "/" + this.IN_DOCUMENT + "/" + record.get('filename'), '_blank');
+        window.open(CONTEXTPATH + "/IMGTMPDISPUTE/" + this.IN_DATE + "/" + this.IN_COUNTRY + "/" + this.IN_DOCUMENT + "/" + record.get('filename'), '_blank');
     },
 
     OnDownloadActionDisabled: function (view, rowIndex, colIndex, item, record) {

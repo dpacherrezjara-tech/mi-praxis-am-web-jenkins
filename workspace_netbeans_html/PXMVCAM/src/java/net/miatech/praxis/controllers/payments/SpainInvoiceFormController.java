@@ -17,7 +17,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -45,14 +44,10 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import net.miatech.praxis.utils.PythonWS;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 
 /**
  *
@@ -65,9 +60,6 @@ public class SpainInvoiceFormController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private SpainInvoiceFormLogic logic;
-
-    @Autowired
-    private PythonWS pws;
 
     @RequestMapping(value = "search")
     public @ResponseBody
@@ -95,40 +87,47 @@ public class SpainInvoiceFormController extends BaseController {
     }
 
     @RequestMapping(value = "export_Xls")
-    public ResponseEntity<byte[]> getFileTxt(HttpServletRequest request, final HttpServletResponse response) throws Exception {
+    public @ResponseBody
+    void export_Xls(HttpServletRequest request, HttpServletResponse response) {
         String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
-        String v1_urlREST = "/api/spain-invoice/spaininvoice";
 
         try {
+            /*
+             Se establece tiempo límite de conexión por 60 min
+             */
+            Unirest.setTimeouts(3600000, 3600000);
+            /*
+             Preparando parámetros para enviar por body
+             */
             HashMap bodyData = new HashMap<>();
             bodyData.put("CCUST", "139");
             bodyData.put("FPROCINI", request.getParameter("VP_FROM").trim());
             bodyData.put("FPROCFIN", request.getParameter("VP_TO").trim());
             bodyData.put("PATH", rutaFile);
 
-            System.out.println(bodyData);
+            String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+            String urlAPI = "/api/spain_invoice/report001/";
+            HttpResponse<JsonNode> responseAPI = Unirest.post(urlREST + urlAPI)
+                    .header("content-type", "application/json")
+                    .header("cache-control", "no-cache")
+                    .body(new Gson().toJson(bodyData))
+                    .asJson();
 
-            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST, bodyData);
-            System.out.println(bodyData);
-            System.out.println(res);
-
-            String resString = new String(res.getBody(), StandardCharsets.UTF_8);
-
-//            System.out.println("Datos obtenidos:");
-            System.out.println(resString);
-
-            return res;
+            String error_code = responseAPI.getBody().getObject().get("error_code").toString();
+            String error_msg = responseAPI.getBody().getObject().get("error_msg").toString();
+            String filename = responseAPI.getBody().getObject().get("filename").toString();
+            /*comprimir archivo
+             */
+            response.setContentType("application/zip");
+            response.setHeader("Content-Disposition", "attachment;filename=\"" + rutaFile + "\\" + filename + ".zip" + "\"");
+            InputStream is = new FileInputStream(rutaFile + "\\" + filename + ".zip");
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
 
         } catch (Exception e) {
-            System.out.println("Error Message => " + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            //throw new SpringException(e);
+            throw new SpringException(e);
         }
     }
-
-
-
-    
 
     public Boolean zip(String fileName) {
 

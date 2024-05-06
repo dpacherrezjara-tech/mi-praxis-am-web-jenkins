@@ -125,6 +125,12 @@ public class EstimatedVarianceDAO {
                     objRtn.LISC = rst.getString("LISC").trim();
                 }
                 
+                if(rst.getObject("LTAX") == null){
+                    objRtn.LTAX = "0.00";
+                }else{
+                    objRtn.LTAX = rst.getString("LTAX").trim();
+                } 
+                
                 if(rst.getObject("LOTHER") == null){
                     objRtn.LOTHER = "0.00";
                 }else{
@@ -134,6 +140,7 @@ public class EstimatedVarianceDAO {
                 objRtn.ECODE = rst.getString("ECODE").trim();
                 objRtn.EGROSS = rst.getString("EGROSS").trim();
                 objRtn.EISC = rst.getString("EISC").trim();
+                objRtn.ETAX = rst.getString("ETAX").trim();
                 objRtn.EOTHER = rst.getString("EOTHER").trim();
                 
                 if(rst.getObject("VGROSS") != null){
@@ -148,6 +155,12 @@ public class EstimatedVarianceDAO {
                     objRtn.VISC = "0.00";
                 }
                 
+                if(rst.getObject("VTAX") != null){
+                    objRtn.VTAX = rst.getString("VTAX").trim();
+                }else {
+                    objRtn.VTAX = "0.00";
+                }
+
                 if(rst.getObject("VOTHER") != null){
                     objRtn.VOTHER = rst.getString("VOTHER").trim();
                 }else {

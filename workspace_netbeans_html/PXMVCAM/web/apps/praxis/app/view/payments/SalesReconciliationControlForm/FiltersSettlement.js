@@ -3,7 +3,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
     alias: 'widget.' + prototype.id + '-filtersSettlement',
     border: true,
     bodyStyle: 'background-color: #E3EAF9;',
-    padding: '2px 0px 1px 0px',
+    padding: '9px 0px 9px 0px',
     layout: 'hbox',
     items: [
         //<editor-fold defaultstate="collapsed" desc="Browser">

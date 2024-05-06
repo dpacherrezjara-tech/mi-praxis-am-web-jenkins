@@ -370,7 +370,6 @@ public class ProMasterTicketDAO {
                     objRtn.fileA720.A720TTSCMM = rs01.getDouble("A720TTSCMM");
 
                     objRtn.fileA720.A720TYQ = rs01.getDouble("A720TYQ");
-                    objRtn.fileA720.A720TTYQ = rs01.getDouble("A720TTYQ");
 
                     objRtn.fileA720.A720VALOL1 = rs01.getDouble("A720VALOL1");
                     objRtn.fileA720.A720VALOL2 = rs01.getDouble("A720VALOL2");
@@ -486,9 +485,6 @@ public class ProMasterTicketDAO {
                     objRtn.fileA720.A720VRIC = rs01.getString("A720VRIC").trim();
                     objRtn.fileA720.EMDCONCEP = rs01.getString("EMDCONCEP").trim();
                     objRtn.fileA720.COMPTKT = rs01.getString("COMPTKT").trim();
-                    objRtn.fileA720.COMPTKT2 = rs01.getString("COMPTKT2").trim();
-                    objRtn.fileA720.COMPTKT3 = rs01.getString("COMPTKT3").trim();
-                    objRtn.fileA720.COMPTKT4 = rs01.getString("COMPTKT4").trim();
                     
                     filter.lstResultSet01.add(objRtn);
                 }
@@ -510,7 +506,6 @@ public class ProMasterTicketDAO {
                         objRtn02.fileA730.A730CUPON4 = rs02.getString("A730CUPON4");
                         objRtn02.fileA730.A730MONREG = rs02.getString("A730MONREG");
                         objRtn02.fileA730.A730FECVTA = rs02.getString("A730FECVTA");
-                        objRtn02.fileA730.A720FECVTA = rs02.getString("A720FECVTA");
                         objRtn02.fileA730.A720TKVOID = rs02.getString("A720TKVOID");
                         objRtn02.fileA730.A730CIA720 = rs02.getString("A730CIA720");
                         objRtn02.fileA730.A730FOR720 = rs02.getString("A730FOR720");

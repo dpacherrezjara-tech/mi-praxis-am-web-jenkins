@@ -24,24 +24,6 @@ public class A3903 {
     public String A3903HREVI;
     public String A3903COREG;
     public String A3903CORER;
-    public String A3903TYPEDES;
-    public String A3903TYPE;
-
-    public String getA3903TYPEDES() {
-        return A3903TYPEDES;
-    }
-
-    public void setA3903TYPEDES(String A3903TYPEDES) {
-        this.A3903TYPEDES = A3903TYPEDES;
-    }
-
-    public String getA3903TYPE() {
-        return A3903TYPE;
-    }
-
-    public void setA3903TYPE(String A3903TYPE) {
-        this.A3903TYPE = A3903TYPE;
-    }
 
     public String getA3903NOMAGENCY() {
         return A3903NOMAGENCY;

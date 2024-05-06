@@ -148,7 +148,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                     },
                     {
                         text: 'Serv. Fee',
-                        dataIndex:'servicefee',
+                        dataIndex:'servicfee',
                         width: 90,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA;";

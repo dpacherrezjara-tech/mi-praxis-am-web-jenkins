@@ -273,7 +273,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DetailDi
     onClickFile: function (btn) {
         var me = this;
         rec = me.view.params.rec;
-        console.log(rec);
         me.beanTMP.IN_PREME = rec.data.A4137PREME;
         me.beanTMP.IN_ANIO = rec.data.A4137ANIO;
         me.beanTMP.IN_NUMBERADM = rec.data.A4137NMEMO;
@@ -336,8 +335,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DetailDi
                 rec: rec,
                 nmemo: Ext.getCmp(prototype.idDisputeGestionMyarc + '-nmemo').getValue(),
                 preme: rec2.data.A4137PREME,
-                anio: rec2.data.A4137ANIO,
-                CNXPA:rec2.data.A4137CNXPA
+                anio: rec2.data.A4137ANIO
             }
         });
         win.show();
