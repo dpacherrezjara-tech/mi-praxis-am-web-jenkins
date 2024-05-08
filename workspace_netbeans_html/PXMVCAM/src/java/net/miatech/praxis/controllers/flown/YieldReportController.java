@@ -215,7 +215,7 @@ public class YieldReportController extends BaseController {
             logic = new YieldReportLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             
-            listaData = logic.loadPX084S03A1784(filter, hmPaises, hmAeropuertos,20);
+            listaData = logic.loadPX084S03A1784(filter, hmPaises, hmAeropuertos,-1);
             
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
             workbook = new XSSFWorkbook();
