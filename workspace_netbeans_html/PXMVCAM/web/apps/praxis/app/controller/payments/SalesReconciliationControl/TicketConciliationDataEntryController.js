@@ -21,21 +21,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         if (res.ok) {
             const data = await res.json();
             me.limpiaObjetoPX(data.response);
+            me.limpiaObjetoPX(data.desglose);
             me.bean = data.response;
+            me.bean.desglose = data.desglose;
             console.log(me.bean);
             mainForm.reset();
             const {a4496CIA, a4496FORMA, a4496SERIE, a4501STVAL, a4501STADM,
-                bpo_COMEN, bpo_COMEN2, adm_COMEN, a4496TKVOI, a4501PRTP,procdate} = data.response;
+                bpo_COMEN, bpo_COMEN2, adm_COMEN, a4496TKVOI, a4501PRTP, procdate} = data.response;
             Ext.getCmp(prototype.idDE2 + '-ticketNumber').setValue(a4496CIA + ' ' + a4496FORMA + a4496SERIE);
-            Ext.getCmp(prototype.idDE2 + '-bpocoment').setValue(bpo_COMEN2!==''?bpo_COMEN2:bpo_COMEN);
+            Ext.getCmp(prototype.idDE2 + '-bpocoment').setValue(bpo_COMEN2 !== '' ? bpo_COMEN2 : bpo_COMEN);
             Ext.getCmp(prototype.idDE2 + '-ADM-BPOCOMEN').setValue(adm_COMEN);
             me.setADMInfo();
             mainForm.setValues(data.response);
-            me.changePerspective(a4501STVAL, a4501STADM, a4496TKVOI, a4501PRTP,procdate);
+            me.changePerspective(a4501STVAL, a4501STADM, a4496TKVOI, a4501PRTP, procdate);
         }
         me.view.unmask();
     },
-    changePerspective: function (status, adm, fvoid, procesador,procdate) {
+    changePerspective: function (status, adm, fvoid, procesador, procdate) {
         const match = ['1', '5', '6', '7'];
         if (fvoid === 'V') {
             Ext.getCmp(prototype.idDE2 + '-panelVoid').show();
@@ -44,7 +46,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         }
         const actualdate = Ext.Date.format(new Date(), 'Ymd');
         //console.log(actualdate,' ',procdate,' ',actualdate>procdate);
-        
+
         if (match.some(x => status === x)) {
             if (status === '6' && fvoid === 'V' && procesador.trim() === '') {
                 Ext.getCmp(prototype.idDE2 + '-liquiInfo').hide();
@@ -59,6 +61,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             }
             Ext.getCmp(prototype.idDE2 + '-panelPending').hide();
             Ext.getCmp(prototype.idDE2 + '-panelStandBy').hide();
+            this.setDesglose();
         } else if (status === '0') {
             Ext.getCmp(prototype.idDE2 + '-liquiInfo').hide();
             Ext.getCmp(prototype.idDE2 + '-panelPending').show();
@@ -83,7 +86,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
                 Ext.getCmp(prototype.idDE2 + '-sendADM').hide();
                 Ext.getCmp(prototype.idDE2 + '-reverseADM').show();
             }
-            if (fvoid === 'V'&&actualdate>procdate) {
+            if (fvoid === 'V' && actualdate > procdate) {
                 Ext.getCmp(prototype.idDE2 + '-forcedMatchVoid').show();
             } else {
                 Ext.getCmp(prototype.idDE2 + '-forcedMatchVoid').hide();
@@ -103,6 +106,25 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         let valor = Ext.util.Format.number(obj.a4501VFOP, '0,000.00');
         Ext.getCmp(prototype.idDE2 + '-ADM-AMT').setValue(valor);
         Ext.getCmp(prototype.idDE2 + '-ADM-MDA').setValue(obj.a4501MFOP);
+    },
+    setDesglose: function () {
+        const desglose = this.bean.desglose;
+        const {a4496CIA,a4496FORMA,a4496SERIE,a4496SEQ} = this.bean;
+        let ticket = a4496CIA + a4496FORMA + a4496SERIE +a4496SEQ;
+        //marca ticket activo
+        desglose.forEach(x=>{
+           let ticketDesglose = x.ccia + x.forma + x.serie + x.seq;
+           if(ticketDesglose === ticket){
+               x.main = true;
+           }
+        });
+        console.log('Desglose Liq. : ', desglose);
+        const gridDesglose = Ext.getCmp(prototype.idDE2 + '-gridDesglose');
+        gridDesglose.view.mask('Loading...');
+        gridDesglose.setStore(Ext.create('Ext.data.Store',{
+            data : desglose
+        }));
+        gridDesglose.view.unmask();
     },
     //<editor-fold defaultstate="collapsed" desc="Handlers">
     onOpenComments: function () {
