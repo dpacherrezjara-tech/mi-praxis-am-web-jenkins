@@ -682,6 +682,26 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     onCenterDataEntry: function () {
         this.view.center();
     },
+    onShowTransactionMatch: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const obj = record.data;
+        const {tdoc} = this.bean;
+        let params = {
+            IN_CCUST: obj.ccust,
+            IN_CIA: obj.ccia,
+            IN_FORMA: obj.forma,
+            IN_SERIE: obj.serie,
+            IN_SEQ: obj.seq,
+            IN_TDOC: tdoc,
+            IN_CORRL: obj.tcorr
+        };
+        console.log('By Ticket Params: ',params);
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TicketConciliationDataEntry', {
+            id: prototype.id + '-TicketConciliationDataEntry-2',
+            searchParams: params,
+            obj: obj
+        });
+        dataEntry.show();
+    },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Grillas Scaneo">
     setBPOGrid: function (data) {
