@@ -168,6 +168,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         }
                     },
                     {text: 'Processor', dataIndex: 'desc_PROCTYPE', width: 120},
+                    {text: 'Chargeback<br>Status', dataIndex: 'chargeback', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#F0D094;";
+                            const opts = {
+                                'N': 'None',
+                                '': 'Pending Rev.',
+                                'Y': 'Reversed'
+                            };
+                            return opts[value.trim()];
+                        }
+                    },
                     {text: 'ADM<br>Status', dataIndex: 'a4501STADM', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;background-color:#F0D094;";

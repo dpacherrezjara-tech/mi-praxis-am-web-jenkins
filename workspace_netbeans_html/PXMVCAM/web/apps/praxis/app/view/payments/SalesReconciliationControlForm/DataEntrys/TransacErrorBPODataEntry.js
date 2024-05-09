@@ -1163,6 +1163,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         sortable: false,
                                                         xtype: 'actioncolumn',
                                                         width: 45,
+                                                        text: 'Det.',
+                                                        align: 'center',
+                                                        items: [
+                                                            {
+                                                                iconCls: 'prx-icon-detail',
+                                                                tooltip: 'Show Detail',
+                                                                handler: 'onShowTransactionMatch'
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        sortable: false,
+                                                        xtype: 'actioncolumn',
+                                                        width: 45,
                                                         text: 'Dupl.',
                                                         align: 'center',
                                                         items: [

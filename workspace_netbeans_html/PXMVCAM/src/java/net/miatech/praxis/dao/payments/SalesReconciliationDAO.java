@@ -421,12 +421,19 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
 
     @Override
     public SQP05126Filter loadSQP05126Filter(SQP05126Filter filter) throws Exception {
+        List<BeanPropertyRowMapper> mappers = new ArrayList<>();
+        mappers.add(new BeanPropertyRowMapper<>(ByTicketFilter.class));
+        mappers.add(new BeanPropertyRowMapper<>(A4335Filter.class));
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
         Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05126", params,
-                new BeanPropertyRowMapper<>(ByTicketFilter.class));
-        List<ByTicketFilter> spRes = (List<ByTicketFilter>) obj.get("result");
+                mappers);
+        List<ByTicketFilter> spRes = (List<ByTicketFilter>) obj.get("result0");
         if (!spRes.isEmpty()) {
             filter.setResponse(spRes.get(0));
+        }
+        List<A4335Filter> spDesglose = (List<A4335Filter>) obj.get("result1");
+        if (!spRes.isEmpty()) {
+            filter.setDesglose(spDesglose);
         }
         return filter;
     }

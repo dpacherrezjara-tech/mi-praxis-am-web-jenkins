@@ -1,5 +1,8 @@
 package net.miatech.praxis.payment.filter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Dvicente
@@ -9,6 +12,7 @@ public class SQP05126Filter {
             IN_CIA,IN_FORMA,IN_SERIE,IN_SEQ,IN_TDOC,IN_CORRL;
     
     private ByTicketFilter response;
+    private List<A4335Filter> desglose = new ArrayList<>();
 
     public String getIN_CCUST() {
         return IN_CCUST;
@@ -73,6 +77,12 @@ public class SQP05126Filter {
     public void setResponse(ByTicketFilter response) {
         this.response = response;
     }
-    
-    
+
+    public List<A4335Filter> getDesglose() {
+        return desglose;
+    }
+
+    public void setDesglose(List<A4335Filter> desglose) {
+        this.desglose = desglose;
+    }
 }
