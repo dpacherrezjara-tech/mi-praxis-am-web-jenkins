@@ -19,6 +19,7 @@ import net.miatech.praxis.payment.filter.A4482Filter;
 import net.miatech.praxis.payment.filter.A4496Filter;
 import net.miatech.praxis.payment.filter.ByTicketFilter;
 import net.miatech.praxis.payment.filter.CreditCardFilter;
+import net.miatech.praxis.payment.filter.ManualBatchFilter;
 import net.miatech.praxis.payment.filter.ProductionBPFilter;
 import net.miatech.praxis.payment.filter.ProductionBTFilter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
@@ -67,6 +68,7 @@ import net.miatech.praxis.payment.filter.SQP05259Filter;
 import net.miatech.praxis.payment.filter.SQP05260Filter;
 import net.miatech.praxis.payment.filter.SQP05261Filter;
 import net.miatech.praxis.payment.filter.SQP05276Filter;
+import net.miatech.praxis.payment.filter.SQP05302Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +76,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -147,8 +150,6 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         filter.setADMINS((List<A4451MP>) obj.get("result6"));
         return filter;
     }
-    
-    
 
     @Override
     public SQP05060Filter getSQP05060Filter(SQP05060Filter filter) throws Exception {
@@ -600,6 +601,15 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
             SqlParameterSource fparams = new BeanPropertySqlParameterSource(fop);
             jdbcUtils.executeSQP(LIBRARY, "SQP05220", fparams);
         }
+        return filter;
+    }
+
+    @Override
+    public SQP05302Filter loadSQP05302Filter(SQP05302Filter filter) throws Exception {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05302", params,
+                new BeanPropertyRowMapper<>(ManualBatchFilter.class));
+        filter.setResult((List<ManualBatchFilter>) obj.get("result"));
         return filter;
     }
 }

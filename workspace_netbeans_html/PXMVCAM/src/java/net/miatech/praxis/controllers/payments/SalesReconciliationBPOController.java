@@ -56,6 +56,7 @@ import net.miatech.praxis.payment.filter.SQP05247Filter;
 import net.miatech.praxis.payment.filter.SQP05259Filter;
 import net.miatech.praxis.payment.filter.SQP05261Filter;
 import net.miatech.praxis.payment.filter.SQP05276Filter;
+import net.miatech.praxis.payment.filter.SQP05302Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.CustomExcelCell;
@@ -1323,6 +1324,21 @@ public class SalesReconciliationBPOController {
         try {
             logic.loadSQP05219Filter(params);
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+//</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Batch Manual">
+    @RequestMapping(value = "loadBatchInformation")
+    public ResponseEntity<?> loadBatchInformation(@ModelAttribute SQP05302Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:loadBatchInformation-------------");
+        try {
+            SQP05302Filter filter = logic.loadSQP05302Filter(params);
+            System.out.println("Total: " + filter.getResult().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
