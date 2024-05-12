@@ -230,5 +230,17 @@
         <group name="PRAXIS AM WEB HTML">
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/WEB-INF/configs/CFGI0001.properties</file>
         </group>
+        <group name="PRAXIS AM">
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/sales/AccountingMasterProcess2Controller.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/sales/AccountingMasterProcess2Logic.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/flown/AccountingMasterProcessLogic.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/sales/AccountingMasterProcess2DAO.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterProcess2/DataEntryAccountingMasterProcess2Controller.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/DefaultController.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/WEB-INF/configs/CFGI0001.properties</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/flown/AccountingMasterProcessController.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/flown/AccountingMasterProcessDAO.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/AccountingMasterProcess/DataEntryAccountingMasterProcessController.js</file>
+        </group>
     </open-files>
 </project-private>
