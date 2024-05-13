@@ -7,7 +7,7 @@ package net.miatech.praxis.payment.filter;
 public class ManualBatchFilter {
     private String TRANSTYPE,PRDA,SCARDN,SAUTHOC,
             FVOID,SMERCHID,SPNR,TICKET,STVAL,SCURRENCY,
-            PPNR,PAUTHOC,FLAG,CCUST,TDOC,AREFNBR;
+            PPNR,PAUTHOC,FLAG,CCUST,TDOC,AREFNBR,SDATE,PAYDATE;
     private Double TGROSAMOUN,SVFOPS,ADJU,ADJU_USD,EXCHRATE;
     
     public String getTRANSTYPE() {
@@ -176,5 +176,21 @@ public class ManualBatchFilter {
 
     public void setEXCHRATE(Double EXCHRATE) {
         this.EXCHRATE = EXCHRATE;
+    }
+
+    public String getSDATE() {
+        return SDATE;
+    }
+
+    public void setSDATE(String SDATE) {
+        this.SDATE = SDATE;
+    }
+
+    public String getPAYDATE() {
+        return PAYDATE;
+    }
+
+    public void setPAYDATE(String PAYDATE) {
+        this.PAYDATE = PAYDATE;
     }
 }
