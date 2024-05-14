@@ -1,12 +1,15 @@
 package net.miatech.praxis.controllers.payments;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.validation.Valid;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
 import net.miatech.praxis.payment.entities.A4507;
 import net.miatech.praxis.payment.filter.A4331Filter;
@@ -57,7 +60,9 @@ import net.miatech.praxis.payment.filter.SQP05259Filter;
 import net.miatech.praxis.payment.filter.SQP05261Filter;
 import net.miatech.praxis.payment.filter.SQP05276Filter;
 import net.miatech.praxis.payment.filter.SQP05302Filter;
+import net.miatech.praxis.payment.filter.SQP05307Filter;
 import net.miatech.praxis.utils.ExportUtils;
+import net.miatech.praxis.utils.ResponseUtils;
 import net.miatech.praxis.utils.SabreWebService;
 import net.miatech.utils.CustomExcelCell;
 import net.miatech.utils.Functions;
@@ -74,6 +79,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 //</editor-fold>
 
 /**
@@ -1330,7 +1336,7 @@ public class SalesReconciliationBPOController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Batch Manual">
     @RequestMapping(value = "loadBatchInformation")
     public ResponseEntity<?> loadBatchInformation(@ModelAttribute SQP05302Filter params) {
@@ -1343,6 +1349,14 @@ public class SalesReconciliationBPOController {
             System.out.println("Error: " + e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "pruebaValid", method = RequestMethod.POST)
+    public ResponseEntity<?> loadBatchInformation(@Valid @RequestBody SQP05307Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:loadBatchInformation-------------");
+        System.out.println(params.toString());
+        SQP05302Filter filter = new SQP05302Filter();
+        return ResponseUtils.ok(params);
     }
 //</editor-fold>
 }
