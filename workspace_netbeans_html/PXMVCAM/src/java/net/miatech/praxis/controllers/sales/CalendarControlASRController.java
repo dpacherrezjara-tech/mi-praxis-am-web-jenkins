@@ -377,7 +377,7 @@ public class CalendarControlASRController extends BaseController {
     
     String Style(Integer cant,Integer cantSale,Integer error){
         String style = "#FF0000";
-        if(cant == 1){
+        if(cant >= 1){
             if(cantSale > 0){
                 style = "#FFCC00";
             }else{
