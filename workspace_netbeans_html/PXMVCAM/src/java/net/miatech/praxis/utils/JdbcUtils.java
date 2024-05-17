@@ -91,6 +91,14 @@ public class JdbcUtils {
         return jdbcTemplate.executeWithoutParams(spCall);
     }
 
+    public Map<String, Object> executeSQPwithoutLog(String LIBRARY, String PGM, SqlParameterSource params) throws Exception {
+        CustomJdbcTemplate jdbcTemplate = this.getJdbcTemplate();
+        SimpleJdbcCall spCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName(LIBRARY)
+                .withProcedureName(PGM);
+        return jdbcTemplate.executeWithParamsWLog(spCall, params);
+    }
+
     public Map<String, Object> executeSQP(String LIBRARY, String PGM) throws Exception {
         CustomJdbcTemplate jdbcTemplate = this.getJdbcTemplate();
         SimpleJdbcCall spCall = new SimpleJdbcCall(jdbcTemplate)

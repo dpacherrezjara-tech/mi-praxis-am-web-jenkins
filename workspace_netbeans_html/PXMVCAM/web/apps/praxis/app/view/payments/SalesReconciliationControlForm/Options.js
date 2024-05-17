@@ -77,7 +77,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Options', {
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnBatchAdju',
-                            iconCls: 'prx-icon-image-process',
+                            iconCls: 'prx-icon-processing',
                             tooltip: 'Batch Adjustment',
                             hidden: false,
                             listeners: {

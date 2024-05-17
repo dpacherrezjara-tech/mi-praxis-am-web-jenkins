@@ -7,8 +7,10 @@ import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
 import net.miatech.praxis.payment.entities.A4507;
@@ -1339,24 +1341,26 @@ public class SalesReconciliationBPOController {
 
     //<editor-fold defaultstate="collapsed" desc="Batch Manual">
     @RequestMapping(value = "loadBatchInformation")
-    public ResponseEntity<?> loadBatchInformation(@ModelAttribute SQP05302Filter params) {
+    public ResponseEntity<?> loadBatchInformation(@ModelAttribute SQP05302Filter params) throws Exception {
         System.out.println("---------------SalesReconciliationBPO:loadBatchInformation-------------");
-        try {
-            SQP05302Filter filter = logic.loadSQP05302Filter(params);
-            System.out.println("Total: " + filter.getResult().size());
-            return new ResponseEntity<>(filter, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        SQP05302Filter filter = logic.loadSQP05302Filter(params);
+        System.out.println("Total: " + filter.getResult().size());
+        return new ResponseEntity<>(filter, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "pruebaValid", method = RequestMethod.POST)
-    public ResponseEntity<?> loadBatchInformation(@Valid @RequestBody SQP05307Filter params) {
-        System.out.println("---------------SalesReconciliationBPO:loadBatchInformation-------------");
-        System.out.println(params.toString());
-        SQP05302Filter filter = new SQP05302Filter();
-        return ResponseUtils.ok(params);
+    @RequestMapping(value = "autoMatchManual", method = RequestMethod.POST)
+    public ResponseEntity<?> autoMatchManual(@Valid @RequestBody SQP05307Filter params) throws Exception {
+        System.out.println("---------------SalesReconciliationBPO:autoMatchManual-------------");
+        SQP05307Filter filter = logic.loadSQP05307Filter(params);
+        return ResponseUtils.ok(filter);
+    }
+
+    @RequestMapping(value = "masiveAutoMatchManual", method = RequestMethod.POST)
+    public ResponseEntity<?> masiveAutoMatchManual(@RequestBody List<SQP05307Filter> params) throws Exception {
+        System.out.println("---------------SalesReconciliationBPO:masiveAutoMatchManual-------------");
+        logic.loadMasiveSQP05307Filter(params);
+        Map map = Collections.singletonMap("message", "Proceso Ejecutandose");
+        return ResponseUtils.ok(map);
     }
 //</editor-fold>
 }

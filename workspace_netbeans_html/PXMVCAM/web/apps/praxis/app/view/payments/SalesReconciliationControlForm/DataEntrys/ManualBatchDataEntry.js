@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
     controller: 'ManualBatchDataEntryController',
     title: 'Manual Batch - Form',
     header: true,
-    width: 1450,
+    width: 1500,
     resizable: true,
     layout: 'fit',
     modal: true,
@@ -137,12 +137,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                     defaults: {},
                     width: '100%',
                     minHeight: 165,
-                    maxHeight: 660,
+                    maxHeight: 560,
                     margin: '5 8 5 8',
                     border: false,
                     id: prototype.idDE4 + '-gridBatch',
                     emptyText: 'No transactions available',
                     store: [],
+                    selModel: {
+                        type: 'checkboxmodel',
+                        checkboxSelect: false,
+                        checkOnly: true
+                    },
                     viewConfig: {
                         stripeRows: true,
                         enableTextSelection: true,
@@ -173,6 +178,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                         iconCls: 'prx-icon-detail',
                                         tooltip: 'Open Detail',
                                         handler: 'onClickBPO'
+                                    }
+                                ]
+                            },
+                            {
+                                sortable: false,
+                                xtype: 'actioncolumn',
+                                width: 50,
+                                text: 'Match',
+                                locked: true,
+                                align: 'center',
+                                items: [
+                                    {
+                                        iconCls: 'prx-icon-image-update',
+                                        tooltip: 'Match Transaction',
+                                        handler: 'onMatchTransaction'
                                     }
                                 ]
                             },
@@ -246,7 +266,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                 }
                             },
                             {
-                                text: 'Curr', dataIndex: 'scurrency', width: 50
+                                text: 'Curr', dataIndex: 'scurrency', width: 50,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "background-color:#c0f0af;";
+                                    return value;
+                                }
                             },
 
                             {
@@ -265,40 +289,68 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                         text: 'PNR<br>Found', dataIndex: 'ppnr', width: 70
                                     },
                                     {
+                                        text: 'Card<br>Found', dataIndex: 'pcardn', width: 150
+                                    },
+                                    {
                                         text: 'Auth<br>Found', dataIndex: 'pauthoc', width: 70
                                     },
                                     {
                                         text: 'Sale Amount', dataIndex: 'svfops', width: 120,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;background-color:#B2DAFA;font-weight:bold;";
+                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
                                     {
                                         text: 'Adjustment', dataIndex: 'adju', width: 100,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;background-color:#B2DAFA;font-weight:bold;";
+                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
                                     {
                                         text: 'Adjustment<br>USD', dataIndex: 'adju_USD', width: 100,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;background-color:#B2DAFA;font-weight:bold;";
+                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
                                     {
                                         text: 'Exch<br>Type', dataIndex: 'exchrate', width: 100,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;background-color:#B2DAFA;font-weight:bold;";
-                                            return Ext.util.Format.number(value, '0,000.00');
+                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                            return value;
                                         }
                                     }
                                 ]
                             }
                         ]
-                    }
+                    },
+                    dockedItems: [
+                        {
+                            xtype: 'toolbar',
+                            dock: 'bottom',
+                            ui: 'footer',
+                            border: false,
+                            margin: '3 5 3 5',
+                            layout: {
+                                pack: 'end'
+                            },
+                            fieldStyle: 'text-align:center',
+                            defaults: {
+                                scale: 'medium'
+                            },
+                            items: [
+                                {
+                                    text: 'Update All',
+                                    iconCls: 'prx-icon-update',
+                                    listeners: {
+                                        click: 'onUpdateAll'
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 }
                 //</editor-fold>
 

@@ -49,6 +49,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
             IN_TDOC: formFilters.IN_TRANSTYPE === 'SALE' ? 'S' : 'R',
             ...formFilters
         };
+        this.searchParams = params;
         return params;
     },
     onClickBPO: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
@@ -84,6 +85,94 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
             store.remove(registrosAEliminar.getAt(0)); // Eliminar el primer registro encontrado
         }
     },
+    onMatchTransaction: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to match Transaction?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            me.fireManualMatch(grid, record.data);
+                        }
+                    }
+                });
+    },
+    fireManualMatch: async function (grid, obj) {
+        const me = this;
+        me.view.mask('Loading...');
+        let params = me.requestObjectPX(obj);
+        params.IN_PROCTYPE = me.searchParams.IN_PROCTYPE;
+        params.IN_PROCTYPESQ = me.searchParams.IN_PROCTYPESQ;
+        params.IN_FDESGLOSE = '';
+        const res = await fetch(`${me.url}/autoMatchManual`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        });
+        if (res.ok) {
+            const data = await res.json();
+            if (data.SQLRES === 1) {
+                global.Msg({msg: data.SQLMSG});
+                me.deleteTransactionInGrid(grid, obj.arefnbr);
+            } else {
+                global.Msg({msg: data.SQLMSG});
+            }
+        }
+        me.view.unmask();
+    },
+    onUpdateAll: function () {
+        const me = this;
+        const grid = Ext.getCmp(prototype.idDE4 + '-gridBatch');
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to match Transactions?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            me.fireManualMatchBatch(grid);
+                        }
+                    }
+                });
+    },
+    fireManualMatchBatch: async function (grid) {
+        const me = this;
+        let selected = grid.getSelectionModel().getSelection();
+        let listaMatch = [];
+        selected.forEach(x => {
+            let formatObj = me.requestObjectPX(x.data);
+            formatObj.IN_PROCTYPE = me.searchParams.IN_PROCTYPE;
+            formatObj.IN_PROCTYPESQ = me.searchParams.IN_PROCTYPESQ;
+            formatObj.IN_FDESGLOSE = '';
+            listaMatch.push(formatObj);
+        });
+        console.log(listaMatch);
+        if (listaMatch.length > 0) {
+            const res = await fetch(`${me.url}/masiveAutoMatchManual`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(listaMatch)
+            });
+            if (res.ok) {
+                const data = await res.json();
+                global.Msg({msg: data.message});
+            }
+        } else {
+            global.Msg({msg: 'Server Error'});
+        }
+    },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     limpiaObjetoPX: function (obj) {
         for (let key in obj) {
@@ -91,6 +180,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
                 obj[key] = obj[key].trimEnd();
             }
         }
+    },
+    requestObjectPX: function (jsonData) {
+        const resultado = {};
+        for (const clave in jsonData) {
+            if (jsonData.hasOwnProperty(clave)) {
+                // Convierte la clave a mayúsculas y añade "IN" como prefijo
+                const nuevaClave = `IN_${clave.toUpperCase()}`;
+
+                // Asigna el valor original a la nueva clave
+                resultado[nuevaClave] = jsonData[clave];
+            }
+        }
+        return resultado;
     },
     sumDate: function (fecha, dias) {
         let fechaDate = new Date(

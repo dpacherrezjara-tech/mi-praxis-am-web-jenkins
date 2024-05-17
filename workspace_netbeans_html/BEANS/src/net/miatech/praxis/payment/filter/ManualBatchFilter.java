@@ -7,9 +7,11 @@ package net.miatech.praxis.payment.filter;
 public class ManualBatchFilter {
     private String TRANSTYPE,PRDA,SCARDN,SAUTHOC,
             FVOID,SMERCHID,SPNR,TICKET,STVAL,SCURRENCY,
-            PPNR,PAUTHOC,FLAG,CCUST,TDOC,AREFNBR,SDATE,PAYDATE;
+            PPNR,PAUTHOC,FLAG,CCUST,TDOC,AREFNBR,SDATE,PAYDATE,
+            PMERCHID,PCARDN,NBRLIQUID,CODCHGBACK,CHGBNUM;
     private Double TGROSAMOUN,SVFOPS,ADJU,ADJU_USD,EXCHRATE;
-    
+    private Integer QTYTKT;
+
     public String getTRANSTYPE() {
         return TRANSTYPE;
     }
@@ -138,6 +140,62 @@ public class ManualBatchFilter {
         this.AREFNBR = AREFNBR;
     }
 
+    public String getSDATE() {
+        return SDATE;
+    }
+
+    public void setSDATE(String SDATE) {
+        this.SDATE = SDATE;
+    }
+
+    public String getPAYDATE() {
+        return PAYDATE;
+    }
+
+    public void setPAYDATE(String PAYDATE) {
+        this.PAYDATE = PAYDATE;
+    }
+
+    public String getPMERCHID() {
+        return PMERCHID;
+    }
+
+    public void setPMERCHID(String PMERCHID) {
+        this.PMERCHID = PMERCHID;
+    }
+
+    public String getPCARDN() {
+        return PCARDN;
+    }
+
+    public void setPCARDN(String PCARDN) {
+        this.PCARDN = PCARDN;
+    }
+
+    public String getNBRLIQUID() {
+        return NBRLIQUID;
+    }
+
+    public void setNBRLIQUID(String NBRLIQUID) {
+        this.NBRLIQUID = NBRLIQUID;
+    }
+
+    public String getCODCHGBACK() {
+        return CODCHGBACK;
+    }
+
+    public void setCODCHGBACK(String CODCHGBACK) {
+        this.CODCHGBACK = CODCHGBACK;
+    }
+
+    public String getCHGBNUM() {
+        return CHGBNUM;
+    }
+
+    public void setCHGBNUM(String CHGBNUM) {
+        this.CHGBNUM = CHGBNUM;
+    }
+
     public Double getTGROSAMOUN() {
         return TGROSAMOUN;
     }
@@ -178,19 +236,13 @@ public class ManualBatchFilter {
         this.EXCHRATE = EXCHRATE;
     }
 
-    public String getSDATE() {
-        return SDATE;
+    public Integer getQTYTKT() {
+        return QTYTKT;
     }
 
-    public void setSDATE(String SDATE) {
-        this.SDATE = SDATE;
+    public void setQTYTKT(Integer QTYTKT) {
+        this.QTYTKT = QTYTKT;
     }
-
-    public String getPAYDATE() {
-        return PAYDATE;
-    }
-
-    public void setPAYDATE(String PAYDATE) {
-        this.PAYDATE = PAYDATE;
-    }
+    
+    
 }
