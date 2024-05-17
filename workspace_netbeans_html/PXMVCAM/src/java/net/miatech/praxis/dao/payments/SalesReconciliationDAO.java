@@ -652,7 +652,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         try {
             SQP05004Filter correos = new SQP05004Filter();
             correos.setKEY1("PK");
-            correos.setKEY1("EMAIL");
+            correos.setKEY2("EMAIL");
             Map<String, Object> objCorreos = jdbcUtils.executeSQP(LIBRARY, "SQP05004",
                     new BeanPropertySqlParameterSource(correos),
                     new BeanPropertyRowMapper<>(A4451MP.class));
@@ -703,12 +703,12 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
             List<String> receptores = new ArrayList<>();
             List<String> CC = new ArrayList<>();
             //receptores.add("dvicente@miatech.net");
-            lstCorreos.stream().filter(x -> x.getA4451fech2().equals("TO"))
+            lstCorreos.stream().filter(x -> x.getA4451fech2().trim().equals("TO"))
                     .collect(Collectors.toList())
                     .forEach(to -> {
                         receptores.add(to.getA4451desc1().trim());
                     });
-            lstCorreos.stream().filter(x -> x.getA4451fech2().equals("CC"))
+            lstCorreos.stream().filter(x -> x.getA4451fech2().trim().equals("CC"))
                     .collect(Collectors.toList())
                     .forEach(to -> {
                         CC.add(to.getA4451desc1().trim());
@@ -744,7 +744,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
             msg.append("<b>Payments Control</b><br>");
             msg.append("<b>Miatech International</b><br><br>");
             //</editor-fold>
-            mailUtils.sendMail(emisor, asunto, receptores, null, msg.toString(), null, "notificaciones@miatech.net");
+            mailUtils.sendMail(emisor, asunto, receptores, CC, msg.toString(), null, "notificaciones@miatech.net");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             try {
