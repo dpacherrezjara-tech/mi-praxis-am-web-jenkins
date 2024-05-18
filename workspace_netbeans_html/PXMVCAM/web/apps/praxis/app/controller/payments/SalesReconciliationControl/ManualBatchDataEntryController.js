@@ -147,6 +147,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
     },
     fireManualMatchBatch: async function (grid) {
         const me = this;
+        let store = grid.getStore();
         let selected = grid.getSelectionModel().getSelection();
         let listaMatch = [];
         selected.forEach(x => {
@@ -168,6 +169,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
             if (res.ok) {
                 const data = await res.json();
                 global.Msg({msg: data.message});
+                Ext.Array.each(selected, function (registro) {
+                    store.remove(registro);
+                });
             }
         } else {
             global.Msg({msg: 'Server Error'});

@@ -1,6 +1,8 @@
 package net.miatech.praxis.dao.payments;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -12,6 +14,8 @@ import net.miatech.praxis.payment.entities.A4451MP;
 import net.miatech.praxis.payment.entities.A4496;
 import net.miatech.praxis.payment.entities.A4501;
 import net.miatech.praxis.payment.entities.A4507;
+import net.miatech.praxis.payment.entities.A4581Filter;
+import net.miatech.praxis.payment.entities.A4582Filter;
 import net.miatech.praxis.payment.filter.A4331BPOFilter;
 import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4331STFilter;
@@ -71,8 +75,11 @@ import net.miatech.praxis.payment.filter.SQP05260Filter;
 import net.miatech.praxis.payment.filter.SQP05261Filter;
 import net.miatech.praxis.payment.filter.SQP05276Filter;
 import net.miatech.praxis.payment.filter.SQP05302Filter;
+import net.miatech.praxis.payment.filter.SQP05304Filter;
 import net.miatech.praxis.payment.filter.SQP05307Filter;
 import net.miatech.praxis.payment.filter.SQP05308Filter;
+import net.miatech.praxis.payment.filter.SQP05310Filter;
+import net.miatech.praxis.payment.filter.SQP05311Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import net.miatech.praxis.utils.MailUtils;
@@ -647,6 +654,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 .IN_TOTAL(list.size())
                 .IN_MATCHS(0)
                 .IN_ERRORS(0)
+                .IN_DESCR("Proceso Conciliacion Manual")
                 .IN_STS("0")
                 .build();
         try {
@@ -757,5 +765,53 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
             }
         }
 
+    }
+
+    @Override
+    public ModelMap loadSQP05304Filter(SQP05304Filter filter) throws Exception {
+        String uuid = UUID.randomUUID().toString();
+        SQP05308Filter logFilter = SQP05308Filter.builder()
+                .IN_ACTION("I")
+                .IN_UUID(uuid)
+                .IN_CCUST("139")
+                .IN_PRDA(Functions.getFechaActual())
+                .IN_PROCTYPE("ALL")
+                .IN_PROCTYPESQ("ALL")
+                .IN_TOTAL(0)
+                .IN_MATCHS(0)
+                .IN_ERRORS(0)
+                .IN_DESCR("Proceso Conciliacion Manual")
+                .IN_STS("4")
+                .build();
+        jdbcUtils.executeSQP(LIBRARY, "SQP05308",
+                    new BeanPropertySqlParameterSource(logFilter));
+        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05304",
+                    new BeanPropertySqlParameterSource(filter));
+        ResultSet resultSet = (ResultSet) obj.get("#result-set-1");
+        String result = "";
+        while(resultSet.next()){
+            result = resultSet.getString(0);
+        }
+        ModelMap map = new ModelMap();
+        map.put("result", result);
+        return map;
+    }
+
+    @Override
+    public SQP05310Filter loadSQP05310Filter(SQP05310Filter filter) throws Exception {
+        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05310",
+                    new BeanPropertySqlParameterSource(filter),
+                    new BeanPropertyRowMapper(A4582Filter.class));
+        filter.setResponse((List<A4582Filter>) obj.get("result"));
+        return filter;
+    }
+
+    @Override
+    public SQP05311Filter loadSQP05311Filter(SQP05311Filter filter) throws Exception {
+        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05311",
+                    new BeanPropertySqlParameterSource(filter),
+                    new BeanPropertyRowMapper(A4581Filter.class));
+        filter.setResponse((List<A4581Filter>) obj.get("result"));
+        return filter;
     }
 }

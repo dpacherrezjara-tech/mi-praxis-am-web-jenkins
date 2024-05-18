@@ -19,5 +19,6 @@ public class SQP05308Filter {
     private Integer IN_TOTAL;
     private Integer IN_MATCHS;
     private Integer IN_ERRORS;
+    private String IN_DESCR;
     private String IN_STS;
 }

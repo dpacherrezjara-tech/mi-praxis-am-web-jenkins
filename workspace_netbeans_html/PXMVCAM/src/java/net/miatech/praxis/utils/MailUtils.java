@@ -32,22 +32,6 @@ public class MailUtils {
     @Autowired
     private CurrentSession session;
 
-    private class SMTPAuthenticator extends Authenticator {
-
-        private final String dEmail;
-        private final String dPassword;
-
-        public SMTPAuthenticator(String email, String password) {
-            dEmail = email;
-            dPassword = password;
-        }
-
-        @Override
-        public PasswordAuthentication getPasswordAuthentication() {
-            return new PasswordAuthentication(dEmail, dPassword);
-        }
-    }
-
     public boolean sendMail(
             String emisor,
             String asunto,
@@ -62,17 +46,25 @@ public class MailUtils {
         Properties props = System.getProperties();
         //Se define el servidor de correos
         props.put("mail.smtp.host", session.getPropertySession().get("APP_SERVER_MAIL_HOST").toString());
-        props.put("mail.smtp.port", session.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString());
+        props.put("mail.smtp.port", session.getPropertySession().get("APP_SERVER_MAIL_PORT").toString());
         props.put("mail.smtp.starttls.enable", "true");
         //props.setProperty("mail.smtp.user", emisor);
         props.setProperty("mail.smtp.user", usuario);
         props.setProperty("mail.smtp.auth", "true");
-        props.setProperty("mail.smtp.ssl.protocols", "TLSv1.1 TLSv1.2");
+        //props.setProperty("mail.smtp.ssl.protocols", "TLSv1.1 TLSv1.2");
 
+        /*
         Authenticator auth = new SMTPAuthenticator("notificaciones@miatech.net",
                 session.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString());
-
-        Session ss = Session.getInstance(props, auth);
+              
+        Session ss = Session.getInstance(props, auth);*/
+        String password = session.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString();
+        Session ss = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(usuario, password);
+            }
+        });
         //Se obtiene sesi&amp;oacute;n desde el servidor de correos               
         ss.setDebug(true);
         MimeMessage message = new MimeMessage(ss);
@@ -86,7 +78,7 @@ public class MailUtils {
                 InternetAddress[] Ccp = new InternetAddress[Ccpy.size()];
                 for (int i = 0; i < Ccp.length; i++) {
                     Ccp[i] = new InternetAddress(Ccpy.get(i));
-                    message.addRecipients(Message.RecipientType.BCC, Ccp);
+                    message.addRecipients(Message.RecipientType.CC, Ccp);
                 }
             }
         }

@@ -62,7 +62,10 @@ import net.miatech.praxis.payment.filter.SQP05259Filter;
 import net.miatech.praxis.payment.filter.SQP05261Filter;
 import net.miatech.praxis.payment.filter.SQP05276Filter;
 import net.miatech.praxis.payment.filter.SQP05302Filter;
+import net.miatech.praxis.payment.filter.SQP05304Filter;
 import net.miatech.praxis.payment.filter.SQP05307Filter;
+import net.miatech.praxis.payment.filter.SQP05310Filter;
+import net.miatech.praxis.payment.filter.SQP05311Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.ResponseUtils;
 import net.miatech.praxis.utils.SabreWebService;
@@ -102,7 +105,7 @@ public class SalesReconciliationBPOController {
     @Autowired
     private SabreWebService sabreWebService;
 
-    private final String controllerName = "SalesReconciliation";
+    private final String controllerName = "PaymentsReconciliation";
 
     @RequestMapping(value = "loadFilters")
     public ResponseEntity<?> loadFilters(ModelMap model) {
@@ -1347,6 +1350,22 @@ public class SalesReconciliationBPOController {
         System.out.println("Total: " + filter.getResult().size());
         return new ResponseEntity<>(filter, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "loadBatchLog")
+    public ResponseEntity<?> loadBatchLog(@ModelAttribute SQP05310Filter params) throws Exception {
+        System.out.println("---------------SalesReconciliationBPO:loadBatchInformation-------------");
+        SQP05310Filter filter = logic.loadSQP05310Filter(params);
+        System.out.println("Total: " + filter.getResponse().size());
+        return ResponseUtils.ok(filter);
+    }
+    
+    @RequestMapping(value = "loadBatchLogInfo")
+    public ResponseEntity<?> loadBatchLogInfo(@ModelAttribute SQP05311Filter params) throws Exception {
+        System.out.println("---------------SalesReconciliationBPO:loadBatchInformation-------------");
+        SQP05311Filter filter = logic.loadSQP05311Filter(params);
+        System.out.println("Total: " + filter.getResponse().size());
+        return ResponseUtils.ok(filter);
+    }
 
     @RequestMapping(value = "autoMatchManual", method = RequestMethod.POST)
     public ResponseEntity<?> autoMatchManual(@Valid @RequestBody SQP05307Filter params) throws Exception {
@@ -1360,6 +1379,13 @@ public class SalesReconciliationBPOController {
         System.out.println("---------------SalesReconciliationBPO:masiveAutoMatchManual-------------");
         logic.loadMasiveSQP05307Filter(params);
         Map map = Collections.singletonMap("message", "Proceso Ejecutandose");
+        return ResponseUtils.ok(map);
+    }
+    
+    @RequestMapping(value = "runAutomaticConciliation", method = RequestMethod.POST)
+    public ResponseEntity<?> runAutomaticConciliation(@RequestBody SQP05304Filter params) throws Exception {
+        System.out.println("---------------SalesReconciliationBPO:runAutomaticConciliation-------------");
+        ModelMap map = logic.loadSQP05304Filter(params);
         return ResponseUtils.ok(map);
     }
 //</editor-fold>
