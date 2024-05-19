@@ -35,6 +35,45 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.BatchLogDa
     onClickSearchBtn: function () {
         this.loadLog();
     },
+    onClickErrors: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const gridDetail = Ext.getCmp(prototype.idDE5 + '-gridLogDetail');
+        let valorCelda = td.textContent || td.innerText;
+        if (valorCelda === '0') {
+            gridDetail.hide();
+            global.Msg({msg: 'No data'});
+            return;
+        }
+        gridDetail.show();
+        this.getDetail(record, gridDetail);
+    },
+    getDetail: async function (record, grid) {
+        const me = this;
+        const view = grid.getView();
+        let params = me.requestObjectPX(record.data);
+        grid.mask('Loading...');
+        const res = await fetch(`${me.url}/loadBatchLogInfo?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            grid.setStore(new Ext.data.Store({
+                autoLoad: true,
+                data: data.response
+            }));
+        }
+        grid.unmask();
+    },
+    onClickInfo: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const {CCUST,PRDA,TDOC,AREFNBR} = record.data;
+        let params = {
+            ccust: CCUST,
+            prda: PRDA,
+            tdoc: TDOC,
+            arefnbr: AREFNBR
+        };
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry', {
+            id: prototype.id + '-TransacErrorBPODataEntry-1',
+            obj: params
+        });
+    },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     limpiaObjetoPX: function (obj) {
         for (let key in obj) {

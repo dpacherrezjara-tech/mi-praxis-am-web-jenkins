@@ -104,28 +104,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     //<editor-fold defaultstate="collapsed" desc="Option Buttons">
     showProcessBtn: function (users) {
         const userName = $('#menuUser').text();
-        const btn = Ext.getCmp(prototype.id + '-btnProcess');
-        const btn2 = Ext.getCmp(prototype.id + '-btnBatchAdju');
-        const btn3 = Ext.getCmp(prototype.id + '-btnBatchLog');
+        const lstBtns = [];
+        lstBtns.push(Ext.getCmp(prototype.id + '-btnProcess'));
+        lstBtns.push(Ext.getCmp(prototype.id + '-btnBatchAdju'));
+        lstBtns.push(Ext.getCmp(prototype.id + '-btnBatchLog'));
+        lstBtns.push(Ext.getCmp(prototype.id + '-btnConciliation'));
         const activeFilter = Ext.getCmp(prototype.id + '-filtersByPayment-1');
         if (activeFilter.isVisible()) {
             if (userName.slice(0, 3) === 'SAP') {
-                btn.show();
-                btn2.show();
-                btn3.show();
+                lstBtns.forEach(btn=>{
+                    btn.show();
+                });
             } else if (users.includes(userName)) {
-                btn.show();
-                btn2.show();
-                btn3.show();
+                lstBtns.forEach(btn=>{
+                    btn.show();
+                });
             } else {
-                btn.hide();
-                btn2.hide();
-                btn3.hide();
+                lstBtns.forEach(btn=>{
+                    btn.hide();
+                });
             }
         } else {
-            btn.hide();
-            btn2.hide();
-            btn3.hide();
+            lstBtns.forEach(btn=>{
+                btn.hide();
+            });
         }
     },
     showProductionBtn: function (users) {

@@ -102,8 +102,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                     xtype: 'grid',
                     defaults: {},
                     width: '98%',
-                    minHeight: 165,
-                    maxHeight: 560,
+                    minHeight: 100,
+                    maxHeight: 150,
                     margin: '5 8 5 8',
                     border: false,
                     id: prototype.idDE5 + '-gridLog',
@@ -142,19 +142,61 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                                 text: 'Matchs', dataIndex: 'MATCHS', width: 80
                             },
                             {
-                                text: 'Errors', dataIndex: 'ERRORS', width: 80
+                                text: 'Errors', dataIndex: 'ERRORS', width: 80,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;font-weight:bolder;color:red;";
+                                    return value;
+                                },
+                                listeners: {
+                                    click: 'onClickErrors'
+                                }
                             },
                             {
                                 text: 'User', dataIndex: 'USCR', width: 80
                             },
                             {
                                 text: 'Date<br>Process', dataIndex: 'FECR', width: 80
-                            },
+                            }
+                        ]
+                    }
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Grilla Info">
+                {
+                    xtype: 'grid',
+                    id: prototype.idDE5 + '-gridLogDetail',
+                    defaults: {},
+                    width: '98%',
+                    minHeight: 100,
+                    maxHeight: 150,
+                    margin: '5 8 5 8',
+                    border: false,
+                    hidden: true,
+                    autoScroll: true,
+                    store: new Ext.data.Store({
+                        data: [],
+                        autoLoad: true
+                    }),
+                    columnLines: true,
+                    viewConfig: {
+                        stripeRows: true,
+                        enableTextSelection: true,
+                        markDirty: false
+                    },
+                    columns: {
+                        defaults: {
+                            align: 'center',
+                            menuDisabled: true,
+                            sortable: true
+                        },
+                        items: [
+                            {text: '#', xtype: 'rownumberer', width: 50, locked: true},
                             {
                                 sortable: false,
+                                locked: true,
                                 xtype: 'actioncolumn',
                                 width: 40,
-                                text: 'View',
+                                text: 'Det',
                                 align: 'center',
                                 items: [
                                     {
@@ -163,37 +205,63 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                                         handler: 'onClickInfo'
                                     }
                                 ]
+                            },
+                            {
+                                text: 'Processing<br>Date', dataIndex: 'PRDA', width: 80
+                            },
+                            {
+                                text: 'Processor', dataIndex: 'DESC_PROCTYPE', width: 160
+                            },
+                            {
+                                text: 'Error<br>Description', dataIndex: 'ERRORMSG', width: 250
+                            },
+                            {
+                                text: 'Card Number', dataIndex: 'SCARDN', width: 160
+                            },
+                            {
+                                text: 'Auth<br>Code', dataIndex: 'SAUTHOC', width: 80
+                            },
+                            {
+                                text: 'Curr', dataIndex: 'SCURRENCY', width: 60
+                            },
+                            {
+                                text: 'Transac.<br>Amount', dataIndex: 'TGROSAMOUN', width: 120
+                            },
+                            {
+                                text: 'PNR', dataIndex: 'SPNR', width: 80
+                            },
+                            {
+                                text: 'Ticket', dataIndex: 'TICKET', width: 120
                             }
                         ]
-                    },
-                    dockedItems: [
-                        {
-                            xtype: 'toolbar',
-                            dock: 'bottom',
-                            ui: 'footer',
-                            border: false,
-                            margin: '3 5 3 5',
-                            layout: {
-                                pack: 'center'
-                            },
-                            fieldStyle: 'text-align:center',
-                            defaults: {
-                                scale: 'medium'
-                            },
-                            items: [
-                                {
-                                    text: 'Close',
-                                    iconCls: 'prx-icon-cancel',
-                                    listeners: {
-                                        click: 'onClose'
-                                    }
-                                }
-                            ]
-                        }
-                    ]
+                    }
                 }
                 //</editor-fold>
-
+            ]
+        }
+    ],
+    dockedItems: [
+        {
+            xtype: 'toolbar',
+            dock: 'bottom',
+            ui: 'footer',
+            border: false,
+            margin: '3 5 3 5',
+            layout: {
+                pack: 'center'
+            },
+            fieldStyle: 'text-align:center',
+            defaults: {
+                scale: 'medium'
+            },
+            items: [
+                {
+                    text: 'Close',
+                    iconCls: 'prx-icon-cancel',
+                    listeners: {
+                        click: 'onClose'
+                    }
+                }
             ]
         }
     ]
