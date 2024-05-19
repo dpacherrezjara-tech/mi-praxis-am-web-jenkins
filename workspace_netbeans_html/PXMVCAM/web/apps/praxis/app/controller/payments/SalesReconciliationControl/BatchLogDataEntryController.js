@@ -62,7 +62,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.BatchLogDa
         grid.unmask();
     },
     onClickInfo: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        const {CCUST,PRDA,TDOC,AREFNBR} = record.data;
+        const {CCUST, PRDA, TDOC, AREFNBR} = record.data;
         let params = {
             ccust: CCUST,
             prda: PRDA,
@@ -73,6 +73,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.BatchLogDa
             id: prototype.id + '-TransacErrorBPODataEntry-1',
             obj: params
         });
+    },
+    onClose: function () {
+        this.view.close();
     },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     limpiaObjetoPX: function (obj) {
