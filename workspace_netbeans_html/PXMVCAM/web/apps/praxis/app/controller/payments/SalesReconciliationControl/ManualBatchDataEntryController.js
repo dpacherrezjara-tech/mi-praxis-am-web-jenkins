@@ -108,7 +108,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
         let params = me.requestObjectPX(obj);
         params.IN_PROCTYPE = me.searchParams.IN_PROCTYPE;
         params.IN_PROCTYPESQ = me.searchParams.IN_PROCTYPESQ;
-        params.IN_FDESGLOSE = '';
+        params.IN_FDESGLOSE = 'A';
         const res = await fetch(`${me.url}/autoMatchManual`, {
             method: 'POST',
             headers: {
@@ -154,7 +154,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
             let formatObj = me.requestObjectPX(x.data);
             formatObj.IN_PROCTYPE = me.searchParams.IN_PROCTYPE;
             formatObj.IN_PROCTYPESQ = me.searchParams.IN_PROCTYPESQ;
-            formatObj.IN_FDESGLOSE = '';
+            formatObj.IN_FDESGLOSE = 'A';
             listaMatch.push(formatObj);
         });
         console.log(listaMatch);
