@@ -1,8 +1,12 @@
 package net.miatech.praxis.dao.payments;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
 import net.miatech.praxis.payment.entities.A006;
 import net.miatech.praxis.payment.entities.A3152;
@@ -10,6 +14,8 @@ import net.miatech.praxis.payment.entities.A4451MP;
 import net.miatech.praxis.payment.entities.A4496;
 import net.miatech.praxis.payment.entities.A4501;
 import net.miatech.praxis.payment.entities.A4507;
+import net.miatech.praxis.payment.entities.A4581Filter;
+import net.miatech.praxis.payment.entities.A4582Filter;
 import net.miatech.praxis.payment.filter.A4331BPOFilter;
 import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4331STFilter;
@@ -19,6 +25,7 @@ import net.miatech.praxis.payment.filter.A4482Filter;
 import net.miatech.praxis.payment.filter.A4496Filter;
 import net.miatech.praxis.payment.filter.ByTicketFilter;
 import net.miatech.praxis.payment.filter.CreditCardFilter;
+import net.miatech.praxis.payment.filter.ManualBatchFilter;
 import net.miatech.praxis.payment.filter.ProductionBPFilter;
 import net.miatech.praxis.payment.filter.ProductionBTFilter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
@@ -67,15 +74,25 @@ import net.miatech.praxis.payment.filter.SQP05259Filter;
 import net.miatech.praxis.payment.filter.SQP05260Filter;
 import net.miatech.praxis.payment.filter.SQP05261Filter;
 import net.miatech.praxis.payment.filter.SQP05276Filter;
+import net.miatech.praxis.payment.filter.SQP05302Filter;
+import net.miatech.praxis.payment.filter.SQP05304Filter;
+import net.miatech.praxis.payment.filter.SQP05307Filter;
+import net.miatech.praxis.payment.filter.SQP05308Filter;
+import net.miatech.praxis.payment.filter.SQP05310Filter;
+import net.miatech.praxis.payment.filter.SQP05311Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
+import net.miatech.praxis.utils.MailUtils;
+import net.miatech.utils.Functions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 
 /**
  *
@@ -87,6 +104,8 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
 
     @Autowired
     private JdbcUtils jdbcUtils;
+    @Autowired
+    private MailUtils mailUtils;
 
     private static final String LIBRARY = "PRAXISMP";
 
@@ -147,8 +166,6 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         filter.setADMINS((List<A4451MP>) obj.get("result6"));
         return filter;
     }
-    
-    
 
     @Override
     public SQP05060Filter getSQP05060Filter(SQP05060Filter filter) throws Exception {
@@ -600,6 +617,201 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
             SqlParameterSource fparams = new BeanPropertySqlParameterSource(fop);
             jdbcUtils.executeSQP(LIBRARY, "SQP05220", fparams);
         }
+        return filter;
+    }
+
+    @Override
+    public SQP05302Filter loadSQP05302Filter(SQP05302Filter filter) throws Exception {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05302", params,
+                new BeanPropertyRowMapper<>(ManualBatchFilter.class));
+        filter.setResult((List<ManualBatchFilter>) obj.get("result"));
+        return filter;
+    }
+
+    @Override
+    public SQP05307Filter loadSQP05307Filter(SQP05307Filter filter) throws Exception {
+        String uuid = UUID.randomUUID().toString();
+        filter.setIN_UUID(uuid);
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05307", params);
+        filter.setSQLRES((Integer) obj.get("SQLRES"));
+        filter.setSQLMSG((String) obj.get("SQLMSG"));
+        return filter;
+    }
+
+    @Async
+    @Override
+    public void loadMasiveSQP05307Filter(List<SQP05307Filter> list) throws Exception {
+        String uuid = UUID.randomUUID().toString();
+        SQP05308Filter logFilter = SQP05308Filter.builder()
+                .IN_ACTION("I")
+                .IN_UUID(uuid)
+                .IN_CCUST("139")
+                .IN_PRDA(list.get(0).getIN_PRDA())
+                .IN_PROCTYPE(list.get(0).getIN_PROCTYPE())
+                .IN_PROCTYPESQ(list.get(0).getIN_PROCTYPESQ())
+                .IN_TOTAL(list.size())
+                .IN_MATCHS(0)
+                .IN_ERRORS(0)
+                .IN_DESCR("Proceso Conciliacion Manual")
+                .IN_STS("0")
+                .build();
+        try {
+            SQP05004Filter correos = new SQP05004Filter();
+            correos.setKEY1("PK");
+            correos.setKEY2("EMAIL");
+            Map<String, Object> objCorreos = jdbcUtils.executeSQP(LIBRARY, "SQP05004",
+                    new BeanPropertySqlParameterSource(correos),
+                    new BeanPropertyRowMapper<>(A4451MP.class));
+            List<A4451MP> lstCorreos = (List<A4451MP>) objCorreos.get("result");
+            Map<String, Object> objLog = jdbcUtils.executeSQP(LIBRARY, "SQP05308",
+                    new BeanPropertySqlParameterSource(logFilter));
+            String fechaProceso = (String) objLog.get("FECR");
+            String horaProceso = (String) objLog.get("HOCR");
+            String usuario = (String) objLog.get("USCR");
+            String procesador = (String) objLog.get("PROCESADOR");
+            List<ModelMap> response = new ArrayList<>();
+            Integer total = list.size();
+            list.forEach((SQP05307Filter filter) -> {
+                SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+                filter.setIN_UUID(uuid);
+                ModelMap res = new ModelMap();
+                try {
+                    Map<String, Object> obj = jdbcUtils.executeSQPwithoutLog(LIBRARY, "SQP05307", params);
+                    res.put("code", (Integer) obj.get("SQLRES"));
+                } catch (Exception e) {
+                    res.put("code", 3);
+                }
+                response.add(res);
+            });
+            Integer procesados = response.stream()
+                    .filter(x -> x.get("code").equals(1))
+                    .collect(Collectors.toList())
+                    .size();
+            logFilter.setIN_MATCHS(procesados);
+            Integer error = response.stream()
+                    .filter(x -> x.get("code").equals(0))
+                    .collect(Collectors.toList())
+                    .size();
+            logFilter.setIN_ERRORS(error);
+            Integer serverError = response.stream()
+                    .filter(x -> x.get("code").equals(3))
+                    .collect(Collectors.toList())
+                    .size();
+
+            logFilter.setIN_ACTION("U");
+            logFilter.setIN_STS("1");
+            objLog = jdbcUtils.executeSQP(LIBRARY, "SQP05308",
+                    new BeanPropertySqlParameterSource(logFilter));
+            String fechaProcesoT = (String) objLog.get("FECR");
+            String horaProcesoT = (String) objLog.get("HOCR");
+            //<editor-fold defaultstate="collapsed" desc="Envio de Correo">
+            String emisor = "notificaciones@miatech.net";//Data.EmailRe;
+            List<String> receptores = new ArrayList<>();
+            List<String> CC = new ArrayList<>();
+            //receptores.add("dvicente@miatech.net");
+            lstCorreos.stream().filter(x -> x.getA4451fech2().trim().equals("TO"))
+                    .collect(Collectors.toList())
+                    .forEach(to -> {
+                        receptores.add(to.getA4451desc1().trim());
+                    });
+            lstCorreos.stream().filter(x -> x.getA4451fech2().trim().equals("CC"))
+                    .collect(Collectors.toList())
+                    .forEach(to -> {
+                        CC.add(to.getA4451desc1().trim());
+                    });
+            String asunto = "Medios de Pago - Proceso Batch Manuales " + usuario + "-" + fechaProceso;//Data.Asunto;
+            String detalle = procesador + "-" + logFilter.getIN_PRDA();
+            StringBuilder msg = new StringBuilder();
+            msg.append("<b>Estimados(as):</b><br><br>");
+            msg.append("Se termino proceso de Match Manuales ejecutado por usuario ")
+                    .append(usuario).append(" ")
+                    .append(fechaProceso).append("-")
+                    .append(horaProceso).append("<br>")
+                    .append("y terminado en la fecha ")
+                    .append(fechaProcesoT).append("-")
+                    .append(horaProcesoT)
+                    .append(" con los siguientes resultados: <br><br>");
+            msg.append("<table border='1'>");
+            msg.append("<tr>")
+                    .append("<th>Fecha</th>")
+                    .append("<th>Total</th>")
+                    .append("<th>Match</th>")
+                    .append("<th>Error</th>")
+                    .append("<th>Server Error</th>")
+                    .append("</tr>");
+            msg.append("<tr>")
+                    .append("<td>").append(detalle).append("</td>")
+                    .append("<td>").append(total).append("</td>")
+                    .append("<td>").append(procesados).append("</td>")
+                    .append("<td>").append(error).append("</td>")
+                    .append("<td>").append(serverError).append("</td>")
+                    .append("</tr>");
+            msg.append("</table><br><br>");
+            msg.append("<b>Payments Control</b><br>");
+            msg.append("<b>Miatech International</b><br><br>");
+            //</editor-fold>
+            mailUtils.sendMail(emisor, asunto, receptores, CC, msg.toString(), null, "notificaciones@miatech.net");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            try {
+                logFilter.setIN_ACTION("U");
+                logFilter.setIN_STS("2");
+                jdbcUtils.executeSQP(LIBRARY, "SQP05308",
+                        new BeanPropertySqlParameterSource(logFilter));
+            } catch (Exception e2) {
+                System.out.println("Error: " + e2.getMessage());
+            }
+        }
+
+    }
+
+    @Override
+    public ModelMap loadSQP05304Filter(SQP05304Filter filter) throws Exception {
+        String uuid = UUID.randomUUID().toString();
+        SQP05308Filter logFilter = SQP05308Filter.builder()
+                .IN_ACTION("I")
+                .IN_UUID(uuid)
+                .IN_CCUST("139")
+                .IN_PRDA(Functions.getFechaActual())
+                .IN_PROCTYPE("ALL")
+                .IN_PROCTYPESQ("ALL")
+                .IN_TOTAL(0)
+                .IN_MATCHS(0)
+                .IN_ERRORS(0)
+                .IN_DESCR("Proceso Conciliacion Manual")
+                .IN_STS("4")
+                .build();
+        jdbcUtils.executeSQP(LIBRARY, "SQP05308",
+                    new BeanPropertySqlParameterSource(logFilter));
+        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05304",
+                    new BeanPropertySqlParameterSource(filter));
+        ResultSet resultSet = (ResultSet) obj.get("#result-set-1");
+        String result = "";
+        while(resultSet.next()){
+            result = resultSet.getString(0);
+        }
+        ModelMap map = new ModelMap();
+        map.put("result", result);
+        return map;
+    }
+
+    @Override
+    public SQP05310Filter loadSQP05310Filter(SQP05310Filter filter) throws Exception {
+        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05310",
+                    new BeanPropertySqlParameterSource(filter),
+                    new BeanPropertyRowMapper(A4582Filter.class));
+        filter.setResponse((List<A4582Filter>) obj.get("result"));
+        return filter;
+    }
+
+    @Override
+    public SQP05311Filter loadSQP05311Filter(SQP05311Filter filter) throws Exception {
+        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05311",
+                    new BeanPropertySqlParameterSource(filter),
+                    new BeanPropertyRowMapper(A4581Filter.class));
+        filter.setResponse((List<A4581Filter>) obj.get("result"));
         return filter;
     }
 }

@@ -287,6 +287,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
     reloadGrid: function () {
         this.loadMainTransaction();
     },
+    reloadMainGrid:function(){
+        let callback = this.view.callback;
+        if(callback){
+            callback();
+        }
+    },
+    reloadMainTransaction:function(){
+        let callback = this.view.reRender;
+        if(callback){
+            callback();
+        }
+    },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="SelModel">
     multiTransacBeforeDeselect: function (selModel, record, index) {
@@ -423,8 +435,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
     },
     maintenanceReverseMSITracking: async function (grid, seleccionados) {
         const me = this;
-        const dataEntry = Ext.getCmp(prototype.id + '-TransacErrorBPODataEntry-1');
-        const gridDet = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
+        //const dataEntry = Ext.getCmp(prototype.id + '-TransacErrorBPODataEntry-1');
+        //const gridDet = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
         grid.getView().mask('Loading...');
         console.log(seleccionados);
         let msi = seleccionados.find(x => x.data.transtype.trim() === 'SALE'
@@ -469,8 +481,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
                     width: 300,
                     timeout: 10000 // 10 segundos
                 });
-                dataEntry.getController().afterRender();
-                gridDet.getStore().load();
+                //dataEntry.getController().afterRender();
+                //gridDet.getStore().load();
+                me.reloadMainTransaction();
+                me.reloadMainGrid();
                 me.view.close();
             }
         } else {
@@ -482,8 +496,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         const me = this;
 
         const grid = Ext.getCmp(prototype.idMSI + '-gridVoidTracking');
-        const dataEntry = Ext.getCmp(prototype.id + '-TransacErrorBPODataEntry-1');
-        const gridDet = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
+        //const dataEntry = Ext.getCmp(prototype.id + '-TransacErrorBPODataEntry-1');
+        //const gridDet = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
         const seleccionados = grid.getSelectionModel().getSelection();
         //console.log(seleccionados);
         if (seleccionados.length < 2) {
@@ -520,9 +534,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
                 buttons: Ext.MessageBox.OK,
                 icon: Ext.MessageBox.INFO
             });
-            dataEntry.getController().afterRender();
-            gridDet.getStore().load();
+            //dataEntry.getController().afterRender();
+            //gridDet.getStore().load();
             me.view.unmask();
+            me.reloadMainTransaction();
+            me.reloadMainGrid();
             me.view.close();
         } else {
             Ext.MessageBox.show({

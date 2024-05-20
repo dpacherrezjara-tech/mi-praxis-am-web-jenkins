@@ -47,6 +47,12 @@ import net.miatech.praxis.payment.filter.SQP05247Filter;
 import net.miatech.praxis.payment.filter.SQP05259Filter;
 import net.miatech.praxis.payment.filter.SQP05261Filter;
 import net.miatech.praxis.payment.filter.SQP05276Filter;
+import net.miatech.praxis.payment.filter.SQP05302Filter;
+import net.miatech.praxis.payment.filter.SQP05304Filter;
+import net.miatech.praxis.payment.filter.SQP05307Filter;
+import net.miatech.praxis.payment.filter.SQP05310Filter;
+import net.miatech.praxis.payment.filter.SQP05311Filter;
+import org.springframework.ui.ModelMap;
 
 /**
  *
@@ -142,5 +148,13 @@ public interface SalesReconciliationLogic {
     SQP05218Filter loadSQP05218Filter(SQP05218Filter filter) throws Exception;
     SQP05219Filter loadSQP05219Filter(SQP05219Filter filter) throws Exception;
 
+    //Batch para conciliacion manual de ajustes
+    SQP05302Filter loadSQP05302Filter(SQP05302Filter filter) throws Exception;
+    SQP05307Filter loadSQP05307Filter(SQP05307Filter filter) throws Exception;
+    void loadMasiveSQP05307Filter(List<SQP05307Filter> lst) throws Exception;
+    SQP05310Filter loadSQP05310Filter(SQP05310Filter filter) throws Exception;
+    SQP05311Filter loadSQP05311Filter(SQP05311Filter filter) throws Exception;
     
+    //Conciliaction Automatica (lanzar proceso)
+    ModelMap loadSQP05304Filter(SQP05304Filter filter) throws Exception;
 }

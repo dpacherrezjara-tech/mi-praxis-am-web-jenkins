@@ -12,12 +12,12 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCallOperations;
  *
  * @author Dvicente
  */
-public class CustomJdbcTemplate extends JdbcTemplate{
-    
+public class CustomJdbcTemplate extends JdbcTemplate {
+
     public CustomJdbcTemplate(DataSource dataSource) {
         super(dataSource);
     }
-    
+
     public Map<String, Object> executeWithParams(SimpleJdbcCallOperations simpleJdbcCall, SqlParameterSource in) {
         try {
             // Lógica antes de la ejecución, si es necesario
@@ -25,7 +25,7 @@ public class CustomJdbcTemplate extends JdbcTemplate{
 
             // Ejecutar la llamada
             Map<String, Object> result = simpleJdbcCall.execute(in);
-            
+
             return result;
         } finally {
             // Cerrar la conexión después de la ejecución
@@ -42,7 +42,7 @@ public class CustomJdbcTemplate extends JdbcTemplate{
             }
         }
     }
-    
+
     public Map<String, Object> executeWithoutParams(SimpleJdbcCallOperations simpleJdbcCall) {
         try {
             // Lógica antes de la ejecución, si es necesario
@@ -67,4 +67,25 @@ public class CustomJdbcTemplate extends JdbcTemplate{
             }
         }
     }
+
+    public Map<String, Object> executeWithParamsWLog(SimpleJdbcCallOperations simpleJdbcCall, SqlParameterSource in) {
+        try {
+            // Ejecutar la llamada
+            Map<String, Object> result = simpleJdbcCall.execute(in);
+            return result;
+        } finally {
+            // Cerrar la conexión después de la ejecución
+            if (simpleJdbcCall instanceof SimpleJdbcCall) {
+                DataSource dataSource = getDataSource();
+                if (dataSource != null) {
+                    try {
+                        dataSource.getConnection().close();
+                    } catch (SQLException e) {
+                        e.printStackTrace(); // Manejar excepciones adecuadamente
+                    }
+                }
+            }
+        }
+    }
+
 }

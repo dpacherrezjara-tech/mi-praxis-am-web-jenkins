@@ -51,7 +51,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
         const obj = record.data;
         const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry', {
             id: prototype.id + '-TransacErrorBPODataEntry-1',
-            obj: obj
+            obj: obj,
+            callback: () => {
+                grid.getStore().load();
+            }
         });
         dataEntry.show();
     },
@@ -87,7 +90,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
     },
     groupByCreditCard: function () {
         const formFilter = Ext.getCmp(prototype.id + '-formFiltersBP-2').getForm();
-        console.log('Parametros',formFilter.getValues());
+        console.log('Parametros', formFilter.getValues());
         const winCreditCard = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.CreditCardFilterDataEntry', {
             id: prototype.id + '-CreditCardFilterDataEntry-1',
             searchParams: formFilter.getValues()
