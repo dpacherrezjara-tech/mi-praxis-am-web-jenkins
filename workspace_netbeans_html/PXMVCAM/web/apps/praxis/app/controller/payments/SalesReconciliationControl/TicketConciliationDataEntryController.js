@@ -154,7 +154,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
                     timeout: 10000 // 10 segundos
                 });
                 me.afterRender();
-                Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+                me.reloadTicketsGrid();
+                //Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
             }
         } else {
             global.Msg({msg: 'Error'});
@@ -182,7 +183,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
                     timeout: 10000 // 10 segundos
                 });
                 me.afterRender();
-                Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+                me.reloadTicketsGrid();
+                //Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
             }
         } else {
             global.Msg({msg: 'Error'});
@@ -262,7 +264,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
                     timeout: 10000 // 10 segundos
                 });
                 me.afterRender();
-                Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+                me.reloadTicketsGrid();
+                //Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
             } else {
                 global.Msg({msg: 'Error'});
             }
@@ -288,7 +291,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
                     timeout: 10000 // 10 segundos
                 });
                 me.afterRender();
-                Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+                me.reloadTicketsGrid();
+                //Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
             } else {
                 global.Msg({msg: 'Error'});
             }
@@ -354,7 +358,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
                     timeout: 10000 // 10 segundos
                 });
                 me.afterRender();
-                Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+                me.reloadTicketsGrid();
+                //Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
             } else {
                 global.Msg({msg: 'Error'});
             }
@@ -380,7 +385,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
                     timeout: 10000 // 10 segundos
                 });
                 me.afterRender();
-                Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+                me.reloadTicketsGrid();
+                //Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
             } else {
                 global.Msg({msg: 'Error'});
             }
@@ -414,6 +420,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
             doctype: a4496TIPOD
         });
         usageWin.show();
+    },
+    reloadTicketsGrid: function () {
+        let callback = this.view.callback;
+        if (callback) {
+            callback();
+        }
     },
     //</editor-fold>
 

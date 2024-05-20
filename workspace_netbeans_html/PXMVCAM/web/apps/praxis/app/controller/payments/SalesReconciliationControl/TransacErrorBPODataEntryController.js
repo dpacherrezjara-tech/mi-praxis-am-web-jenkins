@@ -224,11 +224,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     onAddAdjustment: function (grid, rowIndex, colIndex) {
         let registro = grid.getStore().getAt(rowIndex).data;
 
-        const transacAmt = this.bean.tgrosamoun;
+        let transacType = this.bean.transtype;
+        let transacAmt = this.bean.tgrosamoun;
         const gridAmt = Ext.getCmp(prototype.idDE + '-totAmount').getValue().replace(/,/g, "");
         console.log(transacAmt, '-', gridAmt);
         const objClon = Object.assign({}, registro);
-        objClon.svfops = parseFloat(transacAmt) - parseFloat(gridAmt);
+        if (transacType.trim() === 'CHBK') {
+            objClon.svfops = Math.abs(parseFloat(transacAmt)) - parseFloat(gridAmt);
+        } else {
+            objClon.svfops = parseFloat(transacAmt) - parseFloat(gridAmt);
+        }
         objClon.trnco = objClon.trncu;
         objClon.trncu = 'ADJU';
         const newCorrl = parseInt(objClon.corrl, 10) + 1;
@@ -631,7 +636,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const dataEntryMSI = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry', {
             id: prototype.idDE + '-MSITrackingDataEntry',
             searchParams: params,
-            obj: me.bean
+            obj: me.bean,
+            callback: me.reloadErrorGrid,
+            reRender: me.afterRender
         });
         dataEntryMSI.show();
     },
@@ -649,7 +656,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const dataEntryCHBK = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ChargebackTrackingDataEntry', {
             id: prototype.idDE + '-CHBKTrackingDataEntry',
             searchParams: params,
-            obj: me.bean
+            obj: me.bean,
+            callback: me.reloadErrorGrid,
+            reRender: me.afterRender
         });
         dataEntryCHBK.show();
     },
@@ -694,7 +703,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             IN_TDOC: tdoc,
             IN_CORRL: obj.tcorr
         };
-        console.log('By Ticket Params: ',params);
+        console.log('By Ticket Params: ', params);
         const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TicketConciliationDataEntry', {
             id: prototype.id + '-TicketConciliationDataEntry-2',
             searchParams: params,
@@ -782,8 +791,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         panelScan.unmask();
     },
     reloadErrorGrid: function () {
-        const grid = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
-        grid.getStore().load();
+        let callback = this.view.callback;
+        if (callback) {
+            callback();
+        }
     },
     cleanGridBPO: function (btn) {
         const gridBPO = Ext.getCmp(prototype.idDE + '-gridBPO').getStore();
@@ -1010,6 +1021,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         params.IN_FVOID = conteo_void > 0 ? 'V' : '';
         params.IN_QTYTKT = details.length;
         params.IN_SVFOPS = sumDesglose;
+        params.IN_FDESGLOSE = 'M';
+        params.IN_FADM = codADJU === '03' ? 'Y' : '';
         console.log(params);
         return params;
     },

@@ -20,7 +20,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         const res = await fetch(`${me.url}/loadFilters`);
         if (res.ok) {
             const data = await res.json();
-            console.log(data);
+            console.log('Filtros: ', data);
             const procesadores = data.procesadores;
             const monedas = data.monedas.map(x => ({code: x.a006PAIS, name: `${x.a006PAIS}`}));
             const errores = data.cerror.map(x => ({name: `${x.a4451key3.trim()} - ${x.a4451desc1}`, code: x.a4451key3}));
@@ -82,11 +82,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const cmbMdasbBT = Ext.getCmp(prototype.id + '-cmbMonedabBT');
             me.setComboStore({cmp: cmbMdasbBT, data: monedas,
                 valueField: 'code', displayField: 'name', value: ''});
-            
+
             const cmbMdasbBP = Ext.getCmp(prototype.id + '-cmbMonedaBP');
             me.setComboStore({cmp: cmbMdasbBP, data: monedas,
                 valueField: 'code', displayField: 'name', value: ''});
-            
+
             const cmbMdasfBP = Ext.getCmp(prototype.id + '-cmbMonedafBP');
             me.setComboStore({cmp: cmbMdasfBP, data: monedas,
                 valueField: 'code', displayField: 'name', value: ''});
@@ -104,18 +104,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     //<editor-fold defaultstate="collapsed" desc="Option Buttons">
     showProcessBtn: function (users) {
         const userName = $('#menuUser').text();
-        const btn = Ext.getCmp(prototype.id + '-btnProcess');
+        const lstBtns = [];
+        lstBtns.push(Ext.getCmp(prototype.id + '-btnProcess'));
+        lstBtns.push(Ext.getCmp(prototype.id + '-btnBatchAdju'));
+        lstBtns.push(Ext.getCmp(prototype.id + '-btnBatchLog'));
+        lstBtns.push(Ext.getCmp(prototype.id + '-btnConciliation'));
         const activeFilter = Ext.getCmp(prototype.id + '-filtersByPayment-1');
         if (activeFilter.isVisible()) {
             if (userName.slice(0, 3) === 'SAP') {
-                btn.show();
+                lstBtns.forEach(btn=>{
+                    btn.show();
+                });
             } else if (users.includes(userName)) {
-                btn.show();
+                lstBtns.forEach(btn=>{
+                    btn.show();
+                });
             } else {
-                btn.hide();
+                lstBtns.forEach(btn=>{
+                    btn.hide();
+                });
             }
         } else {
-            btn.hide();
+            lstBtns.forEach(btn=>{
+                btn.hide();
+            });
         }
     },
     showProductionBtn: function (users) {
@@ -408,6 +420,61 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     onEnterKeyPress: function (field, e) {
         if (e.getKey() === e.ENTER) {
             this.onClickSearchBtn();
+        }
+    },
+    onClickBatchAdjuBtn: function () {
+        const manualBatch = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ManualBatchDataEntry', {
+            id: prototype.id + '-ManualBatchDataEntry-1'
+        });
+        manualBatch.show();
+    },
+    onClickBatchLogBtn: function () {
+        const logBatch = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.BatchLogDataEntry', {
+            id: prototype.id + '-BatchLogDataEntry-1'
+        });
+        logBatch.show();
+    },
+    onClickConciliationBtn:function(){
+        const me = this;
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to run Conciliation?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            me.runConciliation();
+                        }
+                    }
+                });
+    },
+    //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="Procesos">
+    runConciliation: async function () {
+        const me = this;
+        let params = {
+            VP_CCUST: '139',
+            VP_PROCESO: 'CONCILIA'
+        };
+        const res = await fetch(`${me.url}/runAutomaticConciliation`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        });
+        if (res.ok) {
+            const data = await res.json();
+            if (data.result === 'P') {
+                global.Msg({msg: 'Starting Process'});
+            } else {
+                global.Msg({msg: 'Process is already running'});
+            }
+        } else {
+            global.Msg({msg: 'Error on Process'});
         }
     },
     //</editor-fold>
