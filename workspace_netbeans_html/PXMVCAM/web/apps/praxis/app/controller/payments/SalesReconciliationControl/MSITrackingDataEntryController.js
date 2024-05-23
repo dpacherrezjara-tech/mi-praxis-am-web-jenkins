@@ -287,16 +287,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
     reloadGrid: function () {
         this.loadMainTransaction();
     },
-    reloadMainGrid:function(){
+    reloadMainGrid: function () {
         let callback = this.view.callback;
-        if(callback){
+        if (callback) {
             callback();
         }
     },
-    reloadMainTransaction:function(){
+    reloadMainTransaction: function () {
         let callback = this.view.reRender;
-        if(callback){
+        if (callback) {
             callback();
+        }
+    },
+    onSelectStatus: function (combo, record) {
+        let valorSeleccionado = record.data.code;
+        const store = Ext.getCmp(prototype.idMSI + '-gridVoidTracking').getStore();
+        store.clearFilter();
+        if (valorSeleccionado !== '') {
+            store.filter('stval', valorSeleccionado);
         }
     },
     //</editor-fold>
