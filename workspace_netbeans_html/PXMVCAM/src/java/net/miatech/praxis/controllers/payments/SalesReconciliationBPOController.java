@@ -62,6 +62,8 @@ import net.miatech.praxis.payment.filter.SQP05304Filter;
 import net.miatech.praxis.payment.filter.SQP05307Filter;
 import net.miatech.praxis.payment.filter.SQP05310Filter;
 import net.miatech.praxis.payment.filter.SQP05311Filter;
+import net.miatech.praxis.payment.filter.SQP05312Filter;
+import net.miatech.praxis.payment.filter.SQP05313Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.ResponseUtils;
 import net.miatech.praxis.utils.SabreWebService;
@@ -456,6 +458,21 @@ public class SalesReconciliationBPOController {
             System.out.println("Error: " + e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    @RequestMapping(value = "loadSaleCHBKTrackingInfo")
+    public ResponseEntity<?> loadSaleCHBKTrackingInfo(@ModelAttribute SQP05312Filter params) throws Exception {
+        System.out.println("-------------- SalesReconciliationBPO : loadSaleCHBKTrackingInfo-------------");
+        SQP05312Filter filter = logic.loadSQP05312Filter(params);
+        System.out.println("Total: " + filter.getResponse().size());
+        return ResponseUtils.ok(filter);
+    }
+    
+    @RequestMapping(value = "maintenanceChbkSaleConcil", method = RequestMethod.POST)
+    public ResponseEntity<?> maintenanceChbkSaleConcil(@RequestBody SQP05313Filter params) throws Exception {
+        System.out.println("-------------- SalesReconciliationBPO : maintenanceChbkSaleConcil-------------");
+        SQP05313Filter filter = logic.loadSQP05313Filter(params);
+        return ResponseUtils.create(filter);
     }
     //</editor-fold>
 

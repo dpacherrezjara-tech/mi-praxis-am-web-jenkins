@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
     controller: 'BatchLogDataEntryController',
     title: 'Batch Log - Form',
     header: true,
-    width: 1000,
+    width: 1070,
     resizable: false,
     layout: 'fit',
     modal: false,
@@ -156,6 +156,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                             },
                             {
                                 text: 'Date<br>Process', dataIndex: 'FECR', width: 80
+                            },
+                            {
+                                text: 'Hour<br>Process', dataIndex: 'HOCR', width: 70
                             }
                         ]
                     }

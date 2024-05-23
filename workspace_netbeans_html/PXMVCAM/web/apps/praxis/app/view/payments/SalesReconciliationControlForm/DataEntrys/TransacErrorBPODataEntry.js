@@ -1401,7 +1401,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Cod', dataIndex: 'scarcod', width: 45
+                                                                text: 'Cod', dataIndex: 'codebank', width: 45
                                                             },
                                                             {
                                                                 text: 'Number', dataIndex: 'cardnbr', width: 130
