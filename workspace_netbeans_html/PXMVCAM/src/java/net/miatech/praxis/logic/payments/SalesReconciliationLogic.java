@@ -52,6 +52,8 @@ import net.miatech.praxis.payment.filter.SQP05304Filter;
 import net.miatech.praxis.payment.filter.SQP05307Filter;
 import net.miatech.praxis.payment.filter.SQP05310Filter;
 import net.miatech.praxis.payment.filter.SQP05311Filter;
+import net.miatech.praxis.payment.filter.SQP05312Filter;
+import net.miatech.praxis.payment.filter.SQP05313Filter;
 import org.springframework.ui.ModelMap;
 
 /**
@@ -106,7 +108,9 @@ public interface SalesReconciliationLogic {
     SQP05077Filter loadSQP05077Filter(SQP05077Filter filter) throws Exception;
     SQP05182Filter loadSQP05182Filter(SQP05182Filter filter) throws Exception;
     SQP05183Filter loadSQP05183Filter(SQP05183Filter filter) throws Exception;
-    
+    SQP05312Filter loadSQP05312Filter(SQP05312Filter filter) throws Exception;
+    SQP05313Filter loadSQP05313Filter(SQP05313Filter filter) throws Exception;
+            
     //proceso de conciliacion entre Transacciones
     SQP05074Filter loadSQP05074Filter(SQP05074Filter filter) throws Exception;
     SQP05147Filter loadSQP05147Filter() throws Exception;

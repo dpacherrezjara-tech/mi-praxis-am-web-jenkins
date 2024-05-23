@@ -32,15 +32,44 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                 defaults: {
                     scale: 'small'
                 }, items: [
+//                    {
+//                        xtype: 'checkbox',
+//                        id: prototype.idCHBK + '-chkChangeView',
+//                        fieldLabel: 'Manual Conciliation',
+//                        labelStyle: 'font-weight:bold;text-align:right;',
+//                        labelWidth: 200,
+//                        width: 270,
+//                        listeners: {
+//                            change: 'onChangeView'
+//                        }
+//                    }
                     {
-                        xtype: 'checkbox',
-                        id: prototype.idCHBK + '-chkChangeView',
-                        fieldLabel: 'Manual Conciliation',
-                        labelStyle: 'font-weight:bold;text-align:right;',
-                        labelWidth: 200,
-                        width: 270,
+                        xtype: 'radiogroup',
+                        id: prototype.idCHBK + '-rbOpcion',
+                        hidden: true,
+                        items: [
+                            {
+                                boxLabel: 'Rev. CHBK<br>Concil.',
+                                name: 'rb',
+                                inputValue: '1',
+                                checked: true,
+                                width:100
+                            },
+                            {
+                                boxLabel: 'SALE<br>Concil.',
+                                name: 'rb',
+                                inputValue: '2',
+                                width:100
+                            },
+                            {
+                                boxLabel: 'Manual<br>Concil.',
+                                name: 'rb',
+                                inputValue: '3',
+                                width:100
+                            }
+                        ],
                         listeners: {
-                            change: 'onChangeView'
+                            change: 'onRadioGroupChange'
                         }
                     }
                 ]
@@ -185,6 +214,147 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                     }
                 },
                 //</editor-fold>
+                {
+                    xtype: 'grid',
+                    border: false,
+                    id: prototype.idCHBK + '-gridSaleTracking',
+                    hidden: true,
+                    viewConfig: {
+                        stripeRows: true,
+                        enableTextSelection: true,
+                        markDirty: false,
+                        listeners: {
+                            refresh: function (dataview) {
+                                Ext.each(dataview.panel.columns, function (column) {
+                                    if (column.autoSizeColumn === true)
+                                        column.autoSize();
+                                });
+                            }
+                        }
+                    },
+                    listeners:{
+                        storechange:'storeChangeSale'
+                    },
+                    columnLines: true,
+                    autoScroll: true,
+                    minHeight: 180,
+                    height: 'auto',
+                    maxHeight: 400,
+                    width: '100%',
+                    selModel: {
+                        type: 'checkboxmodel',
+                        checkboxSelect: false,
+                        checkOnly: true, // Solo permitir selección a través de casillas de verificación
+                        listeners: {
+                            selectionchange: function (sm, seleccionados) {
+                                if (seleccionados.length > 2) {
+                                    // Desseleccionar los registros adicionales si se supera el límite de 3
+                                    sm.deselect(seleccionados.slice(2));
+                                }
+                            },
+                            beforedeselect: function (selModel, record, index) {
+                                if (record.data.STMAIN === '1') {
+                                    return false;
+                                }
+                            },
+                            beforeselect: function (selModel, record, index) {
+                                if (record.data.stval === '6') {
+                                    return false;
+                                }
+                            }
+                        }
+                    },
+                    columns: {
+                        defaults: {
+                            align: 'center',
+                            menuDisabled: true,
+                            sortable: true
+                        },
+                        items: [
+                            {text: 'Processing<br>Date', dataIndex: 'PRDA', width: 80},
+                            {text: 'Payment<br>Date', dataIndex: 'PAYDATE', width: 80},
+                            {text: 'Payment<br>Merchant ID', dataIndex: 'PMERCHID', width: 90},
+                            {text: 'Doc.<br>Type', dataIndex: 'TRANSTYPE', width: 60},
+                            {
+                                text: 'Transaction Information',
+                                defaults: {
+                                    align: 'center',
+                                    menuDisabled: true,
+                                    sortable: true,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                        metaData.style = "text-align:center;background-color:#F0D094";
+                                        return value;
+                                    }
+                                },
+                                columns: [
+                                    {
+                                        text: 'Card Number', dataIndex: 'SCARDN', width: 130
+                                    },
+                                    {
+                                        text: 'Auth<br>Code', dataIndex: 'SAUTHOC', width: 70
+                                    },
+                                    {text: 'Curr', dataIndex: 'SCURRENCY', width: 60},
+                                    {
+                                        text: 'Transac.<br>Amount', dataIndex: 'TGROSAMOUN', width: 100,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#F0D094;font-weight:bolder;";
+                                            value = Ext.util.Format.number(value, '0,000.00');
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Sales<br>Amount', dataIndex: 'SVFOPS', width: 100,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#F0D094;font-weight:bolder;";
+                                            value = Ext.util.Format.number(value, '0,000.00');
+                                            return value;
+                                        }
+                                    },
+                                    {
+                                        text: 'Installment',
+                                        defaults: {
+                                            align: 'center',
+                                            menuDisabled: true,
+                                            sortable: true,
+                                            renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                                metaData.style = "text-align:center;background-color:#F0D094;";
+                                                return value;
+                                            }
+                                        },
+                                        columns: [
+                                            {text: 'Plan', dataIndex: 'NBRINSTA', width: 60},
+                                            {text: 'Number', dataIndex: 'INSTANBR', width: 60}
+                                        ]
+                                    },
+                                    {text: 'PNR', dataIndex: 'SPNR', width: 70},
+                                    {
+                                        text: 'Qty<br>Tkts', dataIndex: 'QTYTKT', width: 40
+                                    }
+                                ]
+                            },
+                            {text: 'Error Description', dataIndex: 'DES_CERROR', width: 180, autoSizeColumn: true},
+                            {text: 'Adju. Description', dataIndex: 'DESC_CODADJU', width: 180, autoSizeColumn: true},
+                            {
+                                text: 'Status', dataIndex: 'STVAL', width: 120,
+                                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                    metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
+                                    const opts = {
+                                        '0': 'Stand By',
+                                        '1': 'Match',
+                                        '2': 'Sales Without Settl.',
+                                        '3': 'Settl. Without Sales',
+                                        '4': 'Match Diff.',
+                                        '5': 'Match Manual',
+                                        '6': 'Forced Match',
+                                        '7': 'Compensation Match',
+                                        '8': 'Pending RFND'
+                                    };
+                                    return opts[value] || '';
+                                }
+                            }
+                        ]
+                    }
+                },
                 //<editor-fold defaultstate="collapsed" desc="Parcial Conciliation">
                 {
                     xtype: 'panel',
@@ -649,6 +819,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                     iconCls: 'prx-icon-update',
                     listeners: {
                         click: 'onUpdateCHBK'
+                    }
+                },
+                {
+                    text: 'Update',
+                    hidden: true,
+                    id: prototype.idCHBK + '-btn-update-sale',
+                    iconCls: 'prx-icon-update',
+                    listeners: {
+                        click: 'onUpdateSALE'
                     }
                 },
                 {

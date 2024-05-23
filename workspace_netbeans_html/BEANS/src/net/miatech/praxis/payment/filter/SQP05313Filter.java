@@ -13,10 +13,13 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  */
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SQP05304Filter {
-    private String VP_CCUST,VP_PROCESO;
+public class SQP05313Filter {
+    private String IN_CCUST,IN_PRDA,IN_TDOC,IN_AREFNBR,
+            IN_PRDAS,IN_TDOCS,IN_AREFNBRS;
+    private String SQLMSG;
+    private Integer SQLRES;
 }

@@ -80,6 +80,8 @@ import net.miatech.praxis.payment.filter.SQP05307Filter;
 import net.miatech.praxis.payment.filter.SQP05308Filter;
 import net.miatech.praxis.payment.filter.SQP05310Filter;
 import net.miatech.praxis.payment.filter.SQP05311Filter;
+import net.miatech.praxis.payment.filter.SQP05312Filter;
+import net.miatech.praxis.payment.filter.SQP05313Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import net.miatech.praxis.utils.MailUtils;
@@ -389,6 +391,26 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         filter.setSQLMSG((String) obj.get("SQLMSG"));
         return filter;
     }
+
+    @Override
+    public SQP05312Filter loadSQP05312Filter(SQP05312Filter filter) throws Exception {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05312", params,
+                new BeanPropertyRowMapper<>(A4331Filter.class));
+        filter.setResponse((List<A4331Filter>) obj.get("result"));
+        return filter;
+    }
+
+    @Override
+    public SQP05313Filter loadSQP05313Filter(SQP05313Filter filter) throws Exception {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05313", params);
+        filter.setSQLRES((Integer) obj.get("SQLRES"));
+        filter.setSQLMSG((String) obj.get("SQLMSG"));
+        return filter;
+    }
+    
+    
 
     @Override
     public SQP05081Filter loadSQP05081Filter(SQP05081Filter filter) throws Exception {
@@ -780,20 +802,20 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 .IN_TOTAL(0)
                 .IN_MATCHS(0)
                 .IN_ERRORS(0)
-                .IN_DESCR("Proceso Conciliacion Manual")
+                .IN_DESCR("Proceso Conciliacion Automatico")
                 .IN_STS("4")
                 .build();
         jdbcUtils.executeSQP(LIBRARY, "SQP05308",
                     new BeanPropertySqlParameterSource(logFilter));
         Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05304",
                     new BeanPropertySqlParameterSource(filter));
-        ResultSet resultSet = (ResultSet) obj.get("#result-set-1");
-        String result = "";
-        while(resultSet.next()){
-            result = resultSet.getString(0);
-        }
+        List<Map<String,String>> resultSet = (List<Map<String,String>>) obj.get("#result-set-1");
         ModelMap map = new ModelMap();
-        map.put("result", result);
+        resultSet.forEach((Map<String, String> x)->{
+            map.put("result", x.get("RESULT"));
+        });
+        
+        
         return map;
     }
 
