@@ -802,20 +802,20 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 .IN_TOTAL(0)
                 .IN_MATCHS(0)
                 .IN_ERRORS(0)
-                .IN_DESCR("Proceso Conciliacion Manual")
+                .IN_DESCR("Proceso Conciliacion Automatico")
                 .IN_STS("4")
                 .build();
         jdbcUtils.executeSQP(LIBRARY, "SQP05308",
                     new BeanPropertySqlParameterSource(logFilter));
         Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05304",
                     new BeanPropertySqlParameterSource(filter));
-        ResultSet resultSet = (ResultSet) obj.get("#result-set-1");
-        String result = "";
-        while(resultSet.next()){
-            result = resultSet.getString(0);
-        }
+        List<Map<String,String>> resultSet = (List<Map<String,String>>) obj.get("#result-set-1");
         ModelMap map = new ModelMap();
-        map.put("result", result);
+        resultSet.forEach((Map<String, String> x)->{
+            map.put("result", x.get("RESULT"));
+        });
+        
+        
         return map;
     }
 
