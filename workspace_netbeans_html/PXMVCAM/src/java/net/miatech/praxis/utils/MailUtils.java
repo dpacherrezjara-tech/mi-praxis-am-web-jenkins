@@ -51,7 +51,7 @@ public class MailUtils {
         //props.setProperty("mail.smtp.user", emisor);
         props.setProperty("mail.smtp.user", usuario);
         props.setProperty("mail.smtp.auth", "true");
-        //props.setProperty("mail.smtp.ssl.protocols", "TLSv1.1 TLSv1.2");
+        props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2 TLSv1.3");
 
         /*
         Authenticator auth = new SMTPAuthenticator("notificaciones@miatech.net",
