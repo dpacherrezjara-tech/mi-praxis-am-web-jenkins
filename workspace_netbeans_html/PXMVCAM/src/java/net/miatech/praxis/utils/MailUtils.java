@@ -29,6 +29,21 @@ import org.springframework.stereotype.Component;
 @Scope("session")
 public class MailUtils {
 
+    private class SMTPAuthenticator extends Authenticator {
+
+        private String dEmail;
+        private String dPassword;
+
+        public SMTPAuthenticator(String email, String password) {
+            dEmail = email;
+            dPassword = password;
+        }
+
+        public PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(dEmail, dPassword);
+        }
+    }
+    
     @Autowired
     private CurrentSession session;
 
@@ -51,20 +66,15 @@ public class MailUtils {
         //props.setProperty("mail.smtp.user", emisor);
         props.setProperty("mail.smtp.user", usuario);
         props.setProperty("mail.smtp.auth", "true");
-        props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2 TLSv1.3");
+        props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
 
-        /*
-        Authenticator auth = new SMTPAuthenticator("notificaciones@miatech.net",
+        
+        Authenticator auth = new SMTPAuthenticator(session.getPropertySession().get("APP_SERVER_MAIL_EMAIL").toString(),
                 session.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString());
               
-        Session ss = Session.getInstance(props, auth);*/
+        Session ss = Session.getInstance(props, auth);
         String password = session.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString();
-        Session ss = Session.getInstance(props, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(usuario, password);
-            }
-        });
+        //Session session = Session.getInstance(props, auth);    
         //Se obtiene sesi&amp;oacute;n desde el servidor de correos               
         ss.setDebug(true);
         MimeMessage message = new MimeMessage(ss);
