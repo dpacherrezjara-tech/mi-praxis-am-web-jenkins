@@ -17,37 +17,20 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import net.miatech.praxis.classes.CurrentSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Dvicente
  */
-@Component
-@Scope("session")
 public class MailUtils {
+    
+    private CurrentSession cs;
 
-    private class SMTPAuthenticator extends Authenticator {
-
-        private String dEmail;
-        private String dPassword;
-
-        public SMTPAuthenticator(String email, String password) {
-            dEmail = email;
-            dPassword = password;
-        }
-
-        public PasswordAuthentication getPasswordAuthentication() {
-            return new PasswordAuthentication(dEmail, dPassword);
-        }
+    public MailUtils(CurrentSession cs) {
+        this.cs = cs;
     }
     
-    @Autowired
-    private CurrentSession session;
-
-    public boolean sendMail(
+    public void sendMail(
             String emisor,
             String asunto,
             List<String> receptores,
@@ -55,26 +38,30 @@ public class MailUtils {
             String mensaje,
             List<String> adjuntos,
             String correoMask) throws Exception {
-        boolean envioExitoso = true;
         String usuario = correoMask; //Correo con el que saldra el email enviado ("from")            
 
         Properties props = System.getProperties();
         //Se define el servidor de correos
-        props.put("mail.smtp.host", session.getPropertySession().get("APP_SERVER_MAIL_HOST").toString());
-        props.put("mail.smtp.port", session.getPropertySession().get("APP_SERVER_MAIL_PORT").toString());
+        props.put("mail.smtp.host", cs.getPropertySession().get("APP_SERVER_MAIL_HOST").toString());
+        props.put("mail.smtp.port", cs.getPropertySession().get("APP_SERVER_MAIL_PORT").toString());
         props.put("mail.smtp.starttls.enable", "true");
         //props.setProperty("mail.smtp.user", emisor);
         props.setProperty("mail.smtp.user", usuario);
         props.setProperty("mail.smtp.auth", "true");
-        props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+        props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2 TLSv1.3");
 
-        
-        Authenticator auth = new SMTPAuthenticator(session.getPropertySession().get("APP_SERVER_MAIL_EMAIL").toString(),
+        /*
+        Authenticator auth = new SMTPAuthenticator("notificaciones@miatech.net",
                 session.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString());
               
-        Session ss = Session.getInstance(props, auth);
-        String password = session.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString();
-        //Session session = Session.getInstance(props, auth);    
+        Session ss = Session.getInstance(props, auth);*/
+        String password = cs.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString();
+        Session ss = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(usuario, password);
+            }
+        });
         //Se obtiene sesi&amp;oacute;n desde el servidor de correos               
         ss.setDebug(true);
         MimeMessage message = new MimeMessage(ss);
@@ -131,7 +118,6 @@ public class MailUtils {
 
         //Se env&amp;iacute;a el e-mail
         Transport.send(message);
-        return envioExitoso;
     }
 
 }

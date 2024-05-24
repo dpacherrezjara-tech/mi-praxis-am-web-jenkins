@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import net.miatech.praxis.classes.CurrentSession;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
 import net.miatech.praxis.payment.entities.A006;
 import net.miatech.praxis.payment.entities.A3152;
@@ -107,7 +108,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
     @Autowired
     private JdbcUtils jdbcUtils;
     @Autowired
-    private MailUtils mailUtils;
+    private CurrentSession cs;
 
     private static final String LIBRARY = "PRAXISMP";
 
@@ -774,6 +775,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
             msg.append("<b>Payments Control</b><br>");
             msg.append("<b>Miatech International</b><br><br>");
             //</editor-fold>
+            MailUtils mailUtils = new MailUtils(cs);
             mailUtils.sendMail(emisor, asunto, receptores, CC, msg.toString(), null, "notificaciones@miatech.net");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
