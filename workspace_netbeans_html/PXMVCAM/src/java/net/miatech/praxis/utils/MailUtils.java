@@ -17,22 +17,20 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import net.miatech.praxis.classes.CurrentSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Dvicente
  */
-@Component
-@Scope("session")
 public class MailUtils {
+    
+    private CurrentSession cs;
 
-    @Autowired
-    private CurrentSession session;
-
-    public boolean sendMail(
+    public MailUtils(CurrentSession cs) {
+        this.cs = cs;
+    }
+    
+    public void sendMail(
             String emisor,
             String asunto,
             List<String> receptores,
@@ -40,13 +38,12 @@ public class MailUtils {
             String mensaje,
             List<String> adjuntos,
             String correoMask) throws Exception {
-        boolean envioExitoso = true;
         String usuario = correoMask; //Correo con el que saldra el email enviado ("from")            
 
         Properties props = System.getProperties();
         //Se define el servidor de correos
-        props.put("mail.smtp.host", session.getPropertySession().get("APP_SERVER_MAIL_HOST").toString());
-        props.put("mail.smtp.port", session.getPropertySession().get("APP_SERVER_MAIL_PORT").toString());
+        props.put("mail.smtp.host", cs.getPropertySession().get("APP_SERVER_MAIL_HOST").toString());
+        props.put("mail.smtp.port", cs.getPropertySession().get("APP_SERVER_MAIL_PORT").toString());
         props.put("mail.smtp.starttls.enable", "true");
         //props.setProperty("mail.smtp.user", emisor);
         props.setProperty("mail.smtp.user", usuario);
@@ -58,7 +55,7 @@ public class MailUtils {
                 session.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString());
               
         Session ss = Session.getInstance(props, auth);*/
-        String password = session.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString();
+        String password = cs.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString();
         Session ss = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -121,7 +118,6 @@ public class MailUtils {
 
         //Se env&amp;iacute;a el e-mail
         Transport.send(message);
-        return envioExitoso;
     }
 
 }
