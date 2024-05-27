@@ -143,7 +143,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
             const data = await res.json();
             if (data.SQLRES === 1) {
                 global.Msg({msg: data.SQLMSG});
-                me.deleteTransactionInGrid(grid, obj.arefnbr);
+                me.deleteTransactionInGrid(grid, obj.AREFNBR);
             } else {
                 global.Msg({msg: data.SQLMSG});
             }
