@@ -471,7 +471,8 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         if (!spRes.isEmpty()) {
             filter.setResponse(spRes.get(0));
         }
-        List<A4335Filter> spDesglose = (List<A4335Filter>) obj.get("result1");
+        List<A4335Filter> spDesglose;
+        spDesglose = (List<A4335Filter>) obj.get("result1");
         if (spDesglose != null) {
             if (!spRes.isEmpty()) {
                 filter.setDesglose(spDesglose);
