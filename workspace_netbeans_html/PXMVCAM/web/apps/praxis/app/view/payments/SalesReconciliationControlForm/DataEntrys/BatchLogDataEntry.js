@@ -157,8 +157,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                             {
                                 text: 'Date<br>Process', dataIndex: 'FECR', width: 80
                             },
-                            {
-                                text: 'Hour<br>Process', dataIndex: 'HOCR', width: 70
+                            {text: 'Status', dataIndex: 'STS', width: 50,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    const opcion = {
+                                        '0': () => {
+                                            metaData.tdAttr = 'data-qtip="Processing"';
+                                            return '<img src="resources/img/botones/arrow-refresh.png"/>';
+                                        },
+                                        '1': () => {
+                                            metaData.tdAttr = 'data-qtip="Success"';
+                                            return '<img src="resources/img/icon/16x16/check.png"/>';
+                                        },
+                                        '2': () => {
+                                            metaData.tdAttr = 'data-qtip="Error"';
+                                            return '<img src="resources/img/icon/delete.png"/>';
+                                        }
+                                    };
+                                    return opcion[value]();
+                                }
                             }
                         ]
                     }

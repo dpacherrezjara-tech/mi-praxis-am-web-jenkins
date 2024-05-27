@@ -346,6 +346,7 @@ public class SalesReconciliationBPOController {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="MSI Tracking">
     @RequestMapping(value = "loadMSITrackingInfo")
     public ResponseEntity<?> loadMSITrackingInfo(@ModelAttribute SQP05061Filter params) {
@@ -601,6 +602,7 @@ public class SalesReconciliationBPOController {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Settlement">
     @RequestMapping(value = "loadSettlementSummary")
     public ResponseEntity<?> loadSettlementSummary(@ModelAttribute SQP05133Filter params) {
@@ -1070,6 +1072,7 @@ public class SalesReconciliationBPOController {
     }
 
 //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Funciones">
     private static String convertStatus(String stval) {
         String valor = "";
