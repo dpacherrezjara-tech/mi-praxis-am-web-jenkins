@@ -64,6 +64,7 @@ import net.miatech.praxis.payment.filter.SQP05310Filter;
 import net.miatech.praxis.payment.filter.SQP05311Filter;
 import net.miatech.praxis.payment.filter.SQP05312Filter;
 import net.miatech.praxis.payment.filter.SQP05313Filter;
+import net.miatech.praxis.payment.filter.SQP05319Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.ResponseUtils;
 import net.miatech.praxis.utils.SabreWebService;
@@ -1355,12 +1356,20 @@ public class SalesReconciliationBPOController {
 //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Batch Manual">
+    @RequestMapping(value = "processBatchInformation")
+    public ResponseEntity<?> processBatchInformation(@ModelAttribute SQP05302Filter params) throws Exception {
+        System.out.println("---------------SalesReconciliationBPO:processBatchInformation-------------");
+        logic.loadSQP05302Filter(params);
+        Map map = Collections.singletonMap("message", "Proceso Ejecutandose");
+        return ResponseUtils.ok(map);
+    }
+    
     @RequestMapping(value = "loadBatchInformation")
-    public ResponseEntity<?> loadBatchInformation(@ModelAttribute SQP05302Filter params) throws Exception {
+    public ResponseEntity<?> loadBatchInformation(@ModelAttribute SQP05319Filter params) throws Exception {
         System.out.println("---------------SalesReconciliationBPO:loadBatchInformation-------------");
-        SQP05302Filter filter = logic.loadSQP05302Filter(params);
-        System.out.println("Total: " + filter.getResult().size());
-        return new ResponseEntity<>(filter, HttpStatus.OK);
+        SQP05319Filter filter = logic.loadSQP05319Filter(params);
+        System.out.println("Total: " + filter.getResponse().size());
+        return ResponseUtils.ok(filter);
     }
     
     @RequestMapping(value = "loadBatchLog")

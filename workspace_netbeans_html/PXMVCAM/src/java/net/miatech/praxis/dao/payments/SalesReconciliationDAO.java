@@ -17,6 +17,7 @@ import net.miatech.praxis.payment.entities.A4501;
 import net.miatech.praxis.payment.entities.A4507;
 import net.miatech.praxis.payment.entities.A4581Filter;
 import net.miatech.praxis.payment.entities.A4582Filter;
+import net.miatech.praxis.payment.entities.A4584;
 import net.miatech.praxis.payment.filter.A4331BPOFilter;
 import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4331STFilter;
@@ -83,6 +84,7 @@ import net.miatech.praxis.payment.filter.SQP05310Filter;
 import net.miatech.praxis.payment.filter.SQP05311Filter;
 import net.miatech.praxis.payment.filter.SQP05312Filter;
 import net.miatech.praxis.payment.filter.SQP05313Filter;
+import net.miatech.praxis.payment.filter.SQP05319Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import net.miatech.praxis.utils.MailUtils;
@@ -108,7 +110,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
     @Autowired
     private JdbcUtils jdbcUtils;
     @Autowired
-    private CurrentSession cs;
+    private MailUtils mailUtils;
 
     private static final String LIBRARY = "PRAXISMP";
 
@@ -643,12 +645,11 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         return filter;
     }
 
+    @Async
     @Override
     public SQP05302Filter loadSQP05302Filter(SQP05302Filter filter) throws Exception {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05302", params,
-                new BeanPropertyRowMapper<>(ManualBatchFilter.class));
-        filter.setResult((List<ManualBatchFilter>) obj.get("result"));
+        jdbcUtils.executeSQP(LIBRARY, "SQP05302", params);
         return filter;
     }
 
@@ -775,7 +776,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
             msg.append("<b>Payments Control</b><br>");
             msg.append("<b>Miatech International</b><br><br>");
             //</editor-fold>
-            MailUtils mailUtils = new MailUtils(cs);
+            //MailUtils mailUtils = new MailUtils(cs);
             mailUtils.sendMail(emisor, asunto, receptores, CC, msg.toString(), null, "notificaciones@miatech.net");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -836,6 +837,15 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                     new BeanPropertySqlParameterSource(filter),
                     new BeanPropertyRowMapper(A4581Filter.class));
         filter.setResponse((List<A4581Filter>) obj.get("result"));
+        return filter;
+    }
+
+    @Override
+    public SQP05319Filter loadSQP05319Filter(SQP05319Filter filter) throws Exception {
+        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05319",
+                    new BeanPropertySqlParameterSource(filter),
+                    new BeanPropertyRowMapper(A4584.class));
+        filter.setResponse((List<A4584>) obj.get("result"));
         return filter;
     }
 }

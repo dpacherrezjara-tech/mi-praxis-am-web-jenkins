@@ -9,9 +9,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
     title: 'Manual Batch - Form',
     header: true,
     width: 1500,
-    resizable: true,
+    resizable: false,
     layout: 'fit',
-    modal: true,
+    modal: false,
     border: false,
     defaults: {
         border: false
@@ -116,18 +116,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                 click: 'onClickSearchBtn'
                             }
                         },
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.idDeProd + '-btnExcel',
-//                            height: 25,
-//                            width: 25,
-//                            margin: '4 4 4 4',
-//                            iconCls: 'prx-icon-excel',
-//                            tooltip: 'Export',
-//                            listeners: {
-//                                click: 'onExportExcelBtn'
-//                            }
-//                        }
+                        {
+                            xtype: 'button',
+                            id: prototype.idDE4 + '-btnProcess',
+                            height: 25,
+                            width: 25,
+                            margin: '4 4 4 4',
+                            iconCls: 'prx-icon-reload',
+                            tooltip: 'Process',
+                            listeners: {
+                                click: 'onProcessAdjuBtn'
+                            }
+                        }
                     ]
                 },
                 //</editor-fold>,
@@ -135,7 +135,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                 {
                     xtype: 'grid',
                     defaults: {},
-                    width: '100%',
+                    width: '99%',
                     minHeight: 165,
                     maxHeight: 560,
                     margin: '5 8 5 8',
@@ -197,13 +197,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                 ]
                             },
                             {
-                                text: 'Processing<br>Date', dataIndex: 'prda', width: 80
+                                text: 'Processing<br>Date', dataIndex: 'PRDA', width: 80
                             },
                             {
-                                text: 'Doc. Type', dataIndex: 'transtype', width: 80
+                                text: 'Doc. Type', dataIndex: 'TRANSTYPE', width: 80
                             },
                             {
-                                text: 'Status<br>Settl. VS Sales', dataIndex: 'stval', width: 150, autoSizeColumn: true,
+                                text: 'Status<br>Settl. VS Sales', dataIndex: 'STVAL', width: 150, autoSizeColumn: true,
                                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                                     metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                                     const opts = {
@@ -221,17 +221,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                 }
                             },
                             {
-                                text: 'Sales<br>Date', dataIndex: 'sdate', width: 80
+                                text: 'Sales<br>Date', dataIndex: 'SDATE', width: 80
                             },
                             {
-                                text: 'Payment<br>Date', dataIndex: 'paydate', width: 80
+                                text: 'Payment<br>Date', dataIndex: 'PAYDATE', width: 80
                             },
                             {
-                                text: 'Sale<br>Merchant ID', width: 120, dataIndex: 'smerchid'
+                                text: 'Sale<br>Merchant ID', width: 120, dataIndex: 'SMERCHID'
                             },
 
                             {
-                                text: 'Void', width: 40, dataIndex: 'fvoid'
+                                text: 'Void', width: 40, dataIndex: 'FVOID'
                             },
                             {
                                 text: 'Credit Card',
@@ -242,28 +242,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                 },
                                 columns: [
                                     {
-                                        text: 'Number', dataIndex: 'scardn', width: 150
+                                        text: 'Number', dataIndex: 'SCARDN', width: 150
                                     },
                                     {
-                                        text: 'Auth', dataIndex: 'sauthoc', width: 70
+                                        text: 'Auth', dataIndex: 'SAUTHOC', width: 70
                                     }
                                 ]
                             },
                             {
-                                text: 'PNR', dataIndex: 'spnr', width: 70
+                                text: 'PNR', dataIndex: 'SPNR', width: 70
                             },
                             {
-                                text: 'Ticket', width: 120, dataIndex: 'ticket'
+                                text: 'Ticket', width: 120, dataIndex: 'TICKET'
                             },
                             {
-                                text: 'Transaction<br>Amount', dataIndex: 'tgrosamoun', width: 120,
+                                text: 'Transaction<br>Amount', dataIndex: 'TGROSAMOUN', width: 120,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
                             {
-                                text: 'Curr', dataIndex: 'scurrency', width: 50,
+                                text: 'Curr', dataIndex: 'SCURRENCY', width: 50,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "background-color:#c0f0af;";
                                     return value;
@@ -283,43 +283,63 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                 },
                                 columns: [
                                     {
-                                        text: 'PNR<br>Found', dataIndex: 'ppnr', width: 70
+                                        text: 'PNR<br>Found', dataIndex: 'PPNR', width: 70
                                     },
                                     {
-                                        text: 'Card<br>Found', dataIndex: 'pcardn', width: 150
+                                        text: 'Card<br>Found', dataIndex: 'PCARDN', width: 150
                                     },
                                     {
-                                        text: 'Auth<br>Found', dataIndex: 'pauthoc', width: 70
+                                        text: 'Auth<br>Found', dataIndex: 'PAUTHOC', width: 70
                                     },
                                     {
-                                        text: 'Sale Amount', dataIndex: 'svfops', width: 120,
+                                        text: 'Sale Amount', dataIndex: 'SVFOPS', width: 120,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
                                     {
-                                        text: 'Adjustment', dataIndex: 'adju', width: 100,
+                                        text: 'Adjustment', dataIndex: 'ADJU', width: 100,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
                                     {
-                                        text: 'Adjustment<br>USD', dataIndex: 'adju_USD', width: 100,
+                                        text: 'Adjustment<br>USD', dataIndex: 'ADJU_USD', width: 100,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
                                     {
-                                        text: 'Exch<br>Type', dataIndex: 'exchrate', width: 100,
+                                        text: 'Exch<br>Type', dataIndex: 'EXCHRATE', width: 100,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                             return value;
                                         }
                                     }
                                 ]
+                            },
+                            {text: 'Status<br>PNR', width: 50,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    const {SPNR,PPNR} = record.data; 
+                                    if(SPNR.trim() === PPNR.trim()){
+                                        return '<img src="resources/img/icon/16x16/check.png"/>';
+                                    }else{
+                                        return '<img src="resources/img/icon/delete.png"/>';
+                                    }
+                                }
+                            },
+                            {text: 'Status<br>Auth', width: 50,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    const {SAUTHOC,PAUTHOC} = record.data; 
+                                    if(SAUTHOC.trim() === PAUTHOC.trim()){
+                                        return '<img src="resources/img/icon/16x16/check.png"/>';
+                                    }else{
+                                        return '<img src="resources/img/icon/delete.png"/>';
+                                    }
+                                }
                             }
                         ]
                     },
