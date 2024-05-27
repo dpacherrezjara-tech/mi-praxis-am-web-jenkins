@@ -412,8 +412,6 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         filter.setSQLMSG((String) obj.get("SQLMSG"));
         return filter;
     }
-    
-    
 
     @Override
     public SQP05081Filter loadSQP05081Filter(SQP05081Filter filter) throws Exception {
@@ -474,8 +472,10 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
             filter.setResponse(spRes.get(0));
         }
         List<A4335Filter> spDesglose = (List<A4335Filter>) obj.get("result1");
-        if (!spRes.isEmpty()) {
-            filter.setDesglose(spDesglose);
+        if (spDesglose != null) {
+            if (!spRes.isEmpty()) {
+                filter.setDesglose(spDesglose);
+            }
         }
         return filter;
     }
@@ -809,42 +809,41 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 .IN_STS("4")
                 .build();
         jdbcUtils.executeSQP(LIBRARY, "SQP05308",
-                    new BeanPropertySqlParameterSource(logFilter));
-        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05304",
-                    new BeanPropertySqlParameterSource(filter));
-        List<Map<String,String>> resultSet = (List<Map<String,String>>) obj.get("#result-set-1");
+                new BeanPropertySqlParameterSource(logFilter));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05304",
+                new BeanPropertySqlParameterSource(filter));
+        List<Map<String, String>> resultSet = (List<Map<String, String>>) obj.get("#result-set-1");
         ModelMap map = new ModelMap();
-        resultSet.forEach((Map<String, String> x)->{
+        resultSet.forEach((Map<String, String> x) -> {
             map.put("result", x.get("RESULT"));
         });
-        
-        
+
         return map;
     }
 
     @Override
     public SQP05310Filter loadSQP05310Filter(SQP05310Filter filter) throws Exception {
-        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05310",
-                    new BeanPropertySqlParameterSource(filter),
-                    new BeanPropertyRowMapper(A4582Filter.class));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05310",
+                new BeanPropertySqlParameterSource(filter),
+                new BeanPropertyRowMapper(A4582Filter.class));
         filter.setResponse((List<A4582Filter>) obj.get("result"));
         return filter;
     }
 
     @Override
     public SQP05311Filter loadSQP05311Filter(SQP05311Filter filter) throws Exception {
-        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05311",
-                    new BeanPropertySqlParameterSource(filter),
-                    new BeanPropertyRowMapper(A4581Filter.class));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05311",
+                new BeanPropertySqlParameterSource(filter),
+                new BeanPropertyRowMapper(A4581Filter.class));
         filter.setResponse((List<A4581Filter>) obj.get("result"));
         return filter;
     }
 
     @Override
     public SQP05319Filter loadSQP05319Filter(SQP05319Filter filter) throws Exception {
-        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05319",
-                    new BeanPropertySqlParameterSource(filter),
-                    new BeanPropertyRowMapper(A4584.class));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05319",
+                new BeanPropertySqlParameterSource(filter),
+                new BeanPropertyRowMapper(A4584.class));
         filter.setResponse((List<A4584>) obj.get("result"));
         return filter;
     }
