@@ -28,11 +28,11 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("session")
 public class MailUtils {
-
+    
     @Autowired
-    private CurrentSession session;
-
-    public boolean sendMail(
+    private CurrentSession cs;
+    
+    public void sendMail(
             String emisor,
             String asunto,
             List<String> receptores,
@@ -40,25 +40,24 @@ public class MailUtils {
             String mensaje,
             List<String> adjuntos,
             String correoMask) throws Exception {
-        boolean envioExitoso = true;
         String usuario = correoMask; //Correo con el que saldra el email enviado ("from")            
 
         Properties props = System.getProperties();
         //Se define el servidor de correos
-        props.put("mail.smtp.host", session.getPropertySession().get("APP_SERVER_MAIL_HOST").toString());
-        props.put("mail.smtp.port", session.getPropertySession().get("APP_SERVER_MAIL_PORT").toString());
-        props.put("mail.smtp.starttls.enable", "true");
-        //props.setProperty("mail.smtp.user", emisor);
+        props.put("mail.smtp.host", "smtp-mail.outlook.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.starttls.enable","true");
+        props.put("mail.smtp.auth", "true"); 
         props.setProperty("mail.smtp.user", usuario);
-        props.setProperty("mail.smtp.auth", "true");
-        //props.setProperty("mail.smtp.ssl.protocols", "TLSv1.1 TLSv1.2");
+        //props.setProperty("mail.smtp.auth", "true");
+        props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2 TLSv1.3");
 
         /*
         Authenticator auth = new SMTPAuthenticator("notificaciones@miatech.net",
                 session.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString());
               
         Session ss = Session.getInstance(props, auth);*/
-        String password = session.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString();
+        String password = cs.getPropertySession().get("APP_SERVER_MAIL_PASSWORD").toString();
         Session ss = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -121,7 +120,6 @@ public class MailUtils {
 
         //Se env&amp;iacute;a el e-mail
         Transport.send(message);
-        return envioExitoso;
     }
 
 }
