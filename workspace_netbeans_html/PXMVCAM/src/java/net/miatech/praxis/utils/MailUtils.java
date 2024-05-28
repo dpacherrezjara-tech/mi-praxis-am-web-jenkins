@@ -17,18 +17,20 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import net.miatech.praxis.classes.CurrentSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Dvicente
  */
+@Component
+@Scope("session")
 public class MailUtils {
     
+    @Autowired
     private CurrentSession cs;
-
-    public MailUtils(CurrentSession cs) {
-        this.cs = cs;
-    }
     
     public void sendMail(
             String emisor,

@@ -33,11 +33,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
             const data = await res.json();
             const store = Ext.create('Ext.data.Store', {
                 autoLoad: true,
-                data: data.result
+                data: data.response
             });
             console.log(data);
             grid.setStore(store);
             this.view.center();
+        }
+        me.view.unmask();
+    },
+    processAdju: async function (params) {
+        const me = this;
+        me.view.mask('Loading...');
+        const res = await fetch(`${me.url}/processBatchInformation?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            global.Msg({msg: data.message});
+        } else {
+            global.Msg({msg: 'Server Error'});
         }
         me.view.unmask();
     },
@@ -54,12 +66,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
     },
     onClickBPO: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
-        const obj = record.data;
+        const {CCUST, PRDA, TDOC, AREFNBR} = record.data;
+        let params = {
+            ccust: CCUST,
+            prda: PRDA,
+            tdoc: TDOC,
+            arefnbr: AREFNBR
+        };
         const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry', {
             id: prototype.id + '-TransacErrorBPODataEntry-1',
-            obj: obj,
+            obj: params,
             callback: () => {
-                me.deleteTransactionInGrid(grid, obj.arefnbr);
+                me.deleteTransactionInGrid(grid, AREFNBR);
             }
         });
         dataEntry.show();
@@ -68,6 +86,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
         let params = this.formatSearchParams();
         console.log('Grid Params: ', params);
         this.loadGrid(params);
+    },
+    onProcessAdjuBtn: function () {
+        let params = this.formatSearchParams();
+        console.log('Process Params: ', params);
+        this.processAdju(params);
     },
     onChangeProctypesq: function (combo, newValue, oldValue) {
         const proctype = Ext.getCmp(prototype.idDE4 + '-cmbProctype');
@@ -120,7 +143,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
             const data = await res.json();
             if (data.SQLRES === 1) {
                 global.Msg({msg: data.SQLMSG});
-                me.deleteTransactionInGrid(grid, obj.arefnbr);
+                me.deleteTransactionInGrid(grid, obj.AREFNBR);
             } else {
                 global.Msg({msg: data.SQLMSG});
             }
@@ -191,9 +214,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
             if (jsonData.hasOwnProperty(clave)) {
                 // Convierte la clave a mayúsculas y añade "IN" como prefijo
                 const nuevaClave = `IN_${clave.toUpperCase()}`;
-
                 // Asigna el valor original a la nueva clave
-                resultado[nuevaClave] = jsonData[clave];
+                if (typeof jsonData[clave] === 'string') {
+                    resultado[nuevaClave] = jsonData[clave].trimEnd();
+                } else {
+                    resultado[nuevaClave] = jsonData[clave];
+                }
             }
         }
         return resultado;

@@ -17,6 +17,7 @@ import net.miatech.praxis.payment.entities.A4501;
 import net.miatech.praxis.payment.entities.A4507;
 import net.miatech.praxis.payment.entities.A4581Filter;
 import net.miatech.praxis.payment.entities.A4582Filter;
+import net.miatech.praxis.payment.entities.A4584;
 import net.miatech.praxis.payment.filter.A4331BPOFilter;
 import net.miatech.praxis.payment.filter.A4331Filter;
 import net.miatech.praxis.payment.filter.A4331STFilter;
@@ -83,6 +84,7 @@ import net.miatech.praxis.payment.filter.SQP05310Filter;
 import net.miatech.praxis.payment.filter.SQP05311Filter;
 import net.miatech.praxis.payment.filter.SQP05312Filter;
 import net.miatech.praxis.payment.filter.SQP05313Filter;
+import net.miatech.praxis.payment.filter.SQP05319Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import net.miatech.praxis.utils.MailUtils;
@@ -108,7 +110,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
     @Autowired
     private JdbcUtils jdbcUtils;
     @Autowired
-    private CurrentSession cs;
+    private MailUtils mailUtils;
 
     private static final String LIBRARY = "PRAXISMP";
 
@@ -410,8 +412,6 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         filter.setSQLMSG((String) obj.get("SQLMSG"));
         return filter;
     }
-    
-    
 
     @Override
     public SQP05081Filter loadSQP05081Filter(SQP05081Filter filter) throws Exception {
@@ -471,9 +471,12 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         if (!spRes.isEmpty()) {
             filter.setResponse(spRes.get(0));
         }
-        List<A4335Filter> spDesglose = (List<A4335Filter>) obj.get("result1");
-        if (!spRes.isEmpty()) {
-            filter.setDesglose(spDesglose);
+        List<A4335Filter> spDesglose;
+        spDesglose = (List<A4335Filter>) obj.get("result1");
+        if (spDesglose != null) {
+            if (!spRes.isEmpty()) {
+                filter.setDesglose(spDesglose);
+            }
         }
         return filter;
     }
@@ -643,12 +646,11 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         return filter;
     }
 
+    @Async
     @Override
     public SQP05302Filter loadSQP05302Filter(SQP05302Filter filter) throws Exception {
         SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
-        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05302", params,
-                new BeanPropertyRowMapper<>(ManualBatchFilter.class));
-        filter.setResult((List<ManualBatchFilter>) obj.get("result"));
+        jdbcUtils.executeSQP(LIBRARY, "SQP05302", params);
         return filter;
     }
 
@@ -775,7 +777,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
             msg.append("<b>Payments Control</b><br>");
             msg.append("<b>Miatech International</b><br><br>");
             //</editor-fold>
-            MailUtils mailUtils = new MailUtils(cs);
+            //MailUtils mailUtils = new MailUtils(cs);
             mailUtils.sendMail(emisor, asunto, receptores, CC, msg.toString(), null, "notificaciones@miatech.net");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -808,34 +810,42 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 .IN_STS("4")
                 .build();
         jdbcUtils.executeSQP(LIBRARY, "SQP05308",
-                    new BeanPropertySqlParameterSource(logFilter));
-        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05304",
-                    new BeanPropertySqlParameterSource(filter));
-        List<Map<String,String>> resultSet = (List<Map<String,String>>) obj.get("#result-set-1");
+                new BeanPropertySqlParameterSource(logFilter));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05304",
+                new BeanPropertySqlParameterSource(filter));
+        List<Map<String, String>> resultSet = (List<Map<String, String>>) obj.get("#result-set-1");
         ModelMap map = new ModelMap();
-        resultSet.forEach((Map<String, String> x)->{
+        resultSet.forEach((Map<String, String> x) -> {
             map.put("result", x.get("RESULT"));
         });
-        
-        
+
         return map;
     }
 
     @Override
     public SQP05310Filter loadSQP05310Filter(SQP05310Filter filter) throws Exception {
-        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05310",
-                    new BeanPropertySqlParameterSource(filter),
-                    new BeanPropertyRowMapper(A4582Filter.class));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05310",
+                new BeanPropertySqlParameterSource(filter),
+                new BeanPropertyRowMapper(A4582Filter.class));
         filter.setResponse((List<A4582Filter>) obj.get("result"));
         return filter;
     }
 
     @Override
     public SQP05311Filter loadSQP05311Filter(SQP05311Filter filter) throws Exception {
-        Map<String,Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05311",
-                    new BeanPropertySqlParameterSource(filter),
-                    new BeanPropertyRowMapper(A4581Filter.class));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05311",
+                new BeanPropertySqlParameterSource(filter),
+                new BeanPropertyRowMapper(A4581Filter.class));
         filter.setResponse((List<A4581Filter>) obj.get("result"));
+        return filter;
+    }
+
+    @Override
+    public SQP05319Filter loadSQP05319Filter(SQP05319Filter filter) throws Exception {
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05319",
+                new BeanPropertySqlParameterSource(filter),
+                new BeanPropertyRowMapper(A4584.class));
+        filter.setResponse((List<A4584>) obj.get("result"));
         return filter;
     }
 }
