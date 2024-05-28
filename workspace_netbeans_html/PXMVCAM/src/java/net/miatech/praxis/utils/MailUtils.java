@@ -42,12 +42,12 @@ public class MailUtils {
 
         Properties props = System.getProperties();
         //Se define el servidor de correos
-        props.put("mail.smtp.host", cs.getPropertySession().get("APP_SERVER_MAIL_HOST").toString());
-        props.put("mail.smtp.port", cs.getPropertySession().get("APP_SERVER_MAIL_PORT").toString());
-        props.put("mail.smtp.starttls.enable", "true");
-        //props.setProperty("mail.smtp.user", emisor);
+        props.put("mail.smtp.host", "smtp-mail.outlook.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.starttls.enable","true");
+        props.put("mail.smtp.auth", "true"); 
         props.setProperty("mail.smtp.user", usuario);
-        props.setProperty("mail.smtp.auth", "true");
+        //props.setProperty("mail.smtp.auth", "true");
         props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2 TLSv1.3");
 
         /*
