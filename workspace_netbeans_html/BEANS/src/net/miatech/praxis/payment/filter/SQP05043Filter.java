@@ -8,7 +8,7 @@ import java.util.List;
  * @author Dvicente
  */
 public class SQP05043Filter {
-    private String IN_AREFNBR;
+    private String IN_CCUST,IN_TDOC,IN_PRDA,IN_AREFNBR;
     private List<A4335Filter> response = new ArrayList<>();
 
     public String getIN_AREFNBR() {
@@ -17,6 +17,30 @@ public class SQP05043Filter {
 
     public void setIN_AREFNBR(String IN_AREFNBR) {
         this.IN_AREFNBR = IN_AREFNBR;
+    }
+
+    public String getIN_CCUST() {
+        return IN_CCUST;
+    }
+
+    public void setIN_CCUST(String IN_CCUST) {
+        this.IN_CCUST = IN_CCUST;
+    }
+
+    public String getIN_TDOC() {
+        return IN_TDOC;
+    }
+
+    public void setIN_TDOC(String IN_TDOC) {
+        this.IN_TDOC = IN_TDOC;
+    }
+
+    public String getIN_PRDA() {
+        return IN_PRDA;
+    }
+
+    public void setIN_PRDA(String IN_PRDA) {
+        this.IN_PRDA = IN_PRDA;
     }
 
     public List<A4335Filter> getResponse() {

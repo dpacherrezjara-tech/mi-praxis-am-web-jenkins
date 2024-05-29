@@ -69,16 +69,20 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.DataEntrys.Commissi
                                         fields: ['code', 'name'],
                                         data: [
                                             ['COM', 'Base Comm.'],
-                                            ['MSI', 'MSI Comm.']
+                                            ['MSI', 'MSI Comm.'],
+                                            ['BIN', 'Bank Comm.']
                                         ]
                                     }),
-                                    labelWidth: 50,
-                                    width: 180,
+                                    labelWidth: 70,
+                                    width: 200,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
                                     editable: false,
-                                    value: 'COM'
+                                    value: 'COM',
+                                    listeners: {
+                                        change: 'onChangeType'
+                                    }
                                 },
                                 {
                                     xtype: 'combobox',
@@ -165,8 +169,8 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.DataEntrys.Commissi
                                     name: 'fecfrom',
                                     fieldLabel: 'From',
                                     format: 'Ymd',
-                                    labelWidth: 50,
-                                    width: 150,
+                                    labelWidth: 70,
+                                    width: 170,
                                     value: new Date(),
                                     editable: true
                                 },
@@ -210,6 +214,125 @@ Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.DataEntrys.Commissi
                                     editable: true,
                                     value: 0,
                                     hideTrigger: true
+                                }
+                            ]
+                        },
+                        {
+                            id: prototype.idDE + '-bankInfo',
+                            hidden:true,
+                            items: [
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.idDE + '-cmbBanks',
+                                    name: 'codebank',
+                                    queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    fieldLabel: 'Bank',
+                                    labelWidth: 70,
+                                    labelAlign: 'right',
+                                    width: 230,
+                                    typeAhead: true,
+                                    valueField: 'a4559CODE',
+                                    displayField: 'a4559DESC',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: '',
+                                    editable: true
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Brand',
+                                    name: 'codecard',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'None'],
+                                            ['1', 'Visa'],
+                                            ['2', 'MasterCard'],
+                                            ['3', 'American Express']
+                                        ]
+                                    }),
+                                    labelWidth: 60,
+                                    width: 180,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                }
+
+                            ]
+                        },
+                        {
+                            id: prototype.idDE + '-binInfo',
+                            hidden:true,
+                            items: [
+                                {
+                                    name: 'codebin',
+                                    value: '',
+                                    fieldLabel: 'BIN',
+                                    labelWidth: 70,
+                                    editable: true,
+                                    width: 140,
+                                    maxLength: 6, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                },
+                                {
+                                    name: 'descbin',
+                                    value: '',
+                                    fieldLabel: 'Description',
+                                    editable: true,
+                                    labelWidth: 100,
+                                    width: 350,
+                                    maxLength: 100, // Límite máximo de caracteres
+                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                }
+                            ]
+                        },
+                        {
+                            id: prototype.idDE + '-binAmtInfo',
+                            hidden:true,
+                            items:[
+                                {
+                                    xtype: 'numberfield',
+                                    labelWidth: 100,
+                                    width: 180,
+                                    fieldLabel: 'Min. Amount',
+                                    name: 'minamt',
+                                    minValue: 0,
+                                    allowDecimals: true,
+                                    decimalPrecision: 2,
+                                    step: 1,
+                                    editable: true,
+                                    value: 0,
+                                    hideTrigger: true
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.idDE + '-cmbMonedas',
+                                    name: 'curramt',
+                                    queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    fieldLabel: 'Currency',
+                                    labelWidth: 80,
+                                    labelAlign: 'right',
+                                    width: 150,
+                                    typeAhead: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: '',
+                                    editable: true
                                 }
                             ]
                         },

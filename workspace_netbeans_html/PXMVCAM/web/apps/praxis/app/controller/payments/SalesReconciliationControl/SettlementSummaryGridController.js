@@ -54,9 +54,31 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
         params.IN_MERCHANT = 'M';
         params.IN_DATEFROM = obj.paydate ? obj.paydate : obj.prda;
         params.IN_DATETO = obj.paydate ? obj.paydate : obj.prda;
-        params.IN_PROCTYPE = obj.proctype;
+        params.IN_PROCTYPESQ = obj.proctypesq;
         params.IN_SCOUNTRY = obj.scountry;
+        params.IN_SCURRENCY = obj.scurrency;
+        params.IN_PCURRENCY = obj.pcurrency;
         return params;
+    },
+    downloadExcel:function(){
+        const me = this;
+        let params = Object.assign({}, me.view.searchParams);
+        params.excel = true;
+        console.log(params);
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Download Excel?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            global.getFile(`${me.view.url}/downloadSettlementSummary?${new URLSearchParams(params)}`);
+                        }
+                    }
+                });
     }
 });
 

@@ -9,8 +9,8 @@ import net.miatech.praxis.payment.entities.CustomPageImpl;
  * @author Dvicente
  */
 public class SQP05041Filter extends CustomPageImpl{
-    private String IN_TFECHA,FECHA_FROM_P,FECHA_FROM_H,
-            IN_PROCTYPE,IN_PROCTYPESQ,IN_MDA,IN_TDOC,IN_PNR,IN_STCONL,IN_IDCON;
+    private String IN_TFECHA,FECHA_FROM,IN_PROCTYPE,IN_PROCTYPESQ,
+            IN_MDA,IN_TDOC,IN_PNR,IN_STCONL,IN_PRAXISID,IN_IDFLEX;
     private List<A4331Filter> response = new ArrayList<>();
     
     public String getIN_TFECHA() {
@@ -21,20 +21,12 @@ public class SQP05041Filter extends CustomPageImpl{
         this.IN_TFECHA = IN_TFECHA;
     }
 
-    public String getFECHA_FROM_P() {
-        return FECHA_FROM_P;
+    public String getFECHA_FROM() {
+        return FECHA_FROM;
     }
 
-    public void setFECHA_FROM_P(String FECHA_FROM_P) {
-        this.FECHA_FROM_P = FECHA_FROM_P;
-    }
-
-    public String getFECHA_FROM_H() {
-        return FECHA_FROM_H;
-    }
-
-    public void setFECHA_FROM_H(String FECHA_FROM_H) {
-        this.FECHA_FROM_H = FECHA_FROM_H;
+    public void setFECHA_FROM(String FECHA_FROM) {
+        this.FECHA_FROM = FECHA_FROM;
     }
 
     public String getIN_PROCTYPE() {
@@ -85,19 +77,27 @@ public class SQP05041Filter extends CustomPageImpl{
         this.IN_STCONL = IN_STCONL;
     }
 
-    public String getIN_IDCON() {
-        return IN_IDCON;
-    }
-
-    public void setIN_IDCON(String IN_IDCON) {
-        this.IN_IDCON = IN_IDCON;
-    }
-
     public List<A4331Filter> getResponse() {
         return response;
     }
 
     public void setResponse(List<A4331Filter> response) {
         this.response = response;
+    }
+
+    public String getIN_IDFLEX() {
+        return IN_IDFLEX;
+    }
+
+    public void setIN_IDFLEX(String IN_IDFLEX) {
+        this.IN_IDFLEX = IN_IDFLEX;
+    }
+
+    public String getIN_PRAXISID() {
+        return IN_PRAXISID;
+    }
+
+    public void setIN_PRAXISID(String IN_PRAXISID) {
+        this.IN_PRAXISID = IN_PRAXISID;
     }
 }

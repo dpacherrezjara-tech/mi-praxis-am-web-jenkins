@@ -1,6 +1,7 @@
 package net.miatech.praxis.utils;
 
 import java.sql.Connection;
+import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import net.miatech.praxis.classes.CurrentSession;
@@ -65,6 +66,37 @@ public class JdbcUtils {
                 .withProcedureName(PGM)
                 .returningResultSet("result", mapper);
         return jdbcTemplate.executeWithoutParams(spCall);
+    }
+
+    public Map<String, Object> executeSQP(String LIBRARY, String PGM, SqlParameterSource params,
+            List<BeanPropertyRowMapper> mappers) throws Exception {
+        CustomJdbcTemplate jdbcTemplate = this.getJdbcTemplate();
+        SimpleJdbcCall spCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName(LIBRARY)
+                .withProcedureName(PGM);
+        for (int i = 0; i < mappers.size(); i++) {
+            spCall.returningResultSet("result" + i, mappers.get(i));
+        }
+        return jdbcTemplate.executeWithParams(spCall, params);
+    }
+
+    public Map<String, Object> executeSQP(String LIBRARY, String PGM, List<BeanPropertyRowMapper> mappers) throws Exception {
+        CustomJdbcTemplate jdbcTemplate = this.getJdbcTemplate();
+        SimpleJdbcCall spCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName(LIBRARY)
+                .withProcedureName(PGM);
+        for (int i = 0; i < mappers.size(); i++) {
+            spCall.returningResultSet("result" + i, mappers.get(i));
+        }
+        return jdbcTemplate.executeWithoutParams(spCall);
+    }
+
+    public Map<String, Object> executeSQPwithoutLog(String LIBRARY, String PGM, SqlParameterSource params) throws Exception {
+        CustomJdbcTemplate jdbcTemplate = this.getJdbcTemplate();
+        SimpleJdbcCall spCall = new SimpleJdbcCall(jdbcTemplate)
+                .withSchemaName(LIBRARY)
+                .withProcedureName(PGM);
+        return jdbcTemplate.executeWithParamsWLog(spCall, params);
     }
 
     public Map<String, Object> executeSQP(String LIBRARY, String PGM) throws Exception {

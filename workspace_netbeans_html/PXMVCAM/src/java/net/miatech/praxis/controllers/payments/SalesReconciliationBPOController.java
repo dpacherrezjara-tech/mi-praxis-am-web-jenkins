@@ -1,17 +1,20 @@
 package net.miatech.praxis.controllers.payments;
 //<editor-fold defaultstate="collapsed" desc="Imports">
-
+import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import javax.validation.Valid;
 import net.miatech.praxis.logic.payments.SalesReconciliationLogic;
 import net.miatech.praxis.payment.entities.A4507;
 import net.miatech.praxis.payment.filter.A4331Filter;
+import net.miatech.praxis.payment.filter.A4331STFilter;
 import net.miatech.praxis.payment.filter.A4496Filter;
 import net.miatech.praxis.payment.filter.SQP04847Filter;
-import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05048Filter;
 import net.miatech.praxis.payment.filter.SQP05052Filter;
 import net.miatech.praxis.payment.filter.SQP05054Filter;
@@ -50,8 +53,22 @@ import net.miatech.praxis.payment.filter.SQP05206Filter;
 import net.miatech.praxis.payment.filter.SQP05217Filter;
 import net.miatech.praxis.payment.filter.SQP05218Filter;
 import net.miatech.praxis.payment.filter.SQP05219Filter;
+import net.miatech.praxis.payment.filter.SQP05247Filter;
+import net.miatech.praxis.payment.filter.SQP05259Filter;
+import net.miatech.praxis.payment.filter.SQP05261Filter;
+import net.miatech.praxis.payment.filter.SQP05276Filter;
+import net.miatech.praxis.payment.filter.SQP05302Filter;
+import net.miatech.praxis.payment.filter.SQP05304Filter;
+import net.miatech.praxis.payment.filter.SQP05307Filter;
+import net.miatech.praxis.payment.filter.SQP05310Filter;
+import net.miatech.praxis.payment.filter.SQP05311Filter;
+import net.miatech.praxis.payment.filter.SQP05312Filter;
+import net.miatech.praxis.payment.filter.SQP05313Filter;
+import net.miatech.praxis.payment.filter.SQP05319Filter;
 import net.miatech.praxis.utils.ExportUtils;
+import net.miatech.praxis.utils.ResponseUtils;
 import net.miatech.praxis.utils.SabreWebService;
+import net.miatech.utils.CustomExcelCell;
 import net.miatech.utils.Functions;
 import net.sabre.miatech.praxis.TicketRES;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,30 +99,24 @@ public class SalesReconciliationBPOController {
 
     @Autowired
     private ExportUtils exportUtils;
-    
+
     @Autowired
     private SabreWebService sabreWebService;
 
-    private final String controllerName = "SalesReconciliation";
+    private final String controllerName = "PaymentsReconciliation";
 
     @RequestMapping(value = "loadFilters")
     public ResponseEntity<?> loadFilters(ModelMap model) {
         try {
             System.out.println("---------------SalesReconciliationBPO:loadFilters-------------");
-            model.put("paises", logic.getPaises());
-            model.put("monedas", logic.getMonedas());
-            SQP05004Filter filter = new SQP05004Filter();
-            filter.setKEY1("CC");
-            model.put("creditcards", logic.getSQP05004Filter(filter).getLst());
-            filter.setKEY1("PK");
-            filter.setKEY2("PROCTYPE");
-            model.put("procesadores", logic.getSQP05004Filter(filter).getLst());
-            filter.setKEY2("86");
-            model.put("cerror", logic.getSQP05004Filter(filter).getLst());
-            filter.setKEY2("89");
-            model.put("codadju", logic.getSQP05004Filter(filter).getLst());
-            filter.setKEY2("ADMIN");
-            model.put("admins", logic.getSQP05004Filter(filter).getLst());
+            SQP05276Filter webFilters = logic.loadSQP05276Filter(new SQP05276Filter("1"));
+            model.put("creditcards", webFilters.getCREDITCARDS());
+            model.put("procesadores", webFilters.getPROCESADORES());
+            model.put("cerror", webFilters.getCERROR());
+            model.put("codadju", webFilters.getCODADJU());
+            model.put("paises", webFilters.getPAISES());
+            model.put("monedas", webFilters.getMONEDAS());
+            model.put("admins", webFilters.getADMINS());
             System.out.println("Total: " + model.size());
             return new ResponseEntity<>(model, HttpStatus.OK);
         } catch (Exception e) {
@@ -141,7 +152,7 @@ public class SalesReconciliationBPOController {
                 if (response.getTicketDataType().getTicket() != null) {
                     //ticcket
                     lst = response.getTicketDataType().getTicket().getServiceCoupon();
-                }else if (response.getTicketDataType().getElectronicMiscDocument()!=null){
+                } else if (response.getTicketDataType().getElectronicMiscDocument() != null) {
                     //emd
                     lst = response.getTicketDataType()
                             .getElectronicMiscDocument()
@@ -155,9 +166,9 @@ public class SalesReconciliationBPOController {
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        
+
     }
 
     //<editor-fold defaultstate="collapsed" desc="By payment">
@@ -257,7 +268,7 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @RequestMapping(value = "loadErrorTransactionStandByScanner")
     public ResponseEntity<?> loadErrorTransactionStandByScanner(@ModelAttribute SQP05187Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : loadErrorTransactionStandByScanner-------------");
@@ -296,7 +307,7 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @RequestMapping(value = "errorTransactionBPOsetStandBy", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> errorTransactionBPOsetStandBy(@RequestBody SQP05056Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : errorTransactionBPOsetStandBy-------------");
@@ -335,6 +346,7 @@ public class SalesReconciliationBPOController {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="MSI Tracking">
     @RequestMapping(value = "loadMSITrackingInfo")
     public ResponseEntity<?> loadMSITrackingInfo(@ModelAttribute SQP05061Filter params) {
@@ -372,6 +384,31 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @RequestMapping(value = "loadMSITrackingManualInfo")
+    public ResponseEntity<?> loadMSITrackingManualInfo(@ModelAttribute SQP05259Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : loadMSITrackingManualInfo-------------");
+        try {
+            SQP05259Filter filter = logic.loadSQP05259Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "maintenanceConcilTransacMan", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> maintenanceMSITracking(@RequestBody SQP05261Filter params) {
+        System.out.println("-------------- SalesReconciliationBPO : maintenanceConcilTransacMan-------------");
+        try {
+            logic.loadSQP05261Filter(params);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Chargeback Tracking">
@@ -399,7 +436,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
     @RequestMapping(value = "loadChargebackTrackingBrowser")
     public ResponseEntity<?> loadChargebackTrackingBrowser(@ModelAttribute SQP05182Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : loadChargebackTrackingBrowser-------------");
@@ -412,7 +449,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
     @RequestMapping(value = "maintenanceChargebackManual", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> maintenanceChargebackManual(@RequestBody SQP05183Filter params) {
         System.out.println("-------------- SalesReconciliationBPO : maintenanceChargebackManual-------------");
@@ -423,6 +460,21 @@ public class SalesReconciliationBPOController {
             System.out.println("Error: " + e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    @RequestMapping(value = "loadSaleCHBKTrackingInfo")
+    public ResponseEntity<?> loadSaleCHBKTrackingInfo(@ModelAttribute SQP05312Filter params) throws Exception {
+        System.out.println("-------------- SalesReconciliationBPO : loadSaleCHBKTrackingInfo-------------");
+        SQP05312Filter filter = logic.loadSQP05312Filter(params);
+        System.out.println("Total: " + filter.getResponse().size());
+        return ResponseUtils.ok(filter);
+    }
+    
+    @RequestMapping(value = "maintenanceChbkSaleConcil", method = RequestMethod.POST)
+    public ResponseEntity<?> maintenanceChbkSaleConcil(@RequestBody SQP05313Filter params) throws Exception {
+        System.out.println("-------------- SalesReconciliationBPO : maintenanceChbkSaleConcil-------------");
+        SQP05313Filter filter = logic.loadSQP05313Filter(params);
+        return ResponseUtils.create(filter);
     }
     //</editor-fold>
 
@@ -550,6 +602,7 @@ public class SalesReconciliationBPOController {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Settlement">
     @RequestMapping(value = "loadSettlementSummary")
     public ResponseEntity<?> loadSettlementSummary(@ModelAttribute SQP05133Filter params) {
@@ -646,7 +699,7 @@ public class SalesReconciliationBPOController {
                 row[25] = obj.getFeup();
                 if (obj.getBPOCOMENT().isEmpty()) {
                     row[26] = obj.getADJUCOMENT();
-                }else{
+                } else {
                     row[26] = obj.getBPOCOMENT();
                 }
                 data.add(row);
@@ -738,7 +791,7 @@ public class SalesReconciliationBPOController {
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();
             //headers
-            Object[] headers = new Object[26];
+            Object[] headers = new Object[27];
             headers[0] = "Sale Date";
             headers[1] = "IATA";
             headers[2] = "Source";
@@ -759,15 +812,16 @@ public class SalesReconciliationBPOController {
             headers[17] = "Amount";
             headers[18] = "Currency";
             headers[19] = "Expected Date";
-            headers[20] = "Processing Date";
+            headers[20] = "Payment Date";
             headers[21] = "Difference";
-            headers[22] = "Status";
-            headers[23] = "Processor";
-            headers[24] = "ADM St.";
-            headers[25] = "BPO Comment";
+            headers[22] = "Processing Date";
+            headers[23] = "Status";
+            headers[24] = "Processor";
+            headers[25] = "ADM St.";
+            headers[26] = "BPO Comment";
             data.add(headers);
             for (A4496Filter obj : filter.getResponse()) {
-                Object[] row = new Object[26];
+                Object[] row = new Object[27];
                 row[0] = obj.getA4496FECVT();
                 row[1] = obj.getA4496AGENT();
                 row[2] = obj.getA4496FUENT();
@@ -788,15 +842,16 @@ public class SalesReconciliationBPOController {
                 row[17] = obj.getA4501VFOP();
                 row[18] = obj.getA4501MFOP();
                 row[19] = obj.getPROCDATE();
-                row[20] = obj.getA4501PRDA();
-                row[21] = restaFechas(obj.getPROCDATE(), obj.getA4501PRDA());
-                row[22] = convertStatus(obj.getA4501STVAL());
-                row[23] = obj.getDESC_PROCTYPE();
-                row[24] = obj.getA4501STADM();
-                if(obj.getA4501STADM().trim().isEmpty()){
-                    row[25] = !obj.getBPO_COMEN2().isEmpty()?obj.getBPO_COMEN2():obj.getBPO_COMEN();
-                }else{
-                    row[25] = obj.getADM_COMEN();
+                row[20] = obj.getPAYDATE();
+                row[21] = restaFechas(obj.getPROCDATE(), obj.getPAYDATE());
+                row[22] = obj.getA4501PRDA();
+                row[23] = convertStatus(obj.getA4501STVAL());
+                row[24] = obj.getDESC_PROCTYPE();
+                row[25] = obj.getA4501STADM();
+                if (obj.getA4501STADM().trim().isEmpty()) {
+                    row[26] = !obj.getBPO_COMEN2().isEmpty() ? obj.getBPO_COMEN2() : obj.getBPO_COMEN();
+                } else {
+                    row[26] = obj.getADM_COMEN();
                 }
                 data.add(row);
             }
@@ -813,105 +868,203 @@ public class SalesReconciliationBPOController {
         try {
             SQP05134Filter filter = logic.loadSQP05134Filter(params);
             System.out.println("Total: " + filter.getResponse().size());
-            List<Object[]> data = new ArrayList<>();
-            //headers
-            Object[] headers = new Object[38];
-            headers[0] = "Processing Date";
-            headers[1] = "Payment Date";
-            headers[2] = "Sales Date";
-            headers[3] = "Settl. vs Sales";
-            headers[4] = "Processor";
-            headers[5] = "Country";
-            headers[6] = "Qty. Tkts";
-            headers[7] = "Invoice Refer. Number PNR";
-            headers[8] = "PNR";
-            headers[9] = "Doc. Type";
-            headers[10] = "Indust. Speci. Ref. Nbr";
-            headers[11] = "Card Number";
-            headers[12] = "Auth Code";
-            headers[13] = "Installment Plan";
-            headers[14] = "Installment Number";
-            headers[15] = "Sales Amount";
-            headers[16] = "Transacton Amount";
-            //comisiones
-            headers[17] = "MSI Rate Comm.";
-            headers[18] = "MSI Serv. Fee";
-            headers[19] = "MSI Total Comm.";
-            headers[20] = "MSI VAT Comm.";
-            headers[21] = "Comm. Disc. Rate";
-            headers[22] = "Comm. Disc. Amount";
-            headers[23] = "Comm. Disc. VAR Rate";
-            headers[24] = "Comm. VAT";
-            //comisiones especiales
-            headers[25] = "CHBK Number";
-            headers[26] = "CHBK Reason Code";
-            headers[27] = "CHBK Amount";
-            headers[28] = "CHBK Commission";
-            headers[29] = "CHBK VAT";
-            headers[30] = "ADJU Amount";
-            headers[31] = "ADJU Commission";
-            headers[32] = "ADJU VAT";
-            headers[33] = "NET Amount to Receive AM";
-            headers[34] = "Currency Settl.";
-            headers[35] = "Calculated Commission";
-            headers[36] = "Rule";
-            headers[37] = "Flag Complement";
-            data.add(headers);
+            String procesador = filter.getResponse().get(0).getDESC_PROCTYPE().trim();
+            String title = procesador + "-" + params.getIN_MERCHANT().trim() + "_" + params.getIN_DATEFROM();
+            List<List<CustomExcelCell>> data = new ArrayList<>();
+            List<CustomExcelCell> header = new ArrayList<>();
+            header.add(new CustomExcelCell("Processing\nDate"));
+            header.add(new CustomExcelCell("Payment\nDate"));
+            header.add(new CustomExcelCell("Sales\nDate"));
+            header.add(new CustomExcelCell("Settl. VS Sales"));
+            header.add(new CustomExcelCell("Processor"));
+            header.add(new CustomExcelCell("Country"));
+            header.add(new CustomExcelCell("Qty\nTkts"));
+            header.add(new CustomExcelCell("Invoice\nRef. Number\nPNR"));
+            header.add(new CustomExcelCell("PNR"));
+            header.add(new CustomExcelCell("Doc. Type"));
+            header.add(new CustomExcelCell("Indust. Speci.\nRef. Nbr."));
+            header.add(new CustomExcelCell("Card Number"));
+            header.add(new CustomExcelCell("Auth"));
+            header.add(new CustomExcelCell("Installment\nPlan"));
+            header.add(new CustomExcelCell("Installment\nNumber"));
+            header.add(new CustomExcelCell("Currency"));
+            header.add(new CustomExcelCell("Sales\nAmount"));
+            header.add(new CustomExcelCell("Transac.\nAmount"));
+            header.add(new CustomExcelCell("MSI Rate"));
+            header.add(new CustomExcelCell("Serv. Fee"));
+            header.add(new CustomExcelCell("MSI VAT"));
+            header.add(new CustomExcelCell("Comm. Rate"));
+            header.add(new CustomExcelCell("Comm. Amount"));
+            header.add(new CustomExcelCell("Comm.\nVAT Rate"));
+            header.add(new CustomExcelCell("Comm.\nVAT Amount"));
+            header.add(new CustomExcelCell("CHBK\nNumber"));
+            header.add(new CustomExcelCell("CHBK\nReason Code"));
+            header.add(new CustomExcelCell("CHBK\nAmount"));
+            header.add(new CustomExcelCell("CHBK\nComm."));
+            header.add(new CustomExcelCell("CHBK\nVAT"));
+            header.add(new CustomExcelCell("ADJU\nAmount"));
+            header.add(new CustomExcelCell("ADJU\nComm."));
+            header.add(new CustomExcelCell("ADJU\nVAT"));
+            header.add(new CustomExcelCell("NET Amount"));
+            header.add(new CustomExcelCell("NET Amount\nTo Reveive AM"));
+            header.add(new CustomExcelCell("Currency\nSettlement"));
+            header.add(new CustomExcelCell("Rule"));
+            header.add(new CustomExcelCell("Flag\nCompl."));
+            data.add(header);
+
+            //colores
+            Color c1 = new Color(178, 218, 250);
+            Color c2 = new Color(252, 246, 220);
             for (A4331Filter obj : filter.getResponse()) {
-                Object[] row = new Object[38];
-                row[0] = obj.getPrda();
-                row[1] = obj.getPaydate();
-                row[2] = obj.getTransdate();
-                row[3] = convertStatus(obj.getStval());
-                row[4] = obj.getDESC_PROCTYPE();
-                row[5] = obj.getScountry();
-                row[6] = obj.getQtytkt();
-                row[7] = obj.getInvoirn();
-                row[8] = obj.getSpnr();
-                row[9] = obj.getTranstype();
-                row[10] = obj.getTicket();
-                row[11] = obj.getScardn();
-                row[12] = obj.getSauthoc();
-                row[13] = obj.getNbrinsta();
-                row[14] = obj.getInstanbr();
-                row[15] = obj.getSvfops();
-                row[16] = obj.getTgrosamoun();
-                row[17] = obj.getSfeerate();
-                row[18] = obj.getServicfeep();
-                row[19] = obj.getAcceamouc();
-                row[20] = obj.getOvercom12p();
-                row[21] = obj.getDiscrate();
-                row[22] = obj.getSfeeamou();
-                row[23] = obj.getDiscratei();
-                row[24] = obj.getIvacom12();
-                row[25] = obj.getChgbnum();
-                row[26] = obj.getCodchgback();
+                List<CustomExcelCell> row = new ArrayList<>();
+                row.add(new CustomExcelCell(obj.getPrda()));
+                row.add(new CustomExcelCell(obj.getPaydate()));
+                row.add(new CustomExcelCell(obj.getSdate()));
+                row.add(new CustomExcelCell(convertStatus(obj.getStval())));
+                row.add(new CustomExcelCell(obj.getDESC_PROCTYPE()));
+                row.add(new CustomExcelCell(obj.getScountry()));
+                row.add(new CustomExcelCell(obj.getQtytkt()));
+                row.add(new CustomExcelCell(obj.getInvoirn()));
+                row.add(new CustomExcelCell(obj.getSpnr()));
+                row.add(new CustomExcelCell(obj.getTranstype()));
+                row.add(new CustomExcelCell(obj.getIsrefnbr()));
+                row.add(new CustomExcelCell(obj.getScardn()));
+                row.add(new CustomExcelCell(obj.getSauthoc()));
+                row.add(new CustomExcelCell(obj.getInstanbr()));
+                row.add(new CustomExcelCell(obj.getNbrinsta()));
+                row.add(new CustomExcelCell(obj.getScurrency()));
+                row.add(new CustomExcelCell(obj.getSvfops()));
+                //row.add(new CustomExcelCell(obj.getTGROSAMOUN_ADJ(), c1));
+                row.add(new CustomExcelCell(obj.getTgrosamoun()));
+                row.add(new CustomExcelCell(obj.getSfeerate()));
+                row.add(new CustomExcelCell(obj.getServicefee()));
+                row.add(new CustomExcelCell(obj.getOvercom12()));
+                row.add(new CustomExcelCell(obj.getDiscrate()));
+                row.add(new CustomExcelCell(obj.getDiscamoun()));
+                row.add(new CustomExcelCell(obj.getDiscratei()));
+                row.add(new CustomExcelCell(obj.getDiscamouni()));
+                row.add(new CustomExcelCell(obj.getChgbnum()));
+                row.add(new CustomExcelCell(obj.getCodchgback()));
                 if (obj.getTranstype().equals("CHBK")) {
-                    row[27] = obj.getTgrosampay();
-                    row[28] = obj.getSfeeamou();
-                    row[29] = obj.getIvacom12();
+                    row.add(new CustomExcelCell(obj.getTgrosamoun()));
+                    row.add(new CustomExcelCell(obj.getDiscamoun()));
+                    row.add(new CustomExcelCell(obj.getDiscamouni()));
                 } else {
-                    row[27] = 0;
-                    row[28] = 0;
-                    row[29] = 0;
+                    row.add(new CustomExcelCell(0));
+                    row.add(new CustomExcelCell(0));
+                    row.add(new CustomExcelCell(0));
                 }
                 if (obj.getTranstype().equals("ADJU")) {
-                    row[30] = obj.getTgrosampay();
-                    row[31] = obj.getSfeeamou();
-                    row[32] = obj.getIvacom12();
+                    row.add(new CustomExcelCell(obj.getTgrosamoun()));
+                    row.add(new CustomExcelCell(obj.getDiscamoun()));
+                    row.add(new CustomExcelCell(obj.getDiscamouni()));
                 } else {
-                    row[30] = 0;
-                    row[31] = 0;
-                    row[32] = 0;
+                    row.add(new CustomExcelCell(0));
+                    row.add(new CustomExcelCell(0));
+                    row.add(new CustomExcelCell(0));
                 }
-                row[33] = obj.getNetopay();
-                row[34] = obj.getPcurrency();
-                row[35] = obj.getDiscamounc();
-                row[36] = obj.getFregla();
-                row[37] = obj.getFcompl();
+                row.add(new CustomExcelCell(obj.getNeto(), c2));
+                row.add(new CustomExcelCell(obj.getNetopay(), c2));
+                row.add(new CustomExcelCell(obj.getPcurrency(), c2));
+                row.add(new CustomExcelCell(convertRegla(obj.getFregla())));
+                row.add(new CustomExcelCell(convertFcompl(obj.getFcompl())));
                 data.add(row);
             }
-            return exportUtils.createExcel(data, controllerName + " - Settlement " + Functions.getFechaActual());
+
+            return exportUtils.createCustomExcel(data,
+                    "Settlement Detail " + title);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "downloadSettlementSummary")
+    public ResponseEntity<?> downloadSettlementSummary(@ModelAttribute SQP05133Filter params) {
+        System.out.println("---------------SalesReconciliationBPO:downloadSettlementSummary-------------");
+        try {
+            SQP05133Filter filter = logic.loadSQP05133Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            String procesador = filter.getResponse().get(0).getDESC_PROCTYPE().trim();
+            String title = "";
+            if (params.getIN_MERCHANT() != null) {
+                title = "Merchant " + procesador + " " + params.getIN_SCURRENCY() + "_" + params.getIN_DATEFROM();
+            } else {
+                title = "Summary " + params.getIN_DATEFROM()
+                        + "-" + params.getIN_DATETO().substring(params.getIN_DATETO().length() - 2);
+            }
+            List<List<CustomExcelCell>> data = new ArrayList<>();
+            List<CustomExcelCell> header = new ArrayList<>();
+            header.add(new CustomExcelCell("Processing\nDate"));
+            if (params.getIN_MERCHANT() != null) {
+                header.add(new CustomExcelCell("Merchant"));
+            }
+            header.add(new CustomExcelCell("Processor"));
+            header.add(new CustomExcelCell("Country"));
+            header.add(new CustomExcelCell("Qty\nTransactions"));
+            header.add(new CustomExcelCell("Currency"));
+            header.add(new CustomExcelCell("Total\nAmount"));
+            header.add(new CustomExcelCell("GROSS\nAmount"));
+            header.add(new CustomExcelCell("Comm.\nAmount"));
+            header.add(new CustomExcelCell("Comm.\nVAT"));
+            header.add(new CustomExcelCell("Serv. Fee"));
+            header.add(new CustomExcelCell("Serv. Fee\nVAT"));
+            header.add(new CustomExcelCell("CHBK\nAmount"));
+            header.add(new CustomExcelCell("CHBK\nComm."));
+            header.add(new CustomExcelCell("CHBK\nVAT"));
+            header.add(new CustomExcelCell("ADJU\nAmount"));
+            header.add(new CustomExcelCell("ADJU\nComm."));
+            header.add(new CustomExcelCell("ADJU\nVAT"));
+            header.add(new CustomExcelCell("NET Amount"));
+            header.add(new CustomExcelCell("Payment Info.\nCurrency"));
+            header.add(new CustomExcelCell("Payment Info.\nTotal Amount"));
+            header.add(new CustomExcelCell("Payment Info.\nGROSS Amount"));
+            header.add(new CustomExcelCell("Payment Info.\nComm. Amount"));
+            header.add(new CustomExcelCell("Payment Info.\nComm. VAT"));
+            header.add(new CustomExcelCell("Payment Info.\nServ. Fee\nAmount"));
+            header.add(new CustomExcelCell("Payment Info.\nServ. Fee\nVAT"));
+            header.add(new CustomExcelCell("Payment Info.\nNET Amount\nTo receive AM"));
+            data.add(header);
+
+            //colores
+            Color c1 = new Color(178, 218, 250);
+            Color c2 = new Color(252, 246, 220);
+            for (A4331STFilter obj : filter.getResponse()) {
+                List<CustomExcelCell> row = new ArrayList<>();
+                row.add(new CustomExcelCell(obj.getPRDA()));
+                if (params.getIN_MERCHANT() != null) {
+                    row.add(new CustomExcelCell(obj.getPMERCHID()));
+                }
+                row.add(new CustomExcelCell(obj.getDESC_PROCTYPE()));
+                row.add(new CustomExcelCell(obj.getSCOUNTRY()));
+                row.add(new CustomExcelCell(obj.getQTYTRN()));
+                row.add(new CustomExcelCell(obj.getSCURRENCY()));
+                row.add(new CustomExcelCell(obj.getTGROSAMOUN(), c1));
+                row.add(new CustomExcelCell(obj.getTGROSAMPAY_WCA(), c1));
+                row.add(new CustomExcelCell(obj.getSFEEAMOU(), c1));
+                row.add(new CustomExcelCell(obj.getIVACOM12(), c1));
+                row.add(new CustomExcelCell(obj.getSERVICFEEP(), c1));
+                row.add(new CustomExcelCell(obj.getOVERCOM12P(), c1));
+                row.add(new CustomExcelCell(obj.getTGROSAMOUN_CB(), c1));
+                row.add(new CustomExcelCell(obj.getSFEEAMOU_CB(), c1));
+                row.add(new CustomExcelCell(obj.getIVACOM12_CB(), c1));
+                row.add(new CustomExcelCell(obj.getADJUSTMENT(), c1));
+                row.add(new CustomExcelCell(obj.getSFEEAMOU_ADJ(), c1));
+                row.add(new CustomExcelCell(obj.getIVACOM12_ADJ(), c1));
+                row.add(new CustomExcelCell(obj.getNETAMOUN(), c1));
+                row.add(new CustomExcelCell(obj.getPCURRENCY(), c2));
+                row.add(new CustomExcelCell(obj.getTGROSAMPAY(), c2));
+                row.add(new CustomExcelCell(obj.getTGROSAMPAY_WCA(), c2));
+                row.add(new CustomExcelCell(obj.getSFEEAMOU(), c2));
+                row.add(new CustomExcelCell(obj.getIVACOM12(), c2));
+                row.add(new CustomExcelCell(obj.getSERVICFEEP(), c2));
+                row.add(new CustomExcelCell(obj.getOVERCOM12P(), c2));
+                row.add(new CustomExcelCell(obj.getNETOPAY(), c2));
+                data.add(row);
+            }
+
+            return exportUtils.createCustomExcel(data,
+                    "Settlement " + title);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -919,6 +1072,7 @@ public class SalesReconciliationBPOController {
     }
 
 //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Funciones">
     private static String convertStatus(String stval) {
         String valor = "";
@@ -954,6 +1108,47 @@ public class SalesReconciliationBPOController {
         return valor;
     }
 
+    private static String convertRegla(String fregla) {
+        String valor = "";
+        switch (fregla) {
+            case "1":
+                valor = "Ticket";
+                break;
+            case "2":
+                valor = "PNR";
+                break;
+            case "3":
+                valor = "C. Card";
+                break;
+            case "4":
+                valor = "Desg. Manual";
+                break;
+            case "5":
+                valor = "Desg. Transac.";
+                break;
+        }
+        return valor;
+    }
+
+    private static String convertFcompl(String fcompl) {
+        String valor = "";
+        switch (fcompl) {
+            case "1":
+                valor = "Plusgrade";
+                break;
+            case "2":
+                valor = "Ligas";
+                break;
+            case "3":
+                valor = "Tablet";
+                break;
+            case "4":
+                valor = "BPO";
+                break;
+        }
+        return valor;
+    }
+
     private static long restaFechas(String fecha1Str, String fecha2Str) {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyyMMdd");
         Date fecha1 = null;
@@ -963,7 +1158,7 @@ public class SalesReconciliationBPOController {
             if (!fecha2Str.trim().isEmpty()) {
                 fecha2 = formatoFecha.parse(fecha2Str);
             }
-        } catch (ParseException e) {
+        } catch (ParseException | NullPointerException e) {
         }
 
         if (fecha1 != null && fecha2 != null) {
@@ -989,7 +1184,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "loadProductionBpDetail")
     public ResponseEntity<?> loadProductionBpDetail(@ModelAttribute SQP05203Filter filter) {
         try {
@@ -1002,8 +1197,112 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    @RequestMapping(value = "downloadProduction")
+    public ResponseEntity<?> downloadProduction(@ModelAttribute SQP05247Filter filter) {
+        try {
+            System.out.println("---------------SalesReconciliationBPO:downloadProduction-------------");
+            filter = logic.loadSQP05247Filter(filter);
+            System.out.println("Total: " + filter.getResponse().size());
+            List<Object[]> data = new ArrayList<>();
+            String title = "";
+
+            if (filter.getIN_ORIG().equals("P")) {
+                //headers
+                Object[] headers = new Object[16];
+                headers[0] = "Worked Date";
+                headers[1] = "Username";
+                headers[2] = "Doc. Type";
+                headers[3] = "Processor";
+                headers[4] = "Country";
+                headers[5] = "Processing Date";
+                headers[6] = "Status";
+                headers[7] = "Card Number";
+                headers[8] = "Auth Code";
+                headers[9] = "Amount";
+                headers[10] = "Currency";
+                headers[11] = "PNR";
+                headers[12] = "Qty Tkts";
+                headers[13] = "Ticket";
+                headers[14] = "Adjustment";
+                headers[15] = "BPO Comment";
+                data.add(headers);
+                for (Object line : filter.getResponse()) {
+                    A4331Filter obj = (A4331Filter) line;
+                    Object[] row = new Object[16];
+                    row[0] = obj.getFeup();
+                    row[1] = obj.getUsup();
+                    row[2] = obj.getTranstype();
+                    row[3] = obj.getDESC_PROCTYPE();
+                    row[4] = obj.getScountry();
+                    row[5] = obj.getPrda();
+                    row[6] = convertStatus(obj.getStval());
+                    row[7] = obj.getScardn();
+                    row[8] = obj.getSauthoc();
+                    row[9] = obj.getTgrosamoun();
+                    row[10] = obj.getScurrency();
+                    row[11] = obj.getSpnr();
+                    row[12] = obj.getQtytkt();
+                    row[13] = obj.getTicket();
+                    row[14] = obj.getCodadju();
+                    row[15] = obj.getBPOCOMENT();
+                    data.add(row);
+                }
+                title = controllerName + " - ByPayment Production ";
+            } else {
+                //headers
+                Object[] headers = new Object[15];
+                headers[0] = "Worked Date";
+                headers[1] = "Username";
+                headers[2] = "Doc. Type";
+                headers[3] = "Processor";
+                headers[4] = "Country";
+                headers[5] = "Sale Date";
+                headers[6] = "Status";
+                headers[7] = "Card Number";
+                headers[8] = "Auth Code";
+                headers[9] = "Amount";
+                headers[10] = "Currency";
+                headers[11] = "PNR";
+                headers[12] = "Card Type";
+                headers[13] = "Ticket";
+                headers[14] = "BPO Comment";
+                headers[15] = "ADM Comment";
+                data.add(headers);
+                for (Object line : filter.getResponse()) {
+                    A4496Filter obj = (A4496Filter) line;
+                    Object[] row = new Object[15];
+                    row[0] = obj.getA4501FEUP();
+                    row[1] = obj.getA4501USUP();
+                    row[2] = obj.getA4496TRNCU();
+                    row[3] = obj.getDESC_PROCTYPE();
+                    row[4] = obj.getA4496PAIS();
+                    row[5] = obj.getA4496FECVT();
+                    row[6] = convertStatus(obj.getA4501STVAL());
+                    row[7] = obj.getA4501NREF();
+                    row[8] = obj.getA4501CAPL();
+                    row[9] = obj.getA4501VFOP();
+                    row[10] = obj.getA4501MFOP();
+                    row[11] = obj.getA4496PNR();
+                    row[12] = obj.getDESC_TARJ();
+                    row[13] = obj.getTICKET();
+                    row[14] = obj.getBPO_COMEN().trim().isEmpty()
+                            ? obj.getBPO_COMEN2()
+                            : obj.getBPO_COMEN();
+                    row[15] = obj.getADM_COMEN();
+                    data.add(row);
+                }
+                title = controllerName + " - ByTicket Production ";
+            }
+
+            return exportUtils.createExcel(data, title + Functions.getFechaActual());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Credit Card Filter">
     @RequestMapping(value = "loadCreditCardFilter")
     public ResponseEntity<?> loadCreditCardFilter(@ModelAttribute SQP05206Filter params) {
@@ -1018,7 +1317,7 @@ public class SalesReconciliationBPOController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Mantenimiento Tarjetas">
     @RequestMapping(value = "loadTicket")
     public ResponseEntity<?> loadTicket(@ModelAttribute SQP05217Filter params) {
@@ -1032,7 +1331,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "loadFopInformation")
     public ResponseEntity<?> loadFopInformation(@ModelAttribute SQP05218Filter params) {
         System.out.println("---------------SalesReconciliationBPO:loadFopInformation-------------");
@@ -1045,7 +1344,7 @@ public class SalesReconciliationBPOController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "insertTicketRecord", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> loadFopInformation(@RequestBody SQP05219Filter params) {
         System.out.println("---------------SalesReconciliationBPO:insertTicketRecord-------------");
@@ -1056,6 +1355,62 @@ public class SalesReconciliationBPOController {
             System.out.println("Error: " + e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+//</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Batch Manual">
+    @RequestMapping(value = "processBatchInformation")
+    public ResponseEntity<?> processBatchInformation(@ModelAttribute SQP05302Filter params) throws Exception {
+        System.out.println("---------------SalesReconciliationBPO:processBatchInformation-------------");
+        logic.loadSQP05302Filter(params);
+        Map map = Collections.singletonMap("message", "Proceso Ejecutandose");
+        return ResponseUtils.ok(map);
+    }
+    
+    @RequestMapping(value = "loadBatchInformation")
+    public ResponseEntity<?> loadBatchInformation(@ModelAttribute SQP05319Filter params) throws Exception {
+        System.out.println("---------------SalesReconciliationBPO:loadBatchInformation-------------");
+        SQP05319Filter filter = logic.loadSQP05319Filter(params);
+        System.out.println("Total: " + filter.getResponse().size());
+        return ResponseUtils.ok(filter);
+    }
+    
+    @RequestMapping(value = "loadBatchLog")
+    public ResponseEntity<?> loadBatchLog(@ModelAttribute SQP05310Filter params) throws Exception {
+        System.out.println("---------------SalesReconciliationBPO:loadBatchInformation-------------");
+        SQP05310Filter filter = logic.loadSQP05310Filter(params);
+        System.out.println("Total: " + filter.getResponse().size());
+        return ResponseUtils.ok(filter);
+    }
+    
+    @RequestMapping(value = "loadBatchLogInfo")
+    public ResponseEntity<?> loadBatchLogInfo(@ModelAttribute SQP05311Filter params) throws Exception {
+        System.out.println("---------------SalesReconciliationBPO:loadBatchInformation-------------");
+        SQP05311Filter filter = logic.loadSQP05311Filter(params);
+        System.out.println("Total: " + filter.getResponse().size());
+        return ResponseUtils.ok(filter);
+    }
+
+    @RequestMapping(value = "autoMatchManual", method = RequestMethod.POST)
+    public ResponseEntity<?> autoMatchManual(@Valid @RequestBody SQP05307Filter params) throws Exception {
+        System.out.println("---------------SalesReconciliationBPO:autoMatchManual-------------");
+        SQP05307Filter filter = logic.loadSQP05307Filter(params);
+        return ResponseUtils.ok(filter);
+    }
+
+    @RequestMapping(value = "masiveAutoMatchManual", method = RequestMethod.POST)
+    public ResponseEntity<?> masiveAutoMatchManual(@RequestBody List<SQP05307Filter> params) throws Exception {
+        System.out.println("---------------SalesReconciliationBPO:masiveAutoMatchManual-------------");
+        logic.loadMasiveSQP05307Filter(params);
+        Map map = Collections.singletonMap("message", "Proceso Ejecutandose");
+        return ResponseUtils.ok(map);
+    }
+    
+    @RequestMapping(value = "runAutomaticConciliation", method = RequestMethod.POST)
+    public ResponseEntity<?> runAutomaticConciliation(@RequestBody SQP05304Filter params) throws Exception {
+        System.out.println("---------------SalesReconciliationBPO:runAutomaticConciliation-------------");
+        ModelMap map = logic.loadSQP05304Filter(params);
+        return ResponseUtils.ok(map);
     }
 //</editor-fold>
 }

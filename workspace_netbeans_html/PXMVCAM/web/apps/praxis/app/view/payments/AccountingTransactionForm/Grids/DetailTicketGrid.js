@@ -7,8 +7,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
     controller: 'ATDetailTicketGridController',
     title: 'Detail',
     titleAlign: 'center',
-    height: 610,
-    width: 1200,
+    minHeight: 210,
+    width: '100%',
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -51,7 +51,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
                     return sts.includes(value)?'Match':'Pending';
                 }
             },
-            {text: 'Ticket', dataIndex: 'tkt', width: 120,
+            {text: 'Ticket', dataIndex: 'tkt', flex:1,
                 listeners: {
                     click: 'onClickTicketInfo'
                 },
@@ -167,7 +167,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
                             return value;
                         }
                     },
-                    {text: 'Id', dataIndex: 'idcon', width: 270, autoSizeColumn: true}
+                    {text: 'Id', dataIndex: 'idcon', width: 310}
                 ]
             },
             {
@@ -184,7 +184,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
                             return value;
                         }
                     },
-                    {text: 'Id', dataIndex: 'liq_IDCON', width: 270, autoSizeColumn: true,
+                    {text: 'Id', dataIndex: 'liq_IDCON', width: 310,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;
@@ -222,9 +222,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
                 scale: 'small',
                 tooltip: 'Export to Excel',
                 listeners: {
-                    click: function (obj) {
-                        obj.up().up().downloadGrid();
-                    }
+                    click: 'downloadExcel'
                 }
             },
             {

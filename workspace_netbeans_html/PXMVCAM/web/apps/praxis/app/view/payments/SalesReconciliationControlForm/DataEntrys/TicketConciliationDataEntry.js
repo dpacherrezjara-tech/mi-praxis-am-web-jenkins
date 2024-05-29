@@ -100,7 +100,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         {
                                             fieldLabel: 'Expected Date',
                                             name: 'procdate',
-                                            fieldStyle:'text-align:center;background: #C0EDB3;',
+                                            fieldStyle: 'text-align:center;background: #C0EDB3;',
                                             width: 180,
                                             labelWidth: 100
                                         },
@@ -575,8 +575,112 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             width: 200
                                         }
                                     ]
+                                },
+                                {
+                                    xtype: 'grid',
+                                    title: 'Tickets Match',
+                                    titleAlign: 'center',
+                                    defaults: {},
+                                    width: '100%',
+                                    maxHeight: 165,
+                                    margin: '0 8 0 8',
+                                    border: false,
+                                    id: prototype.idDE2 + '-gridDesglose',
+                                    emptyText: 'No cards available',
+                                    store: [],
+                                    columns: {
+                                        defaults: {
+                                            align: 'center',
+                                            menuDisabled: true,
+                                            sortable: true
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Status', width: 60,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return 'Concil.';
+                                                }
+                                            },
+                                            {
+                                                text: 'Src', dataIndex: 'fuente', width: 45,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    const opts = {
+                                                        'S': 'ASR',
+                                                        'B': 'BSP',
+                                                        'M': 'Manual',
+                                                        'A': 'ARC'
+                                                    };
+                                                    return opts[value] || '';
+                                                }
+                                            },
+                                            {
+                                                text: 'Doc.<br>Type', dataIndex: 'trncu', width: 60
+                                            },
+                                            {
+                                                text: 'Credit Card',
+                                                defaults: {
+                                                    align: 'center',
+                                                    menuDisabled: true,
+                                                    sortable: true
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Cod', dataIndex: 'scarcod', width: 45
+                                                    },
+                                                    {
+                                                        text: 'Number', dataIndex: 'scardn', width: 130
+                                                    },
+                                                    {
+                                                        text: 'Auth', dataIndex: 'sauthoc', width: 55
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Curr', dataIndex: 'scurrency', width: 50
+                                            },
+                                            {
+                                                text: 'Amount', dataIndex: 'svfops', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                }
+                                            },
+                                            {
+                                                text: 'Sales<br>Date', dataIndex: 'sdate', width: 80
+                                            },
+                                            {
+                                                text: 'PNR', dataIndex: 'spnr', width: 70
+                                            },
+                                            {
+                                                text: 'Ticket', width: 120,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background-color:#FCF6DC;font-weight:bold;";
+                                                    const obj = record.data;
+                                                    const ticket = obj.ccia + obj.forma + obj.serie;
+                                                    return ticket;
+                                                }
+                                            },
+                                            {
+                                                text: 'Corrl', width: 45, dataIndex: 'corrl'
+                                            },
+                                            {
+                                                text: 'Void', width: 40, dataIndex: 'fvoid'
+                                            },
+                                            {
+                                                text: 'Agent', dataIndex: 'sagent', width: 80
+                                            },
+                                            {text: 'Sel.', flex: 1,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    if (record.data.main) {
+                                                        metaData.tdAttr = 'data-qtip="Selected"';
+                                                        return '<img src="resources/img/botones/back.png"/>';
+                                                    }
+                                                    return null;
+                                                }
+                                            }
+                                        ]
+                                    }
                                 }
-
                             ]
                         },
                         //</editor-fold>

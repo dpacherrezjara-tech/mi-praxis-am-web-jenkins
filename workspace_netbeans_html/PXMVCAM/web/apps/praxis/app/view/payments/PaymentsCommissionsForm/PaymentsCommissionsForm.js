@@ -1,6 +1,6 @@
 prototype.id = 'PaymentsCommissions';
 prototype.url = CONTEXTPATH + '/PaymentsCommissions';
-prototype.width = 1600;
+prototype.width = 1700;
 prototype.height = 630;
 
 Ext.define('Ext.Praxis.view.payments.PaymentsCommissionsForm.PaymentsCommissionsForm', {

@@ -43,6 +43,19 @@ import net.miatech.praxis.payment.filter.SQP05206Filter;
 import net.miatech.praxis.payment.filter.SQP05217Filter;
 import net.miatech.praxis.payment.filter.SQP05218Filter;
 import net.miatech.praxis.payment.filter.SQP05219Filter;
+import net.miatech.praxis.payment.filter.SQP05247Filter;
+import net.miatech.praxis.payment.filter.SQP05259Filter;
+import net.miatech.praxis.payment.filter.SQP05261Filter;
+import net.miatech.praxis.payment.filter.SQP05276Filter;
+import net.miatech.praxis.payment.filter.SQP05302Filter;
+import net.miatech.praxis.payment.filter.SQP05304Filter;
+import net.miatech.praxis.payment.filter.SQP05307Filter;
+import net.miatech.praxis.payment.filter.SQP05310Filter;
+import net.miatech.praxis.payment.filter.SQP05311Filter;
+import net.miatech.praxis.payment.filter.SQP05312Filter;
+import net.miatech.praxis.payment.filter.SQP05313Filter;
+import net.miatech.praxis.payment.filter.SQP05319Filter;
+import org.springframework.ui.ModelMap;
 
 /**
  *
@@ -57,6 +70,8 @@ public interface SalesReconciliationLogic {
     List<A006> getMonedas() throws Exception;
 
     SQP05004Filter getSQP05004Filter(SQP05004Filter filter) throws Exception;
+    //Constantes Medios de Pago
+    SQP05276Filter loadSQP05276Filter(SQP05276Filter filter) throws Exception;
 
     SQP05060Filter getSQP05060Filter(SQP05060Filter filter) throws Exception;
 
@@ -86,13 +101,17 @@ public interface SalesReconciliationLogic {
     //Mantenimiento MSI Tracking
     SQP05063Filter loadSQP05063Filter(SQP05063Filter filter) throws Exception;
     SQP05065Filter loadSQP05065Filter(SQP05065Filter filter) throws Exception;
+    SQP05259Filter loadSQP05259Filter(SQP05259Filter filter) throws Exception;
+    void loadSQP05261Filter(SQP05261Filter params) throws Exception;
     
     //Mantenimiento ChargebackTracking
     SQP05081Filter loadSQP05081Filter(SQP05081Filter filter) throws Exception;
     SQP05077Filter loadSQP05077Filter(SQP05077Filter filter) throws Exception;
     SQP05182Filter loadSQP05182Filter(SQP05182Filter filter) throws Exception;
     SQP05183Filter loadSQP05183Filter(SQP05183Filter filter) throws Exception;
-    
+    SQP05312Filter loadSQP05312Filter(SQP05312Filter filter) throws Exception;
+    SQP05313Filter loadSQP05313Filter(SQP05313Filter filter) throws Exception;
+            
     //proceso de conciliacion entre Transacciones
     SQP05074Filter loadSQP05074Filter(SQP05074Filter filter) throws Exception;
     SQP05147Filter loadSQP05147Filter() throws Exception;
@@ -124,6 +143,7 @@ public interface SalesReconciliationLogic {
     //Produccion BPO
     SQP05202Filter loadSQP05202Filter(SQP05202Filter filter) throws Exception;
     SQP05203Filter loadSQP05203Filter(SQP05203Filter filter) throws Exception;
+    SQP05247Filter loadSQP05247Filter(SQP05247Filter filter) throws Exception;
     
     //Conteo de tarjetas por fecha
     SQP05206Filter loadSQP05206Filter(SQP05206Filter filter) throws Exception;
@@ -132,4 +152,15 @@ public interface SalesReconciliationLogic {
     SQP05217Filter loadSQP05217Filter(SQP05217Filter filter) throws Exception;
     SQP05218Filter loadSQP05218Filter(SQP05218Filter filter) throws Exception;
     SQP05219Filter loadSQP05219Filter(SQP05219Filter filter) throws Exception;
+
+    //Batch para conciliacion manual de ajustes
+    SQP05302Filter loadSQP05302Filter(SQP05302Filter filter) throws Exception;
+    SQP05307Filter loadSQP05307Filter(SQP05307Filter filter) throws Exception;
+    void loadMasiveSQP05307Filter(List<SQP05307Filter> lst) throws Exception;
+    SQP05310Filter loadSQP05310Filter(SQP05310Filter filter) throws Exception;
+    SQP05311Filter loadSQP05311Filter(SQP05311Filter filter) throws Exception;
+    SQP05319Filter loadSQP05319Filter(SQP05319Filter filter) throws Exception;
+    
+    //Conciliaction Automatica (lanzar proceso)
+    ModelMap loadSQP05304Filter(SQP05304Filter filter) throws Exception;
 }

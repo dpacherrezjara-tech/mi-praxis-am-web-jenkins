@@ -1,5 +1,7 @@
 package net.miatech.praxis.logic.payments;
 
+import java.util.List;
+import net.miatech.praxis.payment.entities.A006;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.payment.filter.SQP05036Filter;
 import net.miatech.praxis.payment.filter.SQP05037Filter;
@@ -24,4 +26,6 @@ public interface AccountingTransactionLogic {
     SQP05042Filter getSQP05042Filter(SQP05042Filter filter)throws Exception;
     //obtiene detalle de tickets desglosados
     SQP05043Filter getSQP05043Filter(SQP05043Filter filter)throws Exception;
+    //Monedas
+    List<A006> getMonedas() throws Exception;
 }

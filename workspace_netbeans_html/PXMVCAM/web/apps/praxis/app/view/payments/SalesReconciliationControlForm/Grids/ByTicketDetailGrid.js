@@ -110,37 +110,43 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                 },
                 columns: [
                     {text: 'Expected<br>Date', dataIndex: 'procdate', width: 80},
-                    {text: 'Processing<br>Date', dataIndex: 'a4501PRDA', width: 80},
+                    {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
                     {text: 'Difference', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;background-color:#F0D094;";
-                            const fecha1Str = record.data.a4501PRDA.trim();
+                            const fecha1Str = record.data.paydate;
                             const fecha2Str = record.data.procdate; // Puedes dejar esto como una cadena vacía o null
 
-                            if (!fecha2Str) {
-                              value = 0;
-                            } else {
-                              const fecha1 = new Date(
-                                parseInt(fecha1Str.substring(0, 4)),
-                                parseInt(fecha1Str.substring(4, 6)) - 1,
-                                parseInt(fecha1Str.substring(6, 8))
-                              );
-
-                              const fecha2 = new Date(
-                                parseInt(fecha2Str.substring(0, 4)),
-                                parseInt(fecha2Str.substring(4, 6)) - 1,
-                                parseInt(fecha2Str.substring(6, 8))
-                              );
-
-                              if (isNaN(fecha1.getTime()) || isNaN(fecha2.getTime())) {
+                            if (!fecha2Str || !fecha1Str) {
                                 value = 0;
-                              } else {
-                                const diferenciaEnMilisegundos = fecha1 - fecha2;
-                                const diferenciaEnDias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
+                            } else {
+                                const fecha1 = new Date(
+                                        parseInt(fecha1Str.substring(0, 4)),
+                                        parseInt(fecha1Str.substring(4, 6)) - 1,
+                                        parseInt(fecha1Str.substring(6, 8))
+                                        );
 
-                                value = diferenciaEnDias;
-                              }
+                                const fecha2 = new Date(
+                                        parseInt(fecha2Str.substring(0, 4)),
+                                        parseInt(fecha2Str.substring(4, 6)) - 1,
+                                        parseInt(fecha2Str.substring(6, 8))
+                                        );
+
+                                if (isNaN(fecha1.getTime()) || isNaN(fecha2.getTime())) {
+                                    value = 0;
+                                } else {
+                                    const diferenciaEnMilisegundos = fecha1 - fecha2;
+                                    const diferenciaEnDias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
+
+                                    value = diferenciaEnDias;
+                                }
                             }
+                            return value;
+                        }
+                    },
+                    {text: 'Processing<br>Date', dataIndex: 'a4501PRDA', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                             return value;
                         }
                     },
@@ -162,10 +168,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         }
                     },
                     {text: 'Processor', dataIndex: 'desc_PROCTYPE', width: 120},
+                    {text: 'Chargeback<br>Status', dataIndex: 'chargeback', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#F0D094;";
+                            const opts = {
+                                'N': 'None',
+                                '': 'Pending Rev.',
+                                'Y': 'Reversed'
+                            };
+                            return opts[value.trim()];
+                        }
+                    },
                     {text: 'ADM<br>Status', dataIndex: 'a4501STADM', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;background-color:#F0D094;";
-                            return value.trim()===''?'':'Suggested';
+                            return value.trim() === '' ? '' : 'Suggested';
                         }
                     }
                 ]

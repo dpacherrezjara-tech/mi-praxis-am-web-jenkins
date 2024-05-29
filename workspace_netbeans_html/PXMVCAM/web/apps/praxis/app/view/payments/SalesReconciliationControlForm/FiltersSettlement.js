@@ -3,7 +3,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
     alias: 'widget.' + prototype.id + '-filtersSettlement',
     border: true,
     bodyStyle: 'background-color: #E3EAF9;',
-    padding: '9px 0px 9px 0px',
+    padding: '2px 0px 1px 0px',
     layout: 'hbox',
     items: [
         //<editor-fold defaultstate="collapsed" desc="Browser">
@@ -86,6 +86,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                         },
                         {
                             xtype: 'combo',
+                            id: prototype.id + '-cmbProctypeSettl',
+                            name: 'IN_PROCTYPESQ',
+                            labelWidth: 70,
+                            width: 250,
+                            valueField: 'a4451key2',
+                            displayField: 'a4451desc1',
+                            fieldLabel: 'Processor',
+                            queryMode: 'local',
+                            editable: false,
+                            allowBlank: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            labelAlign: 'right',
+                            typeAhead: true,
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            value: ''
+                        },
+                        {
+                            xtype: 'combo',
                             id: prototype.id + '-cmbPaisesSettl',
                             name: 'IN_SCOUNTRY',
                             queryMode: 'local',
@@ -107,20 +127,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                         },
                         {
                             xtype: 'combo',
-                            id: prototype.id + '-cmbProctypeSettl',
-                            name: 'IN_PROCTYPE',
-                            labelWidth: 70,
-                            width: 250,
-                            valueField: 'a4451key3',
-                            displayField: 'a4451desc1',
-                            fieldLabel: 'Processor',
+                            id: prototype.id + '-cmbMonedabST',
+                            name: 'IN_SCURRENCY',
                             queryMode: 'local',
-                            editable: false,
                             allowBlank: true,
+                            forceSelection: true,
+                            selectOnFocus: true,
                             caseSensitive: false,
                             autoSelect: true,
+                            fieldLabel: 'Currency',
+                            labelWidth: 70,
                             labelAlign: 'right',
+                            width: 140,
                             typeAhead: true,
+                            valueField: 'code',
+                            displayField: 'name',
                             enableKeyEvents: true,
                             triggerAction: 'all',
                             value: ''
@@ -148,6 +169,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                             value: ''
                         },
 
+                        
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    border: false,
+                    bodyStyle: 'background: transparent',
+                    defaults: {
+                        fieldStyle: 'text-align: center;',
+                        padding: '5 1 5 1',
+                        anchor: '100%',
+                        hiddenLabel: false,
+                        labelAlign: 'right',
+                        hidden: false
+                    },
+                    items: [
                         {
                             xtype: 'textfield',
                             fieldLabel: 'Card Number',
@@ -219,6 +257,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                             name: 'IN_PNR',
                             maxLength: 8, // Límite máximo de caracteres
                             maskRe: /[a-zA-Z0-9]/, // Expresión regular para permitir solo números
+                            enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                            listeners: {
+                                specialkey: 'onEnterKeyPress'
+                            }
+                        },
+                        {
+                            xtype: 'textfield',
+                            fieldLabel: 'Merchant',
+                            labelWidth: 70,
+                            width: 170,
+                            name: 'IN_PMERCHID',
+                            maxLength: 15, // Límite máximo de caracteres
+                            maskRe: /[0-9]/, // Expresión regular para permitir solo números
                             enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                             listeners: {
                                 specialkey: 'onEnterKeyPress'

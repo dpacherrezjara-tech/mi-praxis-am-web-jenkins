@@ -15,13 +15,15 @@ public class SQP05059Filter {
             IN_DATEFROM,
             IN_DATETO,
             IN_PROCTYPE,
+            IN_PROCTYPESQ,
             IN_SMERCHID,
             IN_TRANSTYPE,
             IN_SCOUNTRY,
             IN_FVOID,
             IN_STVAL,
             IN_CERROR,
-            IN_CODADJU;
+            IN_CODADJU,
+            IN_SCURRENCY;
 
     private List<A4331SRFilter> response = new ArrayList<>();
 
@@ -71,6 +73,14 @@ public class SQP05059Filter {
 
     public void setIN_PROCTYPE(String IN_PROCTYPE) {
         this.IN_PROCTYPE = IN_PROCTYPE;
+    }
+
+    public String getIN_PROCTYPESQ() {
+        return IN_PROCTYPESQ;
+    }
+
+    public void setIN_PROCTYPESQ(String IN_PROCTYPESQ) {
+        this.IN_PROCTYPESQ = IN_PROCTYPESQ;
     }
 
     public String getIN_SMERCHID() {
@@ -137,5 +147,11 @@ public class SQP05059Filter {
         this.response = response;
     }
 
-    
+    public String getIN_SCURRENCY() {
+        return IN_SCURRENCY;
+    }
+
+    public void setIN_SCURRENCY(String IN_SCURRENCY) {
+        this.IN_SCURRENCY = IN_SCURRENCY;
+    }
 }

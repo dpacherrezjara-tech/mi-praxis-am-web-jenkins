@@ -15,26 +15,25 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
         if (res.ok) {
             const data = await res.json();
             const tdate = view.tdate;
-            //let keyDate = tdate === 'P' ? 'paydate' : 'sdate'; // old
-            let keyDate = tdate === 'P' ? 'prda' : 'sdate'; //new
-            //console.log(me.groupBy({data: data.response, key: keydate}));
+            const keyDate = 'fecha';
             console.log(data.response.at(0));
             let firstObj = data.response.at((0));
-            view.setTitle(`${view.title} - ${firstObj.proc_DESC} (${firstObj.scurrency})`);
+            view.setTitle(`${view.title} - ${firstObj.proc_DESC} (${view.searchParams.IN_MDA})`);
             //<editor-fold defaultstate="collapsed" desc="Tree Store">
             const tree = Object.entries(me.groupBy({data: data.response, key: keyDate})).map(obj => {
                 let procdesc = obj.at(1)[0].proc_DESC || '';
                 let childs = obj.at(1).map(x => {
                     return {
                         type: 'detail',
-                        date: x[keyDate],
+                        fecha: x[keyDate],
                         leaf: true,
                         tdate: tdate,
+                        scurrency: view.searchParams.IN_MDA,
                         ...x
                     };
                 });
                 return {
-                    date: obj.at(0),
+                    fecha: obj.at(0),
                     type: 'header',
                     scurrency: view.searchParams.IN_MDA,
                     proc_DESC: procdesc,
@@ -49,12 +48,29 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
                     tdate: tdate
                 };
             });
+            console.log(tree);
             const storeTree = Ext.create('Ext.data.TreeStore', {
                 root: {text: '.', expanded: false, children: tree}
             });
             //</editor-fold>
-            Ext.getCmp(prototype.idTree + '-colFechaP').setText(tdate === 'P' ? 'Processing Date' : 'Sale Date');
-            Ext.getCmp(prototype.idTree + '-colFechaH').setText(tdate === 'P' ? 'Sale Date' : 'Processing Date');
+            const fechap = Ext.getCmp(prototype.idTree + '-colFechaP');
+            const fechah = Ext.getCmp(prototype.idTree + '-colFechaH');
+            const fechan = Ext.getCmp(prototype.idTree + '-colFechaN');
+            if (tdate === 'P') {
+                fechap.setText('Processing Date');
+                fechah.setText('ID FLEX');
+                fechah.dataIndex = 'idflex';
+                fechan.setText('PRAXIS ID');
+                fechan.dataIndex = 'praxisid';
+            } else {
+                fechap.setText('Sale Date');
+                fechah.setText('PRAXIS ID');
+                fechah.dataIndex = 'praxisid';
+                fechan.setText('ID FLEX');
+                fechan.dataIndex = 'idflex';
+            }
+            //Ext.getCmp(prototype.idTree + '-colFechaP').setText(tdate === 'P' ? 'Processing Date' : ' Date');
+            //Ext.getCmp(prototype.idTree + '-colFechaH').setText(tdate === 'P' ? 'FLEX ID' : 'PRAXIS ID');
             me.view.setStore(storeTree);
         }
         mainPanel.unmask();
@@ -78,8 +94,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
     },
     onClickTotal: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
-        if(record.data.type==='header'){
-            if(cellIndex===1){
+        if (record.data.type === 'header') {
+            if (cellIndex === 1) {
                 return;
             }
         }
@@ -89,7 +105,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
         }
         me.showGridDetail(me.formatParameters({type: 'A', obj: record.data}));
     },
-    showGridDetail:function(params){
+    showGridDetail: function (params) {
         const me = this;
         const view = me.view;
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
@@ -105,16 +121,45 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
     formatParameters: function ( {type, obj}) {
         const me = this;
         const view = me.view;
-        const viewParams = view.searchParams;
         let params = {
-            FECHA_FROM_P: obj.date,
-            //FECHA_FROM_H: viewParams.IN_TFECHA === 'P' ? obj['sdate'] : obj['paydate'],
-            FECHA_FROM_H: viewParams.IN_TFECHA === 'P' ? obj['sdate'] : obj['prda'],
             IN_STCONL: type,
-            ...viewParams
+            ...view.searchParams
         };
-        console.log('Detail Params: ',params);
+        params.IN_PRAXISID = obj.praxisid;
+        params.IN_IDFLEX = obj.idflex;
+        params.FECHA_FROM = obj.fecha;
+        console.log('Detail Params: ', params);
         return params;
+    },
+    downloadExcelTree: function () {
+        const view = this.view;
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Download Excel?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            global.getFile(`${view.url}/downloadSummaryTree?${new URLSearchParams(view.searchParams)}`);
+                        }
+                    }
+                });
+
+    },
+    copyID: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        const view = this.view;
+        const tdate = view.tdate;
+        if (tdate === 'P') {
+            navigator.clipboard.writeText(rowData.data.idflex.trim());
+        } else {
+            navigator.clipboard.writeText(rowData.data.praxisid.trim());
+        }
+        global.Msg({
+            msg: 'Copied to clipboard!'
+        });
     },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     groupBy: function ( {data, key}){

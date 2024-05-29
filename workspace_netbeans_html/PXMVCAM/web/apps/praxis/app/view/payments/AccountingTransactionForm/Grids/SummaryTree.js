@@ -34,7 +34,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                 xtype: 'treecolumn',
                 text: '',
                 id: prototype.idTree + '-colFechaP',
-                dataIndex: 'date',
+                dataIndex: 'fecha',
                 width: 150,
                 enableTextSelection: false,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
@@ -52,16 +52,11 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
             {
                 text: '...',
                 id: prototype.idTree + '-colFechaH',
-                width: 120,
+                width: 350,
+                //dataIndex: 'idflex',
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
-                    // console.log(record.data);
-                    if (record.data.tdate === 'P') {
-                        value = record.data.sdate;                        
-                    } else {
-                        //value = record.data.paydate;
-                        value = record.data.prda;                      
-                    }
-                    switch (record.data.type) {
+                    const {type} = record.data;
+                    switch (type) {
                         case 'header':
                             metaData.style = "font-weight:bold;color:#0000FF;";
                             break;
@@ -75,9 +70,51 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                     click: 'onClickTotal'
                 }
             },
+            {
+                sortable: false,
+                xtype: 'actioncolumn',
+                width: 50,
+                text: 'Copy',
+                align: 'center',
+                items: [
+                    {
+                        //iconCls: 'prx-icon-image-log',
+                        tooltip: 'copy ID',
+                        handler: 'copyID',
+                        getClass: function (value, metadata, record) {
+                            if (record.data.type === 'header')
+                                return  '';
+                            return 'prx-icon-image-log';
+                        },
+                        isDisabled: function (view, rowIndex, colIndex, item, record) {
+                            if (record.data.type === 'header')
+                                return  true;
+                            return false;
+                        }
+                    }
+                ]
+            },
+            {
+                text: '...',
+                id: prototype.idTree + '-colFechaN',
+                width: 350,
+                //dataIndex: 'idflex',
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    const {type} = record.data;
+                    switch (type) {
+                        case 'header':
+                            metaData.style = "font-weight:bold;color:#0000FF;";
+                            break;
+                        case 'detail':
+                            metaData.style = "font-weight:bold;color:#008000;";
+                            break;
+                    }
+                    return value;
+                }
+            },
             {text: 'Processor', dataIndex: 'proc_DESC', align: 'center', flex: 1},
             {text: 'Currency', dataIndex: 'scurrency', align: 'center', width: 80},
-            {text: 'Accounted', dataIndex: 'accounted', align: 'center', width: 120,
+            {text: 'Match', dataIndex: 'accounted', align: 'center', width: 120,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     switch (record.data.type) {
                         case 'header':
@@ -91,7 +128,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                     return value;
                 }
             },
-            {text: 'Qty<br>Accounted', dataIndex: 'qty_ACCOUNTED', align: 'center', width: 80,
+            {text: 'Qty<br>Match', dataIndex: 'qty_ACCOUNTED', align: 'center', width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     switch (record.data.type) {
                         case 'header':
@@ -149,7 +186,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                     value = Ext.util.Format.number(value, '0,000.00');
                     return value;
                 }},
-            {text: 'Qty<br>Total', dataIndex: 'qty_TOTAL', align: 'center', width: 80,
+            {text: 'Qty<br>Trns.', dataIndex: 'qty_TOTAL', align: 'center', width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     switch (record.data.type) {
                         case 'header':
@@ -181,7 +218,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                 scale: 'small',
                 tooltip: 'Export to Excel',
                 listeners: {
-                    click: 'downloadExcel'
+                    click: 'downloadExcelTree'
                 }
             },
             {

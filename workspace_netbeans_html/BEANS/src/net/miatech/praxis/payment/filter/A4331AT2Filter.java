@@ -1,13 +1,11 @@
 package net.miatech.praxis.payment.filter;
 
-import net.miatech.praxis.payment.entities.A4331;
-
 /**
  *
  * @author Dvicente
  */
-public class A4331AT2Filter extends A4331{
-    private String PROC_DESC;
+public class A4331AT2Filter{
+    private String FECHA,IDFLEX,PRAXISID,PROC_DESC;
     private Double TOTAL,PENDING,ACCOUNTED,TO_DEBUG;
     private Integer RN,QTY_PENDING,QTY_ACCOUNTED,QTY_TO_DEBUG,QTY_TOTAL;
 
@@ -90,6 +88,28 @@ public class A4331AT2Filter extends A4331{
     public void setQTY_TOTAL(Integer QTY_TOTAL) {
         this.QTY_TOTAL = QTY_TOTAL;
     }
-    
-    
+
+    public String getFECHA() {
+        return FECHA;
+    }
+
+    public void setFECHA(String FECHA) {
+        this.FECHA = FECHA;
+    }
+
+    public String getIDFLEX() {
+        return IDFLEX;
+    }
+
+    public void setIDFLEX(String IDFLEX) {
+        this.IDFLEX = IDFLEX;
+    }
+
+    public String getPRAXISID() {
+        return PRAXISID;
+    }
+
+    public void setPRAXISID(String PRAXISID) {
+        this.PRAXISID = PRAXISID;
+    }
 }

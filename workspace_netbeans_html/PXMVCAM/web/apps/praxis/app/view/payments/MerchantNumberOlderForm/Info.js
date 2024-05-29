@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
+Ext.define('Ext.Praxis.view.payments.MerchantNumberOlderForm.Info', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-info',
     layout: 'border',

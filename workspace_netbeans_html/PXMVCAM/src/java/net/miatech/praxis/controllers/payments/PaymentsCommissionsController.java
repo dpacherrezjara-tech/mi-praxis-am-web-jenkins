@@ -2,6 +2,7 @@ package net.miatech.praxis.controllers.payments;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.miatech.praxis.logic.payments.BankEmissorCatalogLogic;
 import net.miatech.praxis.logic.payments.PaymentsCommissionsLogic;
 import net.miatech.praxis.payment.filter.A4508Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
@@ -9,6 +10,8 @@ import net.miatech.praxis.payment.filter.SQP05135Filter;
 import net.miatech.praxis.payment.filter.SQP05155Filter;
 import net.miatech.praxis.payment.filter.SQP05156Filter;
 import net.miatech.praxis.payment.filter.SQP05158Filter;
+import net.miatech.praxis.payment.filter.SQP05262Filter;
+import net.miatech.praxis.payment.filter.SQP05267Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.utils.Functions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,9 @@ public class PaymentsCommissionsController {
     private PaymentsCommissionsLogic logic;
     
     @Autowired
+    private BankEmissorCatalogLogic bankLogic;
+    
+    @Autowired
     private ExportUtils exportUtils;
 
     private final String controllerName = "PaymentsCommissions";
@@ -49,6 +55,10 @@ public class PaymentsCommissionsController {
             filter.setKEY1("PR");
             filter.setKEY2("");
             model.put("procesq", logic.loadSQP05004Filter(filter).getLst());
+            SQP05262Filter bankFilter = new SQP05262Filter();
+            bankFilter.setIN_CCUST("139");
+            model.put("banks", bankLogic.loadSQP05262Filter(bankFilter).getResponse());
+            model.put("monedas", logic.getMonedas());
             System.out.println("Total: " + model.size());
             return new ResponseEntity<>(model, HttpStatus.OK);
         } catch (Exception e) {
@@ -79,7 +89,7 @@ public class PaymentsCommissionsController {
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();
             //headers
-            Object[] headers = new Object[11];
+            Object[] headers = new Object[21];
             headers[0] = "Type";
             headers[1] = "Card Type";
             headers[2] = "Installments";
@@ -89,22 +99,42 @@ public class PaymentsCommissionsController {
             headers[6] = "Expiry Date";
             headers[7] = "% Commission";
             headers[8] = "VAT";
-            headers[9] = "Date Created";
-            headers[10] = "Date Updated";
+            headers[9] = "Bank";
+            headers[10] = "Brand";
+            headers[11] = "BIN Code";
+            headers[12] = "BIN Description";
+            headers[13] = "Min. Amount";
+            headers[14] = "Curr.";
+            headers[15] = "User Created";
+            headers[16] = "Date Created";
+            headers[17] = "Hour Created";
+            headers[18] = "User Updated";
+            headers[19] = "Date Updated";
+            headers[20] = "Hour Updated";
             data.add(headers);
             for (A4508Filter obj : filter.getResponse()) {
-                Object[] row = new Object[9];
-                row[0] = obj.getCODIGO().equals("COM")?"Commission":"MSI";
+                Object[] row = new Object[21];
+                row[0] = convertTypeComm(obj.getCODIGO());
                 row[1] = obj.getTIPOTARJ().equals("C")?"Credit":"Debit";
                 row[2] = obj.getCUOTAS();
                 row[3] = obj.getDESC_PROCTYPE();
                 row[4] = obj.getCOUNTRY().trim().equals("")?"All":obj.getCOUNTRY();
                 row[5] = obj.getFECFROM();
                 row[6] = obj.getFECTO();
-                row[7] = obj.getRATCNAC() + "%";
+                row[7] = obj.getRATCNAC();
                 row[8] = obj.getRATEIVA() + "%";
-                row[8] = obj.getFECR();
-                row[8] = obj.getFEUP();
+                row[9] = obj.getDESC_BANK();
+                row[10] = convertBrandCard(obj.getCODECARD());
+                row[11] = obj.getCODEBIN();
+                row[12] = obj.getDESCBIN();
+                row[13] = obj.getMINAMT();
+                row[14] = obj.getCURRAMT();
+                row[15] = obj.getUSCR();
+                row[16] = obj.getFECR();
+                row[17] = obj.getHOCR();
+                row[18] = obj.getUSUP();
+                row[19] = obj.getFEUP();
+                row[20] = obj.getHOUP();
                 data.add(row);
             }
             return exportUtils.createExcel(data, controllerName + " - " + Functions.getFechaActual());
@@ -151,5 +181,53 @@ public class PaymentsCommissionsController {
             System.out.println("Error: " + e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "deleteCommission")
+    public ResponseEntity<?> deleteCommission(@RequestBody SQP05267Filter params){
+        System.out.println("---------------PaymentsCommissions:deleteCommission-------------");
+        try {
+            logic.loadSQP05267Filter(params);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
+    private static String convertBrandCard(String codecard){
+        String result = "";
+        switch (codecard.trim()) {
+            case "1":
+                result = "Visa";
+                break;
+            case "2":
+                result = "MasterCard";
+                break;
+            case "3":
+                result = "American Express";
+                break;
+            default:
+                result = "";
+        }
+        return result;
+    }
+    
+    private static String convertTypeComm(String typecomm){
+        String result = "";
+        switch (typecomm.trim()) {
+            case "MSI":
+                result = "MSI Comm.";
+                break;
+            case "COM":
+                result = "Base Comm.";
+                break;
+            case "BIN":
+                result = "Bank Comm.";
+                break;
+            default:
+                result = "";
+        }
+        return result;
     }
 }

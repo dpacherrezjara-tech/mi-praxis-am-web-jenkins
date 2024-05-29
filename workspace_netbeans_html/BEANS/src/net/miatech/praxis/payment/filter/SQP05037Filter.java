@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class SQP05037Filter {
     private String IN_TFECHA,FECHA_FROM
-            ,IN_PROCTYPE,IN_PROCTYPESQ,IN_MDA,IN_TDOC,IN_PNR,IN_IDCON;
+            ,IN_PROCTYPE,IN_PROCTYPESQ,IN_MDA,IN_TDOC,IN_PNR,IN_FLEXID,IN_PRAXISID;
     
     private List<A4331AT2Filter> response = new ArrayList<>();
 
@@ -77,12 +77,20 @@ public class SQP05037Filter {
         this.response = response;
     }
 
-    public String getIN_IDCON() {
-        return IN_IDCON;
+    public String getIN_FLEXID() {
+        return IN_FLEXID;
     }
 
-    public void setIN_IDCON(String IN_IDCON) {
-        this.IN_IDCON = IN_IDCON;
+    public void setIN_FLEXID(String IN_FLEXID) {
+        this.IN_FLEXID = IN_FLEXID;
+    }
+
+    public String getIN_PRAXISID() {
+        return IN_PRAXISID;
+    }
+
+    public void setIN_PRAXISID(String IN_PRAXISID) {
+        this.IN_PRAXISID = IN_PRAXISID;
     }
     
 }

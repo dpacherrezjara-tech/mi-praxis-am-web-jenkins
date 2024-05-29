@@ -20,7 +20,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatDataEntry', {
         {
             xtype: 'form',
             anchor: '100%',
-            id:prototype.id+'-formatDataEntryForm',
+            id: prototype.id + '-formatDataEntryForm',
             items: [
                 {
                     xtype: 'fieldset',
@@ -48,14 +48,15 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatDataEntry', {
                             items: [
                                 {
                                     xtype: 'textfield',
-                                    name:'ccard1',
+                                    name: 'ccard1',
                                     fieldLabel: 'Credit Card',
                                     labelWidth: 70,
                                     width: 130,
                                     maskRe: /[0-9]/, // Solo se permiten números
                                     maxLength: 6, // Máximo de 5 caracteres permitidos
                                     enforceMaxLength: true,
-                                    allowBlank: false
+                                    allowBlank: false,
+                                    id: prototype.id + '-de-cardBin-1'
                                 },
                                 {
                                     xtype: 'label',
@@ -65,30 +66,32 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatDataEntry', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    name:'ccard2',
+                                    name: 'ccard2',
                                     maskRe: /[0-9]/, // Solo se permiten números
                                     width: 40,
                                     maxLength: 4, // Máximo de 5 caracteres permitidos
                                     enforceMaxLength: true,
-                                    allowBlank: false
+                                    allowBlank: false,
+                                    id: prototype.id + '-de-cardBin-2'
                                 }
                             ]
                         },
                         {
                             xtype: 'textfield',
-                            name:'auth',
+                            name: 'auth',
                             fieldLabel: 'Authorization Code',
                             labelWidth: 110,
                             width: 170,
                             maskRe: /[0-9]/, // Solo se permiten números
                             maxLength: 6, // Máximo de 5 caracteres permitidos
                             enforceMaxLength: true,
-                            allowBlank: false
+                            allowBlank: false,
+                            id: prototype.id + '-de-cardAuth'
                         }
                         ,
                         {
                             xtype: 'numberfield',
-                            name:'qtypax',
+                            name: 'qtypax',
                             fieldLabel: 'Qty. Passengers',
                             labelWidth: 100,
                             width: 150,
@@ -97,7 +100,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatDataEntry', {
                         },
                         {
                             xtype: 'numberfield',
-                            name:'qtytk',
+                            name: 'qtytk',
                             fieldLabel: 'Qty. Tickets',
                             labelWidth: 90,
                             width: 140,
@@ -106,13 +109,13 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatDataEntry', {
                         },
                         {
                             xtype: 'textfield',
-                            name:'mda',
+                            name: 'mda',
                             fieldLabel: 'Currency',
                             labelWidth: 65,
                             maskRe: /[a-zA-Z\s]/,
                             width: 115,
                             maxLength: 3, // Máximo de 5 caracteres permitidos
-                            minLength:3,
+                            minLength: 3,
                             enforceMaxLength: true,
                             allowBlank: false,
                             listeners: {
@@ -123,7 +126,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatDataEntry', {
                         },
                         {
                             xtype: 'textfield',
-                            name:'totamount',
+                            name: 'totamount',
                             fieldLabel: 'Total Amount',
                             labelWidth: 80,
                             width: 180,
@@ -133,7 +136,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatDataEntry', {
                         },
                         {
                             xtype: 'textfield',
-                            name:'totamounto',
+                            name: 'totamounto',
                             fieldLabel: 'Total Amount Off',
                             labelWidth: 100,
                             width: 200,
@@ -157,7 +160,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatDataEntry', {
                                 {
                                     xtype: 'textfield',
                                     fieldLabel: 'User',
-                                    name:'useru',
+                                    name: 'useru',
                                     labelWidth: 30,
                                     width: 120,
                                     editable: false
@@ -165,7 +168,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatDataEntry', {
                                 {
                                     xtype: 'textfield',
                                     fieldLabel: 'Date Update',
-                                    name:'dateu',
+                                    name: 'dateu',
                                     labelWidth: 80,
                                     width: 150,
                                     margin: '0 5 0 5',

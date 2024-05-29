@@ -47,9 +47,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
         const me = this;
         const obj = record.data;
         const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TicketConciliationDataEntry', {
-            id: prototype.id + '-TransacErrorBPODataEntry-1',
+            id: prototype.id + '-TicketConciliationDataEntry-1',
             searchParams: me.formatByTicketInfoParams(obj),
-            obj: obj
+            obj: obj,
+            callback: () => {
+                grid.getStore().load();
+            }
         });
         dataEntry.show();
     },

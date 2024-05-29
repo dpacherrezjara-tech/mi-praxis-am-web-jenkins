@@ -22,7 +22,7 @@ import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.A003;
 import net.miatech.praxis.interline.filter.SFI021Filter;
 import net.miatech.praxis.interline.filter.WRF016Filter;
-import net.miatech.praxis.payment.entities.A4202;
+import net.miatech.praxis.payment.old.A4202;
 import net.miatech.praxis.payment.old.A2280Filter;
 import net.miatech.praxis.payment.old.A2287Filter;
 import net.miatech.praxis.payment.old.A2290Filter;
@@ -775,7 +775,7 @@ public class MerchantNumberDAO {
         CallableStatement cstmt = null;
         PreparedStatement pstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00934(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00934(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -798,17 +798,22 @@ public class MerchantNumberDAO {
             cstmt.setString(13, filter.DIRCLIT2.trim());
             cstmt.setString(14, filter.MERCHP.trim());
             cstmt.setString(15, filter.STATUS.trim());
+            
+            cstmt.setString(16, filter.CODAGRUP.trim());
+            cstmt.setString(17, filter.DESCAGRUP.trim());
+            cstmt.setString(18, filter.FECHAINI.trim());
+            cstmt.setString(19, filter.FECHAFIN.trim());
 
-            cstmt.setString(16, session.getUserView().getUserInfo().USR);
-            cstmt.setString(17, Functions.getFechaActual());
-            cstmt.setString(18, Functions.getHoraActual());
+            cstmt.setString(20, session.getUserView().getUserInfo().USR);
+            cstmt.setString(21, Functions.getFechaActual());
+            cstmt.setString(22, Functions.getHoraActual());
             cstmt.execute();
             
-            String SQL_DELETE = "DELETE FROM LIBSAP12.A4202 WHERE MERCHN = ?";
+            String SQL_DELETE = "DELETE FROM PRAXISMP.A4202 WHERE MERCHN = ?";
             (pstmt = cnx.prepareStatement(SQL_DELETE)).setString(1, filter.MERCHN.trim());
             pstmt.execute();
 
-            if (lstDetalle != null && lstDetalle.size() > 0 && !option.equals("D")) {
+            if (lstDetalle != null && !lstDetalle.isEmpty() && !option.equals("D")) {
                 String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04436(?,?,?,?,?,?,?,?)}";
                 cstmt = cnx.prepareCall(SQLCLL02);
                 for (int i = 0; i < lstDetalle.size(); i++) {
@@ -886,6 +891,11 @@ public class MerchantNumberDAO {
                 objRtn.DIRCLIT2 = rs01.getString("DIRCLIT2").trim();
                 objRtn.UNIOPE = rs01.getString("UNIOPE").trim();
                 objRtn.STATUS = rs01.getString("STATUS").trim();
+                
+                objRtn.FECHAINI = rs01.getString("FECHAINI").trim();
+                objRtn.FECHAFIN = rs01.getString("FECHAFIN").trim();
+                objRtn.CODAGRUP = rs01.getString("CODAGRUP").trim();
+                objRtn.DESCAGRUP = rs01.getString("DESCAGRUP").trim();
 
                 objRtn.USCR = rs01.getString("USCR");
                 objRtn.FECR = rs01.getString("FECR");

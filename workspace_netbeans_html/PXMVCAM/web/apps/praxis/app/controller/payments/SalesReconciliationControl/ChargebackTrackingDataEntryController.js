@@ -48,10 +48,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
         const match = ['1', '5', '6', '7'];
         if (match.some(x => me.view.obj.stval === x)) {
             Ext.getCmp(prototype.idCHBK + '-btn-update').hide();
-            Ext.getCmp(prototype.idCHBK + '-chkChangeView').hide();
+            Ext.getCmp(prototype.idCHBK + '-rbOpcion').hide();
         } else {
             Ext.getCmp(prototype.idCHBK + '-btn-update').show();
-            Ext.getCmp(prototype.idCHBK + '-chkChangeView').show();
+            Ext.getCmp(prototype.idCHBK + '-rbOpcion').show();
         }
     },
     //<editor-fold defaultstate="collapsed" desc="Handlers">
@@ -83,19 +83,47 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
                     }
                 });
     },
-    onChangeView: function (checkbox, newValue) {
-        if (newValue) {
-            Ext.getCmp(prototype.idCHBK + '-gridCHBKTracking').hide();
-            Ext.getCmp(prototype.idCHBK + '-btn-update').hide();
-            Ext.getCmp(prototype.idCHBK + '-panelCHBKBrowser').show();
-            Ext.getCmp(prototype.idCHBK + '-btn-update-man').show();
-        } else {
-            Ext.getCmp(prototype.idCHBK + '-gridCHBKTracking').show();
-            Ext.getCmp(prototype.idCHBK + '-btn-update').show();
-            Ext.getCmp(prototype.idCHBK + '-panelCHBKBrowser').hide();
-            Ext.getCmp(prototype.idCHBK + '-btn-update-man').hide();
-        }
-        this.view.center();
+//    onChangeView: function (checkbox, newValue) {
+//        if (newValue) {
+//            Ext.getCmp(prototype.idCHBK + '-gridCHBKTracking').hide();
+//            Ext.getCmp(prototype.idCHBK + '-btn-update').hide();
+//            Ext.getCmp(prototype.idCHBK + '-panelCHBKBrowser').show();
+//            Ext.getCmp(prototype.idCHBK + '-btn-update-man').show();
+//        } else {
+//            Ext.getCmp(prototype.idCHBK + '-gridCHBKTracking').show();
+//            Ext.getCmp(prototype.idCHBK + '-btn-update').show();
+//            Ext.getCmp(prototype.idCHBK + '-panelCHBKBrowser').hide();
+//            Ext.getCmp(prototype.idCHBK + '-btn-update-man').hide();
+//        }
+//        this.view.center();
+//    },
+    onRadioGroupChange: function (field, newValue, oldValue) {
+        const me = this;
+        let selectedValue = newValue.rb;
+        //<editor-fold defaultstate="collapsed" desc="Hide All Btns">
+        Ext.getCmp(prototype.idCHBK + '-gridCHBKTracking').hide();
+        Ext.getCmp(prototype.idCHBK + '-btn-update').hide();
+        Ext.getCmp(prototype.idCHBK + '-panelCHBKBrowser').hide();
+        Ext.getCmp(prototype.idCHBK + '-btn-update-man').hide();
+        Ext.getCmp(prototype.idCHBK + '-gridSaleTracking').hide();
+        Ext.getCmp(prototype.idCHBK + '-btn-update-sale').hide();
+        //</editor-fold>
+        const opt = {
+            '1': () => {
+                Ext.getCmp(prototype.idCHBK + '-gridCHBKTracking').show();
+                Ext.getCmp(prototype.idCHBK + '-btn-update').show();
+            },
+            '2': () => {
+                Ext.getCmp(prototype.idCHBK + '-gridSaleTracking').show();
+                Ext.getCmp(prototype.idCHBK + '-btn-update-sale').show();
+                me.loadSaleChbkGrid();
+            },
+            '3': () => {
+                Ext.getCmp(prototype.idCHBK + '-panelCHBKBrowser').show();
+                Ext.getCmp(prototype.idCHBK + '-btn-update-man').show();
+            }
+        };
+        opt[selectedValue]();
     },
     onSearchBrowser: function () {
         this.loadBrowserGrid();
@@ -144,6 +172,37 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
         }
         desgloseGrid.getView().unmask();
     },
+    loadSaleChbkGrid: async function () {
+        const me = this;
+        const gridCHBK = Ext.getCmp(prototype.idCHBK + '-gridSaleTracking');
+        let params = me.formatSaleCHBKParams();
+        me.view.mask('Loading...');
+        const res = await fetch(`${me.url}/loadSaleCHBKTrackingInfo?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            let store = new Ext.data.Store({
+                autoLoad: true,
+                data: data.response,
+                listeners: {
+                    load: function (store, records, successful) {
+                        const grilla = Ext.getCmp(prototype.idCHBK + '-gridSaleTracking');
+
+                    }
+                }
+            });
+            gridCHBK.setStore(store);
+        }
+        me.view.unmask();
+    },
+    storeChangeSale: function (grid, newStore, oldStore) {
+        let records = newStore.getData().items;
+        let selModel = grid.getSelectionModel();
+        records.forEach(i => {
+            if (i.data.STMAIN === '1') {
+                selModel.select(i, true);
+            }
+        });
+    },
     onSelectDesglose: function (rowModel, record, index) {
         const obj = record.data;
         const desgloseGrid = Ext.getCmp(prototype.idCHBK + '-gridDesgloseCHBK');
@@ -171,11 +230,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
         const me = this;
         const browserGrid = Ext.getCmp(prototype.idCHBK + '-gridCHBKBrowser').getSelectionModel().getSelection();
         const desgloseGrid = Ext.getCmp(prototype.idCHBK + '-gridDesgloseCHBK').getSelectionModel().getSelection();
-        if (browserGrid.length === 0){
+        if (browserGrid.length === 0) {
             global.Msg({msg: 'Select transaction.'});
             return;
         }
-        if (desgloseGrid.length === 0){
+        if (desgloseGrid.length === 0) {
             global.Msg({msg: 'There are no tickets selected.'});
             return;
         }
@@ -198,6 +257,38 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
                         }
                     }
                 });
+    },
+    onUpdateSale: function () {
+        const me = this;
+        const grid = Ext.getCmp(prototype.idCHBK + '-gridSaleTracking');
+        let selected = grid.getSelectionModel().getSelected();
+        let sale = selected.filter(x => x.data.TRANSTYPE.trim() === 'SALE');
+        let chbk = selected.filter(x => x.data.TRANSTYPE.trim() === 'CHBK');
+        if (sale.length === 0 || sale.length > 1) {
+            global.Msg({msg: 'You must select one sale'});
+            return;
+        }
+
+        if (chbk.length === 0 || chbk.length > 1) {
+            global.Msg({msg: 'You must select one chargeback'});
+            return;
+        }
+        let params = me.formatUpdateSaleChbk(sale,chbk);
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to update?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            
+                        }
+                    }
+                });
+        
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Format Params">
@@ -231,6 +322,39 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
             diff: difference
         };
         console.log(params);
+        return params;
+    },
+    formatSaleCHBKParams: function () {
+        const me = this;
+        const obj = me.view.obj;
+        let cc1 = obj.scardn.trim().slice(0, 6);
+        let cc2 = obj.scardn.trim().slice(-4);
+        if (obj.proctype === 'BANORTE00') {
+            cc2 = obj.scardn.trim().slice(-2);
+        }
+        let scardn = `${cc1}%${cc2}%`;
+        let params = {
+            IN_CCUST: obj.ccust,
+            IN_TDOC: obj.tdoc,
+            IN_PRDA: obj.prda,
+            IN_AREFNBR: obj.arefnbr,
+            IN_SCARDN: scardn,
+            IN_TGROSAMOUN: obj.tgrosamoun
+        };
+        console.log('Parametros Sale/CHBK: ', params);
+        return params;
+    },
+    formatUpdateSaleChbk: function (sale,chbk) {
+        let params = {
+            IN_CCUST : chbk.CCUST,
+            IN_PRDA: chbk.PRDA,
+            IN_TDOC: chbk.TDOC,
+            IN_AREFNBR: chbk.AREFNBR,
+            IN_PRDAS: sale.PRDA,
+            IN_TDOCS: sale.TDOC,
+            IN_AREFNBRS: sale.AREFNBR
+        };
+        console.log('Parametros Update Sale/CHBK: ',params);
         return params;
     },
     //</editor-fold>
@@ -316,6 +440,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
             gridDet.getStore().load();
             me.view.close();
         }
+    },
+    maintenanceChbkSale:async function(params){
+        this.view.mask('Loading...');
+        const res = await fetch(`${me.url}/maintenanceChbkSaleConcil`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        });
+        if(res.ok){
+            const data = await res.json();
+            const {SQLRES,SQLMSG} = data;
+            global.Msg({msg:SQLMSG});
+        }
+        this.view.unmask();
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">

@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         if (me.bean.transtype === 'CHBK') {
             diff = tgrosamoun + svfops;
         }
-        Ext.getCmp(prototype.idDE + '-de-txtDIFF_AMOUNT').setValue(Ext.util.Format.number(diff, '0,000.00'));
+        Ext.getCmp(prototype.idDE + '-txtDifference').setValue(diff);
 
         const bpo = Ext.getCmp(prototype.idDE + '-tabBPO');
         const blocked = Ext.getCmp(prototype.idDE + '-tabBlocked');
@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             //transacciones stand by    
         } else if (status === '0') {
             bpo.setDisabled(false);
-            blocked.setDisabled(true);
+            blocked.setDisabled(false);
             desglose.setDisabled(true);
             scanner.hide();
             me.showStandBy(true);
@@ -116,24 +116,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             me.scanCreditCard(me.bean);
         }
         me.changeTrnxView(me.bean.transtype);
-        me.setUserInformation(me.bean);
+        //me.setUserInformation(me.bean);
     },
     changeTrnxView: function (trnx) {
         const me = this;
-        const smerchid = Ext.getCmp(prototype.idDE + '-txtFromDateSMERCHID');
-        const trnxInfo = Ext.getCmp(prototype.idDE + '-txtFromDateTITULO');
-        const saleDate = Ext.getCmp(prototype.idDE + '-txtFromDateBSUMDATE');
-        const salesAmt = Ext.getCmp(prototype.idDE + '-txtFromDateSVFOPS');
+        const smerchid = Ext.getCmp(prototype.idDE + '-txtSMERCHID');
+        const trnxInfo = Ext.getCmp(prototype.idDE + '-fsSaleInfo');
+        const saleDate = Ext.getCmp(prototype.idDE + '-txtSDATE');
+        const salesAmt = Ext.getCmp(prototype.idDE + '-txtSVFOPS');
         if (trnx === 'RFND') {
-            smerchid.setText('Refund Merchant ID');
-            trnxInfo.setText('Refund Information');
-            saleDate.setText('Refund Date');
-            salesAmt.setText('Refund Amount');
+            smerchid.setFieldLabel('Refund Merchant');
+            trnxInfo.setTitle('<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Refund Information</span>');
+            saleDate.setFieldLabel('Refund Date');
+            salesAmt.setFieldLabel('Refund Amount');
         } else {
-            smerchid.setText('Sale Merchant ID');
-            trnxInfo.setText('Sale Information');
-            saleDate.setText('Sale Date');
-            salesAmt.setText('Sale Amount');
+            smerchid.setFieldLabel('Sale Merchant');
+            trnxInfo.setTitle('<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Sale Information</span>');
+            saleDate.setFieldLabel('Sale Date');
+            salesAmt.setFieldLabel('Sale Amount');
         }
 
         Ext.getCmp(prototype.idDE + '-ChargebackTracking').hide();
@@ -147,20 +147,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             Ext.getCmp(prototype.idDE + '-specialTitle').setText('ADJUSTMENT');
         }
     },
-    setUserInformation: function (bean) {
-        const {uscr, fecr, hocr, usup, feup, houp} = bean;
-        Ext.getCmp(prototype.idDE + '-txtUSCR').setValue(uscr);
-        Ext.getCmp(prototype.idDE + '-txtFECR').setValue(fecr);
-        Ext.getCmp(prototype.idDE + '-txtHOCR').setValue(hocr);
-        Ext.getCmp(prototype.idDE + '-txtUSUP').setValue(usup);
-        Ext.getCmp(prototype.idDE + '-txtFEUP').setValue(feup);
-        Ext.getCmp(prototype.idDE + '-txtHOUP').setValue(houp);
-    },
+//    setUserInformation: function (bean) {
+//        const {uscr, fecr, hocr, usup, feup, houp} = bean;
+//        Ext.getCmp(prototype.idDE + '-txtUSCR').setValue(uscr);
+//        Ext.getCmp(prototype.idDE + '-txtFECR').setValue(fecr);
+//        Ext.getCmp(prototype.idDE + '-txtHOCR').setValue(hocr);
+//        Ext.getCmp(prototype.idDE + '-txtUSUP').setValue(usup);
+//        Ext.getCmp(prototype.idDE + '-txtFEUP').setValue(feup);
+//        Ext.getCmp(prototype.idDE + '-txtHOUP').setValue(houp);
+//    },
     showStandBy: function (show) {
         const standByBpo = Ext.getCmp(prototype.idDE + '-bpoComments');
         const addStandBy = Ext.getCmp(prototype.idDE + '-addStandBy');
         const revStandBy = Ext.getCmp(prototype.idDE + '-revStandBy');
         const hideStandBy = Ext.getCmp(prototype.idDE + '-hideStandBy');
+        //debugger;
         if (show) {
             addStandBy.show();
             revStandBy.show();
@@ -190,6 +191,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             global.Msg({msg: 'Error on scan'});
         }
         panelScan.unmask();
+        me.view.center();
     },
     scanStandBy: async function (obj) {
         const me = this;
@@ -222,11 +224,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     onAddAdjustment: function (grid, rowIndex, colIndex) {
         let registro = grid.getStore().getAt(rowIndex).data;
 
-        const transacAmt = this.bean.tgrosamoun;
+        let transacType = this.bean.transtype;
+        let transacAmt = this.bean.tgrosamoun;
         const gridAmt = Ext.getCmp(prototype.idDE + '-totAmount').getValue().replace(/,/g, "");
         console.log(transacAmt, '-', gridAmt);
         const objClon = Object.assign({}, registro);
-        objClon.svfops = parseFloat(transacAmt) - parseFloat(gridAmt);
+        if (transacType.trim() === 'CHBK') {
+            objClon.svfops = Math.abs(parseFloat(transacAmt)) - parseFloat(gridAmt);
+        } else {
+            objClon.svfops = parseFloat(transacAmt) - parseFloat(gridAmt);
+        }
         objClon.trnco = objClon.trncu;
         objClon.trncu = 'ADJU';
         const newCorrl = parseInt(objClon.corrl, 10) + 1;
@@ -236,6 +243,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             return;
         }
         const panelAdju = Ext.getCmp(prototype.idDE + '-panelAdjustments');
+        //debugger;
         panelAdju.show();
 
         const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments');
@@ -457,12 +465,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     },
     onAddCreditCardClick: async function () {
         const me = this;
-        const scannerPanel = Ext.getCmp(prototype.idDE + '-scannerPanel');
-        scannerPanel.mask('Loading...');
+        const scannerInputs = Ext.getCmp(prototype.idDE + '-scannerInputs');
+        scannerInputs.mask('Loading...');
         const scannerForm = Ext.getCmp(prototype.idDE + '-scannerForm').getForm();
         if (!scannerForm.isValid()) {
             global.Msg({msg: 'Invalid Parameters'});
-            scannerPanel.unmask();
+            scannerInputs.unmask();
             return;
         }
         let params = {
@@ -476,9 +484,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             params.IN_SCARDN = `${params.creditcard.at(0)}%${params.creditcard.at(1)}%`;
         }
         console.log(params);
-        if (!params.hasOwnProperty("IN_SCARDN") && params.IN_TICKET === '') {
+        if (!params.hasOwnProperty("IN_SCARDN") && (params.IN_TICKET === '' && params.IN_SPNR === '')) {
             global.Msg({msg: 'Invalid Parameters'});
-            scannerPanel.unmask();
+            scannerInputs.unmask();
             return;
         }
         const forceScan = Ext.getCmp(prototype.idDE + '-chkForceBlock').getValue();
@@ -522,17 +530,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 timeout: 10000 // 10 segundos
             });
         }
-        scannerPanel.unmask();
+        scannerInputs.unmask();
     },
     onAddDuplicated: async function () {
         const me = this;
-        const scannerPanel = Ext.getCmp(prototype.idDE + '-scannerPanel');
+        const scannerInputs = Ext.getCmp(prototype.idDE + '-scannerInputs');
         const adjuPanel = Ext.getCmp(prototype.idDE + '-panelAdjustments');
-        scannerPanel.mask('Loading...');
+        scannerInputs.mask('Loading...');
         const scannerForm = Ext.getCmp(prototype.idDE + '-scannerForm').getForm();
         if (!scannerForm.isValid()) {
             global.Msg({msg: 'Invalid Parameters'});
-            scannerPanel.unmask();
+            scannerInputs.unmask();
             return;
         }
         let params = {
@@ -547,7 +555,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 
         if (params.IN_TICKET === '' || params.IN_SAGENT === '' || params.IN_SPNR === '') {
             global.Msg({msg: 'Invalid Parameters'});
-            scannerPanel.unmask();
+            scannerInputs.unmask();
             return;
         }
         const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments');
@@ -558,6 +566,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             const data = await res.json();
             if (data.response.length === 0) {
                 global.Msg({msg: 'Not Found'});
+                scannerInputs.unmask();
                 return;
             }
             const adju = {
@@ -571,7 +580,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             me.view.center();
             console.log(data.response.at(0));
         }
-        scannerPanel.unmask();
+        scannerInputs.unmask();
     },
     onAddDuplicatedGrid: async function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
@@ -614,6 +623,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const me = this;
         let params = {
             IN_CCUST: '139',
+            IN_PRDA: me.bean.prda,
+            IN_PROCTYPE: me.bean.proctype,
+            IN_PROCTYPESQ: me.bean.proctypesq,
             IN_TGROSAMOUN: me.bean.tgrosamoun
         };
         if (me.bean.proctype === 'BANORTE00') {
@@ -624,7 +636,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const dataEntryMSI = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry', {
             id: prototype.idDE + '-MSITrackingDataEntry',
             searchParams: params,
-            obj: me.bean
+            obj: me.bean,
+            callback: me.reloadErrorGrid,
+            reRender: me.afterRender
         });
         dataEntryMSI.show();
     },
@@ -642,7 +656,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const dataEntryCHBK = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ChargebackTrackingDataEntry', {
             id: prototype.idDE + '-CHBKTrackingDataEntry',
             searchParams: params,
-            obj: me.bean
+            obj: me.bean,
+            callback: me.reloadErrorGrid,
+            reRender: me.afterRender
         });
         dataEntryCHBK.show();
     },
@@ -671,6 +687,29 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             doctype: stdoc
         });
         usageWin.show();
+    },
+    onCenterDataEntry: function () {
+        this.view.center();
+    },
+    onShowTransactionMatch: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const obj = record.data;
+        const {tdoc} = this.bean;
+        let params = {
+            IN_CCUST: obj.ccust,
+            IN_CIA: obj.ccia,
+            IN_FORMA: obj.forma,
+            IN_SERIE: obj.serie,
+            IN_SEQ: obj.seq,
+            IN_TDOC: tdoc,
+            IN_CORRL: obj.tcorr
+        };
+        console.log('By Ticket Params: ', params);
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TicketConciliationDataEntry', {
+            id: prototype.id + '-TicketConciliationDataEntry-2',
+            searchParams: params,
+            obj: obj
+        });
+        dataEntry.show();
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Grillas Scaneo">
@@ -752,8 +791,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         panelScan.unmask();
     },
     reloadErrorGrid: function () {
-        const grid = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
-        grid.getStore().load();
+        let callback = this.view.callback;
+        if (callback) {
+            callback();
+        }
     },
     cleanGridBPO: function (btn) {
         const gridBPO = Ext.getCmp(prototype.idDE + '-gridBPO').getStore();
@@ -838,19 +879,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             cc2 = obj.scardn.trim().slice(-2);
         }
         let scardn = `${cc1}%${cc2}%`;
-        const [inicio, fin] = me.getFechaRango(obj.sdate);
+        //Se agrego fecha de pago como opcional si no existe fecha de venta
+        let fecha = obj.sdate.trim() === '' ? obj.paydate : obj.sdate;
+        const [inicio, fin] = me.getFechaRango(fecha);
         let params = {
             IN_CCUST: obj.ccust,
             IN_SCARDN: scardn,
-            IN_SAUTHOC: obj.sauthoc,
-            IN_DATE: obj.sdate,
+            IN_DATE: fecha,
             IN_DATE_F: inicio,
             IN_DATE_T: fin,
             IN_SMERCHID: obj.smerchid,
             IN_SPNR: obj.spnr,
-            IN_FCOMPL: obj.fcompl,
             IN_TDOC: obj.tdoc,
-            IN_TRANSTYPE: obj.transtype
+            IN_TRANSTYPE: obj.transtype,
+            IN_PROCTYPE: obj.proctype,
+            IN_PROCTYPESQ: obj.proctypesq,
+            IN_TICKET: obj.ticket
         };
         return params;
     },
@@ -878,13 +922,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const me = this;
         const gridBPO = Ext.getCmp(prototype.idDE + '-gridBPO').getStore();
         const details = [...gridBPO.data.items.map(x => me.requestObjectPX(x.data))]
-                .map(x=>({
-                    CCUST: 139,
-                    AREFNBR: obj.arefnbr,
-                    PRDA: obj.prda,
-                    TDOC: obj.tdoc,
-                    ...x
-                }));
+                .map(x => ({
+                        CCUST: 139,
+                        AREFNBR: obj.arefnbr,
+                        PRDA: obj.prda,
+                        TDOC: obj.tdoc,
+                        ...x
+                    }));
         let params = {
             IN_CCUST: obj.ccust,
             IN_PRDA: obj.prda,
@@ -919,7 +963,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         } else {
             difference = totalGross - sumDesglose;
         }
-        console.log('Total Difference: ',difference);
+        console.log('Total Difference: ', difference);
 
         //obtiene detalle para desglosado
         const details = [
@@ -977,6 +1021,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         params.IN_FVOID = conteo_void > 0 ? 'V' : '';
         params.IN_QTYTKT = details.length;
         params.IN_SVFOPS = sumDesglose;
+        params.IN_FDESGLOSE = 'M';
+        params.IN_FADM = codADJU === '03' ? 'Y' : '';
         console.log(params);
         return params;
     },

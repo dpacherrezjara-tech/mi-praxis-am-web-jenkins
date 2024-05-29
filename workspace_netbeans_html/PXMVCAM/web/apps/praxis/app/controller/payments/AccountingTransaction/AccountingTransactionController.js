@@ -19,14 +19,19 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
         panelFilters.mask('Loading Filters...');
         if (res.ok) {
             const data = await res.json();
-            //console.log(data);
-            const storeProcs = me.createComboStore({
-                data: data.lstProcs.filter(x=>x.a4451fech1.trim()==='P'), 
-                valueField: 'a4451key2', 
-                displayField: 'a4451desc1'
-            });
-            Ext.getCmp(prototype.id + '-cmbProcessor').bindStore(storeProcs);
-            //Ext.getCmp(prototype.id + '-cmbTDOC').setValue('SALE');
+            
+            const procesadores = data.lstProcs.filter(x=>x.a4451fech1.trim()==='P');
+            const monedas = data.monedas.map(x => ({code: x.a006PAIS, name: `${x.a006PAIS}`}));
+            
+            //<editor-fold defaultstate="collapsed" desc="Combos">
+            const cmbProcs = Ext.getCmp(prototype.id + '-cmbProcessor');
+            me.setComboStore({cmp: cmbProcs, data: procesadores,
+                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
+            
+            const cmbMdas = Ext.getCmp(prototype.id + '-cmbMoneda');
+            me.setComboStore({cmp: cmbMdas, data: monedas,
+                valueField: 'code', displayField: 'name', value: ''});
+            //</editor-fold>
             panelFilters.unmask();
         }
     },
@@ -47,24 +52,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
         mainPanel.add(summaryGrid);
     },
     formatParameters: function () {
-        let tfecha = Ext.getCmp(prototype.id + '-cmbDate');
-        let from = Ext.getCmp(prototype.id + '-dateFrom');
-        let to = Ext.getCmp(prototype.id + '-dateTo');
-        let procesador = Ext.getCmp(prototype.id + '-cmbProcessor');
-        let mda = Ext.getCmp(prototype.id + '-cmbMDA');
-        let tdoc = Ext.getCmp(prototype.id + '-cmbTDOC');
-        let pnr = Ext.getCmp(prototype.id + '-txtPNR');
-        let idcon = Ext.getCmp(prototype.id + '-txtIDAC');
-        return {
-            IN_TFECHA: tfecha.getValue(),
-            FECHA_FROM: Ext.Date.format(from.getValue(), 'Ym') + '01',
-            FECHA_TO: Ext.Date.format(to.getValue(), 'Ym') + '31',
-            IN_PROCESADOR: procesador.getValue(),
-            IN_MDA: mda.getValue(),
-            IN_TDOC: tdoc.getValue(),
-            IN_PNR: pnr.getValue(),
-            IN_IDCON: idcon.getValue()
-        };
+        let formFilterts = Ext.getCmp(prototype.id + '-panelFilters').getForm().getValues();
+        console.log('Summary Grid Filters: ',formFilterts);
+        return formFilterts;
     },
     onClickFilterBtn:function(){
         const panelFilters = Ext.getCmp(prototype.id + '-contentFilter');
@@ -76,18 +66,15 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
     onClickClearBtn:function(){
         prototype.id = 'AccountingTransactionForm';
         prototype.url = CONTEXTPATH + '/AccountingTransaction';
-        Ext.getCmp(prototype.id + '-txtPNR').setValue('');
-        Ext.getCmp(prototype.id + '-txtIDAC').setValue('');
-        Ext.getCmp(prototype.id + '-cmbMDA').setValue('');
-        Ext.getCmp(prototype.id + '-cmbDate').setValue('P');
-        
-        Ext.getCmp(prototype.id + '-dateFrom').setValue(new Date(new Date().getFullYear(), 0, 1));
-        Ext.getCmp(prototype.id + '-dateTo').setValue(new Date());
-        
-        Ext.getCmp(prototype.id + '-cmbTDOC').setValue('SALE');
+        Ext.getCmp(prototype.id + '-panelFilters').getForm().reset();
     },
     onClickBackBtn: function (obj) {
         window.location.href = CONTEXTPATH;
+    },
+    onEnterKeyPress: function (field, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onClickSearchBtn();
+        }
     },
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">
     onChangeFechaBtn: function (obj) {
@@ -134,6 +121,14 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
     getCmp: function ( {id}){
         return Ext.getCmp(prototype.id + id);
     },
+    setComboStore: function ( {cmp, data, valueField, displayField, value}){
+        const me = this;
+        cmp.suspendEvents(false);
+        cmp.bindStore(me.createComboStore({data: data
+            , valueField: valueField, displayField: displayField}));
+        cmp.setValue(value);
+        cmp.resumeEvents();
+    },
     createComboStore: function ( {data, valueField, displayField}) {
         //crea record vacio
         let allRecord = {};
@@ -148,9 +143,10 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
             }
         });
         //crea Store
-        let store = me.createStore({data: data});
+        let store = this.createStore({data: data});
         //inserta record vacio
         store.insert(0, allRecord);
+        //console.log('store creado',store);
         return store;
     },
     createArrayStore: function ( {data}){
