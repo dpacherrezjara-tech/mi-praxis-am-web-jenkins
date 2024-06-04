@@ -272,8 +272,8 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntryTicket', 
                                             labelAlign: 'left',
                                             padding: '1px 5px 0px 5',
                                             enforceMaxLength: true,
-                                            fieldStyle: 'text-align: center;'
-                                            //maxLength: 4
+                                            fieldStyle: 'text-align: center;',
+                                            maxLength: 50
                                                     //maskRe: /[0-9]/
                                         }
 
