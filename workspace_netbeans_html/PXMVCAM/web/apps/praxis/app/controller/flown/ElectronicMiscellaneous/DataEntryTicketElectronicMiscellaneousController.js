@@ -263,9 +263,10 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
         //Fecha Contable (x ahora lo saca de la Fecha de Vuelo a pedido de ENS)
         var FCONT = Ext.util.Format.date(Ext.getCmp(prototype.id + '-t' + '-txtFCONT').getValue(), 'Ymd');
         var DFLIGHT = Ext.util.Format.date(Ext.getCmp(prototype.id + '-t' + '-txtDFLIGHT').getValue(), 'Ymd');
+        /*
         if (FCONT === '' && DFLIGHT.length === 8) {
             FCONT = DFLIGHT.substring(0, 6);
-        }
+        }*/
         //Valida el origen según la CIA.
         var STORG;
         var cia = strTicket.substring(0, 3);
