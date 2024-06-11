@@ -217,6 +217,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     //metaData.style = "background-color:#b2e1ff;";
                                     let option = record.data.stusocp1;
+                                    const cupon = record.data.indcpn.slice(0,1);
                                     const opts = {
                                         'D': () => {
                                             metaData.style = "background-color:#F34040;font-weight:bolder;";
@@ -225,7 +226,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                             metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
                                         }
                                     };
-                                    if (opts[option])
+                                    if (opts[option] && cupon !== 'V')
                                         opts[option]();
                                     return value;
                                 }
@@ -235,6 +236,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     //metaData.style = "background-color:#b2e1ff;";
                                     let option = record.data.stusocp2;
+                                    const cupon = record.data.indcpn.slice(1,2);
                                     const opts = {
                                         'D': () => {
                                             metaData.style = "background-color:#F34040;font-weight:bolder;";
@@ -243,7 +245,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                             metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
                                         }
                                     };
-                                    if (opts[option])
+                                    if (opts[option] && cupon !== 'V')
                                         opts[option]();
                                     return value;
                                 }
@@ -253,6 +255,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     //metaData.style = "background-color:#b2e1ff;";
                                     let option = record.data.stusocp3;
+                                    const cupon = record.data.indcpn.slice(2,3);
                                     const opts = {
                                         'D': () => {
                                             metaData.style = "background-color:#F34040;font-weight:bolder;";
@@ -261,7 +264,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                             metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
                                         }
                                     };
-                                    if (opts[option])
+                                    if (opts[option] && cupon !== 'V')
                                         opts[option]();
                                     return value;
                                 }
@@ -271,6 +274,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     //metaData.style = "background-color:#b2e1ff;";
                                     let option = record.data.stusocp4;
+                                    const cupon = record.data.indcpn.slice(3,4);
                                     const opts = {
                                         'D': () => {
                                             metaData.style = "background-color:#F34040;font-weight:bolder;";
@@ -279,7 +283,7 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                                             metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
                                         }
                                     };
-                                    if (opts[option])
+                                    if (opts[option] && cupon !== 'V')
                                         opts[option]();
                                     return value;
                                 }
