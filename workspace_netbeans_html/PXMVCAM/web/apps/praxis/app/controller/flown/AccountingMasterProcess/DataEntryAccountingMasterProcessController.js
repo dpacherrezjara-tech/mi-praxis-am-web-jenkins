@@ -170,33 +170,41 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                 var result = res.data;
                 var val_flown = result.IN_FLOWN;
                 var val_emd = result.IN_EMD;
-                if (val_flown === 0){
+                if(val_flown!==-99)
+                {
+                    if (val_flown === 0){
                     /*Ext.Msg.show({
                         title: '.:Flown Validation:.',
                         msg: 'Flown Valuation is pendinng'
                     });*/
                     Ext.Msg.alert('.:Flown Validation:.','Flown Valuation is pending');
-                } else{
-                    if(val_emd === 0){
-                        Ext.Msg.show({
-                            title: '.:PRAXIS:.',
-                            msg: 'EMDs Valuation is pending. Are you sure to insert ?',
-                            buttons: Ext.MessageBox.YESNO,
-                            scope: me,
-                            icon: Ext.MessageBox.QUESTION,
-                            modal: true,
-                            fn: function(btn) {
-                                if (btn === 'yes') {
-                                    me.p.action = "I";
-                                    me.crud();                                    
+                    } else{
+                        if(val_emd === 0){
+                            Ext.Msg.show({
+                                title: '.:PRAXIS:.',
+                                msg: 'EMDs Valuation is pending. Are you sure to insert ?',
+                                buttons: Ext.MessageBox.YESNO,
+                                scope: me,
+                                icon: Ext.MessageBox.QUESTION,
+                                modal: true,
+                                fn: function(btn) {
+                                    if (btn === 'yes') {
+                                        me.p.action = "I";
+                                        me.crud();                                    
+                                    }
                                 }
-                            }
-                        });
-                    } else {
-                        me.p.action = "I";
-                        me.crud();                        
+                            });
+                        } else {
+                            me.p.action = "I";
+                            me.crud();                        
+                        }
                     }
                 }
+                else
+                {
+                    Ext.Msg.alert('.:Flown Validation:.','RECORD EXISTS');
+                    
+                }                
             }
         });
     },
