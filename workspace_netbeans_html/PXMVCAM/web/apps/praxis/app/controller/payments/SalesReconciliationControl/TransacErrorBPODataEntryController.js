@@ -881,7 +881,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         let scardn = `${cc1}%${cc2}%`;
         //Se agrego fecha de pago como opcional si no existe fecha de venta
         let fecha = obj.sdate.trim() === '' ? obj.paydate : obj.sdate;
-        const [inicio, fin] = me.getFechaRango(fecha);
+        const [inicio, fin] = me.getFechaRango(fecha,2);
         let params = {
             IN_CCUST: obj.ccust,
             IN_SCARDN: scardn,
@@ -1064,7 +1064,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         }
         return resultado;
     },
-    getFechaRango: function (fechaString) {
+    getFechaRango: function (fechaString,dias) {
         // Convertir la cadena en un objeto Date
         const fecha = new Date(
                 fechaString.substring(0, 4),
@@ -1074,10 +1074,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 
         // Obtener la fecha +1 día
         const fechaMasUnDia = new Date(fecha);
-        fechaMasUnDia.setDate(fecha.getDate() + 1);
+        fechaMasUnDia.setDate(fecha.getDate() + dias);
         // Obtener la fecha -1 día
         const fechaMenosUnDia = new Date(fecha);
-        fechaMenosUnDia.setDate(fecha.getDate() - 1);
+        fechaMenosUnDia.setDate(fecha.getDate() - dias);
         // Formatear las nuevas fechas como cadenas
         const fechaMasUnDiaString = fechaMasUnDia.toISOString().slice(0, 10).replace(/-/g, '');
         const fechaMenosUnDiaString = fechaMenosUnDia.toISOString().slice(0, 10).replace(/-/g, '');
