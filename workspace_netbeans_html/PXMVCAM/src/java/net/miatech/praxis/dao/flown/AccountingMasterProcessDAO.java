@@ -161,7 +161,115 @@ public class AccountingMasterProcessDAO {
 
         return lstRtn;
     }
-    
+    public List<A1955Filter> searchSQP05346(A1955Filter filter) throws SQLException, Exception {
+	List<A1955Filter> lstRtn = new ArrayList(0);
+	A1955Filter objRtn;
+	int PAGINIT = 1, totPAGS = 0, totRowsPag = filter.page.PAGROW, totRows = -1;
+
+	CallableStatement cstmt01 = null, cstmt02 = null;
+	ResultSet rs01 = null, rs02 = null;
+
+	String SQLCLL01 = "{CALL PRAXIS.SQP05346(?,?,?,?,?,?,?,?)}";
+
+	Connection cnx = null;
+
+	try {
+
+		cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+
+		if (filter.page.PAGNUM > 0) {
+			PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
+		}
+		cstmt01 = cnx.prepareCall(SQLCLL01);
+
+		cstmt01.registerOutParameter("IO_PAGNUM", Types.INTEGER);
+		cstmt01.registerOutParameter("IO_PAGROW", Types.INTEGER);
+		cstmt01.registerOutParameter("IO_TOTPAG", Types.INTEGER);
+		cstmt01.registerOutParameter("IO_TOTROW", Types.INTEGER);
+
+		cstmt01.setString("IN_A4492MODUL", filter.IN_MODULO);
+		cstmt01.setString("IN_FINI", filter.IN_FECHA_PROCESO);
+		cstmt01.setString("IN_FFIN", filter.IN_FECHA_ACUSE);
+		cstmt01.setString("IN_A4492DESC", filter.A1955STATU);
+
+		cstmt01.setInt("IO_PAGNUM", PAGINIT);
+		cstmt01.setInt("IO_PAGROW", totRowsPag);
+		cstmt01.setInt("IO_TOTPAG", totRows);
+		cstmt01.setInt("IO_TOTROW", filter.page.TOTROW);
+
+		cstmt01.execute();
+
+		filter.page.PAGNUM = cstmt01.getInt("IO_PAGNUM");
+		filter.page.PAGROW = cstmt01.getInt("IO_PAGROW");
+		filter.page.TOTPAG = cstmt01.getInt("IO_TOTPAG");
+		filter.page.TOTROW = cstmt01.getInt("IO_TOTROW");
+
+		if (filter.page.TOTROW > 0 && filter.page.TOTROW == cstmt01.getInt("IO_PAGROW")) {
+			totRows = filter.page.TOTROW;
+			totPAGS = filter.page.TOTPAG;
+		} else {
+			try {
+				totRows = cstmt01.getInt("IO_TOTROW");
+				int total = (int) (totRows / totRowsPag);
+				int resto = (totRows % totRowsPag);
+
+				if (resto > 0) {
+					totPAGS = total + 1;
+				} else {
+					totPAGS = total;
+				}
+
+			} catch (Exception e) {
+				totPAGS = totRows / totRowsPag;
+			}
+		}
+
+		filter.page.TOTPAG = totPAGS;
+
+		rs01 = cstmt01.getResultSet();
+		int pos = 0;
+		while (rs01.next()) {
+			pos++;
+			objRtn = new A1955Filter();
+			objRtn.RN = rs01.getLong("RN");
+			objRtn.A1955ENVIO = rs01.getString("A4492ID").trim();
+			objRtn.A1955MODUL = rs01.getString("A4492MODUL").trim();
+			objRtn.MODULE = rs01.getString("A4492MODUL").trim();
+			objRtn.ACCION = rs01.getString("A4492PROG").trim();
+			objRtn.ESTADO = rs01.getString("A4492DESC").trim();
+			objRtn.A1955FPROC = rs01.getString("A4492FPROC").trim();
+			objRtn.A1955STATU = rs01.getString("A4492DESC").trim();
+			//objRtn.A1955PRIOR = rs01.getString("A1955PRIOR").trim();
+			objRtn.A1955USRIN = rs01.getString("A4492UREGI").trim();
+			objRtn.A1955FECIN = rs01.getString("A4492FREGI").trim();
+			objRtn.A1955HORIN = rs01.getString("A4492HREGI").trim();
+			objRtn.A1955USRAC = rs01.getString("A4492UREGI").trim();
+			objRtn.A1955FECAC = rs01.getString("A4492FREGI").trim();
+			objRtn.A1955HORAC = rs01.getString("A4492HREGI").trim();
+
+			objRtn.page.PAGNUM = filter.page.PAGNUM / filter.page.PAGROW + 1;
+			objRtn.page.PAGROW = filter.page.PAGROW;
+			objRtn.page.TOTPAG = filter.page.TOTPAG;
+			objRtn.page.TOTROW = filter.page.TOTROW;
+
+			lstRtn.add(objRtn);
+		}
+	} catch (Exception ex) {
+		String str = ex.getMessage();
+		str = "";
+	} finally {
+		if (rs01 != null) {
+			rs01.close();
+		}
+		if (cstmt01 != null) {
+			cstmt01.close();
+		}
+		session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+		pasarGarbageCollector();
+	}
+
+	return lstRtn;
+    }   
     public String consistenciaFlown(A1955Filter filter) throws SQLException, Exception {       
         String strSQL;
         String STR_RESULT = "";       

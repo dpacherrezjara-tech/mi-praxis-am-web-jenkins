@@ -108,7 +108,7 @@ public class AccountingMasterProcessController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.search(filter);
+            lst = logic.searchSQP05346(filter);
 
         } catch (Exception e) {
             throw new SpringException(e);
