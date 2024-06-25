@@ -28,10 +28,6 @@ public class AccountingMasterProcessLogic {
         return accountingMasterProcessDAO.search(filter);
     }
     
-    public List<A1955Filter> searchSQP05346(A1955Filter filter) throws SQLException, Exception {
-        return accountingMasterProcessDAO.searchSQP05346(filter);
-    }
-    
     public String consistenciaFlown(A1955Filter filter) throws SQLException, Exception {
         return accountingMasterProcessDAO.consistenciaFlown(filter);
     } 
