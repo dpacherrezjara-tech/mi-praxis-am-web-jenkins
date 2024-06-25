@@ -35,10 +35,10 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.SabreGridContro
                             return;
                         }
                         const btnAlert = Ext.getCmp(prototype.id + '-btnAlerts');
-                        if(responseData.ou_ALERT!==0){
+                        if (responseData.ou_ALERT !== 0) {
                             btnAlert.setText(`Alert! Total Refunds: ${responseData.ou_ALERT}`);
                             btnAlert.show();
-                        }else{
+                        } else {
                             btnAlert.hide();
                         }
                         //btnAlert.setPressed(false);
@@ -59,7 +59,7 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.SabreGridContro
         pnrWindow.show();
     },
     onViewTicket: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        if(record.data.ticket.trim()===''){
+        if (record.data.ticket.trim() === '') {
             return;
         }
         const obj = record.data.ticket;
@@ -78,8 +78,8 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.SabreGridContro
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
-    downloadExcel:function(btn){
-      const me = this;
+    downloadExcel: function (btn) {
+        const me = this;
         let params = Object.assign({}, me.view.searchParams);
         params.excel = true;
         console.log(params);
@@ -98,7 +98,44 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.SabreGridContro
                         }
                     }
                 });
+    },
+    //<editor-fold defaultstate="collapsed" desc="Renders">
+    renderUsosFirst: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        value = value.trim();
+        let column = view.getHeaderAtIndex(colIndex);
+        let dataIndex = column.dataIndex;
+        let nroCupon = dataIndex[dataIndex.length - 1];
+        let cpnIndex = nroCupon - 1;
+        const cupon = record.data.indcpn.slice(cpnIndex, nroCupon);
+
+        if (value !== '' && cupon !== 'V') {
+            if (value === 'NOGO') {
+                metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
+            } else {
+                metaData.style = "background-color:#F34040;font-weight:bolder;";
+            }
+        }
+        return value;
+    },
+    renderUsosLast: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        value = value.trim();
+        let column = view.getHeaderAtIndex(colIndex);
+        let dataIndex = column.dataIndex;
+        let nroCupon = dataIndex[dataIndex.length - 1];
+        let cpnIndex = nroCupon - 1;
+        const cupon = record.data.indcpn.slice(cpnIndex, nroCupon);
+        const usoFirst = record.get('usosbcp' + nroCupon).trim();
+        ;
+        if (value !== '' && cupon !== 'V') {
+            if (value === 'RFND' && usoFirst === 'NOGO') {
+                metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
+            } else {
+                metaData.style = "background-color:#F34040;font-weight:bolder;";
+            }
+        }
+        return value;
     }
+    //</editor-fold>
 });
 
 
