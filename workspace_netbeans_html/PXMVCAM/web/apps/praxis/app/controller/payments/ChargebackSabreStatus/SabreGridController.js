@@ -107,7 +107,6 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.SabreGridContro
         let nroCupon = dataIndex[dataIndex.length - 1];
         let cpnIndex = nroCupon - 1;
         const cupon = record.data.indcpn.slice(cpnIndex, nroCupon);
-
         if (value !== '' && cupon !== 'V') {
             if (value === 'NOGO') {
                 metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
@@ -125,7 +124,6 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.SabreGridContro
         let cpnIndex = nroCupon - 1;
         const cupon = record.data.indcpn.slice(cpnIndex, nroCupon);
         const usoFirst = record.get('usosbcp' + nroCupon).trim();
-        ;
         if (value !== '' && cupon !== 'V') {
             if (value === 'RFND' && usoFirst === 'NOGO') {
                 metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
