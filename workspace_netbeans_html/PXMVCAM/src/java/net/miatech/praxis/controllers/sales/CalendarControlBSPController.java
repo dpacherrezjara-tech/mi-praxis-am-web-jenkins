@@ -113,12 +113,12 @@ public class CalendarControlBSPController extends BaseController {
             for(int i=0;i<oList.size();i++){
                 HashMap fechas = new HashMap();
                 if(!vl_period.equals(oList.get(i).A1529PERI) || b){
-                    if (!b) {
-                        vl_from = "";
-                        vl_to = "";
-                        A1529REMW = "";
-                        A1529SETW = "";
-                    }
+//                    if (!b) {
+//                        vl_from = "";
+//                        vl_to = "";
+//                        A1529REMW = "";
+//                        A1529SETW = "";
+//                    }
                     fechas.put("MONDAY", vl_monday);
                     fechas.put("MONDAY_COMM", vl_monday_comm);
                     fechas.put("MONDAY_CANT", vl_monday_cant);
@@ -413,7 +413,7 @@ public class CalendarControlBSPController extends BaseController {
     
     String Style(Integer cant,Integer cantSale,Integer error){
         String style = "#FF0000";
-        if(cant == 1){
+        if(cant >= 1){
             if(cantSale > 0){
                 style = "#FFCC00";
             }else{

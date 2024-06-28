@@ -118,7 +118,29 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
         this.view.close();
     },
     onDeleteClick: function(btn){        
-                         
+        if (this.validaRequiredFields()) {            
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Are you sure to delete ?',
+                buttons: Ext.MessageBox.YESNO,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function(btn) {
+                    if (btn === 'yes') {
+                        this.view.params.action = "D";
+                        this.llenarData();
+                        this.crud();
+                    }
+                }
+            });               
+        } else {
+            var msg = this.msjAlert;
+            if (msg==='') msg = 'You must enter all required fields.';
+            global.Msg({
+                msg: msg
+            });
+        }
     },
     // </editor-fold>
     

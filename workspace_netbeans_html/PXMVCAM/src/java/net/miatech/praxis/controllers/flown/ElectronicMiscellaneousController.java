@@ -1495,6 +1495,9 @@ public class ElectronicMiscellaneousController extends BaseController {
         if (msj.toLowerCase().contains("duplicada")) {
             msj = "Error: Duplicated record.";
         }
+        if (filter.IDCON.length() > 50) {
+            msj = "Error: Maxlength IDCON.";
+        }
         map.put("success", true);
         map.put("msj", msj);
         map.put("strOption", strOption);

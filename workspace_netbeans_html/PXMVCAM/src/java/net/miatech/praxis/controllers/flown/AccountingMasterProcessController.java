@@ -284,7 +284,9 @@ public class AccountingMasterProcessController extends BaseController {
         try {
 
             filter.IN_FECHA_PROCESO = request.getParameter("IN_FECHA_PROCESO").trim();
-            
+            filter.A1955ACTIO = request.getParameter("strOption").trim();
+            filter.A1955FPROC = request.getParameter("IN_FECHA_PROCESO").trim();
+            filter.A1955MODUL = request.getParameter("A1955MODUL").trim();
             logic = new AccountingMasterProcessLogic();
             logic.setSession(this.serverSession.getServerSession());
             listaData = logic.accountValidation(filter);

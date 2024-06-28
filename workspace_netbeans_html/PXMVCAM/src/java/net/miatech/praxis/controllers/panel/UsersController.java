@@ -224,7 +224,7 @@ public class UsersController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             filter.page.PAGNUM = 1;
-            filter.page.PAGROW = -1;
+            filter.page.PAGROW = 0;
             filter.page.TOTPAG = 0;
             filter.page.TOTROW = 1;
             filter.page.PAGINIT = 1;
