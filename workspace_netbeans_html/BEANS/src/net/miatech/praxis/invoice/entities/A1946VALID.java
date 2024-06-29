@@ -1,0 +1,15 @@
+package net.miatech.praxis.invoice.entities;
+
+import lombok.Data;
+
+/**
+ *
+ * @author dvicente
+ */
+@Data
+public class A1946VALID {
+    private String A1946FPROC,A1946CIA,A1946FORMA,A1946SERIE,A1946TRNCU,A1946TRNCO,A1946TIPO,A1946IDCON
+            ,A1946STAT,A1946TIPER;
+    private Double A1946DPTLO,A1946DPTRV,
+            A1946DPDLO,A1946DPDRV,A1946DIVAL,A1946DIVAR,A1946DITOL,A1946DITOR,A1946DTOTL,A1946DTOTR;
+}
