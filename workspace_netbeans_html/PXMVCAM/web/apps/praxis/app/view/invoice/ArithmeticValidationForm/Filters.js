@@ -76,7 +76,10 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Filters', {
                                     editable: true,
                                     labelWidth: 60,
                                     width: 160,
-                                    value: new Date()
+                                    value: new Date(),
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
                                 },
                                 {
                                     xtype: 'datefield',
@@ -86,7 +89,10 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Filters', {
                                     editable: true,
                                     labelWidth: 50,
                                     width: 150,
-                                    value: new Date()
+                                    value: new Date(),
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
                                 },
                                 {
                                     xtype: 'combobox',
@@ -96,7 +102,8 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ["", "All"],
-                                            ["NC", "Nota de Credito"]
+                                            ["NC", "Credit Note"],
+                                            ["F", "Invoice"]
                                         ]
                                     }),
                                     labelWidth: 80,

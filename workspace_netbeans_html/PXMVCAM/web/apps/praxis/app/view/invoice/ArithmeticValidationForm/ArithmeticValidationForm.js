@@ -11,8 +11,7 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.ArithmeticValidatio
         'Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidationController',
         'Ext.Praxis.view.invoice.ArithmeticValidationForm.Options',
         'Ext.Praxis.view.invoice.ArithmeticValidationForm.Filters',
-        //'Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid',
-        //'Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.InfoGrid'
+        'Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid'
     ],
     controller: 'ArithmeticValidationController',
     layout: {
@@ -73,14 +72,8 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.ArithmeticValidatio
                                             ]
                                         },
                                         {
-                                            xtype: 'panel',
-                                            id: prototype.id + '-mainContent',
-                                            height: prototype.height,
-                                            bodyStyle: 'background-color: #E3EAF9;',
-                                            layout: {
-                                                type: 'vbox',
-                                                align: 'center'
-                                            }
+                                            xtype: prototype.id + '-MainGrid',
+                                            bodyStyle: 'background-color: #E3EAF9;'
                                         }
                                     ]
                                 }
