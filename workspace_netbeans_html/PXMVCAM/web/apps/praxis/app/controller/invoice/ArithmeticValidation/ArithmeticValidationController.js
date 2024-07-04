@@ -24,7 +24,7 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
         const filters = Ext.getCmp(prototype.id + '-formFilters');
         filters.getForm().reset();
     },
-    onEnterKeyPress:function(field, e){
+    onEnterKeyPress: function (field, e) {
         if (e.getKey() === e.ENTER) {
             this.onClickSearchBtn();
         }
@@ -43,7 +43,7 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
         this.searchInformation(params);
     },
     //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="Functions">
+    //<editor-fold defaultstate="collapsed" desc="Calls">
     searchTicketGrid: async function () {
         let params = Ext.getCmp(prototype.id + '-formFilters')
                 .getForm().getValues();
@@ -90,14 +90,15 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
         if (res.ok) {
             const data = await res.json();
             const response = data.response;
-            console.log("Response: ",data);
-            if(response.length>0){
-                let totals = response.filter(x => x.A1924TREGI === 'T');
+            console.log("Response: ", data);
+            if (response.length > 0) {
+                let totalsRecs = ['T', 'P', 'L'];
+                let totals = response.filter(x => totalsRecs.includes(x.A1924TREGI));
                 let storeTotals = new Ext.data.Store({
                     data: totals
                 });
                 gridTotals.setStore(storeTotals);
-                let excludedValues = ['T', 'P', 'L'];
+                let excludedValues = ['T', 'P', 'L', 'Z'];
                 let details = response.filter(x => !excludedValues.includes(x.A1924TREGI));
                 let fields = Object.keys(details.at(0));
                 let storeDetails = new Ext.data.Store({
@@ -106,11 +107,42 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
                     autoLoad: true
                 });
                 gridDetails.setStore(storeDetails);
-            }else{
-                global.Msg({msg:'Data not Found'});
+            } else {
+                global.Msg({msg: 'Data not Found'});
             }
         }
         panel.unmask();
+    },
+    //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="Functions">
+    onBeforeEditDetailCell: function (editor, context, eOpts) {
+        // Verificar el valor de la columna 'A1924TREGI'
+        if (context.record.get('A1924TREGI') === 'I') {
+            // Si el status es 'inactive', cancelar la edición
+            return false;
+        }
+    },
+    onEditDetailCell: function (editor, context, eOpts) {
+        const me = this;
+        // Restaurar el color de fondo original cuando se completa la edición
+        //Ext.fly(context.row).setStyle('background-color', 'yellow');
+        let grid = context.grid,
+                view = grid.getView(),
+                cell = view.getCell(context.rowIdx, context.colIdx);
+        let record = context.record;
+        const {A1924TOTLO, A1924TOTRV, A1924IVA} = record.data;
+        let percent = Number(A1924IVA) / 100;
+        debugger;
+        if (context.field === 'A1924TOTLO') {
+            let ivalo = me.redondea05Decimales(A1924TOTLO * percent);
+            record.set('A1924IVALO', ivalo);
+        } else if (context.field === 'A1924TOTRV') {
+            let ivarv = me.redondea05Decimales(A1924TOTRV * percent);
+            record.set('A1924IVARV', ivarv);
+        }
+        record.set('OPTION', 'U');
+        // Cambiar el color de la celda editada
+        Ext.fly(cell).setStyle('background-color', 'yellow');
     },
     //</editor-fold>
 
@@ -182,6 +214,14 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
             return true;
         });
         return resultado;
+    },
+    redondea05Decimales: function (num) {
+        let rounded = Math.round(num * 100) / 100; // Redondear a dos decimales
+        // Si el decimal es exactamente 0.5, redondear hacia arriba
+        if (rounded % 1 === 0.5) {
+            rounded = Math.ceil(rounded); // Redondear hacia arriba
+        }
+        return rounded.toFixed(2); // Devolver el número redondeado con dos decimales como cadena
     }
     //</editor-fold>
 });

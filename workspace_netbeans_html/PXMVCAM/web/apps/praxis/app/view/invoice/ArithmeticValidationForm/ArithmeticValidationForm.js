@@ -1,7 +1,7 @@
 prototype.id = 'ArithmeticValidationForm';
 prototype.url = CONTEXTPATH + '/ArithmeticValidation';
-prototype.width = 1650;
-prototype.height = 630;
+prototype.width = 1750;
+prototype.height = 650;
 //fechaActual = new Date(),mesActual = fechaActual.getMonth(),anioActual = fechaActual.getFullYear();
 
 Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.ArithmeticValidationForm', {
