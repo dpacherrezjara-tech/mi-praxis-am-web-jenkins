@@ -102,8 +102,8 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ["", "All"],
-                                            ["NC", "Credit Note"],
-                                            ["F", "Invoice"]
+                                            ["F", "Factura"],
+                                            ["NC", "Nota de Credito"]
                                         ]
                                     }),
                                     labelWidth: 80,

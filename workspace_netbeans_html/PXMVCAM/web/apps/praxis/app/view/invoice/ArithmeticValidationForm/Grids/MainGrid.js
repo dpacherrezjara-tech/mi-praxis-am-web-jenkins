@@ -57,14 +57,7 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                         }
                     },
                     {
-                        text: 'Doc. Type', dataIndex: 'A1946TIPO', width: 80,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            const opts = {
-                                'F': "Invoice",
-                                'NC': "Credit Note"
-                            };
-                            return opts[value.trim()];
-                        }
+                        text: 'Doc. Type', dataIndex: 'A1946TIPO', width: 80
                     },
                     {
                         text: 'Trans.<br>Type', dataIndex: 'A1946TRNCU', width: 80
