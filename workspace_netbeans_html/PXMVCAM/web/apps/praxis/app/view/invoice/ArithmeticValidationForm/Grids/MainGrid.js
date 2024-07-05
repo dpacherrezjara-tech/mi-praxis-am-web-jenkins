@@ -86,14 +86,17 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
             id: prototype.id + '-panelInfo',
             layout: {
                 type: 'vbox',
-                pack: 'center'
+                pack: 'start'
             },
             defaults: {
                 margin: '5 5 5 5',
                 bodyStyle: 'background: transparent;'
             },
             width: 1150,
+            height: '100%',
+            margin: '2 2 2 2',
             border: false,
+            autoScroll: true,
             items: [
                 //<editor-fold defaultstate="collapsed" desc="Grid Total">
                 {
@@ -158,7 +161,7 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                                 text: 'Record<br>Type', dataIndex: 'A1924TREGI', width: 80
                             },
                             {
-                                text: 'ROE', dataIndex: 'A1924TCAMB', width: 100,//A1924TCAMB
+                                text: 'ROE', dataIndex: 'A1924TCAMB', width: 100, //A1924TCAMB
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:right;";
                                     const {A1924TREGI} = record.data;
@@ -498,7 +501,7 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                                     metaData.style = "text-align:right;font-weight:bold;";
                                     if (value !== 0) {
                                         metaData.style += "background-color:#FF8781;";
-                                    } 
+                                    }
                                     value = Ext.util.Format.number(value, '0,000.00');
                                     return value;
                                 }
@@ -509,7 +512,7 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                                     metaData.style = "text-align:right;font-weight:bold;";
                                     if (value !== 0) {
                                         metaData.style += "background-color:#FF8781;";
-                                    } 
+                                    }
                                     value = Ext.util.Format.number(value, '0,000.00');
                                     return value;
                                 }
@@ -520,7 +523,7 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                                     metaData.style = "text-align:right;font-weight:bold;";
                                     if (value !== 0) {
                                         metaData.style += "background-color:#FF8781;";
-                                    } 
+                                    }
                                     value = Ext.util.Format.number(value, '0,000.00');
                                     return value;
                                 }
@@ -531,7 +534,7 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                                     metaData.style = "text-align:right;font-weight:bold;";
                                     if (value !== 0) {
                                         metaData.style += "background-color:#FF8781;";
-                                    } 
+                                    }
                                     value = Ext.util.Format.number(value, '0,000.00');
                                     return value;
                                 }
@@ -559,7 +562,7 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                         pack: 'end'
                     },
                     width: '100%',
-                    height: 60,
+                    height: 40,
                     border: false,
                     items: [
                         {
@@ -608,6 +611,270 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                             }
                         }
                     ]
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Grid Total 2">
+                {
+                    xtype: 'grid',
+                    title: 'Total',
+                    titleAlign: 'center',
+                    id: prototype.id + '-ticketTotals2',
+                    hidden: true,
+                    border: false,
+                    store: [],
+                    width: '100%',
+                    minHeight: 100,
+                    maxHeight: 200,
+                    viewConfig: {
+                        stripeRows: true,
+                        enableTextSelection: true,
+                        markDirty: false
+                    },
+                    columnLines: true,
+                    columns: {
+                        defaults: {
+                            align: 'center',
+                            menuDisabled: true,
+                            sortable: true,
+                            renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                metaData.style = "text-align:center;";
+                                const {A1924TREGI} = record.data;
+                                if (A1924TREGI === 'T') {
+                                    metaData.style += "background-color:#A2F68D;";
+                                } else {
+                                    metaData.style += "background-color:#FAB274;";
+                                }
+                                return value;
+                            }
+                        },
+                        items: [
+                            //<editor-fold defaultstate="collapsed" desc="Detail Cols">
+                            {
+                                text: 'Trans.<br>Type', dataIndex: 'A1924TRNCU', width: 80
+                            },
+                            {
+                                text: 'Ticket Number', flex: 1,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    const {A1924CIA, A1924FORMA, A1924SERIE, A1924TREGI} = record.data;
+                                    if (A1924TREGI === 'T') {
+                                        metaData.style += "background-color:#A2F68D;";
+                                    } else {
+                                        metaData.style += "background-color:#FAB274;";
+                                    }
+                                    return A1924CIA + A1924FORMA + A1924SERIE;
+                                }
+                            },
+                            {
+                                text: 'SEQ', dataIndex: 'A1924SEQ', width: 50
+                            },
+                            {
+                                text: 'Doc. Type', dataIndex: 'A1924TIPO', width: 80
+                            },
+                            {
+                                text: 'Trans.<br>Code', dataIndex: 'A1924TRNCO', width: 80
+                            },
+                            {
+                                text: 'Record<br>Type', dataIndex: 'A1924TREGI', width: 80
+                            },
+                            {
+                                text: 'ROE', dataIndex: 'A1924TCAMB', width: 100, //A1924TCAMB
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;";
+                                    const {A1924TREGI} = record.data;
+                                    if (A1924TREGI === 'T') {
+                                        metaData.style += "background-color:#A2F68D;";
+                                    } else {
+                                        metaData.style += "background-color:#FAB274;";
+                                    }
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'Curr.', dataIndex: 'A1924MDA', width: 50//A1924TCAMB
+                            },
+                            {
+                                text: 'Total Loc', dataIndex: 'A1924TOTLO', width: 100,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;font-weight:bold;";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    const {A1924TREGI} = record.data;
+                                    if (A1924TREGI === 'T') {
+                                        metaData.style += "background-color:#A2F68D;";
+                                    } else {
+                                        metaData.style += "background-color:#FAB274;";
+                                    }
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'Total Rev', dataIndex: 'A1924TOTRV', width: 100,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;font-weight:bold;";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    const {A1924TREGI} = record.data;
+                                    if (A1924TREGI === 'T') {
+                                        metaData.style += "background-color:#A2F68D;";
+                                    } else {
+                                        metaData.style += "background-color:#FAB274;";
+                                    }
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'Updated',
+                                defaults: {
+                                    align: 'center',
+                                    menuDisabled: true,
+                                    sortable: true,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                        metaData.style = "text-align:center;";
+                                        const {A1924TREGI} = record.data;
+                                        if (A1924TREGI === 'T') {
+                                            metaData.style += "background-color:#A2F68D;";
+                                        } else {
+                                            metaData.style += "background-color:#FAB274;";
+                                        }
+                                        return value;
+                                    }
+                                },
+                                columns: [
+                                    {
+                                        text: 'User', dataIndex: 'A1924REVIS', width: 100
+                                    },
+                                    {
+                                        text: 'Date', dataIndex: 'A1924FREVI', width: 100
+                                    },
+                                    {
+                                        text: 'Hour', dataIndex: 'A1924HREVI', width: 60
+                                    }
+                                ]
+                            }
+                            //</editor-fold>
+                        ]
+                    }
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Grid Detalle 2">
+                {
+                    xtype: 'grid',
+                    title: 'Details',
+                    titleAlign: 'center',
+                    id: prototype.id + '-ticketDetails2',
+                    hidden: true,
+                    border: false,
+                    store: [],
+                    width: '100%',
+                    minHeight: 100,
+                    maxHeight: 400,
+                    viewConfig: {
+                        stripeRows: true,
+                        enableTextSelection: true,
+                        markDirty: false
+                    },
+                    features: [
+                        {
+                            ftype: 'summary' // Agrega la característica de resumen al grid
+                        }
+                    ],
+                    columnLines: true,
+                    columns: {
+                        defaults: {
+                            align: 'center',
+                            menuDisabled: true,
+                            sortable: true
+                        },
+                        items: [
+                            //<editor-fold defaultstate="collapsed" desc="Detail Cols">
+                            {
+                                text: 'Ticket Number', width: 120,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    const {A1924CIA, A1924FORMA, A1924SERIE} = record.data;
+                                    return A1924CIA + A1924FORMA + A1924SERIE;
+                                }
+                            },
+                            {
+                                text: 'SEQ', dataIndex: 'A1924SEQ', width: 50
+                            },
+                            {
+                                text: 'Concept', dataIndex: 'A1924AGRUP', flex: 1
+                            },
+                            {
+                                text: 'Account', dataIndex: 'A1924CUENT', width: 80
+                            },
+                            {
+                                text: 'Sub-Account', dataIndex: 'A1924SUBCU', width: 100
+                            },
+                            {
+                                text: 'Record<br>Type', dataIndex: 'A1924TREGI', width: 70
+                            },
+                            {
+                                text: 'Curr.', dataIndex: 'A1924MDA', width: 50//A1924TCAMB
+                            },
+                            {
+                                text: 'Total Loc', dataIndex: 'A1924TOTLO', width: 100,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;font-weight:bold;";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                },
+                                summaryType: 'sum',
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    metaData.style = 'text-align:center; margin-right:3px;text-align:right;';
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return '<b>' + value + '<b>';
+                                }
+                            },
+                            {
+                                text: 'Total Rev', dataIndex: 'A1924TOTRV', width: 100,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;font-weight:bold;";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                },
+                                summaryType: 'sum',
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    metaData.style = 'text-align:center; margin-right:3px;text-align:right; ';
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return '<b>' + value + '<b>';
+                                }
+                            },
+                            {
+                                text: 'IVA Loc', dataIndex: 'A1924IVALO', width: 100,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;font-weight:bold;";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                },
+                                summaryType: 'sum',
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    metaData.style = 'text-align:center; margin-right:3px;text-align:right; ';
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return '<b>' + value + '<b>';
+                                }
+                            },
+                            {
+                                text: 'IVA Rev', dataIndex: 'A1924IVARV', width: 100,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;font-weight:bold;";
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                },
+                                summaryType: 'sum',
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    metaData.style = 'text-align:center; margin-right:3px;text-align:right; ';
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return '<b>' + value + '<b>';
+                                }
+                            },
+                            {
+                                text: '% IVA', dataIndex: 'A1924IVA', width: 60,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    return value + '%';
+                                }
+                            }
+                            //</editor-fold>
+                        ]
+                    }
                 }
                 //</editor-fold>
             ]

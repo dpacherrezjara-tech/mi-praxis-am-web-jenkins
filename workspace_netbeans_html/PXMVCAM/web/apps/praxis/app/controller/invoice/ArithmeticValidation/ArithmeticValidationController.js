@@ -145,11 +145,59 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
                 });
                 gridDetails.setStore(storeDetails);
                 me.changeDifferences();
+                await me.searchInformationChild(params);
             } else {
                 global.Msg({msg: 'Data not Found'});
             }
         }
         panel.unmask();
+    },
+    searchInformationChild: async function (params) {
+        const me = this;
+        let childParams = Object.assign({}, params);
+        const gridTotals = Ext.getCmp(prototype.id + '-ticketTotals2');
+        gridTotals.getStore().removeAll();
+        const gridDetails = Ext.getCmp(prototype.id + '-ticketDetails2');
+        gridDetails.getStore().removeAll();
+        if (childParams.IN_TRNCO.trim().length === 5) {
+
+            const opts = {
+                'SALE1': 'SALE2',
+                'SALE2': 'SALE1',
+                'EXCA1': 'EXCA2',
+                'EXCA2': 'EXCA1'
+            };
+            childParams.IN_TRNCO = opts[childParams.IN_TRNCO.trim()];
+            const res = await fetch(`${me.url}/loadInformation?${new URLSearchParams(childParams)}`);
+            if (res.ok) {
+                const data = await res.json();
+                const response = data.response;
+                console.log("Response Child: ", data);
+                if (response.length > 0) {
+                    gridTotals.show();
+                    gridDetails.show();
+                    let totalsRecs = ['T', 'P', 'L'];
+                    let totals = response.filter(x => totalsRecs.includes(x.A1924TREGI));
+                    let storeTotals = new Ext.data.Store({
+                        data: totals
+                    });
+                    gridTotals.setStore(storeTotals);
+                    let excludedValues = ['T', 'P', 'L', 'Z'];
+                    let details = response.filter(x => !excludedValues.includes(x.A1924TREGI));
+                    let storeDetails = new Ext.data.Store({
+                        data: details,
+                        autoLoad: true
+                    });
+                    gridDetails.setStore(storeDetails);
+                } else {
+                    gridTotals.hide();
+                    gridDetails.hide();
+                }
+            }
+        } else {
+            gridTotals.hide();
+            gridDetails.hide();
+        }
     },
     enableSaveButton: function (differences) {
         const btnSave = Ext.getCmp(prototype.id + '-btn-save');
@@ -282,9 +330,9 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
         const me = this;
         // Restaurar el color de fondo original cuando se completa la edición
         /*
-        let grid = context.grid,
-                view = grid.getView(),
-                cell = view.getCell(context.rowIdx, context.colIdx);*/
+         let grid = context.grid,
+         view = grid.getView(),
+         cell = view.getCell(context.rowIdx, context.colIdx);*/
         let record = context.record;
         const {A1924TOTLO, A1924TOTRV, A1924IVA} = record.data;
         let percent = Number(A1924IVA) / 100;
