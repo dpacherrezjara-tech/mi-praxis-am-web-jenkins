@@ -2,7 +2,10 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
     extend: 'Ext.app.ViewController',
     alias: 'controller.ArithmeticValidationController',
     url: CONTEXTPATH + '/ArithmeticValidation',
+    ticketParams: null,
+    deletedRecords: [],
     init: function (view) {
+        win.lblUser_toolTip("Estructura: A1946VALID|A1924NZ");
         prototype.id = 'ArithmeticValidationForm';
         prototype.url = CONTEXTPATH + '/ArithmeticValidation';
     },
@@ -40,10 +43,43 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
             IN_FORMA: A1946FORMA,
             IN_SERIE: A1946SERIE
         };
+        this.ticketParams = params;
         this.searchInformation(params);
     },
+    onDeleteRecord: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to delete?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            this.deleteDetailRecord(grid, record);
+                        }
+                    }
+                });
+    },
+    onSaveClick: function () {
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to save?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            this.saveArithmetics();
+                        }
+                    }
+                });
+    },
     //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="Calls">
+    //<editor-fold defaultstate="collapsed" desc="Functions">
     searchTicketGrid: async function () {
         let params = Ext.getCmp(prototype.id + '-formFilters')
                 .getForm().getValues();
@@ -68,7 +104,7 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
                     if (!successful) {
                         global.Msg({msg: 'Data not Found'});
                     } else {
-                        console.log(records);
+                        //console.log(records);
                         if (records.length === 0) {
                             global.Msg({msg: 'Data not Found'});
                         }
@@ -80,6 +116,7 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
     },
     searchInformation: async function (params) {
         const me = this;
+        me.deletedRecords = [];
         const panel = Ext.getCmp(prototype.id + '-panelInfo');
         panel.mask('Loading...');
         const gridTotals = Ext.getCmp(prototype.id + '-ticketTotals');
@@ -107,14 +144,133 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
                     autoLoad: true
                 });
                 gridDetails.setStore(storeDetails);
+                me.changeDifferences();
             } else {
                 global.Msg({msg: 'Data not Found'});
             }
         }
         panel.unmask();
     },
+    enableSaveButton: function (differences) {
+        const btnSave = Ext.getCmp(prototype.id + '-btn-save');
+        const errMsg = Ext.getCmp(prototype.id + '-calculationError');
+        const okMsg = Ext.getCmp(prototype.id + '-calculationMatch');
+        const {A1924TOTLO, A1924TOTRV, A1924IVALO, A1924IVARV} = differences;
+        if (A1924TOTLO === 0 && A1924TOTRV === 0 & A1924IVALO === 0 && A1924IVARV === 0) {
+            btnSave.setDisabled(false);
+            okMsg.show();
+            errMsg.hide();
+        } else {
+            btnSave.setDisabled(true);
+            okMsg.hide();
+            errMsg.show();
+        }
+    },
+    changeDifferences: function () {
+        const me = this;
+        const gridDiff = Ext.getCmp(prototype.id + '-ticketDiffs');
+        const storeTotals = Ext.getCmp(prototype.id + '-ticketTotals').getStore();
+        const storeDetails = Ext.getCmp(prototype.id + '-ticketDetails').getStore();
+        try {
+            let totalRecord = storeTotals.query('A1924TREGI', 'T').items.at(0);
+            let totalTotlo = totalRecord.get('A1924TOTLO');
+            let totalTotre = totalRecord.get('A1924TOTRV');
+
+            let ivaRecords = storeDetails.query('A1924TREGI', 'I');
+            let totalIvalo = ivaRecords.items.reduce((total, record) => {
+                return total + record.get('A1924TOTLO');
+            }, 0);
+            let totalIvarv = ivaRecords.items.reduce((total, record) => {
+                return total + record.get('A1924TOTRV');
+            }, 0);
+
+            let detailRecords = storeDetails.queryBy((record) => {
+                return record.get('A1924TREGI') !== 'I';
+            });
+
+            let detailTotlo = detailRecords.items.reduce((total, record) => {
+                return total + record.get('A1924TOTLO');
+            }, 0);
+            let detailTotrv = detailRecords.items.reduce((total, record) => {
+                return total + record.get('A1924TOTRV');
+            }, 0);
+            let detailIvalo = detailRecords.items.reduce((total, record) => {
+                return total + record.get('A1924IVALO');
+            }, 0);
+            let detailIvarv = detailRecords.items.reduce((total, record) => {
+                return total + record.get('A1924IVARV');
+            }, 0);
+
+            let differences = {
+                A1924CIA: totalRecord.get('A1924CIA'),
+                A1924FORMA: totalRecord.get('A1924FORMA'),
+                A1924SERIE: totalRecord.get('A1924SERIE'),
+                A1924AGRUP: 'Differences',
+                A1924TOTLO: me.redondea05Decimales(totalTotlo - (detailTotlo + totalIvalo)),
+                A1924TOTRV: me.redondea05Decimales(totalTotre - (detailTotrv + totalIvarv)),
+                A1924IVALO: me.redondea05Decimales(totalIvalo - detailIvalo),
+                A1924IVARV: me.redondea05Decimales(totalIvarv - detailIvarv)
+            };
+            console.table(differences);
+            gridDiff.setStore(new Ext.data.Store({
+                data: [differences]
+            }));
+            me.enableSaveButton(differences);
+        } catch (e) {
+            console.error(e);
+        }
+
+    },
+    deleteDetailRecord: function (grid, record) {
+        record.set('OPTION', 'D');
+        this.deletedRecords.push(record);
+        grid.getStore().remove(record);
+        this.changeDifferences();
+    },
+    saveArithmetics: async function () {
+        const me = this;
+        const gridDetails = Ext.getCmp(prototype.id + '-ticketDetails')
+                .getStore();
+        let crudItems = [];
+        let crudOptions = ['C', 'U'];
+        let crudRecords = gridDetails.queryBy((record) => {
+            return crudOptions.includes(record.get('OPTION'));
+        });
+        crudRecords.items.forEach(x => {
+            crudItems.push(me.requestObjectSP(x.data));
+        });
+        me.deletedRecords.forEach(x => {
+            crudItems.push(me.requestObjectSP(x.data));
+        });
+        console.log(crudItems);
+        if (crudItems.length > 0) {
+            me.arithmeticsMaintenance(crudItems);
+        } else {
+            global.Msg({msg: 'Invalid Arguments'});
+        }
+    },
+    arithmeticsMaintenance: async function (crudItems) {
+        const me = this;
+        const panelInfo = Ext.getCmp(prototype.id + '-panelInfo');
+        panelInfo.mask('Loading...');
+        const res = await fetch(`${me.url}/arithmeticsMaintenance`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(crudItems)
+        });
+        if (res.ok) {
+            const data = await res.json();
+            data.forEach((obj, i) => {
+                me.showToast(obj.SQLMSG, i * 100, 't');
+            });
+            me.searchInformation(me.ticketParams);
+        }
+        panelInfo.unmask();
+    },
     //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="Functions">
+    //<editor-fold defaultstate="collapsed" desc="Listeners">
     onBeforeEditDetailCell: function (editor, context, eOpts) {
         // Verificar el valor de la columna 'A1924TREGI'
         if (context.record.get('A1924TREGI') === 'I') {
@@ -143,9 +299,9 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
         record.set('OPTION', 'U');
         // Cambiar el color de la celda editada
         Ext.fly(cell).setStyle('background-color', 'yellow');
+        me.changeDifferences();
     },
     //</editor-fold>
-
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){
         return Ext.getCmp(prototype.id + id);
@@ -215,13 +371,58 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
         });
         return resultado;
     },
+    limpiaObjetoPX: function (obj) {
+        for (let key in obj) {
+            if (typeof obj[key] === 'string') {
+                obj[key] = obj[key].trimEnd();
+            }
+        }
+    },
+    requestObjectSP: function (jsonData) {
+        const resultado = {};
+        for (const clave in jsonData) {
+            if (jsonData.hasOwnProperty(clave)) {
+                // Convierte la clave a mayúsculas y añade "IN" como prefijo
+                const nuevaClave = `IN_${clave.toUpperCase()}`;
+
+                // Asigna el valor original a la nueva clave
+                resultado[nuevaClave] = jsonData[clave];
+            }
+        }
+        return resultado;
+    },
+    requestObjectPX: function (jsonData) {
+        const resultado = {};
+        for (const clave in jsonData) {
+            if (jsonData.hasOwnProperty(clave)) {
+                // Convierte la clave a mayúsculas y añade "IN" como prefijo
+                const nuevaClave = `${clave.toUpperCase()}`;
+
+                // Asigna el valor original a la nueva clave
+                resultado[nuevaClave] = jsonData[clave];
+            }
+        }
+        return resultado;
+    },
     redondea05Decimales: function (num) {
         let rounded = Math.round(num * 100) / 100; // Redondear a dos decimales
         // Si el decimal es exactamente 0.5, redondear hacia arriba
         if (rounded % 1 === 0.5) {
             rounded = Math.ceil(rounded); // Redondear hacia arriba
         }
-        return rounded.toFixed(2); // Devolver el número redondeado con dos decimales como cadena
+        return Number(rounded.toFixed(2)); // Devolver el número redondeado con dos decimales como cadena
+    },
+    showToast: function (message, delay, align) {
+        Ext.defer(function () {
+            Ext.toast({
+                html: `<b>${message}</b>`,
+                title: 'Notification',
+                closable: true,
+                align: align || 't', // Default to top if align not provided
+                slideInDuration: 400,
+                minWidth: 200
+            });
+        }, delay);
     }
     //</editor-fold>
 });

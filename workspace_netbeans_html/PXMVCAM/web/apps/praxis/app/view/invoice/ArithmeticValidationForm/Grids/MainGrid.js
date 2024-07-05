@@ -101,6 +101,7 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                     title: 'Total',
                     titleAlign: 'center',
                     id: prototype.id + '-ticketTotals',
+                    border: false,
                     store: [],
                     width: '100%',
                     minHeight: 100,
@@ -224,10 +225,11 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                     title: 'Details',
                     titleAlign: 'center',
                     id: prototype.id + '-ticketDetails',
+                    border: false,
                     store: [],
                     width: '100%',
                     minHeight: 100,
-                    maxHeight: 440,
+                    maxHeight: 400,
                     viewConfig: {
                         stripeRows: true,
                         enableTextSelection: true,
@@ -294,7 +296,7 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                                 },
                                 summaryType: 'sum',
                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                    metaData.style = 'text-align:center; margin-right:3px;text-align:right;';
                                     value = Ext.util.Format.number(value, '0,000.00');
                                     return '<b>' + value + '<b>';
                                 }
@@ -315,7 +317,7 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                                 },
                                 summaryType: 'sum',
                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                    metaData.style = 'text-align:center; margin-right:3px;text-align:right; ';
                                     value = Ext.util.Format.number(value, '0,000.00');
                                     return '<b>' + value + '<b>';
                                 }
@@ -336,7 +338,7 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                                 },
                                 summaryType: 'sum',
                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                    metaData.style = 'text-align:center; margin-right:3px;text-align:right; ';
                                     value = Ext.util.Format.number(value, '0,000.00');
                                     return '<b>' + value + '<b>';
                                 }
@@ -357,7 +359,7 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                                 },
                                 summaryType: 'sum',
                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                    metaData.style = 'text-align:center; margin-right:3px;text-align:right; ';
                                     value = Ext.util.Format.number(value, '0,000.00');
                                     return '<b>' + value + '<b>';
                                 }
@@ -415,6 +417,112 @@ Ext.define('Ext.Praxis.view.invoice.ArithmeticValidationForm.Grids.MainGrid', {
                                         }
                                     }
                                 ]
+                            }
+                            //</editor-fold>
+                        ]
+                    }
+                },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="Differences">
+                {
+                    xtype: 'grid',
+                    width: '100%',
+                    border: false,
+                    titleAlign: 'center',
+                    id: prototype.id + '-ticketDiffs',
+                    store: [],
+                    minHeight: 20,
+                    maxHeight: 40,
+                    viewConfig: {
+                        stripeRows: true,
+                        enableTextSelection: true,
+                        markDirty: false
+                    },
+                    hideHeaders: true,
+                    columnLines: true,
+                    columns: {
+                        defaults: {
+                            align: 'center',
+                            menuDisabled: true,
+                            sortable: true
+                        },
+                        items: [
+                            //<editor-fold defaultstate="collapsed" desc="Detail Cols">
+                            {
+                                text: '', width: 120,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    const {A1924CIA, A1924FORMA, A1924SERIE} = record.data;
+                                    return A1924CIA + A1924FORMA + A1924SERIE;
+                                }
+                            },
+                            {
+                                width: 50
+                            },
+                            {
+                                dataIndex: 'A1924AGRUP', flex: 1
+                            },
+                            {
+                                width: 80
+                            },
+                            {
+                                width: 100
+                            },
+                            {
+                                width: 70
+                            },
+                            {
+                                dataIndex: 'A1924TOTLO', width: 100,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;font-weight:bold;";
+                                    if (value !== 0) {
+                                        metaData.style += "background-color:#FF8781;";
+                                    } 
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                }
+                            },
+                            {
+                                dataIndex: 'A1924TOTRV', width: 100,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;font-weight:bold;";
+                                    if (value !== 0) {
+                                        metaData.style += "background-color:#FF8781;";
+                                    } 
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                }
+                            },
+                            {
+                                dataIndex: 'A1924IVALO', width: 100,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;font-weight:bold;";
+                                    if (value !== 0) {
+                                        metaData.style += "background-color:#FF8781;";
+                                    } 
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                }
+                            },
+                            {
+                                dataIndex: 'A1924IVARV', width: 100,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:right;font-weight:bold;";
+                                    if (value !== 0) {
+                                        metaData.style += "background-color:#FF8781;";
+                                    } 
+                                    value = Ext.util.Format.number(value, '0,000.00');
+                                    return value;
+                                }
+
+                            },
+                            {
+                                width: 60
+                            },
+                            {
+                                width: 40
+                            },
+                            {
+                                width: 40
                             }
                             //</editor-fold>
                         ]

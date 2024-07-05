@@ -2,10 +2,13 @@ package net.miatech.praxis.dao.invoice;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.miatech.praxis.invoice.entities.A1924NZ;
 import net.miatech.praxis.invoice.entities.A1946VALID;
 import net.miatech.praxis.invoice.filters.SQP05361Filter;
 import net.miatech.praxis.invoice.filters.SQP05362Filter;
+import net.miatech.praxis.invoice.filters.SQP05363Filter;
 import net.miatech.praxis.logic.invoice.ArithmeticValidationLogic;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +49,23 @@ public class ArithmeticValidationDAO implements ArithmeticValidationLogic{
                 params, new BeanPropertyRowMapper<>(A1924NZ.class));
         filter.setResponse((List<A1924NZ>) obj.get("result"));
         return filter;
+    }
+
+    @Override
+    public List<SQP05363Filter> loadSQP05363Filter(List<SQP05363Filter> data) throws Exception {
+        data.forEach((SQP05363Filter filter)->{
+            SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+            try {
+                Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05363",
+                        params);
+                filter.setSQLRES((Integer) obj.get("SQLRES"));
+                filter.setSQLMSG((String) obj.get("SQLMSG"));
+            } catch (Exception ex) {
+                Logger.getLogger(ArithmeticValidationDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        });
+        return data;
     }
     
 }
