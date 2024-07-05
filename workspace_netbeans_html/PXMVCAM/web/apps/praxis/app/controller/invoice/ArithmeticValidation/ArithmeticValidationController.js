@@ -281,10 +281,10 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
     onEditDetailCell: function (editor, context, eOpts) {
         const me = this;
         // Restaurar el color de fondo original cuando se completa la edición
-        //Ext.fly(context.row).setStyle('background-color', 'yellow');
+        /*
         let grid = context.grid,
                 view = grid.getView(),
-                cell = view.getCell(context.rowIdx, context.colIdx);
+                cell = view.getCell(context.rowIdx, context.colIdx);*/
         let record = context.record;
         const {A1924TOTLO, A1924TOTRV, A1924IVA} = record.data;
         let percent = Number(A1924IVA) / 100;
@@ -298,7 +298,8 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
         }
         record.set('OPTION', 'U');
         // Cambiar el color de la celda editada
-        Ext.fly(cell).setStyle('background-color', 'yellow');
+        //Ext.fly(cell).setStyle('background-color', 'yellow');
+        Ext.fly(context.row).setStyle('background-color', 'yellow');
         me.changeDifferences();
     },
     //</editor-fold>
