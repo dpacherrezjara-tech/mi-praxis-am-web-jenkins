@@ -307,7 +307,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             }
                             if (filter.VP_OPTION.equals("IXP")) {
                                 if (fileA3344.A3344TRNCU.length() != 3) {
-                                    mensaje = "THE Transaction type MUST BE 4 CHARACTERES  " + fileA3344.A3344TRNCU;
+                                    mensaje = "THE Transaction type MUST BE 3 CHARACTERES  " + fileA3344.A3344TRNCU;
                                     break;
                                 }
                             } else {
@@ -630,7 +630,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
                         fileA3344.A3344TCAMB = currentRow.getCell(36) == null ? 0 : Double.parseDouble(currentRow.getCell(36).getStringCellValue());
                         ///FECHA DE PROCESO
                         fileA3344.A3344FPROC = currentRow.getCell(37) == null ? "" : currentRow.getCell(37).getStringCellValue();
-                        if (!isValidDate(fileA3344.A3344FPROC)) {
+                        if (fileA3344.A3344TRNCU.equals("SALE") &&!isValidDate(fileA3344.A3344FPROC)) {
                                 mensaje = "Fecha de Proceso no válida: " + fileA3344.A3344FPROC + ". El formato correcto es: YYYYMMDD.";
                                 break;
                         }
@@ -1215,14 +1215,10 @@ public class ADJMassiveaccountingFormController extends BaseController {
                         //IATA_VENTA
                         fileA3344.A3344AGENT = currentRow.getCell(35) == null ? "" : currentRow.getCell(35).getStringCellValue();
                         //TIPO DE CAMBIO
-                        if (!isParsableToDouble(currentRow.getCell(36).getStringCellValue())) {
-                            mensaje = "THE TIPO DE CAMBIO IS NOT VALID: " + currentRow.getCell(36).getStringCellValue();
-                            break;
-                        }
                         fileA3344.A3344TCAMB = currentRow.getCell(36) == null ? 0 : Double.parseDouble(currentRow.getCell(36).getStringCellValue());
                         ///FECHA DE PROCESO
                         fileA3344.A3344FPROC = currentRow.getCell(37) == null ? "" : currentRow.getCell(37).getStringCellValue();
-                        if (!isValidDate(fileA3344.A3344FPROC)) {
+                        if (fileA3344.A3344TRNCU.equals("FLWN") && !isValidDate(fileA3344.A3344FPROC)) {
                                 mensaje = "Fecha de Proceso no válida: " + fileA3344.A3344FPROC + ". El formato correcto es: YYYYMMDD.";
                                 break;
                         }
@@ -1833,7 +1829,8 @@ public class ADJMassiveaccountingFormController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
             map.put("result", e.getMessage());
-            System.out.println("Error Exception");
+            System.out.println("Error Exception: " + e.getLocalizedMessage());
+            e.printStackTrace();
         }
         return new Gson().toJson(map);
     }
