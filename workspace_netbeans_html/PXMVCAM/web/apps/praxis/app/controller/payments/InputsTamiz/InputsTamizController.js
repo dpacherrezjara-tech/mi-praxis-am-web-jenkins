@@ -470,6 +470,10 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
         console.log('Descargando');
         console.log(parameters);
         global.getFile(prototype.url + '/downloadComplementInfo?' + new URLSearchParams(parameters));
+    },
+    downloadDetailSummaryInfo:function(){
+        console.log(searchParamsDetail);
+        global.getFile(prototype.url + '/downloadDetailSummaryInfo?' + new URLSearchParams(searchParamsDetail));
     }
     //</editor-fold>
 
