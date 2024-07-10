@@ -78,6 +78,25 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
                     }
                 });
     },
+    onDuplicateRecord: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        let newObj = Object.assign({}, record.data);
+        newObj.A1924SEQ = null;
+        newObj.A1924TOTLO = 0;
+        newObj.A1924TOTRV = 0;
+        newObj.A1924IVALO = 0;
+        newObj.A1924IVARV = 0;
+        newObj.OPTION = 'C';
+        delete newObj.id;
+        const newRecord = grid.getStore().add(newObj);
+        Ext.defer(function () {
+            let row = grid.getRow(newRecord[0]);
+            if (row) {
+                row.style.backgroundColor = '#BEF395';
+            }
+        }, 50);
+
+        
+    },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Functions">
     searchTicketGrid: async function () {
@@ -270,8 +289,10 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
 
     },
     deleteDetailRecord: function (grid, record) {
-        record.set('OPTION', 'D');
-        this.deletedRecords.push(record);
+        if (record.get('OPTION') !== 'C') {
+            record.set('OPTION', 'D');
+            this.deletedRecords.push(record);
+        }
         grid.getStore().remove(record);
         this.changeDifferences();
     },
@@ -336,7 +357,6 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
         let record = context.record;
         const {A1924TOTLO, A1924TOTRV, A1924IVA} = record.data;
         let percent = Number(A1924IVA) / 100;
-        debugger;
         if (context.field === 'A1924TOTLO') {
             let ivalo = me.redondea05Decimales(A1924TOTLO * percent);
             record.set('A1924IVALO', ivalo);
@@ -344,10 +364,14 @@ Ext.define('Ext.Praxis.controller.invoice.ArithmeticValidation.ArithmeticValidat
             let ivarv = me.redondea05Decimales(A1924TOTRV * percent);
             record.set('A1924IVARV', ivarv);
         }
-        record.set('OPTION', 'U');
-        // Cambiar el color de la celda editada
-        //Ext.fly(cell).setStyle('background-color', 'yellow');
-        Ext.fly(context.row).setStyle('background-color', 'yellow');
+
+        if (record.get('OPTION') !== 'C') {
+            record.set('OPTION', 'U');
+            // Cambiar el color de la celda editada
+            //Ext.fly(cell).setStyle('background-color', 'yellow');
+            Ext.fly(context.row).setStyle('background-color', 'yellow');
+        }
+        //CALCULA DIFERENCIAS
         me.changeDifferences();
     },
     //</editor-fold>

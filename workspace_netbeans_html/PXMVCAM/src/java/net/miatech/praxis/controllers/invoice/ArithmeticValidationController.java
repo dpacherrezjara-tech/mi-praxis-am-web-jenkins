@@ -29,18 +29,21 @@ public class ArithmeticValidationController {
     
     @RequestMapping(value = "loadErrors")
     public ResponseEntity<?> loadErrors(@ModelAttribute SQP05361Filter params) throws Exception{
+        System.out.println("********* ArithmeticValidation - loadErrors *********");
         SQP05361Filter filter = logic.loadSQP05361Filter(params);
         return ResponseUtils.ok(filter);
     }
     
     @RequestMapping(value = "loadInformation")
     public ResponseEntity<?> loadInformation(@ModelAttribute SQP05362Filter params) throws Exception{
+        System.out.println("********* ArithmeticValidation - loadInformation *********");
         SQP05362Filter filter = logic.loadSQP05362Filter(params);
         return ResponseUtils.ok(filter);
     }
     
     @RequestMapping(value = "arithmeticsMaintenance",method = RequestMethod.POST)
     public ResponseEntity<?> arithmeticsMaintenance(@RequestBody List<SQP05363Filter> params) throws Exception{
+        System.out.println("********* ArithmeticValidation - arithmeticsMaintenance *********");
         List<SQP05363Filter> filter = logic.loadSQP05363Filter(params);
         return ResponseUtils.ok(filter);
     }

@@ -28,18 +28,21 @@ public class BillableCodeCatalogController {
     
     @RequestMapping(value = "loadBillingCodes")
     public ResponseEntity<?> loadBillingCodes(@ModelAttribute SQP05356Filter params) throws Exception{
+        System.out.println("********* BillableCodeCatalog - loadBillingCodes *********");
         SQP05356Filter filter = logic.loadSQP05356Filter(params);
         return ResponseUtils.ok(filter);
     }
     
     @RequestMapping(value = "loadBillingCodeInfo")
     public ResponseEntity<?> loadBillingCodeInfo(@ModelAttribute SQP05360Filter params) throws Exception{
+        System.out.println("********* BillableCodeCatalog - loadBillingCodeInfo *********");
         SQP05360Filter filter = logic.loadSQP05360Filter(params);
         return ResponseUtils.ok(filter);
     }
     
     @RequestMapping(value = "loadCrudBillingCode",method = RequestMethod.POST)
     public ResponseEntity<?> loadCrudBillingCode(@RequestBody SQP05357Filter params) throws Exception{
+        System.out.println("********* BillableCodeCatalog - loadCrudBillingCode *********");
         SQP05357Filter filter = logic.loadSQP05357Filter(params);
         return ResponseUtils.ok(filter);
     }
