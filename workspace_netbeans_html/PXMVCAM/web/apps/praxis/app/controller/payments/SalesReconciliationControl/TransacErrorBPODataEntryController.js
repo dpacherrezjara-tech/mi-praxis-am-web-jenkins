@@ -1011,9 +1011,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             if (params.IN_TICKET === '' || params.IN_SPNR === '') {
                 params.IN_TICKET = first.CCIA + first.FORMA + first.SERIE;
                 params.IN_SPNR = first.SPNR;
+                params.IN_SEQ = first.CORRL;
             } else if (params.IN_TICKET.substring(0, 3) === '000') {
                 params.IN_TICKET = first.CCIA + first.FORMA + first.SERIE;
                 params.IN_SPNR = first.SPNR;
+                params.IN_SEQ = first.CORRL;
             }
         }
         console.log('Datos de PNR y Ticket: ', params.IN_SPNR, '-', params.IN_TICKET);
