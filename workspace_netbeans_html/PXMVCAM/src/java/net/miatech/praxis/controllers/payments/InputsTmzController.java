@@ -527,7 +527,9 @@ public class InputsTmzController {
         header.add(new CustomExcelCell("Source"));
         header.add(new CustomExcelCell("Received"));
         header.add(new CustomExcelCell("Loaded"));
-        header.add(new CustomExcelCell("Exonerated"));
+        if(filter.getTIPO().equals("P")){
+            header.add(new CustomExcelCell("Exonerated"));
+        }
         header.add(new CustomExcelCell("Differences"));
         data.add(header);
         res.forEach(obj -> {
@@ -539,7 +541,9 @@ public class InputsTmzController {
             row.add(new CustomExcelCell(obj.getRECEIVED()));
             row.add(new CustomExcelCell(obj.getLOADED()));
             row.add(new CustomExcelCell(obj.getRECEIVED() - obj.getLOADED()));
-            row.add(new CustomExcelCell(0));
+            if(filter.getTIPO().equals("P")){
+                row.add(new CustomExcelCell(0));
+            }
             data.add(row);
         });
         return exportUtils.createCustomExcel(data,title);
