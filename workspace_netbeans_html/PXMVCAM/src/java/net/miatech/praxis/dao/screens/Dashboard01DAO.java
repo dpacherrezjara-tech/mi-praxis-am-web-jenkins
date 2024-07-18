@@ -4270,13 +4270,16 @@ public class Dashboard01DAO {
                     objRtn.totA050COMISI = A050COMISI;
                     objRtn.totA050TUA = A050TUA;
                     objRtn.totA050NETO = A050NETO;
+                    
 
                     objRtn.totQTY2 = QTY2;
                     objRtn.totA050ACEPTA2 = A050ACEPTA2;
                     objRtn.totA050COMISI2 = A050COMISI2;
                     objRtn.totA050TUA2 = A050TUA2;
                     objRtn.totA050NETO2 = A050NETO2;
-
+                    objRtn.PERCNET = objRtn.A050NETO > 0 ? (objRtn.A050NETO2 / objRtn.A050NETO) * 100 : 0;
+                    objRtn.totPERCNET = objRtn.totA050TUA > 0 ? (objRtn.totA050TUA2 / objRtn.totA050TUA) * 100 : 0;
+                    
                     objRtn.Perc1 = (objRtn.totA050NETO > 0) ? (objRtn.A050NETO * 100) / objRtn.totA050NETO : 0;
                     objRtn.Perc2 = (objRtn.totA050NETO2 > 0) ? (objRtn.A050NETO2 * 100) / objRtn.totA050NETO2 : 0;
 
