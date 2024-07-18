@@ -94,6 +94,8 @@ public class A050Filter extends A050 {
     public double totA050OVRAMT2 = 0;
     public double totA050TUA2 = 0;
     public double totA050NETO2 = 0;
+    public double PERCNET = 0;
+    public double totPERCNET = 0;
     //Totales
     public double ACEPTA = 0;
     public double COMISI = 0;
