@@ -377,7 +377,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                             background: '#D1E8FE',
                             captions: {
                                 title: {
-                                    text: ' Billing 2022 - USD ',
+                                    text: ' Billing 2024 - USD ',
                                     alignTo: 'chart'
                                 }
                             },
@@ -579,7 +579,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridData_INT_2',
-                            width: 683,
+                            width: 783,
                             columnLines: true,
                             margin: "5 0 0 0",
                             features: [{
@@ -669,6 +669,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                                                     console.log(data);
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totA050TUA2, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: '%', dataIndex: 'PERCNET', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#E1FFE1;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000.00') + '%';
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT_2').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totPERCNET, '0,000.00')+ '%' + '<b>';
                                                 }
                                             },
                                         ]
