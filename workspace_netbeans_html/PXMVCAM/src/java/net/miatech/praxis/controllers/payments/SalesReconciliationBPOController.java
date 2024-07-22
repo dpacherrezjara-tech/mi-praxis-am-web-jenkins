@@ -905,6 +905,7 @@ public class SalesReconciliationBPOController {
             header.add(new CustomExcelCell("ADJU\nAmount"));
             header.add(new CustomExcelCell("ADJU\nComm."));
             header.add(new CustomExcelCell("ADJU\nVAT"));
+            header.add(new CustomExcelCell("TAX"));
             header.add(new CustomExcelCell("NET Amount"));
             header.add(new CustomExcelCell("NET Amount\nTo Reveive AM"));
             header.add(new CustomExcelCell("Currency\nSettlement"));
@@ -963,6 +964,7 @@ public class SalesReconciliationBPOController {
                     row.add(new CustomExcelCell(0));
                     row.add(new CustomExcelCell(0));
                 }
+                row.add(new CustomExcelCell(obj.getAdjusment()));
                 row.add(new CustomExcelCell(obj.getNeto(), c2));
                 row.add(new CustomExcelCell(obj.getNetopay(), c2));
                 row.add(new CustomExcelCell(obj.getPcurrency(), c2));
@@ -1015,6 +1017,7 @@ public class SalesReconciliationBPOController {
             header.add(new CustomExcelCell("ADJU\nAmount"));
             header.add(new CustomExcelCell("ADJU\nComm."));
             header.add(new CustomExcelCell("ADJU\nVAT"));
+            header.add(new CustomExcelCell("TAX"));
             header.add(new CustomExcelCell("NET Amount"));
             header.add(new CustomExcelCell("Payment Info.\nCurrency"));
             header.add(new CustomExcelCell("Payment Info.\nTotal Amount"));
@@ -1023,6 +1026,7 @@ public class SalesReconciliationBPOController {
             header.add(new CustomExcelCell("Payment Info.\nComm. VAT"));
             header.add(new CustomExcelCell("Payment Info.\nServ. Fee\nAmount"));
             header.add(new CustomExcelCell("Payment Info.\nServ. Fee\nVAT"));
+            header.add(new CustomExcelCell("Payment Info.\nTAX"));
             header.add(new CustomExcelCell("Payment Info.\nNET Amount\nTo receive AM"));
             data.add(header);
 
@@ -1051,6 +1055,7 @@ public class SalesReconciliationBPOController {
                 row.add(new CustomExcelCell(obj.getADJUSTMENT(), c1));
                 row.add(new CustomExcelCell(obj.getSFEEAMOU_ADJ(), c1));
                 row.add(new CustomExcelCell(obj.getIVACOM12_ADJ(), c1));
+                row.add(new CustomExcelCell(obj.getTAX()));
                 row.add(new CustomExcelCell(obj.getNETAMOUN(), c1));
                 row.add(new CustomExcelCell(obj.getPCURRENCY(), c2));
                 row.add(new CustomExcelCell(obj.getTGROSAMPAY(), c2));
@@ -1059,6 +1064,7 @@ public class SalesReconciliationBPOController {
                 row.add(new CustomExcelCell(obj.getIVACOM12(), c2));
                 row.add(new CustomExcelCell(obj.getSERVICFEEP(), c2));
                 row.add(new CustomExcelCell(obj.getOVERCOM12P(), c2));
+                row.add(new CustomExcelCell(obj.getTAXP()));
                 row.add(new CustomExcelCell(obj.getNETOPAY(), c2));
                 data.add(row);
             }
