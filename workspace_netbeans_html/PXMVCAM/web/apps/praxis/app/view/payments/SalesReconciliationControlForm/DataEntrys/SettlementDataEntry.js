@@ -358,12 +358,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                     labelWidth: 120,
                                     width: 230
                                 },
-                                {
-                                    fieldLabel: 'TAX',
-                                    name: 'adjusment',
-                                    labelWidth: 120,
-                                    width: 230
-                                }
                             ]
                         },
                         {
