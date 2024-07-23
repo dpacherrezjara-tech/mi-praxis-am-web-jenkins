@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -22,7 +23,7 @@ public class ReservationBrowserController {
     private ReservationBrowserLogic logic;
     
     @RequestMapping(value = "loadBrowser")
-    public ResponseEntity<?> loadBrowser(SQP05377Filter params) throws Exception{
+    public ResponseEntity<?> loadBrowser(@ModelAttribute SQP05377Filter params) throws Exception{
         SQP05377Filter filter = logic.loadSQP05377Filter(params);
         return ResponseUtils.ok(filter);
     }
