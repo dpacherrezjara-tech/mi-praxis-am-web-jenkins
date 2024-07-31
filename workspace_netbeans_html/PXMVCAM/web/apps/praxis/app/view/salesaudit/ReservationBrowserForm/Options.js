@@ -9,7 +9,8 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Options', {
     items: [
         {
             xtype: 'panel',
-            border: true,
+            layout: 'hbox',
+            border: false,
             items: [
                 {
                     xtype: 'toolbar',
@@ -31,15 +32,23 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Options', {
                             listeners: {
                                 click: 'onDisplayFilterBtn'
                             }
-
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnAdd',
-                            iconCls: 'prx-icon-add',
-                            tooltip: 'New',
+                            id: prototype.id + '-btnLoadRobot',
+                            iconCls: 'prx-icon-processing',
+                            tooltip: 'Load Robot',
                             listeners: {
-                                click: 'onAddMerchantBtn'
+                                click: 'onClickLoadRobot'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnRobotLog',
+                            iconCls: 'prx-icon-image-log',
+                            tooltip: 'Robot Log',
+                            listeners: {
+                                click: 'onClickRobot'
                             }
                         },
                         {

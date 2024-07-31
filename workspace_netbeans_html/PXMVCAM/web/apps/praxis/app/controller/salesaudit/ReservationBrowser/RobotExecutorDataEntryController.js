@@ -1,72 +1,64 @@
-Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.ReservationBrowserController', {
+Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.RobotExecutorDataEntryController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.ReservationBrowserController',
+    alias: 'controller.RobotExecutorDataEntryController',
     url: CONTEXTPATH + '/ReservationBrowser',
     init: function (view) {
-        prototype.id = 'ReservationBrowserForm';
-        prototype.url = CONTEXTPATH + '/ReservationBrowser';
     },
     afterRender: async function () {
-        this.onClickSearchBtn();
-    },
-    formatSearchParams: function () {
-        const formFilters = Ext.getCmp(prototype.id + '-formFilters')
-                .getForm();
-        let params = Object.assign({}, formFilters.getValues());
-        params.IN_CCUST = '139';
-        console.log('Parametros: ', params);
-        return params;
-    },
-    //<editor-fold defaultstate="collapsed" desc="Handlers">
-    onClickSearchBtn: function () {
-        this.searchReservations();
-    },
-    onChangeType: function (obj) {
-        const txtTicket = Ext.getCmp(prototype.id + '-txtTicket');
-        const txtPaxname = Ext.getCmp(prototype.id + '-txtPaxname');
-        if (obj.value === 'T') {
-            txtTicket.show();
-            txtPaxname.show();
-        } else {
-            txtTicket.hide();
-            txtPaxname.hide();
-        }
-    },
-    onClickRobot: function () {
-        const robotWin = Ext.create('Ext.Praxis.view.salesaudit.ReservationBrowserForm.DataEntrys.RobotSabreDataEntry', {
-            id: prototype.id + '-RobotSabreDataEntry-1'
-        });
-        robotWin.show();
-    },
-    onClickLoadRobot: function () {
-        const robotWin = Ext.create('Ext.Praxis.view.salesaudit.ReservationBrowserForm.DataEntrys.RobotExecutorDataEntry', {
-            id: prototype.id + '-RobotExecutorDataEntry-1'
-        });
-        robotWin.show();
-    },
-    //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="Functions">
-    searchReservations: function () {
-        const me = this;
-        const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
-        mainPanel.removeAll();
-        let params = me.formatSearchParams();
-        if (params.IN_OPTION === 'P') {
-            const pnrsGrid = Ext.create('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.PnrsGrid', {
-                id: prototype.id + '-PnrsGrid-1',
-                searchParams: params
-            });
-            mainPanel.add(pnrsGrid);
-        } else {
-            const ticketsGrid = Ext.create('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.TicketsGrid', {
-                id: prototype.id + '-TicketsGrid-1',
-                searchParams: params
-            });
-            mainPanel.add(ticketsGrid);
-        }
-    },
-    //</editor-fold>
 
+    },
+    onProcessClick: async function () {
+        const me = this;
+        const tipo = Ext.getCmp(prototype.idDE2 + '-cmbTipo');
+        const panelParams = Ext.getCmp(prototype.idDE2 + '-formParams').getForm();
+        const panelFile = Ext.getCmp(prototype.idDE2 + '-formFile').getForm();
+        if (tipo.value === 'P') {
+            let params = Object.assign({}, {
+                IN_CCUST: '139',
+                IN_OPTION: 'T',
+                ...panelParams.getValues()
+            });
+            const res = await fetch(`${me.url}/processRobotByParams`, {
+                method: 'POST',
+                body: JSON.stringify(params),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (res.ok) {
+                alert('Procesado');
+            }
+        } else {
+            if (panelFile.isValid()) {
+                panelFile.submit({
+                    url: `${me.url}/processRobotByExcel`, // URL del servidor donde se enviará el archivo
+                    waitMsg: 'Subiendo archivo...',
+                    success: function (fp, o) {
+                        Ext.Msg.alert('Éxito', 'El archivo se ha subido correctamente.');
+                    },
+                    failure: function(fp, o) {
+                        // Manejar diferentes códigos de estado HTTP
+                        if (o.response.status === 200) {
+                            Ext.Msg.alert('Éxito', 'El archivo se ha subido correctamente.');
+                        } else {
+                            Ext.Msg.alert('Error', 'Form submission failed!');
+                        }
+                    }
+                });
+            }
+        }
+    },
+    onChangeType: function (btn) {
+        const panelParams = Ext.getCmp(prototype.idDE2 + '-formParams');
+        const panelFile = Ext.getCmp(prototype.idDE2 + '-formFile');
+        if (btn.value === 'X') {
+            panelFile.show();
+            panelParams.hide();
+        } else {
+            panelFile.hide();
+            panelParams.show();
+        }
+    },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){
         return Ext.getCmp(prototype.id + id);

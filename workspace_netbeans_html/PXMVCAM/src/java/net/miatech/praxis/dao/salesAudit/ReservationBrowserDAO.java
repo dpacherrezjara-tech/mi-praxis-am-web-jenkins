@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Map;
 import net.miatech.praxis.SaleAudit.entities.A4590;
 import net.miatech.praxis.SaleAudit.entities.A4591;
+import net.miatech.praxis.SaleAudit.entities.A4592;
+import net.miatech.praxis.SaleAudit.filter.SQP05372Filter;
 import net.miatech.praxis.SaleAudit.filter.SQP05377Filter;
+import net.miatech.praxis.SaleAudit.filter.SQP05379Filter;
 import net.miatech.praxis.logic.salesAudit.ReservationBrowserLogic;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,12 +25,12 @@ import org.springframework.stereotype.Service;
 @Service
 @Scope("request")
 public class ReservationBrowserDAO implements ReservationBrowserLogic {
-    
+
     @Autowired
     private JdbcUtils jdbcUtils;
-    
+
     private static final String LIBRARY = "PXSAUDIT";
-    
+
     @Override
     public SQP05377Filter loadSQP05377Filter(SQP05377Filter filter) throws Exception {
         filter.setPage();
@@ -43,5 +47,33 @@ public class ReservationBrowserDAO implements ReservationBrowserLogic {
         filter.setPageOut(obj);
         return filter;
     }
-    
+
+    @Async("sabreRobotExecutor")
+    @Override
+    public SQP05372Filter loadSQP05372Filter(SQP05372Filter filter) throws Exception {
+        if(filter.getIN_OPTION().equals("X")){
+            final String sql = "INSERT INTO PXSAUDIT.X3179 VALUES(:CCUST,:PRDA,:PNR,:FUENTE,:CUUID)";
+            BeanPropertySqlParameterSource[] insertParams = new BeanPropertySqlParameterSource[filter.getData().size()];
+            for (int i = 0; i < filter.getData().size(); i++) {
+                insertParams[i] = new BeanPropertySqlParameterSource(filter.getData().get(i));
+            }
+            jdbcUtils.executeNamedParam(sql, insertParams);
+        }
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05372", params);
+        filter.setSQLRES((Integer) obj.get("SQLRES"));
+        filter.setSQLMSG((String) obj.get("SQLMSG"));
+        System.out.println(obj.get("SQLMSG"));
+        return filter;
+    }
+
+    @Override
+    public SQP05379Filter loadSQP05379Filter(SQP05379Filter filter) throws Exception {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05379", params,
+                BeanPropertyRowMapper.newInstance(A4592.class));
+        filter.setResponse((List<A4592>) obj.get("result"));
+        return filter;
+    }
+
 }
