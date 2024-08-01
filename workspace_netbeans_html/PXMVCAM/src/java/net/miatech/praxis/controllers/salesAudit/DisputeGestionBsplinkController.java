@@ -56,6 +56,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
+import java.util.Map;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 
@@ -421,36 +422,11 @@ public class DisputeGestionBsplinkController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-
-    /*
-    @RequestMapping(value = "GetFilesDirectory")
-    public @ResponseBody
-    String GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
-        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        Object res;
-        try {
-            String v1_urlREST = "/api/util/s3_upload_file";
-            String urlREST = "DISPUTAS/WEB/" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
-            
-            HashMap bodyData = new HashMap<>();
-            bodyData.put("client", "am");
-            bodyData.put("type", "VISOR");
-            bodyData.put("remote_path", urlREST);
-
-            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
-            //("success", true);
-        } catch (InterruptedException | ExecutionException | JSONException e) {
-            throw new SpringException(e);
-        }
-
-        return new Gson().toJson(res);
-    }
-     */
     public boolean upload_s3(A2553 filter, File archiv, File archiv2, File archiv3) throws SQLException, Exception {
         boolean res;
         try {
-            String v1_urlREST = "/api/util/s3_upload_file";
-            String urlREST = "DISPUTAS/WEB" + "/" + filter.A2553CNXPA + "/" + Functions.getFechaActual() + "/";
+            String v1_urlREST = "/util/upload-file";
+            String urlREST = "DISPUTAS/WEB" + "/" + filter.A2553CNXPA + "/" + Functions.getFechaActual();
             res = pws.uploadFilesPython(v1_urlREST, "am", urlREST, archiv, archiv2, archiv3);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
@@ -461,29 +437,6 @@ public class DisputeGestionBsplinkController extends BaseController {
 
     }
 
-    /*
-    public String upload_s3A(A2553 filter,File archiv,File archiv2,File archiv3) throws SQLException, Exception {
-        //String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
-        String v1_urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString() + "" + "/api/util/s3_upload_file";
-        //String urlREST = "DISPUTAS/WEB/"+""+ request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
-        String urlREST = "lremicio_test/";
-        String filePath = "D:\\UCV\\Maestria\\matriz_riesgos.xlsx"; //
-        Unirest.setTimeouts(0, 0);
-        HttpResponse<String> response = Unirest.post("http://localhost:8185/api/util/s3_upload_file")
-                .field("client", "am")
-                .field("remote_path", "lremicio_test/")
-                .field("file", archiv) 
-                .asString();
-        
-        JSONObject myObject;
-        myObject = new JSONObject(response.getBody());
-        
-        myObject.get("message");
-        myObject.get("success");
-        return null;
-
-    }
-     */
     @RequestMapping(value = "insertTracing")
     public @ResponseBody
     String insertTracing(ModelMap map, HttpServletRequest request) {
@@ -515,7 +468,7 @@ public class DisputeGestionBsplinkController extends BaseController {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ResponseEntity res;
         try {
-            String v1_urlREST = "/api/util/s3_download_files_visor";
+            String v1_urlREST = "/util/download-files";
             String sesion=serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             String urlREST = "";
             if (request.getParameter("IN_TIPO").trim().equals("USRBSP")) {
@@ -524,12 +477,13 @@ public class DisputeGestionBsplinkController extends BaseController {
                 urlREST = "DISPUTAS/WEB" + "/" + request.getParameter("IN_CNXPA").trim() + "/" + request.getParameter("IN_DATE").trim();
             }
 
-            HashMap bodyData = new HashMap<>();
-            bodyData.put("client", "am");
-            bodyData.put("type", "VISOR");
-            bodyData.put("remote_path", urlREST);
+            //
+            Map<String, Object> queryParams = new HashMap<>();
+            queryParams.put("client", "am");
+            queryParams.put("type", "directory");
+            queryParams.put("remotePath", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData,sesion);
+            res = pws.downloadFilesVisorPython(v1_urlREST, queryParams,sesion);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
             throw new SpringException(e);
@@ -538,46 +492,7 @@ public class DisputeGestionBsplinkController extends BaseController {
           return res;
     }
 
-    /*@RequestMapping(value = "GetFilesDirectory")
-    public @ResponseBody
-    String GetFilesDirectory(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
-
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
-
-        String path_config = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
-        String IN_PATH = path_config + "\\IMGTMPDISPUTE\\";
-        String IN_DATE = request.getParameter("IN_DATE").toString().trim();
-        String IN_COUNTRY = request.getParameter("IN_COUNTRY").toString().trim();
-        String IN_DOCUMENT = request.getParameter("IN_DOCUMENT").toString().trim();
-
-        
-        Se establece tiempo límite de conexión por 60 min
-         
-        Unirest.setTimeouts(3600000, 3600000);
-
-        Preparando parámetros para enviar por body
-         
-        HashMap bodyData = new HashMap<>();
-        bodyData.put("IN_OPTION", "1");
-        bodyData.put("IN_PATH", IN_PATH);
-        bodyData.put("IN_DATE", IN_DATE);
-        bodyData.put("IN_COUNTRY", IN_COUNTRY);
-        bodyData.put("IN_DOCUMENT", IN_DOCUMENT);
-
-        HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/bsplink/download/dispute/all/")
-                .header("content-type", "application/json")
-                .header("cache-control", "no-cache")
-                .body(new Gson().toJson(bodyData))
-                .asJson();
-
-        String body = response.getBody().getObject().get("data").toString();
-
-        map.put("success", true);
-        map.put("data", body);
-
-        return new Gson().toJson(map);
-    }*/
-    public String upload(byte[] bytes, String nroMemo, String nomArchivo) throws Exception {
+     public String upload(byte[] bytes, String nroMemo, String nomArchivo) throws Exception {
 
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
 

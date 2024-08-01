@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
@@ -657,7 +658,7 @@ public class AgentsMasterFileController extends BaseController {
       public ResponseEntity<byte[]> getFileTxt(HttpServletRequest request, final HttpServletResponse response) throws Exception {
         A003 filter = new A003();
         String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
-        String v1_urlREST = "/api/agent-master-file/agentmasterfile";
+        String v1_urlREST = "/agent-master-file/report";
             try {
                 filter.VP_ACTION = request.getParameter("VP_ACTION");
                 filter.A003KEY1 = request.getParameter("A003KEY1");
@@ -670,20 +671,20 @@ public class AgentsMasterFileController extends BaseController {
 //                /*
 //                 Preparando parámetros para enviar por body
 //                 */
-                HashMap bodyData = new HashMap<>();
-                bodyData.put("server_database", "AEROMEXICO");
-                bodyData.put("VP_AIR", "139");
-                bodyData.put("VP_ACTION", filter.VP_ACTION);
-                bodyData.put("VP_A003KEY1", filter.A003KEY1);
-                bodyData.put("VP_A003KEY2", filter.A003KEY2);
-                bodyData.put("VP_A003KEY3", filter.A003KEY3);
-                bodyData.put("VP_A003TYPE", request.getParameter("A003TYPE"));
-                bodyData.put("PATH", rutaFile);
+                Map<String, Object> queryParams = new HashMap<>();
+                //queryParams.put("server_database", "AEROMEXICO");
+                //queryParams.put("VP_AIR", "139");
+                queryParams.put("VP_ACTION", filter.VP_ACTION);
+                queryParams.put("VP_A003KEY1", filter.A003KEY1);
+                queryParams.put("VP_A003KEY2", filter.A003KEY2);
+                queryParams.put("VP_A003KEY3", filter.A003KEY3);
+                queryParams.put("VP_A003TYPE", "xlsx");
+                queryParams.put("path", rutaFile);
                 
-                System.out.println(bodyData);
+                System.out.println(queryParams);
                 
 
-                ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST,bodyData);
+                ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST,queryParams);
 //                System.out.println(bodyData);
                 System.out.println(res);
                 

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
@@ -1373,15 +1374,16 @@ public class RFNDQueryController extends BaseController {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ResponseEntity res;
         try {
-            String v1_urlREST = "/api/util/s3_download_files_visor";
+            String v1_urlREST = "/util/download-files";
             String urlREST = "PXRFNDESP" + "/" + request.getParameter("IN_ANIO").trim() + "/" + request.getParameter("IN_PREME").trim();
             String sesion = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
-            HashMap bodyData = new HashMap<>();
-            bodyData.put("client", "am");
-            bodyData.put("type", "VISOR");
-            bodyData.put("remote_path", urlREST);
+            //
+            Map<String, Object> queryParams = new HashMap<>();
+            queryParams.put("client", "am");
+            queryParams.put("type", "directory");
+            queryParams.put("remotePath", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData, sesion);
+            res = pws.downloadFilesVisorPython(v1_urlREST, queryParams, sesion);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
             throw new SpringException(e);

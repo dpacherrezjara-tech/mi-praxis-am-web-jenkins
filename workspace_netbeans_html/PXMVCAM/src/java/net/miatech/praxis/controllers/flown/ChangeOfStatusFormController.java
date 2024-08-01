@@ -51,6 +51,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import net.miatech.praxis.utils.PythonWS;
@@ -602,55 +603,52 @@ public class ChangeOfStatusFormController extends BaseController {
     void getFileTxt(HttpServletRequest request, HttpServletResponse response) {
      */
     @RequestMapping(value = "getFileTxt")
-        public ResponseEntity<byte[]> getFileTxt(HttpServletRequest request, final HttpServletResponse response) throws Exception {
-            A3676Filter filter = new A3676Filter();
-            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-            String v1_urlREST = "/api/change-of-status/changeofstatus";
-            
+    public ResponseEntity<byte[]> getFileTxt(HttpServletRequest request, final HttpServletResponse response) throws Exception {
+        A3676Filter filter = new A3676Filter();
+        filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+        String v1_urlREST = "/change-of-status/report";
 
-                try {
-                    HashMap bodyData = new HashMap<>();
-                    bodyData.put("IN_OPTION", filter.IN_OPTION.trim());
-                    bodyData.put("IN_CIA", filter.IN_CIA.trim());
-                    bodyData.put("IN_FORMA", filter.IN_FORMA.trim());
-                    bodyData.put("IN_SERIE", filter.IN_SERIE.trim());
-                    bodyData.put("IN_SEQ", filter.IN_SEQ.trim());
-                    bodyData.put("IN_REFERENCE", filter.IN_REFERENCE.trim());
-                    bodyData.put("IN_HORAINI", filter.IN_HORAINI.trim());
-                    bodyData.put("IN_HORAFIN", filter.IN_HORAFIN.trim());
-                    bodyData.put("IN_STATUS", filter.IN_STATUS.trim());
-                    bodyData.put("IN_CURRENCY", filter.IN_CURRENCY.trim());
-                    bodyData.put("IN_COUNTRY", filter.IN_COUNTRY.trim());
-                    bodyData.put("IN_STATUSINI", filter.IN_STATUSINI.trim());
-                    bodyData.put("IN_STATUSFIN", filter.IN_STATUSFIN.trim());
-                    bodyData.put("IN_ORIGEN", filter.IN_ORIGEN.trim());
-                    bodyData.put("IN_LOTE", filter.IN_LOTE.trim());
-                    bodyData.put("IN_DATEFROM", filter.IN_DATEFROM.trim());
-                    bodyData.put("IN_DATETO", filter.IN_DATETO.trim());
-                    
+        try {
+            Map<String, Object> queryParams = new HashMap<>();
+            queryParams.put("IN_OPTION", filter.IN_OPTION.trim());
+            queryParams.put("IN_CIA", filter.IN_CIA.trim());
+            queryParams.put("IN_FORMA", filter.IN_FORMA.trim());
+            queryParams.put("IN_SERIE", filter.IN_SERIE.trim());
+            queryParams.put("IN_SEQ", filter.IN_SEQ.trim());
+            queryParams.put("IN_REFERENCE", filter.IN_REFERENCE.trim());
+            queryParams.put("IN_HORAINI", filter.IN_HORAINI.trim());
+            queryParams.put("IN_HORAFIN", filter.IN_HORAFIN.trim());
+            queryParams.put("IN_STATUS", filter.IN_STATUS.trim());
+            queryParams.put("IN_CURRENCY", filter.IN_CURRENCY.trim());
+            queryParams.put("IN_COUNTRY", filter.IN_COUNTRY.trim());
+            queryParams.put("IN_STATUSINI", filter.IN_STATUSINI.trim());
+            queryParams.put("IN_STATUSFIN", filter.IN_STATUSFIN.trim());
+            queryParams.put("IN_ORIGEN", filter.IN_ORIGEN.trim());
+            queryParams.put("IN_LOTE", filter.IN_LOTE.trim());
+            queryParams.put("IN_DATEFROM", filter.IN_DATEFROM.trim());
+            queryParams.put("IN_DATETO", filter.IN_DATETO.trim());
+            queryParams.put("IN_CCUST", "139");
+
 //                     System.out.println(bodyData);
-                
-
-                ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST,bodyData);
+            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST, queryParams);
 //                System.out.println(bodyData);
 //                System.out.println(res);
-                
-                String resString = new String(res.getBody(), StandardCharsets.UTF_8);
-                
-                System.out.println("Datos obtenidos:");
-                System.out.println(resString);
-                
-                return res;
-                
 
-            } catch (Exception e) {
-                System.out.println("Error Message => "+ e.getMessage());
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            String resString = new String(res.getBody(), StandardCharsets.UTF_8);
+
+            System.out.println("Datos obtenidos:");
+            System.out.println(resString);
+
+            return res;
+
+        } catch (Exception e) {
+            System.out.println("Error Message => " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             //throw new SpringException(e);
-            }
+        }
     }
 
-/*@RequestMapping(value = "/getFileTxt")
+    /*@RequestMapping(value = "/getFileTxt")
     public @ResponseBody
     void getFileTxt(HttpServletRequest request, HttpServletResponse response) {
         A3676Filter filter = new A3676Filter();
@@ -736,8 +734,8 @@ public class ChangeOfStatusFormController extends BaseController {
             throw new SpringException(e);
         }
     }*/
-@RequestMapping(value = "SearchControl")
-        public @ResponseBody
+    @RequestMapping(value = "SearchControl")
+    public @ResponseBody
     String SearchControl(ModelMap map, HttpServletRequest request) {
         A3676Filter filter = new A3676Filter();
         try {
@@ -763,7 +761,7 @@ public class ChangeOfStatusFormController extends BaseController {
     }
 
     @RequestMapping(value = "/getXLSXCAB")
-        public @ResponseBody
+    public @ResponseBody
     void getXLSXCAB(HttpServletRequest request, HttpServletResponse response) {
         A3676Filter filter = new A3676Filter();
         try {
@@ -923,7 +921,7 @@ public class ChangeOfStatusFormController extends BaseController {
     }
 
     @RequestMapping(value = "/getXLSXCABDET")
-        public @ResponseBody
+    public @ResponseBody
     void getXLSXCABDET(HttpServletRequest request, HttpServletResponse response) {
         A3676Filter filter = new A3676Filter();
         try {
@@ -1156,7 +1154,7 @@ public class ChangeOfStatusFormController extends BaseController {
     }
 
     @RequestMapping(value = "SearchControlEjecu")
-        public @ResponseBody
+    public @ResponseBody
     String SearchControlEjecu(ModelMap map, HttpServletRequest request) {
         A3676Filter filter = new A3676Filter();
         try {
@@ -1182,7 +1180,7 @@ public class ChangeOfStatusFormController extends BaseController {
     }
 
     @RequestMapping(value = "SearchDetaCab")
-        public @ResponseBody
+    public @ResponseBody
     String SearchDetaCab(ModelMap map, HttpServletRequest request) {
         List<A3676Filter> lst;
         A3676Filter filter = new A3676Filter();
