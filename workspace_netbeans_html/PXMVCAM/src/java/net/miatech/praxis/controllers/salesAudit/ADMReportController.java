@@ -987,7 +987,7 @@ public class ADMReportController extends BaseController {
             //List<A3404Filter> gridDataRazones2 =  fromJsonList(request.getParameter("beanlstRazones"), gridDataRazones.getClass());//new Gson().fromJson(request.getParameter("beanlstRazones"), gridDataRazones.getClass());
             ADMReportLogic logic = new ADMReportLogic();
             logic.setSession(this.serverSession.getServerSession());
-            result = "RECORD INSERTED"; //logic.insertLisTracingFile(gridData, listenvio);
+            result = logic.insertLisTracingFile(gridData, listenvio);//"RECORD INSERTED"; //
             if (result.equals("RECORD INSERTED")) {
                 if (!listenvio.A2553ARCHV.equals("") || !listenvio.A2553ARCHV2.equals("") || !listenvio.A2553ARCHV3.equals("")) {
 
@@ -1048,8 +1048,8 @@ public class ADMReportController extends BaseController {
     public boolean upload_s3(String IN_CNXPA, File archiv, File archiv2, File archiv3) throws SQLException, Exception {
         boolean res;
         try {
-            String v1_urlREST = "/api/util/s3_upload_file";
-            String urlREST = "ADM" + "/" + IN_CNXPA + "/" + Functions.getFechaActual() + "/";
+            String v1_urlREST = "/util/upload-file";
+            String urlREST = "ADM" + "/" + IN_CNXPA + "/" + Functions.getFechaActual();
             res = pws.uploadFilesPython(v1_urlREST, "am", urlREST, archiv, archiv2, archiv3);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {

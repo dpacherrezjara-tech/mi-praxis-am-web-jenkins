@@ -209,14 +209,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 ]
             },
             {
-                text: 'TAX', dataIndex: 'tax', width: 100,
-                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = "text-align:right;background-color:#B2DAFA";
-                    value = Ext.util.Format.number(value, '0,000.00');
-                    return value;
-                }
-            },
-            {
                 text: 'Net Amount',
                 dataIndex: 'netamoun',
                 width: 130,
@@ -310,14 +302,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                                 }
                             }
                         ]
-                    },
-                    {
-                        text: 'TAX', dataIndex: 'taxp', width: 100,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "text-align:right;background-color:#FCF6DC";
-                            value = Ext.util.Format.number(value, '0,000.00');
-                            return value;
-                        }
                     },
                     {
                         text: 'Net Amount<br>to Receive AM',

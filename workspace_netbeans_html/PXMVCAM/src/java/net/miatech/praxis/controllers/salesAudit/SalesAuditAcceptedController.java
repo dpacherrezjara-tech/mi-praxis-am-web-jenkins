@@ -635,7 +635,7 @@ public class SalesAuditAcceptedController extends BaseController {
                 lstSelectedTkts.add(data);
 
             }
-            String result = logic.insertTracing(filter, lstSelectedTkts, A1672ARCHV);
+            String result =logic.insertTracing(filter, lstSelectedTkts, A1672ARCHV);
             if (result.equals("Operation was successful.")) {
                 result = "The record was saved successfully.";
                 if (!A1672ARCHV.equals("")) {
@@ -650,15 +650,8 @@ public class SalesAuditAcceptedController extends BaseController {
                         } else {
                             result = "An error ocurred when trying to upload the file.";
                         }
-                        //result2 = upload(bytes, obj.A1672CIA + "" + obj.A1672FORMA + "" + obj.A1672SERIE + "" + obj.A1672SEQ + "" + obj.A1672CUPON + "" + obj.A1672TRNCU, A1672ARCHV);
-                        //result2 = upload_s3(obj.A1672CIA + "" + obj.A1672FORMA + "" + obj.A1672SERIE + "" + obj.A1672SEQ + "" + obj.A1672CUPON + "" + obj.A1672TRNCU, A1672ARCHV);
                     }
                 }
-                /*if (filter.A1672FUENT.equals("ASR")) {
-                    if (filter.A1672CORREO == 2) {
-                        result2 = upload_s3_correo();
-                    }
-                }*/
 
             } else {
                 result = "An error ocurred when trying to upload the file.";
@@ -757,8 +750,10 @@ public class SalesAuditAcceptedController extends BaseController {
     public boolean upload_s3(String IN_TICKET, File archiv, File archiv2, File archiv3) throws SQLException, Exception {
         boolean res;
         try {
-            String v1_urlREST = "/api/util/s3_upload_file";
-            String urlREST = "AMAUDIT/TKT" + "/" + IN_TICKET + "/" + Functions.getFechaActual() + "/";
+            String v1_urlREST = "/util/upload-file";
+            String urlREST = "ACCEPTED" + "/" + IN_TICKET + "/" + Functions.getFechaActual();
+            // String urlREST = "DISPUTAS/WEB" + "/" + filter.A2553CNXPA + "/" + Functions.getFechaActual();
+            ///network/amaudit/TKT/1391165403815/20240724
             res = pws.uploadFilesPython(v1_urlREST, "am", urlREST, archiv, archiv2, archiv3);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
@@ -435,8 +436,8 @@ public class PostbillingController extends BaseController {
     public boolean upload_s3(String IN_CNXPA, File archiv, File archiv2, File archiv3) throws SQLException, Exception {
         boolean res;
         try {
-            String v1_urlREST = "/api/util/s3_upload_file";
-            String urlREST = "POSTBILLING/WEB" + "/" + IN_CNXPA + "/" + Functions.getFechaActual() + "/";
+            String v1_urlREST = "/util/upload-file";
+            String urlREST = "POSTBILLING/WEB" + "/" + IN_CNXPA + "/" + Functions.getFechaActual();
             res = pws.uploadFilesPython(v1_urlREST, "am", urlREST, archiv, archiv2, archiv3);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
@@ -476,7 +477,7 @@ public class PostbillingController extends BaseController {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
        ResponseEntity res;
         try {
-            String v1_urlREST = "/api/util/s3_download_files_visor";
+            String v1_urlREST = "/util/download-files";
             String sesion=serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             String urlREST = "";
             if (request.getParameter("IN_TYPE").trim().equals("ROBOT")) {
@@ -488,12 +489,13 @@ public class PostbillingController extends BaseController {
                 urlREST = request.getParameter("IN_MODULO").trim() + "/" + request.getParameter("IN_DOCUMENT").trim() + "/";
             }
 
-            HashMap bodyData = new HashMap<>();
-            bodyData.put("client", "am");
-            bodyData.put("type", "VISOR");
-            bodyData.put("remote_path", urlREST);
+            //
+            Map<String, Object> queryParams = new HashMap<>();
+            queryParams.put("client", "am");
+            queryParams.put("type", "directory");
+            queryParams.put("remotePath", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData,sesion);
+            res = pws.downloadFilesVisorPython(v1_urlREST, queryParams,sesion);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
             throw new SpringException(e);
