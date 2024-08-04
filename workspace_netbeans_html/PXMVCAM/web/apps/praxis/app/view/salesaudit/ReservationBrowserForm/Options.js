@@ -30,7 +30,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Options', {
                             iconCls: 'prx-icon-filter',
                             tooltip: 'Display filter',
                             listeners: {
-                                click: 'onDisplayFilterBtn'
+                                click: 'onClickFilterBtn'
                             }
                         },
                         {

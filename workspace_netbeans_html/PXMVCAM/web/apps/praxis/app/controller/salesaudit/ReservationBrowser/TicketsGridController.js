@@ -3,6 +3,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.TicketsGridContr
     alias: 'controller.TicketsGridController',
     url: CONTEXTPATH + '/ReservationBrowser',
     init: function (view) {
+        if (view.backButton) {
+            Ext.getCmp(prototype.id + '-backButton-1').show();
+        }
     },
     afterRender: async function () {
         this.getData();
@@ -39,6 +42,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.TicketsGridContr
             }
         });
         view.setStore(store);
+    },
+    onClickBackButton: function () {
+        const me = this.view;
+        if (me.backButton) {
+            me.backButton();
+        }
     },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){

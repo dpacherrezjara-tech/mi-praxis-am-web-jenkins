@@ -79,7 +79,10 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Filters', {
                                     editable: true, // Deshabilita la edición del campo
                                     labelWidth: 50,
                                     width: 150,
-                                    value: new Date(anioActual, mesActual, 1)
+                                    value: new Date(anioActual, mesActual, 1),
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
                                 },
                                 {
                                     xtype: 'datefield',
@@ -90,7 +93,10 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Filters', {
                                     editable: true, // Deshabilita la edición del campo
                                     labelWidth: 30,
                                     width: 130,
-                                    value: fechaActual
+                                    value: fechaActual,
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
                                 },
                                 {
                                     xtype: 'textfield',
@@ -165,25 +171,19 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Filters', {
                                     value: ''
                                 },
                                 {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbQueues',
-                                    name: 'IN_JOBQUEUE',
-                                    queryMode: 'local',
-                                    allowBlank: true,
-                                    forceSelection: true,
-                                    selectOnFocus: true,
-                                    caseSensitive: false,
-                                    autoSelect: true,
+                                    xtype: 'textfield',
                                     fieldLabel: 'Queue',
-                                    labelWidth: 65,
-                                    labelAlign: 'right',
-                                    width: 150,
-                                    typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    enableKeyEvents: true,
-                                    triggerAction: 'all',
-                                    value: ''
+                                    labelWidth: 60,
+                                    width: 145,
+                                    name: 'IN_JOBQUEUE',
+                                    maxLength: 15, // Límite máximo de caracteres
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress',
+                                        change: function (field, newValue) {
+                                            field.setValue(newValue.toUpperCase());
+                                        }
+                                    }
                                 },
                                 {
                                     xtype: 'combobox',

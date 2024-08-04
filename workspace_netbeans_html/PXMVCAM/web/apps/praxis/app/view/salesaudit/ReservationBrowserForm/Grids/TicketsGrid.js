@@ -30,12 +30,13 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.TicketsGrid'
             },
             {text: 'Processing<br>Date', dataIndex: 'PRDA', width: 100},
             {text: 'PNR', dataIndex: 'PNR', width: 80},
-            {text: 'Source', dataIndex: 'FUENTE', width: 80},
+            {text: 'PNR<br>Sabre', dataIndex: 'PNRAA', width: 80},
+            {text: 'Src', dataIndex: 'FUENTE', width: 50},
             {text: 'Queue', dataIndex: 'JOBQUEUE', width: 100},
-            {text: 'Transaction', dataIndex: 'TRNCU', width: 100},
+            {text: 'Transaction', dataIndex: 'TRNCU', width: 90},
             {text: 'Ticket', width: 130,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    const {CCIA,FORMA,SERIE} = record.data;
+                    const {CCIA, FORMA, SERIE} = record.data;
                     return CCIA + FORMA + SERIE;
                 }
             },
@@ -73,6 +74,18 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.TicketsGrid'
                 tooltip: 'Export to Excel',
                 listeners: {
                     click: 'downloadExcel'
+                }
+            },
+            {
+                xtype: 'button',
+                hidden: true,
+                id: prototype.id + '-backButton-1',
+                scale: 'small',
+                iconCls: 'prx-icon-back',
+                width: 25,
+                tooltip: 'Back',
+                listeners: {
+                    click: 'onClickBackButton'
                 }
             }
         ]

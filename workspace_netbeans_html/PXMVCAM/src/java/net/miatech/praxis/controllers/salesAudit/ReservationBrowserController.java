@@ -10,7 +10,6 @@ import net.miatech.praxis.SaleAudit.filter.SQP05377Filter;
 import net.miatech.praxis.SaleAudit.filter.SQP05379Filter;
 import net.miatech.praxis.logic.salesAudit.ReservationBrowserLogic;
 import net.miatech.praxis.utils.ResponseUtils;
-import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

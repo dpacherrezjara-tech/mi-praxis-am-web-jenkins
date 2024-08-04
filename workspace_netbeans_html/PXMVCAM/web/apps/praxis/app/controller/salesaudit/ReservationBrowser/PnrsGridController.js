@@ -40,6 +40,32 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.PnrsGridControll
         });
         view.setStore(store);
     },
+    onClickPNR: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
+        const obj = record.data;
+        const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
+        const drillDown = mainPanel.items.items;
+        drillDown.at(-1).hide();
+        const panelDet = Ext.create('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.TicketsGrid', {
+            id: prototype.id + '-TicketsGrid-1',
+            searchParams: me.formatTicketsParams(obj),
+            backButton: () => {
+                drillDown.at(-1).destroy();
+                drillDown.at(-1).show();
+            }
+        });
+        mainPanel.add(panelDet);
+    },
+    formatTicketsParams: function (obj) {
+        let params = {
+            IN_CCUST: '139',
+            IN_PNR: obj.PNR,
+            IN_OPTION: 'T',
+            IN_FROM: obj.PRDA,
+            IN_TO: obj.PRDA
+        };
+        return params
+    },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){
         return Ext.getCmp(prototype.id + id);

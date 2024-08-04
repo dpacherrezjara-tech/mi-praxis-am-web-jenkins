@@ -44,6 +44,22 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.ReservationBrows
         });
         robotWin.show();
     },
+    onEnterKeyPress: function (field, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onClickSearchBtn();
+        }
+    },
+    onClickFilterBtn: function () {
+        const panelFilters = Ext.getCmp(prototype.id + '-formFilters');
+        if (panelFilters.isVisible())
+            panelFilters.hide();
+        else
+            panelFilters.show();
+    },
+    onClearOptionsBtn:function(){
+        const panelFilters = Ext.getCmp(prototype.id + '-formFilters');
+        panelFilters.reset();
+    },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Functions">
     searchReservations: function () {
@@ -66,7 +82,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.ReservationBrows
         }
     },
     //</editor-fold>
-
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){
         return Ext.getCmp(prototype.id + id);

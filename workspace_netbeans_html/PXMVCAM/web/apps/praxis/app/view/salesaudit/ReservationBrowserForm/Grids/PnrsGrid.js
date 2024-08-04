@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.PnrsGrid', {
     maxHeight: prototype.height,
     minHeight: 200,
     height: 'auto',
-    width: 900,
+    width: 1000,
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -31,7 +31,17 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.PnrsGrid', {
                 width: 40 // Ancho de la columna de número de fila (ajusta según tus necesidades)
             },
             {text: 'Processing<br>Date', dataIndex: 'PRDA', width: 100},
-            {text: 'PNR', dataIndex: 'PNR', flex: 1},
+            {text: 'PNR', dataIndex: 'PNR', flex: 1,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
+                    metaData.style += "font-weight:bolder;color:#057ECB;";
+                    return value;
+                },
+                listeners: {
+                    click: 'onClickPNR'
+                }
+            },
+            {text: 'PNR<br>Sabre', dataIndex: 'PNRAA', width: 100},
             {text: 'Source', dataIndex: 'FUENTE', width: 80},
             {text: 'Queue', dataIndex: 'JOBQUEUE', width: 100},
             {text: 'Ticket<br>Ref.', dataIndex: 'REFTKT', width: 130},

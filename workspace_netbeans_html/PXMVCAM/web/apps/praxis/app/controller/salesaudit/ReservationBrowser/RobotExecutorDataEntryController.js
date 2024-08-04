@@ -36,7 +36,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.RobotExecutorDat
                     success: function (fp, o) {
                         Ext.Msg.alert('Éxito', 'El archivo se ha subido correctamente.');
                     },
-                    failure: function(fp, o) {
+                    failure: function (fp, o) {
                         // Manejar diferentes códigos de estado HTTP
                         if (o.response.status === 200) {
                             Ext.Msg.alert('Éxito', 'El archivo se ha subido correctamente.');
@@ -58,6 +58,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.RobotExecutorDat
             panelFile.hide();
             panelParams.show();
         }
+    },
+    onCancelClick: function () {
+        this.view.close();
     },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){

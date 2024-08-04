@@ -12,6 +12,7 @@ public class A4590{
     private String CCUST,  
             PRDA,
             PNR,
+            PNRAA,
             FUENTE,
             JOBQUEUE,
             REFTKT,
