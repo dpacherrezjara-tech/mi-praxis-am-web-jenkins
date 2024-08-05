@@ -225,7 +225,7 @@ public class YieldReportController extends BaseController {
 
                     int len = listaData.size();
                     Integer vi = 0;
-                    String fileName = "Yield Report Summary - " + Functions.getFechaActual() + ".txt";
+                    String fileName = "Yield Report Summary - " + Functions.getFechaActual();
                     File file = new File(rutaFile + "\\" + fileName + ".txt");
 
                     if (file.exists()) {
@@ -256,7 +256,7 @@ public class YieldReportController extends BaseController {
                     writer.close();
 
                     response.setContentType("application/text");
-                    response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + ".txt" + "\"");
+                    response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName +"\"");
                     InputStream is = new FileInputStream(rutaFile + "\\" + fileName + ".txt");
                     IOUtils.copy(is, response.getOutputStream());
                     response.flushBuffer();
