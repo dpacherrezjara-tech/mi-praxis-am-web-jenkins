@@ -196,7 +196,7 @@ public class ISRPricingController extends BaseController {
                 listaData = logic.loadPX088S01A728(filter);
             }
 
-            if (listaData.size() > 65000) {
+            if (listaData.size() > 600) {
 
                 System.out.println("LIQUIDACION : getTXT");
                 String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
