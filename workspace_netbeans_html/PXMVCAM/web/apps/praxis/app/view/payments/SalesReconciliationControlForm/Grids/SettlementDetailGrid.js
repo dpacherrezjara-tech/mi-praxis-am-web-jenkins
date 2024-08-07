@@ -280,9 +280,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         text: 'Amount', dataIndex: 'tgrosamoun', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;";
-                            const {transtype, tgrosamoun,adjusment} = record.data;
+                            const {transtype, tgrosamoun} = record.data;
                             if (transtype.trim() === 'ADJU') {
-                                value = tgrosamoun + adjusment;
+                                value = tgrosamoun;
                             } else {
                                 value = 0;
                             }
@@ -319,6 +319,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         }
                     }
                 ]
+            },
+            {
+                text: 'TAX', dataIndex: 'adjusment', width: 100,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:right;";
+                    value = Ext.util.Format.number(value, '0,000.00');
+                    return value;
+                }
             },
             {
                 text: 'Net Amount', dataIndex: 'neto', width: 100,
