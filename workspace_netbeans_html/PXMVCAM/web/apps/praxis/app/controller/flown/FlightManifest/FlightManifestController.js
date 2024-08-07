@@ -1700,7 +1700,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
                     width = wt;
                 }
             }
-            Ext.getCmp(prototype.id + '-pie').setWidth(width);
+//            Ext.getCmp(prototype.id + '-pie').setWidth(width);
         }
     },
     peek: function () {
