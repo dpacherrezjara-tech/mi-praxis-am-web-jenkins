@@ -29,8 +29,6 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.TicketsGrid'
                 width: 40 // Ancho de la columna de número de fila (ajusta según tus necesidades)
             },
             {text: 'Processing<br>Date', dataIndex: 'PRDA', width: 100},
-            {text: 'PNR', dataIndex: 'PNR', width: 80},
-            {text: 'PNR<br>Sabre', dataIndex: 'PNRAA', width: 80},
             {text: 'Src', dataIndex: 'FUENTE', width: 50},
             {text: 'Queue', dataIndex: 'JOBQUEUE', width: 100},
             {text: 'Transaction', dataIndex: 'TRNCU', width: 90},
@@ -40,11 +38,33 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.TicketsGrid'
                     return CCIA + FORMA + SERIE;
                 }
             },
-            {text: 'Pax<br>Name', dataIndex: 'PAX', flex: 1},
+            {text: 'PNR', dataIndex: 'PNR', width: 80},
+            {text: 'PNR<br>Sabre', dataIndex: 'PNRAA', width: 80},
+            {text: 'Pax<br>Name', dataIndex: 'PAX', width: 250,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
+                    return value;
+                }
+            },
             {text: 'Pax<br>Number', dataIndex: 'CODPAX', width: 80},
-            {text: 'DOCS', dataIndex: 'DOCS', width: 230},
-            {text: 'DOCA', dataIndex: 'DOCA', width: 230},
-            {text: 'OSIS', dataIndex: 'OSIS', width: 230},
+            {text: 'DOCS', dataIndex: 'DOCS', width: 500,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
+                    return value;
+                }
+            },
+            {text: 'DOCA', dataIndex: 'DOCA', width: 500,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
+                    return value;
+                }
+            },
+            {text: 'OSIS', dataIndex: 'OSIS', width: 700,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
+                    return value;
+                }
+            },
             {text: 'Status', dataIndex: 'STSEARCH', width: 100,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
