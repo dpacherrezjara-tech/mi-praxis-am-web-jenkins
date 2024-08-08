@@ -186,8 +186,13 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
         cant = this.bean.QCPNFI;
 
 //        if (cant > 0) {
+            this.objFLIGHTMANIF = {}
+            this.objFLIGHTMANIF.DFLIGHT = x.record.data.DFLIGHT
+            this.objFLIGHTMANIF.NFLIGHT = x.record.data.NFLIGHT
+            this.objFLIGHTMANIF.CDEPART = x.record.data.CDEPART
+            this.objFLIGHTMANIF.CARRIVA = x.record.data.CARRIVA
             var IN_FSABRE = this.getValue("cmbFSabre");
-            this.objFLIGHTMANIF = x.record.data;
+            console.log(x.record.data, 'x.record.data')
             Ext.getCmp(prototype.id + '-titulo').show();
             this.searchDetailFlightManifest(this.objFLIGHTMANIF);
 //        } else {
@@ -342,6 +347,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
             console.log('entra a tkt')
             
             Ext.getCmp(prototype.id + '-titulo').hide();
+            this.objFLIGHTDETAIL = {}
             this.objFLIGHTDETAIL.yearFrom = this.getValue("cmbDateFromYear");
             this.objFLIGHTDETAIL.monthFrom = this.getValue("cmbDateFromMonth");
             this.objFLIGHTDETAIL.yearTo = this.getValue("cmbDateToYear");
