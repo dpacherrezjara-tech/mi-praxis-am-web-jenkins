@@ -759,7 +759,7 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.Info', {
                             id: prototype.id + '-boxDetailFlightManifest',
                             hidden: true,
                             defaults: {
-//                                bodyStyle: 'background: transparent;',
+                                bodyStyle: 'background: transparent;',
                                 border: true,
                                 height: '100%',
                                 align: 'center'
@@ -857,22 +857,16 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.Info', {
                                     ]
                                 },
                                 // <editor-fold defaultstate="collapsed" desc="gridDetailFlightManifest">
-                                {xtype: 'panel',
-                                    hidden: false,
-                                    layout: 'fit',
-                                    items: [
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDetailFlightManifest',
-                                            width: 954,
+                                            width: 944,
                                             height: 550,
                                             features: [{
                                                     ftype: 'summary'
                                                 }],
                                             columnLines: true,
-                                            scrollable: {
-                                                direction: 'vertical',
-                                            },
+                                            
                                             columns: {
                                                 defaults: {
                                                     menuDisabled: true,
@@ -990,8 +984,7 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.Info', {
                                                 ]
                                             }
                                         },
-                                    ]
-                                }
+                                
                                 // </editor-fold>
 
                             ]
