@@ -1032,8 +1032,8 @@ public class FlightManifestController extends BaseController {
             cell54.setCellValue("Dest");
 
 
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 1));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 2));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 4, 4));
 
@@ -1078,75 +1078,22 @@ public class FlightManifestController extends BaseController {
             cell52 = row.createCell(2);
             cell53 = row.createCell(3);
             cell54 = row.createCell(4);
-            cell55 = row.createCell(5);
-            cell56 = row.createCell(6);
-            cell57 = row.createCell(7);
-            cell58 = row.createCell(8);
-            cell59 = row.createCell(9);
-            cell60 = row.createCell(10);
-            cell61 = row.createCell(11);
-            cell62 = row.createCell(12);
-            cell63 = row.createCell(13);
-            cell64 = row.createCell(14);
-            cell65 = row.createCell(15);
-            cell66 = row.createCell(16);
-            cell67 = row.createCell(17);
-            cell68 = row.createCell(18);
-            cell69 = row.createCell(19);
-            cell70 = row.createCell(20);
-            cell71 = row.createCell(21);
-            cell72 = row.createCell(22);
-            cell73 = row.createCell(23);
-            cell74 = row.createCell(24);
-            cell75 = row.createCell(25);
-            cell76 = row.createCell(26);
-            cell77 = row.createCell(27);
-            cell78 = row.createCell(28);
 
             cell50.setCellValue("Date");
-            cell51.setCellValue("Number");
-            cell56.setCellValue("Date");
-            cell61.setCellValue("Date");
-            cell64.setCellValue("Date");
-            cell70.setCellValue("Date");
+            cell51.setCellValue("Date");
+            cell52.setCellValue("Number");
 
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 6, 6));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 11, 11));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 14, 14));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 20, 20));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 2, 2));
+
 
             cell50.setCellStyle(headerStyle);
             cell51.setCellStyle(headerStyle);
             cell52.setCellStyle(headerStyle);
             cell53.setCellStyle(headerStyle);
             cell54.setCellStyle(headerStyle);
-            cell55.setCellStyle(headerStyle);
-            cell56.setCellStyle(headerStyle);
-            cell57.setCellStyle(headerStyle);
-            cell58.setCellStyle(headerStyle);
-            cell59.setCellStyle(headerStyle);
-            cell60.setCellStyle(headerStyle);
-            cell61.setCellStyle(headerStyle);
-            cell62.setCellStyle(headerStyle);
-            cell63.setCellStyle(headerStyle);
-            cell64.setCellStyle(headerStyle);
-            cell65.setCellStyle(headerStyle);
-            cell66.setCellStyle(headerStyle);
-            cell67.setCellStyle(headerStyle);
-            cell68.setCellStyle(headerStyle);
-            cell69.setCellStyle(headerStyle);
-            cell70.setCellStyle(headerStyle);
-            cell71.setCellStyle(headerStyle);
-            cell72.setCellStyle(headerStyle);
-            cell73.setCellStyle(headerStyle);
-            cell74.setCellStyle(headerStyle);
-            cell75.setCellStyle(headerStyle);
-            cell76.setCellStyle(headerStyle);
-            cell77.setCellStyle(headerStyle);
-            cell78.setCellStyle(headerStyle);
-
+            
             ++vj;
             // </editor-fold>
 
@@ -1158,91 +1105,18 @@ public class FlightManifestController extends BaseController {
                 cell52 = row.createCell(2);
                 cell53 = row.createCell(3);
                 cell54 = row.createCell(4);
-                cell55 = row.createCell(5);
-                cell56 = row.createCell(6);
-                cell57 = row.createCell(7);
-                cell58 = row.createCell(8);
-                cell59 = row.createCell(9);
-                cell60 = row.createCell(10);
-                cell61 = row.createCell(11);
-                cell62 = row.createCell(12);
-                cell63 = row.createCell(13);
-                cell64 = row.createCell(14);
-                cell65 = row.createCell(15);
-                cell66 = row.createCell(16);
-                cell67 = row.createCell(17);
-                cell68 = row.createCell(18);
-                cell69 = row.createCell(19);
-                cell70 = row.createCell(20);
-                cell71 = row.createCell(21);
-                cell72 = row.createCell(22);
-                cell73 = row.createCell(23);
-                cell74 = row.createCell(24);
-                cell75 = row.createCell(25);
-                cell76 = row.createCell(26);
-                cell77 = row.createCell(27);
-                cell78 = row.createCell(28);
 
-                cell50.setCellValue(listaData.get(vi).strFormatDate);
-                cell51.setCellValue(listaData.get(vi).NFLIGHT);
-                cell52.setCellValue(listaData.get(vi).CARRI);
-                cell53.setCellValue(listaData.get(vi).strDescFFLOW);
-                cell54.setCellValue(listaData.get(vi).CDEPART);
-                cell55.setCellValue(listaData.get(vi).CARRIVA);
-                cell56.setCellValue(listaData.get(vi).strFormatFSENDSS);
-                cell57.setCellValue(listaData.get(vi).QCPAD);
-                cell58.setCellValue(listaData.get(vi).QCPCHD);
-                cell59.setCellValue(listaData.get(vi).QCPINF);
-                cell60.setCellValue(listaData.get(vi).QCPTRA);
-                cell61.setCellValue(listaData.get(vi).strFormatFSENDOD);
-                cell62.setCellValue(listaData.get(vi).QCPNOD);
-                //cell63.setCellValue(listaData.get(vi).QCPNLEG);
-                cell63.setCellValue(listaData.get(vi).DIFFODSVCR);
-                cell64.setCellValue(listaData.get(vi).strFormatFSENDVC);
-                cell65.setCellValue(listaData.get(vi).QCPNVC);
-                cell66.setCellValue(listaData.get(vi).QCPNOCR);
-                cell67.setCellValue(listaData.get(vi).QCPNMA);
-                cell68.setCellValue(listaData.get(vi).QCPNTOT);
-                cell69.setCellValue(listaData.get(vi).QCPNVAL);
-                cell70.setCellValue(listaData.get(vi).strFormatDate3);
-                cell71.setCellValue(listaData.get(vi).QCPNFI);
-                cell72.setCellValue(listaData.get(vi).QTYTOTPS);
-                cell73.setCellValue(listaData.get(vi).QCPNFRE);
-                cell74.setCellValue(listaData.get(vi).QCPHARB_ESP);
-                cell75.setCellValue(listaData.get(vi).lngQDIFF);
-                cell76.setCellValue(listaData.get(vi).DESCRIP);
-                cell77.setCellValue(listaData.get(vi).DESCRIP2);
-                cell78.setCellValue(listaData.get(vi).TKTS);
+                cell50.setCellValue(listaData.get(vi).strFormatDate3);
+                cell51.setCellValue(listaData.get(vi).strFormatDate);
+                cell52.setCellValue(listaData.get(vi).NFLIGHT);
+                cell53.setCellValue(listaData.get(vi).CDEPART);
+                cell54.setCellValue(listaData.get(vi).CARRIVA);
 
                 cell50.setCellStyle(bodyStyle);
                 cell51.setCellStyle(bodyStyle);
                 cell52.setCellStyle(bodyStyle);
                 cell53.setCellStyle(bodyStyle);
                 cell54.setCellStyle(bodyStyle);
-                cell55.setCellStyle(bodyStyle);
-                cell56.setCellStyle(bodyStyle);
-                cell57.setCellStyle(bodyStyle);
-                cell58.setCellStyle(bodyStyle);
-                cell59.setCellStyle(bodyStyle);
-                cell60.setCellStyle(bodyStyle);
-                cell61.setCellStyle(bodyStyle);
-                cell62.setCellStyle(bodyStyle);
-                cell63.setCellStyle(bodyStyle);
-                cell64.setCellStyle(bodyStyle);
-                cell65.setCellStyle(bodyStyle);
-                cell66.setCellStyle(bodyStyle);
-                cell67.setCellStyle(bodyStyle);
-                cell68.setCellStyle(bodyStyle);
-                cell69.setCellStyle(bodyStyle);
-                cell70.setCellStyle(bodyStyle);
-                cell71.setCellStyle(bodyStyle);
-                cell72.setCellStyle(bodyStyle);
-                cell73.setCellStyle(bodyStyle);
-                cell74.setCellStyle(bodyStyle);
-                cell75.setCellStyle(bodyStyle);
-                cell76.setCellStyle(bodyStyle);
-                cell77.setCellStyle(bodyStyle);
-                cell78.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
@@ -1254,30 +1128,7 @@ public class FlightManifestController extends BaseController {
             sheet.autoSizeColumn(2, true);
             sheet.autoSizeColumn(3, true);
             sheet.autoSizeColumn(4, true);
-            sheet.autoSizeColumn(5, true);
-            sheet.autoSizeColumn(6, true);
-            sheet.autoSizeColumn(7, true);
-            sheet.autoSizeColumn(8, true);
-            sheet.autoSizeColumn(9, true);
-            sheet.autoSizeColumn(10, true);
-            sheet.autoSizeColumn(11, true);
-            sheet.autoSizeColumn(12, true);
-            sheet.autoSizeColumn(13, true);
-            sheet.autoSizeColumn(14, true);
-            sheet.autoSizeColumn(15, true);
-            sheet.autoSizeColumn(16, true);
-            sheet.autoSizeColumn(17, true);
-            sheet.autoSizeColumn(18, true);
-            sheet.autoSizeColumn(19, true);
-            sheet.autoSizeColumn(20, true);
-            sheet.autoSizeColumn(21, true);
-            sheet.autoSizeColumn(22, true);
-            sheet.autoSizeColumn(23, true);
-            sheet.autoSizeColumn(24, true);
-            sheet.autoSizeColumn(25, true);
-            sheet.autoSizeColumn(26, true);
-            sheet.autoSizeColumn(27, true);
-            sheet.autoSizeColumn(28, true);
+
 
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
@@ -2083,12 +1934,8 @@ public class FlightManifestController extends BaseController {
             CH1_6.setCellValue("Seat");
             CH1_7.setCellValue("PNR");
             CH1_8.setCellValue("Ticket");
-            CH1_9.setCellValue("Status");
-            CH1_10.setCellValue("Orig");
-            CH1_11.setCellValue("Dest");
-            CH1_12.setCellValue("VCR vs");
-            CH1_13.setCellValue("Process Sabre");
-            CH1_15.setCellValue("Flag");
+            CH1_9.setCellValue("Orig");
+            CH1_10.setCellValue("Dest");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -2101,11 +1948,6 @@ public class FlightManifestController extends BaseController {
             CH1_8.setCellStyle(headerStyle);
             CH1_9.setCellStyle(headerStyle);
             CH1_10.setCellStyle(headerStyle);
-            CH1_11.setCellStyle(headerStyle);
-            CH1_12.setCellStyle(headerStyle);
-            CH1_13.setCellStyle(headerStyle);
-            CH1_14.setCellStyle(headerStyle);
-            CH1_15.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -2118,10 +1960,7 @@ public class FlightManifestController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 14));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
+
             ++vj;
             //============================================
 
@@ -2138,18 +1977,9 @@ public class FlightManifestController extends BaseController {
             Cell CH2_8 = row2.createCell(8);
             Cell CH2_9 = row2.createCell(9);
             Cell CH2_10 = row2.createCell(10);
-            Cell CH2_11 = row2.createCell(11);
-            Cell CH2_12 = row2.createCell(12);
-            Cell CH2_13 = row2.createCell(13);
-            Cell CH2_14 = row2.createCell(14);
-            Cell CH2_15 = row2.createCell(15);
 
             CH2_1.setCellValue("Date");
             CH2_2.setCellValue("Number");
-            CH2_12.setCellValue("Manifest");
-            CH2_13.setCellValue("Scan");
-            CH2_14.setCellValue("Status");
-            CH2_15.setCellValue("Sales-PRAXIS");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -2162,11 +1992,6 @@ public class FlightManifestController extends BaseController {
             CH2_8.setCellStyle(headerStyle);
             CH2_9.setCellStyle(headerStyle);
             CH2_10.setCellStyle(headerStyle);
-            CH2_11.setCellStyle(headerStyle);
-            CH2_12.setCellStyle(headerStyle);
-            CH2_13.setCellStyle(headerStyle);
-            CH2_14.setCellStyle(headerStyle);
-            CH2_15.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -2186,12 +2011,7 @@ public class FlightManifestController extends BaseController {
                 Cell rcell8 = row1.createCell(8);
                 Cell rcell9 = row1.createCell(9);
                 Cell rcell10 = row1.createCell(10);
-                Cell rcell11 = row1.createCell(11);
-                Cell rcell12 = row1.createCell(12);
-                Cell rcell13 = row1.createCell(13);
-                Cell rcell14 = row1.createCell(14);
-                Cell rcell15 = row1.createCell(15);
-
+                
                 rcell8.setCellStyle(bodyStyle);
 
                 rcell0.setCellValue(listaData.get(vi).RN);
@@ -2203,13 +2023,9 @@ public class FlightManifestController extends BaseController {
                 rcell6.setCellValue(listaData.get(vi).CHAIR);
                 rcell7.setCellValue(listaData.get(vi).SPNR);
                 rcell8.setCellValue(listaData.get(vi).strTicket);
-                rcell9.setCellValue(listaData.get(vi).desSTVAL);
-                rcell10.setCellValue(listaData.get(vi).CDEPART);
-                rcell11.setCellValue(listaData.get(vi).CARRIVA);
-                rcell12.setCellValue(listaData.get(vi).desSTVCR);
-                rcell13.setCellValue(listaData.get(vi).descFSABRE);
-                rcell14.setCellValue(listaData.get(vi).STASABR);
-                rcell15.setCellValue(listaData.get(vi).descFSALES);
+                rcell9.setCellValue(listaData.get(vi).CDEPART);
+                rcell10.setCellValue(listaData.get(vi).CARRIVA);
+
                 iter.next();
                 ++vi;
                 ++vj;
@@ -2227,11 +2043,6 @@ public class FlightManifestController extends BaseController {
             sheet.setColumnWidth(8, 25 * 256);
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
-            sheet.autoSizeColumn(11, true);
-            sheet.autoSizeColumn(12, true);
-            sheet.autoSizeColumn(13, true);
-            sheet.autoSizeColumn(14, true);
-            sheet.autoSizeColumn(15, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");
