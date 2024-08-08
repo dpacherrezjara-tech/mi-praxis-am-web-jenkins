@@ -49,294 +49,6 @@ public class FlightManifestDAO {
         session = ss;
     }
 
-    public List<A1691Filter> loadPX095S01A1691(A1691Filter filter) throws SQLException, Exception {
-        List<A1691Filter> lstCons = new ArrayList<>(0);
-        A1691Filter beanCons;
-        String strFecha = "", NFLIGHT = filter.NFLIGHT.trim(); //YYYYMM
-        int QPEND = 0, QPRO = 0, QCLO = 0, QSSIM = 0, QODS = 0, QVCR = 0, QPHY = 0, QtyCANCEL = 0;
-        int QSVOPRO = 0, QSVOPEND = 0, QSVVPRO = 0, QSVVPEND = 0, QFFLOW = 0;
-
-        if (!NFLIGHT.equals("") && NFLIGHT.length() < 4) {
-            NFLIGHT = Functions.fillZeros(4, NFLIGHT);
-        }
-
-        // <editor-fold defaultstate="collapsed" desc=" 'DATE' ">
-        filter.yearFrom = Functions.fillZeros(4, filter.yearFrom).replace("00", "");//YYYY
-        filter.monthFrom = Functions.fillZeros(2, filter.monthFrom).replace("00", "");
-        filter.dayFrom = Functions.fillZeros(2, filter.dayFrom).replace("00", "");
-        filter.yearTo = Functions.fillZeros(4, filter.yearTo).replace("00", "");//YYYY
-        filter.monthTo = Functions.fillZeros(2, filter.monthTo).replace("00", "");
-        filter.dayTo = Functions.fillZeros(2, filter.dayTo).replace("00", "");
-        //</editor-fold>
-
-        try {
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A1691(?,?,?,?,?,?,?)}";
-
-            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cs = cnx.prepareCall(strSQL);
-
-            cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cs.setString(2, filter.yearFrom + filter.monthFrom + filter.dayFrom);
-            cs.setString(3, filter.yearTo + filter.monthTo + filter.dayTo);
-            cs.setString(4, filter.CARRI.trim());
-            cs.setString(5, filter.FFLOW.trim());
-            cs.setString(6, NFLIGHT);
-            cs.setString(7, Functions.getFechaActual());
-            cs.execute();
-
-            rst = cs.getResultSet();
-            while (rst.next()) {
-                if (!strFecha.equals("") && !strFecha.equals(rst.getString("DATE").trim())) {
-
-                    beanCons = new A1691Filter();
-                    beanCons.yearFrom = filter.yearFrom;
-                    beanCons.monthFrom = filter.monthFrom;
-                    beanCons.dayFrom = filter.dayFrom;
-                    beanCons.yearTo = filter.yearTo;
-                    beanCons.monthTo = filter.monthTo;
-                    beanCons.dayTo = filter.dayTo;
-                    beanCons.CARRI = filter.CARRI;
-                    beanCons.FFLOW = filter.FFLOW;
-
-                    beanCons.DFLIGHT = strFecha;
-                    beanCons.NFLIGHT = NFLIGHT;
-                    beanCons.strFormatDate = Functions.getMonthConvert(strFecha);
-                    beanCons.lngQSSIM = QSSIM;
-                    beanCons.lngQODS = QODS;
-                    beanCons.lngQtyCANCEL = QtyCANCEL;
-                    beanCons.lngQVCR = QVCR;
-                    beanCons.lngQPRO = QPEND;
-                    beanCons.lngQCLO = QPRO;
-                    beanCons.lngQACC = QCLO;
-                    beanCons.lngQSVOPRO = QSVOPRO;
-                    beanCons.lngQSVOPEND = QSVOPEND;
-                    beanCons.lngQSVVPRO = QSVVPRO;
-                    beanCons.lngQSVVPEND = QSVVPEND;
-                    beanCons.lngQPHY = QPHY;
-                    beanCons.lngQFFLOW = QFFLOW;
-                    lstCons.add(beanCons);
-                    QSSIM = 0;
-                    QODS = 0;
-                    QtyCANCEL = 0;
-                    QVCR = 0;
-                    QPRO = 0;
-                    QPEND = 0;
-                    QCLO = 0;
-                    QSVOPRO = 0;
-                    QSVOPEND = 0;
-                    QSVVPRO = 0;
-                    QSVVPEND = 0;
-                    QPHY = 0;
-                    QFFLOW = 0;
-                }
-
-                strFecha = rst.getString("DATE").trim();
-
-                if (rst.getInt("STVAL") == 3 && rst.getString("FMULTI").equals("L")) {
-                    //Cerrado MATCH (En grilla 'Procesado')
-                    QPRO += rst.getLong("QREC");
-                    /*if (!rst.getString("FSTAPO").trim().equals("3")) {
-                     QPRO += rst.getLong("QREC");
-                     }
-                     //Cerrado & Contabilizado (En grilla 'Cerrado') Sólo si el vuelo está cerrado y el Flag de contabilizado está cerrado
-                     if (rst.getString("FSTAPO").trim().equals("3")) {
-                     QCLO += rst.getLong("QREC");
-                     }*/
-                } else if (rst.getInt("STVAL") == 4 && rst.getString("FMULTI").equals("L")) {
-                    //Cerrado (En grilla 'Cerrado') 
-                    QCLO += rst.getLong("QREC");
-                } else //Procesado (En grilla 'Pendiente') Sólo si ha llegado ODS o VCR y no es StandBy(STVAL!=1)
-                {
-                    if (rst.getInt("STVAL") != 3 && rst.getInt("STVAL") != 4 && rst.getString("FMULTI").equals("L") && rst.getInt("STVAL") != 1) {
-                        if (rst.getString("FSTAOD").trim().equals("1") || rst.getString("FSTAVC").trim().equals("1")) {
-                            QPEND += rst.getLong("QREC");
-                        }
-                    }
-                }
-                //Status SSIM
-                if (rst.getString("FSTASS").trim().equals("1")) {
-                    QSSIM += rst.getLong("QREC");
-                    //SSIM vs ODS
-                    if (rst.getString("FSTAOD").trim().equals("1")) {
-                        QSVOPRO += rst.getLong("QREC");
-                    } else {
-                        QSVOPEND += rst.getLong("QREC");
-                    }
-                    //SSIM vs VCR
-                    if (rst.getString("FSTAVC").trim().equals("1")) {
-                        QSVVPRO += rst.getLong("QREC");
-                    } else if (rst.getString("STVAL").trim().equals("1")) {
-                        QSVVPEND += rst.getLong("QREC");
-                    }
-                }
-                //Status ODS
-                if (rst.getString("FSTAOD").trim().equals("1")) {
-                    QODS += rst.getLong("QREC");
-                }
-                if (rst.getString("STVAL").trim().equals("5") || rst.getString("FSTAOD").equals("3")) {
-                    QtyCANCEL += rst.getLong("QtyCANCEL");
-                }
-                //Status VCR
-                if (rst.getString("FSTAVC").trim().equals("1")) {
-                    QVCR += rst.getLong("QREC");
-                }
-                //Status PHY
-                if (rst.getString("FSTAFI").trim().equals("1")) {
-                    QPHY += rst.getLong("QREC");
-                }
-                //Status FFLOW
-                if (rst.getString("FFLOW").trim().equals("U")) {
-                    QFFLOW += rst.getLong("QREC");
-                }
-            }
-
-            if (!strFecha.equals("")) {
-                beanCons = new A1691Filter();
-                beanCons.yearFrom = filter.yearFrom;
-                beanCons.monthFrom = filter.monthFrom;
-                beanCons.dayFrom = filter.dayFrom;
-                beanCons.yearTo = filter.yearTo;
-                beanCons.monthTo = filter.monthTo;
-                beanCons.dayTo = filter.dayTo;
-                beanCons.CARRI = filter.CARRI;
-                beanCons.FFLOW = filter.FFLOW;
-
-                beanCons.DFLIGHT = strFecha;
-                beanCons.NFLIGHT = NFLIGHT;
-                beanCons.strFormatDate = Functions.getMonthConvert(strFecha);
-                beanCons.lngQSSIM = QSSIM;
-                beanCons.lngQODS = QODS;
-                beanCons.lngQtyCANCEL = QtyCANCEL;
-                beanCons.lngQVCR = QVCR;
-                beanCons.lngQPRO = QPEND;
-                beanCons.lngQCLO = QPRO;
-                beanCons.lngQACC = QCLO;
-                beanCons.lngQSVOPRO = QSVOPRO;
-                beanCons.lngQSVOPEND = QSVOPEND;
-                beanCons.lngQSVVPRO = QSVVPRO;
-                beanCons.lngQSVVPEND = QSVVPEND;
-                beanCons.lngQPHY = QPHY;
-                beanCons.lngQFFLOW = QFFLOW;
-                lstCons.add(beanCons);
-            }
-        } finally {
-            setClose();
-        }
-
-        return lstCons;
-    }
-
-    public List<A1692Filter> loadPX095S09A1692(A1691Filter filter, HashMap<String, String> hmAeropuertos) throws SQLException, Exception {
-
-        List<A1692Filter> lstRtn = new ArrayList<>(0);
-        A1692Filter objRtn;
-
-        try {
-            //PX09500012
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX095S09A1692(?,?,?,?,?)}";
-
-            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cs = cnx.prepareCall(strSQL);
-
-            cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cs.setString(2, filter.IN_TKT.substring(0, 3));//CIA
-            cs.setString(3, filter.IN_TKT.substring(3, 7));//FORMA
-            cs.setString(4, filter.IN_TKT.substring(7, 13));//SERIE
-            cs.setString(5, filter.IN_SEQRO);
-
-            cs.execute();
-
-            rst = cs.getResultSet();
-            while (rst.next()) {
-                objRtn = new A1692Filter();
-                objRtn.QTYPAX = rst.getInt("QTYPAX");
-                objRtn.CCIA = rst.getString("CCIA").trim();
-                objRtn.FORMA = rst.getString("FORMA").trim();
-                objRtn.SERIE = rst.getString("SERIE").trim();
-                objRtn.CUPON = rst.getString("CUPON").trim();
-                objRtn.SEQRO = rst.getString("SEQRO").trim();
-                objRtn.SEQ = rst.getString("SEQ").trim();
-                objRtn.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim() + " " + rst.getString("CUPON").trim();
-                objRtn.FCONT = rst.getString("FCONT").trim();
-                objRtn.strFormatDate2 = Functions.getMonthConvert(objRtn.FCONT);
-                objRtn.CDEPART = rst.getString("CDEPART").trim();
-                objRtn.CARRIVA = rst.getString("CARRIVA").trim();
-                if (hmAeropuertos.containsKey(rst.getString("CDEPART").trim().toUpperCase())) {
-                    objRtn.strDescCDEPART = hmAeropuertos.get(rst.getString("CDEPART").trim()).toString();
-                }
-                if (hmAeropuertos.containsKey(rst.getString("CARRIVA").trim().toUpperCase())) {
-                    objRtn.strDescCARRIVA = hmAeropuertos.get(rst.getString("CARRIVA").trim()).toString();
-                }
-                objRtn.CLAS = rst.getString("CLAS");
-                objRtn.IDCON = rst.getString("IDCON").trim();
-                objRtn.FBASE = rst.getString("FBASE").trim();
-                objRtn.NFLIGHT = rst.getString("NFLIGHT").trim();
-                objRtn.DFLIGHT = rst.getString("DFLIGHT").trim();
-                objRtn.LEGSEQ = rst.getString("LEGSEQ").trim();
-                objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DFLIGHT);
-                objRtn.TDOC = rst.getString("TDOC").trim();
-                objRtn.PSVVTA = rst.getString("PSVVTA").trim();
-                objRtn.AGTIA = rst.getString("AGTIA").trim();
-                objRtn.FVTA = rst.getString("FVTA").trim();
-                if (rst.getString("FLOAD").trim().equals("2")) {
-                    objRtn.FLOAD = "OCR";
-                } else if (rst.getString("FLOAD").trim().equals("3")) {
-                    objRtn.FLOAD = "VCR";
-                } else if (rst.getString("FLOAD").trim().equals("4")) {
-                    objRtn.FLOAD = "FIM";
-                } else if (rst.getString("FLOAD").trim().equals("M")) {
-                    objRtn.FLOAD = "MANUAL";
-                } else {
-                    objRtn.FLOAD = rst.getString("FLOAD").trim();
-                }
-                objRtn.strFormatFVTA = Functions.getMonthConvert(rst.getString("FVTA").trim());
-                objRtn.TOPUS = rst.getString("TOPUS").trim();
-                objRtn.CARR = rst.getString("CARR").trim();
-                objRtn.CABI = rst.getString("CABI").trim();
-                objRtn.FECVAL = rst.getString("FECVAL").trim();
-                objRtn.strFormatFECVAL = Functions.getMonthConvert(rst.getString("FECVAL").trim());
-                objRtn.MDACP = rst.getString("MDACP").trim();
-                objRtn.VCPMX = rst.getDouble("VCPMX");
-                objRtn.TCMUS = rst.getDouble("TCMUS");
-                objRtn.VCPUS = rst.getDouble("VCPUS");
-                objRtn.FVAL = rst.getString("FVAL");
-                objRtn.VCPN = rst.getDouble("VCPN");
-                if (objRtn.FVAL.equals("1")) {
-                    objRtn.strDescFVAL = "ISR Values/Sales";
-                } else if (objRtn.FVAL.equals("2")) {
-                    objRtn.strDescFVAL = "Average Value";
-                    objRtn.VCPN = rst.getDouble("VCPMX");
-                } else if (objRtn.FVAL.equals("3")) {
-                    objRtn.strDescFVAL = "VTR";
-                } else if (objRtn.FVAL.equals("4")) {
-                    objRtn.strDescFVAL = "Manual Value";
-                }
-                objRtn.STCON = rst.getString("STCON");
-                if (objRtn.STCON.equals("1")) {
-                    objRtn.strDescSTCON = "Contabilizado.";
-                } else if (objRtn.STCON.equals("2")) {
-                    objRtn.strDescSTCON = "Contabilizado Provisión.";
-                } else if (objRtn.STCON.equals("3")) {
-                    objRtn.strDescSTCON = "Extorno.";
-                } else if (objRtn.STCON.equals("4")) {
-                    objRtn.strDescSTCON = "Extorno contabilizado.";
-                } else if (objRtn.STCON.equals("5")) {
-                    objRtn.strDescSTCON = "VTR.";
-                } else if (objRtn.STCON.equals("6")) {
-                    objRtn.strDescSTCON = "GL 5D.";
-                }
-
-                lstRtn.add(objRtn);
-            }
-        } catch (Exception e) {
-            e.getMessage();
-        } finally {
-            setClose();
-        }
-
-        return lstRtn;
-    }
-
     public List<A1691Filter2> loadPX570S02A1691(A1691Filter2 filter) throws SQLException, Exception {
         List<A1691Filter2> lstCons = new ArrayList<>(0);
         A1691Filter2 beanCons;
@@ -516,265 +228,44 @@ public class FlightManifestDAO {
 
         return lstCons;
     }
-
-    public String loadSQP05035(List<A1691Filter> listaTkt) throws SQLException, Exception {
-        //REALIZA UPDATE COMENTARIOS EN LA TABLA A1816.
-
-        int QTY_UPDATE = 0;
-        String msj ="An Error ocurred";
-        CallableStatement cstmt = null;
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP05035(?,?,?,?,?,?,?,?,?,?,?)}";
-
-        try {
-            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cstmt = cnx.prepareCall(SQLCLL01);
-
-            for (int i = 0; i < listaTkt.size(); ++i) {
-
-                A1691Filter item = listaTkt.get(i);
-                try {
-                    cstmt.registerOutParameter(11, Types.INTEGER);
-
-                    cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
-                    cstmt.setString(2, item.DFLIGHT);
-                    cstmt.setString(3, item.NFLIGHT);
-                    cstmt.setString(4, item.CDEPART);
-                    cstmt.setString(5, item.CARRIVA);
-                    cstmt.setString(6, item.strDescripcion);//BPO
-                    cstmt.setString(7, item.strDescripcion2);//SABRE
-                    cstmt.setString(8, session.getUserView().getUserInfo().USR);
-                    cstmt.setString(9, Functions.getFechaActual());
-                    cstmt.setString(10, Functions.getHoraActual());
-                    cstmt.setInt(11, 0);
-
-                    cstmt.execute();
-
-                    QTY_UPDATE = QTY_UPDATE +cstmt.getInt(11);
-                    
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            msj = "Se actualizaron "+QTY_UPDATE +" resgistros.";
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            msj = e.getMessage();
-        } finally {
-            if (rst != null) {
-                try {
-                    rst.close();
-                } catch (SQLException e) {
-                    logError.error("SQLException Manifest -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-                }
-            }
-            if (cstmt != null) {
-                try {
-                    cstmt.close();
-                } catch (SQLException e) {
-                    logError.error("SQLException Manifest -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-                }
-            }
-            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
-            pasarGarbageCollector();
-        }
-
-        return msj;
-    }
-    
-    
-    public List<A1691Filter> loadPX095S15A1691(A1691Filter filter) throws SQLException, Exception {
-        List<A1691Filter> lstCons = new ArrayList<>(0);
-        A1691Filter beanCons;
-        long QCPNOD = 0, QCPNVC = 0, QCPAD = 0, QCPCHD = 0, QCPINF = 0, QCPTRA = 0, QCPNOCR = 0, QCPNMA = 0, QCPNTOT = 0;
-
-        try {
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX095S15A1691(?,?,?,?,?,?,?,?,?,?,?)}";
-
-            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cs = cnx.prepareCall(strSQL);
-
-            cs.registerOutParameter(8, Types.INTEGER);
-            cs.registerOutParameter(9, Types.INTEGER);
-            cs.registerOutParameter(10, Types.INTEGER);
-            cs.registerOutParameter(11, Types.INTEGER);
-
-            cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cs.setString(2, filter.CARRI);
-            cs.setString(3, filter.FFLOW);
-            cs.setString(4, filter.DFLIGHT);
-            cs.setString(5, filter.FOPERZUL);
-            cs.setString(6, filter.strSQL);//strTipo
-            cs.setString(7, filter.NFLIGHT);
-            cs.setInt(8, filter.page.PAGNUM);
-            cs.setInt(9, filter.page.PAGROW);
-            cs.setInt(10, filter.page.TOTPAG);
-            cs.setInt(11, filter.page.TOTROW);
-            cs.execute();
-
-            filter.page.PAGNUM = cs.getInt(8);
-            filter.page.PAGROW = cs.getInt(9);
-            filter.page.TOTPAG = cs.getInt(10);
-            filter.page.TOTROW = cs.getInt(11);
-
-            rst = cs.getResultSet();
-            while (rst.next()) {
-                QCPNOD = rst.getLong("QCPNOD");
-                QCPNVC = rst.getLong("QCPNVC");
-                QCPNOCR = rst.getLong("QCPNOCR");
-                QCPNMA = rst.getLong("QCPNMA");
-                QCPNTOT = rst.getLong("QCPNTOT");
-
-                QCPAD = rst.getLong("QCPAD");
-                QCPCHD = rst.getLong("QCPCHD");
-                QCPINF = rst.getLong("QCPINF");
-                QCPTRA = rst.getLong("QCPTRA");
-            }
-
-            if (cs.getMoreResults()) {
-                rst = cs.getResultSet();
-                char a = ' ';
-
-                while (rst.next()) {
-                    beanCons = new A1691Filter();
-                    beanCons.yearFrom = filter.yearFrom;
-                    beanCons.monthFrom = filter.monthFrom;
-                    beanCons.dayFrom = filter.dayFrom;
-                    beanCons.yearTo = filter.yearTo;
-                    beanCons.monthTo = filter.monthTo;
-                    beanCons.dayTo = filter.dayTo;
-
-                    beanCons.strDescripcion = filter.strDescripcion;
-                    beanCons.CARRI = rst.getString("CARRI").trim();
-                    beanCons.FCLOFO = rst.getString("FCLOFO");
-                    switch (Integer.parseInt(Functions.fillZeros(1, rst.getString("FCLOFO").trim()))) {
-                        case 1:
-                            beanCons.strFCLOFO = "AUTOMATIC";
-                            beanCons.strDesFCLOFO = "FORCED AUTOMATIC";
-                            break;
-                        case 2:
-                            beanCons.strFCLOFO = "MANUAL";
-                            beanCons.strDesFCLOFO = "FORCED MANUAL";
-                            break;
-                    }
-                    /*if (rst.getString("FCLOFO").trim().equals("1")) {
-                     beanCons.strFCLOFO = "AUTOMATIC";
-                     beanCons.strDesFCLOFO = "FORCED AUTOMATIC";
-                     } else if (rst.getString("FCLOFO").trim().equals("2")) {
-                     beanCons.strFCLOFO = "MANUAL";
-                     beanCons.strDesFCLOFO = "FORCED MANUAL";
-                     } else {
-                     beanCons.strFCLOFO = "";
-                     beanCons.strDesFCLOFO = "";
-                     }*/
-
-                    beanCons.FFLOW = rst.getString("FFLOW").trim();
-                    a = Functions.fillString(rst.getString("FFLOW").trim(), 1).charAt(0);
-                    switch (a) {
-                        case 'C':
-                            beanCons.strDescFFLOW = "Charter";
-                            break;
-                        case 'X':
-                            beanCons.strDescFFLOW = "Canceled";
-                            break;
-                        case 'U':
-                            beanCons.strDescFFLOW = "Unscheduled";
-                            break;
-                        case 'P':
-                            beanCons.strDescFFLOW = "Scheduled";
-                            break;
-                        default:
-                            beanCons.strDescFFLOW = "(None)";
-                            break;
-                    }
-                    /*if (rst.getString("FFLOW").trim().equals("C")) {
-                     beanCons.strDescFFLOW = "Charter";
-                     } else if (rst.getString("FFLOW").trim().equals("X")) {
-                     beanCons.strDescFFLOW = "Canceled";
-                     } else if (rst.getString("FFLOW").trim().equals("U")) {
-                     beanCons.strDescFFLOW = "Unscheduled";
-                     } else if (rst.getString("FFLOW").trim().equals("P")) {
-                     beanCons.strDescFFLOW = "Scheduled";
-                     } else {
-                     beanCons.strDescFFLOW = "(None)";
-                     }*/
-                    beanCons.FSENDSS = rst.getString("FSENDSS").trim();
-                    beanCons.strFormatFSENDSS = Functions.getMonthConvert(rst.getString("FSENDSS").trim());
-                    beanCons.CDEPART = rst.getString("CDEPART").trim();
-                    beanCons.strDescCDEPART = rst.getString("DES_CDEPART");
-                    beanCons.CARRIVA = rst.getString("CARRIVA").trim();
-                    beanCons.strDescCARRIVA = rst.getString("DES_CARRIVA");
-                    beanCons.NFLIGHT = rst.getString("NFLIGHT").trim();
-                    beanCons.DFLIGHT = rst.getString("DFLIGHT").trim();
-                    beanCons.LEGSEQ = rst.getString("LEGSEQ").trim();
-                    beanCons.strFormatDate = Functions.getMonthConvert(beanCons.DFLIGHT);
-                    beanCons.FSENDOD = rst.getString("FSENDOD").trim();
-                    beanCons.strFormatFSENDOD = Functions.getMonthConvert(rst.getString("FSENDOD").trim());
-                    beanCons.FSENDVC = rst.getString("FSENDVC").trim();
-                    beanCons.strFormatFSENDVC = Functions.getMonthConvert(rst.getString("FSENDVC").trim());
-
-                    beanCons.FOPERZUL = rst.getString("FMULTI");//fmulti
-                    beanCons.strFormatDate2 = Functions.getMonthConvert(rst.getString("FOPERZUL"));
-
-                    beanCons.QCPNOD = rst.getLong("QCPNOD");
-                    beanCons.QCPNOCR = rst.getLong("QCPNOCR");
-                    beanCons.QCPNVC = rst.getLong("QCPNVC");
-                    beanCons.QCPNMA = rst.getLong("QCPNMA");
-                    beanCons.QCPNTOT = rst.getLong("QCPNTOT");
-                    /*if(rst.getString("FMULTI").trim().equals("L")){
-                     beanCons.lngQVCR = rst.getLong("QTOT");
-                     }*/
-
-                    beanCons.QCPAD = rst.getLong("QCPAD");
-                    beanCons.QCPCHD = rst.getLong("QCPCHD");
-                    beanCons.QCPINF = rst.getLong("QCPINF");
-                    beanCons.QCPTRA = rst.getLong("QCPTRA");
-
-                    beanCons.totQCPNOD = QCPNOD;
-                    beanCons.totQCPNVC = QCPNVC;
-                    beanCons.totQCPNOCR = QCPNOCR;
-                    beanCons.totQCPNMA = QCPNMA;
-                    beanCons.totQCPNTOT = QCPNTOT;
-                    beanCons.totQCPAD = QCPAD;
-                    beanCons.totQCPCHD = QCPCHD;
-                    beanCons.totQCPINF = QCPINF;
-                    beanCons.totQCPTRA = QCPTRA;
-
-                    beanCons.page.PAGNUM = filter.page.PAGNUM;
-                    beanCons.page.PAGROW = filter.page.PAGROW;
-                    beanCons.page.TOTPAG = filter.page.TOTPAG;
-                    beanCons.page.TOTROW = filter.page.TOTROW;
-
-                    lstCons.add(beanCons);
-                }
-            }
-        } finally {
-            setClose();
-        }
-
-        return lstCons;
-    }
-
+   
     public List<A3729Filter> loadPX095SGGA3729(A3729Filter filter) throws SQLException, Exception {
         List<A3729Filter> lstCons = new ArrayList<>(0);
         A3729Filter beanCons;
 
         try {
 
-            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04322_V2(?,?,?,?,?)}";
+            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04322_V2(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
-
+            
+            cs.registerOutParameter(11, Types.INTEGER);
+            cs.registerOutParameter(12, Types.INTEGER);
+            cs.registerOutParameter(13, Types.INTEGER);
+            cs.registerOutParameter(14, Types.INTEGER);
+            
             cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cs.setString(2, filter.DFLIGHT);
-            cs.setString(3, filter.NFLIGHT);
-            cs.setString(4, filter.CDEPART);
-            cs.setString(5, filter.CARRIVA);
-
+            cs.setString(2, filter.yearFrom + filter.monthFrom + filter.dayFrom);
+            cs.setString(3, filter.yearTo + filter.monthTo + filter.dayTo);
+            cs.setString(4, filter.DFLIGHT);
+            cs.setString(5, filter.NFLIGHT);
+            cs.setString(6, filter.CDEPART);
+            cs.setString(7, filter.CARRIVA);
+            cs.setString(8, filter.LNAME);
+            cs.setString(9, filter.CHAIR);
+            cs.setString(10, filter.TICKET);
+            
+            cs.setInt(11, filter.page.PAGNUM);
+            cs.setInt(12, filter.page.PAGROW);
+            cs.setInt(13, filter.page.TOTPAG);
+            cs.setInt(14, filter.page.TOTROW);
             cs.execute();
+            
+            filter.page.PAGNUM = cs.getInt(11);
+            filter.page.PAGROW = cs.getInt(12);
+            filter.page.TOTPAG = cs.getInt(13);
+            filter.page.TOTROW = cs.getInt(14);
 
             rst = cs.getResultSet();
             while (rst.next()) {
@@ -860,13 +351,18 @@ public class FlightManifestDAO {
 //                } else {
 //                    beanCons.descFSALES = "Yes";
 //                }
-
+                
                 beanCons.USCR = rst.getString("USCR").trim();
                 beanCons.FECR = rst.getString("FECR").trim();
                 beanCons.HOCR = rst.getString("HOCR").trim();
                 beanCons.USUP = rst.getString("USUP").trim();
                 beanCons.FEUP = rst.getString("FEUP").trim();
                 beanCons.HOUP = rst.getString("HOUP").trim();
+                
+                beanCons.page.PAGNUM = filter.page.PAGNUM;
+                beanCons.page.PAGROW = filter.page.PAGROW;
+                beanCons.page.TOTPAG = filter.page.TOTPAG;
+                beanCons.page.TOTROW = filter.page.TOTROW;
 
                 lstCons.add(beanCons);
 
