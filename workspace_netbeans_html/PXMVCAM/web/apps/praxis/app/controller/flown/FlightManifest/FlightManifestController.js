@@ -188,7 +188,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
 //        if (cant > 0) {
             var IN_FSABRE = this.getValue("cmbFSabre");
             this.objFLIGHTMANIF = x.record.data;
-
+            Ext.getCmp(prototype.id + '-titulo').show();
             this.searchDetailFlightManifest(this.objFLIGHTMANIF);
 //        } else {
 //            global.Msg({msg: 'Data Not Found'});
@@ -338,8 +338,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
         Ext.getCmp(prototype.id + '-pie').hide();
 //        var chkManifest = this.getValue("chkManifest");
 
-        if (this.getValue("txtTKT") !== '') {
+        if (this.getValue("txtTKT") !== '' || this.getValue("txtCDEPART") !== '' || this.getValue("txtLNAME") !== '' || this.getValue("txtCHAIR") !== ''  ) {
             console.log('entra a tkt')
+            
+            Ext.getCmp(prototype.id + '-titulo').hide();
             this.objFLIGHTDETAIL.yearFrom = this.getValue("cmbDateFromYear");
             this.objFLIGHTDETAIL.monthFrom = this.getValue("cmbDateFromMonth");
             this.objFLIGHTDETAIL.yearTo = this.getValue("cmbDateToYear");
@@ -579,6 +581,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
                     this.selectedChild('boxDetailData', 'paggin', false);
                 } else if (this.peek() === prototype.id + '-boxDetailNFLGITHData') {
                     this.selectedChild('boxDetailNFLGITHData', 'paggin2', false);
+                } else if ( this.peek() === prototype.id + '-boxDetailFlightManifest' ){
+                    this.selectedChild('boxDetailFlightManifest', 'paggin5', false);
                 }
             }
         } else if (Ext.getCmp(prototype.id + '-BoxSecundario').isVisible()) {
@@ -730,6 +734,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
             },
             listeners: {
                 beforeload: function (obj) {
+//                    Ext.getCmp(prototype.id + '-boxDetailData').mask('Loading...');
                     obj.proxy.extraParams = {beanString: JSON.stringify(bean)};
                 },
                 load: function (obj, obj2, success, response, obj5) {
@@ -741,6 +746,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
 
                     var res = Ext.JSON.decode(response._response.responseText);
                     if (res.success) {
+//                        Ext.getCmp(prototype.id + '-boxDetailData').unmask();
                         if (!me.peek().includes('boxDetailData'))
                             me.selectedChild('boxDetailData', 'paggin');
                         else
@@ -919,7 +925,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
                         var beanTemp = obj.data.items[0].data;
                         console.log(beanTemp);
                         if (!me.peek().includes('boxDetailFlightManifest'))
-                            me.selectedChild('boxDetailFlightManifest');
+                            me.selectedChild('boxDetailFlightManifest', 'paggin5');
+                        else
+                            me.selectedChild('boxDetailFlightManifest', 'paggin5', false);
 //
 //                        Ext.getCmp(prototype.id + '-setTitulo').setTitle('<center style="font-size:12px;">Flight Date : ' +
 //                                beanTemp.strFormatDate + ' - Flight Number : ' + beanTemp.NFLIGHT +
@@ -945,7 +953,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
         });
         Ext.getCmp(prototype.id + '-gridDetailFlightManifest').bindStore(storeGridDatas);
         _pathDetFlight = prototype.url + '/getXLSX_Flight_Manifest?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
-//        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
     },
     //</editor-fold>
     searchFlightManifest: function (objFLIGHTMANIF) {

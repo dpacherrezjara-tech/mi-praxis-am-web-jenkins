@@ -251,8 +251,8 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.Filters', {
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
 //                            maskRe: /[0-9]/,
-                            maxLength: 80,
-                            width: 50,
+                            maxLength: 40,
+                            width: 150,
                             enableKeyEvents: true,
                             listeners: {
                                 keypress: 'onTextKeypress'

@@ -32,20 +32,8 @@ public class FlightManifestLogic {
         objDAO.setSession(ss);
     }
 
-    public List<A1691Filter> loadPX095S01A1691(A1691Filter filter) throws SQLException, Exception {
-        return objDAO.loadPX095S01A1691(filter);
-    }
-
-    public List<A1692Filter> loadPX095S09A1692(A1691Filter filter, HashMap<String, String> hmAeropuertos) throws SQLException, Exception {
-        return objDAO.loadPX095S09A1692(filter, hmAeropuertos);
-    }
-
     public List<A1691Filter2> loadPX570S02A1691(A1691Filter2 filter) throws SQLException, Exception {
         return objDAO.loadPX570S02A1691(filter);
-    }
-
-    public List<A1691Filter> loadPX095S15A1691(A1691Filter filter) throws SQLException, Exception {
-        return objDAO.loadPX095S15A1691(filter);
     }
 
     public List<A3729Filter> loadPX095SGGA3729(A3729Filter filter) throws SQLException, Exception {
@@ -140,7 +128,4 @@ public class FlightManifestLogic {
         return objDAO.SQP04550(filter);
     }
 
-    public String loadSQP05035(List<A1691Filter> listaTkt) throws SQLException, Exception {
-        return objDAO.loadSQP05035(listaTkt);
-    }
 }
