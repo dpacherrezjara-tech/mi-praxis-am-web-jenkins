@@ -69,7 +69,7 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Info', {
                                     id: prototype.id + '-gridData',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     height: 560,
-                                    width: 772,
+                                    width: 932,
                                     columnLines: true,
                                     resizable: false,
 //                                    features: [{
@@ -126,7 +126,9 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Info', {
                                             },
                                             {text: 'Sales Total', width: 100, dataIndex: 'A1781TVALO', renderer: 'getDouble'},
                                             {text: 'Average', width: 100, dataIndex: 'A1781PROME', renderer: 'getDouble'},
-                                            {text: 'Currency', width: 80, dataIndex: 'A1781MONED'}
+                                            {text: 'Currency', width: 80, dataIndex: 'A1781MONED'},
+                                            {text: 'Cod. <br>Reason', width: 80, dataIndex: 'RFIC'},
+                                            {text: 'Sub <br>Cod.', width: 80, dataIndex: 'RECODE'}
                                         ]
                                     }
                                 }

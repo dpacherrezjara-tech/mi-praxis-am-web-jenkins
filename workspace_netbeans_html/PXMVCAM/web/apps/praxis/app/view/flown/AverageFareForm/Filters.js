@@ -127,7 +127,37 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Filters', {
                             maxLength: 1,
                             enforceMaxLength: true,
                             maskRe: /[a-zA-Z]/
-                        }
+                        },
+                        {
+                            xtype: 'label',
+                            text: 'Tarif Type',
+                            style: 'font-weight:bold;',
+                            padding: '10 5 5 5'
+
+                        },
+                        {xtype: 'tbspacer', width: 5},
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbTTARIF',
+                            fieldStyle: 'text-align: left;',
+                            disabled: false,
+                            fieldLabel: '',
+                            width: 80,
+                            labelWidth: 0,
+                            labelAlign: 'right',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "All"], ["F", "TKT"], ["E", "EMD"]
+                                ]
+                            }),
+                            valueField: 'code',
+                            displayField: 'name',
+                            value: ''
+                        },
+                        
                     ]
                 }
 //                {
