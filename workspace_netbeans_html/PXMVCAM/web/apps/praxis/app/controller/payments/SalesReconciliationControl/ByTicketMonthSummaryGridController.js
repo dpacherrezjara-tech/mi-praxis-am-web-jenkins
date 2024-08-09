@@ -15,8 +15,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
         const view = this.view;
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent2');
         console.log(view.searchParams);
-        const tdate = view.searchParams.IN_DATE === 'FECVT' ? 'Sale<br>Date' : 'Processing<br>Date';
-        me.view.columns[0].setText(tdate);
+        let tdate = view.searchParams.IN_DATE;
+        if (tdate === 'FECTV') {
+            me.view.columns[0].setText('Sale<br>Date');
+        } else if (tdate === 'PRDA') {
+            me.view.columns[0].setText('Processing<br>Date');
+        } else {
+            me.view.columns[0].setText('Update<br>Date');
+        }
+        //const tdate = view.searchParams.IN_DATE === 'FECVT' ? 'Sale<br>Date' : 'Processing<br>Date';
+        //me.view.columns[0].setText(tdate);
         if (me.view.backButton) {
             me.view.columns[1].hide();
         }
@@ -55,7 +63,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
             global.Msg({msg: 'No data'});
             return;
         }
-        me.openDaysSummary(record.data.a4496FPROC ? record.data.a4496FPROC : record.data.a4496FECVT);
+        let fecha = '';
+        if (record.data.a4496FPROC) {
+            fecha = record.data.a4496FPROC;
+        } else if (record.data.a4496FECVT) {
+            fecha = record.data.a4496FECVT;
+        } else {
+            fecha = record.data.a4501FEUP;
+        }
+        me.openDaysSummary(fecha);
     },
     onClickDetail: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
@@ -86,7 +102,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
             IN_CCUST: '139',
             ...me.view.searchParams
         };
-        let month = obj.a4496FECVT ? obj.a4496FECVT : obj.a4496FPROC;
+        //let month = obj.a4496FECVT ? obj.a4496FECVT : obj.a4496FPROC;
+        let month = '';
+        if (obj.a4496FECVT) {
+            month = obj.a4496FECVT;
+        } else if (obj.a4496FPROC) {
+            month = obj.a4496FPROC;
+        } else {
+            month = obj.a4501FEUP;
+        }
+
         if (me.view.searchParams.IN_TDATE === 'M') {
             params.IN_DATEFROM = month + '01';
             params.IN_DATETO = month + '31';
@@ -115,7 +140,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
         const me = this;
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent2');
         const drillDown = mainPanel.items.items;
-        let params = Object.assign({},me.view.searchParams);
+        let params = Object.assign({}, me.view.searchParams);
         params.IN_TDATE = 'D';
         params.IN_DATEFROM = month + '01';
         params.IN_DATETO = month + '31';
