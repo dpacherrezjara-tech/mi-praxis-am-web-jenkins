@@ -111,6 +111,7 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
         bean.VP_A1781DEST = Ext.getCmp(prototype.id + '-cmbCARRIVA').getValue();
         bean.VP_A1781RBD = Ext.getCmp(prototype.id + '-txtA1781RBD').getValue().trim();
         bean.VP_A1781FARE = Ext.getCmp(prototype.id + '-txtFARE').getValue().trim();
+        bean.IN_TTARIF = Ext.getCmp(prototype.id + '-cmbTTARIF').getValue().trim();
 
         var beanString = JSON.stringify(bean);
         searchParams = {
