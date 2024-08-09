@@ -943,9 +943,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
                         Ext.getCmp(prototype.id + '-txtQtyT').setText(beanTemp.QTYTOTPS);
                         console.log(obj.data.QTYTOTPS);
                         console.log(beanTemp.QTYTOTPS);
+                        console.log(obj.data.length, 'obj.data.length');
+                        console.log(obj.data.items.length, 'obj.data.items.length');
+                        console.log(obj.data.items[0].data.page.TOTROW, 'obj.data.');
                         Ext.getCmp(prototype.id + '-FlightDate').setText(beanTemp.strFormatDate);
                         Ext.getCmp(prototype.id + '-FlightNumber').setText(beanTemp.NFLIGHT);
-                        Ext.getCmp(prototype.id + '-txtQtyD').setText(obj.data.length);
+                        Ext.getCmp(prototype.id + '-txtQtyD').setText(obj.data.items[0].data.page.TOTROW);
 //                          this.g_nflight = beanTemp.NFLIGHT;
                     } else {
                         global.Msg({msg: 'Data not found'});
