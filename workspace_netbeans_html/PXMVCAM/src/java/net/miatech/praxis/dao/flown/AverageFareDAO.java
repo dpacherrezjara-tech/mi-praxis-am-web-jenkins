@@ -53,31 +53,32 @@ public class AverageFareDAO {
         ResultSet rs01 = null;
         String fActual = Functions.getFechaActual();
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP0026(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP0026(?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
             cstmt01.registerOutParameter(8, Types.INTEGER);
             cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.VP_A1781ORIG);
             cstmt01.setString(3, filter.VP_A1781DEST);
             cstmt01.setString(4, filter.VP_A1781RBD);
             cstmt01.setString(5, filter.VP_A1781FARE);
+            cstmt01.setString(6, filter.IN_TTARIF);
 
-            cstmt01.setInt(6, filter.page.PAGNUM);
-            cstmt01.setInt(7, filter.page.PAGROW);
-            cstmt01.setInt(8, filter.page.TOTPAG);
-            cstmt01.setInt(9, filter.page.TOTROW);
+            cstmt01.setInt(7, filter.page.PAGNUM);
+            cstmt01.setInt(8, filter.page.PAGROW);
+            cstmt01.setInt(9, filter.page.TOTPAG);
+            cstmt01.setInt(10, filter.page.TOTROW);
             cstmt01.execute();
-            filter.page.PAGNUM = cstmt01.getInt(6);
-            filter.page.PAGROW = cstmt01.getInt(7);
-            filter.page.TOTPAG = cstmt01.getInt(8);
-            filter.page.TOTROW = cstmt01.getInt(9);
+            filter.page.PAGNUM = cstmt01.getInt(7);
+            filter.page.PAGROW = cstmt01.getInt(8);
+            filter.page.TOTPAG = cstmt01.getInt(9);
+            filter.page.TOTROW = cstmt01.getInt(10);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -98,6 +99,8 @@ public class AverageFareDAO {
                 objRtn.A1781MONED = rs01.getString("CURRENC");
                 objRtn.A1781PROME = rs01.getDouble("VALPRO");
                 objRtn.A1781RBD = rs01.getString("BOOKI");
+                objRtn.RFIC = rs01.getString("RFIC");
+                objRtn.RECODE = rs01.getString("RECODE");
                 //Paginación
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
