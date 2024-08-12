@@ -435,11 +435,18 @@ public class ClarificationLoadController extends BaseController {
                     }
                 }
 
-                if (fields[0].contains("Merchant")) {
-                    int empieza = fields[0].indexOf("Merchant");
-                    listaExcelString.add(line.substring(empieza));
-                    System.out.println(cont + " : " + line.substring(empieza));
-                    inicio = true;
+                if (fields[0].contains("Merchant") || fields[0].contains("Comercio")) {
+                    if( fields[0].contains("Merchant") ){
+                        int empieza = fields[0].indexOf("Merchant");
+                        listaExcelString.add(line.substring(empieza));
+                        System.out.println(cont + " : " + line.substring(empieza));
+                        inicio = true;
+                    } else if( fields[0].contains("Comercio") ){
+                        int empieza = fields[0].indexOf("Comercio");
+                        listaExcelString.add(line.substring(empieza));
+                        System.out.println(cont + " : " + line.substring(empieza));
+                        inicio = true;
+                    }
                 }
                 /*1049484887,007646056,483030XXXXXX8324,031506,30/09/2022,09/12/2022,2031.00,74524222273122738524986,20221128,29/11/2022,,,,*/
 
