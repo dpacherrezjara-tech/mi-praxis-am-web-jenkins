@@ -73,9 +73,9 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             '#BusinessToolsForm-imgBuild': {
                 click: this.onClickImgBuild
             },
-            '#BusinessToolsForm-chkAll': {
-                change: this.selectAll
-            }
+//            '#BusinessToolsForm-chkAll': {
+//                change: this.selectAll
+//            }
         });
     },
     xpanel_afterrender: function (obj, e) {
@@ -1348,78 +1348,112 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             Ext.getCmp(prototype.id + '-gridDataColumns').unmask('Loading...');
         }, 400);
     },
-
-    selectAll: function (value, row) {
-
-        var check = Ext.getCmp(prototype.id + '-chkAll').checked;
-
-        if (check) {
-            var grid = Ext.getCmp(prototype.id + '-gridDataColumns');
-            if (!grid) {
-                console.error("Grid component not found: " + prototype.id + '-gridDataColumns');
-                return;
-            }
-            var dataStore = grid.getStore();
-            if (!dataStore) {
-                console.error("Store not found in grid component");
-                return;
-            }
-            dataStore.each(function (record) {
-                if (record && record.data) {
-                    record.set('select', true);
-                    storeList.add(record.data);
-                    record.set('select', false);
+    selectAll: function () {
+        console.log('selectAll..........');
+        var dataStore = Ext.getCmp(prototype.id + '-gridDataColumns').getStore();
+        
+        if(dataStore.data.length > 0){
+            console.log('selectAll. innnnnnnnnnnnnnnnn.........');
+            var check = Ext.getCmp(prototype.id + '-chkAll').checked;
+            console.log('chekced' +check);
+            if(check){
+                /*Remuevo campos agregados al grid*/
+//                storeList.removeAll();
+//                for (var j = 0; j < dataStore.data.length; j++) {
+//                    var dataRow = dataStore.data.items[j].data;
+//                    var name = dataRow.DESCRIPT;
+//                    dataRow.select = false;
+//                }
+    //            console.log('len---------------->' + dataStore.data.length);
+                for (var i = 0; i < dataStore.data.length; i++) {
+                    var dataRow = dataStore.data.items[i].data;
+                    console.log('i' +i);
+                    console.log(dataRow.DESCRIPT);
+                    dataRow.select = true;
+                    storeList.add(dataRow);
                 }
-            });
-            var selectedRow = dataStore.getAt(row);
-            if (!selectedRow || !selectedRow.data) {
-                console.error("Row not found or data is null at index: " + row);
-                return;
-            }
-            var dataRow = selectedRow.data;
-            var name = dataRow.DESCRIPT;
-            if (dataRow.select === true) {
-                storeList.remove(storeList.findRecord('DESCRIPT', name));
-                dataRow.select = false;
-            } else {
-                dataRow.select = true;
-                storeList.add(dataRow);
-            }
 
-            grid.setStore(dataStore);
-
-        } else {
-
-            setTimeout(function () {
-                var arr1 = Ext.getCmp(prototype.id + '-gridDataColumns').getStore();
-                var list = [];
-                for (var j = 0; j < arr1.data.items.length; j++) {
-                    var data = arr1.data.items[j].data;
-                    data.select = false;
-                    data.check = true;
-                    data.OrderBy = '';
-                    data.DownUp = 'ASC';
-                    storeList.add(data);
+            }else{
+                for (var j = 0; j < dataStore.data.length; j++) {
+                    var dataRow = dataStore.data.items[j].data;
+                    var name = dataRow.DESCRIPT;
+                    dataRow.select = false;
                 }
-                for (var j = 0; j < arr1.data.items.length; j++) {
-                    list.push(arr1.data.items[j].data);
-                }
-                var storeData = Ext.create('Ext.data.Store', {
-                    data: list,
-                    autoLoad: true
-                });
-                Ext.getCmp(prototype.id + '-gridDataColumns').bindStore(storeData);
-                me.displayQuery(res[0].strSQL);
-
-                Ext.getCmp(prototype.id + '-gridDataColumns').unmask('Loading...');
-            }, 400);
-            
-            setTimeout(function () {
+                /*Remuevo campos agregados al grid*/
                 storeList.removeAll();
-            }, 400);
-            
+            }
 
+            Ext.getCmp(prototype.id + '-gridDataColumns').setStore(dataStore);
         }
+        
+        
+//        if (check) {
+//            var grid = Ext.getCmp(prototype.id + '-gridDataColumns');
+//            if (!grid) {
+//                console.error("Grid component not found: " + prototype.id + '-gridDataColumns');
+//                return;
+//            }
+//            var dataStore = grid.getStore();
+//            if (!dataStore) {
+//                console.error("Store not found in grid component");
+//                return;
+//            }
+//            dataStore.each(function (record) {
+//                if (record && record.data) {
+//                    record.set('select', true);
+//                    storeList.add(record.data);
+//                    record.set('select', false);
+//                }
+//            });
+//            var selectedRow = dataStore.getAt(row);
+//            if (!selectedRow || !selectedRow.data) {
+//                console.error("Row not found or data is null at index: " + row);
+//                return;
+//            }
+//            var dataRow = selectedRow.data;
+//            var name = dataRow.DESCRIPT;
+//            if (dataRow.select === true) {
+//                storeList.remove(storeList.findRecord('DESCRIPT', name));
+//                dataRow.select = false;
+//            } else {
+//                dataRow.select = true;
+//                storeList.add(dataRow);
+//            }
+//
+//            grid.setStore(dataStore);
+//
+//        } else {
+//
+//            setTimeout(function () {
+//                var arr1 = Ext.getCmp(prototype.id + '-gridDataColumns').getStore();
+//                var list = [];
+//                for (var j = 0; j < arr1.data.items.length; j++) {
+//                    var data = arr1.data.items[j].data;
+//                    data.select = false;
+//                    data.check = true;
+//                    data.OrderBy = '';
+//                    data.DownUp = 'ASC';
+//                    storeList.add(data);
+//                }
+//                for (var j = 0; j < arr1.data.items.length; j++) {
+//                    list.push(arr1.data.items[j].data);
+//                }
+//                var storeData = Ext.create('Ext.data.Store', {
+//                    data: list,
+//                    autoLoad: true
+//                });
+//                Ext.getCmp(prototype.id + '-gridDataColumns').bindStore(storeData);
+//                me.displayQuery(res[0].strSQL);
+//
+//                Ext.getCmp(prototype.id + '-gridDataColumns').unmask('Loading...');
+//            }, 400);
+//            
+//            setTimeout(function () {
+//                storeList.removeAll();
+//            }, 400);
+//            
+//
+//        }
 
     },
 
@@ -1791,7 +1825,11 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             if (arr2[j].data['DATATYPE'] === "N") {
                 colsize = 90;
                 data.align = "right";
-                data.type = "float";
+                if(arr2[j].data['DECIMALF'] > 0){
+                    data.type = "float";
+                }else{
+                    data.type = "int";
+                }
                 //data.summaryType = bussinessTools.summaryField('tot' + (j + 1));
             } else {
                 data.align = "center";

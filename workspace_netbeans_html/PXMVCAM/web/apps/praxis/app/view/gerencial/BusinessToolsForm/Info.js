@@ -84,13 +84,13 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Info', {
                             border: false,
                             layout: 'vbox',
                             items: [
-                                {
-                                    xtype: 'checkboxfield',
-                                    id: prototype.id + '-chkAll',
-                                    align: 'left',
-                                    width: 10,
-                                    boxLabel: '<b>All<b>'
-                                },
+//                                {
+//                                    xtype: 'checkboxfield',
+//                                    id: prototype.id + '-chkAll',
+//                                    align: 'left',
+//                                    width: 10,
+//                                    boxLabel: '<b>All<b>'
+//                                },
                                 {
                                     xtype: 'panel',
                                     id: prototype.id + '-panelSelectField02',
@@ -136,8 +136,68 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Info', {
                                                             align: 'center'
                                                         },
                                                         items: [
-                                                            {text: 'Select', width: 50, dataIndex: 'select',
-                                                                headerCheckbox: true,
+                                                            {text: 'Select', width: 50, dataIndex: 'select',margin: '0 0 0 0',/*xtype: 'checkcolumn',*/
+//                                                                headerCheckbox: true,
+                                                                items: [
+                                                                    {
+                                                                        xtype: 'checkboxfield',
+                                                                        id: prototype.id + '-chkAll',
+                                                //                        align: 'left',
+                                                                        labelWidth: 13,  // 
+                                                                        width: 5,
+                                                //                        text: 'My Button',  // Cambia el texto según sea necesario
+                                                                        margin: '0 0 0 0',  // Margen para ajustar la posición del botón
+                                                                        handler: function() {
+                                                                            // Lógica del botón
+                                                //                            Ext.Msg.alert('Info', 'Botón en la cabecera presionado');
+                                                                            me.selectAll();
+                                                                        },
+                                                                        //    listeners: {
+                                                                        //        afterrender: function(checkbox) {
+                                                                        //            // Asegúrate de que el labelEl no ocupe espacio y esté completamente oculto
+                                                                        //            checkbox.labelEl.dom.style.display = 'none';
+                                                                        ////            checkbox.labelEl.dom.style.width = '0px';
+                                                                        ////            checkbox.labelEl.dom.style.height = '0px';
+                                                                        ////            checkbox.labelEl.dom.style.margin = '0px';
+                                                                        ////            checkbox.labelEl.dom.style.padding = '0px';
+                                                                        //        }
+                                                                        //    }
+                                                                    }
+                                                                ],
+//                                                                listeners: {
+//                                                                    checkchange: function (column, rowIndex, checked, eOpts) {
+//                                                                        var record = column.up('grid').getStore().getAt(rowIndex);
+//                                                                        console.log('listener');
+//                                                                        console.log( column.up('grid').getStore());
+//                                                                        console.log(rowIndex);
+//                                                                        console.log(checked);
+//                                                                        console.log(record);
+//                                                                        record.set('select', checked);
+//                                                         
+//      
+//                                                                        //        var dataStore = Ext.getCmp(prototype.id + '-gridDataColumns').getStore();
+//                                                                        //        var dataRow = dataStore.data.items[rowIndex].data;
+//                                                                                var dataRow = record.data;
+//                                                                                //console.log(dataRow);
+//                                                                                var name = dataRow.DESCRIPT;
+//                                                                                console.log('nameeee---->'+name);
+//                                                                                console.log('dataRow---->');
+//                                                                                console.log(dataRow);
+//                                                                                if (checked === true) {
+//                                                                        //            dataRow.select = true;
+//                                                                                    storeList.add(dataRow);
+//                                                                                } else {
+//                                                                                    storeList.remove(storeList.findRecord('DESCRIPT', name));
+//                                                                        //            dataRow.select = false;
+//                                                                                }
+//                                                                                var vgridData = Ext.getCmp(prototype.id + '-panelListColumns');
+//                                                                                vgridData.getView().refresh();
+//                                                                        //        Ext.getCmp(prototype.id + '-gridDataColumns').setStore(dataStore);
+//    
+////                                                                        me.selectOne('',rowIndex);
+//                                                                        // Realiza cualquier otra acción que necesites aquí
+//                                                                    }
+//                                                                }
                                                                 renderer: function (value, meta, record, row, col) {
                                                                     var check = record.data.select;
                                                                     if (check) {
@@ -199,7 +259,8 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Info', {
                                                                 }
                                                             }
                                                         ]
-                                                    }},
+                                                    }
+                                                },
                                                 {
                                                     xtype: 'grid',
                                                     padding: '0 0 0 0',
