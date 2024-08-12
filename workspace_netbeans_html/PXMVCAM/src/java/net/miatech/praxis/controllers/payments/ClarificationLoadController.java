@@ -235,7 +235,6 @@ public class ClarificationLoadController extends BaseController {
     private String uploadSantanderAclaracionesCSV(byte[] bytes, String banco, String input) throws Exception {
 
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-
         boolean inicio = false;
         String filaCompleta = "", msj = "";
         String fecha_tran = "", claim_code = "", afiliacion = "", comercio = "", marca = "", tarjeta_nro = "", arn = "", cod_aut = "", monto = "";
@@ -269,8 +268,8 @@ public class ClarificationLoadController extends BaseController {
             fs.flush();
             fs.close();
 
-//            br = new BufferedReader(new FileReader(strArchivo));
-//            br = new BufferedReader(new InputStreamReader(new FileInputStream(strArchivo), "ISO-8859-1"));
+        //            br = new BufferedReader(new FileReader(strArchivo));
+        //            br = new BufferedReader(new InputStreamReader(new FileInputStream(strArchivo), "ISO-8859-1"));
             br = new BufferedReader(new InputStreamReader(new FileInputStream(strArchivo), "UTF-8"));
             String line = br.readLine();
 
@@ -293,25 +292,43 @@ public class ClarificationLoadController extends BaseController {
                     break;
                 }
 
-                fecha_tran = fields[0].trim();//A
-                claim_code = fields[1].trim();
-                afiliacion = fields[2].trim();//C
-                comercio = fields[3].trim();
-                marca = fields[4].trim();//E
-                tarjeta_nro = fields[5].trim();//F
+                comercio = fields[0].trim();
+                afiliacion = fields[1].trim();//C
+                fecha_tran = fields[2].trim();//A
+                marca = fields[3].trim();//E
+                tarjeta_nro = fields[4].trim();//F
+                cod_aut = Functions.fillZeros(6, fields[5].trim());
                 arn = fields[6].trim();
-                cod_aut = Functions.fillZeros(6, fields[7].trim());
+                claim_code = fields[7].trim();
+                procesador = fields[8].trim();
 
-                monto = fields[8].trim();//I
-                if (monto.contains("\"")) {
-                    comma_in_amt = true;
-                    if (fields[9].trim().contains("\"")) {
-                        monto = fields[8].trim() + fields[9].trim();
+                motivo = fields[9].trim();//reemplazarCaracteresRaros(fields[11+i].trim());//L
+                if (motivo.contains("\"")) {
+                    if (fields[10].trim().contains("\"")) {
+                        motivo = fields[9].trim() + " " + fields[10].trim();
                         i = 1;
                     } else {
-                        if (fields[10].trim().contains("\"")) {
-                            monto = fields[8].trim() + fields[9].trim() + fields[10].trim();
+                        if (fields[11].trim().contains("\"")) {
+                            motivo = fields[9].trim() + " " + fields[10].trim() + " " + fields[11].trim();
                             i = 2;
+                        }
+                    }
+                    motivo = motivo.replaceAll("\"", "");
+                }
+                motivo = reemplazarCaracteresRaros(motivo);
+
+                moneda = fields[10 + i].trim();
+
+                monto = fields[11 + i].trim();//I
+                if (monto.contains("\"")) {
+                    comma_in_amt = true;
+                    if (fields[12 + i].trim().contains("\"")) {
+                        monto = fields[11 + i].trim() + fields[12 + i].trim();
+                        i = i + 1;
+                    } else {
+                        if (fields[13 + i].trim().contains("\"")) {
+                            monto = fields[11 + i].trim() + fields[12 + i].trim() + fields[13 + i].trim();
+                            i = i + 2;
                         }
                     }
                     if (i > 0) {
@@ -319,25 +336,10 @@ public class ClarificationLoadController extends BaseController {
                     }
                 }
 
-                moneda = fields[9 + i].trim();
-                estatus = reemplazarCaracteresRaros(fields[10 + i].trim());
-                motivo = fields[11 + i].trim();//reemplazarCaracteresRaros(fields[11+i].trim());//L
-                if (motivo.contains("\"")) {
-                    if (fields[12 + i].trim().contains("\"")) {
-                        motivo = fields[11 + i].trim() + " " + fields[12 + i].trim();
-                        i = i + 1;
-                    } else {
-                        if (fields[13 + i].trim().contains("\"")) {
-                            motivo = fields[11 + i].trim() + " " + fields[12 + i].trim() + " " + fields[13 + i].trim();
-                            i = i + 2;
-                        }
-                    }
-                    motivo = motivo.replaceAll("\"", "");
-                }
-                motivo = reemplazarCaracteresRaros(motivo);
                 fecha_venc = fields[12 + i].trim();
                 emisor = fields[13 + i].trim();
-                procesador = fields[14 + i].trim();
+                estatus = reemplazarCaracteresRaros(fields[14 + i].trim());
+
 
                 //            tmp = new SimpleDateFormat("yyyy-MM-dd").format(row.getCell(colAB).getDateCellValue());
                 if (inicio) {
@@ -345,12 +347,12 @@ public class ClarificationLoadController extends BaseController {
                     //Columna A
                     fecha_tran = fecha_tran.substring(0, 10);
                     if (fecha_tran.contains("/")) {
-//                        try{
-//                            Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(fecha_tran); 
-//                            fecha_tran = new SimpleDateFormat("yyyyMMdd").format(date1);
-//                        }catch (Exception e){
-//                            msj = " fecha_tran (A) FORMATO FECHA" + e.getMessage();
-//                        }
+        //                        try{
+        //                            Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(fecha_tran); 
+        //                            fecha_tran = new SimpleDateFormat("yyyyMMdd").format(date1);
+        //                        }catch (Exception e){
+        //                            msj = " fecha_tran (A) FORMATO FECHA" + e.getMessage();
+        //                        }
                         fecha_tran = convertirFecha(fecha_tran);
                         if (fecha_tran.equals("error formato fecha")) {
                             msj = " fecha_tran (A) FORMATO FECHA";
@@ -408,12 +410,12 @@ public class ClarificationLoadController extends BaseController {
                     //Columna M
                     fecha_venc = fecha_venc.substring(0, 10);
                     if (fecha_venc.contains("/")) {
-//                        try{
-//                            Date date2=new SimpleDateFormat("dd/MM/yyyy").parse(fecha_venc); 
-//                            fecha_venc = new SimpleDateFormat("yyyyMMdd").format(date2);
-//                        }catch (Exception e){
-//                            msj = " fecha_venc (A) FORMATO FECHA" + e.getMessage();
-//                        }
+        //                        try{
+        //                            Date date2=new SimpleDateFormat("dd/MM/yyyy").parse(fecha_venc); 
+        //                            fecha_venc = new SimpleDateFormat("yyyyMMdd").format(date2);
+        //                        }catch (Exception e){
+        //                            msj = " fecha_venc (A) FORMATO FECHA" + e.getMessage();
+        //                        }
                         fecha_venc = convertirFecha(fecha_venc);
                         if (fecha_venc.equals("error formato fecha")) {
                             msj = " fecha_venc (M) FORMATO FECHA";
@@ -433,8 +435,8 @@ public class ClarificationLoadController extends BaseController {
                     }
                 }
 
-                if (fields[0].contains("Fecha transacci")) {
-                    int empieza = fields[0].indexOf("Fecha transacci");
+                if (fields[0].contains("Merchant")) {
+                    int empieza = fields[0].indexOf("Merchant");
                     listaExcelString.add(line.substring(empieza));
                     System.out.println(cont + " : " + line.substring(empieza));
                     inicio = true;
