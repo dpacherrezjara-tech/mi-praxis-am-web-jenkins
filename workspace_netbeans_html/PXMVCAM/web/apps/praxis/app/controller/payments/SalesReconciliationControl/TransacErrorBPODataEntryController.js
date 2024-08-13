@@ -979,6 +979,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                         PAYDATE: obj.paydate,
                         PRDA: obj.prda,
                         TDOC: obj.tdoc,
+                        TDOCO: x.tdoc,
                         AREFNBR: obj.arefnbr,
                         PROCTYPE: obj.proctype,
                         PROCTYPESQ: obj.proctypesq,
