@@ -966,6 +966,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         }
         console.log('Total Difference: ', difference);
 
+        let cerror = '';
         //obtiene detalle para desglosado
         const details = [
             ...gridBPO.data.items.map(x => ({STMANUAL: 'Sales', ...x.data})),
@@ -997,12 +998,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 o.TRNCU = o.TRNCO || '';
             }
             o.TDOC = obj.tdoc;
+            if(o.STMANUAL !== 'Adjustment' && o.TDOC !== o.TDOCO){
+                o.CERROR === '79';
+                cerror = '79';
+            }
             return o;
         });
         const conteo_void = details.filter(x => x.FVOID === 'V').length;
         //console.log(conteo_void);
 
         const params = me.requestObjectSP(me.bean);
+        params.IN_CERROR = cerror;
         params.difference = difference;
         params.ajustes = gridADJU.data.items.length;
         params.detail = details;
