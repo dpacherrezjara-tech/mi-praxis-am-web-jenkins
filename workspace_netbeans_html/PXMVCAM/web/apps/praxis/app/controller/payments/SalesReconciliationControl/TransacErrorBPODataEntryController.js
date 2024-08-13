@@ -495,6 +495,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const res = await fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`);
         if (res.ok) {
             const data = await res.json();
+            console.log(data);
             let added = 0;
             let repeats = 0;
             data.response.forEach(obj => {
@@ -978,8 +979,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                         SMERCHID: obj.smerchid,
                         PAYDATE: obj.paydate,
                         PRDA: obj.prda,
-                        TDOC: obj.tdoc,
-                        TDOCO: x.tdoc,
                         AREFNBR: obj.arefnbr,
                         PROCTYPE: obj.proctype,
                         PROCTYPESQ: obj.proctypesq,
@@ -997,6 +996,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             if (o.STMANUAL === 'Adjustment' && o.CERROR === '03') {
                 o.TRNCU = o.TRNCO || '';
             }
+            o.TDOC = obj.tdoc;
             return o;
         });
         const conteo_void = details.filter(x => x.FVOID === 'V').length;
