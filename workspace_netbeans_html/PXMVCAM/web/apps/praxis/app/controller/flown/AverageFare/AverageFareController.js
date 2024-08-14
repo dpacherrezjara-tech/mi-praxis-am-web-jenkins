@@ -14,6 +14,7 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
     gridActual: '',
     panelActual: '',
     searchParams: {},
+    bean: {},
     paramsDetail: {},
     me: '',
     setContext: function () {
@@ -105,15 +106,15 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
         this.setGridData(obj, e);
     },
     setFormatParameter: function() {
-        var bean = {};
+        me.bean = {};
 
-        bean.VP_A1781ORIG = Ext.getCmp(prototype.id + '-cmbCDEPART').getValue();
-        bean.VP_A1781DEST = Ext.getCmp(prototype.id + '-cmbCARRIVA').getValue();
-        bean.VP_A1781RBD = Ext.getCmp(prototype.id + '-txtA1781RBD').getValue().trim();
-        bean.VP_A1781FARE = Ext.getCmp(prototype.id + '-txtFARE').getValue().trim();
-        bean.IN_TTARIF = Ext.getCmp(prototype.id + '-cmbTTARIF').getValue().trim();
-
-        var beanString = JSON.stringify(bean);
+        me.bean.VP_A1781ORIG = Ext.getCmp(prototype.id + '-cmbCDEPART').getValue();
+        me.bean.VP_A1781DEST = Ext.getCmp(prototype.id + '-cmbCARRIVA').getValue();
+        me.bean.VP_A1781RBD = Ext.getCmp(prototype.id + '-txtA1781RBD').getValue().trim();
+        me.bean.VP_A1781FARE = Ext.getCmp(prototype.id + '-txtFARE').getValue().trim();
+        me.bean.IN_TTARIF = Ext.getCmp(prototype.id + '-cmbTTARIF').getValue().trim();
+        
+        var beanString = JSON.stringify(me.bean);
         searchParams = {
             beanString: beanString
         };
@@ -156,9 +157,23 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
                 }
             });
             global.clear();
+            me.bean.IN_TTARIF == 'F' ? Ext.getCmp(prototype.id + '-clmRFIC1').hide() : Ext.getCmp(prototype.id + '-clmRFIC1').show()
+            me.bean.IN_TTARIF == 'F' ? Ext.getCmp(prototype.id + '-clmRECODE1').hide() : Ext.getCmp(prototype.id + '-clmRECODE1').show()
+//            me.bean.IN_TTARIF == 'F' ? Ext.getCmp(prototype.id + '-clmRFIC2').hide() : Ext.getCmp(prototype.id + '-clmRFIC2').show()
+//            me.bean.IN_TTARIF == 'F' ? Ext.getCmp(prototype.id + '-clmRECODE2').hide() : Ext.getCmp(prototype.id + '-clmRECODE2').show()
+            me.bean.IN_TTARIF == 'F' ? Ext.getCmp(prototype.id + '-clmCODEDESC1').hide() : Ext.getCmp(prototype.id + '-clmCODEDESC1').show()
+//            me.bean.IN_TTARIF == 'F' ? Ext.getCmp(prototype.id + '-clmCODEDESC2').hide() : Ext.getCmp(prototype.id + '-clmCODEDESC2').show()
+            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmA1781ORIG').hide() : Ext.getCmp(prototype.id + '-clmA1781ORIG').show()
+            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmA1781DEST').hide() : Ext.getCmp(prototype.id + '-clmA1781DEST').show()
+            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmVP_A1781FARE').hide() : Ext.getCmp(prototype.id + '-clmVP_A1781FARE').show()
+            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmA1781RBD').hide() : Ext.getCmp(prototype.id + '-clmA1781RBD').show()
+            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-gridData').setWidth(752) : Ext.getCmp(prototype.id + '-gridData').setWidth(772)
+//            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmA1781PROME').hide() : Ext.getCmp(prototype.id + '-clmA1781PROME').show()
+            
             Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
-
+            
+            
         }
     },
     setGridDataDetail: function(data) {
