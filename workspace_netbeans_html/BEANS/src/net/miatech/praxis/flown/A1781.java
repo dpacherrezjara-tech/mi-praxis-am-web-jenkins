@@ -15,6 +15,7 @@ public  class A1781 {
    public String A1781RBD  = "";    // --1A COLHDG('RBD') SPACE=DEFAULT             
    public String RFIC  = "";    // --1A COLHDG('RFIC') SPACE=DEFAULT             
    public String RECODE  = "";    // --1A COLHDG('RECODE') SPACE=DEFAULT             
+   public String CODEDESC  = "";    // --1A COLHDG('CODEDESC') SPACE=DEFAULT             
    public String A1781DESDE = "";   // --6A COLHDG('AAAAMM CONT-Desde'
    public String A1781HASTA = "";   // --6A COLHDG('AAAAMM CONT-Hasta'
    public int A1781QCUPO = 0;       // --7S 0COLHDG('Cantidad Cupones')
