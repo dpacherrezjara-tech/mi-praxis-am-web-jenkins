@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class A4331SRFilter {
-    private String PRDA,PAYDATE,DESC_PROCTYPE,
+    private String PRDA,PAYDATE,FEUP,DESC_PROCTYPE,
             A4496FECVT,A4496FPROC,A4501FEUP;
     private Integer TOTAL,
             TOTAL_MATCH,TOTAL_PENDING,
