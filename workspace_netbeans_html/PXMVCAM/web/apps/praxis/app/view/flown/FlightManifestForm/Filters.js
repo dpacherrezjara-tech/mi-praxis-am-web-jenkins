@@ -208,12 +208,15 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.Filters', {
                             id: prototype.id + '-txtCDEPART',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
-//                            maskRe: /[0-9]/,
+                            maskRe: /[a-zA-Z]/,
                             maxLength: 3,
                             width: 50,
                             enableKeyEvents: true,
                             listeners: {
-                                keypress: 'onTextKeypress'
+                                keypress: 'onTextKeypress',
+                                change: function(field, newValue) {
+                                    field.setValue(newValue.toUpperCase());
+                                }
                             }
                         },
                         {xtype: 'tbspacer', width: 15},
@@ -250,12 +253,15 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.Filters', {
                             id: prototype.id + '-txtLNAME',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
-//                            maskRe: /[0-9]/,
+                            maskRe: /[a-zA-Z\s]/,
                             maxLength: 40,
                             width: 150,
                             enableKeyEvents: true,
                             listeners: {
-                                keypress: 'onTextKeypress'
+                                keypress: 'onTextKeypress',
+                                change: function(field, newValue) {
+                                    field.setValue(newValue.toUpperCase());
+                                }
                             }
                         },
                         {xtype: 'tbspacer', width: 15},
@@ -271,12 +277,15 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.Filters', {
                             id: prototype.id + '-txtCHAIR',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
-//                            maskRe: /[0-9]/,
+                            maskRe: /[a-zA-Z0-9]/, 
                             maxLength: 5,
                             width: 50,
                             enableKeyEvents: true,
                             listeners: {
-                                keypress: 'onTextKeypress'
+                                keypress: 'onTextKeypress',
+                                change: function(field, newValue) {
+                                    field.setValue(newValue.toUpperCase());
+                                }
                             }
                         },
                         {xtype: 'tbspacer', width: 15},
@@ -293,7 +302,7 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.Filters', {
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
                             maskRe: /[0-9]/,
-//                            maxLength: 13,
+                            maxLength: 13,
                             width: 156,
                             enableKeyEvents: true,
                             listeners: {

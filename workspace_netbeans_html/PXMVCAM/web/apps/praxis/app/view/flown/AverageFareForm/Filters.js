@@ -150,12 +150,12 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Filters', {
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
-                                    ["", "All"], ["F", "TKT"], ["E", "EMD"]
+                                   ["F", "TKT"], ["E", "EMD"]
                                 ]
                             }),
                             valueField: 'code',
                             displayField: 'name',
-                            value: ''
+                            value: 'F'
                         },
                         
                     ]
