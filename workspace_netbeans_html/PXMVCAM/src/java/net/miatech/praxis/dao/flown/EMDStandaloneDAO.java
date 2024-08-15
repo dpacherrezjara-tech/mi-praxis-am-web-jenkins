@@ -408,6 +408,7 @@ public class EMDStandaloneDAO {
                     bean.TOPUS = rst.getString("TOPUS");
                     bean.CARR = rst.getString("CARR");
                     bean.VCPN = rst.getDouble("VCPN");
+                    bean.VCPMX = rst.getDouble("VCPMX");
                     bean.CURRENCY = rst.getString("MDACP");
                     bean.RFIC = rst.getString("RFIC");
                     bean.RECODE = rst.getString("RECODE");

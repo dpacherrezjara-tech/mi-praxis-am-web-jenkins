@@ -167,7 +167,7 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
             me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmA1781DEST').hide() : Ext.getCmp(prototype.id + '-clmA1781DEST').show()
             me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmVP_A1781FARE').hide() : Ext.getCmp(prototype.id + '-clmVP_A1781FARE').show()
             me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmA1781RBD').hide() : Ext.getCmp(prototype.id + '-clmA1781RBD').show()
-            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-gridData').setWidth(752) : Ext.getCmp(prototype.id + '-gridData').setWidth(772)
+            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-gridData').setWidth(752) : Ext.getCmp(prototype.id + '-gridData').setWidth(765)
 //            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmA1781PROME').hide() : Ext.getCmp(prototype.id + '-clmA1781PROME').show()
             
             Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
