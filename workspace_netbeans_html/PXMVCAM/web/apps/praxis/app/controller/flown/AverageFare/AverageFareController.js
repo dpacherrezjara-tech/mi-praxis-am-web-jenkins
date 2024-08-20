@@ -15,6 +15,7 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
     panelActual: '',
     searchParams: {},
     bean: {},
+    beanDetail: {},
     paramsDetail: {},
     me: '',
     setContext: function () {
@@ -102,8 +103,19 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
         });
     },
     btnSearch_click: function(obj, e) {
-        this.setFormatParameter();
-        this.setGridData(obj, e);
+        
+        if( Ext.getCmp(prototype.id + '-txtRFIC').getValue() !== '' || Ext.getCmp(prototype.id + '-txtRECODE').getValue() !== ''  ){
+            this.beanDetail.RFIC = Ext.getCmp(prototype.id + '-txtRFIC').getValue()
+            this.beanDetail.RECODE = Ext.getCmp(prototype.id + '-txtRECODE').getValue()
+            this.beanDetail.IN_TTARIF = 'E'
+            me.paramsDetail.beanString = JSON.stringify(this.beanDetail);
+            console.log('wadafaaaaaa')
+            this.setGridDataDetail();
+        }else{
+            this.setFormatParameter();
+            this.setGridData(obj, e);  
+        }
+        
     },
     setFormatParameter: function() {
         me.bean = {};
@@ -121,6 +133,10 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
     },
     setGridData: function(obj, val) {
         win.lblUser_toolTip("Estructura: A1804");
+        if (me.panelActual !== '-panelGridData') {
+            me.panelActual = '-panelGridData';
+            Ext.getCmp(prototype.id + '-gridData').setVisible(true);
+        }
         me.setWidthPie();
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.setFormatParameter();
@@ -177,6 +193,9 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
         }
     },
     setGridDataDetail: function(data) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataDetail';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
         win.lblUser_toolTip("Estructura: A1804");
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {

@@ -301,8 +301,8 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.Filters', {
                             id: prototype.id + '-txtTKT',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
-                            maskRe: /[0-9]/,
-                            maxLength: 13,
+                            maskRe: /[0-9 ]/,
+                            maxLength: 15,
                             width: 156,
                             enableKeyEvents: true,
                             listeners: {

@@ -343,7 +343,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
         Ext.getCmp(prototype.id + '-pie').hide();
 //        var chkManifest = this.getValue("chkManifest");
 
-        if (this.getValue("txtTKT") !== '' || this.getValue("txtCDEPART") !== '' || this.getValue("txtLNAME") !== '' || this.getValue("txtCHAIR") !== ''  ) {
+        if (this.getValue("txtTKT") !== '' || this.getValue("txtCDEPART") !== '' || this.getValue("txtLNAME") !== '' || this.getValue("txtCHAIR") !== '' || this.getValue("txtFlight") !== '' ) {
             console.log('entra a tkt')
             
             Ext.getCmp(prototype.id + '-titulo').hide();
@@ -358,7 +358,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
             this.objFLIGHTDETAIL.CDEPART = this.getValue("txtCDEPART");
             this.objFLIGHTDETAIL.LNAME = this.getValue("txtLNAME");
             this.objFLIGHTDETAIL.CHAIR = this.getValue("txtCHAIR");
-            this.objFLIGHTDETAIL.TKT = this.getValue("txtTKT");
+            this.objFLIGHTDETAIL.TICKET = this.getValue("txtTKT").replace(" ", "".trim());
+            console.log('tkt', this.getValue("txtTKT").trim().replace(" ", ""))
             this.searchDetailFlightManifest(this.objFLIGHTDETAIL)
         } else {
             this.bean.yearFrom = this.getValue("cmbDateFromYear");
@@ -371,7 +372,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
 //            this.bean.FFLOW = this.getValue("cmbFlagFlown");
             //Carrier =====================================================
 //            this.bean.CARRI = this.getValue("cmbCarrier");
-            this.bean.NFLIGHT = this.getValue("txtFlight");
+//            this.bean.NFLIGHT = this.getValue("txtFlight");
 
 
             Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
@@ -1622,14 +1623,15 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
         Ext.getCmp(prototype.id + '-txtFlight').setReadOnly(false);
     },
     onValidarChange: function () {
-        var list = this.getValue("txtTKT").replace(/\s/g, "").split("");
-        var txtTKT = '';
-        for (var i = 0; i < list.length; i++) {
-            if (this.esNumero(list[i])) {
-                txtTKT += list[i];
-            }
-        }
-        this.setValue('txtTKT', txtTKT.substring(0, 13));
+//        var list = this.getValue("txtTKT").replace(/\s/g, "").split("");
+//        var txtTKT = '';
+//        for (var i = 0; i < list.length; i++) {
+//            if (this.esNumero(list[i])) {
+//                txtTKT += list[i];
+//            }
+//        }
+//        this.setValue('txtTKT', txtTKT.substring(0, 15));
+
         if (this.getValue("txtTKT") === '') {
             this.habilitarFiltros();
         }
