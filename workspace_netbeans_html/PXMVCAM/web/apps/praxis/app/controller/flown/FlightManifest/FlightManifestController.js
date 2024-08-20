@@ -77,12 +77,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
     },
     // </editor-fold>
     BuscarTKT_keyDownHandler: function (obj, e, eOpts) {
+        console.log(e.getKey(), 'e.getKey()')
         switch (e.getKey()) {
             case 13:
-                this.cargarTicket();
-                if (this.getValue("txtTKT") !== '') {
-                    this.deshabilitarFiltros();
-                }
+                    this.btnSearch_click();
                 break;
             case 8://Backspace
                 this.habilitarFiltros();
@@ -95,11 +93,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
                 break;
         }
         if (this.getValue("txtTKT") === '') {
-            this.habilitarFiltros();
+//            this.habilitarFiltros();
         }
     },
     cargarTicket: function () {
-        if (this.getValue("txtTKT").length === 13) {
+        if (this.getValue("txtTKT").length === 14 || this.getValue("txtTKT").length === 15 ) {
             this.bean.IN_TKT = this.getValue("txtTKT");
             this.bean.IN_SEQRO = this.getValue("txtROLL");
             this.searchTKT(this.bean, this.peek());
@@ -344,8 +342,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
 //        var chkManifest = this.getValue("chkManifest");
 
         if (this.getValue("txtTKT") !== '' || this.getValue("txtCDEPART") !== '' || this.getValue("txtLNAME") !== '' || this.getValue("txtCHAIR") !== '' || this.getValue("txtFlight") !== '' ) {
-            console.log('entra a tkt')
-            
+            console.log('entra a tkt',this.getValue("txtTKT"))
+            if( this.getValue("txtTKT") !== '' && this.getValue("txtTKT").length < 14  ){
+               this.setValue('txtTKT', '')
+               global.Msg({msg: 'The ticket number plus coupon must contain a minimum of 14 digits.'}) 
+               return false
+            }
             Ext.getCmp(prototype.id + '-titulo').hide();
             this.objFLIGHTDETAIL = {}
             this.objFLIGHTDETAIL.yearFrom = this.getValue("cmbDateFromYear");
