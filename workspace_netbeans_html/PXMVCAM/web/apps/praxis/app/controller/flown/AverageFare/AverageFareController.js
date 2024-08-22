@@ -305,10 +305,10 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
         this.setFormatParameter();
         switch (me.panelActual) {
             case  '-panelGridData':
-                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+                global.getFile(prototype.url + '/getXLSX?beanString=' + encodeURI(searchParams.beanString));
                 break;
             case  '-panelGridDataDetail':
-                global.getFile(prototype.url + '/getDetailXLSX?beanString=' + me.paramsDetail.beanString);
+                global.getFile(prototype.url + '/getDetailXLSX?beanString=' + encodeURI(me.paramsDetail.beanString));
                 break;
             default:
                 global.Msg(
