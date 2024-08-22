@@ -1055,7 +1055,7 @@ public class SalesReconciliationBPOController {
                 row.add(new CustomExcelCell(obj.getADJUSTMENT(), c1));
                 row.add(new CustomExcelCell(obj.getDISCAMOUN_ADJ(), c1));
                 row.add(new CustomExcelCell(obj.getDISCAMOUNI_ADJ(), c1));
-                row.add(new CustomExcelCell(obj.getTAX()));
+                row.add(new CustomExcelCell(obj.getTAX(), c1));
                 row.add(new CustomExcelCell(obj.getNETAMOUN(), c1));
                 row.add(new CustomExcelCell(obj.getPCURRENCY(), c2));
                 row.add(new CustomExcelCell(obj.getTGROSAMPAY(), c2));
@@ -1064,7 +1064,7 @@ public class SalesReconciliationBPOController {
                 row.add(new CustomExcelCell(obj.getIVACOM12(), c2));
                 row.add(new CustomExcelCell(obj.getSERVICFEEP(), c2));
                 row.add(new CustomExcelCell(obj.getOVERCOM12P(), c2));
-                row.add(new CustomExcelCell(obj.getTAXP()));
+                row.add(new CustomExcelCell(obj.getTAXP(), c2));
                 row.add(new CustomExcelCell(obj.getNETOPAY(), c2));
                 data.add(row);
             }
