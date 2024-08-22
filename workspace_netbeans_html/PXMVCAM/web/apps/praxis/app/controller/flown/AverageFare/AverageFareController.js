@@ -104,17 +104,17 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
     },
     btnSearch_click: function(obj, e) {
         
-        if( Ext.getCmp(prototype.id + '-txtRFIC').getValue() !== '' || Ext.getCmp(prototype.id + '-txtRECODE').getValue() !== ''  ){
-            this.beanDetail.RFIC = Ext.getCmp(prototype.id + '-txtRFIC').getValue()
-            this.beanDetail.RECODE = Ext.getCmp(prototype.id + '-txtRECODE').getValue()
-            this.beanDetail.IN_TTARIF = 'E'
-            me.paramsDetail.beanString = JSON.stringify(this.beanDetail);
-            console.log('wadafaaaaaa')
-            this.setGridDataDetail();
-        }else{
+//        if( Ext.getCmp(prototype.id + '-txtRFIC').getValue() !== '' || Ext.getCmp(prototype.id + '-txtRECODE').getValue() !== ''  ){
+//            this.beanDetail.RFIC = Ext.getCmp(prototype.id + '-txtRFIC').getValue()
+//            this.beanDetail.RECODE = Ext.getCmp(prototype.id + '-txtRECODE').getValue()
+//            this.beanDetail.IN_TTARIF = 'E'
+//            me.paramsDetail.beanString = JSON.stringify(this.beanDetail);
+//            console.log('wadafaaaaaa')
+//            this.setGridDataDetail();
+//        }else{
             this.setFormatParameter();
             this.setGridData(obj, e);  
-        }
+//        }
         
     },
     setFormatParameter: function() {
@@ -124,6 +124,8 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
         me.bean.VP_A1781DEST = Ext.getCmp(prototype.id + '-cmbCARRIVA').getValue();
         me.bean.VP_A1781RBD = Ext.getCmp(prototype.id + '-txtA1781RBD').getValue().trim();
         me.bean.VP_A1781FARE = Ext.getCmp(prototype.id + '-txtFARE').getValue().trim();
+        me.bean.IN_RFIC = Ext.getCmp(prototype.id + '-txtRFIC').getValue().trim();
+        me.bean.IN_RECODE = Ext.getCmp(prototype.id + '-txtRECODE').getValue().trim();
         me.bean.IN_TTARIF = Ext.getCmp(prototype.id + '-cmbTTARIF').getValue().trim();
         
         var beanString = JSON.stringify(me.bean);
@@ -234,6 +236,18 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
         this.setGridDataDetail();
 
     },
+    OnChangeSelected: function (){
+        console.log('wadafaaaaa')
+        if( Ext.getCmp(prototype.id + '-cmbTTARIF').getValue() == 'E' ){
+            Ext.getCmp(prototype.id + '-txtRFIC').setDisabled(false)
+            Ext.getCmp(prototype.id + '-txtRECODE').setDisabled(false)
+        }else{
+            Ext.getCmp(prototype.id + '-txtRFIC').setValue('')
+            Ext.getCmp(prototype.id + '-txtRECODE').setValue('')
+            Ext.getCmp(prototype.id + '-txtRFIC').setDisabled(true)
+            Ext.getCmp(prototype.id + '-txtRECODE').setDisabled(true)
+        }
+    },
     validateFields: function() {
         var msj = '';
         return msj;
@@ -291,10 +305,10 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
         this.setFormatParameter();
         switch (me.panelActual) {
             case  '-panelGridData':
-                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+                global.getFile(prototype.url + '/getXLSX?beanString=' + encodeURI(searchParams.beanString));
                 break;
             case  '-panelGridDataDetail':
-                global.getFile(prototype.url + '/getDetailXLSX?beanString=' + me.paramsDetail.beanString);
+                global.getFile(prototype.url + '/getDetailXLSX?beanString=' + encodeURI(me.paramsDetail.beanString));
                 break;
             default:
                 global.Msg(

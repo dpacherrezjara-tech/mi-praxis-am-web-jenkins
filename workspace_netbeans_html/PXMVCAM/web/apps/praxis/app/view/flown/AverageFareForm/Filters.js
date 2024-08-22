@@ -155,7 +155,10 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Filters', {
                             }),
                             valueField: 'code',
                             displayField: 'name',
-                            value: 'F'
+                            value: 'F',
+                            listeners: {
+                                change: 'OnChangeSelected'
+                            }
                         },
                         
                     ]
@@ -187,6 +190,7 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Filters', {
                             id: prototype.id + '-txtRFIC',
                             required: true,
                             readOnly: false,
+                            disabled: true,
                             fieldLabel: '',
                             width: 50,
                             labelWidth: 0,
@@ -214,6 +218,7 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Filters', {
                             id: prototype.id + '-txtRECODE',
                             required: true,
                             readOnly: false,
+                            disabled: true,
                             fieldLabel: '',
                             width: 78,
                             labelWidth: 0,
