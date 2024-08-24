@@ -8,6 +8,8 @@ import net.miatech.praxis.SaleAudit.entities.X3179;
 import net.miatech.praxis.SaleAudit.filter.SQP05372Filter;
 import net.miatech.praxis.SaleAudit.filter.SQP05377Filter;
 import net.miatech.praxis.SaleAudit.filter.SQP05379Filter;
+import net.miatech.praxis.SaleAudit.filter.SQP05401Filter;
+import net.miatech.praxis.SaleAudit.filter.SQP05402Filter;
 import net.miatech.praxis.logic.salesAudit.ReservationBrowserLogic;
 import net.miatech.praxis.utils.ResponseUtils;
 import org.apache.poi.ss.usermodel.Row;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -89,5 +92,19 @@ public class ReservationBrowserController {
         params.setRandomUUID();
         logic.loadSQP05372Filter(params);
         return ResponseUtils.create();
+    }
+    
+    @RequestMapping(value = "loadKeys")
+    public ResponseEntity<?> loadKeys() throws Exception{
+        System.out.println("**** ReservationBrowser - loadKeys ****");
+        SQP05401Filter filter = logic.loadSQP05401Filter();
+        return ResponseUtils.ok(filter);
+    }
+    
+    @RequestMapping(value = "updateKeys",method = RequestMethod.POST)
+    public ResponseEntity<?> updateKeys(@RequestBody SQP05402Filter params) throws Exception{
+        System.out.println("**** ReservationBrowser - loadKeys ****");
+        SQP05402Filter filter = logic.loadSQP05402Filter(params);
+        return ResponseUtils.ok(filter);
     }
 }

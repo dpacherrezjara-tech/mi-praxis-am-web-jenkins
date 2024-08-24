@@ -5,9 +5,12 @@ import java.util.Map;
 import net.miatech.praxis.SaleAudit.entities.A4590;
 import net.miatech.praxis.SaleAudit.entities.A4591;
 import net.miatech.praxis.SaleAudit.entities.A4592;
+import net.miatech.praxis.SaleAudit.entities.A4593;
 import net.miatech.praxis.SaleAudit.filter.SQP05372Filter;
 import net.miatech.praxis.SaleAudit.filter.SQP05377Filter;
 import net.miatech.praxis.SaleAudit.filter.SQP05379Filter;
+import net.miatech.praxis.SaleAudit.filter.SQP05401Filter;
+import net.miatech.praxis.SaleAudit.filter.SQP05402Filter;
 import net.miatech.praxis.logic.salesAudit.ReservationBrowserLogic;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +76,24 @@ public class ReservationBrowserDAO implements ReservationBrowserLogic {
         Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05379", params,
                 BeanPropertyRowMapper.newInstance(A4592.class));
         filter.setResponse((List<A4592>) obj.get("result"));
+        return filter;
+    }
+
+    @Override
+    public SQP05401Filter loadSQP05401Filter() throws Exception {
+        SQP05401Filter filter = new SQP05401Filter();
+        BeanPropertyRowMapper rm = new BeanPropertyRowMapper(A4593.class);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05401",rm);
+        filter.setResponse((List<A4593>) obj.get("result"));
+        return filter;
+    }
+
+    @Override
+    public SQP05402Filter loadSQP05402Filter(SQP05402Filter filter) throws Exception {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05402", params);
+        filter.setSQLRES((Integer) obj.get("SQLRES"));
+        filter.setSQLMSG((String) obj.get("SQLMSG"));
         return filter;
     }
 
