@@ -226,7 +226,7 @@ public class YieldReportController extends BaseController {
 
                     int len = listaData.size();
                     Integer vi = 0;
-                    String fileName = "Yield Report Summary - " + Functions.getFechaActual() + ".txt";
+                    String fileName = "Yield Report Summary - " + Functions.getFechaActual();
                     File file = new File(rutaFile + "\\" + fileName + ".txt");
 
                     if (file.exists()) {
@@ -476,7 +476,7 @@ public class YieldReportController extends BaseController {
 
                     int len = listaData.size();
                     Integer vi = 0;
-                    String fileName = "Yield Report Detail - " + Functions.getFechaActual() + ".txt";
+                    String fileName = "Yield Report Detail - " + Functions.getFechaActual();
                     File file = new File(rutaFile + "\\" + fileName + ".txt");
 
                     if (file.exists()) {
