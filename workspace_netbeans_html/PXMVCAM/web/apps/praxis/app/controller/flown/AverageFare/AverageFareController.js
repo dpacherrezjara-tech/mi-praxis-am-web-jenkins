@@ -276,6 +276,8 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
         Ext.getCmp(prototype.id + '-cmbCDEPART').setValue('');
         Ext.getCmp(prototype.id + '-txtFARE').setValue('');
         Ext.getCmp(prototype.id + '-txtA1781RBD').setValue('');
+        Ext.getCmp(prototype.id + '-txtRFIC').setValue('');
+        Ext.getCmp(prototype.id + '-txtRECODE').setValue('');
 
     },
     btnExcel_click: function(obj, e) {
