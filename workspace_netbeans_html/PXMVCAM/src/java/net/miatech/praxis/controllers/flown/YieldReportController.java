@@ -187,7 +187,8 @@ public class YieldReportController extends BaseController {
         filter.page.TOTROW = -1;
         filter.page.START = 0;
         filter.page.LIMIT = 0;
-        
+        System.out.println("Cambio");
+        String prueba = "";
         String fileNameDownload = String.format("Yield Report Summary - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         
         try {
