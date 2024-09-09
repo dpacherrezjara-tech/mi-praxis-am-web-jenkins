@@ -12,6 +12,7 @@ import net.miatech.beans.Pagination;
  * @author vhidalgo
  */
 public class SQP05188Filter {
+
     public String VP_OPCION = "";
     public String VP_FDATE1 = "";
     public String VP_FDATE2 = "";
@@ -20,6 +21,8 @@ public class SQP05188Filter {
     public String A1530FCONT = "";
     public String A1530STS9 = "";
     public String STS9 = "";
-    
+    public String RPTE = "";
+    public String APL = "";
+    public String FAC = "";           
     public Pagination page = new Pagination();
 }

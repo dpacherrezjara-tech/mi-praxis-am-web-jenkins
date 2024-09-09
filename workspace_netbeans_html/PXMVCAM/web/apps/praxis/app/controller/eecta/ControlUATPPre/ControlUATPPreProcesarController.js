@@ -23,39 +23,42 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATPPre.ControlUATPPreProcesarCon
     },
     getDataEntryValues: function (strOption) {
         var vl_OP01 = Ext.getCmp(prototype.id02 + '-op01').getValue();
-        var vl_OP02 = Ext.getCmp(prototype.id02 + '-op02').getValue();
         var vl_OP03 = Ext.getCmp(prototype.id02 + '-op03').getValue();
         var VL_PROCESO = '';
         if(vl_OP01)VL_PROCESO = 'UATP';
-        if(vl_OP02)VL_PROCESO = 'REPT';
         if(vl_OP03)VL_PROCESO = 'EECC'; 
-        
-        var VL_FACTURAR = "Y";
         
         var VL_ACTION = strOption;  
         var VL_FECHA1 = '';
-        var VL_FECHA2 = '';
-        var VP_FEJEC  = '';
+        var VL_TIPO = 'XXXX';
+        var VL_TIPO1 = 'X';
+        var VL_TIPO2 = 'X';
+        var VL_TIPO3 = 'X';
+        var VL_TIPO4 = 'X';
+        
         var VP_CDCLI  = '';
         if (VL_PROCESO==='UATP'){
             VL_FECHA1 = Ext.util.Format.date(Ext.getCmp(prototype.id02 + '-FECHA1').getValue(), 'Ymd');
-            VL_FECHA2 = Ext.util.Format.date(Ext.getCmp(prototype.id02 + '-FECHA2').getValue(), 'Ymd');
+            if (Ext.getCmp(prototype.id02 + '-01-CARGA').getValue())
+                VL_TIPO1 = 'V';
+            if (Ext.getCmp(prototype.id02 + '-02-REPORTE').getValue())
+                VL_TIPO2 = 'R';
+            if (Ext.getCmp(prototype.id02 + '-03-APLICACION').getValue())
+                VL_TIPO3 = 'A';
+            if (Ext.getCmp(prototype.id02 + '-04-FACTURACION').getValue())
+                VL_TIPO4 = 'F';
+            VL_TIPO = VL_TIPO1 + VL_TIPO2 + VL_TIPO3 + VL_TIPO4;
         }   
-        if (VL_PROCESO==='REPT')
-        VP_FEJEC = Ext.util.Format.date(Ext.getCmp(prototype.id02 + '-FECHEJE01').getValue(), 'Ymd');            
-        
         if (VL_PROCESO==='EECC'){
-            VP_FEJEC = Ext.util.Format.date(Ext.getCmp(prototype.id02 + '-FECHEJE02').getValue(), 'Ymd');            
+            VL_FECHA1 = Ext.util.Format.date(Ext.getCmp(prototype.id02 + '-FECHEJE02').getValue(), 'Ymd');            
             VP_CDCLI = '';            
         }                       
         return {
             VP_ACTION:VL_ACTION,
             VP_FDATE1:VL_FECHA1,
-            VP_FDATE2:VL_FECHA2,
-            VP_FEJEC:VP_FEJEC,
+            VP_TIPO:VL_TIPO,
             VP_CDCLI:VP_CDCLI,
-            VP_PROCESO:VL_PROCESO,
-            VP_FACTURAR:VL_FACTURAR
+            VP_PROCESO:VL_PROCESO
         };
     },    
     onSaveClick: function (btn) {
@@ -64,8 +67,7 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATPPre.ControlUATPPreProcesarCon
         var params = this.getDataEntryValues(strOption);
         var strMsg = this.validateForm(params);
         var StrMsgConfirm = ''; 
-        if (params.VP_PROCESO === 'UATP') StrMsgConfirm = '¿Procesar reporte de Ventas?';
-        if (params.VP_PROCESO === 'REPT') StrMsgConfirm = '¿Procesar emisión de Reporte de Ventas?'; //no se usa
+        if (params.VP_PROCESO === 'UATP') StrMsgConfirm = '¿Procesar ventas UATP?';
         if (params.VP_PROCESO === 'EECC') StrMsgConfirm = '¿Procesar Estados de Cuenta?';
         
         if (strMsg.trim() !== '') {
@@ -184,7 +186,7 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATPPre.ControlUATPPreProcesarCon
     validateForm: function (params) {
         var mensaje = "";
         if (params.VP_PROCESO === 'UATP') {
-            if(params.VP_FDATE1 === '' || params.VP_FDATE2 === '' )
+            if(params.VP_FDATE1 === '' )
             mensaje = 'INGRESAR RANGO DE FECHAS ';
             Ext.getCmp(prototype.id02 + '-FECHA1').focus();
             return mensaje;
