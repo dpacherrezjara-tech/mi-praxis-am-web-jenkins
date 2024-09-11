@@ -218,7 +218,7 @@ public class YieldReportController extends BaseController {
             logic.setSession((IServerSession) serverSession.getServerSession());
             
             listaData = logic.loadPX084S03A1784(filter, hmPaises, hmAeropuertos,-1);
-            if (listaData.size() > 688) {
+            if (listaData.size() > 65000) {
                 System.out.println("YIELD : getTXT");
                 String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
 
@@ -397,6 +397,12 @@ public class YieldReportController extends BaseController {
                     cell57.setCellStyle(bodyStyle);
                     cell58.setCellStyle(bodyStyle);
 
+                    // </editor-fold>
+
+                    iter.next();
+                    ++vi;
+                    ++vj;
+                }
                     sheet.autoSizeColumn(0, true);
                     sheet.autoSizeColumn(1, true);
                     sheet.autoSizeColumn(2, true);
@@ -406,13 +412,8 @@ public class YieldReportController extends BaseController {
                     sheet.autoSizeColumn(6, true);
                     sheet.autoSizeColumn(7, true);
                     sheet.autoSizeColumn(8, true);
-                    // </editor-fold>
 
-                    iter.next();
-                    ++vi;
-                    ++vj;
-                }
-
+                
                 response.setContentType("application/vnd.openxml");
                 response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
 
