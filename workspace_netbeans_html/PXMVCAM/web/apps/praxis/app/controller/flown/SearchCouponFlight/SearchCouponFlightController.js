@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.controller.flown.SearchCouponFlight.SearchCouponFlightCon
         });
     },
     xpanel_afterrender: function(obj, e) {
-        Ext.getCmp(prototype.id + '-panelDateFilters').hide();
+//        Ext.getCmp(prototype.id + '-panelDateFilters').hide();
         this.setStoreData();
         this.btnSearch_click();
 
@@ -105,8 +105,8 @@ Ext.define('Ext.Praxis.controller.flown.SearchCouponFlight.SearchCouponFlightCon
         obj.setValue(this.fecha.getFullYear());
     },
     afterRenderMonth: function(obj) {
-        obj.setValue('');
-        //obj.setValue('0' + (this.fecha.getMonth() + 1));
+//        obj.setValue('');
+        obj.setValue('0' + (this.fecha.getMonth() + 1));
     },
     selectComboFromYear: function(obj) {
         var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
@@ -269,9 +269,36 @@ Ext.define('Ext.Praxis.controller.flown.SearchCouponFlight.SearchCouponFlightCon
     eventKey: function(e, eOpts) {
         if (eOpts.getKey() === 13) {
             this.btnSearch_click();
+            console.log('wadafaaa')
+            if (Ext.getCmp(prototype.id + '-txtTKT').getValue() !== '') {
+                this.deshabilitarFiltros();
+            }
+        }
+        if (Ext.getCmp(prototype.id + '-txtTKT').getValue() === '') {
+            this.habilitarFiltros();
         }
     }
     ,
+    deshabilitarFiltros: function () {
+        Ext.getCmp(prototype.id + '-cmbDateFromYear').disable(true);
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').disable(true);
+        Ext.getCmp(prototype.id + '-cmbDateFromDay').disable(true);
+        Ext.getCmp(prototype.id + '-cmbDateToYear').disable(true);
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').disable(true);
+        Ext.getCmp(prototype.id + '-cmbDateToDay').disable(true);
+        Ext.getCmp(prototype.id + '-cbxStval').disable(true);
+        Ext.getCmp(prototype.id + '-txtCARR').disable(true);
+    },
+    habilitarFiltros: function () {
+        Ext.getCmp(prototype.id + '-cmbDateFromYear').enable(true);
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').enable(true);
+        Ext.getCmp(prototype.id + '-cmbDateFromDay').enable(true);
+        Ext.getCmp(prototype.id + '-cmbDateToYear').enable(true);
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').enable(true);
+        Ext.getCmp(prototype.id + '-cmbDateToDay').enable(true);
+        Ext.getCmp(prototype.id + '-cbxStval').enable(true);
+        Ext.getCmp(prototype.id + '-txtCARR').enable(true);
+    },
     btnClear_click: function(obj, e) {
         var yearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear');
         var yearTo = Ext.getCmp(prototype.id + '-cmbDateToYear');
