@@ -231,7 +231,7 @@ Ext.define('Ext.Praxis.controller.flown.SearchCouponFlight.SearchCouponFlightCon
                     var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
                     var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
                     var total = Ext.util.Format.number(pagData.total, '0,000');
-
+                    console.log(obj.data.length, 'obj.data.length')
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
                     Ext.getCmp(prototype.id + '-lbl-total').setText(total);
@@ -332,7 +332,7 @@ Ext.define('Ext.Praxis.controller.flown.SearchCouponFlight.SearchCouponFlightCon
             modal: true,
             fn: function(btn) {
                 if (btn === 'ok') {
-                    this.exportExcel();
+                    this.ValidationDownloadExcel();
                 }
             }
         });
@@ -346,6 +346,39 @@ Ext.define('Ext.Praxis.controller.flown.SearchCouponFlight.SearchCouponFlightCon
                 + '&IN_FECHA_TO=' + searchParams.IN_FECHA_TO);
     }
     ,
+    ValidationDownloadExcel: function (rec) {
+        this.setFormatParameter();
+        var me = this;
+        Ext.Ajax.request({
+            url: prototype.url + '/ValidationDownload',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getBody().mask('Loading...'),
+            params: {
+                IN_TKT: searchParams.IN_TKT,
+                IN_STVAL: searchParams.IN_STVAL,
+                IN_CARR: searchParams.IN_CARR,
+                IN_FECHA_FROM: searchParams.IN_FECHA_FROM,
+                IN_FECHA_TO: searchParams.IN_FECHA_TO
+            },
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                var int_result = res.int_result;
+                console.log(int_result, 'int_result')
+                if(int_result>800000)
+                {
+                     global.Msg({
+                            msg: 'Report cannot be exported, please contact system administrator.'
+                        });
+                }
+                else
+                {
+                    me.exportExcel();
+                }
+                Ext.getBody().unmask();
+            }
+        });
+    },
     btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id + '-panelDateFilters');
 
