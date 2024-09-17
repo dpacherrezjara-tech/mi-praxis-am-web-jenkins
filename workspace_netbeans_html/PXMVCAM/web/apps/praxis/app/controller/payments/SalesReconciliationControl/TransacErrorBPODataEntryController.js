@@ -351,6 +351,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     onUpdateClick: function (btn) {
         const me = this;
         let params = me.formatUpdateParams();
+        if (params.detail.filter(x=>x.SCURRENCY !== params.IN_SCURRENCY).length > 0){
+            global.Msg({msg: 'One or more tickets have differents currency!'});
+            return;
+        }
         if (params.detail.length === 0) {
             global.Msg({msg: 'You must have at least one ticket.'});
             return;
