@@ -310,6 +310,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReport.FormUnicoSeguimietoSubiAr
                 {"code": "RE", "name": "Rejected"},
                 {"code": "JU", "name": "Justified"},
                 {"code": "AI", "name": "Reaudited"}
+                
             ]
         }));
 
@@ -320,7 +321,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReport.FormUnicoSeguimietoSubiAr
                 {"code": "CO", "name": "Condoned"},
                 {"code": "PA", "name": "Billed"},
                 {"code": "PI", "name": "Billed GDS"},
-                {"code": "DI", "name": "Disputed"}
+                {"code": "DI", "name": "Disputed"},
+                {"code": "EB", "name": "Bsplink Error"}
             ]
         }));
 
