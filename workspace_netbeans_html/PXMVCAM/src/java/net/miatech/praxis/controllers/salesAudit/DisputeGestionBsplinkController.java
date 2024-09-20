@@ -56,6 +56,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
 import java.util.Map;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
@@ -326,6 +328,35 @@ public class DisputeGestionBsplinkController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    public static String fixEncoding(String input) {
+        // Convierte la cadena desde ISO-8859-1 (Latin-1) a UTF-8
+        byte[] bytes = input.getBytes(StandardCharsets.ISO_8859_1);
+        return new String(bytes, StandardCharsets.UTF_8);
+    }
+
+    public static String replaceSpecialCharacters(String input) {
+        // Normaliza la cadena eliminando los acentos
+        String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
+        // Elimina los caracteres no deseados (diacríticos)
+        String withoutDiacritics = normalized.replaceAll("\\p{M}", "");
+
+        // Ejemplo: Reemplazar ñ con n
+        withoutDiacritics = withoutDiacritics.replace("Á", "A")
+                .replace("ó", "o")
+                .replace("á", "a") // Puedes añadir más según sea necesario
+                .replace("é", "e")
+                .replace("í­", "i")
+                .replace("ú", "u")
+                .replace("É", "E")
+                .replace("Í", "I")
+                .replace("Ó", "O")
+                .replace("Ú", "U");
+        // Puedes añadir más reemplazos específicos si es necesario:
+        withoutDiacritics = withoutDiacritics.replace("ñ", "n").replace("Ñ", "N");
+
+        return withoutDiacritics;
+    }
+
     @RequestMapping(value = "insertTracingFile", method = RequestMethod.POST)
     public @ResponseBody
     String insertTracingFile(ModelMap map, @RequestParam("fileaudito") MultipartFile file1, @RequestParam("fileaudito2") MultipartFile file2, @RequestParam("fileaudito3") MultipartFile file3, HttpServletRequest request) {
@@ -347,10 +378,22 @@ public class DisputeGestionBsplinkController extends BaseController {
             String A2553ARCHV2 = file2.getOriginalFilename();
             String A2553ARCHV3 = file3.getOriginalFilename();
             //
+            if (!A2553ARCHV.equals("")) {
+                A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV));
+            }
+            if (!A2553ARCHV2.equals("")) {
+                A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV2));
+            }
+            if (!A2553ARCHV.equals("")) {
+                A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV));
+            }
+            if (!A2553ARCHV3.equals("")) {
+                A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV3));
+            }
             listenvio.A2553TRNCU = filter.A2553TRNCU;
             listenvio.A2553STAT = filter.A2553STAT;
             listenvio.A2553NMEMO = filter.A2553NMEMO;
-            listenvio.A2553DESCR = filter.A2553DESCR;
+            listenvio.A2553DESCR = fixEncoding(filter.A2553DESCR);
             listenvio.A2553STAT2 = filter.A2553STAT2;
             listenvio.A2553ARCHV = A2553ARCHV;
             listenvio.A2553ARCHV2 = A2553ARCHV2;
@@ -422,6 +465,7 @@ public class DisputeGestionBsplinkController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+
     public boolean upload_s3(A2553 filter, File archiv, File archiv2, File archiv3) throws SQLException, Exception {
         boolean res;
         try {
@@ -464,12 +508,12 @@ public class DisputeGestionBsplinkController extends BaseController {
 
     @RequestMapping(value = "GetFilesDirectory")
     public ResponseEntity<?>//@ResponseBody String 
-        GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+            GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ResponseEntity res;
         try {
             String v1_urlREST = "/util/download-files";
-            String sesion=serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+            String sesion = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             String urlREST = "";
             if (request.getParameter("IN_TIPO").trim().equals("USRBSP")) {
                 urlREST = "DISPUTAS/ROBOT" + "/" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
@@ -483,16 +527,16 @@ public class DisputeGestionBsplinkController extends BaseController {
             queryParams.put("type", "directory");
             queryParams.put("remotePath", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, queryParams,sesion);
+            res = pws.downloadFilesVisorPython(v1_urlREST, queryParams, sesion);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
             throw new SpringException(e);
         }
 
-          return res;
+        return res;
     }
 
-     public String upload(byte[] bytes, String nroMemo, String nomArchivo) throws Exception {
+    public String upload(byte[] bytes, String nroMemo, String nomArchivo) throws Exception {
 
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
 

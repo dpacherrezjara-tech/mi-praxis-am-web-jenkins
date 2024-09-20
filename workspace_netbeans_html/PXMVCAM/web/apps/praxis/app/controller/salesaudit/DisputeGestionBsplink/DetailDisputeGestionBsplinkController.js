@@ -167,7 +167,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DetailDispute
             return;
         }
         if (Ext.getCmp(prototype.id1 + '-Argument').getValue() === '') {
-            Ext.MessageBox.alert('PRAXIS', "The Argument must not exceed 500 characters", function (btn, text) {
+            Ext.MessageBox.alert('PRAXIS', "The Argument must not exceed 2S00 characters", function (btn, text) {
                 if (btn === 'ok' || btn === 'cancel')
                     setTimeout("Ext.getCmp(prototype.id1 + '-Argument').focus();", 100);
             });

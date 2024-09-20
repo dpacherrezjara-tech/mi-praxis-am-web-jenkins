@@ -16,6 +16,7 @@ import net.miatech.beans.SaleAudit.A3182Filter;
 import net.miatech.beans.SaleAudit.SQP00911Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.SaleAudit.A2553;
+import static net.miatech.praxis.controllers.salesAudit.DisputeGestionBsplinkController.fixEncoding;
 import net.miatech.utils.Functions;
 import static net.miatech.utils.Functions.pasarGarbageCollector;
 import org.apache.log4j.Logger;
@@ -213,7 +214,7 @@ public class DisputeGestionBsplinkDAO {
             cs.setString("IN_TRNCU", filter.A2553TRNCU);
             cs.setString("IN_STAT", filter.A2553STAT);
             cs.setString("IN_NMEMO", filter.A2553NMEMO);
-            cs.setString("IN_DESCR", filter.A2553DESCR);
+            cs.setString("IN_DESCR", fixEncoding(filter.A2553DESCR));
             cs.setString("IN_ARCHV", filter.A2553ARCHV);
             cs.setString("IN_ARCHV2", filter.A2553ARCHV2);
             cs.setString("IN_ARCHV3", filter.A2553ARCHV3);
