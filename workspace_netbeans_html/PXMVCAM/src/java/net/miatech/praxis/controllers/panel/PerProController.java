@@ -102,17 +102,24 @@ public class PerProController extends BaseController {
             filter.VP_ACTION = request.getParameter("strOption").toString().trim();
             //filter.VP_CCUST = request.getParameter("USR").toString().trim();
             filter.VP_USR = request.getParameter("USR").toString().trim();
+            filter.VP_USRCOPY = request.getParameter("USRCOPY")!= null ? request.getParameter("USRCOPY").toString().trim() : "";
             //filter.VP_APLICA = request.getParameter("APLICA").toString().trim();
-            filter.VP_NPROG = request.getParameter("NPROG").toString().trim();            
+            filter.VP_NPROG = request.getParameter("NPROG")!= null ? request.getParameter("NPROG").toString().trim() : "";
+            filter.VP_MODULE = request.getParameter("MODULE")!= null ? request.getParameter("MODULE").toString().trim() : "";
             filter.VP_PERMA = request.getParameter("PERMA").toString().trim();            
             filter.VP_PERML = request.getParameter("PERML").toString().trim();
             filter.VP_PERMC = request.getParameter("PERMC").toString().trim();
             filter.VP_PERMM = request.getParameter("PERMM").toString().trim();
             filter.VP_PERME = request.getParameter("PERME").toString().trim();
             filter.VP_PERMX = request.getParameter("PERMX").toString().trim();
-            filter.VP_STAT = request.getParameter("STAT").toString().trim();
+            filter.VP_STAT = request.getParameter("STAT")!= null ? request.getParameter("STAT").toString().trim() : "";
             
-            filter = logic.setPX076S01INF053(filter);
+            if(filter.VP_ACTION.equals("CO")||filter.VP_ACTION.equals("IM")||filter.VP_ACTION.equals("DM")){
+                filter = logic.setSQP05412(filter);
+            }
+            else{
+                filter = logic.setPX076S01INF053(filter);   
+            }
             response = filter.dbException.MESSAGE;
             
         } catch (Exception e) {
