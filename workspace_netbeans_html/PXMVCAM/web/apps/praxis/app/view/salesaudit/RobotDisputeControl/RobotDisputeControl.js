@@ -320,7 +320,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotDisputeControl.RobotDisputeControl',
                                             return vhtml;
                                         }
                                     },*/
-                                    {text: 'Total', dataIndex: 'A3268CTAPROCESADA', width: 120, align: 'right',
+                                    {text: 'Total', dataIndex: 'A3268CANT', width: 120, align: 'right',
                                         cls: 'column_header_double',
                                         summaryType: 'sum',
                                         summaryRenderer: function(value, summaryData, dataIndex) {
@@ -329,7 +329,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotDisputeControl.RobotDisputeControl',
                                             xtype: 'numberfield'
                                         }
                                     },
-                                    {text: 'Processed', dataIndex: 'A3268CANT', width: 100, align: 'right',
+                                    {text: 'Processed', dataIndex: 'A3268TOTALPAG', width: 100, align: 'right',
                                         //cls: 'column_header_double',
                                         summaryType: 'sum',
                                         summaryRenderer: function(value, summaryData, dataIndex) {
