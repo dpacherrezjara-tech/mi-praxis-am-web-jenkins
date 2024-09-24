@@ -1,7 +1,7 @@
 
 prototype.id = 'RobotPostbillingControl';
 prototype.url = CONTEXTPATH + '/RobotPostbillingControl';
-prototype.widthContenedor = 1200;
+prototype.widthContenedor = 1300;
 prototype.heightContenedor = 700;
 
 Ext.define('Ext.Praxis.view.salesaudit.RobotPostbillingControl.RobotPostbillingControl',{
@@ -309,15 +309,8 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotPostbillingControl.RobotPostbillingC
                                     {
                                         text: 'Robot', dataIndex: 'A3536ROBOT', width: 250, sortable: false, align: 'center'
                                     },
-                                    {text: 'Country', dataIndex: 'A3536PAIS', width: 80, align: 'center'
-                                       // renderer: 'onRendererColumnOnPais'
-                                       /* listeners: {
-                                            click: 'searchform_detalle_RFND'
-                                        },
-                                        renderer: function(value, metaData, record, rowIndex) {
-                                            var vhtml = '<a href="#salesaudit-RFND-report-form" >' + value + '</a>';
-                                            return vhtml;
-                                        }*/
+                                    {text: 'Country', dataIndex: 'A3536PAIS', width: 80, align: 'center',
+                                     renderer: 'onRendererColumnOnPais'
                                     },
                                     {text: 'Total', dataIndex: 'A3536CANTI', width: 120, align: 'right',
                                         cls: 'column_header_double',
@@ -356,9 +349,9 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotPostbillingControl.RobotPostbillingC
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridDetalle',
-                            width: prototype.widthContenedor,
+                            width: 1255,
                             hidden: true,
-                            height:prototype.heightContenedor,
+                            height:600,
                             columnLines: true,
                             columns: {
                                 defaults: {
