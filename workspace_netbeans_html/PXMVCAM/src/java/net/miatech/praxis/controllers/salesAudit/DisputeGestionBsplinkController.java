@@ -332,6 +332,7 @@ public class DisputeGestionBsplinkController extends BaseController {
         // Convierte la cadena desde ISO-8859-1 (Latin-1) a UTF-8
         byte[] bytes = input.getBytes(StandardCharsets.ISO_8859_1);
         return new String(bytes, StandardCharsets.UTF_8);
+        
     }
 
     public static String replaceSpecialCharacters(String input) {
@@ -353,6 +354,14 @@ public class DisputeGestionBsplinkController extends BaseController {
                 .replace("Ú", "U");
         // Puedes añadir más reemplazos específicos si es necesario:
         withoutDiacritics = withoutDiacritics.replace("ñ", "n").replace("Ñ", "N");
+
+        return withoutDiacritics;
+    }
+    
+    public static String replaceSpecialComent(String input) {
+       // Ejemplo: Reemplazar ñ con n
+       String withoutDiacritics = input.replace("\"", "");
+        // Puedes añadir más reemplazos específicos si es necesario:
 
         return withoutDiacritics;
     }
@@ -393,14 +402,14 @@ public class DisputeGestionBsplinkController extends BaseController {
             listenvio.A2553TRNCU = filter.A2553TRNCU;
             listenvio.A2553STAT = filter.A2553STAT;
             listenvio.A2553NMEMO = filter.A2553NMEMO;
-            listenvio.A2553DESCR = fixEncoding(filter.A2553DESCR);
+            listenvio.A2553DESCR = replaceSpecialComent(fixEncoding(filter.A2553DESCR));
             listenvio.A2553STAT2 = filter.A2553STAT2;
             listenvio.A2553ARCHV = A2553ARCHV;
             listenvio.A2553ARCHV2 = A2553ARCHV2;
             listenvio.A2553ARCHV3 = A2553ARCHV3;
             listenvio.A2553PAIS = filter.A2553PAIS;
             listenvio.A2553CNXPA = filter.A2553CNXPA;
-            listenvio.A2553FOLIO = "";
+            listenvio.A2553FOLIO = ""; 
 
             result2 = logic.insertTracing(listenvio);
             if (result2.equals("RECORD INSERTED")) {
@@ -485,6 +494,7 @@ public class DisputeGestionBsplinkController extends BaseController {
     public @ResponseBody
     String insertTracing(ModelMap map, HttpServletRequest request) {
         A2553 filter = new A2553();
+        A2553 listenvio = new A2553();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -492,7 +502,21 @@ public class DisputeGestionBsplinkController extends BaseController {
             //ADMReportLogic logic = new ADMReportLogic();
             DisputeGestionBsplinkLogic logic = new DisputeGestionBsplinkLogic();
             logic.setSession(this.serverSession.getServerSession());
-            String result = logic.insertTracing(filter);
+            // 
+            listenvio.A2553TRNCU = filter.A2553TRNCU;
+            listenvio.A2553STAT = filter.A2553STAT;
+            listenvio.A2553NMEMO = filter.A2553NMEMO;
+            listenvio.A2553DESCR = replaceSpecialComent(filter.A2553DESCR); 
+            listenvio.A2553ARCHV = "";
+            listenvio.A2553ARCHV2 = ""; 
+            listenvio.A2553ARCHV3 = "";
+            listenvio.A2553PAIS = filter.A2553PAIS;
+            listenvio.A2553FOLIO = "";
+            listenvio.A2553STAT2 = filter.A2553STAT2;
+            listenvio.A2553CNXPA = filter.A2553CNXPA;
+            
+            
+            String result =logic.insertTracing(filter);
 
             map.put("success", true);
             map.put("result", result);
@@ -504,6 +528,35 @@ public class DisputeGestionBsplinkController extends BaseController {
             map.put("sesion", SESSION_CONTROL);
         }
         return new Gson().toJson(map);
+    }
+    
+     // Método para intentar diferentes decodificaciones
+    public static String forceDecode(String input) {
+        // Decodifica usando una secuencia de encodings que suelen dar problemas
+        try {
+            // Intentar decodificar usando ISO-8859-1 y luego re-interpretarlo como UTF-8
+            byte[] bytes = input.getBytes(StandardCharsets.ISO_8859_1);
+            String utf8String = new String(bytes, StandardCharsets.UTF_8);
+
+            // Si aún hay caracteres extraños, intentar UTF-8 a ISO-8859-1
+            if (containsInvalidCharacters(utf8String)) {
+                bytes = input.getBytes(StandardCharsets.UTF_8);
+                utf8String = new String(bytes, StandardCharsets.ISO_8859_1);
+            }
+
+            // Retornar el texto corregido
+            return utf8String;
+        } catch (Exception e) {
+            // Manejo básico de errores
+            System.err.println("Error decoding string: " + e.getMessage());
+            return input;
+        }
+    }
+
+    // Método para verificar si el texto aún contiene caracteres inválidos
+    private static boolean containsInvalidCharacters(String input) {
+        // Aquí puedes ajustar según los caracteres inválidos que deseas identificar
+        return input.contains("�") || input.contains("?") || input.matches(".*[^\\p{Print}].*");
     }
 
     @RequestMapping(value = "GetFilesDirectory")
