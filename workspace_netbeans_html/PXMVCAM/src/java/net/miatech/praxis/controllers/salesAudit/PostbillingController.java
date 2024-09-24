@@ -12,10 +12,12 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -336,6 +338,44 @@ public class PostbillingController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    public static String fixEncoding(String input) {
+        // Convierte la cadena desde ISO-8859-1 (Latin-1) a UTF-8
+        byte[] bytes = input.getBytes(StandardCharsets.ISO_8859_1);
+        return new String(bytes, StandardCharsets.UTF_8);
+
+    }
+
+    public static String replaceSpecialCharacters(String input) {
+        // Normaliza la cadena eliminando los acentos
+        String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
+        // Elimina los caracteres no deseados (diacríticos)
+        String withoutDiacritics = normalized.replaceAll("\\p{M}", "");
+
+        // Ejemplo: Reemplazar ñ con n
+        withoutDiacritics = withoutDiacritics.replace("Á", "A")
+                .replace("ó", "o")
+                .replace("á", "a") // Puedes añadir más según sea necesario
+                .replace("é", "e")
+                .replace("í­", "i")
+                .replace("ú", "u")
+                .replace("É", "E")
+                .replace("Í", "I")
+                .replace("Ó", "O")
+                .replace("Ú", "U");
+        // Puedes añadir más reemplazos específicos si es necesario:
+        withoutDiacritics = withoutDiacritics.replace("ñ", "n").replace("Ñ", "N");
+
+        return withoutDiacritics;
+    }
+
+    public static String replaceSpecialComent(String input) {
+        // Ejemplo: Reemplazar ñ con n
+        String withoutDiacritics = input.replace("\"", "");
+        // Puedes añadir más reemplazos específicos si es necesario:
+
+        return withoutDiacritics;
+    }
+
     @RequestMapping(value = "insertTracingFile", method = RequestMethod.POST)
     public @ResponseBody
     String insertTracingFile(ModelMap map, @RequestParam("fileaudito") MultipartFile file, @RequestParam("fileaudito2") MultipartFile file2, @RequestParam("fileaudito3") MultipartFile file3, HttpServletRequest request) {
@@ -357,9 +397,19 @@ public class PostbillingController extends BaseController {
             String A3537ARCHV2 = file2.getOriginalFilename();
             String A3537ARCHV3 = file3.getOriginalFilename();
 
+            if (!A3537ARCHV.equals("")) {
+                A3537ARCHV = replaceSpecialCharacters(fixEncoding(filter.A3537ARCHV));
+            }
+            if (!A3537ARCHV2.equals("")) {
+                A3537ARCHV2 = replaceSpecialCharacters(fixEncoding(filter.A3537ARCHV2));
+            }
+            if (!A3537ARCHV3.equals("")) {
+                A3537ARCHV3 = replaceSpecialCharacters(fixEncoding(filter.A3537ARCHV3));
+            }
+
             listenvio.IN_CNXPA = filter.IN_CNXPA;
             listenvio.IN_PREME = filter.IN_PREME;
-            listenvio.IN_DESCRI = filter.IN_DESCRI;
+            listenvio.IN_DESCRI = replaceSpecialComent(fixEncoding(filter.IN_DESCRI));
             listenvio.IN_COUNTRY = filter.IN_COUNTRY;
             listenvio.IN_STATUS = filter.IN_STATUS;
             listenvio.IN_TRNCU = filter.IN_TRNCU;
@@ -472,13 +522,13 @@ public class PostbillingController extends BaseController {
     }
      */
     @RequestMapping(value = "GetFilesDirectory")
-    public  ResponseEntity<?>//@ResponseBody String 
-        GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+    public ResponseEntity<?>//@ResponseBody String 
+            GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-       ResponseEntity res;
+        ResponseEntity res;
         try {
             String v1_urlREST = "/util/download-files";
-            String sesion=serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+            String sesion = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             String urlREST = "";
             if (request.getParameter("IN_TYPE").trim().equals("ROBOT")) {
                 urlREST = request.getParameter("IN_MODULO").trim() + "/" + request.getParameter("IN_TYPE").trim() + "/" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim() + "/";
@@ -495,7 +545,7 @@ public class PostbillingController extends BaseController {
             queryParams.put("type", "directory");
             queryParams.put("remotePath", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, queryParams,sesion);
+            res = pws.downloadFilesVisorPython(v1_urlREST, queryParams, sesion);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
             throw new SpringException(e);
