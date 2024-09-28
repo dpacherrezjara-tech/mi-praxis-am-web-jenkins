@@ -147,6 +147,7 @@ public class SQP00911 {
     public Double A1673TXDIF;
     public String strNombreAgente;
     public String strDirecAgente;
+    public String A3090STAT2;
     public String strZIPCOD;
     public String strDISTRI;
     public String strDEPART;
@@ -191,6 +192,14 @@ public class SQP00911 {
     public String A2548SUBCU;
     public String A2548CLIE;
 
+    public String getA3090STAT2() {
+        return A3090STAT2;
+    }
+
+    public void setA3090STAT2(String A3090STAT2) {
+        this.A3090STAT2 = A3090STAT2;
+    }
+        
     public String getA2548STBSP() {
         return A2548STBSP;
     }
