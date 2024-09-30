@@ -103,6 +103,7 @@ public class DisputeGestionBsplinkDAO {
                 objRtn.A2548REGIS = rs01.getString("A2548REGIS");
                 objRtn.CODIT = rs01.getString("A3090FBILI");
                 objRtn.AGENCY = rs01.getString("AGENCY");
+                objRtn.A3090STAT2 = rs01.getString("A3090STAT2");
                 objRtn.strNombreAgente = rs01.getString("STRNOMBREAGENTE");
                 objRtn.strDirecAgente = rs01.getString("STRDIRECAGENTE");
                 objRtn.A2548TRNCO = rs01.getString("A2548TRNCO");
