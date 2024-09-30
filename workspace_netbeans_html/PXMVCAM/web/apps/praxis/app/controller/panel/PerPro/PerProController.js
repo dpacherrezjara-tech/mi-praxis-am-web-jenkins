@@ -304,9 +304,9 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
             USR = Ext.getCmp(prototype.id+'-moduleUSR').getValue();
         }
         else if(option === "CO"){
-            USR = Ext.getCmp(prototype.id+'-startUSR').getValue();
+            USR = Ext.getCmp(prototype.id+'-endUSR').getValue();
         }
-        var endUSR = Ext.getCmp(prototype.id+'-endUSR').getValue();
+        var startUSR = Ext.getCmp(prototype.id+'-startUSR').getValue();
         var MODULE = Ext.getCmp(prototype.id+'-cboModuleGroup').getValue();
         var PERMA =  Ext.getCmp(prototype.id+'-moduleChkAccess').getValue() ? 'Y' : 'N';
         var PERML =  Ext.getCmp(prototype.id+'-moduleChkRead').getValue() ? 'Y' : 'N';
@@ -316,7 +316,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
         var PERME =  Ext.getCmp(prototype.id+'-moduleChkDelete').getValue() ? 'Y' : 'N';
         this.beanOption = {
             USR: USR,
-            USRCOPY: endUSR,
+            USRCOPY: startUSR,
             MODULE: MODULE,
             PERMA: PERMA,
             PERML: PERML,
