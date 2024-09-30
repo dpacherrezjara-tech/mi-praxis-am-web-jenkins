@@ -106,8 +106,11 @@ public class DisputeGestionBsplinkController extends BaseController {
             DisputeGestionBsplinkLogic logic = new DisputeGestionBsplinkLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<SQP00911Filter> lst_search = logic.SearchReportADM(filter);
-
-            List<SQP00911Filter> lst_disputas_sinatender = new ArrayList<SQP00911Filter>(0);
+            //
+            map.put("success", true);
+            map.put("data", lst_search);
+            map.put("total", lst_search.size() > 0 ? lst_search.get(0).page.TOTROW : 0);
+            /*List<SQP00911Filter> lst_disputas_sinatender = new ArrayList<SQP00911Filter>(0);
             SQP00911Filter obj;
             for (SQP00911Filter rs01 : lst_search) {
                 if (!rs01.A2548SEMAFORO.equals("GREEN")) {
@@ -146,12 +149,12 @@ public class DisputeGestionBsplinkController extends BaseController {
                 /*} else {
                     map.put("success", false);
                     map.put("sesion", "Could not send email!");
-                }*/
+                }
             } else {
                 map.put("success", true);
                 map.put("data", lst_search);
                 map.put("total", lst_search.size() > 0 ? lst_search.get(0).page.TOTROW : 0);
-            }
+            }*/
 
         } catch (SQLException e) {
             map.put("success", false);
