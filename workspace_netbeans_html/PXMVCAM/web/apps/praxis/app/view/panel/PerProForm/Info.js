@@ -255,7 +255,7 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.Info', {
                                                     anchor:'100%',
                                                     listeners: {
                                                         afterrender: function(obj) {
-                                                            obj.setValue('0'); //All
+                                                            obj.setValue(''); //All
                                                         }
                                                     }
                                                 }

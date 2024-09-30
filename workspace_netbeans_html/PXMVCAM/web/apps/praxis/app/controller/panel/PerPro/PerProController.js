@@ -41,7 +41,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                ["0", "ALL"],
+                ["", "ALL"],
                 ["10", "SALES"],
                 ["11", "FLOWN"],
                 ["12", "INTERLINE"],
@@ -288,7 +288,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
         else if(option === "IM" || option === "DM"){
             var moduleUSR = Ext.getCmp(prototype.id+'-moduleUSR').getValue();
             var MODULE = Ext.getCmp(prototype.id+'-cboModuleGroup').getValue();
-            if (moduleUSR ==='' || MODULE === '') {
+            if (moduleUSR ==='') {
                 this.msjAlert='Enter correct data';
                 return false;
             }
