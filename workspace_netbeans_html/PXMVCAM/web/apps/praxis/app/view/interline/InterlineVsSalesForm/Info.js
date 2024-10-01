@@ -227,17 +227,17 @@ Ext.define('Ext.Praxis.view.interline.InterlineVsSalesForm.Info', {
                                 style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                             },
                             items: [
-                                {width: 80}, 
+                                {width: 80},
                                 {width: 75, id: prototype.id + '-totQTYTKT'},
                                 {width: 100, id: prototype.id + '-totVALORS'},
                                 {width: 100, id: prototype.id + '-totGROSSI'},
                                 {width: 100, id: prototype.id + '-totDIFF'},
-                                
+
                                 {width: 75, id: prototype.id + '-totQTYTKTHS'},
                                 {width: 100, id: prototype.id + '-totVALORSHS'},
                                 {width: 100, id: prototype.id + '-totGROSSIHS'},
                                 {width: 100, id: prototype.id + '-totDIFFHS'},
-                                
+
                                 {width: 75, id: prototype.id + '-totQTYTKTLS'},
                                 {width: 100, id: prototype.id + '-totVALORSLS'},
                                 {width: 100, id: prototype.id + '-totGROSSILS'},
@@ -453,17 +453,17 @@ Ext.define('Ext.Praxis.view.interline.InterlineVsSalesForm.Info', {
                                 style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                             },
                             items: [
-                                {width: 80}, 
+                                {width: 80},
                                 {width: 75, id: prototype.id + '-totS_QTYTKT'},
                                 {width: 100, id: prototype.id + '-totS_VALORS'},
                                 {width: 100, id: prototype.id + '-totS_GROSSI'},
                                 {width: 100, id: prototype.id + '-totS_DIFF'},
-                                
+
                                 {width: 75, id: prototype.id + '-totQTYTKTHE'},
                                 {width: 100, id: prototype.id + '-totVALORSHE'},
                                 {width: 100, id: prototype.id + '-totGROSSIHE'},
                                 {width: 100, id: prototype.id + '-totDIFFHE'},
-                                
+
                                 {width: 75, id: prototype.id + '-totQTYTKTLE'},
                                 {width: 100, id: prototype.id + '-totVALORSLE'},
                                 {width: 100, id: prototype.id + '-totGROSSILE'},
@@ -474,7 +474,7 @@ Ext.define('Ext.Praxis.view.interline.InterlineVsSalesForm.Info', {
                     ]
                 },
                 // </editor-fold> 
-               
+
                 // <editor-fold defaultstate="collapsed" desc="boxDetCIA">
                 {
                     region: 'center',
@@ -677,17 +677,17 @@ Ext.define('Ext.Praxis.view.interline.InterlineVsSalesForm.Info', {
                                 style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                             },
                             items: [
-                                {width: 60}, 
+                                {width: 60},
                                 {width: 75, id: prototype.id + '-totDC_QTYTKT'},
                                 {width: 100, id: prototype.id + '-totDC_VALORS'},
                                 {width: 100, id: prototype.id + '-totDC_GROSSI'},
                                 {width: 100, id: prototype.id + '-totDC_DIFF'},
-                                
+
                                 {width: 75, id: prototype.id + '-totDC_QTYTKTHS'},
                                 {width: 100, id: prototype.id + '-totDC_VALORSHS'},
                                 {width: 100, id: prototype.id + '-totDC_GROSSIHS'},
                                 {width: 100, id: prototype.id + '-totDC_DIFFHS'},
-                                
+
                                 {width: 75, id: prototype.id + '-totDC_QTYTKTLS'},
                                 {width: 100, id: prototype.id + '-totDC_VALORSLS'},
                                 {width: 100, id: prototype.id + '-totDC_GROSSILS'},
@@ -900,17 +900,17 @@ Ext.define('Ext.Praxis.view.interline.InterlineVsSalesForm.Info', {
                                 style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
                             },
                             items: [
-                                {width: 60}, 
+                                {width: 60},
                                 {width: 75, id: prototype.id + '-totDCS_QTYTKT'},
                                 {width: 100, id: prototype.id + '-totDCS_VALORS'},
                                 {width: 100, id: prototype.id + '-totDCS_GROSSI'},
                                 {width: 100, id: prototype.id + '-totDCS_DIFF'},
-                                
+
                                 {width: 75, id: prototype.id + '-totDC_QTYTKTHE'},
                                 {width: 100, id: prototype.id + '-totDC_VALORSHE'},
                                 {width: 100, id: prototype.id + '-totDC_GROSSIHE'},
                                 {width: 100, id: prototype.id + '-totDC_DIFFHE'},
-                                
+
                                 {width: 75, id: prototype.id + '-totDC_QTYTKTLE'},
                                 {width: 100, id: prototype.id + '-totDC_VALORSLE'},
                                 {width: 100, id: prototype.id + '-totDC_GROSSILE'},
@@ -921,7 +921,7 @@ Ext.define('Ext.Praxis.view.interline.InterlineVsSalesForm.Info', {
                     ]
                 },
                 // </editor-fold>
-                
+
                 // <editor-fold defaultstate="collapsed" desc="boxDetTKTType">
                 {
                     region: 'center',
@@ -939,6 +939,12 @@ Ext.define('Ext.Praxis.view.interline.InterlineVsSalesForm.Info', {
                         align: 'center'
                     },
                     items: [
+                        {xtype: 'textfield', id: prototype.id + '-lblBDATE', hidden: true, width: 180},
+                        {xtype: 'textfield', id: prototype.id + '-lblBDAIR', hidden: true, width: 180},
+                        {xtype: 'textfield', id: prototype.id + '-lblIN_TRNCU', hidden: true, width: 180},
+                        {xtype: 'textfield', id: prototype.id + '-lblIN_FVALUE', hidden: true, width: 180},
+                        {xtype: 'textfield', id: prototype.id + '-lblTYPE', hidden: true, width: 180},
+                        {xtype: 'textfield', id: prototype.id + '-lblIN_ORDER', hidden: true, width: 180},
                         // <editor-fold defaultstate="collapsed" desc="gridData">
                         {
                             xtype: 'grid',
