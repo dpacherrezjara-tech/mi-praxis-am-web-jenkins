@@ -265,7 +265,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                             items: [
                                 {
                                     fieldLabel: 'Trans. Amount',
-                                    name: 'tgrosamoun',
+                                    name: 'f_TGROSAMOUN',
                                     labelWidth: 120,
                                     width: 230,
                                     listeners: {
@@ -360,7 +360,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 },
                                 {
                                     fieldLabel: 'TAX',
-                                    name: 'adjusment',
+                                    name: 'f_TAX',
                                     labelWidth: 120,
                                     width: 230
                                 }
@@ -374,7 +374,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                             items: [
                                 {
                                     fieldLabel: 'Payment Amount',
-                                    name: 'tgrosampay',
+                                    name: 'f_TGROSAMPAY',
                                     labelWidth: 120,
                                     width: 230,
                                     listeners: {
