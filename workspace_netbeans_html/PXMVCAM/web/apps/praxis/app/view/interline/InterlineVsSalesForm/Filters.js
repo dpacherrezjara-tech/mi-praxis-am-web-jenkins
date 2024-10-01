@@ -141,13 +141,14 @@ Ext.define('Ext.Praxis.view.interline.InterlineVsSalesForm.Filters', {
 //                                    }
                                 },
                                 // </editor-fold>
-                                {xtype: 'tbspacer', width: 26},
-                                {
-                                    xtype: 'label',
-                                    html: 'Period :',
-                                    padding: '8px 7px 8px 0px'
-                                },
-                                {xtype: 'tbspacer', width: 4},
+//                                {xtype: 'tbspacer', width: 26},
+//                                {
+//                                    xtype: 'label',
+//                                    html: 'Period :',
+//                                    hidden: true,
+//                                    padding: '8px 7px 8px 0px'
+//                                },
+//                                {xtype: 'tbspacer', width: 4,hidden: true},
                                 {
                                     xtype: 'combo',
                                     id: prototype.id + '-cmbPERNUM',
@@ -164,6 +165,7 @@ Ext.define('Ext.Praxis.view.interline.InterlineVsSalesForm.Filters', {
                                     autoSelect: true,
                                     editable: true,
                                     width: 135,
+                                    hidden: true,
                                     typeAhead: true,
                                     valueField: 'code', displayField: 'name',
                                     listConfig: {maxHeight: 111},
@@ -178,11 +180,11 @@ Ext.define('Ext.Praxis.view.interline.InterlineVsSalesForm.Filters', {
 //                                        }
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 118},
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     html: 'Airline :',
-                                    width: 80,
+                                    width: 70,
                                     padding: '8px 7px 8px 0px'
                                 },
                                 {xtype: 'tbspacer', width: 4},
