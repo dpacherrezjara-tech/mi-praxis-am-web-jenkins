@@ -141,14 +141,15 @@ Ext.define('Ext.Praxis.view.interline.InterlineVsSalesForm.Filters', {
 //                                    }
                                 },
                                 // </editor-fold>
-//                                {xtype: 'tbspacer', width: 26},
-//                                {
-//                                    xtype: 'label',
-//                                    html: 'Period :',
-//                                    hidden: true,
-//                                    padding: '8px 7px 8px 0px'
-//                                },
-//                                {xtype: 'tbspacer', width: 4,hidden: true},
+                                {xtype: 'tbspacer', width: 26},
+                                {
+                                    xtype: 'label',
+                                    html: 'Period :',
+                                    hidden: true,
+                                    id: prototype.id + '-lblPERNUM',
+                                    padding: '8px 7px 8px 0px'
+                                },
+                                {xtype: 'tbspacer',id: prototype.id + '-tbsPERNUM', width: 4, hidden: true},
                                 {
                                     xtype: 'combo',
                                     id: prototype.id + '-cmbPERNUM',
