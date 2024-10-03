@@ -324,6 +324,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
             PERMM: PERMM,
             PERMX: PERMX,
             PERME: PERME,
+            VP_STAT:"A",
             strOption: option
         };
         console.log('beanOption');
