@@ -215,17 +215,17 @@ public class PerProController extends BaseController {
                 row = sheet.createRow(vj);
                 Cell cell0 = row.createCell(0);
                 Cell cell1 = row.createCell(1);
-                Cell cell2 = row.createCell(12);
-                Cell cell3 = row.createCell(2);
-                Cell cell4 = row.createCell(3);
-                Cell cell5 = row.createCell(4);
-                Cell cell6 = row.createCell(5);
-                Cell cell7 = row.createCell(6);
-                Cell cell8 = row.createCell(7);
-                Cell cell9 = row.createCell(8);
-                Cell cel20 = row.createCell(9);
-                Cell cel21 = row.createCell(10);
-                Cell cel22 = row.createCell(11);
+                Cell cell2 = row.createCell(2);
+                Cell cell3 = row.createCell(3);
+                Cell cell4 = row.createCell(4);
+                Cell cell5 = row.createCell(5);
+                Cell cell6 = row.createCell(6);
+                Cell cell7 = row.createCell(7);
+                Cell cell8 = row.createCell(8);
+                Cell cell9 = row.createCell(9);
+                Cell cel20 = row.createCell(10);
+                Cell cel21 = row.createCell(11);
+                Cell cel22 = row.createCell(12);
 
                 cell0.setCellValue(lstData.get(vi).USR);
                 cell1.setCellValue(lstData.get(vi).NPROG);
