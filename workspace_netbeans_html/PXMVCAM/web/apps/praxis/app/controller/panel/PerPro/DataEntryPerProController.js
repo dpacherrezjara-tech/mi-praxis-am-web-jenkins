@@ -168,6 +168,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
                         icon: icon,
                         fn: function() {
                             if (msg==='Operation was successful') {
+                                Ext.getCmp('DataEntryPerProForm').unmask();
 //                                Ext.getCmp('DataEntryPerProForm').close(),
 //                                Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                             }

@@ -196,6 +196,8 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
     
     exportExcel: function() {
         if (Ext.getCmp(prototype.id+'-boxMainData').isVisible()) {
+            this.setFormatParameter();
+            console.log("PATH XLS: "+_path);
             global.getFile(_path);
         }
     },
@@ -324,7 +326,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
             PERMM: PERMM,
             PERMX: PERMX,
             PERME: PERME,
-            VP_STAT:"A",
+            STAT:"A",
             strOption: option
         };
         console.log('beanOption');

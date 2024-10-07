@@ -18,52 +18,52 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.Options', {
                     xtype: 'toolbar',
                     cls: 'x-toolbar-pag',
                     items: [
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.id + '-btn-pag-first',
-//                            iconCls: 'prx-icon-pagination-first',
-//                            tooltip: 'First Page',
-//                            listeners: {
-//                                click: 'pagFirst'
-//                            }
-//                        },
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.id + '-btn-pag-previous',
-//                            iconCls: 'prx-icon-pagination-previous',
-//                            tooltip: 'Previous Page',
-//                            listeners: {
-//                                click: 'pagPrevious'
-//                            }
-//
-//                        },
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.id + '-btn-pag-next',
-//                            iconCls: 'prx-icon-pagination-next',
-//                            tooltip: 'Next Page',
-//                            listeners: {
-//                                click: 'pagNext'
-//                            }
-//
-//                        },
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.id + '-btn-pag-last',
-//                            iconCls: 'prx-icon-pagination-last',
-//                            tooltip: 'Last Page',
-//                            listeners: {
-//                                click: 'pagLast'
-//                            }
-//                        },
-//                        {
-//                            xtype: 'pagingtoolbar',
-//                            id: prototype.id + '-paggin',
-//                            pageSize: 10,
-//                            border: false,
-//                            displayInfo: false,
-//                            hidden: true
-//                        }
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btn-pag-first',
+                            iconCls: 'prx-icon-pagination-first',
+                            tooltip: 'First Page',
+                            listeners: {
+                                click: 'pagFirst'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btn-pag-previous',
+                            iconCls: 'prx-icon-pagination-previous',
+                            tooltip: 'Previous Page',
+                            listeners: {
+                                click: 'pagPrevious'
+                            }
+
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btn-pag-next',
+                            iconCls: 'prx-icon-pagination-next',
+                            tooltip: 'Next Page',
+                            listeners: {
+                                click: 'pagNext'
+                            }
+
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btn-pag-last',
+                            iconCls: 'prx-icon-pagination-last',
+                            tooltip: 'Last Page',
+                            listeners: {
+                                click: 'pagLast'
+                            }
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        }
                     ]
                 }
             ]
