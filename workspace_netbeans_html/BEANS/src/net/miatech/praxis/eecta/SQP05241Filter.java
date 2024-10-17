@@ -11,12 +11,16 @@ import net.miatech.beans.DBException;
  *
  * @author vhidalgo
  */
-public class SQP04530Filter {
-    public String VP_CCUST = "";
-    public String VP_PROCESO = "";    
-    public String VP_FDATE1 = "";  
-    public String VP_FDATE2 = "";  
-    public String VP_TIPO = "";
-    public String VP_CDCLI= "";
+public class SQP05241Filter {
+
+    public String VP_ACTION = "";
+    public String VP_A4549CDCLI = "";
+    public String VP_A4549IDANT = "";
+    public String VP_A4549ITEM = "";
+    public String VP_A4549COMEN = "";
+    public String VP_A4549NCONT = "";
+    public String VP_A4549PATHF = "";
+    //--OUT
+    public Integer OU_A4241ID = 0;
     public DBException dbException = new DBException();
 }

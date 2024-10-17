@@ -109,7 +109,11 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
             Ext.getCmp(prototype.id + '-A3953STSID').setValue(true);
         if (data.A3953STSDV.trim() === 'S')
             Ext.getCmp(prototype.id + '-A3953STSDV').setValue(true);
-
+        
+        Ext.getCmp(prototype.id + '-A3953DOMFR').setValue(data.A3953DOMFR.trim());
+        Ext.getCmp(prototype.id + '-A3953REGFI').setValue(data.A3953REGFI.trim());
+        Ext.getCmp(prototype.id + '-A3953UCFDI').setValue(data.A3953UCFDI.trim());
+        
         //load detalle Nbr TARJETA UATPs
         //setTimeout( this.search_uatp(), 500);
         this.search_uatp();
@@ -175,6 +179,9 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         if (Ext.getCmp(prototype.id + '-A3953STSDV').getValue())
             VL_A3953STSDV = 'S';
         
+        var VL_A3953DOMFR = Ext.getCmp(prototype.id + '-A3953DOMFR').getValue();
+        var VL_A3953REGFI = Ext.getCmp(prototype.id + '-A3953REGFI').getValue();
+        var VL_A3953UCFDI = Ext.getCmp(prototype.id + '-A3953UCFDI').getValue();
 
         return {
             VP_ACTION: VP_ACTION,
@@ -216,7 +223,10 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
             A3953ARCFX: VL_A3953ARCFX,
             A3953LOGO: VL_A3953LOGO,
             A3953STSID: VL_A3953STSID,
-            A3953STSDV: VL_A3953STSDV
+            A3953STSDV: VL_A3953STSDV,
+            A3953DOMFR: VL_A3953DOMFR,
+            A3953REGFI: VL_A3953REGFI,
+            A3953UCFDI: VL_A3953UCFDI
         };
     },
     getDataEntry_det_identif: function () {
@@ -374,7 +384,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
             params: {
                 beanString: JSON.stringify(this.getDataEntryValues(strOption)),
                 beanuatp: JSON.stringify(lstuatp),
-                bean_identif: JSON.stringify(lst_identif),
+                bean_identif: JSON.stringify(lst_identif)
             },
             beforerequest: Ext.getCmp(prototype.id + '-CatalogoClienteEntry').mask('Loading...', ''),
             success: function (response, options) {
@@ -816,10 +826,10 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
     
     search_calendario: function () {
         var bean = {};
-        bean.VP_OPCION = "1";
+        bean.VP_A3953TCLIN= Ext.getCmp(prototype.id + '-A3953TCLIN').getValue();
         bean.VP_A3965CDCLI = Ext.getCmp(prototype.id + '-A3953CDCLI').getValue();
         bean.VP_A3965PERIO = "";
-        bean.VP_A3965FEJEC = "2021";
+        bean.VP_A3965FEJEC = Ext.util.Format.date(Ext.getCmp(prototype.id + '-A3965FEJEC').getValue(), 'Ym');
         bean.limit = "-1";
         bean.page = "-1";
         //cambiar STORE ***OJO
