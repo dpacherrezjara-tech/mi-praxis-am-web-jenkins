@@ -59,4 +59,9 @@ public class A3953 {
     public Blob LOGO = null;
     public String A3953STSID = "";
     public String A3953STSDV = "";
+    
+    public String A3953DOMFR = "";
+    public String A3953REGFI = "";
+    public String A3953UCFDI = "";
+    
 }

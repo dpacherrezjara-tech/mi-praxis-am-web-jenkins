@@ -14,10 +14,9 @@ import net.miatech.beans.DBException;
 public class SQP04530Filter {
     public String VP_CCUST = "";
     public String VP_PROCESO = "";    
-    public String VP_FDATE1 = "";    
-    public String VP_FDATE2 = "";
-    public String VP_FEJEC = "";
+    public String VP_FDATE1 = "";  
+    public String VP_FDATE2 = "";  
+    public String VP_TIPO = "";
     public String VP_CDCLI= "";
-    public String VP_FACTURAR= "";
     public DBException dbException = new DBException();
 }
