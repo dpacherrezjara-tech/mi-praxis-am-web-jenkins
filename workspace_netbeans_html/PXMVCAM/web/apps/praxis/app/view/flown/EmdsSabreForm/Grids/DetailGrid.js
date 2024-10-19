@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.DetailGrid', {
     maxHeight: prototype.height,
     minHeight: 200,
     height: 'auto',
-    width: 850,
+    width: prototype.width,
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -23,63 +23,124 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.DetailGrid', {
         },
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Cols">
-            {text: 'Processing<br>Date', dataIndex: 'FPROC', flex: 1},
-            {text: 'Total<br>EMDs', dataIndex: 'TOTEMD', width: 100,
+            {text: 'Processing<br>Date', dataIndex: 'FPROC', width: 90},
+            {text: 'Ticket', width: 130,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = "font-weight:bold";
-                    return value;
+                    metaData.style = "font-weight:bold;";
+                    const {CCIA, FORMA, SERIE} = record.data;
+                    return CCIA + FORMA + SERIE;
                 }
             },
-            {text: 'Curr.', dataIndex: 'RMDA', width: 60},
-            {text: 'Fare Rev.', dataIndex: 'TARIF', width: 120,
-                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = "text-align:right";
-                    value = Ext.util.Format.number(value, '0,000.00');
-                    return value;
-                }
-            },
+            {text: 'Seq', dataIndex: 'SEQ', width: 60},
+            {text: 'Coupon', dataIndex: 'CUPON', width: 60},
+            {text: 'Source', dataIndex: 'FTE', width: 70},
+            {text: 'Group', dataIndex: 'GRUPO', width: 80},
             {
-                text: 'Used',
+                text: 'Process Information',
                 defaults: {
                     align: 'center',
                     menuDisabled: true,
                     sortable: true,
                     renderer: function (value, metaData, record, rowIndex, colIndex) {
-                        metaData.style = "text-align:center;background-color:#91fc63;";
+                        metaData.style = "text-align:center;background-color:#84abea;";
                         return value;
                     }
                 },
                 columns: [
-                    {text: 'Total', dataIndex: 'USED', width: 100},
-                    {text: 'Fare', dataIndex: 'UTARIF', width: 120,
+                    {text: 'Status', dataIndex: 'STVAL', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "text-align:right;background-color:#91fc63";
-                            value = Ext.util.Format.number(value, '0,000.00');
-                            return value;
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#92ea84;";
+                            const opts = {
+                                '0': 'Pending',
+                                '1': 'Used',
+                                '2': 'No Used',
+                                '4': 'Status Changed'
+                            };
+                            return opts[value];
                         }
-                    }
+                    },
+                    {text: 'BATCH', dataIndex: 'LOTE', width: 100},
+                    {text: 'Status<br>Changed', dataIndex: 'STCHG', width: 80}
                 ]
             },
             {
-                text: 'No Used',
+                text: 'Document Information',
                 defaults: {
                     align: 'center',
                     menuDisabled: true,
                     sortable: true,
                     renderer: function (value, metaData, record, rowIndex, colIndex) {
-                        metaData.style = "text-align:center;background-color:#F0D094;";
+                        metaData.style = "text-align:center;background-color:#9a84d1;";
                         return value;
                     }
                 },
                 columns: [
-                    {text: 'Total', dataIndex: 'PENDIENTE', width: 100},
-                    {text: 'Fare', dataIndex: 'PTARIF', width: 120,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "text-align:right;background-color:#F0D094";
-                            value = Ext.util.Format.number(value, '0,000.00');
+                    {text: 'Doc.<br>Code', dataIndex: 'CDOC', width: 80},
+                    {text: 'Doc.<br>Type', dataIndex: 'TDOC', width: 80},
+                    {text: 'Country', dataIndex: 'PSVVTA', width: 60},
+                    {text: 'IATA<br>Code', dataIndex: 'AGTIA', width: 100},
+                    {text: 'Sale<br>Date', dataIndex: 'FVTA', width: 90},
+                    {text: 'Pax<br>Type', dataIndex: 'TPAX', width: 100}
+                ]
+            },
+            {
+                text: 'Coupon Detail',
+                defaults: {
+                    align: 'center',
+                    menuDisabled: true,
+                    sortable: true,
+                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                        metaData.style = "text-align:right;background-color:#F0D094";
+                        value = Ext.util.Format.number(value, '0,000.00');
+                        return value;
+                    }
+                },
+                columns: [
+                    {text: 'Carrier<br>Mkt.', dataIndex: 'CARR', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            metaData.style = "text-align:center;background-color:#F0D094;";
                             return value;
                         }
+                    },
+                    {text: 'Carrier<br>Opered', dataIndex: 'CARROP', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            metaData.style = "text-align:center;background-color:#F0D094;";
+                            return value;
+                        }
+                    },
+                    {text: 'Coupon<br>Value', dataIndex: 'VCPN', width: 100},
+                    {text: 'Commision', dataIndex: 'COMISI', width: 100},
+                    {text: 'S. Commision', dataIndex: 'SCOMISI', width: 100},
+                    {text: 'YQ', dataIndex: 'YQ', width: 100},
+                    {text: 'Currency', dataIndex: 'MDACP', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            metaData.style = "text-align:center;background-color:#F0D094;";
+                            return value;
+                        }
+                    },
+                    {text: 'Coupon<br>Value Rev', dataIndex: 'VCPNRV', width: 100},
+                    {text: 'Commision<br>Rev', dataIndex: 'COMREV', width: 100},
+                    {text: 'S. Commision<br>Rev', dataIndex: 'SCOMREV', width: 100},
+                    {text: 'YQ Rev', dataIndex: 'YQREV', width: 100}
+                ]
+            },
+            {
+                text: 'Use Information',
+                defaults: {
+                    align: 'center',
+                    menuDisabled: true,
+                    sortable: true,
+                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                        metaData.style = "text-align:center;background-color:#e4d768;";
+                        return value;
                     }
+                },
+                columns: [
+                    {text: 'Flag', dataIndex: 'TUSO', width: 100},
+                    {text: 'Flight<br>Date', dataIndex: 'DFLIGHT', width: 100},
+                    {text: 'Flight<br>Number', dataIndex: 'NFLIGHT', width: 100},
+                    {text: 'Dep.<br>Airport', dataIndex: 'CDEPART', width: 100},
+                    {text: 'Arr.<br>Airport', dataIndex: 'CARRIVA', width: 100}
                 ]
             }
             //</editor-fold>

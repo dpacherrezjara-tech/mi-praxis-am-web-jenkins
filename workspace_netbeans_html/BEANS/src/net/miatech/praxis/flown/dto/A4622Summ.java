@@ -9,6 +9,6 @@ import lombok.Data;
 @Data
 public class A4622Summ {
     private String FPROC,RMDA;
-    private Integer TOTEMD,USED,PENDIENTE;
-    private Double TARIF,UTARIF,PTARIF;
+    private Integer TOTEMD,USED,PENDIENTE,CSTS;
+    private Double TARIF,UTARIF,PTARIF,CSTTARIF;
 }
