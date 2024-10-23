@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
     maxHeight: prototype.height,
     minHeight: 200,
     height: 'auto',
-    width: 850,
+    width: 1000,
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
                     }
                 },
                 columns: [
-                    {text: 'Total', dataIndex: 'USED', width: 100},
+                    {text: 'Total', dataIndex: 'USED', width: 90},
                     {text: 'Fare', dataIndex: 'UTARIF', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#91fc63";
@@ -72,8 +72,24 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
                     }
                 },
                 columns: [
-                    {text: 'Total', dataIndex: 'PENDIENTE', width: 100},
+                    {text: 'Total', dataIndex: 'PENDIENTE', width: 90},
                     {text: 'Fare', dataIndex: 'PTARIF', width: 120,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;background-color:#F0D094";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    {text: 'Status<br>Changed', dataIndex: 'CSTS', width: 90,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;background-color:#F0D094;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#3f77cd;";
+                            return value;
+                        },
+                        listeners:{
+                            click: 'loadStatusChanged'
+                        }
+                    },
+                    {text: 'Fare<br>St. Chg', dataIndex: 'CSTTARIF', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#F0D094";
                             value = Ext.util.Format.number(value, '0,000.00');

@@ -62,7 +62,14 @@ Ext.define('Ext.Praxis.controller.flown.EmdsSabre.EmdsSabreController', {
         else
             panelFilters.show();
     },
+    onEnterKeyPress: function (field, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onClickSearchBtn();
+        }
+    },
     onChangeFilters:function(btn){
+        const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
+        mainPanel.removeAll();
         if(btn.value==='S'){
             Ext.getCmp(prototype.id + '-formFiltersS').show();
             Ext.getCmp(prototype.id + '-formFiltersB').hide();
