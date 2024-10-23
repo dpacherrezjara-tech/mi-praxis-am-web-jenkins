@@ -133,7 +133,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         cmbOrigen.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "NO", "name": "CADUCO"},
-                {"code": "US", "name": "EMDS"}
+                {"code": "US", "name": "EMD STAND ALONE"}
             ]
         }));
 
@@ -285,7 +285,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         if (rec.data.A3676ORIG === 'EMD RFND') {
             origen = 'EM';
         }
-        if (rec.data.A3676ORIG === 'EMDS') {
+        if (rec.data.A3676ORIG === 'EMD STAND ALONE') {
             origen = 'US';
         }
 
