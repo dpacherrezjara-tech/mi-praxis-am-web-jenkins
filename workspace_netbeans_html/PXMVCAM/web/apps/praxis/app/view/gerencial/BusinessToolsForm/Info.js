@@ -5,7 +5,7 @@
  */
 
 var controller = {
-    select: function(value, row) {
+    select: function (value, row) {
         var dataStore = Ext.getCmp(prototype.id + '-gridDataColumns').getStore();
         var dataRow = dataStore.data.items[row].data;
         //console.log(dataRow);
@@ -77,181 +77,267 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Info', {
                     items: [
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-panelSelectField',
-                            align: 'center',
+                            id: prototype.id + '-panelSelectField00',
+                            align: 'left',
                             margin: '0 0 0 0',
                             bodyStyle: 'background: transparent',
                             border: false,
-                            layout: 'hbox',
+                            layout: 'vbox',
                             items: [
+//                                {
+//                                    xtype: 'checkboxfield',
+//                                    id: prototype.id + '-chkAll',
+//                                    align: 'left',
+//                                    width: 10,
+//                                    boxLabel: '<b>All<b>'
+//                                },
                                 {
-                                    xtype: 'grid',
-                                    padding: '20 0 0 0',
-                                    id: prototype.id + '-gridDataColumns',
-                                    height: 555,
-                                    width: 435,
-                                    resizable: true,
-                                    columnLines: true,
-                                    viewConfig: {
-                                        preserveScrollOnRefresh: true,
-                                        preserveScrollOnReload: true
-                                    },
-                                    bufferedRenderer: true,
-                                    plugins: [
-                                        Ext.create('Ext.grid.plugin.CellEditing', {
-                                            clicksToEdit: 1,
-                                            selectOnEdit: true,
-                                            gridcellediting: true
-                                        })
-                                    ],
-                                    columns: {
-                                        defaults: {
-                                            menuDisabled: true,
-                                            sortable: true,
-                                            align: 'center'
-                                        },
-                                        items: [
-                                            {text: 'Select', width: 50, dataIndex: 'select',
-                                                headerCheckbox: true,
-                                                renderer: function(value, meta, record, row, col) {
-                                                    var check = record.data.select;
-                                                    if (check) {
-                                                        return '<input type="checkbox" checked  onclick="controller.select(this.checked,' + row + ')">';
-                                                    } else {
-                                                        return '<input type="checkbox"   onclick="controller.select(this.checked,' + row + ')">';
-                                                    }
-                                                }
-                                            },
-                                            {text: 'Field', width: 250, dataIndex: 'DESCRIPT',
-                                                renderer: function(value, meta, record, row, col) {
-                                                    var color = record.data['COLOR'].trim();
-                                                    //console.log('LOG : **' + color + '**');
-                                                    meta.style = 'text-align:left;color:' + color + ';';
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Position', width: 60, dataIndex: 'OrderBy',
-                                                renderer: function(value, meta, record, row, col) {
-                                                    var check = record.data.select;
-                                                    if (!check) {
-                                                        meta['tdCls'] = 'x-item-disabled';
-                                                    } else {
-                                                        meta['tdCls'] = 'x-item-enable';
-                                                    }
-                                                    return value;
-                                                },
-                                                editor: {
-                                                    xtype: 'textfield',
-                                                    fieldStyle: 'text-align:center',
-                                                    maskRe: /[0-9]/,
-                                                    enforceMaxLength: true,
-                                                    maxLength: 2
+                                    xtype: 'panel',
+                                    id: prototype.id + '-panelSelectField02',
+                                    align: 'center',
+                                    margin: '0 0 0 0',
+                                    bodyStyle: 'background: transparent',
+                                    border: false,
+                                    layout: 'hbox',
+                                    items: [
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-panelSelectField',
+                                            align: 'center',
+                                            margin: '0 0 0 0',
+                                            bodyStyle: 'background: transparent',
+                                            border: false,
+                                            layout: 'hbox',
+                                            items: [
+                                                {
+                                                    xtype: 'grid',
+                                                    padding: '0 0 0 0',
+                                                    id: prototype.id + '-gridDataColumns',
+                                                    height: 555,
+                                                    width: 435,
+                                                    resizable: true,
+                                                    columnLines: true,
+                                                    viewConfig: {
+                                                        preserveScrollOnRefresh: true,
+                                                        preserveScrollOnReload: true
+                                                    },
+                                                    bufferedRenderer: true,
+                                                    plugins: [
+                                                        Ext.create('Ext.grid.plugin.CellEditing', {
+                                                            clicksToEdit: 1,
+                                                            selectOnEdit: true,
+                                                            gridcellediting: true
+                                                        })
+                                                    ],
+                                                    columns: {
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center'
+                                                        },
+                                                        items: [
+                                                            {text: 'Select', width: 50, dataIndex: 'select',margin: '0 0 0 0',/*xtype: 'checkcolumn',*/
+//                                                                headerCheckbox: true,
+                                                                items: [
+                                                                    {
+                                                                        xtype: 'checkboxfield',
+                                                                        id: prototype.id + '-chkAll',
+                                                //                        align: 'left',
+                                                                        labelWidth: 13,  // 
+                                                                        width: 5,
+                                                //                        text: 'My Button',  // Cambia el texto según sea necesario
+                                                                        margin: '0 0 0 0',  // Margen para ajustar la posición del botón
+                                                                        handler: function() {
+                                                                            // Lógica del botón
+                                                //                            Ext.Msg.alert('Info', 'Botón en la cabecera presionado');
+                                                                            me.selectAll();
+                                                                        },
+                                                                        //    listeners: {
+                                                                        //        afterrender: function(checkbox) {
+                                                                        //            // Asegúrate de que el labelEl no ocupe espacio y esté completamente oculto
+                                                                        //            checkbox.labelEl.dom.style.display = 'none';
+                                                                        ////            checkbox.labelEl.dom.style.width = '0px';
+                                                                        ////            checkbox.labelEl.dom.style.height = '0px';
+                                                                        ////            checkbox.labelEl.dom.style.margin = '0px';
+                                                                        ////            checkbox.labelEl.dom.style.padding = '0px';
+                                                                        //        }
+                                                                        //    }
+                                                                    }
+                                                                ],
+//                                                                listeners: {
+//                                                                    checkchange: function (column, rowIndex, checked, eOpts) {
+//                                                                        var record = column.up('grid').getStore().getAt(rowIndex);
+//                                                                        console.log('listener');
+//                                                                        console.log( column.up('grid').getStore());
+//                                                                        console.log(rowIndex);
+//                                                                        console.log(checked);
+//                                                                        console.log(record);
+//                                                                        record.set('select', checked);
+//                                                         
+//      
+//                                                                        //        var dataStore = Ext.getCmp(prototype.id + '-gridDataColumns').getStore();
+//                                                                        //        var dataRow = dataStore.data.items[rowIndex].data;
+//                                                                                var dataRow = record.data;
+//                                                                                //console.log(dataRow);
+//                                                                                var name = dataRow.DESCRIPT;
+//                                                                                console.log('nameeee---->'+name);
+//                                                                                console.log('dataRow---->');
+//                                                                                console.log(dataRow);
+//                                                                                if (checked === true) {
+//                                                                        //            dataRow.select = true;
+//                                                                                    storeList.add(dataRow);
+//                                                                                } else {
+//                                                                                    storeList.remove(storeList.findRecord('DESCRIPT', name));
+//                                                                        //            dataRow.select = false;
+//                                                                                }
+//                                                                                var vgridData = Ext.getCmp(prototype.id + '-panelListColumns');
+//                                                                                vgridData.getView().refresh();
+//                                                                        //        Ext.getCmp(prototype.id + '-gridDataColumns').setStore(dataStore);
+//    
+////                                                                        me.selectOne('',rowIndex);
+//                                                                        // Realiza cualquier otra acción que necesites aquí
+//                                                                    }
+//                                                                }
+                                                                renderer: function (value, meta, record, row, col) {
+                                                                    var check = record.data.select;
+                                                                    if (check) {
+                                                                        return '<input type="checkbox" checked  onclick="controller.select(this.checked,' + row + ')">';
+                                                                    } else {
+                                                                        return '<input type="checkbox"   onclick="controller.select(this.checked,' + row + ')">';
+                                                                    }
+                                                                }
+                                                            },
+                                                            {text: 'Field', width: 250, dataIndex: 'DESCRIPT',
+                                                                renderer: function (value, meta, record, row, col) {
+                                                                    var color = record.data['COLOR'].trim();
+                                                                    //console.log('LOG : **' + color + '**');
+                                                                    meta.style = 'text-align:left;color:' + color + ';';
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {text: 'Position', width: 60, dataIndex: 'OrderBy',
+                                                                renderer: function (value, meta, record, row, col) {
+                                                                    var check = record.data.select;
+                                                                    if (!check) {
+                                                                        meta['tdCls'] = 'x-item-disabled';
+                                                                    } else {
+                                                                        meta['tdCls'] = 'x-item-enable';
+                                                                    }
+                                                                    return value;
+                                                                },
+                                                                editor: {
+                                                                    xtype: 'textfield',
+                                                                    fieldStyle: 'text-align:center',
+                                                                    maskRe: /[0-9]/,
+                                                                    enforceMaxLength: true,
+                                                                    maxLength: 2
 
-                                                }
-                                            },
-                                            {text: 'Order', width: 60, dataIndex: 'DownUp',
-                                                renderer: function(value, meta, record, row, col) {
-                                                    var check = record.data.select;
-                                                    if (!check) {
-                                                        meta['tdCls'] = 'x-item-disabled';
-                                                    } else {
-                                                        meta['tdCls'] = '';
-                                                    }
+                                                                }
+                                                            },
+                                                            {text: 'Order', width: 60, dataIndex: 'DownUp',
+                                                                renderer: function (value, meta, record, row, col) {
+                                                                    var check = record.data.select;
+                                                                    if (!check) {
+                                                                        meta['tdCls'] = 'x-item-disabled';
+                                                                    } else {
+                                                                        meta['tdCls'] = '';
+                                                                    }
 
 //                                                    if(value==='ASC'){
 //                                                        return 'A';
 //                                                    }else{
 //                                                        return 'D';
 //                                                    }
-                                                    return value;
+                                                                    return value;
+                                                                },
+                                                                editor: {
+                                                                    xtype: 'combo',
+                                                                    store: storeCombo,
+                                                                    editable: false,
+                                                                    valueField: 'code',
+                                                                    displayField: 'name'
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
-                                                editor: {
-                                                    xtype: 'combo',
-                                                    store: storeCombo,
-                                                    editable: false,
-                                                    valueField: 'code',
-                                                    displayField: 'name'
+                                                {
+                                                    xtype: 'grid',
+                                                    padding: '0 0 0 0',
+                                                    id: prototype.id + '-panelListColumns',
+                                                    height: 555,
+                                                    width: 210,
+                                                    resizable: true,
+                                                    columnLines: true,
+                                                    store: storeList,
+                                                    viewConfig: {
+                                                        plugins: {
+                                                            ptype: 'gridviewdragdrop',
+                                                            dragText: 'Drag and drop to reorganize'
+                                                        },
+                                                        preserveScrollOnRefresh: true,
+                                                        preserveScrollOnReload: true,
+                                                        listeners: {
+                                                            drop: function (node, data, dropRec, dropPosition) {
+                                                                var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('DESCRIPT') : ' on empty view';
+                                                            }
+                                                        }
+                                                    },
+                                                    columns: {
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center'
+                                                        },
+                                                        items: [
+                                                            {text: 'Field', width: 195, dataIndex: 'DESCRIPT',
+                                                                renderer: function (value, meta, record, row, col) {
+                                                                    var color = record.data['COLOR'].trim();
+                                                                    //console.log('LOG : **' + color + '**');
+                                                                    meta.style = 'text-align:left;color:' + color + ';';
+                                                                    return value;
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
-                                            }
-                                        ]
-                                    }},
-                                {
-                                    xtype: 'grid',
-                                    padding: '20 0 0 0',
-                                    id: prototype.id + '-panelListColumns',
-                                    height: 555,
-                                    width: 200,
-                                    resizable: true,
-                                    columnLines: true,
-                                    store: storeList,
-                                    viewConfig: {
-                                        plugins: {
-                                            ptype: 'gridviewdragdrop',
-                                            dragText: 'Drag and drop to reorganize'
-                                        },
-                                        preserveScrollOnRefresh: true,
-                                        preserveScrollOnReload: true,
-                                        listeners: {
-                                            drop: function(node, data, dropRec, dropPosition) {
-                                                var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('DESCRIPT') : ' on empty view';
-                                            }
-                                        }
-                                    },
-                                    columns: {
-                                        defaults: {
-                                            menuDisabled: true,
-                                            sortable: true,
-                                            align: 'center'
-                                        },
-                                        items: [
-                                            {text: 'Field', width: 195, dataIndex: 'DESCRIPT',
-                                                renderer: function(value, meta, record, row, col) {
-                                                    var color = record.data['COLOR'].trim();
-                                                    //console.log('LOG : **' + color + '**');
-                                                    meta.style = 'text-align:left;color:' + color + ';';
-                                                    return value;
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }
 
-                                /*{
-                                 xtype: 'panel',
-                                 //title: 'Columns',
-                                 align: 'center',
-                                 margin: '20 10 0 10',
-                                 bodyStyle: 'background: #E6F4FF;border: 1px solid #486A80',
-                                 border: true,
-                                 layout: 'hbox',
-                                 items: [
-                                 {
-                                 xtype: 'dataview',
-                                 id: prototype.id + '-panelListColumns',
-                                 bodyStyle: 'background: #E6F4FF',
-                                 border: true,
-                                 margin: '5 5 0 5',
-                                 padding: '0 5 0 5',
-                                 height: 530,
-                                 layout: 'fit',
-                                 width: 220,
-                                 cls: 'dataview-basic',
-                                 itemTpl: '<div > <li style="color:#244066">{DESCRIPT}</li></div>',
-                                 store: storeList
-                                 }
-                                 ]
-                                 }*/
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            id: prototype.id + '-panelResult',
-                            align: 'center',
-                            margin: '0 0 0 0',
-                            bodyStyle: 'background-color: #E3EAEF;  align: center',
-                            border: false,
-                            layout: 'vbox',
-                            items: [
+                                                /*{
+                                                 xtype: 'panel',
+                                                 //title: 'Columns',
+                                                 align: 'center',
+                                                 margin: '20 10 0 10',
+                                                 bodyStyle: 'background: #E6F4FF;border: 1px solid #486A80',
+                                                 border: true,
+                                                 layout: 'hbox',
+                                                 items: [
+                                                 {
+                                                 xtype: 'dataview',
+                                                 id: prototype.id + '-panelListColumns',
+                                                 bodyStyle: 'background: #E6F4FF',
+                                                 border: true,
+                                                 margin: '5 5 0 5',
+                                                 padding: '0 5 0 5',
+                                                 height: 530,
+                                                 layout: 'fit',
+                                                 width: 220,
+                                                 cls: 'dataview-basic',
+                                                 itemTpl: '<div > <li style="color:#244066">{DESCRIPT}</li></div>',
+                                                 store: storeList
+                                                 }
+                                                 ]
+                                                 }*/
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-panelResult',
+                                            align: 'center',
+                                            margin: '0 0 0 0',
+                                            bodyStyle: 'background-color: #E3EAEF;  align: center',
+                                            border: false,
+                                            layout: 'vbox',
+                                            items: [
 //                                {
 //                                    xtype: 'grid',
 //                                    padding: '20 0 0 0',
@@ -1164,81 +1250,85 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Info', {
 //                                        ]
 //                                    }
 //                                },
-                                {
-                                    xtype: 'panel',
-                                    id: prototype.id + '-panelLabelPagination',
-                                    align: 'center',
-                                    margin: '5 0 0 0',
-                                    bodyStyle: 'background: transparent',
-                                    border: true,
-                                    hidden: true,
-                                    layout: 'hbox',
-                                    items: [
-                                        /** PAGINATION LABELS*/
-                                        {
-                                            xtype: 'panel',
-                                            id: prototype.id + '-pie',
-                                            layout: {
-                                                type: 'hbox',
-                                                pack: 'center'
-                                            },
-                                            border: true,
-                                            height: 25,
-                                            bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
-                                            defaults: {
-                                                border: true,
-                                                padding: '0px 1px 0px 1px'
-                                            },
-                                            padding: '1px 1px 1px 1px',
-                                            items: [
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.id + '-piePanel',
-                                                    width: '100%',
-                                                    height: 25,
-                                                    layout: {
-                                                        type: 'hbox',
-                                                        pack: 'center'
-                                                    },
-                                                    defaults: {
-                                                        xtype: 'label',
-                                                        margin: '3px 0px 0px 5px'
-                                                    }, items: [
+                                                    id: prototype.id + '-panelLabelPagination',
+                                                    align: 'center',
+                                                    margin: '5 0 0 0',
+                                                    bodyStyle: 'background: transparent',
+                                                    border: true,
+                                                    hidden: true,
+                                                    layout: 'hbox',
+                                                    items: [
+                                                        /** PAGINATION LABELS*/
                                                         {
-                                                            text: 'Page',
-                                                            width: 50
-                                                        },
-                                                        {
-                                                            id: prototype.id + '-lbl-currentPage',
-                                                            text: '1',
-                                                            width: 50
-                                                        },
-                                                        {
-                                                            text: 'Of',
-                                                            width: 50
-                                                        },
-                                                        {
-                                                            id: prototype.id + '-lbl-pageCount',
-                                                            text: '0',
-                                                            width: 50
-                                                        },
-                                                        {xtype: 'tbspacer', width: 100},
-                                                        {
-                                                            text: 'Total found',
-                                                            width: 80
-                                                        },
-                                                        {
-                                                            id: prototype.id + '-lbl-total',
-                                                            text: '0', width: 100
+                                                            xtype: 'panel',
+                                                            id: prototype.id + '-pie',
+                                                            layout: {
+                                                                type: 'hbox',
+                                                                pack: 'center'
+                                                            },
+                                                            border: true,
+                                                            height: 25,
+                                                            bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
+                                                            defaults: {
+                                                                border: true,
+                                                                padding: '0px 1px 0px 1px'
+                                                            },
+                                                            padding: '1px 1px 1px 1px',
+                                                            items: [
+                                                                {
+                                                                    xtype: 'panel',
+                                                                    id: prototype.id + '-piePanel',
+                                                                    width: '100%',
+                                                                    height: 25,
+                                                                    layout: {
+                                                                        type: 'hbox',
+                                                                        pack: 'center'
+                                                                    },
+                                                                    defaults: {
+                                                                        xtype: 'label',
+                                                                        margin: '3px 0px 0px 5px'
+                                                                    }, items: [
+                                                                        {
+                                                                            text: 'Page',
+                                                                            width: 50
+                                                                        },
+                                                                        {
+                                                                            id: prototype.id + '-lbl-currentPage',
+                                                                            text: '1',
+                                                                            width: 50
+                                                                        },
+                                                                        {
+                                                                            text: 'Of',
+                                                                            width: 50
+                                                                        },
+                                                                        {
+                                                                            id: prototype.id + '-lbl-pageCount',
+                                                                            text: '0',
+                                                                            width: 50
+                                                                        },
+                                                                        {xtype: 'tbspacer', width: 100},
+                                                                        {
+                                                                            text: 'Total found',
+                                                                            width: 80
+                                                                        },
+                                                                        {
+                                                                            id: prototype.id + '-lbl-total',
+                                                                            text: '0', width: 100
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
                                             ]
                                         }
                                     ]
-                                }
+                                },
                             ]
-                        }
+                        },
                     ]
                 }
 

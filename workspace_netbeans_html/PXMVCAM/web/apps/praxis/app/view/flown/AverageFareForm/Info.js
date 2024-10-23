@@ -69,7 +69,7 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Info', {
                                     id: prototype.id + '-gridData',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     height: 560,
-                                    width: 772,
+                                    width: 852,
                                     columnLines: true,
                                     resizable: false,
 //                                    features: [{
@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'From', width: 70, dataIndex: 'A1781ORIG',
+                                                    {text: 'From', width: 70, dataIndex: 'A1781ORIG', id: prototype.id + '-clmA1781ORIG',
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var tool = record.data['strDescORIG'].trim();
                                                             if (tool.length > 0) {
@@ -101,7 +101,7 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Info', {
                                                             return  value;
                                                         }
                                                     },
-                                                    {text: 'To', width: 70, dataIndex: 'A1781DEST',
+                                                    {text: 'To', width: 70, dataIndex: 'A1781DEST', id: prototype.id + '-clmA1781DEST',
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var tool = record.data['strDescDEST'].trim();
                                                             if (tool.length > 0) {
@@ -113,8 +113,11 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Info', {
 
                                                 ]
                                             },
-                                            {text: 'Fare<br>Basis', width: 180, dataIndex: 'VP_A1781FARE', renderer: 'getText'},
-                                            {text: 'RBD', width: 70, dataIndex: 'A1781RBD'},
+                                            {text: 'Fare<br>Basis', width: 180, dataIndex: 'VP_A1781FARE', renderer: 'getText', id: prototype.id + '-clmVP_A1781FARE'},
+                                            {text: 'RBD', width: 70, dataIndex: 'A1781RBD', id: prototype.id + '-clmA1781RBD'},
+                                            {text: 'Cod. <br>Reason', width: 80, dataIndex: 'RFIC', id: prototype.id + '-clmRFIC1'},
+                                            {text: 'Sub <br>Cod.', width: 80, dataIndex: 'RECODE', id: prototype.id + '-clmRECODE1'},
+                                            {text: 'Code <br>Desc.', width: 200, dataIndex: 'CODEDESC', id: prototype.id + '-clmCODEDESC1', align: 'left',},
                                             {text: 'Qty<br>Coupons', width: 100, dataIndex: 'A1781QCUPO',
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = ' color:#008FE3;text-align:center;text-decoration:underline;';
@@ -125,8 +128,9 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Info', {
                                                 }
                                             },
                                             {text: 'Sales Total', width: 100, dataIndex: 'A1781TVALO', renderer: 'getDouble'},
-                                            {text: 'Average', width: 100, dataIndex: 'A1781PROME', renderer: 'getDouble'},
-                                            {text: 'Currency', width: 80, dataIndex: 'A1781MONED'}
+                                            {text: 'Average', width: 100, dataIndex: 'A1781PROME', renderer: 'getDouble', id: prototype.id + '-clmA1781PROME' },
+                                            {text: 'Currency', width: 80, dataIndex: 'A1781MONED' },
+                                            
                                         ]
                                     }
                                 }
@@ -181,6 +185,9 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Info', {
                                             {text: 'Fare<br>Base', width: 100, dataIndex: 'FAREBASE'},
                                             {text: 'Booking<br>Code', width: 100, dataIndex: 'BOOKI'},
                                             {text: 'Clase<br>Code', width: 100, dataIndex: 'CLASE'},
+//                                            {text: 'Cod. <br>Reason', width: 80, dataIndex: 'RFIC', id: prototype.id + '-clmRFIC2'},
+//                                            {text: 'Sub <br>Cod.', width: 80, dataIndex: 'RECODE', id: prototype.id + '-clmRECODE2'},
+//                                            {text: 'Code <br>Desc.', width: 80, dataIndex: 'CODEDESC', id: prototype.id + '-clmCODEDESC2'},
                                             {text: 'Currency', width: 100, dataIndex: 'CURRENC'},
                                             {text: 'Amount<br>Coupon', width: 100, dataIndex: 'VALOR', renderer: 'getDouble',
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {

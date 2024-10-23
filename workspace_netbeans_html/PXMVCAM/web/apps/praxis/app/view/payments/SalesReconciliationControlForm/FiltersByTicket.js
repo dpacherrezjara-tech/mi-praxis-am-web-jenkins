@@ -83,7 +83,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                         fields: ['code', 'name'],
                                         data: [
                                             ['FECVT', 'Sale Date'],
-                                            ['PRDA', 'Processing Date']
+                                            ['PRDA', 'Processing Date'],
+                                            ['FEUP', 'Update Date']
                                         ]
                                     }),
                                     labelWidth: 50,
@@ -385,7 +386,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                         fields: ['code', 'name'],
                                         data: [
                                             ['FECVT', 'Sale Date'],
-                                            ['PRDA', 'Processing Date']
+                                            ['PRDA', 'Processing Date'],
+                                            ['FEUP', 'Update Date']
                                         ]
                                     }),
                                     labelWidth: 50,

@@ -214,79 +214,19 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                         columns: [
                             {
                                 text: 'C1', dataIndex: 'usosbcp1', width: 60,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    //metaData.style = "background-color:#b2e1ff;";
-                                    let option = record.data.stusocp1;
-                                    const cupon = record.data.indcpn.slice(0,1);
-                                    const opts = {
-                                        'D': () => {
-                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
-                                        },
-                                        'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
-                                        }
-                                    };
-                                    if (opts[option] && cupon !== 'V')
-                                        opts[option]();
-                                    return value;
-                                }
+                                renderer: 'renderUsosFirst'
                             },
                             {
                                 text: 'C2', dataIndex: 'usosbcp2', width: 60,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    //metaData.style = "background-color:#b2e1ff;";
-                                    let option = record.data.stusocp2;
-                                    const cupon = record.data.indcpn.slice(1,2);
-                                    const opts = {
-                                        'D': () => {
-                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
-                                        },
-                                        'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
-                                        }
-                                    };
-                                    if (opts[option] && cupon !== 'V')
-                                        opts[option]();
-                                    return value;
-                                }
+                                renderer: 'renderUsosFirst'
                             },
                             {
                                 text: 'C3', dataIndex: 'usosbcp3', width: 60,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    //metaData.style = "background-color:#b2e1ff;";
-                                    let option = record.data.stusocp3;
-                                    const cupon = record.data.indcpn.slice(2,3);
-                                    const opts = {
-                                        'D': () => {
-                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
-                                        },
-                                        'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
-                                        }
-                                    };
-                                    if (opts[option] && cupon !== 'V')
-                                        opts[option]();
-                                    return value;
-                                }
+                                renderer: 'renderUsosFirst'
                             },
                             {
                                 text: 'C4', dataIndex: 'usosbcp4', width: 60,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    //metaData.style = "background-color:#b2e1ff;";
-                                    let option = record.data.stusocp4;
-                                    const cupon = record.data.indcpn.slice(3,4);
-                                    const opts = {
-                                        'D': () => {
-                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
-                                        },
-                                        'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
-                                        }
-                                    };
-                                    if (opts[option] && cupon !== 'V')
-                                        opts[option]();
-                                    return value;
-                                }
+                                renderer: 'renderUsosFirst'
                             },
                             {
                                 text: 'Date', dataIndex: 'datsabf', width: 80,
@@ -318,75 +258,19 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.Grids.SabreGrid',
                         columns: [
                             {
                                 text: 'C1', dataIndex: 'usosbulcp1', width: 60,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    //metaData.style = "background-color:#b2e1ff;";
-                                    let option = record.data.stusoulcp1;
-                                    const opts = {
-                                        'D': () => {
-                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
-                                        },
-                                        'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
-                                        }
-                                    };
-                                    if (opts[option])
-                                        opts[option]();
-                                    return value;
-                                }
+                                renderer: 'renderUsosLast'
                             },
                             {
                                 text: 'C2', dataIndex: 'usosbulcp2', width: 60,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    //metaData.style = "background-color:#b2e1ff;";
-                                    let option = record.data.stusoulcp2;
-                                    const opts = {
-                                        'D': () => {
-                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
-                                        },
-                                        'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
-                                        }
-                                    };
-                                    if (opts[option])
-                                        opts[option]();
-                                    return value;
-                                }
+                                renderer: 'renderUsosLast'
                             },
                             {
                                 text: 'C3', dataIndex: 'usosbulcp3', width: 60,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    //metaData.style = "background-color:#b2e1ff;";
-                                    let option = record.data.stusoulcp3;
-                                    const opts = {
-                                        'D': () => {
-                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
-                                        },
-                                        'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
-                                        }
-                                    };
-                                    if (opts[option])
-                                        opts[option]();
-                                    return value;
-                                }
+                                renderer: 'renderUsosLast'
                             },
                             {
                                 text: 'C4', dataIndex: 'usosbulcp4', width: 60,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    //metaData.style = "background-color:#b2e1ff;";
-                                    let option = record.data.stusoulcp4;
-                                    const opts = {
-                                        'D': () => {
-                                            metaData.style = "background-color:#F34040;font-weight:bolder;";
-                                        },
-                                        'M': () => {
-                                            metaData.style = "background-color:#1BDE4A;font-weight:bolder;";
-                                        }
-                                    };
-                                    if (opts[option])
-                                        opts[option]();
-                                    return value;
-                                }
+                                renderer: 'renderUsosLast'
                             },
                             {
                                 text: 'Date', dataIndex: 'datsabl', width: 80,

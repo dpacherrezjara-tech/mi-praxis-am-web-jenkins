@@ -122,6 +122,24 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                         xtype: 'pagingtoolbar',
                         id: prototype.id + '-summary-paggin01',
                         displayInfo: true // display additional information like "Displaying x of y items"
+                    },
+                    tbar: {
+                        layout: {
+                            pack: 'end'
+                        },
+                        defaults: {
+                            scale: 'medium'
+                        },
+                        items: [
+                            {
+                                xtype: 'button',
+                                iconCls: 'prx-icon-excel',
+                                tooltip: 'Export to Excel',
+                                listeners: {
+                                    click: 'downloadDetailSummaryInfo'
+                                }
+                            }
+                        ]
                     }
                 });
             },
@@ -184,6 +202,24 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                         xtype: 'pagingtoolbar',
                         id: prototype.id + '-summary-paggin01',
                         displayInfo: true // display additional information like "Displaying x of y items"
+                    },
+                    tbar: {
+                        layout: {
+                            pack: 'end'
+                        },
+                        defaults: {
+                            scale: 'medium'
+                        },
+                        items: [
+                            {
+                                xtype: 'button',
+                                iconCls: 'prx-icon-excel',
+                                tooltip: 'Export to Excel',
+                                listeners: {
+                                    click: 'downloadDetailSummaryInfo'
+                                }
+                            }
+                        ]
                     }
                 });
             }

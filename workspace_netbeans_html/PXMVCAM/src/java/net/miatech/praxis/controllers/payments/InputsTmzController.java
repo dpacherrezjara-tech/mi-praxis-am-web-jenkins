@@ -15,6 +15,8 @@ import net.miatech.praxis.payment.filter.SQP04975Filter;
 import net.miatech.praxis.payment.filter.SQP04976Filter;
 import net.miatech.praxis.payment.filter.SQP05033Filter;
 import net.miatech.praxis.utils.ExportUtils;
+import net.miatech.utils.CustomExcelCell;
+import net.miatech.utils.Functions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -513,4 +515,37 @@ public class InputsTmzController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value = "downloadDetailSummaryInfo")
+    public ResponseEntity<byte[]> downloadDetailSummaryInfo(@ModelAttribute SQP04974Filter filter) throws Exception {
+        List<SQP04974Filter> res = logic.getSQP04974Filter(filter);
+        String title = "Detail Summary " + Functions.getFechaActual();
+        List<List<CustomExcelCell>> data = new ArrayList<>();
+        List<CustomExcelCell> header = new ArrayList<>();
+        header.add(new CustomExcelCell("SEQ"));
+        header.add(new CustomExcelCell("Processing\nDate"));
+        header.add(new CustomExcelCell("Load\nDate"));
+        header.add(new CustomExcelCell("Source"));
+        header.add(new CustomExcelCell("Received"));
+        header.add(new CustomExcelCell("Loaded"));
+        if(filter.getTIPO().equals("P")){
+            header.add(new CustomExcelCell("Exonerated"));
+        }
+        header.add(new CustomExcelCell("Differences"));
+        data.add(header);
+        res.forEach(obj -> {
+            List<CustomExcelCell> row = new ArrayList<>();
+            row.add(new CustomExcelCell(obj.getRN()));
+            row.add(new CustomExcelCell(obj.getPRDA()));
+            row.add(new CustomExcelCell(obj.getFREGIS()));
+            row.add(new CustomExcelCell(obj.getNOMBREPROC()));
+            row.add(new CustomExcelCell(obj.getRECEIVED()));
+            row.add(new CustomExcelCell(obj.getLOADED()));
+            row.add(new CustomExcelCell(obj.getRECEIVED() - obj.getLOADED()));
+            if(filter.getTIPO().equals("P")){
+                row.add(new CustomExcelCell(0));
+            }
+            data.add(row);
+        });
+        return exportUtils.createCustomExcel(data,title);
+    }
 }

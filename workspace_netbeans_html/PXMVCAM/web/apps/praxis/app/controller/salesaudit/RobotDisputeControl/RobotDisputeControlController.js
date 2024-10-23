@@ -131,6 +131,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotDisputeControl.RobotDisputeCon
         }
 
     },
+    imgExcel_clickHandler: function (obj, e) {
+        this.imgSearch_clickHandler(true);
+    },
     onCmbRobotAfterRender: function (obj) {
         obj.setValue('1');
     },
@@ -143,6 +146,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotDisputeControl.RobotDisputeCon
     onBackClick: function (obj, e) {
         Ext.getCmp(prototype.id + '-gridData').setVisible(true);
         Ext.getCmp(prototype.id + '-lbl-total').setVisible(true);
+        var excel = Ext.getCmp(prototype.id + '-btn-excel');
+        var excel2 = Ext.getCmp(prototype.id + '-btn-excel2');
+        // 
+        excel2.hide();
+        excel.show();
+
 
         //Ext.getCmp(prototype.id + '-lbl-total').setText('0');
         Ext.getCmp(prototype.id + '-gridDetalle').setVisible(false);
@@ -203,7 +212,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotDisputeControl.RobotDisputeCon
                 return;
             }
         }
-        Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
         //datos capturados del texto
         this.bean.IN_OPTION = cmbsearch;
         this.bean.IN_DATEFROM = txtDateFrom;
@@ -229,7 +237,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotDisputeControl.RobotDisputeCon
 
                 }, callback: function (records, operation, success) {
                     if (records.length !== 0) {
-                        Ext.getCmp(prototype.id + '-lbl-total').setText(records[0].data.A3268TOTALPAG);
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(records[0].data.A3254TOTAPAIS);
                     } else {
                         Ext.getCmp(prototype.id + '-lbl-total').setText('0');
                         global.Msg({msg: "Data not found.", icon: 2, fn: function () {
@@ -343,8 +351,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotDisputeControl.RobotDisputeCon
 
     },
     searchform_detalle_Dispute_excel: function () {
-        if (this.bean2.IN_COUNTRY != '') {
-            me.exportExcel(prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(this.bean2)));
+        if (this.bean2.IN_COUNTRY !== '') {
+            me.exportExcel(prototype.url + '/getXLSX2?beanString=' + encodeURI(JSON.stringify(this.bean2)));
         } else {
             Ext.MessageBox.alert('PRAXIS', "Select Country");
             return;
@@ -362,24 +370,26 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotDisputeControl.RobotDisputeCon
         var totalDeta = Ext.getCmp(prototype.id + '-lbl-totalDeta');
         var back = Ext.getCmp(prototype.id + '-btn-back');
         var excel = Ext.getCmp(prototype.id + '-btn-excel');
+        var excel2 = Ext.getCmp(prototype.id + '-btn-excel2');
         var CmbArea = Ext.getCmp(prototype.id + '-CmbArea');
         var Audit = Ext.getCmp(prototype.id + '-Audit');
 
         gridData.hide();
         total.hide();
+        excel.hide();
 
         gridDetalle.show();
         totalDeta.show();
         back.show();
-        excel.show();
+        excel2.show();
         CmbArea.show();
         Audit.show();
 
         ///CARGANDO EL DETALLE DE LA GRTILLA 
-         var grid = Ext.getCmp(prototype.id + '-gridData');
+        var grid = Ext.getCmp(prototype.id + '-gridData');
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
-        
+
         var CmbRobot = Ext.getCmp(prototype.id + '-ComboRobot').getValue();
         var CmbArea = Ext.getCmp(prototype.id + '-CmbArea').getValue();
         var Audit = Ext.getCmp(prototype.id + '-Audit').getValue();
@@ -410,15 +420,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotDisputeControl.RobotDisputeCon
 
 
     },
-    
-    onRendererColumnOnStatus: function(value, metaData, record, rowIndex, colIndex, store, view){
-        switch( String(record.get('A3268FLAG')) ){
+
+    onRendererColumnOnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        switch (String(record.get('A3268FLAG'))) {
             case 'Sin data':
                 value = 'silver';
-            break;
+                break;
             case 'Sent to BSPLINK':
                 value = 'green';
-            break;
+                break;
             default:
                 value = 'red';
         }

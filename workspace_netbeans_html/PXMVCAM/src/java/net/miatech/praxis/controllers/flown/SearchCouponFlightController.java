@@ -13,15 +13,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.A1692Filter;
+import net.miatech.beans.PX019S01A721Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.flown.SearchCouponFlightLogic;
+import net.miatech.praxis.logic.sales.FareBasisLogic;
 import net.miatech.utils.Functions;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -461,5 +464,42 @@ public class SearchCouponFlightController extends BaseController {
         }
 
     }
+    
+    @RequestMapping(value = "ValidationDownload")
+    public @ResponseBody
+    String ValidationDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        List<A1692Filter> lst = new ArrayList<>(0);
+        A1692Filter filter = new A1692Filter();
 
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+
+        try {
+            logic = new SearchCouponFlightLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            filter.IN_TKT = request.getParameter("IN_TKT");
+            filter.IN_STVAL = request.getParameter("IN_STVAL");
+            filter.IN_CARR = request.getParameter("IN_CARR");
+            filter.IN_FECHA_FROM = request.getParameter("IN_FECHA_FROM");
+            filter.IN_FECHA_TO = request.getParameter("IN_FECHA_TO");
+           
+            System.out.println("----------------- Parametros --------------------- ");
+            System.out.println(" limit : " + request.getParameter("limit"));
+            System.out.println(" start : " + request.getParameter("start"));
+
+            System.out.println("-------------------------------------------------- ");
+
+            int int_result = logic.ValidationDownload(filter);
+            HashMap m = new HashMap();
+            m.put("success", true);
+            m.put("int_result", int_result);
+            return new Gson().toJson(m);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+    }
 }

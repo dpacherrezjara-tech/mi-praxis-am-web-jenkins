@@ -610,7 +610,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             for (var i = 0; i < selection.length; i++) {
                 var row = grid.getSelectionModel().getSelection()[i];
                 if (Ext.String.trim(row.get('A4076FLAG')) === 'U') {
-                    if (Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtUser').getValue() === 'XFMALAGON' || Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtUser').getValue() === 'XEILIANA' || Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtUser').getValue() === 'SAP26') {
+                    if (Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtUser').getValue() === 'XFMALAGON' || Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtUser').getValue() === 'XEILIANA' || Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtUser').getValue() === 'XDINORAHG') {
                         lstNew.push(row.data);
                     } else {
                         global.Msg({msg: 'The user is not authorized to carry out the process'});
