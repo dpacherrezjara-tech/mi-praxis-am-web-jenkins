@@ -6,13 +6,11 @@
 package net.miatech.praxis.controllers.salesAudit;
 
 import com.google.gson.Gson;
-import static com.mashape.unirest.http.HttpClientHelper.request;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,17 +21,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static jxl.biff.BaseCellFeatures.logger;
 import net.miatech.beans.SaleAudit.SQP00911Filter;
-import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.SaleAudit.A2553;
 import net.miatech.praxis.classes.ProMail;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.ADMReportLogic;
 import net.miatech.praxis.logic.salesAudit.DisputeGestionBsplinkLogic;
+import net.miatech.praxis.utils.PythonWS;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -48,16 +46,21 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
+import java.util.Map;
+import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
 
 /**
  *
@@ -69,6 +72,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class DisputeGestionBsplinkController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
+    @Autowired
+    private PythonWS pws;
 
     @RequestMapping(value = "SearchReportADM")
     public @ResponseBody
@@ -101,8 +106,11 @@ public class DisputeGestionBsplinkController extends BaseController {
             DisputeGestionBsplinkLogic logic = new DisputeGestionBsplinkLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<SQP00911Filter> lst_search = logic.SearchReportADM(filter);
-
-            List<SQP00911Filter> lst_disputas_sinatender = new ArrayList<SQP00911Filter>(0);
+            //
+            map.put("success", true);
+            map.put("data", lst_search);
+            map.put("total", lst_search.size() > 0 ? lst_search.get(0).page.TOTROW : 0);
+            /*List<SQP00911Filter> lst_disputas_sinatender = new ArrayList<SQP00911Filter>(0);
             SQP00911Filter obj;
             for (SQP00911Filter rs01 : lst_search) {
                 if (!rs01.A2548SEMAFORO.equals("GREEN")) {
@@ -134,19 +142,19 @@ public class DisputeGestionBsplinkController extends BaseController {
                     vl_flag = "1";
                 }
 
-               // if (vl_flag.equals("0")) {
-                    map.put("success", true);
-                    map.put("data", lst_search);
-                    map.put("total", lst_search.size() > 0 ? lst_search.get(0).page.TOTROW : 0);
+                // if (vl_flag.equals("0")) {
+                map.put("success", true);
+                map.put("data", lst_search);
+                map.put("total", lst_search.size() > 0 ? lst_search.get(0).page.TOTROW : 0);
                 /*} else {
                     map.put("success", false);
                     map.put("sesion", "Could not send email!");
-                }*/
+                }
             } else {
                 map.put("success", true);
                 map.put("data", lst_search);
                 map.put("total", lst_search.size() > 0 ? lst_search.get(0).page.TOTROW : 0);
-            }
+            }*/
 
         } catch (SQLException e) {
             map.put("success", false);
@@ -323,62 +331,143 @@ public class DisputeGestionBsplinkController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    public static String fixEncoding(String input) {
+        // Convierte la cadena desde ISO-8859-1 (Latin-1) a UTF-8
+        byte[] bytes = input.getBytes(StandardCharsets.ISO_8859_1);
+        return new String(bytes, StandardCharsets.UTF_8);
+        
+    }
+
+    public static String replaceSpecialCharacters(String input) {
+        // Normaliza la cadena eliminando los acentos
+        String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
+        // Elimina los caracteres no deseados (diacríticos)
+        String withoutDiacritics = normalized.replaceAll("\\p{M}", "");
+
+        // Ejemplo: Reemplazar ñ con n
+        withoutDiacritics = withoutDiacritics.replace("Á", "A")
+                .replace("ó", "o")
+                .replace("á", "a") // Puedes añadir más según sea necesario
+                .replace("é", "e")
+                .replace("í­", "i")
+                .replace("ú", "u")
+                .replace("É", "E")
+                .replace("Í", "I")
+                .replace("Ó", "O")
+                .replace("Ú", "U");
+        // Puedes añadir más reemplazos específicos si es necesario:
+        withoutDiacritics = withoutDiacritics.replace("ñ", "n").replace("Ñ", "N");
+
+        return withoutDiacritics;
+    }
+    
+    public static String replaceSpecialComent(String input) {
+       // Ejemplo: Reemplazar ñ con n
+       String withoutDiacritics = input.replace("\"", "");
+        // Puedes añadir más reemplazos específicos si es necesario:
+
+        return withoutDiacritics;
+    }
+
     @RequestMapping(value = "insertTracingFile", method = RequestMethod.POST)
     public @ResponseBody
-    String insertTracingFile(ModelMap map, @RequestParam("fileaudito") MultipartFile file, @RequestParam("fileaudito2") MultipartFile file2, @RequestParam("fileaudito3") MultipartFile file3, HttpServletRequest request) {
+    String insertTracingFile(ModelMap map, @RequestParam("fileaudito") MultipartFile file1, @RequestParam("fileaudito2") MultipartFile file2, @RequestParam("fileaudito3") MultipartFile file3, HttpServletRequest request) {
         A2553 filter = new A2553();
         A2553 listenvio = new A2553();
-        String VL_ARCHI ="";
-        String result2 ="";
+        String VL_ARCHI = "";
+        String result2 = "";
+        boolean result = false;
+        File archivo1;
+        File archivo2 = null;
+        File archivo3 = null;
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             //ADMReportLogic logic = new ADMReportLogic();
             DisputeGestionBsplinkLogic logic = new DisputeGestionBsplinkLogic();
             logic.setSession(this.serverSession.getServerSession());
-            String A2553ARCHV = file.getOriginalFilename();
+            String A2553ARCHV = file1.getOriginalFilename();
             String A2553ARCHV2 = file2.getOriginalFilename();
             String A2553ARCHV3 = file3.getOriginalFilename();
-
+            //
+            if (!A2553ARCHV.equals("")) {
+                A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV));
+            }
+            if (!A2553ARCHV2.equals("")) {
+                A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV2));
+            }
+            if (!A2553ARCHV.equals("")) {
+                A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV));
+            }
+            if (!A2553ARCHV3.equals("")) {
+                A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV3));
+            }
             listenvio.A2553TRNCU = filter.A2553TRNCU;
             listenvio.A2553STAT = filter.A2553STAT;
             listenvio.A2553NMEMO = filter.A2553NMEMO;
-            listenvio.A2553DESCR = filter.A2553DESCR;
+            listenvio.A2553DESCR = replaceSpecialComent(fixEncoding(filter.A2553DESCR));
             listenvio.A2553STAT2 = filter.A2553STAT2;
             listenvio.A2553ARCHV = A2553ARCHV;
             listenvio.A2553ARCHV2 = A2553ARCHV2;
             listenvio.A2553ARCHV3 = A2553ARCHV3;
             listenvio.A2553PAIS = filter.A2553PAIS;
             listenvio.A2553CNXPA = filter.A2553CNXPA;
-            listenvio.A2553FOLIO = "";
+            listenvio.A2553FOLIO = ""; 
 
+            result2 = logic.insertTracing(listenvio);
+            if (result2.equals("RECORD INSERTED")) {
+                // para achivos 1
+                archivo1 = new File(file1.getOriginalFilename());
+                file1.transferTo(archivo1);
+                // para achivos 2
+                if (!file2.getOriginalFilename().equals("")) {
+                    archivo2 = new File(file2.getOriginalFilename());
+                    file2.transferTo(archivo2);
+                }
+                // para achivos 3
+                if (!file3.getOriginalFilename().equals("")) {
+                    archivo3 = new File(file3.getOriginalFilename());
+                    file3.transferTo(archivo3);
+                }
+
+                result = upload_s3(listenvio, archivo1, archivo2, archivo3);
+                if (result) {
+                    result2 = "The record was saved successfully.";
+                } else {
+                    result2 = "An error ocurred when trying to upload the file.";
+                }
+            } else {
+                result2 = "An error ocurred when trying to upload the file.";
+            }
+
+            /*  
             String result = logic.insertTracing(listenvio);
             if (result.equals("RECORD INSERTED")) {
                 result = "The record was saved successfully.";
                 if (!A2553ARCHV.equals("")) {
-                    byte[] bytes = file.getBytes();
-                    result = upload(bytes, filter.A2553CNXPA, A2553ARCHV);
-                    VL_ARCHI="1";
+                   // byte[] bytes = file.getBytes();
+                   // result = upload(bytes, filter.A2553CNXPA, A2553ARCHV);
+                    VL_ARCHI = "1";
                 }
                 if (!A2553ARCHV2.equals("")) {
                     byte[] bytes2 = file2.getBytes();
                     result = upload(bytes2, filter.A2553CNXPA, A2553ARCHV2);
-                    VL_ARCHI="1";
+                    VL_ARCHI = "1";
                 }
                 if (!A2553ARCHV3.equals("")) {
                     byte[] bytes3 = file3.getBytes();
                     result = upload(bytes3, filter.A2553CNXPA, A2553ARCHV3);
-                    VL_ARCHI="1";
+                    VL_ARCHI = "1";
                 }
-                if(VL_ARCHI.equals("1")){
+                if (VL_ARCHI.equals("1")) {
                     result2 = upload_s3(filter.A2553CNXPA);
                 }
             } else {
                 result = "An error ocurred when trying to upload the file.";
             }
-
+             */
             map.put("success", true);
-            map.put("result", result);
+            map.put("result", result2);
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -388,28 +477,19 @@ public class DisputeGestionBsplinkController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    public String upload_s3(String IN_CNXPA) throws SQLException, Exception {
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
 
+    public boolean upload_s3(A2553 filter, File archiv, File archiv2, File archiv3) throws SQLException, Exception {
+        boolean res;
+        try {
+            String v1_urlREST = "/util/upload-file";
+            String urlREST = "DISPUTAS/WEB" + "/" + filter.A2553CNXPA + "/" + Functions.getFechaActual();
+            res = pws.uploadFilesPython(v1_urlREST, "am", urlREST, archiv, archiv2, archiv3);
+            //("success", true);
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            throw new SpringException(e);
+        }
 
-        /*
-         Se establece tiempo límite de conexión por 60 min
-         */
-        Unirest.setTimeouts(3600000, 3600000);
-        HashMap bodyData = new HashMap<>();
-        bodyData.put("IN_PATH", "\\\\10.0.0.87\\amaudit\\DISPUTAS\\WEB\\" + IN_CNXPA + "\\" + Functions.getFechaActual());
-        bodyData.put("IN_PREFIX", "DISPUTAS/WEB/");
-        bodyData.put("IN_DATE", Functions.getFechaActual());
-
-        HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/bsplink/upload_s3/")
-                .header("content-type", "application/json")
-                .header("cache-control", "no-cache")
-                .body(new Gson().toJson(bodyData))
-                .asJson();
-
-        String error_msg = response.getBody().getObject().get("error_msg").toString();
-
-        return error_msg;
+        return res;
 
     }
 
@@ -417,6 +497,7 @@ public class DisputeGestionBsplinkController extends BaseController {
     public @ResponseBody
     String insertTracing(ModelMap map, HttpServletRequest request) {
         A2553 filter = new A2553();
+        A2553 listenvio = new A2553();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -424,7 +505,21 @@ public class DisputeGestionBsplinkController extends BaseController {
             //ADMReportLogic logic = new ADMReportLogic();
             DisputeGestionBsplinkLogic logic = new DisputeGestionBsplinkLogic();
             logic.setSession(this.serverSession.getServerSession());
-            String result = logic.insertTracing(filter);
+            // 
+            listenvio.A2553TRNCU = filter.A2553TRNCU;
+            listenvio.A2553STAT = filter.A2553STAT;
+            listenvio.A2553NMEMO = filter.A2553NMEMO;
+            listenvio.A2553DESCR = replaceSpecialComent(filter.A2553DESCR); 
+            listenvio.A2553ARCHV = "";
+            listenvio.A2553ARCHV2 = ""; 
+            listenvio.A2553ARCHV3 = "";
+            listenvio.A2553PAIS = filter.A2553PAIS;
+            listenvio.A2553FOLIO = "";
+            listenvio.A2553STAT2 = filter.A2553STAT2;
+            listenvio.A2553CNXPA = filter.A2553CNXPA;
+            
+            
+            String result =logic.insertTracing(filter);
 
             map.put("success", true);
             map.put("result", result);
@@ -437,46 +532,64 @@ public class DisputeGestionBsplinkController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    
+     // Método para intentar diferentes decodificaciones
+    public static String forceDecode(String input) {
+        // Decodifica usando una secuencia de encodings que suelen dar problemas
+        try {
+            // Intentar decodificar usando ISO-8859-1 y luego re-interpretarlo como UTF-8
+            byte[] bytes = input.getBytes(StandardCharsets.ISO_8859_1);
+            String utf8String = new String(bytes, StandardCharsets.UTF_8);
+
+            // Si aún hay caracteres extraños, intentar UTF-8 a ISO-8859-1
+            if (containsInvalidCharacters(utf8String)) {
+                bytes = input.getBytes(StandardCharsets.UTF_8);
+                utf8String = new String(bytes, StandardCharsets.ISO_8859_1);
+            }
+
+            // Retornar el texto corregido
+            return utf8String;
+        } catch (Exception e) {
+            // Manejo básico de errores
+            System.err.println("Error decoding string: " + e.getMessage());
+            return input;
+        }
+    }
+
+    // Método para verificar si el texto aún contiene caracteres inválidos
+    private static boolean containsInvalidCharacters(String input) {
+        // Aquí puedes ajustar según los caracteres inválidos que deseas identificar
+        return input.contains("�") || input.contains("?") || input.matches(".*[^\\p{Print}].*");
+    }
 
     @RequestMapping(value = "GetFilesDirectory")
-    public @ResponseBody
-    String GetFilesDirectory(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
+    public ResponseEntity<?>//@ResponseBody String 
+            GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        ResponseEntity res;
+        try {
+            String v1_urlREST = "/util/download-files";
+            String sesion = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+            String urlREST = "";
+            if (request.getParameter("IN_TIPO").trim().equals("USRBSP")) {
+                urlREST = "DISPUTAS/ROBOT" + "/" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
+            } else {
+                urlREST = "DISPUTAS/WEB" + "/" + request.getParameter("IN_CNXPA").trim() + "/" + request.getParameter("IN_DATE").trim();
+            }
 
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+            //
+            Map<String, Object> queryParams = new HashMap<>();
+            queryParams.put("client", "am");
+            queryParams.put("type", "directory");
+            queryParams.put("remotePath", urlREST);
 
-        String path_config = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
-        String IN_PATH = path_config + "\\IMGTMPDISPUTE\\";
-        String IN_DATE = request.getParameter("IN_DATE").toString().trim();
-        String IN_COUNTRY = request.getParameter("IN_COUNTRY").toString().trim();
-        String IN_DOCUMENT = request.getParameter("IN_DOCUMENT").toString().trim();
+            res = pws.downloadFilesVisorPython(v1_urlREST, queryParams, sesion);
+            //("success", true);
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            throw new SpringException(e);
+        }
 
-        /*
-         Se establece tiempo límite de conexión por 60 min
-         */
-        Unirest.setTimeouts(3600000, 3600000);
-
-        /*
-         Preparando parámetros para enviar por body
-         */
-        HashMap bodyData = new HashMap<>();
-        bodyData.put("IN_OPTION", "1");
-        bodyData.put("IN_PATH", IN_PATH);
-        bodyData.put("IN_DATE", IN_DATE);
-        bodyData.put("IN_COUNTRY", IN_COUNTRY);
-        bodyData.put("IN_DOCUMENT", IN_DOCUMENT);
-
-        HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/bsplink/download/dispute/all/")
-                .header("content-type", "application/json")
-                .header("cache-control", "no-cache")
-                .body(new Gson().toJson(bodyData))
-                .asJson();
-
-        String body = response.getBody().getObject().get("data").toString();
-
-        map.put("success", true);
-        map.put("data", body);
-
-        return new Gson().toJson(map);
+        return res;
     }
 
     public String upload(byte[] bytes, String nroMemo, String nomArchivo) throws Exception {
