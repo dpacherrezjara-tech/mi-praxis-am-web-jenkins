@@ -151,8 +151,7 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Filters', {
                                             ['', 'All'],
                                             ['S', 'ASR'],
                                             ['A', 'ARC'],
-                                            ['B', 'BSP'],
-                                            ['C', 'CTN']
+                                            ['B', 'BSP']
                                         ]
                                     }),
                                     labelWidth: 60,
