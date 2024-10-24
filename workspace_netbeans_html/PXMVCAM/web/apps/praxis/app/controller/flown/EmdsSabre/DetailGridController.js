@@ -61,7 +61,7 @@ Ext.define('Ext.Praxis.controller.flown.EmdsSabre.DetailGridController', {
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
-                            global.getFile(`${me.view.url}/downloadDetail?${new URLSearchParams(params)}`);
+                            global.getFile(`${me.url}/downloadDetail?${new URLSearchParams(params)}`);
                         }
                     }
                 });
