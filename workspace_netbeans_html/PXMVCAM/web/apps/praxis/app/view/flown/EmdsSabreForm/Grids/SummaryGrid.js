@@ -50,7 +50,15 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
                     }
                 },
                 columns: [
-                    {text: 'Total', dataIndex: 'USED', width: 90},
+                    {text: 'Total', dataIndex: 'USED', width: 90,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;background-color:#91fc63;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#3f77cd;";
+                            return value;
+                        },
+                        listeners:{
+                            click: 'loadUsed'
+                        }
+                    },
                     {text: 'Fare', dataIndex: 'UTARIF', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#91fc63";
@@ -72,7 +80,15 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
                     }
                 },
                 columns: [
-                    {text: 'Total', dataIndex: 'PENDIENTE', width: 90},
+                    {text: 'Total', dataIndex: 'PENDIENTE', width: 90,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;background-color:#F0D094;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#3f77cd;";
+                            return value;
+                        },
+                        listeners:{
+                            click: 'loadNotUsed'
+                        }
+                    },
                     {text: 'Fare', dataIndex: 'PTARIF', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#F0D094";
@@ -114,6 +130,7 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
                 iconCls: 'prx-icon-excel',
                 scale: 'small',
                 tooltip: 'Export to Excel',
+                hidden:true,
                 listeners: {
                     click: 'downloadExcel'
                 }

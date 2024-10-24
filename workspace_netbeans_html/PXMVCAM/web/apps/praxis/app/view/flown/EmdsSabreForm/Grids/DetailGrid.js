@@ -60,7 +60,25 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.DetailGrid', {
                         }
                     },
                     {text: 'BATCH', dataIndex: 'LOTE', width: 100},
-                    {text: 'Status<br>Changed', dataIndex: 'STCHG', width: 80}
+                    {text: 'Status<br>Changed', dataIndex: 'STUSE', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#84abea;";
+
+                            const {STUSE, STVAL} = record.data;
+                            if (STVAL === '1') {
+                                value = '#dae868';
+                            } else {
+                                if (record.data.STUSE.trim() === 'USED') {
+                                    value = 'green';
+                                    //return `${value} <img src="resources/img/icon/16x16/circle_green.png"/>`;
+                                } else {
+                                    value = 'red';
+                                    //return `${value} <img src="resources/img/icon/16x16/circle_red.png"/>`;
+                                }
+                            }
+                            return  `${STUSE} <i class="fas fa-circle" style="font-size: 16px; color: ${value} ;"></i>`;
+                        }
+                    }
                 ]
             },
             {
