@@ -95,7 +95,7 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.DetailGrid', {
                 columns: [
                     {text: 'Doc.<br>Code', dataIndex: 'CDOC', width: 80},
                     {text: 'RFIC', dataIndex: 'RFIC', width: 80},
-                    {text: 'RFIS', dataIndex: 'RFIS', width: 80},
+                    {text: 'RFISC', dataIndex: 'RFIS', width: 80},
                     {text: 'Country', dataIndex: 'PSVVTA', width: 60},
                     {text: 'IATA<br>Code', dataIndex: 'AGTIA', width: 100},
                     {text: 'Sale<br>Date', dataIndex: 'FVTA', width: 90},
