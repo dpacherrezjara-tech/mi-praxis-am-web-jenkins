@@ -69,7 +69,8 @@ public class EmdsSabreController {
             header.add(new CustomExcelCell("BATCH"));
             header.add(new CustomExcelCell("Status\nChanged"));
             header.add(new CustomExcelCell("Doc. Code"));
-            header.add(new CustomExcelCell("Doc. Type"));
+            header.add(new CustomExcelCell("RFIC"));
+            header.add(new CustomExcelCell("RFISC"));
             header.add(new CustomExcelCell("Country"));
             header.add(new CustomExcelCell("IATA Code"));
             header.add(new CustomExcelCell("Sale Date"));
@@ -108,14 +109,15 @@ public class EmdsSabreController {
                 row.add(new CustomExcelCell(obj.getLOTE()));
                 row.add(new CustomExcelCell(obj.getSTUSE()));
                 row.add(new CustomExcelCell(obj.getCDOC()));
-                row.add(new CustomExcelCell(obj.getTDOC()));
+                //row.add(new CustomExcelCell(obj.getTDOC()));
+                row.add(new CustomExcelCell(obj.getRFIC()));
+                row.add(new CustomExcelCell(obj.getRFIS()));
                 row.add(new CustomExcelCell(obj.getPSVVTA()));
                 row.add(new CustomExcelCell(obj.getAGTIA()));
                 row.add(new CustomExcelCell(obj.getFVTA()));
                 row.add(new CustomExcelCell(obj.getTPAX()));
                 row.add(new CustomExcelCell(obj.getCARR()));
                 row.add(new CustomExcelCell(obj.getCARROP()));
-                //row.add(new CustomExcelCell(obj.getTGROSAMOUN_ADJ(), c1));
                 row.add(new CustomExcelCell(obj.getVCPN()));
                 row.add(new CustomExcelCell(obj.getCOMISI()));
                 row.add(new CustomExcelCell(obj.getSCOMISI()));

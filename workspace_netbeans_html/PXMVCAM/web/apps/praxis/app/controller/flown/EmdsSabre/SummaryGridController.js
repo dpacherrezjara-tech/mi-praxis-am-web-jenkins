@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.controller.flown.EmdsSabre.SummaryGridController', {
             IN_CCUST: '139',
             IN_FPROCF:FPROC,
             IN_FPROCT:'',
-            IN_STVAL: '2',
+            IN_STVAL: 'X',
             IN_TPAX: me.view.searchParams.IN_TPAX,
             IN_FTE: me.view.searchParams.IN_FTE,
             IN_TICKET: me.view.searchParams.IN_TICKET
