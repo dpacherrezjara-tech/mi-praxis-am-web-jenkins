@@ -61,7 +61,45 @@ public class A3676 {
     public int A3676CNTAM;
     public int A3676CNTPR;
     public int A3676TOTPAGI;
+    
+    public String A3676AREA;
+    public String A3676AREAD;
+    public String A3676MODO;
+    public String A3676TYPE;
 
+    public String getA3676AREA() {
+        return A3676AREA;
+    }
+
+    public void setA3676AREA(String A3676AREA) {
+        this.A3676AREA = A3676AREA;
+    }
+
+    public String getA3676AREAD() {
+        return A3676AREAD;
+    }
+
+    public void setA3676AREAD(String A3676AREAD) {
+        this.A3676AREAD = A3676AREAD;
+    }
+
+    public String getA3676MODO() {
+        return A3676MODO;
+    }
+
+    public void setA3676MODO(String A3676MODO) {
+        this.A3676MODO = A3676MODO;
+    }
+
+    public String getA3676TYPE() {
+        return A3676TYPE;
+    }
+
+    public void setA3676TYPE(String A3676TYPE) {
+        this.A3676TYPE = A3676TYPE;
+    }
+    
+    
     public String getA3676TIDOC() {
         return A3676TIDOC;
     }
