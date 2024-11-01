@@ -779,7 +779,7 @@ public class PostbillingController extends BaseController {
 
             Row row;
             Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18,
-                    CH_19, CH_20, CH_21, CH_22, CH_23;
+                    CH_19, CH_20, CH_21, CH_22, CH_23, CH_24;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -807,6 +807,7 @@ public class PostbillingController extends BaseController {
             CH_21 = row.createCell(21);
             CH_22 = row.createCell(22);
             CH_23 = row.createCell(23);
+            CH_24 = row.createCell(24);
 
             CH_00.setCellValue("Origin");
             CH_01.setCellValue("IATA");
@@ -836,6 +837,7 @@ public class PostbillingController extends BaseController {
             CH_21.setCellValue("QTY BSP");
             CH_22.setCellValue("Issue date");
             CH_23.setCellValue("Process");
+            CH_24.setCellValue("Bsplink");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -861,6 +863,7 @@ public class PostbillingController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 21));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 22));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 23));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 24));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -886,6 +889,7 @@ public class PostbillingController extends BaseController {
             CH_21.setCellStyle(headerStyle);
             CH_22.setCellStyle(headerStyle);
             CH_23.setCellStyle(headerStyle);
+            CH_24.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -917,6 +921,7 @@ public class PostbillingController extends BaseController {
                 CH_21 = row.createCell(21);
                 CH_22 = row.createCell(22);
                 CH_23 = row.createCell(23);
+                CH_24 = row.createCell(24);
 
                 CH_00.setCellValue(listaData.get(vi).A3537MODO);
                 CH_01.setCellValue(listaData.get(vi).A3537IATA);
@@ -947,6 +952,7 @@ public class PostbillingController extends BaseController {
                 CH_21.setCellValue((listaData.get(vi).A3537CANTANGE));
                 CH_22.setCellValue((listaData.get(vi).A3537FVTA));
                 CH_23.setCellValue((listaData.get(vi).A3537STAT4));
+                CH_24.setCellValue((listaData.get(vi).A3537FLARF));
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -972,6 +978,7 @@ public class PostbillingController extends BaseController {
                 CH_21.setCellStyle(bodyStyle);
                 CH_22.setCellStyle(bodyStyle);
                 CH_23.setCellStyle(bodyStyle);
+                CH_24.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
