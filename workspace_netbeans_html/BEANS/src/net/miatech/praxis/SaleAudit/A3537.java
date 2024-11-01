@@ -31,6 +31,7 @@ public class A3537 {
     public String A3537RAUDI;
     public String A3537FFILE;
     public String A3537STAT3;
+    public String A3537FLARF;
     public double A3537NETO;
 
     public double A3537NMAX;
@@ -77,6 +78,14 @@ public class A3537 {
     public String A3537ARCHV3;
     public String A3537NUMCONX;
 
+    public String getA3537FLARF() {
+        return A3537FLARF;
+    }
+
+    public void setA3537FLARF(String A3537FLARF) {
+        this.A3537FLARF = A3537FLARF;
+    }
+       
     public String getA3537FVTA() {
         return A3537FVTA;
     }
