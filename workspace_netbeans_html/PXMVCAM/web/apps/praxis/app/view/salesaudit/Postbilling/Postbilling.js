@@ -368,6 +368,19 @@ Ext.define('Ext.Praxis.view.salesaudit.Postbilling.Postbilling', {
                             columns: {
                                 items: [
                                     {
+                                        sortable: false,
+                                        xtype: 'actioncolumn',
+                                        width: 50,
+                                        align: 'center',
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-detail',
+                                                tooltip: 'Detail',
+                                                handler: 'onDetailClick'
+                                            }
+                                        ]
+                                    },
+                                    {
                                         text: 'Origin', dataIndex: 'A3537MODO', align: 'center', width: 75
                                     }, {
                                         text: 'IATA',
@@ -534,19 +547,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Postbilling.Postbilling', {
                                         dataIndex: 'A3537FVTA',
                                         width: 80
                                     },
-                                    {
-                                        sortable: false,
-                                        xtype: 'actioncolumn',
-                                        width: 50,
-                                        align: 'center',
-                                        items: [
-                                            {
-                                                iconCls: 'prx-icon-detail',
-                                                tooltip: 'Detail',
-                                                handler: 'onDetailClick'
-                                            }
-                                        ]
-                                    }
+                                    {text: 'Bsplink', dataIndex: 'A3537FLARF', width: 100, align: 'center'}
                                 ],
                                 defaults: {
                                     sortable: true,
