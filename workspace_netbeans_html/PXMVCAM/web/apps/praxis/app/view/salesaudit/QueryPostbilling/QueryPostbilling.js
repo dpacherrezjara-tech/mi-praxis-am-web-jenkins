@@ -381,6 +381,19 @@ Ext.define('Ext.Praxis.view.salesaudit.QueryPostbilling.QueryPostbilling', {
                             height: 520,
                             columns: {
                                 items: [
+                                    {
+                                        sortable: false,
+                                        xtype: 'actioncolumn',
+                                        width: 50,
+                                        align: 'center',
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-detail',
+                                                tooltip: 'Detail',
+                                                handler: 'onDetailClick'
+                                            }
+                                        ]
+                                    },
                                     {text: 'Origin', dataIndex: 'A3537MODO', align: 'center', width: 75},
                                     {text: 'IATA', dataIndex: 'A3537IATA', width: 65},
                                     {text: 'Agency', dataIndex: 'A3537NOMAGENCY', width: 200, align: 'left', renderer: 'onRendererColumnAgency'},
@@ -428,19 +441,8 @@ Ext.define('Ext.Praxis.view.salesaudit.QueryPostbilling.QueryPostbilling', {
                                     {text: 'Issue</br>date', dataIndex: 'A3537FVTA', width: 80},
                                     {text: 'Reference', dataIndex: 'A3537CNREL', width: 120, renderer: 'onRendererColumnAttr'},
                                     {text: 'Process', dataIndex: 'A3537STAT4', width: 80},
-                                    {
-                                        sortable: false,
-                                        xtype: 'actioncolumn',
-                                        width: 50,
-                                        align: 'center',
-                                        items: [
-                                            {
-                                                iconCls: 'prx-icon-detail',
-                                                tooltip: 'Detail',
-                                                handler: 'onDetailClick'
-                                            }
-                                        ]
-                                    }
+                                    {text: 'Bsplink', dataIndex: 'A3537FLARF', width: 100, align: 'center'}
+
                                 ],
                                 defaults: {
                                     sortable: true,
