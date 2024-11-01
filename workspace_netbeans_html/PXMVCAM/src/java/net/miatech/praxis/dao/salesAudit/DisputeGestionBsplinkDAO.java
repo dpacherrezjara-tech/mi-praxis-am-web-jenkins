@@ -112,6 +112,7 @@ public class DisputeGestionBsplinkDAO {
                 objRtn.A2548AREA = rs01.getString("A2548AREA");
                 objRtn.A2548AREADES = rs01.getString("A2548AREADES");
                 objRtn.A2548CANTIDAD = rs01.getInt("RN");
+                objRtn.A2548STCOR = rs01.getString("A3090FLAG");
 
                 //AEROLINEA
                 objRtn.A2548TARIF = rs01.getDouble("A2548TARIF");

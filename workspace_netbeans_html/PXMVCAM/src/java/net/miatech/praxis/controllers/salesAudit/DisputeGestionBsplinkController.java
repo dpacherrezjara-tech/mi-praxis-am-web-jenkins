@@ -335,7 +335,7 @@ public class DisputeGestionBsplinkController extends BaseController {
         // Convierte la cadena desde ISO-8859-1 (Latin-1) a UTF-8
         byte[] bytes = input.getBytes(StandardCharsets.ISO_8859_1);
         return new String(bytes, StandardCharsets.UTF_8);
-        
+
     }
 
     public static String replaceSpecialCharacters(String input) {
@@ -360,10 +360,10 @@ public class DisputeGestionBsplinkController extends BaseController {
 
         return withoutDiacritics;
     }
-    
+
     public static String replaceSpecialComent(String input) {
-       // Ejemplo: Reemplazar ñ con n
-       String withoutDiacritics = input.replace("\"", "");
+        // Ejemplo: Reemplazar ñ con n
+        String withoutDiacritics = input.replace("\"", "");
         // Puedes añadir más reemplazos específicos si es necesario:
 
         return withoutDiacritics;
@@ -412,7 +412,7 @@ public class DisputeGestionBsplinkController extends BaseController {
             listenvio.A2553ARCHV3 = A2553ARCHV3;
             listenvio.A2553PAIS = filter.A2553PAIS;
             listenvio.A2553CNXPA = filter.A2553CNXPA;
-            listenvio.A2553FOLIO = ""; 
+            listenvio.A2553FOLIO = "";
 
             result2 = logic.insertTracing(listenvio);
             if (result2.equals("RECORD INSERTED")) {
@@ -509,17 +509,16 @@ public class DisputeGestionBsplinkController extends BaseController {
             listenvio.A2553TRNCU = filter.A2553TRNCU;
             listenvio.A2553STAT = filter.A2553STAT;
             listenvio.A2553NMEMO = filter.A2553NMEMO;
-            listenvio.A2553DESCR = replaceSpecialComent(filter.A2553DESCR); 
+            listenvio.A2553DESCR = replaceSpecialComent(filter.A2553DESCR);
             listenvio.A2553ARCHV = "";
-            listenvio.A2553ARCHV2 = ""; 
+            listenvio.A2553ARCHV2 = "";
             listenvio.A2553ARCHV3 = "";
             listenvio.A2553PAIS = filter.A2553PAIS;
             listenvio.A2553FOLIO = "";
             listenvio.A2553STAT2 = filter.A2553STAT2;
             listenvio.A2553CNXPA = filter.A2553CNXPA;
-            
-            
-            String result =logic.insertTracing(filter);
+
+            String result = logic.insertTracing(filter);
 
             map.put("success", true);
             map.put("result", result);
@@ -532,8 +531,8 @@ public class DisputeGestionBsplinkController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
-     // Método para intentar diferentes decodificaciones
+
+    // Método para intentar diferentes decodificaciones
     public static String forceDecode(String input) {
         // Decodifica usando una secuencia de encodings que suelen dar problemas
         try {
@@ -682,7 +681,7 @@ public class DisputeGestionBsplinkController extends BaseController {
             Iterator iter = lst_search.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -703,6 +702,7 @@ public class DisputeGestionBsplinkController extends BaseController {
             CH_14 = row.createCell(14);
             CH_15 = row.createCell(15);
             CH_16 = row.createCell(16);
+            CH_17 = row.createCell(17);
 
             CH_00.setCellValue("Memo number");
             CH_01.setCellValue("Country");
@@ -721,6 +721,7 @@ public class DisputeGestionBsplinkController extends BaseController {
             CH_14.setCellValue("Area");
             CH_15.setCellValue("Status");
             CH_16.setCellValue("Days");
+            CH_17.setCellValue("Bsplink");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -739,6 +740,7 @@ public class DisputeGestionBsplinkController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -757,6 +759,7 @@ public class DisputeGestionBsplinkController extends BaseController {
             CH_14.setCellStyle(headerStyle);
             CH_15.setCellStyle(headerStyle);
             CH_16.setCellStyle(headerStyle);
+            CH_17.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -781,6 +784,7 @@ public class DisputeGestionBsplinkController extends BaseController {
                 CH_14 = row.createCell(14);
                 CH_15 = row.createCell(15);
                 CH_16 = row.createCell(16);
+                CH_17 = row.createCell(17);
 
                 CH_00.setCellValue(lst_search.get(vi).A2548NMEMO);
                 CH_01.setCellValue(lst_search.get(vi).A2548PAIS);
@@ -856,6 +860,7 @@ public class DisputeGestionBsplinkController extends BaseController {
                 }
                 CH_15.setCellValue(Status);
                 CH_16.setCellValue(lst_search.get(vi).A2548DIAS);
+                CH_17.setCellValue(lst_search.get(vi).A2548STCOR);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -874,6 +879,7 @@ public class DisputeGestionBsplinkController extends BaseController {
                 CH_14.setCellStyle(bodyStyle);
                 CH_15.setCellStyle(bodyStyle);
                 CH_16.setCellStyle(bodyStyle);
+                CH_17.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
