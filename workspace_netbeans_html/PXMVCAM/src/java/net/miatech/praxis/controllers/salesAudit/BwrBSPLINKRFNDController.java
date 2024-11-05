@@ -431,7 +431,7 @@ public class BwrBSPLINKRFNDController extends BaseController {
         receptores.add("notificaciones@miatech.net");
         List<String> Ccp = new ArrayList<String>();
         String[] parts = null;
-        String strMails = "ebarraza@aeromexico.com";
+        String strMails = "dngonzalezc@aeromexico.com";
         //strMails = "zperez@miatech.net";
         parts = strMails.split(";");
         for (int i = 0; i < parts.length; i++) {
