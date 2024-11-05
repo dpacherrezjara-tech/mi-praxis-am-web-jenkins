@@ -145,6 +145,9 @@ public class BwrQueryRefundController extends BaseController {
             mapProperties = new HashMap<>();
             mapProperties.put("A3389REGAS", "AUTOPRC11");
             lstData.add(mapProperties);
+            mapProperties = new HashMap<>();
+            mapProperties.put("A3389REGAS", "REJECTPR");
+            lstData.add(mapProperties);
 
             for (int vi = 0; vi < lst.size(); ++vi) {
                 mapProperties = new HashMap<>();
@@ -683,7 +686,7 @@ public class BwrQueryRefundController extends BaseController {
 
     @RequestMapping(value = "GetFilesDirectory")
     public ResponseEntity<?>//@ResponseBody String
-         GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+            GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ResponseEntity res;
         try {
@@ -691,7 +694,7 @@ public class BwrQueryRefundController extends BaseController {
             String urlREST = "BsplinkRFND/ROBOT/" + "" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
             String sesion = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             //
-            Map<String, Object> queryParams = new HashMap<>(); 
+            Map<String, Object> queryParams = new HashMap<>();
             queryParams.put("client", "am");
             queryParams.put("type", "directory");
             queryParams.put("remotePath", urlREST);
@@ -731,7 +734,7 @@ public class BwrQueryRefundController extends BaseController {
 
     @RequestMapping(value = "SearchRFNDPDI")
     public ResponseEntity<?>//@ResponseBody String 
-        SearchRFNDPDI(Object map, HttpServletRequest request) throws Exception {
+            SearchRFNDPDI(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ResponseEntity res;
         A3389Filter filter = new A3389Filter();
@@ -759,7 +762,7 @@ public class BwrQueryRefundController extends BaseController {
             throw new SpringException(e);
         }
 
-         return res;
+        return res;
     }
 
     //    @RequestMapping(value = "SearchRFNDPDI")
