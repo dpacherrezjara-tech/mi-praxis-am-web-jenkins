@@ -116,7 +116,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.Filters', {
                                             width: 210,
                                             height: 28,
                                             maskRe: /[0-9]/,
-                                            value:'1394',
+                                            value:'',
                                             //maskRe:/[1234567890\.]/, NUMERO CON DECIMAL
                                             listeners: {
                                                 keypress: 'onTxtFilterKeypress'
