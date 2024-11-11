@@ -1053,7 +1053,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                     ]
                                 },
                                 {
-                                    title: 'Información Fiscal',
+                                    title: 'Información Fiscal / Contacto',
                                     items: [
                                         {
                                             xtype: 'panel',
@@ -1103,6 +1103,23 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                                     enableKeyEvents: true,
                                                     enforceMaxLength: true,
                                                     maxLength: 20,
+                                                    listeners: {
+                                                        change: 'onUpperValue',
+                                                        keypress: function (obj, e) {
+                                                            if (e.getKey() === e.ENTER) {
+                                                               Ext.getCmp(prototype.id + '-A3953REFER').focus();
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'textfield',
+                                                    id: prototype.id + '-A3953REFER',
+                                                    fieldLabel: 'Correo', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                                                    width: '70%',
+                                                    enableKeyEvents: true,
+                                                    enforceMaxLength: true,
+                                                    maxLength: 50,
                                                     listeners: {
                                                         change: 'onUpperValue',
                                                         keypress: function (obj, e) {
