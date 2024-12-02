@@ -25,8 +25,8 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryElectro
             case 'U':
                 Ext.getCmp(prototype.id + '-btn-delete').show();
                 Ext.getCmp(prototype.id + '-btn-update').show();
-                this.disabledField();
                 this.getDataInputs();
+                this.disabledField();
                 this.view.setHeight(this.view.getHeight());
                 break;
         }
@@ -372,11 +372,7 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryElectro
         Ext.getCmp(prototype.id + '-txtUSUP').setValue(rec.USUP.trim());
         Ext.getCmp(prototype.id + '-txtFEUP').setValue(rec.FEUP.trim());
         Ext.getCmp(prototype.id + '-txtHOUP').setValue(rec.HOUP.trim());
-        
-        if (rec.USUP1.trim()==="USRWEB" || rec.USUP1.trim()==="LAGREDA" || rec.USUP1.trim()==="HILDAA"){
-            Ext.getCmp(prototype.id + '-txtDFLIGHT').setReadOnly(false);
-        }
-        
+
     }
 });
 

@@ -541,7 +541,6 @@ public class ElectronicMiscellaneousDAO {
                 objRtn.FECR = rs01.getString("FECR");
                 objRtn.HOCR = Functions.ConvertedTime(rs01.getString("HOCR").trim());
                 objRtn.USUP = rs01.getString("USUP");
-                objRtn.USUP1 = rs01.getString("USUP1");
                 objRtn.FEUP = rs01.getString("FEUP");
                 objRtn.HOUP = Functions.ConvertedTime(rs01.getString("HOUP").trim());
 

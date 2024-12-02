@@ -411,24 +411,20 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
             Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
             Ext.getCmp(prototype.id+'-cmbTVTA').enable(true);
             Ext.getCmp(prototype.id+'-cmbTPAX').enable(true);
-            if(bean.USERK === 'KEYLAV' || bean.USERK === 'UAT182'|| bean.USERK === 'SAP52T' || bean.USERK === 'LAGREDA' || bean.USERK === 'HILDAA'){
+            if(bean.USERK === 'KEYLAV' || bean.USERK === 'UAT182'|| bean.USERK === 'SAP52T'){
                 Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(false);
                 Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
                 Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(false);
-                Ext.getCmp(prototype.id+'-cmbFVAL').setReadOnly(false);
-                Ext.getCmp(prototype.id+'-cmbSTVAL').setReadOnly(false);
             }
         } else {
             Ext.getCmp(prototype.id+'-txtCDOC').setReadOnly(true);
             Ext.getCmp(prototype.id+'-cmbTDOC').disable(true);
             Ext.getCmp(prototype.id+'-txtPSVVTA').setReadOnly(true);
             Ext.getCmp(prototype.id+'-txtAGTIA').setReadOnly(true);
-            if(bean.USERK === 'KEYLAV' || bean.USERK === 'UAT182'|| bean.USERK === 'SAP52T' || bean.USERK === 'LAGREDA' || bean.USERK === 'HILDAA'){
+            if(bean.USERK === 'KEYLAV' || bean.USERK === 'UAT182'|| bean.USERK === 'SAP52T'){
                 Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(false);
                 Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
                 Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(false);
-                Ext.getCmp(prototype.id+'-cmbFVAL').setReadOnly(false);
-                Ext.getCmp(prototype.id+'-cmbSTVAL').setReadOnly(false);
             }
             else{
                 Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(true);
