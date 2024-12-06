@@ -219,6 +219,11 @@ public class ElectronicMiscellaneousDAO {
                     bean.totQCPNOTHU = QCPNOTHE;
                     bean.totQCPNVAL = QCPNVAL;
                     bean.totQCPNDIFF = QCPNUSEA - QCPNVAL;
+                    
+                    bean.DFLIGHT_OLD = rst.getString("DFLIGHT");
+                    bean.NFLIGHT_OLD = rst.getString("NFLIGHT");
+                    bean.CDEPART_OLD = rst.getString("CDEPART");
+                    bean.CARRIVA_OLD = rst.getString("CARRIVA");
 
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;
@@ -576,7 +581,7 @@ public class ElectronicMiscellaneousDAO {
 
         CallableStatement cstmt = null;
         try {
-            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX135S04A1817(?,?,?,?,?,?,?,?,?,?," + "?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP05477(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
@@ -599,6 +604,11 @@ public class ElectronicMiscellaneousDAO {
             cstmt.setString(17, filter.FCLOSE);
             cstmt.setLong(18, filter.QCPNVAL);
             cstmt.setString(19, filter.FSTAPO);
+            
+            cstmt.setString(20, filter.CDEPART_OLD);
+            cstmt.setString(21, filter.CARRIVA_OLD);
+            cstmt.setString(22, filter.NFLIGHT_OLD);
+            cstmt.setString(23, filter.DFLIGHT_OLD);
             cstmt.execute();
 
         } catch (Exception e) {

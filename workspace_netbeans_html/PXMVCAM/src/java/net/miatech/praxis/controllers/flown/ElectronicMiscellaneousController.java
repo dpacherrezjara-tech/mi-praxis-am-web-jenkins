@@ -1419,6 +1419,11 @@ public class ElectronicMiscellaneousController extends BaseController {
         filter.QCPNUSEA = Integer.parseInt(request.getParameter("QCPNUSEA"));
         filter.QCPNVAL = Integer.parseInt(request.getParameter("QCPNVAL"));
         filter.QCPNOTHE = Integer.parseInt(request.getParameter("QCPNOTHE"));
+        
+        filter.CDEPART_OLD = request.getParameter("CDEPART_OLD");
+        filter.CARRIVA_OLD = request.getParameter("CARRIVA_OLD");
+        filter.NFLIGHT_OLD = request.getParameter("NFLIGHT_OLD");
+        filter.DFLIGHT_OLD = request.getParameter("DFLIGHT_OLD");
 
         msj = logic.loadPX135S04A1817(filter, strOption);
         if (msj.toLowerCase().contains("duplicada")) {
