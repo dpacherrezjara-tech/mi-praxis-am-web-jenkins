@@ -373,6 +373,9 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryElectro
         Ext.getCmp(prototype.id + '-txtFEUP').setValue(rec.FEUP.trim());
         Ext.getCmp(prototype.id + '-txtHOUP').setValue(rec.HOUP.trim());
 
+        if ( rec.USUP1.trim()==="LAGREDA" || rec.USUP1.trim()==="HILDAA" || rec.USUP1.trim()==="USRWEB" ){
+            Ext.getCmp(prototype.id + '-txtDFLIGHT').setReadOnly(false);
+        }
     }
 });
 
