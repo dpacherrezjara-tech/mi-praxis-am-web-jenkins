@@ -61,7 +61,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         Ext.getCmp(prototype.id + '-A3953RFC').setValue(data.A3953RFC.trim());
         Ext.getCmp(prototype.id + '-A3953DIRE1').setValue(data.A3953DIRE1.trim());
         //""; //Ext.getCmp(prototype.id + '-A3953DIRE2').getValue();                          
-        //""; //Ext.getCmp(prototype.id + '-A3953REFER').getValue();                          
+        //""; //Ext.getCmp(prototype.id + '-A3953REFER').getValue();              
+        Ext.getCmp(prototype.id + '-A3953REFER').setValue(data.A3953REFER.trim()); //correo 
         Ext.getCmp(prototype.id + '-A3953COLON').setValue(data.A3953COLON.trim());
         Ext.getCmp(prototype.id + '-A3953DELEG').setValue(data.A3953DELEG.trim());
         Ext.getCmp(prototype.id + '-A3953CIUDA').setValue(data.A3953CIUDA.trim());
@@ -129,7 +130,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         var VL_A3953RFC = Ext.getCmp(prototype.id + '-A3953RFC').getValue();
         var VL_A3953DIRE1 = Ext.getCmp(prototype.id + '-A3953DIRE1').getValue();
         var VL_A3953DIRE2 = ""; //Ext.getCmp(prototype.id + '-A3953DIRE2').getValue();
-        var VL_A3953REFER = ""; //Ext.getCmp(prototype.id + '-A3953REFER').getValue();
+        var VL_A3953REFER = Ext.getCmp(prototype.id + '-A3953REFER').getValue(); //se usa para correo
         var VL_A3953COLON = Ext.getCmp(prototype.id + '-A3953COLON').getValue();
         var VL_A3953DELEG = Ext.getCmp(prototype.id + '-A3953DELEG').getValue();
         var VL_A3953CIUDA = Ext.getCmp(prototype.id + '-A3953CIUDA').getValue();
@@ -547,7 +548,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         Ext.getCmp(prototype.id + '-A3953RFC').setValue('');
         Ext.getCmp(prototype.id + '-A3953DIRE1').setValue('');
         //""; //Ext.getCmp(prototype.id + '-A3953DIRE2').getValue();                          
-        //""; //Ext.getCmp(prototype.id + '-A3953REFER').getValue();                          
+        //""; //Ext.getCmp(prototype.id + '-A3953REFER').getValue();  
+        Ext.getCmp(prototype.id + '-A3953REFER').setValue('');
         Ext.getCmp(prototype.id + '-A3953COLON').setValue('');
         Ext.getCmp(prototype.id + '-A3953DELEG').setValue('');
         Ext.getCmp(prototype.id + '-A3953CIUDA').setValue('');

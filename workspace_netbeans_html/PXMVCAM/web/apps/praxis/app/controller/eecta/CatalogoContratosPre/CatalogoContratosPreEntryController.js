@@ -48,14 +48,14 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         //Ext.getCmp(prototype.id + '-btn-upload').setDisabled(bflag);
     },
     set_calcular_beneficio: function () {
-
+        var A4241TOTBF = 0;
+        var A4241TOT = 0;
         var A4241TOTAN = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOTAN').getValue().replace(",", "").replace(",", ""));
         var A4241PORBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241PORBF').getValue().replace(",", "").replace(",", ""));
-        if (Ext.Number.parseFloat(A4241PORBF) === 0)
-            return;
-
-        var A4241TOTBF = Ext.Number.parseFloat(A4241TOTAN * A4241PORBF) / 100;
-        var A4241TOT = Ext.Number.parseFloat(A4241TOTAN + A4241TOTBF);
+        if (Ext.Number.parseFloat(A4241PORBF) > 0)
+            A4241TOTBF = Ext.Number.parseFloat(A4241TOTAN * A4241PORBF) / 100;
+        
+        A4241TOT = Ext.Number.parseFloat(A4241TOTAN + A4241TOTBF);
         Ext.getCmp(prototype.id + '-A4241TOTBF').setValue(Ext.util.Format.number(A4241TOTBF, '0,000.00'));
         Ext.getCmp(prototype.id + '-A4241TOT').setValue(Ext.util.Format.number(A4241TOT, '0,000.00'));
     },
@@ -493,6 +493,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
     onFacturarNCBeneficioClick: function () {
 
         var VL_A4241IDANT = Ext.getCmp(prototype.id + '-A4241IDANT').getValue();
+        var VL_A4421TOTBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOTBF').getValue().replace(",", "").replace(",", ""));
         
         if ( parseInt(VL_A4241IDANT) === 0) {
             global.Msg({
@@ -500,6 +501,13 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             });
             return;
         }
+         if ( parseInt(VL_A4421TOTBF) === 0) {
+            global.Msg({
+                msg: 'No se puede facturar no hay importe de beneficio'
+            });
+            return;
+        }
+        
         if ( Ext.getCmp(prototype.id + '-A4241UIDBF').getValue().trim() !== '') {
             global.Msg({
                 msg: 'El beneficio ya esta facturado'
@@ -582,10 +590,13 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             Ext.getCmp(prototype.id + '-A4241MDA').focus();
             return mensaje;
         }
+        
+        // No validar, puede haber contratos sin BENEFICIO
         if (parseFloat(params.A4241PORBF) === 0 || params.A4241PORBF === null) {
-            mensaje = 'INGRESAR % BENEFICIO';
-            Ext.getCmp(prototype.id + '-A4241PORBF').focus();
-            return mensaje;
+//            mensaje = 'INGRESAR % BENEFICIO';
+//            Ext.getCmp(prototype.id + '-A4241PORBF').focus();
+//            return mensaje;
+            params.A4241PORBF = 0;
         }
         var Count = Ext.getCmp(prototype.id + '-gridData-uatp').getStore().getCount();
         if (Count === 0) {
@@ -858,11 +869,11 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
 //                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
 //                    Ext.getCmp(prototype.id + '-lbl-total').setText(total);
                     // </editor-fold>
-                    if (obj.data.length === 0) {
-                        global.Msg({
-                            msg: 'Data not found'
-                        });
-                    }
+//                    if (obj.data.length === 0) {
+//                        global.Msg({
+//                            msg: 'Data not found'
+//                        });
+//                    }
                     global.clear();
                 }
             }

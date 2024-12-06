@@ -61,7 +61,8 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGridAdjuntos', {
                                             text: 'Add',
                                             id: prototype.id + '-gridData-adjuntos-add',
                                             iconCls: 'prx-icon-add',
-                                            handler: 'onClickAdd_uatp'
+                                            handler: 'onClickAdd_uatp',
+                                            hidden:true
                                         }
 //                                        ,{
 //                                            text:'handle',
