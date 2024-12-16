@@ -1061,6 +1061,150 @@ public class ProPaymentsControlDAO {
 
         return lstRtn;
     }
+    
+    public List<A3020Filter> loadPX418SQP02149(A3020Filter filter) throws SQLException, Exception {
+
+        List<A3020Filter> lstRtn = new ArrayList<A3020Filter>(0);
+        A3020Filter objRtn;
+        int QTY1 = 0;
+        double SVFOPUS1 = 0;
+        int QDAY30 = 0, QDAY60 = 0, QDAY90 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
+        double ADAY30 = 0, ADAY60 = 0, ADAY90 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL PRAXIS.SQP02149(?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.IN_PAYMENT);
+            cstmt01.setString(5, filter.IN_TDOC);
+            cstmt01.setString(6, filter.IN_FTE);
+            cstmt01.setString(7, filter.IN_FINSUMO);
+            cstmt01.setString(8, filter.IN_BANK);
+            cstmt01.setString(9, filter.SCARCOD);
+            cstmt01.setString(10, filter.IN_RANGE);
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+
+                QTY1 = rs01.getInt("QTY1");
+                SVFOPUS1 = rs01.getDouble("SVFOPUS1");
+
+                QDAY30 = rs01.getInt("QDAY30");
+                ADAY30 = rs01.getDouble("ADAY30");
+                QDAY60 = rs01.getInt("QDAY60");
+                ADAY60 = rs01.getDouble("ADAY60");
+                QDAY90 = rs01.getInt("QDAY90");
+                ADAY90 = rs01.getDouble("ADAY90");
+                //QDAY20 = rs01.getInt("QDAY20");
+                //ADAY20 = rs01.getDouble("ADAY20");
+                QOTHER = rs01.getInt("QOTHER");
+                AOTHER = rs01.getDouble("AOTHER");
+
+                QTOT = rs01.getInt("QTOT");
+                ATOT = rs01.getDouble("ATOT");
+            }
+
+            rs01.close();
+
+            if (cstmt01.getMoreResults()) {
+
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new A3020Filter();
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.IN_PAYMENT = filter.IN_PAYMENT;
+                    objRtn.IN_TDOC = filter.IN_TDOC;
+                    objRtn.IN_FTE = filter.IN_FTE;
+                    objRtn.IN_FINSUMO = filter.IN_FINSUMO;
+                    objRtn.IN_BANK = filter.IN_BANK;
+
+                    objRtn.SCARCOD = rs01.getString("SCARCOD");
+                    objRtn.strDescription = rs01.getString("NAMECAR");
+
+                    objRtn.QTY1 = rs01.getInt("QTY1");
+                    objRtn.SVFOPUS1 = rs01.getDouble("SVFOPUS1");
+                    objRtn.perc1 = (SVFOPUS1 > 0) ? (objRtn.SVFOPUS1 * 100) / SVFOPUS1 : 0;
+
+                    objRtn.QDAY30 = rs01.getInt("QDAY30");
+                    objRtn.QDAY60 = rs01.getInt("QDAY60");
+                    objRtn.QDAY90 = rs01.getInt("QDAY90");
+                    //objRtn.QDAY20 = rs01.getInt("QDAY20");
+                    objRtn.QOTHER = rs01.getInt("QOTHER");
+                    //objRtn.QPAY = rs01.getInt("QPAY");
+
+                    objRtn.ADAY30 = rs01.getDouble("ADAY30");
+                    objRtn.ADAY60 = rs01.getDouble("ADAY60");
+                    objRtn.ADAY90 = rs01.getDouble("ADAY90");
+                    //objRtn.ADAY20 = rs01.getDouble("ADAY20");
+                    objRtn.AOTHER = rs01.getDouble("AOTHER");
+
+                    objRtn.diff1 = rs01.getInt("QTOT");
+                    objRtn.diff2 = rs01.getDouble("ATOT");
+                    objRtn.perc3 = (rs01.getDouble("SVFOPUS1") > 0) ? (rs01.getDouble("ATOT") * 100) / rs01.getDouble("SVFOPUS1") : 0;
+
+                    objRtn.totQTY1 = QTY1;
+                    objRtn.totSVFOPUS1 = SVFOPUS1;
+
+                    objRtn.totQDAY30 = QDAY30;
+                    objRtn.totQDAY60 = QDAY60;
+                    objRtn.totQDAY90 = QDAY90;
+                    //objRtn.totQDAY20 = QDAY20;
+                    objRtn.totQOTHER = QOTHER;
+
+                    objRtn.totADAY30 = ADAY30;
+                    objRtn.totADAY60 = ADAY60;
+                    objRtn.totADAY90 = ADAY90;
+                    //objRtn.totADAY20 = ADAY20;
+                    objRtn.totAOTHER = AOTHER;
+
+                    objRtn.totdiff1 = QTOT;
+                    objRtn.totdiff2 = ATOT;
+                    objRtn.totperc3 = (SVFOPUS1 > 0) ? (ATOT * 100) / SVFOPUS1 : 0;
+
+                    objRtn.perc_30 = (SVFOPUS1 > 0) ? (ADAY30 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_60 = (SVFOPUS1 > 0) ? (ADAY60 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_90 = (SVFOPUS1 > 0) ? (ADAY90 * 100) / SVFOPUS1 : 0;
+                    //objRtn.perc_20 = (SVFOPUS1 > 0) ? (ADAY20 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_O20 = (SVFOPUS1 > 0) ? (AOTHER * 100) / SVFOPUS1 : 0;
+
+                    lstRtn.add(objRtn);
+                }
+            }
+
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
 
     public List<A3020Filter> loadPX418SQP02215(A3020Filter filter) throws SQLException, Exception {
 
