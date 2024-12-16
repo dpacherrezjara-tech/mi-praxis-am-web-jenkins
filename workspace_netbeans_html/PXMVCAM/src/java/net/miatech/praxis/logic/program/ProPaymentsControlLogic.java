@@ -57,6 +57,10 @@ public class ProPaymentsControlLogic {
         return ProPaymentsControlDAO.loadPX418SQP02148(filter);
     }
     
+    public List<A3020Filter> loadPX418SQP02149(A3020Filter filter) throws SQLException, Exception {
+        return ProPaymentsControlDAO.loadPX418SQP02149(filter);
+    }
+    
     public List<A3020Filter> loadPX418SQP02215(A3020Filter filter) throws SQLException, Exception {
         return ProPaymentsControlDAO.loadPX418SQP02215(filter);
     }

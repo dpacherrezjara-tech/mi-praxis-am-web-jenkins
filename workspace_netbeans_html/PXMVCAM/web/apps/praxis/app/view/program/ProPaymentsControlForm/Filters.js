@@ -560,7 +560,9 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                                 {xtype: 'tbspacer', width: 20},
                                 {boxLabel: '<b style="color:#046AAA;">Card Type</b>', inputValue: 'SCARCOD', name: 'rbgFlag', width: 80},
                                 {xtype: 'tbspacer', width: 20},
-                                {boxLabel: '<b style="color:#046AAA;">Bank</b>', inputValue: 'CODEBANK', name: 'rbgFlag'}
+                                {boxLabel: '<b style="color:#046AAA;">Bank</b>', inputValue: 'CODEBANK', name: 'rbgFlag'},
+                                {xtype: 'tbspacer', width: 20},
+                                {boxLabel: '<b style="color:#046AAA;">Merchant</b>', inputValue: 'MERCHANT', name: 'rbgFlag'}
                             ],
                             listeners: {
                                 change: 'btnSearch_click'
