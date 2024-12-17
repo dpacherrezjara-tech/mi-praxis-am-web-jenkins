@@ -13,6 +13,8 @@ import com.google.gson.JsonParser;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -213,27 +215,37 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 break;
                             }
                             if (!getCellValue(currentRow.getCell(23)).equals("")) {
-                                fileA2552.A2552TARIF = Float.parseFloat(getCellValue(currentRow.getCell(23)));
+                                //fileA2552.A2552TARIF = Float.parseFloat(getCellValue(currentRow.getCell(23)));
+                                BigDecimal A2552TARIF = new BigDecimal(getCellValue(currentRow.getCell(23))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TARIF = A2552TARIF.doubleValue();
                             } else {
                                 fileA2552.A2552TARIF = 0;
                             }
                             if (!getCellValue(currentRow.getCell(24)).equals("")) {
-                                fileA2552.A2552TAX = Float.parseFloat(getCellValue(currentRow.getCell(24)));
+                                //fileA2552.A2552TAX = Float.parseFloat(getCellValue(currentRow.getCell(24)));
+                                BigDecimal A2552TAX = new BigDecimal(getCellValue(currentRow.getCell(24))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX = A2552TAX.doubleValue();
                             } else {
                                 fileA2552.A2552TAX = 0;
                             }
                             if (!getCellValue(currentRow.getCell(25)).equals("")) {
-                                fileA2552.A2552COMI = Float.parseFloat(getCellValue(currentRow.getCell(25)));
+                                //fileA2552.A2552COMI = Float.parseFloat(getCellValue(currentRow.getCell(25)));
+                                BigDecimal A2552COMI = new BigDecimal(getCellValue(currentRow.getCell(25))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552COMI = A2552COMI.doubleValue();
                             } else {
                                 fileA2552.A2552COMI = 0;
                             }
                             if (!getCellValue(currentRow.getCell(26)).equals("")) {
-                                fileA2552.A2552SCMII = Float.parseFloat(getCellValue(currentRow.getCell(26)));
+                                //fileA2552.A2552SCMII = Float.parseFloat(getCellValue(currentRow.getCell(26)));
+                                BigDecimal A2552SCMII = new BigDecimal(getCellValue(currentRow.getCell(26))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552SCMII = A2552SCMII.doubleValue();
                             } else {
                                 fileA2552.A2552SCMII = 0;
                             }
                             if (!getCellValue(currentRow.getCell(27)).equals("")) {
-                                fileA2552.A2552TAXCM = Float.parseFloat(getCellValue(currentRow.getCell(27)));
+                                //fileA2552.A2552TAXCM = Float.parseFloat(getCellValue(currentRow.getCell(27)));
+                                BigDecimal A2552TAXCM = new BigDecimal(getCellValue(currentRow.getCell(27))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAXCM = A2552TAXCM.doubleValue();
                             } else {
                                 fileA2552.A2552TAXCM = 0;
                             }
@@ -248,7 +260,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX1 = getCellValue(currentRow.getCell(28));
                             fileA2552.A2552CDATO1 = getCellValue(currentRow.getCell(29));
                             if (!getCellValue(currentRow.getCell(30)).equals("")) {
-                                fileA2552.A2552TAX1 = Float.parseFloat(getCellValue(currentRow.getCell(30)));
+                                //fileA2552.A2552TAX1 = Float.parseFloat(getCellValue(currentRow.getCell(30)));
+                                BigDecimal A2552TAX1 = new BigDecimal(getCellValue(currentRow.getCell(30))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX1 = A2552TAX1.doubleValue();
                             } else {
                                 fileA2552.A2552TAX1 = 0;
                             }
@@ -259,7 +273,10 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX2 = getCellValue(currentRow.getCell(31));
                             fileA2552.A2552CDATO2 = getCellValue(currentRow.getCell(32));
                             if (!getCellValue(currentRow.getCell(33)).equals("")) {
-                                fileA2552.A2552TAX2 = Float.parseFloat(getCellValue(currentRow.getCell(33)));
+                                //fileA2552.A2552TAX2 = Float.parseFloat(getCellValue(currentRow.getCell(33)));
+                                //Convertir el valor a BigDecimal, redondeando a 2 decimales
+                                BigDecimal A2552TAX2 = new BigDecimal(getCellValue(currentRow.getCell(33))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX2 = A2552TAX2.doubleValue();
                             } else {
                                 fileA2552.A2552TAX2 = 0;
                             }
@@ -269,7 +286,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX3 = getCellValue(currentRow.getCell(34));
                             fileA2552.A2552CDATO3 = getCellValue(currentRow.getCell(35));
                             if (!getCellValue(currentRow.getCell(36)).equals("")) {
-                                fileA2552.A2552TAX3 = Float.parseFloat(getCellValue(currentRow.getCell(36)));
+                                //fileA2552.A2552TAX3 = Float.parseFloat(getCellValue(currentRow.getCell(36)));
+                                BigDecimal A2552TAX3 = new BigDecimal(getCellValue(currentRow.getCell(36))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX3 = A2552TAX3.doubleValue();
                             } else {
                                 fileA2552.A2552TAX3 = 0;
                             }
@@ -279,7 +298,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX4 = getCellValue(currentRow.getCell(37));
                             fileA2552.A2552CDATO4 = getCellValue(currentRow.getCell(38));
                             if (!getCellValue(currentRow.getCell(39)).equals("")) {
-                                fileA2552.A2552TAX4 = Float.parseFloat(getCellValue(currentRow.getCell(39)));
+                                //fileA2552.A2552TAX4 = Float.parseFloat(getCellValue(currentRow.getCell(39)));
+                                 BigDecimal A2552TAX4 = new BigDecimal(getCellValue(currentRow.getCell(39))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX4 = A2552TAX4.doubleValue();
                             } else {
                                 fileA2552.A2552TAX4 = 0;
                             }
@@ -289,7 +310,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX5 = getCellValue(currentRow.getCell(40));
                             fileA2552.A2552CDATO5 = getCellValue(currentRow.getCell(41));
                             if (!getCellValue(currentRow.getCell(42)).equals("")) {
-                                fileA2552.A2552TAX5 = Float.parseFloat(getCellValue(currentRow.getCell(42)));
+                                //fileA2552.A2552TAX5 = Float.parseFloat(getCellValue(currentRow.getCell(42)));
+                                BigDecimal A2552TAX5 = new BigDecimal(getCellValue(currentRow.getCell(42))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX5 = A2552TAX5.doubleValue();
                             } else {
                                 fileA2552.A2552TAX5 = 0;
                             }
@@ -299,7 +322,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX6 = getCellValue(currentRow.getCell(43));
                             fileA2552.A2552CDATO6 = getCellValue(currentRow.getCell(44));
                             if (!getCellValue(currentRow.getCell(45)).equals("")) {
-                                fileA2552.A2552TAX6 = Float.parseFloat(getCellValue(currentRow.getCell(45)));
+                                //fileA2552.A2552TAX6 = Float.parseFloat(getCellValue(currentRow.getCell(45)));
+                                BigDecimal A2552TAX6 = new BigDecimal(getCellValue(currentRow.getCell(45))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX6 = A2552TAX6.doubleValue();
                             } else {
                                 fileA2552.A2552TAX6 = 0;
                             }
@@ -309,7 +334,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX7 = getCellValue(currentRow.getCell(46));
                             fileA2552.A2552CDATO7 = getCellValue(currentRow.getCell(47));
                             if (!getCellValue(currentRow.getCell(48)).equals("")) {
-                                fileA2552.A2552TAX7 = Float.parseFloat(getCellValue(currentRow.getCell(48)));
+                               // fileA2552.A2552TAX7 = Float.parseFloat(getCellValue(currentRow.getCell(48)));
+                               BigDecimal A2552TAX7 = new BigDecimal(getCellValue(currentRow.getCell(48))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX7 = A2552TAX7.doubleValue();
                             } else {
                                 fileA2552.A2552TAX7 = 0;
                             }
@@ -319,7 +346,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX8 = getCellValue(currentRow.getCell(49));
                             fileA2552.A2552CDATO8 = getCellValue(currentRow.getCell(50));
                             if (!getCellValue(currentRow.getCell(51)).equals("")) {
-                                fileA2552.A2552TAX8 = Float.parseFloat(getCellValue(currentRow.getCell(51)));
+                                //fileA2552.A2552TAX8 = Float.parseFloat(getCellValue(currentRow.getCell(51)));
+                                BigDecimal A2552TAX8 = new BigDecimal(getCellValue(currentRow.getCell(51))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX8 = A2552TAX8.doubleValue();
                             } else {
                                 fileA2552.A2552TAX8 = 0;
                             }
@@ -329,7 +358,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX9 = getCellValue(currentRow.getCell(52));
                             fileA2552.A2552CDATO9 = getCellValue(currentRow.getCell(53));
                             if (!getCellValue(currentRow.getCell(54)).equals("")) {
-                                fileA2552.A2552TAX9 = Float.parseFloat(getCellValue(currentRow.getCell(54)));
+                                //fileA2552.A2552TAX9 = Float.parseFloat(getCellValue(currentRow.getCell(54)));
+                                 BigDecimal A2552TAX9 = new BigDecimal(getCellValue(currentRow.getCell(54))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX9 = A2552TAX9.doubleValue();
                             } else {
                                 fileA2552.A2552TAX9 = 0;
                             }
@@ -339,7 +370,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX10 = getCellValue(currentRow.getCell(55));
                             fileA2552.A2552CDATO10 = getCellValue(currentRow.getCell(56));
                             if (!getCellValue(currentRow.getCell(57)).equals("")) {
-                                fileA2552.A2552TAX10 = Float.parseFloat(getCellValue(currentRow.getCell(57)));
+                                //fileA2552.A2552TAX10 = Float.parseFloat(getCellValue(currentRow.getCell(57)));
+                                BigDecimal A2552TAX10 = new BigDecimal(getCellValue(currentRow.getCell(57))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX10 = A2552TAX10.doubleValue();
                             } else {
                                 fileA2552.A2552TAX10 = 0;
                             }
@@ -349,7 +382,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX11 = getCellValue(currentRow.getCell(58));
                             fileA2552.A2552CDATO11 = getCellValue(currentRow.getCell(59));
                             if (!getCellValue(currentRow.getCell(60)).equals("")) {
-                                fileA2552.A2552TAX11 = Float.parseFloat(getCellValue(currentRow.getCell(60)));
+                                //fileA2552.A2552TAX11 = Float.parseFloat(getCellValue(currentRow.getCell(60)));
+                                 BigDecimal A2552TAX11 = new BigDecimal(getCellValue(currentRow.getCell(60))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX11 = A2552TAX11.doubleValue();
                             } else {
                                 fileA2552.A2552TAX11 = 0;
                             }
@@ -359,7 +394,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX12 = getCellValue(currentRow.getCell(61));
                             fileA2552.A2552CDATO12 = getCellValue(currentRow.getCell(62));
                             if (!getCellValue(currentRow.getCell(63)).equals("")) {
-                                fileA2552.A2552TAX12 = Float.parseFloat(getCellValue(currentRow.getCell(63)));
+                                //fileA2552.A2552TAX12 = Float.parseFloat(getCellValue(currentRow.getCell(63)));
+                               BigDecimal A2552TAX12 = new BigDecimal(getCellValue(currentRow.getCell(63))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX12 = A2552TAX12.doubleValue();
                             } else {
                                 fileA2552.A2552TAX12 = 0;
                             }
@@ -369,7 +406,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX13 = getCellValue(currentRow.getCell(64));
                             fileA2552.A2552CDATO13 = getCellValue(currentRow.getCell(65));
                             if (!getCellValue(currentRow.getCell(66)).equals("")) {
-                                fileA2552.A2552TAX13 = Float.parseFloat(getCellValue(currentRow.getCell(66)));
+                               // fileA2552.A2552TAX13 = Float.parseFloat(getCellValue(currentRow.getCell(66)));
+                               BigDecimal A2552TAX13 = new BigDecimal(getCellValue(currentRow.getCell(66))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX13 = A2552TAX13.doubleValue();
                             } else {
                                 fileA2552.A2552TAX13 = 0;
                             }
@@ -379,7 +418,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX14 = getCellValue(currentRow.getCell(67));
                             fileA2552.A2552CDATO14 = getCellValue(currentRow.getCell(68));
                             if (!getCellValue(currentRow.getCell(69)).equals("")) {
-                                fileA2552.A2552TAX14 = Float.parseFloat(getCellValue(currentRow.getCell(69)));
+                                //fileA2552.A2552TAX14 = Float.parseFloat(getCellValue(currentRow.getCell(69)));
+                                BigDecimal A2552TAX14 = new BigDecimal(getCellValue(currentRow.getCell(69))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX14 = A2552TAX14.doubleValue();
                             } else {
                                 fileA2552.A2552TAX14 = 0;
                             }
@@ -389,7 +430,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX15 = getCellValue(currentRow.getCell(70));
                             fileA2552.A2552CDATO15 = getCellValue(currentRow.getCell(71));
                             if (!getCellValue(currentRow.getCell(72)).equals("")) {
-                                fileA2552.A2552TAX15 = Float.parseFloat(getCellValue(currentRow.getCell(72)));
+                                //fileA2552.A2552TAX15 = Float.parseFloat(getCellValue(currentRow.getCell(72)));
+                                BigDecimal A2552TAX15 = new BigDecimal(getCellValue(currentRow.getCell(72))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX15 = A2552TAX15.doubleValue();
                             } else {
                                 fileA2552.A2552TAX15 = 0;
                             }
@@ -399,7 +442,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX16 = getCellValue(currentRow.getCell(73));
                             fileA2552.A2552CDATO16 = getCellValue(currentRow.getCell(74));
                             if (!getCellValue(currentRow.getCell(75)).equals("")) {
-                                fileA2552.A2552TAX16 = Float.parseFloat(getCellValue(currentRow.getCell(75)));
+                                //fileA2552.A2552TAX16 = Float.parseFloat(getCellValue(currentRow.getCell(75)));
+                                 BigDecimal A2552TAX16 = new BigDecimal(getCellValue(currentRow.getCell(75))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX16 = A2552TAX16.doubleValue();
                             } else {
                                 fileA2552.A2552TAX16 = 0;
                             }
@@ -409,7 +454,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX17 = getCellValue(currentRow.getCell(76));
                             fileA2552.A2552CDATO17 = getCellValue(currentRow.getCell(77));
                             if (!getCellValue(currentRow.getCell(78)).equals("")) {
-                                fileA2552.A2552TAX17 = Float.parseFloat(getCellValue(currentRow.getCell(78)));
+                                //fileA2552.A2552TAX17 = Float.parseFloat(getCellValue(currentRow.getCell(78)));
+                                BigDecimal A2552TAX17 = new BigDecimal(getCellValue(currentRow.getCell(78))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX17 = A2552TAX17.doubleValue();
                             } else {
                                 fileA2552.A2552TAX17 = 0;
                             }
@@ -419,7 +466,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX18 = getCellValue(currentRow.getCell(79));
                             fileA2552.A2552CDATO18 = getCellValue(currentRow.getCell(80));
                             if (!getCellValue(currentRow.getCell(81)).equals("")) {
-                                fileA2552.A2552TAX18 = Float.parseFloat(getCellValue(currentRow.getCell(81)));
+                                //fileA2552.A2552TAX18 = Float.parseFloat(getCellValue(currentRow.getCell(81)));
+                                BigDecimal A2552TAX18 = new BigDecimal(getCellValue(currentRow.getCell(81))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX18 = A2552TAX18.doubleValue();
                             } else {
                                 fileA2552.A2552TAX18 = 0;
                             }
@@ -429,7 +478,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX19 = getCellValue(currentRow.getCell(82));
                             fileA2552.A2552CDATO19 = getCellValue(currentRow.getCell(83));
                             if (!getCellValue(currentRow.getCell(84)).equals("")) {
-                                fileA2552.A2552TAX19 = Float.parseFloat(getCellValue(currentRow.getCell(84)));
+                                //fileA2552.A2552TAX19 = Float.parseFloat(getCellValue(currentRow.getCell(84)));
+                                 BigDecimal A2552TAX19 = new BigDecimal(getCellValue(currentRow.getCell(84))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX19 = A2552TAX19.doubleValue();
                             } else {
                                 fileA2552.A2552TAX19 = 0;
                             }
@@ -439,7 +490,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552CODTAX20 = getCellValue(currentRow.getCell(85));
                             fileA2552.A2552CDATO20 = getCellValue(currentRow.getCell(86));
                             if (!getCellValue(currentRow.getCell(87)).equals("")) {
-                                fileA2552.A2552TAX20 = Float.parseFloat(getCellValue(currentRow.getCell(87)));
+                                //fileA2552.A2552TAX20 = Float.parseFloat(getCellValue(currentRow.getCell(87)));
+                                BigDecimal A2552TAX20 = new BigDecimal(getCellValue(currentRow.getCell(87))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAX20 = A2552TAX20.doubleValue();
                             } else {
                                 fileA2552.A2552TAX20 = 0;
                             }
@@ -601,22 +654,30 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                     break;
                                 }
                                 if (!getCellValue(currentRow.getCell(9)).equals("")) {
-                                    fileA2552.A2552TARIF = Float.parseFloat(getCellValue(currentRow.getCell(9)));
+                                    //fileA2552.A2552TARIF = Float.parseFloat(getCellValue(currentRow.getCell(9)));
+                                    BigDecimal A2552TARIF = new BigDecimal(getCellValue(currentRow.getCell(9))).setScale(2, RoundingMode.HALF_UP);
+                                    fileA2552.A2552TARIF = A2552TARIF.doubleValue();
                                 } else {
                                     fileA2552.A2552TARIF = 0;
                                 }
                                 if (!getCellValue(currentRow.getCell(10)).equals("")) {
-                                    fileA2552.A2552IVA = Float.parseFloat(getCellValue(currentRow.getCell(10)));
+                                    //fileA2552.A2552IVA = Float.parseFloat(getCellValue(currentRow.getCell(10)));
+                                     BigDecimal A2552IVA = new BigDecimal(getCellValue(currentRow.getCell(10))).setScale(2, RoundingMode.HALF_UP);
+                                    fileA2552.A2552IVA = A2552IVA.doubleValue();
                                 } else {
                                     fileA2552.A2552IVA = 0;
                                 }
                                 if (!getCellValue(currentRow.getCell(11)).equals("")) {
-                                    fileA2552.A2552COMI = Float.parseFloat(getCellValue(currentRow.getCell(11)));
+                                    //fileA2552.A2552COMI = Float.parseFloat(getCellValue(currentRow.getCell(11)));
+                                     BigDecimal A2552COMI = new BigDecimal(getCellValue(currentRow.getCell(11))).setScale(2, RoundingMode.HALF_UP);
+                                    fileA2552.A2552COMI = A2552COMI.doubleValue();
                                 } else {
                                     fileA2552.A2552COMI = 0;
                                 }
                                 if (!getCellValue(currentRow.getCell(12)).equals("")) {
-                                    fileA2552.A2552TAXCM = Float.parseFloat(getCellValue(currentRow.getCell(12)));
+                                   // fileA2552.A2552TAXCM = Float.parseFloat(getCellValue(currentRow.getCell(12)));
+                                    BigDecimal A2552TAXCM = new BigDecimal(getCellValue(currentRow.getCell(12))).setScale(2, RoundingMode.HALF_UP);
+                                    fileA2552.A2552TAXCM = A2552TAXCM.doubleValue();
                                 } else {
                                     fileA2552.A2552TAXCM = 0;
                                 }
@@ -680,25 +741,33 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 fileA2552.A2552PERIODO = parts[1];
 
                                 if (!getCellValue(currentRow.getCell(14)).equals("")) {
-                                    fileA2552.A2552PROVI = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                                    //fileA2552.A2552PROVI = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                                    BigDecimal A2552PROVI = new BigDecimal(getCellValue(currentRow.getCell(14))).setScale(2, RoundingMode.HALF_UP);
+                                    fileA2552.A2552PROVI = A2552PROVI.doubleValue();
                                 } else {
                                     fileA2552.A2552PROVI = 0;
                                 }
                                 fileA2552.A2552PROVIDES = getCellValue(currentRow.getCell(15));
                                 if (!getCellValue(currentRow.getCell(16)).equals("")) {
-                                    fileA2552.A2552PROVI2 = Float.parseFloat(getCellValue(currentRow.getCell(16)));
+                                    //fileA2552.A2552PROVI2 = Float.parseFloat(getCellValue(currentRow.getCell(16)));
+                                    BigDecimal A2552PROVI2 = new BigDecimal(getCellValue(currentRow.getCell(16))).setScale(2, RoundingMode.HALF_UP);
+                                    fileA2552.A2552PROVI2 = A2552PROVI2.doubleValue();
                                 } else {
                                     fileA2552.A2552PROVI2 = 0;
                                 }
                                 fileA2552.A2552PROVIDES2 = getCellValue(currentRow.getCell(17));
                                 if (!getCellValue(currentRow.getCell(18)).equals("")) {
-                                    fileA2552.A2552PROVI3 = Float.parseFloat(getCellValue(currentRow.getCell(18)));
+                                    //fileA2552.A2552PROVI3 = Float.parseFloat(getCellValue(currentRow.getCell(18)));
+                                    BigDecimal A2552PROVI3 = new BigDecimal(getCellValue(currentRow.getCell(18))).setScale(2, RoundingMode.HALF_UP);
+                                    fileA2552.A2552PROVI3 = A2552PROVI3.doubleValue();
                                 } else {
                                     fileA2552.A2552PROVI3 = 0;
                                 }
                                 fileA2552.A2552PROVIDES3 = getCellValue(currentRow.getCell(19));
                                 if (!getCellValue(currentRow.getCell(20)).equals("")) {
-                                    fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(20)));
+                                    //fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(20)));
+                                     BigDecimal A2552PROVI4 = new BigDecimal(getCellValue(currentRow.getCell(20))).setScale(2, RoundingMode.HALF_UP);
+                                    fileA2552.A2552PROVI4 = A2552PROVI4.doubleValue();
                                 } else {
                                     fileA2552.A2552PROVI4 = 0;
                                 }
@@ -820,38 +889,52 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 break;
                             }
                             if (!getCellValue(currentRow.getCell(9)).equals("")) {
-                                fileA2552.A2552COMI = Float.parseFloat(getCellValue(currentRow.getCell(9)));
+                                //fileA2552.A2552COMI = Float.parseFloat(getCellValue(currentRow.getCell(9)));
+                                BigDecimal A2552COMI = new BigDecimal(getCellValue(currentRow.getCell(9))).setScale(2, RoundingMode.HALF_UP);
+                                    fileA2552.A2552COMI = A2552COMI.doubleValue();
                             } else {
                                 fileA2552.A2552COMI = 0;
                             }
                             if (!getCellValue(currentRow.getCell(10)).equals("")) {
-                                fileA2552.A2552TAXCM = Float.parseFloat(getCellValue(currentRow.getCell(10)));
+                                //fileA2552.A2552TAXCM = Float.parseFloat(getCellValue(currentRow.getCell(10)));
+                                BigDecimal A2552TAXCM = new BigDecimal(getCellValue(currentRow.getCell(10))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAXCM = A2552TAXCM.doubleValue();
                             } else {
                                 fileA2552.A2552TAXCM = 0;
                             }
                             if (!getCellValue(currentRow.getCell(11)).equals("")) {
-                                fileA2552.A2552PROVI = Float.parseFloat(getCellValue(currentRow.getCell(11)));
+                                //fileA2552.A2552PROVI = Float.parseFloat(getCellValue(currentRow.getCell(11)));
+                                BigDecimal A2552PROVI = new BigDecimal(getCellValue(currentRow.getCell(11))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552PROVI = A2552PROVI.doubleValue();
                             } else {
                                 fileA2552.A2552PROVI = 0;
                             }
                             if (!getCellValue(currentRow.getCell(12)).equals("")) {
-                                fileA2552.A2552PROVI2 = Float.parseFloat(getCellValue(currentRow.getCell(12)));
+                                //fileA2552.A2552PROVI2 = Float.parseFloat(getCellValue(currentRow.getCell(12)));
+                                BigDecimal A2552PROVI2 = new BigDecimal(getCellValue(currentRow.getCell(12))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552PROVI2 = A2552PROVI2.doubleValue();
                             } else {
                                 fileA2552.A2552PROVI2 = 0;
                             }
                             if (!getCellValue(currentRow.getCell(13)).equals("")) {
-                                fileA2552.A2552PROVI3 = Float.parseFloat(getCellValue(currentRow.getCell(13)));
+                                //fileA2552.A2552PROVI3 = Float.parseFloat(getCellValue(currentRow.getCell(13)));
+                                 BigDecimal A2552PROVI3 = new BigDecimal(getCellValue(currentRow.getCell(13))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552PROVI3 = A2552PROVI3.doubleValue();
                             } else {
                                 fileA2552.A2552PROVI3 = 0;
                             }
                             if (!getCellValue(currentRow.getCell(14)).equals("")) {
-                                fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                                //fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                                BigDecimal A2552PROVI4 = new BigDecimal(getCellValue(currentRow.getCell(14))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552PROVI4 = A2552PROVI4.doubleValue();
                             } else {
                                 fileA2552.A2552PROVI4 = 0;
                             }
 
                             if (!getCellValue(currentRow.getCell(14)).equals("")) {
-                                fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                                //fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                                BigDecimal A2552NETO = new BigDecimal(getCellValue(currentRow.getCell(14))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552NETO = A2552NETO.doubleValue();
                             } else {
                                 fileA2552.A2552NETO = 0;
                             }
@@ -953,41 +1036,55 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 break;
                             }
                             if (!getCellValue(currentRow.getCell(9)).equals("")) {
-                                fileA2552.A2552COMI = Float.parseFloat(getCellValue(currentRow.getCell(9)));
+                               // fileA2552.A2552COMI = Float.parseFloat(getCellValue(currentRow.getCell(9)));
+                               BigDecimal A2552COMI = new BigDecimal(getCellValue(currentRow.getCell(9))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552COMI = A2552COMI.doubleValue();
                             } else {
                                 fileA2552.A2552COMI = 0;
                             }
                             if (!getCellValue(currentRow.getCell(10)).equals("")) {
-                                fileA2552.A2552TAXCM = Float.parseFloat(getCellValue(currentRow.getCell(10)));
+                                //fileA2552.A2552TAXCM = Float.parseFloat(getCellValue(currentRow.getCell(10)));
+                                 BigDecimal A2552TAXCM = new BigDecimal(getCellValue(currentRow.getCell(10))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAXCM = A2552TAXCM.doubleValue();
                             } else {
                                 fileA2552.A2552TAXCM = 0;
                             }
                             // retenciones 
                             if (!getCellValue(currentRow.getCell(11)).equals("")) {
-                                fileA2552.A2552PROVI = Float.parseFloat(getCellValue(currentRow.getCell(11)));
+                               // fileA2552.A2552PROVI = Float.parseFloat(getCellValue(currentRow.getCell(11)));
+                               BigDecimal A2552PROVI = new BigDecimal(getCellValue(currentRow.getCell(11))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552PROVI = A2552PROVI.doubleValue();
                             } else {
                                 fileA2552.A2552PROVI = 0;
                             }
                             if (!getCellValue(currentRow.getCell(12)).equals("")) {
-                                fileA2552.A2552PROVI2 = Float.parseFloat(getCellValue(currentRow.getCell(12)));
+                                //fileA2552.A2552PROVI2 = Float.parseFloat(getCellValue(currentRow.getCell(12)));
+                                BigDecimal A2552PROVI2 = new BigDecimal(getCellValue(currentRow.getCell(12))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552PROVI2 = A2552PROVI2.doubleValue();
                             } else {
                                 fileA2552.A2552PROVI2 = 0;
                             }
                             if (!getCellValue(currentRow.getCell(13)).equals("")) {
-                                fileA2552.A2552PROVI3 = Float.parseFloat(getCellValue(currentRow.getCell(13)));
+                               // fileA2552.A2552PROVI3 = Float.parseFloat(getCellValue(currentRow.getCell(13)));
+                               BigDecimal A2552PROVI3 = new BigDecimal(getCellValue(currentRow.getCell(13))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552PROVI3 = A2552PROVI3.doubleValue();
                             } else {
                                 fileA2552.A2552PROVI3 = 0;
                             }
 
                             if (!getCellValue(currentRow.getCell(14)).equals("")) {
-                                fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                                //fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                                 BigDecimal A2552PROVI4 = new BigDecimal(getCellValue(currentRow.getCell(14))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552PROVI4 = A2552PROVI4.doubleValue();
                             } else {
                                 fileA2552.A2552PROVI4 = 0;
                             }
                             // fin                           
 
                             if (!getCellValue(currentRow.getCell(15)).equals("")) {
-                                fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(15)));
+                               // fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(15)));
+                               BigDecimal A2552NETO = new BigDecimal(getCellValue(currentRow.getCell(15))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552NETO = A2552NETO.doubleValue();
                             } else {
                                 fileA2552.A2552NETO = 0;
                             }
@@ -1163,39 +1260,53 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                 break;
                             }
                             if (!getCellValue(currentRow.getCell(9)).equals("")) {
-                                fileA2552.A2552COMI = Float.parseFloat(getCellValue(currentRow.getCell(9)));
+                                //fileA2552.A2552COMI = Float.parseFloat(getCellValue(currentRow.getCell(9)));
+                                BigDecimal A2552COMI = new BigDecimal(getCellValue(currentRow.getCell(9))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552COMI = A2552COMI.doubleValue();
                             } else {
                                 fileA2552.A2552COMI = 0;
                             }
                             if (!getCellValue(currentRow.getCell(10)).equals("")) {
-                                fileA2552.A2552TAXCM = Float.parseFloat(getCellValue(currentRow.getCell(10)));
+                                //fileA2552.A2552TAXCM = Float.parseFloat(getCellValue(currentRow.getCell(10)));
+                                 BigDecimal A2552TAXCM = new BigDecimal(getCellValue(currentRow.getCell(10))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552TAXCM = A2552TAXCM.doubleValue();
                             } else {
                                 fileA2552.A2552TAXCM = 0;
                             }
                             if (!getCellValue(currentRow.getCell(11)).equals("")) {
-                                fileA2552.A2552PROVI = Float.parseFloat(getCellValue(currentRow.getCell(11)));
+                                //fileA2552.A2552PROVI = Float.parseFloat(getCellValue(currentRow.getCell(11)));
+                                BigDecimal A2552PROVI = new BigDecimal(getCellValue(currentRow.getCell(11))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552PROVI = A2552PROVI.doubleValue();
                             } else {
                                 fileA2552.A2552PROVI = 0;
                             }
                             if (!getCellValue(currentRow.getCell(12)).equals("")) {
-                                fileA2552.A2552PROVI2 = Float.parseFloat(getCellValue(currentRow.getCell(12)));
+                                //fileA2552.A2552PROVI2 = Float.parseFloat(getCellValue(currentRow.getCell(12)));
+                                BigDecimal A2552PROVI2 = new BigDecimal(getCellValue(currentRow.getCell(12))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552PROVI2 = A2552PROVI2.doubleValue();
                             } else {
                                 fileA2552.A2552PROVI2 = 0;
                             }
                             if (!getCellValue(currentRow.getCell(13)).equals("")) {
-                                fileA2552.A2552PROVI3 = Float.parseFloat(getCellValue(currentRow.getCell(13)));
+                               // fileA2552.A2552PROVI3 = Float.parseFloat(getCellValue(currentRow.getCell(13)));
+                                BigDecimal A2552PROVI3 = new BigDecimal(getCellValue(currentRow.getCell(13))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552PROVI3 = A2552PROVI3.doubleValue();
                             } else {
                                 fileA2552.A2552PROVI3 = 0;
                             }
 
                             if (!getCellValue(currentRow.getCell(14)).equals("")) {
-                                fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                                //fileA2552.A2552PROVI4 = Float.parseFloat(getCellValue(currentRow.getCell(14)));
+                                BigDecimal A2552PROVI4 = new BigDecimal(getCellValue(currentRow.getCell(14))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552PROVI4 = A2552PROVI4.doubleValue();
                             } else {
                                 fileA2552.A2552PROVI4 = 0;
                             }
 
                             if (!getCellValue(currentRow.getCell(15)).equals("")) {
-                                fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(15)));
+                                //fileA2552.A2552NETO = Float.parseFloat(getCellValue(currentRow.getCell(15)));
+                                BigDecimal A2552NETO = new BigDecimal(getCellValue(currentRow.getCell(15))).setScale(2, RoundingMode.HALF_UP);
+                                fileA2552.A2552NETO = A2552NETO.doubleValue();
                             } else {
                                 fileA2552.A2552NETO = 0;
                             }
