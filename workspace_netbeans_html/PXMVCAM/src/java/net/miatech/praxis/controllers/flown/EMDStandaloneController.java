@@ -748,7 +748,7 @@ public class EMDStandaloneController extends BaseController {
         String fileNameDownload = String.format("Report Detail EMD Standalone - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             List<A1817Filter> listaData = this.getList(request, true);
-            if (listaData.size() > 65000) {
+            if (listaData.size() > 40000) {
                 System.out.println("YIELD : getTXT");
                 String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
 
