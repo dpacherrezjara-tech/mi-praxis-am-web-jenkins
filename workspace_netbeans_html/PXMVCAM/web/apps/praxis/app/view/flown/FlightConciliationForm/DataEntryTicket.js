@@ -1253,7 +1253,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                     autoSelect: true,
                                     editable: true,
                                     width: 130,
-                                    disabled: true,
+                                    //disabled: true,
                                     typeAhead: true,
                                     emptyText: '',
                                     valueField: 'code', displayField: 'name',
