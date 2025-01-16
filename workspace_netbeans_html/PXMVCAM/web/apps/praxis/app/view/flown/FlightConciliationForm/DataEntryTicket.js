@@ -541,7 +541,6 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                             ["1", "Pending/Without Sale"],
                                             ["2", "Valued"],
                                             ["3", "Closed"],
-                                            ["5", "Value Error"],
                                             ["7", "BPO Volado"],
                                             ["9", "Poliza Errada"]
                                         ]
@@ -557,8 +556,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                     autoSelect: true,
                                     editable: true,
                                     width: 130,
-                                    disabled: true,
-                                    //readOnly: true,
+                                    disabled: false,
                                     typeAhead: true,
                                     emptyText: '',
                                     valueField: 'code', displayField: 'name',
@@ -1255,8 +1253,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                     autoSelect: true,
                                     editable: true,
                                     width: 130,
-                                    disabled: true,
-                                    //readOnly: true,
+                                    //disabled: true,
                                     typeAhead: true,
                                     emptyText: '',
                                     valueField: 'code', displayField: 'name',
