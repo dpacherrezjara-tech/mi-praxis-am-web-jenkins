@@ -112,7 +112,8 @@ Ext.define('Ext.Praxis.view.invoice.BillableCodeCatalogForm.DataEntrys.Maintenan
                                                     ["2", "2-Facturable Glob."],
                                                     ["3", "3-Facturable Auto."],
                                                     ["4", "4-Masivo"],
-                                                    ["5", "5-Bulk"]
+                                                    ["5", "5-Bulk"],
+                                                    ["6", "6-PreCompra"]
                                                 ]
                                             }),
                                             labelWidth: 90,
