@@ -69,13 +69,28 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGrid', {
                                     {text: 'Customer<br>Code', dataIndex: 'A4241CDCLI', align: 'left', width: 85, locked: true},
                                     {text: 'Customer Name', dataIndex: 'A3953RSOCI', align: 'left', width: 250, locked: true},
                                     {
-                                        text: 'Invoice', dataIndex: 'A4241STATB', align: 'center', width: 60, locked: true,
+                                        text: 'Invoice<br>FA, NC, NC TKT', dataIndex: 'A4241STATB', align: 'center', width: 100, locked: true,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             metaData.tdStyle = 'font-weight:bold;';
                                             var html = '<img src="resources/img/semaforo/Circle_Silver.png" title="Pendiente" >';
                                             if (record.get('A4241STATB') === '1')
-                                                var html = '<img src="resources/img/semaforo/Circle_Green.png" title="Facturado" >';
-                                            return html;
+                                                var html = '<img src="resources/img/semaforo/Circle_Green.png" title="Facturado FA" >';
+                                            if (record.get('A4241STATB') === 'X')
+                                                var html = '<img src="resources/img/semaforo/Circle_Orange.png" title="Enviado para timbrar FA" >';
+                                            
+                                            var html1 = '<img src="resources/img/semaforo/Circle_Silver.png" title="Pendiente" >';
+                                            if (record.get('A4241STA2') === '1')
+                                                var html1 = '<img src="resources/img/semaforo/Circle_Green.png" title="Facturado NC" >';
+                                            if (record.get('A4241STA2') === 'X')
+                                                var html1 = '<img src="resources/img/semaforo/Circle_Orange.png" title="Enviado para timbrar NC" >';
+                                            
+                                            var html2 = '<img src="resources/img/semaforo/Circle_Silver.png" title="Pendiente" >';
+                                            if (record.get('A4241STA1') === '1')
+                                                var html2 = '<img src="resources/img/semaforo/Circle_Green.png" title="Facturado NC TKT" >';
+                                            if (record.get('A4241STA1') === 'X')
+                                                var html2 = '<img src="resources/img/semaforo/Circle_Orange.png" title="Enviado para timbrar NC TKT" >';
+                                            
+                                            return html + ' ' + html1 + ' ' + html2 ;
                                         }
                                     },
                                     {text: 'Curr.', dataIndex: 'A4241MDA', width: 50, align: 'left'},
@@ -84,7 +99,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGrid', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-                                    {text: '% Profit ', dataIndex: 'A4241PORBF', width: 70, align: 'right',
+                                    {text: '% Profit ', dataIndex: 'A4241PORBF', width: 60, align: 'right',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
