@@ -39,6 +39,8 @@ public class A4241 {
     public String A4241HORAC = "";
     //news DATOS DE FACTURACION(TIMBRADO)
     public String A4241FECTB = "";
+    public String A4241STA1 = "";
+    public String A4241STA2 = "";
     public String A4241UIDAN = "";
     public String A4241UIDBF = "";
     public String A4241STATB = "";

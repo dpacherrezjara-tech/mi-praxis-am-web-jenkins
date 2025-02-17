@@ -22,7 +22,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         var grid01 = Ext.getCmp(prototype.id + '-gridData-uatp');
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataUatp', {});
         grid01.setStore(storeGridDatas);
-              
+
 
         this.get_ClearField();
         var p = this.view.params;
@@ -32,7 +32,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btnDet-contrato').hide();
                 Ext.getCmp(prototype.id + '-btn-save').show();
-                
+
                 this.handlerEvent_setDisabled(true);
                 Ext.getCmp(prototype.id + '-A3953RSOCI').focus();
                 break;
@@ -100,7 +100,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
             Ext.getCmp(prototype.id + '-A3953ARCFX').setValue(true);
         Ext.getCmp(prototype.id + '-A3962CONT1').setValue(data.A3962CONT1);
         Ext.getCmp(prototype.id + '-A3962CONT1_E').setValue(data.A3962CONT1_E);
-        
+
         //console.log('data.A3953LOGO: ' + data.A3953LOGO);
         Ext.getCmp(prototype.id + '-A3953LOGO').setValue(data.A3953LOGO);
         if (data.A3953LOGO.trim() !== '')
@@ -110,11 +110,11 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
             Ext.getCmp(prototype.id + '-A3953STSID').setValue(true);
         if (data.A3953STSDV.trim() === 'S')
             Ext.getCmp(prototype.id + '-A3953STSDV').setValue(true);
-        
+
         Ext.getCmp(prototype.id + '-A3953DOMFR').setValue(data.A3953DOMFR.trim());
         Ext.getCmp(prototype.id + '-A3953REGFI').setValue(data.A3953REGFI.trim());
         Ext.getCmp(prototype.id + '-A3953UCFDI').setValue(data.A3953UCFDI.trim());
-        
+
         //load detalle Nbr TARJETA UATPs
         //setTimeout( this.search_uatp(), 500);
         this.search_uatp();
@@ -175,11 +175,11 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         var VL_A3953STSID = 'N';
         if (Ext.getCmp(prototype.id + '-A3953STSID').getValue())
             VL_A3953STSID = 'S';
-        
+
         var VL_A3953STSDV = 'N';
         if (Ext.getCmp(prototype.id + '-A3953STSDV').getValue())
             VL_A3953STSDV = 'S';
-        
+
         var VL_A3953DOMFR = Ext.getCmp(prototype.id + '-A3953DOMFR').getValue();
         var VL_A3953REGFI = Ext.getCmp(prototype.id + '-A3953REGFI').getValue();
         var VL_A3953UCFDI = Ext.getCmp(prototype.id + '-A3953UCFDI').getValue();
@@ -399,7 +399,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
                     fn: function () {
                         //culmino PROCESO
                         //console.log(objRtn.dbException.SQLCODE);
-                        if(objRtn.dbException.SQLCODE === '0')return;                        
+                        if (objRtn.dbException.SQLCODE === '0')
+                            return;
                         Ext.getCmp(prototype.id + '-A3953CDCLI').setValue(objRtn.OU_A3953CDCLI);
                         //carga logo(pendiente)
 //                        Ext.getCmp(prototype.id + '-btn-upload').disable(true);
@@ -492,7 +493,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
             Ext.getCmp(prototype.id + '-A3953RFC').focus();
             return mensaje;
         }
-        if (params.A3953TCLIN === '' || params.A3953TCLIN === null ) {
+        if (params.A3953TCLIN === '' || params.A3953TCLIN === null) {
             mensaje = 'SELECCIONE TIPO CLIENTE';
             Ext.getCmp(prototype.id + '-A3953TCLIN').focus();
             return mensaje;
@@ -512,13 +513,13 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
             Ext.getCmp(prototype.id + '-A3953INDPE').focus();
             return mensaje;
         }
-        
+
         if (params.A3953INDPP === null) {
             mensaje = 'SELECCIONE INDICADOR PERIODO COMPLEMENTO PAGO';
             Ext.getCmp(prototype.id + '-A3953INDPP').focus();
             return mensaje;
         }
-        
+
         var Count = Ext.getCmp(prototype.id + '-gridData-uatp').getStore().getCount();
         if (Count === 0) {
             mensaje = 'INGRESE DETALLE TARJETA UATP';
@@ -579,7 +580,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         Ext.getCmp(prototype.id + '-A3953ARCTX').setValue(false);
         Ext.getCmp(prototype.id + '-A3953ARCEC').setValue(false);
         Ext.getCmp(prototype.id + '-A3953ARCFZ').setValue(false);
-        Ext.getCmp(prototype.id + '-A3953ARCFX').setValue(false);        
+        Ext.getCmp(prototype.id + '-A3953ARCFX').setValue(false);
     },
     /*
      * Upload file logo
@@ -788,7 +789,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
     },
     PadLeft: function (number, width) {
         width -= number.toString().length;
-        if (width > 0){
+        if (width > 0) {
             return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
         }
         return number + ""; // siempre devuelve tipo cadena
@@ -798,10 +799,10 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         var items = grid01.getStore().data.items;
         //console.log(items);
         var VL_A3979SEQID = 0;
-        items.forEach(function (rec) {            
+        items.forEach(function (rec) {
             VL_A3979SEQID = rec.data.A3979SEQID;
         });
-        VL_A3979SEQID = parseFloat(VL_A3979SEQID) + 1;        
+        VL_A3979SEQID = parseFloat(VL_A3979SEQID) + 1;
         var beanGrid = {};
         beanGrid.A3979SEQID = this.PadLeft(VL_A3979SEQID, 3);
         beanGrid.A3979DESCR = '';
@@ -825,10 +826,10 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
             }
         });
     },
-    
+
     search_calendario: function () {
         var bean = {};
-        bean.VP_A3953TCLIN= Ext.getCmp(prototype.id + '-A3953TCLIN').getValue();
+        bean.VP_A3953TCLIN = Ext.getCmp(prototype.id + '-A3953TCLIN').getValue();
         bean.VP_A3965CDCLI = Ext.getCmp(prototype.id + '-A3953CDCLI').getValue();
         bean.VP_A3965PERIO = "";
         bean.VP_A3965FEJEC = Ext.util.Format.date(Ext.getCmp(prototype.id + '-A3965FEJEC').getValue(), 'Ym');
@@ -863,11 +864,11 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
                     global.clear();
                 }
             }
-        });        
+        });
         Ext.getCmp(prototype.id + '-gridData-GridCalendario').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridData-GridCalendario').getStore().reload();
     },
-    
+
     /*
      * 
      * @param {type} objGrid
@@ -937,18 +938,18 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
             }
         });
     },
-    btnDetContrato_click:function(){
+    btnDetContrato_click: function () {
         this.winDataEntry('U');
     },
-    winDataEntry: function(action) {
-        action = action === null || action === undefined ? 'U' : action;        
+    winDataEntry: function (action) {
+        action = action === null || action === undefined ? 'U' : action;
         var VL_CDCLI = Ext.getCmp(prototype.id + '-A3953CDCLI').getValue();
         Ext.create('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteContrato', {
             id: prototype.id02 + '-CatalogoClienteContrato',
             params: {
                 action: action,
                 rec: {
-                  CDCLI:VL_CDCLI
+                    CDCLI: VL_CDCLI
                 }
             }
         }).show();
