@@ -70,7 +70,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkReportsStatisticsdet.Bsplink
                 {"code": "", "name": "ALL"},
                 {"code": "F", "name": "AUTHORISED"},
                 {"code": "Y", "name": "PENDING"},
-                {"code": "R", "name": "REJECTED"}
+                {"code": "R", "name": "REJECTED"},
+                {"code": "P", "name": "BILLED"}
             ]
         }));
 

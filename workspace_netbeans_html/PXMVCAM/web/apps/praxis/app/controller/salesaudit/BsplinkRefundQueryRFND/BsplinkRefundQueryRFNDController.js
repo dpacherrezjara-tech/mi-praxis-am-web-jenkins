@@ -85,6 +85,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
                 {"code": "", "name": "ALL"},
                 {"code": "A", "name": "ASSIGNED TO THE AUDITOR"},
                 {"code": "F", "name": "AUTHORISED"},
+                {"code": "P", "name": "BILLED"},
                 {"code": "B", "name": "CHANGE FOR ANOTHER"},
                 {"code": "E", "name": "ERROR IN THE PROCESS"},
                 {"code": "J", "name": "EXEC. OF THE ROBOT"},
@@ -420,6 +421,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
             case 'F':
                 color = '#81F781';
                 value = 'AUTHORISED';
+                break;
+            case 'P':
+                color = '#81F7BE';
+                value = 'BILLED';
                 break;
             case 'Y':
                 color = '#CCFF00';
