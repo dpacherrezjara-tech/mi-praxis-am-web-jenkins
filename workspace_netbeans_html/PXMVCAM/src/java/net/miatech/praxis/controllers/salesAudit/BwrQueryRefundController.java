@@ -626,6 +626,9 @@ public class BwrQueryRefundController extends BaseController {
                     case "K":
                         vl_A3389FLAG = "CPN EVALUATION";
                         break;
+                    case "P":
+                        vl_A3389FLAG = "BILLED";
+                        break;
                 }
                 CH_15.setCellValue(vl_A3389FLAG);
                 CH_16.setCellValue(lst.get(vi).A3389DIAS);
