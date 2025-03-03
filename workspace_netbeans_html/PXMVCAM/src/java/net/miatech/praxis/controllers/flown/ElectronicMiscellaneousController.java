@@ -1484,19 +1484,16 @@ public class ElectronicMiscellaneousController extends BaseController {
         filter.DFLIGHT = request.getParameter("DFLIGHT");
         filter.STORG = request.getParameter("STORG");
         filter.STVAL = request.getParameter("STVAL");
-        filter.VCPN = Double.parseDouble(request.getParameter("VCPN"));
-        filter.COMISI = Double.parseDouble(request.getParameter("COMISI").replaceAll(",", ""));
-        filter.VTAX = Double.parseDouble(request.getParameter("VTAX"));
-        filter.VCPMX = Double.parseDouble(request.getParameter("VCPMX"));
-        filter.TCMUS = Double.parseDouble(request.getParameter("TCMUS"));
-        filter.VCPUS = Double.parseDouble(request.getParameter("VCPUS"));
+        filter.VCPN = Double.parseDouble(request.getParameter("VCPN").replace(",",""));
+        filter.COMISI = Double.parseDouble(request.getParameter("COMISI").replace(",",""));
+        filter.VTAX = Double.parseDouble(request.getParameter("VTAX").replace(",",""));
+        filter.VCPMX = Double.parseDouble(request.getParameter("VCPMX").replace(",",""));
+        filter.TCMUS = Double.parseDouble(request.getParameter("TCMUS").replace(",",""));
+        filter.VCPUS = Double.parseDouble(request.getParameter("VCPUS").replace(",",""));
 
         msj = logic.loadPX135S04A1818(filter, strOption);
         if (msj.toLowerCase().contains("duplicada")) {
             msj = "Error: Duplicated record.";
-        }
-        if (filter.IDCON.length() > 50) {
-            msj = "Error: Maxlength IDCON.";
         }
         map.put("success", true);
         map.put("msj", msj);
