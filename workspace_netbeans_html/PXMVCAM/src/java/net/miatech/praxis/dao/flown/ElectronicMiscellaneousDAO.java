@@ -821,6 +821,7 @@ public class ElectronicMiscellaneousDAO {
 
         } catch (Exception e) {
             e.getMessage();
+            strMsj = "Error: " + e.getMessage();
         } finally {
             if (cstmt != null) {
                 try {
