@@ -71,7 +71,8 @@ Ext.define('Ext.Praxis.controller.sales.CalendarControlARC.CalendarControlARCCon
             Ext.Ajax.request({
                 url: prototype.url + '/search',
                 params: {
-                    IN_A1527PPED: bean.IN_A1527PPED
+                    IN_A1527PPED: bean.IN_A1527PPED,
+                    IN_VERSION: calendarVersion === 'ARC2'?'2':'1'
                 },
                 beforerequest: Ext.getCmp(prototype.id + '-contenedor-calendario').mask('Loading...'),
                 success: function(response, options) {

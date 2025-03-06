@@ -433,8 +433,8 @@ Ext.define('Ext.global.MtCalendar',{
                                         vhtml+='<div style="width: 65px; color: #339900;"><a name="link-item-calendar" id="' + 'link-' + ( data06 ) + '" href="#" style="' + me.getColor(value03.SATURDAY_COLOR) + '" >' + value03.SATURDAY + '</a></div>';
                                         vhtml+='<div style="width: 65px; background-color: #C8B3A4; margin-right: 0px !important;"><a name="link-item-calendar" id="' + 'link-' + ( data07 ) + '" href="#" style="' + me.getColor(value03.SUNDAY_COLOR) + '" >' + value03.SUNDAY + '</a></div>';
                                         vhtml+='<div style="width: 65px; background-color: #C8B3A4; margin-left: 0px !important;"><a name="link-item-calendar" id="' + 'link-' + ( data08 ) + '" href="#" style="' + me.getColor(value03.MONDAY_COLOR) + '" >' + value03.MONDAY + '</a></div>';
-                                        vhtml+='<div style="width: 65px; color: #339900;"><a name="link-item-calendar" id="' + 'link-' + ( data09 ) + '" href="#" style="' + me.getColor(value03.WEDNESDAY_COLOR) + '" >' + value03.WEDNESDAY + '</a></div>';
-                                        vhtml+='<div style="width: 65px;"><a name="link-item-calendar" id="' + 'link-' + ( data10 ) + '" href="#" style="' + me.getColor(value03.THURSDAY2_COLOR) + '" >' + value03.WEDNESDAY + '</a></div>';
+                                        vhtml+='<div style="width: 65px; color: #339900;"><a name="link-item-calendar" id="' + 'link-' + ( data09 ) + '" href="#" style="' + me.getColor(value03.TUESDAY_COLOR) + '" >' + value03.TUESDAY + '</a></div>';
+                                        vhtml+='<div style="width: 65px;"><a name="link-item-calendar" id="' + 'link-' + ( data10 ) + '" href="#" style="' + me.getColor(value03.THURSDAY2_COLOR) + '" >' + value03.TUESDAY + '</a></div>';
                                     vhtml+='</div>'; 
                                     /*
                                     vhtml+='<div>';
