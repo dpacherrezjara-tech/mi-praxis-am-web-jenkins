@@ -142,6 +142,15 @@ public class CalendarControlARCController extends BaseController {
                     fechas.put("SUNDAY_COLOR", vl_sunday_St);
                     fechas.put("MONDAY", vl_monday);
                     fechas.put("TUESDAY", vl_tuesday);
+                    fechas.put("TUESDAY_COMMELW", vl_tuesday_commELW);
+                    fechas.put("TUESDAY_COMMIAP", vl_tuesday_commIAP);
+                    fechas.put("TUESDAY_COMMIAR", vl_tuesday_commIAR);
+                    fechas.put("TUESDAY_CANT", vl_tuesday_cant);
+                    fechas.put("TUESDAY_ERROR", vl_tuesday_error);
+                    fechas.put("TUESDAY_CANTSALE", vl_tuesday_cantSale);
+                    fechas.put("TUESDAY_CANTELW", vl_tuesday_cantELW);
+                    fechas.put("TUESDAY_CANTIAP", vl_tuesday_cantIAP);
+                    fechas.put("TUESDAY_CANTIAR", vl_tuesday_cantIAR);
                     fechas.put("TUESDAY_COLOR", vl_tuesday_St);
                     fechas.put("WEDNESDAY", vl_wednesday);
                     fechas.put("WEDNESDAY_COMMELW", vl_wednesday_commELW);
@@ -237,6 +246,7 @@ public class CalendarControlARCController extends BaseController {
                     vl_friday_St = "#000000";
                     vl_saturday_St = "#000000";
                     vl_sunday_St = "#000000";
+                    vl_tuesday_St = "#000000";
                     vl_wednesday_St = "#000000";
                     vl_thursday_St = "#000000";
                     vl_week = oList.get(i).A1527PDIDS;
@@ -497,6 +507,15 @@ public class CalendarControlARCController extends BaseController {
                     fechas.put("SUNDAY_COLOR", vl_sunday_St);
                     fechas.put("MONDAY", vl_monday);
                     fechas.put("TUESDAY", vl_tuesday);
+                    fechas.put("TUESDAY_COMMELW", vl_tuesday_commELW);
+                    fechas.put("TUESDAY_COMMIAP", vl_tuesday_commIAP);
+                    fechas.put("TUESDAY_COMMIAR", vl_tuesday_commIAR);
+                    fechas.put("TUESDAY_CANT", vl_tuesday_cant);
+                    fechas.put("TUESDAY_ERROR", vl_tuesday_error);
+                    fechas.put("TUESDAY_CANTSALE", vl_tuesday_cantSale);
+                    fechas.put("TUESDAY_CANTELW", vl_tuesday_cantELW);
+                    fechas.put("TUESDAY_CANTIAP", vl_tuesday_cantIAP);
+                    fechas.put("TUESDAY_CANTIAR", vl_tuesday_cantIAR);
                     fechas.put("TUESDAY_COLOR", vl_tuesday_St);
                     fechas.put("WEDNESDAY", vl_wednesday);
                     fechas.put("WEDNESDAY_COMMELW", vl_wednesday_commELW);
@@ -560,6 +579,16 @@ public class CalendarControlARCController extends BaseController {
                     vl_sunday_cantIAR = 0;
                     vl_monday = "";
                     vl_tuesday = "";
+                    vl_tuesday = "";
+                    vl_tuesday_commELW = "";
+                    vl_tuesday_commIAP = "";
+                    vl_tuesday_commIAR = "";
+                    vl_tuesday_cant = 0;
+                    vl_tuesday_error = 0;
+                    vl_tuesday_cantSale = 0;
+                    vl_tuesday_cantELW = 0;
+                    vl_tuesday_cantIAP = 0;
+                    vl_tuesday_cantIAR = 0;
                     vl_wednesday = "";
                     vl_wednesday_commELW = "";
                     vl_wednesday_commIAP = "";
@@ -583,6 +612,7 @@ public class CalendarControlARCController extends BaseController {
                     vl_friday_St = "#000000";
                     vl_saturday_St = "#000000";
                     vl_sunday_St = "#000000";
+                    vl_tuesday_St = "#000000";
                     vl_wednesday_St = "#000000";
                     vl_thursday_St = "#000000";
                 }

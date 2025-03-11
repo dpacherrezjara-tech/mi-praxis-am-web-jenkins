@@ -494,7 +494,7 @@ Ext.define('Ext.global.MtCalendar',{
         // };
         // console.log(Ext.DomHelper.append(target, spec));
         // target.setAttribute("data-qtip", "This tip is inline");
-        if( this.fuente == 'ARC' ){
+        if( this.fuente == 'ARC' || this.fuente == 'ARC2'){
             this.fireEvent('onItemCalendarClick', p.qtr, p.month, p.week, p.op, p.commelw, p.commiap, p.commiar, p.cant, p.error, p.cantsale, p.cantelw, p.cantiap, p.cantiar, p.text);
         }else if( this.fuente == 'ASR' ){
             this.fireEvent('onItemCalendarClick', p.qtr, p.month, p.week, p.op, p.comm, p.cant, p.error, p.cantsale, p.text);
@@ -513,7 +513,7 @@ Ext.define('Ext.global.MtCalendar',{
             op = value.id.split('-')[4];
             
             //------------------------------
-            if( me.fuente == 'ARC' ){
+            if( me.fuente == 'ARC' || me.fuente == 'ARC2'){
                 var commelw, commiap, commiar, cantelw, cantiap, cantiar;
                 commelw = value.id.split('-')[5];
                 commiap = value.id.split('-')[6];
