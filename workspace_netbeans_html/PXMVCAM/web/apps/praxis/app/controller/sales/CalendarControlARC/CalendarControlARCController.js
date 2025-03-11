@@ -86,9 +86,16 @@ Ext.define('Ext.Praxis.controller.sales.CalendarControlARC.CalendarControlARCCon
                         items: res,
                         listeners: {
                             onItemCalendarClick: function(qtr, month, week, op, commelw, commiap, commiar, cant, error, cantsale, cantelw, cantiap, cantiar, text) {
-                                if (parseInt(text) <= parseInt(Ext.Date.format(new Date(), 'Ymd')) && op !== 'MONDAY' && op !== 'TUESDAY' && (cant !== 3 || error > 0) && cantsale < 3) {
-                                    me.getRegularization(text, cantelw, cantiap, cantiar);
+                                if(calendarVersion==='ARC2'){
+                                    if (parseInt(text) <= parseInt(Ext.Date.format(new Date(), 'Ymd')) && op !== 'MONDAY' && op !== 'SUNDAY' && (cant !== 3 || error > 0) && cantsale < 3) {
+                                        me.getRegularization(text, cantelw, cantiap, cantiar);
+                                    }
+                                }else{
+                                    if (parseInt(text) <= parseInt(Ext.Date.format(new Date(), 'Ymd')) && op !== 'MONDAY' && op !== 'TUESDAY' && (cant !== 3 || error > 0) && cantsale < 3) {
+                                        me.getRegularization(text, cantelw, cantiap, cantiar);
+                                    }
                                 }
+                                
                             }
                         }
                     });
