@@ -31,7 +31,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.Emailcatalog
          * Solucion temporal para el reinicio de variables
          */
         prototype.idEmailca = 'EmailcatalogReportForm';
-       prototype.idEmailcaDataEn = 'DataEntryEmailcatalogReportForm';
+        prototype.idEmailcaDataEn = 'DataEntryEmailcatalogReportForm';
         prototype.url = CONTEXTPATH + '/EmailcatalogReportForm';
         prototype.widthWindow = 1366;
         prototype.heightWindow = 768;
@@ -47,12 +47,23 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.Emailcatalog
     },
     setStoresFilters: function () {
         var cmbStatus = Ext.getCmp(prototype.idEmailca + '-CmbStatus');
+        var CmbType = Ext.getCmp(prototype.idEmailca + '-CmbType');
 
         cmbStatus.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
                 {"code": "A", "name": "ACTIVE"},
                 {"code": "E", "name": "INACTIVE"}
+            ]
+        }));
+
+        CmbType.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "ALL"},
+                {"code": "EMPP", "name": "EMPLOYEES"},
+                {"code": "PARN", "name": "PARNERTS (TDVS)"},
+                {"code": "TELE", "name": "VENDOR TELEPERFORMANCE"},
+                {"code": "TELV", "name": "VENDOR TELVISTA"}
             ]
         }));
 
@@ -104,6 +115,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.Emailcatalog
         var me = this;
         me.bean.IN_IATA = Ext.getCmp(prototype.idEmailca + '-txtIATA').getValue();
         me.bean.IN_STATUS = Ext.getCmp(prototype.idEmailca + '-CmbStatus').getValue();
+        me.bean.IN_TYPE =  Ext.getCmp(prototype.idEmailca + '-CmbType').getValue();
         me.bean.pexcel = Ext.getCmp(prototype.id + '-pagination').getValue() ? 0 : 1;
 
         me.SearchReport(me.bean, obj === true ? obj : false);
@@ -118,7 +130,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.Emailcatalog
                 params: bean,
                 callback: function (records, operation, success) {
                     if (records.length === 0) {
-                        var Objtemp = records[0].data;
+                        //var Objtemp = records[0].data;
                         global.Msg({msg: "Data not found.", icon: 2, fn: function () {
                             }});
 
@@ -163,9 +175,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.Emailcatalog
     },
     onRendererColumnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
         var color = '#FFFFFF';
-        switch(String(record.get('A3903FLAG'))){
-            case 'A': color = '#F5A9F2'; value = 'ACTIVE'; break;
-            case 'E': color = '#FF0000'; value = 'Void'; break;
+        switch (String(record.get('A3903FLAG'))) {
+            case 'A':
+                color = '#F5A9F2';
+                value = 'ACTIVE';
+                break;
+            case 'E':
+                color = '#FF0000';
+                value = 'Void';
+                break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
         metaData.style = "font-weight:bold !important; background:" + color + " !important";

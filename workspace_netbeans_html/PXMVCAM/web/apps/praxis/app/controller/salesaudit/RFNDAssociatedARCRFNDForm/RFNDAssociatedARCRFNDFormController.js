@@ -102,7 +102,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDAssociatedARCRFNDForm.RFNDAssoc
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtUser').setValue(Ext.String.trim(res.user.USR));
-                if (Ext.String.trim(res.user.USR) === 'XEILIANA' || Ext.String.trim(res.user.USR) === 'SAP26') {
+                if (Ext.String.trim(res.user.USR) === 'XEILIANA' || Ext.String.trim(res.user.USR) === 'XSTEPHANYC' || Ext.String.trim(res.user.USR) === 'XDINORAHG') {
                     Ext.getCmp(prototype.idRFNDAssociatedARCR + '-txtUser').setReadOnly(false);
                 }
                 me.onSearchClickInitial();

@@ -87,7 +87,8 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
 
         cmbOrigen.bindStore(Ext.create('Ext.data.Store', {
             data: [
-                {"code": "NO", "name": "CADUCO"}
+                {"code": "NO", "name": "CADUCO"},
+                {"code": "US", "name": "EMD STAND ALONE"}
             ]
         }));
 

@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,7 +60,7 @@ public class DownloadFilesReportFormController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private DownloadFilesReportFormLogic logic;
-    
+
     @Autowired
     private PythonWS pws;
 
@@ -222,7 +223,7 @@ public class DownloadFilesReportFormController extends BaseController {
         }
 
     }
-    
+
     @RequestMapping(value = "SearchDebitosDetail")
     public @ResponseBody
     String SearchDebitosDetail(ModelMap map, HttpServletRequest request) {
@@ -276,21 +277,23 @@ public class DownloadFilesReportFormController extends BaseController {
         A3280Filter filter = new A3280Filter();
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-        
-        String v1_urlREST = "/api/download-files-report/downloadfiles";
+
+        String v1_urlREST = "/download-files-report/file";
 
         try {
-            
-            HashMap bodyData = new HashMap<>();
-            bodyData.put("date_from", filter.IN_DATEFROM);
-            bodyData.put("date_to", filter.IN_DATETO);
-            bodyData.put("PREFIX", "bsplink/");
 
-            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST,bodyData);
+            Map<String, Object> queryParams = new HashMap<>();
+            queryParams.put("date_from", filter.IN_DATEFROM);
+            queryParams.put("date_to", filter.IN_DATETO);
+            queryParams.put("CCUST", "139");
+            queryParams.put("client", "am");
+            queryParams.put("PREFIX", "bsplink");
+
+            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST, queryParams);
             return res;
 
         } catch (Exception e) {
-            System.out.println("Error Message => "+ e.getMessage());
+            System.out.println("Error Message => " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             //throw new SpringException(e);
         }
@@ -299,22 +302,25 @@ public class DownloadFilesReportFormController extends BaseController {
     @RequestMapping(value = "downloadFile")
     public ResponseEntity<byte[]> downloadFile(HttpServletRequest request, HttpServletResponse response) throws Exception {
         A3280Filter filter = new A3280Filter();
+         String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-        
-        String v1_urlREST = "/api/download-files-report/downloadfilesbyctry";
+
+        String v1_urlREST = "/download-files-report/fileByCtry";
 
         try {
-            HashMap bodyData = new HashMap<>();
-            bodyData.put("date_from", filter.IN_DATEFROM);
-            bodyData.put("country", filter.IN_COUNTRY);
-            bodyData.put("PREFIX", "bsplink/");
-            
-            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST,bodyData);
+            Map<String, Object> queryParams = new HashMap<>();
+            queryParams.put("date_from", filter.IN_DATEFROM);
+            queryParams.put("country", filter.IN_COUNTRY);
+            queryParams.put("CCUST", "139");
+            queryParams.put("client", "am");
+            queryParams.put("PREFIX", "bsplink");
+
+            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST, queryParams);
             return res;
 
         } catch (Exception e) {
-            System.out.println("Error Message => "+ e.getMessage());
+            System.out.println("Error Message => " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -11,10 +11,10 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreProcesarForm'
     requires: [
         'Ext.Praxis.controller.eecta.ControlUATPPre.ControlUATPPreProcesarController'
     ],
-    title: 'Procesar',
+    title: 'PROCESAMIENTO',
     header: true,
     width: 500,
-    height: 180,
+    height: 300,
     border: false,
     resizable: false,
     layout: {
@@ -32,10 +32,11 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreProcesarForm'
                 type: 'vbox'
             },
             items: [
+
                 {
                     xtype: 'panel',
                     id: prototype.id02 + '-form01',
-                    layout: 'hbox',
+                    layout: 'vbox',
                     width: '100%',
                     margin: '5 0 0 0',
                     items: [
@@ -44,110 +45,21 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreProcesarForm'
                             layout: 'hbox',
                             border: false,
                             margin: '1 1 1 1',
-                            width: 150,
+                            width: 500,
                             items: [
                                 {
                                     xtype: 'radiofield',
                                     id: prototype.id02 + '-op01',
                                     name: prototype.id02 + '-op',
-                                    boxLabel: 'REPORTE VENTAS',
+                                    boxLabel: 'VENTAS PRECOMPRA',
                                     margin: '2 2 2 10',
                                     checked: true
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '1 1 1 1',
-                            items: [
-                                {
-                                    xtype: 'datefield',
-                                    id: prototype.id02 + '-FECHA1',
-                                    fieldLabel: 'Seleccionar fecha', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                    width: 230, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
-                                    format: 'Ymd',
-                                    invalidText: 'Ingrese fecha valida en formato Ymd',
-                                    minValue: new Date(1990, 00, 01),
-                                    maxValue: new Date(),
-                                    value: new Date(),
-                                    maskRe: /[0-9/]/,
-                                    editable: true,
-                                    enableKeyEvents: true,
-                                    enforceMaxLength: true,
-                                    maxLength: 12,
-                                    listeners: {
-                                        keypress: function (obj, e) {
-                                            if (e.getKey() === e.ENTER) {
-                                                Ext.getCmp(prototype.id02 + '-FECHA2').focus();
-                                            }
-                                        }
-                                    }
                                 },
                                 {
                                     xtype: 'datefield',
-                                    id: prototype.id02 + '-FECHA2',
-                                    fieldLabel: 'Hasta', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 50,
-                                    width: 160, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
-                                    format: 'Ymd', disabled: true,
-                                    invalidText: 'Ingrese fecha valida en formato Ymd',
-                                    minValue: new Date(1990, 00, 01),
-                                    maxValue: new Date(),
-                                    value: new Date(),
-                                    hidden: true,
-                                    maskRe: /[0-9/]/,
-                                    editable: true,
-                                    enableKeyEvents: true,
-                                    enforceMaxLength: true,
-                                    maxLength: 12,
-                                    listeners: {
-                                        keypress: function (obj, e) {
-                                            if (e.getKey() === e.ENTER) {
-                                                //Ext.getCmp(prototype.id + '-btn-save').focus();
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        }                        
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    id: prototype.id02 + '-form02',
-                    hidden: true,
-                    layout: 'hbox',
-                    width: '100%',
-                    border: false,
-                    margin: '5 5 5 5',
-                    items: [
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '1 1 1 1',
-                            width: 150,
-                            items: [{
-                                    xtype: 'radiofield',
-                                    id: prototype.id02 + '-op02',
-                                    name: prototype.id02 + '-op',
-                                    boxLabel: 'REPORTE DE VENTA',
-                                    margin: '2 2 2 10'
-                                }]
-
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '1 1 1 1',
-                            items: [
-                                {
-                                    xtype: 'datefield',
-                                    id: prototype.id02 + '-FECHEJE01',
-                                    fieldLabel: 'Emisión', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
-                                    width: 180, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
+                                    id: prototype.id02 + '-FECHA1',
+                                    fieldLabel: 'Seleccionar fecha', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 150,
+                                    width: 260, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
                                     format: 'Ymd',
                                     invalidText: 'Ingrese fecha valida en formato Ymd',
                                     minValue: new Date(1990, 00, 01),
@@ -161,10 +73,70 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreProcesarForm'
                                     listeners: {
                                         keypress: function (obj, e) {
                                             if (e.getKey() === e.ENTER) {
-                                                Ext.getCmp(prototype.id + '-FECHA2').focus();
+                                                //Ext.getCmp(prototype.id02 + '-FECHA2').focus();
                                             }
                                         }
                                     }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '5 1 1 10',
+                            items: [
+                                {
+                                    xtype: 'checkboxfield',
+                                    id: prototype.id02 + '-01-CARGA',
+                                    checked: true,
+                                    padding: '0px 0px 0px 10px',
+                                    boxLabel: 'Cargar Ventas'
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '5 1 1 10',
+                            items: [
+                                {
+                                    xtype: 'checkboxfield',
+                                    id: prototype.id02 + '-02-REPORTE',
+                                    checked: true,
+                                    padding: '0px 0px 0px 10px',
+                                    boxLabel: 'Generar Reporte'
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '5 1 1 10',
+                            items: [
+                                {
+                                    xtype: 'checkboxfield',
+                                    id: prototype.id02 + '-03-APLICACION',
+                                    checked: true,
+                                    padding: '0px 0px 0px 10px',
+                                    boxLabel: 'Procesar Aplicación'
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '5 1 1 10',
+                            items: [
+                                {
+                                    xtype: 'checkboxfield',
+                                    id: prototype.id02 + '-04-FACTURACION',
+                                    checked: true,
+                                    padding: '0px 0px 0px 10px',
+                                    boxLabel: 'Enviar a Facturación'
                                 }
                             ]
                         }
@@ -175,13 +147,13 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreProcesarForm'
                     id: prototype.id02 + '-form03',
                     layout: 'hbox',
                     width: '100%',
-                    margin: '5 0 0 0',
+                    margin: '10 0 0 0',
                     items: [
                         {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            margin: '1 1 1 1',
+                            margin: '5 1 1 1',
                             width: 150,
                             items: [
                                 {
@@ -197,7 +169,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreProcesarForm'
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            margin: '1 1 1 1',
+                            margin: '5 1 1 1',
                             items: [
                                 {
                                     xtype: 'datefield',
@@ -217,7 +189,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreProcesarForm'
                                     listeners: {
                                         keypress: function (obj, e) {
                                             if (e.getKey() === e.ENTER) {
-                                                Ext.getCmp(prototype.id + '-FECHA2').focus();
+                                                //Ext.getCmp(prototype.id + '-FECHA2').focus();
                                             }
                                         }
                                     }
@@ -229,7 +201,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreProcesarForm'
                 {
                     xtype: 'label',
                     padding: '0 2 2 5',
-                    html: '<font color="green"><h3 id="ControlUATPPreProcesarForm_Msg"></h3></font>'
+                    html: '<font color="green"><h3 id="ControlUATPPreProcesarForm_Msg">Iniciar..</h3></font>'
                 }
             ]
         }
