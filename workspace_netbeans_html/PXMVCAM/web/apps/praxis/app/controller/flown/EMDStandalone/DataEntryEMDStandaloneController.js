@@ -75,7 +75,6 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
         this.setValue('de-txtFECVAL', this.beanResult.FECVAL);
         this.setValue('de-txtCURRENCY', this.beanResult.CURRENCY);
         this.setValue('de-txtTOTAL', this.beanResult.VCPN);
-        this.setValue('de-txtVCPMX', this.beanResult.VCPMX);
         this.setValue('de-txtFCONT', this.beanResult.FCONT);
         this.setValue('de-txtIDCON', this.beanResult.IDCON);
         this.setValue('de-txtTN16', this.beanResult.TN16);

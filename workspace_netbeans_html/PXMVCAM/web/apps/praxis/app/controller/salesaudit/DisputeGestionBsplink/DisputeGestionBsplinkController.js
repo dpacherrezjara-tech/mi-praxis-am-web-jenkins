@@ -175,7 +175,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeGestio
         var cmbSearch = Ext.getCmp(prototype.id + '-search-type');
         var cmbOrigin = Ext.getCmp(prototype.id + '-ComboOrigin');
         var cmbArea = Ext.getCmp(prototype.id + '-ComboArea');
-        var ComboStatus = Ext.getCmp(prototype.id + '-ComboStatus');
 
         var cmbSource = Ext.getCmp(prototype.id + '-ComboSource');
         var cmbChannel = Ext.getCmp(prototype.id + '-ComboChannel');
@@ -201,16 +200,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeGestio
                 {"code": "QR", "name": "QUERYS"},
                 {"code": "UP", "name": "UPFRONT"},
                 {"code": "MP", "name": "PAYMENT CONCILIATION"}
-
-            ]
-        }));
-        
-        ComboStatus.bindStore(Ext.create('Ext.data.Store', {
-            data: [
-                {"code": "", "name": "ALL"},
-                {"code": "DI", "name": "DISPUTE"},
-                {"code": "DE", "name": "REJECTED DISPUTE"},
-                {"code": "WA", "name": "ACCEPTED DISPUTE"}
 
             ]
         }));
@@ -250,109 +239,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeGestio
 
 
     },
-    onRendererColumnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        var color = '#FFFFFF';
-        switch (String(record.get('A2548FLAG'))) {
-            case 'A':
-                color = '#F5A9F2';
-                value = 'Approved';
-                break;
-            case 'U':
-                color = '#D8D8D8';
-                value = 'Cleared Up';
-                break;
-            case 'X':
-                color = '#FF0000';
-                value = 'Void';
-                break;
-            case 'C':
-                color = '#F2F5A9';
-                value = 'Condoned';
-                break;
-            case 'P':
-                color = '#81F7BE';
-                value = 'Billed';
-                break;
-            case 'I':
-                color = '#BEF781';
-                value = 'Billed GDS';
-                break;
-            case 'F':
-                color = '#4DEC8E';
-                value = 'Accredited';
-                break;
-            case 'Z':
-                color = '#F8D169';
-                value = 'Authorized';
-                break;
-            case 'R':
-                color = '#F2A60D';
-                value = 'Reaudited';
-                break;
-            case 'J':
-                color = '#E3DAED';
-                value = 'Justified';
-                break;
-            case 'D':
-                color = '#FF9966';
-                value = 'Disputed';
-                break;
-            case 'E':
-                color = '#F78181';
-                value = 'Rejected dispute';
-                break;
-            case 'W':
-                color = '#F3EFB6';
-                value = 'Approved dispute';
-                break;
-            case 'B':
-                color = '#AAE3E8';
-                value = 'Acm\Adm na BSPlink\MM';
-                break;
-            case 'Y':
-                color = '#EFE41B';
-                value = 'Pending';
-                break;
-            case 'N':
-                color = '#E5B2B2';
-                value = 'Rejected';
-                break;
-            case 'O':
-                color = '#B791EF';
-                value = 'IATA disabled';
-                break;
-            case 'Q':
-                color = '#DC7633';
-                value = 'Unregistered client';
-                break;
-            case 'L':
-                color = '#FB63A2';
-                value = 'Acm BSPlink/MM';
-                break;
-
-            case 'G':
-                color = '#F3F781';
-                value = 'PBD issued';
-                break;
-            case 'H':
-                color = '#FE9A2E';
-                value = 'Agreement not reached - to agent';
-                break;
-            case 'T':
-                color = '#F781D8';
-                value = 'Agree with airline';
-                break;
-            case 'K':
-                color = '#A9F5BC';
-                value = 'Agree with Agent';
-                break;
-                //{"code": "G", "name": "POST BILLING"},
-        }
-
-        metaData.tdAttr = 'data-qtip="' + value + '"';
-        metaData.style = "font-weight:bold !important; background:" + color + " !important";
-        return value;
-    },
     onLoadUsers: function () {
         // var cmbUser = Ext.getCmp(prototype.id + '-txtUser');
     },
@@ -370,9 +256,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeGestio
     },
     onCmbAreaAfterRender: function (obj) {
         obj.setValue('');
-    },
-    onCmbStatusAfterRender: function (obj) {
-        obj.setValue('DI');
     },
     onchange: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
@@ -468,7 +351,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeGestio
     },
     onCmbSourceSelect: function (obj, records, eOpts) {
 
-        if (obj.getValue() === 'ASR' || obj.getValue() === 'BSP') {
+        if (obj.getValue() == 'ASR' || obj.getValue() == 'BSP') {
             Ext.getCmp(prototype.id + '-country2').setVisible(true);
         } else {
             Ext.getCmp(prototype.id + '-country2').setVisible(false);
@@ -487,7 +370,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeGestio
 
     },
     onSearchkey: function (f, e) {
-        if (e.getKey() === e.ENTER) {
+        if (e.getKey() == e.ENTER) {
             this.imgSearch_clickHandler();
         }
 
@@ -508,8 +391,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeGestio
         var txtCurrency = Ext.getCmp(prototype.id + '-Currency').getValue();
         var txtTourCode = Ext.getCmp(prototype.id + '-TourCode').getValue();
         var txtAudit = Ext.getCmp(prototype.id + '-Audit').getValue();
-        var ComboStatus = Ext.getCmp(prototype.id + '-ComboStatus').getValue();
-        
         if (cmbsearch == '') {
             Ext.MessageBox.alert('PRAXIS', "Select Search Type", function (btn, text) {
                 if (btn == 'ok' || btn == 'cancel')
@@ -575,8 +456,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeGestio
             this.bean.COMBOCHANNEL = '';
             this.bean.CHANNEL = '';
             this.bean.AUTMAN = '';
-            this.bean.VP_USER = '';
-            //this.bean.STATUS = 'D';
+            this.bean.STATUS = 'D';
             this.bean.VP_TUORCODE = '';
             this.bean.VP_IATA = '';
         } else if (cmbsearch === "1" || cmbsearch === "3" || cmbsearch === "4") {
@@ -586,15 +466,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeGestio
             this.bean.DATETO = txtDateTo;
             this.bean.COMBOBY = "";
             this.bean.AUTMAN = cmbOrigin;
-            //this.bean.STATUS = "D";
+            this.bean.STATUS = "D";
             this.bean.COMBOCHANNEL = CombSource;
             this.bean.CHANNEL = CombChannel;
             this.bean.COUNTRY = txtcountry2;
             this.bean.CURRENCY = txtCurrency;
-            this.bean.VP_TUORCODE = txtTourCode;
+            this.bean.VP_TUORCODE = txtTourCode
             this.bean.VP_IATA = '';
             this.bean.NUMBERADM = '';
-            this.bean.VP_USER = txtAudit;
 
         } else if (cmbsearch === "5") {
             this.bean.NUMBERADM = '';
@@ -602,7 +481,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeGestio
             this.bean.VP_IATA = txtIata;
             this.bean.COMBOBY = "";
             this.bean.AUTMAN = cmbOrigin;
-            //this.bean.STATUS = "D";//String(CmbStatus.selectedItem.data);
+            this.bean.STATUS = "D";//String(CmbStatus.selectedItem.data);
             this.bean.COMBOCHANNEL = CombSource;
             this.bean.CHANNEL = CombChannel;
             this.bean.COUNTRY = txtcountry2;
@@ -611,16 +490,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeGestio
             this.bean.DATEFROM = '';
             this.bean.DATETO = '';
             this.bean.VP_TUORCODE = '';
-            this.bean.VP_USER = txtAudit;
 
         }
-        this.bean.pexcel = Ext.getCmp(prototype.id + '-pagination').getValue() ? 0 : 1;        
+        this.bean.pexcel = Ext.getCmp(prototype.id + '-pagination').getValue() ? 0 : 1;
+        this.bean.VP_USER = txtAudit;
         this.bean.VP_TYPE = '';
         this.bean.VP_AREA = CombArea;
         this.bean.VP_EROOR = cmbError;
-        this.bean.STATUS=ComboStatus;
         this.SearchReportDispute(this.bean, obj === true ? obj : false);
-        
+
+
+
     },
     SearchReportDispute: function (bean, bExcel) {
         if (bExcel) {

@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.controller.flown.SearchCouponFlight.SearchCouponFlightCon
         });
     },
     xpanel_afterrender: function(obj, e) {
-//        Ext.getCmp(prototype.id + '-panelDateFilters').hide();
+        Ext.getCmp(prototype.id + '-panelDateFilters').hide();
         this.setStoreData();
         this.btnSearch_click();
 
@@ -105,8 +105,8 @@ Ext.define('Ext.Praxis.controller.flown.SearchCouponFlight.SearchCouponFlightCon
         obj.setValue(this.fecha.getFullYear());
     },
     afterRenderMonth: function(obj) {
-//        obj.setValue('');
-        obj.setValue('0' + (this.fecha.getMonth() + 1));
+        obj.setValue('');
+        //obj.setValue('0' + (this.fecha.getMonth() + 1));
     },
     selectComboFromYear: function(obj) {
         var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
@@ -231,7 +231,7 @@ Ext.define('Ext.Praxis.controller.flown.SearchCouponFlight.SearchCouponFlightCon
                     var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
                     var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
                     var total = Ext.util.Format.number(pagData.total, '0,000');
-                    console.log(obj.data.length, 'obj.data.length')
+
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
                     Ext.getCmp(prototype.id + '-lbl-total').setText(total);
@@ -269,36 +269,9 @@ Ext.define('Ext.Praxis.controller.flown.SearchCouponFlight.SearchCouponFlightCon
     eventKey: function(e, eOpts) {
         if (eOpts.getKey() === 13) {
             this.btnSearch_click();
-            console.log('wadafaaa')
-            if (Ext.getCmp(prototype.id + '-txtTKT').getValue() !== '') {
-                this.deshabilitarFiltros();
-            }
-        }
-        if (Ext.getCmp(prototype.id + '-txtTKT').getValue() === '') {
-            this.habilitarFiltros();
         }
     }
     ,
-    deshabilitarFiltros: function () {
-        Ext.getCmp(prototype.id + '-cmbDateFromYear').disable(true);
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').disable(true);
-        Ext.getCmp(prototype.id + '-cmbDateFromDay').disable(true);
-        Ext.getCmp(prototype.id + '-cmbDateToYear').disable(true);
-        Ext.getCmp(prototype.id + '-cmbDateToMonth').disable(true);
-        Ext.getCmp(prototype.id + '-cmbDateToDay').disable(true);
-        Ext.getCmp(prototype.id + '-cbxStval').disable(true);
-        Ext.getCmp(prototype.id + '-txtCARR').disable(true);
-    },
-    habilitarFiltros: function () {
-        Ext.getCmp(prototype.id + '-cmbDateFromYear').enable(true);
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').enable(true);
-        Ext.getCmp(prototype.id + '-cmbDateFromDay').enable(true);
-        Ext.getCmp(prototype.id + '-cmbDateToYear').enable(true);
-        Ext.getCmp(prototype.id + '-cmbDateToMonth').enable(true);
-        Ext.getCmp(prototype.id + '-cmbDateToDay').enable(true);
-        Ext.getCmp(prototype.id + '-cbxStval').enable(true);
-        Ext.getCmp(prototype.id + '-txtCARR').enable(true);
-    },
     btnClear_click: function(obj, e) {
         var yearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear');
         var yearTo = Ext.getCmp(prototype.id + '-cmbDateToYear');
@@ -332,7 +305,7 @@ Ext.define('Ext.Praxis.controller.flown.SearchCouponFlight.SearchCouponFlightCon
             modal: true,
             fn: function(btn) {
                 if (btn === 'ok') {
-                    this.ValidationDownloadExcel();
+                    this.exportExcel();
                 }
             }
         });
@@ -346,39 +319,6 @@ Ext.define('Ext.Praxis.controller.flown.SearchCouponFlight.SearchCouponFlightCon
                 + '&IN_FECHA_TO=' + searchParams.IN_FECHA_TO);
     }
     ,
-    ValidationDownloadExcel: function (rec) {
-        this.setFormatParameter();
-        var me = this;
-        Ext.Ajax.request({
-            url: prototype.url + '/ValidationDownload',
-            method: 'POST',
-            timeout: 60000000,
-            beforerequest: Ext.getBody().mask('Loading...'),
-            params: {
-                IN_TKT: searchParams.IN_TKT,
-                IN_STVAL: searchParams.IN_STVAL,
-                IN_CARR: searchParams.IN_CARR,
-                IN_FECHA_FROM: searchParams.IN_FECHA_FROM,
-                IN_FECHA_TO: searchParams.IN_FECHA_TO
-            },
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                var int_result = res.int_result;
-                console.log(int_result, 'int_result')
-                if(int_result>800000)
-                {
-                     global.Msg({
-                            msg: 'Report cannot be exported, please contact system administrator.'
-                        });
-                }
-                else
-                {
-                    me.exportExcel();
-                }
-                Ext.getBody().unmask();
-            }
-        });
-    },
     btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id + '-panelDateFilters');
 

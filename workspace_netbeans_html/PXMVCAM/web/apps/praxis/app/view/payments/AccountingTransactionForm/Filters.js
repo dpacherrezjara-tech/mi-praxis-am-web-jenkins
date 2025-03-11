@@ -219,7 +219,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     id: prototype.id + '-txtIDFLEX',
                                     fieldStyle: 'text-align:center',
                                     labelStyle:'font-weight:bold;text-align:right;',
-                                    name: 'IN_FLEXID',
+                                    name: 'IN_IDFLEX',
                                     fieldLabel: 'FLEX ID',
                                     labelWidth: 100,
                                     width: 390,

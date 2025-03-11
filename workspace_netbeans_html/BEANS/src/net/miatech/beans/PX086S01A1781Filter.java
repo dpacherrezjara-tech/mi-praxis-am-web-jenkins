@@ -20,9 +20,6 @@ public class PX086S01A1781Filter extends A1781 {
      public String VP_A1781FARE = "";
      public String strDescORIG = "";
      public String strDescDEST = "";
-     public String IN_TTARIF = "";
-     public String IN_RFIC = "";
-     public String IN_RECODE = "";
      public String strTitulo = "";
      // inOut
      public String RN= "";

@@ -76,10 +76,14 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridCalendario', {
 //                                        }
                                     },
                                     {
-                                        text: 'Periodicidad', dataIndex: 'A3965INDPE', align: 'center', width: 100,
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return value === 'M'?'MENSUAL':'DIARIA';
-                                        }    
+                                        text: 'Tipo<br>Periodo', dataIndex: 'A3965INDPE', align: 'center', width: 60
+//                                        editor: {
+//                                            xtype: 'textfield',
+//                                            allowBlank: false,
+//                                            enableKeyEvents: true,
+//                                            enforceMaxLength: true,
+//                                            maxLength: 100
+//                                        }
                                     },
                                     {
                                         text: 'Fecha<br>Emisión', dataIndex: 'A3965FEJEC', width: 80, align: 'center'
@@ -99,15 +103,53 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridCalendario', {
                                             {text: 'Desde', dataIndex: 'A3965FINIP', width: 70, align: 'center'},
                                             {text: 'Hasta', dataIndex: 'A3965FFINP', width: 70, align: 'center'}
                                         ]
+//                                        editor: {
+//                                            xtype: 'datefield',
+//                                            width: 120,
+//                                            format: 'Y/m/d',
+//                                            //minValue: new Date(1990, 00, 01),
+//                                            maskRe: /[0-9/]/,
+//                                            editable: true,
+//                                            enableKeyEvents: true,
+//                                            enforceMaxLength: true,
+//                                            maxLength: 10,
+//                                            //padding: '2 0 0 2 ',
+//                                            listeners: {
+//                                                keypress: function (obj, e) {
+//                                                    if (e.getKey() === e.ENTER) {
+//                                                        //Ext.getCmp(prototype.id+'-txtA1757NFACT').focus();
+//                                                    }
+//                                                }
+//                                            }
+//                                        },
+//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+//                                            return Ext.util.Format.date(value, 'Y/m/d');
+//                                        }
                                     },
                                     {
-                                        text: 'Estado', dataIndex: 'A3965STAT', width: 70, align: 'center',
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                                                                      
-                                            var html = '<img src="resources/img/semaforo/Circle_Silver.png" title="PENDIENTE" >';
-                                            if ( record.get('A3965STAT') === 'P' )
-                                            var html = '<img src="resources/img/semaforo/Circle_Green.png" title="PROCESADO" >';
-                                            return html;
-                                        }
+                                        text: 'Estado', dataIndex: 'A3965STAT', width: 70, align: 'center'
+//                                        editor: {
+//                                            xtype: 'datefield',
+//                                            width: 120,
+//                                            format: 'Y/md',
+//                                            //minValue: new Date(1990, 00, 01),
+//                                            maskRe: /[0-9/]/,
+//                                            editable: true,
+//                                            enableKeyEvents: true,
+//                                            enforceMaxLength: true,
+//                                            maxLength: 10,
+//                                            //padding: '2 0 0 2 ',
+//                                            listeners: {
+//                                                keypress: function (obj, e) {
+//                                                    if (e.getKey() === e.ENTER) {
+//                                                        //Ext.getCmp(prototype.id+'-txtA1757NFACT').focus();
+//                                                    }
+//                                                }
+//                                            }
+//                                        },
+//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+//                                            return Ext.util.Format.date(value, 'Y/m/d');
+//                                        }
                                     }
 //                                    {
 //                                        xtype: 'actioncolumn',

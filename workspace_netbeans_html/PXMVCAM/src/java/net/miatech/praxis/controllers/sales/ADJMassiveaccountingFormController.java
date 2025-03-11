@@ -529,8 +529,6 @@ public class ADJMassiveaccountingFormController extends BaseController {
                                     || fileA3344.A3344CTAC.equals("02-00-000000-0000-1141-13821-0000-04") || fileA3344.A3344CTAC.equals("04-00-000000-0000-2131-24702-0000-02")
                                     || fileA3344.A3344CTAC.equals("06-00-000000-0000-1131-11404-0000-00")) {
                                 fileA3344.A3344MARCA = "P";
-                            } else if (!fileA3344.A3344MARCA.equals("")) {
-                                fileA3344.A3344MARCA = "P";
                             } else {
                                 fileA3344.A3344MARCA = "";
                             }
@@ -2097,7 +2095,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
         }
         return cellValue.trim();
     }
-
+    
     @RequestMapping(value = "/getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -2273,6 +2271,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
                 CH_15.setCellValue(listaData.get(vi).A3344USRIN);
                 CH_16.setCellValue(listaData.get(vi).A3344FLAG);
                 CH_17.setCellValue(listaData.get(vi).A3344CTAC);
+                
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);

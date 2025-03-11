@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
@@ -265,8 +264,8 @@ public class DisputemanagementMyarcFormController extends BaseController {
     public boolean upload_s3(String nrocnxpa, File archiv) throws SQLException, Exception {
         boolean res;
         try {
-            String v1_urlREST = "/util/upload-file";
-            String urlREST = "MYARC/WEB" + "/" + nrocnxpa + "/" + Functions.getFechaActual();
+            String v1_urlREST = "/api/util/s3_upload_file";
+            String urlREST = "MYARC/WEB" + "/" + nrocnxpa + "/" + Functions.getFechaActual() + "/";
             res = pws.uploadFilesPython(v1_urlREST, "am", urlREST, archiv, null, null);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
@@ -317,7 +316,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ResponseEntity res;
         try {
-            String v1_urlREST = "/util/download-files";
+            String v1_urlREST = "/api/util/s3_download_files_visor";
             String sesion = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             String urlREST = "";
             if (request.getParameter("IN_TIPO").trim().equals("AGENCY")) {
@@ -326,13 +325,12 @@ public class DisputemanagementMyarcFormController extends BaseController {
                 urlREST = "MYARC/WEB/" + "" + request.getParameter("IN_CNXPA").trim() + "/" + request.getParameter("IN_DATE").trim();
             }
 
-            //
-            Map<String, Object> queryParams = new HashMap<>();
-            queryParams.put("client", "am");
-            queryParams.put("type", "directory");
-            queryParams.put("remotePath", urlREST);
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("client", "am");
+            bodyData.put("type", "VISOR");
+            bodyData.put("remote_path", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, queryParams, sesion);
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData, sesion);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
             throw new SpringException(e);

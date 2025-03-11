@@ -351,10 +351,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     onUpdateClick: function (btn) {
         const me = this;
         let params = me.formatUpdateParams();
-        if (params.detail.filter(x=>x.SCURRENCY !== params.IN_SCURRENCY).length > 0){
-            global.Msg({msg: 'One or more tickets have differents currency!'});
-            return;
-        }
         if (params.detail.length === 0) {
             global.Msg({msg: 'You must have at least one ticket.'});
             return;
@@ -499,7 +495,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const res = await fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`);
         if (res.ok) {
             const data = await res.json();
-            console.log(data);
             let added = 0;
             let repeats = 0;
             data.response.forEach(obj => {
@@ -970,7 +965,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         }
         console.log('Total Difference: ', difference);
 
-        let cerror = '';
         //obtiene detalle para desglosado
         const details = [
             ...gridBPO.data.items.map(x => ({STMANUAL: 'Sales', ...x.data})),
@@ -984,6 +978,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                         SMERCHID: obj.smerchid,
                         PAYDATE: obj.paydate,
                         PRDA: obj.prda,
+                        TDOC: obj.tdoc,
                         AREFNBR: obj.arefnbr,
                         PROCTYPE: obj.proctype,
                         PROCTYPESQ: obj.proctypesq,
@@ -1001,18 +996,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             if (o.STMANUAL === 'Adjustment' && o.CERROR === '03') {
                 o.TRNCU = o.TRNCO || '';
             }
-            o.TDOC = obj.tdoc;
-            if(o.STMANUAL !== 'Adjustment' && o.TDOC !== o.TDOCO){
-                o.CERROR === '79';
-                cerror = '79';
-            }
             return o;
         });
         const conteo_void = details.filter(x => x.FVOID === 'V').length;
         //console.log(conteo_void);
 
         const params = me.requestObjectSP(me.bean);
-        params.IN_CERROR = cerror;
         params.difference = difference;
         params.ajustes = gridADJU.data.items.length;
         params.detail = details;

@@ -419,14 +419,7 @@ public class InterlineVsSalesDAO {
                 objRtn.IN_FVALUE = filter.IN_FVALUE.trim();
                 objRtn.TYPE = filter.TYPE;
                 objRtn.IN_ORDER = filter.IN_ORDER;
-                
-                objRtn.BEAN_BDATE = filter.BDATE.trim();
-                objRtn.BEAN_BDAIR = filter.BDAIR.trim();
-                objRtn.BEAN_TRNCU = filter.IN_TRNCU.trim();
-                objRtn.BEAN_FVALUE = filter.IN_FVALUE.trim();
-                objRtn.BEAN_TYPE = filter.TYPE;
-                objRtn.BEAN_ORDER = filter.IN_ORDER;
-                
+
                 objRtn.RN = rs01.getLong("RN");
                 objRtn.BDATE = rs01.getString("BDATE").trim();
                 objRtn.strFormatDate = Functions.getMonthConvert2(objRtn.BDATE);

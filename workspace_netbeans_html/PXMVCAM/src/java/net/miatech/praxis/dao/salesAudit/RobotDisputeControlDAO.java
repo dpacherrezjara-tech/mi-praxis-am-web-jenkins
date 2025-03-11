@@ -72,7 +72,6 @@ public class RobotDisputeControlDAO {
                     objRtn.A3268ROBOT = rs01.getString("ROBOT");
                     objRtn.A3268STATO = rs01.getString("A3254FINA");
                     objRtn.A3268TOTALPAG = rs01.getString("A3254CANTPAGI");
-                    objRtn.A3254TOTAPAIS = rs01.getString("A3254TOTAPAIS");
                 } else {
                     objRtn.A3268CCUST = rs01.getString("A3255CCUST");
                     objRtn.A3268PAIS = rs01.getString("A3255PAIS");

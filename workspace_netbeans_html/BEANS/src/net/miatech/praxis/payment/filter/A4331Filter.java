@@ -9,23 +9,6 @@ import net.miatech.praxis.payment.entities.A4331;
 public class A4331Filter extends A4331{
     private String DESC_ERROR,DES_MERCHANT,DES_SMERCHANT,DES_CERROR,
             DESC_CODADJU,DESC_PROCTYPE,BPOCOMENT,ADJUCOMENT,IDFLEX,PRAXISID,STMAIN;
-    private Double F_TAX,F_ADJUSMENT;
-
-    public Double getF_ADJUSMENT() {
-        return F_ADJUSMENT;
-    }
-
-    public void setF_ADJUSMENT(Double F_ADJUSMENT) {
-        this.F_ADJUSMENT = F_ADJUSMENT;
-    }
-
-    public Double getF_TAX() {
-        return F_TAX;
-    }
-
-    public void setF_TAX(Double F_TAX) {
-        this.F_TAX = F_TAX;
-    }
     private A4331SFilter summary;
 
     public String getDESC_ERROR() {

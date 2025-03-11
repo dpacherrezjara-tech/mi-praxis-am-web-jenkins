@@ -10,8 +10,9 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
     controller: prototype.id + '-dataEntryController',
     requires: [
         'Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPreEntryController',
-        'Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGridUatp',
-        'Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGridAdjuntos'
+        'Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGridUatp'
+                //'Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGridIdentif',
+                //'Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGridCalendario'        
     ],
     title: 'Mantenimiento Contratos',
     header: true,
@@ -858,29 +859,9 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                                     id: prototype.id + '-btn-facturar',
                                                     text: 'Facturar',
                                                     icon: 'resources/img/botones/file.png',
-                                                    //disabled: false,
+                                                    disabled: false,
                                                     listeners: {
                                                         click: 'onFacturarClick'
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'button',
-                                                    id: prototype.id + '-btn-facturar-beneficio_nc',
-                                                    text: 'Beneficio NC',
-                                                    icon: 'resources/img/botones/file.png',
-                                                    // disabled: true,
-                                                    listeners: {
-                                                        click: 'onFacturarNCBeneficioClick'
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'button',
-                                                    id: prototype.id + '-btn-facturar-nc-tkt',
-                                                    text: 'NC Tickets',
-                                                    icon: 'resources/img/botones/file.png',
-                                                    // disabled: true,
-                                                    listeners: {
-                                                        click: 'onFacturarNCTicketClick'
                                                     }
                                                 }
                                             ]
@@ -906,121 +887,12 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                                 {
                                     xtype: 'panel',
                                     width: '100%',
-                                    title: 'UATP cards',
+                                    title: 'Tarjetas UATP',
                                     id: prototype.id + '-contenedor-grid-uatp',
                                     margin: '1 1 1 1',
                                     items: [
                                         {
                                             xtype: prototype.id + '-info-uatp'
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    width: '100%',
-                                    title: 'Attach file',                                    
-                                    margin: '1 1 1 1',
-                                    items: [
-                                        {
-                                            xtype: 'panel',
-                                            layout: 'vbox',
-                                            border: false,
-                                            margin: '3 3 3 3',
-                                            items: [
-                                                {
-                                                    xtype: 'panel',
-                                                    layout: 'hbox',
-                                                    border: false,
-                                                    items: [
-                                                        {
-                                                            xtype: 'form',
-                                                            id: prototype.id + '-form01',
-                                                            layout: 'vbox',
-                                                            items: [
-                                                                {
-                                                                    xtype: 'filefield',
-                                                                    padding: '2 2 2 2',
-                                                                    id: prototype.id + '-file',
-                                                                    name: 'logofile',
-                                                                    emptyText: 'Adjuntar...',
-                                                                    //labelAlign: 'top',
-                                                                    //fieldLabel: '<strong style="font-weight:bold;color:#0B333C;">Cargar logo</strong>',
-                                                                    allowBlank: true,
-//                                                                    disabled: true,
-                                                                    accept: '.pdf, .docx',
-                                                                    labelWidth: 80,
-                                                                    width: 300,
-                                                                    //buttonText: 'Select logo...',
-                                                                    regex: /(.)+((\.pdf)|(\.doc)(\w)?)$/i,
-                                                                    regexText: 'Only pdf formats are accepted',
-                                                                    buttonConfig: {
-                                                                        text: 'Examinar...',
-                                                                        width: 100,
-                                                                        glyph: 'xf3b6@Ionicons'
-                                                                    },
-                                                                    listeners: {
-                                                                        //change: 'onUploadChange'
-                                                                    }
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            xtype: 'toolbar',
-                                                            dock: 'bottom',
-                                                            ui: 'footer',
-                                                            margin: '2 0 2 0',
-                                                            layout: {
-                                                                pack: 'center'
-                                                            },
-                                                            fieldStyle: 'text-align:center',
-                                                            defaults: {
-                                                                scale: 'small'
-                                                            },
-                                                            items: [
-                                                                {
-                                                                    xtype: 'button',
-                                                                    id: prototype.id + '-btn-upload',
-                                                                    text: 'Upload',
-                                                                    icon: 'resources/img/botones/update.png',
-//                                                                    disabled: true,
-                                                                    listeners: {
-                                                                        click: 'onbtn_uploadClick'
-                                                                    }
-                                                                },
-//                                                                {
-//                                                                    xtype: 'label',
-//                                                                    labelAlign: 'left',
-//                                                                    width: 250,
-//                                                                    padding: '2px 5px 2px 3px',
-//                                                                    html: '<strong style="color:#AC4546;font-size:10px;">Formato: jpg/png file <br> Dimensión: 245x42 pixels </strong>'
-//
-//                                                                },
-                                                                {
-                                                                    xtype: 'button',
-                                                                    text: 'Mostrar',
-                                                                    hidden: true,
-                                                                    listeners: {
-                                                                        click: 'onbtn_searchImage'
-                                                                    }
-                                                                },
-                                                                {
-                                                                    xtype: 'checkboxfield',
-                                                                    id: prototype.id + '-A3953LOGO_chk',
-                                                                    checked: false,
-                                                                    readOnly: true,
-                                                                    hidden: true,
-                                                                    padding: '0px 0px 0px 10px',
-                                                                    boxLabel: 'Logo Cargado'
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                           id: prototype.id + '-contenedor-grid-doc-adjuntos', 
-                                           xtype: prototype.id + '-info-adjuntos' 
                                         }
                                     ]
                                 }
@@ -1075,15 +947,15 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.CatalogoContratosPreE
                     listeners: {
                         click: 'onCancelClick'
                     }
+                },
+                {
+                    xtype: 'label',
+                    labelAlign: 'center',
+                    width: 150,
+                    padding: '2px 5px 2px 3px',
+                    html: '<strong style="color:#AC4546;font-size:13px;">(*)Required Fields</strong>'
+
                 }
-//                {
-//                    xtype: 'label',
-//                    labelAlign: 'center',
-//                    width: 150,
-//                    padding: '2px 5px 2px 3px',
-//                    html: '<strong style="color:#AC4546;font-size:13px;">(*)Required Fields</strong>'
-//
-//                }
             ]
         }
     ]

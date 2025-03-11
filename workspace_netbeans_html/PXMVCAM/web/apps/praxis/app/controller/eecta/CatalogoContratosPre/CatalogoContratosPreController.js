@@ -1,4 +1,6 @@
-//console.log('CatalogoContratosPreController');
+
+console.log('CatalogoContratosPreController');
+
 Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPreController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.CatalogoContratosPreController',

@@ -16,7 +16,6 @@ import net.miatech.beans.SaleAudit.A3182Filter;
 import net.miatech.beans.SaleAudit.SQP00911Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.SaleAudit.A2553;
-import static net.miatech.praxis.controllers.salesAudit.DisputeGestionBsplinkController.fixEncoding;
 import net.miatech.utils.Functions;
 import static net.miatech.utils.Functions.pasarGarbageCollector;
 import org.apache.log4j.Logger;
@@ -77,6 +76,7 @@ public class DisputeGestionBsplinkDAO {
             cstmt01.setInt(22, filter.page.PAGROW);
             cstmt01.setInt(23, filter.page.TOTPAG);
             cstmt01.setInt(24, filter.page.TOTROW);
+            
 
             cstmt01.execute();
 
@@ -103,7 +103,6 @@ public class DisputeGestionBsplinkDAO {
                 objRtn.A2548REGIS = rs01.getString("A2548REGIS");
                 objRtn.CODIT = rs01.getString("A3090FBILI");
                 objRtn.AGENCY = rs01.getString("AGENCY");
-                objRtn.A3090STAT2 = rs01.getString("A3090STAT2");
                 objRtn.strNombreAgente = rs01.getString("STRNOMBREAGENTE");
                 objRtn.strDirecAgente = rs01.getString("STRDIRECAGENTE");
                 objRtn.A2548TRNCO = rs01.getString("A2548TRNCO");
@@ -111,8 +110,7 @@ public class DisputeGestionBsplinkDAO {
                 objRtn.A2548PAIS = rs01.getString("A2548PAIS");
                 objRtn.A2548AREA = rs01.getString("A2548AREA");
                 objRtn.A2548AREADES = rs01.getString("A2548AREADES");
-                objRtn.A2548CANTIDAD = rs01.getInt("RN");
-                objRtn.A2548STCOR = rs01.getString("A3090FLAG");
+                objRtn.A2548CANTIDAD= rs01.getInt("RN");
 
                 //AEROLINEA
                 objRtn.A2548TARIF = rs01.getDouble("A2548TARIF");
@@ -222,7 +220,7 @@ public class DisputeGestionBsplinkDAO {
             cs.setString("IN_PAIS", filter.A2553PAIS);
             cs.setString("IN_FOLIO", filter.A2553FOLIO);
             cs.setString("IN_STATO", filter.A2553STAT2);
-            cs.setString("IN_CNXPA", filter.A2553CNXPA);
+             cs.setString("IN_CNXPA", filter.A2553CNXPA);
 
             cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
             cs.setString("IN_FREGI", Functions.getFechaActual());
@@ -350,7 +348,7 @@ public class DisputeGestionBsplinkDAO {
 
         return STR_RESULT;
     }
-
+    
     public List<SQP00911Filter> loadDataInit(SQP00911Filter filter) throws SQLException, Exception {
         List<SQP00911Filter> lstRtn = new ArrayList<SQP00911Filter>(0);
         SQP00911Filter objRtn;
@@ -364,10 +362,11 @@ public class DisputeGestionBsplinkDAO {
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-
+            
             cstmt01.setString(1, filter.OPCIONTYPE);
             cstmt01.setString(2, session.getUserView().getCustomerInfo().CCUST);
-
+           
+            
             cstmt01.execute();
 
             rs01 = cstmt01.getResultSet();

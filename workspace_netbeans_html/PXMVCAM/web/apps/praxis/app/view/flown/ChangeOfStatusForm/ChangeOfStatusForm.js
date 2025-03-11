@@ -408,7 +408,7 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                             labelWidth: 50,
                                             width: 300,
                                             listeners: {
-                                                specialkey: 'onSearchkey'
+                                                specialkey: 'onSearchkey',
                                                 //change: 'onchange'
                                             }
                                         },
@@ -473,13 +473,13 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         dataIndex: 'A3676FRECE',
                                         width: 80
                                     },
-                                    /*{text: 'Cur.',dataIndex: 'A3676CUR',width: 40},
+                                    {text: 'Cur.',dataIndex: 'A3676CUR',width: 40},
                                             {text: 'Net.',dataIndex: 'A3676MONTO',width: 70,align: 'right',
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     return win.formatDblNumber(value);
                                                 }
-                                            },*/
+                                            },
                                     {text: 'Praxis',
                                         columns: [
                                             {text: 'Ticket', dataIndex: 'A3676TIKET',width: 100},

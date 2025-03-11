@@ -147,7 +147,6 @@ public class SQP00911 {
     public Double A1673TXDIF;
     public String strNombreAgente;
     public String strDirecAgente;
-    public String A3090STAT2;
     public String strZIPCOD;
     public String strDISTRI;
     public String strDEPART;
@@ -162,7 +161,6 @@ public class SQP00911 {
     public String A2548DIAS;
     public String A2548EMAIL;
     public String A2548FFILE;
-    public String A2548STBSP;
 
     public double CANTGROUP;
     public double CANTCLIE;
@@ -192,22 +190,6 @@ public class SQP00911 {
     public String A2548SUBCU;
     public String A2548CLIE;
 
-    public String getA3090STAT2() {
-        return A3090STAT2;
-    }
-
-    public void setA3090STAT2(String A3090STAT2) {
-        this.A3090STAT2 = A3090STAT2;
-    }
-        
-    public String getA2548STBSP() {
-        return A2548STBSP;
-    }
-
-    public void setA2548STBSP(String A2548STBSP) {
-        this.A2548STBSP = A2548STBSP;
-    }
-       
     public String getA2548CLIE() {
         return A2548CLIE;
     }

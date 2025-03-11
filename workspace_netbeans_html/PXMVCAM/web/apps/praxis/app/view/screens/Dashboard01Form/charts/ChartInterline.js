@@ -354,14 +354,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                             {text: '%', dataIndex: 'Perc1', width: 50,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "background:#E1FFE1;text-align:right";
-                                                                    return Ext.util.Format.number(value, '0,000') + "%";
-                                                                },
-                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT').getStore().getData().items[0].data;
-
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(100, '0,000') + "%" + '<b>';
+                                                                    return Ext.util.Format.number(value, '0,000');
                                                                 }
+
                                                             }
                                                         ]
                                                     }
@@ -373,7 +368,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                             bodyStyle: 'background-color: #E3EAF9;',
                                             padding: '5 0 0 20',
                                             width: 800,
-                                            height: 380,
+                                            height: 400,
                                             border: false,
                                             layout: {
                                                 type: 'vbox'
@@ -407,8 +402,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                 {
                                                     xtype: 'cartesian',
                                                     id: prototype.id + '-ChtSalesAnalysis_IA_01_C',
-                                                    width: 700,
-                                                    height: 300,
+                                                    width: 780,
+                                                    height: 380,
                                                     background: '#E3EAF9',
                                                     captions: {
                                                         title: {text: 'Coupons by Month - Prime', alignTo: 'chart'}
@@ -455,8 +450,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                             yField: ['QTY'],
                                                             highlight: true,
                                                             style: {
-//                                                                inGroupGapWidth: 100,
-                                                                groupGutter: 2 
+                                                                inGroupGapWidth: -7
                                                             },
                                                             tooltip: {
                                                                 trackMouse: true,
@@ -475,8 +469,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                     xtype: 'cartesian',
                                                     hidden: true,
                                                     id: prototype.id + '-ChtSalesAnalysis_IA_01_A',
-                                                    width: 700,
-                                                    height: 300,
+                                                    width: 780,
+                                                    height: 380,
                                                     background: '#E3EAF9',
                                                     captions: {
                                                         title: {text: 'Amount by Month - Prime', alignTo: 'chart'}
@@ -520,8 +514,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                             yField: ['A050NETO'],
                                                             highlight: true,
                                                             style: {
-                                                                inGroupGapWidth: 100,
-                                                                groupGutter: 2 
+                                                                inGroupGapWidth: -7
                                                             },
                                                             tooltip: {
                                                                 trackMouse: true,
@@ -541,7 +534,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                 {
                                     xtype: 'panel',
                                     margin: '5 0 5 0',
-                                    border: false,
                                     layout: {
                                         type: 'hbox',
                                         pack: 'center'
@@ -645,13 +637,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                             {text: '%', dataIndex: 'Perc2', width: 50,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "background:#E1FFE1;text-align:right";
-                                                                    return Ext.util.Format.number(value, '0,000') + "%";
-                                                                },
-                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT2').getStore().getData().items[0].data;
-
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(100, '0,000') + "%" + '<b>';
+                                                                    return Ext.util.Format.number(value, '0,000');
                                                                 }
 
                                                             },
@@ -665,7 +651,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                             bodyStyle: 'background-color: #E3EAF9;',
                                             padding: '5 0 0 20',
                                             width: 800,
-                                            height: 380,
+                                            height: 400,
                                             border: false,
                                             layout: {
                                                 type: 'vbox'
@@ -699,8 +685,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                 {
                                                     xtype: 'cartesian',
                                                     id: prototype.id + '-ChtSalesAnalysis_IA_02_D',
-                                                    width: 700,
-                                                    height: 300,
+                                                    width: 800,
+                                                    height: 400,
                                                     background: '#E3EAF9',
                                                     captions: {
                                                         title: {
@@ -774,9 +760,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                 {
                                                     xtype: 'cartesian',
                                                     id: prototype.id + '-ChtSalesAnalysis_IA_02_A',
-                                                    hidden: true,
-                                                    width: 700,
-                                                    height: 300,
+                                                    width: 800,
+                                                    height: 400,
                                                     background: '#E3EAF9',
                                                     captions: {
                                                         title: {
@@ -951,13 +936,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                     {text: '%', dataIndex: 'Perc3', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background:#E1FFE1;text-align:right";
-                                                            return Ext.util.Format.number(value, '0,000') + "%";
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridData_INT_TOT').getStore().getData().items[0].data;
-
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(100, '0,000') + "%" + '<b>';
+                                                            return Ext.util.Format.number(value, '0,000');
                                                         }
 
                                                     }
@@ -1179,14 +1158,15 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                             {text: '%', dataIndex: 'Perc1', width: 50,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "background:#E1FFE1;text-align:right";
-                                                    return Ext.util.Format.number(value, '0,000') + "%";
+                                                    return Ext.util.Format.number(value, '0,000');
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataAIR_P_INT').getStore().getData().items[0].data;
 
                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(100, '0,000') + "%" + '<b>';
+                                                    return '<b>100%<b>';
                                                 }
+
                                             }
                                         ]
                                     },
@@ -1292,18 +1272,22 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                             tipText: function (thumb) {
                                 return Ext.String.format('First {0} Airline', thumb.value);
                             },
-                            listeners: {
-                                change: 'onChangeTopAirline'
+                            listeners:{
+                                change:'onChangeTopAirline'
                             }
 
                         },
                     ]
                 },
-
+                
+                
+                
+                
+                
                 /**
                  * PANEL DE GRILLA Y GRAFICOS - WORKP
                  * */
-
+                
                 {
                     xtype: 'panel',
                     id: prototype.id + '-boxInt_WorkProgress',
@@ -1359,7 +1343,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                             html: '<strong style="color:#000;">Select By : </strong>',
                                             align: 'left',
                                             fieldStyle: 'text-align: center;',
-                                            //                                    width: 120,
+        //                                    width: 120,
                                             padding: '8px 0px 0px 5px',
                                         },
                                         {xtype: 'tbspacer', width: 20},
@@ -1405,6 +1389,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
 //                                            }
                                         },
                                         {xtype: 'tbspacer', width: 20},
+                                        
                                     ]
                                 }
                             ]
@@ -1445,10 +1430,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                             labelWidth: 100,
                                             width: 350,
                                             anchor: '100%',
-                                            listeners: {
-                                                change: function (field, newValue) {
+                                            listeners:{
+                                                change: function(field, newValue){
                                                     field.setValue(newValue.toUpperCase());
-                                                }
+                                                 } 
                                             }
                                         },
                                         {xtype: 'tbspacer', width: 80},
@@ -1495,17 +1480,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                             labelWidth: 130,
                                             width: 320,
                                             anchor: '100%',
-                                            listeners: {
-                                                change: function (field, newValue) {
+                                            listeners:{
+                                                change: function(field, newValue){
                                                     field.setValue(newValue.toUpperCase());
-                                                }
+                                                 } 
                                             }
                                         },
+                                        
                                     ]
                                 }
                             ]
                         },
-
+                        
                         // INFO PRINCIPAL - COUPON
                         {
                             xtype: 'panel',
@@ -1810,8 +1796,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     metaData.style = "text-align:right;";
                                                                     var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
-                                                                    return Ext.util.Format.number(data.totPorc, '0,000') + '%';
-                                                                    ;
+                                                                    return Ext.util.Format.number(data.totPorc, '0,000') + '%';;
                                                                 }
                                                             },
                                                             {text: 'Total Rejected <br> Coupons', dataIndex: 'QRM', width: 100,
@@ -1898,21 +1883,21 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                             position: 'bottom',
                                                             visibleRange: [0, 1]
                                                         }],
-                                                    series: [
-                                                        {
-                                                            type: 'line',
-                                                            xField: 'strDescripcion',
-                                                            yField: 'totAud1',
-                                                            title: 'Audited',
-                                                            fill: true,
-                                                            highlight: true,
-                                                            tooltip: {
-                                                                trackMouse: true,
-                                                                height: 28,
-                                                                renderer: function (toolTip, record, ctx) {
-                                                                    toolTip.setHtml(record.get('strDescripcion') + ' : ' + Ext.util.Format.number(record.get('totAud1'), '0,000'));
-                                                                }
-                                                            },
+                                                        series: [
+                                                            {
+                                                                type: 'line',
+                                                                xField: 'strDescripcion',
+                                                                yField: 'totAud1',
+                                                                title: 'Audited',
+                                                                fill: true,
+                                                                highlight: true,
+                                                                tooltip: {
+                                                                    trackMouse: true,
+                                                                    height: 28,
+                                                                    renderer: function(toolTip, record, ctx) {
+                                                                        toolTip.setHtml(record.get('strDescripcion') + ' : ' + Ext.util.Format.number(record.get('totAud1'), '0,000'));
+                                                                    }
+                                                                },
 //                                                                tooltip: {
 //                                                                    trackMouse: true,
 //                                                                    style: 'background: #FFF',
@@ -1924,23 +1909,23 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
 //                                                                        toolTip.setHtml('Total Coupons : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
 //                                                                    }
 //                                                                },
-                                                            style: {
-                                                                smooth: true,
-                                                                fill: '#fcfcfc', // punto
-                                                                stroke: '#33bdda',
-
-                                                                fillOpacity: 0.1,
-                                                                miterLimit: 3,
-                                                                lineCap: 'miter',
-                                                                lineWidth: 2
-                                                            },
-                                                            marker: {
-                                                                type: 'circle',
-                                                                radius: 4,
-                                                                lineWidth: 2,
-                                                                stroke: "#33bdda",
-                                                                fill: 'white'
-                                                            },
+                                                                style: {
+                                                                    smooth: true,
+                                                                    fill: '#fcfcfc',    // punto
+                                                                    stroke: '#33bdda',
+                                                                    
+                                                                    fillOpacity: 0.1,
+                                                                    miterLimit: 3,
+                                                                    lineCap: 'miter',
+                                                                    lineWidth: 2
+                                                                },
+                                                                marker: {
+                                                                    type: 'circle',
+                                                                    radius: 4,
+                                                                    lineWidth: 2,
+                                                                    stroke: "#33bdda",
+                                                                    fill: 'white'
+                                                                },
 //                                                                label: {
 //                                                                    field: 'Aud1',
 //                                                                    display: 'over',
@@ -1959,41 +1944,41 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
 //                                                                    'stroke-width': 2,
 //                                                                    stroke: '#fff'
 //                                                                },
-                                                            //renderer: 'onColumnRender'
-                                                        },
-                                                        {
-                                                            type: 'line',
+                                                                //renderer: 'onColumnRender'
+                                                            },
+                                                            {
+                                                                type: 'line',
 //                                                                id: prototype.id + '-leyendLastG1',
-                                                            xField: 'strDescripcion',
-                                                            yField: 'totRej1',
-                                                            title: 'Rejected',
-                                                            fill: true,
-                                                            highlight: true,
-                                                            tooltip: {
-                                                                trackMouse: true,
-                                                                height: 28,
-                                                                renderer: function (toolTip, record, ctx) {
-                                                                    toolTip.setHtml(record.get('strDescripcion') + ' : ' + Ext.util.Format.number(record.get('totRej1'), '0,000'));
+                                                                xField: 'strDescripcion',
+                                                                yField: 'totRej1',
+                                                                title: 'Rejected',
+                                                                fill: true,
+                                                                highlight: true,
+                                                                tooltip: {
+                                                                    trackMouse: true,
+                                                                    height: 28,
+                                                                    renderer: function(toolTip, record, ctx) {
+                                                                        toolTip.setHtml(record.get('strDescripcion') + ' : ' + Ext.util.Format.number(record.get('totRej1'), '0,000'));
+                                                                    }
+                                                                },
+                                                                style: {
+                                                                    smooth: true,
+                                                                    fill: "#FAB347",
+                                                                    stroke: "#FAB347",
+                                                                    fillOpacity: 0.1,
+                                                                    miterLimit: 3,
+                                                                    lineCap: 'miter',
+                                                                    lineWidth: 2
+                                                                },
+                                                                marker: {
+                                                                    type: 'circle',
+                                                                    radius: 4,
+                                                                    lineWidth: 1,
+                                                                    stroke: "#FAB347",
+                                                                    fill: 'white'
                                                                 }
-                                                            },
-                                                            style: {
-                                                                smooth: true,
-                                                                fill: "#FAB347",
-                                                                stroke: "#FAB347",
-                                                                fillOpacity: 0.1,
-                                                                miterLimit: 3,
-                                                                lineCap: 'miter',
-                                                                lineWidth: 2
-                                                            },
-                                                            marker: {
-                                                                type: 'circle',
-                                                                radius: 4,
-                                                                lineWidth: 1,
-                                                                stroke: "#FAB347",
-                                                                fill: 'white'
                                                             }
-                                                        }
-
+                                                            
                                                     ]
                                                 }
                                             ]
@@ -2085,7 +2070,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                 }
                             ]
                         },
-
+                        
+                        
+                        
                         // INFO PRINCIPAL - AMOUNT
                         {
                             xtype: 'panel',
@@ -2110,7 +2097,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                     },
                                     bodyStyle: 'background-color: transparent;',
                                     items: [
-
+                                        
                                         // Grafico Barras
                                         {
                                             xtype: 'panel',
@@ -2194,7 +2181,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
 //                                                id: prototype.id + '-ChtSalesAnalysis_IA_01_A',
                                             ]
                                         },
-
+                                        
                                         // Grafico Lineas
                                         {
                                             xtype: 'panel',
@@ -2229,7 +2216,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                             renderer: function (obj, value) {
                                                                 if (value > 1) {
                                                                     return  ' ' + Ext.util.Format.number((value), '0.') + '%';
-                                                                } else
+                                                                }else 
 //                                                                    if (value < 1) {
                                                                     return  ' ' + Ext.util.Format.number((value), '0.00') + '%';
 //                                                                }else {
@@ -2242,46 +2229,46 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                             position: 'bottom',
                                                             visibleRange: [0, 1]
                                                         }],
-                                                    series: [
-                                                        {
-                                                            type: 'line',
-                                                            xField: 'strDescripcion',
-                                                            yField: 'totAud1',
-                                                            title: 'Recovered',
-                                                            fill: true,
-                                                            highlight: true,
-                                                            tooltip: {
-                                                                trackMouse: true,
-                                                                height: 28,
-                                                                renderer: function (toolTip, record, ctx) {
-                                                                    toolTip.setHtml(record.get('strDescripcion') + ' : ' + Ext.util.Format.number(record.get('totAud1'), '0,000.00') + '%');
+                                                        series: [
+                                                            {
+                                                                type: 'line',
+                                                                xField: 'strDescripcion',
+                                                                yField: 'totAud1',
+                                                                title: 'Recovered',
+                                                                fill: true,
+                                                                highlight: true,
+                                                                tooltip: {
+                                                                    trackMouse: true,
+                                                                    height: 28,
+                                                                    renderer: function(toolTip, record, ctx) {
+                                                                        toolTip.setHtml(record.get('strDescripcion') + ' : ' + Ext.util.Format.number(record.get('totAud1'), '0,000.00') + '%');
+                                                                    }
+                                                                },
+                                                                style: {
+                                                                    smooth: true,
+                                                                    fill: '#fcfcfc',    // punto
+                                                                    stroke: '#33bdda',
+                                                                    
+                                                                    fillOpacity: 0.1,
+                                                                    miterLimit: 3,
+                                                                    lineCap: 'miter',
+                                                                    lineWidth: 2
+                                                                },
+                                                                marker: {
+                                                                    type: 'circle',
+                                                                    radius: 4,
+                                                                    lineWidth: 2,
+                                                                    stroke: "#33bdda",
+                                                                    fill: 'white'
                                                                 }
-                                                            },
-                                                            style: {
-                                                                smooth: true,
-                                                                fill: '#fcfcfc', // punto
-                                                                stroke: '#33bdda',
-
-                                                                fillOpacity: 0.1,
-                                                                miterLimit: 3,
-                                                                lineCap: 'miter',
-                                                                lineWidth: 2
-                                                            },
-                                                            marker: {
-                                                                type: 'circle',
-                                                                radius: 4,
-                                                                lineWidth: 2,
-                                                                stroke: "#33bdda",
-                                                                fill: 'white'
                                                             }
-                                                        }
                                                     ]
                                                 }
                                             ]
                                         }
                                     ]
                                 },
-
+                                
                                 // GRID
                                 {
                                     xtype: 'panel',
@@ -2509,14 +2496,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                             {text: '% Rec', dataIndex: 'Porc', width: 80,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#EDF3F3;";
-                                                                    return Ext.util.Format.number(value, '0,000.00') + '%';
-                                                                    ;
+                                                                    return Ext.util.Format.number(value, '0,000.00') + '%';;
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     metaData.style = "text-align:right;";
                                                                     var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
-                                                                    return Ext.util.Format.number(data.totPorc, '0,000') + '%';
-                                                                    ;
+                                                                    return Ext.util.Format.number(data.totPorc, '0,000') + '%';;
                                                                 }
                                                             }
                                                         ]
@@ -2528,11 +2513,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                 }
                             ]
                         },
+                        
                     ]
                 }
-
-
-
+                
+                
+                
             ]
         },
     ]

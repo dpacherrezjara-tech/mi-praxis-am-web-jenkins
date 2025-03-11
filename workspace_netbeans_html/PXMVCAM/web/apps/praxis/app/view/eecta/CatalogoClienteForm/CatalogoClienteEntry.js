@@ -12,7 +12,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
         'Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryController',
         'Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridUatp',
         'Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridIdentif',
-        'Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridCalendario'
+        'Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridCalendario'        
     ],
     title: 'Mantenimiento Cliente',
     header: true,
@@ -531,7 +531,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                                 data: [
                                                     ["C", "CREDITO"],
                                                     ["I", "INTERCAMBIO"],
-                                                    ["P", "PRE-COMPRA"]
+                                                    ["P", "PRE-COMPRA"]                                                    
                                                 ]
                                             }),
                                             queryMode: 'local',
@@ -626,7 +626,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                             xtype: 'button',
                                             id: prototype.id + '-btnDet-contrato',
                                             iconCls: 'prx-icon-docum',
-                                            tooltip: 'Detalle Contrato',
+                                            tooltip: 'Detalle Contrato',                                              
                                             margin: '0 0 0 2',
                                             listeners: {
                                                 click: 'btnDetContrato_click'
@@ -817,7 +817,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                     items: [
                                         {
                                             xtype: 'checkboxfield',
-                                            id: prototype.id + '-A3953STSDV',
+                                            id: prototype.id + '-A3953STSDV',                                            
                                             padding: '0px 0px 0px 10px',
                                             boxLabel: 'Generar Reporte venta por Identificador'
                                         },
@@ -1053,90 +1053,12 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                     ]
                                 },
                                 {
-                                    title: 'Información Fiscal / Contacto',
-                                    items: [
-                                        {
-                                            xtype: 'panel',
-                                            // layout: 'column',
-                                            margin: '1 0 1 0',
-                                            border: false,
-                                            items: [
-                                                {
-                                                    xtype: 'textfield',
-                                                    id: prototype.id + '-A3953DOMFR',
-                                                    fieldLabel: 'Domilicio Fiscal', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                                    width: 200,
-                                                    enableKeyEvents: true,
-                                                    enforceMaxLength: true,
-                                                    maxLength: 20,
-                                                    listeners: {
-                                                        change: 'onUpperValue',
-                                                        keypress: function (obj, e) {
-                                                            if (e.getKey() === e.ENTER) {
-                                                                Ext.getCmp(prototype.id + '-A3953REGFI').focus();
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'textfield',
-                                                    id: prototype.id + '-A3953REGFI',
-                                                    fieldLabel: 'Regimen Fiscal', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                                    width: 200,
-                                                    enableKeyEvents: true,
-                                                    enforceMaxLength: true,
-                                                    maxLength: 20,
-                                                    listeners: {
-                                                        change: 'onUpperValue',
-                                                        keypress: function (obj, e) {
-                                                            if (e.getKey() === e.ENTER) {
-                                                                Ext.getCmp(prototype.id + '-A3953UCFDI').focus();
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'textfield',
-                                                    id: prototype.id + '-A3953UCFDI',
-                                                    fieldLabel: 'Uso CFDI', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                                    width: 200,
-                                                    enableKeyEvents: true,
-                                                    enforceMaxLength: true,
-                                                    maxLength: 20,
-                                                    listeners: {
-                                                        change: 'onUpperValue',
-                                                        keypress: function (obj, e) {
-                                                            if (e.getKey() === e.ENTER) {
-                                                               Ext.getCmp(prototype.id + '-A3953REFER').focus();
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'textfield',
-                                                    id: prototype.id + '-A3953REFER',
-                                                    fieldLabel: 'Correo', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                                    width: '70%',
-                                                    enableKeyEvents: true,
-                                                    enforceMaxLength: true,
-                                                    maxLength: 50,
-                                                    listeners: {
-                                                        change: 'onUpperValue',
-                                                        keypress: function (obj, e) {
-                                                            if (e.getKey() === e.ENTER) {
-                                                                // Ext.getCmp(prototype.id + '-A3953CTAMA').focus();
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    ]
+                                    title: 'Contacto Cliente',
+                                    xtype: 'checkboxfield'
                                 },
                                 {
                                     title: 'Contacto Aeromexico',
-                                    xtype: 'checkboxfield',
-                                    hidden: true
+                                    xtype: 'checkboxfield'
                                 },
                                 {
                                     xtype: 'panel',
@@ -1144,49 +1066,6 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                     title: 'Calendario',
                                     id: prototype.id + '-contenedor-grid-GridCalendario',
                                     items: [
-                                        {
-                                            xtype: 'panel',
-                                            layout: 'column',
-                                            margin: '1 0 1 0',
-                                            border: false,
-                                            items: [
-                                                {
-                                                    xtype: 'datefield',
-                                                    id: prototype.id + '-A3965FEJEC',
-                                                    fieldLabel: 'Periodo', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
-                                                    width: 220,
-                                                    format: 'Ym',
-                                                    //formatText: '',
-                                                    //invalidText: 'Type the date in the format: YYYY/MM/DD',
-                                                    minValue: new Date(1990, 00, 01),
-                                                    value: new Date(),
-                                                    maskRe: /[0-9/]/,
-                                                    editable: true,
-                                                    enableKeyEvents: true,
-                                                    enforceMaxLength: true,
-                                                    maxLength: 10,
-                                                    //padding:'2 2 2 2 ',                                            
-                                                    listeners: {
-                                                        //change: 'onUpperValue',
-                                                        keypress: function (obj, e) {
-                                                            if (e.getKey() === e.ENTER) {
-                                                                //Ext.getCmp(prototype.id+'-txtA1757NFACT').focus();
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'button',
-                                                    id: prototype.id + '-btn-calendar-refresh',
-                                                    iconCls: 'prx-icon-docum',
-                                                    tooltip: 'Recargar calendario',
-                                                    margin: '0 0 0 2',
-                                                    listeners: {
-                                                        click: 'search_calendario'
-                                                    }
-                                                }
-                                            ]
-                                        },
                                         {
                                             xtype: prototype.id + '-info-GridCalendario'
                                         }

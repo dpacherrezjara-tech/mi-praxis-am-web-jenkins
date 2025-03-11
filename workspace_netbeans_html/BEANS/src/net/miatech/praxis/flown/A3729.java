@@ -26,7 +26,6 @@ public class A3729 {
     public String SEQ = "";
     public String DFLIGHT = "";
     public String NFLIGHT = "";
-    public String FSENDFI = "";
     public String CDEPART = "";
     public String CARRIVA = "";
     public String STVAL = "";
