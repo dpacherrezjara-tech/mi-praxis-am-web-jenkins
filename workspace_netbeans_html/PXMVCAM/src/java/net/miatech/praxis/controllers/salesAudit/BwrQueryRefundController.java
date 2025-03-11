@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import javax.print.DocFlavor;
 import javax.servlet.http.HttpServletRequest;
@@ -144,9 +143,6 @@ public class BwrQueryRefundController extends BaseController {
             lstData.add(mapProperties);
             mapProperties = new HashMap<>();
             mapProperties.put("A3389REGAS", "AUTOPRC11");
-            lstData.add(mapProperties);
-            mapProperties = new HashMap<>();
-            mapProperties.put("A3389REGAS", "REJECTPR");
             lstData.add(mapProperties);
 
             for (int vi = 0; vi < lst.size(); ++vi) {
@@ -686,20 +682,19 @@ public class BwrQueryRefundController extends BaseController {
 
     @RequestMapping(value = "GetFilesDirectory")
     public ResponseEntity<?>//@ResponseBody String
-            GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+         GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ResponseEntity res;
         try {
-            String v1_urlREST = "/util/download-files";
+            String v1_urlREST = "/api/util/s3_download_files_visor";
             String urlREST = "BsplinkRFND/ROBOT/" + "" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
             String sesion = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
-            //
-            Map<String, Object> queryParams = new HashMap<>();
-            queryParams.put("client", "am");
-            queryParams.put("type", "directory");
-            queryParams.put("remotePath", urlREST);
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("client", "am");
+            bodyData.put("type", "VISOR");
+            bodyData.put("remote_path", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, queryParams, sesion);
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData, sesion);
             //("success", true);
         } catch (Exception e) {
             throw new SpringException(e);
@@ -708,6 +703,70 @@ public class BwrQueryRefundController extends BaseController {
         return res;
     }
 
+    /*
+    @RequestMapping(value = "GetFilesDirectory")
+    public JSONArray DownloadFiles_python(HttpServletRequest request, final HttpServletResponse response) throws Exception {
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        String v1_urlREST = "/api/util/s3_download_files_visor";
+
+        try {
+
+            // ruta del proceso
+            String urlREST = "BsplinkRFND/ROBOT/" + "" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim();
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("client", "am");
+            bodyData.put("type", "VISOR");
+            bodyData.put("remote_path", urlREST);
+
+           JSONArray res = pws.downloadFilesVisorPython(v1_urlREST, bodyData);
+            return res;
+
+        } catch (Exception e) {
+            System.out.println("Error Message => " + e.getMessage());
+            //return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new SpringException(e);
+        }
+    }
+     */
+ /*
+    @RequestMapping(value = "GetFilesDirectory")
+    public @ResponseBody
+    String GetFilesDirectory(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
+        System.out.println("Conexión AWS...");
+
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+
+        String path_config = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        String IN_OPTION = request.getParameter("IN_OPTION").toString().trim();
+        String IN_PATH = path_config + "\\IMGTMPRFND\\";
+        String IN_DATE = request.getParameter("IN_DATE").toString().trim();
+        String IN_COUNTRY = request.getParameter("IN_COUNTRY").toString().trim();
+        String IN_DOCUMENT = request.getParameter("IN_DOCUMENT").toString().trim();
+
+        
+        Unirest.setTimeouts(3600000, 3600000);
+
+                HashMap bodyData = new HashMap<>();
+        bodyData.put("IN_OPTION", IN_OPTION);
+        bodyData.put("IN_PATH", IN_PATH);
+        bodyData.put("IN_DATE", IN_DATE);
+        bodyData.put("IN_COUNTRY", IN_COUNTRY);
+        bodyData.put("IN_DOCUMENT", IN_DOCUMENT);
+
+        HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/bsplink/download/rfnd/all/")
+                .header("content-type", "application/json")
+                .header("cache-control", "no-cache")
+                .body(new Gson().toJson(bodyData))
+                .asJson();
+
+        String body = response.getBody().getObject().get("data").toString();
+
+        map.put("success", true);
+        map.put("data", body);
+
+        return new Gson().toJson(map);
+    }
+     */
     @RequestMapping(value = "searchLstRFND")
     public @ResponseBody
     String searchLstRFND(ModelMap map, HttpServletRequest request) {
@@ -734,7 +793,7 @@ public class BwrQueryRefundController extends BaseController {
 
     @RequestMapping(value = "SearchRFNDPDI")
     public ResponseEntity<?>//@ResponseBody String 
-            SearchRFNDPDI(Object map, HttpServletRequest request) throws Exception {
+        SearchRFNDPDI(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ResponseEntity res;
         A3389Filter filter = new A3389Filter();
@@ -762,7 +821,7 @@ public class BwrQueryRefundController extends BaseController {
             throw new SpringException(e);
         }
 
-        return res;
+         return res;
     }
 
     //    @RequestMapping(value = "SearchRFNDPDI")

@@ -170,7 +170,7 @@ Ext.define('Ext.Praxis.view.sales.ViewTicketAccountingForm.Info', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-                                    {text: 'Credit Loc', width: 100, dataIndex: 'CREDITO',
+                                    {text: 'Debit Loc', width: 100, dataIndex: 'CREDITO',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             var font = record.data.NTARJ === 'TOTAL' ? 'bold' : 'normal';
                                             var background = record.data.NTARJ === 'TOTAL' ? '#FBD705' : '#99FFCC';

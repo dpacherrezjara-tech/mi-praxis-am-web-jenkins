@@ -556,20 +556,20 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntryTicket', 
                                     fieldStyle: 'text-align: left;'
                                 },
                                 //{xtype: 'tbspacer', width: 224},
-//                                {
-//                                    xtype: 'label',
-//                                    labelAlign: 'left',
-//                                    html: '<strong style="color:#000;">Leg Secuence</strong>',
-//                                    width: 130,
-//                                    padding: '1px 5px 0px 10px'
-//
-//                                },
-//                                {
-//                                    xtype: 'label',
-//                                    labelAlign: 'center',
-//                                    //html: '<strong style="color:#AC4546;font-size:13px;">(*)</strong>',
-//                                    width: 30
-//                                },
+                                {
+                                    xtype: 'label',
+                                    labelAlign: 'left',
+                                    html: '<strong style="color:#000;">Leg Secuence</strong>',
+                                    width: 130,
+                                    padding: '1px 5px 0px 10px'
+
+                                },
+                                {
+                                    xtype: 'label',
+                                    labelAlign: 'center',
+                                    //html: '<strong style="color:#AC4546;font-size:13px;">(*)</strong>',
+                                    width: 30
+                                },
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-t' + '-txtLEGSEQ',
@@ -577,7 +577,6 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntryTicket', 
                                     // readOnly: true,
                                     fieldLabel: '',
                                     width: 90,
-                                    hidden: true,
                                     labelWidth: 0,
                                     labelAlign: 'left',
                                     enforceMaxLength: true,
@@ -597,7 +596,7 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntryTicket', 
                                     xtype: 'label',
                                     labelAlign: 'center',
                                     //html: '<strong style="color:#AC4546;font-size:13px;">(*)</strong>',
-                                    width: 80
+                                    width: 30
                                 },
                                 {
                                     xtype: 'combo',

@@ -108,8 +108,7 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
                 ["PP", "PayPal"],
                 ["US", "American Express USA"],  //uploadCSV
                 ["EL", "Elavon"],                //uploadCSV
-                ["STB", "Santander BSP"],            //uploadFile
-                ["BBVA", "BBVA"],            //uploadFile
+                ["STB", "Santander BSP"]            //uploadFile
             ]
         }));
         cmbBankCode.setValue("BX");

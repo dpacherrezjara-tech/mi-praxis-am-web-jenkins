@@ -138,7 +138,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReportForm.ADMReportFormControll
                 {"code": "Q", "name": "UNREGISTERED CLIENT"},
                 {"code": "N", "name": "REJECTED"},
                 {"code": "R", "name": "REAUDITED"}
-                
 
             ]
         }));

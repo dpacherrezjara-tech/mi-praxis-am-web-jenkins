@@ -19,7 +19,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,7 +63,7 @@ public class DownloadCommuniReportFormController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private DownloadCommuniReportFormLogic logic;
-
+    
     @Autowired
     private PythonWS pws;
 
@@ -257,23 +256,21 @@ public class DownloadCommuniReportFormController extends BaseController {
         A3455Filter filter = new A3455Filter();
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-
-        String v1_urlREST = "/download-communique-report/file";
-
+        
+        String v1_urlREST = "/api/download-communi-report/downloadcommuni";
+                
         try {
-            Map<String, Object> queryParams = new HashMap<>();
-            queryParams.put("date_from", filter.IN_DATEFROM);
-            queryParams.put("date_to", filter.IN_DATETO);
-            queryParams.put("PREFIX", "COMUNICADOS/");
-            queryParams.put("CCUST", "139");
-            queryParams.put("client", "am");
-
-            System.out.println("bodyData => " + queryParams);
-            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST, queryParams);
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("date_from", filter.IN_DATEFROM);
+            bodyData.put("date_to", filter.IN_DATETO);
+            bodyData.put("PREFIX", "COMUNICADOS/");
+            
+            System.out.println("bodyData => "+ bodyData);
+            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST,bodyData);
             return res;
 
         } catch (Exception e) {
-            System.out.println("Error Message => " + e.getMessage());
+            System.out.println("Error Message => "+ e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             //throw new SpringException(e);
         }
@@ -284,22 +281,21 @@ public class DownloadCommuniReportFormController extends BaseController {
         A3455Filter filter = new A3455Filter();
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-
-        String v1_urlREST = "/download-files-report/fileByCtry";
+        
+        String v1_urlREST = "/api/download-communi-report/downloadcommunibyctry";
 
         try {
-            Map<String, Object> queryParams = new HashMap<>();
-            queryParams.put("date_from", filter.IN_DATEFROM);
-            queryParams.put("country", filter.IN_COUNTRY);
-            queryParams.put("PREFIX", "COMUNICADOS");
-            queryParams.put("CCUST", "139");
-            queryParams.put("client", "am");
-
-            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST, queryParams);
-            return res;
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("date_from", filter.IN_DATEFROM);
+            bodyData.put("country", filter.IN_COUNTRY);
+            bodyData.put("PREFIX", "COMUNICADOS/");
+            System.out.println("bodyData => "+ bodyData);
+           
+            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST,bodyData);
+                return res;
 
         } catch (Exception e) {
-            System.out.println("Error Message => " + e.getMessage());
+            System.out.println("Error Message => "+ e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

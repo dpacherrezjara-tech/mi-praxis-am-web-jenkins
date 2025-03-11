@@ -14,10 +14,6 @@ import net.miatech.praxis.eecta.SQP04587Filter;
 import net.miatech.praxis.eecta.SQP04588Filter;
 import net.miatech.praxis.eecta.SQP04589Filter;
 import net.miatech.praxis.eecta.SQP04666Filter;
-import net.miatech.praxis.eecta.SQP05212Filter;
-import net.miatech.praxis.eecta.SQP05241Filter;
-import net.miatech.praxis.eecta.SQP05242Filter;
-import net.miatech.praxis.eecta.SQP05245Filter;
 
 /**
  *
@@ -49,22 +45,6 @@ public class CatalogoContratosPreLogic {
 
     public SQP04666Filter setSQP04666Filter(SQP04666Filter filter) throws SQLException, Exception {
         return objDAO.setSQP04666Filter(filter);
-    }
-
-    public SQP05212Filter setSQP05212Filter(SQP05212Filter filter) throws SQLException, Exception {
-        return objDAO.setSQP05212Filter(filter);
-    }
-
-    public SQP05245Filter setSQP05245Filter(SQP05245Filter filter) throws SQLException, Exception {
-        return objDAO.setSQP05245Filter(filter);
-    }
-
-    public SQP05241Filter setSQP05241Filter(SQP05241Filter filter) throws SQLException, Exception {
-        return objDAO.setSQP05241Filter(filter);
-    }
-
-    public List<SQP05242Filter> getSQP05242Filter(SQP05242Filter filter) throws SQLException, Exception {
-        return objDAO.getSQP05242Filter(filter);
     }
 
 }

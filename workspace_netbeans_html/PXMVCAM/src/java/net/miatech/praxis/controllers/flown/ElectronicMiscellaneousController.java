@@ -1485,7 +1485,7 @@ public class ElectronicMiscellaneousController extends BaseController {
         filter.STORG = request.getParameter("STORG");
         filter.STVAL = request.getParameter("STVAL");
         filter.VCPN = Double.parseDouble(request.getParameter("VCPN"));
-        filter.COMISI = Double.parseDouble(request.getParameter("COMISI").replaceAll(",", ""));
+        filter.COMISI = Double.parseDouble(request.getParameter("COMISI"));
         filter.VTAX = Double.parseDouble(request.getParameter("VTAX"));
         filter.VCPMX = Double.parseDouble(request.getParameter("VCPMX"));
         filter.TCMUS = Double.parseDouble(request.getParameter("TCMUS"));

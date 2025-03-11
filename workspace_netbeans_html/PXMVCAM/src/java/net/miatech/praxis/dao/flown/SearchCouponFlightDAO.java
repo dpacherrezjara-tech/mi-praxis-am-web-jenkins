@@ -15,11 +15,8 @@ import java.util.List;
 import java.util.logging.Level;
 import net.miatech.beans.A1692Filter;
 import net.miatech.beans.A1952Filter;
-import net.miatech.beans.PX019S01A721Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
-import static net.miatech.praxis.dao.sales.FareBasisDAO.pasarGarbageCollector;
-import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -150,77 +147,5 @@ public class SearchCouponFlightDAO {
         }
 
         return lstRtn;
-    }
-    
-    public int ValidationDownload(A1692Filter filter) throws SQLException, Exception {
-        List<A1692Filter> lstRtn = new ArrayList<>(0);
-        A1692Filter objRtn;
-        String tkt = Functions.fillString(filter.IN_TKT, 13);
-        CallableStatement cstmt01 = null;
-        ResultSet rs01 = null;
-
-        try {
-            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX080S01A1692(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
-            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            cstmt01 = cnx.prepareCall(SQLCLL01);
-
-            cstmt01.registerOutParameter(10, Types.INTEGER);
-            cstmt01.registerOutParameter(11, Types.INTEGER);
-            cstmt01.registerOutParameter(12, Types.INTEGER);
-            cstmt01.registerOutParameter(13, Types.INTEGER);
-
-            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.IN_FECHA_FROM);
-            cstmt01.setString(3, filter.IN_FECHA_TO);
-            cstmt01.setString(4, Functions.getFechaActual());
-            cstmt01.setString(5, tkt.substring(0, 3).trim());//CIA
-            cstmt01.setString(6, tkt.substring(3, 7).trim());//FORMA
-            cstmt01.setString(7, tkt.substring(7, 13).trim());//SERIE
-            cstmt01.setString(8, filter.IN_STVAL);
-            cstmt01.setString(9, filter.IN_CARR);
-            cstmt01.setInt(10, filter.page.PAGNUM);
-            cstmt01.setInt(11, filter.page.PAGROW);
-            cstmt01.setInt(12, filter.page.TOTPAG);
-            cstmt01.setInt(13, filter.page.TOTROW);
-
-            cstmt01.execute();
-
-            filter.page.PAGNUM = cstmt01.getInt(10);
-            filter.page.PAGROW = cstmt01.getInt(11);
-            filter.page.TOTPAG = cstmt01.getInt(12);
-            filter.page.TOTROW = cstmt01.getInt(13);
-
-            rs01 = cstmt01.getResultSet();
-
-        } 
-        finally {
-            setClose();
-        }
-
-        return filter.page.TOTROW;
-    }
-    
-    private void setClose() {
-
-        if (rst != null) {
-            try {
-                rst.close();
-            } catch (SQLException e) {
-                throw new SpringException(e);
-            }
-        }
-        if (cs != null) {
-            try {
-                cs.close();
-            } catch (SQLException e) {
-                throw new SpringException(e);
-            }
-        }
-        try {
-            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
-        } catch (Exception ex) {
-            throw new SpringException(ex);
-        }
-        pasarGarbageCollector();
     }
 }

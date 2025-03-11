@@ -31,7 +31,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
                 Ext.getCmp(prototype.idEmailcaDataEn + '-txtmailagency').setValue(rec.get('A3903COREG'));
                 Ext.getCmp(prototype.idEmailcaDataEn + '-txtmailAirline').setValue(rec.get('A3903CORER'));
                 Ext.getCmp(prototype.idEmailcaDataEn + '-CmbStatus').setValue(rec.get('A3903FLAG'));
-                Ext.getCmp(prototype.idEmailcaDataEn + '-CmbType').setValue(rec.get('A3903TYPE'));
 
 
                 Ext.getCmp(prototype.idEmailcaDataEn + '-txtA3406REGIS').setValue(rec.get('A3903REGIS'));
@@ -55,8 +54,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
                 Ext.getCmp(prototype.idEmailcaDataEn + '-txtA3406REVIS').setValue('');
                 Ext.getCmp(prototype.idEmailcaDataEn + '-txtA3406FREVI').setValue('');
                 Ext.getCmp(prototype.idEmailcaDataEn + '-txtA3406HREVI').setValue('');
-                 Ext.getCmp(prototype.idEmailcaDataEn + '-CmbType').setValue('');
-                
 
                 break;
             default:
@@ -68,23 +65,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
 
     OnLoadCmbStatus: function (id) {
         var cmbSearch = Ext.getCmp(prototype.idEmailcaDataEn + '-CmbStatus');
-        var CmbType = Ext.getCmp(prototype.idEmailcaDataEn + '-CmbType');
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "A", "name": "Enabled"},
                 {"code": "E", "name": "Disabled"}
-            ]
-        }));
-        
-        
-         CmbType.bindStore(Ext.create('Ext.data.Store', {
-            data: [
-                {"code": "", "name": "SELECT"},
-                {"code": "EMPP", "name": "EMPLOYEES"},
-                {"code": "PARN", "name": "PARNERTS (TDVS)"},
-                {"code": "TELE", "name": "VENDOR TELEPERFORMANCE"},
-                {"code": "TELV", "name": "VENDOR TELVISTA"}
             ]
         }));
     },
@@ -109,7 +94,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
             me.beanTMP.A3903AGETE = Ext.getCmp(prototype.idEmailcaDataEn + '-txtIATAman').getValue();
             me.beanTMP.A3903CORER = Ext.getCmp(prototype.idEmailcaDataEn + '-txtmailAirline').getValue();
             me.beanTMP.A3903COREG = Ext.getCmp(prototype.idEmailcaDataEn + '-txtmailagency').getValue();
-            me.beanTMP.A3903TYPE = Ext.getCmp(prototype.idEmailcaDataEn + '-CmbType').getValue();
             me.beanTMP.A3903CORRL = '';
             me.beanTMP.A3903FLAG = Ext.getCmp(prototype.idEmailcaDataEn + '-CmbStatus').getValue();
 
@@ -123,10 +107,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
             }
             if (me.beanTMP.A3903COREG === '') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Agency E-Mail');
-                return;
-            }
-            if (me.beanTMP.A3903TYPE === '') {
-                Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Type');
                 return;
             }
 
@@ -174,7 +154,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
             me.beanTMP.A3903AGETE = Ext.getCmp(prototype.idEmailcaDataEn + '-txtIATAman').getValue();
             me.beanTMP.A3903CORER = Ext.getCmp(prototype.idEmailcaDataEn + '-txtmailAirline').getValue();
             me.beanTMP.A3903COREG = Ext.getCmp(prototype.idEmailcaDataEn + '-txtmailagency').getValue();
-            me.beanTMP.A3903TYPE = Ext.getCmp(prototype.idEmailcaDataEn + '-CmbType').getValue();
             me.beanTMP.A3903CORRL = rec.get('A3903CORRL');
             me.beanTMP.A3903FLAG = Ext.getCmp(prototype.idEmailcaDataEn + '-CmbStatus').getValue();
 
@@ -188,10 +167,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
             }
             if (me.beanTMP.A3903COREG === '') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Agency E-Mail');
-                return;
-            }
-            if (me.beanTMP.A3903TYPE === '') {
-                Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Type');
                 return;
             }
 

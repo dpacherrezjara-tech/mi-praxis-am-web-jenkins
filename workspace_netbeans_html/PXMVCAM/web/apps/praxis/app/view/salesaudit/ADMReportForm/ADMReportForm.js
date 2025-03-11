@@ -787,6 +787,34 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMReportForm.ADMReportForm', {
                                      }
                                      ]
                                      },*/
+                                    {text: 'Ticket', dataIndex: 'A2548TIKET', width: 100},
+                                    {text: 'Memo<br>Number', dataIndex: 'A2548NMEMO', width: 80},
+                                    {text: 'Country', dataIndex: 'A2548PAIS', width: 60},
+                                    {text: 'Cur.', dataIndex: 'A2548MDA', width: 40},
+                                    {text: 'Amount', dataIndex: 'A2548NETO', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'IATA', dataIndex: 'A2548IATA', width: 70},
+                                    {text: 'Agency', dataIndex: 'AGENCY', width: 150, renderer: 'onRendererColumnAttr'},
+                                    {text: 'Source', dataIndex: 'A2548FTE', width: 60},
+                                    {text: 'Transaction', dataIndex: 'A2548TRNCO', width: 80},
+                                    {text: 'Tour Code', dataIndex: 'A2548CODIT', width: 80},
+                                    {text: 'Types', dataIndex: 'A2548TRNCU', width: 50, renderer: 'onRendererColumnAttr'},
+                                    {text: 'System<br>Date', dataIndex: 'A2548FREGI', width: 70},
+                                    {text: 'Accounting<br>Date', dataIndex: 'A2548FCONT', width: 90},
+                                    {text: 'Issue<br>Date', dataIndex: 'A2548FVTA', width: 90},
+                                    {text: 'Bsplink <br> Date', dataIndex: 'A2548FFILE', width: 85},
+                                    {text: 'User', dataIndex: 'A2548REGIS', width: 100},
+                                    {text: 'Reason 1', dataIndex: 'A2548DESC1', width: 70, renderer: 'onRendererColumnAttr'},
+                                    {text: 'Origin', dataIndex: 'A2548BASE', width: 100, sortable: false, renderer: 'onRendererColumnBase'},
+                                    {text: 'Area', dataIndex: 'A2548AREA', width: 100, renderer: 'onRendererColumnAttr'},
+                                    {text: 'Type', dataIndex: 'A2548TYPE', width: 100},
+                                    {text: 'Status', dataIndex: 'A2548FLAG', width: 130, sortable: false, renderer: 'onRendererColumnStatus'},
+                                    {text: 'Connexion', dataIndex: 'A2548NMERF', width: 120, renderer: 'onRendererColumnAttr'},
+                                    {text: 'Reference', dataIndex: 'A2548CNREL', width: 120, renderer: 'onRendererColumnAttr'},
+                                    {text: 'N°<br>Notice', dataIndex: 'A2548NRCOR', width: 80,},
+                                    {text: 'Notice<br>Date', dataIndex: 'A2548FECOR', width: 90},
+                                    {text: 'Status<br>Notice', dataIndex: 'A2548STCOR', width: 90,renderer: 'onRendererColumnNotice'},
+                                    {text: 'PNR', dataIndex: 'A2548PNR', width: 90},
+                                    {text: 'EPR', dataIndex: 'A2548EPR', width: 90},
                                     {
                                         sortable: false,
                                         xtype: 'actioncolumn',
@@ -812,37 +840,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMReportForm.ADMReportForm', {
                                                 handler: 'onDetailDocumtClick'
                                             }
                                         ]
-                                    },
-                                    {text: 'Ticket', dataIndex: 'A2548TIKET', width: 100},
-                                    {text: 'Memo<br>Number', dataIndex: 'A2548NMEMO', width: 80},
-                                    {text: 'Country', dataIndex: 'A2548PAIS', width: 60},
-                                    {text: 'Cur.', dataIndex: 'A2548MDA', width: 40},
-                                    {text: 'Amount', dataIndex: 'A2548NETO', width: 120, renderer: 'onColumnAmountRenderer'},
-                                    {text: 'IATA', dataIndex: 'A2548IATA', width: 70},
-                                    {text: 'Agency', dataIndex: 'AGENCY', width: 150, renderer: 'onRendererColumnAttr'},
-                                    {text: 'Source', dataIndex: 'A2548FTE', width: 60},
-                                    {text: 'Transaction', dataIndex: 'A2548TRNCO', width: 80},
-                                    {text: 'Tour Code', dataIndex: 'A2548CODIT', width: 80},
-                                    {text: 'Types', dataIndex: 'A2548TRNCU', width: 50, renderer: 'onRendererColumnAttr'},
-                                    {text: 'System<br>Date', dataIndex: 'A2548FREGI', width: 70},
-                                    {text: 'Accounting<br>Date', dataIndex: 'A2548FCONT', width: 90},
-                                    {text: 'Issue<br>Date', dataIndex: 'A2548FVTA', width: 90},
-                                    {text: 'Bsplink <br> Date', dataIndex: 'A2548FFILE', width: 85},
-                                    {text: 'User', dataIndex: 'A2548REGIS', width: 100},
-                                    {text: 'Reason 1', dataIndex: 'A2548DESC1', width: 70, renderer: 'onRendererColumnAttr'},
-                                    {text: 'Origin', dataIndex: 'A2548BASE', width: 100, sortable: false, renderer: 'onRendererColumnBase'},
-                                    {text: 'Area', dataIndex: 'A2548AREA', width: 100, renderer: 'onRendererColumnAttr'},
-                                    {text: 'Type', dataIndex: 'A2548TYPE', width: 100},
-                                    {text: 'Answer <br>status',dataIndex: 'A2548STBSP',width: 100 },
-                                    {text: 'Status', dataIndex: 'A2548FLAG', width: 130, sortable: false, renderer: 'onRendererColumnStatus'},
-                                    {text: 'Connexion', dataIndex: 'A2548NMERF', width: 120, renderer: 'onRendererColumnAttr'},
-                                    {text: 'Reference', dataIndex: 'A2548CNREL', width: 120, renderer: 'onRendererColumnAttr'},
-                                    {text: 'N°<br>Notice', dataIndex: 'A2548NRCOR', width: 80,},
-                                    {text: 'Notice<br>Date', dataIndex: 'A2548FECOR', width: 90},
-                                    {text: 'Status<br>Notice', dataIndex: 'A2548STCOR', width: 90,renderer: 'onRendererColumnNotice'},
-                                    {text: 'PNR', dataIndex: 'A2548PNR', width: 90},
-                                    {text: 'EPR', dataIndex: 'A2548EPR', width: 90}
-                                    
+                                    }
                                     //
 
                                 ], listeners: {

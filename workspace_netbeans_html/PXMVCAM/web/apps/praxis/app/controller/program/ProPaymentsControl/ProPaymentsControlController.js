@@ -375,7 +375,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
     btnSearch_click: function (obj, e) {
         this.setFormatParameter();
         var typeSearch = Ext.getCmp(prototype.id + '-cmbType').getValue();
-        console.log(typeSearch);
+
         if (typeSearch === '2') {
 //            roScrDashboardPayment.searchCountry(bean);
             this.searchCountry();
@@ -391,16 +391,20 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                 case 'MONTH':
                     Ext.getCmp(prototype.id + '-lblShow').hide();
                     Ext.getCmp(prototype.id + '-cmbCASH').hide();
+//                    roScrDashboardPayment.searchPayDelay(bean);
                     this.searchPayDelay();
                     break;
                 case 'COUNTRY':
                     Ext.getCmp(prototype.id + '-lblShow').hide();
                     Ext.getCmp(prototype.id + '-cmbCASH').hide();
+//                    roScrDashboardPayment.searchPayDelayCountry(bean);
                     this.searchPayDelayCountry();
                     break;
                 case 'CARD':
+
                     Ext.getCmp(prototype.id + '-lblShow').show();
                     Ext.getCmp(prototype.id + '-cmbCASH').show();
+//                    bean.SCARCOD     = String(cmbCASH.selectedItem.data);
                     me.bean.SCARCOD = Ext.getCmp(prototype.id + '-cmbCASH').getValue();
                     var beanString = JSON.stringify(me.bean);
                     searchParamsCard = {
@@ -408,16 +412,6 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                         bean: me.bean
                     };
                     this.searchPayDelayCard();
-                    break;
-                case 'MERCHANT':
-                    Ext.getCmp(prototype.id + '-lblShow').hide();
-                    Ext.getCmp(prototype.id + '-cmbCASH').hide();
-//                    var beanString = JSON.stringify(me.bean);
-//                    searchParamsCard = {
-//                        beanString: beanString,
-//                        bean: me.bean
-//                    };
-                    this.searchPayDelayMerchant();
                     break;
             }
         } else if (typeSearch === '6') {
@@ -1334,100 +1328,6 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
         }
     },
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="searchPayDelayMerchant">
-    searchPayDelayMerchant: function () {
-        win.lblUser_toolTip("Estructura: A3020");
-        me.panelActual = '-boxPayDelayMerchant';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-//        console.log(searchParamsCard);
-        var msj = this.validateFields();
-        if (msj !== '') {
-            global.Msg({msg: msj
-            });
-        } else {
-            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
-                proxy: {
-                    url: prototype.url + '/searchPayDelayMerchant'
-                }, listeners: {
-                    beforeload: function (obj) {
-                        obj.proxy.extraParams = searchParamsCard;
-                    },
-                    load: function (obj) {
-                        if (obj.data.length === 0) {
-                            Ext.getCmp(prototype.id + '-totM_QSALES').setText('0');
-                            Ext.getCmp(prototype.id + '-totM_ASALES').setText('0');
-                            Ext.getCmp(prototype.id + '-totM_PERC').setText('0');
-
-                            Ext.getCmp(prototype.id + '-totM_QDAY30').setText('0');
-                            Ext.getCmp(prototype.id + '-totM_ADAY30').setText('0');
-                            Ext.getCmp(prototype.id + '-totM_QDAY60').setText('0');
-                            Ext.getCmp(prototype.id + '-totM_ADAY60').setText('0');
-                            Ext.getCmp(prototype.id + '-totM_QDAY90').setText('0');
-                            Ext.getCmp(prototype.id + '-totM_ADAY90').setText('0');
-
-                            Ext.getCmp(prototype.id + '-totM_QOTHER').setText('0');
-                            Ext.getCmp(prototype.id + '-totM_AOTHER').setText('0');
-
-                            Ext.getCmp(prototype.id + '-totM_QTOTAL').setText('0');
-                            Ext.getCmp(prototype.id + '-totM_ATOTAL').setText('0');
-                            Ext.getCmp(prototype.id + '-totM_PERTOT').setText('0');
-
-                            Ext.getCmp(prototype.id + '-100%merchant').setText('0%');
-
-                            Ext.getCmp(prototype.id + '-lblTotM_PERC_30').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotM_PERC_60').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotM_PERC_90').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotM_PERC_O20').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotM_PERC_PEND').setText('0%');
-                            global.Msg({
-                                msg: 'Data not found.'
-                            });
-                        } else {
-                            var data = obj.data.items[0].data;
-//                            console.log(data);
-                            Ext.getCmp(prototype.id + '-totM_QSALES').setText(Ext.util.Format.number(data.totQTY1, '0,000'));
-                            Ext.getCmp(prototype.id + '-totM_ASALES').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
-                            Ext.getCmp(prototype.id + '-totM_PERC').setText('100');
-
-                            var a = Ext.getCmp(prototype.id + '-txtRange').getValue();
-                            if (a === '') {
-                                a = 30;
-                            }
-                            Ext.getCmp(prototype.id + '-txtRange1111A').setText('Days 1-' + a);
-                            Ext.getCmp(prototype.id + '-txtRange2222A').setText('Days ' + ((a * 1) + 1) + '-' + (a * 2));
-                            Ext.getCmp(prototype.id + '-txtRange3333A').setText('Days ' + ((a * 2) + 1) + '-' + (a * 3));
-                            Ext.getCmp(prototype.id + '-txtRange4444A').setText('Over ' + ((a * 3) + 1));
-
-                            Ext.getCmp(prototype.id + '-totM_QDAY30').setText(Ext.util.Format.number(data.totQDAY30, '0,000'));
-                            Ext.getCmp(prototype.id + '-totM_ADAY30').setText(Ext.util.Format.number(data.totADAY30, '0,000'));
-                            Ext.getCmp(prototype.id + '-totM_QDAY60').setText(Ext.util.Format.number(data.totQDAY60, '0,000'));
-                            Ext.getCmp(prototype.id + '-totM_ADAY60').setText(Ext.util.Format.number(data.totADAY60, '0,000'));
-                            Ext.getCmp(prototype.id + '-totM_QDAY90').setText(Ext.util.Format.number(data.totQDAY90, '0,000'));
-                            Ext.getCmp(prototype.id + '-totM_ADAY90').setText(Ext.util.Format.number(data.totADAY90, '0,000'));
-
-                            Ext.getCmp(prototype.id + '-totM_QOTHER').setText(Ext.util.Format.number(data.totQOTHER, '0,000'));
-                            Ext.getCmp(prototype.id + '-totM_AOTHER').setText(Ext.util.Format.number(data.totAOTHER, '0,000'));
-
-                            Ext.getCmp(prototype.id + '-totM_QTOTAL').setText(Ext.util.Format.number(data.totdiff1, '0,000'));
-                            Ext.getCmp(prototype.id + '-totM_ATOTAL').setText(Ext.util.Format.number(data.totdiff2, '0,000'));
-                            Ext.getCmp(prototype.id + '-totM_PERTOT').setText(Ext.util.Format.number(data.totperc3, '0,000.00'));
-
-                            Ext.getCmp(prototype.id + '-lblTotM_PERC_30').setText(Ext.util.Format.number(data.perc_30, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotM_PERC_60').setText(Ext.util.Format.number(data.perc_60, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotM_PERC_90').setText(Ext.util.Format.number(data.perc_90, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotM_PERC_O20').setText(Ext.util.Format.number(data.perc_O20, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotM_PERC_PEND').setText(Ext.util.Format.number(data.totperc3, '0,000.00') + '%');
-                        }
-//                        me.setWidthPie();
-                    }
-                }
-            });
-
-            global.clear();
-            Ext.getCmp(prototype.id + '-gridDataPayDelayMerchant').bindStore(storeGridDatas);
-        }
-    },
-    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="searchUSAState">
     searchUSAState: function () {
         win.lblUser_toolTip("Estructura: A3264");
@@ -1936,12 +1836,12 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                                 var sum = data.dblTotAMTCLARU - data.dblTotAMTBANK;
                                 var item = {};
 
-                                item.LABEL = 'Total Received - ' + Ext.util.Format.number(sum, '0,000');
+                                item.LABEL = 'Total Received - ' + Ext.util.Format.number(sum, '0,000.00');
                                 item.AMOUNT_ON_PERCENT = sum;
                                 lstTemp.push(item);
 
                                 item = {};
-                                item.LABEL = 'Total ChargedBack - ' + Ext.util.Format.number(data.dblTotAMTBANK, '0,000');
+                                item.LABEL = 'Total ChargedBack - ' + Ext.util.Format.number(data.dblTotAMTBANK, '0,000.00');
                                 item.AMOUNT_ON_PERCENT = data.dblTotAMTBANK;
                                 lstTemp.push(item);
 
@@ -1969,10 +1869,8 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             var titIN_SELECT = '';
             if (IN_SELECT === 'CODEBANK') {
                 titIN_SELECT = 'Bank';
-            } else if (IN_SELECT === 'CARD'){
-                titIN_SELECT = 'Credit Card';
             } else {
-                titIN_SELECT = 'Merchant';
+                titIN_SELECT = 'Credit Card';
             }
 
             var msj = this.validateFields();
@@ -2107,10 +2005,8 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             var titIN_SELECT = '';
             if (IN_SELECT === 'CODEBANK') {
                 titIN_SELECT = 'Bank';
-            } else if (IN_SELECT === 'CARD'){
-                titIN_SELECT = 'Credit Card';
             } else {
-                titIN_SELECT = 'Merchant';
+                titIN_SELECT = 'Credit Card';
             }
 
             var msj = this.validateFields();

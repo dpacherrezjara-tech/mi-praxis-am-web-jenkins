@@ -58,7 +58,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryGridCont
             IN_TDOC: viewParams.IN_TDOC,
             IN_PNR: viewParams.IN_PNR,
             IN_PRAXISID: viewParams.IN_PRAXISID,
-            IN_FLEXID: viewParams.IN_FLEXID
+            IN_FLEXID: viewParams.IN_IDFLEX
         };
     },
     downloadExcel: function () {

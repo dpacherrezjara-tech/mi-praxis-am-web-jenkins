@@ -16,11 +16,7 @@ public class A3965 {
     public String A3965PERIO = "";
     public String A3965INDPE = "";
     public String A3965FEJEC = "";
-
-    public String A3965AAAAP = "";
-    public String A3965MMP = "";
-
-    public String A3965FPERI = "";
+    public String A3965FPERI = "";    
     public String A3965FINIP = "";
     public String A3965FFINP = "";
     public String A3965STAT = "";

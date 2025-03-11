@@ -428,7 +428,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
             }
             else{
                 Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(true);
-                //Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(true);
+                Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(true);
                 Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(true);
             }
             Ext.getCmp(prototype.id+'-cmbTVTA').disable(true);

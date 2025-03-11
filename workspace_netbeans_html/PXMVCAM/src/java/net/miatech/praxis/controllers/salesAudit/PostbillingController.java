@@ -12,17 +12,14 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
@@ -338,44 +335,6 @@ public class PostbillingController extends BaseController {
         return new Gson().toJson(map);
     }
 
-    public static String fixEncoding(String input) {
-        // Convierte la cadena desde ISO-8859-1 (Latin-1) a UTF-8
-        byte[] bytes = input.getBytes(StandardCharsets.ISO_8859_1);
-        return new String(bytes, StandardCharsets.UTF_8);
-
-    }
-
-    public static String replaceSpecialCharacters(String input) {
-        // Normaliza la cadena eliminando los acentos
-        String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
-        // Elimina los caracteres no deseados (diacríticos)
-        String withoutDiacritics = normalized.replaceAll("\\p{M}", "");
-
-        // Ejemplo: Reemplazar ñ con n
-        withoutDiacritics = withoutDiacritics.replace("Á", "A")
-                .replace("ó", "o")
-                .replace("á", "a") // Puedes añadir más según sea necesario
-                .replace("é", "e")
-                .replace("í­", "i")
-                .replace("ú", "u")
-                .replace("É", "E")
-                .replace("Í", "I")
-                .replace("Ó", "O")
-                .replace("Ú", "U");
-        // Puedes añadir más reemplazos específicos si es necesario:
-        withoutDiacritics = withoutDiacritics.replace("ñ", "n").replace("Ñ", "N");
-
-        return withoutDiacritics;
-    }
-
-    public static String replaceSpecialComent(String input) {
-        // Ejemplo: Reemplazar ñ con n
-        String withoutDiacritics = input.replace("\"", "");
-        // Puedes añadir más reemplazos específicos si es necesario:
-
-        return withoutDiacritics;
-    }
-
     @RequestMapping(value = "insertTracingFile", method = RequestMethod.POST)
     public @ResponseBody
     String insertTracingFile(ModelMap map, @RequestParam("fileaudito") MultipartFile file, @RequestParam("fileaudito2") MultipartFile file2, @RequestParam("fileaudito3") MultipartFile file3, HttpServletRequest request) {
@@ -397,19 +356,9 @@ public class PostbillingController extends BaseController {
             String A3537ARCHV2 = file2.getOriginalFilename();
             String A3537ARCHV3 = file3.getOriginalFilename();
 
-            if (!A3537ARCHV.equals("")) {
-                A3537ARCHV = replaceSpecialCharacters(fixEncoding(filter.A3537ARCHV));
-            }
-            if (!A3537ARCHV2.equals("")) {
-                A3537ARCHV2 = replaceSpecialCharacters(fixEncoding(filter.A3537ARCHV2));
-            }
-            if (!A3537ARCHV3.equals("")) {
-                A3537ARCHV3 = replaceSpecialCharacters(fixEncoding(filter.A3537ARCHV3));
-            }
-
             listenvio.IN_CNXPA = filter.IN_CNXPA;
             listenvio.IN_PREME = filter.IN_PREME;
-            listenvio.IN_DESCRI = replaceSpecialComent(fixEncoding(filter.IN_DESCRI));
+            listenvio.IN_DESCRI = filter.IN_DESCRI;
             listenvio.IN_COUNTRY = filter.IN_COUNTRY;
             listenvio.IN_STATUS = filter.IN_STATUS;
             listenvio.IN_TRNCU = filter.IN_TRNCU;
@@ -486,8 +435,8 @@ public class PostbillingController extends BaseController {
     public boolean upload_s3(String IN_CNXPA, File archiv, File archiv2, File archiv3) throws SQLException, Exception {
         boolean res;
         try {
-            String v1_urlREST = "/util/upload-file";
-            String urlREST = "POSTBILLING/WEB" + "/" + IN_CNXPA + "/" + Functions.getFechaActual();
+            String v1_urlREST = "/api/util/s3_upload_file";
+            String urlREST = "POSTBILLING/WEB" + "/" + IN_CNXPA + "/" + Functions.getFechaActual() + "/";
             res = pws.uploadFilesPython(v1_urlREST, "am", urlREST, archiv, archiv2, archiv3);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
@@ -522,13 +471,13 @@ public class PostbillingController extends BaseController {
     }
      */
     @RequestMapping(value = "GetFilesDirectory")
-    public ResponseEntity<?>//@ResponseBody String 
-            GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
+    public  ResponseEntity<?>//@ResponseBody String 
+        GetFilesDirectory(Object map, HttpServletRequest request) throws Exception {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ResponseEntity res;
+       ResponseEntity res;
         try {
-            String v1_urlREST = "/util/download-files";
-            String sesion = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+            String v1_urlREST = "/api/util/s3_download_files_visor";
+            String sesion=serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             String urlREST = "";
             if (request.getParameter("IN_TYPE").trim().equals("ROBOT")) {
                 urlREST = request.getParameter("IN_MODULO").trim() + "/" + request.getParameter("IN_TYPE").trim() + "/" + request.getParameter("IN_DATE").trim() + "/" + request.getParameter("IN_COUNTRY").trim() + "/" + request.getParameter("IN_DOCUMENT").trim() + "/";
@@ -539,13 +488,12 @@ public class PostbillingController extends BaseController {
                 urlREST = request.getParameter("IN_MODULO").trim() + "/" + request.getParameter("IN_DOCUMENT").trim() + "/";
             }
 
-            //
-            Map<String, Object> queryParams = new HashMap<>();
-            queryParams.put("client", "am");
-            queryParams.put("type", "directory");
-            queryParams.put("remotePath", urlREST);
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("client", "am");
+            bodyData.put("type", "VISOR");
+            bodyData.put("remote_path", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, queryParams, sesion);
+            res = pws.downloadFilesVisorPython(v1_urlREST, bodyData,sesion);
             //("success", true);
         } catch (InterruptedException | ExecutionException | JSONException e) {
             throw new SpringException(e);
@@ -779,7 +727,7 @@ public class PostbillingController extends BaseController {
 
             Row row;
             Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18,
-                    CH_19, CH_20, CH_21, CH_22, CH_23, CH_24;
+                    CH_19, CH_20, CH_21, CH_22, CH_23;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -807,7 +755,6 @@ public class PostbillingController extends BaseController {
             CH_21 = row.createCell(21);
             CH_22 = row.createCell(22);
             CH_23 = row.createCell(23);
-            CH_24 = row.createCell(24);
 
             CH_00.setCellValue("Origin");
             CH_01.setCellValue("IATA");
@@ -837,7 +784,6 @@ public class PostbillingController extends BaseController {
             CH_21.setCellValue("QTY BSP");
             CH_22.setCellValue("Issue date");
             CH_23.setCellValue("Process");
-            CH_24.setCellValue("Bsplink");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -863,7 +809,6 @@ public class PostbillingController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 21));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 22));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 23));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 24));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -889,7 +834,6 @@ public class PostbillingController extends BaseController {
             CH_21.setCellStyle(headerStyle);
             CH_22.setCellStyle(headerStyle);
             CH_23.setCellStyle(headerStyle);
-            CH_24.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -921,7 +865,6 @@ public class PostbillingController extends BaseController {
                 CH_21 = row.createCell(21);
                 CH_22 = row.createCell(22);
                 CH_23 = row.createCell(23);
-                CH_24 = row.createCell(24);
 
                 CH_00.setCellValue(listaData.get(vi).A3537MODO);
                 CH_01.setCellValue(listaData.get(vi).A3537IATA);
@@ -952,7 +895,6 @@ public class PostbillingController extends BaseController {
                 CH_21.setCellValue((listaData.get(vi).A3537CANTANGE));
                 CH_22.setCellValue((listaData.get(vi).A3537FVTA));
                 CH_23.setCellValue((listaData.get(vi).A3537STAT4));
-                CH_24.setCellValue((listaData.get(vi).A3537FLARF));
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -978,7 +920,6 @@ public class PostbillingController extends BaseController {
                 CH_21.setCellStyle(bodyStyle);
                 CH_22.setCellStyle(bodyStyle);
                 CH_23.setCellStyle(bodyStyle);
-                CH_24.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;

@@ -135,7 +135,18 @@ public class ControlUATPPreController extends BaseController {
             logic = new ControlUATPPreLogic();
             logic.setSession(this.serverSession.getServerSession());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-            objRtn = logic.setSQP04530Filter(filter);                    
+            objRtn = logic.setSQP04530Filter(filter);
+            
+            //Enviar EXCEL para timbre individual            
+            if(filter.VP_PROCESO.equals("UATP") && filter.VP_FACTURAR.equals("Y") ){
+//                CALL SERVICIO PYTHON
+                  
+//                objRtn01 = this.setSQP03348Filter( filter );
+//                if(!objRtn01.dbException.SQLCODE.equals('1')){
+//                    objRtn.dbException.MESSAGE = objRtn01.dbException.MESSAGE;   
+//                    objRtn.dbException.SQLCODE = objRtn01.dbException.SQLCODE;   
+//                }                     
+            }                     
             map.put("objRtn", objRtn);
             map.put("success", true);
         } catch (Exception ex) {
