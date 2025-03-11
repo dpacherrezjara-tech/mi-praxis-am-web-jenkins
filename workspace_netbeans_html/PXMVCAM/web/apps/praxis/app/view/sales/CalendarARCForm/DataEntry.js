@@ -1,40 +1,40 @@
-    Ext.define('Ext.Praxis.view.sales.CalendarARCForm.DataEntry',{
+Ext.define('Ext.Praxis.view.sales.CalendarARCForm.DataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryCalendarARCForm',
 
     controller: 'DataEntryCalendarARCController',
 
-    requires:[
+    requires: [
         'Ext.Praxis.controller.sales.CalendarARC.DataEntryCalendarARCController'
     ],
 
-    title:'Maintenance Calendar ARC',
-    header:true,
-    height:420,
-    width:780,
-    border:false,
-    resizable:false,
-    layout:'fit',
-    modal:true,
+    title: 'Maintenance Calendar ARC',
+    header: true,
+    height: 450,
+    width: 850,
+    border: false,
+    resizable: false,
+    layout: 'fit',
+    modal: true,
 
-    defaults:{
+    defaults: {
         border: false
     },
 
-    items:[
+    items: [
         {
             xtype: 'form',
             id: prototype.id + '-formDataEntry',
-            defaults:{
+            defaults: {
                 style: 'margin: 3px;',
                 border: false
             },
-            items:[
+            items: [
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
+                    items: [
+                        {xtype: 'tbspacer', width: 7},
                         {
                             xtype: 'label',
                             text: 'Period Ending Date',
@@ -51,30 +51,30 @@
                                 'data-qtip': 'Mandatory Field'
                             }
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtA1528FPRO',
+                            id: prototype.id + '-txtA1528FPRO',
                             fieldStyle: 'text-align:center',
                             format: 'Y/m/d',
                             maskRe: /[0-9/]/,
                             width: 90/*,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Format valid YYYY/MM/DD'
-                            }*/
+                             autoEl: {
+                             tag: 'label',
+                             'data-qtip': 'Format valid YYYY/MM/DD'
+                             }*/
                         },
-                        { xtype: 'tbspacer', width: 20 },
+                        {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'label',
                             text: 'Week',
                             style: 'font-weight:bold;color:#000;',
                             width: 70
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1527PDIDS',
+                            id: prototype.id + '-txtA1527PDIDS',
                             fieldStyle: 'text-align:right',
                             enforceMaxLength: true,
                             maxLength: 1,
@@ -85,29 +85,29 @@
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
+                    items: [
+                        {xtype: 'tbspacer', width: 7},
                         {
                             xtype: 'label',
                             text: 'Proccesing Date',
                             style: 'font-weight:bold;color:#000;',
                             width: 155
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtA1527SODA',
+                            id: prototype.id + '-txtA1527SODA',
                             fieldStyle: 'text-align:center',
                             format: 'Y/m/d',
                             editable: true,
                             maskRe: /[0-9/]/,
                             width: 90/*,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Format valid YYYY/MM/DD'
-                            }*/
+                             autoEl: {
+                             tag: 'label',
+                             'data-qtip': 'Format valid YYYY/MM/DD'
+                             }*/
                         },
-                        { xtype: 'tbspacer', width: 20 },
+                        {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'label',
                             text: 'Cycle',
@@ -124,39 +124,59 @@
                                 'data-qtip': 'Mandatory Field'
                             }
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1527PDIDC',
+                            id: prototype.id + '-txtA1527PDIDC',
                             fieldStyle: 'text-align:right',
                             enforceMaxLength: true,
                             maxLength: 1,
                             width: 50
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
+                        //(NEW) 1=Wed, 2=Thu, 3=Fri, 4=Sat, 5=Sun, 6=Mon, 7=Wed
                         {
-                            xtype: 'label',
-                            text: '1=Fri, 2=Sat, 3=Sun, 4=Mon, 5=Tue, 6=Wed, 7=Thu',
-                            style: 'font-weight:bold;color:#000;',
-                            width: 450
+                            xtype: 'panel',
+                            layout: {
+                                type:'vbox',
+                                align:'center'
+                            },
+                            border: false,
+                            items: [
+                                {
+                                    xtype: 'label',
+                                    //text: '1=Fri, 2=Sat, 3=Sun, 4=Mon, 5=Tue, 6=Wed, 7=Thu',
+                                    text: '(OLD) 1=Fri, 2=Sat, 3=Sun, 4=Mon, 5=Tue, 6=Wed, 7=Thu',
+                                    style: 'font-weight:bold;color:#000;',
+                                    width: 450
+                                },
+                                {
+                                    xtype: 'label',
+                                    //text: '1=Fri, 2=Sat, 3=Sun, 4=Mon, 5=Tue, 6=Wed, 7=Thu',
+                                    text: '(NEW) 1=Wed, 2=Thu, 3=Fri, 4=Sat, 5=Sun, 6=Mon, 7=Wed',
+                                    style: 'font-weight:bold;color:#000;',
+                                    width: 450
+                                }
+                            ]
+
                         }
                     ]
                 },
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
+                    items: [
+                        {xtype: 'tbspacer', width: 7},
                         {
                             xtype: 'label',
                             text: 'Year',
                             style: 'font-weight:bold;color:#000;',
                             width: 155
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1527ANIO',
+                            id: prototype.id + '-txtA1527ANIO',
                             fieldStyle: 'text-align:right',
                             enforceMaxLength: true,
                             maxLength: 4,
@@ -167,18 +187,18 @@
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
+                    items: [
+                        {xtype: 'tbspacer', width: 7},
                         {
                             xtype: 'label',
                             text: 'Quarter',
                             style: 'font-weight:bold;color:#000;',
                             width: 155
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1527CUART',
+                            id: prototype.id + '-txtA1527CUART',
                             fieldStyle: 'text-align:right',
                             enforceMaxLength: true,
                             maxLength: 1,
@@ -189,18 +209,18 @@
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
+                    items: [
+                        {xtype: 'tbspacer', width: 7},
                         {
                             xtype: 'label',
                             text: 'Month',
                             style: 'font-weight:bold;color:#000;',
                             width: 155
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1527PDIDM',
+                            id: prototype.id + '-txtA1527PDIDM',
                             fieldStyle: 'text-align:right',
                             enforceMaxLength: true,
                             maxLength: 2,
@@ -211,70 +231,70 @@
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
+                    items: [
+                        {xtype: 'tbspacer', width: 7},
                         {
                             xtype: 'label',
                             text: 'Weekly',
                             style: 'font-weight:bold;color:#000;',
                             width: 155
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtA1527CINTA',
+                            id: prototype.id + '-txtA1527CINTA',
                             fieldStyle: 'text-align:center',
                             format: 'Y/m/d',
                             maskRe: /[0-9/]/,
                             width: 90/*,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Format valid YYYY/MM/DD'
-                            }*/
+                             autoEl: {
+                             tag: 'label',
+                             'data-qtip': 'Format valid YYYY/MM/DD'
+                             }*/
                         }
                     ]
                 },
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
+                    items: [
+                        {xtype: 'tbspacer', width: 7},
                         {
                             xtype: 'label',
                             text: 'Disbursement',
                             style: 'font-weight:bold;color:#000;',
                             width: 155
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtA1527DESEM',
+                            id: prototype.id + '-txtA1527DESEM',
                             fieldStyle: 'text-align:center',
                             format: 'Y/m/d',
                             maskRe: /[0-9/]/,
                             width: 90/*,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Format valid YYYY/MM/DD'
-                            }*/
+                             autoEl: {
+                             tag: 'label',
+                             'data-qtip': 'Format valid YYYY/MM/DD'
+                             }*/
                         }
                     ]
                 },
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
+                    items: [
+                        {xtype: 'tbspacer', width: 7},
                         {
                             xtype: 'label',
                             text: 'Cycle Null',
                             style: 'font-weight:bold;color:#000;',
                             width: 155
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1527CNULO',
+                            id: prototype.id + '-txtA1527CNULO',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 1,
@@ -285,18 +305,18 @@
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
+                    items: [
+                        {xtype: 'tbspacer', width: 7},
                         {
                             xtype: 'label',
                             text: 'Remark',
                             style: 'font-weight:bold;color:#000;',
                             width: 155
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1527OBS',
+                            id: prototype.id + '-txtA1527OBS',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 10,
@@ -306,12 +326,12 @@
                 },
                 {
                     xtype: 'fieldset',
-                    id: prototype.id+'-ControlData',
+                    id: prototype.id + '-ControlData',
                     title: 'Control Data',
                     margin: '15 0 8 0',
                     width: 700,
                     border: true,
-                    defaults:{
+                    defaults: {
                         style: 'margin: 3px;',
                         border: false
                     },
@@ -323,8 +343,8 @@
                             defaults: {
                                 labelAlign: 'left'
                             },
-                            items:[
-                                { xtype: 'tbspacer', width: 7 },
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
                                     text: 'Creator User',
@@ -333,15 +353,15 @@
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-USCR',
+                                    id: prototype.id + '-USCR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
-                                { xtype: 'tbspacer', width: 20 },
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Creation Date',
@@ -350,15 +370,15 @@
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-FECR',
+                                    id: prototype.id + '-FECR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
-                                { xtype: 'tbspacer', width: 20 },
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Creation Time',
@@ -367,11 +387,11 @@
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-HOCR',
+                                    id: prototype.id + '-HOCR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 }
@@ -384,8 +404,8 @@
                             defaults: {
                                 labelAlign: 'left'
                             },
-                            items:[
-                                { xtype: 'tbspacer', width: 7 },
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
                                     text: 'User Update',
@@ -394,15 +414,15 @@
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-USUP',
+                                    id: prototype.id + '-USUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
-                                { xtype: 'tbspacer', width: 20 },
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Update Date',
@@ -411,15 +431,15 @@
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-FEUP',
+                                    id: prototype.id + '-FEUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
-                                { xtype: 'tbspacer', width: 20 },
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Update Time',
@@ -428,11 +448,11 @@
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-HOUP',
+                                    id: prototype.id + '-HOUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 }
@@ -443,53 +463,53 @@
             ]
         }
     ],
-    dockedItems:[
+    dockedItems: [
         {
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
             margin: '10 0 10 0',
-            layout:{
+            layout: {
                 pack: 'center'
             },
             fieldStyle: 'text-align:center',
-            defaults:{
+            defaults: {
                 scale: 'medium'
             },
-            items:[
+            items: [
                 {
                     text: 'Save',
-                    id:prototype.id+'-btn-save',
+                    id: prototype.id + '-btn-save',
                     iconCls: 'prx-icon-save',
-                    listeners:{
+                    listeners: {
                         click: 'onSaveClick'
                     }
                 },
                 {
                     text: 'Update',
-                    id:prototype.id+'-btn-update',
+                    id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
-                    listeners:{
+                    listeners: {
                         click: 'onUpdateClick'
                     }
                 },
                 {
                     text: 'Delete',
-                    id:prototype.id+'-btn-delete',
+                    id: prototype.id + '-btn-delete',
                     iconCls: 'prx-icon-delete',
-                    listeners:{
+                    listeners: {
                         click: 'onDeleteClick'
                     }
                 },
                 {
                     text: 'Cancel',
-                    id:prototype.id+'-btn-cancel',
+                    id: prototype.id + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
-                    listeners:{
+                    listeners: {
                         click: 'onCancelClick'
                     }
                 },
-                { xtype: 'tbspacer', width: 30 },
+                {xtype: 'tbspacer', width: 30},
                 {
                     xtype: 'label',
                     text: '(*) Required Fields',
