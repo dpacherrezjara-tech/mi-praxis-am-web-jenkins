@@ -64,6 +64,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkTaskAssignmentRFND.BsplinkTa
             ]
         }));
     },
+    onSearchkey: function (f, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onSearchClick();
+        }
+
+    },
+    onchange: function (field, newValue, oldValue) {
+        field.setValue(newValue.toUpperCase());
+    },
 
     onLoadUsers: function(){
         var cmbUser = Ext.getCmp(prototype.id+'-txtUser');

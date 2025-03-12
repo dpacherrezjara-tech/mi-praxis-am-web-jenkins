@@ -3,6 +3,8 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.IATACalendarController'
     alias: 'controller.IATACalendarController',
     me: '',
     childs: '',
+    strFechDuplicat: '',
+    fileGlob: '',
     stack: [],
     bean: {},
     recPeriod: {},
@@ -20,7 +22,7 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.IATACalendarController'
     afterRender: function () {
         this.initDate();
         this.imgSearch_clickHandler();
-        this.verificarPermisos('PX00000186');
+        this.verificarPermisos('PX00000186');        
     },
     verificarPermisos: function(nprog) {
         Ext.Ajax.request({
@@ -30,8 +32,15 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.IATACalendarController'
             params: {nprog: nprog || ''},
             success: function(response, opts) {
                 var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+                
                 if (res.success) {
                     me.objPermiso = res.matrix;
+                                        
+                    if(me.objPermiso.USR.trim() === 'PMAYORGA' || me.objPermiso.USR.trim() === 'SAP01'|| me.objPermiso.USR.trim() === 'SAP43'){
+                        Ext.getCmp(prototype.id + '-boxLoad').show();
+                    }
+                    
                 } else global.Msg({msg: res.sesion});
             },
             failure: function(response, opts) {
@@ -95,7 +104,7 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.IATACalendarController'
     onEditClick: function(grid, rowIndex, colIndex) {
         var store = grid.getStore();
         var data = store.getAt(rowIndex).data;
-        this.winDataEntry('M', data);
+        this.winDataEntry('U', data);
     },
     winDataEntry: function(action, data) {
         action = action === null || action === undefined ? 'V' : action;
@@ -103,7 +112,7 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.IATACalendarController'
         Ext.create('Ext.Praxis.view.interline.IATACalendarForm.DataEntry', {
             id: 'DataEntryIATACalendarForm',
             params: {
-                actionCode: action,
+                action: action,
                 bean: data,
                 objPermiso: me.objPermiso
             }
@@ -149,7 +158,7 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.IATACalendarController'
     imgChart_clickHandler: function() {
     },
     btnAdd_click: function () {
-        this.winDataEntry('A');
+        this.winDataEntry('I');
     },
     imgBack_clickHandler: function() {
         global.showMenu();
@@ -234,6 +243,83 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.IATACalendarController'
         });
     },
     //</editor-fold>
+    
+    
+    onLoadValid: function() {
+        
+    },
+    
+    onFileLoad: function(a,b,c,d,e,f) {
+        
+        var me = this;
+        console.log(me.strFechDuplicat);
+                
+        if(me.strFechDuplicat === ''){
+            me.fileGlob = Ext.getCmp(prototype.id + '-file').getValue();
+        }
+                
+        if (me.fileGlob === '') {
+            Ext.MessageBox.alert('PRAXIS', "::: Select only one file. Please :::", function (btn, text) {
+                if (btn === 'ok' || btn === 'cancel')
+                    setTimeout("Ext.getCmp(prototype.id + '-File').focus();", 100);
+            });
+            return;
+        }
+        
+        var form = Ext.getCmp(prototype.id + '-form-01').getForm();
+//        console.log(form);
+        
+        
+        form.submit({
+            url: prototype.url + '/load_A1851',
+            waitMsg: 'Uploading your sure to upload the file...',
+            params: {strFechDuplicat: me.strFechDuplicat},
+            success: function (fp, o) {
+                var res = Ext.decode(o.response.responseText);
+                console.log(res);
+                
+                if (res.objResult.isDateDuplicat) {
+                    if (res.duplicat) {
+                        Ext.Msg.show({
+                            title: '.:Confirmation:.',
+                            msg: 'Record already exists, do you want to replace?',
+                            buttons: Ext.MessageBox.OKCANCEL,
+                            scope: this,
+                            icon: Ext.MessageBox.QUESTION,
+                            modal: true,
+                            fn: function (btn) {
+                                if (btn === 'ok') {
+                                    me.strFechDuplicat = res.objResult.strDateDuplicat;
+                                    me.onFileLoad();
+                                }
+                            }
+                        });
+                    }
+                }else{
+                    if(!res.error){
+                        global.Msg({msg: ".: Successful Upload :."});
+                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                    }else{
+                        global.Msg({msg: ".: Error Loading File :."});
+                    }
+                    
+                    me.strFechDuplicat = '';
+                    
+                    var filefield = form.getFields().get(0);
+                    filefield.setRawValue('');
+                    form.reset();
+                }
+//                Ext.getCmp(prototype.id+'-btn-upload').enable(true);
+            },
+            failure: function(response, opts) {
+                console.log(response);
+                console.log('server-side failure with status code ' + response.status);
+                global.Msg({msg: ".: Error Server :."});
+            }
+        });
+        
+        
+    },
     
     exportExcel: function() {
 //        global.getFile(_path);

@@ -121,7 +121,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterInterli.AccountingMa
             option.show();
     },
     btnAdd_click: function (obj, e) {
-        this.winDataEntry('A');
+        this.winDataEntry('I');
     },
     btnBack_click: function () {
         global.showMenu();
@@ -147,11 +147,11 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterInterli.AccountingMa
     },
     onEditClick: function (grid, rowIndex, colIndex) {
         var data = grid.getStore().getAt(rowIndex).data;
-        this.winDataEntry('M', data);
+        this.winDataEntry('U', data);
     },
     winDataEntry: function (action, data) {
         
-        action = action === null || action === undefined ? 'M' : action;
+        action = action === null || action === undefined ? 'U' : action;
         data = data === null || data === undefined ? {} : data;
                 
         Ext.create('Ext.Praxis.view.interline.AccountingMasterInterliForm.DataEntry', {

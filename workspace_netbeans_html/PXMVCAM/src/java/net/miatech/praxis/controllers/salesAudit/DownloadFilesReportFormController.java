@@ -6,9 +6,6 @@
 package net.miatech.praxis.controllers.salesAudit;
 
 import com.google.gson.Gson;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,6 +16,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +25,7 @@ import net.miatech.praxis.classes.ZipDirectory;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.DownloadFilesReportFormLogic;
+import net.miatech.praxis.utils.PythonWS;
 import net.miatech.utils.Functions;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -37,11 +36,14 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +60,9 @@ public class DownloadFilesReportFormController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private DownloadFilesReportFormLogic logic;
+
+    @Autowired
+    private PythonWS pws;
 
     @RequestMapping(value = "searchDowloadFiles")
     public @ResponseBody
@@ -218,7 +223,7 @@ public class DownloadFilesReportFormController extends BaseController {
         }
 
     }
-    
+
     @RequestMapping(value = "SearchDebitosDetail")
     public @ResponseBody
     String SearchDebitosDetail(ModelMap map, HttpServletRequest request) {
@@ -268,76 +273,55 @@ public class DownloadFilesReportFormController extends BaseController {
     }
 
     @RequestMapping(value = "DownloadFiles_python")
-    public @ResponseBody
-    void DownloadFiles_python(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ResponseEntity<byte[]> DownloadFiles_python(HttpServletRequest request, final HttpServletResponse response) throws Exception {
         A3280Filter filter = new A3280Filter();
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
-        String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
 
+        String v1_urlREST = "/download-files-report/file";
+
         try {
-            Unirest.setTimeouts(3600000, 3600000);
-            HashMap bodyData = new HashMap<>();
-            bodyData.put("date_from", filter.IN_DATEFROM);
-            bodyData.put("date_to", filter.IN_DATETO);
-            bodyData.put("PREFIX", "bsplink/");
 
-            HttpResponse<JsonNode> responses = Unirest.post(urlREST + "/api/bsplink/export_data/")
-                    .header("content-type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .body(new Gson().toJson(bodyData))
-                    .asJson();
+            Map<String, Object> queryParams = new HashMap<>();
+            queryParams.put("date_from", filter.IN_DATEFROM);
+            queryParams.put("date_to", filter.IN_DATETO);
+            queryParams.put("CCUST", "139");
+            queryParams.put("client", "am");
+            queryParams.put("PREFIX", "bsplink");
 
-            String error_code = responses.getBody().getObject().get("error_code").toString();
-            String error_msg = responses.getBody().getObject().get("error_msg").toString();
-            String filename = responses.getBody().getObject().get("filename").toString();
-
-            response.setContentType("application/zip");
-            response.setHeader("Content-Disposition", "attachment;filename=\"" + rutaFile + "\\\\" + filename + "\"");
-            InputStream is = new FileInputStream(rutaFile + "\\\\" + filename);
-            IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();
+            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST, queryParams);
+            return res;
 
         } catch (Exception e) {
-            throw new SpringException(e);
+            System.out.println("Error Message => " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            //throw new SpringException(e);
         }
     }
 
     @RequestMapping(value = "downloadFile")
-    public @ResponseBody
-    void downloadFile(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ResponseEntity<byte[]> downloadFile(HttpServletRequest request, HttpServletResponse response) throws Exception {
         A3280Filter filter = new A3280Filter();
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
-        String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+         String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
 
+        String v1_urlREST = "/download-files-report/fileByCtry";
+
         try {
-            Unirest.setTimeouts(3600000, 3600000);
-            HashMap bodyData = new HashMap<>();
-            bodyData.put("date_from", filter.IN_DATEFROM);
-            bodyData.put("country", filter.IN_COUNTRY);
-            bodyData.put("PREFIX", "bsplink/");
+            Map<String, Object> queryParams = new HashMap<>();
+            queryParams.put("date_from", filter.IN_DATEFROM);
+            queryParams.put("country", filter.IN_COUNTRY);
+            queryParams.put("CCUST", "139");
+            queryParams.put("client", "am");
+            queryParams.put("PREFIX", "bsplink");
 
-            HttpResponse<JsonNode> responses = Unirest.post(urlREST + "/api/bsplink/export_data_archi/")
-                    .header("content-type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .body(new Gson().toJson(bodyData))
-                    .asJson();
-
-            String error_code = responses.getBody().getObject().get("error_code").toString();
-            String error_msg = responses.getBody().getObject().get("error_msg").toString();
-            String filename = responses.getBody().getObject().get("filename").toString();
-
-            response.setContentType("application/zip");
-            response.setHeader("Content-Disposition", "attachment;filename=\"" + rutaFile + "\\\\" + filename + "\"");
-            InputStream is = new FileInputStream(rutaFile + "\\\\" + filename);
-            IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();
+            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST, queryParams);
+            return res;
 
         } catch (Exception e) {
-            throw new SpringException(e);
+            System.out.println("Error Message => " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

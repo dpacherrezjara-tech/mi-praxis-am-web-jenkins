@@ -3,6 +3,7 @@ package net.miatech.praxis.logic.program;
 // <editor-fold defaultstate="collapsed" desc="import">
 import java.sql.SQLException;
 import java.util.List;
+import net.miatech.beans.A4474Filter;
 import net.miatech.beans.PX040S01A1716Filter;
 import net.miatech.beans.PX040S01A720Filter;
 import net.miatech.beans.PX040S02A720Filter;
@@ -17,7 +18,7 @@ import net.miatech.praxis.dao.program.ProMasterTicketDAO;
 // </editor-fold>
 /**
  *
- * @author gsanchez
+ * @author gsanche
  */
 public class ProMasterTicketLogic {
 
@@ -26,17 +27,34 @@ public class ProMasterTicketLogic {
     public void setSession(IServerSession ss) {
         objDAO.setSession(ss);
     }
-
+    
+    public List<PX040S01A720Filter> SQP05174(PX040S01A720Filter filter) throws SQLException, Exception {
+        return objDAO.SQP05174(filter);
+    }
+    
+    public List<PX040S01A720Filter> SQP05175(PX040S01A720Filter filter) throws SQLException, Exception {
+        return objDAO.SQP05175(filter);
+    }
+    
     @Deprecated
     public PX040S01A720Filter loadPX040S01A720(PX040S01A720Filter filter) throws SQLException, Exception {
         return objDAO.loadPX040S01A720(filter);
     }
     
     @Deprecated
+    public List<PX040S01A720Filter> SQP04422(PX040S01A720Filter filter) throws SQLException, Exception {
+        return objDAO.SQP04422(filter);
+    }
+    
+    @Deprecated
     public List<PX040S01A1716Filter> loadPX040S01A1716(PX040S01A1716Filter filter) throws SQLException, Exception {
         return objDAO.loadPX040S01A1716(filter);
     }
-
+    
+    public List<A4474Filter> loadSQP05045(A4474Filter filter) throws SQLException, Exception {
+        return objDAO.loadSQP05045(filter);
+    }
+            
     public List<A720> loadPX040S02A720(PX040S02A720Filter filter) throws SQLException, Exception {
         return objDAO.loadPX040S02A720(filter);
     }

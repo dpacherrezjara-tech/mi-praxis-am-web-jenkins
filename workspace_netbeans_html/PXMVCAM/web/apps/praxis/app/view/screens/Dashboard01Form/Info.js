@@ -5,7 +5,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
           'Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis',
           'Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis',
           'Ext.Praxis.view.screens.Dashboard01Form.tabs.ByIATA',
+          'Ext.Praxis.view.screens.Dashboard01Form.tabs.SpaProfitability',
           'Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline',
+          'Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrExpired',
           'Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrEMD'
     ],
     layout: 'border',
@@ -34,8 +36,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                     xtype: 'tabpanel',
                     id: prototype.id + '-tabMain',
                     deferredRender: true,
-                    width: 1500,
-                    height: 770,
+                    width: 1600,
+                    height: 670,//820
+                    border: false,
                     anchor: '100%',
                     margin: '1 1 1 1',
                     autoScroll: true,
@@ -74,15 +77,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
                             id: prototype.id + '-FlownAnalysis_tab',
-                            title: 'Flown Analysis',
-                            layout: {
-                                type: 'vbox',
-                                align: 'center'
-                            },
-                            margin: '10 10 10 10',
-                            defaults: {
-                                labelAlign: 'left'
-                            },
+                            title: 'Flown Analysis',                            
                             items: [
                                 {                                    
                                     id: prototype.id+ '-FlownAnalysis_screen',
@@ -113,7 +108,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                         {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
-                            id: prototype.id + '-tabScrExchange',
+                            id: prototype.id + '-ScrExpired_tab',
                             title: 'Expired Analysis',
                             layout: {
                                 type: 'vbox',
@@ -125,14 +120,17 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                             },
                             items: [
                                 {
-//                                    xtype:prototype.id + '-FlownAnalysis'
+                                    id: prototype.id+ '-ScrExpired_screen',
+                                    xtype:prototype.id + '-ScrExpired'
                                 }
                             ]
                         },
                         {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
-                            id: prototype.id + '-tabScrRefund',
+//                            hidden:true,
+                            id: prototype.id + '-SpaProfitability_tab',
+//                            hidden:true,
                             title: 'Spa Profitability',
                             layout: {
                                 type: 'vbox',
@@ -144,7 +142,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                             },
                             items: [
                                 {
-//                                    xtype:prototype.id + '-FlownAnalysis'
+                                    id: prototype.id+ '-SpaProfitability_screen',
+                                    xtype:prototype.id + '-SpaProfitability'
                                 }
                             ]
                         },
@@ -152,6 +151,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
                             id: prototype.id + '-ByIATA_tab',
+//                            hidden:true,
                             title: 'Sales By IATAs',
                             layout: {
                                 type: 'vbox',

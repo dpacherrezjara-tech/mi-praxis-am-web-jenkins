@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,7 +68,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import net.miatech.praxis.BSPF104;
 import net.miatech.praxis.logic.salesAudit.BwrQueryRefundLogic;
+import net.miatech.praxis.utils.PythonWS;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 //</editor-fold>
 /**
@@ -84,6 +88,8 @@ public class ADMReportController extends BaseController {
     private MasterDAO masterDAO;
     private ProrrateoNewDAO prorrateoNewDAO;
     private ProrrateoDAO prorrateoDAO;
+    @Autowired
+    private PythonWS pws;
 
     @RequestMapping(value = "SearchReportADM")
     public @ResponseBody
@@ -328,7 +334,7 @@ public class ADMReportController extends BaseController {
 
             Row row;
             Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11,
-                    CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25, CH_26, CH_27, CH_28, CH_29,CH_30;
+                    CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25, CH_26, CH_27, CH_28, CH_29, CH_30;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -515,7 +521,7 @@ public class ADMReportController extends BaseController {
                 CH_14.setCellValue(listaData.get(vi).A2548FFILE);
                 CH_15.setCellValue(listaData.get(vi).A2548NFACT);
                 CH_16.setCellValue(listaData.get(vi).A2548REGIS);
-                CH_17.setCellValue(listaData.get(vi).A2548DESC1);
+                CH_17.setCellValue(listaData.get(vi).A2548DESC3);
                 String base = "";
                 if (listaData.get(vi).A2548BASE.equals("PR")) {
                     base = "PROCESO REGULAR";
@@ -687,7 +693,7 @@ public class ADMReportController extends BaseController {
             sheet.autoSizeColumn(15, true);
             sheet.autoSizeColumn(16, true);
             //sheet.autoSizeColumn(17, true);
-            sheet.autoSizeColumn(18, true); 
+            sheet.autoSizeColumn(18, true);
             //sheet.autoSizeColumn(19, true);
             //sheet.autoSizeColumn(20, true);
             //sheet.autoSizeColumn(21, true);
@@ -770,6 +776,10 @@ public class ADMReportController extends BaseController {
     String insertTracingFile(ModelMap map, @RequestParam("fileaudito") MultipartFile file, @RequestParam("fileaudito2") MultipartFile file2, @RequestParam("fileaudito3") MultipartFile file3, HttpServletRequest request) {
         A2553 filter = new A2553();
         A2553 listenvio = new A2553();
+        boolean result2 = false;
+        File archivo1;
+        File archivo2 = null;
+        File archivo3 = null;
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -792,6 +802,28 @@ public class ADMReportController extends BaseController {
             String result = logic.insertTracing(listenvio);
             if (result.equals("RECORD INSERTED")) {
                 result = "The record was saved successfully.";
+
+                // para achivos 1
+                archivo1 = new File(file.getOriginalFilename());
+                file.transferTo(archivo1);
+                // para achivos 2
+                if (!file2.getOriginalFilename().equals("")) {
+                    archivo2 = new File(file2.getOriginalFilename());
+                    file2.transferTo(archivo2);
+                }
+                // para achivos 3
+                if (!file3.getOriginalFilename().equals("")) {
+                    archivo3 = new File(file3.getOriginalFilename());
+                    file3.transferTo(archivo3);
+                }
+
+                result2 = upload_s3(filter.A2553NMEMO, archivo1, archivo2, archivo3);
+                if (result2) {
+                    result = "The record was saved successfully.";
+                } else {
+                    result = "An error ocurred when trying to upload the file.";
+                }
+                /*
                 if (!A2553ARCHV.equals("")) {
                     byte[] bytes = file.getBytes();
                     result = upload(bytes, filter.A2553NMEMO, A2553ARCHV);
@@ -804,6 +836,7 @@ public class ADMReportController extends BaseController {
                     byte[] bytes3 = file3.getBytes();
                     result = upload(bytes3, filter.A2553NMEMO, A2553ARCHV3);
                 }
+                 */
             } else {
                 result = "An error ocurred when trying to upload the file.";
             }
@@ -844,6 +877,7 @@ public class ADMReportController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    /*
     public String upload(byte[] bytes, String nroMemo, String nomArchivo) throws Exception {
 
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -861,10 +895,7 @@ public class ADMReportController extends BaseController {
             }
             File dir2 = new File(directory, Functions.getFechaActual());
             dir2.mkdir();
-            /* if (!Files.exists(dir)) {
-             Files.createDirectory(dir);
-             }*/
-
+           
             String strArchivo = rutaMemo + "\\" + Functions.getFechaActual() + "\\" + nomArchivo;
             File archivo = new File(strArchivo);
             FileOutputStream fs = new FileOutputStream(archivo);
@@ -881,6 +912,7 @@ public class ADMReportController extends BaseController {
 
         return mensaje;
     }
+     */
 
     @RequestMapping(value = "insertTKT")
     public @ResponseBody
@@ -920,9 +952,13 @@ public class ADMReportController extends BaseController {
     public @ResponseBody
     String insertLisTracingFile(ModelMap map, HttpServletRequest request, @RequestParam("fileaudito") MultipartFile file, @RequestParam("fileaudito2") MultipartFile file2, @RequestParam("fileaudito3") MultipartFile file3) {
         String result = "";
-        String result2 = "";
+        //String result2 = "";
         String estado = "";
         String VL_ARCHI = "";
+        boolean result2 = false;
+        File archivo1;
+        File archivo2 = null;
+        File archivo3 = null;
         A2553 listenvio = new A2553();
         ArrayList<SQP00911Filter> gridData = new ArrayList<SQP00911Filter>();
 
@@ -951,12 +987,32 @@ public class ADMReportController extends BaseController {
             //List<A3404Filter> gridDataRazones2 =  fromJsonList(request.getParameter("beanlstRazones"), gridDataRazones.getClass());//new Gson().fromJson(request.getParameter("beanlstRazones"), gridDataRazones.getClass());
             ADMReportLogic logic = new ADMReportLogic();
             logic.setSession(this.serverSession.getServerSession());
-            result = logic.insertLisTracingFile(gridData, listenvio);
+            result = logic.insertLisTracingFile(gridData, listenvio);//"RECORD INSERTED"; //
             if (result.equals("RECORD INSERTED")) {
                 if (!listenvio.A2553ARCHV.equals("") || !listenvio.A2553ARCHV2.equals("") || !listenvio.A2553ARCHV3.equals("")) {
 
                     for (int i = 0; i < gridData.size(); i++) {
-                        if (!listenvio.A2553ARCHV.equals("")) {
+                        // para achivos 1
+                        archivo1 = new File(file.getOriginalFilename());
+                        file.transferTo(archivo1);
+                        // para achivos 2
+                        if (!file2.getOriginalFilename().equals("")) {
+                            archivo2 = new File(file2.getOriginalFilename());
+                            file2.transferTo(archivo2);
+                        }
+                        // para achivos 3
+                        if (!file3.getOriginalFilename().equals("")) {
+                            archivo3 = new File(file3.getOriginalFilename());
+                            file3.transferTo(archivo3);
+                        }
+
+                        result2 = upload_s3(gridData.get(i).A2548CNXPA, archivo1, archivo2, archivo3);
+                        if (result2) {
+                            result = "The record was saved successfully.";
+                        } else {
+                            result = "An error ocurred when trying to upload the file.";
+                        }
+                        /*if (!listenvio.A2553ARCHV.equals("")) {
                             byte[] bytes2 = file2.getBytes();
                             result2 = upload(bytes2, gridData.get(i).A2548CNXPA, listenvio.A2553ARCHV);
                             VL_ARCHI = "1";
@@ -973,7 +1029,7 @@ public class ADMReportController extends BaseController {
                         }
                         if (VL_ARCHI.equals("1")) {
                             result2 = upload_s3(gridData.get(i).A2548CNXPA);
-                        }
+                        }*/
                     }
 
                 }
@@ -989,13 +1045,24 @@ public class ADMReportController extends BaseController {
         return new Gson().toJson(map);
     }
 
-    public String upload_s3(String IN_CNXPA) throws SQLException, Exception {
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+    public boolean upload_s3(String IN_CNXPA, File archiv, File archiv2, File archiv3) throws SQLException, Exception {
+        boolean res;
+        try {
+            String v1_urlREST = "/util/upload-file";
+            String urlREST = "ADM" + "/" + IN_CNXPA + "/" + Functions.getFechaActual();
+            res = pws.uploadFilesPython(v1_urlREST, "am", urlREST, archiv, archiv2, archiv3);
+            //("success", true);
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            throw new SpringException(e);
+        }
 
+        return res;
 
-        /*
-         Se establece tiempo límite de conexión por 60 min
-         */
+    }
+
+    /*public String upload_s3(String IN_CNXPA) throws SQLException, Exception {
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_SERVICE_AM").toString();
+
         Unirest.setTimeouts(3600000, 3600000);
         HashMap bodyData = new HashMap<>();
         bodyData.put("IN_PATH", "\\\\10.0.0.87\\amaudit\\ADM\\" + IN_CNXPA + "\\" + Functions.getFechaActual());
@@ -1012,8 +1079,7 @@ public class ADMReportController extends BaseController {
 
         return error_msg;
 
-    }
-
+    }*/
     @RequestMapping(value = "getFormUnicoPDF")
     public @ResponseBody
     void getFormUnicoPDF(HttpServletRequest request, HttpServletResponse response) {
@@ -1459,6 +1525,7 @@ public class ADMReportController extends BaseController {
                 map03.put("A1673TXORI", lst.lst_CalcuImpuestos.get(vi).A1673TXORI);
                 map03.put("A1673TXMIA", lst.lst_CalcuImpuestos.get(vi).A1673TXMIA);
                 map03.put("A1673TXDIF", lst.lst_CalcuImpuestos.get(vi).A1673TXDIF);
+                map03.put("A1673CDATO", lst.lst_CalcuImpuestos.get(vi).A1673CDATO);
 
                 lst_CalculosImpuestos.add(map03);
             }

@@ -259,6 +259,42 @@ public class BusinessToolsDAO {
         SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00768(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
+
+        if ("1".equals(filter.IN_FLAG_CPN_SALE)) {
+            String strSql_FVLO = "";
+            String strSql_NVLO = "";
+            String strSql_ORI = "";
+            String strSql_DES = "";
+            String strSql_VALUE= "";
+
+            strSql_FVLO = " CASE WHEN A1692.CUPON ='1' THEN  A720FVLO1  "
+                    + "WHEN A1692.CUPON='2' THEN  A720FVLO2   "
+                    + "WHEN A1692.CUPON='3' THEN  A720FVLO3   "
+                    + "WHEN A1692.CUPON='4' THEN  A720FVLO4   END AS A720FVLO";
+
+            strSql_NVLO = " CASE WHEN A1692.CUPON='1' THEN  A720NVLO1  "
+                    + "WHEN A1692.CUPON='2' THEN  A720NVLO2   "
+                    + "WHEN A1692.CUPON='3' THEN  A720NVLO3   "
+                    + "WHEN A1692.CUPON='4' THEN  A720NVLO4   END AS A720NVLO";
+
+            strSql_ORI = " CASE WHEN A1692.CUPON='1' THEN  A720RUTA0  "
+                    + "WHEN A1692.CUPON='2' THEN  A720RUTA1   "
+                    + "WHEN A1692.CUPON='3' THEN  A720RUTA2   "
+                    + "WHEN A1692.CUPON='4' THEN  A720RUTA3   END AS A720RUTA_0";
+
+            strSql_DES = " CASE WHEN A1692.CUPON='1' THEN  A720RUTA1  "
+                    + "WHEN A1692.CUPON='2' THEN  A720RUTA2   "
+                    + "WHEN A1692.CUPON='3' THEN  A720RUTA3   "
+                    + "WHEN A1692.CUPON='4' THEN  A720RUTA4   END AS A720RUTA_1";
+            
+            strSql_VALUE = " CASE WHEN A1692.CUPON='1' THEN  A720VALOR1  "
+                    + "WHEN A1692.CUPON='2' THEN  A720VALOR2   "
+                    + "WHEN A1692.CUPON='3' THEN  A720VALOR3   "
+                    + "WHEN A1692.CUPON='4' THEN  A720VALOR4   END AS A720VALOR";
+
+            filter.strSelectA = filter.strSelectA.trim() + "," + strSql_FVLO + "," + strSql_NVLO + "," + strSql_ORI + "," + strSql_DES+ "," + strSql_VALUE +", A720FECVTA";
+        }
+        System.out.println(filter.strSelectA);
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
@@ -501,6 +537,16 @@ public class BusinessToolsDAO {
                         obj.column63 = rst.getString("column77");
                     }
 
+                    if ("1".equals(filter.IN_FLAG_CPN_SALE)) {
+                        obj.A720FVLO = rst.getString("A720FVLO");
+                        obj.A720NVLO = rst.getString("A720NVLO");
+                        obj.A720RUTA_0 = rst.getString("A720RUTA_0");
+                        obj.A720RUTA_1 = rst.getString("A720RUTA_1");
+                        obj.A720FECVTA = rst.getString("A720FECVTA");
+                        obj.A720VALOR = rst.getDouble("A720VALOR");
+
+                    }
+                    
                     obj.tot1 = TOT1;
                     obj.tot2 = TOT2;
                     obj.tot3 = TOT3;
@@ -1145,5 +1191,84 @@ public class BusinessToolsDAO {
         }
 
         return lista;
+    }
+
+    public SQP00768 executeValuation(SQP00768 filter) throws SQLException,Exception {
+
+        List<SQP00768> lista = new ArrayList<>(0);
+        SQP00768 obj;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "";
+        SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00768U(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(16, Types.INTEGER);
+            cstmt.registerOutParameter(17, Types.INTEGER);
+            cstmt.registerOutParameter(18, Types.VARCHAR);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, session.getUserView().getCustomerInfo().USR);
+            cstmt.setString(3, filter.strCliente);
+            cstmt.setString(4, filter.strFecha);
+            cstmt.setString(5, filter.IN_FECHA_FROM);
+            cstmt.setString(6, filter.IN_FECHA_TO);
+            cstmt.setString(7, filter.strSQL.trim());
+            cstmt.setString(8, filter.strSelectA.trim().replace("@", "''"));
+            cstmt.setString(9, filter.strSelectN.trim().replace("@", "''"));
+            cstmt.setString(10, filter.strOrderBy.trim());
+            cstmt.setString(11, filter.IN_SOURCEF.trim());
+            cstmt.setString(12, filter.IN_SOURCEF2.trim());
+            cstmt.setString(13, filter.IN_TABLA);
+            cstmt.setString(14, filter.IN_TABLA2);
+            cstmt.setString(15, filter.IN_VALID_MFSTO);
+            cstmt.setLong(16, filter.QTY);
+            cstmt.setLong(17, filter.QTY_UPDATE);
+            cstmt.setString(18, filter.strMSG);
+
+            cstmt.execute();
+
+            filter.QTY = cstmt.getInt(16);
+            filter.QTY_UPDATE = cstmt.getInt(17);
+            filter.strMSG = cstmt.getString(18);
+
+            
+        
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            filter.strMSG = e.getMessage();
+        } finally {
+            try {
+                if (rst != null) {
+                    try {
+                        rst.close();
+                    } catch (SQLException e) {
+                        throw new SpringException(e);
+                    }
+                }
+                if (cstmt != null) {
+                    try {
+                        cstmt.close();
+                    } catch (SQLException e) {
+                        throw new SpringException(e);
+                    }
+                }
+                session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            } catch (Exception e) {
+            }
+
+            pasarGarbageCollector();
+        }
+
+        return filter;
     }
 }

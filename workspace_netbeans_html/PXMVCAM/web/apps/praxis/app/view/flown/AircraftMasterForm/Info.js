@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.flown.AircraftMasterForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1537,
+                width: 1577,
                 height: 500,
                 align: 'center'
             },
@@ -28,7 +28,7 @@ Ext.define('Ext.Praxis.view.flown.AircraftMasterForm.Info', {
                     xtype: 'grid',
                     id: prototype.id + '-gridData',
                     store: Ext.create('Ext.Praxis.store.flown.AircraftMaster.GridData'),
-                    height: 507,
+                    height: 527,
                     columnLines: true,                     
                     columns:{
                         defaults: {
@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.view.flown.AircraftMasterForm.Info', {
                             {text: 'Nbr', dataIndex: 'RN', width: 40},
                             {text: 'Equipment', dataIndex: 'EQUIPO', width: 80},
                             {text: 'Model', dataIndex: 'MODELO', width: 80},
-                            {text: 'Number', dataIndex: 'NUMERO', width: 60},
+                            {text: 'Number', dataIndex: 'NUMERO', width: 80},
                             {
                                 text: 'Registration',
                                 defaults: {
@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.flown.AircraftMasterForm.Info', {
                                 ]
                             },
                             {text: 'Carrier', dataIndex: 'CARRIER', width: 60},
-                            {text: 'Type', dataIndex: 'TIPO', width: 40},
+                            {text: 'Type', dataIndex: 'TIPO', width: 60},
                             {
                                 text: 'Manufacture',
                                 defaults: {

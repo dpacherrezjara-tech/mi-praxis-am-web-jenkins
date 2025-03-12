@@ -67,9 +67,9 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Filters', {
                                     typeAhead: true,
                                     listConfig: {maxHeight: 111},
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromYear_changeHandler'
                                     }
                                 },
@@ -88,9 +88,9 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Filters', {
                                     valueField: 'code', displayField: 'name',
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromMonth_changeHandler'
                                     }
                                 },
@@ -111,9 +111,9 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Filters', {
                                     listConfig: {maxHeight: 111},
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromDay_changeHandler'
                                     }
                                 },
@@ -141,9 +141,9 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Filters', {
                                     typeAhead: true,
                                     listConfig: {maxHeight: 111},
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
                                 },
                                 {
@@ -160,9 +160,9 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Filters', {
                                     valueField: 'code', displayField: 'name',
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
                                 },
                                 {
@@ -181,12 +181,64 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Filters', {
                                     listConfig: {maxHeight: 111},
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
-                                }
+                                },
                                 // </editor-fold>
+                                {xtype: 'tbspacer', width: 300},
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-boxLoad',
+                                    hidden: true,
+                                    width: 280,
+                                    layout: 'hbox',
+                                    border: false,
+                                    bodyStyle: 'background-color: #E3EAF9;',
+                                    items: [
+                                        {
+                                            xtype: 'form',
+                                            id: prototype.id + '-form-01',
+                                            border: false,
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            items: [{
+                                                xtype: 'filefield',
+                                                id: prototype.id + '-file',
+                                                name: 'excelfile',
+                                                clearOnSubmit: false,
+                //                                fieldLabel: '<strong style="font-weight:bold;color:#0B333C;">Update Excel</strong>',
+                                                allowBlank: true,
+                                                accept: '.xlsx, .xls',
+                                                labelWidth: 85,
+                                                width: 160,
+                                                buttonText: 'Select excel...',
+                                                regex: /(.)+((\.xlsx)|(\.xls)|(\.csv)(\w)?)$/i,
+                                                regexText: 'Only XLS and XLSX formats are accepted',
+                                                buttonConfig: {
+                                                    text : '<strong>Select file</strong>',
+                                                    width: 80
+                                                },
+                                                listeners:{
+                                                    //change: 'onUploadChange'
+                                                }
+                                            }]
+                                        },
+                                        {xtype: 'tbspacer', width: 20},
+                                        {
+                                            xtype: 'button',
+                                            id:prototype.id+'-btn-upload',
+                                            margin: '2 0 0 0',
+                                            width: 60,
+                                            html: '<strong style="color:white;">LOAD</strong>',
+                                            style: 'background:#24678D;color:white;font-weight:bold;',
+                                            border: false,
+                                            listeners:{
+                                                click: 'onFileLoad'
+                                            }
+                                        }
+                                    ]
+                                }
                             ]
                         }
                     ]

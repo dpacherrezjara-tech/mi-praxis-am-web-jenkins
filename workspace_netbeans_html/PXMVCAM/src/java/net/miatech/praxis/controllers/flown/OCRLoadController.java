@@ -482,26 +482,31 @@ public class OCRLoadController extends BaseController {
             Cell CH2_01 = row2.createCell(1);
             CH2_01.setCellValue("Date");
             Cell CH2_02 = row2.createCell(2);
-            CH2_02.setCellValue("Number");
+            CH2_02.setCellValue("Processing Date");
             Cell CH2_03 = row2.createCell(3);
-            CH2_03.setCellValue("Departure");
+            CH2_03.setCellValue("Number");
             Cell CH2_04 = row2.createCell(4);
-            CH2_04.setCellValue("Arrival");
+            CH2_04.setCellValue("Departure");
+            Cell CH2_05 = row2.createCell(5);
+            CH2_05.setCellValue("Arrival");
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 2, 2));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 5, 5));
 
             CH2_01.setCellStyle(headerStyle);
             CH2_02.setCellStyle(headerStyle);
             CH2_03.setCellStyle(headerStyle);
             CH2_04.setCellStyle(headerStyle);
+            CH2_05.setCellStyle(headerStyle);
 
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(2, true);
             sheet.autoSizeColumn(3, true);
             sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
 
             ++vj;
             // </editor-fold>
@@ -515,24 +520,28 @@ public class OCRLoadController extends BaseController {
                 Cell cell52 = row.createCell(2);
                 Cell cell53 = row.createCell(3);
                 Cell cell54 = row.createCell(4);
+                Cell cell55 = row.createCell(5);
 
                 cell50.setCellValue(listaData.get(vi).strTicket);
                 cell51.setCellValue(listaData.get(vi).strFormatDate);
-                cell52.setCellValue(listaData.get(vi).NFLIGHT);
-                cell53.setCellValue(listaData.get(vi).CDEPART);
-                cell54.setCellValue(listaData.get(vi).CARRIVA);
+                cell52.setCellValue(listaData.get(vi).PRDA);
+                cell53.setCellValue(listaData.get(vi).NFLIGHT);
+                cell54.setCellValue(listaData.get(vi).CDEPART);
+                cell55.setCellValue(listaData.get(vi).CARRIVA);
 
                 cell50.setCellStyle(bodyStyle);
                 cell51.setCellStyle(bodyStyle);
                 cell52.setCellStyle(bodyStyle);
                 cell53.setCellStyle(bodyStyle);
                 cell54.setCellStyle(bodyStyle);
+                cell55.setCellStyle(bodyStyle);
 
                 sheet.autoSizeColumn(0, true);
                 sheet.autoSizeColumn(1, true);
                 sheet.autoSizeColumn(2, true);
                 sheet.autoSizeColumn(3, true);
                 sheet.autoSizeColumn(4, true);
+                sheet.autoSizeColumn(5, true);
                 // </editor-fold>
                 
                 iter.next();

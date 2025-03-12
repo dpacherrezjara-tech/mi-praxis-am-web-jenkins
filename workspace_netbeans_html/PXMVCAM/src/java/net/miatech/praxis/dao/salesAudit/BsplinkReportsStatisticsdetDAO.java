@@ -120,6 +120,9 @@ public class BsplinkReportsStatisticsdetDAO {
                 objRtn.A3389DIAS = rs01.getString("DIAS");
                 objRtn.A3389SEMAF = rs01.getString("TRAFFIC_LIGHT");
                 objRtn.A3389TCODE = rs01.getString("PAYMETRFND");
+                objRtn.A3401STATU = rs01.getString("A3401STATU");
+                objRtn.A3401RAAG = rs01.getString("A3401RAAG");
+                objRtn.A3389CHANEL = rs01.getString("A3389CHANEL");
                 //MONTOS
                 objRtn.A3389TARIF = rs01.getDouble("A3389TARIF");
                 objRtn.A3389COMIS = rs01.getDouble("A3389COMIS");
@@ -127,6 +130,7 @@ public class BsplinkReportsStatisticsdetDAO {
                 objRtn.A3389PENAL = rs01.getDouble("A3389PENAL");
                 objRtn.A3389PORPE = rs01.getDouble("A3389PORPE");
                 objRtn.A3389TOTAL = rs01.getDouble("A3389TOTAL");
+                objRtn.A3389FECOR = rs01.getString("A3389FVNTA");
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;

@@ -121,8 +121,8 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntryTicket', 
                                             id: prototype.id + '-t' + '-txtSEQ',
                                             required: true,
                                             // readOnly: true,
-                                            fieldLabel: '<strong style="color:#000;">Secuence</strong>',
-                                            width: 150,
+                                            fieldLabel: '<strong style="color:#000;">Sequence</strong>',
+                                            width: 115,
                                             labelWidth: 80,
                                             labelAlign: 'left',
                                             padding: '1px 5px 0px 5',
@@ -272,8 +272,8 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntryTicket', 
                                             labelAlign: 'left',
                                             padding: '1px 5px 0px 5',
                                             enforceMaxLength: true,
-                                            fieldStyle: 'text-align: center;'
-                                            //maxLength: 4
+                                            fieldStyle: 'text-align: center;',
+                                            maxLength: 50
                                                     //maskRe: /[0-9]/
                                         }
 
@@ -556,20 +556,20 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntryTicket', 
                                     fieldStyle: 'text-align: left;'
                                 },
                                 //{xtype: 'tbspacer', width: 224},
-                                {
-                                    xtype: 'label',
-                                    labelAlign: 'left',
-                                    html: '<strong style="color:#000;">Leg Secuence</strong>',
-                                    width: 130,
-                                    padding: '1px 5px 0px 10px'
-
-                                },
-                                {
-                                    xtype: 'label',
-                                    labelAlign: 'center',
-                                    //html: '<strong style="color:#AC4546;font-size:13px;">(*)</strong>',
-                                    width: 30
-                                },
+//                                {
+//                                    xtype: 'label',
+//                                    labelAlign: 'left',
+//                                    html: '<strong style="color:#000;">Leg Secuence</strong>',
+//                                    width: 130,
+//                                    padding: '1px 5px 0px 10px'
+//
+//                                },
+//                                {
+//                                    xtype: 'label',
+//                                    labelAlign: 'center',
+//                                    //html: '<strong style="color:#AC4546;font-size:13px;">(*)</strong>',
+//                                    width: 30
+//                                },
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-t' + '-txtLEGSEQ',
@@ -577,6 +577,7 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntryTicket', 
                                     // readOnly: true,
                                     fieldLabel: '',
                                     width: 90,
+                                    hidden: true,
                                     labelWidth: 0,
                                     labelAlign: 'left',
                                     enforceMaxLength: true,
@@ -596,7 +597,7 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntryTicket', 
                                     xtype: 'label',
                                     labelAlign: 'center',
                                     //html: '<strong style="color:#AC4546;font-size:13px;">(*)</strong>',
-                                    width: 30
+                                    width: 80
                                 },
                                 {
                                     xtype: 'combo',

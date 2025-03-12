@@ -62,7 +62,7 @@ Ext.define('Ext.Praxis.view.payments.ClarificationLoadForm.Filters', {
                         xtype: 'filefield',
                         id: prototype.id + '-file',
                         name: 'excelfile',
-                        fieldLabel: '<strong style="font-weight:bold;color:#0B333C;">Upload File</strong>',
+                        fieldLabel: '<strong style="font-weight:bold;color:#0B333C;">Upload File.</strong>',
                         allowBlank: true,
                         accept: '.xlsx, .xls',
                         labelWidth: 80,

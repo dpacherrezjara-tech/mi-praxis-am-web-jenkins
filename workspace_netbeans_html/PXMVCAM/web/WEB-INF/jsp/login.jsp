@@ -55,8 +55,10 @@
            var CONTEXTPATH = '<%=request.getContextPath()%>';
            console.log('CONTEXTPATH:'+CONTEXTPATH);
            var URL =  window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
-           //if(window.location.hostname==='10.19.17.33')
-           //    window.location = 'https://praxisamtesting.miatech.net'+CONTEXTPATH;
+           if(window.location.hostname==='10.19.17.33')
+               window.location = 'https://praxisamtesting.miatech.net'+CONTEXTPATH;
+           if(window.location.hostname==='10.19.17.40')
+               window.location = 'https://praxisam.miatech.net'+CONTEXTPATH;
            console.log('URL:'+URL);
         </script>
     </head>

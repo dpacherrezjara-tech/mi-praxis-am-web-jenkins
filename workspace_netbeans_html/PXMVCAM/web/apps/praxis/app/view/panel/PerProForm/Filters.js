@@ -51,10 +51,15 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.Filters', {
                         {
                             xtype: 'textfield',
                             id: prototype.id+'-codigo-option',
+                            maxLength: 10,
+                            enforceMaxLength: true,
                             labelWidth:90,
                             labelAlign:'right',
                             width:'100%',
-                            anchor:'100%'
+                            anchor:'100%',
+                            listeners:{
+                                change: 'onUpperValue'
+                            }
                         }
                     ]
                 }

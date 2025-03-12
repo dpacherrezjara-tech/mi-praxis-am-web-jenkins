@@ -39,12 +39,10 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -204,6 +202,7 @@ public class ADMManualFormController extends BaseController {
                 map02 = new HashMap<>();
 
                 map02.put("A1673CDTAX", lst.lst_CalcuImpuestos.get(vi).A1673CDTAX);
+                map02.put("A1673CDATO", lst.lst_CalcuImpuestos.get(vi).A1673CDATO);
                 map02.put("A1673TXORI", lst.lst_CalcuImpuestos.get(vi).A1673TXORI);
                 map02.put("A1673TXMIA", lst.lst_CalcuImpuestos.get(vi).A1673TXMIA);
                 map02.put("A1673TXDIF", lst.lst_CalcuImpuestos.get(vi).A1673TXDIF);
@@ -326,6 +325,9 @@ public class ADMManualFormController extends BaseController {
         String razones = "";
         String taxes = "";
         boolean iboolean;
+        int contrazo=0;
+        int contaxes=0;
+         
         SQP00911Filter filter = new SQP00911Filter();
         ArrayList<A2560Filter> gridDataRazones = new ArrayList<A2560Filter>();
         ArrayList<A1673Filter> gridDataTaxes = new ArrayList<A1673Filter>();
@@ -340,15 +342,13 @@ public class ADMManualFormController extends BaseController {
             for (JsonElement obj : gsonTaxes) {
                 JsonObject gsonObj = obj.getAsJsonObject();
                 A1673Filter data = new A1673Filter();
-                taxes = taxes + "|" + gsonObj.get("A1673CDTAX").getAsString() + "$" + gsonObj.get("A1673TXMIA").getAsString();
-
-                //gridDataTaxes.add(data);
+                taxes = taxes + "|" + gsonObj.get("A1673CDTAX").getAsString() + "$" + gsonObj.get("A1673TXMIA").getAsString() + "$" + gsonObj.get("A1673CDATO").getAsString(); //
             }
             //LISTA DE TKT
             for (JsonElement obj : gsonRazo) {
                 JsonObject gsonObj = obj.getAsJsonObject();
                 A2560Filter data = new A2560Filter();
-                razones += razones + "|" + gsonObj.get("A2560CODRZ").getAsString() + "$" + gsonObj.get("A2560FAMIL").getAsString() + "$" + gsonObj.get("A2560ERROR").getAsString();
+                razones = razones + "|" + gsonObj.get("A2560CODRZ").getAsString() + "$" + gsonObj.get("A2560FAMIL").getAsString() + "$" + gsonObj.get("A2560ERROR").getAsString();
             }
 
             logic = new ADMManualFormLogic();

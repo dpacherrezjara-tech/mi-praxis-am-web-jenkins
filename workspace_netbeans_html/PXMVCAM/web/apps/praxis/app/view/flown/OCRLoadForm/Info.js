@@ -59,6 +59,12 @@ Ext.define('Ext.Praxis.view.flown.OCRLoadForm.Info', {
                                             return value;
                                         }
                                     },
+                                    {text: 'Processing <br> Date', dataIndex: 'PRDA', width: 120,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        }
+                                    },
                                     {text: 'Number', dataIndex: 'NFLIGHT', width: 100,
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center;";
@@ -205,6 +211,12 @@ Ext.define('Ext.Praxis.view.flown.OCRLoadForm.Info', {
                                 },
                                 columns: [
                                     {text: 'Date', dataIndex: 'strFormatDate', width: 120,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'Processing <br> Date', dataIndex: 'PRDA', width: 120,
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center;";
                                             return value;

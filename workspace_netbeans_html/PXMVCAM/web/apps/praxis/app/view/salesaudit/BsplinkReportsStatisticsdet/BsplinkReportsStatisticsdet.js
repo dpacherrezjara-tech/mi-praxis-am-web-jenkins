@@ -406,7 +406,8 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkReportsStatisticsdet.BsplinkReport
                                             height: 480,
                                             columns: {
                                                 items: [
-                                                    {
+                                                     {text: 'Channel', dataIndex: 'A3389CHANEL', width: 60, sortable: false, align: 'center'},
+                                                     {
                                                         text: 'Country',
                                                         dataIndex: 'A3389PAIS',
                                                         width: 60
@@ -435,6 +436,11 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkReportsStatisticsdet.BsplinkReport
                                                         width: 80
                                                     },
                                                     {
+                                                        text: 'Sale </br>date',
+                                                        dataIndex: 'A3389FECOR',
+                                                        width: 80
+                                                    },
+                                                    {
                                                         text: 'Application </br>date',
                                                         dataIndex: 'A3389FAPPI',
                                                         width: 80
@@ -459,7 +465,7 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkReportsStatisticsdet.BsplinkReport
                                                         text: 'Reason BSP',
                                                         dataIndex: 'A3389RAAG',
                                                         width: 100,
-                                                        renderer: 'onRendererColumntdAttr'
+                                                        renderer: 'onRendererColumnReason'
                                                     },
                                                     {
                                                         text: 'Reason AM',

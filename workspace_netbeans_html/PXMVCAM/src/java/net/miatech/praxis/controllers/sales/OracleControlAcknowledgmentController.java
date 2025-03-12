@@ -7,10 +7,17 @@ package net.miatech.praxis.controllers.sales;
 
 import com.google.gson.Gson;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,6 +31,7 @@ import net.miatech.beans.A1881Filter;
 import net.miatech.beans.PX019S01A025Filter;
 import net.miatech.libmiatec.A1007;
 import net.miatech.praxis.controllers.BaseController;
+import static net.miatech.praxis.controllers.tnu.AtlUsageNoSaleController.zipFile;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.sales.SalesOracleAcknowledgementLogic;
 import net.miatech.praxis.logic.flown.ZoneMasterFileLogic;
@@ -37,6 +45,7 @@ import net.miatech.praxisbi.A1955Filter;
 import net.miatech.praxisbi.A1956;
 import net.miatech.praxisbi.A2160;
 import net.miatech.utils.Functions;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -45,6 +54,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -116,6 +126,128 @@ public class OracleControlAcknowledgmentController extends BaseController {
         return new Gson().toJson(map);
 
     }
+    @RequestMapping(value = "getXLSX")
+    public @ResponseBody
+    void getXLSX(HttpServletRequest request, HttpServletResponse response) {
+        List<A1955Filter> listaData;
+        A1955Filter filter = new A1955Filter();
+        
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        Date date = new Date();
+        String fileNameDownload = String.format("Oracle Accounting Report - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        String RUTA_FILE_NAME_SERVER_40 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_40").toString();
+        String RUTA_FILE_NAME_SERVER_41 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_41").toString();
+        String RUTA_FILE_NAME_SERVER_33 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_33").toString();
+
+        try {
+            Workbook workbook = null;
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            filter.IN_MODULO = request.getParameter("IN_MODULO");
+            filter.IN_ENVIO = request.getParameter("IN_ENVIO");
+            filter.IN_FECHA_PROCESO = request.getParameter("IN_FECHA_PROCESO");
+            filter.IN_FECHA_ACUSE = request.getParameter("IN_FECHA_ACUSE");
+            filter.A1955FUENT = request.getParameter("A1955FUENT");
+            filter.A1955KEY2 = request.getParameter("A1955KEY2");
+            filter.A1955KEY3 = request.getParameter("A1955KEY3");
+            filter.A1955STATU = request.getParameter("A1955STATU");
+            filter.A1955ACTIO = request.getParameter("A1955ACTIO");
+            
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = -1;
+            start = 0;
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            
+            SalesOracleAcknowledgementLogic logic;
+            logic = new SalesOracleAcknowledgementLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            listaData = logic.loadPX247S01A1955(filter);
+            
+            int len = listaData.size();
+            Integer vi = 0;            
+            String fileName = "PX247-ORACLE-ControlOfAcknowledgment-"+date.getDay()+date.getMinutes()+date.getSeconds();
+            file = new File(rutaFile + "\\" + fileName + ".csv");
+            
+            if (file.exists())
+                file.delete();
+            
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+            String cadena = "";
+            
+            for (vi = 0; vi < len; vi++) {
+                //titulos en la primera fila
+                if ( vi == 0 ){
+                    cadena = "Praxis ID,Module,Type,Proc. Date,Source,Country,Channel,Account Date,Action,Status,Oracle ID";
+                    writer.println("" + cadena );
+                }
+                cadena = "";                                
+                cadena += "" + listaData.get(vi).A1955ENVIO + ",";
+                cadena += "" + listaData.get(vi).A1955MODUL + ",";
+                cadena += "" + listaData.get(vi).MODULE + ",";
+                cadena += "" + listaData.get(vi).A1955FPROC + ",";
+                cadena += "" + listaData.get(vi).A1955FUENT + ",";
+                cadena += "" + listaData.get(vi).A1955KEY2 + ",";
+                cadena += "" + listaData.get(vi).A1955KEY3 + ",";
+                cadena += "" + listaData.get(vi).A1955FCONT + ",";               
+                cadena += "" + listaData.get(vi).ACCION + ",";
+                cadena += "" + listaData.get(vi).ESTADO + ",";
+                cadena += "" + listaData.get(vi).A1955ORACL + ",";
+                    
+                writer.println("" + cadena );
+            }
+            writer.flush();
+            writer.close();
+            
+            /**
+             * Comprimimos archivo generado para su optima descarga
+             */
+            if (zip(fileName)){
+                File file1 = new File(RUTA_FILE_NAME_SERVER_40 + "\\" + fileName + ".zip");
+                File file2 = new File(RUTA_FILE_NAME_SERVER_41 + "\\" + fileName + ".zip");
+                File file3 = new File(RUTA_FILE_NAME_SERVER_33 + "\\" + fileName + ".zip");
+                if(!file1.exists())
+                    Functions.copyFilesWithName(rutaFile + "\\" + fileName + ".zip", RUTA_FILE_NAME_SERVER_40 + "\\" + fileName + ".zip");
+                if(!file2.exists())
+                    Functions.copyFilesWithName(rutaFile + "\\" + fileName + ".zip", RUTA_FILE_NAME_SERVER_41 + "\\" + fileName + ".zip");
+                if(!file3.exists())
+                    Functions.copyFilesWithName(rutaFile + "\\" + fileName + ".zip", RUTA_FILE_NAME_SERVER_33 + "\\" + fileName + ".zip");
+            }            
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + ".zip" + "\"");
+
+            InputStream is = new FileInputStream(rutaFile + "\\" + fileName + ".zip");
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SpringException(e);
+        }
+    }
+    
+    public Boolean zip(String fileName){
+        String path = this.serverSession.getPropertySession().get("RUTA_DOWNLOAD").toString();
+        Boolean existe = false;
+        try {
+            File fileZip = new File( path + "\\" + fileName + ".zip");
+            
+            if (fileZip.exists())
+                fileZip.delete();
+            
+            zipFile(new File(path + "\\" + fileName + ".csv"), path + "\\" + fileName + ".zip");
+            
+            existe = true;
+
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        }
+        return existe;
+    }
+    
     
     @RequestMapping(value = "searchMessages")
     public @ResponseBody
@@ -184,7 +316,7 @@ public class OracleControlAcknowledgmentController extends BaseController {
                 start = (start != 0 ? start : 0);
                 filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
             } else {
-                filter.page.PAGROW = -1;
+                filter.page.PAGROW = 0;
                 filter.page.PAGNUM = 1;
             }
 

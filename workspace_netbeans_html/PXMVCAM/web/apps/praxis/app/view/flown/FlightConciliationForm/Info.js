@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                         items: [
                                             {
                                                 text: 'Flight Date', dataIndex: 'strFormatDate', flex: 1, //width: 80,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
@@ -96,12 +96,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                                 listeners: {
                                                                     click: 'onViewDetailClick'
                                                                 },
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;color:#057ECB";
                                                                     value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                                     return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                                 },
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     metaData.style = "text-align:right;";
                                                                     var items = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items;
                                                                     var total = 0;
@@ -125,12 +125,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                                 listeners: {
                                                                     click: 'onViewDetailClick'
                                                                 },
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;color:#057ECB;";
                                                                     value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                                     return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                                 },
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     metaData.style = "text-align:right;";
                                                                     var items = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items;
                                                                     var total = 0;
@@ -144,12 +144,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                                 listeners: {
                                                                     click: 'onViewDetailClick'
                                                                 },
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;color:#057ECB;";
                                                                     value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                                     return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                                 },
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     metaData.style = "text-align:right;";
                                                                     var items = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items;
                                                                     var total = 0;
@@ -173,12 +173,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                                 listeners: {
                                                                     click: 'onViewDetailClick'
                                                                 },
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;color:#057ECB";
                                                                     value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                                     return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                                 },
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     metaData.style = "text-align:right;";
                                                                     var items = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items;
                                                                     var total = 0;
@@ -204,12 +204,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         listeners: {
                                                             click: 'onViewDetailClick'
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;color:#057ECB;background:#d5f4d5;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                             return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var items = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items;
                                                             var total = 0;
@@ -223,12 +223,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         listeners: {
                                                             click: 'onViewDetailClick'
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;color:#057ECB;background:#CDEACD;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                             return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var items = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items;
                                                             var total = 0;
@@ -242,12 +242,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         listeners: {
                                                             click: 'onViewDetailClick'
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;color:#057ECB;background:#CDEACD;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                             return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var items = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items;
                                                             var total = 0;
@@ -271,12 +271,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         listeners: {
                                                             click: 'onViewDetailClick'
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;color:#057ECB";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                             return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var items = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items;
                                                             var total = 0;
@@ -290,12 +290,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         listeners: {
                                                             click: 'onViewDetailClick'
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;color:#057ECB";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                             return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var items = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items;
                                                             var total = 0;
@@ -319,12 +319,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         listeners: {
                                                             click: 'onViewDetailClick'
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;color:#057ECB";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                             return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var items = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items;
                                                             var total = 0;
@@ -338,12 +338,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         listeners: {
                                                             click: 'onViewDetailClick'
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;color:#057ECB";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                             return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var items = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items;
                                                             var total = 0;
@@ -359,12 +359,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 listeners: {
                                                     click: 'onViewDetailClick'
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;color:#057ECB";
                                                     value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                     return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     metaData.style = "text-align:right;";
                                                     var items = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items;
                                                     var total = 0;
@@ -386,12 +386,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         listeners: {
                                                             click: 'onViewDetailClick'
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;color:#057ECB";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
                                                             return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var items = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items;
                                                             var total = 0;
@@ -426,7 +426,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetail',
-                                    width: 1600,
+                                    width: 1770,
                                     height: 580,
                                     columnLines: true,
                                     features: [{
@@ -456,14 +456,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Date', dataIndex: 'strFormatDate', width: 100 //flex: 1
+                                                                text: 'Date', dataIndex: 'strFormatDate', width: 80 //flex: 1
                                                             },
                                                             {
                                                                 text: 'Number', dataIndex: 'NFLIGHT', width: 60,
                                                                 listeners: {
                                                                     click: 'onViewDetailNFLIGHTClick'
                                                                 },
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;color:#057ECB";
                                                                     value = '<b>' + value + '</b>';
                                                                     return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
@@ -472,14 +472,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         ]
                                                     },
                                                     {
-                                                        text: 'Carrier', dataIndex: 'CARRI', width: 50
+                                                        text: 'Carr.', dataIndex: 'CARRI', width: 50
                                                     },
                                                     {
-                                                        text: 'Flown Type', dataIndex: 'strDescFFLOW', width: 90
+                                                        text: 'Flown Type', dataIndex: 'strDescFFLOW', width: 85
                                                     },
                                                     {
                                                         text: 'Orig', dataIndex: 'CDEPART', width: 45,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             metaData.tdAttr = 'data-qtip="' + record.data.strDescCDEPART + '"';
                                                             return value;
@@ -487,7 +487,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Dest', dataIndex: 'CARRIVA', width: 45,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             metaData.tdAttr = 'data-qtip="' + record.data.strDescCARRIVA + '"';
                                                             return value;
@@ -502,7 +502,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Date', dataIndex: 'strFormatFSENDSS', width: 100
+                                                                text: 'Date', dataIndex: 'strFormatFSENDSS', width: 80
                                                             }
                                                         ]
                                                     }
@@ -517,44 +517,44 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Senior', dataIndex: 'QCPAD', width: 55,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:#FFF9E0;";
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPAD, '0,000');
                                                         }
                                                     },
                                                     {text: 'Children', dataIndex: 'QCPCHD', width: 60,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:#FFF9E0;";
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPCHD, '0,000');
                                                         }
                                                     },
                                                     {text: 'Infant', dataIndex: 'QCPINF', width: 55,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:#FFF9E0;";
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPINF, '0,000');
                                                         }
                                                     },
                                                     {text: 'Transit', dataIndex: 'QCPTRA', width: 55,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:#FFF9E0;";
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPTRA, '0,000');
@@ -579,17 +579,17 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Date', dataIndex: 'strFormatFSENDOD', width: 100
+                                                                text: 'Date', dataIndex: 'strFormatFSENDOD', width: 85
                                                             }
                                                         ]
                                                     },
                                                     {
-                                                        text: 'Qty', dataIndex: 'QCPNOD', width: 45,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        text: 'Qty', dataIndex: 'QCPNOD', width: 75,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:#d5f4d5;";
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPNOD, '0,000');
@@ -611,11 +611,11 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                              },*/
                                             {
                                                 text: 'Dif', dataIndex: 'DIFFODSVCR', width: 50, sortable: true,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background:#d5f4d5;";
                                                     return value;
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     metaData.style = "text-align:right;";
                                                     var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                     return Ext.util.Format.number(data.totDIFFODSVCR, '0,000');
@@ -638,17 +638,17 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Date', dataIndex: 'strFormatFSENDVC', width: 90, sortable: true
+                                                                text: 'Date', dataIndex: 'strFormatFSENDVC', width: 80, sortable: true
                                                             }
                                                         ]
                                                     },
                                                     {
                                                         text: 'Qty', dataIndex: 'QCPNVC', width: 45, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPNVC, '0,000');
@@ -668,12 +668,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         listeners: {
                                                             click: 'onViewDetail'
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;color:#057ECB";
                                                             value = '<b>' + value + '</b>';
                                                             return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPNOCR, '0,000');
@@ -693,12 +693,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         listeners: {
                                                             click: 'onViewDetTicketClick'
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;color:#057ECB";
                                                             value = '<b>' + value + '</b>';
                                                             return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPNMA, '0,000');
@@ -707,35 +707,35 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Total', dataIndex: 'QCPNTOT', width: 75, sortable: true,
+                                                text: 'Total', dataIndex: 'QCPNTOT', width: 50, sortable: true,
                                                 listeners: {
                                                     click: 'onViewDetTicketClick'
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;color:#057ECB;background:#d5f4d5;";
                                                     value = '<b>' + value + '</b>';
                                                     return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     metaData.style = "text-align:right;";
                                                     var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                     return Ext.util.Format.number(data.totQCPNTOT, '0,000');
                                                 }
                                             },
                                             {
-                                                text: 'Coupons',
+                                                text: 'Cpns',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Valued', dataIndex: 'QCPNVAL', width: 75, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    {text: 'Valued', dataIndex: 'QCPNVAL', width: 60, sortable: true,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPNVAL, '0,000');
@@ -762,11 +762,11 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Date', dataIndex: 'strFormatDate3', width: 90,
+                                                                text: 'Date', dataIndex: 'strFormatDate3', width: 75,
                                                                 listeners: {
                                                                     click: 'onViewFileClick',
                                                                 },
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.tdAttr = 'data-qtip="Open Flight Manifest"';
                                                                     metaData.style = "text-align:right;color:#057ECB;background:#d5f4d5;";
                                                                     value = '<b>' + value + '</b>';
@@ -777,7 +777,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Qty', dataIndex: 'QCPNFI', width: 45,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
                                                         }
@@ -785,7 +785,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Flight Manifest',
+                                                text: 'Flight Manifest Coupons',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
@@ -801,8 +801,8 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Date', dataIndex: 'strFormatDate3', width: 100, sortable: true,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                text: 'Date', dataIndex: 'strFormatDate3', width: 80, sortable: true,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;background:#ccfaff;";
                                                                     return value;
                                                                 },
@@ -810,58 +810,87 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         ]
                                                     },
                                                     {
-                                                        text: 'Qty', dataIndex: 'QCPNFI', width: 50, sortable: true,
+                                                        text: 'Qty<br>Detail', dataIndex: 'QCPNFI', width: 50, sortable: true,
                                                         listeners: {
                                                             click: 'onViewDetailFlightManifest'
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;color:#057ECB;background:#ccfaff;";
                                                             value = '<b>' + value + '</b>';
                                                             return '<a href="#flown-flight-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPNFI, '0,000');
                                                         }
                                                     },
                                                     {
-                                                        text: 'Qty NR', dataIndex: 'QCPNFRE', width: 60, sortable: true,
-//                                                        listeners: {
-//                                                            click: 'onViewDetailFlightManifest'
-//                                                        },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        text: 'Qty<br>Total', dataIndex: 'QTYTOTPS', width: 50, sortable: true,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:#ccfaff;";
 //                                                            value = '<b>' + value + '</b>';
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = "text-align:right;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
+                                                            return Ext.util.Format.number(data.totQTYTOTPS, '0,000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Qty NR', dataIndex: 'QCPNFRE', width: 55, sortable: true,
+//                                                        listeners: {
+//                                                            click: 'onViewDetailFlightManifest'
+//                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:#ccfaff;";
+//                                                            value = '<b>' + value + '</b>';
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPNFRE, '0,000');
                                                         }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                text: 'Coupons',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
+                                                    },
+                                                    {
+                                                        text: 'Qty Insp', dataIndex: 'QCPHARB_ESP', width: 60, sortable: true,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:#ccfaff;";
+//                                                            value = '<b>' + value + '</b>';
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = "text-align:right;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
+                                                            return Ext.util.Format.number(data.totQCPHARB_ESP, '0,000');
+                                                        }
+                                                    },
                                                     {text: 'Diff', dataIndex: 'lngQDIFF', width: 50, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totDiff, '0,000');
                                                         }
-                                                    }
+                                                    },
+                                                    {
+                                                        text: 'Obs.', dataIndex: '', width: 50,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background:#d5f4d5;";
+                                                            if (record.data.DESCRIP !== '') {
+                                                                metaData.tdAttr = 'data-qtip="' + record.data.DESCRIP.substring(0,50).trim() + '<br>' + record.data.DESCRIP.substring(50,100).trim() + '"';
+                                                                return 'Y';
+                                                            } else {
+                                                                return 'N';
+                                                            }
+
+                                                        },
+                                                    },
                                                 ]
                                             },
                                             {
@@ -884,6 +913,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                 // </editor-fold>
                             ]
                         },
+                        //
                         {
                             region: 'center',
                             id: prototype.id + '-boxDetailNFLGITHData',
@@ -934,7 +964,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         columns: [
                                                             {
                                                                 text: 'Date', dataIndex: 'strFormatDate2', width: 90,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;";
                                                                     return value;
                                                                 }
@@ -951,14 +981,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         columns: [
                                                             {
                                                                 text: 'Date', dataIndex: 'strFormatDate', width: 90,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;";
                                                                     return value;
                                                                 }
                                                             },
                                                             {
                                                                 text: 'Number', dataIndex: 'NFLIGHT', width: 60,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;";
                                                                     return value;
                                                                 }
@@ -967,28 +997,28 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Carrier', dataIndex: 'CARRI', width: 60,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return value;
                                                         }
                                                     },
                                                     {
                                                         text: 'Flown Type', dataIndex: 'strDescFFLOW', width: 90,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return value;
                                                         }
                                                     },
                                                     {
                                                         text: 'Leg', dataIndex: 'FOPERZUL', width: 60,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return value;
                                                         }
                                                     },
                                                     {
                                                         text: 'Orig', dataIndex: 'CDEPART', width: 55,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             metaData.tdAttr = 'data-qtip="' + record.data.strDescCDEPART + '"';
                                                             return value;
@@ -996,7 +1026,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Dest', dataIndex: 'CARRIVA', width: 55,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             metaData.tdAttr = 'data-qtip="' + record.data.strDescCARRIVA + '"';
                                                             return value;
@@ -1012,7 +1042,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         columns: [
                                                             {
                                                                 text: 'Date', dataIndex: 'strFormatFSENDSS', width: 90,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;";
                                                                     return value;
                                                                 }
@@ -1039,7 +1069,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         columns: [
                                                             {
                                                                 text: 'Date', dataIndex: 'strFormatFSENDVC', width: 90, sortable: true,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;";
                                                                     return value;
                                                                 }
@@ -1048,11 +1078,11 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Qty', dataIndex: 'QCPNVC', width: 55, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailNFLIGHT').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPNVC, '0,000');
@@ -1070,11 +1100,11 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Qty', dataIndex: 'QCPNOCR', width: 45, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailNFLIGHT').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPNOCR, '0,000');
@@ -1092,11 +1122,11 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Qty', dataIndex: 'QCPNMA', width: 60, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailNFLIGHT').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPNMA, '0,000');
@@ -1109,12 +1139,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 listeners: {
                                                     click: 'onViewDetTicketClick'
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background:#d5f4d5;";
                                                     value = '<b>' + value + '</b>';
                                                     return '<a href="#flown-flight-conciliation-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     metaData.style = "text-align:right;";
                                                     var data = Ext.getCmp(prototype.id + '-gridDetailNFLIGHT').getStore().getData().items[0].data;
                                                     return Ext.util.Format.number(data.totQCPNTOT, '0,000');
@@ -1154,7 +1184,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                     items: [
                                         {
                                             xtype: 'panel',
-                                            width: 1324,
+                                            width: 1439,
                                             id: prototype.id + '-setTitulo',
                                             height: '100%',
                                             layout: {
@@ -1167,11 +1197,20 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                             },
                                             items: [
                                                 {
-                                                    html: '<b> Quantity:</b>',
+                                                    html: '<b> Qty Detail:</b>',
+                                                    width: 70
+                                                },
+                                                {
+                                                    id: prototype.id + '-txtQtyD',
+                                                    text: '0',
+                                                    width: 40
+                                                },
+                                                {
+                                                    html: '<b> Qty Total:</b>',
                                                     width: 60
                                                 },
                                                 {
-                                                    id: prototype.id + '-txtQty',
+                                                    id: prototype.id + '-txtQtyT',
                                                     text: '0',
                                                     width: 40
                                                 },
@@ -1209,7 +1248,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     listeners: {
                                                         click: 'openExport'
                                                     },
-                                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                         metaData.style = "text-align:left;";
                                                         value = '<b>' + value + '</b>';
                                                         return '<a href="#flown-flight-conciliation-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
@@ -1227,7 +1266,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDetailFlightManifest',
-                                            width: 1324,
+                                            width: 1439,
                                             height: 550,
                                             features: [{
                                                     ftype: 'summary'
@@ -1258,14 +1297,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Last Name', dataIndex: 'LNAME', width: 120, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;";
                                                             return value;
                                                         }
                                                     },
                                                     {
                                                         text: 'First Name', dataIndex: 'FNAME', width: 120, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;";
                                                             return value;
                                                         }
@@ -1279,7 +1318,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Seat', dataIndex: 'CHAIR', width: 70, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background:#FFF9E0;";
                                                             return value;
                                                         },
@@ -1291,11 +1330,18 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
 //                                                        }
                                                     },
                                                     {
+                                                        text: 'PNR', dataIndex: 'SPNR', width: 70, sortable: true,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
                                                         text: 'Ticket', dataIndex: 'strTicket', width: 130, sortable: true,
                                                         listeners: {
                                                             click: 'viewTicket'
                                                         },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background:#d5f4d5;";
                                                             value = '<b>' + value + '</b>';
                                                             return '<a href="#flown-flight-conciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
@@ -1329,6 +1375,20 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         ]
                                                     },
                                                     {text: 'Flag<br>Sales-PRAXIS', dataIndex: 'descFSALES', width: 100, sortable: true},
+                                                    {
+                                                        sortable: false,
+                                                        xtype: 'actioncolumn',
+                                                        width: 45,
+                                                        text: 'Edit',
+                                                        align: 'center',
+                                                        items: [
+                                                            {
+                                                                iconCls: 'prx-icon-edit',
+                                                                tooltip: 'Edit',
+                                                                handler: 'viewDataEntry_A3729'
+                                                            }
+                                                        ]
+                                                    }
                                                 ]
                                             }
                                         },
@@ -1353,7 +1413,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
 //                                align: 'center'
 //                            },
 //                            items: [
-//                                // <editor-fold defaultstate="collapsed" desc="gridDetailLeg">
+                        //                                // <editor-fold defaultstate="collapsed" desc="gridDetailLeg">
 //                                {
 //                                    xtype: 'grid',
 //                                    id: prototype.id + '-gridDetailLeg',
@@ -1554,7 +1614,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                  }
                                                  }
                                                  }, */
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "color:#057ECB;background-color:#FFFFFF;cursor: pointer;";
                                                     metaData.tdAttr = 'data-qtip="' + data.strTicket + ' - Enter to view Image' + '"';
@@ -1571,7 +1631,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Date', dataIndex: 'strFormatDate2', width: 100, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                             metaData.style = "text-align:center;color:" + color;
@@ -1583,14 +1643,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                             },
                                             {
                                                 text: 'Seq', dataIndex: 'SEQ', width: 40, sortable: true,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
                                             {
                                                 text: 'Rolling', dataIndex: 'SEQRO', width: 44, sortable: true,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
@@ -1605,7 +1665,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Date', dataIndex: 'strFormatFVTA', width: 120, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                             metaData.style = "text-align:center;color:" + color;
@@ -1614,7 +1674,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Country', dataIndex: 'PSVVTA', width: 85, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                             metaData.style = "text-align:center;color:" + color;
@@ -1632,7 +1692,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         columns: [
                                                             {
                                                                 text: 'Basis', dataIndex: 'FBASE', width: 120, sortable: true,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
                                                                     var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                                     metaData.style = "text-align:left;color:" + color;
@@ -1643,7 +1703,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'RBD', dataIndex: 'CLAS', width: 75, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                             metaData.style = "text-align:center;color:" + color;
@@ -1652,13 +1712,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Pax', dataIndex: 'QTYPAX', width: 70, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                             metaData.style = "text-align:right;color:" + color;
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetTkt1').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totTAX, '0,000');
@@ -1676,7 +1736,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Operation', dataIndex: 'TOPUS', width: 90, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                             metaData.style = "text-align:center;color:" + color;
@@ -1686,7 +1746,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Carrier', dataIndex: 'CARR', width: 80, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                             metaData.style = "text-align:center;color:" + color;
@@ -1695,7 +1755,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Value', dataIndex: 'VCPN', width: 80, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                             metaData.style = "text-align:right;color:" + color;
@@ -1705,7 +1765,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Com.', dataIndex: 'COMISI', width: 80, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                             metaData.style = "text-align:right;color:" + color;
@@ -1715,7 +1775,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Curr.', dataIndex: 'MDACP', width: 80, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                             metaData.style = "text-align:center;color:" + color;
@@ -1732,7 +1792,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         columns: [
                                                             {
                                                                 text: 'Valoration', dataIndex: 'strDescFVAL', width: 130, sortable: true,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
                                                                     var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                                     metaData.style = "text-align:center;color:" + color;
@@ -1743,7 +1803,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'MXN', dataIndex: 'VCPMX', width: 100, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                             metaData.style = "text-align:right;color:" + color;
@@ -1753,7 +1813,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Rate', dataIndex: 'TCMUS', width: 100, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                             metaData.style = "text-align:right;color:" + color;
@@ -1763,7 +1823,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'USD', dataIndex: 'VCPUS', width: 100, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             var color = data.strSQL === 'verde' ? "#2BC224" : "#244066";
                                                             metaData.style = "text-align:right;color:" + color;
@@ -1778,7 +1838,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 listeners: {
                                                     click: 'viewDataEntryTkt_clickHandler'
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     metaData.tdAttr = 'data-qtip="Edit Ticket"';
                                                     return '<img src="resources/img/botones/16x16/1326498593_018.png">';
@@ -1844,7 +1904,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                  }
                                                  }
                                                  },*/
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "color:#057ECB;background-color:#FFFFFF;cursor: pointer;";
                                                     metaData.tdAttr = 'data-qtip="' + data.strTicket + ' - Enter to view Image' + '"';
@@ -1862,7 +1922,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Date', dataIndex: 'strFormatDate2', width: 80, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";//color add viene de la bd
                                                             metaData.tdAttr = 'data-qtip="' + record.data.CDEPART + '-' + record.data.CARRIVA + '"';
                                                             return value;
@@ -1872,14 +1932,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                             },
                                             {
                                                 text: 'Seq', dataIndex: 'SEQ', width: 35, sortable: true,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
                                             {
                                                 text: 'Rolling', dataIndex: 'SEQRO', width: 35, sortable: true,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
@@ -1894,14 +1954,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Date', dataIndex: 'strFormatFVTA', width: 80, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";//color add viene de la bd
                                                             return value;
                                                         }
                                                     },
                                                     {
                                                         text: 'Country', dataIndex: 'PSVVTA', width: 40, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";//color add viene de la bd
                                                             metaData.tdAttr = 'data-qtip="' + record.data.strDescPSVVTA + '"';
                                                             return value;
@@ -1917,7 +1977,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         columns: [
                                                             {
                                                                 text: 'Basis', dataIndex: 'FBASE', width: 115, sortable: true,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:left;";//color add viene de la bd
                                                                     return value;
                                                                 }
@@ -1926,18 +1986,18 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'RBD', dataIndex: 'CLAS', width: 40, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";//color add viene de la bd
                                                             return value;
                                                         }
                                                     },
                                                     {
                                                         text: 'Pax', dataIndex: 'QTYPAX', width: 45, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";//color add viene de la bd
                                                             return value;
                                                         },
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetTkt2').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totTAX, '0,000');
@@ -1955,7 +2015,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Oper.', dataIndex: 'TOPUS', width: 50, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";//color add viene de la bd
                                                             metaData.tdAttr = 'data-qtip="D=Domestic/I=International"';
                                                             return value;
@@ -1963,63 +2023,63 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Carrier', dataIndex: 'CARR', width: 55, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";//color add viene de la bd
                                                             return value;
                                                         }
                                                     },
                                                     /*{
-                                                        text: '0%',
-                                                        defaults: {
-                                                            menuDisabled: true,
-                                                            sortable: false,
-                                                            align: 'center'
-                                                        },
-                                                        columns: [
-                                                            {
-                                                                text: 'Value', dataIndex: 'VCPN0', width: 60, sortable: true,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;";//color add viene de la bd
-                                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                                    return value;
-                                                                }
-                                                            },
-                                                            {
-                                                                text: 'YQ', dataIndex: 'VYQ0', width: 60, sortable: true,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;";
-                                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                                    return value;
-                                                                }
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        text: '16%',
-                                                        defaults: {
-                                                            menuDisabled: true,
-                                                            sortable: false,
-                                                            align: 'center'
-                                                        },
-                                                        columns: [
-                                                            {
-                                                                text: 'Value', dataIndex: 'VCPN16', width: 50, sortable: true,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;";//color add viene de la bd
-                                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                                    return value;
-                                                                }
-                                                            },
-                                                            {
-                                                                text: 'YQ', dataIndex: 'VYQ16', width: 40, sortable: true,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;";
-                                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                                    return value;
-                                                                }
-                                                            }
-                                                        ]
-                                                    },*/
+                                                     text: '0%',
+                                                     defaults: {
+                                                     menuDisabled: true,
+                                                     sortable: false,
+                                                     align: 'center'
+                                                     },
+                                                     columns: [
+                                                     {
+                                                     text: 'Value', dataIndex: 'VCPN0', width: 60, sortable: true,
+                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     metaData.style = "text-align:right;";//color add viene de la bd
+                                                     value = Ext.util.Format.number(value, '0,000.00');
+                                                     return value;
+                                                     }
+                                                     },
+                                                     {
+                                                     text: 'YQ', dataIndex: 'VYQ0', width: 60, sortable: true,
+                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     metaData.style = "text-align:right;";
+                                                     value = Ext.util.Format.number(value, '0,000.00');
+                                                     return value;
+                                                     }
+                                                     }
+                                                     ]
+                                                     },
+                                                     {
+                                                     text: '16%',
+                                                     defaults: {
+                                                     menuDisabled: true,
+                                                     sortable: false,
+                                                     align: 'center'
+                                                     },
+                                                     columns: [
+                                                     {
+                                                     text: 'Value', dataIndex: 'VCPN16', width: 50, sortable: true,
+                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     metaData.style = "text-align:right;";//color add viene de la bd
+                                                     value = Ext.util.Format.number(value, '0,000.00');
+                                                     return value;
+                                                     }
+                                                     },
+                                                     {
+                                                     text: 'YQ', dataIndex: 'VYQ16', width: 40, sortable: true,
+                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     metaData.style = "text-align:right;";
+                                                     value = Ext.util.Format.number(value, '0,000.00');
+                                                     return value;
+                                                     }
+                                                     }
+                                                     ]
+                                                     },*/
                                                     {
                                                         text: 'Total',
                                                         defaults: {
@@ -2030,7 +2090,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         columns: [
                                                             {
                                                                 text: 'Value', dataIndex: 'VCPN', width: 60, sortable: true,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";//color add viene de la bd
                                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                                     return value;
@@ -2038,7 +2098,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                             },
                                                             {
                                                                 text: 'YQ', dataIndex: 'VYQ', width: 40, sortable: true,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                                     return value;
@@ -2048,7 +2108,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Com.', dataIndex: 'COMISI', width: 55, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";//color add viene de la bd
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
@@ -2056,7 +2116,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Curr.', dataIndex: 'MDACP', width: 40, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";//color add viene de la bd
                                                             return value;
                                                         }
@@ -2071,7 +2131,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         columns: [
                                                             {
                                                                 text: 'Valoration', dataIndex: 'strDescFVAL', width: 110, sortable: true,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;";//color add viene de la bd
                                                                     return value;
                                                                 }
@@ -2090,7 +2150,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Date', dataIndex: 'strFCON', width: 80, sortable: false,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";//color add viene de la bd
                                                             metaData.tdAttr = 'data-qtip="' + record.data.CDEPART + '-' + record.data.CARRIVA + '"';
                                                             return value;
@@ -2098,14 +2158,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Id', dataIndex: 'IDCON', width: 235, sortable: false,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return value;
                                                         }
                                                     },
                                                     {
                                                         text: 'Status', dataIndex: 'strDescSTCON', width: 90, sortable: false,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             metaData.tdAttr = 'data-qtip="' + record.data.strDescSTCON + '"';
                                                             return value;
@@ -2113,7 +2173,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Service Type', dataIndex: 'strFFLOW', width: 85, sortable: false,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             metaData.tdAttr = 'data-qtip="' + record.data.strFFLOW + '"';
                                                             return value;
@@ -2126,7 +2186,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 listeners: {
                                                     click: 'viewDataEntryTkt_clickHandler'
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     metaData.tdAttr = 'data-qtip="Edit Ticket"';
                                                     return '<img src="resources/img/botones/16x16/1326498593_018.png">';
@@ -2176,7 +2236,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                         listeners: {
                                             click: 'viewDataEntryTkt_clickHandler'
                                         },
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center;color:#057ECB;text-decoration:none;font-weight:bold;cursor:pointer;";
                                             return '<a href="#flown-flight-conciliation-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                         }
@@ -2184,13 +2244,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                     {text: 'Seq', dataIndex: 'SEQ', width: 40},
                                     {
                                         text: 'Rolling', dataIndex: 'SEQRO', width: 44, sortable: true,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center;";
                                             return value;
                                         }
                                     },
                                     {text: 'Source', dataIndex: 'FLOAD', width: 55, sortable: true,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center;";
                                             return value;
                                         }
@@ -2205,14 +2265,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                         columns: [
                                             {
                                                 text: 'Date', dataIndex: 'strFormatFVTA', width: 75,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
                                             {
                                                 text: 'Country', dataIndex: 'PSVVTA', width: 53,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
@@ -2226,7 +2286,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Basis', dataIndex: 'FBASE', width: 75,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;";
                                                             return value;
                                                         }
@@ -2235,14 +2295,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                             },
                                             {
                                                 text: 'RBD', dataIndex: 'CLAS', width: 45,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
                                             {
                                                 text: 'Pax', dataIndex: 'QTYPAX', width: 40,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     return value;
                                                 }
@@ -2259,21 +2319,21 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                         columns: [
                                             {
                                                 text: 'Date', dataIndex: 'strFormatDate', width: 80,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
                                             {
                                                 text: 'Number', dataIndex: 'NFLIGHT', width: 60,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
                                             {
                                                 text: 'Orig', dataIndex: 'CDEPART', width: 55,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     metaData.tdAttr = 'data-qtip="' + record.data.strDescCDEPART + '"';
                                                     return value;
@@ -2281,7 +2341,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                             },
                                             {
                                                 text: 'Dest', dataIndex: 'CARRIVA', width: 55,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     metaData.tdAttr = 'data-qtip="' + record.data.strDescCARRIVA + '"';
                                                     return value;
@@ -2306,7 +2366,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Type', dataIndex: 'TOPUS', width: 50,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             metaData.tdAttr = 'data-qtip="D=Domestic/I=International"';
                                                             return value;
@@ -2316,35 +2376,35 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                             },
                                             {
                                                 text: 'Carrier', dataIndex: 'CARR', width: 55,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
                                             {
                                                 text: 'Cabin', dataIndex: 'CABI', width: 50,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
                                             {
                                                 text: 'Date Value', dataIndex: 'strFormatFECVAL', width: 80, sortable: false,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
                                             {
                                                 text: 'Value', dataIndex: 'VCPN', width: 57,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     return value;
                                                 }
                                             },
                                             {
                                                 text: 'Curr.', dataIndex: 'MDACP', width: 65,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
@@ -2358,7 +2418,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Valoration', dataIndex: 'strDescFVAL', width: 110,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return value;
                                                         }
@@ -2377,21 +2437,21 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                         columns: [
                                             {
                                                 text: 'Date', dataIndex: 'strFormatDate2', width: 80, sortable: false,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
                                             {
                                                 text: 'Id', dataIndex: 'IDCON', width: 100, sortable: false,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
                                             },
                                             {
                                                 text: 'Status', dataIndex: 'strDescSTCON', width: 90, sortable: false,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     metaData.tdAttr = 'data-qtip="' + record.data.strDescSTCON + '"';
                                                     return value;
@@ -2399,7 +2459,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                             },
                                             {
                                                 text: 'Service Type', dataIndex: 'strFFLOW', width: 85, sortable: false,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     metaData.tdAttr = 'data-qtip="' + record.data.strFFLOW + '"';
                                                     return value;
@@ -2412,7 +2472,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                         listeners: {
                                             click: 'viewDataEntryTkt_clickHandler'
                                         },
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:center;";
                                             return '<img src="resources/img/botones/16x16/1326498593_018.png">';
                                         }
@@ -2421,6 +2481,241 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                             }
                         }
                         // </editor-fold>
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-boxFlightManifest',
+                    hidden: true,
+                    defaults: {
+//                                bodyStyle: 'background: transparent;',
+                        border: true,
+                        height: '100%',
+                        align: 'center'
+                    },
+                    items: [
+                        /*{
+                         xtype: 'panel',
+                         id: prototype.id + '-titulo',
+                         hidden: false,
+                         layout: {
+                         type: 'hbox',
+                         pack: 'center'
+                         },
+                         border: true,
+                         height: 25,
+                         bodyStyle: 'background-color: E3EAEF;',
+                         defaults: {
+                         border: false
+                         },
+                         items: [
+                         {
+                         xtype: 'panel',
+                         width: 1324,
+                         id: prototype.id + '-setTitulo',
+                         height: '100%',
+                         layout: {
+                         type: 'hbox',
+                         pack: 'center'
+                         },
+                         defaults: {
+                         xtype: 'label',
+                         margin: '3px 0px 0px 5px'
+                         },
+                         items: [
+                         {
+                         html: '<b> Quantity:</b>',
+                         width: 60
+                         },
+                         {
+                         id: prototype.id + '-txtQty',
+                         text: '0',
+                         width: 40
+                         },
+                         {
+                         html: '<b>Flight Date:</b>',
+                         width: 75
+                         },
+                         {
+                         id: prototype.id + '-FlightDate',
+                         //                                                    text: '1',
+                         width: 80
+                         },
+                         {
+                         html: '<b>Flight Number:</b>',
+                         width: 95
+                         },
+                         {
+                         id: prototype.id + '-FlightNumber',
+                         text: '0',
+                         width: 45
+                         },
+                         {
+                         html: '<b>Download File:</b>',
+                         width: 100
+                         },
+                         {
+                         xtype: 'button',
+                         id: prototype.id + '-imgInfo1',
+                         region: 'south',
+                         width: 20,
+                         height: 20,
+                         hidden: false,
+                         icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                         tooltip: 'File Flight Manifest',
+                         listeners: {
+                         click: 'openExport'
+                         },
+                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                         metaData.style = "text-align:left;";
+                         value = '<b>' + value + '</b>';
+                         return '<a href="#flown-flight-conciliation-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                         }
+                         }
+                         ]
+                         }
+                         ]
+                         },*/
+                        // <editor-fold defaultstate="collapsed" desc="gridFlightManifest">
+                        {xtype: 'panel',
+                            hidden: false,
+                            layout: 'fit',
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridFlightManifest',
+                                    width: 1369,
+//                                    width: 1449,
+                                    height: 550,
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
+                                    columnLines: true,
+                                    scrollable: {
+                                        direction: 'vertical',
+                                    },
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: true,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Nbr', width: 40, dataIndex: 'RN', sortable: true, },
+                                            {text: 'Flight',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'Date', width: 100, dataIndex: 'DFLIGHT'},
+                                                    {text: 'Number', width: 80, dataIndex: 'NFLIGHT'}
+                                                ]
+                                            },
+                                            {
+                                                text: 'Last Name', dataIndex: 'LNAME', width: 120, sortable: true,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:left;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'First Name', dataIndex: 'FNAME', width: 120, sortable: true,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:left;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Pax <br> Type', dataIndex: 'desPAX', width: 70, sortable: true,
+//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            metaData.style = "text-align:center;background:#FFF9E0;";
+//                                                            return value;
+//                                                        }
+                                            },
+                                            {
+                                                text: 'Seat', dataIndex: 'CHAIR', width: 70, sortable: true,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;background:#FFF9E0;";
+                                                    return value;
+                                                },
+//                                                        sorter: function (v1, v2) {
+//                                                            console.log('sorter');
+//                                                            v1 = v1.get('CHAIR');
+//                                                            v2 = v2.get('CHAIR');
+//                                                            return v1 > v2 ? 1 : ( v1 < v2 ? -1 : 0 );
+//                                                        }
+                                            },
+//                                            {
+//                                                text: 'PNR', dataIndex: 'PNR', width: 80, sortable: true,
+//                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                    metaData.style = "text-align:center;";
+//                                                    return value;
+//                                                }
+//                                            },
+                                            {
+                                                text: 'Ticket', dataIndex: 'strTicket', width: 130, sortable: true,
+                                                listeners: {
+                                                    click: 'viewTicket'
+                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;background:#d5f4d5;";
+                                                    value = '<b>' + value + '</b>';
+                                                    return '<a href="#flown-flight-conciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
+                                            {text: 'Status', dataIndex: 'desSTVAL', width: 110, sortable: true},
+                                            {text: 'Orig', dataIndex: 'CDEPART', width: 70, sortable: true},
+                                            {text: 'Dest', dataIndex: 'CARRIVA', width: 70, sortable: true},
+                                            {text: 'VCR vs',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'Manifest', dataIndex: 'desSTVCR', width: 70, sortable: true},
+                                                ]
+                                            },
+                                            {
+                                                text: 'Process Sabre',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'Scan', dataIndex: 'descFSABRE', width: 80, sortable: true},
+                                                    {text: 'Status', dataIndex: 'STASABR', width: 80, sortable: true},
+                                                ]
+                                            },
+                                            {text: 'Flag<br>Sales-PRAXIS', dataIndex: 'descFSALES', width: 100, sortable: true},
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 45,
+                                                text: 'Edit',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-edit',
+                                                        tooltip: 'Edit',
+                                                        handler: 'viewDataEntry_A3729'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+
+                        // </editor-fold>
+
                     ]
                 },
                 // <editor-fold defaultstate="collapsed" desc="pie">

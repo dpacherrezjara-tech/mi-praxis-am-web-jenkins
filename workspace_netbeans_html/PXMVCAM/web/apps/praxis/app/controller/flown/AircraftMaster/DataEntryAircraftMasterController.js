@@ -9,23 +9,23 @@ Ext.define('Ext.Praxis.controller.flown.AircraftMaster.DataEntryAircraftMasterCo
     },
     afterRender: function(){
         this.p = this.view.params;
-        switch( this.p.actionCode ){
+        switch( this.p.action ){
             case 'I':
                 this.HabilitarCampoClave();
                 this.limpiarData();
-                Ext.getCmp(prototype.id+'-btnSave').show();
-                Ext.getCmp(prototype.id+'-btnUpdate').hide();
-                Ext.getCmp(prototype.id+'-btnDelete').hide();
+                Ext.getCmp(prototype.id+'-btn-save').show();
+                Ext.getCmp(prototype.id+'-btn-update').hide();
+                Ext.getCmp(prototype.id+'-btn-delete').hide();
                 break;
             case 'U':
                 this.DeshabilitarCampoClave();
                 this.mostrarData();
-                Ext.getCmp(prototype.id+'-btnSave').hide();
-                Ext.getCmp(prototype.id+'-btnUpdate').show();
-                Ext.getCmp(prototype.id+'-btnDelete').show();
+                Ext.getCmp(prototype.id+'-btn-save').hide();
+                Ext.getCmp(prototype.id+'-btn-update').show();
+                Ext.getCmp(prototype.id+'-btn-delete').show();
                 break;
         }
-        global.AccessControlMaganer();
+        global.AccessControlManagerByModeById(this.p, prototype.id);
     },
     HabilitarCampoClave: function() {
         Ext.getCmp(prototype.id+'-txtEQUIPO').setReadOnly(false);

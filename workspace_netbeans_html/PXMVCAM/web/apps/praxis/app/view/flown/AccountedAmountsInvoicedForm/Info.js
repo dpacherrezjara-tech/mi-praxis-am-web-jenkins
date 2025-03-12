@@ -56,6 +56,8 @@ Ext.define('Ext.Praxis.view.flown.AccountedAmountsInvoicedForm.Info', {
                             {text: 'Airline Code', width: 120, dataIndex: 'A2559FACT'},
                             {text: 'Accounting Date', width: 120, dataIndex: 'A2559FCONT'},
                             {text: 'Invoice Number', width: 120, dataIndex: 'A2559FACTU'},
+                            {text: 'Accounting Date IXC', width: 150, dataIndex: 'A2559FCOIC'},
+                            {text: 'Source Code', width: 120, dataIndex: 'A2559TUSO'},
                             {text: 'Accounted',
                                 defaults: {
                                     menuDisabled: true,
@@ -79,6 +81,18 @@ Ext.define('Ext.Praxis.view.flown.AccountedAmountsInvoicedForm.Info', {
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = ' text-align:right; margin-right:3px ';
                                             return  Ext.util.Format.number(value, '0,000');
+                                        }
+                                    },
+                                    {text: 'YQ', width: 80, dataIndex: 'A2559YQ',
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = ' text-align:right; margin-right:3px ';
+                                            return  Ext.util.Format.number(value, '0,000');
+                                        }
+                                    },
+                                    {text: 'TC', width: 80, dataIndex: 'A2559TCAMB',
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = ' text-align:right; margin-right:3px ';
+                                            return  value.toFixed(6);
                                         }
                                     }
                                 ]
@@ -107,6 +121,18 @@ Ext.define('Ext.Praxis.view.flown.AccountedAmountsInvoicedForm.Info', {
                                             metaData.style = ' text-align:right; margin-right:3px ';
                                             return  Ext.util.Format.number(value, '0,000');
                                         }
+                                    },
+                                    {text: 'YQ', width: 80, dataIndex: 'A2559FYQ',
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = ' text-align:right; margin-right:3px ';
+                                            return  Ext.util.Format.number(value, '0,000');
+                                        }
+                                    },
+                                    {text: 'TC', width: 80, dataIndex: 'A2559TCAMF',
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = ' text-align:right; margin-right:3px ';
+                                            return  value.toFixed(6);
+                                        }
                                     }
                                 ]
                             },
@@ -133,6 +159,18 @@ Ext.define('Ext.Praxis.view.flown.AccountedAmountsInvoicedForm.Info', {
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = ' text-align:right; margin-right:3px ';
                                             return  Ext.util.Format.number(value, '0,000');
+                                        }
+                                    },
+                                    {text: 'YQ', width: 80, dataIndex: 'DFQ',
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = ' text-align:right; margin-right:3px ';
+                                            return  Ext.util.Format.number(value, '0,000');
+                                        }
+                                    },
+                                    {text: 'TC', width: 80, dataIndex: 'DCAMB',
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = ' text-align:right; margin-right:3px ';
+                                            return  value.toFixed(6);
                                         }
                                     }
                                 ]

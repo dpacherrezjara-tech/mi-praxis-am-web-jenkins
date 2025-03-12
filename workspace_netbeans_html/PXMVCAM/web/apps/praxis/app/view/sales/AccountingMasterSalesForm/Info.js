@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Info', {
                             align: 'center'
                         },
                         items: [
-                            {text: 'Type', width: 80, dataIndex: 'A1740TITRA',
+                            {text: 'Type', width: 50, dataIndex: 'A1740TITRA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
@@ -57,13 +57,13 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Info', {
                                     return value;
                                 }
                             },
-                            {text: 'Sub Type', width: 80, dataIndex: 'A1740SUBTI',
+                            {text: 'Sub Type', width: 70, dataIndex: 'A1740SUBTI',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Category', width: 80, dataIndex: 'A1740CATEG',
+                            {text: 'Category', width: 70, dataIndex: 'A1740CATEG',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
@@ -75,31 +75,31 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Info', {
                                     return value;
                                 }
                             },
-                            {text: 'Unit', width: 80, dataIndex: 'A1740UNIDA',
+                            {text: 'Unit', width: 40, dataIndex: 'A1740UNIDA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'C.Cost', width: 80, dataIndex: 'A1740CECOS',
+                            {text: 'C.Cost', width: 70, dataIndex: 'A1740CECOS',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Location', width: 80, dataIndex: 'A1740UBICA',
+                            {text: 'Location', width: 70, dataIndex: 'A1740UBICA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Account', width: 80, dataIndex: 'A1740CTA',
+                            {text: 'Account', width: 70, dataIndex: 'A1740CTA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Sub account', width: 100, dataIndex: 'A1740SCTA',
+                            {text: 'Sub account', width: 90, dataIndex: 'A1740SCTA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
@@ -112,6 +112,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Info', {
                                 }
                             },
                             {text: 'Inter company', width: 100, dataIndex: 'A1740ICIA',
+                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:center;";
+                                    return value;
+                                }
+                            },
+                            {text: 'Country Location', width: 120, dataIndex: 'A1740INTNU',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;

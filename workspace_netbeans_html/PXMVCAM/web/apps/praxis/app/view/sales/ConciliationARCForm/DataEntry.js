@@ -467,7 +467,7 @@ Ext.define('Ext.Praxis.view.sales.ConciliationARCForm.DataEntry', {
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
                                             maxLength: 1,
-                                            maskRe: /[A/M/D/a/m/d]/,
+                                            maskRe: /[M/m]/,
                                             listeners: {
                                                 change: 'onUpperValue',                                                
                                                 keypress: function (obj, e) {
@@ -479,8 +479,8 @@ Ext.define('Ext.Praxis.view.sales.ConciliationARCForm.DataEntry', {
                                         },
                                         {
                                             xtype: 'label',
-                                            width: 200,
-                                            text: 'A=Macht M=Manual D=Difference',
+                                            width: 250,
+                                            text: 'A=Match M=Manual Match D=Difference',
                                             style: 'font-weight:normal;text-align:left;'
 
                                         }

@@ -23,15 +23,20 @@ Ext.define('Ext.Praxis.controller.screens.CtrlDeliveryAudiFormController', {
     },
     cargaDatos: function () {
         var me = this;
+        var busqueda = '/searchDelivery';
+        if (String(me.view.params.TRNCU)==='RFND'){
+            busqueda = '/searchDeliveryRFND';
+        }
         /*var mask = new Ext.LoadMask(Ext.getCmp(prototype.id0 + '-form'), {
          msg: 'Please Wait....'
          });
          mask.show();*/
         
          me.BeanDelivery.TDNR = String(me.view.params.TDNR);
-          me.BeanDelivery.FUENTE = String(me.view.params.FTE);
+         me.BeanDelivery.FUENTE = String(me.view.params.FTE);
+         me.BeanDelivery.IDFILE = String(me.view.params.IDFIL);
         Ext.Ajax.request({
-            url: me.urlWin01 + '/searchDelivery',
+            url: me.urlWin01 + busqueda,
              params: {beanString: JSON.stringify(me.BeanDelivery)},
            /* params: {
                 TDNR: String(this.view.params.TDNR),

@@ -30,6 +30,7 @@ import net.miatech.praxis.logic.sales.AccountingMasterBINESLogic;
 import net.miatech.praxis.logic.sales.AccountingMasterCCAMLogic;
 import net.miatech.praxis.logic.sales.ViewTicketAccountingLogic;
 import net.miatech.praxis.logic.sales.MinimunRuleLogic;
+import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -42,9 +43,13 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -57,6 +62,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Scope("request")
 @RequestMapping("/ViewTicketAccounting")
 public class ViewTicketAccountingController extends BaseController {
+    
+    @Autowired
+    private ExportUtils exportUtils;
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private ViewTicketAccountingLogic logic;
@@ -133,8 +141,12 @@ public class ViewTicketAccountingController extends BaseController {
             filter.page.PAGNUM = -1;
             filter.page.TOTPAG = 300;
             filter.page.TOTROW = 300;
-
-            lst = logic.load(filter);
+            
+            if (filter.TRANSACTION.equals("RFTX")){
+                lst = logic.loadRFTX(filter);
+            }else{
+                lst = logic.load(filter);
+            }
 
         } catch (Exception e) {
             System.out.println("--->"+e.getMessage());
@@ -212,7 +224,7 @@ public class ViewTicketAccountingController extends BaseController {
 //
 //            Workbook workbook;
 //            File file = File.createTempFile(fileNameDownload, ".xlsx");
-//            List<A1880Filter> listaData = this.getList(request, true);
+//            List<PX0241S01A720Filter> listaData = this.getList(request, true);
 //
 //            System.out.println("Tamaño de lista devuelta : " + listaData.size());
 //
@@ -494,4 +506,146 @@ public class ViewTicketAccountingController extends BaseController {
 //
 //    }
 
+    @RequestMapping(value = "getXLSX")
+    public ResponseEntity<?> getXLSX(HttpServletRequest request){
+        try {
+            System.out.println("---------------ViewTicketAccounting:getXLSX-------------");
+            logic = new ViewTicketAccountingLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<PX0241S01A720Filter> lst = new ArrayList<>();
+            PX0241S01A720Filter params = new PX0241S01A720Filter();
+            params.AIRLINE = request.getParameter("AIRLINE");
+            params.MODE = request.getParameter("MODE");
+            params.TRANSACTION = request.getParameter("TRANSACTION");
+            params.TKT = request.getParameter("TKT");
+            params.SEQ = request.getParameter("SEQ");
+            params.CUPON1 = request.getParameter("CUPON1");
+            params.CUPON2 = request.getParameter("CUPON2");
+            params.CUPON3 = request.getParameter("CUPON3");
+            params.CUPON4 = request.getParameter("CUPON4");
+            params.FROM = request.getParameter("FROM");
+            params.TO = request.getParameter("TO");
+            params.FUENTE = request.getParameter("FUENTE");
+            params.PAIS = request.getParameter("PAIS");
+            params.CHANNEL = request.getParameter("CHANNEL");
+            params.STERROR = request.getParameter("STERROR");
+            params.FLAG = request.getParameter("FLAG");
+            params.SEQTRAN = Integer.parseInt(request.getParameter("SEQTRAN"));
+            params.page.PAGNUM = -1;
+            params.page.TOTPAG = 300;
+            params.page.TOTROW = 300;
+            if (params.TRANSACTION.equals("RFTX")){
+                lst = logic.loadRFTX(params);
+            }else{
+                lst = logic.load(params);
+            }
+            System.out.println("Total: " + lst.size());
+            List<Object[]> data = new ArrayList<>();
+            //headers
+            Object[] headers = new Object[45];
+            headers[0] = "TDOC";
+            headers[1] = "TFOR";
+            headers[2] = "C1";
+            headers[3] = "C2";
+            headers[4] = "C3";
+            headers[5] = "Card";
+            headers[6] = "Nbr Card";
+            headers[7] = "RFIC";
+            headers[8] = "RFIS";
+            headers[9] = "Debit Loc";
+            headers[10] = "Credit loc";
+            headers[11] = "Debit Rev";
+            headers[12] = "Credit Rev";
+            headers[13] = "IVA";
+            headers[14] = "FOP IVA";
+            headers[15] = "F. OPEN";
+            headers[16] = "VRIC";
+            headers[17] = "PFC";
+            headers[18] = "IATAVTA-PS";
+            headers[19] = "FECUSO";
+            headers[20] = "CTA";
+            headers[21] = "LIB1";
+            headers[22] = "CIA1";
+            headers[23] = "CLIENTE";
+            headers[24] = "DIRECCION";
+            headers[25] = "PROVEEDOR";
+            headers[26] = "TD_ORACLE";
+            headers[27] = "COMB";
+            headers[28] = "TITULO";
+            headers[29] = "SUCURSAL";
+            headers[30] = "CTACTRL";
+            headers[31] = "TITULOCTRL";
+            headers[32] = "LIBCTRL";
+            headers[33] = "CTAPROVEE";
+            headers[34] = "TITULOPROVEE";
+            headers[35] = "L. PRO";
+            headers[36] = "LCTACTRLPROVEEPRO";
+            headers[37] = "TITULOCTRLPROVEE";
+            headers[38] = "L.P.CTRL";
+            headers[39] = "TITULOCTRLPROVEE";
+            headers[40] = "CTAPROVEE";
+            headers[41] = "L. AR";
+            headers[42] = "CLI. AR06";
+            headers[43] = "DIR. AR06";
+            headers[44] = "TD. AR06";
+            
+            data.add(headers);
+            for (PX0241S01A720Filter obj : lst) {
+                Object[] row = new Object[45];
+                row[0] = obj.TDOC;
+                
+                row[1] = obj.TFOR;
+                row[2] = obj.CONCEPT1;
+                row[3] = obj.CONCEPT2;
+                row[4] = obj.CONCEPT3;
+                row[5] = obj.TTARJ;
+                row[6] = obj.NTARJ;
+                row[7] = obj.RFIC;
+                row[8] = obj.RFIS;
+                row[9] = obj.DEBITO;
+                row[10] = obj.CREDITO;
+                row[11] = obj.DEBITORV;
+                row[12] = obj.CREDITORV;
+                row[13] = obj.TASA;
+                row[14] = obj.FOP_IVA;
+                row[15] = obj.FOPEN;
+                row[16] = obj.VRIC;
+                row[17] = obj.PFC;
+                row[18] = obj.IATAVTA;
+                row[19] = obj.FECUSO;
+                row[20] = obj.CTA;
+                row[21] = obj.LIB1;
+                row[22] = obj.CIA1;
+                row[23] = obj.CLIENTE;
+                row[24] = obj.PROVEEDOR;
+                row[25] = obj.DIRECCION;
+                row[26] = obj.TD_ORACLE;
+                row[27] = obj.COMB;
+                row[28] = obj.TITULO;
+                row[29] = obj.SUCURSAL;
+                row[30] = obj.CTACTRL;
+                row[31] = obj.TITULOCTRL;
+                row[32] = obj.LIBCTRL;
+                row[33] = obj.CTAPROVEE;
+                row[34] = obj.TITULOPROVEE;
+                row[35] = obj.LIBPROVEE;
+                row[36] = obj.CTACTRLPROVEE;
+                row[37] = obj.TITULOCTRLPROVEE;
+                row[38] = obj.LIBCTRLPROVEE;
+                row[39] = obj.CTAARPROVEE;
+                row[40] = obj.TITULOARPROVEE;
+                row[41] = obj.LIBARPROVEE;
+                row[42] = obj.CLIENTEAR06;
+                row[43] = obj.DIRECCIONAR06;
+                row[44] = obj.TD_ORACLEAR06;
+                data.add(row);
+            }
+            String controllerName = "ViewTicketAccounting";
+            return exportUtils.createExcel(data, controllerName + " - " + Functions.getFechaActual());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
 }

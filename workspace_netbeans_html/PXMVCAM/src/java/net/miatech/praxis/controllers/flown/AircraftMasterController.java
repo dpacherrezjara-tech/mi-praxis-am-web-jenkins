@@ -4,7 +4,9 @@ package net.miatech.praxis.controllers.flown;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,6 +23,7 @@ import net.miatech.praxis.logic.flown.AircraftMasterLogic;
 import net.miatech.utils.Functions;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
@@ -34,35 +37,36 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 // </editor-fold>
-
 /**
  *
  * @author gsanchez
  */
-
 @Controller
 @Scope("request")
 @RequestMapping("/AircraftMaster")
 public class AircraftMasterController extends BaseController {
-    
+
     private AircraftMasterLogic logic;
-    
+
     @RequestMapping(value = "/search")
     public @ResponseBody
     String search(ModelMap map, HttpServletRequest request) {
         A1702Filter filter = new A1702Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-            
+
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
 
             logic = new AircraftMasterLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             List<A1702Filter> listaData = logic.loadPX102S01A1702(filter);
-            
+
             map.put("success", true);
             map.put("data", listaData);
         } catch (Exception e) {
@@ -71,7 +75,7 @@ public class AircraftMasterController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "/searchCompleteData")
     public @ResponseBody
     String searchCompleteData(ModelMap map, HttpServletRequest request) {
@@ -92,7 +96,7 @@ public class AircraftMasterController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "/MaintenanceA1702")
     public @ResponseBody
     String MaintenanceA1702(ModelMap map, HttpServletRequest request) {
@@ -114,7 +118,200 @@ public class AircraftMasterController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
+    @RequestMapping(value = "updateAircraft", method = RequestMethod.POST)
+    public @ResponseBody
+    String updateCommA1816(ModelMap map, @RequestParam("excelfile_VLO") MultipartFile excelfile, HttpServletRequest request) {
+        byte[] bytes = null;
+
+        String msj = "No existen registros por actualizar";
+
+//        
+        Integer cont = 0;
+        try {
+            List<A1702Filter> lstAircraft = new ArrayList<>(0);
+            A1702Filter obj = new A1702Filter();
+            double prue = 0;
+            int prue2 = 0;
+            String filename = excelfile.getOriginalFilename();
+            XSSFWorkbook workbook = new XSSFWorkbook(excelfile.getInputStream());
+            Sheet datatypeSheet = workbook.getSheetAt(0);
+            Iterator<Row> iterator = datatypeSheet.iterator();
+            //HSSFCell cell;
+            DataFormatter formatter = new DataFormatter(); 
+            
+            while (iterator.hasNext()) {
+
+                cont++;
+                Row sheet = iterator.next();
+                //Iterator<Cell> cellIterator = currentRow.iterator();
+                if (cont > 2) {
+                    if (sheet.getCell(0) != null) {
+                        obj = new A1702Filter();
+//                        obj.DFLIGHT = sheet.getCell(1) == null ? "" : sheet.getCell(1).toString().trim();
+                        obj.EQUIPO = sheet.getCell(1) == null ? "" : sheet.getCell(1).toString().trim();
+                        obj.MODELO = formatter.formatCellValue(sheet.getCell(2));
+                        obj.NUMERO = formatter.formatCellValue(sheet.getCell(3));
+                        
+                        obj.MATRIC = sheet.getCell(4) == null ? "" : sheet.getCell(4).toString().trim();
+                        obj.CARRIER = sheet.getCell(5) == null ? "" : sheet.getCell(5).toString().trim();
+                        obj.TIPO = sheet.getCell(6) == null ? "" : sheet.getCell(6).toString().trim();
+//                        obj.FECHA = sheet.getCell(7) == null ? "" : sheet.getCell(7).toString().trim();
+                        obj.FECHA = sheet.getCell(7) == null ? "" : sheet.getCell(7).toString().trim();
+                        System.out.println(obj.FECHA);
+
+                        if (obj.FECHA.contains("-")) {
+                            String[] fecha = obj.FECHA.split("-");
+                            String fecha2 = String.format("%0" + 4 + "d", Integer.valueOf(fecha[2]));
+                            String fecha1 = fecha[1];
+                            if (fecha1.equals("ene")) {
+                                fecha1 = "01";
+                            } else if (fecha1.equals("feb")) {
+                                fecha1 = "02";
+                            } else if (fecha1.equals("mar")) {
+                                fecha1 = "03";
+                            } else if (fecha1.equals("abr")) {
+                                fecha1 = "04";
+                            } else if (fecha1.equals("may")) {
+                                fecha1 = "05";
+                            } else if (fecha1.equals("jun")) {
+                                fecha1 = "06";
+                            } else if (fecha1.equals("jul")) {
+                                fecha1 = "07";
+                            } else if (fecha1.equals("ago")) {
+                                fecha1 = "08";
+                            } else if (fecha1.equals("sep")) {
+                                fecha1 = "09";
+                            } else if (fecha1.equals("oct")) {
+                                fecha1 = "10";
+                            } else if (fecha1.equals("nov")) {
+                                fecha1 = "11";
+                            } else if (fecha1.equals("dic")) {
+                                fecha1 = "12";
+                            }
+
+                            fecha1 = String.format("%0" + 2 + "d", Integer.valueOf(fecha1));
+                            String fecha0 = String.format("%0" + 2 + "d", Integer.valueOf(fecha[0]));
+                            System.out.println(fecha2 + fecha1 + fecha0);
+                            obj.FECHA = fecha2 + fecha1 + fecha0;
+                        }
+
+                        obj.FECHAOP = sheet.getCell(8) == null ? "" : sheet.getCell(8).toString().trim();
+                        System.out.println(obj.FECHAOP);
+
+                        if (obj.FECHAOP.contains("-")) {
+                            String[] fecha = obj.FECHAOP.split("-");
+                            String fecha2 = String.format("%0" + 4 + "d", Integer.valueOf(fecha[2]));
+                            String fecha1 = fecha[1];
+                            if (fecha1.equals("ene")) {
+                                fecha1 = "01";
+                            } else if (fecha1.equals("feb")) {
+                                fecha1 = "02";
+                            } else if (fecha1.equals("mar")) {
+                                fecha1 = "03";
+                            } else if (fecha1.equals("abr")) {
+                                fecha1 = "04";
+                            } else if (fecha1.equals("may")) {
+                                fecha1 = "05";
+                            } else if (fecha1.equals("jun")) {
+                                fecha1 = "06";
+                            } else if (fecha1.equals("jul")) {
+                                fecha1 = "07";
+                            } else if (fecha1.equals("ago")) {
+                                fecha1 = "08";
+                            } else if (fecha1.equals("sep")) {
+                                fecha1 = "09";
+                            } else if (fecha1.equals("oct")) {
+                                fecha1 = "10";
+                            } else if (fecha1.equals("nov")) {
+                                fecha1 = "11";
+                            } else if (fecha1.equals("dic")) {
+                                fecha1 = "12";
+                            }
+
+                            fecha1 = String.format("%0" + 2 + "d", Integer.valueOf(fecha1));
+                            String fecha0 = String.format("%0" + 2 + "d", Integer.valueOf(fecha[0]));
+                            System.out.println(fecha2 + fecha1 + fecha0);
+                            obj.FECHAOP = fecha2 + fecha1 + fecha0;
+                        }
+                        obj.FECINICO = sheet.getCell(9) == null ? "" : sheet.getCell(9).toString().trim();
+                        obj.FECFINCO = sheet.getCell(10) == null ? "" : sheet.getCell(10).toString().trim();
+                        String HORAVLO = "", PAXF = "", PAXJ = "", PAXY = "", PAX = "", TOTMILL = "", TOTGALO = "", TOTCARG = "", PESO = "", PESOMAX = "";
+
+                        HORAVLO = sheet.getCell(11).toString().trim();
+                        obj.HORAVLO = Double.parseDouble(HORAVLO);
+
+                        PAXF = sheet.getCell(12).toString().trim();
+                        PAXF = PAXF.replace(".0", "");
+                        obj.PAXF = Integer.parseInt(PAXF);
+
+                        PAXJ = sheet.getCell(13).toString().trim();
+                        PAXJ = PAXJ.replace(".0", "");
+                        obj.PAXJ = Integer.parseInt(PAXJ);
+
+                        PAXY = sheet.getCell(14).toString().trim();
+                        PAXY = PAXY.replace(".0", "");
+                        obj.PAXY = Integer.parseInt(PAXY);
+
+                        PAX = sheet.getCell(15).toString().trim();
+                        PAX = PAX.replace(".0", "");
+                        obj.PAX = Integer.parseInt(PAX);
+
+                        TOTMILL = sheet.getCell(16).toString().trim();
+                        obj.TOTMILL = Double.parseDouble(TOTMILL);
+
+                        TOTGALO = sheet.getCell(17).toString().trim();
+                        obj.TOTGALO = Double.parseDouble(TOTGALO);
+                        try {
+                            TOTCARG = sheet.getCell(18).toString().trim();
+                            obj.TOTCARG = Double.parseDouble(TOTCARG);
+                        } catch (Exception a) {
+                            obj.TOTCARG = 0.0;
+                        }
+                        try {
+                            PESO = sheet.getCell(19).toString().trim();
+                            obj.PESO = Double.parseDouble(PESO);
+                        } catch (Exception a) {
+                            obj.PESO = 0.0;
+                        }
+                        try {
+                            PESOMAX = sheet.getCell(20).toString().trim();
+                            obj.PESOMAX = Double.parseDouble(PESOMAX);
+                        } catch (Exception a) {
+                            obj.PESOMAX = 0.0;
+                        }
+
+                        obj.ESTADO = sheet.getCell(21) == null ? "" : sheet.getCell(21).toString().trim();
+                        if (obj.ESTADO.equals("Activo")) {
+                            obj.ESTADO = "1";
+                        } else {
+                            obj.ESTADO = "";
+                        }
+                        System.out.println("Registro" + cont);
+                        lstAircraft.add(obj);
+
+                    }
+                }
+            }
+
+            logic = new AircraftMasterLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            if (lstAircraft.size() > 0) {
+                msj = logic.loadSQP04933(lstAircraft);
+            }
+            map.put("success", true);
+            map.put("msj", msj);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+            throw new SpringException(ex);
+        }
+        return new Gson().toJson(map);
+
+    }
+
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -122,9 +319,9 @@ public class AircraftMasterController extends BaseController {
         try {
             Workbook workbook = null;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            
+
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-            
+
             A1702Filter filter = new A1702Filter();
 //            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             filter.IN_VALORTXT = request.getParameter("IN_VALORTXT");
@@ -158,7 +355,7 @@ public class AircraftMasterController extends BaseController {
             headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
             headerStyle.setFont(headerFont);
-            
+
             bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
             bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
@@ -243,9 +440,9 @@ public class AircraftMasterController extends BaseController {
             CH1_21.setCellStyle(headerStyle);
 
             ++vj;
-            
+
             Row row2 = sheet.createRow(vj);
-            
+
             Cell CH2_00 = row2.createCell(0);
             Cell CH2_01 = row2.createCell(1);
             Cell CH2_02 = row2.createCell(2);
@@ -283,7 +480,7 @@ public class AircraftMasterController extends BaseController {
             CH2_17.setCellValue("Gallons");
             CH2_18.setCellValue("Charge");
             CH2_20.setCellValue("Weight");
-            
+
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 4, 4));//Number
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 7, 7));//Date
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 8, 8));//Start Date
@@ -324,7 +521,7 @@ public class AircraftMasterController extends BaseController {
 
             ++vj;
             // </editor-fold>
-            
+
             while (iter.hasNext()) {
                 row = sheet.createRow(vj);
                 // <editor-fold defaultstate="collapsed" desc="data">
@@ -350,7 +547,7 @@ public class AircraftMasterController extends BaseController {
                 Cell cell69 = row.createCell(19);
                 Cell cell70 = row.createCell(20);
                 Cell cell71 = row.createCell(21);
-                
+
                 cell50.setCellValue(listaData.get(vi).RN);
                 cell51.setCellValue(listaData.get(vi).EQUIPO);
                 cell52.setCellValue(listaData.get(vi).MODELO);
@@ -405,7 +602,7 @@ public class AircraftMasterController extends BaseController {
                 ++vi;
                 ++vj;
             }
-            
+
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(2, true);
@@ -414,7 +611,7 @@ public class AircraftMasterController extends BaseController {
             sheet.autoSizeColumn(5, true);
             sheet.autoSizeColumn(6, true);
             sheet.autoSizeColumn(7, true);
-            
+
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
 

@@ -53,4 +53,5 @@ public class A2033 {
     public String FECPRO= "";
     
     public double AMOUNTLOC = 0d;
+    public String CPN_REF = "";
 }

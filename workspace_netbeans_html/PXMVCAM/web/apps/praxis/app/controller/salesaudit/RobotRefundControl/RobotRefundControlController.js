@@ -133,6 +133,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotRefundControl.RobotRefundContr
     onBackClick: function(obj, e) {
         Ext.getCmp(prototype.id + '-gridData').setVisible(true);
         Ext.getCmp(prototype.id + '-lbl-total').setVisible(true);
+        Ext.getCmp(prototype.id + '-btn-excel').setVisible(true);
 
         //Ext.getCmp(prototype.id + '-lbl-total').setText('0');
         Ext.getCmp(prototype.id + '-gridDetalle').setVisible(false);
@@ -283,6 +284,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotRefundControl.RobotRefundContr
             Ext.getCmp(prototype.id + '-gridDetalle').setVisible(true);
             Ext.getCmp(prototype.id + '-lbl-totalDeta').setVisible(true);
             Ext.getCmp(prototype.id + '-btn-back').setVisible(true);
+            Ext.getCmp(prototype.id + '-btn-excel').setVisible(false);
             ///CARGANDO EL DETALLE DE LA GRTILLA 
             var CmbRobot = Ext.getCmp(prototype.id + '-ComboRobot').getValue();
             this.bean2.IN_OPTION = '3';

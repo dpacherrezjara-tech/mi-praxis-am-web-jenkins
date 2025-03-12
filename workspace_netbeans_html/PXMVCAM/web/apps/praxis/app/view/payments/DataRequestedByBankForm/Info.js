@@ -365,7 +365,15 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByBankForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'to Bank', dataIndex: 'DATES', width: 80
+                                                        text: 'to Bank', dataIndex: 'DATES', width: 80,
+                                                        listeners: {
+                                                            click: 'onSendEmail'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {                                                     
+                                                            metaData.style = "color:#057ECB;";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#payments-data-requested-by-bank-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        }
                                                     }
                                                 ]
                                             },
@@ -1875,7 +1883,394 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByBankForm.Info', {
                                 }
                             ]
                         },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-boxCardDataTKT',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+//                            height: 450,
+                            width: 1460,
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'left'
+                            },
+                            items: [
+                                {
+//                                    xtype: 'grid',
+                                    xtype: 'treepanel',
+                                    id: prototype.id + '-gridCardDataTKT',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    width: 1460,
+                                    height: 650,
+                                    reserveScrollbar: true,
+                                    useArrows: true,
+                                    rootVisible: false,
+                                    multiSelect: true,
+                                    columnLines: true,
+                                    rowLines: true,
+                                    features: [{
+//                                        dock: 'bottom',
+                                            ftype: 'summary'
+                                        }],
+                                    plugins: {
+                                        ptype: 'cellediting',
+                                        clicksToEdit: 1
+                                    },
+                                    columns: {
+                                        defaults: {menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Credit<br>Number',
+                                                xtype: 'treecolumn',
+                                                dataIndex: 'strDescripcion',
+                                                width: 190,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    metaData.tdAttr = 'data-qtip="' + data.strDescripcion + '"';
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Qty',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Tkts', dataIndex: 'pos', width: 60,
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridCardDataTKT').getStore().getData().items[0].data;
+                                                            console.log(data);
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.lngTotDocs, '0,000') + '<b>';
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Ticket',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Number', dataIndex: 'strTicket', width: 140,
+                                                        editor: {
+                                                            xtype: 'textfield',
+                                                            editable: true,
+                                                            enableKeyEvents: true,
+                                                            listeners: {
+                                                                keypress: 'eventKey2',
+                                                                specialkey: 'eventKey2'
+                                                            }
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.style = "color:#057ECB;background-color:#FFFFFF;";
+                                                            metaData.tdAttr = 'data-qtip="' + data.strTicket + ' - Enter to view Image' + '"';
+                                                            return '<b>' + value + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Status', dataIndex: 'strDescStatus', width: 95,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    metaData.tdAttr = 'data-qtip="' + data.strDescStatus + '"';
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Folio',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Number', dataIndex: 'FOLIO', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.tdAttr = 'data-qtip="' + data.CLINAME + '"';
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Country', dataIndex: 'SCOUNTRY', width: 60
+                                            },
+                                            {
+                                                text: 'MXN', dataIndex: 'VFOP', width: 75,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridCardDataTKT').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.dblTotVFOP, '0,000.00') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'Clar.',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Amt', dataIndex: 'AUTAMOUNT', width: 75,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridCardDataTKT').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.dblTotAUTAMOUNT, '0,000.00') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Authorization',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Code', dataIndex: 'AUTHNBR', width: 60
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Sales',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'SALEDATE', width: 75
+                                                    },
+                                                    {
+                                                        text: 'Agent', dataIndex: 'AGENTE', width: 75,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.tdAttr = 'data-qtip="' + data.strDescription1 + '"';
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Qty',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Cpns', dataIndex: 'TOTCUP', width: 50,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridCardDataTKT').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.lngTotTOTCUP, '0,000') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Status Cpn',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: '1', dataIndex: 'strUsoCpn1', width: 40,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.tdAttr = 'data-qtip="' + data.strDescUsoCpn1 + '"';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '2', dataIndex: 'strUsoCpn2', width: 40,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.tdAttr = 'data-qtip="' + data.strDescUsoCpn2 + '"';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '3', dataIndex: 'strUsoCpn3', width: 40,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.tdAttr = 'data-qtip="' + data.strDescUsoCpn3 + '"';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '4', dataIndex: 'strUsoCpn4', width: 40,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.tdAttr = 'data-qtip="' + data.strDescUsoCpn4 + '"';
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {text: 'Image',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Link', dataIndex: 'strImgLink', width: 50,
+                                                        listeners: {
+                                                            click: 'viewImagen'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.tdAttr = 'data-qtip="' + 'Linked On : ' + data.LINKDATE + ' - ' + data.LINKHORA + '"';
+                                                            value = '<b>' + value + '<b>';
+                                                            return '<a href="#payments-data-requested-by-bank-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {text: 'Sent',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'to Bank', dataIndex: 'DATES', width: 75
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Bank',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                }, columns: [
+                                                    {
+                                                        text: 'Notice', dataIndex: 'DATEN', width: 60
+                                                    }
+                                                ]},
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 40,
+                                                text: 'Edit',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-edit',
+                                                        tooltip: 'Edit Data',
+                                                        handler: 'onEditClick'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 40,
+                                                text: 'Delete',
+                                                align: 'center',
+                                                items: [
+                                                    {
+//                                                        iconCls: 'prx-icon-delete',
+                                                        icon: 'resources/img/botones/16x16/delete.png',
+                                                        tooltip: 'Delete Ticket',
+                                                        handler: 'onDeleteClick'
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        scope: this,
+                                        viewConfig: {
+                                            stripeRows: true,
+                                            enableTextSelection: true,
+                                            markDirty: false,
+                                            getRowClass: function (record, rowIndex, rowParams, store) {
+                                                if (rowIndex % 2 === 0)
+                                                    return 'rowA';
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-SummaryCardDataTKT',
+                                    width: 1679,
+                                    align: 'left',
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center'
+                                    },
+                                    defaults: {
+                                        xtype: 'label',
+                                        align: 'center',
+                                        html: '' + '&nbsp',
+                                        height: 25,
+                                        padding: '5 5 5 0',
+                                        style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                    },
+                                    items: [
 
+                                        {width: 190},
+                                        {width: 60, id: prototype.id + '-lblTotQTKTTKT'},
+                                        {width: 140},
+                                        {width: 95},
+                                        {width: 80},
+                                        {width: 60},
+                                        {width: 75, id: prototype.id + '-lblTotVFOPTKT'},
+                                        {width: 75, id: prototype.id + '-lblTotAUTAMOUNTDTKT'},
+                                        {width: 60},
+                                        {width: 150},
+                                        {width: 50, id: prototype.id + '-lblTotTOTCUPTKT'},
+                                        {width: 425}
+                                    ]
+                                }
+                            ]
+                        },
                         {
                             xtype: 'panel',
                             id: prototype.id + '-boxDetAvisosNoMatch',

@@ -4,13 +4,108 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
     border: false,
     layout: {
         type: 'hbox',
-        pack: 'end'
+        //pack: 'end'
     },
     items: [
+        {xtype: 'tbspacer', width: 76},
         {
             xtype: 'panel',
-            id: prototype.id+'-boxPaginacion',
-            hidden: true,
+            border: true,
+            width: 150,
+            id: prototype.id + '-OptionsOp2',
+            items: [
+                {
+                    xtype: 'toolbar',
+                    items: [
+//                        {xtype: 'tbspacer', width: 100},
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnSearch_2',
+                            iconCls: 'prx-icon-search',
+                            tooltip: 'Search',
+//                            listeners: {
+//                                click: 'imgSearch_clickHandler'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnFilter_2',
+                            iconCls: 'prx-icon-filter',
+                            tooltip: 'Display filter',
+//                            listeners: {
+//                                click: 'imgFilter_clickHandler'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnDisplay_2',
+                            icon: 'resources/img/botones/FalseChart.png',
+                            tooltip: 'Display Charts',
+//                            listeners: {
+//                                click: 'btnDisplay_click'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnDisplayFore_2',
+                            icon: 'resources/img/botones/FalseChart.png',
+                            tooltip: 'Display Charts',
+//                            listeners: {
+//                                click: 'btnDisplay_click'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnExcel_2',
+                            iconCls: 'prx-icon-excel',
+                            tooltip: 'Export to Excel',
+//                            listeners: {
+//                                click: 'imgExcel_clickHandler'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnClear_2',
+                            iconCls: 'prx-icon-clear',
+                            tooltip: 'Clear Options',
+//                            listeners: {
+//                                click: 'imgClear_clickHandler'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnAdd_2',
+                            iconCls: 'prx-icon-add',
+                            tooltip: 'New',
+                            hidden: true,
+//                            listeners: {
+//                                click: 'btnAdd_click'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnBack_2',
+                            iconCls: 'prx-icon-back',
+                            tooltip: 'Back',
+                            listeners: {
+                                click: 'imgBack_clickHandler'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnBackFake_2',
+                            iconCls: 'prx-icon-back',
+                            tooltip: 'Back',
+                        }
+                    ]
+                }
+            ]
+        },
+        {xtype: 'tbspacer', width: 1081},
+        {
+            xtype: 'panel',
+            id: prototype.id + '-boxPaginacion',
+            hidden: false,
             width: 100,
             border: false,
             items: [
@@ -93,14 +188,154 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                             border: false,
                             displayInfo: false,
                             hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-pagginGDS',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-pagginGDStkt',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-pagginCabin',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-pagginAlliance',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-pagginRoutingType',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_loadSalesAgent',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_searchFlownFlight',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_searchByCityPair',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_searchByFlightProfitability',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_loadCityPair',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_searchDetail',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_searchDetByCoupon',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_searchByCabin',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_searchSPA',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_searchDetail_SPAS',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_searchDetail_SPAN',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
                         }
                     ]
                 }
             ]
         },
+        {
+            xtype: 'panel',
+            id: prototype.id + '-espaciado',
+            hidden: false,
+            width: 100,
+            border: false,
+            items: [
+                //ANCHO FLUCTUABLE PARA NO OCULTAR EL OPTIONS
+            ]
+        },
         {xtype: 'tbspacer', width: 20},
         {
             xtype: 'panel',
+            width: 150,
+            id: prototype.id + '-OptionsOp',
             border: true,
             items: [
                 {
@@ -125,8 +360,17 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
 //                            }
                         },
                         {
-                            xtype:'button',
+                            xtype: 'button',
                             id: prototype.id + '-btnDisplay',
+                            icon: 'resources/img/botones/FalseChart.png',
+                            tooltip: 'Display Charts',
+//                            listeners: {
+//                                click: 'btnDisplay_click'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnDisplayFore',
                             icon: 'resources/img/botones/FalseChart.png',
                             tooltip: 'Display Charts',
 //                            listeners: {
@@ -138,9 +382,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel',
-                            listeners: {
+//                            listeners: {
 //                                click: 'imgExcel_clickHandler'
-                            }
+//                            }
                         },
                         {
                             xtype: 'button',
@@ -169,6 +413,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                             listeners: {
                                 click: 'imgBack_clickHandler'
                             }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnBackFake',
+                            iconCls: 'prx-icon-back',
+                            tooltip: 'Back',
                         }
                     ]
                 }

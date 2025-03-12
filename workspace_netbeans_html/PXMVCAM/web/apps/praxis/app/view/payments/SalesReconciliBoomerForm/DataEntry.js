@@ -115,7 +115,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 6,
-                                    readOnly: true,
+                                    //readOnly: true,
                                     width: 70
                                 },
                                 {xtype: 'tbspacer', width: 30},
@@ -139,7 +139,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 2,
-                                    readOnly: true,
+                                    //readOnly: true,
                                     width: 70
                                 },
                                 {xtype: 'tbspacer', width: 80},
@@ -502,6 +502,40 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                 
                             ]
                         },
+                        /*{
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background:#E5ECEF;',
+                            margin: '0 2 2 5',
+                            defaults: {
+                                anchor: '100%',
+                                width: 1080
+                            },
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: 'Comment',
+                                    style: 'font-weight:bold;color:#121E31;',
+                                    width: 130,
+                                    padding: '3 0'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtCOMMENT',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    maxLength: 50,
+                                    padding: '3 0',
+                                    //readOnly: false,
+                                    //maskRe: /[0-9]/,
+                                    width: 350
+                                },                                
+                                {xtype: 'tbspacer', width: 600},
+                                
+                            ]
+                        },*/
                     ]
                 },
                 // <editor-fold defaultstate="collapsed" desc="ComissionData">

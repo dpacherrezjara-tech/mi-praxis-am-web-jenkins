@@ -104,6 +104,7 @@ public class AccountingMasterInterliController extends BaseController {
             filter.A1740CCUST = request.getParameter("A1740CCUST").trim();
             filter.A1740TITRA = request.getParameter("A1740TITRA").trim();
             filter.A1740TIPO = request.getParameter("A1740TIPO").trim();
+            filter.A1740INTNU = request.getParameter("A1740INTNU").trim();
             filter.A1740SUBTI = request.getParameter("A1740SUBTI").trim();
             filter.A1740CATEG = request.getParameter("A1740CATEG").trim();
             filter.A1740CIA = request.getParameter("A1740CIA").trim();
@@ -238,9 +239,11 @@ public class AccountingMasterInterliController extends BaseController {
             Cell CH1_11 = row.createCell(11);
             CH1_11.setCellValue("Inter Company");
             Cell CH1_12 = row.createCell(12);
-            CH1_12.setCellValue("Client");
+            CH1_12.setCellValue("Country Location");
             Cell CH1_13 = row.createCell(13);
-            CH1_13.setCellValue("Effective");
+            CH1_13.setCellValue("Client");
+            Cell CH1_14 = row.createCell(14);
+            CH1_14.setCellValue("Effective");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -256,6 +259,7 @@ public class AccountingMasterInterliController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -271,6 +275,7 @@ public class AccountingMasterInterliController extends BaseController {
             CH1_11.setCellStyle(headerStyle);
             CH1_12.setCellStyle(headerStyle);
             CH1_13.setCellStyle(headerStyle);
+            CH1_14.setCellStyle(headerStyle);
 
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
@@ -286,6 +291,7 @@ public class AccountingMasterInterliController extends BaseController {
             sheet.autoSizeColumn(11, true);
             sheet.autoSizeColumn(12, true);
             sheet.autoSizeColumn(13, true);
+            sheet.autoSizeColumn(14, true);
 
             ++vj;
             // </editor-fold>
@@ -308,6 +314,7 @@ public class AccountingMasterInterliController extends BaseController {
                 Cell cell61 = row.createCell(11);
                 Cell cell62 = row.createCell(12);
                 Cell cell63 = row.createCell(13);
+                Cell cell64 = row.createCell(14);
 
                 cell50.setCellValue(listaData.get(vi).A1740TITRA);
                 cell51.setCellValue(listaData.get(vi).A1740TIPODESC);
@@ -321,8 +328,9 @@ public class AccountingMasterInterliController extends BaseController {
                 cell59.setCellValue(listaData.get(vi).A1740SCTA);
                 cell60.setCellValue(listaData.get(vi).A1740EQUI);
                 cell61.setCellValue(listaData.get(vi).A1740ICIA);
-                cell62.setCellValue(listaData.get(vi).A1740CLIE);
-                cell63.setCellValue(listaData.get(vi).A1740FINI);
+                cell62.setCellValue(listaData.get(vi).A1740INTNU);
+                cell63.setCellValue(listaData.get(vi).A1740CLIE);
+                cell64.setCellValue(listaData.get(vi).A1740FINI);
 
                 cell50.setCellStyle(bodyStyle);
                 cell51.setCellStyle(bodyStyle);
@@ -338,6 +346,7 @@ public class AccountingMasterInterliController extends BaseController {
                 cell61.setCellStyle(bodyStyle);
                 cell62.setCellStyle(bodyStyle);
                 cell63.setCellStyle(bodyStyle);
+                cell64.setCellStyle(bodyStyle);
 
                 sheet.autoSizeColumn(0, true);
                 sheet.autoSizeColumn(1, true);
@@ -353,6 +362,7 @@ public class AccountingMasterInterliController extends BaseController {
                 sheet.autoSizeColumn(11, true);
                 sheet.autoSizeColumn(12, true);
                 sheet.autoSizeColumn(13, true);
+                sheet.autoSizeColumn(14, true);
                 // </editor-fold>
                 
                 iter.next();

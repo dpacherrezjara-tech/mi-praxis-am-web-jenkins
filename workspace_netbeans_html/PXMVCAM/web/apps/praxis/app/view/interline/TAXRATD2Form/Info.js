@@ -415,19 +415,48 @@ Ext.define('Ext.Praxis.view.interline.TAXRATD2Form.Info', {
                                         },
                                         columns: [
                                             {
-                                                text: 'Amount', dataIndex: 'ISC', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                text: 'MXN',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
                                                 },
-                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                    metaData.style = "text-align:right;";
-                                                    var data = Ext.getCmp(prototype.id + '-gridDetailA1141Data').getStore().getData().items[0].data;
-                                                    return Ext.util.Format.number(data.totISC, '0,000.00');
-                                                }
+                                                columns: [
+                                                    {
+                                                        text: 'Amount', dataIndex: 'LAM_XV', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = "text-align:right;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailA1141Data').getStore().getData().items[0].data;
+                                                            return Ext.util.Format.number(data.tot_LAM_XV, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
                                             },
                                             {
-                                                text: 'Currency', dataIndex: 'MDACP', width: 70
+                                                text: 'USD',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Amount', dataIndex: 'EAM_XV', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = "text-align:right;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailA1141Data').getStore().getData().items[0].data;
+                                                            return Ext.util.Format.number(data.tot_EAM_XV, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         ]
                                     },
@@ -440,19 +469,48 @@ Ext.define('Ext.Praxis.view.interline.TAXRATD2Form.Info', {
                                         },
                                         columns: [
                                             {
-                                                text: 'Amount', dataIndex: 'GROSS', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                text: 'MXN',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
                                                 },
-                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                    metaData.style = "text-align:right;";
-                                                    var data = Ext.getCmp(prototype.id + '-gridDetailA1141Data').getStore().getData().items[0].data;
-                                                    return Ext.util.Format.number(data.totGROSS, '0,000.00');
-                                                }
+                                                columns: [
+                                                    {
+                                                        text: 'Amount', dataIndex: 'LAM_XD', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = "text-align:right;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailA1141Data').getStore().getData().items[0].data;
+                                                            return Ext.util.Format.number(data.tot_LAM_XD, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
                                             },
                                             {
-                                                text: 'Currency', dataIndex: 'BATCHP', width: 70
+                                                text: 'USD',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Amount', dataIndex: 'EAM_XD', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = "text-align:right;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailA1141Data').getStore().getData().items[0].data;
+                                                            return Ext.util.Format.number(data.tot_EAM_XD, '0,000.00');
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }

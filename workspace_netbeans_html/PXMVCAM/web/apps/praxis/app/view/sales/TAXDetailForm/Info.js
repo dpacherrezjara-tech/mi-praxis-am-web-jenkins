@@ -88,8 +88,8 @@ Ext.define('Ext.Praxis.view.sales.TAXDetailForm.Info', {
                                 }
                             },
                             {text: 'Accounting<br>Date', width: 120, dataIndex: 'FECCONT'},
-                            {text: 'Accounting<br>ID', width: 140, dataIndex: 'ACOUNTID'},
-                            {text: 'Account', width: 140, dataIndex: 'CUENT'}
+                            {text: 'Accounting<br>ID', width: 140, dataIndex: 'ACOUNTID'}
+                            //{text: 'Account', width: 140, dataIndex: 'CUENT'}
 
 
                         ]

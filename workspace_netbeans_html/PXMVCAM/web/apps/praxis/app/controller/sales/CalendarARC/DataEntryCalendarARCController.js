@@ -22,7 +22,8 @@ Ext.define('Ext.Praxis.controller.sales.CalendarARC.DataEntryCalendarARCControll
 //                Ext.getCmp(prototype.id + '-txtAirline').focus();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     },
     getDataInputs: function(rec) {
 

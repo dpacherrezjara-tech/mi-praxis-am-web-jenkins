@@ -7,8 +7,10 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
     controller: 'DataEntryProMasterTicketController',
     title: 'View Ticket - Browser',
     header: true,
+    closable: false,
+    closeAction: 'hide',
     height: 640,
-    width: 1200,
+    width: 1300,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -78,7 +80,8 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
                                                         fields: ['code', 'name'],
                                                         data: [
                                                             ["", "Select"], ["1", "Ticket"], ["2", "Pax Name"],
-                                                            ["3", "PNR"], ["4", "C.Card"], ["5", "IATA"], ["6","ADM/ACM"]
+                                                            ["3", "PNR"], ["4", "C.Card"], //["7", "C.Card Void"],
+                                                            ["5", "IATA"], ["6","ADM/ACM"]                                                            
                                                         ]
                                                     }),
                                                     queryMode: 'local',
@@ -343,6 +346,25 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
                                                             listeners: {
                                                                 //keypress: 'onTextKeypress'
                                                             }
+                                                        },
+                                                        {xtype: 'tbspacer', width: 8},
+                                                        {
+                                                            xtype: 'label', text: 'Approved Cod:', padding: '4 0 0 0'
+                                                        },
+                                                        {xtype: 'tbspacer', width: 4},
+                                                        {
+                                                            xtype: 'textfield',
+                                                            id: prototype.id+'-1-txtCAPL',
+                                                            fieldStyle: 'text-align:center',
+                                                            enableKeyEvents: true,
+                                                            enforceMaxLength: true,
+                                                            maxLength: 8,
+                                                            width: 100,
+                                                            maskRe: /[0-9/]/,
+                                                            value: '',
+                                                            listeners: {
+                                                                //keypress: 'onTextKeypress'
+                                                            }
                                                         }
                                                     ]
                                                 },
@@ -512,10 +534,13 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
                                                         editor:{ xtype:'textfield', editable: false }
                                                     },
                                                     {
-                                                        text: 'Ticket Number', dataIndex: 'TICKET', width: 150,editor:{ xtype:'textfield', editable: false }
+                                                        text: 'Ticket Number', dataIndex: 'TICKET', width: 120,editor:{ xtype:'textfield', editable: false }
                                                     },
                                                     {
-                                                        text: 'CC Number', dataIndex: 'A1531NREF', width: 180,editor:{ xtype:'textfield', editable: false }
+                                                        text: 'CC Number', dataIndex: 'A1531NREF', width: 120,editor:{ xtype:'textfield', editable: false }
+                                                    },
+                                                    {
+                                                        text: 'Approved Cod.', dataIndex: 'A1531CAPL', width: 100,editor:{ xtype:'textfield', editable: false }
                                                     },
                                                     {
                                                         text: 'Issue<br/>Orig.', dataIndex: 'A720CIUVTA', width: 60
@@ -541,10 +566,32 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Cur', dataIndex: 'A720MONEDA', width: 40
+                                                        text: 'Cur', dataIndex: 'A1531MFOP', width: 40
                                                     },
                                                     {
                                                         text: 'PNR', dataIndex: 'A720PNR', width: 80,editor:{ xtype:'textfield', editable: false }
+                                                    },
+                                                    {
+                                                        text: 'Status MP', dataIndex: 'SCARDN', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            console.log('file:');
+                                                            console.log(record.data);
+                                                            //console.log(record.data.SCARDN.trim());
+                                                            var result = '';
+                                                            //if(record.data.SCARDN!==null)
+                                                            if(record.data.hasOwnProperty('SCARDN'))
+                                                            {
+                                                                if(record.data.SAUTHOC !=='' && record.data.SCARDN !=='')
+                                                                    result = 'Conciliate';
+                                                                else
+                                                                    result = 'Pending';
+                                                            }
+                                                            return result;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Void', dataIndex: 'A720TKVOID', width: 40
                                                     },
                                                     {
                                                         xtype: 'actioncolumn',
@@ -632,6 +679,29 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
             ]
         }
     ],
-    dockedItems: [
+    dockedItems:[
+        {
+            xtype: 'toolbar',
+            dock: 'bottom',
+            ui: 'footer',
+            margin: '10 0 10 0',
+            layout:{
+                pack: 'center'
+            },
+            fieldStyle: 'text-align:center',
+            defaults:{
+                scale: 'medium'
+            },
+            items:[
+                {
+                    text: 'Cancel',
+                    id:prototype.id+'-btn-cancel',
+                    iconCls: 'prx-icon-cancel',
+                    listeners:{
+                        click: 'onCancelClick'
+                    }
+                }
+            ]
+        }
     ]
 });

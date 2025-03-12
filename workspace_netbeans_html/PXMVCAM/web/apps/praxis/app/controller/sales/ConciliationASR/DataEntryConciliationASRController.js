@@ -12,9 +12,11 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.DataEntryConciliationASR
         this.action = this.p.action;
     },
     afterRender: function(){ 
+        this.p = this.view.params;
         this.get_ClearField();
         this.get_data();
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     },
     get_ClearField: function() {
         win.setValue('DataEntry-txtWKSTAT', '');
@@ -126,10 +128,10 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.DataEntryConciliationASR
         this.beanUpd.HDTE  = win.getValue('DataEntry-txtHeaderDate');
         this.beanUpd.HNAME  = win.getValue('DataEntry-txtHeaderName');
         this.beanUpd.HSTATUS  = win.getValue('DataEntry-txtHeaderStatus');
-        this.beanUpd.SCASH  = Number(win.getValue('DataEntry-txtSaleCash').replace(',', ''));
-        this.beanUpd.SCREDIT  = Number(win.getValue('DataEntry-txtSaleCredit').replace(',', ''));
-        this.beanUpd.RCASH  = Number(win.getValue('DataEntry-txtRefundCash').replace(',', ''));
-        this.beanUpd.RCREDIT  = Number(win.getValue('DataEntry-txtRefundCredit').replace(',', ''));
+        this.beanUpd.SCASH  = Number(win.getValue('DataEntry-txtSaleCash').replace(',', '').replace(',', ''));
+        this.beanUpd.SCREDIT  = Number(win.getValue('DataEntry-txtSaleCredit').replace(',', '').replace(',', ''));
+        this.beanUpd.RCASH  = Number(win.getValue('DataEntry-txtRefundCash').replace(',', '').replace(',', ''));
+        this.beanUpd.RCREDIT  = Number(win.getValue('DataEntry-txtRefundCredit').replace(',', '').replace(',', ''));
         //User Input	
         this.beanUpd.STATUS = win.getValue('DataEntry-txtIndicator');//(txtIndicator.text == 'A') ? 'M' : txtIndicator.text;
         this.beanUpd.COMENT = win.getValue('DataEntry-txtComment');

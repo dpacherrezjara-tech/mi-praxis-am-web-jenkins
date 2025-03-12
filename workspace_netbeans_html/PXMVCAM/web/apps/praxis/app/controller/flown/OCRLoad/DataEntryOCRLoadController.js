@@ -26,9 +26,9 @@ Ext.define('Ext.Praxis.controller.flown.OCRLoad.DataEntryOCRLoadController',{
         SERIE: "",
         CUPON: "",
         MDACP: "",
-        VCPN: "",
-        COMISI: "",
-        VTAX: ""
+        VCPN: "0",
+        COMISI: "0",
+        VTAX: "0"
     },
     // </editor-fold>
     init: function(view) {
@@ -56,7 +56,7 @@ Ext.define('Ext.Praxis.controller.flown.OCRLoad.DataEntryOCRLoadController',{
                 Ext.getCmp(prototype.id+'-cmbType').setValue("T");
                 break;
         }
-        global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     },
     getDataInputs: function(rec) {
         var txtTKT = rec.get('strTicket').replace(/\s/g, "");
@@ -390,6 +390,16 @@ Ext.define('Ext.Praxis.controller.flown.OCRLoad.DataEntryOCRLoadController',{
             fn: function(btn) {
                 if (btn === 'yes') {
                     this.view.params.action = "D";
+                    this.beanOption.CCUST = p.rec.data.CCUST;
+                    this.beanOption.CCIA = p.rec.data.CCIA;
+                    this.beanOption.FORMA = p.rec.data.FORMA;
+                    this.beanOption.SERIE = p.rec.data.SERIE;
+                    this.beanOption.CUPON = p.rec.data.CUPON;
+                    this.beanOption.strTicket = p.rec.data.CCIA + p.rec.data.FORMA + p.rec.data.SERIE + p.rec.data.CUPON;
+                    this.beanOption.DFLIGHT = p.rec.data.DFLIGHT;
+                    this.beanOption.NFLIGHT = p.rec.data.NFLIGHT;
+                    this.beanOption.CDEPART = p.rec.data.CDEPART;
+                    this.beanOption.CARRIVA = p.rec.data.CARRIVA;
                     this.crud();
                 }
             }
@@ -450,6 +460,8 @@ Ext.define('Ext.Praxis.controller.flown.OCRLoad.DataEntryOCRLoadController',{
     getDataEntryValues: function() {
         var p = this.view.params;
         var strOption = p.action;
+        
+        console.log(this.beanOption);
         
         return {
             strOption: strOption,

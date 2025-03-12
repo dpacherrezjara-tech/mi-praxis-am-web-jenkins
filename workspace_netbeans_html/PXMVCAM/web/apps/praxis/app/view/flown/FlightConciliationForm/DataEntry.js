@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
     controller: 'DataEntryFlightConciliationController',
     title: 'Flight Manifest - Data Entry Form',
     header: true,
-    height: 720,
+    height: 740,
     width: 850,
     border: false,
     resizable: false,
@@ -312,6 +312,43 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             minLength: 2,
                             maxLength: 2,
                             width: 100
+                        },
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'label',
+                            text: 'Flight Multileg',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 100
+                        },
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFMulti',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "None"],
+                                    ["L", "Leg"],
+                                    ["S", "Segment"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            hidden: false,
+                            readOnly: false,
+                            allowBlank: true,
+                            hiddenLabel: false,
+                            forceSelection: true,
+                            selectOnFocus: false,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            editable: false,
+                            width: 90,
+                            typeAhead: true,
+                            valueField: 'code', displayField: 'name',
+                            listConfig: {maxHeight: 111},
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            hideTrigger: false
                         }
                     ]
                 },
@@ -644,7 +681,6 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     padding: '0px 80px 0px 0px',
                                     html: '<strong style="color:#000; text-decoration: underline; ">ODS File Information</strong>'
                                 },
-                                {xtype: 'tbspacer', width: 300},
                                 {
                                     xtype: 'label',
                                     id: prototype.id + '-txtDESCRIP-label',
@@ -657,16 +693,34 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                         'data-qtip': 'Mandatory Field'
                                     }
                                 },
+                                {xtype: 'tbspacer', width: 300},
                                 {
+                                xtype: 'panel',
+                                border: false,
+                                bodyStyle: 'background: #EFE9E5',
+                                items:[
+                                   {
                                     xtype: 'textfield',
                                     id: prototype.id + '-txtDESCRIP',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
-                                    maxLength: 50,
+                                    maxLength: 100,
                                     inputAttrTpl: "data-qtip='Enter an observation if is needed'",
-                                    width: 400,
+                                    width: 600,
                                     hidden: false
-                                }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtDESCRIP2',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 100,
+                                    inputAttrTpl: "data-qtip='Enter an observation if is needed'",
+                                    width: 600,
+                                    hidden: false
+                                } 
+                                ]
+                            }
                             ]
                         },
                         {
@@ -982,7 +1036,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             xtype: 'datefield',
                             id: prototype.id + '-txtFSENDVC',
                             fieldStyle: 'text-align:left',
-                            disabled: true,
+                            disabled: false,
                             value: '',
                             format: 'Ymd',
                             formatText: '',
@@ -1297,7 +1351,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     text: 'Qty Coupons',
                                     fieldStyle: 'text-align:center',
                                     style: 'font-weight:bold;color:#000;',
-                                    width: 100
+                                    width: 80
                                 },
                                 {
                                     xtype: 'textfield',
@@ -1307,7 +1361,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     maskRe: /[0-9]/,
                                     maxLength: 5,
                                     value: '0',
-                                    width: 100
+                                    width: 80
                                 },
                                 {xtype: 'tbspacer', width: 20, height: 1},
                                 {
@@ -1325,9 +1379,26 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     maskRe: /[0-9]/,
                                     maxLength: 5,
                                     value: '0',
-                                    width: 100
+                                    width: 80
                                 },
-                                
+                                {xtype: 'tbspacer', width: 20, height: 1},
+                                {
+                                    xtype: 'label',
+                                    text: 'Qty Insp',
+                                    fieldStyle: 'text-align:center',
+                                    style: 'font-weight:bold;color:#000;',
+                                    width: 60
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtQCPHARB',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 5,
+                                    value: '0',
+                                    width: 80
+                                },
                             ]
                         },
                         {

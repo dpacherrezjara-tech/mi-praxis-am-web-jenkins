@@ -6,6 +6,7 @@ import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.AS400Structure;
 import com.ibm.as400.access.ProgramCall;
 import com.ibm.as400.access.ProgramParameter;
+import java.io.File;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +17,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 import net.miatech.beans.A1692Filter;
+import net.miatech.beans.A4471Filter;
 import net.miatech.beans.A720Filter;
 import net.miatech.beans.FACSIMILFilter;
 import net.miatech.beans.PRORATEFilter;
@@ -3217,6 +3220,154 @@ public class ProrrateoNewDAO {
         }
         return strTEXTO;
     }
+    
+    public String searchDeliveryARC1(String ccust, FACSIMILFilter filter, String fuente) throws SQLException, Exception {
+        CallableStatement cs = null;
+        ResultSet rst = null;
+        String strSQL;
+        String strTEXTO = "";
+        Connection cnx = null;
+        String ubica = "";
+        String A4470NFILE = "";
+        try {
+            
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP05160(?,?)}"; //Cambio ROLLING
+            
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = cnx.prepareCall(strSQL);
+            cs.setString(1, ccust);
+            cs.setString(2, filter.TDNR.trim());
+
+            cs.execute();
+            
+            rst = cs.getResultSet();
+            
+            while (rst.next()) {
+                ubica= rst.getString("A4470UBICA").trim();
+                A4470NFILE = rst.getString("A4470NFILE").trim();
+            }
+
+            try {
+                rst.close();
+                String root =  ubica + "PRODUCTION\\" + A4470NFILE;
+                File myObj = new File(root);
+                Scanner myReader = new Scanner(myObj);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    System.out.println(data);
+                    strTEXTO += data  + "\n";
+                }
+                myReader.close();
+ 
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+            try {
+                cs.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            // =================
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+        }
+        return strTEXTO;
+    }
+    
+    public A4471Filter searchDeliveryARC(String ccust, A4471Filter filter, String fuente) throws SQLException, Exception {
+        CallableStatement cs = null;
+        ResultSet rst = null;
+        String strSQL;
+        A4471Filter result = new A4471Filter();
+        Connection cnx = null;
+        try {
+            
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP05162(?,?)}"; //Cambio ROLLING
+            
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = cnx.prepareCall(strSQL);
+            cs.setString(1, ccust);
+            cs.setString(2, filter.TDNR.trim());
+
+            cs.execute();
+            
+            rst = cs.getResultSet();
+            
+            while (rst.next()) {
+                
+                result.A4471CCUST= rst.getString("A4471CCUST").trim();
+                result.A4471SOURC= rst.getString("A4471SOURC").trim();
+                result.A4471FFILE= rst.getString("A4471FFILE").trim();
+                result.A4471REFNB= rst.getString("A4471REFNB").trim();
+                result.A4471SECUE= rst.getString("A4471SECUE").trim();
+                result.A4471IDFIL= rst.getString("A4471IDFIL").trim();
+                result.A4471STATU= rst.getString("A4471STATU").trim();
+                result.A4471CCC= rst.getString("A4471CCC").trim();
+                result.A4471IATA= rst.getString("A4471IATA").trim();
+                result.A4471CIA= rst.getString("A4471CIA").trim();
+                result.A4471FORMA= rst.getString("A4471FORMA").trim();
+                result.A4471SERIE= rst.getString("A4471SERIE").trim();
+                result.A4471FVENT= rst.getString("A4471FVENT").trim();
+                result.A4471IDET= rst.getString("A4471IDET").trim();
+                result.A4471TOTVT= rst.getString("A4471TOTVT").trim();
+                result.A4471RFNUM= rst.getString("A4471RFNUM").trim();
+                result.A4471ESAC= rst.getString("A4471ESAC").trim();
+                result.A4471SESAC= rst.getString("A4471SESAC").trim();
+                result.A4471FREPO= rst.getString("A4471FREPO").trim();
+                result.A4471NPAG= rst.getString("A4471NPAG").trim();
+                result.A4471REGIS= rst.getString("A4471REGIS").trim();
+                result.A4471FREGI= rst.getString("A4471FREGI").trim();
+                result.A4471HREGI= rst.getString("A4471HREGI").trim();
+                result.A4471REGVI= rst.getString("A4471REGVI").trim();
+                result.A4471FREVI= rst.getString("A4471FREVI").trim();
+                result.A4471HREVI= rst.getString("A4471HREVI").trim();
+            }
+
+            try {
+                cs.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            // =================
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+        }
+        return result;
+    }    
 
     public List<FACSIMILFilter> loadSQP00778(String ccust, FACSIMILFilter filter) throws SQLException, Exception {
         List<FACSIMILFilter> lstRtn = new ArrayList<FACSIMILFilter>(0);

@@ -669,7 +669,7 @@ Ext.define('Ext.Praxis.view.interline.FlownOALForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id+'-gridDataByCUPON',
                                     bodyStyle: 'background: transparent;',
-                                    width: 1280,
+                                    width: 1360,
                                     columnLines: true,
                                     enableColumnMove: false,
                                     features: [{
@@ -751,7 +751,8 @@ Ext.define('Ext.Praxis.view.interline.FlownOALForm.Info', {
                                                     {text: 'Com', width: 75, dataIndex: 'COMISI', renderer: 'getDouble'}
                                                 ]
                                             },
-                                            {text: 'Status', width: 65, dataIndex: 'FINVO', sortable: true}
+                                            {text: 'Status', width: 65, dataIndex: 'FINVO', sortable: true},
+                                            {text: 'Accounting<br>Date', width: 80, dataIndex: 'A1964FCONT', sortable: true}
                                         ]
                                     }
                                 }

@@ -108,7 +108,8 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
                 ["PP", "PayPal"],
                 ["US", "American Express USA"],  //uploadCSV
                 ["EL", "Elavon"],                //uploadCSV
-                ["STB", "Santander BSP"]            //uploadFile
+                ["STB", "Santander BSP"],            //uploadFile
+                ["BBVA", "BBVA"],            //uploadFile
             ]
         }));
         cmbBankCode.setValue("BX");
@@ -202,7 +203,7 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
                     }else{
                         global.Msg({msg: msjUpload});
                     }
-                } else if(success){
+                } else if(res.success){
                     var msjResult = res.msjResult;
                     global.Msg({msg: msjResult});
                 }else{

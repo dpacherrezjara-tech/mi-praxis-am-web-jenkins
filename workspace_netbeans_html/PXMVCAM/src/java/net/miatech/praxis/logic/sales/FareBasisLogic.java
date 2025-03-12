@@ -30,4 +30,8 @@ public class FareBasisLogic {
         return fareBasisDAO.loadPX019S01A721(filter);
     }
 
+    public int ValidationDownload(PX019S01A721Filter filter) throws SQLException, Exception {
+        return fareBasisDAO.ValidationDownload(filter);
+    }
+    
 }

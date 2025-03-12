@@ -6,9 +6,12 @@
 package net.miatech.praxis.controllers.payments;
 
 import com.google.gson.Gson;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -31,12 +34,15 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.DataRequestedByBankLogic;
-import net.miatech.praxis.payment.filter.A2290Filter;
-import net.miatech.praxis.payment.filter.A2331Filter;
-import net.miatech.praxis.payment.filter.A2345Filter;
+import net.miatech.praxis.payment.old.A2290Filter;
+import net.miatech.praxis.payment.old.A2331Filter;
+import net.miatech.praxis.payment.old.A2345Filter;
 import net.miatech.praxis.classes.ProReportClarification;
-import net.miatech.praxis.payment.ExcelChargeBack;
+import static net.miatech.praxis.controllers.tnu.AtlUsageNoSaleController.zipFile;
+import net.miatech.praxis.payment.old.ExcelChargeBack;
 import net.miatech.utils.Functions;
+import static net.miatech.utils.Functions.getFechaActual;
+import static net.miatech.utils.Functions.getHoraActual;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -221,6 +227,55 @@ public class DataRequestedByBankController extends BaseController {
             }
 
             lst = logic.loadPX404SQP01884(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "searchDetCardTKT")
+    public @ResponseBody
+    String searchDetCardTKT(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- DataRequestedByBank : searchDetCardTKT-------------");
+
+        map.put("success", true);
+        List<A2331Filter> lst = this.getListDetCardTKT(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A2331Filter> getListDetCardTKT(HttpServletRequest request, Boolean bExcel) {
+
+        List<A2331Filter> lst = new ArrayList<>(0);
+        A2331Filter filter = new A2331Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new DataRequestedByBankLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A2331Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX404SQP02680(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -472,15 +527,14 @@ public class DataRequestedByBankController extends BaseController {
         return lst;
     }
 
-    
     @RequestMapping(value = "sendEmailtoIATA")
     public @ResponseBody
     String sendEmailtoIATA(ModelMap map, HttpServletRequest request) {
-        
+
         System.out.println("-------------- DataRequestedByBank : sendEmailtoIATA-------------");
         Gson gson = new Gson();
         String listas = "";
-        
+
         A2331Filter aclaracion;
         boolean iboolean;
         String msj = "";
@@ -493,7 +547,7 @@ public class DataRequestedByBankController extends BaseController {
         try {
             logic = new DataRequestedByBankLogic();
             logic.setSession(this.serverSession.getServerSession());
-            
+
             listas = request.getParameter("lista");
             A2331Filter[] listaAclaraciones = gson.fromJson(listas, A2331Filter[].class);
 
@@ -620,11 +674,11 @@ public class DataRequestedByBankController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "sendEmailtoBank")
     public @ResponseBody
     String sendEmailtoBank(ModelMap map, HttpServletRequest request) {
-        
+
         System.out.println("-------------- DataRequestedByBank : sendEmailtoBank-------------");
         String listas = "";
         Gson gson = new Gson();
@@ -639,15 +693,18 @@ public class DataRequestedByBankController extends BaseController {
         List<String> lstPdfAdj = new ArrayList<String>();
         List<String> lstPdfAdjName = new ArrayList<String>();
         String strCarpeta = "\\\\" + serverSession.getServerSession().getPropertySession().get("RUTA_REPOSITORY") + "\\am\\INSUMOS-MEDIOS-PAGOS\\BDR\\";
+        String RUTA_DOWNLOAD = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        String RUTA_FILE_NAME_SERVER_40 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_40").toString();
+        String RUTA_FILE_NAME_SERVER_41 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_41").toString();
+        String RUTA_FILE_NAME_SERVER_33 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_33").toString();
         HashMap nomAutorizacion = new HashMap();
         boolean hayUS = false, hayOtPais = false;
         List<String> info = new ArrayList<>(0);
-        
 
         try {
             logic = new DataRequestedByBankLogic();
             logic.setSession(this.serverSession.getServerSession());
-                        
+
             listas = request.getParameter("lista");
             A2331Filter[] listaxFechaRemesa = gson.fromJson(listas, A2331Filter[].class);
 
@@ -692,7 +749,7 @@ public class DataRequestedByBankController extends BaseController {
                                     hayUS = true;
                                 } else {
                                     hayOtPais = true;
-                                }                             
+                                }
                             }
                             //if (contador != listaData.size()) {
                             msj += " Clarifications updated : " + contador;
@@ -737,7 +794,7 @@ public class DataRequestedByBankController extends BaseController {
 //                receptores.add("lmendoza@miatech.net");
                 // Emails CC
                 List<String> Ccp = new ArrayList<String>();
-                String strMails = "jtorres@miatech.net";//
+                String strMails = "jtorres@miatech.net;jsolano@miatech.net";//
                 if (!strMails.trim().equals("")) {
                     String[] parts = strMails.split(";");
                     for (int i = 0; i < parts.length; i++) {
@@ -768,7 +825,7 @@ public class DataRequestedByBankController extends BaseController {
                     if (success) {
 
                         lstPdfAdj.add(proClarReject.getFile().get(0).getAbsolutePath());
-                        lstPdfAdjName.add(proClarReject.getFile().get(0).getName() );
+                        lstPdfAdjName.add(proClarReject.getFile().get(0).getName());
                     } else {
                         //resp.info.add("Could not send email!");
                         msj += " Error. Could not send email!";
@@ -777,7 +834,7 @@ public class DataRequestedByBankController extends BaseController {
                 }
                 for (int i = 0; i < lstFolioCCAdj.size(); i++) {
                     ProReportClarification proClarRejectCC = new ProReportClarification();
-                    boolean success = proClarRejectCC.createReportPDF_CCW(lstFolioCCAdj.get(i).FOLIO, lstFolioCCAdj.get(i));
+                    boolean success = proClarRejectCC.createReportPDF_CCW(lstFolioCCAdj.get(i).FOLIO, lstFolioCCAdj.get(i), RUTA_DOWNLOAD);
 
                     if (success) {
 
@@ -789,13 +846,20 @@ public class DataRequestedByBankController extends BaseController {
                         break;
                     }
                 }
+                try {
+                    LogR("Terminó Creacion de PDF : " + getFechaActual() + " - Hora : " + getHoraActual());
+                } catch (Exception e) {
+                    System.out.println("Error en Log : Terminó Creacion de PDF - " + getFechaActual() + " - Hora : " + getHoraActual());
+                }
+
                 if (!msj.contains("Error")) {
 
                     DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
                     Date date = new Date();
-                    String zipName = "/Dumps/Aclaraciones" + dateFormat.format(date) + ".zip";
+                    String RUTA = RUTA_DOWNLOAD + "/Aclaraciones" + dateFormat.format(date) + ".zip";
+                    String zipNOMBRE = "Aclaraciones" + dateFormat.format(date) + ".zip";
 //                    FileOutputStream fileZip = new FileOutputStream(zipName);
-                    ZipOutputStream os = new ZipOutputStream(new FileOutputStream(zipName));
+                    ZipOutputStream os = new ZipOutputStream(new FileOutputStream(RUTA));
                     for (int i = 0; i < lstPdfAdj.size(); i++) {
                         ZipEntry entrada = new ZipEntry(lstPdfAdjName.get(i));
                         os.putNextEntry(entrada);
@@ -812,11 +876,38 @@ public class DataRequestedByBankController extends BaseController {
                     }
                     os.close();
                     List<String> lstPdfAdjZip = new ArrayList<String>();
-                    lstPdfAdjZip.add(zipName);
+                    lstPdfAdjZip.add(RUTA);
+                    if (lstPdfAdjZip.size() > 0) {
+                        File file1 = new File(RUTA_FILE_NAME_SERVER_40 + "\\" + zipNOMBRE);
+                        File file2 = new File(RUTA_FILE_NAME_SERVER_41 + "\\" + zipNOMBRE);
+                        File file3 = new File(RUTA_FILE_NAME_SERVER_33 + "\\" + zipNOMBRE);
+                        if (!file1.exists()) {
+                            Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE, RUTA_FILE_NAME_SERVER_40 + "\\" + zipNOMBRE);
+                        }
+                        if (!file2.exists()) {
+                            Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE, RUTA_FILE_NAME_SERVER_41 + "\\" + zipNOMBRE);
+                        }
+                        if (!file3.exists()) {
+                            Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE, RUTA_FILE_NAME_SERVER_33 + "\\" + zipNOMBRE);
+                        }
+                        System.out.println(file1.exists());
+                        System.out.println(file2.exists());
+                        System.out.println(file3.exists());
+                    }
 
+                    try {
+                        LogR("Terminó Creacion de ZIP : " + getFechaActual() + " - Hora : " + getHoraActual());
+                    } catch (Exception e) {
+                        System.out.println("Error en Log : Terminó Creacion de ZIP - " + getFechaActual() + " - Hora : " + getHoraActual());
+                    }
 //                    iboolean = proMail.enviaMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdj, emisor);
-                    iboolean = proMail.enviaMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdjZip, emisor);
-                    
+                    iboolean = proMail.sendEmailMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdjZip, emisor);
+
+                    try {
+                        LogR("Terminó Creacion de Email : " + getFechaActual() + " - Hora : " + getHoraActual());
+                    } catch (Exception e) {
+                        System.out.println("Error en Log : Terminó Creacion de Email - " + getFechaActual() + " - Hora : " + getHoraActual());
+                    }
                     if (iboolean) {
                         info.add("Email Sent.");
                     } else {
@@ -826,7 +917,7 @@ public class DataRequestedByBankController extends BaseController {
 
                             //Hace la reversión
                             msj = logic.loadPX404SQP01900(aclaracion, "3");
-                            msj = "Information could not be updated.";
+                            msj = "Information could not be updated. (Email)";
                         }
                     }
 
@@ -836,7 +927,7 @@ public class DataRequestedByBankController extends BaseController {
 
                         //Hace la reversión
                         msj = logic.loadPX404SQP01900(aclaracion, "3");
-                        msj = "Information could not be updated.";
+                        msj = "Information could not be updated. (Pdf)";
                     }
                 }
             }
@@ -847,6 +938,265 @@ public class DataRequestedByBankController extends BaseController {
         } catch (Exception ex) {
             logError.error("An error ocurred, pleas try again later.");
             map.put("success", false);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "sendEmail")
+    public @ResponseBody
+    String sendEmail(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- DataRequestedByBank : sendEmail-------------");
+        String listas = "";
+        Gson gson = new Gson();
+        A2331Filter aclaracion;
+        A2331Filter fecha;
+        boolean iboolean;
+        String msj = "", strTabla = "";
+        List<A2331Filter> listaAclaraciones = new ArrayList<>();
+        int contador = 0;
+        List<A2331Filter> lstFolioCCAdj = new ArrayList<>();
+        List<String> lstImagenesAdj = new ArrayList<String>();
+        List<String> lstPdfAdj = new ArrayList<String>();
+        List<String> lstPdfAdjName = new ArrayList<String>();
+        String strCarpeta = "\\\\" + serverSession.getServerSession().getPropertySession().get("RUTA_REPOSITORY") + "\\am\\INSUMOS-MEDIOS-PAGOS\\BDR\\";
+        String RUTA_DOWNLOAD = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        String RUTA_FILE_NAME_SERVER_40 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_40").toString();
+        String RUTA_FILE_NAME_SERVER_41 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_41").toString();
+        String RUTA_FILE_NAME_SERVER_33 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_33").toString();
+        HashMap nomAutorizacion = new HashMap();
+        boolean hayUS = false, hayOtPais = false;
+        List<String> info = new ArrayList<>(0);
+
+        try {
+            logic = new DataRequestedByBankLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            listas = request.getParameter("listaRow");
+            A2331Filter[] listaxFechaRemesa = gson.fromJson(listas, A2331Filter[].class);
+
+            if (listaxFechaRemesa != null && listaxFechaRemesa.length > 0) {
+                for (int x = 0; x < listaxFechaRemesa.length; x++) {
+                    fecha = listaxFechaRemesa[x];
+//                    if (fecha.STVAL.trim().equals("3")) {
+                    //Obtiene la lista de aclaraciones de esa fecha
+                    listaAclaraciones = logic.loadPX404SQP01899(fecha);
+
+                    contador = 0;
+                    if (listaAclaraciones != null && listaAclaraciones.size() > 0) {
+                        for (int i = 0; i < listaAclaraciones.size(); i++) {
+                            aclaracion = listaAclaraciones.get(i);
+
+                            // <editor-fold defaultstate="collapsed" desc="Actualiza la informacion">
+                            //Actualiza la informacion
+//                                if (aclaracion.DATES.trim().isEmpty()) {
+//                                    msj = logic.loadPX404SQP01900(aclaracion, "4");
+                            //msj = "SUCCESS";
+//                                    if (msj.contains("SUCCESS")) {
+                            contador++;
+                            if (aclaracion.strFlag.trim().equals("CC")) {
+                                //Call Center y Web
+                                A2331Filter beanInfo = logic.loadPX405SQP01958(aclaracion);
+                                lstFolioCCAdj.add(beanInfo);
+                            } else {
+
+                                lstImagenesAdj.add(strCarpeta + aclaracion.SENTDATE + "\\" + aclaracion.RUTA);
+                                nomAutorizacion.put(strCarpeta + aclaracion.SENTDATE + "\\" + aclaracion.RUTA, aclaracion.AUTHNBR);
+                            }
+
+                            strTabla += "<tr><td align='center'>" + aclaracion.FOLIO
+                                    + "</td><td align='center'>" + aclaracion.SENTDATE + "</td></tr>";
+//                                    }
+
+//                                } else {
+//                                    msj += " Clarification already sent to BANK. Authorization Nbr: " + aclaracion.AUTHNBR.trim();
+//                                }
+                            if (aclaracion.SCOUNTRY.trim().equals("US")) {
+                                hayUS = true;
+                            } else {
+                                hayOtPais = true;
+                            }
+                            // </editor-fold>
+                        }
+                        //if (contador != listaData.size()) {
+                        msj += " Clarifications Sent: " + contador;
+                        //}
+
+                    } else {
+                        msj = "Error. Information not found";
+                    }
+
+//                    } else {
+//                        msj = "Error : Information is not linked yet.";
+//                        break;
+//                    }
+                }
+            } else {
+                msj = "Error. There is not information to send.";
+            }
+
+            if (!msj.contains("Error") && !msj.contains("ERROR")) {
+                //CODIGO DE MAIL Y SU ATTACHMENT
+                ProMail proMail = new ProMail();
+                List<String> receptores = new ArrayList<String>();
+                String emisor = "";
+
+                if (hayUS && hayOtPais) {
+                    receptores.add("amaclaracionescontracargos@aeromexico.com");
+                    receptores.add("amcscaclaracioncontracargousaeur@aeromexico.com");
+                    emisor = "amaclaracionescontracargos@miatech.net";
+
+                } else if (hayUS) {
+//                    receptCores.add("amcscaclaracioncontracargousaeur@aeromexico.com");
+                    receptores.add("ealcibari@aeromexico.com");
+                    receptores.add("eneves@miatech.net");
+                    receptores.add("jtorres@miatech.net");
+                    emisor = "amcscaclaracioncontracargousaeur@miatech.net";
+
+                } else {
+                    receptores.add("amaclaracionescontracargos@aeromexico.com");
+                    emisor = "amaclaracionescontracargos@miatech.net";
+                }
+
+//                receptores.add("jugaz@miatech.net");
+//                emisor = "amaclaracionescontracargos@miatech.net";
+                // Emails CC
+                List<String> Ccp = new ArrayList<String>();
+                String strMails = "jtorres@miatech.net;jsolano@miatech.net";//
+                if (!strMails.trim().equals("")) {
+                    String[] parts = strMails.split(";");
+                    for (int i = 0; i < parts.length; i++) {
+                        Ccp.add(parts[i]);
+                    }
+                }
+                String asunto = "Aclaraciones Aeromexico";
+                String mensaje = "<html><body><br/>Buen día:<br/><br/>"
+                        + "Anexo encontraran soporte de los siguientes números de folio que corresponden a las remesas:"
+                        + "<br/><br/><table border='2' cellspacing='0' cellpadding='3' style='border: 1px solid black;'>"
+                        + "<tr style='background-color: #2196f3'; color: #ffffff;><td align='center'>Folio</td><td align='center'>Remesa</td></tr>" + strTabla
+                        + "</table>"
+                        + "<br/><br/>Saludos.";
+
+                // Genera PDF
+                for (int i = 0; i < lstImagenesAdj.size(); i++) {
+                    ProReportClarification proClarReject = new ProReportClarification();
+                    boolean success = proClarReject.createReportPDF(nomAutorizacion.get(lstImagenesAdj.get(i).toString()).toString(), lstImagenesAdj.get(i).toString());
+
+                    if (success) {
+
+                        lstPdfAdj.add(proClarReject.getFile().get(0).getAbsolutePath());
+                        lstPdfAdjName.add(proClarReject.getFile().get(0).getName());
+                    } else {
+                        msj += " Error.(Pdf) Could not send email! ";
+                        break;
+                    }
+                }
+                for (int i = 0; i < lstFolioCCAdj.size(); i++) {
+                    ProReportClarification proClarRejectCC = new ProReportClarification();
+                    boolean success = proClarRejectCC.createReportPDF_CCW(lstFolioCCAdj.get(i).FOLIO, lstFolioCCAdj.get(i), RUTA_DOWNLOAD);
+
+                    if (success) {
+
+                        lstPdfAdj.add(proClarRejectCC.getFile().get(0).getAbsolutePath());
+                        lstPdfAdjName.add(proClarRejectCC.getFile().get(0).getName());
+                    } else {
+                        msj += " Error. Could not send email!";
+                        break;
+                    }
+                }
+
+                try {
+                    LogR("Terminó Creacion de PDF : " + getFechaActual() + " - Hora : " + getHoraActual());
+                } catch (Exception e) {
+                    System.out.println("Error en Log : Terminó Creacion de PDF - " + getFechaActual() + " - Hora : " + getHoraActual());
+                }
+                if (!msj.contains("Error")) {
+
+                    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+                    Date date = new Date();
+                    String RUTA = RUTA_DOWNLOAD + "/Aclaraciones" + dateFormat.format(date) + ".zip";
+                    String zipNOMBRE = "Aclaraciones" + dateFormat.format(date) + ".zip";
+//                    FileOutputStream fileZip = new FileOutputStream(zipName);
+                    ZipOutputStream os = new ZipOutputStream(new FileOutputStream(RUTA));
+                    for (int i = 0; i < lstPdfAdj.size(); i++) {
+                        ZipEntry entrada = new ZipEntry(lstPdfAdjName.get(i));
+                        os.putNextEntry(entrada);
+
+                        FileInputStream fis = new FileInputStream(lstPdfAdj.get(i));
+                        byte[] buffer = new byte[1024];
+                        int leido = 0;
+                        while (0 < (leido = fis.read(buffer))) {
+                            os.write(buffer, 0, leido);
+                        }
+
+                        fis.close();
+                        os.closeEntry();
+                    }
+                    os.close();
+                    List<String> lstPdfAdjZip = new ArrayList<String>();
+                    lstPdfAdjZip.add(RUTA);
+                    if (lstPdfAdjZip.size() > 0) {
+                        File file1 = new File(RUTA_FILE_NAME_SERVER_40 + "\\" + zipNOMBRE);
+                        File file2 = new File(RUTA_FILE_NAME_SERVER_41 + "\\" + zipNOMBRE);
+                        File file3 = new File(RUTA_FILE_NAME_SERVER_33 + "\\" + zipNOMBRE);
+                        if (!file1.exists()) {
+                            Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE, RUTA_FILE_NAME_SERVER_40 + "\\" + zipNOMBRE);
+                        }
+                        if (!file2.exists()) {
+                            Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE, RUTA_FILE_NAME_SERVER_41 + "\\" + zipNOMBRE);
+                        }
+                        if (!file3.exists()) {
+                            Functions.copyFilesWithName(RUTA_DOWNLOAD + "\\" + zipNOMBRE, RUTA_FILE_NAME_SERVER_33 + "\\" + zipNOMBRE);
+                        }
+                    }
+                    try {
+                        LogR("Terminó Creacion de ZIP : " + getFechaActual() + " - Hora : " + getHoraActual());
+                    } catch (Exception e) {
+                        System.out.println("Error en Log : Terminó Creacion de ZIP - " + getFechaActual() + " - Hora : " + getHoraActual());
+                    }
+                    iboolean = proMail.sendEmailMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdjZip, emisor);
+                    try {
+                        LogR("Terminó Creacion de Email : " + getFechaActual() + " - Hora : " + getHoraActual());
+                    } catch (Exception e) {
+                        System.out.println("Error en Log : Terminó Creacion de Email - " + getFechaActual() + " - Hora : " + getHoraActual());
+                    }
+                    if (iboolean) {
+                        info.add("Email Sent.");
+                    } else {
+                        msj = "Error Sending Email";
+                        /*
+                        info.add("Could not send email!");
+                        for (int i = 0; i < listaAclaraciones.size(); i++) {
+                            aclaracion = listaAclaraciones.get(i);
+
+                            //Hace la reversión
+                            msj = logic.loadPX404SQP01900(aclaracion, "3");
+                            msj = "Information could not be updated. (Email)";
+                        }
+                         */
+                    }
+
+                } else {
+                    msj = "Error Sending Email (Pdf)";
+                    /*
+                    for (int i = 0; i < listaAclaraciones.size(); i++) {
+                        aclaracion = listaAclaraciones.get(i);
+
+                        //Hace la reversión
+                        msj = logic.loadPX404SQP01900(aclaracion, "3");
+                        msj = "Information could not be updated. (Pdf)";
+                    }
+                     */
+                }
+            }
+
+            map.put("msjError", msj);
+            map.put("info", info);
+            map.put("success", true);
+        } catch (Exception ex) {
+            logError.error("An error ocurred, pleas try again later.");
+            map.put("success", false);
+            map.put("msjError", msj + " - " + ex.getMessage());
         }
         return new Gson().toJson(map);
     }
@@ -1046,11 +1396,11 @@ public class DataRequestedByBankController extends BaseController {
             throw new SpringException(e);
         }
     }
-    
+
     @RequestMapping(value = "exportHistoricalBN")
     public @ResponseBody
     void exportHistoricalBN(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+
         System.out.println("-------------- DataRequestedByBank : exportHistoricalBN-------------");
 
         String rutaFile = this.serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
@@ -1453,19 +1803,19 @@ public class DataRequestedByBankController extends BaseController {
             throw new SpringException(e);
         }
     }
-    
+
     @RequestMapping(value = "exportChargeBack")
     public @ResponseBody
     void exportChargeBack(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+
         System.out.println("-------------- DataRequestedByBank : exportChargeBack-------------");
 
         String rutaFile = this.serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
-        
+
         List<ExcelChargeBack> listaDataTemp = new ArrayList<ExcelChargeBack>();
         List<ExcelChargeBack> listaDataTotal = new ArrayList<ExcelChargeBack>();
         List<ExcelChargeBack> listaDataParcial = new ArrayList<ExcelChargeBack>();
-        
+
         int lstSize = 0;
         A2331Filter filter = new A2331Filter();
         Gson gson = new Gson();
@@ -1474,7 +1824,7 @@ public class DataRequestedByBankController extends BaseController {
         try {
             DataRequestedByBankLogic logic = new DataRequestedByBankLogic();
             logic.setSession(this.serverSession.getServerSession());
-            
+
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A2331Filter.class);
             filter.page.TOTROW = -1;
@@ -1486,7 +1836,7 @@ public class DataRequestedByBankController extends BaseController {
 
             filter.page.PAGROW = -1;
             filter.page.PAGNUM = 1;
-            
+
             listaDataTotal = logic.loadPX404SQP03580(filter, "T");
             listaDataParcial = logic.loadPX404SQP03580(filter, "P");
 
@@ -1893,12 +2243,10 @@ public class DataRequestedByBankController extends BaseController {
 //            FileOutputStream fos = new FileOutputStream(rutaFile + "\\" + strFileName);
 //            workbook.write(fos);
 //            fos.close();
-
 //            resp.vars.put("lstChargeBack", lstSize);
 //            //resp.vars.put("strFileName", strFileName);
 //            resp.vars.put("strFileName", strFileName);
 //            resp.vars.put("rutaFile", rutaFile + "\\" + strFileName);
-            
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + strFileName + "\"");
 
@@ -2082,11 +2430,11 @@ public class DataRequestedByBankController extends BaseController {
         style.setTopBorderColor(IndexedColors.BLACK.getIndex());
         return style;
     }
-    
+
     @RequestMapping(value = "exportHistoricalAvisos")
     public @ResponseBody
     void exportHistoricalAvisos(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+
         System.out.println("-------------- DataRequestedByBank : exportHistoricalAvisos-------------");
 
         String rutaFile = this.serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
@@ -2096,11 +2444,11 @@ public class DataRequestedByBankController extends BaseController {
         A2331Filter filter = new A2331Filter();
         Gson gson = new Gson();
         String beanString = "";
-        
+
         HashMap hmCANAL = new HashMap();
         hmCANAL.put("CCT", "CALL CENTER");
         hmCANAL.put("WEB", "INTERNET");
-        
+
         try {
 
             DataRequestedByBankLogic logic = new DataRequestedByBankLogic();
@@ -2500,20 +2848,19 @@ public class DataRequestedByBankController extends BaseController {
                 FileOutputStream fos = new FileOutputStream(rutaFile + "\\" + strFileName);
                 workbook.write(response.getOutputStream());
                 fos.close();
-                
-                
+
             }
         } catch (IOException e) {
             throw new SpringException(e);
         }
     }
-    
+
     @RequestMapping(value = "exportHistoricalAvisosFra")
     public @ResponseBody
     void exportHistoricalAvisosFra(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+
         System.out.println("-------------- DataRequestedByBank : exportHistoricalAvisosFra-------------");
-        
+
         String rutaFile = this.serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
 
         List<A2331Filter> listaData;
@@ -2521,7 +2868,7 @@ public class DataRequestedByBankController extends BaseController {
         A2331Filter filter = new A2331Filter();
         Gson gson = new Gson();
         String beanString = "";
-        
+
         try {
 
             DataRequestedByBankLogic logic = new DataRequestedByBankLogic();
@@ -2893,10 +3240,8 @@ public class DataRequestedByBankController extends BaseController {
             throw new SpringException(e);
         }
     }
-    
-    
-    
-   @RequestMapping(value = "executeOption")
+
+    @RequestMapping(value = "executeOption")
     public @ResponseBody
     String executeOption(ModelMap map, HttpServletRequest request) {
 
@@ -2909,10 +3254,10 @@ public class DataRequestedByBankController extends BaseController {
         try {
             logic = new DataRequestedByBankLogic();
             logic.setSession(this.serverSession.getServerSession());
-            
+
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A2331Filter.class);
-            
+
             msj = logic.loadPX404SQP01946(filter);
 
             map.put("success", true);
@@ -2923,7 +3268,7 @@ public class DataRequestedByBankController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "executeDeleteClarification")
     public @ResponseBody
     String executeDeleteClarification(ModelMap map, HttpServletRequest request) {
@@ -2937,10 +3282,10 @@ public class DataRequestedByBankController extends BaseController {
         try {
             logic = new DataRequestedByBankLogic();
             logic.setSession(this.serverSession.getServerSession());
-            
+
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A2331Filter.class);
-            
+
             msj = logic.loadPX404SQP02078(filter);
 
             map.put("success", true);
@@ -2951,8 +3296,7 @@ public class DataRequestedByBankController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
-    
+
     @RequestMapping(value = "searchBean")
     public @ResponseBody
     String searchBean(ModelMap map, HttpServletRequest request) {
@@ -2979,7 +3323,7 @@ public class DataRequestedByBankController extends BaseController {
 
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "searchBeanAvisos")
     public @ResponseBody
     String searchBeanAvisos(ModelMap map, HttpServletRequest request) {
@@ -3006,7 +3350,7 @@ public class DataRequestedByBankController extends BaseController {
 
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "searchInfCallCenter")
     public @ResponseBody
     String searchInfCallCenter(ModelMap map, HttpServletRequest request) {
@@ -4537,4 +4881,35 @@ public class DataRequestedByBankController extends BaseController {
         }
     }
 
+    public Boolean zip(List<String> fileName) {
+        String path = this.serverSession.getPropertySession().get("RUTA_DOWNLOAD").toString();
+        Boolean existe = false;
+        try {
+            File fileZip = new File(path + "\\" + fileName + ".zip");
+
+            if (fileZip.exists()) {
+                fileZip.delete();
+            }
+
+            zipFile(new File(path + "\\" + fileName + ".csv"), path + "\\" + fileName + ".zip");
+
+            existe = true;
+
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        }
+        return existe;
+    }
+
+    public void LogR(String Mensa) throws IOException {
+        File file = new File("\\\\WSFILE\\Documentos\\PAYMENT-CONTROL\\Log\\Log.txt");
+        // Si el archivo no existe es creado
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        FileWriter fw = new FileWriter(file, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(Mensa + "\n");
+        bw.close();
+    }
 }

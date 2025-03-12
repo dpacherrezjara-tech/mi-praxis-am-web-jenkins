@@ -67,7 +67,7 @@ public class CouponsEstimatedValueDAO {
         //filter.dayTo = Functions.fillZeros(2, filter.dayTo).replace("00", "");
         //</editor-fold>
         //String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX098SQP0007(?,?,?,?,?,?,?,?,?,?,?,?)}";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03069_1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04428(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         double rate = 0, rate_RE = 0;
         Connection cnx = null;
 
@@ -75,10 +75,10 @@ public class CouponsEstimatedValueDAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(12, Types.INTEGER);
             cstmt01.registerOutParameter(13, Types.INTEGER);
             cstmt01.registerOutParameter(14, Types.INTEGER);
             cstmt01.registerOutParameter(15, Types.INTEGER);
+            cstmt01.registerOutParameter(16, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setInt(2, filter.IN_TIPOFECHA);
@@ -87,23 +87,24 @@ public class CouponsEstimatedValueDAO {
             cstmt01.setString(3, filter.IN_FECHA_FROM);
             cstmt01.setString(4, filter.IN_FECHA_TO);
             cstmt01.setString(5, filter.IN_TKT);
-            cstmt01.setString(6, filter.IN_CARR);
-            cstmt01.setString(7, filter.IN_ZONA); //ZONA
-            cstmt01.setString(8, filter.IN_STVAL); //STOCL
-            cstmt01.setString(9, filter.IN_NFLIGHT); //STVAL
-            cstmt01.setString(10, filter.IN_TYPE); //Tipo de consulta (FLOWN o EMD)
-            cstmt01.setString(11, filter.IN_FVAL);
-            cstmt01.setInt(12, filter.page.PAGNUM);
-            cstmt01.setInt(13, filter.page.PAGROW);
-            cstmt01.setInt(14, filter.page.TOTPAG);
-            cstmt01.setInt(15, filter.page.TOTROW);
+            cstmt01.setString(6, filter.IN_SEQ);
+            cstmt01.setString(7, filter.IN_CARR);
+            cstmt01.setString(8, filter.IN_ZONA); //ZONA
+            cstmt01.setString(9, filter.IN_STVAL); //STOCL
+            cstmt01.setString(10, filter.IN_NFLIGHT); //STVAL
+            cstmt01.setString(11, filter.IN_TYPE); //Tipo de consulta (FLOWN o EMD o EMDS)
+            cstmt01.setString(12, filter.IN_FVAL);
+            cstmt01.setInt(13, filter.page.PAGNUM);
+            cstmt01.setInt(14, filter.page.PAGROW);
+            cstmt01.setInt(15, filter.page.TOTPAG);
+            cstmt01.setInt(16, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(12);
-            filter.page.PAGROW = cstmt01.getInt(13);
-            filter.page.TOTPAG = cstmt01.getInt(14);
-            filter.page.TOTROW = cstmt01.getInt(15);
+            filter.page.PAGNUM = cstmt01.getInt(13);
+            filter.page.PAGROW = cstmt01.getInt(14);
+            filter.page.TOTPAG = cstmt01.getInt(15);
+            filter.page.TOTROW = cstmt01.getInt(16);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -122,10 +123,12 @@ public class CouponsEstimatedValueDAO {
 
                     objRtn = new A1692Filter();
 
+                    objRtn.IN_TYPE = filter.IN_TYPE;
                     objRtn.CCIA = rs01.getString("CCIA").trim();
                     objRtn.FORMA = rs01.getString("FORMA").trim();
                     objRtn.SERIE = rs01.getString("SERIE").trim();
                     objRtn.CUPON = rs01.getString("CUPON").trim();
+                    objRtn.SEQ = rs01.getString("SEQ").trim();
                     objRtn.strTicket = rs01.getString("CCIA").trim() + " " + rs01.getString("FORMA").trim() + rs01.getString("SERIE").trim() + " " + rs01.getString("CUPON").trim();
                     objRtn.CDEPART = rs01.getString("CDEPART").trim();
                     objRtn.CARRIVA = rs01.getString("CARRIVA").trim();
@@ -147,7 +150,13 @@ public class CouponsEstimatedValueDAO {
                     }else{
                      objRtn.strFVAL= "NO"; 
                     }
-
+                    
+                    if ("S".equals(filter.IN_TYPE)) {
+                        objRtn.RFIC = rs01.getString("RFIC");
+                        objRtn.RECODE = rs01.getString("RECODE");
+                        objRtn.DESC_RECODE = rs01.getString("DESC_RECODE");
+                    }
+                    
                     /*objRtn.STVAL = rs01.getString("STVAL").trim();
                      if(rs01.getString("STVAL").trim().equals("7")){
                      objRtn.strDescSTVAL = "Pending-Value";       
@@ -191,6 +200,7 @@ public class CouponsEstimatedValueDAO {
 
                     objRtn.A1437RCOMI = (objRtn.VCPMX > 0) ? objRtn.VCPMX * objRtn.TCMUS : 0.00;  //valor mxn
                     objRtn.VCPUS = (double) Math.round(objRtn.A1437RCOMI * 100) / 100;
+                    objRtn.strDescSTNEW=rs01.getString("strFlag").trim();
 
                     objRtn.page.PAGNUM = filter.page.PAGNUM;
                     objRtn.page.PAGROW = filter.page.PAGROW;

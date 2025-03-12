@@ -82,7 +82,7 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.DataEntry', {
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 3},
+                                {xtype: 'tbspacer', width: 5},
                                 {
                                     xtype: 'combo',
                                     id: prototype.id + '-cmbPERIOD',
@@ -114,6 +114,26 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.DataEntry', {
                                     }
                                 },
                                 {xtype: 'tbspacer', width: 10}
+                                ,
+                                {
+                                    xtype: 'label',
+                                    text: 'Status',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 60
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-txtStatus',
+                                    store: new Ext.data.SimpleStore({
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ["",''],["1",'Processed'], ["0",'Closed']
+                                        ]
+                                    }),
+                                    fieldStyle: 'text-align:center',
+                                    width: 80,
+                                    valueField: 'code', displayField: 'name'
+                                }
                             ]
                         },
                         {
@@ -499,7 +519,7 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.DataEntry', {
             items: [
                 {
                     text: 'Save',
-                    id:prototype.id+'-btnSave',
+                    id:prototype.id+'-btn-save',
                     iconCls: 'prx-icon-save',
                     hidden: true,
                     listeners:{
@@ -508,7 +528,7 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.DataEntry', {
                 },
                 {
                     text: 'Update',
-                    id:prototype.id+'-btnUpdate',
+                    id:prototype.id+'-btn-update',
                     iconCls: 'prx-icon-update',
                     hidden: true,
                     listeners:{
@@ -517,7 +537,7 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.DataEntry', {
                 },
                 {
                     text: 'Delete',
-                    id:prototype.id+'-btnDelete',
+                    id:prototype.id+'-btn-delete',
                     iconCls: 'prx-icon-delete',
                     hidden: true,
                     listeners:{
@@ -526,7 +546,7 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.DataEntry', {
                 },
                 {
                     text: 'Cancel',
-                    id:prototype.id+'-btnCancel',
+                    id:prototype.id+'-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners:{
                         click: 'onCancelClick'

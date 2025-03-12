@@ -204,7 +204,7 @@ public class SSIMDuplicatedController extends BaseController {
 
             a.IN_FECHA_FROM = request.getParameter("dateFrom").trim();
             a.IN_FECHA_TO = request.getParameter("dateTo").trim();
-            a.NFLIGHT = request.getParameter("flightNumber").trim();
+            a.IN_NFLIGHT = request.getParameter("flightNumber").trim();
 
             oList = logic.loadPX232S01A1691(a, hmAeropuertos);
 

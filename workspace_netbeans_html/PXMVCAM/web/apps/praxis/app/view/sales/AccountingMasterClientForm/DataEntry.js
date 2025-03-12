@@ -226,7 +226,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
 //                            maxLength: 30,
-                            maxLength: 40,
+                            maxLength: 50,
                             width: 260,
                             listeners:{
                                 change: 'onUpperValue'

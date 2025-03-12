@@ -191,7 +191,13 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkTaskAssignmentRFND.BsplinkTaskAssi
                                             width: 100,
                                             hideLabel: true,
                                             enableKeyEvents: true,
-                                            hidden: true
+                                            maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
+                                            maxLength: 8,
+                                            enforceMaxLength: 8,
+                                            hidden: true,
+                                            listeners: {
+                                                specialkey: 'onSearchkey'
+                                            }
                                         },
                                         {
                                             xtype: 'datefield',
@@ -227,8 +233,14 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkTaskAssignmentRFND.BsplinkTaskAssi
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtFrmaSerie',
                                             hideLabel: true,
+                                            maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
+                                            maxLength: 10,
+                                            enforceMaxLength: 10,
                                             width: 80,
-                                            hidden: true
+                                            hidden: true,
+                                            listeners: {
+                                                specialkey: 'onSearchkey'
+                                            }
                                         },
                                         {
                                             xtype: 'textfield',
@@ -242,7 +254,11 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkTaskAssignmentRFND.BsplinkTaskAssi
                                             id: prototype.id + '-txtNumber',
                                             hideLabel: true,
                                             width: 80,
-                                            hidden: true
+                                            hidden: true,
+                                            maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
+                                            listeners: {
+                                                specialkey: 'onSearchkey'
+                                            }
                                         }
                                     ]
                                 },
@@ -263,7 +279,14 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkTaskAssignmentRFND.BsplinkTaskAssi
                                             id: prototype.id + '-cmbCountry',
                                             fieldLabel: 'Country',
                                             labelWidth: 50,
-                                            width: 110
+                                            width: 110,
+                                             maskRe: /[A-Z,a-z,Ñ,ñ]/,
+                                            maxLength: 2,
+                                            enforceMaxLength: 2,
+                                            listeners: {
+                                               specialkey: 'onSearchkey',
+                                               change: 'onchange'
+                                            }
                                         },
                                         {
                                             xtype: 'combo',

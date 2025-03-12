@@ -45,7 +45,11 @@ public class AgentsMasterFileLogic {
         return masterDAO.loadPaises();
     }
 
-  public A003 setPX018S03A003(A003 filter) throws SQLException, Exception {
+    public A003 setPX018S03A003(A003 filter) throws SQLException, Exception {
         return agentsMasterFileDAO.setPX018S03A003(filter);
+    }
+    
+    public int ValidationDownload(A003 filter) throws SQLException, Exception {
+        return agentsMasterFileDAO.ValidationDownload(filter);
     }
 }

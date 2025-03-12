@@ -105,6 +105,7 @@ public class BwrRefundTicketControlDAO {
                 objRtn.A3389STATU = rs01.getString("FLAGCAMBESTA");
                 objRtn.A3389SEMAF = rs01.getString("ESFINA");
                 objRtn.A3389TOTAL = rs01.getDouble("MONTO");
+                objRtn.A3389CHANEL = rs01.getString("A3389CHANEL");
                 
                 // A2548EMISION
                 objRtn.page.PAGNUM = filter.page.PAGNUM;

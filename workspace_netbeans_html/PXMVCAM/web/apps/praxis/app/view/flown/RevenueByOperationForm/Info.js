@@ -316,7 +316,8 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Info', {
                     defaults: {
                         bodyStyle: 'background: transparent;',
                         border: false,
-                        width: prototype.widthGridByZone,
+//                        width: prototype.widthGridByZone,
+                        width: 1620,
 //                        height: 545,
                         align: 'center'
                     },
@@ -325,7 +326,8 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Info', {
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridDataByZone',
-                            width: prototype.widthGridByZone,
+//                            width: prototype.widthGridByZone,
+//                            width: 1620,
                             height: 545,
                             columnLines: true,
                             columns: {
@@ -583,7 +585,8 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Info', {
                     defaults: {
                         bodyStyle: 'background: transparent;',
                         border: false,
-                        width: prototype.widthGridByCityPair,
+//                        width: prototype.widthGridByCityPair,
+                        width: 1620,
 //                        height: 545,
                         align: 'center'
                     },
@@ -592,7 +595,8 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Info', {
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridDataByCityPair',
-                            width: prototype.widthGridByCityPair,
+//                            width: prototype.widthGridByCityPair,
+                            width: 1620,
                             height: 545,
                             columnLines: true,
                             columns: {
@@ -857,7 +861,8 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Info', {
                     defaults: {
                         bodyStyle: 'background: transparent;',
                         border: false,
-                        width: prototype.widthGridByNPlane,
+//                        width: prototype.widthGridByNPlane,
+                        width: 1372,
 //                        height: 545,
                         align: 'center'
                     },
@@ -866,8 +871,9 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Info', {
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridDataByNPlane',
-                            width: prototype.widthGridByNPlane,
-                            height: 545,
+//                            width: prototype.widthGridByNPlane,
+                            width: 1372,
+                            height: 550,
                             columnLines: true,
                             features: [{
                                     ftype: 'summary'

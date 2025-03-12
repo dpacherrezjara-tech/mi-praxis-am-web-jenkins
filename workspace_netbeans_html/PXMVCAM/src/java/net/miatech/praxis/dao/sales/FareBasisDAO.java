@@ -16,6 +16,8 @@ import net.miatech.beans.PX019S01A025Filter;
 import net.miatech.beans.PX019S01A721Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
+import static net.miatech.praxis.dao.sales.AgentsMasterFileDAO.pasarGarbageCollector;
+import net.miatech.praxis.exceptions.SpringException;
 import org.apache.log4j.Logger;
 
 /**
@@ -140,4 +142,71 @@ public class FareBasisDAO {
 
         return lstRtn;
     }
+    
+    public int ValidationDownload(PX019S01A721Filter filter) throws SQLException, Exception {
+        List<PX019S01A721Filter> lstRtn = new ArrayList<>(0);
+        PX019S01A721Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        try {
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX019S01A721(?,?,?,?,?,?,?)}";
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(4, Types.INTEGER);
+            cstmt01.registerOutParameter(5, Types.INTEGER);
+            cstmt01.registerOutParameter(6, Types.INTEGER);
+            cstmt01.registerOutParameter(7, Types.INTEGER);
+
+            cstmt01.setInt(1, filter.IN_OPCION);
+            cstmt01.setString(2, filter.IN_AIRLIN);
+            cstmt01.setString(3, filter.IN_FBASIS);
+            cstmt01.setInt(4, filter.page.PAGNUM);
+            cstmt01.setInt(5, filter.page.PAGROW);
+            cstmt01.setInt(6, filter.page.TOTPAG);
+            cstmt01.setInt(7, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(4);
+            filter.page.PAGROW = cstmt01.getInt(5);
+            filter.page.TOTPAG = cstmt01.getInt(6);
+            filter.page.TOTROW = cstmt01.getInt(7);
+
+            rs01 = cstmt01.getResultSet();
+
+        } 
+        finally {
+            setClose();
+        }
+
+        return filter.page.TOTROW;
+    }
+    
+    private void setClose() {
+
+        if (rst != null) {
+            try {
+                rst.close();
+            } catch (SQLException e) {
+                throw new SpringException(e);
+            }
+        }
+        if (cs != null) {
+            try {
+                cs.close();
+            } catch (SQLException e) {
+                throw new SpringException(e);
+            }
+        }
+        try {
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+        } catch (Exception ex) {
+            throw new SpringException(ex);
+        }
+        pasarGarbageCollector();
+    }
+    
+    
 }

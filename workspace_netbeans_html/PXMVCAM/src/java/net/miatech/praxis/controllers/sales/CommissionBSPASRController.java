@@ -275,7 +275,7 @@ public class CommissionBSPASRController extends BaseController {
         for (int i = 0; i < parts.length ; i++) {
             Ccp.add( parts[i] );      
         }        
-        String emisor  = "notificaciones@miatech.net";//Rw.get(0).EmailRe;
+        String emisor  = "notificaciones@miatech.net"; // "amcontrolventasfranquicias@aeromexico.com";//Rw.get(0).EmailRe;
         String asunto  = Rw.get(0).Asunto ;
         String mensaje = Rw.get(0).Mensaje;
         List<String> archivos = new ArrayList<>();        

@@ -16,12 +16,8 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
             case 'U':
                 this.mostrarData(this.p.rec);
                 Ext.getCmp(prototype.id+'-btn-save').hide();
-                Ext.getCmp(prototype.id+'-btn-update').hide();
-                if(this.p.rec.data.ESTADO === 'Error'){
-                    Ext.getCmp(prototype.id+'-btn-delete').show();
-                }else{
-                    Ext.getCmp(prototype.id+'-btn-delete').hide();
-                }                            
+                Ext.getCmp(prototype.id+'-btn-update').show();
+                Ext.getCmp(prototype.id+'-btn-delete').show();
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
                 break;
             case 'I':
@@ -31,28 +27,13 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
 //                Ext.getCmp(prototype.id + '-obj').setValue("X");
 //                Ext.getCmp(prototype.id + '-obj').focus();
-                break;
-                
+                break;                
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     onMostrarCampoChange: function(cmp, newValue, oldValue, eOpts) {
-        this.limpiarCampos();
-        var strModulo = this.getValue('cbxModulo');
+//        this.limpiarCampos();
         
-        switch (strModulo) {
-            case 'PSALES':
-            case 'PPSALES':
-            case 'PADJMA':
-            case '':
-                Ext.getCmp(prototype.id+'-boxFecha').show();
-                Ext.getCmp(prototype.id+'-boxCaducos').hide();                
-                break;
-            case 'PCADUCOS':
-                Ext.getCmp(prototype.id+'-boxFecha').hide();
-                Ext.getCmp(prototype.id+'-boxCaducos').show();                
-                break;
-        }
     },        
     
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
@@ -63,55 +44,25 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
     
     // <editor-fold defaultstate="collapsed" desc="mostrarData">
     mostrarData: function(rec) {
-        // <editor-fold defaultstate="collapsed" desc="Iniciar Combo Date">
-        this.setValue('cmbDateFromYear', new Date().getFullYear());
-        //this.setValue('cmbDateToYear', new Date().getFullYear());
-        //this.setValue('cbxDateYear', new Date().getFullYear());
-        var mes = new Date().getMonth()+1;
-        if(mes < 10) mes = "0"+mes;
-        this.setValue('cmbDateFromMonth', mes);
-        //this.setValue('cmbDateToMonth', mes);
-        //this.setValue('cbxDateMonth', mes);
-        // </editor-fold>
-        
-        this.setValue('cbxModulo', rec.get('A1955MODUL'));
-        Ext.getCmp(prototype.id+'-cbxModulo').setReadOnly(true);
-        
-        switch (rec.get('A1955MODUL')) {
-            case 'PSALES': case 'PFLOWN': case 'PADJMA': case "PPSALES" :  
-                Ext.getCmp(prototype.id+'-boxFecha').show();
-                //Ext.getCmp(prototype.id+'-boxPeriodo').hide();
-                Ext.getCmp(prototype.id+'-boxCaducos').hide();
-                this.setValue('txtProcessDate', Ext.Date.parseDate(rec.get('A1955FPROC'), "Ymd"));
-                break;
-            /*case 'PAPINT': case 'PARINT':
-                Ext.getCmp(prototype.id+'-boxFecha').hide();
-                //Ext.getCmp(prototype.id+'-boxPeriodo').show();
-                Ext.getCmp(prototype.id+'-boxCaducos').hide();
-                this.setValue('cbxDateYear', rec.get('A1955FPROC').substring(0,4));
-                this.setValue('cbxDateMonth', rec.get('A1955FPROC').substring(4,6));
-                this.setValue('cbxDatePeriod', rec.get('A1955FPROC').substring(6,8));
-                break;*/
-            case 'PCADUCOS':
-                Ext.getCmp(prototype.id+'-boxFecha').hide();
-                //Ext.getCmp(prototype.id+'-boxPeriodo').hide();
-                Ext.getCmp(prototype.id+'-boxCaducos').show();                
-                
-                this.setValue('txtProcessDate', Ext.Date.parseDate(rec.get('A1955FPROC'), "Ymd"));
-                this.setValue('cmbDateFromYear', rec.get('A1955KEY4').substring(0,4));
-                this.setValue('cmbDateFromMonth', rec.get('A1955KEY4').substring(4,6));
-                //this.setValue('cmbDateToYear', rec.get('A1955KEY4').substring(0,4));
-                //this.setValue('cmbDateToMonth', rec.get('A1955KEY4').substring(4,6));
-                break;
-        }
-        
+        console.log('log rec');
+        console.log(rec);
+        this.setValue('USR', rec.get('USR'));
+        this.setValue('NPROG', rec.get('NPROG'));
+        this.setValue('PROG', rec.get('PROG'));
+        Ext.getCmp(prototype.id+'-chkStatus').setValue(rec.get('STAT') === 'A' ? true : false);
+        Ext.getCmp(prototype.id+'-chkAccess').setValue(rec.get('PERMA') === 'Y' ? true : false);
+        Ext.getCmp(prototype.id+'-chkRead').setValue(rec.get('PERML') === 'Y' ? true : false);
+        Ext.getCmp(prototype.id+'-chkInsert').setValue(rec.get('PERMC') === 'Y' ? true : false);
+        Ext.getCmp(prototype.id+'-chkUpdate').setValue(rec.get('PERMM') === 'Y' ? true : false);
+        Ext.getCmp(prototype.id+'-chkExport').setValue(rec.get('PERMX') === 'Y' ? true : false);
+        Ext.getCmp(prototype.id+'-chkDelete').setValue(rec.get('PERME') === 'Y' ? true : false);
         // <editor-fold defaultstate="collapsed" desc="ControlData">
-        this.setValue('USCR', rec.get('A1955USRIN'));
-        this.setValue('FECR', rec.get('A1955FECIN'));
-        this.setValue('HOCR', rec.get('A1955HORIN'));
-        this.setValue('USUP', rec.get('A1955USRAC'));
-        this.setValue('FEUP', rec.get('A1955FECAC'));
-        this.setValue('HOUP', rec.get('A1955HORAC'));
+        this.setValue('USCR', rec.get('USCR'));
+        this.setValue('FECR', rec.get('DTCR'));
+        //this.setValue('HOCR', rec.get('HOCR'));
+        this.setValue('USUP', rec.get('USUP'));
+        this.setValue('FEUP', rec.get('DTUP'));
+        //this.setValue('HOUP', rec.get('HOUP'));
         // </editor-fold>
     },
     // </editor-fold>   
@@ -119,44 +70,46 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
     // <editor-fold defaultstate="collapsed" desc="CRUD">
     onSaveClick: function(btn) {
         if (this.validaRequiredFields()) {
-            switch (this.getValue('cbxModulo')) {
-                case "PSALES" : 
-                case "PCADUCOS" : 
-                case "PADJMA" : 
-                    Ext.Msg.show({
-                        title: '.:PRAXIS:.',
-                        msg: 'Are you sure to insert ?',
-                        buttons: Ext.MessageBox.YESNO,
-                        scope: this,
-                        icon: Ext.MessageBox.QUESTION,
-                        modal: true,
-                        fn: function(btn) {
-                            if (btn === 'yes') {
-                                this.view.params.action = "I";
-                                this.llenarData();
-                                this.crud();
-                            }
+                Ext.Msg.show({
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to insert ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function(btn) {
+                        if (btn === 'yes') {
+                            this.view.params.action = "I";
+                            this.llenarData();
+                            this.crud();
                         }
-                    });
-                    break;            
-                case "PPSALES" :
-                    Ext.Msg.show({
-                        title: '.:PRAXIS:.',
-                        msg: 'Are you sure to insert ?',
-                        buttons: Ext.MessageBox.YESNO,
-                        scope: this,
-                        icon: Ext.MessageBox.QUESTION,
-                        modal: true,
-                        fn: function(btn) {
-                            if (btn === 'yes') {
-                                this.view.params.action = "I";
-                                this.llenarData();
-                                this.crudPending();
-                            }
+                    }
+                });
+        } else {
+            var msg = this.msjAlert;
+            if (msg==='') msg = 'You must enter all required fields.';
+            global.Msg({
+                msg: msg
+            });
+        }
+    },
+    onUpdateClick: function(btn) {
+        if (this.validaRequiredFields()) {
+                Ext.Msg.show({
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to update ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function(btn) {
+                        if (btn === 'yes') {
+                            this.view.params.action = "U";
+                            this.llenarData();
+                            this.crud();
                         }
-                    });
-                    break;            
-            }   
+                    }
+                });
         } else {
             var msg = this.msjAlert;
             if (msg==='') msg = 'You must enter all required fields.';
@@ -169,79 +122,29 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
         this.view.close();
     },
     onDeleteClick: function(btn){        
-        switch (this.getValue('cbxModulo')) {
-            case "PSALES" : 
-                dataentryParams = {};
-                dataentryParams.IN_MODULO = 'SALES';
-                dataentryParams.IN_FECHA_PROCESO = this.p.rec.get('A1955FPROC');
-                this.setReverse(this.p.rec);
-                break;
-            case "PCADUCOS" : case "PADJMA" : 
-                Ext.Msg.show({
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to delete ?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function(btn) {
-                        if (btn === 'yes') {
-                            this.view.params.action = "D";
-                            this.llenarData();
-                            //console.log(this.beanOption);
-                            this.crud();
-                        }
+        Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Are you sure to delete ?',
+                buttons: Ext.MessageBox.YESNO,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function(btn) {
+                    if (btn === 'yes') {
+                        this.view.params.action = "D";
+                        this.llenarData();
+                        //console.log(this.beanOption);
+                        this.crud();
                     }
-                });
-                break;            
-            case "PPSALES" :
-                Ext.Msg.show({
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to delete ?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function(btn) {
-                        if (btn === 'yes') {
-                            this.view.params.action = "D";
-                            this.llenarData();
-                            //console.log(this.beanOption);
-                            this.crudPending();
-                        }
-                    }
-                });
-                break;            
-        }                  
+                }
+            });                       
     },
     // </editor-fold>
     
     validaRequiredFields: function() {
-        var cbxModulo = this.getValue('cbxModulo');
-        if (cbxModulo==='') {
-            this.msjAlert='Select Module.';
+        if (this.getValue('USR')==='' || this.getValue('NPROG') === null) {
+            this.msjAlert='Enter correct data';
             return false;
-        } else {
-            switch (cbxModulo) {
-                case "PSALES" : case "PFLOWN": case "PADJMA" : case "PPSALES" :                           
-                    if (this.getValue('txtProcessDate')==='' || this.getValue('txtProcessDate') === null) {
-                        this.msjAlert='Enter correct data';
-                        return false;
-                    }
-                    break;
-                /*case "PAPINT" : case "PARINT" :
-                    if (this.getValue('cbxDatePeriod')==='') {
-                        this.msjAlert='Enter correct data.';
-                        return false;
-                    }
-                    break;*/
-                case "PCADUCOS" :
-                    if (this.getValue('cmbDateFromYear')==='' || this.getValue('cmbDateFromMonth')==='') {
-                        this.msjAlert='Enter correct data';
-                        return false;
-                    }
-                    break;
-            }
         }
         return true;
     },
@@ -249,7 +152,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
     crud: function() {
         var mod = this;
         Ext.Ajax.request({
-            url: prototype.url + '/Maintance',
+            url: prototype.url + '/crud',
             method: 'POST',
             timeout: 60000000,
             params: this.beanOption,
@@ -258,75 +161,16 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
-                    var msg = res.intResult;                    
-                    /*var cbxModulo = mod.getValue('cbxModulo');
-                    if(cbxModulo==='PSALES')
-                    {
-                        var lstGroups = res.lstGroups;
-                        if(lstGroups.length>0)
-                        {
-                            var groups = '';
-                            for(var i=0 ; i<lstGroups.length; i++)
-                            {
-                                if(i<(lstGroups.length-1))
-                                    groups+=lstGroups[i].A1955ERRLG+',';
-                                else
-                                    groups+=lstGroups[i].A1955ERRLG;
-                            }
-                            msg = 'Observed Groups: ' + groups 
-                        }
-                    }*/
-                        
+                    var msg = res.response;                    
                     var icon=1;
-                    if(msg==='RECORD EXISTS'){
-                        icon=2;
-                    }
                     global.Msg({
                         msg: msg,
                         icon: icon,
                         fn: function() {
-                            if (msg==='RECORD INSERTED') {
-                                Ext.getCmp('DataEntryPerProForm').close(),
-                                Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                            }
-                        }
-                    });
-                } else {
-                    global.Msg({
-                        msg: res.sesion
-                    });
-                }
-                Ext.getCmp('DataEntryPerProForm').unmask();
-            },
-            failure: function(response, opts) {
-                console.log('server-side failure with status code ' + response.status);
-                Ext.getCmp('DataEntryPerProForm').unmask();
-            }
-        });
-    },
-    
-    crudPending: function() {
-        Ext.Ajax.request({
-            url: prototype.url + '/MaintancePending',
-            method: 'POST',
-            timeout: 60000000,
-            params: this.beanOption,
-            beforerequest: Ext.getCmp('DataEntryPerProForm').mask('Loading...'),
-            success: function(response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {
-                    var msg = res.intResult;
-                    var icon=1;
-                    if(msg==='RECORD EXISTS'){
-                        icon=2;
-                    }
-                    global.Msg({
-                        msg: msg,
-                        icon: icon,
-                        fn: function() {
-                            if (msg==='RECORD INSERTED') {
-                                Ext.getCmp('DataEntryPerProForm').close(),
-                                Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                            if (msg==='Operation was successful') {
+                                Ext.getCmp('DataEntryPerProForm').unmask();
+//                                Ext.getCmp('DataEntryPerProForm').close(),
+//                                Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                             }
                         }
                     });
@@ -362,66 +206,35 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
     llenarData: function() {
         this.beanOption = {};
         
-        var A1955KEY2 = '', A1955KEY4 = '', IN_FECHA_PROCESO = '';
-        var A1955MODUL = this.getValue('cbxModulo');
-        
-        switch (this.getValue('cbxModulo')) {
-            case "PSALES" : case "PFLOWN": case "PADJMA" : case "PPSALES" :
-                IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtProcessDate').getValue(), 'Ymd');
-                break;
-            /*case "PAPINT" : case "PARINT" :
-                IN_FECHA_PROCESO = this.getValue('cbxDateYear')+this.getValue('cbxDateMonth')+this.getValue('cbxDatePeriod');
-                break;*/
-            case "PCADUCOS" :
-                IN_FECHA_PROCESO = this.getValue('cmbDateFromYear')+this.getValue('cmbDateFromMonth');
-                //A1955KEY2 = this.getValue('cmbDateFromYear')+this.getValue('cmbDateFromMonth');
-                //A1955KEY4 = this.getValue('cmbDateToYear')+this.getValue('cmbDateToMonth');
-                break;
-        }
-        
+        var USR = this.getValue('USR');
+        var NPROG = this.getValue('NPROG');
+        var STAT =  Ext.getCmp(prototype.id+'-chkStatus').getValue() ? 'A' : 'L';
+        var PERMA =  Ext.getCmp(prototype.id+'-chkAccess').getValue() ? 'Y' : 'N';
+        var PERML =  Ext.getCmp(prototype.id+'-chkRead').getValue() ? 'Y' : 'N';
+        var PERMC =  Ext.getCmp(prototype.id+'-chkInsert').getValue() ? 'Y' : 'N';
+        var PERMM =  Ext.getCmp(prototype.id+'-chkUpdate').getValue() ? 'Y' : 'N';
+        var PERMX =  Ext.getCmp(prototype.id+'-chkExport').getValue() ? 'Y' : 'N';
+        var PERME =  Ext.getCmp(prototype.id+'-chkDelete').getValue() ? 'Y' : 'N';
         this.beanOption = {
-            A1955MODUL: A1955MODUL,
-            IN_FECHA_PROCESO: IN_FECHA_PROCESO,
-            A1955KEY2: A1955KEY2,
-            A1955KEY4: A1955KEY4,
+            USR: USR,
+            NPROG: NPROG,
+            STAT: STAT,
+            PERMA: PERMA,
+            PERML: PERML,
+            PERMC: PERMC,
+            PERMM: PERMM,
+            PERMX: PERMX,
+            PERME: PERME,
             strOption: this.view.params.action
         };
+        console.log('beanOption');
+        console.log(this.beanOption);        
     },
     limpiarCampos: function() {
-        var mes = new Date().getMonth()+1;
-        if(mes < 10) mes = "0"+mes;
-        Ext.getCmp(prototype.id+'-cmbDateFromMonth').setValue(mes);
-        Ext.getCmp(prototype.id+'-cmbDateFromYear').setValue(new Date().getFullYear());               
-        this.setValue("txtProcessDate", "");
-    },    
-    setReverse: function(objDT){
-        Ext.Ajax.request({
-            url: prototype.url + '/searchReversa',
-            method: 'POST',
-            timeout: 60000000,
-            params: dataentryParams,
-            //beforerequest: Ext.getCmp('DataEntryPerProForm').mask('Loading...'),
-            success: function(response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {                    
-                    Ext.create('Ext.Praxis.view.panel.PerProForm.DataEntryReverse', {
-                        id: 'DataEntryReversePerProForm',
-                        params: {
-                            rec: res.data,
-                            obj: objDT.data
-                        }
-                    }).show();                   
-                } else {
-                    global.Msg({
-                        msg: res.sesion
-                    });
-                }
-                //Ext.getCmp('DataEntryPerProForm').unmask();
-            },
-            failure: function(response, opts) {
-                console.log('server-side failure with status code ' + response.status);
-                //Ext.getCmp('DataEntryPerProForm').unmask();
-            }
-        });
-    }
+                     
+        //this.setValue("txtProcessDate", "");
+    },
+    onUpperValue: function(field, newValue, oldValue) {
+        field.setValue(newValue.toUpperCase());
+    },        
 });

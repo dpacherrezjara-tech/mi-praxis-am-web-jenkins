@@ -32,5 +32,15 @@ public class A2447 {
     public String A2447FREVI = "";
     public String A2447HREVI = "";
     public String A2447INDCO = "";
-    
+    public String A2447COD = "";
+    public Double A2447CHARG = 0.00;
+    public Double A2447COMBA = 0.00;
+    public Double A2447IVACB = 0.00;
+    public String A2447COD2 = "";
+    public Double A2447COMB2 = 0.00;
+    public Double A2447IVAC2 = 0.00;
+    public String A2447NFAC1 = "";
+    public String A2447NFAC2 = "";
+    public String A2447FFAC1 = "";
+    public String A2447FFAC2 = "";
 }

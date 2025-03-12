@@ -1,7 +1,7 @@
 prototype.id = 'OCRLoadForm';
 prototype.url = CONTEXTPATH + '/OCRLoad';
 prototype.widthContenedor = 1000;
-prototype.widthGrid = 659;
+prototype.widthGrid = 791;
 
 Ext.define('Ext.Praxis.view.flown.OCRLoadForm.OCRLoadForm', {
     extend: 'Ext.form.Panel',

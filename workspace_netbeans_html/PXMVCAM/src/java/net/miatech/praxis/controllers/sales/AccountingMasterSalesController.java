@@ -102,6 +102,7 @@ public class AccountingMasterSalesController extends BaseController {
             strOption = request.getParameter("strOption");
             filter.A1740TITRA = request.getParameter("A1740TITRA");
             filter.A1740TIPO = request.getParameter("A1740TIPO");
+            filter.A1740INTNU = request.getParameter("A1740INTNU");
             filter.A1740SUBTI = request.getParameter("A1740SUBTI");
             filter.A1740CATEG = request.getParameter("A1740CATEG");
             filter.A1740CIA = request.getParameter("A1740CIA");
@@ -154,7 +155,7 @@ public class AccountingMasterSalesController extends BaseController {
 
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
             Workbook workbook = new XSSFWorkbook();
-            Sheet sheet = workbook.createSheet("Account Master TAX");
+            Sheet sheet = workbook.createSheet("Account Master Sales");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
 //            CellStyle headerStyle = workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
@@ -192,7 +193,7 @@ public class AccountingMasterSalesController extends BaseController {
 
             Row row;
             Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11,
-                    CH_12, CH_13, CH_14, CH_15, CH_16, CH_17;
+                    CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -214,6 +215,7 @@ public class AccountingMasterSalesController extends BaseController {
             CH_15 = row.createCell(15);
             CH_16 = row.createCell(16);
             CH_17 = row.createCell(17);
+            CH_18 = row.createCell(18);
 
             CH_00.setCellValue("Type");
             CH_01.setCellValue("AccountType");
@@ -228,8 +230,9 @@ public class AccountingMasterSalesController extends BaseController {
             CH_10.setCellValue("Sub account");
             CH_11.setCellValue("Equipment");
             CH_12.setCellValue("Inter company");
-            CH_13.setCellValue("Client");
-            CH_14.setCellValue("Effectiveness");
+            CH_13.setCellValue("Country Location");
+            CH_14.setCellValue("Client");
+            CH_15.setCellValue("Effectiveness");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -246,6 +249,7 @@ public class AccountingMasterSalesController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -262,6 +266,7 @@ public class AccountingMasterSalesController extends BaseController {
             CH_12.setCellStyle(headerStyle);
             CH_13.setCellStyle(headerStyle);
             CH_14.setCellStyle(headerStyle);
+            CH_15.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -284,6 +289,7 @@ public class AccountingMasterSalesController extends BaseController {
                 CH_12 = row.createCell(12);
                 CH_13 = row.createCell(13);
                 CH_14 = row.createCell(14);
+                CH_15 = row.createCell(15);
 
                 CH_00.setCellValue(listaData.get(vi).A1740TITRA);
                 CH_01.setCellValue(listaData.get(vi).A1740TIPO);
@@ -298,8 +304,10 @@ public class AccountingMasterSalesController extends BaseController {
                 CH_10.setCellValue(listaData.get(vi).A1740SCTA);
                 CH_11.setCellValue(listaData.get(vi).A1740EQUI);
                 CH_12.setCellValue(listaData.get(vi).A1740ICIA);
-                CH_13.setCellValue(listaData.get(vi).A1740CLIE);
-                CH_14.setCellValue(listaData.get(vi).A1740FINI);
+                CH_13.setCellValue(listaData.get(vi).A1740INTNU);
+                CH_14.setCellValue(listaData.get(vi).A1740CLIE);
+                CH_15.setCellValue(listaData.get(vi).A1740FINI);
+                
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -316,6 +324,7 @@ public class AccountingMasterSalesController extends BaseController {
                 CH_12.setCellStyle(bodyStyle);
                 CH_13.setCellStyle(bodyStyle);
                 CH_14.setCellStyle(bodyStyle);
+                CH_15.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
@@ -336,6 +345,7 @@ public class AccountingMasterSalesController extends BaseController {
             sheet.autoSizeColumn(12, true);
             sheet.autoSizeColumn(13, true);
             sheet.autoSizeColumn(14, true);
+            sheet.autoSizeColumn(15, true);
 
             //String fileNameDownload = String.format("ADM Report - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             String fileNameDownload = String.format(

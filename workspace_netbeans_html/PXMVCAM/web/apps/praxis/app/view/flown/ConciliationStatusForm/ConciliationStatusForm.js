@@ -300,7 +300,7 @@ Ext.define('Ext.Praxis.view.flown.ConciliationStatusForm.ConciliationStatusForm'
                                     {text: 'Origin', dataIndex: 'A3676ORIG', width: 100, sortable: true, align: 'center'},
                                     {text: 'Total Send <br> TKT', dataIndex: 'A3676TETKT', width: 100, sortable: true, align: 'right'},
                                     {text: 'Total Send <br> CPN', dataIndex: 'A3676TECPN', width: 100, sortable: true, align: 'right'},
-                                    {text: 'Total Answer <br> TKT', dataIndex: 'A3676TECPN', width: 100, sortable: true, align: 'right'},
+                                    {text: 'Total Answer <br> TKT', dataIndex: 'A3676TRTKT', width: 100, sortable: true, align: 'right'},
                                     {text: 'Total Answer <br> CPN', dataIndex: 'A3676TRCPN', width: 100, sortable: true, align: 'right'},
                                     {text: 'Status',dataIndex: 'A3676STROB',width: 215,renderer: 'onRendererColumnStatus'}
 
@@ -365,6 +365,20 @@ Ext.define('Ext.Praxis.view.flown.ConciliationStatusForm.ConciliationStatusForm'
                                                 }
                                             }*/
                                         ]
+                                    },
+                                    {
+                                        text: 'Status initial',
+                                        dataIndex: 'A3676STINI',
+                                        width: 150,
+                                        align: 'left',
+                                        renderer: 'onRendererToltip'
+                                    },
+                                    {
+                                        text: 'Status end',
+                                        dataIndex: 'A3676STFIN',
+                                        width: 150,
+                                        align: 'left',
+                                        renderer: 'onRendererToltip'
                                     },
                                     {
                                         text: 'Status',

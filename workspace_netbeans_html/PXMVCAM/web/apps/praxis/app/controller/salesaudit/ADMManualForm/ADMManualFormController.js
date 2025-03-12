@@ -41,10 +41,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.ADMManualFormControll
         prototype.id1 = 'SeguimietoFormUnico';
         prototype.id5 = 'FormUnicoSeguimietoSubiArchivo';
         prototype.id6 = 'ADMSeguimietoSubiArchivo';
+        prototype.idAccountingCTA = '-viewAccountingCTA';
         prototype.url2 = CONTEXTPATH + '/ADMReport';
         prototype.url = CONTEXTPATH + '/ADMManualForm';
         prototype.widthContenedor = 1395;
         prototype.heightContenedor = 605;
+        /*nuevo*/
+        prototype.id10 = 'AccountingCTA';
 
     },
     setStoresGrids: function () {
@@ -926,6 +929,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.ADMManualFormControll
     onAddClick: function () {
         var win = new Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual({
             params: {
+                action: "I",
                 url01: prototype.url
             }
         });

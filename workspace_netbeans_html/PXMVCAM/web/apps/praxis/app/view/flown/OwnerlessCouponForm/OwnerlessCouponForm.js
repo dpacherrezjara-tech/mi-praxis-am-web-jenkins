@@ -62,7 +62,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.OwnerlessCouponForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1500,
+                                        width: 1600,
                                         align: 'center'
                                     },
                                     items: [
@@ -76,7 +76,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.OwnerlessCouponForm', {
                                         },
                                         {
                                             xtype: 'panel',
-                                            height: 580,
+                                            height: 600,
                                             layout: 'fit',
                                             items: [
                                                 {

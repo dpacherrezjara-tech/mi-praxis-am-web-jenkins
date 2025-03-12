@@ -226,6 +226,15 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnTxt',
+                            icon: 'resources/img/botones/txt.png',
+                            tooltip: 'Export TXT',
+                            listeners: {
+                                click: 'btnTXT_click'
+                            }
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnClear',
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options',

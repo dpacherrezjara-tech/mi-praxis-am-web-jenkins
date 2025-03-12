@@ -104,6 +104,7 @@ public class OCRLoadDAO {
                 //beanTkt.LEGSEQ = rst.getString("LEGSEQ").trim();
                 beanTkt.strFormatDate = Functions.getMonthConvert(beanTkt.DFLIGHT);
                 beanTkt.TDOC = rst.getString("TDOC").trim();
+                beanTkt.PRDA = Functions.getMonthConvert(rst.getString("PRDA").trim());
                 //beanTkt.PSVVTA = rst.getString("PSVVTA").trim();
                 /*if (hmPaises.containsKey(rst.getString("PSVVTA").trim().toUpperCase())) {
                  beanTkt.strDescPSVVTA = hmPaises.get(rst.getString("PSVVTA").trim()).toString();
@@ -209,6 +210,7 @@ public class OCRLoadDAO {
                 //beanTkt.LEGSEQ = rst.getString("LEGSEQ").trim();
                 beanTkt.strFormatDate = Functions.getMonthConvert(beanTkt.DFLIGHT);
                 beanTkt.TDOC = rst.getString("TDOC").trim();
+                beanTkt.PRDA = Functions.getMonthConvert(rst.getString("PRDA").trim());
                 //beanTkt.PSVVTA = rst.getString("PSVVTA").trim();
                 /*if (hmPaises.containsKey(rst.getString("PSVVTA").trim().toUpperCase())) {
                  beanTkt.strDescPSVVTA = hmPaises.get(rst.getString("PSVVTA").trim()).toString();
@@ -507,7 +509,7 @@ public class OCRLoadDAO {
         if (filter.QTYPAX == 0) {
             filter.QTYPAX = 1;
         }
-        strSQL = "{CALL " + session.getMainLibrary() + ".SQP0071_1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        strSQL = "{CALL " + session.getMainLibrary() + ".SQP0071_1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         try {
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -519,31 +521,32 @@ public class OCRLoadDAO {
             cs.setString(4, filter.SERIE.trim());
             cs.setString(5, filter.CUPON.trim());
             cs.setString(6, filter.DCHEQ.trim());
-            cs.setString(7, filter.STVAL.trim());
-            cs.setString(8, filter.DFLIGHT.trim());
-            cs.setString(9, filter.NFLIGHT.trim());
-            cs.setString(10, filter.CDEPART.trim());
-            cs.setString(11, filter.CARRIVA.trim());
-            cs.setString(12, filter.ZONA.trim());
-            cs.setString(13, filter.IN_CARR.trim());//filter.CARR.trim()
-            cs.setDouble(14, filter.VCPN);
-            cs.setDouble(15, filter.COMISI);
-            cs.setDouble(16, filter.VTAX);
-            cs.setString(17, filter.MDACP.trim());
-            cs.setString(18, session.getUserView().getUserInfo().USR);
-            cs.setString(19, Functions.getFechaActual());
-            cs.setString(20, Functions.getHoraActual());
-            cs.setString(21, filter.TDOC.trim());
-            cs.setString(22, filter.FLOAD.trim());
-            cs.setInt(23, filter.QTYPAX);
-            cs.setString(24, Functions.getFechaActual()); //filter.FCONT.trim() se cambió a pedido de ENS 20150120
-            cs.setString(25, filter.CABI);
-            cs.setString(26, filter.CLAS);
-            cs.setString(27, filter.FBASE);
-            cs.setString(28, filter.FOPERZUL.trim());
-            cs.setString(29, filter.FVAL.trim());
-            cs.setString(30, filter.FECVAL.trim());
-            cs.setString(31, filter.NPLANE.trim());
+            cs.setString(7, filter.SEQ.trim());
+            cs.setString(8, filter.STVAL.trim());
+            cs.setString(9, filter.DFLIGHT.trim());
+            cs.setString(10, filter.NFLIGHT.trim());
+            cs.setString(11, filter.CDEPART.trim());
+            cs.setString(12, filter.CARRIVA.trim());
+            cs.setString(13, filter.ZONA.trim());
+            cs.setString(14, filter.IN_CARR.trim());//filter.CARR.trim()
+            cs.setDouble(15, filter.VCPN);
+            cs.setDouble(16, filter.COMISI);
+            cs.setDouble(17, filter.VTAX);
+            cs.setString(18, filter.MDACP.trim());
+            cs.setString(19, session.getUserView().getUserInfo().USR);
+            cs.setString(20, Functions.getFechaActual());
+            cs.setString(21, Functions.getHoraActual());
+            cs.setString(22, filter.TDOC.trim());
+            cs.setString(23, filter.FLOAD.trim());
+            cs.setInt(24, filter.QTYPAX);
+            cs.setString(25, Functions.getFechaActual()); //filter.FCONT.trim() se cambió a pedido de ENS 20150120
+            cs.setString(26, filter.CABI);
+            cs.setString(27, filter.CLAS);
+            cs.setString(28, filter.FBASE);
+            cs.setString(29, filter.FOPERZUL.trim());
+            cs.setString(30, filter.FVAL.trim());
+            cs.setString(31, filter.FECVAL.trim());
+            cs.setString(32, filter.NPLANE.trim());
             cs.execute();
 
         } catch (Exception e) {

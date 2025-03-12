@@ -54,7 +54,7 @@ public class RFNDReasonMaintenanceDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL LIBSAP26.SQP03095(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXRFNDESP.SQP03095(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -144,7 +144,7 @@ public class RFNDReasonMaintenanceDAO {
         String strRtn = "";
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL LIBSAP26.SQP03096(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXRFNDESP.SQP04583(?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         String strUsuario, strFecha, strHora;
         try {

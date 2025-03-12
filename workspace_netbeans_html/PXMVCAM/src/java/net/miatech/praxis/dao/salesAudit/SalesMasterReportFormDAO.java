@@ -152,6 +152,7 @@ public class SalesMasterReportFormDAO {
                 objRtn.A1672TKCNX = rs01.getString("A1672CNX1");
                 objRtn.A1672FCMI = rs01.getString("A1672FCMI");
                 objRtn.A1672PNR = rs01.getString("A1672PNR");
+               objRtn.A1672IDFIL = rs01.getString("A1672IDFIL"); 
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;

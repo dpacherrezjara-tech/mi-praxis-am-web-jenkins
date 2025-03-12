@@ -99,7 +99,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
         me.bean.VP_CIA = rec.get('A1672CIA');
         me.bean.VP_FRMSRIE = rec.get('A1672FORMA') + "" + rec.get('A1672SERIE');
         me.bean.VP_SEQ = rec.get('A1672SEQ');
-        me.bean.VP_IDFILE='';
+        me.bean.VP_IDFILE=rec.get('A1672IDFIL');
         me.bean.VP_TRNCU = rec.get('A1672TRNCU');
         me.bean.VP_CUPON = rec.get('A1672CUPON');
         me.bean.A1672AGENT = rec.get('A1672AGENT');
@@ -176,6 +176,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
                     });
 
                     Ext.getCmp(prototype.id1 + '-txtDatePlace').setValue(Ext.String.trim(res.lstFaximil.DAIS));
+                    console.log(res.lstFaximil.strIssExc);
+                    
                     if (res.lstFaximil.strIssExc !== '') {
                         Ext.getCmp(prototype.id1 + '-txtIssExc').setText(Ext.String.trim(res.lstFaximil.strIssExc.substring(2, 16)));
                     } else {
@@ -495,7 +497,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
         var win = new Ext.Praxis.view.screens.CtrlDeliveryAudiForm({
             params: {
                 TDNR: rec.get('A1672CIA') + "" + rec.get('A1672FORMA') + "" + rec.get('A1672SERIE'),
-                FTE: rec.get('A1672FUENT')
+                FTE: rec.get('A1672FUENT'),
+                IDFIL: rec.get('A1672IDFIL'),
+                TRNCU: Ext.getCmp(prototype.id1 + '-txtTrnx').getValue()
             }
         });
         win.show();
@@ -572,6 +576,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
         me.beanTKT.A1672PAIVT = Ext.getCmp(prototype.id1 + '-txtPaiVta').getValue();
         me.beanTKT.A1672AGENT = Ext.getCmp(prototype.id1 + '-txtAgentF').getValue();
         me.beanTKT.A1672FUENT = Ext.getCmp(prototype.id1 + '-txtSRC').getValue();
+        me.beanTKT.A1672IDFIL = rec.get('A1672IDFIL');
 
         Ext.Ajax.request({
             url: me.urlWin01 + '/loadASRFacsimilProrate/',
@@ -608,6 +613,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
                     });
 
                     Ext.getCmp(prototype.id1 + '-txtDatePlace').setValue(Ext.String.trim(res.lstFaximil.DAIS));
+                    
+                    console.log(res.lstFaximil.strIssExc);
                     if (res.lstFaximil.strIssExc !== '') {
                         Ext.getCmp(prototype.id1 + '-txtIssExc').setText(Ext.String.trim(res.lstFaximil.strIssExc.substring(2, 16)));
                     } else {

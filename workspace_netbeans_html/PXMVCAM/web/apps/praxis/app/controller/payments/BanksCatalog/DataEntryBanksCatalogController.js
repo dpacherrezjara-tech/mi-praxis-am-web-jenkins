@@ -100,6 +100,7 @@ Ext.define('Ext.Praxis.controller.payments.BanksCatalog.DataEntryBanksCatalogCon
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
+                ["",""],
                 ["O", "Open"],
                 ["C", "Closed"]
             ]
@@ -243,7 +244,7 @@ Ext.define('Ext.Praxis.controller.payments.BanksCatalog.DataEntryBanksCatalogCon
                         var beanTemp = {};
                         this.llenarData(beanTemp);
                         beanTemp.option = 'U';
-                        beanTemp.beanString = JSON.stringify(beanTemp);;
+                        beanTemp.beanString = JSON.stringify(beanTemp);
                         this.MaintenanceA2280(beanTemp);
                     }
                 }

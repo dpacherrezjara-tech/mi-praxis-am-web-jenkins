@@ -1,7 +1,7 @@
 
 prototype.id = 'RFNDUserMaintenance';
 prototype.url = CONTEXTPATH + '/RFNDUserMaintenance';
-prototype.widthWindow = 1366;
+prototype.widthWindow = 900;
 prototype.heightWindow = 768;
 
 Ext.define('Ext.Praxis.view.salesaudit.RFNDUserMaintenance.RFNDUserMaintenance',{
@@ -296,7 +296,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDUserMaintenance.RFNDUserMaintenance',
                             columns:{
                                 items:[
                                     { text: 'Auditor', dataIndex: 'A3650USER', flex: 1 },
-                                    { text: 'Area', dataIndex: 'A3650AREA', flex: 1 },
+                                    { text: 'Area', dataIndex: 'A3650AREA',  width: 200 },
                                     { text: 'System date', dataIndex: 'A3650FREGI', flex: 1 },
                                     { text: 'Date efective', dataIndex: 'A3650FALTA', flex: 1 },
                                     { text: 'Date discontinuity', dataIndex: 'A3650FBAJA', flex: 1 },

@@ -186,8 +186,8 @@ Ext.define('Ext.Praxis.view.sales.ConciliationASRForm.DataEntry', {
                                     xtype: 'textfield',
                                     id: prototype.id+'-DataEntry-txtSaleCash',
                                     fieldStyle: 'font-size:13px;text-align:right;',
-                                    enforceMaxLength: true,
-                                    maxLength: 10,
+                                    //enforceMaxLength: true,
+                                    //maxLength: 10,
                                     width: 95
                                 }
                             ]
@@ -199,8 +199,8 @@ Ext.define('Ext.Praxis.view.sales.ConciliationASRForm.DataEntry', {
                                     xtype: 'textfield',
                                     id: prototype.id+'-DataEntry-txtSaleCredit',
                                     fieldStyle: 'font-size:13px;text-align:right;',
-                                    enforceMaxLength: true,
-                                    maxLength: 10,
+                                    //enforceMaxLength: true,
+                                    //maxLength: 10,
                                     width: 95
                                 }]
                         }
@@ -222,8 +222,8 @@ Ext.define('Ext.Praxis.view.sales.ConciliationASRForm.DataEntry', {
                                     xtype: 'textfield',
                                     id: prototype.id+'-DataEntry-txtRefundCash',
                                     fieldStyle: 'font-size:13px;text-align:right;',
-                                    enforceMaxLength: true,
-                                    maxLength: 10,
+                                    //enforceMaxLength: true,
+                                    //maxLength: 10,
                                     width: 95
                                 }
                             ]
@@ -235,8 +235,8 @@ Ext.define('Ext.Praxis.view.sales.ConciliationASRForm.DataEntry', {
                                     xtype: 'textfield',
                                     id: prototype.id+'-DataEntry-txtRefundCredit',
                                     fieldStyle: 'font-size:13px;text-align:right;',
-                                    enforceMaxLength: true,
-                                    maxLength: 10,
+                                    //enforceMaxLength: true,
+                                    //maxLength: 10,
                                     width: 95
                                 }]
                         }

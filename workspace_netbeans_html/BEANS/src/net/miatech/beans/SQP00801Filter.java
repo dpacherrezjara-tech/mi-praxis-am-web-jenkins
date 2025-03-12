@@ -23,6 +23,8 @@ public class SQP00801Filter extends A2447 {
     public double A2444TCOMI = 0;
     public double A2444TTCAS = 0;
     public double A2444TCAMC = 0;
+    public double A2444BANKC = 0;
+    public double A2444IVA16 = 0;
     // pagin
     public Pagination page = new Pagination();
 }

@@ -93,12 +93,13 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             id: prototype.id + '-cmbCountry2',
                             queryMode: 'local',
                             triggerAction: 'all',
-                            autoSelect: false,
+                            autoSelect: true,
                             enableKeyEvents: true,
                             forceSelection: true,
-                            caseSensitive: true,
+                            caseSensitive: false,
                             readOnly: false,
-                            editable: false,
+                            editable: true,
+                            typeAhead: true,
                             valueField: 'code',
                             displayField: 'name',
                             width: 140,
@@ -212,9 +213,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             autoSelect: false,
                             enableKeyEvents: true,
                             forceSelection: true,
-                            caseSensitive: true,
+                            caseSensitive: false,
                             readOnly: false,
-                            editable: false,
+                            editable: true,
+                            typeAhead: true,
                             valueField: 'code',
                             displayField: 'name',
                             width: 120,
@@ -368,6 +370,48 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             listeners:{
                                 change: 'onUpperValue'
                             }
+                        },
+                        { xtype: 'tbspacer', width: 40 },
+                        {
+                            xtype: 'label',
+                            text: 'Country Location',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 180
+                        },
+                        {
+                            xtype: 'label',
+                            text: '(*)',
+                            id: prototype.id+'-label_required04',
+                            style: 'font-weight:bold;color:red;',
+                            width: 20,
+                            autoEl: {
+                                tag: 'label',
+                                'data-qtip': 'Mandatory Field'
+                            }
+                        },
+                        { xtype: 'tbspacer', width: 10 },
+                        {
+                            xtype:'combo',
+                            id: prototype.id + '-cmbINTNU',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "Select"],
+                                    ["Y", "YES"],
+                                    ["N", "NO"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            autoSelect: false,
+                            enableKeyEvents: true,
+                            forceSelection: true,
+                            caseSensitive: true,
+                            editable: false,
+                            valueField: 'code',
+                            displayField: 'name',
+                            width: 70,
+                            listConfig: {height: 111}
                         }
                     ]
                 },

@@ -69,6 +69,7 @@ public class ZoneMasterFileDAO {
         hm.put("SUD", "SUDAMERICA");
         hm.put("OCE", "OCEANIA");
         hm.put("AFR", "AFRICA");
+        hm.put("TJX", "FRONTERA XPRESS");
 
         List<A1708> listaData = new ArrayList();
 
@@ -191,6 +192,7 @@ public class ZoneMasterFileDAO {
         hm.put("SUD", "SUDAMERICA");
         hm.put("OCE", "OCEANIA");
         hm.put("AFR", "AFRICA");
+        hm.put("TJX", "FRONTERA XPRESS");
         Connection cnx = null;
 
         try {
@@ -327,6 +329,7 @@ public class ZoneMasterFileDAO {
         hm.put("SUD", "SUDAMERICA");
         hm.put("OCE", "OCEANIA");
         hm.put("AFR", "AFRICA");
+        hm.put("TJX", "FRONTERA XPRESS");
         Connection cnx = null;
 
         try {

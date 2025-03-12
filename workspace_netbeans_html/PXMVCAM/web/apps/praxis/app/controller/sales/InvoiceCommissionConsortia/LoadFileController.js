@@ -80,7 +80,8 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.LoadFileContr
                     Ext.MessageBox.alert('PRAXIS', msj, function (btn, text) {
                         if (btn === 'ok' || btn === 'cancel'){
                             if (SQLCODE==="0") {
-                                Ext.getCmp(prototype.idLoadFileConsortia + '-win').close();
+                                //Ext.getCmp(prototype.idLoadFileConsortia + '-win').close();
+                                me.view.close();
                             }else{
                                 Ext.create('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.LoadErrorFile', {
                                     id: 'LoadErrorFileInvoiceCommissionConsortiaForm',

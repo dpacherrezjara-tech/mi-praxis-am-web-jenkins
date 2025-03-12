@@ -92,16 +92,16 @@ public class RFNDTicketcontrolFormDAO {
             while (rs01.next()) {
                 objRtn = new A3648Filter();
                 objRtn.A3648CCUST = rs01.getString("A3647CCUST");
-                objRtn.A3648FOLIO = rs01.getString("A3647FOLIO");
+                //objRtn.A3648FOLIO = rs01.getString("A3647FOLIO");
                 objRtn.A3648FREGI = rs01.getString("A3647FREGI");
-                objRtn.A3648FAUTO = rs01.getString("A3647FAUTO");
-                objRtn.A3648FAPPI = rs01.getString("A3647FAPPI");
-                objRtn.A3648REGAS = rs01.getString("A3647REGAS");
-                objRtn.A3648TKT = rs01.getString("A3648TKT");
+                //objRtn.A3648FAUTO = rs01.getString("A3647FAUTO");
+                //objRtn.A3648FAPPI = rs01.getString("A3647FAPPI");
+                //objRtn.A3648REGAS = rs01.getString("A3647REGAS");
+                //objRtn.A3648TKT = rs01.getString("A3648TKT");
                 objRtn.A3648FLAG = rs01.getString("A3648FLAG");
                 objRtn.A3648STATO = rs01.getString("A3648STATO");
-                objRtn.A3648STATU = rs01.getString("A3658FLAG");
-                objRtn.A3648DESTI = rs01.getString("A3658DESC");
+                //objRtn.A3648STATU = rs01.getString("A3658FLAG");
+                //objRtn.A3648DESTI = rs01.getString("A3658DESC");
                 objRtn.A3648MDA = rs01.getString("A3648MDA");
                 objRtn.A3648TOTAD = rs01.getDouble("A3648TOTAD");
                 objRtn.A3648PREME = rs01.getString("A3648PREME");
@@ -164,9 +164,9 @@ public class RFNDTicketcontrolFormDAO {
                 objRtn = new A3648Filter();
                 objRtn.A3648CCUST = rs01.getString("A3658CCUST");
                 objRtn.A3648PREME = rs01.getString("A3658PREME");
-                objRtn.A3648TKT = rs01.getString("A3658TKT");
+                //objRtn.A3648TKT = rs01.getString("A3658TKT");
                 objRtn.A3648FLAG = rs01.getString("A3658FLAG");
-                objRtn.A3648DESTI = rs01.getString("A3658DESC");
+                //objRtn.A3648DESTI = rs01.getString("A3658DESC");
                 objRtn.A3648FREGI = rs01.getString("A3658FREGI");
                 lstRtn.add(objRtn);
             }

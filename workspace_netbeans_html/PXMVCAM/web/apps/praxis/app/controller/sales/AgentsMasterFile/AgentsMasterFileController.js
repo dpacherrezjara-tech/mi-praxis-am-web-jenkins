@@ -378,15 +378,46 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.AgentsMasterFileControl
             modal: true,
             fn: function (btn) {
                 if (btn === 'ok') {
-                    this.exportExcel();
+                    this.validationDownloadExcel();
                 }
+            }
+        });
+    },
+    validationDownloadExcel: function (rec) {
+        this.setParams();
+        var me = this;
+        Ext.Ajax.request({
+            url: prototype.url + '/ValidationDownload',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getBody().mask('Loading...'),
+            params: {
+                VP_ACTION: searchParams.VP_ACTION,
+                A003KEY1: searchParams.A003KEY1,
+                A003KEY2: searchParams.A003KEY2,
+                A003KEY3: searchParams.A003KEY3
+            },
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                var int_result = res.int_result;
+                if(int_result>100000)
+                {
+                     global.Msg({
+                            msg: 'Report cannot be exported, please contact system administrator.'
+                        });
+                }
+                else
+                {
+                    me.exportExcel();
+                }
+                Ext.getBody().unmask();
             }
         });
     },
     exportExcel: function () {
         this.setParams();
         var VP_A003TYPE = 'xlsx';
-        global.getFile(prototype.url + '/getFileTxt?VP_ACTION=' + searchParams.VP_ACTION + '&A003KEY1=' + searchParams.A003KEY1 + '&A003KEY2=' + searchParams.A003KEY2 + '&A003KEY3=' + searchParams.A003KEY3 + '&A003TYPE=' + VP_A003TYPE);
+        global.getFile(prototype.url + '/getXLSX?VP_ACTION=' + searchParams.VP_ACTION + '&A003KEY1=' + searchParams.A003KEY1 + '&A003KEY2=' + searchParams.A003KEY2 + '&A003KEY3=' + searchParams.A003KEY3 + '&A003TYPE=' + VP_A003TYPE);
     },
     btnTxt_click: function (obj, e) {
         Ext.Msg.show({
@@ -398,17 +429,51 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.AgentsMasterFileControl
             modal: true,
             fn: function (btn) {
                 if (btn === 'ok') {
-                    this.exportTxt();
+                    this.validationDownloadTxt();
                 }
+                Ext.getBody().unmask();
             }
         });
     },
-    exportTxt: function () {
+    exportTxt: function (rec) {
         this.setParams();
         var VP_A003TYPE = 'txt';
         global.getFile(prototype.url + '/getFileTxt?VP_ACTION=' + searchParams.VP_ACTION + '&A003KEY1=' + searchParams.A003KEY1 + '&A003KEY2=' + searchParams.A003KEY2 + '&A003KEY3=' + searchParams.A003KEY3 + '&A003TYPE=' + VP_A003TYPE);
-    }
-    ,
+    },
+
+    
+    validationDownloadTxt: function (rec) {
+        this.setParams();
+        var me = this;
+        Ext.Ajax.request({
+            url: prototype.url + '/ValidationDownload',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getBody().mask('Loading...'),
+            params: {
+                VP_ACTION: searchParams.VP_ACTION,
+                A003KEY1: searchParams.A003KEY1,
+                A003KEY2: searchParams.A003KEY2,
+                A003KEY3: searchParams.A003KEY3
+            },
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                var int_result = res.int_result;
+                if(int_result>100000)
+                {
+                     global.Msg({
+                            msg: 'Report cannot be exported, please contact system administrator.'
+                        });
+                }
+                else
+                {
+                    me.exportTxt();
+                }
+                Ext.getBody().unmask();
+            }
+        });
+    },
+    
     btnFilter_click: function (obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
         if (option.isVisible()) {

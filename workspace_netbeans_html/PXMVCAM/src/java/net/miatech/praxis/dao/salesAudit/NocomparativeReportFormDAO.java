@@ -126,6 +126,7 @@ public class NocomparativeReportFormDAO {
                         objRtn.A3951STATO = rs01.getString("A3951STATO");
                         objRtn.A3951TOTAL = rs01.getInt("TOTAL");
                         objRtn.A3951FREGI = rs01.getString("A3951FREGI");
+                        objRtn.A3951PERIO = rs01.getString("A3951PERIO");
                     } else {
                         objRtn.A3951CCUST = rs01.getString("A3951CCUST");
                         objRtn.A3951PAIS = rs01.getString("A3951PAIS");

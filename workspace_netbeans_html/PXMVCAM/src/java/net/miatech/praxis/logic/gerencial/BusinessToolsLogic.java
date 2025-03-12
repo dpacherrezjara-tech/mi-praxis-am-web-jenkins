@@ -54,5 +54,9 @@ public class BusinessToolsLogic {
     public List<A1248> loadOperadores() throws Exception {
         return businessToolsDAO.loadOperadores();
     }
+    
+    public SQP00768 executeValuation(SQP00768 filter) throws Exception {
+        return businessToolsDAO.executeValuation(filter);
+    }
 
 }

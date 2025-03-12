@@ -37,7 +37,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDPending.RFNDFormRazones',{
             items:[
                 {
                     xtype: 'grid',
-                    id: prototype.id04 + '-gridControlRazon',
+                    id: prototype.idRFNDFormRazones + '-gridControlRazon',
                     flex: 1,
                     height: 400,
                     features: [

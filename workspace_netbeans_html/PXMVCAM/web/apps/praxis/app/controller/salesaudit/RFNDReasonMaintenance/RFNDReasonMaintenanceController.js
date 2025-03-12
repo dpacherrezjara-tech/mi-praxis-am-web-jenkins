@@ -3,6 +3,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDReasonMaintenance.RFNDReasonMai
     extend: 'Ext.app.ViewController',
     alias: 'controller.RFNDReasonMaintenanceController',
     beanTMP: {},
+    beanEXCEL:{},
     /**
      * Constructor
      */
@@ -47,13 +48,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDReasonMaintenance.RFNDReasonMai
             data: [
                 { "code": "", "name": "ALL"},
                 { "code": "Authorise", "name": "AUTHORISE"},
-                { "code": "Cupon", "name": "CUPON"},
-                { "code": "Comision", "name": "COMMISSION"},
+                { "code": "Rejected", "name": "REJECTED"}
+                /*{ "code": "Comision", "name": "COMMISSION"},
                 { "code": "Formas P", "name": "FORM OF PAYMENT"},
                 { "code": "TKTEXPI", "name": "TKTEXPI"},
                 { "code": "Fare", "name": "FARE"},
                 { "code": "Taxes", "name": "TAXES"},
-                { "code": "sale D", "name": "SALES D"}
+                { "code": "sale D", "name": "SALES D"}*/
             ]
         }));
         
@@ -118,7 +119,33 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDReasonMaintenance.RFNDReasonMai
         }
         return '<i class="fas fa-circle" style="font-size: 16px; color:' + value + ';"></i>';
     },
-    
+    onExcelClick: function () {
+        var me = this;
+        var selectedValue = String(Ext.getCmp(prototype.id+'-cbxFiltro').getValue());
+        
+        me.beanEXCEL.IN_OPTION = selectedValue;
+        me.beanEXCEL.IN_CODRAZ = '';
+        me.beanEXCEL.IN_STATUS = Ext.getCmp(prototype.id+'-CmbStatus').getValue();
+        me.beanEXCEL.A3651FAMIL = Ext.getCmp(prototype.id+'-txtFamilia').getValue();
+        me.beanEXCEL.IN_COMENT = '';
+        
+
+        if (Ext.Object.getSize(me.beanEXCEL) > 0) {
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Download Excel ?',
+                buttons: Ext.MessageBox.OKCANCEL,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function (btn) {
+                    if (btn === 'ok') {
+                        global.getFile(prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(me.beanEXCEL)));
+                    }
+                }
+            });
+        }
+    },
     onSearchClick: function(btn){
         var me = this;
         var form = Ext.getCmp(prototype.id + '-contenedor-filters-form').getForm();

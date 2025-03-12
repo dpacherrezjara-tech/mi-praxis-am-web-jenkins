@@ -224,6 +224,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
     },
     onCancelClick: function(btn){
         this.view.close();
+    },
+    onUpperValue: function(field, newValue, oldValue) {
+        field.setValue(newValue.toUpperCase());
     }
 
 });

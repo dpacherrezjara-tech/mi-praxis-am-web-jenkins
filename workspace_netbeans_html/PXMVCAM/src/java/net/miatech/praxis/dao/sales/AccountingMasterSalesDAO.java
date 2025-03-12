@@ -51,7 +51,7 @@ public class AccountingMasterSalesDAO {
         A1740Filter objRtn;
         int PAGINIT = 1, totPAGS = 0, totRowsPag = 20, totRows = -1;
         try {
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX126S01A1740(?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04480(?,?,?,?,?,?,?,?,?,?)}"; // PX126S01A1740
 
             if (filter.page.PAGNUM > 0) {
                 PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
@@ -133,6 +133,7 @@ public class AccountingMasterSalesDAO {
                 objRtn.A1740REGVI = rst.getString("A1740REGVI").trim();
                 objRtn.A1740FREVI = Functions.getMonthConvertDate(rst.getString("A1740FREVI").trim());
                 objRtn.A1740HREVI = Functions.ConvertedTime(rst.getString("A1740HREVI").trim());
+                objRtn.A1740INTNU = rst.getString("A1740INTNU").trim();                
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -158,7 +159,7 @@ public class AccountingMasterSalesDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX126S01A1740(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04480(?,?,?,?,?,?,?,?,?,?)}"; // PX126S01A1740
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -217,7 +218,8 @@ public class AccountingMasterSalesDAO {
                 objRtn.A1740REGVI = rs01.getString("A1740REGVI").trim();
                 objRtn.A1740FREVI = Functions.getMonthConvertDate(rs01.getString("A1740FREVI").trim());
                 objRtn.A1740HREVI = Functions.ConvertedTime(rs01.getString("A1740HREVI").trim());
-               
+                objRtn.A1740INTNU = rs01.getString("A1740INTNU").trim();
+                
      
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -228,7 +230,7 @@ public class AccountingMasterSalesDAO {
             }
 
         } catch (Exception e) {
-            e.getMessage();
+                e.getMessage();
         } finally {
             if (rs01 != null) {
                 try {
@@ -256,7 +258,7 @@ public class AccountingMasterSalesDAO {
      public String accountMasterMaintance(A1740Filter filter, String strOption) {
         String STR_RESULT = "";
         try {
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX126S02A1740(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04481(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; // PX126S02A1740
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
@@ -283,6 +285,7 @@ public class AccountingMasterSalesDAO {
             cs.setString(22, filter.IN_A1740TIPO_OLD);
             cs.setString(23, filter.IN_A1740SUBTI_OLD);
             cs.setString(24, filter.IN_A1740CATEG_OLD);
+            cs.setString(25, filter.A1740INTNU);
             cs.execute();
 
             rst = cs.getResultSet();

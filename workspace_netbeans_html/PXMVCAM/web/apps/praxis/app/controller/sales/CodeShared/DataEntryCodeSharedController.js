@@ -30,7 +30,8 @@ Ext.define('Ext.Praxis.controller.sales.CodeShared.DataEntryCodeSharedController
                 Ext.getCmp(prototype.id + '-txtAirline').focus();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     },
     // <editor-fold defaultstate="collapsed" desc="mostrarData">
     mostrarData: function(rec) {

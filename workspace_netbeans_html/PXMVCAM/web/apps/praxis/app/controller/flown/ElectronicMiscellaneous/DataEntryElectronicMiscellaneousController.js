@@ -30,7 +30,8 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryElectro
                 this.view.setHeight(this.view.getHeight());
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     },
     setStoreData: function() {
         var cmbTEMD = Ext.getCmp(prototype.id + '-cmbTEMD');

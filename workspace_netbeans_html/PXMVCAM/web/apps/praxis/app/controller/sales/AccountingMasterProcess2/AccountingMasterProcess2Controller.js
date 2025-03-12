@@ -47,10 +47,6 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.AccountingMaste
                 Ext.getCmp(prototype.id+'-boxDateFilter').hide();
                 Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
                 break;            
-            case 'PADJMA':
-                Ext.getCmp(prototype.id+'-boxDateFilter').show();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
-                break;
             case 'PCADUCOS':
                 Ext.getCmp(prototype.id+'-boxDateFilter').hide();
                 Ext.getCmp(prototype.id+'-boxPeriodFilter').show();

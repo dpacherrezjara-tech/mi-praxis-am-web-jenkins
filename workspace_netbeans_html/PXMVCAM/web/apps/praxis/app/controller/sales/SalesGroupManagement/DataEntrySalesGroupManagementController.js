@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesGroupManagement.DataEntrySalesGroup
                 this.view.setHeight(this.view.getHeight());
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     }
     ,
     setStoreData: function() {

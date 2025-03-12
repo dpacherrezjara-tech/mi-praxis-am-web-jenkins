@@ -55,42 +55,56 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.Info', {
                                 },
                                 items: [
                                     {
-                                        text: 'Nbr', dataIndex: 'RN', width: 70,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
-                                            return value;
-                                        }
+                                        text: 'User',
+                                        dataIndex: 'USR',
+                                        width: 100,
+                                        align: 'center'
                                     },
                                     {
-                                        text: 'ID Process', dataIndex: 'A1955ENVIO', width: 145
+                                        text: 'City',
+                                        dataIndex: 'CITY',
+                                        //width: 200,
+                                        flex:1,
+                                        align: 'left',
+                                        cls: 'column_header_double'
                                     },
                                     {
-                                        text: 'Module', dataIndex: 'MODULE', width: 145,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:left;";
-                                            return value;
-                                        }
+                                        text: 'Status',
+                                        dataIndex: 'STAT',
+                                        //width: 200,
+                                        flex:1,
+                                        align: 'center',
+                                        cls: 'column_header_double'
                                     },
-                                    {
-                                        text: 'Type', dataIndex: 'ACCION', width: 130,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:left;";
-                                            return value;
-                                        }
+                                    {                
+                                        text: 'User Create',
+                                        dataIndex: 'USCR',
+                                        width: 150,
+                                        cls: 'column_header_double',
+                                        align: 'center'
                                     },
-                                    {
-                                        text: 'Proc. Date', dataIndex: 'A1955FPROC', width: 138, id: prototype.id+'-colFechaProc',
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:left;";
-                                            return value;
-                                        }
+                                    {                
+                                        text: 'Date Create',
+                                        dataIndex: 'DTCR',
+                                        //width: 100,
+                                        flex:1,
+                                        cls: 'column_header_double',
+                                        align: 'left'
                                     },
-                                    {
-                                        text: 'Status', dataIndex: 'ESTADO', width: 145,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:left;";
-                                            return value;
-                                        }
+                                    {                
+                                        text: 'User Update',
+                                        dataIndex: 'USUP',
+                                        width: 150,
+                                        cls: 'column_header_double',
+                                        align: 'center'
+                                    },
+                                    {                
+                                        text: 'Date Update',
+                                        dataIndex: 'DTUP',
+                                        //width: 100,
+                                        flex:1,
+                                        cls: 'column_header_double',
+                                        align: 'left'
                                     },
                                     {
                                         text: 'Edit',
@@ -114,6 +128,7 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.Info', {
                         {
                             xtype: 'panel',
                             id: prototype.id + '-pie',
+                            hidden: true,
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'

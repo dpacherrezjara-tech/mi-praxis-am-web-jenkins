@@ -6,23 +6,24 @@
 package net.miatech.praxis.controllers.sales;
 
 import com.google.gson.Gson;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A006;
 import net.miatech.libmiatec.A1007;
 import net.miatech.praxis.A003;
@@ -31,7 +32,6 @@ import static net.miatech.praxis.controllers.tnu.AtlUsageNoSaleController.zipFil
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.sales.AgentsMasterFileLogic;
 import net.miatech.utils.Functions;
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -45,11 +45,17 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import net.miatech.praxis.utils.PythonWS;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 /**
  *
@@ -62,7 +68,14 @@ public class AgentsMasterFileController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private AgentsMasterFileLogic logic;
-
+    private Connection cnx = null;
+    private IServerSession session;
+    private CallableStatement cs = null;
+    
+    @Autowired
+    private PythonWS pws;
+    
+    
     @RequestMapping(method = RequestMethod.POST)
     public String index(ModelMap map) {
         map.put("vp_serverDate", Functions.getFechaActual());
@@ -82,7 +95,11 @@ public class AgentsMasterFileController extends BaseController {
         return new Gson().toJson(map);
 
     }
-
+    
+    public void setSession(IServerSession ss) {
+        session = ss;
+    }
+    
     public List<A003> getList(HttpServletRequest request, Boolean bExcel) {
         logic = new AgentsMasterFileLogic();
 
@@ -118,8 +135,19 @@ public class AgentsMasterFileController extends BaseController {
                 filter.strExcel = "TRUE";
             }
 
-            lst = logic.loadAgentReport(filter);
+            if(this.serverSession.getFareBasis()!=null && "".equals(filter.VP_ACTION) && "".equals(filter.A003KEY1) && "".equals(filter.A003KEY2) && "".equals(filter.A003KEY3) && filter.page.PAGNUM == 1)
+            {
+                if (!bExcel) 
+                    lst = serverSession.getAgentMaster();
+                else
+                    lst = logic.loadAgentReport(filter);
+            }
+            else
+            {
+                lst = logic.loadAgentReport(filter);
+            }
 
+            
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -159,7 +187,7 @@ public class AgentsMasterFileController extends BaseController {
 
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A003> listaData = this.getList(request, false);
+            List<A003> listaData = this.getList(request, true);
 
             System.out.println("Agents Master File : " + listaData.size());
 
@@ -461,8 +489,8 @@ public class AgentsMasterFileController extends BaseController {
         List<A1007> lstCiudades;
         List<A006> lstPaises;
         try {
-            lstCiudades = logic.loadCiudades3();
-            lstPaises = logic.loadPaises();
+            lstCiudades = this.serverSession.getCiudades(); // logic.loadCiudades3();
+            lstPaises = this.serverSession.getPaises(); //logic.loadPaises();
             map.put("dataPaises", lstPaises);
             map.put("dataCity", lstCiudades);
         } catch (Exception ex) {
@@ -627,60 +655,84 @@ public class AgentsMasterFileController extends BaseController {
     /*API python descarga de archivos grandes : NO_USADO
      */
     @RequestMapping(value = "getFileTxt")
-    public @ResponseBody
-    void getFileTxt(HttpServletRequest request, HttpServletResponse response) {
+      public ResponseEntity<byte[]> getFileTxt(HttpServletRequest request, final HttpServletResponse response) throws Exception {
         A003 filter = new A003();
         String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        String v1_urlREST = "/agent-master-file/report";
+            try {
+                filter.VP_ACTION = request.getParameter("VP_ACTION");
+                filter.A003KEY1 = request.getParameter("A003KEY1");
+                filter.A003KEY2 = request.getParameter("A003KEY2");
+                filter.A003KEY3 = request.getParameter("A003KEY3");
+//                /*
+//                 Se establece tiempo límite de conexión por 60 min
+//                 */
+//                Unirest.setTimeouts(3600000, 3600000);
+//                /*
+//                 Preparando parámetros para enviar por body
+//                 */
+                Map<String, Object> queryParams = new HashMap<>();
+                //queryParams.put("server_database", "AEROMEXICO");
+                //queryParams.put("VP_AIR", "139");
+                queryParams.put("VP_ACTION", filter.VP_ACTION);
+                queryParams.put("VP_A003KEY1", filter.A003KEY1);
+                queryParams.put("VP_A003KEY2", filter.A003KEY2);
+                queryParams.put("VP_A003KEY3", filter.A003KEY3);
+                queryParams.put("VP_A003TYPE", "xlsx");
+                queryParams.put("path", rutaFile);
+                
+                System.out.println(queryParams);
+                
 
-        try {
-            filter.VP_ACTION = request.getParameter("VP_ACTION");
-            filter.A003KEY1 = request.getParameter("A003KEY1");
-            filter.A003KEY2 = request.getParameter("A003KEY2");
-            filter.A003KEY3 = request.getParameter("A003KEY3");
-            /*
-             Se establece tiempo límite de conexión por 60 min
-             */
-            Unirest.setTimeouts(3600000, 3600000);
-            /*
-             Preparando parámetros para enviar por body
-             */
-            HashMap bodyData = new HashMap<>();
-            bodyData.put("server_database", "AEROMEXICO");
-            bodyData.put("VP_AIR", "139");
-            bodyData.put("VP_ACTION", filter.VP_ACTION);
-            bodyData.put("VP_A003KEY1", filter.A003KEY1);
-            bodyData.put("VP_A003KEY2", filter.A003KEY2);
-            bodyData.put("VP_A003KEY3", filter.A003KEY3);
-            bodyData.put("VP_A003TYPE", request.getParameter("A003TYPE"));
-            bodyData.put("PATH", rutaFile);
+                ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST,queryParams);
+//                System.out.println(bodyData);
+                System.out.println(res);
+                
+                String resString = new String(res.getBody(), StandardCharsets.UTF_8);
+                
+                System.out.println("Datos obtenidos:");
+                System.out.println(resString);
+                
+                return res;
+                
 
-            String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
-            String urlAPI = "/api/AgentsMasterFile/rptAgentsMasterFile/";
-            HttpResponse<JsonNode> responseAPI = Unirest.post(urlREST + urlAPI)
-                    .header("content-type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .body(new Gson().toJson(bodyData))
-                    .asJson();
+            } catch (Exception e) {
+                System.out.println("Error Message => "+ e.getMessage());
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            //throw new SpringException(e);
+            }
+    }
 
-            String error_code = responseAPI.getBody().getObject().get("error_code").toString();
-            String error_msg = responseAPI.getBody().getObject().get("error_msg").toString();
-            String filename = responseAPI.getBody().getObject().get("filename").toString();
-            /*comprimir archivo
-             */
-            /*if (!filename.isEmpty()) {
-                if (!zip(filename)) {
-                    response.setContentType("application/zip");
-                }
-            }*/
-             response.setContentType("application/zip");
-            response.setHeader("Content-Disposition", "attachment;filename=\"" + rutaFile + "\\" + filename + ".zip" + "\"");
-            InputStream is = new FileInputStream(rutaFile + "\\" + filename + ".zip");
-            IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();
+    @RequestMapping(value = "ValidationDownload")
+    public @ResponseBody
+    String ValidationDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        A003 filter = new A003();
+        String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        filter.page.PAGROW = -1;
+        filter.page.PAGNUM = 1;
+            try {
+                logic = new AgentsMasterFileLogic();
+                logic.setSession(this.serverSession.getServerSession());
+                
+                filter.VP_ACTION = request.getParameter("VP_ACTION");
+                filter.A003KEY1 = request.getParameter("A003KEY1");
+                filter.A003KEY2 = request.getParameter("A003KEY2");
+                filter.A003KEY3 = request.getParameter("A003KEY3");
+                
+                int int_result = logic.ValidationDownload(filter);
+                HashMap m = new HashMap();
+                m.put("success", true);
+                m.put("int_result", int_result);
 
-        } catch (Exception e) {
-            throw new SpringException(e);
-        }
+                return new Gson().toJson(m);
+                
+
+            } catch (Exception e) {
+                throw new SpringException(e);
+            }
     }
 
 }

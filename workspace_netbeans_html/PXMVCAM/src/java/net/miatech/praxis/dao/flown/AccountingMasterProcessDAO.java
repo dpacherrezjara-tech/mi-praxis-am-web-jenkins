@@ -194,7 +194,7 @@ public class AccountingMasterProcessDAO {
         String STR_RESULT = "";        
         
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP00902(?,?,?,?,?,?,?,?,?)}"; 
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP05071(?,?,?,?,?,?,?,?,?)}"; 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
             cs.setString(2, session.getUserView().getCustomerInfo().CCUST);
@@ -221,6 +221,102 @@ public class AccountingMasterProcessDAO {
 
         return STR_RESULT;
     }
+      
+    public A1955Filter accountValidation(A1955Filter filter) throws SQLException, Exception {
+        
+        
+        A1955Filter objRtn = new A1955Filter();
+        
+        
+        
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        
+        String SQLCLL01 = "{CALL PRAXIS.SQP04896(?,?,?,?)}";
+
+        Connection cnx = null;
+        
+        try {
+            String STR_MESSAGE = accountValidationInsertFlown(filter, "I");
+            if("NEXT".equals(STR_MESSAGE))
+            {
+                cnx = session.getCNXIBMDB2().getIBMDB2Connection();           
+                cstmt01 = cnx.prepareCall(SQLCLL01);
+
+                cstmt01.registerOutParameter(3, Types.INTEGER);
+                cstmt01.registerOutParameter(4, Types.INTEGER);
+
+                cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+                cstmt01.setString(2, filter.IN_FECHA_PROCESO);
+                cstmt01.setInt(3, 0);
+                cstmt01.setInt(4, 0);
+                cstmt01.execute();
+
+                objRtn.IN_FLOWN = cstmt01.getInt(3);
+                objRtn.IN_EMD = cstmt01.getInt(4);
+                
+            }
+            else
+            {
+                objRtn.IN_FLOWN = -99;
+            }
+            
+         }catch(Exception ex){
+             String str = ex.getMessage();
+             str = "";
+         }finally {
+            if (rs01 != null) {
+                rs01.close();
+            }
+            if (cstmt01 != null) {
+                cstmt01.close();
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+         
+         return objRtn;
+         
+    }
+    
+    public String accountValidationInsertFlown(A1955Filter filter, String strOption) throws SQLException, Exception {
+        String STR_RESULT = "";
+        try {    
+            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP05306(?,?,?,?,?,?,?,?,?)}"; 
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();  
+            cs = cnx.prepareCall(strSQL);
+            cs.setString(1, strOption);
+            cs.setString(2, session.getUserView().getCustomerInfo().CCUST);
+            cs.setString(3, filter.A1955MODUL);            
+            cs.setString(4, filter.IN_FECHA_PROCESO);
+            cs.setString(5, session.getUserView().getUserInfo().USR);
+            cs.setString(6, Functions.getFechaActual());
+            cs.setString(7, Functions.getHoraActual());
+            cs.setString(8, filter.A1955KEY2);
+            cs.setString(9, filter.A1955KEY4);
+            cs.execute();
+            
+            rst = cs.getResultSet();
+            while (rst.next()) {
+                STR_RESULT = rst.getString("VMESSAGE");
+            }
+//            try { cs.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }
+        }catch(Exception ex){
+             String str = ex.getMessage();
+             str = "";
+         }finally {
+            if (rst != null) {
+                rst.close();
+            }
+            if (cs != null) {
+                cs.close();
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return STR_RESULT;
+    } 
       
     public String accountMaintancePendingFlown(A1955Filter filter, String strOption) throws SQLException, Exception  {
         String strSQL;

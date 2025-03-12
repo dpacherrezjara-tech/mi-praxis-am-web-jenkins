@@ -2,7 +2,7 @@
 prototype.id = 'MultilegReportForm';
 prototype.url = CONTEXTPATH+'/MultilegReport';
 prototype.widthContenedor = 1340;
-prototype.widthGrid = 790;
+prototype.widthGrid = 850;
 prototype.widthGridDetail = 1252;
 prototype.widthGridDetTicket = 1305;
 prototype.widthGridDetTicketA1897 = 1330;

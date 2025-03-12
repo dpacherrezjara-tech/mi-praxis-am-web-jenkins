@@ -91,7 +91,8 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMReasonsForm.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ["", "ALL"], ["COMISION", "COMISION"], ["CARGOS/PN", "CARGOS/PN"],
-                                            ["TARIFA", "TARIFA"], ["FOP", "FOP"], ["TAX", "TAX"]
+                                            ["TARIFA", "TARIFA"], ["FOP", "FOP"], ["TAX", "TAX"],
+                                            ["MP", "MEDIOS DE PAGO"]
                                         ]
                                     }),
                                     queryMode: 'local',

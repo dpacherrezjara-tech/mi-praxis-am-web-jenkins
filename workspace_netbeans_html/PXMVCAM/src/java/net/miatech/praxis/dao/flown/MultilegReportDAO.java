@@ -15,6 +15,7 @@ import net.miatech.beans.A1786Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.utils.Functions;
+import org.apache.log4j.Logger;
 
 // </editor-fold>
 /**
@@ -29,6 +30,7 @@ public class MultilegReportDAO {
     private ResultSet rst = null;
     private Connection cnx = null;
     private String strSQL;
+    private static final Logger logError = Logger.getLogger("errorLog");
     // </editor-fold>
 
     public MultilegReportDAO() {
@@ -406,8 +408,45 @@ public class MultilegReportDAO {
 
         return lstCons;
     }
+    
 
-    private void setClose() {
+    public String loadPX087SQP04261(A1786Filter filter) throws SQLException, Exception {
+        //FORCE MATCH.
+        String strMsj = "An Unexpected Error Ocurred.";
+
+        CallableStatement cstmt = null;
+        String SQLCLL01="";
+        
+        SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04261(?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(7, Types.VARCHAR);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, session.getUserView().getUserInfo().USR);
+            cstmt.setString(3, filter.DFLIGHT);
+            cstmt.setString(4, filter.NFLIGHT);
+            cstmt.setString(5, filter.ORIG);
+            cstmt.setString(6, filter.DEST);
+            cstmt.setString(7, "");
+            cstmt.execute();
+
+            strMsj = cstmt.getString(7);
+
+        } catch (Exception e) {
+            strMsj = e.getMessage();
+        } finally {
+            setClose();
+        }
+
+        return strMsj;
+    }
+
+
+    private void setClose() throws Exception {
 
         if (rst != null) {
             try {
@@ -420,7 +459,8 @@ public class MultilegReportDAO {
             try {
                 cs.close();
             } catch (SQLException e) {
-                throw new SpringException(e);
+//                throw new SpringException(e);
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
             }
         }
         try {
@@ -430,7 +470,7 @@ public class MultilegReportDAO {
         }
         pasarGarbageCollector();
     }
-
+    
     public static void pasarGarbageCollector() {
         System.gc();
         System.runFinalization();

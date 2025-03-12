@@ -19,8 +19,10 @@ public class SFI040Filter extends SFI040 {
     public String monthTo = "";
     public String dayFrom = "";
     public String dayTo = "";
+    public String BDATEGRA = "";
     public String strFormatDate = "";
     public String strFormatDate2 = "";
+    public String strFormatDateGRA = "";
     public String imgSTPM = "";
     public String strTGROSS = "";
     public String strTISC = "";
@@ -70,6 +72,9 @@ public class SFI040Filter extends SFI040 {
     public int QITEMSCAR = 0;
     public double TNETOCAR_LY = 0;
     public int QITEMSCAR_LY = 0;
+    //GRAFICO 
+    public double TNETOCARGRA = 0;
+    public double TNETGRA = 0;
     //Porcentajes
     public double PerPAX = 0;
     public double PerAMT = 0;

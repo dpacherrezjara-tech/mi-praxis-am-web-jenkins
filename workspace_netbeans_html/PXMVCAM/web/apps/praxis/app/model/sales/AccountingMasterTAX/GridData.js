@@ -16,6 +16,7 @@
         {name: 'A1741SCTA', type: 'string'},
         {name: 'A1741EQUI', type: 'string'},
         {name: 'A1741ICIA', type: 'string'},
+        {name: 'A1741INTNU', type: 'string'},
         {name: 'A1741CONCE', type: 'string'},
         {name: 'A1741FINI', type: 'string'},
         {name: 'A1741FFIN', type: 'string'}

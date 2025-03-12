@@ -13,11 +13,9 @@ import net.miatech.beans.SQP00792Filter;
 import net.miatech.beans.SQP00793Filter;
 import net.miatech.beans.SQP00794Filter;
 import net.miatech.beans.SQP00795Filter;
-import net.miatech.beans.SQP00796Filter;
-import net.miatech.beans.SQP00806Filter;
+import net.miatech.beans.SQP04561Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.sales.ConsortiaDAO;
-import net.miatech.praxis.dao.sales.PercentCommissionDAO;
 
 /**
  *
@@ -63,4 +61,9 @@ public class ConsortiaLogic {
     public List<SQP00792Filter> downLoadDetalleCTIA(SQP00792Filter filter) throws SQLException, Exception {
         return consortiaDAO.downLoadDetalleCTIA(filter);
     }
+    
+    public List<SQP04561Filter> loadSQP04561(SQP04561Filter filter) throws SQLException, Exception {
+        return consortiaDAO.loadSQP04561(filter);
+    }
+    
 }

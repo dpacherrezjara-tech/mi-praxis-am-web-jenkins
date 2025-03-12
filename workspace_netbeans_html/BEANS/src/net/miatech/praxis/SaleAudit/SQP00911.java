@@ -147,6 +147,7 @@ public class SQP00911 {
     public Double A1673TXDIF;
     public String strNombreAgente;
     public String strDirecAgente;
+    public String A3090STAT2;
     public String strZIPCOD;
     public String strDISTRI;
     public String strDEPART;
@@ -161,6 +162,7 @@ public class SQP00911 {
     public String A2548DIAS;
     public String A2548EMAIL;
     public String A2548FFILE;
+    public String A2548STBSP;
 
     public double CANTGROUP;
     public double CANTCLIE;
@@ -179,7 +181,105 @@ public class SQP00911 {
     public Double TTCARGO;
     public Double PENDIGROUP;
     public Double PENDISCLIE;
+    
+    public String A2548CIAF;
+    public String A2548UNID;
+    public String A2548CECO;
+    public String A2548EQUI;
+    public String A2548ICIA;
+    public String A2548UBICI;
+    public String A2548CUENT;
+    public String A2548SUBCU;
+    public String A2548CLIE;
 
+    public String getA3090STAT2() {
+        return A3090STAT2;
+    }
+
+    public void setA3090STAT2(String A3090STAT2) {
+        this.A3090STAT2 = A3090STAT2;
+    }
+        
+    public String getA2548STBSP() {
+        return A2548STBSP;
+    }
+
+    public void setA2548STBSP(String A2548STBSP) {
+        this.A2548STBSP = A2548STBSP;
+    }
+       
+    public String getA2548CLIE() {
+        return A2548CLIE;
+    }
+
+    public void setA2548CLIE(String A2548CLIE) {
+        this.A2548CLIE = A2548CLIE;
+    }
+    
+    public String getA2548CIAF() {
+        return A2548CIAF;
+    }
+
+    public void setA2548CIAF(String A2548CIAF) {
+        this.A2548CIAF = A2548CIAF;
+    }
+
+    public String getA2548UNID() {
+        return A2548UNID;
+    }
+
+    public void setA2548UNID(String A2548UNID) {
+        this.A2548UNID = A2548UNID;
+    }
+
+    public String getA2548CECO() {
+        return A2548CECO;
+    }
+
+    public void setA2548CECO(String A2548CECO) {
+        this.A2548CECO = A2548CECO;
+    }
+
+    public String getA2548EQUI() {
+        return A2548EQUI;
+    }
+
+    public void setA2548EQUI(String A2548EQUI) {
+        this.A2548EQUI = A2548EQUI;
+    }
+
+    public String getA2548ICIA() {
+        return A2548ICIA;
+    }
+
+    public void setA2548ICIA(String A2548ICIA) {
+        this.A2548ICIA = A2548ICIA;
+    }
+
+    public String getA2548UBICI() {
+        return A2548UBICI;
+    }
+
+    public void setA2548UBICI(String A2548UBICI) {
+        this.A2548UBICI = A2548UBICI;
+    }
+
+    public String getA2548CUENT() {
+        return A2548CUENT;
+    }
+
+    public void setA2548CUENT(String A2548CUENT) {
+        this.A2548CUENT = A2548CUENT;
+    }
+
+    public String getA2548SUBCU() {
+        return A2548SUBCU;
+    }
+
+    public void setA2548SUBCU(String A2548SUBCU) {
+        this.A2548SUBCU = A2548SUBCU;
+    }
+     
     public Double getPENDIGROUP() {
         return PENDIGROUP;
     }

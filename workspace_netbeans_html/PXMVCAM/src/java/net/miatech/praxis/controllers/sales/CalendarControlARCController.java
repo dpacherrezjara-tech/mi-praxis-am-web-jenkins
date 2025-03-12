@@ -64,6 +64,7 @@ public class CalendarControlARCController extends BaseController {
         ArrayList<HashMap> lstfechasDis = new ArrayList<>();
 
         String fechaActual = "";
+        String flagUlt = "";
         Date ahora = new Date();
         SimpleDateFormat formateador = new SimpleDateFormat("yyyyMMdd");
         fechaActual = formateador.format(ahora);
@@ -227,6 +228,9 @@ public class CalendarControlARCController extends BaseController {
                     vl_thursday_St = "#000000";
                     vl_week = oList.get(i).A1527PDIDS;
                     vl_period = oList.get(i).A1527PPED;
+                    if (i == oList.size() - 1) {
+                        flagUlt = "Y";
+                    }
                 }
                 switch (oList.get(i).A1527PDIDC) {
                     case "1":
@@ -323,89 +327,135 @@ public class CalendarControlARCController extends BaseController {
                         if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
                             vl_thursday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
                         }
-                        /*fechas.put("FRIDAY", vl_friday);
-                         fechas.put("FRIDAY_COMMELW", vl_friday_commELW);
-                         fechas.put("FRIDAY_COMMIAP", vl_friday_commIAP);
-                         fechas.put("FRIDAY_COMMIAR", vl_friday_commIAR);
-                         fechas.put("FRIDAY_CANT", vl_friday_cant);
-                         fechas.put("FRIDAY_ERROR", vl_friday_error);
-                         fechas.put("FRIDAY_CANTSALE", vl_friday_cantSale);
-                         fechas.put("FRIDAY_CANTELW", vl_friday_cantELW);
-                         fechas.put("FRIDAY_CANTIAP", vl_friday_cantIAP);
-                         fechas.put("FRIDAY_CANTIAR", vl_friday_cantIAR);
-                         fechas.put("FRIDAY_COLOR", vl_friday_St);
-                         fechas.put("SATURDAY", vl_saturday);
-                         fechas.put("SATURDAY_COMMELW", vl_saturday_commELW);
-                         fechas.put("SATURDAY_COMMIAP", vl_saturday_commIAP);
-                         fechas.put("SATURDAY_COMMIAR", vl_saturday_commIAR);
-                         fechas.put("SATURDAY_CANT", vl_saturday_cant);
-                         fechas.put("SATURDAY_ERROR", vl_saturday_error);
-                         fechas.put("SATURDAY_CANTSALE", vl_saturday_cantSale);
-                         fechas.put("SATURDAY_CANTELW", vl_saturday_cantELW);
-                         fechas.put("SATURDAY_CANTIAP", vl_saturday_cantIAP);
-                         fechas.put("SATURDAY_CANTIAR", vl_saturday_cantIAR);
-                         fechas.put("SATURDAY_COLOR", vl_saturday_St);
-                         fechas.put("SUNDAY", vl_sunday);
-                         fechas.put("SUNDAY_COMMELW", vl_sunday_commELW);
-                         fechas.put("SUNDAY_COMMIAP", vl_sunday_commIAP);
-                         fechas.put("SUNDAY_COMMIAR", vl_sunday_commIAR);
-                         fechas.put("SUNDAY_CANT", vl_sunday_cant);
-                         fechas.put("SUNDAY_ERROR", vl_sunday_error);
-                         fechas.put("SUNDAY_CANTSALE", vl_sunday_cantSale);
-                         fechas.put("SUNDAY_CANTELW", vl_sunday_cantELW);
-                         fechas.put("SUNDAY_CANTIAP", vl_sunday_cantIAP);
-                         fechas.put("SUNDAY_CANTIAR", vl_sunday_cantIAR);
-                         fechas.put("SUNDAY_COLOR", vl_sunday_St);
-                         fechas.put("MONDAY", vl_monday);
-                         fechas.put("TUESDAY", vl_tuesday);
-                         fechas.put("WEDNESDAY", vl_wednesday);
-                         fechas.put("WEDNESDAY_COMMELW", vl_wednesday_commELW);
-                         fechas.put("WEDNESDAY_COMMIAP", vl_wednesday_commIAP);
-                         fechas.put("WEDNESDAY_COMMIAR", vl_wednesday_commIAR);
-                         fechas.put("WEDNESDAY_CANT", vl_wednesday_cant);
-                         fechas.put("WEDNESDAY_ERROR", vl_wednesday_error);
-                         fechas.put("WEDNESDAY_CANTSALE", vl_wednesday_cantSale);
-                         fechas.put("WEDNESDAY_CANTELW", vl_wednesday_cantELW);
-                         fechas.put("WEDNESDAY_CANTIAP", vl_wednesday_cantIAP);
-                         fechas.put("WEDNESDAY_CANTIAR", vl_wednesday_cantIAR);
-                         fechas.put("WEDNESDAY_COLOR", vl_wednesday_St);
-                         fechas.put("THURSDAY1", oList.get(i).A1527SODA);
-                         fechas.put("THURSDAY1_COMMELW", oList.get(i).A1698_COMMEN_ELW);
-                         fechas.put("THURSDAY1_COMMIAP", oList.get(i).A1698_COMMEN_IAP);
-                         fechas.put("THURSDAY1_COMMIAR", oList.get(i).A1698_COMMEN_IAR);
-                         fechas.put("THURSDAY1_CANT", oList.get(i).A1698_TAPES);
-                         fechas.put("THURSDAY1_ERROR", oList.get(i).A1698_ERRORS);
-                         fechas.put("THURSDAY1_CANTSALE", oList.get(i).A1698_SALEWO);
-                         fechas.put("THURSDAY1_CANTELW", oList.get(i).A1698_COUNT_ELW);
-                         fechas.put("THURSDAY1_CANTIAP", oList.get(i).A1698_COUNT_IAP);
-                         fechas.put("THURSDAY1_CANTIAR", oList.get(i).A1698_COUNT_IAR);
-                         if(Integer.parseInt(oList.get(i).A1527SODA)<=Integer.parseInt(fechaActual)){
-                         fechas.put("THURSDAY1_COLOR", Style(oList.get(i).A1698_TAPES,oList.get(i).A1698_SALEWO,oList.get(i).A1698_ERRORS));
-                         }
-                         fechas.put("WEEK", vl_week);
-                         fechas.put("PED", vl_period);
-                         fechas.put("THURSDAY2", oList.get(i).A1527CINTA);
-                         fechasDis.put("VALOR", oList.get(i).A1527DESEM);
-                         lstfechas.add(contFechas,fechas);
-                         lstfechasDis.add(contFechas,fechasDis);
-                         contFechas ++;
-                         contMonth = 1;
-                         vl_friday="";vl_friday_commELW="";vl_friday_commIAP="";vl_friday_commIAR="";
-                         vl_friday_cant=0;vl_friday_error=0;vl_friday_cantSale=0;vl_friday_cantELW=0;vl_friday_cantIAP=0;vl_friday_cantIAR=0;
-                         vl_saturday="";vl_saturday_commELW="";vl_saturday_commIAP="";vl_saturday_commIAR="";
-                         vl_saturday_cant=0;vl_saturday_error=0;vl_saturday_cantSale=0;vl_saturday_cantELW=0;vl_saturday_cantIAP=0;vl_saturday_cantIAR=0;
-                         vl_sunday="";vl_sunday_commELW="";vl_sunday_commIAP="";vl_sunday_commIAR="";
-                         vl_sunday_cant=0;vl_sunday_error=0;vl_sunday_cantSale=0;vl_sunday_cantELW=0;vl_sunday_cantIAP=0;vl_sunday_cantIAR=0;
-                         vl_monday = "";
-                         vl_tuesday = "";
-                         vl_wednesday="";vl_wednesday_commELW="";vl_wednesday_commIAP="";vl_wednesday_commIAR="";
-                         vl_wednesday_cant=0;vl_wednesday_error=0;vl_wednesday_cantSale=0;vl_wednesday_cantELW=0;vl_wednesday_cantIAP=0;vl_wednesday_cantIAR=0;
-                         vl_friday_St = "#000000";
-                         vl_saturday_St = "#000000";
-                         vl_sunday_St = "#000000";
-                         vl_wednesday_St = "#000000";*/
                         break;
                 }
+                
+                // Insertar la ultima semana
+                if (i == oList.size() - 1 && flagUlt.equals("")) {
+                    fechas.put("FRIDAY", vl_friday);
+                    fechas.put("FRIDAY_COMMELW", vl_friday_commELW);
+                    fechas.put("FRIDAY_COMMIAP", vl_friday_commIAP);
+                    fechas.put("FRIDAY_COMMIAR", vl_friday_commIAR);
+                    fechas.put("FRIDAY_CANT", vl_friday_cant);
+                    fechas.put("FRIDAY_ERROR", vl_friday_error);
+                    fechas.put("FRIDAY_CANTSALE", vl_friday_cantSale);
+                    fechas.put("FRIDAY_CANTELW", vl_friday_cantELW);
+                    fechas.put("FRIDAY_CANTIAP", vl_friday_cantIAP);
+                    fechas.put("FRIDAY_CANTIAR", vl_friday_cantIAR);
+                    fechas.put("FRIDAY_COLOR", vl_friday_St);
+                    fechas.put("SATURDAY", vl_saturday);
+                    fechas.put("SATURDAY_COMMELW", vl_saturday_commELW);
+                    fechas.put("SATURDAY_COMMIAP", vl_saturday_commIAP);
+                    fechas.put("SATURDAY_COMMIAR", vl_saturday_commIAR);
+                    fechas.put("SATURDAY_CANT", vl_saturday_cant);
+                    fechas.put("SATURDAY_ERROR", vl_saturday_error);
+                    fechas.put("SATURDAY_CANTSALE", vl_saturday_cantSale);
+                    fechas.put("SATURDAY_CANTELW", vl_saturday_cantELW);
+                    fechas.put("SATURDAY_CANTIAP", vl_saturday_cantIAP);
+                    fechas.put("SATURDAY_CANTIAR", vl_saturday_cantIAR);
+                    fechas.put("SATURDAY_COLOR", vl_saturday_St);
+                    fechas.put("SUNDAY", vl_sunday);
+                    fechas.put("SUNDAY_COMMELW", vl_sunday_commELW);
+                    fechas.put("SUNDAY_COMMIAP", vl_sunday_commIAP);
+                    fechas.put("SUNDAY_COMMIAR", vl_sunday_commIAR);
+                    fechas.put("SUNDAY_CANT", vl_sunday_cant);
+                    fechas.put("SUNDAY_ERROR", vl_sunday_error);
+                    fechas.put("SUNDAY_CANTSALE", vl_sunday_cantSale);
+                    fechas.put("SUNDAY_CANTELW", vl_sunday_cantELW);
+                    fechas.put("SUNDAY_CANTIAP", vl_sunday_cantIAP);
+                    fechas.put("SUNDAY_CANTIAR", vl_sunday_cantIAR);
+                    fechas.put("SUNDAY_COLOR", vl_sunday_St);
+                    fechas.put("MONDAY", vl_monday);
+                    fechas.put("TUESDAY", vl_tuesday);
+                    fechas.put("WEDNESDAY", vl_wednesday);
+                    fechas.put("WEDNESDAY_COMMELW", vl_wednesday_commELW);
+                    fechas.put("WEDNESDAY_COMMIAP", vl_wednesday_commIAP);
+                    fechas.put("WEDNESDAY_COMMIAR", vl_wednesday_commIAR);
+                    fechas.put("WEDNESDAY_CANT", vl_wednesday_cant);
+                    fechas.put("WEDNESDAY_ERROR", vl_wednesday_error);
+                    fechas.put("WEDNESDAY_CANTSALE", vl_wednesday_cantSale);
+                    fechas.put("WEDNESDAY_CANTELW", vl_wednesday_cantELW);
+                    fechas.put("WEDNESDAY_CANTIAP", vl_wednesday_cantIAP);
+                    fechas.put("WEDNESDAY_CANTIAR", vl_wednesday_cantIAR);
+                    fechas.put("WEDNESDAY_COLOR", vl_wednesday_St);
+                    fechas.put("THURSDAY1", vl_thursday);
+                    fechas.put("THURSDAY1_COMMELW", vl_thursday_commELW);
+                    fechas.put("THURSDAY1_COMMIAP", vl_thursday_commIAP);
+                    fechas.put("THURSDAY1_COMMIAR", vl_thursday_commIAR);
+                    fechas.put("THURSDAY1_CANT", vl_thursday_cant);
+                    fechas.put("THURSDAY1_ERROR", vl_thursday_error);
+                    fechas.put("THURSDAY1_CANTSALE", vl_thursday_cantSale);
+                    fechas.put("THURSDAY1_CANTELW", vl_thursday_cantELW);
+                    fechas.put("THURSDAY1_CANTIAP", vl_thursday_cantIAP);
+                    fechas.put("THURSDAY1_CANTIAR", vl_thursday_cantIAR);
+                    fechas.put("THURSDAY1_COLOR", vl_thursday_St);
+                    fechas.put("WEEK", vl_week);
+                    fechas.put("PED", vl_period);
+                    fechas.put("THURSDAY2", vl_thursday2);
+                    fechasDis.put("VALOR", vl_fechaDisbursment);
+                    lstfechas.add(contFechas, fechas);
+                    lstfechasDis.add(contFechas, fechasDis);
+                    contFechas++;
+                    contMonth = 1;
+                    vl_friday = "";
+                    vl_friday_commELW = "";
+                    vl_friday_commIAP = "";
+                    vl_friday_commIAR = "";
+                    vl_friday_cant = 0;
+                    vl_friday_error = 0;
+                    vl_friday_cantSale = 0;
+                    vl_friday_cantELW = 0;
+                    vl_friday_cantIAP = 0;
+                    vl_friday_cantIAR = 0;
+                    vl_saturday = "";
+                    vl_saturday_commELW = "";
+                    vl_saturday_commIAP = "";
+                    vl_saturday_commIAR = "";
+                    vl_saturday_cant = 0;
+                    vl_saturday_error = 0;
+                    vl_saturday_cantSale = 0;
+                    vl_saturday_cantELW = 0;
+                    vl_saturday_cantIAP = 0;
+                    vl_saturday_cantIAR = 0;
+                    vl_sunday = "";
+                    vl_sunday_commELW = "";
+                    vl_sunday_commIAP = "";
+                    vl_sunday_commIAR = "";
+                    vl_sunday_cant = 0;
+                    vl_sunday_error = 0;
+                    vl_sunday_cantSale = 0;
+                    vl_sunday_cantELW = 0;
+                    vl_sunday_cantIAP = 0;
+                    vl_sunday_cantIAR = 0;
+                    vl_monday = "";
+                    vl_tuesday = "";
+                    vl_wednesday = "";
+                    vl_wednesday_commELW = "";
+                    vl_wednesday_commIAP = "";
+                    vl_wednesday_commIAR = "";
+                    vl_wednesday_cant = 0;
+                    vl_wednesday_error = 0;
+                    vl_wednesday_cantSale = 0;
+                    vl_wednesday_cantELW = 0;
+                    vl_wednesday_cantIAP = 0;
+                    vl_wednesday_cantIAR = 0;
+                    vl_thursday = "";
+                    vl_thursday_commELW = "";
+                    vl_thursday_commIAP = "";
+                    vl_thursday_commIAR = "";
+                    vl_thursday_cant = 0;
+                    vl_thursday_error = 0;
+                    vl_thursday_cantSale = 0;
+                    vl_thursday_cantELW = 0;
+                    vl_thursday_cantIAP = 0;
+                    vl_thursday_cantIAR = 0;
+                    vl_friday_St = "#000000";
+                    vl_saturday_St = "#000000";
+                    vl_sunday_St = "#000000";
+                    vl_wednesday_St = "#000000";
+                    vl_thursday_St = "#000000";
+                }
+                
                 HashMap month = new HashMap();
                 HashMap week = new HashMap();
 
@@ -490,10 +540,10 @@ public class CalendarControlARCController extends BaseController {
 
         return new Gson().toJson(map);
     }
-
+    
     String Style(Integer cant,Integer cantSale,Integer error){
         String style = "#FF0000";
-        if(cant == 1){
+        if(cant >= 1){
             if(cantSale > 0){
                 style = "#FFCC00";
             }else{

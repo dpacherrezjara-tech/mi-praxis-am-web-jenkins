@@ -22,11 +22,11 @@ import net.miatech.beans.ReportEmdDetailsA1530Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.interline.filter.SFI021Filter;
 import net.miatech.praxis.interline.filter.WRF016Filter;
-import net.miatech.praxis.payment.A2281;
-import net.miatech.praxis.payment.A2359;
-import net.miatech.praxis.payment.filter.A2280Filter;
-import net.miatech.praxis.payment.filter.A2287Filter;
-import net.miatech.praxis.payment.filter.A2290Filter;
+import net.miatech.praxis.payment.old.A2281;
+import net.miatech.praxis.payment.old.A2359;
+import net.miatech.praxis.payment.old.A2280Filter;
+import net.miatech.praxis.payment.old.A2287Filter;
+import net.miatech.praxis.payment.old.A2290Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -677,7 +677,7 @@ public class InputsDAO {
                 objRtn.strFormatDate2 = filter.strFormatDate2;
                 objRtn.FECHA = rs01.getString("FECRFILE");
                 objRtn.strFormatDate3 = Functions.getMonthConvert(objRtn.FECHA);
-                objRtn.strFormatDate4 = rs01.getString("NLOT");
+//                objRtn.strFormatDate4 = rs01.getString("NLOT");
                 objRtn.FUENTE = rs01.getString("FUENTE");
                 objRtn.PPROGRAM = rs01.getString("PPROGRAM");
                 objRtn.MENSA = rs01.getString("MENSA").trim();
@@ -825,39 +825,45 @@ public class InputsDAO {
         hmTablaFuente.put("ACLARSNTDR", "A2311");
         hmTablaFuente.put("AVISOSBNMX", "A2316");
         hmTablaFuente.put("EECCBX", "A2328");
+        hmTablaFuente.put("AXGRRCN-D", "A4111");
+        hmTablaFuente.put("AXPLUSGR-D", "A4123");
+        hmTablaFuente.put("AXLIGATB-D", "A4125");
+        hmTablaFuente.put("WORLDPAY-D", "A4039");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00667(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04393(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(8, Types.VARCHAR);
-            cstmt01.registerOutParameter(9, Types.INTEGER);
-            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.VARCHAR);
             cstmt01.registerOutParameter(11, Types.INTEGER);
             cstmt01.registerOutParameter(12, Types.INTEGER);
+            cstmt01.registerOutParameter(13, Types.INTEGER);
+            cstmt01.registerOutParameter(14, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.FECR);//filter.strFormatDate4
-            cstmt01.setString(3, filter.HOCR);
-            cstmt01.setString(4, filter.FUENTE);//"PLM"
-            cstmt01.setString(5, filter.PPROGRAM);
-            cstmt01.setString(6, filter.IN_ERROR);
-            cstmt01.setString(7, consulta);
-            cstmt01.setString(8, "");
-            cstmt01.setInt(9, filter.page.PAGNUM);
-            cstmt01.setInt(10, filter.page.PAGROW);
-            cstmt01.setInt(11, filter.page.TOTPAG);
-            cstmt01.setInt(12, filter.page.TOTROW);
+            cstmt01.setString(2, filter.FECHA); // FECRFILE
+            cstmt01.setString(3, filter.FECR);
+            cstmt01.setString(4, filter.HOCR);
+            cstmt01.setString(5, filter.FUENTE);//"PLM"
+            cstmt01.setString(6, filter.PPROGRAM);
+            cstmt01.setString(7, filter.IN_ERROR);
+            cstmt01.setString(8, filter.IN_FECRFILE);            
+            cstmt01.setString(9, consulta);
+            cstmt01.setString(10, "");
+            cstmt01.setInt(11, filter.page.PAGNUM);
+            cstmt01.setInt(12, filter.page.PAGROW);
+            cstmt01.setInt(13, filter.page.TOTPAG);
+            cstmt01.setInt(14, filter.page.TOTROW);
             cstmt01.execute();
 
-            filter.strFormatDate4 = cstmt01.getString(8);
-            filter.page.PAGNUM = cstmt01.getInt(9);
-            filter.page.PAGROW = cstmt01.getInt(10);
-            filter.page.TOTPAG = cstmt01.getInt(11);
-            filter.page.TOTROW = cstmt01.getInt(12);
+            filter.strFormatDate4 = cstmt01.getString(10);
+            filter.page.PAGNUM = cstmt01.getInt(11);
+            filter.page.PAGROW = cstmt01.getInt(12);
+            filter.page.TOTPAG = cstmt01.getInt(13);
+            filter.page.TOTROW = cstmt01.getInt(14);
 
             rs01 = cstmt01.getResultSet();
             int pos = 0;
@@ -946,8 +952,10 @@ public class InputsDAO {
             rs01 = cstmt01.getResultSet();
             hm = new HashMap();
             while (rs01.next()) {
-
-                hm.put(rs01.getString("FECHA"), "");
+                    
+                objeto = new A1686Filter();                
+                hm.put(rs01.getString("FECHA"), rs01.getInt("QTYRECEI"));                
+                
             }
 
             String fecha;
@@ -966,7 +974,7 @@ public class InputsDAO {
                             if (tipo.equals("ACCB")) {
                                 objeto = new A1686Filter();
                                 objeto.fecha = fecha;
-                                objeto.strFormatDate = "ROJO";
+                                objeto.strFormatDate = "AMBAR";
                                 if (hm.containsKey(fecha)) {
                                     objeto.strFormatDate = "VERDE";
                                 }
@@ -974,9 +982,16 @@ public class InputsDAO {
                             } else {
                                 objeto = new A1686Filter();
                                 objeto.fecha = fecha;
-                                objeto.strFormatDate = "ROJO";
+                                objeto.strFormatDate = "AMBAR";
                                 if (hm.containsKey(fecha)) {
                                     objeto.strFormatDate = "VERDE";
+                                    
+                                    // Verificar si archivo vino vacio (pintar amarillo)
+                                    if(filter.IN_FUENTE.trim().equals("AXGRRCN-D")){
+                                        if(hm.get(fecha).toString().equals("0") ){
+                                            objeto.strFormatDate = "YELLOW";
+                                        }
+                                    }
                                 }
                                 lista.add(objeto);
                             }

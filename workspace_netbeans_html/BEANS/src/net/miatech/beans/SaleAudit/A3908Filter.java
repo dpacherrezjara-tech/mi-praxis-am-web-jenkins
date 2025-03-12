@@ -16,6 +16,7 @@ public class A3908Filter extends A3908{
 
     public String IN_OPTION = "";
     public String IN_PREME = "";
+    public String IN_TIPO = "";
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();
     public DBException dbException = new DBException();
 

@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainData',
                                     bodyStyle: 'background-color: #E3EAEF;',
-                                    width: 1515,
+                                    width: 1615,
                                     columnLines: true,
                                     resizable: false,
                                     features: [{
@@ -273,15 +273,37 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesForm.Info', {
 //                                                                return true;
 //                                                            }
 //                                                        },
-                                                        getClass: function(v, meta, rec) {
+                                                      /* getClass: function(v, meta, rec) {
                                                             if (rec.data.PERNUM !== '04') {
 //                                                                meta.tdCls = "x-grid-cell x-grid-td x-grid-cell-actioncolumn-1609 x-grid-cell-last x-selectable";
 //                                                                metaData.unselectableAttr = "unselectable='off'";
                                                                 metaData.css = 'x-hide-display';
                                                                 return v;
                                                             }
-                                                        },
+                                                        },*/
                                                         handler: 'openExportManyExcels'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'EMD-DELTA',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'SKYLINK',
+                                                        xtype: 'actioncolumn',
+                                                        width: 100,
+                                                        align: 'center',
+                                                        items: [
+                                                            {
+                                                                icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                                                                handler: 'exportExcelEMD'
+                                                            }
+                                                        ]
                                                     }
                                                 ]
                                             }

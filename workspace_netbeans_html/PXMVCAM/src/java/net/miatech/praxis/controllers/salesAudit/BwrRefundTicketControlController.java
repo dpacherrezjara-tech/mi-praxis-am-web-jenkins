@@ -44,39 +44,39 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Scope("request")
 @RequestMapping("/BwrRefundTicketControl")
 public class BwrRefundTicketControlController extends BaseController {
-    
+
     private static final Logger logError = Logger.getLogger("errorLog");
     private BwrRefundTicketControlLogic logic;
-    
+
     @RequestMapping(value = "searchRefundTicketControl")
     public @ResponseBody
     String SearchQueryRefund(ModelMap map, HttpServletRequest request) {
         List<A3389Filter> lst;
         A3389Filter filter = new A3389Filter();
-        try{
+        try {
             logic = new BwrRefundTicketControlLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            int pExcel = Integer.parseInt(request.getParameter("pexcel").toString());
+            int pExcel = Integer.parseInt(request.getParameter("pexcel"));
             Boolean bExcel = pExcel == 1 ? true : false;
-            
-            filter.IN_OPTION = request.getParameter("IN_OPTION").toString().trim();
-            filter.IN_CIA = request.getParameter("IN_CIA").toString().trim();
-            filter.IN_FORMA = request.getParameter("IN_FORMA").toString().trim();
-            filter.IN_SERIE = request.getParameter("IN_SERIE").toString().trim();
-            filter.IN_SEQ = request.getParameter("IN_SEQ").toString().trim();
-            filter.IN_DATEFROM = request.getParameter("IN_DATEFROM").toString().trim();
-            filter.IN_DATETO = request.getParameter("IN_DATETO").toString().trim();
-            filter.IN_COUNTRY = request.getParameter("IN_COUNTRY").toString().trim();
-            
+
+            filter.IN_OPTION = request.getParameter("IN_OPTION").trim();
+            filter.IN_CIA = request.getParameter("IN_CIA").trim();
+            filter.IN_FORMA = request.getParameter("IN_FORMA").trim();
+            filter.IN_SERIE = request.getParameter("IN_SERIE").trim();
+            filter.IN_SEQ = request.getParameter("IN_SEQ").trim();
+            filter.IN_DATEFROM = request.getParameter("IN_DATEFROM").trim();
+            filter.IN_DATETO = request.getParameter("IN_DATETO").trim();
+            filter.IN_COUNTRY = request.getParameter("IN_COUNTRY").trim();
+
             if (!bExcel) {
                 filter.page.PAGROW = -1;
                 filter.page.PAGNUM = 1;
-            }else{
+            } else {
                 filter.page.PAGROW = -1;
                 filter.page.PAGNUM = 1;
             }
-            
+
             lst = logic.searchRefundTicketControl(filter);
         } catch (Exception e) {
             throw new SpringException(e);
@@ -87,6 +87,7 @@ public class BwrRefundTicketControlController extends BaseController {
 
         return new Gson().toJson(map);
     }
+
     @RequestMapping(value = "/getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -101,9 +102,9 @@ public class BwrRefundTicketControlController extends BaseController {
             logic = new BwrRefundTicketControlLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A3389Filter> lst = logic.searchRefundTicketControl(filter);
-            
+
             //Workbook workbook = new XSSFWorkbook();
-              int limite = 300;
+            int limite = 300;
             SXSSFWorkbook workbook = new SXSSFWorkbook(limite);
             Sheet sheet = workbook.createSheet("RefundTicketControl");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
@@ -138,7 +139,7 @@ public class BwrRefundTicketControlController extends BaseController {
             Iterator iter = lst.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08;
 
             row = sheet.createRow(vj);
 
@@ -150,16 +151,17 @@ public class BwrRefundTicketControlController extends BaseController {
             CH_05 = row.createCell(5);
             CH_06 = row.createCell(6);
             CH_07 = row.createCell(7);
+            CH_08 = row.createCell(8);
 
-             CH_00.setCellValue("System date");
-             CH_01.setCellValue("Ticket");
-             CH_02.setCellValue("Country");
-             CH_03.setCellValue("Send to audit");
-             CH_04.setCellValue("Return to audit");
-             CH_05.setCellValue("Send to sabre");
-             CH_06.setCellValue("Currency");
-             CH_07.setCellValue("Amount");
-             
+            CH_00.setCellValue("System date");
+            CH_01.setCellValue("Ticket");
+            CH_02.setCellValue("Channel");
+            CH_02.setCellValue("Country");
+            CH_04.setCellValue("Send to audit");
+            CH_05.setCellValue("Return to audit");
+            CH_06.setCellValue("Send to sabre");
+            CH_07.setCellValue("Currency");
+            CH_08.setCellValue("Amount");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -195,12 +197,13 @@ public class BwrRefundTicketControlController extends BaseController {
 
                 CH_00.setCellValue(lst.get(vi).A3389FREGI);
                 CH_01.setCellValue(lst.get(vi).A3389TKT);
-                CH_02.setCellValue(lst.get(vi).A3389PAIS);
-                CH_03.setCellValue(lst.get(vi).A3389FLAG);
-                CH_04.setCellValue(lst.get(vi).A3389STATO);
-                CH_05.setCellValue(lst.get(vi).A3389STATU);
-                CH_06.setCellValue(lst.get(vi).A3389MDA);
-                CH_07.setCellValue(lst.get(vi).A3389TOTAL);
+                CH_02.setCellValue(lst.get(vi).A3389CHANEL);
+                CH_03.setCellValue(lst.get(vi).A3389PAIS);
+                CH_04.setCellValue(lst.get(vi).A3389FLAG);
+                CH_05.setCellValue(lst.get(vi).A3389STATO);
+                CH_06.setCellValue(lst.get(vi).A3389STATU);
+                CH_07.setCellValue(lst.get(vi).A3389MDA);
+                CH_08.setCellValue(lst.get(vi).A3389TOTAL);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -210,6 +213,7 @@ public class BwrRefundTicketControlController extends BaseController {
                 CH_05.setCellStyle(bodyStyle);
                 CH_06.setCellStyle(bodyStyle);
                 CH_07.setCellStyle(bodyStyle);
+                CH_08.setCellStyle(bodyStyle);
 
                 iter.next();
                 ++vi;
@@ -221,7 +225,7 @@ public class BwrRefundTicketControlController extends BaseController {
             //sheet.autoSizeColumn(2, true);
             //sheet.autoSizeColumn(3, true);
             //sheet.autoSizeColumn(4, true);
-           // sheet.autoSizeColumn(5, true);
+            // sheet.autoSizeColumn(5, true);
             sheet.autoSizeColumn(6, true);
             //sheet.autoSizeColumn(7, true);
 
@@ -241,7 +245,7 @@ public class BwrRefundTicketControlController extends BaseController {
         }
 
     }
-    
+
     /*
     public JavaToFlexResponse searchRefundTicketControl(A3389Filter filter) {
         JavaToFlexResponse resp = new JavaToFlexResponse();
@@ -266,6 +270,5 @@ public class BwrRefundTicketControlController extends BaseController {
 
         return resp;
     }
-    */
-    
+     */
 }

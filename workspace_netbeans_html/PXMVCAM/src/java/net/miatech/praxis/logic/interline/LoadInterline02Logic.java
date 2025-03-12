@@ -158,4 +158,14 @@ public class LoadInterline02Logic {
     public List<A020Filter> loadPX195S01A020(A020Filter filter) throws SQLException, Exception {
         return loadInterline02DAO.loadPX195S01A020(filter);
     }
+    
+    public boolean searchDate_A1851(String fech) throws SQLException, Exception {
+        return loadInterline02DAO.searchDate_A1851(fech);
+    }
+    
+    public boolean insert_A1851(List<A1851> lstRtn, String strFechDuplicat) throws SQLException, Exception {
+        return loadInterline02DAO.insert_A1851(lstRtn, strFechDuplicat);
+    }
+    
+    
 }

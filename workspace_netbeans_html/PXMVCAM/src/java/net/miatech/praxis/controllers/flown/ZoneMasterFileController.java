@@ -275,46 +275,34 @@ public class ZoneMasterFileController extends BaseController {
                     // ====== CREANDO TITULOS ======================================
                     Row row = sheet.createRow(vj);
                     Cell CH1_00 = row.createCell(0);
-                    CH1_00.setCellValue("Nbr");
-                    Cell CH1_01 = row.createCell(1);
-                    CH1_01.setCellValue("Treg");
+                    CH1_00.setCellValue("Airport");
                     Cell CH1_02 = row.createCell(2);
-                    CH1_02.setCellValue("Airport");
-                    Cell CH1_04 = row.createCell(4);
-                    CH1_04.setCellValue("Zone");
+                    CH1_02.setCellValue("Zone");
 
                     //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-                    sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));//Nbr
-                    sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));//Treg
-                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 3));//Airport
-                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 5));//Zone            
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));//Airport
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 3));//Zone            
 
                     CH1_00.setCellStyle(headerStyle);
-                    CH1_01.setCellStyle(headerStyle);
                     CH1_02.setCellStyle(headerStyle);
-                    CH1_04.setCellStyle(headerStyle);
 
                     //*******************
                     ++vj;
                     Row row2 = sheet.createRow(vj);
 
                     Cell CH2_00 = row2.createCell(0);
+                    CH2_00.setCellValue("Code");
                     Cell CH2_01 = row2.createCell(1);
+                    CH2_01.setCellValue("AirportName");
                     Cell CH2_02 = row2.createCell(2);
                     CH2_02.setCellValue("Code");
                     Cell CH2_03 = row2.createCell(3);
-                    CH2_03.setCellValue("AirportName");
-                    Cell CH2_04 = row2.createCell(4);
-                    CH2_04.setCellValue("Code");
-                    Cell CH2_05 = row2.createCell(5);
-                    CH2_05.setCellValue("Zone Name");
+                    CH2_03.setCellValue("Zone Name");
 
                     CH2_00.setCellStyle(headerStyle);
                     CH2_01.setCellStyle(headerStyle);
                     CH2_02.setCellStyle(headerStyle);
                     CH2_03.setCellStyle(headerStyle);
-                    CH2_04.setCellStyle(headerStyle);
-                    CH2_05.setCellStyle(headerStyle);
 
                     // =============================================================
                     ++vj;
@@ -325,22 +313,16 @@ public class ZoneMasterFileController extends BaseController {
                         Cell rcell1 = row.createCell(1);
                         Cell rcell2 = row.createCell(2);
                         Cell rcell3 = row.createCell(3);
-                        Cell rcell4 = row.createCell(4);
-                        Cell rcell5 = row.createCell(5);
 
-                        rcell0.setCellValue(listaData.get(vi).pos);
-                        rcell1.setCellValue(listaData.get(vi).TREG);
-                        rcell2.setCellValue(listaData.get(vi).ATOS);
-                        rcell3.setCellValue(listaData.get(vi).strAeropuerto);
-                        rcell4.setCellValue(listaData.get(vi).ZONA);
-                        rcell5.setCellValue(listaData.get(vi).strZONA);
+                        rcell0.setCellValue(listaData.get(vi).ATOS);
+                        rcell1.setCellValue(listaData.get(vi).strAeropuerto);
+                        rcell2.setCellValue(listaData.get(vi).ZONA);
+                        rcell3.setCellValue(listaData.get(vi).strZONA);
 
                         rcell0.setCellStyle(bodyStyle);
                         rcell1.setCellStyle(bodyStyle);
                         rcell2.setCellStyle(bodyStyle);
                         rcell3.setCellStyle(bodyStyle);
-                        rcell4.setCellStyle(bodyStyle);
-                        rcell5.setCellStyle(bodyStyle);
 
                         iter.next();
                         ++vi;
@@ -350,8 +332,6 @@ public class ZoneMasterFileController extends BaseController {
                     sheet.autoSizeColumn(1, true);
                     sheet.autoSizeColumn(2, true);
                     sheet.autoSizeColumn(3, true);
-                    sheet.autoSizeColumn(4, true);
-                    sheet.autoSizeColumn(5, true);
 
                     break;
 

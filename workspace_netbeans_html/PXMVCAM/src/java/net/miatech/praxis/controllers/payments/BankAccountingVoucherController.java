@@ -27,7 +27,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.BankAccountingVoucherLogic;
-import net.miatech.praxis.payment.A2364;
+import net.miatech.praxis.payment.old.A2364;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;

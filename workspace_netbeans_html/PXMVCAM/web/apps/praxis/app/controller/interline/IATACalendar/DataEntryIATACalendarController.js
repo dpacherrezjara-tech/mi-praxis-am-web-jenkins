@@ -10,21 +10,24 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.DataEntryIATACalendarCo
         this.objPermiso = this.p.objPermiso;
     },
     afterRender: function(){
-        meEntry.PERMISO = win.validateAccess(this.objPermiso, this.p.actionCode);
-        Ext.getCmp(prototype.id + '-btnSave').hide();
-        Ext.getCmp(prototype.id + '-btnUpdate').hide();
-        Ext.getCmp(prototype.id + '-btnDelete').hide();
-        
-        switch (this.p.actionCode) {
-            case "A":
+        meEntry.PERMISO = win.validateAccess(this.objPermiso, this.p.action);
+        Ext.getCmp(prototype.id + '-btn-save').hide();
+        Ext.getCmp(prototype.id + '-btn-update').hide();
+        Ext.getCmp(prototype.id + '-btn-delete').hide();
+        this.p = this.view.params;
+        switch (this.p.action) {
+            case "I":
                 this.HabilitarCampoClave();
-                if(meEntry.PERMISO){
-                    Ext.getCmp(prototype.id + '-btnSave').show();
-                }
+                //if(meEntry.PERMISO){
+                    Ext.getCmp(prototype.id + '-btn-save').show();
+                //}
                 break;
-            case "M":
+            case "U":
                 this.DeshabilitarCampoClave();
                 this.mostrarData();
+                //if(meEntry.PERMISO){
+                    Ext.getCmp(prototype.id + '-btn-update').show();
+                //}
 //                Ext.getCmp(prototype.id + '-btnSave').hide();
 //                Ext.getCmp(prototype.id + '-btnUpdate').hide();
 //                Ext.getCmp(prototype.id + '-btnDelete').hide();
@@ -32,12 +35,13 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.DataEntryIATACalendarCo
             case "V":
                 this.DeshabilitarCampos();
                 this.mostrarData();
-                Ext.getCmp(prototype.id + '-btnSave').hide();
-                Ext.getCmp(prototype.id + '-btnUpdate').hide();
-                Ext.getCmp(prototype.id + '-btnDelete').hide();
+                Ext.getCmp(prototype.id + '-btn-save').hide();
+                Ext.getCmp(prototype.id + '-btn-update').hide();
+                Ext.getCmp(prototype.id + '-btn-delete').hide();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
+        global.AccessControlManagerByModeById(this.p, prototype.id);
     },
     //<editor-fold defaultstate="collapsed" desc="toolbar">
     onSaveClick: function () {
@@ -56,6 +60,29 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.DataEntryIATACalendarCo
                     var msjResult = this.validacionInsert(beanTemp);
                     if (msjResult === '') {
                         this.MaintenanceA1851(beanTemp, 'I');
+                    } else {
+                        global.Msg({msg: msjResult});
+                    }
+                }
+            }
+        });
+    },
+    onUpdateClick: function () {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to update ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {
+                    var beanTemp = {};
+                    this.llenarData(beanTemp);
+                    
+                    var msjResult = this.validacionInsert(beanTemp);
+                    if (msjResult === '') {
+                        this.MaintenanceA1851(beanTemp, 'U');
                     } else {
                         global.Msg({msg: msjResult});
                     }
@@ -105,13 +132,15 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.DataEntryIATACalendarCo
         this.setValue('txtDENVI', this.p.bean.DENVI.trim());
         this.setValue('txtTIMESE', this.p.bean.TIMESE.trim());
         this.setValue('cmbPERIOD', this.p.bean.PERIOD.trim());
-        
+        this.setValue('txtStatus', this.p.bean.STVAL.trim());
+    
         this.setValue('txtUSCR', this.p.bean.USCR.trim());
         this.setValue('txtFECR', this.p.bean.FECR.trim());
         this.setValue('txtHOCR', this.p.bean.HOCR.trim());
         this.setValue('txtUSUP', this.p.bean.USUP.trim());
         this.setValue('txtFEUP', this.p.bean.FEUP.trim());
         this.setValue('txtHOUP', this.p.bean.HOUP.trim());
+    
     },
     llenarData: function (beanTemp) {
         beanTemp.FINVOIC= Ext.util.Format.date(this.getValue('txtFINVOIC'), 'Ym');
@@ -122,6 +151,7 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.DataEntryIATACalendarCo
         beanTemp.TIMESO= this.getValue("txtTIMESO");
         beanTemp.DENVI= Ext.util.Format.date(this.getValue('txtDENVI'), 'Ymd');
         beanTemp.TIMESE= this.getValue("txtTIMESE");
+        beanTemp.STVAL= this.getValue("txtStatus");
 
         beanTemp.USCR = this.getValue("txtUSCR");
         beanTemp.FECR = this.getValue("txtFECR");

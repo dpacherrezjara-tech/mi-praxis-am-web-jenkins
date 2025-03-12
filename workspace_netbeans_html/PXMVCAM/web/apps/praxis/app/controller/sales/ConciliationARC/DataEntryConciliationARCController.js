@@ -21,7 +21,8 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationARC.DataEntryConciliationARC
     afterRender: function() { 
         var p = this.view.params;
         this.getDataInputs();
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(p);
     },
     getDataInputs: function() {
 

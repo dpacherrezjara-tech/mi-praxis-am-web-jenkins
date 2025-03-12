@@ -25,34 +25,33 @@ Ext.define('Ext.Praxis.view.sales.CalendarControlBSPForm.Info', {
                 {
                     region: 'center',
                     id: prototype.id + '-region-content-center',
-                    border:false,
-                    items:[
-                    {
-                        xtype: 'panel',
-                        border:false,
-                        layout: {
-                            type: 'vbox',
-                            align: 'center'
-                        },
-                        bodyStyle: 'background: transparent',
-                        defaults: {
-                            width: 620,
-                            border:false
-                        },
-                        items:[{
+                    border: false,
+                    items: [
+                        {
                             xtype: 'panel',
-                            id: prototype.id + '-contenedor-calendario',
+                            border: false,
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
                             bodyStyle: 'background: transparent',
-//                            height: 480,
-                            width: 1060,
-                            autoScroll: true,
-                            listeners:{
-                                afterrender: function(obj, e){
+                            defaults: {
+                                width: 620,
+                                border: false
+                            },
+                            items: [{
+                                    xtype: 'panel',
+                                    id: prototype.id + '-contenedor-calendario',
+                                    flex: 1,
+                                    bodyStyle: 'background: transparent;max-height:100vh;overflow:auto;',
+                                    width: 1060,
+                                    listeners: {
+                                        afterrender: function (obj, e) {
 
-                                }
-                            }
+                                        }
+                                    }
+                                }]
                         }]
-                    }]
                 }
             ]
         },

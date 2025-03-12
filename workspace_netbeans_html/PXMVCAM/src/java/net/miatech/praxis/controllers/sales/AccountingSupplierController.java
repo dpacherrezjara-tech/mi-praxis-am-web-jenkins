@@ -326,6 +326,7 @@ public class AccountingSupplierController extends BaseController {
             filter.A1806UNIDA = request.getParameter("A1806UNIDA");
             filter.A1806CENCO = request.getParameter("A1806CENCO");
             filter.A1806UBICA = request.getParameter("A1806UBICA");
+            filter.A1806MONED = request.getParameter("A1806MONED");
             filter.A1806CUENT = request.getParameter("A1806CUENT");
             filter.A1806SUBCT = request.getParameter("A1806SUBCT");
             filter.A1806EQUI = request.getParameter("A1806EQUI");
@@ -333,7 +334,8 @@ public class AccountingSupplierController extends BaseController {
             filter.A1806FINI = request.getParameter("A1806FINI");
             filter.A1806FFIN = request.getParameter("A1806FFIN");
             filter.IN_A1806TIPOC_OLD = request.getParameter("IN_A1806TIPOC_OLD");
-            filter.IN_A1806NUM_OLD = request.getParameter("IN_A1806NUM_OLD");       
+            filter.IN_A1806NUM_OLD = request.getParameter("IN_A1806NUM_OLD");
+            filter.IN_A1806MONED_OLD = request.getParameter("IN_A1806MONED_OLD");
             
            
                     

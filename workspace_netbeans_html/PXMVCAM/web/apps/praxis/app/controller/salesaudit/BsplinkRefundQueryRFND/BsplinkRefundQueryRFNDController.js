@@ -85,6 +85,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
                 {"code": "", "name": "ALL"},
                 {"code": "A", "name": "ASSIGNED TO THE AUDITOR"},
                 {"code": "F", "name": "AUTHORISED"},
+                {"code": "P", "name": "BILLED"},
                 {"code": "B", "name": "CHANGE FOR ANOTHER"},
                 {"code": "E", "name": "ERROR IN THE PROCESS"},
                 {"code": "J", "name": "EXEC. OF THE ROBOT"},
@@ -217,8 +218,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
             case '5':
                 txtIATA.show();
                 cmbStatus.show();
-                txtDateFrom.hide();
-                txtDateTo.hide();
+                txtDateFrom.show();
+                txtDateTo.show();
                 txtHora1.hide();
                 txtHora2.hide();
                 txtCia.hide();
@@ -297,6 +298,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
         if (comboBy == '2' || comboBy == '3' || comboBy == '5') {
             if (comboBy == '2') {
                 me.beanTMP.IN_DOCUMET = Ext.String.trim(Ext.getCmp(prototype.id + '-txtNumber').getValue());
+                me.beanTMP.IN_DATEFROM = '';
+                me.beanTMP.IN_DATETO = '';
             } else {
                 me.beanTMP.IN_DOCUMET = '';
             }
@@ -305,14 +308,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
                 me.beanTMP.IN_FORMA = Ext.String.trim(Ext.getCmp(prototype.id + '-txtFrmaSerie').getValue().substr(0, 4));
                 me.beanTMP.IN_SERIE = Ext.String.trim(Ext.getCmp(prototype.id + '-txtFrmaSerie').getValue().substr(4, 10));
                 me.beanTMP.IN_SEQ = Ext.String.trim(Ext.getCmp(prototype.id + '-txtSeq').getValue());
+                me.beanTMP.IN_DATEFROM = '';
+                me.beanTMP.IN_DATETO = '';
             } else {
                 me.beanTMP.IN_CIA = '';
                 me.beanTMP.IN_FORMA = '';
                 me.beanTMP.IN_SERIE = '';
                 me.beanTMP.IN_SEQ = '';
+                me.beanTMP.IN_DATEFROM = Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue();
+                me.beanTMP.IN_DATETO = Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue();
             }
-            me.beanTMP.IN_DATEFROM = '';
-            me.beanTMP.IN_DATETO = '';
+
         }
 
         if (comboBy == '1' || comboBy == '4' || comboBy == '6') {
@@ -347,13 +353,21 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
         store.loadPage(1, {
             params: me.beanTMP,
             callback: function (records, operation, success) {
+                //  var Objtemp = records[0].data;
+
                 Ext.getCmp(prototype.id + '-pagination').enable();
             }
         });
 
     },
+    ToGB2312: function (str) {
+        var cadena = str.replace(/\\u/gi, '%u');
+        cadena = cadena.replace(/\\n/gi, "\n");
+        cadena = cadena.replace(/\\t/gi, "\t");
+        return unescape(cadena);
+    },
     onSearchkey: function (f, e) {
-        if (e.getKey() == e.ENTER) {
+        if (e.getKey() === e.ENTER) {
             this.onSearchClick();
         }
 
@@ -375,17 +389,22 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
 
     onRendererColumnAgency: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        return value;
     },
 
     onRendererColumnPassenger: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        return value;
     },
 
     onRendererColumnReason: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        var me = this;
+        if (record.get('A3389PAIS') === 'CN') {
+            metaData.tdAttr = 'data-qtip="' + me.ToGB2312(value) + '"';
+        } else {
+            metaData.tdAttr = 'data-qtip="' + value + '"';
+        }
+        return value;
     },
 
     onRendererColumnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -402,6 +421,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
             case 'F':
                 color = '#81F781';
                 value = 'AUTHORISED';
+                break;
+            case 'P':
+                color = '#81F7BE';
+                value = 'BILLED';
                 break;
             case 'Y':
                 color = '#CCFF00';
@@ -476,7 +499,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
     onUpdateClick: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         var me = this;
-        if (rec.get('A3389FLAG') === 'F' || rec.get('A3389FLAG') === 'R') {
+        if (rec.get('A3389FLAG') === 'F' || rec.get('A3389FLAG') === 'R' || rec.get('A3389FLAG') === 'Z') {
             if (rec.get('A3389FLAG') === 'F') {
                 var fechaInicio = new Date(rec.get('A3389FAUTO').substring(0, 4) + '-' + rec.get('A3389FAUTO').substring(6, 4) + '-' + rec.get('A3389FAUTO').substring(8, 6));//new Date(rec.get('A3389FAUTO'));
                 var fechaFin = new Date();

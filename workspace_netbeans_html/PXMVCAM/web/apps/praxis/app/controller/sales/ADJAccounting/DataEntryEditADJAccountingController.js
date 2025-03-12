@@ -23,6 +23,7 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryEditADJAccounting
         var p = this.view.params;
         this.setStoreData();
         this.getDataInputs();
+        global.AccessControlMaganerByMode(p);
     },
     setStoreData: function() {
         var cmbTypeBusq = Ext.getCmp(prototype.id + '-de-cmbTypeBusq');

@@ -14,7 +14,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.DataEntry', {
     title: 'Accounting Supplier Data Entry ',
     header: true,
     width: 650,
-    height: 330,
+    height: 370,
     border: false,
     resizable: false,
     layout: {
@@ -177,6 +177,43 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.DataEntry', {
                                             labelAlign: 'left',
                                             padding: '2px 5px 2px 3px'
 
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'column',
+                                    margin: '1 0 1 0',
+                                    border: false,
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            labelAlign: 'left',
+                                            width: 130,
+                                            padding: '2px 5px 2px 10px',
+                                            html: '<strong style="color:#000;  ">Currency</strong>'
+
+                                        },
+                                        {
+                                            xtype: 'label',
+                                            labelAlign: 'center',
+                                            width: 40,
+                                            padding: '2px 5px 2px 3px',
+                                            html: '<strong style="color:red;font-size:13px;">(*)</strong>'
+
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1806MONED',
+                                            maxLength: 3,
+                                            fieldLabel: '',
+                                            width: 100,
+                                            border: true,
+                                            fieldStyle: 'text-align: center;',
+                                            labelWidth: 0,
+                                            enforceMaxLength: true,
+                                            labelAlign: 'left',
+                                            padding: '2px 5px 2px 3px'
                                         }
                                     ]
                                 },

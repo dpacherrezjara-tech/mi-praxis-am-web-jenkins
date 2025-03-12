@@ -152,10 +152,10 @@ public class UserDAO  {
         String pass = auth.TOKEN;
 
         String SQLCLL01 = "{CALL PRAXIS.SQP02743(?,?,?)}"; //123
-        
-        ConnectionIBMDB2Server tmpCnx = null;
+        ConnectionIBMDB2Server tmpCnx;
         tmpCnx = application.getConnection(user, pass);
         tmpCnx.open();
+
         try {
             cstmt01 = tmpCnx.getConnection().prepareCall(SQLCLL01);
             cstmt01.setString(1, "139");
@@ -187,15 +187,17 @@ public class UserDAO  {
     public void SQP02491(String usuario) throws SQLException, Exception {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String user = session.getAttribute("USR_HABILITAR_USUARIO").toString();
-        String pass = session.getAttribute("PASS_HABILITAR_USUARIO").toString();
-
+        //String user = session.getProperty("USR_HABILITAR_USUARIO");
+        //String pass = session.getProperty("PASS_HABILITAR_USUARIO");
+        
         String SQLCLL01 = "{CALL PRAXIS.SQP02491(?)}";
-        ConnectionIBMDB2Server tmpCnx = null;
-        tmpCnx = application.getConnection(user, pass);
+        Connection tmpCnx;
+        //tmpCnx = application.getConnection(user, pass);
+        tmpCnx = session.getCNXIBMDB2().getIBMDB2Connection();
+        //tmpCnx.open();
+
         try {
-            tmpCnx.open();
-            cstmt01 = tmpCnx.getConnection().prepareCall(SQLCLL01);
+            cstmt01 = tmpCnx.prepareCall(SQLCLL01);
             cstmt01.setString(1, usuario);
             cstmt01.execute();
 
@@ -222,18 +224,19 @@ public class UserDAO  {
     public void SQP03266(String usuario, String expiredDate) throws SQLException, Exception {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String user = session.getAttribute("USR_HABILITAR_USUARIO").toString();
-        String pass = session.getAttribute("PASS_HABILITAR_USUARIO").toString();
+        //String user = session.getProperty("USR_HABILITAR_USUARIO");
+        //String pass = session.getProperty("PASS_HABILITAR_USUARIO");
         String strDay = expiredDate.substring(6, 8); // YYMMAA
         String strMonth = expiredDate.substring(4, 6);
         String strYear = expiredDate.substring(2, 4);
         expiredDate = strDay + strMonth + strYear; // AAMMYYYY
         String SQLCLL01 = "{CALL PRAXIS.SQP03266(?,?)}";
-        ConnectionIBMDB2Server tmpCnx = null;
-        tmpCnx = application.getConnection(user, pass);   
-        tmpCnx.open();
+        Connection tmpCnx;
+        tmpCnx = session.getCNXIBMDB2().getIBMDB2Connection();  //application.getConnection(user, pass);
+        //tmpCnx.open();
+
         try {
-            cstmt01 = tmpCnx.getConnection().prepareCall(SQLCLL01);
+            cstmt01 = tmpCnx.prepareCall(SQLCLL01);
             cstmt01.setString(1, usuario);
             cstmt01.setString(2, expiredDate);
             cstmt01.execute();
@@ -261,16 +264,17 @@ public class UserDAO  {
     public void SQP03218(String usuario, String clave) throws SQLException, Exception {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String user = session.getAttribute("USR_HABILITAR_USUARIO").toString();
-        String pass = session.getAttribute("PASS_HABILITAR_USUARIO").toString();
+        //String user = session.getProperty("USR_HABILITAR_USUARIO");
+        //String pass = session.getProperty("PASS_HABILITAR_USUARIO");
 
         String SQLCLL01 = "{CALL PRAXIS.SQP03218(?,?)}";
-        ConnectionIBMDB2Server tmpCnx = null;
-        tmpCnx = application.getConnection(user, pass);
-        tmpCnx.open();
-        
+        Connection tmpCnx;
+        tmpCnx = session.getCNXIBMDB2().getIBMDB2Connection();   //application.getConnection(user, pass);
+        //tmpCnx.open();
+
         try {
-            cstmt01 = tmpCnx.getConnection().prepareCall(SQLCLL01);
+            cstmt01 = tmpCnx.prepareCall(SQLCLL01);
+            cstmt01.setString(1, usuario);
             cstmt01.setString(2, clave);
             cstmt01.execute();
 
@@ -297,16 +301,17 @@ public class UserDAO  {
     public void SQP03219(String usuario, String clave, String desc) throws SQLException, Exception {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String user = session.getAttribute("USR_HABILITAR_USUARIO").toString();
-        String pass = session.getAttribute("PASS_HABILITAR_USUARIO").toString();
+        //String user = session.getProperty("USR_HABILITAR_USUARIO");
+        //String pass = session.getProperty("PASS_HABILITAR_USUARIO");
 
         String SQLCLL01 = "{CALL PRAXIS.SQP03219(?,?,?)}";
-        ConnectionIBMDB2Server tmpCnx = null;
-        tmpCnx = application.getConnection(user, pass);
-        tmpCnx.open();
+        Connection tmpCnx;
+        tmpCnx = session.getCNXIBMDB2().getIBMDB2Connection();  // application.getConnection(user, pass);
+        //tmpCnx.open();
 
         try {
-            cstmt01 = tmpCnx.getConnection().prepareCall(SQLCLL01);
+            //cstmt01 = tmpCnx.getConnection().prepareCall(SQLCLL01);
+            cstmt01 = tmpCnx.prepareCall(SQLCLL01);
             cstmt01.setString(1, usuario);
             cstmt01.setString(2, clave);
             cstmt01.setString(3, desc);
@@ -338,16 +343,18 @@ public class UserDAO  {
         
         boolean boValida = false;
         
-        String user = session.getAttribute("USR_HABILITAR_USUARIO").toString();
-        String pass = session.getAttribute("PASS_HABILITAR_USUARIO").toString();
+        //String user = session.getProperty("USR_HABILITAR_USUARIO");
+        //String pass = session.getProperty("PASS_HABILITAR_USUARIO");
 
         String SQLCLL01 = "{CALL PRAXIS.SQP03268(?)}";
-        ConnectionIBMDB2Server tmpCnx = null;
-        tmpCnx = application.getConnection(user, pass);
-        tmpCnx.open();
-        
+        //ConnectionIBMDB2Server tmpCnx;
+        Connection tmpCnx;
+        tmpCnx = session.getCNXIBMDB2().getIBMDB2Connection(); //application.getConnection(user, pass);
+        //tmpCnx.open();
+
         try {
-            cstmt01 = tmpCnx.getConnection().prepareCall(SQLCLL01);
+            //cstmt01 = tmpCnx.getConnection().prepareCall(SQLCLL01);
+            cstmt01 = tmpCnx.prepareCall(SQLCLL01);
             cstmt01.setString(1, usuario);
             cstmt01.execute();
 

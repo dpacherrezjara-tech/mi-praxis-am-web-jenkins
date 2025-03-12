@@ -32,7 +32,8 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
                 this.view.setHeight(this.view.getHeight());
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     },
     onFocusLeaveOpe: function(obj) {
         console.log(obj.getValue());
@@ -262,9 +263,10 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
         //Fecha Contable (x ahora lo saca de la Fecha de Vuelo a pedido de ENS)
         var FCONT = Ext.util.Format.date(Ext.getCmp(prototype.id + '-t' + '-txtFCONT').getValue(), 'Ymd');
         var DFLIGHT = Ext.util.Format.date(Ext.getCmp(prototype.id + '-t' + '-txtDFLIGHT').getValue(), 'Ymd');
+        /*
         if (FCONT === '' && DFLIGHT.length === 8) {
             FCONT = DFLIGHT.substring(0, 6);
-        }
+        }*/
         //Valida el origen según la CIA.
         var STORG;
         var cia = strTicket.substring(0, 3);
@@ -503,7 +505,8 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
             CCIA: rec.CCIA,
             FORMA: rec.FORMA,
             SERIE: rec.SERIE,
-            CUPON: rec.CUPON
+            CUPON: rec.CUPON,
+            SEQ: rec.SEQ
         };
         Ext.Ajax.request({
             url: prototype.url + '/searcheEntyTKT',
@@ -525,6 +528,7 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
         Ext.getCmp(prototype.id + '-t' + '-txtRoll').setValue(rec.SEQRO.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtCupon').setValue(rec.CUPON.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue(rec.DCHEQ.trim());
+        Ext.getCmp(prototype.id + '-t' + '-txtSEQ').setValue(rec.SEQ.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtFCONT').setValue(rec.FCONT.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtCDEPART').setValue(rec.CDEPART.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtCARRIVA').setValue(rec.CARRIVA.trim());
@@ -581,11 +585,11 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
             target: prototype.id + '-t' + '-txtPSVVTA',
             html: rec.strDescPSVVTA.trim()
         });
-        if (rec.SEQ.trim() === '') {
-            Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue('00');
-        } else {
-            Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue(rec.SEQ.trim());
-        }
+//        if (rec.SEQ.trim() === '') {
+//            Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue('00');
+//        } else {
+//            Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue(rec.SEQ.trim());
+//        }
 
         //Sólo son editables si la información que viene es vacía (A pedido de Javier Toledo)
         if (rec.CDOC.trim() === '' && rec.TDOC.trim() === '' && rec.PSVVTA.trim() === '' && rec.AGTIA.trim() === '' && rec.FVTA.trim() === ''

@@ -19,5 +19,6 @@ public class A051 {
     public String A051FECHA1= "";
     public String A051FECHA2= "";
     public String A051COMENT= "";
-    public String A051STATUS= "";    
+    public String A051STATUS= "";
+    public String IN_A051KEY2_OLD= "";    
 }

@@ -7,7 +7,7 @@
 prototype.id = 'Dashboard01Form';
 prototype.url = CONTEXTPATH + '/Dashboard01';
 prototype.urlMaster = CONTEXTPATH + '/MasterController';
-prototype.widthContenedor = 1550;
+prototype.widthContenedor = 1850;
 prototype.widthGrid = 1147;
 
 
@@ -21,7 +21,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Dashboard01Form', {
         'Ext.Praxis.view.screens.Dashboard01Form.Filters',
         'Ext.Praxis.view.screens.Dashboard01Form.Info',
         'Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline',
-        'Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales'
+        'Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales',
+        'Ext.Praxis.view.screens.Dashboard01Form.charts.ChartFlown',
+        'Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSpa'
     ],
     controller: 'Dashboard01Controller',
     layout: {
@@ -65,7 +67,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Dashboard01Form', {
                                     border: false,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1850,
+                                        width: 1750,
                                         align: 'center'
                                     },
                                     items: [
@@ -75,7 +77,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Dashboard01Form', {
                                             border: false,
                                             autoScroll: true,
                                             defaults: {
-                                                width: 1550,
+                                                width: 1650,
                                                 align: 'center'
                                             },
                                             layout: {
@@ -90,7 +92,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Dashboard01Form', {
                                                 },
                                                 {
                                                     xtype: 'panel',
-                                                    height: 680,
+                                                    height: 690,//820
                                                     layout: 'fit',
                                                     items: [
                                                         {
@@ -142,6 +144,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Dashboard01Form', {
                                                 {   xtype: prototype.id + '-chartSales',
                                                     id: prototype.id + '-panelChartSales'
                                                 },
+                                                {   xtype: prototype.id + '-chartFlown',
+                                                    id: prototype.id + '-panelChartFlown'
+                                                },
+                                                {   xtype: prototype.id + '-chartSpa',
+                                                    id: prototype.id + '-panelChartSpa'
+                                                }
                                             ]
                                         },
                                         // <editor-fold defaultstate="collapsed" desc="pie">
@@ -155,6 +163,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Dashboard01Form', {
                                             },
                                             border: true,
                                             height: 25,
+                                            width: 1500,
                                             bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
                                             defaults: {
                                                 border: false

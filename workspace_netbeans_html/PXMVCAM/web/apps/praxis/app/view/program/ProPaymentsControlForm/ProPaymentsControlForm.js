@@ -57,18 +57,14 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.ProPaymentsControlFor
                                         align: 'center'
                                     },
                                     items: [
-                                        {
-                                            xtype: prototype.id + '-options',
-                                        }
-                                        ,
+                                        {xtype: prototype.id + '-options'},
                                         {
                                             xtype: prototype.id + '-filters',
                                             id: prototype.id + '-contentFilter'
-                                        }
-                                        ,
+                                        },
                                         {
                                             xtype: 'panel',
-                                            height: 756,
+                                            height: 1000,
                                             width: 1770,
                                             layout: 'fit',
                                             items: [

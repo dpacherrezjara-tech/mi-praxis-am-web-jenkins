@@ -318,7 +318,7 @@ public class LoadMassiveDebitsSubiArchivoDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL PXSAUDIT.SQP01904(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP01904(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         ResultSet rst = null;
         String valida = "Y";
@@ -330,8 +330,8 @@ public class LoadMassiveDebitsSubiArchivoDAO {
             cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
             for (A2552Filter obj : filter) {
                 //INSERTAR DATOS A LA TABLA
-                cstmt01.registerOutParameter(81, Types.VARCHAR);
-                cstmt01.registerOutParameter(82, Types.VARCHAR);
+                cstmt01.registerOutParameter(104, Types.VARCHAR);
+                cstmt01.registerOutParameter(105, Types.VARCHAR);
 
                 cstmt01.setString(1, obj.A2552CCUST);
                 cstmt01.setString(2, obj.A2552BASE);
@@ -415,13 +415,37 @@ public class LoadMassiveDebitsSubiArchivoDAO {
                 cstmt01.setString(78, obj.A2552TTARJ);
                 cstmt01.setString(79, obj.A2552NREF);
 
-                cstmt01.setString(80, valida);
+                cstmt01.setString(80, obj.A2552CDATO1);
+                cstmt01.setString(81, obj.A2552CDATO2);
+                cstmt01.setString(82, obj.A2552CDATO3);
+                cstmt01.setString(83, obj.A2552CDATO4);
+                cstmt01.setString(84, obj.A2552CDATO5);
+                cstmt01.setString(85, obj.A2552CDATO6);
+                cstmt01.setString(86, obj.A2552CDATO7);
+                cstmt01.setString(87, obj.A2552CDATO8);
+                cstmt01.setString(88, obj.A2552CDATO9);
+                cstmt01.setString(89, obj.A2552CDATO10);
+                cstmt01.setString(90, obj.A2552CDATO11);
+                cstmt01.setString(91, obj.A2552CDATO12);
+                cstmt01.setString(92, obj.A2552CDATO13);
+                cstmt01.setString(93, obj.A2552CDATO14);
+                cstmt01.setString(94, obj.A2552CDATO15);
+                cstmt01.setString(95, obj.A2552CDATO16);
+                cstmt01.setString(96, obj.A2552CDATO17);
+                cstmt01.setString(97, obj.A2552CDATO18);
+                cstmt01.setString(98, obj.A2552CDATO19);
+                cstmt01.setString(99, obj.A2552CDATO20);
+                cstmt01.setDouble(100, obj.A2552PROVI4);
+                
+                cstmt01.setString(101, obj.A2552EPR);
+                cstmt01.setString(102, obj.A2552PNR);
+                cstmt01.setString(103, valida);
 
                 cstmt01.execute();
                 valida = "N";
-                obj.dbException.SQLCODE = cstmt01.getString(81);
-                obj.dbException.MESSAGE = cstmt01.getString(82);
-                mensaje = obj.dbException.MESSAGE;
+                obj.dbException.SQLCODE = cstmt01.getString(104);
+                obj.dbException.MESSAGE = cstmt01.getString(105);
+                mensaje = obj.dbException.MESSAGE; 
 
                 if (!obj.dbException.SQLCODE.equals("0")) {
                     mensaje = obj.dbException.MESSAGE;

@@ -47,6 +47,8 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.async.Callback;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import java.util.Map;
+import org.json.JSONObject;
 
 /**
  *
@@ -574,7 +576,7 @@ public class SalesMasterReportFormController extends BaseController {
         try {
 
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-            String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+            String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_API_PRAXIS").toString();
 
             String context = "";
             String usr = this.serverSession.getServerSession().getUserView().getUserInfo().USR;
@@ -587,55 +589,44 @@ public class SalesMasterReportFormController extends BaseController {
             /*
          Preparando parámetros para enviar por body
              */
-            HashMap bodyData = new HashMap<>();
-            bodyData.put("VP_OPCION", Integer.parseInt(request.getParameter("VP_FILTER")));
-            bodyData.put("VP_CIA", request.getParameter("VP_CIA").trim());
-            bodyData.put("VP_FRMSRIE", request.getParameter("VP_FRMSRIE").trim());
-            bodyData.put("VP_SEQ", request.getParameter("VP_SEQ").trim());
-            bodyData.put("VP_SOURCE", request.getParameter("VP_SOURCE").trim());
-            bodyData.put("VP_CANAL", request.getParameter("VP_CANAL").trim());
-            bodyData.put("VP_IATA", request.getParameter("VP_IATA").trim());
-            bodyData.put("VP_IT", request.getParameter("VP_IT").trim());
-            bodyData.put("VP_FBASIS", request.getParameter("VP_FBASIS").trim());
-            bodyData.put("VP_CODREASON", request.getParameter("VP_CODREASON").trim());
-            bodyData.put("VP_TYMEMO", request.getParameter("VP_TYMEMO").trim());
-            bodyData.put("VP_AUDIT", request.getParameter("VP_AUDIT").trim());
-            bodyData.put("VP_STATUS", request.getParameter("VP_STATUS").trim());
-            bodyData.put("VP_DATEFROM", request.getParameter("VP_DATEFROM").trim());
-            bodyData.put("VP_DATETO", request.getParameter("VP_DATETO").trim());
-            bodyData.put("VP_TRNCU", request.getParameter("VP_TRNCU").trim());
-            bodyData.put("VP_STREVISION", request.getParameter("VP_STREVISION").trim());
-            bodyData.put("VP_TDOC", request.getParameter("VP_TDOC").trim());
-            bodyData.put("VP_PAIS", request.getParameter("VP_PAIS").trim());
-            bodyData.put("to_emails", request.getParameter("CorreoPri").trim());
-            bodyData.put("cc_emails", request.getParameter("CorreoCopi").trim());
-            bodyData.put("domain", context);
-            bodyData.put("IN_USER", usr);
-            bodyData.put("IN_PWD", pass);
+            Map<String, Object> queryParams = new HashMap<>();
+            queryParams.put("VP_OPCION", Integer.parseInt(request.getParameter("VP_FILTER")));
+            queryParams.put("VP_CCUST", "139");
+            queryParams.put("VP_CIA", request.getParameter("VP_CIA").trim());
+            queryParams.put("VP_FRMSRIE", request.getParameter("VP_FRMSRIE").trim());
+            queryParams.put("VP_SEQ", request.getParameter("VP_SEQ").trim());
+            queryParams.put("VP_SOURCE", request.getParameter("VP_SOURCE").trim());
+            queryParams.put("VP_CANAL", request.getParameter("VP_CANAL").trim());
+            queryParams.put("VP_IATA", request.getParameter("VP_IATA").trim());
+            queryParams.put("VP_IT", request.getParameter("VP_IT").trim());
+            queryParams.put("VP_FBASIS", request.getParameter("VP_FBASIS").trim());
+            queryParams.put("VP_CODREASON", request.getParameter("VP_CODREASON").trim());
+            queryParams.put("VP_TYMEMO", request.getParameter("VP_TYMEMO").trim());
+            queryParams.put("VP_AUDIT", request.getParameter("VP_AUDIT").trim());
+            queryParams.put("VP_STATUS", request.getParameter("VP_STATUS").trim());
+            queryParams.put("VP_DATEFROM", request.getParameter("VP_DATEFROM").trim());
+            queryParams.put("VP_DATETO", request.getParameter("VP_DATETO").trim());
+            queryParams.put("VP_TRNCU", request.getParameter("VP_TRNCU").trim());
+            queryParams.put("VP_STREVISION", request.getParameter("VP_STREVISION").trim());
+            queryParams.put("VP_TDOC", request.getParameter("VP_TDOC").trim());
+            queryParams.put("VP_PAIS", request.getParameter("VP_PAIS").trim());
+            queryParams.put("to_emails", request.getParameter("CorreoPri").trim());
+            queryParams.put("cc_emails", request.getParameter("CorreoCopi").trim());
+            queryParams.put("domain", context);
+            queryParams.put("IN_USER", usr);
+            queryParams.put("IN_PWD", pass);
 
-            Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST + "/api/salesaudit/export_data_txt/")
-                    .header("content-type", "application/json")
-                    .header("cache-control", "no-cache")
-                    .body(new Gson().toJson(bodyData))
-                    .asJsonAsync(new Callback<JsonNode>() {
-
-                        public void failed(UnirestException e) {
-                            System.out.println("The request has failed");
-                        }
-
-                        public void completed(HttpResponse<JsonNode> response) {
-                            int code = response.getStatus();
-                            System.out.println("==>" + code);
-                        }
-
-                        public void cancelled() {
-                            System.out.println("The request has been cancelled");
-                        }
-
-                    });
-
-            String error_code = "0";
-            result = "The request was sent to the indicated email";
+            HttpResponse<JsonNode> response = Unirest.get(urlREST.trim() + "/sales-master-report/report").queryString(queryParams).asJson();
+            JsonNode body = response.getBody();
+            // Extrae los datos específicos del JSON
+            JSONObject jsonObject = body.getObject();
+            String status = jsonObject.getString("status");
+            String error_code = "0";//response.getBody().getObject().get("error_code").toString();
+            if (status.equals("success")) {
+                result = jsonObject.getString("message");//response.getBody().getObject().get("error_msg").toString();
+            } else {
+                result = jsonObject.getString("message");//response.getBody().getObject().get("error_msg").toString(); 
+            }
 
         } catch (Exception e) {
             throw new SpringException(e);
@@ -646,7 +637,7 @@ public class SalesMasterReportFormController extends BaseController {
     }
 
     public String upload_s3(HttpServletRequest request) throws SQLException, Exception {
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_SERVICE_AM").toString();
 
         String context = "";
         String usr = this.serverSession.getServerSession().getUserView().getUserInfo().USR;
@@ -661,6 +652,7 @@ public class SalesMasterReportFormController extends BaseController {
          */
         HashMap bodyData = new HashMap<>();
         bodyData.put("VP_OPCION", Integer.parseInt(request.getParameter("VP_FILTER")));
+        bodyData.put("VP_CCUST", "139");
         bodyData.put("VP_CIA", request.getParameter("VP_CIA").trim());
         bodyData.put("VP_FRMSRIE", request.getParameter("VP_FRMSRIE").trim());
         bodyData.put("VP_SEQ", request.getParameter("VP_SEQ").trim());
@@ -685,7 +677,9 @@ public class SalesMasterReportFormController extends BaseController {
         bodyData.put("IN_USER", usr);
         bodyData.put("IN_PWD", pass);
 
-        Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST + "/api/salesaudit/export_data_txt/")
+        System.out.println(bodyData);
+
+        Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST + "/api/sales-master-report/salesmasterreport")
                 .header("content-type", "application/json")
                 .header("cache-control", "no-cache")
                 .body(new Gson().toJson(bodyData))

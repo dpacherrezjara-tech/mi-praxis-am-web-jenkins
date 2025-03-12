@@ -108,6 +108,7 @@ public class RobotRefundControlController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+
     @RequestMapping(value = "/getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -115,7 +116,7 @@ public class RobotRefundControlController extends BaseController {
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-            
+
             RefundControlLogic logic = new RefundControlLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A3388Filter> listaData = logic.searchRefundControl(filter);
@@ -159,7 +160,7 @@ public class RobotRefundControlController extends BaseController {
             Iterator iter = listaData.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -169,22 +170,23 @@ public class RobotRefundControlController extends BaseController {
             CH_03 = row.createCell(3);
             CH_04 = row.createCell(4);
             CH_05 = row.createCell(5);
+            CH_06 = row.createCell(6);
 
             CH_00.setCellValue("System date");
             CH_01.setCellValue("Robot");
-            CH_02.setCellValue("Country");
-            CH_03.setCellValue("Total");
-            CH_04.setCellValue("Processed");
-            CH_05.setCellValue("Status");
-            
+            CH_02.setCellValue("Channel");
+            CH_03.setCellValue("Country");
+            CH_04.setCellValue("Total");
+            CH_05.setCellValue("Processed");
+            CH_06.setCellValue("Status");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));         
-            
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -192,7 +194,8 @@ public class RobotRefundControlController extends BaseController {
             CH_03.setCellStyle(headerStyle);
             CH_04.setCellStyle(headerStyle);
             CH_05.setCellStyle(headerStyle);
-            
+            CH_06.setCellStyle(headerStyle);
+
             ++vj;
             //</editor-fold>
 
@@ -205,13 +208,15 @@ public class RobotRefundControlController extends BaseController {
                 CH_03 = row.createCell(3);
                 CH_04 = row.createCell(4);
                 CH_05 = row.createCell(5);
-                
-                CH_00.setCellValue("");
-                CH_01.setCellValue(listaData.get(vi).A3388FREGI);
-                CH_02.setCellValue(listaData.get(vi).A3388PAIS);
-                CH_03.setCellValue(listaData.get(vi).A3388CANTI);
-                CH_04.setCellValue(listaData.get(vi).A3388COUNT);
-                CH_05.setCellValue(listaData.get(vi).A3388FLAG);
+                CH_06 = row.createCell(6);
+
+                CH_00.setCellValue(listaData.get(vi).A3388FREGI);
+                CH_01.setCellValue(listaData.get(vi).A3388ROBOT);
+                CH_02.setCellValue(listaData.get(vi).A3388CHANEL);
+                CH_03.setCellValue(listaData.get(vi).A3388PAIS);
+                CH_04.setCellValue(listaData.get(vi).A3388CANTI);
+                CH_05.setCellValue(listaData.get(vi).A3388COUNT);
+                CH_06.setCellValue(listaData.get(vi).A3388FLAG);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -219,6 +224,7 @@ public class RobotRefundControlController extends BaseController {
                 CH_03.setCellStyle(bodyStyle);
                 CH_04.setCellStyle(bodyStyle);
                 CH_05.setCellStyle(bodyStyle);
+                CH_06.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
@@ -230,8 +236,8 @@ public class RobotRefundControlController extends BaseController {
             sheet.autoSizeColumn(3, true);
             sheet.autoSizeColumn(4, true);
             sheet.autoSizeColumn(5, true);
-            
-            
+            sheet.autoSizeColumn(6, true);
+
             String fileNameDownload = String.format("RefundControl - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");

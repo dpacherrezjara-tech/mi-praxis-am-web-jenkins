@@ -647,7 +647,7 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesIpForm.Info', {
                                     id: prototype.id + '-gridDataDetail20',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     height: 580,
-                                    width: 1532,
+                                    width: 1672,
                                     columnLines: true,
                                     resizable: false,
                                     features: [{
@@ -691,8 +691,8 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesIpForm.Info', {
                                                     },
                                                     {text: 'Flight<br>Date', width: 80, dataIndex: 'DES_SOURCOD'},
                                                     {text: 'Elect<br>Tkt Ind.', width: 60, dataIndex: 'ETKTIND'},
-                                                    {text: 'Currency', width: 60, dataIndex: 'ACURREN'},
-                                                    {text: 'GROSS', width: 70, dataIndex: 'GROSS', renderer: 'getDouble',
+                                                    {text: 'Curr.', width: 50, dataIndex: 'ACURREN'},
+                                                    {text: 'GROSS', width: 90, dataIndex: 'GROSS', renderer: 'getDouble',
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataDetail20').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
@@ -708,7 +708,7 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesIpForm.Info', {
                                                         },
                                                         columns: [
                                                             {text: 'Rate', width: 70, dataIndex: 'ISCCH', renderer: 'getDouble'},
-                                                            {text: 'Amount', width: 70, dataIndex: 'ISCAMT', renderer: 'getDouble',
+                                                            {text: 'Amount', width: 90, dataIndex: 'ISCAMT', renderer: 'getDouble',
                                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataDetail20').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
@@ -776,7 +776,7 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesIpForm.Info', {
 
                                                         ]
                                                     },
-                                                    {text: 'NET', width: 70, dataIndex: 'CPNTAM', renderer: 'getDouble',
+                                                    {text: 'NET', width: 90, dataIndex: 'CPNTAM', renderer: 'getDouble',
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataDetail20').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
@@ -795,7 +795,7 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesIpForm.Info', {
                                                         },
                                                         columns: [
                                                             {text: 'Date', width: 70, dataIndex: 'AccountingDate'},
-                                                            {text: 'ID', width: 210, dataIndex: 'AccountingID'}
+                                                            {text: 'ID', width: 300, dataIndex: 'AccountingID'}
 
                                                         ]
                                                     }

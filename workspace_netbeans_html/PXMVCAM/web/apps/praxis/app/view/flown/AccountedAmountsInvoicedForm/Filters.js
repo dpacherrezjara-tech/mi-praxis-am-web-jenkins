@@ -23,7 +23,7 @@ Ext.define('Ext.Praxis.view.flown.AccountedAmountsInvoicedForm.Filters', {
                 fieldStyle: 'text-align: center;',
                 padding: '0px 1px 0px 0px',
                 anchor: '100%',
-                width: 1560
+                width: 1890
             },
             items: [
                 /**
@@ -44,14 +44,7 @@ Ext.define('Ext.Praxis.view.flown.AccountedAmountsInvoicedForm.Filters', {
                     items: [
                         {
                             xtype: 'label',
-                            html: '<strong style="color:#000;">Search by </strong>',
-                            align: 'left',
-                            fieldStyle: 'text-align: left;',
-                            padding: '11px 7px 8px 10px'
-                        },
-                        {
-                            xtype: 'label',
-                            html: 'Value Date:',
+                            html: '<strong style="color:#000;">Value Date:</strong>',
                             align: 'left',
                             fieldStyle: 'text-align: left;',
                             padding: '11px 7px 8px 10px'
@@ -59,7 +52,7 @@ Ext.define('Ext.Praxis.view.flown.AccountedAmountsInvoicedForm.Filters', {
                         {
                             xtype: 'datefield',
                             format: 'Y/m/d',
-                            fieldLabel: '<b>From </b><strong style="color:#AC4546;font-size:13px;"> (*)</strong>',
+                            fieldLabel: 'From <strong style="color:#AC4546;font-size:13px;"> (*)</strong>',
                             anchor: '100%',
                             id: prototype.id + '-txtDateFrom',
                             fieldStyle: 'text-align:center',
@@ -71,7 +64,7 @@ Ext.define('Ext.Praxis.view.flown.AccountedAmountsInvoicedForm.Filters', {
                         {
                             xtype: 'datefield',
                             format: 'Y/m/d',
-                            fieldLabel: '<b>To </b><strong style="color:#AC4546;font-size:13px;"> (*)</strong>',
+                            fieldLabel: 'To <strong style="color:#AC4546;font-size:13px;"> (*)</strong>',
                             anchor: '100%',
                             id: prototype.id + '-txtDateTo',
                             fieldStyle: 'text-align:center',
@@ -85,8 +78,129 @@ Ext.define('Ext.Praxis.view.flown.AccountedAmountsInvoicedForm.Filters', {
                             id: prototype.id + '-cbxType',
                             required: true,
                             fieldLabel: 'Type',
+                            width: 120,
+                            labelWidth: 40,
+                            labelAlign: 'left',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name'
+
+                        },
+                        {
+                            xtype: 'label',
+                            html: '<strong style="color:#000;">Accounting date flown:</strong>',
+                            align: 'left',
+                            fieldStyle: 'text-align: left;',
+                            padding: '11px 7px 8px 10px'
+                        },
+                        {
+                            xtype: 'datefield',
+                            format: 'Y/m/d',
+                            fieldLabel: 'From',
+                            anchor: '100%',
+                            id: prototype.id + '-txtDateFlownFrom',
+                            fieldStyle: 'text-align:center',
+                            maskRe: /[0-9/]/,
+                            enforceMaxLength: true,
                             width: 160,
-                            labelWidth: 90,
+                            labelWidth: 40
+                        },
+                        {
+                            xtype: 'datefield',
+                            format: 'Y/m/d',
+                            fieldLabel: 'To',
+                            anchor: '100%',
+                            id: prototype.id + '-txtDateFlownTo',
+                            fieldStyle: 'text-align:center',
+                            maskRe: /[0-9/]/,
+                            enforceMaxLength: true,
+                            width: 160,
+                            labelWidth: 40
+                        },
+                        {
+                            xtype: 'label',
+                            html: '<strong style="color:#000;">Date flight:</strong>',
+                            align: 'left',
+                            fieldStyle: 'text-align: left;',
+                            padding: '11px 7px 8px 10px'
+                        },
+                        {
+                            xtype: 'datefield',
+                            format: 'Y/m/d',
+                            fieldLabel: 'From',
+                            anchor: '100%',
+                            id: prototype.id + '-txtDateFlightFrom',
+                            fieldStyle: 'text-align:center',
+                            maskRe: /[0-9/]/,
+                            enforceMaxLength: true,
+                            width: 160,
+                            labelWidth: 40
+                        },
+                        {
+                            xtype: 'datefield',
+                            format: 'Y/m/d',
+                            fieldLabel: 'To',
+                            anchor: '100%',
+                            id: prototype.id + '-txtDateFlightTo',
+                            fieldStyle: 'text-align:center',
+                            maskRe: /[0-9/]/,
+                            enforceMaxLength: true,
+                            width: 160,
+                            labelWidth: 40
+                        },
+                        {
+                            xtype: 'label',
+                            html: '<strong style="color:#000;">Billing:</strong>',
+                            align: 'left',
+                            fieldStyle: 'text-align: left;',
+                            padding: '11px 7px 8px 10px'
+                        },
+                        {
+                            xtype: 'datefield',
+                            format: 'Y/m',
+                            fieldLabel: 'From',
+                            anchor: '100%',
+                            id: prototype.id + '-txtDateBillingFrom',
+                            fieldStyle: 'text-align:center',
+                            maskRe: /[0-9/]/,
+                            enforceMaxLength: true,
+                            width: 145,
+                            labelWidth: 40
+                        },
+                                                {
+                            xtype: 'datefield',
+                            format: 'Y/m',
+                            fieldLabel: 'To',
+                            anchor: '100%',
+                            id: prototype.id + '-txtDateBillingTo',
+                            fieldStyle: 'text-align:center',
+                            maskRe: /[0-9/]/,
+                            enforceMaxLength: true,
+                            width: 145,
+                            labelWidth: 40
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cbxPeriod',
+                            required: true,
+                            fieldLabel: 'Period',
+                            width: 120,
+                            labelWidth: 40,
+                            labelAlign: 'left',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name'
+
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cbxFlag',
+                            required: true,
+                            fieldLabel: 'Rep',
+                            width: 100,
+                            labelWidth: 40,
                             labelAlign: 'left',
                             queryMode: 'local',
                             triggerAction: 'all',

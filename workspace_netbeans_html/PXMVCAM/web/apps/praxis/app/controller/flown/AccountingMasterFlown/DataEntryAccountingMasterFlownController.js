@@ -19,22 +19,23 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
     init: function(view) {
         var me = this;
         
-        this.setStoreCombos("1");
-        this.setStoreCombos("2");
-        this.setStoreCombos("3");
         
-        Ext.getCmp(prototype.id + '-cmbDocumentTypeDataEntry').select("");
-        Ext.getCmp(prototype.id + '-cmbCtaTypeDataEntry').select("");
-        Ext.getCmp(prototype.id + '-cmbCategoryDataEntry').select("");
+        
     },
     /**
      * Se ejecuta luego de haber cargado todos los componentes
      */
     afterRender: function() {
         var p = this.view.params;
-        
+        this.setStoreCombos("1");
+        this.setStoreCombos("2");
+        this.setStoreCombos("3");       
         switch (p.action) {
             case 'I':
+                Ext.getCmp(prototype.id + '-cmbDocumentTypeDataEntry').select("");
+                Ext.getCmp(prototype.id + '-cmbCtaTypeDataEntry').select("");
+                Ext.getCmp(prototype.id + '-cmbCategoryDataEntry').select("");
+                Ext.getCmp(prototype.id + '-cmbINTNU').setValue("");
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-save').show();
@@ -47,7 +48,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
                 Ext.getCmp(prototype.id + '-btn-delete').show();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(p);
     },
     setStoreCombos: function(tipo) {
         var combo, value;
@@ -74,19 +76,19 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
                 lst.push(['', 'Select']);
                 switch(tipo) {
                     case '1':
-                        for(var k in data)
+                        for(var k = 0; k< data.length; k++)
                             lst.push([data[k].A1740TITRA, data[k].A1740TITRA]);
                         break;
                     case '2':
-                        for(var k in data)
+                        for(var k = 0; k< data.length; k++)
                             lst.push([data[k].A1740TIPO, data[k].A1740TIPODESC]);
                         break;
                     case '3':
-                        for(var k in data)
+                        for(var k = 0; k< data.length; k++)
                             lst.push([data[k].A1740CATEG, data[k].A1740CATEG]);
                         break;
                 }
-                var storeComboBox = Ext.create('Ext.data.ArrayStore', {
+                var storeComboBox = Ext.create('Ext.data.SimpleStore', {
                     storeId: 'data',
                     autoLoad: false,
                     data: lst,
@@ -138,8 +140,9 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
         var cmb2 = Ext.getCmp(prototype.id + '-cmbCtaTypeDataEntry').getValue();
         var cmb3 = Ext.getCmp(prototype.id + '-cmbCategoryDataEntry').getValue();
         var txt = Ext.getCmp(prototype.id + '-txtA1740SUBTI').getValue();
+        var cmbINTNU = Ext.getCmp(prototype.id + '-cmbINTNU').getValue();
 
-        if (cmb1 === "" || cmb2 === "" || cmb3 === "" || txt === "") {
+        if (cmbINTNU ==="" || cmb1 === "" || cmb2 === "" || cmb3 === "" || txt === "") {
             global.Msg({
                 msg: 'You must enter all required fields.',
                 fn: function() {}
@@ -209,16 +212,32 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
         });
     },
     getDataEntryValues: function(strOption) {
-        if (strOption === 'U') {
+        if (strOption === 'U' || strOption === 'D') {
             var p = this.view.params;
             rec = p.rec;
-            IN_A1740SUBTI_OLD = rec.get('A1740SUBTI');
-        } else IN_A1740SUBTI_OLD = "";
+            /* IN_A1740SUBTI_OLD = rec.get('A1740SUBTI');            
+            IN_A1740TITRA_OLD = rec.get('A1740TITRA');
+            IN_A1740TIPO_OLD = rec.get('A1740TIPO');
+            IN_A1740CATEG_OLD = rec.get('A1740CATEG');*/
+            
+            IN_A1740TITRA_OLD = Ext.getCmp(prototype.id + '-lblA1740TITRA').getValue();
+            IN_A1740TIPO_OLD = Ext.getCmp(prototype.id + '-lblA1740TIPO').getValue();
+            IN_A1740SUBTI_OLD = Ext.getCmp(prototype.id + '-lblA1740SUBTI').getValue();
+            IN_A1740CATEG_OLD = Ext.getCmp(prototype.id + '-lblA1740CATEG').getValue();
+        } 
+        else 
+        {
+            IN_A1740SUBTI_OLD = "";            
+            IN_A1740TITRA_OLD = "";
+            IN_A1740TIPO_OLD = "";
+            IN_A1740CATEG_OLD = "";
+        }
         
         var A1740TITRA = Ext.getCmp(prototype.id + '-cmbDocumentTypeDataEntry').getValue();
         var A1740TIPO = Ext.getCmp(prototype.id + '-cmbCtaTypeDataEntry').getValue();
         var A1740SUBTI = Ext.getCmp(prototype.id + '-txtA1740SUBTI').getValue();
         var A1740CATEG = Ext.getCmp(prototype.id + '-cmbCategoryDataEntry').getValue();
+        var A1740INTNU = Ext.getCmp(prototype.id + '-cmbINTNU').getValue();
         
         var A1740CIA = Ext.getCmp(prototype.id + '-txtA1740CIA').getValue();
         var A1740UNIDA = Ext.getCmp(prototype.id + '-txtA1740UNIDA').getValue();
@@ -234,6 +253,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
         var A1740FINI = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1740FINI').getValue(), 'Ymd');
         var A1740FFIN = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1740FFIN').getValue(), 'Ymd');
         
+        
+        if (IN_A1740SUBTI_OLD === null) IN_A1740SUBTI_OLD = "";
         if (IN_A1740TITRA_OLD === null) IN_A1740TITRA_OLD = "";
         if (IN_A1740TIPO_OLD === null) IN_A1740TIPO_OLD = "";
         if (IN_A1740CATEG_OLD === null) IN_A1740CATEG_OLD = "";
@@ -245,6 +266,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
             A1740SUBTI: A1740SUBTI,
             A1740CATEG: A1740CATEG,
             A1740CIA: A1740CIA,
+            A1740INTNU: A1740INTNU,
             A1740UNIDA: A1740UNIDA,
             A1740CECOS: A1740CECOS,
             A1740UBICA: A1740UBICA,
@@ -275,9 +297,10 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
         rec = p.rec;
 
         Ext.getCmp(prototype.id + '-cmbDocumentTypeDataEntry').setValue(rec.get('A1740TITRA'));
-        Ext.getCmp(prototype.id + '-cmbCtaTypeDataEntry').setValue(rec.get('A1740TIPODESC'));
+        Ext.getCmp(prototype.id + '-cmbCtaTypeDataEntry').setValue(rec.get('A1740TIPO'));
         Ext.getCmp(prototype.id + '-txtA1740SUBTI').setValue(rec.get('A1740SUBTI'));
         Ext.getCmp(prototype.id + '-cmbCategoryDataEntry').setValue(rec.get('A1740CATEG'));
+        Ext.getCmp(prototype.id + '-cmbINTNU').setValue(rec.get('A1740INTNU')=== 'YES' ? 'Y' : 'N');
         
         Ext.getCmp(prototype.id + '-txtA1740CIA').setValue(rec.get('A1740CIA'));
         Ext.getCmp(prototype.id + '-txtA1740UNIDA').setValue(rec.get('A1740UNIDA'));
@@ -298,7 +321,12 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
         Ext.getCmp(prototype.id + '-USUP').setValue(rec.get('A1740REGVI'));
         Ext.getCmp(prototype.id + '-FEUP').setValue(rec.get('A1740FREVI'));
         Ext.getCmp(prototype.id + '-HOUP').setValue(rec.get('A1740HREVI'));
-
+        
+        Ext.getCmp(prototype.id + '-lblA1740TITRA').setValue(rec.get('A1740TITRA'));
+        Ext.getCmp(prototype.id + '-lblA1740TIPO').setValue(rec.get('A1740TIPO'));
+        Ext.getCmp(prototype.id + '-lblA1740SUBTI').setValue(rec.get('A1740SUBTI'));
+        Ext.getCmp(prototype.id + '-lblA1740CATEG').setValue(rec.get('A1740CATEG'));
+        
     }
 
 });

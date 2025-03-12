@@ -21,9 +21,9 @@ import net.miatech.beans.ReportEmdDetailsA1530Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.interline.filter.SFI021Filter;
 import net.miatech.praxis.interline.filter.WRF016Filter;
-import net.miatech.praxis.payment.filter.A2280Filter;
-import net.miatech.praxis.payment.filter.A2287Filter;
-import net.miatech.praxis.payment.filter.A2290Filter;
+import net.miatech.praxis.payment.old.A2280Filter;
+import net.miatech.praxis.payment.old.A2287Filter;
+import net.miatech.praxis.payment.old.A2290Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 

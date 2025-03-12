@@ -404,6 +404,7 @@ public class A720 {
     public double A720TQ = 0d;
     public String A720MDATQ = "";
     public double A720TYQ = 0d;
+    public double A720TTYQ = 0d;
     public String A720MDAYQ = "";
     public double A720YQ = 0d;
     public double A720YQ1 = 0d;
@@ -643,6 +644,11 @@ public class A720 {
     public String A1672_PREME = "";
     public String A2548_NMEMO = "";
 
+    
+    public int A4373_TOT = 0;
+    public String A1530FECCO = "";
+    
+    
     public DBException dbException = new DBException();
     public double A720LYQ = 0;
     public double A720LIV = 0;
@@ -664,4 +670,12 @@ public class A720 {
     public String A720DESTC4 = "";
     public String A720TTARJ = "";
     public String A720NREF = "";
+    
+    
+    public String EMDCONCEP ="";
+    public String COMPTKT ="";
+    public String COMPTKT2 ="";
+    public String COMPTKT3 ="";
+    public String COMPTKT4 ="";
+    
 }

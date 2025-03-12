@@ -54,34 +54,35 @@ public class EmailcatalogReportFormDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL PXSAUDIT.SQP03726(?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP03726(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(4, Types.INTEGER);
             cstmt01.registerOutParameter(5, Types.INTEGER);
             cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_IATA);
             cstmt01.setString(3, filter.IN_STATUS);
+            cstmt01.setString(4, filter.IN_TYPE);
 
-            cstmt01.setInt(4, filter.page.PAGNUM);
-            cstmt01.setInt(5, filter.page.PAGROW);
-            cstmt01.setInt(6, filter.page.TOTPAG);
-            cstmt01.setInt(7, filter.page.TOTROW);
+            cstmt01.setInt(5, filter.page.PAGNUM);
+            cstmt01.setInt(6, filter.page.PAGROW);
+            cstmt01.setInt(7, filter.page.TOTPAG);
+            cstmt01.setInt(8, filter.page.TOTROW);
 
             cstmt01.execute();
 
             //*System.out.println("Aqui entro con Filtro Categoria: ");
-            filter.page.PAGNUM = cstmt01.getInt(4);
-            filter.page.PAGROW = cstmt01.getInt(5);
-            filter.page.TOTPAG = cstmt01.getInt(6);
-            filter.page.TOTROW = cstmt01.getInt(7);
+            filter.page.PAGNUM = cstmt01.getInt(5);
+            filter.page.PAGROW = cstmt01.getInt(6);
+            filter.page.TOTPAG = cstmt01.getInt(7);
+            filter.page.TOTROW = cstmt01.getInt(8);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -99,6 +100,10 @@ public class EmailcatalogReportFormDAO {
                 objRtn.A3903REVIS = rs01.getString("A3903REVIS");
                 objRtn.A3903FREVI = rs01.getString("A3903FREVI");
                 objRtn.A3903HREVI = rs01.getString("A3903HREVI");
+
+                objRtn.A3903TYPEDES = rs01.getString("A3903TYPEDES");
+                objRtn.A3903TYPE = rs01.getString("A3903TYPE");
+
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
@@ -137,7 +142,7 @@ public class EmailcatalogReportFormDAO {
 
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL PXSAUDIT.SQP03727(?,?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL PXSAUDIT.SQP03727(?,?,?,?,?,?,?,?,?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
             cs.setString("IN_OPCION", filter.IN_OPCION);
@@ -146,6 +151,7 @@ public class EmailcatalogReportFormDAO {
             cs.setString("IN_COREG", filter.A3903COREG);
             cs.setString("IN_CORRL", filter.A3903CORRL);
             cs.setString("IN_FLAG", filter.A3903FLAG);
+            cs.setString("IN_TYPE", filter.A3903TYPE);
 
             cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
             cs.setString("IN_FREGI", Functions.getFechaActual());

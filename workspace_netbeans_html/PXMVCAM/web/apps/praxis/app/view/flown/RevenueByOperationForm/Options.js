@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Options', {
         {
             xtype: 'panel',
             id: prototype.id+'-boxPaginacion',
-            hidden: true,
+            hidden: false,
             width: 100,
             border: false,
             items: [

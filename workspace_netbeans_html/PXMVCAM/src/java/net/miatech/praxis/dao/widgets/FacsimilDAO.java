@@ -71,7 +71,12 @@ public class FacsimilDAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
 
-            cs.setString(1, filter.TDNR.trim());
+            //cs.setString(1, filter.TDNR.trim());
+            //artificio para los RFND
+            if (filter.TRNC.equals("RFND") || filter.TRNC.equals("RFTX")) {
+               filter.IDFILE = "RFND";
+            }
+            cs.setString(1, filter.TDNR.trim() + "  " + filter.IDFILE.trim());
             cs.execute();
 
             beanFacsimil.CCUST = ccust.trim();
@@ -92,6 +97,43 @@ public class FacsimilDAO {
                     beanFacsimil.CDGT = rst.getString("ASR").substring(308, 309);
                     beanFacsimil.TRNC = rst.getString("ASR").substring(360, 364);
                     beanFacsimil.AGTN = rst.getString("ASR").substring(15304, 15312);
+                    
+                    //RECORD 30 - Fare/Tax Amounts
+                    int x30 = 144;
+                    Double totTax = 0.00;
+                    for (int i = 0; i < 10; i++) {
+                        if (rst.getString("ASR").substring(472 + (i * x30), 475 + (i * x30)).trim().length() > 0) {
+                            String regTax = "";
+                            if (this.cambia_caracter(rst.getString("ASR").substring(492 + (i * x30), 493 + (i * x30))).trim().length() > 1) {
+                                if (rst.getString("ASR").substring(475 + (i * x30), 480 + (i * x30)).trim().equals("")) {
+                                    regTax = rst.getString("ASR").substring(472 + (i * x30), 475 + (i * x30)) + " " + rst.getString("ASR").substring(475 + (i * x30), 480 + (i * x30)) + "-" + Long.parseLong(rst.getString("ASR").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ASR").substring(491 + (i * x30), 492 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(492 + (i * x30), 493 + (i * x30))).substring(1, 2);
+                                    totTax -= Double.valueOf(Long.parseLong(rst.getString("ASR").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ASR").substring(491 + (i * x30), 492 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(492 + (i * x30), 493 + (i * x30))).substring(1, 2));
+                                }
+                            } else {
+                                if (rst.getString("ASR").substring(475 + (i * x30), 480 + (i * x30)).trim().equals("")) {
+                                    regTax = rst.getString("ASR").substring(472 + (i * x30), 475 + (i * x30)) + " " + rst.getString("ASR").substring(475 + (i * x30), 480 + (i * x30)) + " " + Long.parseLong(rst.getString("ASR").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ASR").substring(491 + (i * x30), 492 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(492 + (i * x30), 493 + (i * x30)));
+                                    totTax += Double.valueOf(Long.parseLong(rst.getString("ASR").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ASR").substring(491 + (i * x30), 492 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(492 + (i * x30), 493 + (i * x30))));
+                                }
+                            }
+                            lstTaxes.add(regTax);
+                            if ((rst.getString("ASR").substring(493 + (i * x30), 496 + (i * x30))).trim().length() > 0) {
+                                String regTax2 = "";
+                                if (this.cambia_caracter(rst.getString("ASR").substring(513 + (i * x30), 514 + (i * x30))).trim().length() > 1) {
+                                    if (rst.getString("ASR").substring(496 + (i * x30), 501 + (i * x30)).trim().equals("")) {
+                                        regTax2 = rst.getString("ASR").substring(493 + (i * x30), 496 + (i * x30)) + " " + rst.getString("ASR").substring(496 + (i * x30), 501 + (i * x30)) + "-" + Long.parseLong(rst.getString("ASR").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ASR").substring(512 + (i * x30), 513 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(513 + (i * x30), 514 + (i * x30))).substring(1, 2);
+                                        totTax -= Double.valueOf(Long.parseLong(rst.getString("ASR").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ASR").substring(512 + (i * x30), 513 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(513 + (i * x30), 514 + (i * x30))).substring(1, 2));
+                                    }
+                                } else {
+                                    if (rst.getString("ASR").substring(496 + (i * x30), 501 + (i * x30)).trim().equals("")) {
+                                        regTax2 = rst.getString("ASR").substring(493 + (i * x30), 496 + (i * x30)) + " " + rst.getString("ASR").substring(496 + (i * x30), 501 + (i * x30)) + " " + Long.parseLong(rst.getString("ASR").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ASR").substring(512 + (i * x30), 513 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(513 + (i * x30), 514 + (i * x30)));
+                                        totTax += Double.valueOf(Long.parseLong(rst.getString("ASR").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ASR").substring(512 + (i * x30), 513 + (i * x30)) + this.cambia_caracter(rst.getString("ASR").substring(513 + (i * x30), 514 + (i * x30))));
+                                    }
+                                }
+                                lstTaxes.add(regTax2);
+                            }
+                        }
+                    }
+                    
                     //RECORD 46 - Endorsements/Restrictions Information
                     int x46 = 136;
                     for (int i = 0; i < 3; i++) {
@@ -273,27 +315,28 @@ public class FacsimilDAO {
                         double total;
                         String total_s;
                         String equivalent_s;
-                        String regTax;
-                        String regTax2 = "MXN 0.00";
-                        String regTax3 = "MXN 0.00";
+//                        String regTax;
+//                        String regTax2 = "MXN 0.00";
+//                        String regTax3 = "MXN 0.00";
                         beanFacsimil.CUTP1 = rst.getString("ASR").substring(11540, 11543);
                         beanFacsimil.FARE = rst.getString("ASR").substring(11443, 11454) + "." + rst.getString("ASR").substring(11454, 11456);
                         equivalent_s = rst.getString("ASR").substring(11457, 11468) + "." + rst.getString("ASR").substring(11468, 11470);
-                        if (rst.getString("ASR").substring(11544, 11547).trim().length() > 0) {
+                        if (rst.getString("ASR").substring(11544, 11547).trim().length() > 0 && !rst.getString("ASR").substring(11544, 11547).trim().equals(beanFacsimil.CUTP1)) {
                             beanFacsimil.EQFR = rst.getString("ASR").substring(11544, 11547) + equivalent_s;
                         } else {
-                            beanFacsimil.EQFR = beanFacsimil.CUTP1 + equivalent_s;
+                            //beanFacsimil.EQFR = beanFacsimil.CUTP1 + equivalent_s;
+                            beanFacsimil.EQFR = "";
                         }
-                        regTax = beanFacsimil.EQFR.substring(0, 3) + " " + Long.parseLong(rst.getString("ASR").substring(11490, 11501)) + "." + rst.getString("ASR").substring(11501, 11503);
-                        lstTaxes.add(regTax);
-                        if (Long.parseLong(rst.getString("ASR").substring(11504, 11515)) > 0) {
-                            regTax2 = beanFacsimil.EQFR.substring(0, 3) + " " + Long.parseLong(rst.getString("ASR").substring(11504, 11515)) + "." + rst.getString("ASR").substring(11515, 11517);
-                            lstTaxes.add(regTax2);
-                        }
-                        if (Long.parseLong(rst.getString("ASR").substring(11518, 11529)) > 0) {
-                            regTax3 = beanFacsimil.EQFR.substring(0, 3) + " " + Long.parseLong(rst.getString("ASR").substring(11518, 11529)) + "." + rst.getString("ASR").substring(11529, 11531);
-                            lstTaxes.add(regTax3);
-                        }
+//                        regTax = beanFacsimil.EQFR.substring(0, 3) + " " + Long.parseLong(rst.getString("ASR").substring(11490, 11501)) + "." + rst.getString("ASR").substring(11501, 11503);
+//                        lstTaxes.add(regTax);
+//                        if (Long.parseLong(rst.getString("ASR").substring(11504, 11515)) > 0) {
+//                            regTax2 = beanFacsimil.EQFR.substring(0, 3) + " " + Long.parseLong(rst.getString("ASR").substring(11504, 11515)) + "." + rst.getString("ASR").substring(11515, 11517);
+//                            lstTaxes.add(regTax2);
+//                        }
+//                        if (Long.parseLong(rst.getString("ASR").substring(11518, 11529)) > 0) {
+//                            regTax3 = beanFacsimil.EQFR.substring(0, 3) + " " + Long.parseLong(rst.getString("ASR").substring(11518, 11529)) + "." + rst.getString("ASR").substring(11529, 11531);
+//                            lstTaxes.add(regTax3);
+//                        }
                         /*beanFacsimil.CUTP1 = rst.getString("ASR").substring(7990, 7993);
                          beanFacsimil.FARE = rst.getString("ASR").substring(7893, 7904) + "." + rst.getString("ASR").substring(7904, 7906);
                          equivalent_s = rst.getString("ASR").substring(7907, 7918) + "." + rst.getString("ASR").substring(7918, 7920);
@@ -313,9 +356,11 @@ public class FacsimilDAO {
                          lstTaxes.add(regTax3);
                          }*/
                         if (Double.parseDouble(equivalent_s) > 0) {
-                            total = Double.parseDouble(equivalent_s) + Double.parseDouble(regTax.substring(4)) + Double.parseDouble(regTax2.substring(4)) + Double.parseDouble(regTax3.substring(4));
+                            //total = Double.parseDouble(equivalent_s) + Double.parseDouble(regTax.substring(4)) + Double.parseDouble(regTax2.substring(4)) + Double.parseDouble(regTax3.substring(4));
+                            total = Math.round((Double.parseDouble(equivalent_s) + (Math.round(totTax * 100.00) / 100.00))*100.00) / 100.00 ;
                         } else {
-                            total = Double.parseDouble(beanFacsimil.FARE) + Double.parseDouble(regTax.substring(4)) + Double.parseDouble(regTax2.substring(4)) + Double.parseDouble(regTax3.substring(4));
+                            //total = Double.parseDouble(beanFacsimil.FARE) + Double.parseDouble(regTax.substring(4)) + Double.parseDouble(regTax2.substring(4)) + Double.parseDouble(regTax3.substring(4));
+                            total = Math.round((Double.parseDouble(beanFacsimil.FARE) + (Math.round(totTax * 100.00) / 100.00))*100.00) / 100.00 ;
                         }
                         total_s = total + "";
                         beanFacsimil.TOTL = total_s;
@@ -729,14 +774,20 @@ public class FacsimilDAO {
 
         Connection cnx = null;
         try {
+            //artificio para los RFND
+            if (filter.TRNC.equals("RFND") || filter.TRNC.equals("RFTX")) {
+               filter.IDFILE = "RFND";
+            }
+            
             //String strSQL = "{CALL " + session.getMainLibrary() + ".PXBSPFACSIMILNEW(?)}";
-            String strSQL = "{CALL PXBSPFACSIMILNEW(?,?,?)}";
+            String strSQL = "{CALL PXBSPFACSIMILNEW(?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
-            cs.registerOutParameter(2, Types.CHAR);
             cs.registerOutParameter(3, Types.CHAR);
+            cs.registerOutParameter(4, Types.CHAR);
 
             cs.setString(1, filter.TDNR.trim());
+            cs.setString(2, filter.IDFILE.trim());
             cs.execute();
 
             beanFacsimil.CCUST = ccust.trim();
@@ -744,9 +795,13 @@ public class FacsimilDAO {
             beanFacsimil.COUNTRY = filter.COUNTRY.trim();
             beanFacsimil.nombre = filter.nombre.trim();
 
-            OU_SEQ = cs.getString(2);
+            OU_SEQ = cs.getString(3);
             if (OU_SEQ.equals("220")) {
-                OU_NROID = cs.getString(3);
+                OU_NROID = cs.getString(4);
+                //artificio para los RFND
+                if (filter.TRNC.equals("RFND") || filter.TRNC.equals("RFTX")) {
+                    OU_NROID = "RFND     ";
+                }
                 session.getCNXIBMDB2().openSystem();
                 ProgramCall program = new ProgramCall(session.getCNXIBMDB2().getSystem());
                 try {
@@ -1790,7 +1845,8 @@ public class FacsimilDAO {
                             strConj = mapping.getString(N02_RECEIVING_IO_9879[IDX_RECEIVING_IO_9879.LK_CNJPADRE]);
                             long cjn;
                             String cjn_s;
-                            if (!strConj.trim().equals("")){
+                            //if (!strConj.trim().equals("")){
+                            if (!beanFacsimil.strEsCjn.trim().equals("") && !beanFacsimil.strEsCjn.trim().equals("N")){
                                 for (int i = 0; i < 1; i++) {
                                     cjn = Long.parseLong(mapping.getString(N02_RECEIVING_IO_9879[IDX_RECEIVING_IO_9879.LK_CNJPADRE])) + (i + 1);
                                     cjn_s = cjn + "";
@@ -2555,7 +2611,8 @@ public class FacsimilDAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
 
-            cs.setString(1, filter.TDNR.trim());
+            //cs.setString(1, filter.TDNR.trim());
+            cs.setString(1, filter.TDNR.trim() + "  " + filter.IDFILE.trim());
             cs.execute();
 
             beanFacsimil.CCUST = ccust.trim();
@@ -2583,24 +2640,62 @@ public class FacsimilDAO {
                             //beanFacsimil.CUTP1 = rst.getString("ARC").substring(460, 463);
                             if (Long.parseLong(rst.getString("ARC").substring(528, 539)) != 0 && rst.getString("ARC").substring(528, 539).length() != 0) {//INFR
                                 beanFacsimil.CUTP1 = rst.getString("ARC").substring(544, 547);
-                                beanFacsimil.FARE = rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 541);
-                                beanFacsimil.EQFR = rst.getString("ARC").substring(460, 463) + rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 460);
+                                //beanFacsimil.FARE = rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 541);
+                                if (this.cambia_caracter(rst.getString("ARC").substring(540, 541)).trim().length() > 1) {
+                                    beanFacsimil.FARE = "-" + rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 540) + this.cambia_caracter(rst.getString("ARC").substring(540, 541)).substring(1, 2);
+                                } else {
+                                    beanFacsimil.FARE = rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 540) + this.cambia_caracter(rst.getString("ARC").substring(540, 541));
+                                }
+                                //beanFacsimil.EQFR = rst.getString("ARC").substring(460, 463) + rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 460);
+                                if (this.cambia_caracter(rst.getString("ARC").substring(459, 460)).trim().length() > 1) {
+                                    beanFacsimil.EQFR = "-" + rst.getString("ARC").substring(460, 463) + rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 459) + this.cambia_caracter(rst.getString("ARC").substring(459, 460)).substring(1, 2);
+                                } else {
+                                    beanFacsimil.EQFR = rst.getString("ARC").substring(460, 463) + rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 459) + this.cambia_caracter(rst.getString("ARC").substring(459, 460));
+                                }
                             } else {
                                 beanFacsimil.CUTP1 = rst.getString("ARC").substring(460, 463);
-                                beanFacsimil.FARE = rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 460);
-                                beanFacsimil.EQFR = rst.getString("ARC").substring(544, 547) + rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 541);
+                                //beanFacsimil.FARE = rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 460);
+                                if (this.cambia_caracter(rst.getString("ARC").substring(459, 460)).trim().length() > 1) {
+                                    beanFacsimil.FARE = "-" + rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 459) + this.cambia_caracter(rst.getString("ARC").substring(459, 460)).substring(1, 2);
+                                } else {
+                                    beanFacsimil.FARE = rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 459) + this.cambia_caracter(rst.getString("ARC").substring(459, 460));
+                                }
+                                //beanFacsimil.EQFR = rst.getString("ARC").substring(544, 547) + rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 541);
+                                if (this.cambia_caracter(rst.getString("ARC").substring(540, 541)).trim().length() > 1) {
+                                    beanFacsimil.EQFR = "-" + rst.getString("ARC").substring(544, 547) + rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 540) + this.cambia_caracter(rst.getString("ARC").substring(540, 541)).substring(1, 2);
+                                } else {
+                                    beanFacsimil.EQFR = rst.getString("ARC").substring(544, 547) + rst.getString("ARC").substring(528, 539) + "." + rst.getString("ARC").substring(539, 540) + this.cambia_caracter(rst.getString("ARC").substring(540, 541));
+                                }
                             }
                             //beanFacsimil.FARE = rst.getString("ARC").substring(447, 458) + "." + rst.getString("ARC").substring(458, 460);
                             //beanFacsimil.EQFR = rst.getString("ARC").substring(544, 547) + rst.getString("ARC").substring(527, 538) + "." + rst.getString("ARC").substring(538, 540);
-                            beanFacsimil.TOTL = rst.getString("ARC").substring(514, 525) + "." + rst.getString("ARC").substring(525, 527);
-                            String regTax = rst.getString("ARC").substring(472 + (i * x30), 474 + (i * x30)) + " " + rst.getString("ARC").substring(474 + (i * x30), 480 + (i * x30)) + " " + Long.parseLong(rst.getString("ARC").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ARC").substring(491 + (i * x30), 493 + (i * x30));
+                            //beanFacsimil.TOTL = rst.getString("ARC").substring(514, 525) + "." + rst.getString("ARC").substring(525, 527);
+                            if (this.cambia_caracter(rst.getString("ARC").substring(526, 527)).trim().length() > 1) {
+                                beanFacsimil.TOTL = "-" + rst.getString("ARC").substring(514, 525) + "." + rst.getString("ARC").substring(525, 526) + this.cambia_caracter(rst.getString("ARC").substring(526, 527)).substring(1, 2);
+                            } else {
+                                beanFacsimil.TOTL = rst.getString("ARC").substring(514, 525) + "." + rst.getString("ARC").substring(525, 526) + this.cambia_caracter(rst.getString("ARC").substring(526, 527));
+                            }
+                            //String regTax = rst.getString("ARC").substring(472 + (i * x30), 474 + (i * x30)) + " " + rst.getString("ARC").substring(474 + (i * x30), 480 + (i * x30)) + " " + Long.parseLong(rst.getString("ARC").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ARC").substring(491 + (i * x30), 493 + (i * x30));
+                            String regTax = "";
+                            if (this.cambia_caracter(rst.getString("ARC").substring(492 + (i * x30), 493 + (i * x30))).trim().length() > 1) {
+                                regTax = rst.getString("ARC").substring(472 + (i * x30), 474 + (i * x30)) + " " + rst.getString("ARC").substring(474 + (i * x30), 480 + (i * x30)) + "-" + Long.parseLong(rst.getString("ARC").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ARC").substring(491 + (i * x30), 492 + (i * x30)) + this.cambia_caracter(rst.getString("ARC").substring(492 + (i * x30), 493 + (i * x30))).substring(1, 2);
+                            } else {
+                                regTax = rst.getString("ARC").substring(472 + (i * x30), 474 + (i * x30)) + " " + rst.getString("ARC").substring(474 + (i * x30), 480 + (i * x30)) + " " + Long.parseLong(rst.getString("ARC").substring(480 + (i * x30), 491 + (i * x30))) + "." + rst.getString("ARC").substring(491 + (i * x30), 492 + (i * x30)) + this.cambia_caracter(rst.getString("ARC").substring(492 + (i * x30), 493 + (i * x30)));
+                            }
                             lstTaxes.add(regTax);
                             if ((rst.getString("ARC").substring(493 + (i * x30), 495 + (i * x30))).trim().length() > 0) {
-                                String regTax2 = rst.getString("ARC").substring(493 + (i * x30), 495 + (i * x30)) + " " + rst.getString("ARC").substring(495 + (i * x30), 501 + (i * x30)) + " " + Long.parseLong(rst.getString("ARC").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ARC").substring(512 + (i * x30), 514 + (i * x30));
+                                //String regTax2 = rst.getString("ARC").substring(493 + (i * x30), 495 + (i * x30)) + " " + rst.getString("ARC").substring(495 + (i * x30), 501 + (i * x30)) + " " + Long.parseLong(rst.getString("ARC").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ARC").substring(512 + (i * x30), 514 + (i * x30));
+                                String regTax2 = "";
+                                if (this.cambia_caracter(rst.getString("ARC").substring(513 + (i * x30), 514 + (i * x30))).trim().length() > 1) {
+                                    regTax2 = rst.getString("ARC").substring(493 + (i * x30), 495 + (i * x30)) + " " + rst.getString("ARC").substring(495 + (i * x30), 501 + (i * x30)) + "-" + Long.parseLong(rst.getString("ARC").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ARC").substring(512 + (i * x30), 513 + (i * x30)) + this.cambia_caracter(rst.getString("ARC").substring(513 + (i * x30), 514 + (i * x30))).substring(1, 2);
+                                } else {
+                                    regTax2 = rst.getString("ARC").substring(493 + (i * x30), 495 + (i * x30)) + " " + rst.getString("ARC").substring(495 + (i * x30), 501 + (i * x30)) + " " + Long.parseLong(rst.getString("ARC").substring(501 + (i * x30), 512 + (i * x30))) + "." + rst.getString("ARC").substring(512 + (i * x30), 513 + (i * x30)) + this.cambia_caracter(rst.getString("ARC").substring(513 + (i * x30), 514 + (i * x30)));
+                                }
                                 lstTaxes.add(regTax2);
                             }
                         }
                     }
+                    
                     //RECORD 46 - Endorsements/Restrictions Information
                     int x46 = 136;
                     for (int i = 0; i < 3; i++) {
@@ -2784,10 +2879,17 @@ public class FacsimilDAO {
                                         // String strFPTP = rst.getString("ARC").substring(8723, 8725).trim();
                                         String strFPTP = rst.getString("ARC").substring(8723 + (i * x84), 8725 + (i * x84)).trim();
                                         if ((strFPTP.trim().equals("EX") || strFPTP.trim().equals("ET")) /*&& i == 0*/) {
-                                            beanFacsimil.strIssExc += " / " + rst.getString("ARC").substring(8746 + (i * x84), 8765 + (i * x84));
+                                            //beanFacsimil.strIssExc += " / " + rst.getString("ARC").substring(8746 + (i * x84), 8765 + (i * x84)); modificado por zpp 20230106 IND00576 
+                                            beanFacsimil.strIssExc += " / " + rst.getString("ARC").substring(8744 + (i * x84), 8761 + (i * x84)); 
+                                            
                                         }
                                         if (Long.parseLong(rst.getString("ARC").substring(8733 + (i * x84), 8742 + (i * x84))) > 0) {
-                                            String monto = Long.parseLong(rst.getString("ARC").substring(8733 + (i * x84), 8742 + (i * x84))) + "." + rst.getString("ARC").substring(8742 + (i * x84), 8744 + (i * x84));
+                                            String monto = "";
+                                            if (this.cambia_caracter(rst.getString("ARC").substring(492 + (i * x30), 493 + (i * x30))).trim().length() > 1) {
+                                                monto = Long.parseLong(rst.getString("ARC").substring(8733 + (i * x84), 8742 + (i * x84))) + "." + rst.getString("ARC").substring(8742 + (i * x84), 8743 + (i * x84)) + this.cambia_caracter(rst.getString("ARC").substring(8743 + (i * x84), 8744 + (i * x84))).substring(1, 2);
+                                            } else {
+                                                monto = Long.parseLong(rst.getString("ARC").substring(8733 + (i * x84), 8742 + (i * x84))) + "." + rst.getString("ARC").substring(8742 + (i * x84), 8743 + (i * x84)) + this.cambia_caracter(rst.getString("ARC").substring(8743 + (i * x84), 8744 + (i * x84)));
+                                            }
                                             if (rst.getString("ARC").substring(8723 + (i * x84), 8725 + (i * x84)).trim().equals("CC") || rst.getString("ARC").substring(8723 + (i * x84), 8725 + (i * x84)).trim().equals("TC")) {
                                                 if (rst.getString("ARC").substring(8772 + (i * x84), 8778 + (i * x84)).trim().length() > 0) {
                                                     lstFOP.add("Type:" + rst.getString("ARC").substring(8723 + (i * x84), 8731 + (i * x84)).trim() + "  Amount: " + monto + "  Account:" + rst.getString("ARC").substring(8744 + (i * x84), 8763 + (i * x84)).trim() + "  Approval Code:" + rst.getString("ARC").substring(8772 + (i * x84), 8778 + (i * x84)).trim());
@@ -2816,7 +2918,12 @@ public class FacsimilDAO {
                                         beanFacsimil.strIssExc += " / " + rst.getString("ARC").substring(8746 + (i * x84), 8765 + (i * x84));
                                     }
                                     if (Long.parseLong(rst.getString("ARC").substring(8733 + (i * x84), 8742 + (i * x84))) > 0) {
-                                        String monto = Long.parseLong(rst.getString("ARC").substring(8733 + (i * x84), 8742 + (i * x84))) + "." + rst.getString("ARC").substring(8742 + (i * x84), 8744 + (i * x84));
+                                        String monto = "";
+                                        if (this.cambia_caracter(rst.getString("ARC").substring(492 + (i * x30), 493 + (i * x30))).trim().length() > 1) {
+                                            monto = Long.parseLong(rst.getString("ARC").substring(8733 + (i * x84), 8742 + (i * x84))) + "." + rst.getString("ARC").substring(8742 + (i * x84), 8743 + (i * x84)) + this.cambia_caracter(rst.getString("ARC").substring(8743 + (i * x84), 8744 + (i * x84))).substring(1, 2);
+                                        } else {
+                                            monto = Long.parseLong(rst.getString("ARC").substring(8733 + (i * x84), 8742 + (i * x84))) + "." + rst.getString("ARC").substring(8742 + (i * x84), 8743 + (i * x84)) + this.cambia_caracter(rst.getString("ARC").substring(8743 + (i * x84), 8744 + (i * x84)));
+                                        }
                                         if (rst.getString("ARC").substring(8723 + (i * x84), 8725 + (i * x84)).trim().equals("CC") || rst.getString("ARC").substring(8723 + (i * x84), 8725 + (i * x84)).trim().equals("TC")) {
                                             if (rst.getString("ARC").substring(8772 + (i * x84), 8778 + (i * x84)).trim().length() > 0) {
                                                 lstFOP.add("Type:" + rst.getString("ARC").substring(8723 + (i * x84), 8731 + (i * x84)).trim() + "  Amount: " + monto + "  Account:" + rst.getString("ARC").substring(8744 + (i * x84), 8763 + (i * x84)).trim() + "  Approval Code:" + rst.getString("ARC").substring(8772 + (i * x84), 8778 + (i * x84)).trim());
@@ -3133,6 +3240,51 @@ public class FacsimilDAO {
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
         }
         return beanFacsimil;
+    }
+    
+    public String cambia_caracter(String VL_CARACTER) {
+        if (VL_CARACTER.equals("{")) {
+            VL_CARACTER = "0";
+        } else if (VL_CARACTER.equals("A")) {
+            VL_CARACTER = "1";
+        } else if (VL_CARACTER.equals("B")) {
+            VL_CARACTER = "2";
+        } else if (VL_CARACTER.equals("C")) {
+            VL_CARACTER = "3";
+        } else if (VL_CARACTER.equals("D")) {
+            VL_CARACTER = "4";
+        } else if (VL_CARACTER.equals("E")) {
+            VL_CARACTER = "5";
+        } else if (VL_CARACTER.equals("F")) {
+            VL_CARACTER = "6";
+        } else if (VL_CARACTER.equals("G")) {
+            VL_CARACTER = "7";
+        } else if (VL_CARACTER.equals("H")) {
+            VL_CARACTER = "8";
+        } else if (VL_CARACTER.equals("I")) {
+            VL_CARACTER = "9";
+        } else if (VL_CARACTER.equals("}")) {
+            VL_CARACTER = "-0";
+        } else if (VL_CARACTER.equals("J")) {
+            VL_CARACTER = "-1";
+        } else if (VL_CARACTER.equals("K")) {
+            VL_CARACTER = "-2";
+        } else if (VL_CARACTER.equals("L")) {
+            VL_CARACTER = "-3";
+        } else if (VL_CARACTER.equals("M")) {
+            VL_CARACTER = "-4";
+        } else if (VL_CARACTER.equals("N")) {
+            VL_CARACTER = "-5";
+        } else if (VL_CARACTER.equals("O")) {
+            VL_CARACTER = "-6";
+        } else if (VL_CARACTER.equals("P")) {
+            VL_CARACTER = "-7";
+        } else if (VL_CARACTER.equals("Q")) {
+            VL_CARACTER = "-8";
+        } else if (VL_CARACTER.equals("R")) {
+            VL_CARACTER = "-9";
+        }
+        return VL_CARACTER;
     }
     
     public static void pasarGarbageCollector() {

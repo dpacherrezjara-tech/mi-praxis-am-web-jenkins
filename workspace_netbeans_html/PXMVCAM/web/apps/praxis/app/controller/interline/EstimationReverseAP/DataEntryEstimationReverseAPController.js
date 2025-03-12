@@ -35,7 +35,7 @@ Ext.define('Ext.Praxis.controller.interline.EstimationReverseAP.DataEntryEstimat
         }
         Ext.getCmp(prototype.id + '-cboType').bindStore(this.p.listType);
         this.setValue('cboType', {});
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     setStoreData: function() {
         //<editor-fold defaultstate="collapsed" desc="cmbDateYear2">

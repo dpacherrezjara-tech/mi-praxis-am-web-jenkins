@@ -111,7 +111,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrEMD', {
                                             {text: 'Amount', dataIndex: 'AMOUNTEM', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#E3CAF6;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -145,7 +145,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrEMD', {
                                             {text: 'Amount', dataIndex: 'AMOUNTEA', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#FFFFCD;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -179,7 +179,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrEMD', {
                                             {text: 'Amount', dataIndex: 'AMOUNTES', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#FFC875;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -213,7 +213,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrEMD', {
                                             {text: 'Amount', dataIndex: 'AMOUNTEMD', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#9CD2FF;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -247,7 +247,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrEMD', {
                                             {text: 'Amount', dataIndex: 'AMOUNTMS', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#FFFFFF;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -281,7 +281,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrEMD', {
                                             {text: 'Amount', dataIndex: 'AMOUNTEV', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#FFD2D6;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -315,7 +315,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrEMD', {
                                             {text: 'Amount', dataIndex: 'TOTAMTEMD', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#d5f4d5;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -420,7 +420,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrEMD', {
                                             {text: 'Amount', dataIndex: 'AMOUNTFL', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -454,7 +454,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrEMD', {
                                             {text: 'Amount', dataIndex: 'AMOUNTRF', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -488,7 +488,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrEMD', {
                                             {text: 'Amount', dataIndex: 'AMOUNTEX', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -522,7 +522,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrEMD', {
                                             {text: 'Amount', dataIndex: 'TOTAMTUSE', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#d5f4d5;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    value = Ext.util.Format.number(value, '0,000');
                                                     return  value;
                                                 },
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {

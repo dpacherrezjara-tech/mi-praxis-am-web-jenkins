@@ -52,7 +52,7 @@ Ext.define('Ext.Praxis.controller.screens.ScrFormUnicoController', {
                 var txtErrorRazones = Ext.getCmp(prototype.id1 + '-ErrorRazones');
                 txtErrorRazones.hide();
                 Ext.getCmp(prototype.id1 + '-MemoNumber').setValue(res.lst_dataIni[0].A2548NMEMO);
-                 Ext.getCmp(prototype.id1 + '-NNotice').setValue(res.lst_dataIni[0].A2548NRCOR);
+                Ext.getCmp(prototype.id1 + '-NNotice').setValue(res.lst_dataIni[0].A2548NRCOR);
                 Ext.getCmp(prototype.id1 + '-IssueDate').setValue(res.lst_dataIni[0].A2548FREGI);
                 Ext.getCmp(prototype.id1 + '-Accepted').setValue(res.lst_dataIni[0].A2548FREGI);
                 Ext.getCmp(prototype.id1 + '-Usser').setValue(res.lst_dataIni[0].A2548REGIS);
@@ -71,7 +71,20 @@ Ext.define('Ext.Praxis.controller.screens.ScrFormUnicoController', {
                 Ext.getCmp(prototype.id1 + '-IATAName').setValue(res.lst_dataIni[0].AGENCY);
                 Ext.getCmp(prototype.id1 + '-Address').setValue(res.lst_dataIni[0].DIRAGENCY);
                 Ext.getCmp(prototype.id1 + '-PassName').setValue(res.lst_dataIni[0].A2548EMPLE);
-                Ext.getCmp(prototype.id1 + '-CTA').setValue(res.lst_dataIni[0].A2548CTAC);
+                //MODIFICA ACA 
+                //A2548CIA,A2548UNID,	A2548CECO,A2548UBICA,A2548CUENT,A2548SUBCU,A2548EQUI,A2548ICIA,A2548CLIE
+//                Ext.getCmp(prototype.id1 + '-CTA').setValue(res.lst_dataIni[0].A2548CUENT +''+res.lst_dataIni[0].A2548SUBCU +''+res.lst_dataIni[0].A2548CLIE);
+                Ext.getCmp(prototype.id1 + '-A2548CIA').setValue(res.lst_dataIni[0].A2548CIAF);
+                Ext.getCmp(prototype.id1 + '-A2548UNID').setValue(res.lst_dataIni[0].A2548UNID);
+                Ext.getCmp(prototype.id1 + '-A2548CECO').setValue(res.lst_dataIni[0].A2548CECO);
+                Ext.getCmp(prototype.id1 + '-A2548UBICA').setValue(res.lst_dataIni[0].A2548UBICA);
+                Ext.getCmp(prototype.id1 + '-A2548CUENT').setValue(res.lst_dataIni[0].A2548CUENT);
+                Ext.getCmp(prototype.id1 + '-A2548SUBCU').setValue(res.lst_dataIni[0].A2548SUBCU);
+                Ext.getCmp(prototype.id1 + '-A2548EQUI').setValue(res.lst_dataIni[0].A2548EQUI);
+                Ext.getCmp(prototype.id1 + '-A2548ICIA').setValue(res.lst_dataIni[0].A2548ICIA);
+
+                Ext.getCmp(prototype.id1 + '-A2548CLIE').setValue(res.lst_dataIni[0].A2548CLIE);
+                        
                 Ext.getCmp(prototype.id1 + '-cur').setValue(res.lst_dataIni[0].A2548MDA);
                 var txtPDFASR = Ext.getCmp(prototype.id1 + '-PDFASR');
                 var PDFBSP = Ext.getCmp(prototype.id1 + '-PDFBSP');
@@ -211,7 +224,18 @@ Ext.define('Ext.Praxis.controller.screens.ScrFormUnicoController', {
         Ext.getCmp(prototype.id1 + '-IATAName').setValue('');
         Ext.getCmp(prototype.id1 + '-Address').setValue('');
         Ext.getCmp(prototype.id1 + '-PassName').setValue('');
-        Ext.getCmp(prototype.id1 + '-CTA').setValue('');
+//        Ext.getCmp(prototype.id1 + '-CTA').setValue('');
+        Ext.getCmp(prototype.id1 + '-A2548CIA').setValue('');
+        Ext.getCmp(prototype.id1 + '-A2548UNID').setValue('');
+        Ext.getCmp(prototype.id1 + '-A2548CECO').setValue('');
+        Ext.getCmp(prototype.id1 + '-A2548UBICA').setValue('');
+        Ext.getCmp(prototype.id1 + '-A2548CUENT').setValue('');
+        Ext.getCmp(prototype.id1 + '-A2548SUBCU').setValue('');
+        Ext.getCmp(prototype.id1 + '-A2548EQUI').setValue('');
+        Ext.getCmp(prototype.id1 + '-A2548ICIA').setValue('');
+        Ext.getCmp(prototype.id1 + '-A2548CLIE').setValue('');
+
+
         Ext.getCmp(prototype.id1 + '-cur').setValue('');
         var txtPDFASR = Ext.getCmp(prototype.id1 + '-PDFASR');
         var PDFBSP = Ext.getCmp(prototype.id1 + '-PDFBSP');

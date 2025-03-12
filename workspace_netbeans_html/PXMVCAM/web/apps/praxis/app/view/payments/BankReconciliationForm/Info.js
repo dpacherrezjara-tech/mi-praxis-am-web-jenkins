@@ -2162,7 +2162,8 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDataDetA1531TKT',
-                                            width: 713,
+                                            width: 724,
+                                            height: 550,
                                             columnLines: true,
                                             features: [{
                                                     ftype: 'summary'
@@ -2294,7 +2295,8 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDataDetA1531Excel',
-                                            width: 793,
+                                            width: 804,
+                                            height: 530,
                                             columnLines: true,
                                             features: [{
                                                     ftype: 'summary'

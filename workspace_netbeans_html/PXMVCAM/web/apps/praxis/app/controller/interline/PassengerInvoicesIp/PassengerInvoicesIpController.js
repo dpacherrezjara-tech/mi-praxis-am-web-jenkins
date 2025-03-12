@@ -16,6 +16,7 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoicesIp.PassengerInvoice
     panelActual: '',
     me: '', //
     searchParams: {},
+    searchParamsAnual: {},
     paramsDetail: {},
     paramsDetailExcel: {},
     bean20: {},
@@ -44,6 +45,9 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoicesIp.PassengerInvoice
             },
             '#PassengerInvoicesIpForm-btnExcel': {
                 click: this.btnExcel_click
+            },
+            '#PassengerInvoicesIpForm-btnTxt': {
+                click: this.btnTxt_click
             },
             '#PassengerInvoicesIpForm-btnFilter': {
                 click: this.btnFilter_click
@@ -1477,6 +1481,41 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoicesIp.PassengerInvoice
         Ext.getCmp(prototype.id + '-cmbFindBy').setValue('');
         Ext.getCmp(prototype.id + '-txtTKT').setValue('');
 
+    },
+    btnTxt_click: function(obj, e) {
+
+//        this.setFormatParameter();
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Download TXT anual ?',
+                buttons: Ext.MessageBox.OKCANCEL,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function(btn) {
+                    if (btn === 'ok') {
+                        this.exportTXT();
+                    }
+                }
+            });
+        }
+    },
+    exportTXT: function(obj, e) {        
+        me.bean = {};
+        me.bean.BDATE = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue();
+
+        var beanString = JSON.stringify(me.bean);
+        searchParamsAnual = {
+            beanString: beanString
+        };
+        console.log(searchParamsAnual);
+        
+        global.getFile(prototype.url + '/downloadTxt?beanString=' + searchParamsAnual.beanString + '&flagByMonth=A' );
     },
     btnExcel_click: function(obj, e) {
 

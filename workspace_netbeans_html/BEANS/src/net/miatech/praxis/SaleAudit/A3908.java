@@ -32,6 +32,7 @@ public class A3908 {
     public String A3908FREVI;
     public String A3908HREVI;
     public String A3908STATR;
+    public int A3908FLAG;
 
     public String getA3908CCUST() {
         return A3908CCUST;

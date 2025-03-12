@@ -17,6 +17,7 @@ public class A1692 {
     public String CUPON = "";
     public String DCHEQ = "";
     public String SEQ = "";
+    public String SEQRO = "";
     public String STVAL = "";
     public String FTE = "";
     public String FLOAD = "";
@@ -47,6 +48,11 @@ public class A1692 {
     public double TCMUS = 0;
     public double VCPUS = 0;
     
+    public String A4373CUPN1 = "";
+    public String A4373CUPN2 = "";
+    public String A4373CUPN3 = "";
+    public String A4373CUPN4 = "";
+    
     public String FCONT = "";
     public String IDCON = "";
     
@@ -56,4 +62,5 @@ public class A1692 {
     public String USUP = "";
     public String FEUP = "";
     public String HOUP = "";
+    public String CPN_REF = "";
 }

@@ -422,10 +422,20 @@ public class ConciliationASRDAO {
                 objRtn.STATUS = rs01.getString("STATUS");
                 objRtn.STATUS_RECORD = "";
                 
-                double intA1530_A1720_CA_SUM = rs01.getDouble("SCASH") - rs01.getDouble("RCASH");
-                double intA1530_A1720_CC_SUM = rs01.getDouble("SCREDIT") -  rs01.getDouble("RCREDIT");
+//                if (objRtn.WKSTAT.equals("86977085")){
+//                    objRtn.STATUS_RECORD = "";
+//                }
+                
+                double intA1530_A1720_CA_SUM = rs01.getDouble("SCASH") - rs01.getDouble("RCASH");                
+                double intA1530_A1720_CC_SUM = rs01.getDouble("SCREDIT") -  rs01.getDouble("RCREDIT");    
+                intA1530_A1720_CA_SUM = fijarNumero(intA1530_A1720_CA_SUM,2);
+                intA1530_A1720_CC_SUM = fijarNumero(intA1530_A1720_CC_SUM,2);
+                
                 double diff_CA_SUM = intA1530_A1720_CA_SUM - rs01.getDouble("A1530_A1720_CA_SUM"); 
                 double diff_CC_SUM = intA1530_A1720_CC_SUM - rs01.getDouble("A1530_A1720_CC_SUM");
+                diff_CA_SUM = fijarNumero(diff_CA_SUM,2);
+                diff_CC_SUM = fijarNumero(diff_CC_SUM,2);
+                
                 switch (objRtn.STATUS) {
                     case "A":
                         objRtn.STATUS_RECORD = "MATCH"; //MATCH AUTOMATIC.
@@ -477,7 +487,13 @@ public class ConciliationASRDAO {
         }
         return lstRtn;
     }
-    
+    public static double fijarNumero(double numero, int digitos) {
+        double resultado;
+        resultado = numero * Math.pow(10, digitos);
+        resultado = Math.round(resultado);
+        resultado = resultado/Math.pow(10, digitos);
+        return resultado;
+    }
     public List<PX031S03A1530Filter> loadPX031S03A1530(PX031S03A1530Filter filter) throws SQLException, Exception {
         List<PX031S03A1530Filter> lstRtn = new ArrayList<PX031S03A1530Filter>(0);
         PX031S03A1530Filter objRtn;

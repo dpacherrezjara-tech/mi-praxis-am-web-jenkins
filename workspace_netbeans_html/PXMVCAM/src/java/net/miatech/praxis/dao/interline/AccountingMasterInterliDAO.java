@@ -43,7 +43,7 @@ public class AccountingMasterInterliDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL PRAXIS.PX210S01A1740(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP04488(?,?,?,?,?,?,?,?,?,?)}"; // PX210S01A1740
 
         session.getCNXIBMDB2().open();         
         try {
@@ -104,6 +104,7 @@ public class AccountingMasterInterliDAO {
                 objRtn.RN = rs01.getLong("NO");
                 objRtn.A1740TITRA = rs01.getString("A1740TITRA").trim();
                 objRtn.A1740TIPO = rs01.getString("A1740TIPO").trim();
+                objRtn.A1740INTNU = rs01.getString("A1740INTNU").trim();
                 objRtn.A1740TIPODESC = rs01.getString("A1740TIPODESC").trim();
                 objRtn.A1740SUBTI = rs01.getString("A1740SUBTI").trim();
                 objRtn.A1740CATEG = rs01.getString("A1740CATEG").trim();
@@ -115,6 +116,7 @@ public class AccountingMasterInterliDAO {
                 objRtn.A1740SCTA = rs01.getString("A1740SCTA").trim();
                 objRtn.A1740EQUI = rs01.getString("A1740EQUI").trim();
                 objRtn.A1740ICIA = rs01.getString("A1740ICIA").trim();
+                objRtn.A1740INTNU = rs01.getString("A1740INTNU");
                 objRtn.A1740CLIE = rs01.getString("A1740CLIE").trim();
                 objRtn.A1740FINI = Functions.getMonthConvertDate(rs01.getString("A1740FINI"));
                 objRtn.A1740FFIN = Functions.getMonthConvertDate(rs01.getString("A1740FFIN"));
@@ -154,7 +156,7 @@ public class AccountingMasterInterliDAO {
         
         session.getCNXIBMDB2().open();
         try {    
-            strSQL = "{CALL PRAXIS.PX210S02A1740(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL PRAXIS.SQP04489(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; // PX210S02A1740
             cs = session.getCNXIBMDB2().getConnection().prepareCall(strSQL);
             cs.setString(1, strOption);
             cs.setString(2, filter.A1740CCUST);
@@ -180,6 +182,7 @@ public class AccountingMasterInterliDAO {
             cs.setString(22, filter.IN_A1740TIPO_OLD);
             cs.setString(23, filter.IN_A1740SUBTI_OLD);
             cs.setString(24, filter.IN_A1740CATEG_OLD);
+            cs.setString(25, filter.A1740INTNU);
             cs.execute();
             
             rst = cs.getResultSet();

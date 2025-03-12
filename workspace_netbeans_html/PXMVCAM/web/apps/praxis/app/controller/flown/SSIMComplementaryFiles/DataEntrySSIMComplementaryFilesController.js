@@ -61,7 +61,8 @@ Ext.define('Ext.Praxis.controller.flown.SSIMComplementaryFiles.DataEntrySSIMComp
 //                Ext.getCmp(prototype.id01+'-txtA1707-CARRIER').focus();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
+        global.AccessControlManagerByModeById(p, prototype.id01);
     },
 
     getDataInputs: function(){

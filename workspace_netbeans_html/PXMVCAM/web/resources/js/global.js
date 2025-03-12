@@ -1395,6 +1395,39 @@ var LarSyrExt = function () {
         mapForm.submit();
     };
 
+    this.AccessControlManagerExport = function(id) {
+        if(userAccess.length>0)
+        {
+            console.log("AccessControlMaganerExport");
+            console.log(prototype.id);
+            console.log(accessSelect);
+            if(Ext.getCmp(id)!==undefined){
+                if(accessSelect.PERMX==='N'){
+                    Ext.getCmp(id).hide();
+                } else{
+                    Ext.getCmp(id).show();
+                }
+            }
+        }
+    };
+    
+    this.AccessControlManagerAdd = function(id) {
+        if(userAccess.length>0)
+        {
+            console.log("AccessControlManagerAdd");
+            console.log(prototype.id);
+            console.log(accessSelect);
+            if(Ext.getCmp(id)!==undefined){
+                if(accessSelect.PERMC==='N'){
+                    Ext.getCmp(id).hide();
+                } else{
+                    Ext.getCmp(id).show();
+                }
+            }
+        }
+    };
+
+
     this.AccessControlMaganer = function() {
         if(userAccess.length>0)
         {
@@ -1412,26 +1445,362 @@ var LarSyrExt = function () {
             console.log(prototype.id);
             console.log(accessSelect);
             if(accessSelect.PERMC==='N'){
-                //if(Ext.getCmp(prototype.id+'-btn-save')) Ext.getCmp(prototype.id+'-btn-save').hide();
-                //if(Ext.getCmp(prototype.id+'-btnAdd')) Ext.getCmp(prototype.id+'-btnAdd').hide();
-            }/*else{
+                if(Ext.getCmp(prototype.id+'-btn-save')) Ext.getCmp(prototype.id+'-btn-save').hide();
+                if(Ext.getCmp(prototype.id+'-btnAdd')) Ext.getCmp(prototype.id+'-btnAdd').hide();
+            }else{
                 if(Ext.getCmp(prototype.id+'-btn-save')) Ext.getCmp(prototype.id+'-btn-save').show();
                 if(Ext.getCmp(prototype.id+'-btnAdd')) Ext.getCmp(prototype.id+'-btnAdd').show();
-            }*/
+            }
             if(accessSelect.PERMM==='N'){
-                //if(Ext.getCmp(prototype.id+'-btn-update')) Ext.getCmp(prototype.id+'-btn-update').hide();
-            }/*else{
-                //if(Ext.getCmp(prototype.id+'-btn-save')) Ext.getCmp(prototype.id+'-btn-save').show();
+                if(Ext.getCmp(prototype.id+'-btn-update')) Ext.getCmp(prototype.id+'-btn-update').hide();
+            }else{
                 if(Ext.getCmp(prototype.id+'-btn-update')) Ext.getCmp(prototype.id+'-btn-update').show();
-            }*/
+            }
             if(accessSelect.PERME==='N'){
-                //if(Ext.getCmp(prototype.id+'-btn-delete')) Ext.getCmp(prototype.id+'-btn-delete').hide();
-            }/*else{
+                if(Ext.getCmp(prototype.id+'-btn-delete')) Ext.getCmp(prototype.id+'-btn-delete').hide();
+            }else{
                 if(Ext.getCmp(prototype.id+'-btn-delete')) Ext.getCmp(prototype.id+'-btn-delete').show();
-            }*/
+            }
         }
     };
+    
+    this.AccessControlMaganerByMode = function(p) {
+        if(userAccess.length>0)
+        {
+            console.log("BEGIN AccessControlMaganer");
+            console.log(p.action);            
+
+            if(p.action=='I')
+            {
+                if(Ext.getCmp(prototype.id+'-btn-save')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-btn-save').hidden)
+                        {
+                                if(accessSelect.PERMC==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-btn-save').hide();
+                                }
+                        }
+
+                }
+
+                if(Ext.getCmp(prototype.id+'-btn-update')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-btn-update').hidden)
+                        {
+                                if(accessSelect.PERMM==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-btn-update').hide();
+                                }
+                        }
+                }
+
+                if(Ext.getCmp(prototype.id+'-btn-delete')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-btn-delete').hidden)
+                        {
+                                if(accessSelect.PERME==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-btn-delete').hide();
+                                }
+                        }
+
+                }
+            }
+            else if (p.action=='U')
+            {
+				console.log("BEGIN AccessControlMaganer save");
+                if(Ext.getCmp(prototype.id+'-btn-save')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-btn-save').hidden)
+                        {
+                                if(accessSelect.PERMM==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-btn-save').hide();
+                                }
+                        }
+
+                }
+				
+				console.log("BEGIN AccessControlMaganer update");
+                if(Ext.getCmp(prototype.id+'-btn-update')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-btn-update').hidden)
+                        {
+                                if(accessSelect.PERMM==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-btn-update').hide();
+                                }
+                        }
+                }
+				
+				console.log("BEGIN AccessControlMaganer DataEntry update");
+				if(Ext.getCmp(prototype.id+'-DataEntry-btn-update')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-DataEntry-btn-update').hidden)
+                        {
+                                if(accessSelect.PERMM==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-DataEntry-btn-update').hide();
+                                }
+                        }
+                }
+
+                if(Ext.getCmp(prototype.id+'-btn-delete')!==undefined)
+                {
+                        if(!Ext.getCmp(prototype.id+'-btn-delete').hidden)
+                        {
+                                if(accessSelect.PERME==='N')
+                                {
+                                        Ext.getCmp(prototype.id+'-btn-delete').hide();
+                                }
+                        }
+
+                }
+            }
+        }
+    };
+    
+    this.AccessControlManagerByModeById = function(p, id) {
+        if(userAccess.length>0)
+        {
+            console.log("BEGIN AccessControlManager");
+            console.log("ACTION:" + p.action);            
+
+            if(p.action=='I')
+            {
+                if(Ext.getCmp(id+'-btn-save')!== undefined)
+                {
+                    if(!Ext.getCmp(id+'-btn-save').hidden)
+                    {
+                        if(accessSelect.PERMC==='N')
+                        {
+                            Ext.getCmp(id+'-btn-save').hide();
+                        }
+                    }
+                }
+                if(Ext.getCmp(id+'-btn-update')!==undefined)
+                {
+                    if(!Ext.getCmp(id+'-btn-update').hidden)
+                    {
+                        if(accessSelect.PERMM==='N')
+                        {
+                            Ext.getCmp(id+'-btn-update').hide();
+                        }
+                    }
+                }
+                if(Ext.getCmp(id+'-btn-delete')!==undefined)
+                {
+                    if(!Ext.getCmp(id+'-btn-delete').hidden)
+                    {
+                        if(accessSelect.PERME==='N')
+                        {
+                            Ext.getCmp(id+'-btn-delete').hide();
+                        }
+                    }
+                }
+            }
+            else if (p.action=='U')
+            {
+		console.log("BEGIN AccessControlManager save");
+                if(Ext.getCmp(id+'-btn-save')!==undefined)
+                {
+                    if(!Ext.getCmp(id+'-btn-save').hidden)
+                    {
+                        if(accessSelect.PERMM==='N')
+                        {
+                            Ext.getCmp(id+'-btn-save').hide();
+                        }
+                    }
+
+                }		
+                console.log("BEGIN AccessControlManager update");
+                if(Ext.getCmp(id+'-btn-update')!==undefined)
+                {
+                    if(!Ext.getCmp(id+'-btn-update').hidden)
+                    {
+                        if(accessSelect.PERMM==='N')
+                        {
+                            Ext.getCmp(id+'-btn-update').hide();
+                        }
+                    }
+                }
+                console.log("BEGIN AccessControlMaganer DataEntry update");
+                if(Ext.getCmp(id+'-DataEntry-btn-update')!==undefined)
+                {
+                    if(!Ext.getCmp(id+'-DataEntry-btn-update').hidden)
+                    {
+                        if(accessSelect.PERMM==='N')
+                        {
+                            Ext.getCmp(id+'-DataEntry-btn-update').hide();
+                        }
+                    }
+                }
+                if(Ext.getCmp(id+'-btn-delete')!==undefined)
+                {
+                    if(!Ext.getCmp(id+'-btn-delete').hidden)
+                    {
+                        if(accessSelect.PERME==='N')
+                        {
+                            Ext.getCmp(id+'-btn-delete').hide();
+                        }
+                    }
+                }
+            }
+        }
+    };
+    this.countBy = function(array, campo){
+        return array.reduce((acumulador, objeto) => {
+            // Obtener el valor del campo
+            const key = objeto[campo];
+
+            // Si la clave ya existe en el acumulador, incrementar el contador
+            if (acumulador[key]) {
+                acumulador[key]++;
+            } else {
+                // Si la clave no existe, inicializar el contador en 1
+                acumulador[key] = 1;
+            }
+
+            return acumulador;
+        }, {});
+    };
+    this.sumBy = function(array, campo){
+        return array.reduce((acumulador, objeto) => {
+            return acumulador + (objeto[campo] || 0); // Evitar valores indefinidos
+        }, 0);
+    };
+    this.sumByFilter = function(array, campo,campoFiltrado,valor){
+        return array.reduce((acumulador, objeto) => {
+            return (objeto[campoFiltrado] || '') === valor ?  
+                acumulador + (objeto[campo] || 0): acumulador; // Evitar valores indefinidos
+        }, 0);
+    };
+    this.getDistict = function(lst, key){
+        let valoresVistos = {};
+        // Filtra el array para eliminar duplicados según la columna "nombre"
+        let resultado = lst.filter(function (item) {
+            if (valoresVistos[item[key]]) {
+                // Si el valor ya se ha visto, exclúyelo
+                return false;
+            }
+            // Si es la primera vez que se ve, márcalo como visto y manténlo en el resultado
+            valoresVistos[item[key]] = true;
+            return true;
+        });
+        return resultado;
+    };
+    this.setComboStore = function(cmp, data, valueField, displayField, value){
+        //crea record vacio
+        let allRecord = {};
+        allRecord[displayField] = 'All';
+        allRecord[valueField] = '';
+        //limpia record de data
+        data.forEach(obj => {
+            for (let attr in obj) {
+                if (typeof obj[attr] === 'string') {
+                    obj[attr] = obj[attr].trimEnd();
+                }
+            }
+        });
+        //crea Store
+        let store = new Ext.data.Store({
+            autoLoad:true,
+            data: data
+        });
+        //inserta record vacio
+        store.insert(0, allRecord);
+        //renderiza Combo
+        cmp.valueField = valueField;
+        cmp.displayField = displayField;
+        cmp.suspendEvents(false);
+        cmp.bindStore(store);
+        cmp.setValue(value);
+        cmp.resumeEvents();
+    };
+    this.arrayAddUnique = function(newArray, array, keys){
+        let prev = array.length;
+        let added = newArray.length;
+        let newObjs = newArray.filter(obj => !array.some(x =>
+                keys.every(key => obj[key] === x[key])
+            ));
+        array = array.concat(newObjs);
+
+        let post = array.length;
+        return {
+            original : prev,
+            added: added,
+            inserted : (post - prev),
+            duplicated : added - (post - prev),
+            modified : post,
+            data : array
+        };
+    };
+    this.arrayRemove = function (removeArray, array, keys) {
+        let prev = array.length;
+        array = array.filter(item =>
+            !removeArray.some(x =>
+                keys.every(key => item[key] === x[key])
+            )
+        );
+        let post = array.length;
+
+        return {
+            original: prev,
+            removed: removeArray.length,
+            modified: post,
+            data: array
+        };
+    };
+    this.filterArrayByObj = function(array,obj,equals){
+        let lst = array.filter(x =>{
+            return Object.keys(obj).every(key=>{
+                return obj[key] === '' || (
+                        //variable equals
+                        equals ? obj[key] === x[key].trim() :
+                            obj[key] !== x[key].trim()
+                        );
+            });
+        });
+        return lst;
+    };
     this.PX_UTILS_URL = 'js/praxis.ui-1.0/praxis.utils-1.0.js';
+    this.downloadFile = function(objAxios,url,params,typeFile = 'zip'){
+        new AWN().async(
+            objAxios.post(url,params? params : null, 
+        {
+            responseType: 'blob'  // Configuración para recibir un Blob
+        }).then(response => {
+            // Procesar la descarga del archivo
+            const contentDisposition = response.headers['content-disposition'];
+            let nombreArchivo = `file.${typeFile}`;
+
+            if (contentDisposition) {
+                const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                const matches = filenameRegex.exec(contentDisposition);
+                if (matches !== null && matches[1]) {
+                    nombreArchivo = matches[1].replace(/['"]/g, '');
+                }
+            }
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = nombreArchivo;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+        }),
+        'Sucessfully Downloaded',
+        'Error on Download');
+    };
+    this.cleanPXobj = function(obj){
+        for (let key in obj) {
+            if (typeof obj[key] === 'string') {
+                obj[key] = obj[key].trimEnd();
+            }
+        }
+    };
 };
 
 var global = new LarSyrExt();

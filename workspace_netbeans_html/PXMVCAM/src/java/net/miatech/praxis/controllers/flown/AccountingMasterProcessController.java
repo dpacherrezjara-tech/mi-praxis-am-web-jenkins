@@ -256,7 +256,7 @@ public class AccountingMasterProcessController extends BaseController {
             
             if(strOption.equals("D")){                
                 switch(filter.A1955MODUL){
-                    case "PFLOWN" :
+                    case "PFLOWNPRE" :
                         logic.reversaFlown(filter);
                         break;
                 }                
@@ -274,6 +274,35 @@ public class AccountingMasterProcessController extends BaseController {
         m.put("strOption", strOption);
 
         return new Gson().toJson(m);
+    }
+    
+    @RequestMapping(value = "validation")
+    public @ResponseBody
+    String validation(ModelMap map, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        A1955Filter listaData;
+        A1955Filter filter = new A1955Filter();
+        try {
+
+            filter.IN_FECHA_PROCESO = request.getParameter("IN_FECHA_PROCESO").trim();
+            filter.A1955ACTIO = request.getParameter("strOption").trim();
+            filter.A1955FPROC = request.getParameter("IN_FECHA_PROCESO").trim();
+            filter.A1955MODUL = request.getParameter("A1955MODUL").trim();
+            logic = new AccountingMasterProcessLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            listaData = logic.accountValidation(filter);
+            
+            map.put("success", true);            
+            map.put("data", listaData);
+
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + ex.getMessage());
+        }
+
+        return new Gson().toJson(map);
     }
      
     @RequestMapping(value = "/searchReversa")

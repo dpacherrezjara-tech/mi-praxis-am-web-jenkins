@@ -378,10 +378,10 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByBankForm.Filters', {
                     maxLength: 13,
                     labelWidth: 80,
                     width: 240,
-//                    enableKeyEvents: true,
-//                    listeners: {
-//                        keypress: 'BuscarTKT_keyDownHandler'
-//                    }
+                    enableKeyEvents: true,
+                    listeners: {
+                        keypress: 'BuscarTKT_keyDownHandler'
+                    }
                 },
                 {
                     xtype: 'radiogroup',

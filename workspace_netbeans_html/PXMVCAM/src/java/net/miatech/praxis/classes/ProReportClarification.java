@@ -29,10 +29,11 @@ import java.io.FileOutputStream;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import net.miatech.praxis.payment.filter.A2331Filter;
+import net.miatech.praxis.payment.old.A2331Filter;
 import net.miatech.utils.Functions;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -50,6 +51,7 @@ public class ProReportClarification {
     private int Hlng = 12;
     private File fileTmp01; //, fileTmp02;
     private List<File> lstFileTmp = new ArrayList<File>();
+    private static final Logger logError = Logger.getLogger("errorLog");
 
     class TableHeader extends PdfPageEventHelper {
 
@@ -186,6 +188,7 @@ public class ProReportClarification {
 
         } catch (Exception e) {
             e.printStackTrace();
+            logError.error("Data Request By Bank (createReportPDF) - Message: " + e.getMessage() + " Stacktrace: " + e.getMessage() + "**" + e.getStackTrace().toString());
             success = false;
         }
 
@@ -193,17 +196,19 @@ public class ProReportClarification {
 
     }
 
-    public boolean createReportPDF_CCW(String folio, A2331Filter aclaracion) {
+    public boolean createReportPDF_CCW(String folio, A2331Filter aclaracion, String RUTA_DOWNLOAD) {
         //Call Center y Web
         boolean success = true;
         String strNomFile = "Folio_" + folio;
         NumberFormat nfDbl = NumberFormat.getInstance(java.util.Locale.US);
         nfDbl.setMinimumFractionDigits(2);
         nfDbl.setMaximumFractionDigits(2);
-
         try {
 
-            fileTmp01 = File.createTempFile(strNomFile + "_", ".pdf");
+//            fileTmp01 = File.createTempFile(strNomFile + "_", ".pdf");
+            
+            fileTmp01 = new File(RUTA_DOWNLOAD + "\\" + strNomFile + ".pdf");
+                    
             lstFileTmp.add(fileTmp01);
             PYi = 550;
             Hlng = 20;
@@ -519,6 +524,7 @@ public class ProReportClarification {
             e.printStackTrace();
             Log log = LogFactory.getLog("ProReportClarification");
             log.error("Message: " + e.getMessage() + " Stacktrace: " + e.getMessage() + "**" + e.getStackTrace().toString());
+            logError.error("Data Request By Bank (createReportPDF_CCW) - Message: " + e.getMessage() + " Stacktrace: " + e.getMessage() + "**" + e.getStackTrace().toString());
             success = false;
         }
 

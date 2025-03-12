@@ -135,3 +135,28 @@
   background-image: url("../img/icon/graph_pie.png");
   
 }
+
+.prx-icon-downloadfile {
+    background-image: url("../img/icon/downloadfile.png");
+    background-size: 16px;
+}
+
+.prx-icon-reload {
+    background-image: url("../img/icon/reload.png");
+    background-size: 16px;
+}
+
+.prx-icon-cancel-action {
+    background-image: url("../img/icon/cancel.png");
+    background-size: 16px;
+}
+
+.prx-icon-bpo-comment {
+    background-image: url("../img/icon/26x26/comments.png");
+    background-size: 16px;
+}
+
+.prx-icon-new {
+    background-image: url("../img/botones/new.png");
+    background-size: 16px;
+}

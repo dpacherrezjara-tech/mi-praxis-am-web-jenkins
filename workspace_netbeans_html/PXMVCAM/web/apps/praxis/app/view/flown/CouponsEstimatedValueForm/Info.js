@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
         {
             region: 'center',
             id: prototype.id + '-regionCenterGrid01',
-            width: 1295,
+            width: 1395,
             layout: {
                 type: 'vbox',
                 align: 'center'
@@ -32,7 +32,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
             items: [
                 // --------------------------   GRID MAIN DATA---------------------
                 //-----------------------------------------------------------------
-                
+
                 {
                     xtype: 'panel',
                     id: prototype.id + '-panelGridData',
@@ -47,8 +47,8 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                             xtype: 'grid',
                             padding: '20 0 0 0',
                             id: prototype.id + '-gridData',
-                            height: 540,
-                            width: 1261,
+                            height: 535,
+                            width: 1331,
                             columnLines: true,
                             resizable: false,
                             columns: {
@@ -59,8 +59,18 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                     align: 'center'
                                 },
                                 items: [
-                                    {text: 'Tickets', width: 110, dataIndex: 'strTicket'},
-                                    {text: 'Status', width: 90, dataIndex: 'strDescSTVAL'},
+                                    {text: 'Tickets', width: 110, dataIndex: 'strTicket',
+                                        listeners: {
+                                            click: 'displayMasterTkt_clickHandler'
+                                        },
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "color:#057ECB;";
+                                            value = '<b>' + value + '</b>';
+                                            return '<a href="#flown-coupons-estimated-value-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                        }
+                                    },
+                                    {text: 'Seq', width: 55, dataIndex: 'SEQ'},
+                                    {text: 'Status', width: 85, dataIndex: 'strDescSTVAL'},
                                     {text: 'Flight ',
                                         defaults: {
                                             menuDisabled: true,
@@ -71,8 +81,35 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                             {text: 'Date', width: 80, dataIndex: 'strFormatDate2'}
                                         ]
                                     },
-                                    {text: 'VCR Date', width: 80, dataIndex: 'strFormatDate'},
-                                    {text: 'Flight ',
+                                    {text: 'VCR Date',id: prototype.id + '-VCR', width: 80, dataIndex: 'strFormatDate'},
+                                    {text: 'RFIC',
+                                        hidden:true,
+                                        id: prototype.id + '-RFIC',
+                                        dataIndex: 'RFIC', width: 40,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center";
+                                            return value;
+                                        },
+                                    },
+                                    {text: 'Reason<br>Code',
+                                        hidden:true,
+                                        id: prototype.id + '-Reason',
+                                        dataIndex: 'RECODE', width: 60,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center";
+                                            return value;
+                                        },
+                                    },
+                                    {text: 'Free Description',
+                                        hidden:true,
+                                        id: prototype.id + '-Free',
+                                        dataIndex: 'DESC_RECODE', width: 140,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:left";
+                                            return value;
+                                        },
+                                    },
+                                    {text: 'Flight ',id: prototype.id + '-Number',
                                         defaults: {
                                             menuDisabled: true,
                                             sortable: true,
@@ -82,7 +119,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                             {text: 'Number', width: 60, dataIndex: 'NFLIGHT'}
                                         ]
                                     },
-                                    {text: 'City ',
+                                    {text: 'City ',id: prototype.id + '-City',
                                         defaults: {
                                             menuDisabled: true,
                                             sortable: true,
@@ -93,6 +130,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                         ]
                                     },
                                     {text: 'Leg ',
+                                        id: prototype.id + '-Leg',
                                         defaults: {
                                             menuDisabled: true,
                                             sortable: true,
@@ -102,9 +140,9 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                             {text: 'Sec.', width: 45, dataIndex: 'LEGSEQ'}
                                         ]
                                     },
-                                    {text: 'Zone', width: 50, dataIndex: 'ZONA'},
+                                    {text: 'Zone',id: prototype.id + '-Zone', width: 50, dataIndex: 'ZONA'},
                                     {text: 'Carrier', width: 51, dataIndex: 'CARR'},
-                                    {text: 'Fare ',
+                                    {text: 'Fare ',id: prototype.id + '-Fare',
                                         defaults: {
                                             menuDisabled: true,
                                             sortable: true,
@@ -112,14 +150,14 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                         },
                                         columns: [
                                             {text: 'Basis', width: 95, dataIndex: 'FBASE',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:left;';
                                                     return  value;
                                                 }
                                             }
                                         ]
                                     },
-                                    {text: 'Class', width: 45, dataIndex: 'CLAS'},
+                                    {text: 'Class', id: prototype.id + '-Class',width: 45, dataIndex: 'CLAS'},
                                     {text: 'Sales Value ',
                                         defaults: {
                                             menuDisabled: true,
@@ -129,7 +167,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                         columns: [
                                             {text: 'Flag', width: 60, dataIndex: 'strFVAL'},
                                             {text: 'USD', width: 80, dataIndex: 'VCPN',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:right;';
                                                     return  Ext.util.Format.number(value, '0,000.00');
                                                 }
@@ -143,8 +181,8 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                             align: 'center'
                                         },
                                         columns: [
-                                            {text: 'USD', width: 91, dataIndex: 'VCPMX',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            {text: 'USD', width: 81, dataIndex: 'VCPMX',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:right;';
                                                     return  Ext.util.Format.number(value, '0,000.00');
                                                 }
@@ -159,7 +197,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                         },
                                         columns: [
                                             {text: 'Rate', width: 80, dataIndex: 'TCMUS',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:center;';
                                                     return  value;
                                                 }
@@ -173,8 +211,8 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                             align: 'center'
                                         },
                                         columns: [
-                                            {text: 'MXN', width: 92, dataIndex: 'VCPUS',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            {text: 'MXN', width: 82, dataIndex: 'VCPUS',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:right;';
                                                     return  Ext.util.Format.number(value, '0,000.00');
                                                 }
@@ -190,165 +228,166 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                         columns: [
                                             {text: 'Date', width: 80, dataIndex: 'strFormatFVTA'}
                                         ]
-                                    }
+                                    },
+                                    {text: 'Flag', id: prototype.id + '-Flag', width: 40, dataIndex: 'strDescSTNEW'}
 
                                     /*
-
-                                    {text: 'Values',
-                                        defaults: {
-                                            menuDisabled: true,
-                                            sortable: true,
-                                            align: 'center'
-                                        },
-                                        columns: [
-                                            {text: 'Value', width: 90, dataIndex: 'VCPN',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:right; margin-right:0px;';
-                                                    return  Ext.util.Format.number(value, '0,000');
-                                                }
-                                            },
-                                            {text: 'Currency', width: 90, dataIndex: 'MDACP',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:right; margin-right:0px;';
-                                                    return  Ext.util.Format.number(value, '0,000');
-                                                }
-                                            },
-                                            {text: 'Status <br> Accounting', width: 120, dataIndex: 'strDescFVAL',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:right; margin-right:0px;';
-                                                    return  Ext.util.Format.number(value, '0,000');
-                                                }
-                                            },
-                                            {text: 'MXN', width: 70, dataIndex: 'VCPMX',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:right; margin-right:0px;';
-                                                    return  Ext.util.Format.number(value, '0,000');
-                                                }
-                                            },
-                                            {text: 'Rate', width: 70, dataIndex: 'TCMUS',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:right; margin-right:0px;';
-                                                    return  Ext.util.Format.number(value, '0,000');
-                                                }
-                                            },
-                                            {text: 'Difference', width: 70, dataIndex: 'difVakues',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:right; margin-right:0px;';
-                                                    return  Ext.util.Format.number(value, '0,000');
-                                                }
-                                            },
-                                            {text: 'USD', width: 70, dataIndex: 'VCPUS',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:right; margin-right:0px;';
-                                                    return  Ext.util.Format.number(value, '0,000');
-                                                }
-                                            },
-                                            {text: 'Commission', width: 70, dataIndex: 'COMISI',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:right; margin-right:0px;';
-                                                    return  Ext.util.Format.number(value, '0,000');
-                                                }
-                                            }
-                                        ]
-                                    }
-
-                                    */
+                                     
+                                     {text: 'Values',
+                                     defaults: {
+                                     menuDisabled: true,
+                                     sortable: true,
+                                     align: 'center'
+                                     },
+                                     columns: [
+                                     {text: 'Value', width: 90, dataIndex: 'VCPN',
+                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                     metaData.style = 'text-align:right; margin-right:0px;';
+                                     return  Ext.util.Format.number(value, '0,000');
+                                     }
+                                     },
+                                     {text: 'Currency', width: 90, dataIndex: 'MDACP',
+                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                     metaData.style = 'text-align:right; margin-right:0px;';
+                                     return  Ext.util.Format.number(value, '0,000');
+                                     }
+                                     },
+                                     {text: 'Status <br> Accounting', width: 120, dataIndex: 'strDescFVAL',
+                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                     metaData.style = 'text-align:right; margin-right:0px;';
+                                     return  Ext.util.Format.number(value, '0,000');
+                                     }
+                                     },
+                                     {text: 'MXN', width: 70, dataIndex: 'VCPMX',
+                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                     metaData.style = 'text-align:right; margin-right:0px;';
+                                     return  Ext.util.Format.number(value, '0,000');
+                                     }
+                                     },
+                                     {text: 'Rate', width: 70, dataIndex: 'TCMUS',
+                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                     metaData.style = 'text-align:right; margin-right:0px;';
+                                     return  Ext.util.Format.number(value, '0,000');
+                                     }
+                                     },
+                                     {text: 'Difference', width: 70, dataIndex: 'difVakues',
+                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                     metaData.style = 'text-align:right; margin-right:0px;';
+                                     return  Ext.util.Format.number(value, '0,000');
+                                     }
+                                     },
+                                     {text: 'USD', width: 70, dataIndex: 'VCPUS',
+                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                     metaData.style = 'text-align:right; margin-right:0px;';
+                                     return  Ext.util.Format.number(value, '0,000');
+                                     }
+                                     },
+                                     {text: 'Commission', width: 70, dataIndex: 'COMISI',
+                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                     metaData.style = 'text-align:right; margin-right:0px;';
+                                     return  Ext.util.Format.number(value, '0,000');
+                                     }
+                                     }
+                                     ]
+                                     }
+                                     
+                                     */
 
                                 ]
                             }
                         },
-        //                {
-        //                    xtype: 'grid',
-        //                    padding: '20 0 0 0',
-        //                    id: prototype.id + '-gridDataPrevious',
-        //                    height: 450,
-        //                    width: 1033,
-        //                    hidden: true,
-        //                    columnLines: true,
-        //                    resizable: false,
-        //                    columns: {
-        //                        defaults: {
-        //                            menuDisabled: true,
-        //                            sortable: true,
-        //                            resizable: false,
-        //                            align: 'center'
-        //                        },
-        //                        items: [
-        //                            {text: 'Flight ',
-        //                                defaults: {
-        //                                    menuDisabled: true,
-        //                                    sortable: true,
-        //                                    align: 'center'
-        //                                },
-        //                                columns: [
-        //                                    {text: 'Date', width: 90, dataIndex: 'strTicket'},
-        //                                    {text: 'Orig', width: 70, dataIndex: 'CDEPART'},
-        //                                    {text: 'Dest', width: 70, dataIndex: 'CARRIVA'},
-        //                                    {text: 'RBD', width: 50, dataIndex: 'CLAS'},
-        //                                    {text: 'Fare <br> Basis', width: 100, dataIndex: 'FBASE'}
-        //                                ]
-        //                            },
-        //                            {text: 'Values',
-        //                                defaults: {
-        //                                    menuDisabled: true,
-        //                                    sortable: true,
-        //                                    align: 'center'
-        //                                },
-        //                                columns: [
-        //                                    {text: 'Value', width: 90, dataIndex: 'VCPN',
-        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-        //                                            metaData.style = 'text-align:right; margin-right:0px;';
-        //                                            return  Ext.util.Format.number(value, '0,000');
-        //                                        }
-        //                                    },
-        //                                    {text: 'Currency', width: 90, dataIndex: 'MDACP',
-        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-        //                                            metaData.style = 'text-align:right; margin-right:0px;';
-        //                                            return  Ext.util.Format.number(value, '0,000');
-        //                                        }
-        //                                    },
-        //                                    {text: 'Status <br> Accounting', width: 120, dataIndex: 'strDescFVAL',
-        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-        //                                            metaData.style = 'text-align:right; margin-right:0px;';
-        //                                            return  Ext.util.Format.number(value, '0,000');
-        //                                        }
-        //                                    },
-        //                                    {text: 'MXN', width: 70, dataIndex: 'VCPMX',
-        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-        //                                            metaData.style = 'text-align:right; margin-right:0px;';
-        //                                            return  Ext.util.Format.number(value, '0,000');
-        //                                        }
-        //                                    },
-        //                                    {text: 'Rate', width: 70, dataIndex: 'TCMUS',
-        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-        //                                            metaData.style = 'text-align:right; margin-right:0px;';
-        //                                            return  Ext.util.Format.number(value, '0,000');
-        //                                        }
-        //                                    },
-        //                                    {text: 'Difference', width: 70, dataIndex: 'difVakues',
-        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-        //                                            metaData.style = 'text-align:right; margin-right:0px;';
-        //                                            return  Ext.util.Format.number(value, '0,000');
-        //                                        }
-        //                                    },
-        //                                    {text: 'USD', width: 70, dataIndex: 'VCPUS',
-        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-        //                                            metaData.style = 'text-align:right; margin-right:0px;';
-        //                                            return  Ext.util.Format.number(value, '0,000');
-        //                                        }
-        //                                    },
-        //                                    {text: 'Commission', width: 70, dataIndex: 'COMISI',
-        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-        //                                            metaData.style = 'text-align:right; margin-right:0px;';
-        //                                            return  Ext.util.Format.number(value, '0,000');
-        //                                        }
-        //                                    }
-        //                                ]
-        //                            }
-        //
-        //                        ]
-        //                    }
-        //                },
+                        //                {
+                        //                    xtype: 'grid',
+                        //                    padding: '20 0 0 0',
+                        //                    id: prototype.id + '-gridDataPrevious',
+                        //                    height: 450,
+                        //                    width: 1033,
+                        //                    hidden: true,
+                        //                    columnLines: true,
+                        //                    resizable: false,
+                        //                    columns: {
+                        //                        defaults: {
+                        //                            menuDisabled: true,
+                        //                            sortable: true,
+                        //                            resizable: false,
+                        //                            align: 'center'
+                        //                        },
+                        //                        items: [
+                        //                            {text: 'Flight ',
+                        //                                defaults: {
+                        //                                    menuDisabled: true,
+                        //                                    sortable: true,
+                        //                                    align: 'center'
+                        //                                },
+                        //                                columns: [
+                        //                                    {text: 'Date', width: 90, dataIndex: 'strTicket'},
+                        //                                    {text: 'Orig', width: 70, dataIndex: 'CDEPART'},
+                        //                                    {text: 'Dest', width: 70, dataIndex: 'CARRIVA'},
+                        //                                    {text: 'RBD', width: 50, dataIndex: 'CLAS'},
+                        //                                    {text: 'Fare <br> Basis', width: 100, dataIndex: 'FBASE'}
+                        //                                ]
+                        //                            },
+                        //                            {text: 'Values',
+                        //                                defaults: {
+                        //                                    menuDisabled: true,
+                        //                                    sortable: true,
+                        //                                    align: 'center'
+                        //                                },
+                        //                                columns: [
+                        //                                    {text: 'Value', width: 90, dataIndex: 'VCPN',
+                        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        //                                            metaData.style = 'text-align:right; margin-right:0px;';
+                        //                                            return  Ext.util.Format.number(value, '0,000');
+                        //                                        }
+                        //                                    },
+                        //                                    {text: 'Currency', width: 90, dataIndex: 'MDACP',
+                        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        //                                            metaData.style = 'text-align:right; margin-right:0px;';
+                        //                                            return  Ext.util.Format.number(value, '0,000');
+                        //                                        }
+                        //                                    },
+                        //                                    {text: 'Status <br> Accounting', width: 120, dataIndex: 'strDescFVAL',
+                        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        //                                            metaData.style = 'text-align:right; margin-right:0px;';
+                        //                                            return  Ext.util.Format.number(value, '0,000');
+                        //                                        }
+                        //                                    },
+                        //                                    {text: 'MXN', width: 70, dataIndex: 'VCPMX',
+                        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        //                                            metaData.style = 'text-align:right; margin-right:0px;';
+                        //                                            return  Ext.util.Format.number(value, '0,000');
+                        //                                        }
+                        //                                    },
+                        //                                    {text: 'Rate', width: 70, dataIndex: 'TCMUS',
+                        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        //                                            metaData.style = 'text-align:right; margin-right:0px;';
+                        //                                            return  Ext.util.Format.number(value, '0,000');
+                        //                                        }
+                        //                                    },
+                        //                                    {text: 'Difference', width: 70, dataIndex: 'difVakues',
+                        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        //                                            metaData.style = 'text-align:right; margin-right:0px;';
+                        //                                            return  Ext.util.Format.number(value, '0,000');
+                        //                                        }
+                        //                                    },
+                        //                                    {text: 'USD', width: 70, dataIndex: 'VCPUS',
+                        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        //                                            metaData.style = 'text-align:right; margin-right:0px;';
+                        //                                            return  Ext.util.Format.number(value, '0,000');
+                        //                                        }
+                        //                                    },
+                        //                                    {text: 'Commission', width: 70, dataIndex: 'COMISI',
+                        //                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                        //                                            metaData.style = 'text-align:right; margin-right:0px;';
+                        //                                            return  Ext.util.Format.number(value, '0,000');
+                        //                                        }
+                        //                                    }
+                        //                                ]
+                        //                            }
+                        //
+                        //                        ]
+                        //                    }
+                        //                },
                         /** PAGINATION LABELS*/
                         {
                             xtype: 'panel',
@@ -411,8 +450,8 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                 }
                             ]
                         }
-                    ]  
-                }
+                    ]
+                },
             ]
         },
         {

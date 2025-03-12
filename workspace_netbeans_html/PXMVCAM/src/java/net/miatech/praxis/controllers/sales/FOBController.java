@@ -30,10 +30,12 @@ import net.miatech.beans.PX117S2A1728Filter;
 import net.miatech.beans.SQP00794Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.classes.ProMail;
+import net.miatech.praxis.classes.ProReportCommFOB;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.sales.FOBLogic;
 import net.miatech.utils.Functions;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -52,8 +54,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import net.miatech.praxis.classes.ProReportCommFOB;
-import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -404,7 +404,8 @@ public class FOBController extends BaseController {
             CH1_07.setCellValue("IVA");
             CH1_08.setCellValue("Comm. +  IVA");
             CH1_09.setCellValue("Total Cash");
-            CH1_10.setCellValue("Total Cash - Commission");
+//            CH1_10.setCellValue("Total Cash - Commission");
+            CH1_10.setCellValue("Total");
             CH1_11.setCellValue("Send to FOB");
             CH1_13.setCellValue("Acuse");
             CH1_14.setCellValue("Received From FOB");

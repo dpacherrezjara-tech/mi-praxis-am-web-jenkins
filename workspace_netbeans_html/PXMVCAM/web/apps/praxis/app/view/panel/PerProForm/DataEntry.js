@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
 
     title:'Permits / Programs Management - Data Entry Form',
     header:true,
-    height:330,
+    height:340,
     width:815,
     border:false,
     resizable:false,
@@ -42,13 +42,19 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                             width: 70
                         },
                         {
-                            xtype: 'label',
-                            text: 'LZAMBRANO',
+                            xtype: 'textfield',
+                            id: prototype.id + '-USR',
+                            text: '',
+                            maxLength: 10,
+                            enforceMaxLength: true,
                             //style: 'font-weight:bold;color:red;',
                             width: 120,
                             autoEl: {
                                 tag: 'label',
                                 'data-qtip': 'Mandatory Field'
+                            },
+                            listeners:{
+                                change: 'onUpperValue'
                             }
                         },
                         { xtype: 'tbspacer', width: 7 },
@@ -78,24 +84,35 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                             width: 70
                         },
                         {
-                            xtype: 'label',
-                            text: 'PX000000',
+                            xtype: 'textfield',
+                            id: prototype.id + '-NPROG',                            
+                            text: '',
+                            maxLength: 10,
+                            enforceMaxLength: true,
                             //style: 'font-weight:bold;color:red;',
                             width: 120,
                             autoEl: {
                                 tag: 'label',
                                 'data-qtip': 'Mandatory Field'
+                            },
+                            listeners:{
+                                change: 'onUpperValue'
                             }
                         },
                         { xtype: 'tbspacer', width: 7 },
                         {
-                            xtype: 'label',
-                            text: 'Description',
+                            xtype: 'textfield',
+                            id: prototype.id + '-PROG',
+                            readOnly: true,
+                            text: '',
                             //style: 'font-weight:bold;color:red;',
-                            width: 120,
+                            width: 300,
                             autoEl: {
                                 tag: 'label',
                                 'data-qtip': 'Mandatory Field'
+                            },
+                            listeners:{
+                                change: 'onUpperValue'
                             }
                         },
                     ]
@@ -237,27 +254,13 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                                     xtype: 'textfield',
                                     id:prototype.id+'-FECR',
                                     readOnly: true,
-                                    width: 80,
+                                    width: 150,
                                     listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
                                 { xtype: 'tbspacer', width: 60 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Creation Time',
-                                    style: 'font-weight:bold;color:#000;',
-                                    width: 120
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-HOCR',
-                                    readOnly: true,
-                                    width: 80,
-                                    listeners:{
-                                        change: 'onUpperValue'
-                                    }
-                                }
+                                
                             ]
                         },
                         {
@@ -295,27 +298,13 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                                     xtype: 'textfield',
                                     id:prototype.id+'-FEUP',
                                     readOnly: true,
-                                    width: 80,
+                                    width: 150,
                                     listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
                                 { xtype: 'tbspacer', width: 60 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Update Time',
-                                    style: 'font-weight:bold;color:#000;',
-                                    width: 120
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-HOUP',
-                                    readOnly: true,
-                                    width: 80,
-                                    listeners:{
-                                        change: 'onUpperValue'
-                                    }
-                                }
+                                
                             ]
                         }
                     ]
@@ -377,28 +366,7 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                     style: 'font-weight:bold;color:red;',
                     width: 120
                 }
-//                ,
-//                { xtype: 'tbspacer', width: 30 },
-//                {
-//                    xtype: 'button',
-//                    id:prototype.id+'-btn-prev',
-//                    icon: 'resources/img/botones/prev.png',
-//                    tooltip: 'View Previous Flight Manifest',
-//                    border: false,
-//                    listeners:{
-//                        click: 'onPrevClick'
-//                    }
-//                },
-//                {
-//                    xtype: 'button',
-//                    id:prototype.id+'-btn-next',
-//                    icon: 'resources/img/botones/next2.png',
-//                    tooltip: 'View Next Flight Manifest',
-//                    border: false,
-//                    listeners:{
-//                        click: 'onNextClick'
-//                    }
-//                }
+
             ]
         }
     ]

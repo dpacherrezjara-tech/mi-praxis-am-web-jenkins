@@ -65,18 +65,77 @@ public class InputsControlController extends BaseController {
         map.put("vp_serverTime", Functions.getHoraActual());
         return "flown/InputsControl/form_index";
     }
+    
+    @RequestMapping(value = "/obtainDataCombo")
+    public @ResponseBody
+    String obtainDataCombo(ModelMap map, HttpServletRequest request) {
+        
+        A1686Filter filter = new A1686Filter();
+        String beanString = "";
+        Gson gson = new Gson();
+        
+        try {
+            InputsControlLogic logic = new InputsControlLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1686Filter.class);
+            
+            List<A1686Filter> listaData = logic.loadPX077S14A1910(filter);
+
+            map.put("success", true);
+            map.put("lstProgramas", listaData);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
 
     @RequestMapping(value = "searchA1686")
     public @ResponseBody
-    String searchA1686(ModelMap map, HttpServletRequest request) {
+    String searchA1686(ModelMap map, HttpServletRequest request) throws Exception {
         System.out.println("-------------- InputsControl : searchA1686-------------");
         map.put("success", true);
         List<A1686Filter> lst = this.getListA1686(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("User", this.serverSession.getServerSession().getUserView().getUserInfo().USR);
         map.put("data", lst);
         return new Gson().toJson(map);
 
+    }
+    public List<A1686Filter> getListA1686(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1686Filter> lst = new ArrayList<>(0);
+        A1686Filter filter = new A1686Filter();
+        String beanString = "";
+        Gson gson = new Gson();
+
+        try {
+            
+        /*
+            filter.IN_TIPOFECHA = Integer.parseInt(request.getParameter("tipoFecha"));
+            filter.IN_FECHA_FROM = request.getParameter("dateFrom");
+            filter.IN_FECHA_TO = request.getParameter("dateTo");
+            filter.IN_FUENTE = request.getParameter("source");
+        */
+            
+            logic = new InputsControlLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1686Filter.class);
+        
+            lst = logic.loadPX077S01A1686(filter);
+
+        } catch (Exception e) {
+            System.out.println("--" + e.getMessage());
+
+            throw new SpringException(e);
+        }
+
+        return lst;
     }
 
     @RequestMapping(value = "searchCalendar")
@@ -112,46 +171,6 @@ public class InputsControlController extends BaseController {
         map.put("success", true);
         map.put("data", lst);
         return new Gson().toJson(map);
-    }
-
-    public List<A1686Filter> getListA1686(HttpServletRequest request, Boolean bExcel) {
-
-        logic = new InputsControlLogic();
-
-        List<A1686Filter> lst = new ArrayList<>(0);
-        A1686Filter filter = new A1686Filter();
-
-        filter.page.TOTROW = -1;
-        filter.page.START = 0;
-        filter.page.LIMIT = 0;
-
-        try {
-
-            logic.setSession(this.serverSession.getServerSession());
-
-            System.out.println("tipoFecha : " + request.getParameter("tipoFecha"));
-
-            filter.IN_TIPOFECHA = Integer.parseInt(request.getParameter("tipoFecha"));
-            filter.IN_FECHA_FROM = request.getParameter("dateFrom");
-            filter.IN_FECHA_TO = request.getParameter("dateTo");
-            filter.IN_FUENTE = request.getParameter("source");
-
-            System.out.println("----------------- Parametros --------------------- ");
-            System.out.println(" IN_TIPOFECHA : " + request.getParameter("tipoFecha"));
-            System.out.println(" IN_FECHA_FROM : " + request.getParameter("dateFrom"));
-            System.out.println(" IN_FECHA_TO : " + request.getParameter("dateTo"));
-            System.out.println(" IN_FUENTE : " + request.getParameter("source"));
-            System.out.println("-------------------------------------------------- ");
-
-            lst = logic.loadPX077S01A1686(filter);
-
-        } catch (Exception e) {
-            System.out.println("--" + e.getMessage());
-
-            throw new SpringException(e);
-        }
-
-        return lst;
     }
 
     @RequestMapping(value = "searchA1686Formateados")
@@ -1336,7 +1355,7 @@ public class InputsControlController extends BaseController {
             workbook = new XSSFWorkbook();
 
             Sheet sheet = workbook.createSheet("InputControl");
-
+//            sheet.setColumnWidth(4, 50000);
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
@@ -1375,10 +1394,10 @@ public class InputsControlController extends BaseController {
 
             Cell CH1_00 = row.createCell(0);
             Cell CH1_01 = row.createCell(1);
-            Cell CH1_02 = row.createCell(1);
-            Cell CH1_03 = row.createCell(1);
-            Cell CH1_04 = row.createCell(1);
-
+            Cell CH1_02 = row.createCell(2);
+            Cell CH1_03 = row.createCell(3);
+            Cell CH1_04 = row.createCell(4);
+            
             CH1_00.setCellValue("Nbr");
             CH1_01.setCellValue("Flight Date");
             CH1_02.setCellValue("Transaction Number");
@@ -1402,10 +1421,11 @@ public class InputsControlController extends BaseController {
                 Cell rcell3 = row.createCell(3);
                 Cell rcell4 = row.createCell(4);
 
-                rcell0.setCellValue(listaData.get(vi).Nbr);
+                rcell0.setCellValue(listaData.get(vi).RN);
                 rcell1.setCellValue(listaData.get(vi).strFormatDate);
                 rcell2.setCellValue(listaData.get(vi).TRNN);
                 rcell3.setCellValue(listaData.get(vi).CCIA);
+                listaData.get(vi).EMDDATA = listaData.get(vi).EMDDATA.replaceAll("  ","");
                 rcell4.setCellValue(listaData.get(vi).EMDDATA);
 
                 rcell0.setCellStyle(bodyStyle);
@@ -2616,4 +2636,52 @@ public class InputsControlController extends BaseController {
         }
 
     }
+    
+    
+    @RequestMapping(value = "searchLOGSA1910")
+    public @ResponseBody
+    String searchLOGSA1910(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- InputsControl : searchLOGSA1910-------------");
+
+        map.put("success", true);
+        List<A1686Filter> lst = this.getListAgent(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A1686Filter> getListAgent(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1686Filter> lst = new ArrayList<>(0);
+        A1686Filter filter = new A1686Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new InputsControlLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1686Filter.class);
+                
+            lst = logic.loadPX077S13A1910(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

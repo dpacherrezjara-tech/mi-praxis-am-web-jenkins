@@ -25,7 +25,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterFlownForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1410,
+                width: 1510,
                 height: 510,
                 align: 'center'
             },
@@ -44,20 +44,26 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterFlownForm.Info', {
 
                         },
                         items: [
-                            {text: 'Type',  width: 60, dataIndex: 'A1740TITRA'},
-                            {text: 'Account Type', width: 100, dataIndex: 'A1740TIPO', visible: false},
-                            {text: 'Cta Type',  width: 140, dataIndex: 'A1740TIPODESC'},
+                            {text: 'Type',  width: 50, dataIndex: 'A1740TITRA'},
+                            {text: 'AccountType', width: 35, dataIndex: 'A1740TIPO', hidden: true,
+                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:center;";
+                                    return value;
+                                }
+                            },
+                            {text: 'Cta Type',  width: 100, dataIndex: 'A1740TIPODESC'},
                             {text: 'Sub Type', width: 70, dataIndex: 'A1740SUBTI'},
                             {text: 'Category', width: 70, dataIndex: 'A1740CATEG'},
                             {text: 'Company', width: 70, dataIndex: 'A1740CIA'},
-                            {text: 'Unit', width: 50, dataIndex: 'A1740UNIDA'},
-                            {text: 'C Cost', width: 80, dataIndex: 'A1740CECOS'},
-                            {text: 'Ubi', width: 60, dataIndex: 'A1740UBICA'},
-                            {text: 'Account', width: 70, dataIndex: 'A1740CTA'},
+                            {text: 'Unit', width: 60, dataIndex: 'A1740UNIDA'},
+                            {text: 'C Cost', width: 70, dataIndex: 'A1740CECOS'},
+                            {text: 'Ubi', width: 70, dataIndex: 'A1740UBICA'},
+                            {text: 'Account', width: 60, dataIndex: 'A1740CTA'},
                             {text: 'Sub Account', width: 90, dataIndex: 'A1740SCTA'},
                             {text: 'Equipment', width: 80, dataIndex: 'A1740EQUI'},
                             {text: 'Inter Company', width: 100, dataIndex: 'A1740ICIA'},
-                            {text: 'Client', width: 240, dataIndex: 'A1740CLIE'},
+                            {text: 'Country Location', width: 120, dataIndex: 'A1740INTNU'},
+                            {text: 'Client', width: 270, dataIndex: 'A1740CLIE'},
                             {text: 'Effective', width: 80, dataIndex: 'A1740FINI'},
                             {
                                 sortable: false,

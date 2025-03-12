@@ -15,20 +15,19 @@ import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
 // </editor-fold>
-
 /**
  *
  * @author gsanchez
  */
 public class AircraftMasterDAO {
-    
+
     private IServerSession session;
     private static final Logger logError = Logger.getLogger("errorLog");
 
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
+
     public List<A1702Filter> loadPX102S01A1702(A1702Filter filter) throws SQLException, Exception {
 
         List<A1702Filter> lstRtn = new ArrayList<A1702Filter>(0);
@@ -115,7 +114,7 @@ public class AircraftMasterDAO {
 
         return lstRtn;
     }
-    
+
     public A1702 loadPX102S02A1702(A1702Filter filter) throws SQLException, Exception {
         A1702 objRtn = new A1702();
 
@@ -208,7 +207,7 @@ public class AircraftMasterDAO {
 
         return objRtn;
     }
-    
+
     public String loadPX102S03A1702(A1702 filter, String option) throws SQLException, Exception {
 
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1702.
@@ -278,7 +277,85 @@ public class AircraftMasterDAO {
 
         return strMsj;
     }
-    
+
+    public String loadSQP04933(List<A1702Filter> listaTkt) throws SQLException, Exception {
+        //REALIZA UPDATE COMENTARIOS EN LA TABLA A1816.
+
+        int QTY_UPDATE = 0;
+        String msj = "An Error ocurred";
+        CallableStatement cstmt = null;
+        Connection cnx = null;
+
+        String SQL_DELETE = "DELETE FROM PRAXIS.A1702";
+        cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+        cstmt = cnx.prepareCall(SQL_DELETE);
+        cstmt.execute();
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04933(?,?,?,?,?,?,?,?,?,"
+                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            for (int i = 0; i < listaTkt.size(); ++i) {
+
+                A1702Filter item = listaTkt.get(i);
+                try {
+                    cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+                    cstmt = cnx.prepareCall(SQLCLL01);
+                    System.out.println("Registro " + i + " : " + item.EQUIPO.trim() + item.MODELO.trim() + item.NUMERO.trim() + item.MATRIC.trim());
+                    cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+                    cstmt.setString(2, item.EQUIPO.trim());
+                    cstmt.setString(3, item.MODELO.trim());
+                    cstmt.setString(4, item.NUMERO.trim());
+                    cstmt.setString(5, item.MATRIC.trim());
+                    cstmt.setString(6, item.CARRIER.trim());
+                    cstmt.setString(7, item.TIPO.trim());
+                    cstmt.setString(8, item.FECHA.trim());
+                    cstmt.setString(9, item.FECHAOP.trim());
+                    cstmt.setString(10, item.FECINICO.trim());
+                    cstmt.setString(11, item.FECFINCO.trim());
+                    cstmt.setDouble(12, item.HORAVLO);
+                    cstmt.setInt(13, item.PAXF);
+                    cstmt.setInt(14, item.PAXJ);
+                    cstmt.setInt(15, item.PAXY);
+                    cstmt.setInt(16, item.PAX);
+                    cstmt.setDouble(17, item.TOTMILL);
+                    cstmt.setDouble(18, item.TOTGALO);
+                    cstmt.setDouble(19, item.TOTCARG);
+                    cstmt.setDouble(20, item.PESO);
+                    cstmt.setDouble(21, item.PESOMAX);
+                    cstmt.setString(22, item.ESTADO.trim());
+                    cstmt.setString(23, session.getUserView().getUserInfo().USR);
+                    cstmt.setString(24, Functions.getFechaActual());
+                    cstmt.setString(25, Functions.getHoraActual());
+                    cstmt.execute();
+                    QTY_UPDATE++;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            msj = "Se actualizaron " + QTY_UPDATE + " resgistros.";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            msj = e.getMessage();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException Manifest -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+
     public static void pasarGarbageCollector() {
         System.gc();
         System.runFinalization();

@@ -25,8 +25,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                
-                height: 550,
+                height: 600,
                 align: 'center'
             },
             items: [
@@ -35,7 +34,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Info', {
                     id: prototype.id + '-gridData',
                     height: 500,
                     hidden: false,
-                    width: 1100,
+                    width: 1200,
                     columnLines: true,
                     columns: {
                         defaults: {
@@ -46,21 +45,25 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Info', {
                         },
                         items: [
                             {text: 'Ticket <br> Number', width: 150, dataIndex: 'strTicket',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     var tool = record.data['strTicket'].trim();
                                     if (tool.length > 0) {
                                         metaData.tdAttr = 'data-qtip = "' + tool + '"';
                                     }
                                     metaData.tdCls = "x-grid-cell x-grid-td x-grid-cell-actioncolumn-1609 x-grid-cell-last x-selectable";
-                                    metaData.style = "background:#CCFFFF" ;
+                                    metaData.style = "background:#CCFFFF";
                                     return value;
                                 }},
-                            {text: 'Flight <br> Date', width: 150, dataIndex: 'strFormatDate'},
-                            {text: 'Flight <br> Number', width: 150, dataIndex: 'A1413NVLOB'},
+                            {text: 'Flight', align: 'center',
+                                columns: [
+                                    {text: 'Date', width: 150, dataIndex: 'strFormatDate'},
+                                    {text: 'Number', width: 150, dataIndex: 'A1413NVLOB'},
+                                ]
+                            },
                             {text: 'Transaction <br> Date', width: 150, dataIndex: 'strFormatDate2'},
                             {text: 'Join <br> Date', width: 150, dataIndex: 'strDescripcion'},
                             {text: 'Orig', width: 90, dataIndex: 'A1413FROM',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     var tool = record.data['strFROM'].trim();
                                     if (tool.length > 0) {
                                         metaData.tdAttr = 'data-qtip = "' + tool + '"';
@@ -68,14 +71,15 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Info', {
                                     return value;
                                 }},
                             {text: 'Dest', width: 90, dataIndex: 'A1413TO',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     var tool = record.data['strTO'].trim();
                                     if (tool.length > 0) {
                                         metaData.tdAttr = 'data-qtip = "' + tool + '"';
                                     }
                                     return value;
                                 }},
-                            {text: 'Flag <br> Flown', width: 100, dataIndex: 'FFLOWN'},
+                            {text: 'Flag <br> Flown', width: 80, dataIndex: 'FFLOWN'},
+                            {text: 'Status', width: 120, dataIndex: 'A1413STCRU'},
                             {
                                 sortable: false,
                                 xtype: 'actioncolumn',
@@ -125,7 +129,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Info', {
                                     {text: 'Carrier', dataIndex: 'CARRI', width: 65, align: 'center'},
                                     {text: 'Flown Type', dataIndex: 'strDescFFLOW', width: 85, align: 'center'},
                                     {text: 'Orig', dataIndex: 'CDEPART', width: 70, align: 'center',
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             var tool = record.data['strDescCDEPART'].trim();
                                             if (tool.length > 0) {
                                                 metaData.tdAttr = 'data-qtip = "' + tool + '"';
@@ -133,7 +137,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Info', {
                                             return value;
                                         }},
                                     {text: 'Dest', dataIndex: 'CARRIVA', width: 70, align: 'center',
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             var tool = record.data['strDescCARRIVA'].trim();
                                             if (tool.length > 0) {
                                                 metaData.tdAttr = 'data-qtip = "' + tool + '"';
@@ -153,19 +157,19 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Info', {
                             },
                             {text: 'Information PAX ODS',
                                 columns: [
-                                    {text: 'Senior', dataIndex: 'QCPAD', width: 60, align: 'right', menuDisabled: true, renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                    {text: 'Senior', dataIndex: 'QCPAD', width: 60, align: 'right', menuDisabled: true, renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "background-color:#FFF9E0";
                                             return value;
                                         }},
-                                    {text: 'Children', dataIndex: 'QCPCHD', width: 70, align: 'right', menuDisabled: true, renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                    {text: 'Children', dataIndex: 'QCPCHD', width: 70, align: 'right', menuDisabled: true, renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "background-color:#FFF9E0";
                                             return value;
                                         }},
-                                    {text: 'Infant', dataIndex: 'QCPINF', width: 60, align: 'right', menuDisabled: true, renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                    {text: 'Infant', dataIndex: 'QCPINF', width: 60, align: 'right', menuDisabled: true, renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "background-color:#FFF9E0";
                                             return value;
                                         }},
-                                    {text: 'Transit', dataIndex: 'QCPTRA', width: 60, align: 'right', menuDisabled: true, renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                    {text: 'Transit', dataIndex: 'QCPTRA', width: 60, align: 'right', menuDisabled: true, renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "background-color:#FFF9E0";
                                             return value;
                                         }}
@@ -178,13 +182,13 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Info', {
                                             {text: 'Date', dataIndex: 'strFormatFSENDOD', width: 105, align: 'center', menuDisabled: true}
                                         ]
                                     },
-                                    {text: 'Qty', dataIndex: 'QCPNOD', width: 55, align: 'right', menuDisabled: true, renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                    {text: 'Qty', dataIndex: 'QCPNOD', width: 55, align: 'right', menuDisabled: true, renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "background-color:#D5F4D5";
                                             return value;
                                         }}
                                 ]
                             },
-                            {text: 'LEG', dataIndex: 'QCPNLEG', width: 55, align: 'right', menuDisabled: true, renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {text: 'LEG', dataIndex: 'QCPNLEG', width: 55, align: 'right', menuDisabled: true, renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "background-color:#D5F4D5";
                                     return value;
                                 }},
@@ -208,7 +212,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Info', {
                                     {text: 'Qty', dataIndex: 'QCPNMA', width: 60, align: 'right', menuDisabled: true}
                                 ]
                             },
-                            {text: 'Total', dataIndex: 'QCPNTOT', width: 60, align: 'right', menuDisabled: true, renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {text: 'Total', dataIndex: 'QCPNTOT', width: 60, align: 'right', menuDisabled: true, renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "background-color:#D5F4D5;td:hover { background-color: #B2E1FF;}";
                                     return value;
                                 }},
@@ -233,8 +237,113 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Info', {
                             }
                         ]
                     }
-                }
-                ,
+                },
+                {
+                    xtype: 'grid',
+                    id: prototype.id + '-gridData3',
+                    height: 500,
+                    hidden: true,
+                    width: 1070,
+                    features: [{
+                            ftype: 'summary',
+                            dock: 'bottom'
+                        }],
+                    columnLines: true,
+                    columns: {
+                        defaults: {
+                            menuDisabled: true,
+                            sortable: true,
+                            align: 'center'
+
+                        },
+                        items: [
+                            {text: 'Flight', align: 'center',
+                                columns: [
+                                    {text: 'Date', width: 80, dataIndex: 'DFLIGHT'},
+                                    {text: 'Number', width: 70, dataIndex: 'NFLIGHT'},
+                                ]
+                            },
+                            {text: 'Orig', dataIndex: 'CDEPART', width: 70, align: 'center',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    var tool = record.data['strDescCDEPART'].trim();
+                                    if (tool.length > 0) {
+                                        metaData.tdAttr = 'data-qtip = "' + tool + '"';
+                                    }
+                                    return value;
+                                }
+                            },
+                            {text: 'Dest', dataIndex: 'CARRIVA', width: 70, align: 'center',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    var tool = record.data['strDescCARRIVA'].trim();
+                                    if (tool.length > 0) {
+                                        metaData.tdAttr = 'data-qtip = "' + tool + '"';
+                                    }
+                                    return value;
+                                }
+                            },
+                            {text: 'Status', width: 80, dataIndex: 'STVAL'},
+                            //{text: 'Status<br>ODS', width: 120, dataIndex: 'A3778STVAL'},
+                            {text: 'ODS Cancelled', align: 'center',
+                                columns: [
+                                    {text: 'Creation User', width: 100, dataIndex: 'A3778USCR', menuDisabled: true,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "background-color:#D5F4D5;text-align:center";
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'Creation Date', width: 100, dataIndex: 'A3778FECR', menuDisabled: true,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "background-color:#D5F4D5;text-align:center";
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'Creation Hour', width: 100, dataIndex: 'A3778HOCR', menuDisabled: true,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "background-color:#D5F4D5;text-align:center";
+                                            return value;
+                                        }
+                                    },
+                                ]
+                            },
+                            {text: 'ODS Operated', //B3ECFF
+                                columns: [
+                                    {text: 'Pax Total', width: 80, align: 'right', dataIndex: 'PAXTOTAL', menuDisabled: true,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            var data = Ext.getCmp(prototype.id + '-gridData3').getStore().getData().items[rowIndex].data;
+                                            if (data.A1688USCR === '' && data.A1688FECR === '' && data.A1688HOCR === '' && data.PAXTOTAL === 0) {
+                                                value = '';
+                                            }
+                                            metaData.style = "background-color:#B3ECFF;text-align:right";
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-gridData3').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.totPAXTOTAL, '0,000') + '<b>';
+                                        }
+                                    },
+                                    {text: 'Creation User', width: 100, dataIndex: 'A1688USCR', menuDisabled: true,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "background-color:#B3ECFF;text-align:center";
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'Creation Date', width: 100, dataIndex: 'A1688FECR', menuDisabled: true,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "background-color:#B3ECFF;text-align:center";
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'Creation Hour', width: 100, dataIndex: 'A1688HOCR', menuDisabled: true,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "background-color:#B3ECFF;text-align:center";
+                                            return value;
+                                        }
+                                    },
+                                ]
+                            },
+                        ]
+                    }
+                },
                 {
                     xtype: 'panel',
                     id: prototype.id + '-pie',

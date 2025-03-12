@@ -435,6 +435,31 @@ public class BusinessToolsController extends BaseController {
     }
     
 
+    @RequestMapping(value = "executeValuation")
+    public @ResponseBody
+    String executeValuation(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- BusinessTools : executeValuation-------------");
+        logic = new BusinessToolsLogic();
+        SQP00768 filter = new SQP00768();
+        String msj = "";
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            logic.executeValuation(filter);
+            msj = filter.strMSG;
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+
+        map.put("success", true);
+        map.put("mensaje", msj);
+
+        return new Gson().toJson(map);
+    }
+
 //    @RequestMapping(value = "getXLSX")
 //    public @ResponseBody
 //    void getXLSX(HttpServletRequest request, HttpServletResponse response) {

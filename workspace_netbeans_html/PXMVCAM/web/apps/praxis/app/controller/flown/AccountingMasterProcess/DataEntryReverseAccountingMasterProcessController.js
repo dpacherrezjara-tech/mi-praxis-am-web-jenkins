@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryReverse
         this.beanParam = {
             IN_FECHA_PROCESO : Ext.getCmp(prototype.id+'-txtProcessDate2').getValue(),
             IN_ENVIO: Ext.getCmp(prototype.id+'-chkRegularizacion').getValue(),
-            A1955MODUL: 'PFLOWN',
+            A1955MODUL: 'PFLOWNPRE',
             strOption: 'D'
         };        
     },

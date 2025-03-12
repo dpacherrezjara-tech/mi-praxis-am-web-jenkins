@@ -312,7 +312,7 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.Info', {
                             xtype: 'grid',
                             padding: '20 0 0 0',
                             id: prototype.id + '-gridDataDetailCoupon',
-                            height: 550,
+                            height: 555,
                             width: 1530,
                             // hidden: true,
                             columnLines: true,
@@ -332,6 +332,7 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.Info', {
                                             return '<a href="#flown-electronic-miscellaneous-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
                                         }
                                     },
+                                    {text: 'Seq', width: 60, dataIndex: 'SEQ'},
                                     {text: 'Rolling', width: 60, dataIndex: 'SEQRO'},
                                     {text: 'Sale',
                                         defaults: {

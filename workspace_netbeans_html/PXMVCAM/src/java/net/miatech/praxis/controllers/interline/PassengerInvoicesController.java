@@ -189,7 +189,55 @@ public class PassengerInvoicesController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    @RequestMapping(value = "/ObtenDato")
+    public @ResponseBody
+    String ObtenDato(ModelMap map, HttpServletRequest request) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
 
+        String[] lista;//Nombres de los archivos en general
+        String file = "";
+        SFI040Filter filter = new SFI040Filter();
+        List<SFI040Filter> listaArray = new ArrayList<SFI040Filter>();
+        byte[] bytes = null;
+        //OBTENIENDO EL ZIP DESEADO ========================================
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            FilenameFilter fnfZIP = new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return (name.startsWith("Detalle del EMD_") && name.toLowerCase().endsWith(".xlsx"));
+                }
+            };
+            String cia = serverSession.getServerSession().getUserView().getCustomerInfo().CCUST;
+            //OBTENIENDO NOMBRE DE ZIP REJECTION y BILLING MEMO,
+            // listaArray=null;
+            String pathImgs = "\\\\" + serverSession.propertySession.get("RUTA_REPOSITORY") + "\\AM\\EMD-DELTA-SKYLINK\\EMD _ DL _ 20" + filter.BDATE.substring(0,2);
+            File archivo = new File(pathImgs);
+            lista = archivo.list(fnfZIP);//
+            if (lista != null && lista.length > 0) {
+                for (int i = 0; i < lista.length; i++) {
+                    if (lista[i].toString().trim().startsWith("Detalle del EMD_" + "20" + filter.BDATE.substring(0, 4) + "-" + filter.PERNUM )) {
+                        //  file = lista[i].toString().trim();
+                        SFI040Filter nombre = new SFI040Filter();
+                        nombre.strFormatDate = lista[i].toString().trim();
+                        nombre.FILLER1 = pathImgs;
+                        listaArray.add(nombre);
+                    }
+                }
+            }
+            map.put("success", true);
+            map.put("listaArray", listaArray);
+        } catch (Exception e) {
+            e.printStackTrace(pw);
+            sw.toString();
+            map.put("success", false);
+            map.put("sesion", " Message: " + e.getMessage() + ". StackTrace:" + sw.toString());
+        }
+        return new Gson().toJson(map);
+    }
     @RequestMapping(value = "getIDECZip")
     public @ResponseBody
     void getIDECZip(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -5630,6 +5678,68 @@ public class PassengerInvoicesController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    /*
+    
+    @RequestMapping(value = "/downloadExcelEMD")
+    public @ResponseBody
+    void downloadExcelEMD(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String serverPath = request.getSession().getServletContext().getRealPath("/");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHSS");
+            String path = sdf.format(new Date());
+            ZipFiles zipFiles = new ZipFiles();
+            List<File> srcfile = new ArrayList<File>();
+            srcfile.add(downloadXLSX_30(request));
+
+            File zipfile = new File(serverPath + path + ".zip");
+            zipFiles.zipFiles(srcfile, zipfile);
+            zipFiles.downFile(response, serverPath, path + ".zip");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    */
+    
+    @RequestMapping(value = "downloadExcelEMD")
+    public @ResponseBody
+    void downloadExcelEMD(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        System.out.println("downloadExcelEMD : downloadExcelEMD");
+        
+        SFI040Filter filter = new SFI040Filter();
+        filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+        InputStream is = null;
+        try {
+            
+//            String rutaFile = "\\\\px\\AM\\EMD-DELTA-SKYLINK";
+            String rutaFile = "\\\\" + serverSession.propertySession.get("RUTA_REPOSITORY") + "\\AM\\EMD-DELTA-SKYLINK\\\\EMD _ DL _ 20" + filter.BDATE.substring(0,2);
+            String fileName = "Detalle del EMD_" + "20" + filter.BDATE.substring(0, 4) + "-" + filter.PERNUM + ".xlsx";
+
+//            response.setContentType("application/zip");
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+
+            OutputStream out = response.getOutputStream();
+            is = new FileInputStream(rutaFile + "\\" + fileName);
+
+            int bytes;
+            while ((bytes = is.read()) != -1) {
+                out.write(bytes);
+            }
+            is.close();
+            response.flushBuffer();
+//            IOUtils.copy(is, response.getOutputStream());
+//            response.flushBuffer();
+
+        } catch (IOException ex) {
+            System.out.println(ex);
+        } finally {
+            is.close();
+        }
+
     }
     
     @RequestMapping(value = "/downloadTxt")

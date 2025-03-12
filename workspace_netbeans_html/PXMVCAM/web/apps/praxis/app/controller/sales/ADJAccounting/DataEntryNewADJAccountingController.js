@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryNewADJAccountingC
                 tabMain.hide();
                 btnsave.hide();
                 break;
-            case 'ES':
+            case 'I':
                 grid03.hide();
                 tabMain.show();
                 txaReference1.hide();
@@ -46,7 +46,7 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryNewADJAccountingC
                 break;
         }
         //this.CleanFields();
-
+        global.AccessControlManagerByModeById(me.view.params, prototype.idadjnew);
     },
     setStores: function () {
         var grid01 = Ext.getCmp(prototype.idadjnew + '-de-gridOriginalData');

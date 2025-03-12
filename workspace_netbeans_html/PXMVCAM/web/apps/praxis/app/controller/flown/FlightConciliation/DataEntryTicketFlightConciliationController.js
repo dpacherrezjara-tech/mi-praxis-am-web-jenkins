@@ -5,6 +5,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
     p: {},
     bean: {},
     beanCons: {},
+    oldSEQ:'',
     FUNCION: '',
     NPROG: 'PX00000095',
     recalculoVuelo: '',
@@ -12,7 +13,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
     init: function(view) {
         meEntryTick = this;
         this.p = this.view.params;
-//        console.log(this.p);
+        console.log(this.p);
     },
     afterRender: function(){
         switch( this.p.actionCode ){
@@ -82,6 +83,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         Ext.getCmp(prototype.id + '-txtTicket').setValue("");
         Ext.getCmp(prototype.id + '-txtDCHEQ').setValue("");
         Ext.getCmp(prototype.id + '-txtSEQ').setValue("");
+        Ext.getCmp(prototype.id + '-txtSEQRO').setValue("");
         Ext.getCmp(prototype.id + '-txtFCONT').setValue("");
         Ext.getCmp(prototype.id + '-txtID').setValue("");
         Ext.getCmp(prototype.id + '-txtCDEPART').setValue("");
@@ -92,6 +94,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         Ext.getCmp(prototype.id + '-txtFOPERZUL').setValue("");
         Ext.getCmp(prototype.id + '-txtNPLANE').setValue("");
         Ext.getCmp(prototype.id + '-txtLEGSEQ').setValue("");
+        Ext.getCmp(prototype.id + '-txtFDUP').setValue("");
         Ext.getCmp(prototype.id + '-cmbFTE').setValue("");
         Ext.getCmp(prototype.id + '-cmbSTORG').setValue("");
         Ext.getCmp(prototype.id + '-cmbSTVAL').setValue("");
@@ -322,6 +325,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         } else {
             this.setValue("txtSEQ", bean.SEQ);
         }
+        this.oldSEQ = bean.SEQ;
+        console.log(this.oldSEQ);
 //        if (bean.SEQRO === '') {
 //            this.setValue("txtSEQRO", '00');
 //        } else {
@@ -345,6 +350,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         this.setValue("txtFOPERZUL", bean.FOPERZUL);
         this.setValue("txtNPLANE", bean.NPLANE);
         this.setValue("txtLEGSEQ", bean.LEGSEQ);
+        this.setValue("txtFDUP", bean.FDUP);
         if (bean.CCIA !== '139') {
             this.setValue("cmbSTORG", "1");
         } else if(bean.CCIA === '139') {
@@ -405,12 +411,26 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
             Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
             Ext.getCmp(prototype.id+'-cmbTVTA').enable(true);
             Ext.getCmp(prototype.id+'-cmbTPAX').enable(true);
+            if(bean.USERK === 'KEYLAV' || bean.USERK === 'UAT182'|| bean.USERK === 'SAP52T'){
+                Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(false);
+                Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
+                Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(false);
+            }
         } else {
             Ext.getCmp(prototype.id+'-txtCDOC').setReadOnly(true);
             Ext.getCmp(prototype.id+'-cmbTDOC').disable(true);
             Ext.getCmp(prototype.id+'-txtPSVVTA').setReadOnly(true);
             Ext.getCmp(prototype.id+'-txtAGTIA').setReadOnly(true);
-            Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(true);
+            if(bean.USERK === 'KEYLAV' || bean.USERK === 'UAT182'|| bean.USERK === 'SAP52T'){
+                Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(false);
+                Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
+                Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(false);
+            }
+            else{
+                Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(true);
+                //Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(true);
+                Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(true);
+            }
             Ext.getCmp(prototype.id+'-cmbTVTA').disable(true);
             Ext.getCmp(prototype.id+'-cmbTPAX').disable(true);
         }
@@ -448,6 +468,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
 	}else{
             beanOption.SEQ = this.getValue("txtSEQ");
 	}
+        beanOption.oldSEQ = this.oldSEQ;
+        beanOption.SEQRO = this.getValue("txtSEQRO");
         beanOption.DCHEQ = this.getValue("txtDCHEQ");
         beanOption.CDEPART = this.getValue("txtCDEPART");
         beanOption.CARRIVA = this.getValue("txtCARRIVA");
@@ -458,6 +480,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         beanOption.FOPERZUL = Ext.util.Format.date(this.getValue("txtFOPERZUL"), 'Ymd');
         beanOption.NPLANE = this.getValue("txtNPLANE");
         beanOption.LEGSEQ = this.getValue("txtLEGSEQ");
+        beanOption.FDUP = this.getValue("txtFDUP");
         beanOption.FTE = this.getValue("cmbFTE");
         beanOption.CDOC = this.getValue("txtCDOC");
         beanOption.TDOC = this.getValue("cmbTDOC");

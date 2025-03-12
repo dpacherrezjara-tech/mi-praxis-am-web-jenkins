@@ -1,8 +1,10 @@
 package net.miatech.praxis.dao.interline;
 
 import java.sql.CallableStatement;
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -1212,7 +1214,11 @@ public class LoadInterline02DAO {
                 objRtn.TIMESE = rs01.getString("TIMESE");
                 objRtn.strDescripcion2 = Functions.ConvertedTime(objRtn.TIMESE);
                 objRtn.STVAL = rs01.getString("STVAL");
-
+                if(objRtn.STVAL.equals("0")){
+                    objRtn.desSTVAL = "Closed";
+                }else if(objRtn.STVAL.equals("1")){
+                    objRtn.desSTVAL = "Processed";
+                }
                 objRtn.USCR = rs01.getString("USCR");
                 objRtn.FECR = rs01.getString("FECR");
                 objRtn.HOCR = rs01.getString("HOCR");
@@ -1893,7 +1899,9 @@ public class LoadInterline02DAO {
                     objRtn.CUPON = rs01.getString("CUPON");
                     objRtn.strTicket = rs01.getString("CCIA") + " " + rs01.getString("FORMA") + rs01.getString("SERIE") + " " + rs01.getString("CUPON");
                     objRtn.FCONT = rs01.getString("FCONT");
+                    objRtn.A1964FCONT = rs01.getString("A1964FCONT");
                     objRtn.strFormatDate2 = Functions.getMonthConvert(objRtn.FCONT);
+                    objRtn.A1964FCONT = Functions.getMonthConvert(objRtn.A1964FCONT);
                     objRtn.ZONA = rs01.getString("ZONA");
                     objRtn.CDEPART = rs01.getString("CDEPART");
                     objRtn.CARRIVA = rs01.getString("CARRIVA");
@@ -3489,6 +3497,180 @@ public class LoadInterline02DAO {
         return strMsj;
     }
 
+    
+    // Buscar si existe FINVOIC ( duplicado A1851)
+    public boolean searchDate_A1851(String fech) throws Exception {
+    
+        boolean existe = false;
+        PreparedStatement cstmt = null;
+        Connection cnx = null;
+        ResultSet rst = null;
+        
+//        String SQLCLL03 = "SELECT CCUST FROM PRAXIS.TEMP_GG_A1851 WHERE SUBSTR(FINVOIC,1,4) = ? LIMIT 1 ";
+        String SQLCLL03 = "SELECT CCUST FROM PRAXIS.A1851 WHERE SUBSTR(FINVOIC,1,4) = ? LIMIT 1 ";
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareStatement(SQLCLL03);
+            
+            cstmt.setString(1, fech);
+            cstmt.execute();
+            
+            rst = cstmt.getResultSet();
+            if(rst.next()){
+                existe = true;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e2) {
+            System.out.println("Error: " + e2);
+        }
+        return existe;
+        
+    }
+    
+    public boolean insert_A1851(List<A1851> lstRtn, String strFechDuplicat) throws SQLException, Exception {
+
+        boolean loadOk = false;
+        boolean deleteOk = false;
+        
+        Connection cnx = null;
+        CallableStatement cstmt = null;
+        PreparedStatement pstmt = null;
+        Statement stmt = null;
+        
+        try {
+            try {
+                if(!strFechDuplicat.equals("")){
+                    // BORRAR
+//                    String SQL_DELETE = "DELETE " + session.getMainLibrary() + ".TEMP_GG_A1851 WHERE CCUST = ? AND SUBSTR(FINVOIC,1,4) = ?";
+                    String SQL_DELETE = "DELETE " + session.getMainLibrary() + ".A1851 WHERE CCUST = ? AND SUBSTR(FINVOIC,1,4) = ?";
+
+                    pstmt = session.getCNXIBMDB2().getIBMDB2Connection().prepareStatement(SQL_DELETE);
+
+                    pstmt.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
+                    pstmt.setString(2, strFechDuplicat);
+                    pstmt.executeUpdate();
+                    
+                    deleteOk = true;
+                }
+            } finally {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                // =================
+                pasarGarbageCollector();
+                session.getCNXIBMDB2().close();
+            }
+            
+            if( (strFechDuplicat.equals("") && deleteOk == false) || (!strFechDuplicat.equals("") && deleteOk == true) ){
+                String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04317(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+                cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+                cstmt = cnx.prepareCall(SQLCLL01);
+
+                for (int i = 0; i < lstRtn.size(); ++i) {
+                    A1851 item = lstRtn.get(i);
+
+                    cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
+                    cstmt.setString(2, item.FINVOIC);
+                    cstmt.setString(3, item.PERIOD);
+                    
+                    cstmt.setString(4, item.DOENV);
+                    cstmt.setString(5, item.TIMESI);
+
+                    cstmt.setString(6, item.DCENV);
+                    cstmt.setString(7, item.TIMESO);
+
+                    cstmt.setString(8, item.DENVI);
+                    cstmt.setString(9, item.TIMESE);
+                    cstmt.setString(10,"1");
+                    cstmt.setString(11, session.getUserView().getUserInfo().USR);
+                    cstmt.setString(12, Functions.getFechaActual());
+                    cstmt.setString(13, Functions.getHoraActual());
+                    cstmt.execute();
+                }
+
+                loadOk = true;
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return loadOk;
+    }
+    
+    
+    
+    public boolean insert_A1851_BK(List<A1851> lstRtn, String flagDupli) throws SQLException, Exception {
+
+        PreparedStatement cstmt = null;
+        boolean loadOk = false;
+        Connection cnx = null;
+        
+        //        String SQLCLL04 = " INSERT INTO PRAXIS.A1851(CCUST, FINVOIC, PERIO, DOENV, TIMESI, DCENV, TIMESO, DENVI, TIMESE, USCR, FECR, HOCR) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+        String SQLCLL01 = " INSERT INTO PRAXIS.TEMP_GG_A1851(CCUST, FINVOIC, PERIO, DOENV, TIMESI, DCENV, TIMESO, DENVI, TIMESE, USCR, FECR, HOCR) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+        
+        try {
+            
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareStatement(SQLCLL01);
+            
+            for (int i = 0; i < lstRtn.size(); ++i) {
+                A1851 item = lstRtn.get(i);
+            
+                cstmt.setString(1, "139");
+                cstmt.setString(2, item.FINVOIC);
+                cstmt.setString(3, item.PERIOD);
+                
+                cstmt.setString(4, item.DOENV);
+                cstmt.setString(5, item.TIMESI);
+                
+                cstmt.setString(6, item.DCENV);
+                cstmt.setString(7, item.TIMESO);
+                
+                cstmt.setString(8, item.DENVI);
+                cstmt.setString(9, item.TIMESE);
+            
+                cstmt.setString(10, "SAP43");
+                cstmt.setString(11, Functions.getFechaActual());
+                cstmt.setString(12, Functions.getHoraActual());
+                cstmt.execute();
+            }
+            
+            loadOk = true;
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return loadOk;
+    }
+    
     
     public static void pasarGarbageCollector() {
         System.gc();

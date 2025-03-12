@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.Filters', {
                             id: prototype.id + '-cboModulo',
                             required: true,
                             fieldLabel: '',
-                            width: 150,
+                            width: 200,
                             labelWidth: 0,
                             labelAlign: 'left',
                             queryMode: 'local',

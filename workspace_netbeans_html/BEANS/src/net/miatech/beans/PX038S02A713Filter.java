@@ -15,6 +15,7 @@ public class PX038S02A713Filter extends A713 {
     public String IN_AIRLIN = "";
     public String IN_GRUPO = "";
     public String IN_TKT = "";
+    public String IN_IATA = "";
     
     public String DOCUMENTO = "";
     public String CNJ = "";

@@ -52,7 +52,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 Ext.getCmp(prototype.id + '-txtUser').setValue(Ext.String.trim(res.user.USR));
-                if (Ext.String.trim(res.user.USR) === 'XEILIANA' || Ext.String.trim(res.user.USR) === 'SAP26') {
+                if (Ext.String.trim(res.user.USR) === 'XEILIANA' || Ext.String.trim(res.user.USR) === 'XDINORAHG') {
                     Ext.getCmp(prototype.id + '-txtUser').setReadOnly(false);
                 }
                 me.onSearchClickInitial();
@@ -417,9 +417,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
         metaData.tdAttr = 'data-qtip="' + value + '"';
         return value;
     },
-
+    ToGB2312: function (str) {
+        var cadena = str.replace(/\\u/gi, '%u');
+        cadena = cadena.replace(/\\n/gi, "\n");
+        cadena = cadena.replace(/\\t/gi, "\t");
+        return unescape(cadena);
+    },
     onRendererColumnReason: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        metaData.tdAttr = 'data-qtip="' + value + '"';
+        var me = this;
+        if (record.get('A3389PAIS') === 'CN') {
+            metaData.tdAttr = 'data-qtip="' + me.ToGB2312(value) + '"';
+        } else {
+            metaData.tdAttr = 'data-qtip="' + value + '"';
+        }
         return value;
     },
 

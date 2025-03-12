@@ -43,7 +43,7 @@ Ext.define('Ext.Praxis.controller.sales.RatesExchange.DataEntryRatesExchangeCont
                 this.view.setHeight(this.view.getHeight());
                 break;
         }
-        this.txtRateDateOl = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtRateDate').getValue(), 'Ymd');
+        this.txtRateDateOld = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtRateDate').getValue(), 'Ymd');
         this.txtCurrFromOld = Ext.getCmp(prototype.id + '-txtCurrFrom').getValue();
         this.txtCurrToOld = Ext.getCmp(prototype.id + '-txtCurrTo').getValue();
         global.AccessControlMaganer();

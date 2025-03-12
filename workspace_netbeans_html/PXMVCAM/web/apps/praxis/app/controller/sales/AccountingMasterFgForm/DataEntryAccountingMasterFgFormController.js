@@ -37,7 +37,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterFgForm.DataEntryAccounti
                 Ext.getCmp(prototype.id2 + '-btn-delete').show();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
+        global.AccessControlManagerByModeById(p, prototype.id2);
 
     },
     getDataInputs: function () {

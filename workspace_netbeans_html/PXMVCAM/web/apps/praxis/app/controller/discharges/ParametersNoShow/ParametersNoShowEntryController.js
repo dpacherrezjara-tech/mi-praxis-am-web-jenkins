@@ -40,6 +40,7 @@ Ext.define('Ext.Praxis.controller.discharges.ParametersNoShow.ParametersNoShowEn
                 this.handlerEvent_setDisabled(true);
                 break;
         }
+        global.AccessControlMaganerByMode(p);
     },
     get_setCombo_load: function () {
         //console.log(Cmbkey);

@@ -1,7 +1,7 @@
 
 prototype.id = 'RobotRefundControl';
 prototype.url = CONTEXTPATH + '/RobotRefundControl';
-prototype.widthContenedor = 1200;
+prototype.widthContenedor = 1250;
 prototype.heightContenedor = 700;
 
 Ext.define('Ext.Praxis.view.salesaudit.RobotRefundControl.RobotRefundControl', {
@@ -268,7 +268,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotRefundControl.RobotRefundControl', {
                             id: prototype.id + '-gridData',
                             columnLines: true,
                             autoScroll: true,
-                            width: 920,
+                            width: 1000,
                             height: 600,
                             features: [{
                                     //id: 'group',
@@ -287,15 +287,10 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotRefundControl.RobotRefundControl', {
                                     align: 'center'
                                 },
                                 items: [
-                                    {
-                                        text: 'System <br> date', dataIndex: 'A3388FREGI', width: 100, sortable: true, align: 'center'
-                                    },
-                                    {
-                                        text: 'Robot', dataIndex: 'A3388ROBOT', width: 250, sortable: false, align: 'center'
-                                    },
-                                    {text: 'Country', dataIndex: 'A3388PAIS', width: 80, align: 'center',
-                                         renderer: 'onRendererColumnOnPais'
-                                    },
+                                    { text: 'System <br> date', dataIndex: 'A3388FREGI', width: 100, sortable: true, align: 'center'},
+                                    {text: 'Robot', dataIndex: 'A3388ROBOT', width: 250, sortable: false, align: 'center'},
+                                    {text: 'Channel', dataIndex: 'A3388CHANEL', width: 60, sortable: false, align: 'center'},
+                                    {text: 'Country', dataIndex: 'A3388PAIS', width: 80, align: 'center',renderer: 'onRendererColumnOnPais'},
                                     {text: 'Total', dataIndex: 'A3388CANTI', width: 120, align: 'right',
                                         cls: 'column_header_double',
                                         summaryType: 'sum',
@@ -323,18 +318,6 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotRefundControl.RobotRefundControl', {
                                         width: 60,
                                         renderer: 'onRendererColumnOnTime'
                                     }
-                                    /*{text: '', dataIndex: 'A3388FINA', width: 40, align: 'right',
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            if (value == 'A') {
-                                                return '<img src="resources/img/semaforo/Circle_Green.png" />';
-                                            } else if (value == 'D') {
-                                                return '<img src="resources/img/semaforo/Circle_Silver.png" />';
-                                            } else {
-                                                return '<img src="resources/img/semaforo/Circle_Red.png" />';
-                                            }
-
-                                        }
-                                    }*/
 
                                 ]
                             }
@@ -353,6 +336,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotRefundControl.RobotRefundControl', {
                                     align: 'center'
                                 },
                                 items: [
+                                    {text: 'Channel', dataIndex: 'A3388CHANEL', width: 60, sortable: false, align: 'center'},
                                     {
                                         text: 'Document', dataIndex: 'A3388NUMER', align: 'center', width: 90, sortable: false
                                     },

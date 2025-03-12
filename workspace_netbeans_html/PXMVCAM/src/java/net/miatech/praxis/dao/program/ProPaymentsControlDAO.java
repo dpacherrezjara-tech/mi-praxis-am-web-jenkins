@@ -13,9 +13,10 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import net.miatech.beans.IMF145Filter;
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.payment.filter.A2331Filter;
-import net.miatech.praxis.payment.filter.A3020Filter;
+import net.miatech.praxis.payment.old.A2331Filter;
+import net.miatech.praxis.payment.old.A3020Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
  * @author ggutierrez
  */
 public class ProPaymentsControlDAO {
-    
+
     private IServerSession session;
     private CallableStatement cs = null;
     private ResultSet rst = null;
@@ -47,7 +48,7 @@ public class ProPaymentsControlDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
+
     public List<A3020Filter> loadPX418SQP02084(A3020Filter filter) throws SQLException, Exception {
 
         List<A3020Filter> lstRtn = new ArrayList<A3020Filter>(0);
@@ -636,14 +637,14 @@ public class ProPaymentsControlDAO {
         A3020Filter objRtn;
         int QTY1 = 0;
         double SVFOPUS1 = 0;//SE QUITARON CALCULOS DE 11 A 15 A PEDIDO MPH 20180320
-        int QDAY5 = 0, QDAY10 = 0, QDAY15 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
-        double ADAY5 = 0, ADAY10 = 0, ADAY15 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
+        int QDAY30 = 0, QDAY60 = 0, QDAY90 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
+        double ADAY30 = 0, ADAY60 = 0, ADAY90 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP02146(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP02146(?,?,?,?,?,?,?,?,?)}";
 
         try {
 
@@ -658,6 +659,7 @@ public class ProPaymentsControlDAO {
             cstmt01.setString(6, filter.IN_FTE);
             cstmt01.setString(7, filter.IN_FINSUMO);
             cstmt01.setString(8, filter.IN_BANK);
+            cstmt01.setString(9, filter.IN_RANGE);
 
             cstmt01.execute();
 
@@ -667,12 +669,12 @@ public class ProPaymentsControlDAO {
                 QTY1 = rs01.getInt("QTY1");
                 SVFOPUS1 = rs01.getDouble("SVFOPUS1");
 
-                QDAY5 = rs01.getInt("QDAY5");
-                ADAY5 = rs01.getDouble("ADAY5");
-                QDAY10 = rs01.getInt("QDAY10");
-                ADAY10 = rs01.getDouble("ADAY10");
-                QDAY15 = rs01.getInt("QDAY15");
-                ADAY15 = rs01.getDouble("ADAY15");
+                QDAY30 = rs01.getInt("QDAY30");
+                ADAY30 = rs01.getDouble("ADAY30");
+                QDAY60 = rs01.getInt("QDAY60");
+                ADAY60 = rs01.getDouble("ADAY60");
+                QDAY90 = rs01.getInt("QDAY90");
+                ADAY90 = rs01.getDouble("ADAY90");
                 //QDAY20 = rs01.getInt("QDAY20");
                 //ADAY20 = rs01.getDouble("ADAY20");
                 QOTHER = rs01.getInt("QOTHER");
@@ -706,15 +708,15 @@ public class ProPaymentsControlDAO {
                     objRtn.SVFOPUS1 = rs01.getDouble("SVFOPUS1");
                     objRtn.perc1 = (SVFOPUS1 > 0) ? (objRtn.SVFOPUS1 * 100) / SVFOPUS1 : 0;
 
-                    objRtn.QDAY5 = rs01.getInt("QDAY5");
-                    objRtn.QDAY10 = rs01.getInt("QDAY10");
-                    objRtn.QDAY15 = rs01.getInt("QDAY15");
+                    objRtn.QDAY30 = rs01.getInt("QDAY30");
+                    objRtn.QDAY60 = rs01.getInt("QDAY60");
+                    objRtn.QDAY90 = rs01.getInt("QDAY90");
                     //objRtn.QDAY20 = rs01.getInt("QDAY20");
                     objRtn.QOTHER = rs01.getInt("QOTHER");
 
-                    objRtn.ADAY5 = rs01.getDouble("ADAY5");
-                    objRtn.ADAY10 = rs01.getDouble("ADAY10");
-                    objRtn.ADAY15 = rs01.getDouble("ADAY15");
+                    objRtn.ADAY30 = rs01.getDouble("ADAY30");
+                    objRtn.ADAY60 = rs01.getDouble("ADAY60");
+                    objRtn.ADAY90 = rs01.getDouble("ADAY90");
                     //objRtn.ADAY20 = rs01.getDouble("ADAY20");
                     objRtn.AOTHER = rs01.getDouble("AOTHER");
 
@@ -725,15 +727,15 @@ public class ProPaymentsControlDAO {
                     objRtn.totQTY1 = QTY1;
                     objRtn.totSVFOPUS1 = SVFOPUS1;
 
-                    objRtn.totQDAY5 = QDAY5;
-                    objRtn.totQDAY10 = QDAY10;
-                    objRtn.totQDAY15 = QDAY15;
+                    objRtn.totQDAY30 = QDAY30;
+                    objRtn.totQDAY60 = QDAY60;
+                    objRtn.totQDAY90 = QDAY90;
                     //objRtn.totQDAY20 = QDAY20;
                     objRtn.totQOTHER = QOTHER;
                     //objRtn.totQPAY = QPAY;
-                    objRtn.totADAY5 = ADAY5;
-                    objRtn.totADAY10 = ADAY10;
-                    objRtn.totADAY15 = ADAY15;
+                    objRtn.totADAY30 = ADAY30;
+                    objRtn.totADAY60 = ADAY60;
+                    objRtn.totADAY90 = ADAY90;
                     //objRtn.totADAY20 = ADAY20;
                     objRtn.totAOTHER = AOTHER;
                     //objRtn.totAPAY = APAY;
@@ -742,9 +744,9 @@ public class ProPaymentsControlDAO {
                     objRtn.totdiff2 = ATOT;
                     objRtn.totperc3 = (SVFOPUS1 > 0) ? (ATOT * 100) / SVFOPUS1 : 0;
 
-                    objRtn.perc_5 = (SVFOPUS1 > 0) ? (ADAY5 * 100) / SVFOPUS1 : 0;
-                    objRtn.perc_10 = (SVFOPUS1 > 0) ? (ADAY10 * 100) / SVFOPUS1 : 0;
-                    objRtn.perc_15 = (SVFOPUS1 > 0) ? (ADAY15 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_30 = (SVFOPUS1 > 0) ? (ADAY30 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_60 = (SVFOPUS1 > 0) ? (ADAY60 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_90 = (SVFOPUS1 > 0) ? (ADAY90 * 100) / SVFOPUS1 : 0;
                     //objRtn.perc_20 = (SVFOPUS1 > 0) ? (ADAY20 * 100) / SVFOPUS1 : 0;
                     objRtn.perc_O20 = (SVFOPUS1 > 0) ? (AOTHER * 100) / SVFOPUS1 : 0;
 
@@ -780,14 +782,14 @@ public class ProPaymentsControlDAO {
         A3020Filter objRtn;
         int QTY1 = 0;
         double SVFOPUS1 = 0;
-        int QDAY5 = 0, QDAY10 = 0, QDAY15 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
-        double ADAY5 = 0, ADAY10 = 0, ADAY15 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
+        int QDAY30 = 0, QDAY60 = 0, QDAY90 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
+        double ADAY30 = 0, ADAY60 = 0, ADAY90 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP02147(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP02147(?,?,?,?,?,?,?,?,?)}";
 
         try {
 
@@ -802,6 +804,7 @@ public class ProPaymentsControlDAO {
             cstmt01.setString(6, filter.IN_FTE);
             cstmt01.setString(7, filter.IN_FINSUMO);
             cstmt01.setString(8, filter.IN_BANK);
+            cstmt01.setString(9, filter.IN_RANGE);
 
             cstmt01.execute();
 
@@ -811,12 +814,12 @@ public class ProPaymentsControlDAO {
                 QTY1 = rs01.getInt("QTY1");
                 SVFOPUS1 = rs01.getDouble("SVFOPUS1");
 
-                QDAY5 = rs01.getInt("QDAY5");
-                ADAY5 = rs01.getDouble("ADAY5");
-                QDAY10 = rs01.getInt("QDAY10");
-                ADAY10 = rs01.getDouble("ADAY10");
-                QDAY15 = rs01.getInt("QDAY15");
-                ADAY15 = rs01.getDouble("ADAY15");
+                QDAY30 = rs01.getInt("QDAY30");
+                ADAY30 = rs01.getDouble("ADAY30");
+                QDAY60 = rs01.getInt("QDAY60");
+                ADAY60 = rs01.getDouble("ADAY60");
+                QDAY90 = rs01.getInt("QDAY90");
+                ADAY90 = rs01.getDouble("ADAY90");
                 //QDAY20 = rs01.getInt("QDAY20");
                 //ADAY20 = rs01.getDouble("ADAY20");
                 QOTHER = rs01.getInt("QOTHER");
@@ -848,15 +851,15 @@ public class ProPaymentsControlDAO {
                     objRtn.SVFOPUS1 = rs01.getDouble("SVFOPUS1");
                     objRtn.perc1 = (SVFOPUS1 > 0) ? (objRtn.SVFOPUS1 * 100) / SVFOPUS1 : 0;
 
-                    objRtn.QDAY5 = rs01.getInt("QDAY5");
-                    objRtn.QDAY10 = rs01.getInt("QDAY10");
-                    objRtn.QDAY15 = rs01.getInt("QDAY15");
+                    objRtn.QDAY30 = rs01.getInt("QDAY30");
+                    objRtn.QDAY60 = rs01.getInt("QDAY60");
+                    objRtn.QDAY90 = rs01.getInt("QDAY90");
                     //objRtn.QDAY20 = rs01.getInt("QDAY20");
                     objRtn.QOTHER = rs01.getInt("QOTHER");
 
-                    objRtn.ADAY5 = rs01.getDouble("ADAY5");
-                    objRtn.ADAY10 = rs01.getDouble("ADAY10");
-                    objRtn.ADAY15 = rs01.getDouble("ADAY15");
+                    objRtn.ADAY30 = rs01.getDouble("ADAY30");
+                    objRtn.ADAY60 = rs01.getDouble("ADAY60");
+                    objRtn.ADAY90 = rs01.getDouble("ADAY90");
                     //objRtn.ADAY20 = rs01.getDouble("ADAY20");
                     objRtn.AOTHER = rs01.getDouble("AOTHER");
 
@@ -867,15 +870,15 @@ public class ProPaymentsControlDAO {
                     objRtn.totQTY1 = QTY1;
                     objRtn.totSVFOPUS1 = SVFOPUS1;
 
-                    objRtn.totQDAY5 = QDAY5;
-                    objRtn.totQDAY10 = QDAY10;
-                    objRtn.totQDAY15 = QDAY15;
+                    objRtn.totQDAY30 = QDAY30;
+                    objRtn.totQDAY60 = QDAY60;
+                    objRtn.totQDAY90 = QDAY90;
                     //objRtn.totQDAY20 = QDAY20;
                     objRtn.totQOTHER = QOTHER;
 
-                    objRtn.totADAY5 = ADAY5;
-                    objRtn.totADAY10 = ADAY10;
-                    objRtn.totADAY15 = ADAY15;
+                    objRtn.totADAY30 = ADAY30;
+                    objRtn.totADAY60 = ADAY60;
+                    objRtn.totADAY90 = ADAY90;
                     //objRtn.totADAY20 = ADAY20;
                     objRtn.totAOTHER = AOTHER;
 
@@ -883,9 +886,9 @@ public class ProPaymentsControlDAO {
                     objRtn.totdiff2 = ATOT;
                     objRtn.totperc3 = (SVFOPUS1 > 0) ? (ATOT * 100) / SVFOPUS1 : 0;
 
-                    objRtn.perc_5 = (SVFOPUS1 > 0) ? (ADAY5 * 100) / SVFOPUS1 : 0;
-                    objRtn.perc_10 = (SVFOPUS1 > 0) ? (ADAY10 * 100) / SVFOPUS1 : 0;
-                    objRtn.perc_15 = (SVFOPUS1 > 0) ? (ADAY15 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_30 = (SVFOPUS1 > 0) ? (ADAY30 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_60 = (SVFOPUS1 > 0) ? (ADAY60 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_90 = (SVFOPUS1 > 0) ? (ADAY90 * 100) / SVFOPUS1 : 0;
                     //objRtn.perc_20 = (SVFOPUS1 > 0) ? (ADAY20 * 100) / SVFOPUS1 : 0;
                     objRtn.perc_O20 = (SVFOPUS1 > 0) ? (AOTHER * 100) / SVFOPUS1 : 0;
 
@@ -915,21 +918,20 @@ public class ProPaymentsControlDAO {
         return lstRtn;
     }
 
-        
     public List<A3020Filter> loadPX418SQP02148(A3020Filter filter) throws SQLException, Exception {
 
         List<A3020Filter> lstRtn = new ArrayList<A3020Filter>(0);
         A3020Filter objRtn;
         int QTY1 = 0;
         double SVFOPUS1 = 0;
-        int QDAY5 = 0, QDAY10 = 0, QDAY15 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
-        double ADAY5 = 0, ADAY10 = 0, ADAY15 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
+        int QDAY30 = 0, QDAY60 = 0, QDAY90 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
+        double ADAY30 = 0, ADAY60 = 0, ADAY90 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP02148_1(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP02148_1(?,?,?,?,?,?,?,?,?,?)}";
 
         try {
 
@@ -945,6 +947,7 @@ public class ProPaymentsControlDAO {
             cstmt01.setString(7, filter.IN_FINSUMO);
             cstmt01.setString(8, filter.IN_BANK);
             cstmt01.setString(9, filter.SCARCOD);
+            cstmt01.setString(10, filter.IN_RANGE);
 
             cstmt01.execute();
 
@@ -954,12 +957,12 @@ public class ProPaymentsControlDAO {
                 QTY1 = rs01.getInt("QTY1");
                 SVFOPUS1 = rs01.getDouble("SVFOPUS1");
 
-                QDAY5 = rs01.getInt("QDAY5");
-                ADAY5 = rs01.getDouble("ADAY5");
-                QDAY10 = rs01.getInt("QDAY10");
-                ADAY10 = rs01.getDouble("ADAY10");
-                QDAY15 = rs01.getInt("QDAY15");
-                ADAY15 = rs01.getDouble("ADAY15");
+                QDAY30 = rs01.getInt("QDAY30");
+                ADAY30 = rs01.getDouble("ADAY30");
+                QDAY60 = rs01.getInt("QDAY60");
+                ADAY60 = rs01.getDouble("ADAY60");
+                QDAY90 = rs01.getInt("QDAY90");
+                ADAY90 = rs01.getDouble("ADAY90");
                 //QDAY20 = rs01.getInt("QDAY20");
                 //ADAY20 = rs01.getDouble("ADAY20");
                 QOTHER = rs01.getInt("QOTHER");
@@ -991,16 +994,16 @@ public class ProPaymentsControlDAO {
                     objRtn.SVFOPUS1 = rs01.getDouble("SVFOPUS1");
                     objRtn.perc1 = (SVFOPUS1 > 0) ? (objRtn.SVFOPUS1 * 100) / SVFOPUS1 : 0;
 
-                    objRtn.QDAY5 = rs01.getInt("QDAY5");
-                    objRtn.QDAY10 = rs01.getInt("QDAY10");
-                    objRtn.QDAY15 = rs01.getInt("QDAY15");
+                    objRtn.QDAY30 = rs01.getInt("QDAY30");
+                    objRtn.QDAY60 = rs01.getInt("QDAY60");
+                    objRtn.QDAY90 = rs01.getInt("QDAY90");
                     //objRtn.QDAY20 = rs01.getInt("QDAY20");
                     objRtn.QOTHER = rs01.getInt("QOTHER");
                     //objRtn.QPAY = rs01.getInt("QPAY");
 
-                    objRtn.ADAY5 = rs01.getDouble("ADAY5");
-                    objRtn.ADAY10 = rs01.getDouble("ADAY10");
-                    objRtn.ADAY15 = rs01.getDouble("ADAY15");
+                    objRtn.ADAY30 = rs01.getDouble("ADAY30");
+                    objRtn.ADAY60 = rs01.getDouble("ADAY60");
+                    objRtn.ADAY90 = rs01.getDouble("ADAY90");
                     //objRtn.ADAY20 = rs01.getDouble("ADAY20");
                     objRtn.AOTHER = rs01.getDouble("AOTHER");
 
@@ -1011,15 +1014,15 @@ public class ProPaymentsControlDAO {
                     objRtn.totQTY1 = QTY1;
                     objRtn.totSVFOPUS1 = SVFOPUS1;
 
-                    objRtn.totQDAY5 = QDAY5;
-                    objRtn.totQDAY10 = QDAY10;
-                    objRtn.totQDAY15 = QDAY15;
+                    objRtn.totQDAY30 = QDAY30;
+                    objRtn.totQDAY60 = QDAY60;
+                    objRtn.totQDAY90 = QDAY90;
                     //objRtn.totQDAY20 = QDAY20;
                     objRtn.totQOTHER = QOTHER;
 
-                    objRtn.totADAY5 = ADAY5;
-                    objRtn.totADAY10 = ADAY10;
-                    objRtn.totADAY15 = ADAY15;
+                    objRtn.totADAY30 = ADAY30;
+                    objRtn.totADAY60 = ADAY60;
+                    objRtn.totADAY90 = ADAY90;
                     //objRtn.totADAY20 = ADAY20;
                     objRtn.totAOTHER = AOTHER;
 
@@ -1027,9 +1030,153 @@ public class ProPaymentsControlDAO {
                     objRtn.totdiff2 = ATOT;
                     objRtn.totperc3 = (SVFOPUS1 > 0) ? (ATOT * 100) / SVFOPUS1 : 0;
 
-                    objRtn.perc_5 = (SVFOPUS1 > 0) ? (ADAY5 * 100) / SVFOPUS1 : 0;
-                    objRtn.perc_10 = (SVFOPUS1 > 0) ? (ADAY10 * 100) / SVFOPUS1 : 0;
-                    objRtn.perc_15 = (SVFOPUS1 > 0) ? (ADAY15 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_30 = (SVFOPUS1 > 0) ? (ADAY30 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_60 = (SVFOPUS1 > 0) ? (ADAY60 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_90 = (SVFOPUS1 > 0) ? (ADAY90 * 100) / SVFOPUS1 : 0;
+                    //objRtn.perc_20 = (SVFOPUS1 > 0) ? (ADAY20 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_O20 = (SVFOPUS1 > 0) ? (AOTHER * 100) / SVFOPUS1 : 0;
+
+                    lstRtn.add(objRtn);
+                }
+            }
+
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+    
+    public List<A3020Filter> loadPX418SQP02149(A3020Filter filter) throws SQLException, Exception {
+
+        List<A3020Filter> lstRtn = new ArrayList<A3020Filter>(0);
+        A3020Filter objRtn;
+        int QTY1 = 0;
+        double SVFOPUS1 = 0;
+        int QDAY30 = 0, QDAY60 = 0, QDAY90 = 0, QOTHER = 0, QPAY = 0, QTOT = 0;//, QDAY20 = 0
+        double ADAY30 = 0, ADAY60 = 0, ADAY90 = 0, AOTHER = 0, APAY = 0, ATOT = 0;//, ADAY20 = 0
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL PRAXIS.SQP02149(?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.IN_PAYMENT);
+            cstmt01.setString(5, filter.IN_TDOC);
+            cstmt01.setString(6, filter.IN_FTE);
+            cstmt01.setString(7, filter.IN_FINSUMO);
+            cstmt01.setString(8, filter.IN_BANK);
+            cstmt01.setString(9, filter.SCARCOD);
+            cstmt01.setString(10, filter.IN_RANGE);
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+
+                QTY1 = rs01.getInt("QTY1");
+                SVFOPUS1 = rs01.getDouble("SVFOPUS1");
+
+                QDAY30 = rs01.getInt("QDAY30");
+                ADAY30 = rs01.getDouble("ADAY30");
+                QDAY60 = rs01.getInt("QDAY60");
+                ADAY60 = rs01.getDouble("ADAY60");
+                QDAY90 = rs01.getInt("QDAY90");
+                ADAY90 = rs01.getDouble("ADAY90");
+                //QDAY20 = rs01.getInt("QDAY20");
+                //ADAY20 = rs01.getDouble("ADAY20");
+                QOTHER = rs01.getInt("QOTHER");
+                AOTHER = rs01.getDouble("AOTHER");
+
+                QTOT = rs01.getInt("QTOT");
+                ATOT = rs01.getDouble("ATOT");
+            }
+
+            rs01.close();
+
+            if (cstmt01.getMoreResults()) {
+
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new A3020Filter();
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.IN_PAYMENT = filter.IN_PAYMENT;
+                    objRtn.IN_TDOC = filter.IN_TDOC;
+                    objRtn.IN_FTE = filter.IN_FTE;
+                    objRtn.IN_FINSUMO = filter.IN_FINSUMO;
+                    objRtn.IN_BANK = filter.IN_BANK;
+
+                    objRtn.SCARCOD = rs01.getString("SCARCOD");
+                    objRtn.strDescription = rs01.getString("NAMECAR");
+
+                    objRtn.QTY1 = rs01.getInt("QTY1");
+                    objRtn.SVFOPUS1 = rs01.getDouble("SVFOPUS1");
+                    objRtn.perc1 = (SVFOPUS1 > 0) ? (objRtn.SVFOPUS1 * 100) / SVFOPUS1 : 0;
+
+                    objRtn.QDAY30 = rs01.getInt("QDAY30");
+                    objRtn.QDAY60 = rs01.getInt("QDAY60");
+                    objRtn.QDAY90 = rs01.getInt("QDAY90");
+                    //objRtn.QDAY20 = rs01.getInt("QDAY20");
+                    objRtn.QOTHER = rs01.getInt("QOTHER");
+                    //objRtn.QPAY = rs01.getInt("QPAY");
+
+                    objRtn.ADAY30 = rs01.getDouble("ADAY30");
+                    objRtn.ADAY60 = rs01.getDouble("ADAY60");
+                    objRtn.ADAY90 = rs01.getDouble("ADAY90");
+                    //objRtn.ADAY20 = rs01.getDouble("ADAY20");
+                    objRtn.AOTHER = rs01.getDouble("AOTHER");
+
+                    objRtn.diff1 = rs01.getInt("QTOT");
+                    objRtn.diff2 = rs01.getDouble("ATOT");
+                    objRtn.perc3 = (rs01.getDouble("SVFOPUS1") > 0) ? (rs01.getDouble("ATOT") * 100) / rs01.getDouble("SVFOPUS1") : 0;
+
+                    objRtn.totQTY1 = QTY1;
+                    objRtn.totSVFOPUS1 = SVFOPUS1;
+
+                    objRtn.totQDAY30 = QDAY30;
+                    objRtn.totQDAY60 = QDAY60;
+                    objRtn.totQDAY90 = QDAY90;
+                    //objRtn.totQDAY20 = QDAY20;
+                    objRtn.totQOTHER = QOTHER;
+
+                    objRtn.totADAY30 = ADAY30;
+                    objRtn.totADAY60 = ADAY60;
+                    objRtn.totADAY90 = ADAY90;
+                    //objRtn.totADAY20 = ADAY20;
+                    objRtn.totAOTHER = AOTHER;
+
+                    objRtn.totdiff1 = QTOT;
+                    objRtn.totdiff2 = ATOT;
+                    objRtn.totperc3 = (SVFOPUS1 > 0) ? (ATOT * 100) / SVFOPUS1 : 0;
+
+                    objRtn.perc_30 = (SVFOPUS1 > 0) ? (ADAY30 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_60 = (SVFOPUS1 > 0) ? (ADAY60 * 100) / SVFOPUS1 : 0;
+                    objRtn.perc_90 = (SVFOPUS1 > 0) ? (ADAY90 * 100) / SVFOPUS1 : 0;
                     //objRtn.perc_20 = (SVFOPUS1 > 0) ? (ADAY20 * 100) / SVFOPUS1 : 0;
                     objRtn.perc_O20 = (SVFOPUS1 > 0) ? (AOTHER * 100) / SVFOPUS1 : 0;
 
@@ -1297,7 +1444,7 @@ public class ProPaymentsControlDAO {
         A3020Filter objRtn;
         int QTY1 = 0;
         double SVFOPUS1 = 0;
-        
+
         HashMap POSDataCodes = new HashMap();
         POSDataCodes.put("**", "(Empty)");
         POSDataCodes.put("00", "Unknown");
@@ -1620,12 +1767,12 @@ public class ProPaymentsControlDAO {
         int QTY1 = 0;
         double SVFOPUS1 = 0;
         String strBanco = "", strBancoOpt = "", strTitulo = "";
-        if(!filter.strFormatDate.isEmpty()){
+        if (!filter.strFormatDate.isEmpty()) {
             strTitulo = "Sales Date : " + filter.strFormatDate + " - POS Entry Mode : " + filter.strDescription;
-        }else{
+        } else {
             strTitulo = "POS Entry Mode : " + filter.strDescription;
         }
-        
+
         boolean hayData = false;
         HashMap hmTotBank = new HashMap();
 
@@ -1947,7 +2094,7 @@ public class ProPaymentsControlDAO {
 
         return lstRtn;
     }
-    
+
     public List<A3020Filter> loadPX418SQP02325(A3020Filter filter) throws SQLException, Exception {
 
         List<A3020Filter> lstRtn = new ArrayList<A3020Filter>(0);
@@ -2032,7 +2179,7 @@ public class ProPaymentsControlDAO {
                     if (objRtn.perc1 >= 99) {
 //                        objRtn.strImagen1 = "assets/icons/16x16/greenP.png";
                         objRtn.strImagen1 = "resources/img/icon/16x16/circle_green.png";
-                        
+
                     } else if (objRtn.perc1 == 0) {
 //                        objRtn.strImagen1 = "assets/icons/16x16/redP.png";
                         objRtn.strImagen1 = "resources/img/icon/16x16/circle_red.png";
@@ -2070,15 +2217,15 @@ public class ProPaymentsControlDAO {
 //                        objRtn.strImagen3 = "assets/icons/16x16/ambar.png";
                         objRtn.strImagen3 = "resources/img/icon/16x16/Circle_Yellow.png";
                     }
-                    
+
                     objRtn.diff1 = objRtn.QTY2 - objRtn.QTY1;
                     objRtn.diff2 = objRtn.QTYA - objRtn.QTY1;
                     objRtn.diff3 = objRtn.QTYSABO - objRtn.QTY1;
-                    
+
                     objRtn.DiffConci1 = objRtn.SVFOPUS2 - objRtn.SVFOPUS1;
                     objRtn.DiffConci2 = objRtn.SVFOPUSA - objRtn.SVFOPUS1;
                     objRtn.DiffConci3 = objRtn.SVFOPUSABO - objRtn.SVFOPUS1;
-                    
+
                     objRtn.totQTY1 = QTY1;
                     objRtn.totSVFOPUS1 = SVFOPUS1;
                     objRtn.totQTY2 = QTY2;
@@ -2087,11 +2234,11 @@ public class ProPaymentsControlDAO {
                     objRtn.totSVFOPUSA = SVFOPUSA;
                     objRtn.totQTYSABO = QTYSABO;
                     objRtn.totSVFOPUSABO = SVFOPUSABO;
-                    
-                    objRtn.totdiff1=objRtn.totQTY2 - objRtn.totQTY1;
-                    objRtn.totdiff2=objRtn.totQTYA - objRtn.totQTY1;
-                    objRtn.totdiff3=objRtn.totQTYSABO - objRtn.totQTY1;
-                    
+
+                    objRtn.totdiff1 = objRtn.totQTY2 - objRtn.totQTY1;
+                    objRtn.totdiff2 = objRtn.totQTYA - objRtn.totQTY1;
+                    objRtn.totdiff3 = objRtn.totQTYSABO - objRtn.totQTY1;
+
                     objRtn.TotDiffConci1 = objRtn.totSVFOPUS2 - objRtn.totSVFOPUS1;
                     objRtn.TotDiffConci2 = objRtn.totSVFOPUSA - objRtn.totSVFOPUS1;
                     objRtn.TotDiffConci3 = objRtn.totSVFOPUSABO - objRtn.totSVFOPUS1;
@@ -2122,7 +2269,7 @@ public class ProPaymentsControlDAO {
 
         return lstRtn;
     }
-    
+
     public List<A3020Filter> loadPX418SQP02326(A3020Filter filter) throws SQLException, Exception {
 
         List<A3020Filter> lstRtn = new ArrayList<A3020Filter>(0);
@@ -2248,7 +2395,6 @@ public class ProPaymentsControlDAO {
 //                        objRtn.strImagen3 = "assets/icons/16x16/ambar.png";
                         objRtn.strImagen3 = "resources/img/icon/16x16/Circle_Yellow.png";
                     }
-                    
 
                     objRtn.totQTY1 = QTY1;
                     objRtn.totSVFOPUS1 = SVFOPUS1;
@@ -2258,23 +2404,23 @@ public class ProPaymentsControlDAO {
                     objRtn.totSVFOPUSA = SVFOPUSA;
                     objRtn.totQTYSABO = QTYSABO;
                     objRtn.totSVFOPUSABO = SVFOPUSABO;
-                    
+
                     objRtn.diff1 = objRtn.QTY2 - objRtn.QTY1;
                     objRtn.diff2 = objRtn.QTYA - objRtn.QTY1;
                     objRtn.diff3 = objRtn.QTYSABO - objRtn.QTY1;
-                    
+
                     objRtn.DiffConci1 = objRtn.SVFOPUS2 - objRtn.SVFOPUS1;
                     objRtn.DiffConci2 = objRtn.SVFOPUSA - objRtn.SVFOPUS1;
                     objRtn.DiffConci3 = objRtn.SVFOPUSABO - objRtn.SVFOPUS1;
-                    
-                    objRtn.totdiff1=objRtn.totQTY2 - objRtn.totQTY1;
-                    objRtn.totdiff2=objRtn.totQTYA - objRtn.totQTY1;
-                    objRtn.totdiff3=objRtn.totQTYSABO - objRtn.totQTY1;
-                    
+
+                    objRtn.totdiff1 = objRtn.totQTY2 - objRtn.totQTY1;
+                    objRtn.totdiff2 = objRtn.totQTYA - objRtn.totQTY1;
+                    objRtn.totdiff3 = objRtn.totQTYSABO - objRtn.totQTY1;
+
                     objRtn.TotDiffConci1 = objRtn.totSVFOPUS2 - objRtn.totSVFOPUS1;
                     objRtn.TotDiffConci2 = objRtn.totSVFOPUSA - objRtn.totSVFOPUS1;
                     objRtn.TotDiffConci3 = objRtn.totSVFOPUSABO - objRtn.totSVFOPUS1;
-                    
+
                     lstRtn.add(objRtn);
                 }
 
@@ -2423,8 +2569,7 @@ public class ProPaymentsControlDAO {
 //                        objRtn.strImagen3 = "assets/icons/16x16/ambar.png";
                         objRtn.strImagen3 = "resources/img/icon/16x16/Circle_Yellow.png";
                     }
-                    
-                    
+
                     objRtn.totQTY1 = QTY1;
                     objRtn.totSVFOPUS1 = SVFOPUS1;
                     objRtn.totQTY2 = QTY2;
@@ -2433,19 +2578,19 @@ public class ProPaymentsControlDAO {
                     objRtn.totSVFOPUSA = SVFOPUSA;
                     objRtn.totQTYSABO = QTYSABO;
                     objRtn.totSVFOPUSABO = SVFOPUSABO;
-                    
+
                     objRtn.diff1 = objRtn.QTY2 - objRtn.QTY1;
                     objRtn.diff2 = objRtn.QTYA - objRtn.QTY1;
                     objRtn.diff3 = objRtn.QTYSABO - objRtn.QTY1;
-                    
+
                     objRtn.DiffConci1 = objRtn.SVFOPUS2 - objRtn.SVFOPUS1;
                     objRtn.DiffConci2 = objRtn.SVFOPUSA - objRtn.SVFOPUS1;
                     objRtn.DiffConci3 = objRtn.SVFOPUSABO - objRtn.SVFOPUS1;
-                    
-                    objRtn.totdiff1=objRtn.totQTY2 - objRtn.totQTY1;
-                    objRtn.totdiff2=objRtn.totQTYA - objRtn.totQTY1;
-                    objRtn.totdiff3=objRtn.totQTYSABO - objRtn.totQTY1;
-                    
+
+                    objRtn.totdiff1 = objRtn.totQTY2 - objRtn.totQTY1;
+                    objRtn.totdiff2 = objRtn.totQTYA - objRtn.totQTY1;
+                    objRtn.totdiff3 = objRtn.totQTYSABO - objRtn.totQTY1;
+
                     objRtn.TotDiffConci1 = objRtn.totSVFOPUS2 - objRtn.totSVFOPUS1;
                     objRtn.TotDiffConci2 = objRtn.totSVFOPUSA - objRtn.totSVFOPUS1;
                     objRtn.TotDiffConci3 = objRtn.totSVFOPUSABO - objRtn.totSVFOPUS1;
@@ -2989,7 +3134,816 @@ public class ProPaymentsControlDAO {
         return list;
     }
 
+    // ---------------------------------------------------------------------------------------------------------------
+    public List<IMF145Filter> loadSQP04546(IMF145Filter filter) throws SQLException, Exception {
+
+        List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
+        IMF145Filter bean;
+
+        long QTYSALES = 0, AMOUNTS = 0, QTYSALCA = 0, AMOUNTCA = 0, QTYSALCC = 0, AMOUNTCC = 0, QTYSALBA = 0, diffAMOUNTCC = 0, diffQTYSALCC = 0;
+        long AMOUNTBA = 0, VALOREX = 0, VALORCA = 0, VALORCC = 0;
+//        double AMOUNT = 0, COMISION = 0, TAX = 0, AYQ = 0, AYR = 0, FARE = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04546(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(12, Types.INTEGER);
+            cstmt.registerOutParameter(13, Types.INTEGER);
+            cstmt.registerOutParameter(14, Types.INTEGER);
+            cstmt.registerOutParameter(15, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATE);
+            cstmt.setString(3, filter.IN_FECHA_FROM);
+            cstmt.setString(4, filter.IN_FECHA_TO);
+
+            cstmt.setString(5, filter.IN_FTE);
+            cstmt.setString(6, filter.IN_PAYMENT);
+            cstmt.setString(7, filter.IN_TDOC);
+            cstmt.setString(8, filter.IN_SCOUNTRY);
+            cstmt.setString(9, filter.IN_FLAG);
+            cstmt.setString(10, filter.IN_FINSUMO);
+            cstmt.setString(11, filter.IN_BANK);
+            cstmt.setInt(12, filter.page.PAGNUM);
+            cstmt.setInt(13, filter.page.PAGROW);
+            cstmt.setInt(14, filter.page.TOTPAG);
+            cstmt.setInt(15, filter.page.TOTROW);
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                QTYSALES = rst.getLong("QTYSALES");
+                AMOUNTS = rst.getLong("AMOUNTS");
+
+                QTYSALCA = rst.getLong("QTYSALCA");
+                AMOUNTCA = rst.getLong("AMOUNTCA");
+                QTYSALCC = rst.getLong("QTYSALCC");
+                AMOUNTCC = rst.getLong("AMOUNTCC");
+
+                QTYSALBA = rst.getLong("QTYSALBA");
+                AMOUNTBA = rst.getLong("AMOUNTBA");
+
+                VALOREX = rst.getLong("VALOREX");
+                VALORCA = rst.getLong("VALORCA");
+                VALORCC = rst.getLong("VALORCC");
+                
+                diffAMOUNTCC = AMOUNTCC - AMOUNTBA;
+                diffQTYSALCC = QTYSALCC - QTYSALBA;
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF145Filter();
+                    bean.IN_DATE = filter.IN_DATE;
+                    bean.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    bean.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    bean.IN_FTE = filter.IN_FTE;
+                    bean.IN_PAYMENT = filter.IN_PAYMENT;
+                    bean.IN_TDOC = filter.IN_TDOC;
+                    bean.IN_SCOUNTRY = filter.IN_SCOUNTRY;
+                    bean.IN_FLAG = filter.IN_FLAG;
+                    bean.IN_FINSUMO = filter.IN_FINSUMO;
+                    bean.IN_BANK = filter.IN_BANK;
+
+                   
+                    bean.DSALES = rst.getString("DSALES");
+                    bean.strFormatDate = Functions.getMonthConvert6(bean.DSALES);
+                    bean.SCOUNTRY = rst.getString("SCOUNTRY");
+                    bean.SCARCOD = rst.getString("SCARCOD");
+
+                    bean.QTYSALES = rst.getLong("QTYSALES");
+                    bean.AMOUNTS = rst.getLong("AMOUNTS");
+
+                    bean.QTYSALCA = rst.getLong("QTYSALCA");
+                    bean.AMOUNTCA = rst.getLong("AMOUNTCA");
+                    bean.QTYSALCC = rst.getLong("QTYSALCC");
+                    bean.AMOUNTCC = rst.getLong("AMOUNTCC");
+
+                    bean.QTYSALBA = rst.getLong("QTYSALBA");
+                    bean.AMOUNTBA = rst.getLong("AMOUNTBA");
+
+                    bean.VALOREX = rst.getLong("VALOREX");
+                    bean.VALORCA = rst.getLong("VALORCA");
+                    bean.VALORCC = rst.getLong("VALORCC");
+
+                    bean.diffQTYSALCC = bean.QTYSALCC - bean.QTYSALBA;
+                    bean.diffAMOUNTCC = bean.AMOUNTCC - bean.AMOUNTBA;
+
+                    bean.totQTYSALES = QTYSALES;
+                    bean.totAMOUNTS = AMOUNTS;
+
+                    bean.totQTYSALCA = QTYSALCA;
+                    bean.totAMOUNTCA = AMOUNTCA;
+                    bean.totQTYSALCC = QTYSALCC;
+                    bean.totAMOUNTCC = AMOUNTCC;
+
+                    bean.totQTYSALBA = QTYSALBA;
+                    bean.totAMOUNTBA = AMOUNTBA;
+                    bean.totVALOREX = VALOREX;
+                    bean.totVALORCA = VALORCA;
+                    bean.totVALORCC = VALORCC;
+                    bean.totdiffAMOUNTCC = diffAMOUNTCC;
+                    bean.totdiffQTYSALCC = diffQTYSALCC;
+
+                    if (AMOUNTS != 0) {
+                        bean.totpercCA = AMOUNTCA * 100 / AMOUNTS;
+                        bean.totpercCC = AMOUNTCC * 100 / AMOUNTS;
+                    } else {
+                        bean.totpercCA = 0;
+                        bean.totpercCC = 0;
+                    }
+                    
+                    if (AMOUNTCC != 0) {
+                        bean.totpercBA = AMOUNTBA * 100 / AMOUNTCC;
+                        bean.totpercPE = diffAMOUNTCC * 100 / AMOUNTCC;
+                    } else {
+                        bean.totpercBA = 0;
+                        bean.totpercPE = 0;
+                    }
+
+                    if (bean.AMOUNTS != 0) {
+                        bean.percSales = bean.AMOUNTS * 100 / bean.totAMOUNTS;
+                    } else {
+                        bean.percSales = 0;
+                    }
+
+//                    bean.percCA = bean.AMOUNTCA*100/bean.totAMOUNTCA;
+//                    bean.percCC = bean.AMOUNTCC*100/bean.totAMOUNTCC;                   
+                    if (bean.AMOUNTS != 0) {
+                        bean.percCA = bean.AMOUNTCA * 100 / bean.AMOUNTS;
+                        bean.percCC = bean.AMOUNTCC * 100 / bean.AMOUNTS;
+                    } else {
+                        bean.percCA = 0;
+                        bean.percCC = 0;
+                    }
+
+                    if (bean.AMOUNTCC != 0) {
+                        bean.percBA = bean.AMOUNTBA * 100 / bean.AMOUNTCC;
+                        bean.percPE = bean.diffAMOUNTCC * 100 / bean.AMOUNTCC;
+                    } else {
+                        bean.percBA = 0;
+                        bean.percPE = 0;
+                    }
+
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+
+                    lista.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
+    }
+
+    public List<IMF145Filter> loadSQP04541(IMF145Filter filter) throws SQLException, Exception {
+
+        List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
+        IMF145Filter bean;
+
+        long QTYSALES = 0, AMOUNTS = 0, QTYSALCA = 0, AMOUNTCA = 0, QTYSALCC = 0, AMOUNTCC = 0, QTYSALBA = 0, diffAMOUNTCC = 0, diffQTYSALCC = 0;
+        long AMOUNTBA = 0, VALOREX = 0, VALORCA = 0, VALORCC = 0;
+//        double AMOUNT = 0, COMISION = 0, TAX = 0, AYQ = 0, AYR = 0, FARE = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04541(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(11, Types.INTEGER);
+            cstmt.registerOutParameter(12, Types.INTEGER);
+            cstmt.registerOutParameter(13, Types.INTEGER);
+            cstmt.registerOutParameter(14, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATE);
+            cstmt.setString(3, filter.DSALES);
+
+            cstmt.setString(4, filter.IN_FTE);
+            cstmt.setString(5, filter.IN_PAYMENT);
+            cstmt.setString(6, filter.IN_TDOC);
+            cstmt.setString(7, filter.IN_SCOUNTRY);
+            cstmt.setString(8, filter.IN_FLAG);
+            cstmt.setString(9, filter.IN_FINSUMO);
+            cstmt.setString(10, filter.IN_BANK);
+            cstmt.setInt(11, filter.page.PAGNUM);
+            cstmt.setInt(12, filter.page.PAGROW);
+            cstmt.setInt(13, filter.page.TOTPAG);
+            cstmt.setInt(14, filter.page.TOTROW);
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                QTYSALES = rst.getLong("QTYSALES");
+                AMOUNTS = rst.getLong("AMOUNTS");
+
+                QTYSALCA = rst.getLong("QTYSALCA");
+                AMOUNTCA = rst.getLong("AMOUNTCA");
+                QTYSALCC = rst.getLong("QTYSALCC");
+                AMOUNTCC = rst.getLong("AMOUNTCC");
+
+                QTYSALBA = rst.getLong("QTYSALBA");
+                AMOUNTBA = rst.getLong("AMOUNTBA");
+
+                VALOREX = rst.getLong("VALOREX");
+                VALORCA = rst.getLong("VALORCA");
+                VALORCC = rst.getLong("VALORCC");
+                
+                diffAMOUNTCC = AMOUNTCC - AMOUNTBA;
+                diffQTYSALCC = QTYSALCC - QTYSALBA;
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF145Filter();
+                    bean.IN_DATE = filter.IN_DATE;
+                    bean.IN_FECHA = filter.strFormatDate;
+
+                    bean.IN_FTE = filter.IN_FTE;
+                    bean.IN_PAYMENT = filter.IN_PAYMENT;
+                    bean.IN_TDOC = filter.IN_TDOC;
+                    bean.IN_SCOUNTRY = filter.IN_SCOUNTRY;
+                    bean.IN_FLAG = filter.IN_FLAG;
+                    bean.IN_FINSUMO = filter.IN_FINSUMO;
+                    bean.IN_BANK = filter.IN_BANK;
+
+                    bean.DSALES = rst.getString("DSALES");
+                    bean.strFormatDate = Functions.getMonthConvert6(bean.DSALES);
+                    bean.SCOUNTRY = rst.getString("SCOUNTRY");
+                    bean.SCARCOD = rst.getString("SCARCOD");
+
+                    bean.QTYSALES = rst.getLong("QTYSALES");
+                    bean.AMOUNTS = rst.getLong("AMOUNTS");
+
+                    bean.QTYSALCA = rst.getLong("QTYSALCA");
+                    bean.AMOUNTCA = rst.getLong("AMOUNTCA");
+                    bean.QTYSALCC = rst.getLong("QTYSALCC");
+                    bean.AMOUNTCC = rst.getLong("AMOUNTCC");
+
+                    bean.QTYSALBA = rst.getLong("QTYSALBA");
+                    bean.AMOUNTBA = rst.getLong("AMOUNTBA");
+
+                    bean.VALOREX = rst.getLong("VALOREX");
+                    bean.VALORCA = rst.getLong("VALORCA");
+                    bean.VALORCC = rst.getLong("VALORCC");
+
+                    bean.diffQTYSALCC = bean.QTYSALCC - bean.QTYSALBA;
+                    bean.diffAMOUNTCC = bean.AMOUNTCC - bean.AMOUNTBA;
+
+                    bean.totQTYSALES = QTYSALES;
+                    bean.totAMOUNTS = AMOUNTS;
+
+                    bean.totQTYSALCA = QTYSALCA;
+                    bean.totAMOUNTCA = AMOUNTCA;
+                    bean.totQTYSALCC = QTYSALCC;
+                    bean.totAMOUNTCC = AMOUNTCC;
+
+                    bean.totQTYSALBA = QTYSALBA;
+                    bean.totAMOUNTBA = AMOUNTBA;
+                    bean.totVALOREX = VALOREX;
+                    bean.totVALORCA = VALORCA;
+                    bean.totVALORCC = VALORCC;
+                    bean.totdiffAMOUNTCC = diffAMOUNTCC;
+                    bean.totdiffQTYSALCC = diffQTYSALCC;
+
+                    if (AMOUNTS != 0) {
+                        bean.totpercCA = AMOUNTCA * 100 / AMOUNTS;
+                        bean.totpercCC = AMOUNTCC * 100 / AMOUNTS;
+                    } else {
+                        bean.totpercCA = 0;
+                        bean.totpercCC = 0;
+                    }
+                    
+                    if (AMOUNTCC != 0) {
+                        bean.totpercBA = AMOUNTBA * 100 / AMOUNTCC;
+                        bean.totpercPE = diffAMOUNTCC * 100 / AMOUNTCC;
+                    } else {
+                        bean.totpercBA = 0;
+                        bean.totpercPE = 0;
+                    }
+
+                    if (bean.AMOUNTS != 0) {
+                        bean.percSales = bean.AMOUNTS * 100 / bean.totAMOUNTS;
+                    } else {
+                        bean.percSales = 0;
+                    }
+
+//                    bean.percCA = bean.AMOUNTCA*100/bean.totAMOUNTCA;
+//                    bean.percCC = bean.AMOUNTCC*100/bean.totAMOUNTCC;                   
+                    if (bean.AMOUNTS != 0) {
+                        bean.percCA = bean.AMOUNTCA * 100 / bean.AMOUNTS;
+                        bean.percCC = bean.AMOUNTCC * 100 / bean.AMOUNTS;
+                    } else {
+                        bean.percCA = 0;
+                        bean.percCC = 0;
+                    }
+
+                    if (bean.AMOUNTCC != 0) {
+                        bean.percBA = bean.AMOUNTBA * 100 / bean.AMOUNTCC;
+                        bean.percPE = bean.diffAMOUNTCC * 100 / bean.AMOUNTCC;
+                    } else {
+                        bean.percBA = 0;
+                        bean.percPE = 0;
+                    }
+
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+
+                    lista.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
+    }
     
+    // ---------------------------------------------------------------------------------------------------------------
+    public List<IMF145Filter> loadSQP04912(IMF145Filter filter) throws SQLException, Exception {
+
+        List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
+        IMF145Filter bean;
+
+        long SADJUST = 0, SFEEAMOU = 0, DIF = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04912(?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+            cstmt.setString(4, filter.IN_SCOUNTRY);
+
+            cstmt.setInt(5, filter.page.PAGNUM);
+            cstmt.setInt(6, filter.page.PAGROW);
+            cstmt.setInt(7, filter.page.TOTPAG);
+            cstmt.setInt(8, filter.page.TOTROW);
+            cstmt.execute();
+            
+            filter.page.PAGNUM = cstmt.getInt(5);
+            filter.page.PAGROW = cstmt.getInt(6);
+            filter.page.TOTPAG = cstmt.getInt(7);
+            filter.page.TOTROW = cstmt.getInt(8);
+            
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                SADJUST = rst.getLong("SADJUST");
+                SFEEAMOU = rst.getLong("SFEEAMOU");
+                DIF = rst.getLong("DIF");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF145Filter();
+                    bean.IN_FECHA = rst.getString("SDATE");
+                    bean.SDATE = rst.getString("SDATE");
+                    bean.strFormatDate = Functions.getMonthConvert6(bean.SDATE);
+                    
+                    bean.SADJUST = rst.getLong("SADJUST");
+                    bean.SFEEAMOU = rst.getLong("SFEEAMOU");
+                    bean.DIF = rst.getLong("DIF");
+                    
+                    bean.totSADJUST = SADJUST;
+                    bean.totSFEEAMOU = SFEEAMOU;
+                    bean.totDIF = DIF;
+                    
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+
+                    lista.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
+    }
     
+    public List<IMF145Filter> loadSQP04915(IMF145Filter filter) throws SQLException, Exception {
+
+        List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
+        IMF145Filter bean;
+
+        long SADJUST = 0, SFEEAMOU = 0, DIF = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04915(?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA);
+            cstmt.setString(3, filter.IN_SCOUNTRY);
+
+            cstmt.setInt(4, filter.page.PAGNUM);
+            cstmt.setInt(5, filter.page.PAGROW);
+            cstmt.setInt(6, filter.page.TOTPAG);
+            cstmt.setInt(7, filter.page.TOTROW);
+            cstmt.execute();
+            
+            filter.page.PAGNUM = cstmt.getInt(4);
+            filter.page.PAGROW = cstmt.getInt(5);
+            filter.page.TOTPAG = cstmt.getInt(6);
+            filter.page.TOTROW = cstmt.getInt(7);
+            
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                SADJUST = rst.getLong("SADJUST");
+                SFEEAMOU = rst.getLong("SFEEAMOU");
+                DIF = rst.getLong("DIF");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF145Filter();
+                    bean.IN_FECHA = rst.getString("SDATE");
+                    bean.SDATE = rst.getString("SDATE");
+                    bean.strFormatDate = Functions.getMonthConvert6(bean.SDATE);
+                    
+                    bean.SCOUNTRY = filter.IN_SCOUNTRY;
+                    bean.SCARCOD = rst.getString("SCARCOD");
+                    bean.SCARDescr = rst.getString("SCARDescr");
+                    if(bean.SCARCOD.equals("AX")){
+                        bean.SCARDescr = "AMERICAN EXPRESS";
+                    }
+                    bean.SADJUST = rst.getLong("SADJUST");
+                    bean.SFEEAMOU = rst.getLong("SFEEAMOU");
+                    bean.DIF = rst.getLong("DIF");
+                    
+                    bean.totSADJUST = SADJUST;
+                    bean.totSFEEAMOU = SFEEAMOU;
+                    bean.totDIF = DIF;
+                    
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+
+                    lista.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
+    }
+
+    public List<IMF145Filter> loadSQP04913(IMF145Filter filter) throws SQLException, Exception {
+
+        List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
+        IMF145Filter bean;
+
+        long SADJUST = 0, SFEEAMOU = 0, DIF = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04913(?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA);
+            cstmt.setString(3, filter.IN_SCOUNTRY);
+            cstmt.setString(4, filter.IN_SCARCOD);
+
+            cstmt.setInt(5, filter.page.PAGNUM);
+            cstmt.setInt(6, filter.page.PAGROW);
+            cstmt.setInt(7, filter.page.TOTPAG);
+            cstmt.setInt(8, filter.page.TOTROW);
+            cstmt.execute();
+            
+            filter.page.PAGNUM = cstmt.getInt(5);
+            filter.page.PAGROW = cstmt.getInt(6);
+            filter.page.TOTPAG = cstmt.getInt(7);
+            filter.page.TOTROW = cstmt.getInt(8);
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                SADJUST = rst.getLong("SADJUST");
+                SFEEAMOU = rst.getLong("SFEEAMOU");
+                DIF = rst.getLong("DIF");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF145Filter();
+                    bean.IN_FECHA_DIA = rst.getString("SDATE");
+                    bean.SDATE = rst.getString("SDATE");
+                    bean.strFormatDate = filter.strFormatDate;
+                    
+                    bean.SCOUNTRY = filter.IN_SCOUNTRY;
+                    bean.SCARCOD = filter.IN_SCARCOD;
+                    bean.SADJUST = rst.getLong("SADJUST");
+                    bean.SFEEAMOU = rst.getLong("SFEEAMOU");
+                    bean.DIF = rst.getLong("DIF");
+                    
+                    bean.totSADJUST = SADJUST;
+                    bean.totSFEEAMOU = SFEEAMOU;
+                    bean.totDIF = DIF;
+
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+
+                    lista.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
+    }
     
+    public List<IMF145Filter> loadSQP04914(IMF145Filter filter) throws SQLException, Exception {
+
+        List<IMF145Filter> lista = new ArrayList<IMF145Filter>(0);
+        IMF145Filter bean;
+
+        double SVFOPS = 0, DISCRATEC = 0, FINSAMOUC = 0, SINSAMOUC = 0, DISCAMOUN = 0, RATESFEED = 0, SADJUST = 0, SFEEAMOU = 0, DIF = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04914(?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_DIA);
+            cstmt.setString(3, filter.IN_SCOUNTRY);
+            cstmt.setString(4, filter.IN_SCARCOD);
+            
+            cstmt.setInt(5, filter.page.PAGNUM);
+            cstmt.setInt(6, filter.page.PAGROW);
+            cstmt.setInt(7, filter.page.TOTPAG);
+            cstmt.setInt(8, filter.page.TOTROW);
+            
+            cstmt.execute();
+                
+            filter.page.PAGNUM = cstmt.getInt(5);
+            filter.page.PAGROW = cstmt.getInt(6);
+            filter.page.TOTPAG = cstmt.getInt(7);
+            filter.page.TOTROW = cstmt.getInt(8);
+            
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                SVFOPS = rst.getDouble("SVFOPS");
+                DISCRATEC = rst.getDouble("DISCRATEC");
+                FINSAMOUC = rst.getDouble("FINSAMOUC");
+                SINSAMOUC = rst.getDouble("SINSAMOUC");
+                DISCAMOUN = rst.getDouble("DISCAMOUN");
+                RATESFEED = rst.getDouble("RATESFEED");
+                SADJUST = rst.getDouble("SADJUST");
+                SFEEAMOU = rst.getDouble("SFEEAMOU");
+                DIF = rst.getDouble("DIF");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF145Filter();
+                    bean.IN_FECHA_DIA = rst.getString("SDATE").trim();
+                    bean.CCIA = rst.getString("CCIA").trim();
+                    bean.FORMA = rst.getString("FORMA").trim();
+                    bean.SERIE = rst.getString("SERIE").trim();
+                    bean.TICKET = bean.CCIA + bean.FORMA + bean.SERIE;
+                    bean.SCARDN = rst.getString("SCARDN").trim();
+                    bean.SAUTHOC = rst.getString("SAUTHOC").trim();
+                    bean.SAGENT = rst.getString("SAGENT").trim();
+                    bean.SDATE = rst.getString("SDATE").trim();
+                    bean.strFormatDate = Functions.getMonthConvert6(filter.SDATE);
+                    bean.SPNR = rst.getString("SPNR").trim();
+                    bean.SCURRENCY = rst.getString("SCURRENCY").trim();
+                    bean.SCOUNTRY = filter.IN_SCOUNTRY;
+                    bean.SCARCOD = filter.IN_SCARCOD;
+                    
+                    bean.SVFOPS = rst.getDouble("SVFOPS");
+                    bean.DISCRATEC = rst.getDouble("DISCRATEC");
+                    bean.FINSAMOUC = rst.getDouble("FINSAMOUC");
+                    bean.SINSAMOUC = rst.getDouble("SINSAMOUC");
+                    bean.DISCAMOUN = rst.getDouble("DISCAMOUN");
+                    bean.RATESFEED = rst.getDouble("RATESFEED");
+                    bean.SADJUST = rst.getDouble("SADJUST");
+                    bean.SFEEAMOU = rst.getDouble("SFEEAMOU");
+                    bean.DIF = rst.getDouble("DIF");
+                    
+                    bean.totSVFOPS = SVFOPS;
+                    bean.totDISCRATEC = DISCRATEC;
+                    bean.totFINSAMOUC = FINSAMOUC;
+                    bean.totSINSAMOUC = SINSAMOUC;
+                    bean.totDISCAMOUN = DISCAMOUN;
+                    bean.totRATESFEED = RATESFEED;
+                    bean.totSADJUST = SADJUST;
+                    bean.totSFEEAMOU = SFEEAMOU;
+                    bean.totDIF = DIF;
+
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+
+                    lista.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
+    }
 }

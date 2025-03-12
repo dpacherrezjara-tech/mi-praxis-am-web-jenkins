@@ -5116,7 +5116,7 @@ public class LoadInterlineDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03908_2_M(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04281(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {

@@ -151,7 +151,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Postbilling.DetailPostbillingContro
                 {"code": "DAG", "name": "DISAGREE WITH AGENT"},
                 //{"code": "DAA", "name": "DISAGREE WITH AIRLINE"},
                 {"code": "AAG", "name": "AGREE WITH AGENT"},
-                {"code": "PRS", "name": "PBD REASON SENT"}
+                {"code": "PRS", "name": "AIRLINE COMMENTED"}
                 //{"code": "PRA", "name": "ASK TO THE AGENCY"}
                 // {"code": "AAA", "name": "AGREE WITH AIRLINE"}
             ]

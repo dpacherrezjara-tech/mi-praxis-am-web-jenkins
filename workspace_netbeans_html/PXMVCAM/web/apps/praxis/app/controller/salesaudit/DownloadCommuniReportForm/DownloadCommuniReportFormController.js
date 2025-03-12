@@ -397,17 +397,21 @@ Ext.define('Ext.Praxis.controller.salesaudit.DownloadCommuniReportForm.DownloadC
             }
             lstNewList.sort;
             if (lstNewList.length > 0) {
-                vl_total_reg = lstNewList.length;
-                vl_total_regsta = 0;
-                for (var z = 0; z < lstNewList.length; z++) {
-                    if (z === 0) {
-                        VL_A3280DESDE = lstNewList[z].A3455FDATE;
-                    }
-                    vl_total_regsta = vl_total_reg - 1;
-                    if (vl_total_regsta === 0) {
-                        VL_A3280HASTA = lstNewList[z].A3455FDATE;
-                    }
-                }
+                VL_A3280DESDE = lstNewList.at(0).A3455FDATE;
+                VL_A3280HASTA = lstNewList.at(-1).A3455FDATE;
+//                console.log("desde: " + VL_A3280DESDE,"hasta: " + VL_A3280HASTA);
+//                console.log(lstNewList)
+//                vl_total_reg = lstNewList.length;
+//                vl_total_regsta = 0;
+//                for (var z = 0; z < lstNewList.length; z++) {
+//                    if (z === 0) {
+//                        VL_A3280DESDE = lstNewList[z].A3455FDATE;
+//                    }
+//                    vl_total_regsta = vl_total_reg - 1;
+//                    if (vl_total_regsta === 0) {
+//                        VL_A3280HASTA = lstNewList[z].A3455FDATE;
+//                    }
+//                }
 
                 me.beanDownload.IN_DATEFROM = VL_A3280DESDE;
                 me.beanDownload.IN_DATETO = VL_A3280HASTA;

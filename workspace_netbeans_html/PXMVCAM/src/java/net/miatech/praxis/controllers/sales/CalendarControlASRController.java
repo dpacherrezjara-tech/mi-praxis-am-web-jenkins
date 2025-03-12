@@ -65,6 +65,7 @@ public class CalendarControlASRController extends BaseController {
         ArrayList<HashMap> lstfechas = new ArrayList<HashMap>();
         
         String fechaActual = "";
+        String flagUlt = "";
         Date ahora = new Date();
         SimpleDateFormat formateador = new SimpleDateFormat("yyyyMMdd");
         fechaActual = formateador.format(ahora);
@@ -174,6 +175,9 @@ public class CalendarControlASRController extends BaseController {
                     vl_saturday_St = "#000000";
                     vl_sunday_St = "#000000";
                     vl_week = oList.get(i).A1528PDIDS;
+                    if (i == oList.size() - 1) {
+                        flagUlt = "Y";
+                    }
                 }
                 switch(oList.get(i).A1528PDIDC){
                     case "2": vl_monday = oList.get(i).A1528PRDA;
@@ -240,6 +244,78 @@ public class CalendarControlASRController extends BaseController {
                               }
                               break;
                 }
+                
+                // Insertar la ultima semana
+                if (i == oList.size() - 1 && flagUlt.equals("")) {
+                    fechas.put("MONDAY", vl_monday);
+                    fechas.put("MONDAY_COMM", vl_monday_comm);
+                    fechas.put("MONDAY_CANT", vl_monday_cant);
+                    fechas.put("MONDAY_ERROR", vl_monday_error);
+                    fechas.put("MONDAY_CANTSALE", vl_monday_cantSale);
+                    fechas.put("MONDAY_COLOR", vl_monday_St);
+                    fechas.put("TUESDAY", vl_tuesday);
+                    fechas.put("TUESDAY_COMM", vl_tuesday_comm);
+                    fechas.put("TUESDAY_CANT", vl_tuesday_cant);
+                    fechas.put("TUESDAY_ERROR", vl_tuesday_error);
+                    fechas.put("TUESDAY_CANTSALE", vl_tuesday_cantSale);
+                    fechas.put("TUESDAY_COLOR", vl_tuesday_St);
+                    fechas.put("WEDNESDAY", vl_wednesday);
+                    fechas.put("WEDNESDAY_COMM", vl_wednesday_comm);
+                    fechas.put("WEDNESDAY_CANT", vl_wednesday_cant);
+                    fechas.put("WEDNESDAY_ERROR", vl_wednesday_error);
+                    fechas.put("WEDNESDAY_CANTSALE", vl_wednesday_cantSale);
+                    fechas.put("WEDNESDAY_COLOR", vl_wednesday_St);
+                    fechas.put("THURSDAY", vl_thursday);
+                    fechas.put("THURSDAY_COMM", vl_thursday_comm);
+                    fechas.put("THURSDAY_CANT", vl_thursday_cant);
+                    fechas.put("THURSDAY_ERROR", vl_thursday_error);
+                    fechas.put("THURSDAY_CANTSALE", vl_thursday_cantSale);
+                    fechas.put("THURSDAY_COLOR", vl_thursday_St);
+                    fechas.put("FRIDAY", vl_friday);
+                    fechas.put("FRIDAY_COMM", vl_friday_comm);
+                    fechas.put("FRIDAY_CANT", vl_friday_cant);
+                    fechas.put("FRIDAY_ERROR", vl_friday_error);
+                    fechas.put("FRIDAY_CANTSALE", vl_friday_cantSale);
+                    fechas.put("FRIDAY_COLOR", vl_friday_St);
+                    fechas.put("SATURDAY", vl_saturday);
+                    fechas.put("SATURDAY_COMM", vl_saturday_comm);
+                    fechas.put("SATURDAY_CANT", vl_saturday_cant);
+                    fechas.put("SATURDAY_ERROR", vl_saturday_error);
+                    fechas.put("SATURDAY_CANTSALE", vl_saturday_cantSale);
+                    fechas.put("SATURDAY_COLOR", vl_saturday_St);
+                    fechas.put("SUNDAY", vl_sunday);
+                    fechas.put("SUNDAY_COMM", vl_sunday_comm);
+                    fechas.put("SUNDAY_CANT", vl_sunday_cant);
+                    fechas.put("SUNDAY_ERROR", vl_sunday_error);
+                    fechas.put("SUNDAY_CANTSALE", vl_sunday_cantSale);
+                    fechas.put("SUNDAY_COLOR", vl_sunday_St);
+                    fechas.put("WEEK", vl_week);
+                    lstfechas.add(contFechas,fechas);
+                    contFechas ++;
+                    contMonth = 1;
+                    vl_monday = "";vl_monday_comm="";
+                    vl_monday_cant=0;vl_monday_error=0;vl_monday_cantSale=0;
+                    vl_tuesday = "";vl_tuesday_comm="";
+                    vl_tuesday_cant=0;vl_tuesday_error=0;vl_tuesday_cantSale=0;
+                    vl_wednesday="";vl_wednesday_comm="";
+                    vl_wednesday_cant=0;vl_wednesday_error=0;vl_wednesday_cantSale=0;
+                    vl_thursday="";vl_thursday_comm="";
+                    vl_thursday_cant=0;vl_thursday_error=0;vl_thursday_cantSale=0;
+                    vl_friday="";vl_friday_comm="";
+                    vl_friday_cant=0;vl_friday_error=0;vl_friday_cantSale=0;
+                    vl_saturday="";vl_saturday_comm="";
+                    vl_saturday_cant=0;vl_saturday_error=0;vl_saturday_cantSale=0;
+                    vl_sunday="";vl_sunday_comm="";
+                    vl_sunday_cant=0;vl_sunday_error=0;vl_sunday_cantSale=0;
+                    vl_monday_St = "#000000";
+                    vl_tuesday_St = "#000000";
+                    vl_wednesday_St = "#000000";
+                    vl_thursday_St = "#000000";
+                    vl_friday_St = "#000000";
+                    vl_saturday_St = "#000000";
+                    vl_sunday_St = "#000000";
+                }
+                
                 HashMap month = new HashMap();
                 HashMap week = new HashMap();
                 
@@ -301,7 +377,7 @@ public class CalendarControlASRController extends BaseController {
     
     String Style(Integer cant,Integer cantSale,Integer error){
         String style = "#FF0000";
-        if(cant == 1){
+        if(cant >= 1){
             if(cantSale > 0){
                 style = "#FFCC00";
             }else{

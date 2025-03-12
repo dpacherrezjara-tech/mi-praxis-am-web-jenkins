@@ -32,6 +32,7 @@ public class A3268 {
     public String A3268FDATE;
     public String A3268TOTALPAG;
     public String A3268DIAS;
+    public String A3254TOTAPAIS;
 
     public String A3268TYPE;
     public String A3268BASE;
@@ -41,6 +42,22 @@ public class A3268 {
     public String A3268FBCP;
     public String A3268RAUDI;
 
+    public String getA3268DIAS() {
+        return A3268DIAS;
+    }
+
+    public void setA3268DIAS(String A3268DIAS) {
+        this.A3268DIAS = A3268DIAS;
+    }
+
+    public String getA3254TOTAPAIS() {
+        return A3254TOTAPAIS;
+    }
+
+    public void setA3254TOTAPAIS(String A3254TOTAPAIS) {
+        this.A3254TOTAPAIS = A3254TOTAPAIS;
+    }
+    
     public String getA3268TYPE() {
         return A3268TYPE;
     }

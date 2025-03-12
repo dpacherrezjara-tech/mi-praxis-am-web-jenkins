@@ -561,20 +561,22 @@ public class ElectronicMiscellaneousController extends BaseController {
             Cell CH1_10 = row.createCell(10);
             Cell CH1_11 = row.createCell(11);
             Cell CH1_12 = row.createCell(12);
+            Cell CH1_13 = row.createCell(13);
 
-            CH1_00.setCellValue("Flight Date");
-            CH1_01.setCellValue("Flight Number");
-            CH1_02.setCellValue("Zone");
-            CH1_03.setCellValue("From");
-            CH1_04.setCellValue("To");
-            CH1_05.setCellValue("EMD - Total");
-            CH1_06.setCellValue("EMD- OAL");
-            CH1_07.setCellValue("EMD- AM");
-            CH1_08.setCellValue("CPN STAND ALONE");
-            CH1_09.setCellValue("CPN USED - QTY");
-            CH1_10.setCellValue("CPN USED - VAL");
-            CH1_11.setCellValue("CPN USED - DIFF");
-            CH1_12.setCellValue("CPN Others");
+            CH1_00.setCellValue("Flight");
+            CH1_01.setCellValue("Flight");
+            CH1_02.setCellValue("Plane Nbr.");
+            CH1_03.setCellValue("Zone");
+            CH1_04.setCellValue("ORIG");
+            CH1_05.setCellValue("DEST");
+            CH1_06.setCellValue("EMD");
+            CH1_07.setCellValue("");
+            CH1_08.setCellValue("");
+            CH1_09.setCellValue("CPN");
+            CH1_10.setCellValue("CPN USED");
+            CH1_11.setCellValue("");
+            CH1_12.setCellValue("");
+            CH1_13.setCellValue("CPN");
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -589,9 +591,82 @@ public class ElectronicMiscellaneousController extends BaseController {
             CH1_10.setCellStyle(headerStyle);
             CH1_11.setCellStyle(headerStyle);
             CH1_12.setCellStyle(headerStyle);
+            CH1_13.setCellStyle(headerStyle);
 
-            //          ========================================================
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 12));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
             ++vj;
+            
+            // ======  Nivel 2 ==========
+            Row row2 = sheet.createRow(vj);
+            Cell CH2_0 = row2.createCell(0);
+            Cell CH2_1 = row2.createCell(1);
+            Cell CH2_2 = row2.createCell(2);
+            Cell CH2_3 = row2.createCell(3);
+            Cell CH2_4 = row2.createCell(4);
+            Cell CH2_5 = row2.createCell(5);
+            Cell CH2_6 = row2.createCell(6);
+            Cell CH2_7 = row2.createCell(7);
+            Cell CH2_8 = row2.createCell(8);
+            Cell CH2_9 = row2.createCell(9);
+            Cell CH2_10 = row2.createCell(10);
+            Cell CH2_11 = row2.createCell(11);
+            Cell CH2_12 = row2.createCell(12);
+            Cell CH2_13 = row2.createCell(13);
+
+            CH2_0.setCellValue("Date");
+            CH2_1.setCellValue("Number");
+            CH2_2.setCellValue("");
+            CH2_3.setCellValue("");
+            CH2_4.setCellValue("");
+            CH2_5.setCellValue("");
+            CH2_6.setCellValue("Total");
+            CH2_7.setCellValue("OAL");
+            CH2_8.setCellValue("OAM");
+            CH2_9.setCellValue("STAND-ALONE");
+            CH2_10.setCellValue("QTY");
+            CH2_11.setCellValue("VAL");
+            CH2_12.setCellValue("DIFF");
+            CH2_13.setCellValue("Others");
+
+            CH2_0.setCellStyle(headerStyle);
+            CH2_1.setCellStyle(headerStyle);
+            CH2_2.setCellStyle(headerStyle);
+            CH2_3.setCellStyle(headerStyle);
+            CH2_4.setCellStyle(headerStyle);
+            CH2_5.setCellStyle(headerStyle);
+            CH2_6.setCellStyle(headerStyle);
+            CH2_7.setCellStyle(headerStyle);
+            CH2_8.setCellStyle(headerStyle);
+            CH2_9.setCellStyle(headerStyle);
+            CH2_10.setCellStyle(headerStyle);
+            CH2_11.setCellStyle(headerStyle);
+            CH2_12.setCellStyle(headerStyle);
+            CH2_13.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 13, 13));
+            ++vj;
+            //============================================
+            
             while (iter.hasNext()) {
 
                 row = sheet.createRow(vj);
@@ -609,35 +684,23 @@ public class ElectronicMiscellaneousController extends BaseController {
                 Cell rcell10 = row.createCell(10);
                 Cell rcell11 = row.createCell(11);
                 Cell rcell12 = row.createCell(12);
+                Cell rcell13 = row.createCell(13);
 
                 rcell0.setCellValue(listaData.get(vi).strFormatDate);
                 rcell1.setCellValue(listaData.get(vi).NFLIGHT);
-                rcell2.setCellValue(listaData.get(vi).ZONA);
-                rcell3.setCellValue(listaData.get(vi).CDEPART);
-                rcell4.setCellValue(listaData.get(vi).CARRIVA);
-                rcell5.setCellValue(listaData.get(vi).QCPNEMD);
-                rcell6.setCellValue(listaData.get(vi).QCPNOAL);
-                rcell7.setCellValue(listaData.get(vi).QCPNON);
-                rcell8.setCellValue(listaData.get(vi).QCPNSTAS);
-                rcell9.setCellValue(listaData.get(vi).QCPNUSEA);
-                rcell10.setCellValue(listaData.get(vi).QCPNVAL);
-                rcell11.setCellValue(listaData.get(vi).QCPNDIFF);
-                rcell12.setCellValue(listaData.get(vi).QCPNOTHU);
+                rcell2.setCellValue(listaData.get(vi).NPLANE);
+                rcell3.setCellValue(listaData.get(vi).ZONA);
+                rcell4.setCellValue(listaData.get(vi).CDEPART);
+                rcell5.setCellValue(listaData.get(vi).CARRIVA);
+                rcell6.setCellValue(listaData.get(vi).QCPNEMD);
+                rcell7.setCellValue(listaData.get(vi).QCPNOAL);
+                rcell8.setCellValue(listaData.get(vi).QCPNON);
+                rcell9.setCellValue(listaData.get(vi).QCPNSTAS);
+                rcell10.setCellValue(listaData.get(vi).QCPNUSEA);
+                rcell11.setCellValue(listaData.get(vi).QCPNVAL);
+                rcell12.setCellValue(listaData.get(vi).QCPNDIFF);
+                rcell13.setCellValue(listaData.get(vi).QCPNOTHU);
 
-//                rcell0.setCellStyle(bodyStyle);
-//                rcell1.setCellStyle(bodyStyle);
-//                rcell2.setCellStyle(bodyStyle);
-//                rcell3.setCellStyle(bodyStyle);
-//                rcell4.setCellStyle(bodyStyle);
-//                rcell5.setCellStyle(bodyStyle);
-//                rcell6.setCellStyle(bodyStyle);
-//                rcell7.setCellStyle(bodyStyle);
-//                rcell8.setCellStyle(bodyStyle);
-//                rcell9.setCellStyle(bodyStyle);
-//                rcell10.setCellStyle(bodyStyle);
-//                rcell11.setCellStyle(bodyStyle);
-//                rcell12.setCellStyle(bodyStyle);
-//              
                 iter.next();
                 ++vi;
                 ++vj;
@@ -656,6 +719,7 @@ public class ElectronicMiscellaneousController extends BaseController {
             sheet.autoSizeColumn(10, true);
             sheet.autoSizeColumn(11, true);
             sheet.autoSizeColumn(12, true);
+            sheet.autoSizeColumn(13, true);
 
             /**
              * fileNameDownload = Nombre de descarga
@@ -743,14 +807,28 @@ public class ElectronicMiscellaneousController extends BaseController {
             Cell CH1_12 = row.createCell(12);
             Cell CH1_13 = row.createCell(13);
             Cell CH1_14 = row.createCell(14);
+            Cell CH1_15 = row.createCell(15);
+            Cell CH1_16 = row.createCell(16);
+            Cell CH1_17 = row.createCell(17);
 
             CH1_00.setCellValue("Ticket");
-            CH1_01.setCellValue("Sale");
-            CH1_05.setCellValue("RFIC");
-            CH1_06.setCellValue("Reason Code");
-            CH1_07.setCellValue("Free Description");
-            CH1_08.setCellValue("Coupon");
-            CH1_13.setCellValue("Accounting");
+            CH1_01.setCellValue("Seq");
+            CH1_02.setCellValue("Rolling");
+            CH1_03.setCellValue("Sale");
+            CH1_04.setCellValue("");
+            CH1_05.setCellValue("");
+            CH1_06.setCellValue("");
+            CH1_07.setCellValue("");
+            CH1_08.setCellValue("RFIC");
+            CH1_09.setCellValue("Reason Code");
+            CH1_10.setCellValue("Free Description");
+            CH1_11.setCellValue("Coupon");
+            CH1_12.setCellValue("");
+            CH1_13.setCellValue("");
+            CH1_14.setCellValue("");
+            CH1_15.setCellValue("");
+            CH1_16.setCellValue("Accounting");
+            CH1_17.setCellValue("");
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -767,15 +845,20 @@ public class ElectronicMiscellaneousController extends BaseController {
             CH1_12.setCellStyle(headerStyle);
             CH1_13.setCellStyle(headerStyle);
             CH1_14.setCellStyle(headerStyle);
+            CH1_15.setCellStyle(headerStyle);
+            CH1_16.setCellStyle(headerStyle);
+            CH1_17.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 6, 6));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 7, 7));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 12));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 14));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 17));
 
             //*******************
             ++vj;
@@ -795,18 +878,28 @@ public class ElectronicMiscellaneousController extends BaseController {
             Cell CH2_12 = row2.createCell(12);
             Cell CH2_13 = row2.createCell(13);
             Cell CH2_14 = row2.createCell(14);
+            Cell CH2_15 = row2.createCell(15);
+            Cell CH2_16 = row2.createCell(16);
+            Cell CH2_17 = row2.createCell(17);
 
-            CH2_01.setCellValue("Associated Ticket");
-            CH2_02.setCellValue("Date");
-            CH2_03.setCellValue("Country");
-            CH2_04.setCellValue("Status");
-            CH2_08.setCellValue("Carrier");
-            CH2_09.setCellValue("Value");
-            CH2_10.setCellValue("Com.");
-            CH2_11.setCellValue("Curr.");
-            CH2_12.setCellValue("Status Validation");
-            CH2_13.setCellValue("Date");
-            CH2_14.setCellValue("ID");
+            CH2_00.setCellValue("");
+            CH2_01.setCellValue("");
+            CH2_02.setCellValue("");
+            CH2_03.setCellValue("Associated Ticket");
+            CH2_04.setCellValue("Plane");
+            CH2_05.setCellValue("Date");
+            CH2_06.setCellValue("Country");
+            CH2_07.setCellValue("Status");
+            CH2_08.setCellValue("");
+            CH2_09.setCellValue("Code");
+            CH2_10.setCellValue("");
+            CH2_11.setCellValue("Carrier");
+            CH2_12.setCellValue("Value");
+            CH2_13.setCellValue("Com.");
+            CH2_14.setCellValue("Curr.");
+            CH2_15.setCellValue("Status Validation");
+            CH2_16.setCellValue("Date");
+            CH2_17.setCellValue("ID");
 
             CH2_00.setCellStyle(headerStyle);
             CH2_01.setCellStyle(headerStyle);
@@ -823,6 +916,9 @@ public class ElectronicMiscellaneousController extends BaseController {
             CH2_12.setCellStyle(headerStyle);
             CH2_13.setCellStyle(headerStyle);
             CH2_14.setCellStyle(headerStyle);
+            CH2_15.setCellStyle(headerStyle);
+            CH2_16.setCellStyle(headerStyle);
+            CH2_17.setCellStyle(headerStyle);
 
             //          ========================================================
             ++vj;
@@ -845,22 +941,28 @@ public class ElectronicMiscellaneousController extends BaseController {
                 Cell rcell12 = row.createCell(12);
                 Cell rcell13 = row.createCell(13);
                 Cell rcell14 = row.createCell(14);
+                Cell rcell15 = row.createCell(15);
+                Cell rcell16 = row.createCell(16);
+                Cell rcell17 = row.createCell(17);
 
                 rcell0.setCellValue(listaData.get(vi).strTicket);
-                rcell1.setCellValue(listaData.get(vi).TKTASO);
-                rcell2.setCellValue(listaData.get(vi).strFormatDate2);
-                rcell3.setCellValue(listaData.get(vi).PSVVTA);
-                rcell4.setCellValue(listaData.get(vi).FVAL);
-                rcell5.setCellValue(listaData.get(vi).RFIC);
-                rcell6.setCellValue(listaData.get(vi).RECODE);
-                rcell7.setCellValue(listaData.get(vi).DES_RECODE);
-                rcell8.setCellValue(listaData.get(vi).CARR);
-                rcell9.setCellValue(listaData.get(vi).VCPN);
-                rcell10.setCellValue(listaData.get(vi).COMISI);
-                rcell11.setCellValue(listaData.get(vi).MDACP);
-                rcell12.setCellValue(listaData.get(vi).strDescFVAL);
-                rcell13.setCellValue(listaData.get(vi).strFCON);
-                rcell14.setCellValue(listaData.get(vi).IDCON);
+                rcell1.setCellValue(listaData.get(vi).SEQ);
+                rcell2.setCellValue(listaData.get(vi).SEQRO);
+                rcell3.setCellValue(listaData.get(vi).TKTASO);
+                rcell4.setCellValue(listaData.get(vi).NPLANE);
+                rcell5.setCellValue(listaData.get(vi).strFormatDate2);
+                rcell6.setCellValue(listaData.get(vi).PSVVTA);
+                rcell7.setCellValue(listaData.get(vi).FVAL);
+                rcell8.setCellValue(listaData.get(vi).RFIC);
+                rcell9.setCellValue(listaData.get(vi).RECODE);
+                rcell10.setCellValue(listaData.get(vi).DES_RECODE);
+                rcell11.setCellValue(listaData.get(vi).CARR);
+                rcell12.setCellValue(listaData.get(vi).VCPN);
+                rcell13.setCellValue(listaData.get(vi).COMISI);
+                rcell14.setCellValue(listaData.get(vi).MDACP);
+                rcell15.setCellValue(listaData.get(vi).strDescFVAL);
+                rcell16.setCellValue(listaData.get(vi).strFCON);
+                rcell17.setCellValue(listaData.get(vi).IDCON);
 
 //                rcell0.setCellStyle(bodyStyle);
 //                rcell1.setCellStyle(bodyStyle);
@@ -898,6 +1000,292 @@ public class ElectronicMiscellaneousController extends BaseController {
             sheet.autoSizeColumn(12, true);
             sheet.autoSizeColumn(13, true);
             sheet.autoSizeColumn(14, true);
+            sheet.autoSizeColumn(15, true);
+            sheet.autoSizeColumn(16, true);
+            sheet.autoSizeColumn(17, true);
+
+            /**
+             * fileNameDownload = Nombre de descarga
+             */
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+            fos.close();
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+
+    }
+    
+    @RequestMapping(value = "getDetailCoupon2XLSX")
+    public @ResponseBody
+    void getDetailCoupon2XLSX(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Electronic Miscellaneous Documentr: getDetailCouponXLSX");
+
+        String fileNameDownload = String.format("Electronic Miscellaneous Document - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+
+        try {
+
+            Workbook workbook;
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            List<A1692Filter> listaData = this.getSearchTKT_2(request, true);
+
+            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+
+            workbook = new XSSFWorkbook();
+
+            Sheet sheet = workbook.createSheet("Electronic Miscellaneous Document");
+
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            Integer vi = 0;
+            Integer vj = 0; //Almacena el numero de fila
+            Iterator iter = listaData.iterator();
+
+            // ====== CREANDO TITULOS ======================================
+            Row row = sheet.createRow(vj);
+
+            Cell CH1_00 = row.createCell(0);
+            Cell CH1_01 = row.createCell(1);
+            Cell CH1_02 = row.createCell(2);
+            Cell CH1_03 = row.createCell(3);
+            Cell CH1_04 = row.createCell(4);
+            Cell CH1_05 = row.createCell(5);
+            Cell CH1_06 = row.createCell(6);
+            Cell CH1_07 = row.createCell(7);
+            Cell CH1_08 = row.createCell(8);
+            Cell CH1_09 = row.createCell(9);
+            Cell CH1_10 = row.createCell(10);
+            Cell CH1_11 = row.createCell(11);
+            Cell CH1_12 = row.createCell(12);
+            Cell CH1_13 = row.createCell(13);
+            Cell CH1_14 = row.createCell(14);
+            Cell CH1_15 = row.createCell(15);
+            Cell CH1_16 = row.createCell(16);
+            Cell CH1_17 = row.createCell(17);
+
+            CH1_00.setCellValue("Ticket");
+            CH1_01.setCellValue("Seq");
+            CH1_02.setCellValue("Rolling");
+            CH1_03.setCellValue("Sale");
+            CH1_04.setCellValue("");
+            CH1_05.setCellValue("");
+            CH1_06.setCellValue("");
+            CH1_07.setCellValue("");
+            CH1_08.setCellValue("RFIC");
+            CH1_09.setCellValue("Reason Code");
+            CH1_10.setCellValue("Free Description");
+            CH1_11.setCellValue("Coupon");
+            CH1_12.setCellValue("");
+            CH1_13.setCellValue("");
+            CH1_14.setCellValue("");
+            CH1_15.setCellValue("");
+            CH1_16.setCellValue("Accounting");
+            CH1_17.setCellValue("");
+
+            CH1_00.setCellStyle(headerStyle);
+            CH1_01.setCellStyle(headerStyle);
+            CH1_02.setCellStyle(headerStyle);
+            CH1_03.setCellStyle(headerStyle);
+            CH1_04.setCellStyle(headerStyle);
+            CH1_05.setCellStyle(headerStyle);
+            CH1_06.setCellStyle(headerStyle);
+            CH1_07.setCellStyle(headerStyle);
+            CH1_08.setCellStyle(headerStyle);
+            CH1_09.setCellStyle(headerStyle);
+            CH1_10.setCellStyle(headerStyle);
+            CH1_11.setCellStyle(headerStyle);
+            CH1_12.setCellStyle(headerStyle);
+            CH1_13.setCellStyle(headerStyle);
+            CH1_14.setCellStyle(headerStyle);
+            CH1_15.setCellStyle(headerStyle);
+            CH1_16.setCellStyle(headerStyle);
+            CH1_17.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 17));
+
+            //*******************
+            ++vj;
+            Row row2 = sheet.createRow(vj);
+            Cell CH2_00 = row2.createCell(0);
+            Cell CH2_01 = row2.createCell(1);
+            Cell CH2_02 = row2.createCell(2);
+            Cell CH2_03 = row2.createCell(3);
+            Cell CH2_04 = row2.createCell(4);
+            Cell CH2_05 = row2.createCell(5);
+            Cell CH2_06 = row2.createCell(6);
+            Cell CH2_07 = row2.createCell(7);
+            Cell CH2_08 = row2.createCell(8);
+            Cell CH2_09 = row2.createCell(9);
+            Cell CH2_10 = row2.createCell(10);
+            Cell CH2_11 = row2.createCell(11);
+            Cell CH2_12 = row2.createCell(12);
+            Cell CH2_13 = row2.createCell(13);
+            Cell CH2_14 = row2.createCell(14);
+            Cell CH2_15 = row2.createCell(15);
+            Cell CH2_16 = row2.createCell(16);
+            Cell CH2_17 = row2.createCell(17);
+
+            CH2_00.setCellValue("");
+            CH2_01.setCellValue("");
+            CH2_02.setCellValue("");
+            CH2_03.setCellValue("Associated Ticket");
+            CH2_04.setCellValue("Plane");
+            CH2_05.setCellValue("Date");
+            CH2_06.setCellValue("Country");
+            CH2_07.setCellValue("Status");
+            CH2_08.setCellValue("");
+            CH2_09.setCellValue("Code");
+            CH2_10.setCellValue("");
+            CH2_11.setCellValue("Carrier");
+            CH2_12.setCellValue("Value");
+            CH2_13.setCellValue("Com.");
+            CH2_14.setCellValue("Curr.");
+            CH2_15.setCellValue("Status Validation");
+            CH2_16.setCellValue("Date");
+            CH2_17.setCellValue("ID");
+
+            CH2_00.setCellStyle(headerStyle);
+            CH2_01.setCellStyle(headerStyle);
+            CH2_02.setCellStyle(headerStyle);
+            CH2_03.setCellStyle(headerStyle);
+            CH2_04.setCellStyle(headerStyle);
+            CH2_05.setCellStyle(headerStyle);
+            CH2_06.setCellStyle(headerStyle);
+            CH2_07.setCellStyle(headerStyle);
+            CH2_08.setCellStyle(headerStyle);
+            CH2_09.setCellStyle(headerStyle);
+            CH2_10.setCellStyle(headerStyle);
+            CH2_11.setCellStyle(headerStyle);
+            CH2_12.setCellStyle(headerStyle);
+            CH2_13.setCellStyle(headerStyle);
+            CH2_14.setCellStyle(headerStyle);
+            CH2_15.setCellStyle(headerStyle);
+            CH2_16.setCellStyle(headerStyle);
+            CH2_17.setCellStyle(headerStyle);
+
+            //          ========================================================
+            ++vj;
+            while (iter.hasNext()) {
+
+                row = sheet.createRow(vj);
+
+                Cell rcell0 = row.createCell(0);
+                Cell rcell1 = row.createCell(1);
+                Cell rcell2 = row.createCell(2);
+                Cell rcell3 = row.createCell(3);
+                Cell rcell4 = row.createCell(4);
+                Cell rcell5 = row.createCell(5);
+                Cell rcell6 = row.createCell(6);
+                Cell rcell7 = row.createCell(7);
+                Cell rcell8 = row.createCell(8);
+                Cell rcell9 = row.createCell(9);
+                Cell rcell10 = row.createCell(10);
+                Cell rcell11 = row.createCell(11);
+                Cell rcell12 = row.createCell(12);
+                Cell rcell13 = row.createCell(13);
+                Cell rcell14 = row.createCell(14);
+                Cell rcell15 = row.createCell(15);
+                Cell rcell16 = row.createCell(16);
+                Cell rcell17 = row.createCell(17);
+
+                rcell0.setCellValue(listaData.get(vi).strTicket);
+                rcell1.setCellValue(listaData.get(vi).SEQ);
+                rcell2.setCellValue(listaData.get(vi).SEQRO);
+                rcell3.setCellValue(listaData.get(vi).TKTASO);
+                rcell4.setCellValue(listaData.get(vi).NPLANE);
+                rcell5.setCellValue(listaData.get(vi).strFormatDate2);
+                rcell6.setCellValue(listaData.get(vi).PSVVTA);
+                rcell7.setCellValue(listaData.get(vi).FVAL);
+                rcell8.setCellValue(listaData.get(vi).RFIC);
+                rcell9.setCellValue(listaData.get(vi).RECODE);
+                rcell10.setCellValue(listaData.get(vi).DES_RECODE);
+                rcell11.setCellValue(listaData.get(vi).CARR);
+                rcell12.setCellValue(listaData.get(vi).VCPN);
+                rcell13.setCellValue(listaData.get(vi).COMISI);
+                rcell14.setCellValue(listaData.get(vi).MDACP);
+                rcell15.setCellValue(listaData.get(vi).strDescFVAL);
+                rcell16.setCellValue(listaData.get(vi).strFCON);
+                rcell17.setCellValue(listaData.get(vi).IDCON);
+
+//                rcell0.setCellStyle(bodyStyle);
+//                rcell1.setCellStyle(bodyStyle);
+//                rcell2.setCellStyle(bodyStyle);
+//                rcell3.setCellStyle(bodyStyle);
+//                rcell4.setCellStyle(bodyStyle);
+//                rcell5.setCellStyle(bodyStyle);
+//                rcell6.setCellStyle(bodyStyle);
+//                rcell7.setCellStyle(bodyStyle);
+//                rcell8.setCellStyle(bodyStyle);
+//                rcell9.setCellStyle(bodyStyle);
+//                rcell10.setCellStyle(bodyStyle);
+//                rcell11.setCellStyle(bodyStyle);
+//                rcell12.setCellStyle(bodyStyle);
+//                rcell13.setCellStyle(bodyStyle);
+//                rcell14.setCellStyle(bodyStyle);
+//              
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+            sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
+            sheet.autoSizeColumn(12, true);
+            sheet.autoSizeColumn(13, true);
+            sheet.autoSizeColumn(14, true);
+            sheet.autoSizeColumn(15, true);
+            sheet.autoSizeColumn(16, true);
+            sheet.autoSizeColumn(17, true);
 
             /**
              * fileNameDownload = Nombre de descarga
@@ -949,6 +1337,7 @@ public class ElectronicMiscellaneousController extends BaseController {
         filter.FORMA = request.getParameter("FORMA");
         filter.SERIE = request.getParameter("SERIE");
         filter.CUPON = request.getParameter("CUPON");
+        filter.SEQ = request.getParameter("SEQ");
         A1692Filter bean;
         bean = logic.loadPX135S06A1818(filter);
 
@@ -1095,12 +1484,12 @@ public class ElectronicMiscellaneousController extends BaseController {
         filter.DFLIGHT = request.getParameter("DFLIGHT");
         filter.STORG = request.getParameter("STORG");
         filter.STVAL = request.getParameter("STVAL");
-        filter.VCPN = Double.parseDouble(request.getParameter("VCPN"));
-        filter.COMISI = Double.parseDouble(request.getParameter("COMISI"));
-        filter.VTAX = Double.parseDouble(request.getParameter("VTAX"));
-        filter.VCPMX = Double.parseDouble(request.getParameter("VCPMX"));
-        filter.TCMUS = Double.parseDouble(request.getParameter("TCMUS"));
-        filter.VCPUS = Double.parseDouble(request.getParameter("VCPUS"));
+        filter.VCPN = Double.parseDouble(request.getParameter("VCPN").replace(",",""));
+        filter.COMISI = Double.parseDouble(request.getParameter("COMISI").replace(",",""));
+        filter.VTAX = Double.parseDouble(request.getParameter("VTAX").replace(",",""));
+        filter.VCPMX = Double.parseDouble(request.getParameter("VCPMX").replace(",",""));
+        filter.TCMUS = Double.parseDouble(request.getParameter("TCMUS").replace(",",""));
+        filter.VCPUS = Double.parseDouble(request.getParameter("VCPUS").replace(",",""));
 
         msj = logic.loadPX135S04A1818(filter, strOption);
         if (msj.toLowerCase().contains("duplicada")) {

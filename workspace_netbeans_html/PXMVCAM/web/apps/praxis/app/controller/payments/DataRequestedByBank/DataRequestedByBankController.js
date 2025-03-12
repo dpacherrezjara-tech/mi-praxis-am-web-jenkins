@@ -305,6 +305,58 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
         }
 
     },
+    
+    onSendEmail: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        
+//        if(rowData.data.DATES !== '' && rowData.data.STVAL === '3'){
+        if(rowData.data.DATES !== ''){
+            console.log(rowData.data);
+            
+            Ext.Msg.show({
+                title: '.:Confirmation:.',
+                msg: 'Sure to Send Email to Bank?',
+                buttons: Ext.MessageBox.OKCANCEL,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function (btn) {
+                    if (btn === 'ok') {
+                        var lstObj = [];
+                        lstObj.push(rowData.data);
+                        
+                        console.log(lstObj);
+                        var listaRow = JSON.stringify(lstObj);
+
+                        Ext.Ajax.request({
+                            url: prototype.url + '/sendEmail',
+                            method: 'POST',
+                            timeout: 60000000,
+                            beforerequest: Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...'),
+                            params: {listaRow: listaRow},
+                            success: function (response, options) {
+                                Ext.getCmp(prototype.id + '-contentInfo').unmask('Loading...');
+                                var res = Ext.JSON.decode(response.responseText);
+                                console.log(res);
+                                var msjError = String(res.msjError);
+                //
+                                if (msjError !== "") {
+                                    global.Msg({msg: msjError});
+//                                    if (msjError.startsWith('Error')) {
+//                                        me.btnSearch_click();
+//                                    }
+//                                    Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                                }else{
+                                    global.Msg({msg: "Error Email"});
+                                }
+                            }
+                        });
+                    }   
+                }
+
+            });
+        }
+    },
+    
     sendEmailtoIATA: function () {
 
         var beanString = JSON.stringify(meDE.bean.data);
@@ -466,17 +518,23 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
 
     },
     obtainData: function () {
-
+        
         var storeComboDataYear = win.getStoreYear(false);
         var storeComboDataMonth = win.getStoreMonth(false);
         var storeComboDataDay = win.getStoreDays(true);
+        
+        var month = this.fecha.getMonth() + 1;
+
+        if (month < 10) {
+            month = '0' + month;
+        }
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateDay').bindStore(storeComboDataDay);
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
-//        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue(month);
         Ext.getCmp(prototype.id + '-cmbDateDay').setValue('');
 
 
@@ -485,7 +543,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
         Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
 
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
-//        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
 
         var cmbEmail = Ext.getCmp(prototype.id + '-cmbEmail');
@@ -676,19 +734,170 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
             };
             console.log(searchParams);
 
-            var option = Ext.getCmp(prototype.id + '-rbgType').getValue();
-            switch (option.rb) {
-                case 'ACLARACIONES':
-                    console.log('Clarifications');
-                    this.search();
-                    break;
-                case 'AVISOS':
-                    console.log('Bank Notice');
-                    this.searchAvisos();
-                    break;
-            }
+//            var option = Ext.getCmp(prototype.id + '-rbgType').getValue();
+//            switch (option.rb) {
+//                case 'ACLARACIONES':
+//                    console.log('Clarifications');
+//                    this.search();
+//                    break;
+//                case 'AVISOS':
+//                    console.log('Bank Notice');
+//                    this.searchAvisos();
+//                    break;
+//            }
         }
     },
+    searchDetCardTKT: function (bean) {
+        win.lblUser_toolTip("Estructura: A2331");
+        
+        var tkt = JSON.stringify(bean);
+        console.log(tkt);
+        
+        Ext.getCmp(prototype.id + '-pie').hide();
+
+        Ext.Ajax.request({
+            url: prototype.url + '/searchDetCardTKT',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...'),
+            params: {beanString: tkt},
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-contentInfo').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+
+                if (res.data.length === 0) {
+                    global.Msg({
+                        msg: 'Data not found.'
+                    });
+                } else {
+                    me.drillDown.push(me.panelActual);
+                    me.panelActual = '-boxCardDataTKT';
+                    global.selectedChild(me.childs, prototype.id + me.panelActual);
+                    
+                    var data = res.data[0];
+                    var lstData = res.data;
+                    
+                    console.log(data);
+
+                    var filDate = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+                    var descFilDate = '';
+
+                    if (filDate === 'SALEDATE') {
+                        descFilDate = 'Sale Date';
+                    } else if (filDate === 'FECR') {
+                        descFilDate = 'Creation Date';
+                    } else if (filDate === 'FECSELEC') {
+                        descFilDate = 'GDS Date';
+                    } else {
+                        descFilDate = 'Reception Date';
+                    }
+//
+                    var tit = Ext.getCmp(prototype.id + '-gridCardDataTKT');
+                    tit.setTitle('<center style="font-size:12px;">' + descFilDate + ' : ' + data.strFormatDate + ' - Merchant Number : ' + data.MERCHN + ' ' + data.MERCHNAM + '</center>');
+
+                    var a = [];
+                    var dataRoot = {text: '.', expanded: false, children: []};
+
+                    Ext.Object.each(lstData, function (index, value) {
+                        if (a.indexOf(value.strDescripcion) < 0) {
+                            var x = [];
+
+                            var TOT_pos = 0;
+                            var TOT_VFOP = 0;
+                            var TOT_TOTCUP = 0;
+                            var TOT_AUTAMOUNT = 0;
+                            Ext.Object.each(lstData, function (index, valuex) {
+                                if (value.strDescripcion === valuex.strDescripcion) {
+                                    TOT_pos += valuex.pos;
+                                    TOT_VFOP += valuex.VFOP;
+                                    TOT_AUTAMOUNT += valuex.AUTAMOUNT;
+                                    TOT_TOTCUP += valuex.TOTCUP;
+                                }
+                            });
+
+                            a.push(value.strDescripcion);
+                            dataRoot.children.push({
+                                strDescripcion: value.strDescripcion,
+                                pos: TOT_pos,
+                                strTicket: '',
+                                VFOP: TOT_VFOP,
+                                AUTAMOUNT: value.AUTAMOUNT,
+                                AUTHNBR: value.AUTHNBR,
+                                SALEDATE: value.SALEDATE,
+                                AGENTE: value.AGENTE,
+                                TOTCUP: TOT_TOTCUP,
+                                strImgLink: '',
+                                DATES: value.DATES,
+                                DATEN: value.DATEN,
+                                expanded: false, children: []
+                            });
+                            var b = [];
+                            Ext.Object.each(lstData, function (index, value01) {
+                                if (value.strDescripcion === value01.strDescripcion) {
+//                                    b.push(value01.VNR);
+                                    dataRoot.children[a.indexOf(value.strDescripcion)].children.push({
+                                        strDescripcion: value01.strDescripcion,
+                                        CODMOTI: value01.CODMOTI,
+                                        CLINAME: value01.CLINAME,
+                                        pos: value01.pos,
+                                        strTicket: value01.strTicket,
+                                        strDescStatus: value01.strDescStatus,
+                                        FOLIO: value01.FOLIO,
+                                        SCOUNTRY: value01.SCOUNTRY,
+                                        VFOP: value01.VFOP,
+                                        AUTAMOUNT: value01.AUTAMOUNT,
+                                        AUTHNBR: value01.AUTHNBR,
+                                        SALEDATE: value01.SALEDATE,
+                                        AGENTE: value01.AGENTE,
+                                        TOTCUP: value01.TOTCUP,
+                                        strUsoCpn1: value01.strUsoCpn1,
+                                        strUsoCpn2: value01.strUsoCpn2,
+                                        strUsoCpn3: value01.strUsoCpn3,
+                                        strUsoCpn4: value01.strUsoCpn4,
+                                        strImgLink: value01.strImgLink,
+                                        DATES: value01.DATES,
+                                        DATEN: value01.DATEN,
+                                        //DataEntry Update
+                                        MERCHN: value01.MERCHN,
+                                        SENTDATE: value01.SENTDATE,
+                                        MERCHNAM: value01.MERCHNAM,
+                                        CARDNBR: value01.CARDNBR,
+                                        NUMREFER: value01.NUMREFER,
+                                        SQCRFILE: value01.SQCRFILE,
+                                        STVAL: value01.STVAL,
+                                        CODEBANK: value01.CODEBANK,
+                                        SCARCOD: value01.SCARCOD,
+                                        IATADATE: value01.IATADATE,
+                                        CERROR: value01.CERROR,
+                                        //DataEntry Delete
+                                        TDOC: value01.TDOC,
+                                        CCIA: value01.CCIA,
+                                        FORMA: value01.FORMA,
+                                        SERIE: value01.SERIE,
+                                        leaf: true
+                                    });
+                                }
+                            });
+                        }
+                    });
+//                    console.log(dataRoot);
+//                    prototype.id_TOT_lngTotDocs_ = data.lngTotDocs;
+
+                    Ext.getCmp(prototype.id + '-lblTotQTKTTKT').setText(Ext.util.Format.number(data.lngTotDocs, '0,000'));
+                    Ext.getCmp(prototype.id + '-lblTotVFOPTKT').setText(Ext.util.Format.number(data.dblTotVFOP, '0,000.00'));
+                    Ext.getCmp(prototype.id + '-lblTotAUTAMOUNTDTKT').setText(Ext.util.Format.number(data.dblTotAUTAMOUNT, '0,000.00'));
+                    Ext.getCmp(prototype.id + '-lblTotTOTCUPTKT').setText(Ext.util.Format.number(data.lngTotTOTCUP, '0,000'));
+
+                    var storeTree = Ext.create('Ext.data.TreeStore', {
+                        root: dataRoot
+                    });
+
+                    Ext.getCmp(prototype.id + '-gridCardDataTKT').setStore(storeTree);
+                }
+            }
+        });
+    },
+    /*
     setFormatParameter: function () {
         me.bean = {};
         me.beanTKT = {};
@@ -739,7 +948,12 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
             console.log(searchParams);
         }
     },
+    */
+    
     btnSearch_click: function (obj, e) {
+        
+        Ext.getCmp(prototype.id + '-pie').show();
+        
         me.lstSendBank = [];
         me.lstSendIata = [];
         this.setFormatParameter();
@@ -886,7 +1100,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
         this.beanDetCard.IN_TCARD = rowData.data.IN_TCARD;
         this.beanDetCard.IN_MERCHN = rowData.data.IN_MERCHN;
         this.beanDetCard.IN_CODEBANK = rowData.data.IN_CODEBANK;
-//        console.log(this.beanDetCard);
+        console.log(this.beanDetCard);
 
         me.paramsDetail.beanString = JSON.stringify(this.beanDetCard);
         this.setGridDataDetCard_2();
@@ -1378,6 +1592,10 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
                                         AUTAMOUNT: value01.AUTAMOUNT,
                                         CONCEPT: value01.CONCEPT,
                                         strDescStatus: value01.strDescStatus,
+                                        SENTDATE: value01.SENTDATE,
+                                        MERCHN: value01.MERCHN,
+                                        CARDNBR: value01.CARDNBR,
+                                        SQCRFILE: value01.SQCRFILE,
                                         strTicket: value01.strTicket,
                                         strUsoCpn1: value01.strUsoCpn1,
                                         strUsoCpn2: value01.strUsoCpn2,
@@ -1434,6 +1652,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
                             });
                         } else {
                             var data = obj.data.items[0].data;
+                            console.log('data');
                             console.log(data);
                         }
                         me.setWidthPie();
@@ -1558,6 +1777,10 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
                                         AGENTE: value01.AGENTE,
                                         AUTAMOUNT: value01.AUTAMOUNT,
                                         CONCEPT: value01.CONCEPT,
+                                        SENTDATE: value01.SENTDATE,
+                                        MERCHN: value01.MERCHN,
+                                        CARDNBR: value01.CARDNBR,
+                                        SQCRFILE: value01.SQCRFILE,
                                         strDescStatus: value01.strDescStatus,
                                         strTicket: value01.strTicket,
                                         strUsoCpn1: value01.strUsoCpn1,
@@ -2270,6 +2493,8 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
     },
     onEditClick2: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
+        console.log('rec');
+        console.log(rec);
         if (rec.data.children === null || rec.data.children === undefined) {
             this.winDataEntry2('U', rec);
         } else {

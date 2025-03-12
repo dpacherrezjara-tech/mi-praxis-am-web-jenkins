@@ -113,12 +113,12 @@ public class CalendarControlBSPController extends BaseController {
             for(int i=0;i<oList.size();i++){
                 HashMap fechas = new HashMap();
                 if(!vl_period.equals(oList.get(i).A1529PERI) || b){
-                    if (!b) {
-                        vl_from = "";
-                        vl_to = "";
-                        A1529REMW = "";
-                        A1529SETW = "";
-                    }
+//                    if (!b) {
+//                        vl_from = "";
+//                        vl_to = "";
+//                        A1529REMW = "";
+//                        A1529SETW = "";
+//                    }
                     fechas.put("MONDAY", vl_monday);
                     fechas.put("MONDAY_COMM", vl_monday_comm);
                     fechas.put("MONDAY_CANT", vl_monday_cant);
@@ -282,19 +282,7 @@ public class CalendarControlBSPController extends BaseController {
                 }
                 HashMap month = new HashMap();
                 HashMap week = new HashMap();
-
-                if(contMonth==1 && (!vl_month.equals(oList.get(i).A1529MESB))){
-                    week.put("VALOR", vl_month_vl);
-                    week.put("PD", lstfechas);
-                    lstweek.add(week);
-                    month.put("MONTHS",lstweek);
-                    lstmonth.add(month);
-                    contMonth = 0;
-                    contGeneral = 1;
-                    lstfechas = new ArrayList<HashMap>();
-                    contFechas=0;
-                    lstweek = new ArrayList<HashMap>();
-                }
+                
                 if (i == oList.size()-1) {
                     fechas = new HashMap();
                     fechas.put("MONDAY", vl_monday);
@@ -340,11 +328,16 @@ public class CalendarControlBSPController extends BaseController {
                     fechas.put("SUNDAY_CANTSALE", vl_sunday_cantSale);
                     fechas.put("SUNDAY_COLOR", vl_sunday_St);
                     fechas.put("PERIOD", vl_period);
-                    fechas.put("FROM", "");
+                    /*fechas.put("FROM", "");
                     fechas.put("TO", "");
                     fechas.put("A1529BAIR", "");
                     fechas.put("A1529REMW", "");
-                    fechas.put("A1529SETW", "");
+                    fechas.put("A1529SETW", "");*/
+                    fechas.put("FROM", vl_from);
+                    fechas.put("TO", vl_to);
+                    fechas.put("A1529BAIR", A1529BAIR);
+                    fechas.put("A1529REMW", A1529REMW);
+                    fechas.put("A1529SETW", A1529SETW);
                     lstfechas.add(contFechas,fechas);
                     contFechas ++;
                     month = new HashMap();
@@ -359,6 +352,20 @@ public class CalendarControlBSPController extends BaseController {
                     qtr.put("QTR",lstmonth);
                     lista.add(qtr);
                 }
+                
+                if(contMonth==1 && (!vl_month.equals(oList.get(i).A1529MESB))){
+                    week.put("VALOR", vl_month_vl);
+                    week.put("PD", lstfechas);
+                    lstweek.add(week);
+                    month.put("MONTHS",lstweek);
+                    lstmonth.add(month);
+                    contMonth = 0;
+                    contGeneral = 1;
+                    lstfechas = new ArrayList<HashMap>();
+                    contFechas=0;
+                    lstweek = new ArrayList<HashMap>();
+                }
+                
                 if(!vl_month.equals(oList.get(i).A1529MESB)){
                     vl_month = oList.get(i).A1529MESB;
                     switch(vl_month){
@@ -406,7 +413,7 @@ public class CalendarControlBSPController extends BaseController {
     
     String Style(Integer cant,Integer cantSale,Integer error){
         String style = "#FF0000";
-        if(cant == 1){
+        if(cant >= 1){
             if(cantSale > 0){
                 style = "#FFCC00";
             }else{

@@ -8,9 +8,9 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
         'Ext.Praxis.controller.panel.Users.DataEntryUsersController'
     ],
 
-    title:'Accounting Master Process- Data Entry Form',
+    title:'Users Mant- Data Entry Form',
     header:true,
-    height:260,
+    height:340,
     width:815,
     border:false,
     resizable:false,
@@ -37,411 +37,178 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
-                            text: 'Module',
+                            text: 'User: ',
                             style: 'font-weight:bold;color:#000;',
-                            width: 120
+                            width: 80
                         },
                         {
-                            xtype: 'label',
-                            text: '(*)',
-                            style: 'font-weight:bold;color:red;',
-                            width: 20,
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtUSR',
+                            text: '',
+                            maxLength: 10,
+                            enforceMaxLength: true,
+                            //style: 'font-weight:bold;color:red;',
+                            width: 120,
                             autoEl: {
                                 tag: 'label',
                                 'data-qtip': 'Mandatory Field'
+                            },
+                            listeners:{
+                                change: 'onUpperValue'
                             }
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        { xtype: 'tbspacer', width: 7 },
                         {
-                            xtype:'combo',
-                            id: prototype.id + '-cbxModulo',
-                            store: new Ext.data.SimpleStore({
-                                fields: ['code', 'name'],
-                                data: [
-                                    ["", "(Select)"],
-                                    ["PSALES", "Sales Accounting"],
-                                    ["PADJMA", "Manual Adjustment"],
-                                    ["PCADUCOS", "Caducos"],
-                                    ["PPSALES", "Sales Accounting Pending"]
-                                ]
-                            }),
-                            queryMode: 'local',
-                            hiddenLabel: false,
-                            forceSelection: true,
-                            caseSensitive: false,
-                            autoSelect: true,
-                            editable: false,
-                            width: 160,
-                            typeAhead: true,
-                            valueField: 'code', displayField: 'name',
-                            listConfig: {maxHeight: 111},
-                            enableKeyEvents: true,
-                            triggerAction: 'all',
-                            change: 'onMostrarCampoChange',
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkStatus',
+                            boxLabelAlign: 'after',
+                            width: 80,
+                            boxLabel: '<b>Status</b>',
+                            readOnly: false
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox' 
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    items:[
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'label',
+                            text: 'Description: ',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 80
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtDESC',                            
+                            text: '',
+                            maxLength: 30,
+                            enforceMaxLength: true,
+                            //style: 'font-weight:bold;color:red;',
+                            width: 320,
+                            autoEl: {
+                                tag: 'label',
+                                'data-qtip': 'Mandatory Field'
+                            },
                             listeners:{
-                                afterrender: function (combo, eOpts) {
-                                    combo.setValue("");
-                                },
-                                keyup: function (combo, e) {
-                                    var key = String.fromCharCode(e.getKey());
-                                    var filter = /^[a-zA-Z]+$/;
-                                    var test_bool = filter.test(key);
-                                    if (test_bool) {
-                                        combo.doQuery(key);
-                                    }
-                                },
-                                change: 'onMostrarCampoChange',
+                                change: 'onUpperValue'
                             }
                         }
                     ]
                 },
-                // <editor-fold defaultstate="collapsed" desc="boxFecha">
+                {
+                    xtype: 'panel',
+                    layout: 'hbox' 
+                },
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    id: prototype.id + '-boxFecha',
-                    hidden: false,
-                    defaults: {
-                        bodyStyle: 'background: transparent;',
-                        border: false,
-                        align: 'center'
-                    },
-                    items: [
+                    items:[
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
-                            text: 'Process Date',
+                            text: 'City: ',
                             style: 'font-weight:bold;color:#000;',
-                            width: 120
+                            width: 80
+                        },
+                        {
+                            xtype:'combo',
+                            id: prototype.id + '-cboCity',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "- SELECT -"],
+                                    ["MEX", "MEXICO DF"],
+                                    ["LIM", "LIMA"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            autoSelect: false,
+                            enableKeyEvents: true,
+                            forceSelection: true,
+                            caseSensitive: true,
+                            editable: false,
+                            valueField: 'code',
+                            displayField: 'name',
+                            width: 100,
+                            listConfig: {height: 111}
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox' 
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    items:[
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkExpiredDate',
+                            width: 20,
+                            readOnly: false
                         },
                         {
                             xtype: 'label',
-                            text: '(*)',
-                            style: 'font-weight:bold;color:red;',
-                            width: 20,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Mandatory Field'
-                            }
+                            text: 'Expiration Date: ',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 120
                         },
-                        { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtProcessDate',
-                            fieldStyle: 'text-align:center',
+                            id:prototype.id+'-txtExpDate',
                             format: 'Y/m/d',
-                            formatText: '',
-                            invalidText: 'Format valid YYYY/MM/DD',
-                            minValue: new Date(1990, 00, 01),
                             maskRe: /[0-9/]/,
-                            editable: true,
+                            fieldStyle: 'text-align:center;',
+                            editable: false,
                             enforceMaxLength: true,
                             maxLength: 10,
-                            inputAttrTpl: "data-qtip='Format valid YYYY/MM/DD'",
-                            width: 90
-                        }
-                    ]
-                }
-                // </editor-fold>                
-                ,
-                // <editor-fold defaultstate="collapsed" desc="boxCaducos">
+                            width: 90/*,
+                            autoEl: {
+                                tag: 'label',
+                                'data-qtip': 'Format valid YYYY/MM/DD'
+                            }*/
+                        },
+                        { xtype: 'tbspacer', width: 20 },
                         {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            id: prototype.id + '-boxCaducos',
-                            //hidden: true,
-                            defaults: {
-                                bodyStyle: 'background: transparent;',
-                                border: false,
-                                align: 'center'
-                            },
-                            items: [
-                                { xtype: 'tbspacer', width: 5 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Period',
-                                    style: 'font-weight:bold;color:#000;',
-                                    padding: '2px 0px 2px 0px'
-                                },
-                                { xtype: 'tbspacer', width: 82 },
-                                {
-                                    xtype: 'label',
-                                    text: '(*)',
-                                    style: 'font-weight:bold;color:red;',
-                                    width: 20,
-                                    autoEl: {
-                                        tag: 'label',
-                                        'data-qtip': 'Mandatory Field'
-                                    }
-                                },
-                                { xtype: 'tbspacer', width: 10 },
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbDateFromYear',
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    autoSelect: false,
-                                    enableKeyEvents: true,
-                                    forceSelection: true,
-                                    caseSensitive: false,
-                                    editable: false,
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    width: 80,
-                                    hiddenLabel: false,
-                                    listConfig: {maxHeight: 111},
-                                    listeners: {
-                                        keyup: function (combo, e) {
-                                            var key = String.fromCharCode(e.getKey());
-                                            var filter = /^[0-9]+$/;
-                                            var test_bool = filter.test(key);
-                                            if (test_bool) {
-                                                combo.doQuery(key);
-                                            }
-                                        }
-                                    }
-                                },
-                                {xtype: 'tbspacer', width: 4},
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbDateFromMonth',
-                                    labelAlign: 'right',
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    editable: false,
-                                    autoSelect: false,
-                                    enableKeyEvents: true,
-                                    caseSensitive: false,
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    labelWidth: 0,
-                                    width: 77,
-                                    anchor: '100%',
-                                    listConfig: {maxHeight: 111},
-                                    listeners: {
-                                        keyup: function (combo, e) {
-                                            var key = String.fromCharCode(e.getKey());
-                                            var filter = /^[a-zA-Z]+$/;
-                                            var test_bool = filter.test(key);
-                                            if (test_bool) {
-                                                combo.doQuery(key);
-                                            }
-                                        }
-                                    }
-                                }
-                                /*,
-                                { xtype: 'tbspacer', width: 5 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Month To',
-                                    style: 'font-weight:bold;color:#000;',
-                                    padding: '2px 0px 2px 0px'
-                                },
-                                { xtype: 'tbspacer', width: 3 },
-                                {
-                                    xtype: 'label',
-                                    text: '(*)',
-                                    style: 'font-weight:bold;color:red;',
-                                    width: 20,
-                                    autoEl: {
-                                        tag: 'label',
-                                        'data-qtip': 'Mandatory Field'
-                                    }
-                                }
-                                ,
-                                { xtype: 'tbspacer', width: 10 },
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbDateToYear',
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    autoSelect: false,
-                                    enableKeyEvents: true,
-                                    forceSelection: true,
-                                    caseSensitive: false,
-                                    editable: false,
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    width: 80,
-                                    hiddenLabel: false,
-                                    listConfig: {maxHeight: 111},
-                                    listeners: {
-                                        keyup: function (combo, e) {
-                                            var key = String.fromCharCode(e.getKey());
-                                            var filter = /^[0-9]+$/;
-                                            var test_bool = filter.test(key);
-                                            if (test_bool) {
-                                                combo.doQuery(key);
-                                            }
-                                        },
-                                        change: 'onToYearChange',
-                                    }
-                                },
-                                {xtype: 'tbspacer', width: 4},
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbDateToMonth',
-                                    labelAlign: 'right',
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    editable: false,
-                                    autoSelect: false,
-                                    enableKeyEvents: true,
-                                    caseSensitive: false,
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    labelWidth: 0,
-                                    width: 80,
-                                    anchor: '100%',
-                                    listConfig: {maxHeight: 111},
-                                    listeners: {
-                                        keyup: function (combo, e) {
-                                            var key = String.fromCharCode(e.getKey());
-                                            var filter = /^[a-zA-Z]+$/;
-                                            var test_bool = filter.test(key);
-                                            if (test_bool) {
-                                                combo.doQuery(key);
-                                            }
-                                        },
-                                        change: 'onToMonthChange',
-                                    }
-                                }*/
-                            ]
-                        }
-                        // </editor-fold>                
-                ,
-                /*
-                // <editor-fold defaultstate="collapsed" desc="boxPeriodo">
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    id: prototype.id + '-boxPeriodo',
-                    hidden: true,
-                    defaults: {
-                        bodyStyle: 'background: transparent;',
-                        border: false,
-                        align: 'center'
-                    },
-                    items: [
-                        { xtype: 'tbspacer', width: 7 },
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkPass',
+                            width: 20,
+                            readOnly: false
+                        },
                         {
                             xtype: 'label',
-                            text: 'Billing Period',
+                            text: 'Enter Password: ',
                             style: 'font-weight:bold;color:#000;',
                             width: 120
                         },
                         {
-                            xtype: 'label',
-                            text: '(*)',
-                            style: 'font-weight:bold;color:red;',
-                            width: 20,
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtPass',                            
+                            text: '',
+                            maxLength: 10,
+                            enforceMaxLength: true,
+                            //style: 'font-weight:bold;color:red;',
+                            width: 220,
                             autoEl: {
                                 tag: 'label',
                                 'data-qtip': 'Mandatory Field'
-                            }
-                        },
-                        { xtype: 'tbspacer', width: 10 },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cbxDateYear',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            forceSelection: true,
-                            caseSensitive: false,
-                            editable: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            width: 80,
-                            hiddenLabel: false,
-                            listConfig: {maxHeight: 111},
-                            listeners: {
-                                keyup: function (combo, e) {
-                                    var key = String.fromCharCode(e.getKey());
-                                    var filter = /^[0-9]+$/;
-                                    var test_bool = filter.test(key);
-                                    if (test_bool) {
-                                        combo.doQuery(key);
-                                    }
-                                },
-                                change: 'onYearChange',
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 4},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cbxDateMonth',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            labelWidth: 0,
-                            width: 80,
-                            anchor: '100%',
-                            listConfig: {maxHeight: 111},
-                            listeners: {
-                                keyup: function (combo, e) {
-                                    var key = String.fromCharCode(e.getKey());
-                                    var filter = /^[a-zA-Z]+$/;
-                                    var test_bool = filter.test(key);
-                                    if (test_bool) {
-                                        combo.doQuery(key);
-                                    }
-                                },
-                                change: 'onMonthChange',
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 4},
-                        {
-                            xtype:'combo',
-                            id: prototype.id + '-cbxDatePeriod',
-                            store: new Ext.data.SimpleStore({
-                                fields: ['code', 'name'],
-                                data: [
-                                    ["", "Select"],
-                                    ["01", "01"],
-                                    ["02", "02"],
-                                    ["03", "03"],
-                                    ["04", "04"]
-                                ]
-                            }),
-                            queryMode: 'local',
-                            hiddenLabel: false,
-                            forceSelection: true,
-                            caseSensitive: false,
-                            autoSelect: true,
-                            editable: false,
-                            width: 80,
-                            typeAhead: true,
-                            valueField: 'code', displayField: 'name',
-                            listConfig: {maxHeight: 111},
-                            enableKeyEvents: true,
-                            triggerAction: 'all',
+                            },
                             listeners:{
-                                afterrender: function (combo, eOpts) {
-                                    combo.setValue("");
-                                },
-                                keyup: function (combo, e) {
-                                    var key = String.fromCharCode(e.getKey());
-                                    var filter = /^[a-zA-Z]+$/;
-                                    var test_bool = filter.test(key);
-                                    if (test_bool) {
-                                        combo.doQuery(key);
-                                    }
-                                },
-                                change: 'onPeriodChange',
+                                change: 'onUpperValue'
                             }
                         }
                     ]
                 },
-                // </editor-fold>
-                */
+                
                 // <editor-fold defaultstate="collapsed" desc="ControlData">
                 {
                     xtype: 'fieldset',
@@ -489,27 +256,13 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                                     xtype: 'textfield',
                                     id:prototype.id+'-FECR',
                                     readOnly: true,
-                                    width: 80,
+                                    width: 150,
                                     listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
                                 { xtype: 'tbspacer', width: 60 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Creation Time',
-                                    style: 'font-weight:bold;color:#000;',
-                                    width: 120
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-HOCR',
-                                    readOnly: true,
-                                    width: 80,
-                                    listeners:{
-                                        change: 'onUpperValue'
-                                    }
-                                }
+                                
                             ]
                         },
                         {
@@ -547,27 +300,13 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                                     xtype: 'textfield',
                                     id:prototype.id+'-FEUP',
                                     readOnly: true,
-                                    width: 80,
+                                    width: 150,
                                     listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
                                 { xtype: 'tbspacer', width: 60 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Update Time',
-                                    style: 'font-weight:bold;color:#000;',
-                                    width: 120
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-HOUP',
-                                    readOnly: true,
-                                    width: 80,
-                                    listeners:{
-                                        change: 'onUpperValue'
-                                    }
-                                }
+                                
                             ]
                         }
                     ]
@@ -629,28 +368,7 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                     style: 'font-weight:bold;color:red;',
                     width: 120
                 }
-//                ,
-//                { xtype: 'tbspacer', width: 30 },
-//                {
-//                    xtype: 'button',
-//                    id:prototype.id+'-btn-prev',
-//                    icon: 'resources/img/botones/prev.png',
-//                    tooltip: 'View Previous Flight Manifest',
-//                    border: false,
-//                    listeners:{
-//                        click: 'onPrevClick'
-//                    }
-//                },
-//                {
-//                    xtype: 'button',
-//                    id:prototype.id+'-btn-next',
-//                    icon: 'resources/img/botones/next2.png',
-//                    tooltip: 'View Next Flight Manifest',
-//                    border: false,
-//                    listeners:{
-//                        click: 'onNextClick'
-//                    }
-//                }
+
             ]
         }
     ]

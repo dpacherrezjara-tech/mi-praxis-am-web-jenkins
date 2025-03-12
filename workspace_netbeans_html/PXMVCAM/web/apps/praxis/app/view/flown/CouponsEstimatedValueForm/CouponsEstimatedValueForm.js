@@ -60,7 +60,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.CouponsEstimatedValu
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1300,
+                                        width: 1400,
                                         align: 'center'
                                     },
                                     items: [

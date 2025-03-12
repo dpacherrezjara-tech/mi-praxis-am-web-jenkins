@@ -57,6 +57,61 @@ public class InputsControlDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
+    
+    public List<A1686Filter> loadPX077S14A1910(A1686Filter filter) throws SQLException, Exception {
+
+        List<A1686Filter> lstRtn = new ArrayList<A1686Filter>(0);
+        A1686Filter objRtn;
+        int totQRECOR = 0, totQRECORG = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX077S14A1910(?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            int pos = 0;
+            while (rs01.next()) {
+                pos++;
+                objRtn = new A1686Filter();
+                objRtn.FUENTE = rs01.getString("CPROGRAM");//Cod de Programa
+
+                lstRtn.add(objRtn);
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
 
     public List<A1686Filter> loadPX077S01A1686(A1686Filter filter) throws SQLException, Exception {
 
@@ -635,7 +690,7 @@ public class InputsControlDAO {
             cstmt01.registerOutParameter(4, Types.INTEGER);
             cstmt01.registerOutParameter(5, Types.INTEGER);
             cstmt01.registerOutParameter(6, Types.INTEGER);
-
+            
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.FECHA.trim());
             cstmt01.setInt(3, filter.page.PAGNUM);
@@ -1269,4 +1324,81 @@ public class InputsControlDAO {
 
     }
 
+    public List<A1686Filter> loadPX077S13A1910(A1686Filter filter) throws SQLException, Exception {
+
+        List<A1686Filter> lstRtn = new ArrayList<A1686Filter>(0);
+        A1686Filter objRtn;
+        int totQRECOR = 0, totQRECORG = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX077S13A1910(?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.MENSA);//NRO PROGRAMA
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            int pos = 0;
+            while (rs01.next()) {
+                pos++;
+                objRtn = new A1686Filter();
+                objRtn.RN = pos;
+                objRtn.STVAL = rs01.getString("STATP");
+                objRtn.strFormatDate4 = rs01.getString("DESCRIP");
+                objRtn.MENSA = rs01.getString("MENSA");
+                objRtn.FUENTE = rs01.getString("CPROGRAM");//Cod de Programa
+                objRtn.QRECOR = rs01.getInt("QTYREAD");
+                objRtn.QRECORG = rs01.getInt("QTYWRITE");
+                objRtn.FECR = Functions.getMonthConvert(rs01.getString("FECR"));
+                objRtn.HOCR = Functions.ConvertedTime(rs01.getString("HOCR").substring(0, 6));
+                objRtn.USCR = rs01.getString("USCR");
+                objRtn.strFormatDate = Functions.ConvertedTime(rs01.getString("HOFIN"));
+                //objRtn.strFormatDate4 = Functions.restBetween2HoursMinSeg(rs01.getString("HOFIN"), rs01.getString("HOCR").substring(0, 6));
+                objRtn.strFormatDate4 = Functions.ConvertedTime(Functions.restBetween2HoursMinSeg_HF_HI(rs01.getString("HOFIN"), rs01.getString("HOCR").substring(0, 6)));
+                objRtn.strFormatDate2 = rs01.getString("DESCRIP");
+                objRtn.PPROGRAM = rs01.getString("PPROGRAM");
+
+                lstRtn.add(objRtn);
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+
+    
+    
+    
+    
+    
+    
+    
 }

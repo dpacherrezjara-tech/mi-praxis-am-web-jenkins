@@ -97,24 +97,24 @@ public class BwrBSPLINKRFNDController extends BaseController {
             logic = new BwrBSPLINKRFNDLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            int limit = Integer.parseInt(request.getParameter("limit").toString());
-            int start = Integer.parseInt(request.getParameter("start").toString());
+            int limit = Integer.parseInt(request.getParameter("limit"));
+            int start = Integer.parseInt(request.getParameter("start"));
 
-            int pExcel = Integer.parseInt(request.getParameter("pexcel").toString());
+            int pExcel = Integer.parseInt(request.getParameter("pexcel"));
             Boolean bExcel = pExcel == 1 ? true : false;
 
-            filter.IN_OPTION = request.getParameter("IN_OPTION").toString().trim();
-            filter.IN_CIA = request.getParameter("IN_CIA").toString().trim();
-            filter.IN_FORMA = request.getParameter("IN_FORMA").toString().trim();
-            filter.IN_SERIE = request.getParameter("IN_SERIE").toString().trim();
-            filter.IN_SEQ = request.getParameter("IN_SEQ").toString().trim();
-            filter.IN_DOCUMET = request.getParameter("IN_DOCUMET").toString().trim();
-            filter.IN_DATEFROM = request.getParameter("IN_DATEFROM").toString().trim();
-            filter.IN_DATETO = request.getParameter("IN_DATETO").toString().trim();
-            filter.IN_COUNTRY = request.getParameter("IN_COUNTRY").toString().trim();
-            filter.IN_STATUS = request.getParameter("IN_STATUS").toString().trim();
-            filter.IN_USER = request.getParameter("IN_USER").toString().trim();
-            filter.IN_IATA = request.getParameter("IN_IATA").toString().trim();
+            filter.IN_OPTION = request.getParameter("IN_OPTION").trim();
+            filter.IN_CIA = request.getParameter("IN_CIA").trim();
+            filter.IN_FORMA = request.getParameter("IN_FORMA").trim();
+            filter.IN_SERIE = request.getParameter("IN_SERIE").trim();
+            filter.IN_SEQ = request.getParameter("IN_SEQ").trim();
+            filter.IN_DOCUMET = request.getParameter("IN_DOCUMET").trim();
+            filter.IN_DATEFROM = request.getParameter("IN_DATEFROM").trim();
+            filter.IN_DATETO = request.getParameter("IN_DATETO").trim();
+            filter.IN_COUNTRY = request.getParameter("IN_COUNTRY").trim();
+            filter.IN_STATUS = request.getParameter("IN_STATUS").trim();
+            filter.IN_USER = request.getParameter("IN_USER").trim();
+            filter.IN_IATA = request.getParameter("IN_IATA").trim();
 
             if (!bExcel) {
                 filter.page.PAGROW = 20;
@@ -146,7 +146,7 @@ public class BwrBSPLINKRFNDController extends BaseController {
             logic = new BwrBSPLINKRFNDLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            filter.IN_PAIS = request.getParameter("IN_PAIS").toString().trim();
+            filter.IN_PAIS = request.getParameter("IN_PAIS").trim();
 
             lst = logic.SearchRFNDRazon(filter);
         } catch (Exception e) {
@@ -163,7 +163,7 @@ public class BwrBSPLINKRFNDController extends BaseController {
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
         A3389Filter filter = new A3389Filter();
-
+        String vl_A3389FLAG = "ASSIGNED TO AUDITOR";
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -211,7 +211,7 @@ public class BwrBSPLINKRFNDController extends BaseController {
             Iterator iter = lst.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15;
 
             row = sheet.createRow(vj);
 
@@ -230,22 +230,24 @@ public class BwrBSPLINKRFNDController extends BaseController {
             CH_12 = row.createCell(12);
             CH_13 = row.createCell(13);
             CH_14 = row.createCell(14);
+            CH_15 = row.createCell(15);
 
-            CH_00.setCellValue("Document");
-            CH_01.setCellValue("Ticket");
-            CH_02.setCellValue("IATA");
-            CH_03.setCellValue("Agency");
-            CH_04.setCellValue("Application date");
-            CH_05.setCellValue("Authorise / Reject date");
-            CH_06.setCellValue("Country");
-            CH_07.setCellValue("Cur.");
-            CH_08.setCellValue("Net");
-            CH_09.setCellValue("Passenger");
-            CH_10.setCellValue("Auditor");
-            CH_11.setCellValue("Reason BSP");
-            CH_12.setCellValue("Sales audit");
-            CH_13.setCellValue("Status");
-            CH_14.setCellValue("Days");
+            CH_00.setCellValue("Channel");
+            CH_01.setCellValue("Document");
+            CH_02.setCellValue("Ticket");
+            CH_03.setCellValue("IATA");
+            CH_04.setCellValue("Agency");
+            CH_05.setCellValue("Application date");
+            CH_06.setCellValue("Authorise / Reject date");
+            CH_07.setCellValue("Country");
+            CH_08.setCellValue("Cur.");
+            CH_09.setCellValue("Net");
+            CH_10.setCellValue("Passenger");
+            CH_11.setCellValue("Auditor");
+            CH_12.setCellValue("Reason BSP");
+            CH_13.setCellValue("Sales audit");
+            CH_14.setCellValue("Status");
+            CH_15.setCellValue("Days");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -262,6 +264,7 @@ public class BwrBSPLINKRFNDController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -278,6 +281,7 @@ public class BwrBSPLINKRFNDController extends BaseController {
             CH_12.setCellStyle(headerStyle);
             CH_13.setCellStyle(headerStyle);
             CH_14.setCellStyle(headerStyle);
+            CH_15.setCellStyle(headerStyle);
 
             ++vj;
 
@@ -299,22 +303,70 @@ public class BwrBSPLINKRFNDController extends BaseController {
                 CH_12 = row.createCell(12);
                 CH_13 = row.createCell(13);
                 CH_14 = row.createCell(14);
+                CH_15 = row.createCell(15);
 
-                CH_00.setCellValue(lst.get(vi).A3389NUMER);
-                CH_01.setCellValue(lst.get(vi).A3389TKT);
-                CH_02.setCellValue(lst.get(vi).A3389IATA);
-                CH_03.setCellValue(lst.get(vi).A3389NOMAGENCY);
-                CH_04.setCellValue(lst.get(vi).A3389FAPPI);
-                CH_05.setCellValue(lst.get(vi).A3389FAUTO);
-                CH_06.setCellValue(lst.get(vi).A3389PAIS);
-                CH_07.setCellValue(lst.get(vi).A3389MDA);
-                CH_08.setCellValue(lst.get(vi).A3389TOTAL);
-                CH_09.setCellValue(lst.get(vi).A3389PAX);
-                CH_10.setCellValue(lst.get(vi).A3389REGAS);
-                CH_11.setCellValue(lst.get(vi).A3389RAAG);
-                CH_12.setCellValue(lst.get(vi).A3389STATO);
-                CH_13.setCellValue(lst.get(vi).A3389FLAG);
-                CH_14.setCellValue(lst.get(vi).A3389DIAS);
+                CH_00.setCellValue(lst.get(vi).A3389CHANEL);
+                CH_01.setCellValue(lst.get(vi).A3389NUMER);
+                CH_02.setCellValue(lst.get(vi).A3389TKT);
+                CH_03.setCellValue(lst.get(vi).A3389IATA);
+                CH_04.setCellValue(lst.get(vi).A3389NOMAGENCY);
+                CH_05.setCellValue(lst.get(vi).A3389FAPPI);
+                CH_06.setCellValue(lst.get(vi).A3389FAUTO);
+                CH_07.setCellValue(lst.get(vi).A3389PAIS);
+                CH_08.setCellValue(lst.get(vi).A3389MDA);
+                CH_09.setCellValue(lst.get(vi).A3389TOTAL);
+                CH_10.setCellValue(lst.get(vi).A3389PAX);
+                CH_11.setCellValue(lst.get(vi).A3389REGAS);
+                CH_12.setCellValue(lst.get(vi).A3389RACN);
+                CH_13.setCellValue(lst.get(vi).A3389STATO);
+
+                switch ((lst.get(vi).A3389FLAG).trim()) {
+                    case "A":
+                        vl_A3389FLAG = "ASSIGNED TO AUDITOR";
+                        break;
+                    case "R":
+                        vl_A3389FLAG = "REJECTED";
+                        break;
+                    case "F":
+                        vl_A3389FLAG = "AUTHORISED";
+                        break;
+                    case "Y":
+                        vl_A3389FLAG = "PENDING";
+                        break;
+                    case "X":
+                        vl_A3389FLAG = "VOID";
+                        break;
+                    case "D":
+                        vl_A3389FLAG = "REEMBOLSABLE";
+                        break;
+                    case "J":
+                        vl_A3389FLAG = "EXEC. OF THE ROBOT";
+                        break;
+                    case "G":
+                        vl_A3389FLAG = "NO REEMBOLSABLE";
+                        break;
+                    case "B":
+                        vl_A3389FLAG = "CHANGE FOR ANOTHER";
+                        break;
+                    case "C":
+                        vl_A3389FLAG = "INCONSISTENCY WITH THE ROBOT";
+                        break;
+                    case "":
+                        vl_A3389FLAG = "PENDING DOWNLOAD";
+                        break;
+                    case "E":
+                        vl_A3389FLAG = "ERROR IN THE PROCESS";
+                        break;
+                    case "Z":
+                        vl_A3389FLAG = "UNDER INVESTIGATION";
+                        break;
+                    case "K":
+                        vl_A3389FLAG = "CPN EVALUATION";
+                        break;
+                }
+                CH_14.setCellValue(vl_A3389FLAG);
+                //CH_14.setCellValue(lst.get(vi).A3389FLAG);
+                CH_15.setCellValue(lst.get(vi).A3389DIAS);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -331,6 +383,7 @@ public class BwrBSPLINKRFNDController extends BaseController {
                 CH_12.setCellStyle(bodyStyle);
                 CH_13.setCellStyle(bodyStyle);
                 CH_14.setCellStyle(bodyStyle);
+                CH_15.setCellStyle(bodyStyle);
 
                 iter.next();
                 ++vi;
@@ -340,15 +393,15 @@ public class BwrBSPLINKRFNDController extends BaseController {
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(2, true);
-            //sheet.autoSizeColumn(3, true);
-            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(3, true);
+            //sheet.autoSizeColumn(4, true);
             sheet.autoSizeColumn(5, true);
             sheet.autoSizeColumn(6, true);
             sheet.autoSizeColumn(7, true);
             sheet.autoSizeColumn(8, true);
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
-            sheet.autoSizeColumn(11, true);
+            //sheet.autoSizeColumn(11, true);
             //sheet.autoSizeColumn(12, true);
             //sheet.autoSizeColumn(13, true);
             //sheet.autoSizeColumn(14, true);
@@ -424,7 +477,7 @@ public class BwrBSPLINKRFNDController extends BaseController {
         receptores.add("notificaciones@miatech.net");
         List<String> Ccp = new ArrayList<String>();
         String[] parts = null;
-        String strMails = "ebarraza@aeromexico.com";
+        String strMails = "dngonzalezc@aeromexico.com";
         //strMails = "zperez@miatech.net";
         parts = strMails.split(";");
         for (int i = 0; i < parts.length; i++) {

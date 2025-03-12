@@ -9,12 +9,10 @@ import com.google.gson.JsonParser;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
-import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,6 +23,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.FACSIMILFilter;
@@ -35,15 +34,12 @@ import net.miatech.beans.SaleAudit.A1674Filter;
 import net.miatech.beans.SaleAudit.A1675Filter;
 import net.miatech.beans.SaleAudit.A2537Filter;
 import net.miatech.beans.SaleAudit.SQP00989Filter;
-import net.miatech.beans.SaleAudit.SQP00989Filter_1;
 import net.miatech.libmiatec.A1248;
 import net.miatech.praxis.BSPF104;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
-import net.miatech.praxis.dao.program.ProrrateoNewDAO;
-import net.miatech.praxis.dao.screens.ProrrateoDAO;
+import net.miatech.praxis.dao.widgets.FacsimilDAO;
 import net.miatech.praxis.exceptions.SpringException;
-import net.miatech.praxis.logic.program.ProrrateoNewLogic;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import net.miatech.praxis.logic.salesAudit.SalesAuditAcceptedLogic;
@@ -59,6 +55,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -67,6 +64,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import net.miatech.praxis.utils.PythonWS;
 
 //</editor-fold>
 /**
@@ -82,8 +81,10 @@ public class SalesAuditAcceptedController extends BaseController {
     private SalesAuditAcceptedLogic logic;
     private SQP00989Filter filter;
     private FACSIMILFilter filter2;
-    private ProrrateoDAO prorrateoDAO;
+    private FacsimilDAO facsimilDAO;
     private MasterDAO masterDAO;
+    @Autowired
+    private PythonWS pws;
     //private ProrrateoNewLogic prorrateoNewLogic;
 
     @RequestMapping(value = "obtainDataCombo")
@@ -264,9 +265,10 @@ public class SalesAuditAcceptedController extends BaseController {
         FACSIMILFilter beanFaximil = new FACSIMILFilter();
         BSPF104 filter2 = new BSPF104();
         HashMap<String, String> hmCiudades;
-        masterDAO = new MasterDAO();
-        prorrateoDAO = new ProrrateoDAO();
+        //masterDAO = new MasterDAO();
+        facsimilDAO = new FacsimilDAO();
         INF020 cliente = this.serverSession.getServerSession().getUserView().getCustomerInfo();
+        HashMap<String, String> hmAeropuertos = new MasterDAO(this.serverSession.getServerSession()).loadCiudadesHash();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -280,23 +282,23 @@ public class SalesAuditAcceptedController extends BaseController {
             SQP00989Filter beanADM = logic.searchADMData(filter);
             List<A1672Filter> lstItinerary = logic.lstItinerary(filter);
             //para el devlivery
-            masterDAO.setSession(this.serverSession.getServerSession());
-            hmCiudades = masterDAO.loadCiudadesHash();
+            //masterDAO.setSession(this.serverSession.getServerSession());
+            // hmCiudades = masterDAO.loadCiudadesHash();
             filter2.TDNR = cliente.CCUST + "" + filter.VP_FRMSRIE;
             filter2.COUNTRY = filter.A1672PAIVT;
             filter2.AGTN = filter.A1672AGENT;
             filter2.FUENTE = filter.A1672FUENT;
             filter2.SEQTKT = filter.VP_SEQ;
             filter2.IDFILE = filter.VP_IDFILE;
-            prorrateoDAO.setSession(this.serverSession.getServerSession());
+            facsimilDAO.setSession(this.serverSession.getServerSession());
             if (filter.A1672FUENT.equals("BSP")) {
-                beanFaximil = prorrateoDAO.loadBSPFacsimilProrate(cliente.CCUST, filter2, hmCiudades);
+                beanFaximil = facsimilDAO.loadBSPFacsimilProrate(filter2, hmAeropuertos);
             }
             if (filter.A1672FUENT.equals("ARC")) {
-                beanFaximil = prorrateoDAO.loadARCFacsimilProrate(cliente.CCUST, filter2, hmCiudades);
+                beanFaximil = facsimilDAO.loadARCFacsimilProrate(filter2, hmAeropuertos);
             }
             if (filter.A1672FUENT.equals("ASR")) {
-                beanFaximil = prorrateoDAO.loadASRFacsimilProrate(cliente.CCUST, filter2, hmCiudades);
+                beanFaximil = facsimilDAO.loadASRFacsimilProrate(filter2, hmAeropuertos);
             }
 
             map.put("success", true);
@@ -550,30 +552,36 @@ public class SalesAuditAcceptedController extends BaseController {
         FACSIMILFilter beanFaximil = new FACSIMILFilter();
         BSPF104 filter2 = new BSPF104();
         HashMap<String, String> hmCiudades;
-        masterDAO = new MasterDAO();
-        prorrateoDAO = new ProrrateoDAO();
+        String listaData;
+        //masterDAO = new MasterDAO();
+        facsimilDAO = new FacsimilDAO();
         INF020 cliente = this.serverSession.getServerSession().getUserView().getCustomerInfo();
+        HashMap<String, String> hmAeropuertos = new MasterDAO(this.serverSession.getServerSession()).loadCiudadesHash();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
 
-            SalesAuditAcceptedLogic logic = new SalesAuditAcceptedLogic();
+            logic = new SalesAuditAcceptedLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            listaData = logic.searchIDFILE(filter);
             //para el devlivery
-            masterDAO.setSession(this.serverSession.getServerSession());
-            hmCiudades = masterDAO.loadCiudadesHash();
+            // masterDAO.setSession(this.serverSession.getServerSession());
+            //hmCiudades = masterDAO.loadCiudadesHash();
             filter2.TDNR = filter.VP_FRMSRIE;
             filter2.COUNTRY = filter.A1672PAIVT;
             filter2.AGTN = filter.A1672AGENT;
             filter2.FUENTE = filter.A1672FUENT;
-            prorrateoDAO.setSession(this.serverSession.getServerSession());
+            filter2.IDFILE = listaData;
+            facsimilDAO.setSession(this.serverSession.getServerSession());
+
             if (filter.A1672FUENT.equals("BSP")) {
-                beanFaximil = prorrateoDAO.loadBSPFacsimilProrate(cliente.CCUST, filter2, hmCiudades);
+                beanFaximil = facsimilDAO.loadBSPFacsimilProrate(filter2, hmAeropuertos);
             }
             if (filter.A1672FUENT.equals("ARC")) {
-                beanFaximil = prorrateoDAO.loadARCFacsimilProrate(cliente.CCUST, filter2, hmCiudades);
+                beanFaximil = facsimilDAO.loadARCFacsimilProrate(filter2, hmAeropuertos);
             }
             if (filter.A1672FUENT.equals("ASR")) {
-                beanFaximil = prorrateoDAO.loadASRFacsimilProrate(cliente.CCUST, filter2, hmCiudades);
+                beanFaximil = facsimilDAO.loadASRFacsimilProrate(filter2, hmAeropuertos);
             }
 
             map.put("success", true);
@@ -593,7 +601,9 @@ public class SalesAuditAcceptedController extends BaseController {
     String marcarRev(ModelMap map, @RequestParam("file") MultipartFile file, HttpServletRequest request) {
         SQP00989Filter filter = new SQP00989Filter();
         ArrayList<SQP00989Filter> lstSelectedTkts = new ArrayList<SQP00989Filter>();
-        String result2 = "";
+        //String result2 = "";
+        boolean result2 = false;
+        File archivo1;
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -625,21 +635,23 @@ public class SalesAuditAcceptedController extends BaseController {
                 lstSelectedTkts.add(data);
 
             }
-            String result = logic.insertTracing(filter, lstSelectedTkts, A1672ARCHV);
+            String result =logic.insertTracing(filter, lstSelectedTkts, A1672ARCHV);
             if (result.equals("Operation was successful.")) {
                 result = "The record was saved successfully.";
                 if (!A1672ARCHV.equals("")) {
-                    byte[] bytes = file.getBytes();
+                    // para achivos 1
+                    archivo1 = new File(file.getOriginalFilename());
+                    file.transferTo(archivo1);
+                    //byte[] bytes = file.getBytes();
                     for (SQP00989Filter obj : lstSelectedTkts) {
-                        result2 = upload(bytes, obj.A1672CIA + "" + obj.A1672FORMA + "" + obj.A1672SERIE + "" + obj.A1672SEQ + "" + obj.A1672CUPON + "" + obj.A1672TRNCU, A1672ARCHV);
-                        result2 = upload_s3(obj.A1672CIA + "" + obj.A1672FORMA + "" + obj.A1672SERIE + "" + obj.A1672SEQ + "" + obj.A1672CUPON + "" + obj.A1672TRNCU, A1672ARCHV);
+                        result2 = upload_s3(obj.A1672CIA + "" + obj.A1672FORMA + "" + obj.A1672SERIE + "" + obj.A1672SEQ + "" + obj.A1672CUPON + "" + obj.A1672TRNCU, archivo1, null, null);
+                        if (result2) {
+                            result = "The record was saved successfully.";
+                        } else {
+                            result = "An error ocurred when trying to upload the file.";
+                        }
                     }
                 }
-                /*if (filter.A1672FUENT.equals("ASR")) {
-                    if (filter.A1672CORREO == 2) {
-                        result2 = upload_s3_correo();
-                    }
-                }*/
 
             } else {
                 result = "An error ocurred when trying to upload the file.";
@@ -679,6 +691,7 @@ public class SalesAuditAcceptedController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    /*
     public String upload(byte[] bytes, String TKT, String nomArchivo) throws Exception {
 
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -696,10 +709,7 @@ public class SalesAuditAcceptedController extends BaseController {
             }
             File dir2 = new File(directory, Functions.getFechaActual());
             dir2.mkdir();
-            /* if (!Files.exists(dir)) {
-             Files.createDirectory(dir);
-             }*/
-
+            
             String strArchivo = rutaMemo + "\\" + Functions.getFechaActual() + "\\" + nomArchivo;
             File archivo = new File(strArchivo);
             FileOutputStream fs = new FileOutputStream(archivo);
@@ -716,9 +726,9 @@ public class SalesAuditAcceptedController extends BaseController {
 
         return mensaje;
     }
-
+     */
     public String upload_s3_correo() throws SQLException, Exception {
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_SERVICE_AM").toString();
 
         Unirest.setTimeouts(3600000, 3600000);
         HashMap bodyData = new HashMap<>();
@@ -737,13 +747,27 @@ public class SalesAuditAcceptedController extends BaseController {
 
     }
 
+    public boolean upload_s3(String IN_TICKET, File archiv, File archiv2, File archiv3) throws SQLException, Exception {
+        boolean res;
+        try {
+            String v1_urlREST = "/util/upload-file";
+            String urlREST = "ACCEPTED" + "/" + IN_TICKET + "/" + Functions.getFechaActual();
+            // String urlREST = "DISPUTAS/WEB" + "/" + filter.A2553CNXPA + "/" + Functions.getFechaActual();
+            ///network/amaudit/TKT/1391165403815/20240724
+            res = pws.uploadFilesPython(v1_urlREST, "am", urlREST, archiv, archiv2, archiv3);
+            //("success", true);
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            throw new SpringException(e);
+        }
+
+        return res;
+
+    }
+
+    /*
     public String upload_s3(String TKT, String nomArchivo) throws SQLException, Exception {
         String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
 
-
-        /*
-         Se establece tiempo límite de conexión por 60 min
-         */
         Unirest.setTimeouts(3600000, 3600000);
         HashMap bodyData = new HashMap<>();
         bodyData.put("IN_PATH", "\\\\10.0.0.87\\AMAUDIT\\TKT\\" + TKT + "\\" + Functions.getFechaActual());
@@ -761,7 +785,7 @@ public class SalesAuditAcceptedController extends BaseController {
         return error_msg;
 
     }
-
+     */
     @RequestMapping(value = "Group")
     public @ResponseBody
     String Group(ModelMap map, HttpServletRequest request) {

@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
         'Ext.Praxis.view.salesaudit.ADMReportForm.FormUnicoSeguimieto',
         'Ext.Praxis.view.salesaudit.ADMReportForm.FormUnicoSeguimietoSubiArchivo',
         'Ext.Praxis.view.salesaudit.ADMReportForm.FormformateoCta'
-        
+
     ],
     controller: 'ScrFormUnicoController',
     title: 'Single Format',
@@ -103,7 +103,7 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                                     labelWidth: 70
                                                 }
                                             ]
-                                        },{
+                                        }, {
                                             width: 165,
                                             border: false,
                                             padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
@@ -160,7 +160,7 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                                     icon: 'resources/img/botones/16x16/swap.png',
                                                     tooltip: 'Check Detail',
                                                     listeners: {
-                                                         click: 'onSeguimietoClick'
+                                                        click: 'onSeguimietoClick'
                                                     }
                                                 }
                                             ]
@@ -215,7 +215,7 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                                     icon: 'resources/img/botones/16x16/swap.png',
                                                     tooltip: 'Show Related Documents',
                                                     listeners: {
-                                                            click: 'onRelatedDocumentsClick'
+                                                        click: 'onRelatedDocumentsClick'
                                                     }
                                                 }
                                             ]
@@ -371,34 +371,152 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                     defaults: {
                                         bodyStyle: 'background: transparent'
                                     },
-                                    items: [{
-                                            width: 250,
+                                    items: [
+//                                    {
+//                                            width: 250,
+//                                            border: false,
+//                                            padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
+//                                            items: [{
+//                                                    xtype: 'textfield',
+//                                                    maskRe: /[A-Z,a-z,Ñ,ñ]/,
+//                                                    id: prototype.id1 + '-CTA',
+//                                                    fieldLabel: 'CTA',
+//                                                    readOnly: true,
+//                                                    width: 248,
+//                                                    labelWidth: 50
+//                                                }
+//                                            ]
+//                                        },
+                                        {
+                                            width: 75,
                                             border: false,
                                             padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
                                             items: [{
                                                     xtype: 'textfield',
-                                                    maskRe: /[A-Z,a-z,Ñ,ñ]/,
-                                                    id: prototype.id1 + '-CTA',
+                                                    id: prototype.id1 + '-A2548CIA',
                                                     fieldLabel: 'CTA',
-                                                    readOnly: true,
-                                                    width: 248,
-                                                    labelWidth: 50
+                                                    labelWidth: 30,
+                                                    enforceMaxLength: true,
+                                                    widht:60,
+//                                                    maxLength: 4,
+                                                    readOnly: true
                                                 }
                                             ]
-                                        },{
+                                        },
+                                        {
+                                            width: 50,
+                                            border: false,
+                                            padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
+                                            items: [{
+                                                    xtype: 'textfield',
+                                                    id: prototype.id1 + '-A2548UNID',
+                                                    enforceMaxLength: true,
+                                                    width: 45,
+//                                                    maxLength: 4,
+                                                    readOnly: true
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            width: 50,
+                                            border: false,
+                                            padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
+                                            items: [{
+                                                    xtype: 'textfield',
+                                                    id: prototype.id1 + '-A2548CECO',
+                                                    enforceMaxLength: true,
+                                                    width: 45,
+//                                                    maxLength: 4,
+                                                    readOnly: true
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            width: 50,
+                                            border: false,
+                                            padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
+                                            items: [{
+                                                    xtype: 'textfield',
+                                                    id: prototype.id1 + '-A2548UBICA',
+                                                    enforceMaxLength: true,
+                                                    width: 45,
+//                                                    maxLength: 4,
+                                                    readOnly: true
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            width: 50,
+                                            border: false,
+                                            padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
+                                            items: [{
+                                                    xtype: 'textfield',
+                                                    id: prototype.id1 + '-A2548CUENT',
+                                                    enforceMaxLength: true,
+                                                    width: 45,
+//                                                    maxLength: 4,
+                                                    readOnly: true
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            width: 50,
+                                            border: false,
+                                            padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
+                                            items: [{
+                                                    xtype: 'textfield',
+                                                    id: prototype.id1 + '-A2548SUBCU',
+                                                    enforceMaxLength: true,
+                                                    width: 45,
+//                                                    maxLength: 4,
+                                                    readOnly: true
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            width: 50,
+                                            border: false,
+                                            padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
+                                            items: [{
+                                                    xtype: 'textfield',
+                                                    id: prototype.id1 + '-A2548EQUI',
+                                                    enforceMaxLength: true,
+                                                    width: 45,
+//                                                    maxLength: 4,
+                                                    readOnly: true
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            width: 50,
+                                            border: false,
+                                            padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
+                                            items: [{
+                                                    xtype: 'textfield',
+                                                    id: prototype.id1 + '-A2548ICIA',
+                                                    enforceMaxLength: true,
+                                                    width: 45,
+//                                                    maxLength: 4,
+                                                    readOnly: true
+                                                }
+                                            ]
+                                        },
+                                        {
                                             width: 5,
                                             border: false
                                         }, {
-                                            width: 600,
+//                                            width: 600,
+                                            width: 430,
                                             border: false,
                                             padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
                                             items: [{
                                                     xtype: 'textfield',
                                                     id: prototype.id1 + '-Address',
                                                     fieldLabel: 'Address',
-                                                    width: 595,
+//                                                    width: 595,
+                                                    width: 420,
                                                     readOnly: true,
-                                                    labelWidth: 60
+                                                    labelWidth: 50
                                                 }
                                             ]
                                         }]
@@ -409,18 +527,20 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                     defaults: {
                                         bodyStyle: 'background: transparent'
                                     },
-                                    items: [{
-                                            width: 100,
+                                    items: [
+                                        {
+
+                                            width: 610,
                                             border: false,
-                                            padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
+                                            padding: '2px 5px 0px 0px', bodyStyle: 'background: transparent',
                                             items: [{
-                                                    xtype: 'button',
-                                                    text    : 'provisions',
-                                                    icon: 'resources/img/botones/16x16/swap.png',
-                                                    tooltip: 'Check Detail provisions',
-                                                    listeners: {
-                                                            click: 'onProvisionsClick'
-                                                    }
+                                                    xtype: 'textfield',
+                                                    id: prototype.id1 + '-A2548CLIE',
+                                                    fieldLabel: 'Client',
+                                                    width: 600,
+                                                    labelWidth: 40,
+//                                                    handler:'onLoadData',
+                                                    readOnly: true
                                                 }
                                             ]
                                         },
@@ -430,18 +550,58 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                             padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
                                             items: [{
                                                     xtype: 'button',
-                                                    text    : 'Tasa Iva%',
+                                                    text: 'provisions',
                                                     icon: 'resources/img/botones/16x16/swap.png',
-                                                    tooltip: 'Check Detail Tasa Iva',
+                                                    tooltip: 'Check Detail provisions',
                                                     listeners: {
-                                                            click: 'onTasaIvaClick'
+                                                        click: 'onProvisionsClick'
                                                     }
                                                 }
                                             ]
-                                        },{
+                                        },
+                                        {
+                                            width: 100,
+                                            border: false,
+                                            padding: '2px 0px 0px 0px', bodyStyle: 'background: transparent',
+                                            items: [{
+                                                    xtype: 'button',
+                                                    text: 'Tasa Iva%',
+                                                    icon: 'resources/img/botones/16x16/swap.png',
+                                                    tooltip: 'Check Detail Tasa Iva',
+                                                    listeners: {
+                                                        click: 'onTasaIvaClick'
+                                                    }
+                                                }
+                                            ]
+                                        }, {
                                             width: 50,
                                             border: false
-                                        }, {
+                                        }
+//                                        {
+//                                            width: 605,
+//                                            border: false,
+//                                            padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
+//                                            items: [{
+//                                                    xtype: 'textfield',
+//                                                    id: prototype.id1 + '-PassName',
+//                                                    fieldLabel: 'Pass Name',
+//                                                    readOnly: true,
+//                                                    width: 600,
+//                                                    labelWidth: 65
+//                                                }
+//                                            ]
+//                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    defaults: {
+                                        bodyStyle: 'background: transparent'
+                                    },
+                                    items: [
+                                        {
                                             width: 605,
                                             border: false,
                                             padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
@@ -459,7 +619,7 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                         }, {
                             xtype: 'panel',
                             id: prototype.id1 + '-image',
-                            layout: 'vbox',// width: 605,
+                            layout: 'vbox', // width: 605,
                             collapsible: true,
                             border: false,
                             defaults: {
@@ -470,9 +630,9 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                     layout: 'hbox',
                                     border: false,
                                     defaults: {
-                                       // bodyStyle: 'background: transparent'
+                                        // bodyStyle: 'background: transparent'
                                     },
-                                    items: [{border: false,width: 280,height: 70,
+                                    items: [{border: false, width: 280, height: 70,
                                             html: '<img src=resources/img/botones/16x16/Aeromexico.jpg />'
                                         }]
                                 }, {
@@ -482,20 +642,20 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                     defaults: {
                                         bodyStyle: 'background: transparent'
                                     },
-                                    items: [{border: false, height: 140,width: 48, 
+                                    items: [{border: false, height: 140, width: 48,
                                             html: '<a href="#" onclick="Ext.getCmp(prototype.id1 + \'-win\').getController().PDF_clickHandler(1);"> <img  src="resources/img/botones/24x24/pdf_48.png" /> </a>'
-                                        }, {border: false, width: 48,height: 140, id: prototype.id1 + '-PDFASR', hidden: true,
+                                        }, {border: false, width: 48, height: 140, id: prototype.id1 + '-PDFASR', hidden: true,
                                             html: '<a href="#" onclick="Ext.getCmp(prototype.id1 + \'-win\').getController().PDF_clickHandler(3);">  <img src="resources/img/botones/24x24/pdf_ASR_BSP.png" /> </a>'
-                                        }, {border: false, width: 48,height: 140, id: prototype.id1 + '-PDFRecallCommi', hidden: true,
+                                        }, {border: false, width: 48, height: 140, id: prototype.id1 + '-PDFRecallCommi', hidden: true,
                                             html: '<a href="#" onclick="Ext.getCmp(prototype.id1 + \'-win\').getController().PDF_clickHandler(5);">  <img src="resources/img/botones/24x24/pdf_ASR_BSP.png" /> </a>'
-                                        }, {border: false, width: 48,height: 140, id: prototype.id1 + '-PDFBSP', hidden: true,
+                                        }, {border: false, width: 48, height: 140, id: prototype.id1 + '-PDFBSP', hidden: true,
                                             html: '<a href="#" onclick="Ext.getCmp(prototype.id1 + \'-win\').getController().PDF_clickHandler(4);">  <img src="resources/img/botones/24x24/pdf_ASR_BSP.png" /> </a>'
-                                        }, {border: false, width: 48,height: 140, id: prototype.id1 + '-PDFARC', hidden: true,
+                                        }, {border: false, width: 48, height: 140, id: prototype.id1 + '-PDFARC', hidden: true,
                                             html: '<a href="#" onclick="Ext.getCmp(prototype.id1 + \'-win\').getController().PDF_clickHandler(2);">  <img src="resources/img/botones/24x24/pdf_ASR_BSP.png" /> </a>'
                                         }
                                     ]
                                 }]
-                        },]
+                        }]
                 },
                 {
                     xtype: 'panel',
@@ -525,31 +685,31 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                                 columns: [
                                                     {text: 'Tarifa', dataIndex: 'A1580FMIOR', width: 80, align: 'right',
                                                         cls: 'column_header_double',
-                                                        renderer: function(value, metaData, record, rowIndex) {
+                                                        renderer: function (value, metaData, record, rowIndex) {
                                                             return Ext.util.Format.number(value, '0,000.00');
                                                         }
                                                     },
                                                     {text: 'Q´s', dataIndex: 'A1580QMIOR', width: 80, align: 'right',
                                                         cls: 'column_header_double',
-                                                        renderer: function(value, metaData, record, rowIndex) {
+                                                        renderer: function (value, metaData, record, rowIndex) {
                                                             return Ext.util.Format.number(value, '0,000.00');
                                                         }
                                                     },
                                                     {text: 'Total <br> Fare', dataIndex: 'TotalFare', width: 80, align: 'right',
                                                         cls: 'column_header_double',
-                                                        renderer: function(value, metaData, record, rowIndex) {
+                                                        renderer: function (value, metaData, record, rowIndex) {
                                                             return Ext.util.Format.number(value, '0,000.00');
                                                         }
                                                     },
                                                     {text: 'Charges', dataIndex: 'A1580CHAMI', width: 80, align: 'right',
                                                         cls: 'column_header_double',
-                                                        renderer: function(value, metaData, record, rowIndex) {
+                                                        renderer: function (value, metaData, record, rowIndex) {
                                                             return Ext.util.Format.number(value, '0,000.00');
                                                         }
                                                     },
                                                     {text: 'Total <br>  TKT', dataIndex: 'TotalTKT', width: 80, align: 'right',
                                                         cls: 'column_header_double',
-                                                        renderer: function(value, metaData, record, rowIndex) {
+                                                        renderer: function (value, metaData, record, rowIndex) {
                                                             return Ext.util.Format.number(value, '0,000.00');
                                                         }
                                                     }
@@ -590,7 +750,7 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                             {text: 'Codigo', dataIndex: 'A2553CODE', width: 60, align: 'left'},
                                             {text: 'Family', dataIndex: 'A2553TYPO', width: 90, align: 'left'},
                                             {text: 'Description', dataIndex: 'A2553DESCR', width: 185, align: 'left',
-                                                renderer: function(value, metadata) {
+                                                renderer: function (value, metadata) {
                                                     metadata.tdAttr = 'data-qtip="' + value + '"';
                                                     return value;
                                                 }
@@ -605,7 +765,7 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                     width: 300,
                                     border: false,
                                     padding: '2px 2px 0px 0px', bodyStyle: 'background: transparent',
-                                    id:prototype.id1 + '-CABErrorRazones',
+                                    id: prototype.id1 + '-CABErrorRazones',
                                     height: 50,
                                     hidden: true,
                                     items: [{
@@ -765,12 +925,13 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                             autoScroll: true, width: 950, height: 100,
                                             columns: {
                                                 items: [
-                                                    {text: 'Tax', dataIndex: 'A1673CDTAX', width: 140, align: 'left'},
+                                                    {text: 'Tax', dataIndex: 'A1673CDTAX', width: 60, align: 'left'},
+                                                    {text: 'Ato', dataIndex: 'A1673CDATO', width: 60, align: 'left'},
                                                     {text: 'Calculated Airline',
                                                         columns: [
                                                             {text: 'Amount', dataIndex: 'A1673TXMIA', width: 250, align: 'right',
                                                                 cls: 'column_header_double',
-                                                                renderer: function(value, metaData, record, rowIndex) {
+                                                                renderer: function (value, metaData, record, rowIndex) {
                                                                     return Ext.util.Format.number(value, '0,000.00');
                                                                 }}
                                                         ]
@@ -778,7 +939,7 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                                         columns: [
                                                             {text: 'Amount', dataIndex: 'A1673TXORI', width: 250, align: 'right',
                                                                 cls: 'column_header_double',
-                                                                renderer: function(value, metaData, record, rowIndex) {
+                                                                renderer: function (value, metaData, record, rowIndex) {
                                                                     return Ext.util.Format.number(value, '0,000.00');
                                                                 }}
                                                         ]
@@ -786,7 +947,7 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                                         columns: [
                                                             {text: 'Amount', dataIndex: 'A1673TXDIF', width: 250, align: 'right',
                                                                 cls: 'column_header_double',
-                                                                renderer: function(value, metaData, record, rowIndex) {
+                                                                renderer: function (value, metaData, record, rowIndex) {
                                                                     return Ext.util.Format.number(value, '0,000.00');
                                                                 }}
                                                         ]
@@ -1061,7 +1222,7 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                                                 }
                                             ]
                                         }]
-                                },{
+                                }, {
                                     xtype: 'panel',
                                     layout: 'hbox',
                                     border: false,
@@ -1216,7 +1377,7 @@ Ext.define('Ext.Praxis.view.screens.ScrFormUnico', {
                 }
             ]
         }
-        
+
     ],
     dockedItems: [
         {

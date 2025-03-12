@@ -11,11 +11,11 @@ import java.util.List;
 import net.miatech.beans.A1691Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.DataRequestedByBankDAO;
-import net.miatech.praxis.payment.ExcelChargeBack;
-import net.miatech.praxis.payment.filter.A2280Filter;
-import net.miatech.praxis.payment.filter.A2290Filter;
-import net.miatech.praxis.payment.filter.A2331Filter;
-import net.miatech.praxis.payment.filter.A2345Filter;
+import net.miatech.praxis.payment.old.ExcelChargeBack;
+import net.miatech.praxis.payment.old.A2280Filter;
+import net.miatech.praxis.payment.old.A2290Filter;
+import net.miatech.praxis.payment.old.A2331Filter;
+import net.miatech.praxis.payment.old.A2345Filter;
 
 public class DataRequestedByBankLogic {
 
@@ -107,6 +107,10 @@ public class DataRequestedByBankLogic {
     
     public List<ExcelChargeBack> loadPX404SQP03580(A2331Filter filter,String TRFND) throws SQLException, Exception {
         return DataRequestedByBankDAO.loadPX404SQP03580(filter,TRFND);
+    }
+    
+    public List<A2331Filter> loadPX404SQP02680(A2331Filter filter) throws SQLException, Exception {
+        return DataRequestedByBankDAO.loadPX404SQP02680(filter);
     }
     
 }

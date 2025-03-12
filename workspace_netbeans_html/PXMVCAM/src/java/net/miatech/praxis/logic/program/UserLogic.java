@@ -55,4 +55,19 @@ public class UserLogic {
         userDAO.SQP02491(usuario);
     }
     
+    public void SQP03266(String usuario, String expiredDate) throws SQLException, Exception {
+        userDAO.SQP03266(usuario,expiredDate);
+    }
+    
+    public void SQP03218(String usuario, String pass) throws SQLException, Exception {
+        userDAO.SQP03218(usuario, pass);
+    }
+    
+    public void SQP03219(String usuario, String clave, String desc) throws SQLException, Exception {
+        userDAO.SQP03219(usuario, clave, desc);
+    }
+    
+    public boolean SQP03268(String usuario) throws SQLException, Exception {
+        return userDAO.SQP03268(usuario);
+    }
 }
