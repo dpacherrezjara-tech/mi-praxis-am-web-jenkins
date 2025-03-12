@@ -111,6 +111,10 @@ public class CatalogoContratosPreDAO {
                 objRtn.A4241UIDAN  = rs01.getString("A4241UIDAN");
                 objRtn.A4241UIDBF  = rs01.getString("A4241UIDBF");
                 objRtn.A4241STATB  = rs01.getString("A4241STATB");
+                
+                objRtn.A4241STA1  = rs01.getString("A4241STA1");
+                objRtn.A4241STA2  = rs01.getString("A4241STA2");
+                
                 objRtn.A4241STDE  = rs01.getString("A4241STDE");
                 objRtn.A4241RMSG  = rs01.getString("A4241RMSG");
                 

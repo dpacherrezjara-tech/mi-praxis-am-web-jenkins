@@ -16,7 +16,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
     },
     afterRender: function () {
         Ext.getCmp(prototype.id + '-txtPARAM1').focus();
-        this.Onsearch();                
+        //this.Onsearch();                
         //create STORE for Data Entry UATP grid
         /*
          Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataUatp',{});
