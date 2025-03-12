@@ -458,11 +458,11 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.AgentsMasterFileControl
             },
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
-                var int_result = res.int_result;
-                if(int_result>100000)
+                //var int_result = res.int_result;
+                if(Ext.getCmp(prototype.id + '-cmbSearchBy').getValue()==='')
                 {
                      global.Msg({
-                            msg: 'Report cannot be exported, please contact system administrator.'
+                            msg: 'You must select a search option.'
                         });
                 }
                 else
