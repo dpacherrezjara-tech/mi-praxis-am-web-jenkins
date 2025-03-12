@@ -300,6 +300,9 @@ Ext.define('Ext.Praxis.controller.sales.CalendarControlARC.CalendarControlARCCon
         if (this._path.length > 0)
             global.getFile(this._path);
     },
+    onChangeVersion: function(){
+        this.btnSearch_click(null,null);
+    },
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function(id) {
         return Ext.getCmp(prototype.id + '-' + id).getValue();
