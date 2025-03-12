@@ -162,7 +162,6 @@ public class ADMReportDAO {
                     objRtn.A2548NETO = rs01.getDouble("A2548NETO");
                 } else {
                     objRtn.A2548CCUST = rs01.getString("A2548CCUST");
-                    objRtn.A2548STBSP = rs01.getString("A2548STBSP");
                     objRtn.A2548PREME = rs01.getString("A2548PREME");
                     objRtn.A2548FFILE = rs01.getString("A2548FFILE");
                     objRtn.A2548NFACT = rs01.getString("A2548NFACT");

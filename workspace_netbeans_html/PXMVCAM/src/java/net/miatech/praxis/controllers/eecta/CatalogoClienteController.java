@@ -393,7 +393,6 @@ public class CatalogoClienteController extends BaseController {
         filter.page.START = 0;
         filter.page.LIMIT = 0;
         try {
-            filter.VP_A3953TCLIN = request.getParameter("VP_A3953TCLIN");
             filter.VP_A3965CDCLI = request.getParameter("VP_A3965CDCLI");
             filter.VP_A3965PERIO = request.getParameter("VP_A3965PERIO");
             filter.VP_A3965FEJEC = request.getParameter("VP_A3965FEJEC");            

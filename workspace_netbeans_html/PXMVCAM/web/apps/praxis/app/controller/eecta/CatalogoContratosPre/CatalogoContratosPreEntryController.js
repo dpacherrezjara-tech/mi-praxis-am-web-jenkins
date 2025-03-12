@@ -48,14 +48,14 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         //Ext.getCmp(prototype.id + '-btn-upload').setDisabled(bflag);
     },
     set_calcular_beneficio: function () {
-        var A4241TOTBF = 0;
-        var A4241TOT = 0;
+
         var A4241TOTAN = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOTAN').getValue().replace(",", "").replace(",", ""));
         var A4241PORBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241PORBF').getValue().replace(",", "").replace(",", ""));
-        if (Ext.Number.parseFloat(A4241PORBF) > 0)
-            A4241TOTBF = Ext.Number.parseFloat(A4241TOTAN * A4241PORBF) / 100;
-        
-        A4241TOT = Ext.Number.parseFloat(A4241TOTAN + A4241TOTBF);
+        if (Ext.Number.parseFloat(A4241PORBF) === 0)
+            return;
+
+        var A4241TOTBF = Ext.Number.parseFloat(A4241TOTAN * A4241PORBF) / 100;
+        var A4241TOT = Ext.Number.parseFloat(A4241TOTAN + A4241TOTBF);
         Ext.getCmp(prototype.id + '-A4241TOTBF').setValue(Ext.util.Format.number(A4241TOTBF, '0,000.00'));
         Ext.getCmp(prototype.id + '-A4241TOT').setValue(Ext.util.Format.number(A4241TOT, '0,000.00'));
     },
@@ -106,11 +106,10 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         //datos de facturacion
         Ext.getCmp(prototype.id + '-A4241UIDAN').setValue(data.A4241UIDAN); 
         Ext.getCmp(prototype.id + '-A4241UIDBF').setValue(data.A4241UIDBF); 
-//        if (data.A4241STATB === '1' ){
-//            Ext.getCmp(prototype.id + '-btn-facturar').setDisabled(true);
-//        }      
+        if (data.A4241STATB === '1' ){
+            Ext.getCmp(prototype.id + '-btn-facturar').setDisabled(true);
+        }      
         this.search_uatp();
-        this.searchAttachFile();
 
     },
     getDataEntryValues: function (strOption) {
@@ -331,85 +330,6 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             }
         });
     },
-    onInvoiceNCBeneficio: function () {
-        var me = this;
-        var VL_A4241IDANT = Ext.getCmp(prototype.id + '-A4241IDANT').getValue();
-        var VL_FDESDE = '';
-        var VP_FHASTA = '';
-        var VP_CDCLI = '';
-
-        Ext.Ajax.request({
-            url: this.url + '/setInvoiceNCBeneficio',
-            method: 'POST',
-            timeout: 60000000,
-            params: {
-                beanString: JSON.stringify({
-                    VP_IDANT: VL_A4241IDANT,
-                    VP_FDESDE: VL_FDESDE,
-                    VP_FHASTA: VP_FHASTA,
-                    VP_CDCLI: VP_CDCLI
-                })
-            },
-            beforerequest: Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').mask('Loading...', ''),
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                var objRtn = res.objRtn;
-                Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').unmask('Loading...', '');
-                global.Msg({
-                    msg: objRtn.dbException.MESSAGE,
-                    icon: objRtn.dbException.SQLCODE,
-                    fn: function () {
-                        //culmino PROCESO
-                        console.log(objRtn.dbException);
-                        if (objRtn.dbException.SQLCODE === '0')
-                            return;
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                        Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').close();
-                    }
-                });
-            }
-        });
-    },
-    
-    onInvoiceNCTicket: function () {        
-        var VL_A4241IDANT = Ext.getCmp(prototype.id + '-A4241IDANT').getValue();
-        var VL_FDESDE = '';
-        var VP_FHASTA = '';
-        var VP_CDCLI = '';
-
-        Ext.Ajax.request({
-            url: this.url + '/setInvoiceNCTicket',
-            method: 'POST',
-            timeout: 60000000,
-            params: {
-                beanString: JSON.stringify({
-                    VP_IDANT: VL_A4241IDANT,
-                    VP_FDESDE: VL_FDESDE,
-                    VP_FHASTA: VP_FHASTA,
-                    VP_CDCLI: VP_CDCLI
-                })
-            },
-            beforerequest: Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').mask('Loading...', ''),
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                var objRtn = res.objRtn;
-                Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').unmask('Loading...', '');
-                global.Msg({
-                    msg: objRtn.dbException.MESSAGE,
-                    icon: objRtn.dbException.SQLCODE,
-                    fn: function () {
-                        //culmino PROCESO
-                        console.log(objRtn.dbException);
-                        if (objRtn.dbException.SQLCODE === '0')
-                            return;
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                        Ext.getCmp(prototype.id + '-CatalogoContratosPreEntry').close();
-                    }
-                });
-            }
-        });
-    },
-    
     onUpdateClick: function (btn) {
         var p = this.view.params;
         var strOption = p.action;
@@ -462,16 +382,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
         console.log(VL_A4241IDANT);
         if ( parseInt(VL_A4241IDANT) === 0) {
             global.Msg({
-                msg: 'No se puede facturar'
-            });
-            return;
-        }
-        var p = this.view.params;
-        var data = p.rec.data;
-        //console.log(data);        
-        if ( data.A4241STATB === '1') {
-            global.Msg({
-                msg: 'El anticipo ya esta facturado'
+                msg: 'Id Contrato no valido'
             });
             return;
         }
@@ -485,77 +396,6 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             fn: function (btn) {
                 if (btn === 'yes') {
                     this.onInvoice();
-                }
-            }
-        });
-    },
-    
-    onFacturarNCBeneficioClick: function () {
-
-        var VL_A4241IDANT = Ext.getCmp(prototype.id + '-A4241IDANT').getValue();
-        var VL_A4421TOTBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4241TOTBF').getValue().replace(",", "").replace(",", ""));
-        
-        if ( parseInt(VL_A4241IDANT) === 0) {
-            global.Msg({
-                msg: 'No se puede facturar'
-            });
-            return;
-        }
-         if ( parseInt(VL_A4421TOTBF) === 0) {
-            global.Msg({
-                msg: 'No se puede facturar no hay importe de beneficio'
-            });
-            return;
-        }
-        
-        if ( Ext.getCmp(prototype.id + '-A4241UIDBF').getValue().trim() !== '') {
-            global.Msg({
-                msg: 'El beneficio ya esta facturado'
-            });
-            return;
-        }
-        Ext.Msg.show({
-            title: '.:PRAXIS:.',
-            msg: 'Are you sure to send to invoice NC?',
-            scope: this,
-            buttons: Ext.MessageBox.YESNO,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: function (btn) {
-                if (btn === 'yes') {
-                    this.onInvoiceNCBeneficio();
-                }
-            }
-        });
-    },
-    onFacturarNCTicketClick: function () {
-
-        var VL_A4241IDANT = Ext.getCmp(prototype.id + '-A4241IDANT').getValue();
-        
-        if ( parseInt(VL_A4241IDANT) === 0) {
-            global.Msg({
-                msg: 'No se puede facturar'
-            });
-            return;
-        }
-//        console.log(Ext.getCmp(prototype.id + '-A4242SALBF').getValue());
-        var VL_A4242SALBF = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-A4242SALBF').getValue().replace(",", "").replace(",", ""));
-        if ( VL_A4242SALBF !== 0 ) {
-            global.Msg({
-                msg: 'No puede facturar, saldo de anticipo debe ser cero(0)'
-            });
-            return;
-        }
-        Ext.Msg.show({
-            title: '.:PRAXIS:.',
-            msg: 'Are you sure to send to invoice NC TKT?',
-            scope: this,
-            buttons: Ext.MessageBox.YESNO,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: function (btn) {
-                if (btn === 'yes') {
-                    this.onInvoiceNCTicket();
                 }
             }
         });
@@ -590,13 +430,10 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             Ext.getCmp(prototype.id + '-A4241MDA').focus();
             return mensaje;
         }
-        
-        // No validar, puede haber contratos sin BENEFICIO
         if (parseFloat(params.A4241PORBF) === 0 || params.A4241PORBF === null) {
-//            mensaje = 'INGRESAR % BENEFICIO';
-//            Ext.getCmp(prototype.id + '-A4241PORBF').focus();
-//            return mensaje;
-            params.A4241PORBF = 0;
+            mensaje = 'INGRESAR % BENEFICIO';
+            Ext.getCmp(prototype.id + '-A4241PORBF').focus();
+            return mensaje;
         }
         var Count = Ext.getCmp(prototype.id + '-gridData-uatp').getStore().getCount();
         if (Count === 0) {
@@ -780,147 +617,11 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoContratosPre.CatalogoContratosPr
             }
         });
     },
-    /*
-     * Upload file contrato 
-     */
-    onbtn_uploadClick: function () {
-        Ext.Msg.show({
-            title: '.:PRAXIS:.',
-            msg: '¿Cargar archivo seleccionado?',
-            buttons: Ext.MessageBox.YESNO,
-            scope: this,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: function (btn) {
-                if (btn === 'yes') {
-                    Ext.getCmp(prototype.id + '-btn-upload').disable(true);
-                    this.setuploadContrato();
-                }
-            }
-        });
-    },
-    setuploadContrato: function () {
-        var me = this;
-        var file = Ext.getCmp(prototype.id + '-file').getValue();
-        //console.log('file>' + file);
-        if (file === '') {
-            Ext.MessageBox.alert('PRAXIS', "Seleccionar archivo", function (btn, text) {
-                if (btn === 'ok' || btn === 'cancel')
-                    setTimeout("Ext.getCmp(prototype.id + '-file').focus();", 100);
-            });
-            return;
-        }
-        var VL_OPCION = 'I';
-//        if (Ext.getCmp(prototype.id + '-A3953LOGO').getValue().trim())
-//            VP_ACTION = 'U';
-
-        var lparams = {
-            VP_ACTION: VL_OPCION,
-            VP_A4549CDCLI: Ext.getCmp(prototype.id + '-A4241CDCLI').getValue(),
-            VP_A4549IDANT: Ext.getCmp(prototype.id + '-A4241IDANT').getValue(),
-            VP_A4549ITEM: 0,
-            VP_A4549COMEN: '',
-            VP_A4549NCONT: '',
-            VP_A4549PATHF: ''
-        };
-        var form = Ext.getCmp(prototype.id + '-form01').getForm();
-        form.submit({
-            url: prototype.url + '/uploadContrato',
-            waitMsg: 'Uploading your sure to upload the file...',
-            params: {beanString: JSON.stringify(lparams)},
-            success: function (fp, o) {
-                var res = Ext.decode(o.response.responseText);
-                var objRtn = res.objRtn;
-                Ext.getCmp(prototype.id + '-btn-upload').enable(true);
-                global.Msg({
-                    msg: objRtn.dbException.MESSAGE,
-                    icon: 1,
-                    fn: function () {
-//                      Ext.getCmp(prototype.id + '-A3953LOGO_chk').setValue(true);
-                        me.searchAttachFile();
-                    }
-                });
-            },
-            failure: function (response, opts) {
-                console.log('server-side failure with status code ' + response.status);
-            }
-        });
-    },    
-    searchAttachFile: function () {
-        var bean = {};
-        bean.VP_IDANT = Ext.getCmp(prototype.id + '-A4241IDANT').getValue();
-        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataUatp', {
-            proxy: {
-                url: prototype.url + '/searchAttachFile'
-            },
-            listeners: {
-                beforeload: function (obj) {
-                    obj.proxy.extraParams = bean;
-                },
-                load: function (obj, obj2, success, obj4, obj5) {
-                    //win.lblUser_toolTip("Estructura: A3009");
-                    // <editor-fold defaultstate="collapsed" desc="paggin">
-//                    var pag = Ext.getCmp(prototype.id + '-paggin');
-//                    var pagData = pag.getPageData();
-//                    var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
-//                    var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
-//                    var total = Ext.util.Format.number(pagData.total, '0,000');
-//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
-//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
-//                    Ext.getCmp(prototype.id + '-lbl-total').setText(total);
-                    // </editor-fold>
-//                    if (obj.data.length === 0) {
-//                        global.Msg({
-//                            msg: 'Data not found'
-//                        });
-//                    }
-                    global.clear();
-                }
-            }
-        });         
-        var panel = Ext.getCmp(prototype.id + '-contenedor-grid-doc-adjuntos');
-        panel.removeAll();
-        var gridPanel = Ext.create({
-            region: 'center',
-            xtype: prototype.id + '-info-adjuntos',
-            id: prototype.id + '-content-info-adjuntos'
-        });
-        panel.add(gridPanel);
-        Ext.getCmp(prototype.id + '-gridData-adjuntos').setStore(storeGridDatas);
-    },
-    btnPdf_click: function( obj, metaData, rowNum, columnNum, obj2, rowData ) {
-        var params ={
-            'PATHF': rowData.data.A4549PATHF.trim(),
-            'fileName':rowData.data.A4549NCONT.trim()
-        };  
-        Ext.Msg.show({
-            title: '.:PRAXIS:.',
-            msg: 'Download Pdf ?',
-            buttons: Ext.MessageBox.OKCANCEL,
-            scope: this,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: function(btn) {
-                if (btn === 'ok') {
-                    this.exportPdf(params);
-                }
-            }
-        });
-    },
-    exportPdf: function(params) {
-              
-        var bean = {};
-        bean.path = params.PATHF;
-        bean.fileName = params.fileName;                
-        bean.beanString = JSON.stringify(bean);
-        global.getFile(prototype.url + '/donwloadFile?beanString=' +encodeURI(bean.beanString));                
-        
-    },
     OnEventbuscarCliente: function (obj, e, eOpts) {
         if (e.getKey() === e.ENTER) {
             this.onBuscarCliente();
         }
-    },    
+    },
     PadLeft: function (number, width) {
         width -= number.toString().length;
         if (width > 0) {

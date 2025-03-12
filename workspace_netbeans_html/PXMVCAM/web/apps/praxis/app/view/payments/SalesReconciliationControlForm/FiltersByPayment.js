@@ -83,8 +83,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                         fields: ['code', 'name'],
                                         data: [
                                             ['PRDA', 'Processing Date'],
-                                            ['PAYDATE', 'Payment Date'],
-                                            ['FEUP', 'Update Date']
+                                            ['PAYDATE', 'Payment Date']
                                         ]
                                     }),
                                     labelWidth: 50,
@@ -346,8 +345,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                         fields: ['code', 'name'],
                                         data: [
                                             ['PRDA', 'Processing Date'],
-                                            ['PAYDATE', 'Payment Date'],
-                                            ['FEUP', 'Update Date']
+                                            ['PAYDATE', 'Payment Date']
                                         ]
                                     }),
                                     labelWidth: 50,

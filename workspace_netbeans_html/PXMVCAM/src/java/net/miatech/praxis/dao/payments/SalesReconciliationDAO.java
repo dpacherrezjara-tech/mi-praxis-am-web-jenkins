@@ -193,7 +193,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 + "FUENTE,FVOID,CARDTYPE,SAGENT,SCARDCOD,SCURRENCY,SCOUNTRY,SDATE,SPNR,GRUPO,CODEPR,CANAL,"
                 + "CIAP,FORMAP,SERIEP,RUTA0,RUTA1,RUTA2,RUTA3,RUTA4,FVLO1,FVLO2,FVLO3,FVLO4,"
                 + "TOTCUP,CPUI,PAX,FLAG,STDOC,TCORR,"
-                + "NBRLIQUID,CODCHGBACK,CHGBNUM,TGROSAMOUN,TDOCO) "
+                + "NBRLIQUID,CODCHGBACK,CHGBNUM,TGROSAMOUN) "
                 + "VALUES"
                 + "(:CCUST,:AREFNBR,:CCIA,:FORMA,:SERIE,:SEQ,:CORRL,:TDOC,:PRDA,:SVFOPS,:SCARDN,:SAUTHOC,"
                 + ":TRNCU,:STVAL,:PMERCHID,:SMERCHID,:PAYDATE,:PROCTYPE,:PROCTYPESQ,"
@@ -201,7 +201,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
                 + ":FUENTE,:FVOID,:CARDTYPE,:SAGENT,:SCARDCOD,:SCURRENCY,:SCOUNTRY,:SDATE,:SPNR,:GRUPO,:CODEPR,:CANAL,"
                 + ":CIAP,:FORMAP,:SERIEP,:RUTA0,:RUTA1,:RUTA2,:RUTA3,:RUTA4,:FVLO1,:FVLO2,:FVLO3,:FVLO4,"
                 + ":TOTCUP,:CPUI,:PAX,:FLAG,:STDOC,:TCORR,"
-                + ":NBRLIQUID,:CODCHGBACK,:CHGBNUM,:TGROSAMOUN,:TDOCO)";
+                + ":NBRLIQUID,:CODCHGBACK,:CHGBNUM,:TGROSAMOUN)";
 
 //</editor-fold>
         BeanPropertySqlParameterSource[] insertParams = new BeanPropertySqlParameterSource[filter.getDetail().size()];

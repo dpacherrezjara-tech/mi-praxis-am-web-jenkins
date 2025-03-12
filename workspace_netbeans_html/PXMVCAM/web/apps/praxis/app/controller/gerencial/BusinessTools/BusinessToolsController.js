@@ -15,10 +15,10 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
     searchParams: {},
     paramsDetail: {},
     gridProviderDynamic: [],
-    listaCampos: [],
+    listaCampos : [],
     info_perm: [],
     resObtainDataFavoritos: [],
-    init: function (view) {
+    init: function(view) {
         prototype.id = 'BusinessToolsForm';
         prototype.url = CONTEXTPATH + '/BusinessTools';
         me = this;
@@ -72,13 +72,15 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             },
             '#BusinessToolsForm-imgBuild': {
                 click: this.onClickImgBuild
-            },
-//            '#BusinessToolsForm-chkAll': {
-//                change: this.selectAll
-//            }
+            }
+
+
+
+
+
         });
     },
-    xpanel_afterrender: function (obj, e) {
+    xpanel_afterrender: function(obj, e) {
 
         console.log("Inicio Controller");
         this.setStoreData();
@@ -86,41 +88,41 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         // this.btnSearch_click();
         this.validateProgram('PX00000282');
     },
-    showGridActual: function () {
+    showGridActual: function() {
         this.hideAllGrid();
 //        Ext.getCmp(prototype.id + this.gridActual).show();
     },
-    hideAllGrid: function () {
+    hideAllGrid: function() {
 //        Ext.getCmp(prototype.id + '-gridData').hide();
     },
-    onClickImgBuild: function () {
-
+    onClickImgBuild: function() {
+        
         var vPag = Ext.getCmp(prototype.id + '-panelLabelPagination');
         var vPanel = Ext.getCmp(prototype.id + '-panelSelectField');
-
+        
         var vgridData = Ext.getCmp(prototype.id + '-gridDanamic');
         var vpanelResult = Ext.getCmp(prototype.id + '-panelResult');
         var vpanelPag = Ext.getCmp(prototype.id + '-piePanel');
-
-        if (vPanel.isVisible()) {
+        
+        if(vPanel.isVisible()){ 
             vgridData.setWidth(1200);
             vPag.setWidth(1200);
             vpanelResult.setWidth(1200);
             vPanel.setVisible(false);
-        } else {
+        }else{
             vgridData.setWidth(600);
             vPag.setWidth(600);
             vpanelResult.setWidth(600);
             vPanel.setVisible(true);
         }
         /*Ext.getCmp(prototype.id + '-campo' + (i + 1)).hide();
-         Ext.getCmp(prototype.id + '-panelLabelPagination').show();*/
-
+        Ext.getCmp(prototype.id + '-panelLabelPagination').show();*/
+        
     },
-    onClickImgInfo: function () {
+    onClickImgInfo: function() {
 
         var tabla = Ext.getCmp(prototype.id + '-cmbTabla').getValue();
-        var tabla2 = Ext.getCmp(prototype.id + '-cmbTabla2').getValue();
+         var tabla2 = Ext.getCmp(prototype.id + '-cmbTabla2').getValue();
         Ext.create('Ext.Praxis.view.gerencial.BusinessToolsForm.DataEntryHelp', {
             id: prototype.id + '-dataEntryHelp',
             params: {
@@ -129,7 +131,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             }
         }).show();
     },
-    onClickImgSave: function () {
+    onClickImgSave: function() {
 
         var tabla = Ext.getCmp(prototype.id + '-cmbTabla').getValue();
         Ext.create('Ext.Praxis.view.gerencial.BusinessToolsForm.DataEntrySaveQuery', {
@@ -140,40 +142,41 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             }
         }).show();
     },
-    onChangeCmbTabla: function (args, obj, newValue, oldValue, event) {
-        console.log('1-' + obj + ' =====' + args + '······newValue=' + newValue + '?????oldValue=' + oldValue + 'FIN' + event + '<----');
+    onChangeCmbTabla: function(args, obj ,newValue , oldValue , event ) {
+        console.log('1-' +obj + ' =====' + args + '······newValue=' + newValue + '?????oldValue=' + oldValue + 'FIN' + event + '<----');
         //console.log(value);
         if (newValue !== '' && newValue !== '#') {
             win.lblUser_toolTip("Estructura: " + Ext.getCmp(prototype.id + '-cmbTabla').getValue());
             this.changeFile(args, 0);
         }
     },
-    changeFile: function (tipo, dato) {
+    changeFile: function(tipo, dato) {
         console.log('changeFile');
         var tabla = Ext.getCmp(prototype.id + '-cmbTabla').getValue();
         var tabla2 = Ext.getCmp(prototype.id + '-cmbTabla2').getValue();
-
+        
         win.lblUser_toolTip("Estructura: " + tabla);
         if (tabla !== '') {
             if (tipo === 'Secundario') {
                 this.obtainData(tabla, tabla2, dato);
-            } else {
+            }
+            else {
                 this.obtainData(tabla, '', dato);
             }
         }
-
+        
         //Panel para la funcion de valoracion
-        if (tabla === 'A1692') {
-            if (me.validateAccess('M')) {
+        if(tabla ==='A1692'){
+            if(me.validateAccess('M')) {
                 Ext.getCmp(prototype.id + '-boxFunctions').show();
             }
-        } else {
+        }else{
             Ext.getCmp(prototype.id + '-boxFunctions').hide();
         }
-
-
+        
+        
     },
-    obtainData: function (tabla, tabla2, dato) {
+    obtainData: function(tabla, tabla2, dato) {
         Ext.Ajax.request({
             url: prototype.url + '/obtainData',
             params: {
@@ -182,7 +185,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             },
             method: 'POST',
             beforerequest: Ext.getCmp(prototype.id + '-gridDataColumns').mask('Loading...'),
-            success: function (response, options) {
+            success: function(response, options) {
                 Ext.getCmp(prototype.id + '-gridDataColumns').unmask('Loading...');
 
                 var res = Ext.JSON.decode(response.responseText);
@@ -202,7 +205,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 //                var listaCampos = [];
                 me.listaCampos = [];
                 var listaCamposGrid = [];
-                me.listaCampos.push({code: "", name: "All", tabla: "", size: "", tipo: "", fieldSys: "", userfield: "", label: ""});
+                me.listaCampos.push({code: "", name: "All", tabla: "", size: "", tipo: "", fieldSys: "", userfield: "",label:""});
 
                 for (var i = 0; i < resCampos.length; i++) {
                     var datos = {};
@@ -223,7 +226,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                         size: resCampos[i].LENGHTF,
                         tipo: resCampos[i].DATATYPE,
                         fieldSys: resCampos[i].SYSTFIELD,
-                        userfield: resCampos[i].USERFIELD,
+                        userfield: resCampos[i].USERFIELD, 
                         label: resCampos[i].USERFIELD + ' - ' + resCampos[i].DESCRIPT
                     };
                     me.listaCampos.push(datosCampos);
@@ -257,11 +260,11 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                     autoLoad: true
                 });
                 Ext.getCmp(prototype.id + '-cmbTipoFecha').bindStore(storeData);//
-
-
+                
+                
                 for (var i = 1; i < 8; i++) {
-                    Ext.getCmp(prototype.id + '-cmbCampo' + i).bindStore(storeDataCombo);
-                    Ext.getCmp(prototype.id + '-cmbCampo' + i).setValue('');
+                    Ext.getCmp(prototype.id + '-cmbCampo'+i).bindStore(storeDataCombo);
+                    Ext.getCmp(prototype.id + '-cmbCampo'+i).setValue('');
                 }
 
 
@@ -300,13 +303,13 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 
                 if (resFiles !== undefined) {
                     var listaFile = [];
-                    listaFile.push({TABNAME: '', DESCRIPT: 'Select', SOURCEF: '', cli: '', USERFIELD: '', SYSTFIELD: '', strModul: ''});
+                    listaFile.push({TABNAME: '', DESCRIPT: 'Select',  SOURCEF: '',cli: '',USERFIELD: '',SYSTFIELD: '',strModul: ''});
                     var i = 0;
                     var mod = '';
                     for (var i = 0; i < resFiles.length; i++) {
                         if (i === 0 || mod !== resFiles[i].strModul) {
                             mod = resFiles[i].strModul;
-                            listaFile.push({TABNAME: '#', DESCRIPT: resFiles[i].strModul, SOURCEF: '', cli: '', USERFIELD: '', SYSTFIELD: '', strModul: ''});
+                            listaFile.push({TABNAME: '#', DESCRIPT: resFiles[i].strModul,  SOURCEF: '',cli: '',USERFIELD: '',SYSTFIELD: '',strModul: ''});
                         }
                         var datos = {};
                         datos = {
@@ -337,16 +340,16 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                     autoLoad: true
                 });
                 Ext.getCmp(prototype.id + '-gridDataColumns').bindStore(storeData);
-
-                if (dato === 1) {
+                
+                if(dato===1){
                     me.armarData(me.resObtainDataFavoritos);
                 }
-
+                
             }});
-
+        
         console.log(me.listaCampos);
     },
-    setStoreData: function () {
+    setStoreData: function() {
         var storeComboDataYear = win.getStoreYear(false);
         var storeComboDataMonth = win.getStoreMonth(true);
         var storeComboDataDay = win.getStoreDays(true);
@@ -356,16 +359,16 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
         Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
         Ext.getCmp(prototype.id + '-cmbDateYear').setValue(this.fecha.getFullYear());
-
-        var month = this.fecha.getMonth() + 1;
-        if (month < 10) {
+        
+        var month=this.fecha.getMonth()+1;
+        if(month <10){
             month = '0' + month;
         }
-
+        
         Ext.getCmp(prototype.id + '-cmbDateMonth').setValue(month);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
-
+        
         var cmbTabla = Ext.getCmp(prototype.id + '-cmbTabla');
         cmbTabla.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -385,8 +388,8 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 
             ]}));
         cmbFav.setValue('');
-
-
+        
+        
         for (var i = 2; i < 8; i++) {
             var cmbConector = Ext.getCmp(prototype.id + '-cmbConector' + i);
             cmbConector.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -398,7 +401,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                 ]}));
             cmbConector.setValue('AND');
         }
-
+        
         var cmbFunctions = Ext.getCmp(prototype.id + '-cmbFunctions');
         cmbFunctions.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -417,20 +420,20 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             params: {
                 tabla: ''
             },
-            success: function (response, options) {
+            success: function(response, options) {
                 Ext.getBody().unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 var data = res.data;
                 var lstOperadores = res.lstOperadores;
                 var newData = [];
-                newData.push({TABNAME: '', DESCRIPT: 'Select', SOURCEF: '', cli: '', USERFIELD: '', SYSTFIELD: '', strModul: ''});
+                newData.push({TABNAME: '', DESCRIPT: 'Select',  SOURCEF: '',cli: '',USERFIELD: '',SYSTFIELD: '',strModul: ''});
                 var dataOP = [];
                 dataOP.push({data: "", label: "All", help: ""});
                 var mod = '';
                 for (var i = 0; i < data.length; i++) {
                     if (i === 0 || mod !== data[i].strModul) {
                         mod = data[i].strModul;
-                        var item = {TABNAME: '#', DESCRIPT: data[i].strModul, SOURCEF: '', cli: '', USERFIELD: '', SYSTFIELD: '', strModul: ''};
+                        var item = { TABNAME: '#', DESCRIPT: data[i].strModul,  SOURCEF: '',cli: '',USERFIELD: '',SYSTFIELD: '',strModul: ''};
                         newData.push(item);
                     }
                     var item = {
@@ -453,14 +456,14 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                     };
                     dataOP.push(itemOP);
                 }
-
+                
                 var storeData = Ext.create('Ext.data.Store', {
                     data: newData,
                     autoLoad: true
                 });
                 Ext.getCmp(prototype.id + '-cmbTabla').bindStore(storeData);
                 Ext.getCmp(prototype.id + '-cmbTabla').setValue('');
-
+                
                 var storeDataOP = Ext.create('Ext.data.Store', {
                     data: dataOP,
                     autoLoad: true
@@ -482,17 +485,17 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             }
         });
     },
-    btnSearch_click: function (obj, e) {
+    btnSearch_click: function(obj, e) {
         me.gridActual = '-gridData';
         this.showGridActual();
         this.setFormatParameter();
         this.setGridData(obj, e);
     },
-    setFormatParameter: function () {
+    setFormatParameter: function() {
 
         var IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
         var IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
-        var strSQL = this.armandoQuery();
+        var strSQL = this.armandoQuery();  
         var strFecha = Ext.getCmp(prototype.id + '-cmbTipoFecha').getValue();
         var IN_TABLA = Ext.getCmp(prototype.id + '-cmbTabla').getValue();
         var IN_TABLA2 = Ext.getCmp(prototype.id + '-cmbTabla2').getValue();
@@ -503,15 +506,15 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         var strOrderByEtiquetas = me.orderbyEtiquetas;
         var check = Ext.getCmp(prototype.id + '-chkSelGB').checked;
 
-        var v_flag_cpn_sale = '';
-        if (IN_TABLA === 'A1692' && IN_TABLA2 === 'A720') {
-            v_flag_cpn_sale = '1';
+        var v_flag_cpn_sale ='';
+        if(IN_TABLA === 'A1692' && IN_TABLA2 === 'A720'){
+            v_flag_cpn_sale ='1';
         }
 
         me.searchParams = {
             IN_FECHA_FROM: IN_FECHA_FROM,
             IN_FECHA_TO: IN_FECHA_TO,
-            strSQL: strSQL,
+            strSQL : strSQL,
             IN_SOURCEF: IN_SOURCEF,
             IN_SOURCEF2: IN_SOURCEF2,
             IN_TABLA: IN_TABLA,
@@ -525,8 +528,8 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             strSelectA: '',
             strSelectN: '',
             RN: '',
-            IN_FLAG_CPN_SALE: v_flag_cpn_sale,
-            IN_VALID_MFSTO: ''
+            IN_FLAG_CPN_SALE:v_flag_cpn_sale,
+            IN_VALID_MFSTO:''
         };
 
 
@@ -537,10 +540,10 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         }
         console.log(me.searchParams);
     },
-    getSystFieldByUserField: function (campo) {
-
-        var objCampo;
-        var campoA1248 = '';
+    getSystFieldByUserField: function(campo) {
+        
+	var objCampo;
+	var campoA1248 = '';
 //        var lstCampos = Ext.getCmp(prototype.id + '-cmbCampo1').getStore().data.items;
 
         for (var j = 0; j < me.listaCampos.length; j++) {
@@ -552,10 +555,10 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         }
         return campoA1248;
     },
-    getUserFieldBySystField: function (campo) {
-
-        var objCampo;
-        var campoA1248 = '';
+    getUserFieldBySystField: function(campo) {
+        
+	var objCampo;
+	var campoA1248 = '';
 //        var lstCampos = Ext.getCmp(prototype.id + '-cmbCampo1').getStore().data.items;
 
 //        for (var j = 0; j < lstCampos.length; j++) {
@@ -575,152 +578,151 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         }
         return campoA1248;
     },
-    armandoQuery: function () {
+    armandoQuery: function() {
         //Userfield = systfield
-        //Armando Query ===========================================
-        var strSQL = '';
-        var temp = '';
-        var temp2 = '';
-        var campo = '';
-        var esPrim = false;
-        var dataType = '';
-
-
-        //=========================================================
-        //Campo 1 =================================================
-
-
+	//Armando Query ===========================================
+	var strSQL = '';
+	var temp = '';
+	var temp2 = '';
+	var campo = '';
+	var esPrim = false;
+	var dataType = '';
+        
+        
+	//=========================================================
+	//Campo 1 =================================================
+        
+        
         for (var i = 1; i < 8; i++) {
-
-            var idtxtCampo = '-txtCampo' + i;
-            var idcmbCampo = '-cmbCampo' + i;
-            var idcmbCampoB = '-cmbCampo' + i + 'B';
-            var idtxtValue = '-txtValue' + i;
-            var idtxtValueB = '-txtValue' + i + 'B';
-            var idcmbOperador = '-cmbOperador' + i;
-            var idcmbConector = '-cmbConector' + i;
-
+            
+            var idtxtCampo = '-txtCampo'+i;
+            var idcmbCampo = '-cmbCampo'+i;
+            var idcmbCampoB = '-cmbCampo'+i+'B';
+            var idtxtValue = '-txtValue'+i;
+            var idtxtValueB = '-txtValue'+i+'B';
+            var idcmbOperador = '-cmbOperador'+i;
+            var idcmbConector = '-cmbConector'+i;
+        
             var txtCampo = Ext.getCmp(prototype.id + idtxtCampo);
             var cmbCampo = Ext.getCmp(prototype.id + idcmbCampo).getValue();
             var cmbCampoB = Ext.getCmp(prototype.id + idcmbCampoB).getValue();
             var txtValue = Ext.getCmp(prototype.id + idtxtValue);
             var txtValueB = Ext.getCmp(prototype.id + idtxtValueB).getValue();
             var cmbConector = '';
-            if (esPrim) {
+            if(esPrim){
                 cmbConector = Ext.getCmp(prototype.id + idcmbConector).getValue();
             }
-
+            
 
             //alert(cmbCampo);
             var cmbOperador = Ext.getCmp(prototype.id + idcmbOperador).getValue();
 
-            if (txtCampo.isVisible()) {
-                campo = this.getSystFieldByUserField(txtCampo.getValue().toUpperCase());
-            } else {
-                campo = this.getSystFieldByUserField(cmbCampo.toUpperCase());
+            if(txtCampo.isVisible()){
+                    campo = this.getSystFieldByUserField(txtCampo.getValue().toUpperCase());
+            }else{
+                    campo = this.getSystFieldByUserField(cmbCampo.toUpperCase());
             }
 
-            if (campo !== '' && (txtValue.getValue() !== '' || cmbCampoB !== '')) {
+            if(campo !== '' && (txtValue.getValue() !== '' || cmbCampoB!== '') ){
 
-                if (txtValue.isVisible()) {
-                    dataType = '';
-                    temp = txtValue.getValue().toUpperCase();
-                    temp2 = txtValueB.toUpperCase();
-                } else {
-                    temp = cmbCampoB.toUpperCase();
-                    dataType = 'N';
-                }
-
-
-
-                if (esPrim) {
-                    strSQL += cmbConector.toUpperCase();
-                }
-
-
-                strSQL += " " + campo + " " + this.getConectorSql(cmbOperador, '', temp, temp2, dataType);
-                esPrim = true;
+                    if(txtValue.isVisible()){
+                            dataType = '';
+                            temp = txtValue.getValue().toUpperCase();
+                            temp2= txtValueB.toUpperCase();
+                    }else{
+                            temp = cmbCampoB.toUpperCase();
+                            dataType = 'N';
+                    }
+                    
+                    
+                    
+                    if(esPrim){
+                            strSQL += cmbConector.toUpperCase();
+                    }
+                    
+                    
+                    strSQL += " " + campo + " " + this.getConectorSql(cmbOperador, '', temp, temp2,dataType);
+                    esPrim = true;
             }
             //=================================================
             //Campo 2 =============================================
         }
-
-
-
+        
+        
+        
         //alert(strSQL);
-
-
-        return strSQL;
+        
+        
+        return strSQL; 
     },
 
-    getConectorSql: function (operador, combo, campo1, campo2, dataType) {
-        var operadorEq = '';
-        var param = campo1.split(',');
-        var open = " '", close = "' ";
-        if (dataType == "N") {
-            //Si es numerico no se pone ''
-            open = " ", close = " ";
-            //campo= "DECIMAL("+campo+", 13, 2 )";
-        }
+    getConectorSql: function(operador, combo,campo1,campo2, dataType){
+            var operadorEq = '';
+            var param = campo1.split(',');
+            var open=" '",close="' ";
+            if(dataType == "N"){
+                    //Si es numerico no se pone ''
+                    open=" ",close=" ";
+                    //campo= "DECIMAL("+campo+", 13, 2 )";
+            }
 
-        switch (operador.trim()) {
-            case 'EQ':
-                operadorEq = '=' + open + campo1 + close;
-                break;
-            case 'GT':
-                operadorEq = '>' + open + campo1 + close;
-                break;
-            case 'LT':
-                operadorEq = '<' + open + campo1 + close;
-                ;
-                break;
-            case 'GE':
-                operadorEq = '>=' + open + campo1 + close;
-                break;
-            case 'LE':
-                operadorEq = '<=' + open + campo1 + close;
-                break;
-            case 'NE':
-                operadorEq = '<>' + open + campo1 + close;
-                break;
-            case 'LIKE':
-                operadorEq = ' LIKE ' + open + campo1 + close;
-                break;
-            case 'NLIKE':
-                operadorEq = 'NOT LIKE' + open + campo1 + close;
-                break;
-            case 'LIST':
-                operadorEq = 'IN ('
-                for (var c = 0; c < param.length; c++) {
-                    operadorEq += param[c]
-                    if (c + 2 <= param.length) {
-                        operadorEq += ',';
-                    }
-                }
-                operadorEq += ') ';
-                break;
-            case 'NLIST':
-                operadorEq = 'NOT IN ('
-                for (var j = 0; j < param.length; j++) {
-                    operadorEq += param[j]
-                    if (j + 2 <= param.length) {
-                        operadorEq += ',';
-                    }
-                }
-                operadorEq += ') ';
-                break;
-            case 'BETWEEN':
-                operadorEq = ' BETWEEN ' + open + campo1 + close + ' AND ' + open + campo2 + close + ' ';
-                break;
-            default:
-                operadorEq = '=';
-                //setComboBoxItem(combo, 'All');
-                break;
-        }
+            switch(operador.trim()){
+                    case 'EQ':
+                            operadorEq = '=' + open + campo1 + close;
+                            break;
+                    case 'GT':
+                            operadorEq = '>' + open + campo1 + close;
+                            break;
+                    case 'LT':
+                            operadorEq = '<' + open + campo1 + close;;
+                            break;
+                    case 'GE':
+                            operadorEq = '>=' + open + campo1 + close;
+                            break;
+                    case 'LE':
+                            operadorEq = '<=' + open + campo1 + close;
+                            break;
+                    case 'NE':
+                            operadorEq = '<>' + open + campo1 + close;
+                            break;
+                    case 'LIKE':
+                            operadorEq = ' LIKE ' + open + campo1 + close;
+                            break;
+                    case 'NLIKE':
+                            operadorEq = 'NOT LIKE' + open + campo1 + close;
+                            break;
+                    case 'LIST': 
+                            operadorEq = 'IN ('
+                            for(var c = 0; c < param.length; c++){
+                                    operadorEq += param[c] 
+                                    if(c+2 <= param.length){
+                                            operadorEq += ',';
+                                    }
+                            }
+                            operadorEq += ') ';
+                            break;
+                    case 'NLIST': 
+                            operadorEq = 'NOT IN ('
+                            for(var j= 0; j < param.length; j++){
+                                    operadorEq += param[j] 
+                                    if(j+2 <= param.length){
+                                            operadorEq += ',';
+                                    }
+                            }
+                            operadorEq += ') ';
+                            break;
+                    case 'BETWEEN':
+                            operadorEq = ' BETWEEN ' + open + campo1 + close+ ' AND ' + open + campo2 + close + ' ';
+                            break;
+                    default:
+                            operadorEq = '=';
+                            //setComboBoxItem(combo, 'All');
+                            break;
+            }
 
-        return operadorEq;
+            return operadorEq;
     },
-    createQuerySelectGroupBy: function () {
+    createQuerySelectGroupBy: function() {
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
         var etiq = '';
         var select = '';
@@ -774,7 +776,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         me.searchParams.strSelectN = selectN;
         me.searchParams.RN = arr2.length;
     },
-    createQuerySelect: function () {
+    createQuerySelect: function() {
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
         var selectA = '';
         var selectN = '';
@@ -791,11 +793,11 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             var ALIAS = arr2[j].data["ALIAS"] + '.';
             var CAMPO = arr2[j].data["campo"];
 
-            if (arr2[j].data["FIELDTYPE"] === 'C') {
-                //sI ES CAMPO COMPUESTO NO SE LE AGREGA ETIQUETA (A1672.)
-                ALIAS = '';
+            if(arr2[j].data["FIELDTYPE"] === 'C'){
+                    //sI ES CAMPO COMPUESTO NO SE LE AGREGA ETIQUETA (A1672.)
+                    ALIAS='';
             }
-
+        
             selectA += strComa + ALIAS + CAMPO + ' column' + (j + 1);
             if (arr2[j].data["DATATYPE"] === 'N') {
                 existsNumeric = true;
@@ -822,7 +824,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         me.searchParams.strSelectN = selectN;
         me.searchParams.RN = arr2.length;
     },
-    createOrderBy: function () {
+    createOrderBy: function() {
         var arr1 = Ext.getCmp(prototype.id + '-gridDataColumns').getStore().data.items;
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
 
@@ -857,7 +859,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         }
 
         if (flag) {
-            ArrOB.sort(function (a, b) {
+            ArrOB.sort(function(a, b) {
                 return a.OrderBy - b.OrderBy;
             });
 
@@ -885,11 +887,11 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 
         return orderby;
     },
-    obtenerDatoCombo: function (combo, valida, campo) {
+    obtenerDatoCombo: function(combo, valida, campo) {
         var tabla = Ext.getCmp(prototype.id + combo).getValue();
         var array = Ext.getCmp(prototype.id + combo).getStore().data.items;
         var result = '';
-
+        
         for (var i = 0; i < array.length; i++) {
             if (array[i].data[valida] === tabla) {
                 result = array[i].data[campo];
@@ -900,19 +902,19 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         return result;
     },
     /*setStoreDataGridDynamic: function() {
-     
-     this.storeGridDynamic = new Ext.data.ArrayStore({
-     idProperty: 'storeGridDynamicId',
-     autoDestroy: true,
-     storeId: 'storeGridDynamicId',
-     idIndex: 0,
-     fields: [
-     {dataIndex: 'column1', text: 'FUENT', width: 80, align: 'center', type: 'string', level: 1}
-     ]
-     });
-     
-     },*/
-    configurarGrid: function () {
+
+        this.storeGridDynamic = new Ext.data.ArrayStore({
+            idProperty: 'storeGridDynamicId',
+            autoDestroy: true,
+            storeId: 'storeGridDynamicId',
+            idIndex: 0,
+            fields: [
+                {dataIndex: 'column1', text: 'FUENT', width: 80, align: 'center', type: 'string', level: 1}
+            ]
+        });
+
+    },*/
+    configurarGrid: function() {
 //        this.hideColumns();
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
         var numColumns = me.searchParams.RN;
@@ -921,14 +923,14 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         if (anchoGrilla > 500) {
             anchoGrilla = 502;
         }
-        if (check && (numColumns > 0)) {
+        if (check && (numColumns>0)) {
             anchoGrilla = anchoGrilla + 100;
         }
 
         Ext.getCmp(prototype.id + '-panelLabelPagination').show();
-
-
-
+        
+        
+        
         if (Ext.getCmp(prototype.id + '-gridDanamic')) {
             Ext.getCmp(prototype.id + '-gridDanamic').destroy();
         }
@@ -936,7 +938,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         var myGrid = Ext.create('Ext.grid.Panel', {
             id: prototype.id + '-gridDanamic',
             cls: 'gridCss',
-            padding: '0 0 0 0',
+            padding: '20 0 0 0',
             bodyStyle: 'background: transparent;',
             columnLines: true,
             enableColumnMove: true,
@@ -958,27 +960,27 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
         var numColumns = me.searchParams.RN;
         console.log(arr2);
-        /*
-         * 
-         * 
-         var vPanel = Ext.getCmp(prototype.id + '-panelSelectField');
-         
-         var vgridData = Ext.getCmp(prototype.id + '-gridDanamic');
-         var vpanelResult = Ext.getCmp(prototype.id + '-panelResult');
-         var vpanelPag = Ext.getCmp(prototype.id + '-piePanel');
-         
-         * */
+/*
+ * 
+ * 
+        var vPanel = Ext.getCmp(prototype.id + '-panelSelectField');
+        
+        var vgridData = Ext.getCmp(prototype.id + '-gridDanamic');
+        var vpanelResult = Ext.getCmp(prototype.id + '-panelResult');
+        var vpanelPag = Ext.getCmp(prototype.id + '-piePanel');
+        
+ * */
 //        var v_boxContenedorGrid = Ext.getCmp(prototype.id + '-boxContenedorGrid');
         var vPanel = Ext.getCmp(prototype.id + '-panelSelectField');
         var vPag = Ext.getCmp(prototype.id + '-panelLabelPagination');
 
         var vgridData = Ext.getCmp(prototype.id + '-gridDanamic');
 
-        if (vPanel.isVisible()) {
+        if(vPanel.isVisible()){ 
             v_panelResult.setWidth(600);
             vgridData.setWidth(600);
             vPag.setWidth(600);
-        } else {
+        }else{
             v_panelResult.setWidth(1200);
             vgridData.setWidth(1200);
             vPag.setWidth(1200);
@@ -988,31 +990,31 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 
         v_panelResult.insert(0, myGrid);
     },
-    configurarGridData: function () {
-        console.log('configurarGridDataaaaaa');
-
+    configurarGridData: function() {
+        console.log ('configurarGridDataaaaaa');
+        
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
         var numColumns = me.searchParams.RN;
         var vgridData = Ext.getCmp(prototype.id + '-gridDanamic');
-
+        
         var column1 = Ext.create('Ext.grid.column.Column', {text: 'RN', width: 50, align: 'center', dataIndex: 'RN'});
         vgridData.headerCt.insert(0, column1);
         vgridData.getView().refresh();
 
-
+        
 
         for (var i = 0; i < numColumns; i++) {
 //            var gridView = Ext.getCmp(prototype.id + '-gridDanamic');
-            var v_nroColumna = (i + 1);
+            var v_nroColumna = (i+1);
             var v_align = 'center';
             if (arr2[i].data["DATATYPE"] === 'N') {
                 v_align = 'right';
             } else if (arr2[i].data["size"] > 50) {
                 v_align = 'left';
             }
-            var v_cabecera = arr2[i].data["DCOLHDG"];
+            var v_cabecera =arr2[i].data["DCOLHDG"];
             var v_fields = Ext.getCmp(prototype.id + '-panelListColumns').getStore().getData().items[i].data;
-            var v_columnaGrid = me.retornaColumna(v_cabecera, v_nroColumna, v_align, v_fields);
+            var v_columnaGrid = me.retornaColumna(v_cabecera,v_nroColumna,v_align,v_fields);
 
 //            var column = Ext.create('Ext.grid.column.Column', {text: arr2[i].data["DCOLHDG"], dataIndex: 'column' + (v_nroColumna), align: v_align
 //                        ,summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -1035,116 +1037,116 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 ////                                    }
 //                        }
 //            });
-
-
-            vgridData.headerCt.insert(v_nroColumna, v_columnaGrid);
+            
+            
+            vgridData.headerCt.insert(v_nroColumna, v_columnaGrid);            
             vgridData.getView().refresh();
 
 //            console.log(i+'-->'+Ext.getCmp(prototype.id+'-gridDanamic').columns.length);
         }
-
+        
         var tabla = Ext.getCmp(prototype.id + '-cmbTabla').getValue();
         var tabla2 = Ext.getCmp(prototype.id + '-cmbTabla2').getValue();
-        if (tabla === 'A1692' && tabla2 === 'A720' && Ext.getCmp(prototype.id + '-cmbFunctions').getValue() === '1') {
-
+        if(tabla === 'A1692' && tabla2 === 'A720' && Ext.getCmp(prototype.id + '-cmbFunctions').getValue()==='1'){
+            
 //            var gridView_d = Ext.getCmp(prototype.id + '-gridDanamic');
-
+            
             var column_1ast = Ext.create('Ext.grid.column.Column', {text: 'Sale Date', width: 100, align: 'center', dataIndex: 'A720FECVTA'
-                , renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = 'text-align:center;background:#d5f4d5;';
-                    return value;
-                }
+            ,renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:center;background:#d5f4d5;';
+                            return value;
+                        }
             });
-            vgridData.headerCt.insert(numColumns + 1, column_1ast);
+            vgridData.headerCt.insert(numColumns+1, column_1ast);
             vgridData.getView().refresh();
 
             var column_1ast2 = Ext.create('Ext.grid.column.Column', {text: 'FVLO Sale', width: 100, align: 'center', dataIndex: 'A720FVLO'
-                , renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = 'text-align:center;background:#d5f4d5;';
-                    return value;
-                }
+            ,renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:center;background:#d5f4d5;';
+                            return value;
+                        }
             });
-            vgridData.headerCt.insert(numColumns + 2, column_1ast2);
+            vgridData.headerCt.insert(numColumns+2, column_1ast2);
             vgridData.getView().refresh();
-
+            
             var column_1ast3 = Ext.create('Ext.grid.column.Column', {text: 'NVLO Sale', width: 100, align: 'center', dataIndex: 'A720NVLO'
-                , renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = 'text-align:center;background:#d5f4d5;';
-                    return value;
-                }
+            ,renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:center;background:#d5f4d5;';
+                            return value;
+                        }
             });
-            vgridData.headerCt.insert(numColumns + 3, column_1ast3);
+            vgridData.headerCt.insert(numColumns+3, column_1ast3);
             vgridData.getView().refresh();
-
+            
             var column_1ast4 = Ext.create('Ext.grid.column.Column', {text: 'Orig Sale', width: 100, align: 'center', dataIndex: 'A720RUTA_0'
-                , renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = 'text-align:center;background:#d5f4d5;';
-                    return value;
-                }
+            ,renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:center;background:#d5f4d5;';
+                            return value;
+                        }
             });
-            vgridData.headerCt.insert(numColumns + 4, column_1ast4);
+            vgridData.headerCt.insert(numColumns+4, column_1ast4);
             vgridData.getView().refresh();
-
+            
             var column_1ast5 = Ext.create('Ext.grid.column.Column', {text: 'Dest Sale', width: 100, align: 'center', dataIndex: 'A720RUTA_1'
-                , renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = 'text-align:center;background:#d5f4d5;';
-                    return value;
-                }
+            ,renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:center;background:#d5f4d5;';
+                            return value;
+                        }
             });
-            vgridData.headerCt.insert(numColumns + 5, column_1ast5);
+            vgridData.headerCt.insert(numColumns+5, column_1ast5);
             vgridData.getView().refresh();
-
+            
             var column_1ast6 = Ext.create('Ext.grid.column.Column', {text: 'VALUE', width: 100, align: 'center', dataIndex: 'A720VALOR'
-                , renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = 'text-align:right;background:#d5f4d5;';
-                    return value;
-                }
+            ,renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = 'text-align:right;background:#d5f4d5;';
+                            return value;
+                        }
             });
-            vgridData.headerCt.insert(numColumns + 6, column_1ast6);
+            vgridData.headerCt.insert(numColumns+6, column_1ast6);
             vgridData.getView().refresh();
         }
-
-
+        
+        
     },
-    retornaColumna: function (v_cabecera, v_columna, v_align, v_fields) {
-
-        var column = Ext.create('Ext.grid.column.Column', {text: v_cabecera, dataIndex: 'column' + (v_columna), align: v_align
-            , summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                var data_store = Ext.getCmp(prototype.id + '-gridDanamic').getStore().getData().items[0].data;
-                var v_valor = 'tot' + (v_columna);
-
-
-                if (v_fields.DATATYPE === 'N') {
-                    return '<b>' + Ext.util.Format.number(data_store[v_valor], '0,000') + '<b>';
-                } else {
-                    return '';
-                }
-
-
+    retornaColumna: function(v_cabecera,v_columna,v_align,v_fields) {
+        
+            var column = Ext.create('Ext.grid.column.Column', {text: v_cabecera, dataIndex: 'column' + (v_columna), align: v_align
+                        ,summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                            var data_store = Ext.getCmp(prototype.id + '-gridDanamic').getStore().getData().items[0].data;
+                            var v_valor = 'tot'+(v_columna);
+                            
+                            
+                            if (v_fields.DATATYPE === 'N') {
+                                return '<b>' + Ext.util.Format.number(data_store[v_valor], '0,000') + '<b>';
+                            } else {
+                                return '';
+                            }
+                            
+                            
 //                          return data_store[v_valor];
-            }
-        });
-
+                        }
+            });
+        
         return column;
     },
-    hideColumns: function () {
+    hideColumns: function() {
         for (var i = 1; i < 63; i++) {
             Ext.getCmp(prototype.id + '-campo' + (i + 1)).hide();
         }
     },
-    setGridData: function (obj, val) {
+    setGridData: function(obj, val) {
 
         this.configurarGrid();
         var storeGridDatas = Ext.create('Ext.Praxis.store.gerencial.GridData', {
             proxy: {
                 url: prototype.url + '/searchFields'
             }, listeners: {
-                beforeload: function (obj) {
-                    obj.proxy.extraParams = {beanString: JSON.stringify(me.searchParams)};
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = {beanString : JSON.stringify(me.searchParams)};
                     Ext.getCmp(prototype.id + '-boxContenedorGrid').mask('Loading...');
                 },
-
-                load: function (obj) {
+                
+                load: function(obj) {
                     Ext.getCmp(prototype.id + '-boxContenedorGrid').unmask('Loading...');
                     var pag = Ext.getCmp(prototype.id + '-paggin');
                     var pagData = pag.getPageData();
@@ -1157,7 +1159,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                             msg: 'Data not found.'
                         });
                     } else {
-                        me.configurarGridData();
+                          me.configurarGridData();
 //                        var element = obj.data.items[0].data;
 //                        Ext.getCmp(prototype.id + '-columnMonth1').setText(element.labelMes1);
 //                        Ext.getCmp(prototype.id + '-columnMonth2').setText(element.labelMes2);
@@ -1171,10 +1173,10 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             }
         });
         global.clear();
-
+        
         Ext.getCmp(prototype.id + '-gridDanamic').bindStore(storeGridDatas);
-
-
+        
+        
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 //        console.log('=========');
 //        
@@ -1199,81 +1201,81 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 //            me.configurarGridData(storeGridDatas);
 //          
 //        },2000);
-
+        
 //        Ext.getCmp(prototype.id + '-grafico01').bindStore(storeGridDatas);
     },
-    imprimeTime: function () {
+    imprimeTime: function() {
         console.log('1 seg');
         console.log(Ext.getCmp(prototype.id + '-gridDanamic').getStore().getData().items[0].data);
     },
-    changecmbCampo: function (nbr) {
-        var idtxt = '-txtCampo' + nbr;
-        var idcmb = '-cmbCampo' + nbr;
+    changecmbCampo: function(nbr) {
+        var idtxt ='-txtCampo' + nbr;
+        var idcmb ='-cmbCampo' + nbr;
         Ext.getCmp(prototype.id + idtxt).setValue(Ext.getCmp(prototype.id + idcmb).getValue());
 
         /*if(Ext.getCmp(prototype.id + idcmb).getValue() === null){
-         Ext.getCmp(prototype.id + idcmb).getStore().load();
-         Ext.getCmp(prototype.id + idtxt).setValue('');
-         }else{
-         //        console.log(Ext.getCmp(prototype.id + idtxt));
-         Ext.getCmp(prototype.id + idtxt).setValue(Ext.getCmp(prototype.id + idcmb).getValue());
-         }*/
-
+            Ext.getCmp(prototype.id + idcmb).getStore().load();
+            Ext.getCmp(prototype.id + idtxt).setValue('');
+        }else{
+//        console.log(Ext.getCmp(prototype.id + idtxt));
+            Ext.getCmp(prototype.id + idtxt).setValue(Ext.getCmp(prototype.id + idcmb).getValue());
+        }*/
+        
     },
-    changeOperador: function (nbr) {
+    changeOperador: function(nbr) {
         var v_cmb = Ext.getCmp(prototype.id + '-cmbOperador' + nbr);
         var v_hbox = Ext.getCmp(prototype.id + '-hb_Between' + nbr);
         var v_text = Ext.getCmp(prototype.id + '-txtValue' + nbr + 'B');
-
+        
         v_text.setValue('');
-        if (v_cmb.getValue() === 'BETWEEN') {
-            v_hbox.show();
-        } else {
-            v_hbox.hide();
-        }
+	if(v_cmb.getValue()==='BETWEEN'){
+	   v_hbox.show();
+	}else{
+	   v_hbox.hide();
+	}
     },
-    imgClearRow: function (nbr) {
-        /*if(nro!='1'){
-         var v_cmbConector:ComboBox = this["cmbConector"+nro];
-         }*/
-        var v_txtCampoText = Ext.getCmp(prototype.id + '-txtCampo' + nbr);
-        var v_cmbCampo = Ext.getCmp(prototype.id + '-cmbCampo' + nbr);
-        //var v_cmbCampoB = Ext.getCmp(prototype.id + '-cmbCampo' + nbr + 'B');
-        var v_cmbOperador = Ext.getCmp(prototype.id + '-cmbOperador' + nbr);
-        var v_txtValue = Ext.getCmp(prototype.id + '-txtValue' + nbr);
-        var v_txtValueBetween = Ext.getCmp(prototype.id + '-txtValue' + nbr + 'B');
-        var v_hbox = Ext.getCmp(prototype.id + '-hb_Between' + nbr);
-
-        if (nbr != '1') {
+    imgClearRow: function(nbr) {
+	/*if(nro!='1'){
+		var v_cmbConector:ComboBox = this["cmbConector"+nro];
+	}*/
+	var v_txtCampoText = Ext.getCmp(prototype.id + '-txtCampo' + nbr);
+	var v_cmbCampo = Ext.getCmp(prototype.id + '-cmbCampo' + nbr);
+	//var v_cmbCampoB = Ext.getCmp(prototype.id + '-cmbCampo' + nbr + 'B');
+	var v_cmbOperador = Ext.getCmp(prototype.id + '-cmbOperador' + nbr);
+	var v_txtValue = Ext.getCmp(prototype.id + '-txtValue' + nbr);
+	var v_txtValueBetween = Ext.getCmp(prototype.id + '-txtValue' + nbr + 'B');
+	var v_hbox = Ext.getCmp(prototype.id + '-hb_Between' + nbr);
+        
+	if(nbr!='1'){
             //SelectedIndex = 0
-            var cb = Ext.getCmp(prototype.id + '-cmbConector' + nbr);
-            cb.setValue(cb.getStore().getAt(0).get(cb.valueField));
-        }
-
-        v_txtCampoText.setValue('');
-        v_cmbCampo.setValue('');
-        //v_cmbCampoB.selectedIndex=0;
-        v_cmbOperador.setValue('');
-        v_txtValue.setValue('');
-        v_txtValueBetween.setValue('');
+            var cb = Ext.getCmp(prototype.id + '-cmbConector'+nbr);     
+            cb.setValue(cb.getStore().getAt(0).get(cb.valueField));   
+	}
+	
+	v_txtCampoText.setValue('');
+	v_cmbCampo.setValue('');
+	//v_cmbCampoB.selectedIndex=0;
+	v_cmbOperador.setValue('');
+	v_txtValue.setValue('');
+	v_txtValueBetween.setValue('');
         v_hbox.hide();
     },
-    imgInfo_clickHandler: function (nbr) {
-
-        var idtxt = '-txtCampo' + nbr;
-        var idcmb = '-cmbCampo' + nbr;
-
-        if (Ext.getCmp(prototype.id + idtxt).isVisible()) {
+    imgInfo_clickHandler: function(nbr) {
+        
+        var idtxt ='-txtCampo' + nbr;
+        var idcmb ='-cmbCampo' + nbr;
+        
+        if(Ext.getCmp(prototype.id + idtxt).isVisible()){
             Ext.getCmp(prototype.id + idtxt).hide();
             Ext.getCmp(prototype.id + idcmb).show();
-        } else {
+        }else{
             Ext.getCmp(prototype.id + idtxt).show();
             Ext.getCmp(prototype.id + idcmb).hide();
         }
-
+        
     },
     onSelectCmbFav: function(obj, value) {
-
+        
         if (obj.value !== '') {
             var tabla = Ext.getCmp(prototype.id + '-cmbTabla').getValue();
             var codigo = Ext.getCmp(prototype.id + '-cmbFav').getValue();
@@ -1292,9 +1294,9 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                         Ext.getCmp(prototype.id + '-cmbTabla2').setValue(res[0].IN_TABLA2.trim());
 //                        prototype.ChangeFile('Secundario', 1);
                         me.changeFile('Secundario', 1);
-
+                        
                     }else{
-
+                        
                         me.armarData(me.resObtainDataFavoritos);
                     }
                 }
@@ -1302,7 +1304,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         }
     },
     armarData: function(res) {
-
+        
         setTimeout(function() {
             //Armo data que regreso de Favoritos
             var arr1 = Ext.getCmp(prototype.id + '-gridDataColumns').getStore();
@@ -1348,117 +1350,8 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             Ext.getCmp(prototype.id + '-gridDataColumns').unmask('Loading...');
         }, 400);
     },
-    selectAll: function () {
-        console.log('selectAll..........');
-        var dataStore = Ext.getCmp(prototype.id + '-gridDataColumns').getStore();
+    displayQuery: function(Query) {
         
-        if(dataStore.data.length > 0){
-            console.log('selectAll. innnnnnnnnnnnnnnnn.........');
-            var check = Ext.getCmp(prototype.id + '-chkAll').checked;
-            console.log('chekced' +check);
-            if(check){
-                /*Remuevo campos agregados al grid*/
-//                storeList.removeAll();
-//                for (var j = 0; j < dataStore.data.length; j++) {
-//                    var dataRow = dataStore.data.items[j].data;
-//                    var name = dataRow.DESCRIPT;
-//                    dataRow.select = false;
-//                }
-    //            console.log('len---------------->' + dataStore.data.length);
-                for (var i = 0; i < dataStore.data.length; i++) {
-                    var dataRow = dataStore.data.items[i].data;
-                    console.log('i' +i);
-                    console.log(dataRow.DESCRIPT);
-                    dataRow.select = true;
-                    storeList.add(dataRow);
-                }
-
-            }else{
-                for (var j = 0; j < dataStore.data.length; j++) {
-                    var dataRow = dataStore.data.items[j].data;
-                    var name = dataRow.DESCRIPT;
-                    dataRow.select = false;
-                }
-                /*Remuevo campos agregados al grid*/
-                storeList.removeAll();
-            }
-
-            Ext.getCmp(prototype.id + '-gridDataColumns').setStore(dataStore);
-        }
-        
-        
-//        if (check) {
-//            var grid = Ext.getCmp(prototype.id + '-gridDataColumns');
-//            if (!grid) {
-//                console.error("Grid component not found: " + prototype.id + '-gridDataColumns');
-//                return;
-//            }
-//            var dataStore = grid.getStore();
-//            if (!dataStore) {
-//                console.error("Store not found in grid component");
-//                return;
-//            }
-//            dataStore.each(function (record) {
-//                if (record && record.data) {
-//                    record.set('select', true);
-//                    storeList.add(record.data);
-//                    record.set('select', false);
-//                }
-//            });
-//            var selectedRow = dataStore.getAt(row);
-//            if (!selectedRow || !selectedRow.data) {
-//                console.error("Row not found or data is null at index: " + row);
-//                return;
-//            }
-//            var dataRow = selectedRow.data;
-//            var name = dataRow.DESCRIPT;
-//            if (dataRow.select === true) {
-//                storeList.remove(storeList.findRecord('DESCRIPT', name));
-//                dataRow.select = false;
-//            } else {
-//                dataRow.select = true;
-//                storeList.add(dataRow);
-//            }
-//
-//            grid.setStore(dataStore);
-//
-//        } else {
-//
-//            setTimeout(function () {
-//                var arr1 = Ext.getCmp(prototype.id + '-gridDataColumns').getStore();
-//                var list = [];
-//                for (var j = 0; j < arr1.data.items.length; j++) {
-//                    var data = arr1.data.items[j].data;
-//                    data.select = false;
-//                    data.check = true;
-//                    data.OrderBy = '';
-//                    data.DownUp = 'ASC';
-//                    storeList.add(data);
-//                }
-//                for (var j = 0; j < arr1.data.items.length; j++) {
-//                    list.push(arr1.data.items[j].data);
-//                }
-//                var storeData = Ext.create('Ext.data.Store', {
-//                    data: list,
-//                    autoLoad: true
-//                });
-//                Ext.getCmp(prototype.id + '-gridDataColumns').bindStore(storeData);
-//                me.displayQuery(res[0].strSQL);
-//
-//                Ext.getCmp(prototype.id + '-gridDataColumns').unmask('Loading...');
-//            }, 400);
-//            
-//            setTimeout(function () {
-//                storeList.removeAll();
-//            }, 400);
-//            
-//
-//        }
-
-    },
-
-    displayQuery: function (Query) {
-
         var param = Query.split(';');
         var cb2 = Ext.getCmp(prototype.id + '-cmbConector2');
         var cb3 = Ext.getCmp(prototype.id + '-cmbConector3');
@@ -1466,51 +1359,51 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         var cb5 = Ext.getCmp(prototype.id + '-cmbConector5');
         var cb6 = Ext.getCmp(prototype.id + '-cmbConector6');
         var cb7 = Ext.getCmp(prototype.id + '-cmbConector7');
-
+        
         Ext.getCmp(prototype.id + '-txtCampo1').setValue(this.getUserFieldBySystField(param[0]));
         Ext.getCmp(prototype.id + '-cmbCampo1').setValue(this.getUserFieldBySystField(param[0]));
         Ext.getCmp(prototype.id + '-cmbOperador1').setValue(param[1]);
         Ext.getCmp(prototype.id + '-txtValue1').setValue(param[2]);
-
-
-        cb2.setValue(cb2.getStore().getAt(param[3]).get(cb2.valueField));
+        
+        
+        cb2.setValue(cb2.getStore().getAt(param[3]).get(cb2.valueField)); 
         Ext.getCmp(prototype.id + '-txtCampo2').setValue(this.getUserFieldBySystField(param[4]));
         Ext.getCmp(prototype.id + '-cmbCampo2').setValue(this.getUserFieldBySystField(param[4]));
         Ext.getCmp(prototype.id + '-cmbOperador2').setValue(param[5]);
         Ext.getCmp(prototype.id + '-txtValue2').setValue(param[6]);
-
-        cb3.setValue(cb3.getStore().getAt(param[7]).get(cb3.valueField));
+        
+        cb3.setValue(cb3.getStore().getAt(param[7]).get(cb3.valueField)); 
         Ext.getCmp(prototype.id + '-txtCampo3').setValue(this.getUserFieldBySystField(param[8]));
         Ext.getCmp(prototype.id + '-cmbCampo3').setValue(this.getUserFieldBySystField(param[8]));
         Ext.getCmp(prototype.id + '-cmbOperador3').setValue(param[9]);
         Ext.getCmp(prototype.id + '-txtValue3').setValue(param[10]);
-
-        cb4.setValue(cb4.getStore().getAt(param[11]).get(cb4.valueField));
+        
+        cb4.setValue(cb4.getStore().getAt(param[11]).get(cb4.valueField)); 
         Ext.getCmp(prototype.id + '-txtCampo4').setValue(this.getUserFieldBySystField(param[12]));
         Ext.getCmp(prototype.id + '-cmbCampo4').setValue(param[12]);
         Ext.getCmp(prototype.id + '-cmbOperador4').setValue(param[13]);
         Ext.getCmp(prototype.id + '-txtValue4').setValue(param[14]);
-
-        cb5.setValue(cb5.getStore().getAt(param[15]).get(cb5.valueField));
+        
+        cb5.setValue(cb5.getStore().getAt(param[15]).get(cb5.valueField)); 
         Ext.getCmp(prototype.id + '-txtCampo5').setValue(this.getUserFieldBySystField(param[16]));
         Ext.getCmp(prototype.id + '-cmbCampo5').setValue(this.getUserFieldBySystField(param[16]));
         Ext.getCmp(prototype.id + '-cmbOperador5').setValue(param[17]);
         Ext.getCmp(prototype.id + '-txtValue5').setValue(param[18]);
-
-        cb6.setValue(cb6.getStore().getAt(param[19]).get(cb6.valueField));
+        
+        cb6.setValue(cb6.getStore().getAt(param[19]).get(cb6.valueField)); 
         Ext.getCmp(prototype.id + '-txtCampo6').setValue(this.getUserFieldBySystField(param[20]));
         Ext.getCmp(prototype.id + '-cmbCampo6').setValue(this.getUserFieldBySystField(param[20]));
         Ext.getCmp(prototype.id + '-cmbOperador6').setValue(param[21]);
         Ext.getCmp(prototype.id + '-txtValue6').setValue(param[22]);
-
-        cb7.setValue(cb7.getStore().getAt(param[23]).get(cb7.valueField));
+        
+        cb7.setValue(cb7.getStore().getAt(param[23]).get(cb7.valueField)); 
         Ext.getCmp(prototype.id + '-txtCampo7').setValue(this.getUserFieldBySystField(param[24]));
         Ext.getCmp(prototype.id + '-cmbCampo7').setValue(this.getUserFieldBySystField(param[24]));
         Ext.getCmp(prototype.id + '-cmbOperador7').setValue(param[25]);
         Ext.getCmp(prototype.id + '-txtValue7').setValue(param[26]);
-
+        
     },
-    btnBack_click: function (obj, e) {
+    btnBack_click: function(obj, e) {
 
 
         if (me.drillDown.length > 0) {
@@ -1534,7 +1427,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             global.showMenu();
         }
     },
-    btnDisplay_click: function () {
+    btnDisplay_click: function() {
         var option = Ext.getCmp(prototype.id + '-panelGraficos');
         if (option.isVisible()) {
             option.setVisible(false);
@@ -1542,13 +1435,13 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             option.setVisible(true);
         }
     }
-    , btnClear_click: function (obj, e) {
+    , btnClear_click: function(obj, e) {
         var yearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear');
         var monthFrom = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
         yearFrom.setValue(this.fecha.getFullYear());
         monthFrom.setValue('');
     },
-    btnExcel_click: function (obj, e) {
+    btnExcel_click: function(obj, e) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Download Excel ?',
@@ -1556,15 +1449,15 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function (btn) {
+            fn: function(btn) {
                 if (btn === 'ok') {
                     this.exportExcel();
                 }
             }
         });
     },
-    exportExcel: function () {
-
+    exportExcel: function() {
+        
         switch (me.gridActual) {
             case  '-gridData':
 //                        var grid = Ext.getCmp(prototype.id + '-gridData');
@@ -1586,19 +1479,19 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 //                        url += method + '?' + params;
 //                        lg(url);
 //                        global.getFile(url);
-
-
+                        
+                        
 //                        var grid = Ext.getCmp(prototype.id + '-gridData');
+                        
+                        this.setFormatParameter();
+                        var data = me.searchParams;
 
-                this.setFormatParameter();
-                var data = me.searchParams;
+                        //var schema = JSON.stringify({text: "", columns: grid.config.columns.items});
+                        var schema = JSON.stringify({text: "", columns: this.getColumns()});
+                        data.schema = schema;
 
-                //var schema = JSON.stringify({text: "", columns: grid.config.columns.items});
-                var schema = JSON.stringify({text: "", columns: this.getColumns()});
-                data.schema = schema;
-
-                me.searchParams = data;
-                var url = prototype.url;
+                        me.searchParams = data;
+                        var url = prototype.url;
 //                        console.log(data);
 //                        var params = Object.keys(data).map(function(k) {
 //                            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
@@ -1609,32 +1502,32 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 //                        global.getFile(url);
 
 
-                console.log(prototype.url + '/getFieldsXLSX');
-                console.log(JSON.stringify(me.searchParams));
-                console.log(schema);
+                        console.log(prototype.url + '/getFieldsXLSX');
+                        console.log(JSON.stringify(me.searchParams));
+                        console.log(schema);
 
-                var mapForm = document.createElement("form");
-                mapForm.target = "_blank";
-                mapForm.method = "POST"; // or "post" if appropriate
-                mapForm.action = prototype.url + '/getFieldsXLSX';
+                        var mapForm = document.createElement("form");
+                        mapForm.target = "_blank";
+                        mapForm.method = "POST"; // or "post" if appropriate
+                        mapForm.action = prototype.url + '/getFieldsXLSX';
 
-                var mapInput = document.createElement("input");
-                mapInput.type = "text";
-                mapInput.name = "beanString";
-                mapInput.value = JSON.stringify(me.searchParams);
-                mapForm.appendChild(mapInput);
+                        var mapInput = document.createElement("input");
+                        mapInput.type = "text";
+                        mapInput.name = "beanString";
+                        mapInput.value = JSON.stringify(me.searchParams);
+                        mapForm.appendChild(mapInput);
 
-                var mapInput = document.createElement("input");
-                mapInput.type = "text";
-                mapInput.name = "schema";
-                mapInput.value = schema;
-                mapForm.appendChild(mapInput);
+                        var mapInput = document.createElement("input");
+                        mapInput.type = "text";
+                        mapInput.name = "schema";
+                        mapInput.value = schema;
+                        mapForm.appendChild(mapInput);
 
-                document.body.appendChild(mapForm);
+                        document.body.appendChild(mapForm);
 
 
-                mapForm.submit();
-
+                        mapForm.submit();
+                
                 break;
 
             default:
@@ -1644,7 +1537,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                 break;
         }
     },
-    btnTXT_click: function (obj, e) {
+    btnTXT_click: function(obj, e) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Download Excel ?',
@@ -1652,25 +1545,25 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function (btn) {
+            fn: function(btn) {
                 if (btn === 'ok') {
                     this.exportTXT();
                 }
             }
         });
     },
-    changeFunction: function () {
-
-        if (Ext.getCmp(prototype.id + '-cmbFunctions').getValue() === '') {
+    changeFunction: function() {
+        
+        if(Ext.getCmp(prototype.id + '-cmbFunctions').getValue()==='') {
             Ext.getCmp(prototype.id + '-btnFunct').setDisabled(true);
-        } else {
+        }else{
             Ext.getCmp(prototype.id + '-btnFunct').setDisabled(false);
         }
-
+        
     },
-    procesar_function: function (obj, e) {
-
-
+    procesar_function: function(obj, e) {
+        
+        
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Confirm the process?',
@@ -1678,39 +1571,39 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function (btn) {
+            fn: function(btn) {
                 if (btn === 'ok') {
                     this.process_valuation();
                 }
             }
         });
     },
-    process_valuation: function () {
+    process_valuation: function() {
         me.searchParams.IN_VALID_MFSTO = '';
-        if (Ext.getCmp(prototype.id + '-chkManifiesto').getValue()) {
+        if(Ext.getCmp(prototype.id + '-chkManifiesto').getValue()){
             me.searchParams.IN_VALID_MFSTO = 'N';
         }
-
+        
 //        console.log(me.searchParams);
-        Ext.Ajax.request({
-            url: prototype.url + '/executeValuation',
-            params: {beanString: JSON.stringify(me.searchParams)},
+         Ext.Ajax.request({
+            url: prototype.url + '/executeValuation' ,
+            params: {beanString : JSON.stringify(me.searchParams)},
             method: 'POST',
             beforerequest: Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...'),
-            success: function (response, options) {
+            success: function(response, options) {
                 Ext.getCmp(prototype.id + '-contentInfo').unmask('Loading...');
 
                 var res = Ext.JSON.decode(response.responseText);
-
-                global.Msg({
-                    msg: res.mensaje
-                });
-
-            }});
-
-
+                
+                        global.Msg({
+                            msg: res.mensaje
+                        });
+                
+        }});
+        
+        
     },
-    exportTXT: function () {
+    exportTXT: function() {
 
         switch (me.gridActual) {
             case  '-gridData':
@@ -1744,29 +1637,29 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 //                        url += method + '?' + params;
 //                        lg(url);
 //                        global.getFile(url);
-
-
+                        
+                        
 //                        var grid = Ext.getCmp(prototype.id + '-gridData');
+                        
+                        this.setFormatParameter();
+                        var data = me.searchParams;
 
-                this.setFormatParameter();
-                var data = me.searchParams;
+                        //var schema = JSON.stringify({text: "", columns: grid.config.columns.items});
+                        var schema = JSON.stringify({text: "", columns: this.getColumns()});
+                        data.schema = schema;
 
-                //var schema = JSON.stringify({text: "", columns: grid.config.columns.items});
-                var schema = JSON.stringify({text: "", columns: this.getColumns()});
-                data.schema = schema;
-
-                var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
-                for (var j = 0; j < arr2.length; j++) {
-                    //Alert.show(Lista2.g);
-                    if (j === 0) {
-                        data.column1 = arr2[j].data["DCOLHDG"].trim();
-                    } else {
-                        data.column1 += ',' + arr2[j].data["DCOLHDG"].trim();
-                    }
-                }
-
-                me.searchParams = data;
-                var url = prototype.url;
+                        var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
+                        for (var j = 0; j < arr2.length; j++) {
+                                //Alert.show(Lista2.g);
+                                if(j === 0){
+                                        data.column1 = arr2[j].data["DCOLHDG"].trim(); 
+                                }else{
+                                        data.column1 += ',' +  arr2[j].data["DCOLHDG"].trim(); 
+                                }
+                        }
+                        
+                        me.searchParams = data;
+                        var url = prototype.url;
 //                        console.log(data);
 //                        var params = Object.keys(data).map(function(k) {
 //                            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
@@ -1777,28 +1670,28 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 //                        global.getFile(url);
 
 
-                var mapForm = document.createElement("form");
-                mapForm.target = "_blank";
-                mapForm.method = "POST"; // or "post" if appropriate
-                mapForm.action = prototype.url + '/ExportTXT';
+                        var mapForm = document.createElement("form");
+                        mapForm.target = "_blank";
+                        mapForm.method = "POST"; // or "post" if appropriate
+                        mapForm.action = prototype.url + '/ExportTXT';
 
-                var mapInput = document.createElement("input");
-                mapInput.type = "text";
-                mapInput.name = "beanString";
-                mapInput.value = JSON.stringify(me.searchParams);
-                mapForm.appendChild(mapInput);
+                        var mapInput = document.createElement("input");
+                        mapInput.type = "text";
+                        mapInput.name = "beanString";
+                        mapInput.value = JSON.stringify(me.searchParams);
+                        mapForm.appendChild(mapInput);
 
-                var mapInput = document.createElement("input");
-                mapInput.type = "text";
-                mapInput.name = "schema";
-                mapInput.value = schema;
-                mapForm.appendChild(mapInput);
+                        var mapInput = document.createElement("input");
+                        mapInput.type = "text";
+                        mapInput.name = "schema";
+                        mapInput.value = schema;
+                        mapForm.appendChild(mapInput);
 
-                document.body.appendChild(mapForm);
+                        document.body.appendChild(mapForm);
 
 
-                mapForm.submit();
-
+                        mapForm.submit();
+                        
                 break;
 
             default:
@@ -1808,13 +1701,13 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                 break;
         }
     },
-    getColumns: function () {
-        var columns = [];
+    getColumns: function(){
+        var columns = [ ];
 
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
         var numColumns = me.searchParams.RN;
         var colsize = 80;
-
+        
         for (var j = 0; j < numColumns; j++) {
             var data = {
                 dataIndex: "column" + (j + 1).toString(),
@@ -1825,13 +1718,9 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             if (arr2[j].data['DATATYPE'] === "N") {
                 colsize = 90;
                 data.align = "right";
-                if(arr2[j].data['DECIMALF'] > 0){
-                    data.type = "float";
-                }else{
-                    data.type = "int";
-                }
+                data.type = "float";
                 //data.summaryType = bussinessTools.summaryField('tot' + (j + 1));
-            } else {
+            }else {
                 data.align = "center";
                 data.type = "string";
                 if (arr2[j].data['size'] > 1) {
@@ -1849,18 +1738,18 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             data.width = colsize;
             data.level = 1;
             //lg(data);
-
+            
             columns.push(data);
-
-
+            
+            
         }
-
+        
         return columns;
     },
-    onChangeBox: function () {
+    onChangeBox: function() {
         console.log("Cambio");
     },
-    btnFilter_click: function (obj) {
+    btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id + '-panelFilters2');
         if (option.isVisible()) {
             option.setVisible(false);
@@ -1869,7 +1758,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         }
     },
     //<editor-fold defaultstate="collapsed" desc="validateProgram">
-    validateProgram: function (nprog) {
+    validateProgram: function( nprog) {
 //        console.log('------- validateProgram ---------');
 //        console.log('------- nprog ' + nprog);
 //        console.log('------- opcion  ' +opcion);
@@ -1878,7 +1767,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             method: 'POST',
             timeout: 60000000,
             params: {nprog: nprog || ''},
-            success: function (response, opts) {
+            success: function(response, opts) {
 //                console.log(response);
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
@@ -1886,12 +1775,12 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                 } else
                     global.Msg({msg: res.sesion});
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
             }
         });
     },
-    validateAccess: function (opcion) {
+    validateAccess: function(opcion) {
         var info = me.info_perm;
         var bolRtn = false;
         switch (opcion)
@@ -1927,7 +1816,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
     /*     
      * Funciones para la paginacion     
      */
-    getPaggin: function () {
+    getPaggin: function() {
         me.pagginActual = '';
         switch (me.gridActual) {
             case  '-gridData':
@@ -1939,26 +1828,26 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 
         }
     },
-    pagFirst: function (obj, e) {
+    pagFirst: function(obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveFirst();
-    }, pagPrevious: function (obj, e) {
+    }, pagPrevious: function(obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.movePrevious();
     },
-    pagNext: function (obj, e) {
+    pagNext: function(obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveNext();
     },
-    pagLast: function (obj, e) {
+    pagLast: function(obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveLast();
     },
-    Search_keyDownHandler: function (obj, e, eOpts) {
+    Search_keyDownHandler: function(obj, e, eOpts) {
         console.log('Search_keyDownHandler');
         switch (e.getKey()) {
             case 13:

@@ -136,7 +136,6 @@ public class PostbillingDAO {
                 objRtn.A3537NMAX = rs01.getDouble("A3537NMAX");
                 objRtn.A3537PBDNE = rs01.getDouble("A3537PBDNE");
                 objRtn.A3537STAT3 = rs01.getString("A3537STAT3");
-                objRtn.A3537FLARF = rs01.getString("A3537FLARF");
 
                 // A2548EMISION
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
@@ -679,7 +678,6 @@ public class PostbillingDAO {
                 objRtn.A3537NUMCONX = rs01.getString("A3537NUMCONX");
                 objRtn.A3537FVTA = rs01.getString("A3537FVTA");
                 objRtn.A3537STAT4 = rs01.getString("A3537STAT4");
-                objRtn.A3537FLARF = rs01.getString("A3537FLARF");
 
                 objRtn.A3537NETO = rs01.getDouble("A3537NETO");
                 objRtn.A3537NMAX = rs01.getDouble("A3537NMAX");

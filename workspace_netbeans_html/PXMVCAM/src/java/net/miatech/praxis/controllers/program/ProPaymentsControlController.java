@@ -446,54 +446,6 @@ public class ProPaymentsControlController extends BaseController {
         }
         return lst;
     }
-    
-    @RequestMapping(value = "searchPayDelayMerchant")
-    public @ResponseBody
-    String searchPayDelayMerchant(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- ProPaymentsControl : searchPayDelayMerchant-------------");
-        map.put("success", true);
-        List<A3020Filter> lst = this.getListPayDelayCard(request, false);
-        System.out.println("Total : " + lst.size());
-        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
-        map.put("data", lst);
-        return new Gson().toJson(map);
-    }
-
-    public List<A3020Filter> getListPayDelayMerchant(HttpServletRequest request, Boolean bExcel) {
-
-        List<A3020Filter> lst = new ArrayList<>(0);
-        A3020Filter filter = new A3020Filter();
-        Gson gson = new Gson();
-        String beanString = "";
-
-        try {
-            logic = new ProPaymentsControlLogic();
-            logic.setSession(this.serverSession.getServerSession());
-
-            beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A3020Filter.class);
-            filter.page.TOTROW = -1;
-            filter.page.START = 0;
-            filter.page.LIMIT = 0;
-
-            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
-            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
-
-            if (!bExcel) {
-                filter.page.PAGROW = 20;
-                start = (start != 0 ? start : 0);
-                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            } else {
-                filter.page.PAGROW = -1;
-                filter.page.PAGNUM = 1;
-            }
-
-            lst = logic.loadPX418SQP02149(filter);
-        } catch (Exception e) {
-            throw new SpringException(e);
-        }
-        return lst;
-    }
 
     @RequestMapping(value = "searchUSAState")
     public @ResponseBody

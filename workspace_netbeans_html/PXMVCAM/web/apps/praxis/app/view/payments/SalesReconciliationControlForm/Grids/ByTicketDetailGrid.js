@@ -167,18 +167,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                             return opts[value] || '';
                         }
                     },
-                    {text: 'User<br>Update', dataIndex: 'a4501USUP', width: 100,
-                        renderer: function (value, metaData, record, rowIndex, colIndex) {
-                            metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
-                            return value;
-                        }
-                    },
-                    {text: 'Date<br>Update', dataIndex: 'a4501FEUP', width: 100,
-                        renderer: function (value, metaData, record, rowIndex, colIndex) {
-                            metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
-                            return value;
-                        }
-                    },
                     {text: 'Processor', dataIndex: 'desc_PROCTYPE', width: 120},
                     {text: 'Chargeback<br>Status', dataIndex: 'chargeback', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {

@@ -127,115 +127,47 @@ Ext.define('Ext.Praxis.view.flown.AverageFareForm.Filters', {
                             maxLength: 1,
                             enforceMaxLength: true,
                             maskRe: /[a-zA-Z]/
-                        },
-                        {
-                            xtype: 'label',
-                            text: 'Tarif Type',
-                            style: 'font-weight:bold;',
-                            padding: '10 5 5 5'
-
-                        },
-                        {xtype: 'tbspacer', width: 5},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbTTARIF',
-                            fieldStyle: 'text-align: left;',
-                            disabled: false,
-                            fieldLabel: '',
-                            width: 80,
-                            labelWidth: 0,
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            store: new Ext.data.SimpleStore({
-                                fields: ['code', 'name'],
-                                data: [
-                                   ["F", "TKT"], ["E", "EMD S"]
-                                ]
-                            }),
-                            valueField: 'code',
-                            displayField: 'name',
-                            value: 'F',
-                            listeners: {
-                                change: 'OnChangeSelected'
-                            }
-                        },
-                        
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    bodyStyle: 'background: transparent',
-                    id: prototype.id + '-panelFilters2',
-                    border: false,
-                    layout: 'column',
-                    defaults: {
-                        // labelStyle: 'font-weight:bold;',
-                        fieldStyle: 'text-align: center;',
-                        padding: '8px 7px 8px 10px',
-                        anchor: '100%'
-                    },
-                    items: [
-//                        {xtype: 'tbspacer', width: 5},
-                        {
-                            xtype: 'label',
-                            text: 'Cod.Rea',
-                            width: 60,
-//                            style: 'font-weight:bold;',
-                            padding: '10 10 5 10'
-
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtRFIC',
-                            required: true,
-                            readOnly: false,
-                            disabled: true,
-                            fieldLabel: '',
-                            width: 50,
-                            labelWidth: 0,
-                            fieldStyle: 'text-align: center;',
-                            labelAlign: 'left',
-                            maxLength: 1,
-                            enforceMaxLength: true,
-                            maskRe: /[a-zA-Z]/,
-                            listeners: {
-                                change: function(field, newValue) {
-                                    field.setValue(newValue.toUpperCase());
-                                }
-                            }
-                        },
-                        {
-                            xtype: 'label',
-                            text: 'Sub.Code',
-                            width: 55,
-//                            style: 'font-weight:bold;',
-                            padding: '10 5 5 5'
-
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtRECODE',
-                            required: true,
-                            readOnly: false,
-                            disabled: true,
-                            fieldLabel: '',
-                            width: 78,
-                            labelWidth: 0,
-                            fieldStyle: 'text-align: center;',
-                            labelAlign: 'left',
-                            maxLength: 3,
-                            enforceMaxLength: true,
-                            maskRe: /[a-zA-Z0-9]/, 
-                            listeners: {
-                                change: function(field, newValue) {
-                                    field.setValue(newValue.toUpperCase());
-                                }
-                            }
                         }
-
                     ]
                 }
+//                {
+//                    xtype: 'panel',
+//                    bodyStyle: 'background: transparent',
+//                    id: prototype.id + '-panelFilters2',
+//                    border: false,
+//                    layout: 'column',
+//                    defaults: {
+//                        // labelStyle: 'font-weight:bold;',
+//                        fieldStyle: 'text-align: center;',
+//                        padding: '8px 7px 8px 10px',
+//                        anchor: '100%'
+//                    },
+//                    items: [
+//                        {
+//                            xtype: 'label',
+//                            text: 'Ticket',
+//                            width: 55,
+//                            style: 'font-weight:bold;',
+//                            padding: '10 5 5 5'
+//
+//                        },
+//                        {
+//                            xtype: 'textfield',
+//                            id: prototype.id + '-txtTKT',
+//                            required: true,
+//                            readOnly: false,
+//                            fieldLabel: '',
+//                            width: 120,
+//                            labelWidth: 0,
+//                            fieldStyle: 'text-align: center;',
+//                            labelAlign: 'left',
+//                            maxLength: 13,
+//                            enforceMaxLength: true,
+//                            maskRe: /[0-9]/
+//                        }
+//
+//                    ]
+//                }
             ]
         }
     ]

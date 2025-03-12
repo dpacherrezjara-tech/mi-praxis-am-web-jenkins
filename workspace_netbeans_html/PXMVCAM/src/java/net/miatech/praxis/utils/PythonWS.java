@@ -47,24 +47,32 @@ public class PythonWS {
     //</editor-fold>
 
     private String getRestUrl(String endpoint) {
-        String restUrl = this.session.getServerSession().getPropertySession().get("RUTA_API_PRAXIS").toString() + endpoint;
+        String restUrl = this.session.getServerSession().getPropertySession().get("RUTA_REST_SERVICE_AM").toString() + endpoint;
         System.out.println("ACTIVE URL: " + restUrl);
         return restUrl;
     }
 
-    public ResponseEntity<byte[]> downloadFilesFromPython(String endpoint, Map queryParams) throws Exception {
+    public ResponseEntity<byte[]> downloadFilesFromPython(String endpoint, HashMap body) throws Exception {
         Unirest.setTimeouts(3600000, 3600000);
-        HttpResponse<JsonNode> response = Unirest.get(this.getRestUrl(endpoint)).queryString(queryParams).asJson();
-        JsonNode body = response.getBody();
-        JSONObject jsonObject = body.getObject();
-        String status = jsonObject.getString("status");
-        String url = jsonObject.getString("url");
-        // Si la respuesta HTTP tiene éxito, leemos los datos de la respuesta
-        if (status.equals("success")) {
+        Future<HttpResponse<JsonNode>> postFuture = Unirest.post(this.getRestUrl(endpoint))//Sending
+                .header("content-type", "application/json")
+                .header("cache-control", "no-cache")
+                .body(new Gson().toJson(body))
+                .asJsonAsync();
 
-            byte[] responseBody = downloadFile(url);
-            //
-            String nombreFile = Paths.get(new URL(url).getPath())
+        HttpResponse<JsonNode> postResponse = postFuture.get();
+        String downloadUrl = postResponse.getBody().getObject().getString("filename");
+
+        // Descargamos el archivo desde la URL de descarga obtenida
+        HttpResponse<InputStream> httpResponse = Unirest.get(downloadUrl).asBinary();
+
+        // Si la respuesta HTTP tiene éxito, leemos los datos de la respuesta
+        if (httpResponse.getStatus() == HttpURLConnection.HTTP_OK) {
+            InputStream inputStream = httpResponse.getBody();
+            byte[] responseBody = IOUtils.toByteArray(inputStream);
+            inputStream.close();
+
+            String nombreFile = Paths.get(new URL(downloadUrl).getPath())
                     .getFileName().toString();
 
             HttpHeaders headers = new HttpHeaders();
@@ -74,41 +82,35 @@ public class PythonWS {
             // Devolvemos un ResponseEntity con los datos de la respuesta y el código de estado HTTP 200
             return new ResponseEntity<>(responseBody, headers, HttpStatus.OK);
         } else {
-            System.out.println("Falló la descarga del archivo. Código de respuesta HTTP: " + status.equals("success"));
+            System.out.println("Falló la descarga del archivo. Código de respuesta HTTP: " + httpResponse.getStatus());
             // Devolvemos un ResponseEntity con el código de estado HTTP 400 si la descarga falla
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    public static byte[] downloadFile(String fileURL) throws IOException {
-        URL url = new URL(fileURL);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-
-        try (InputStream inputStream = connection.getInputStream()) {
-            byte[] responseBody = IOUtils.toByteArray(inputStream);
-            return responseBody;
-        } finally {
-            connection.disconnect();
-        }
-    }
-
-    public ResponseEntity<?> downloadFilesVisorPython(String endpoint, Map queryParams, String sesion) throws InterruptedException, ExecutionException, JSONException, UnirestException {
+    public ResponseEntity<?> downloadFilesVisorPython(String endpoint, HashMap body, String sesion) throws InterruptedException, ExecutionException, JSONException {
         Unirest.setTimeouts(3600000, 3600000);
-        HttpResponse<JsonNode> response = Unirest.get(this.getRestUrl(endpoint)).queryString(queryParams).asJson();
-        JsonNode body = response.getBody();
-        JSONArray jsonArray = new JSONArray(body.toString());
+        Future<HttpResponse<JsonNode>> postFuture = Unirest.post(this.getRestUrl(endpoint))//Sending
+                .header("content-type", "application/json")
+                .header("cache-control", "no-cache")
+                .body(new Gson().toJson(body))
+                .asJsonAsync();
+
+        HttpResponse<JsonNode> postResponse = postFuture.get();
+        Object obj = postResponse.getBody().getObject();
+        JSONObject jsonObject = (JSONObject) obj;
         List<Map<String, String>> resp = new ArrayList<>();
         //
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject datosfor = jsonArray.getJSONObject(i);
+        JSONArray ListDatos = (JSONArray) jsonObject.get("files");
+        for (int i = 0; i < ListDatos.length(); i++) {
+            JSONObject datosfor = ListDatos.getJSONObject(i);
             String url1 = datosfor.getString("url");
             String extension = datosfor.getString("extension");
             String[] partes = url1.split("/");
             //
             String imageUrl = url1.replace(" ", "%20");
             String destinationFile = sesion + "\\" + partes[partes.length - 1];
-            String NameFile = partes[partes.length - 1];
+            String NameFile = partes[partes.length - 1]; 
             //
             try {
 
@@ -151,61 +153,33 @@ public class PythonWS {
         JSONObject myObject = null;
         Unirest.setTimeouts(3600000, 3600000);
         if (File3 != null) {
-            HttpResponse<JsonNode> response = Unirest.post(this.getRestUrl(endpoint))
+            HttpResponse<String> response = Unirest.post(this.getRestUrl(endpoint))
                     .field("client", ciente)
-                    .field("remotePath", remote_path)
-                    .field("files", File1)
-                    .field("files", File2)
-                    .field("files", File3)
-                    .asJson();
-            JsonNode body = response.getBody();
-            // Extrae los datos específicos del JSON
-            JSONArray jsonArray = new JSONArray(body.toString());
-            JSONObject firstObject = jsonArray.getJSONObject(0);
-            String status = firstObject.getString("status");
-            if (status.equals("success")) {
-                retorno = true;
-            } else {
-                retorno = false;
-            }
+                    .field("remote_path", remote_path)
+                    .field("file", File1)
+                    .field("file", File2)
+                    .field("file", File3)
+                    .asString();
+            myObject = new JSONObject(response.getBody());
         } else if (File2 != null) {
-            HttpResponse<JsonNode> response = Unirest.post(this.getRestUrl(endpoint))
+            HttpResponse<String> response = Unirest.post(this.getRestUrl(endpoint))
                     .field("client", ciente)
-                    .field("remotePath", remote_path)
-                    .field("files", File1)
-                    .field("files", File2)
-                    .asJson();
-            JsonNode body = response.getBody();
-            // Extrae los datos específicos del JSON
-            JSONArray jsonArray = new JSONArray(body.toString());
-            JSONObject firstObject = jsonArray.getJSONObject(0);
-            String status = firstObject.getString("status");
-            if (status.equals("success")) {
-                retorno = true;
-            } else {
-                retorno = false;
-            }
+                    .field("remote_path", remote_path)
+                    .field("file", File1)
+                    .field("file", File2)
+                    .asString();
+            myObject = new JSONObject(response.getBody());
         } else {
-            // Future<HttpResponse<JsonNode>> 
-            HttpResponse<JsonNode> response = Unirest.post(this.getRestUrl(endpoint))
+            HttpResponse<String> response = Unirest.post(this.getRestUrl(endpoint))
                     .field("client", ciente)
-                    .field("remotePath", remote_path)
-                    .field("files", File1)
-                    .asJson();
-            JsonNode body = response.getBody();
-            // Extrae los datos específicos del JSON
-            JSONArray jsonArray = new JSONArray(body.toString());
-            JSONObject firstObject = jsonArray.getJSONObject(0);
-            String status = firstObject.getString("status");
-            if (status.equals("success")) {
-                retorno = true;
-            } else {
-                retorno = false;
-            }
-
-            //myObject = new JSONObject(response.getBody());
+                    .field("remote_path", remote_path)
+                    .field("file", File1)
+                    .asString();
+            myObject = new JSONObject(response.getBody());
         }
 
+        //  myObject.get("message");
+        retorno = (boolean) myObject.get("success");
         return retorno;
     }
 

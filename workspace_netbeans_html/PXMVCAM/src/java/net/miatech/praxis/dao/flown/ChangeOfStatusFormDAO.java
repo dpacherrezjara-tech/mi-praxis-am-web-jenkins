@@ -63,7 +63,7 @@ public class ChangeOfStatusFormDAO {
             cstmt01.registerOutParameter(19, Types.INTEGER);
             cstmt01.registerOutParameter(20, Types.INTEGER);
             cstmt01.registerOutParameter(21, Types.INTEGER);
-            cstmt01.registerOutParameter(22, Types.INTEGER); 
+            cstmt01.registerOutParameter(22, Types.INTEGER);
 
             cstmt01.setString(1, filter.IN_OPTION);
             cstmt01.setString(2, session.getUserView().getCustomerInfo().CCUST);
@@ -102,12 +102,7 @@ public class ChangeOfStatusFormDAO {
                 objRtn = new A3676Filter();
                 objRtn.A3676CCUST = rs01.getString("A3676CCUST");
                 objRtn.A3676LOTE = rs01.getString("A3676LOTE");
-                
-                objRtn.A3676AREA = rs01.getString("A3676AREA");
-                objRtn.A3676AREAD = rs01.getString("A3676AREAD");
-                objRtn.A3676MODO = rs01.getString("A3676MODO");
-                objRtn.A3676TYPE = rs01.getString("A3676TYPE");
-                
+
                 objRtn.A3676ORIG = rs01.getString("A3676ORIG");
                 objRtn.A3676CIA = rs01.getString("A3676CIA");
                 objRtn.A3676FORMA = rs01.getString("A3676FORMA");
@@ -150,7 +145,7 @@ public class ChangeOfStatusFormDAO {
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
                 objRtn.page.TOTROW = filter.page.TOTROW;
 
-                lstRtn.add(objRtn); 
+                lstRtn.add(objRtn);
 
                 //System.out.println("Aqui entro con Filtro Categoria: " +lstRtn);
             }
@@ -192,7 +187,7 @@ public class ChangeOfStatusFormDAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST); 
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_OPTION);
             cstmt01.setString(3, filter.IN_DATEFROM);
             cstmt01.setString(4, filter.IN_DATETO);

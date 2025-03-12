@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,7 +53,7 @@ public class SendingcontrolReportFormController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private SendingcontrolReportFormLogic logic;
-
+    
     @Autowired
     private PythonWS pws;
 
@@ -261,38 +260,32 @@ public class SendingcontrolReportFormController extends BaseController {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
         String vl_PREFIX = "";
-        String vl_urlREST = "/sending-control-report/file";
+        String vl_urlREST = "/api/sending-control-report/downloadfiles";
         switch (filter.IN_TYPE) {
             case "DN":
-                vl_PREFIX = "NONCOMPARATIVE";
+                vl_PREFIX = "NONCOMPARATIVE/";
                 break;
             case "DC":
-                vl_PREFIX = "COMPARATIVE";
+                vl_PREFIX = "COMPARATIVE/";
                 break;
             default:
-                vl_PREFIX = "GSA";
+                vl_PREFIX = "GSA/";
                 break;
         }
         try {
             if (vl_PREFIX.isEmpty()) {
                 throw new NullPointerException("No existe endpoint");
             }
-            Map<String, Object> queryParams = new HashMap<>();
-            queryParams.put("date_from", filter.IN_DATEFROM);
-            queryParams.put("date_to", filter.IN_DATETO);
-            if (filter.IN_TYPE.equals("DF")) {
-                queryParams.put("pr_type", "GSA");
-            } else {
-                queryParams.put("pr_type", filter.IN_TYPE);
-            }
-            queryParams.put("PREFIX", vl_PREFIX);
-            queryParams.put("CCUST", "139");
-            queryParams.put("client", "am");
-
-            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(vl_urlREST, queryParams);
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("date_from", filter.IN_DATEFROM);
+            bodyData.put("date_to", filter.IN_DATETO);
+            bodyData.put("pr_type", filter.IN_TYPE);
+            bodyData.put("PREFIX", vl_PREFIX);
+            
+            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(vl_urlREST,bodyData);
             return res;
         } catch (Exception e) {
-            System.out.println("Error Message => " + e.getMessage());
+            System.out.println("Error Message => "+ e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             //throw new SpringException(e);
         }
@@ -304,35 +297,33 @@ public class SendingcontrolReportFormController extends BaseController {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
         String vl_PREFIX = "";
-        String vl_urlREST = "/sending-control-report/fileByCtry";
+        String vl_urlREST = "/api/sending-control-report/downloadfilesbyctry";
         switch (filter.IN_TYPE) {
             case "DN":
-                vl_PREFIX = "NONCOMPARATIVE";
+                vl_PREFIX = "NONCOMPARATIVE/";
                 break;
             case "DC":
-                vl_PREFIX = "COMPARATIVE";
+                vl_PREFIX = "COMPARATIVE/";
                 break;
             default:
-                vl_PREFIX = "GSA";
+                vl_PREFIX = "GSA/";
                 break;
         }
         try {
             if (vl_PREFIX.isEmpty()) {
                 throw new NullPointerException("No existe endpoint");
             }
-            Map<String, Object> queryParams = new HashMap<>();
-            queryParams.put("date_from", filter.IN_DATEFROM);
-            queryParams.put("country", filter.IN_COUNTRY);
-            //queryParams.put("pr_type", filter.IN_TYPE);
-            queryParams.put("PREFIX", vl_PREFIX);
-            queryParams.put("CCUST", "139");
-            queryParams.put("client", "am");
+            HashMap bodyData = new HashMap<>();
+            bodyData.put("date_from", filter.IN_DATEFROM);
+            bodyData.put("country", filter.IN_COUNTRY);
+            bodyData.put("pr_type", filter.IN_TYPE);
+            bodyData.put("PREFIX", vl_PREFIX);
 
-            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(vl_urlREST, queryParams);
+            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(vl_urlREST,bodyData);
             return res;
 
         } catch (Exception e) {
-            System.out.println("Error Message => " + e.getMessage());
+            System.out.println("Error Message => "+ e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

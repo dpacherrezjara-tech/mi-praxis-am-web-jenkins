@@ -14,7 +14,6 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Future;
 import javax.servlet.http.HttpServletRequest;
 import net.miatech.beans.ReportTaxA1530Filter;
@@ -22,7 +21,6 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.sales.AccountingTaxdetailFormLogic;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -119,7 +117,7 @@ public class AccountingTaxdetailFormController extends BaseController {
     }
 
     public String upload_s3(ReportTaxA1530Filter filter) throws SQLException, Exception {
-        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_API_PRAXIS").toString();
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_SERVICE_AM").toString();
         String context = "";//serverSession.getUserView().getUserInfo().CONTEXT;
         String usr = serverSession.getServerSession().getUserView().getUserInfo().USR;
         String pass = serverSession.getServerSession().getUserView().getUserInfo().TOKEN;
@@ -128,41 +126,53 @@ public class AccountingTaxdetailFormController extends BaseController {
          Se establece tiempo límite de conexión por 60 min
          */
         Unirest.setTimeouts(3600000, 3600000);
+        HashMap bodyData = new HashMap<>();
+        bodyData.put("V_CCUST", "139");
+        bodyData.put("V_BUSCARPOR", filter.Opcion);
+        bodyData.put("V_FECINI", filter.DateFrom);
+        bodyData.put("V_FECFIN", filter.DateTo);
+        bodyData.put("V_IDCON", filter.CONTABLE);
+        bodyData.put("V_TIPOTAX", filter.Tax);
+        bodyData.put("V_GRUPO", filter.GRUPO);
+        bodyData.put("V_TIPOFUENT", filter.SALES);
+        bodyData.put("V_MDA", filter.Currency);
+        bodyData.put("V_COUNTRY", filter.COUNTRY);
+        bodyData.put("V_BANCO", filter.BANK);
+        bodyData.put("V_AGENTE", filter.IATA);
+        bodyData.put("V_CHANEL", filter.CHANNEL);
+        bodyData.put("V_ATO", filter.ATO);
+        bodyData.put("V_COUNTRY_TAX", filter.COUNTRYTAX);
+        bodyData.put("to_emails", filter.CorreoPri);
+        bodyData.put("cc_emails", filter.CorreoCopi);
+        bodyData.put("domain", context);
+        bodyData.put("IN_USER", usr);
+        bodyData.put("IN_PWD", pass);
 
-        Map<String, Object> queryParams = new HashMap<>();
-        queryParams.put("V_CCUST", "139");
-        queryParams.put("V_BUSCARPOR", filter.Opcion);
-        queryParams.put("V_FECINI", filter.DateFrom);
-        queryParams.put("V_FECFIN", filter.DateTo);
-        queryParams.put("V_IDCON", filter.CONTABLE);
-        queryParams.put("V_TIPOTAX", filter.Tax);
-        queryParams.put("V_GRUPO", filter.GRUPO);
-        queryParams.put("V_TIPOFUENT", filter.SALES);
-        queryParams.put("V_MDA", filter.Currency);
-        queryParams.put("V_COUNTRY", filter.COUNTRY);
-        queryParams.put("V_BANCO", filter.BANK);
-        queryParams.put("V_AGENTE", filter.IATA);
-        queryParams.put("V_CHANEL", filter.CHANNEL);
-        queryParams.put("V_ATO", filter.ATO);
-        queryParams.put("V_COUNTRY_TAX", filter.COUNTRYTAX);
-        queryParams.put("to_emails", filter.CorreoPri);
-        queryParams.put("cc_emails", filter.CorreoCopi);
-        queryParams.put("domain", context);
-        queryParams.put("IN_USER", usr);
-        queryParams.put("IN_PWD", pass);
+//        Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST.trim() + "/api/AccountingTaxdetail/report001/")
+          Future<HttpResponse<JsonNode>> future = Unirest.post(urlREST.trim() + "/api/accounting-tax-detail/accountingtax")
+                .header("content-type", "application/json")
+                .header("cache-control", "no-cache")
+                .body(new Gson().toJson(bodyData))
+                .asJsonAsync(new Callback<JsonNode>() {
 
-        HttpResponse<JsonNode> response = Unirest.get(urlREST.trim() + "/accounting-tax-detail/report").queryString(queryParams).asJson();
-        JsonNode body = response.getBody();
-        // Extrae los datos específicos del JSON
-        JSONObject jsonObject = body.getObject();
-        String status = jsonObject.getString("status");
+                    public void failed(UnirestException e) {
+                        System.out.println("The request has failed");
+                    }
+
+                    public void completed(HttpResponse<JsonNode> response) {
+                        int code = response.getStatus();
+                        System.out.println("==>" + code);
+                    }
+
+                    public void cancelled() {
+                        System.out.println("The request has been cancelled");
+                    }
+
+                });
+
         String error_code = "0";//response.getBody().getObject().get("error_code").toString();
-        String error_msg;
-        if (status.equals("success")) {
-            error_msg = jsonObject.getString("message");//response.getBody().getObject().get("error_msg").toString();
-        } else {
-            error_msg = jsonObject.getString("message");//response.getBody().getObject().get("error_msg").toString();
-        }
+        String error_msg = "The report will be sending the mail";//response.getBody().getObject().get("error_msg").toString();
+
         return error_msg;
 
     }

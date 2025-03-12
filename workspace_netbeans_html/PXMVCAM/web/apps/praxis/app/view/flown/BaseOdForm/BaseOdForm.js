@@ -1,18 +1,22 @@
-prototype.widthContenedor = 1660;
-console.log(prototype);
-Ext.define('Ext.Praxis.view.flown.FlightManifestForm.FlightManifestForm', {
+prototype.id = 'BaseOdForm';
+prototype.url = CONTEXTPATH + '/BaseOd';
+prototype.widthContenedor = 850;
+prototype.widthGrid = 825;
+
+Ext.define('Ext.Praxis.view.flown.BaseOdForm.BaseOdForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.FlightManifestForm',
+    alias: 'widget.BaseOdForm',
     requires: [
-        'Ext.Praxis.controller.flown.FlightManifest.FlightManifestController',
-        'Ext.Praxis.view.flown.FlightManifestForm.Options',
-        'Ext.Praxis.view.flown.FlightManifestForm.Filters',
-        'Ext.Praxis.view.flown.FlightManifestForm.Info'
+          'Ext.Praxis.controller.flown.BaseOd.BaseOdController',
+          'Ext.Praxis.view.flown.BaseOdForm.Options',
+          'Ext.Praxis.view.flown.BaseOdForm.Filters',
+          'Ext.Praxis.view.flown.BaseOdForm.Info'
     ],
-    controller: 'FlightManifestController',
+    controller: 'BaseOdController',
     layout: {
         type: 'fit'
     },
+    padding: '0 0 0 0',
     border: false,
     defaults: {
         border: false
@@ -25,7 +29,7 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.FlightManifestForm', {
             layout: 'fit',
             items: [
                 {
-                    id: prototype.id + '-form',
+                    id: prototype.id +'-form',
                     border: false,
                     bodyCls: 'colorFondo',
                     layout: 'fit',
@@ -37,11 +41,12 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.FlightManifestForm', {
                         {
                             xtype: 'panel',
                             region: 'center',
+//                          width: 900,
                             layout: 'border',
                             items: [
                                 {
                                     region: 'center',
-                                    id: prototype.id + '-centerC',
+                                    id: prototype.id +'-centerC',
                                     layout: {
                                         type: 'vbox',
                                         align: 'center'
@@ -54,34 +59,35 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.FlightManifestForm', {
                                     },
                                     items: [
                                         {
-                                            xtype: prototype.id + '-options'
+                                            xtype:prototype.id + '-options'
                                         }
                                         ,
                                         {
-                                            xtype: prototype.id + '-filters',
-                                            id: prototype.id + '-contentFilter'
+                                            xtype:prototype.id+ '-filters',
+                                            id: prototype.id+'-contentFilter',
+                                            hidden: true
                                         }
                                         ,
                                         {
                                             xtype: 'panel',
-                                            height: 640,
+                                            height: 580,
                                             layout: 'fit',
-                                            border: true,
                                             items: [
                                                 {
                                                     xtype: 'panel',
+                                                    id: prototype.id+'-centerC-panel01',
                                                     layout: 'border',
                                                     align: 'center',
-                                                    border: false,
+                                                    border: true,
                                                     defaults: {
-                                                        border: false
+                                                        border: true
                                                     },
                                                     bodyStyle: 'background-color: white;',
                                                     items: [
                                                         {
                                                             region: 'center',
-                                                            xtype: prototype.id + '-info',
-                                                            id: prototype.id + '-contentInfo'
+                                                            xtype: prototype.id +'-info',
+                                                            id:prototype.id+'-contentInfo'
                                                         }
                                                     ]
                                                 }
@@ -97,3 +103,6 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.FlightManifestForm', {
         }
     ]
 });
+
+
+

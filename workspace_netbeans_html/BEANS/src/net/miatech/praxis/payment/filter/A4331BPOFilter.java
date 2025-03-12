@@ -8,32 +8,6 @@ import net.miatech.praxis.payment.entities.A4331;
  */
 public class A4331BPOFilter extends A4331{
     private String DESC_PROC,DESC_ERROR,DESC_ADJU,SMERCHIDF,DESC_PMERCHID,DESC_SMERCHID,BPOCOMENT,ADJUCOMENT;
-    private Double F_TAX,F_TGROSAMOUN,F_TGROSAMPAY;
-
-    public Double getF_TGROSAMPAY() {
-        return F_TGROSAMPAY;
-    }
-
-    public void setF_TGROSAMPAY(Double F_TGROSAMPAY) {
-        this.F_TGROSAMPAY = F_TGROSAMPAY;
-    }
-
-    public Double getF_TGROSAMOUN() {
-        return F_TGROSAMOUN;
-    }
-
-    public void setF_TGROSAMOUN(Double F_TGROSAMOUN) {
-        this.F_TGROSAMOUN = F_TGROSAMOUN;
-    }
-
-    public Double getF_TAX() {
-        return F_TAX;
-    }
-
-    public void setF_TAX(Double F_TAX) {
-        this.F_TAX = F_TAX;
-    }
-    
 
     public String getDESC_PROC() {
         return DESC_PROC;

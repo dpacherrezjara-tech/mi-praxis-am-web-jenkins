@@ -15,17 +15,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentM
         const view = this.view;
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
         console.log(view.searchParams);
-        //const tdate = view.searchParams.IN_DATE === 'PRDA' ? 'Processing<br>Date' : 'Payment<br>Date';
-        let tdate = ''; 
-        if (view.searchParams.IN_DATE === 'PRDA'){
-            tdate = 'Processing<br>Date';   
-        }
-        else if (view.searchParams.IN_DATE === 'PAYDATE'){
-            tdate = 'Payment<br>Date';
-        }
-        else {
-            tdate = 'Update<br>Date';
-        }
+        const tdate = view.searchParams.IN_DATE === 'PRDA' ? 'Processing<br>Date' : 'Payment<br>Date';
         me.view.columns[0].setText(tdate);
         if (me.view.backButton) {
             me.view.columns[1].hide();
@@ -61,22 +51,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentM
     onClickTotal: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
         const view = me.view;
-        //console.log (record.data);
         if (record.data.total === 0) {
             global.Msg({msg: 'No data'});
             return;
         }
-        let tdate = '';
-        if (record.data.paydate){
-            tdate = record.data.paydate;
-        }
-        else if (record.data.prda){
-            tdate = record.data.prda;
-        }
-        else {
-            tdate = record.data.feup;
-        }
-        me.openDaysSummary(tdate);
+        me.openDaysSummary(record.data.paydate ? record.data.paydate : record.data.prda);
     },
     onClickDetail: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
@@ -131,23 +110,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentM
             IN_CCUST: '139',
             ...me.view.searchParams
         };
-        let tdate = '';
-        if (obj.paydate){
-            tdate = obj.paydate;
-        }
-        else if (obj.prda){
-            tdate = obj.prda;
-        }
-        else {
-            tdate = obj.feup;
-        }
         if (me.view.searchParams.IN_TDATE === 'M') {
-            params.IN_MONTH = tdate;
+            params.IN_MONTH = obj.paydate ? obj.paydate : obj.prda;
             params.IN_DATEFROM = '';
             params.IN_DATETO = '';
         } else {
-            params.IN_DATEFROM = tdate;
-            params.IN_DATETO = tdate;
+            params.IN_DATEFROM = (obj.paydate ? obj.paydate : obj.prda);
+            params.IN_DATETO = (obj.paydate ? obj.paydate : obj.prda);
             params.IN_MONTH = '';
         }
         //<editor-fold defaultstate="collapsed" desc="Opciones">

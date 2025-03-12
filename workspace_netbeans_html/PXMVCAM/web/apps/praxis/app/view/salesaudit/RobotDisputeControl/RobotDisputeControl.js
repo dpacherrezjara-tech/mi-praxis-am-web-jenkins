@@ -22,7 +22,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotDisputeControl.RobotDisputeControl',
     defaults: {
         border: false
     },
-    listeners: {
+    listeners:{
         beforeShow: 'OnBeforeShow'
     },
     items: [
@@ -66,22 +66,11 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotDisputeControl.RobotDisputeControl',
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.id + '-btn-excel',
-                                    //hidden: true,
+                                    id: prototype.id + '-btn-excel',hidden: true,
                                     iconCls: 'prx-icon-excel',
                                     tooltip: 'Export to Excel',
                                     listeners: {
-                                        click: 'imgExcel_clickHandler'
-                                    }
-                                },
-                                {
-                                    xtype: 'button',
-                                    id: prototype.id + '-btn-excel2',
-                                    hidden: true,
-                                    iconCls: 'prx-icon-excel',
-                                    tooltip: 'Export to Excel',
-                                    listeners: {
-                                        click: 'searchform_detalle_Dispute_excel'
+                                        click: 'onExcelClick'
                                     }
                                 },
                                 {
@@ -162,7 +151,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotDisputeControl.RobotDisputeControl',
                                             format: 'Y/m/d',
                                             labelWidth: 40,
                                             value: new Date(),
-                                            maxValue: Ext.Date.format(new Date(), 'Y/m/d'),
+                                            maxValue : Ext.Date.format(new Date(),'Y/m/d'),
                                             labelAlign: 'right',
                                             width: 135,
                                             listeners: {
@@ -176,7 +165,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotDisputeControl.RobotDisputeControl',
                                             format: 'Y/m/d',
                                             labelWidth: 40,
                                             value: new Date(),
-                                            maxValue: Ext.Date.format(new Date(), 'Y/m/d'),
+                                            maxValue : Ext.Date.format(new Date(),'Y/m/d'),
                                             labelAlign: 'right',
                                             width: 135,
                                             listeners: {
@@ -248,7 +237,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotDisputeControl.RobotDisputeControl',
                                             }
                                         }, {
                                             xtype: 'combo',
-                                            id: prototype.id + '-CmbArea', hidden: true,
+                                            id: prototype.id + '-CmbArea',hidden: true,
                                             fieldLabel: 'Area',
                                             queryMode: 'local',
                                             displayField: 'name',
@@ -266,7 +255,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotDisputeControl.RobotDisputeControl',
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-Audit', hidden: true,
+                                            id: prototype.id + '-Audit',hidden: true,
                                             fieldLabel: 'Audit',
                                             maskRe: /[A-Z,a-z,Ñ,ñ]/,
                                             maxLength: 10,
@@ -323,27 +312,27 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotDisputeControl.RobotDisputeControl',
                                         renderer: 'onRendererColumnOnPais'
                                     },
                                     /*{text: 'Country', dataIndex: 'A3268PAIS', width: 80, align: 'center',
-                                     listeners: {
-                                     click: 'searchform_detalle_Dispute'
-                                     },
-                                     renderer: function(value, metaData, record, rowIndex) {
-                                     var vhtml = '<a href="#salesaudit-Dispute-report-form" >' + value + '</a>';
-                                     return vhtml;
-                                     }
-                                     },*/
-                                    {text: 'Total', dataIndex: 'A3268CANT', width: 120, align: 'right',
+                                        listeners: {
+                                            click: 'searchform_detalle_Dispute'
+                                        },
+                                        renderer: function(value, metaData, record, rowIndex) {
+                                            var vhtml = '<a href="#salesaudit-Dispute-report-form" >' + value + '</a>';
+                                            return vhtml;
+                                        }
+                                    },*/
+                                    {text: 'Total', dataIndex: 'A3268CTAPROCESADA', width: 120, align: 'right',
                                         cls: 'column_header_double',
                                         summaryType: 'sum',
-                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                        summaryRenderer: function(value, summaryData, dataIndex) {
                                             return 'Total ' + value;
                                         }, field: {
                                             xtype: 'numberfield'
                                         }
                                     },
-                                    {text: 'Processed', dataIndex: 'A3268TOTALPAG', width: 100, align: 'right',
+                                    {text: 'Processed', dataIndex: 'A3268CANT', width: 100, align: 'right',
                                         //cls: 'column_header_double',
                                         summaryType: 'sum',
-                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                        summaryRenderer: function(value, summaryData, dataIndex) {
                                             return 'Processed ' + value;
                                         }, field: {
                                             xtype: 'numberfield'
@@ -359,17 +348,17 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotDisputeControl.RobotDisputeControl',
                                         renderer: 'onRendererColumnOnTime'
                                     }
                                     /*{text: '', dataIndex: 'A3268STATO', width: 40, align: 'right',
-                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                     if (value == 'A') {
-                                     return '<img src="resources/img/semaforo/Circle_Green.png" />';
-                                     } else if (value == 'D') {
-                                     return '<img src="resources/img/semaforo/Circle_Silver.png" />';
-                                     } else {
-                                     return '<img src="resources/img/semaforo/Circle_Red.png" />';
-                                     }
-                                     
-                                     }
-                                     }*/
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            if (value == 'A') {
+                                                return '<img src="resources/img/semaforo/Circle_Green.png" />';
+                                            } else if (value == 'D') {
+                                                return '<img src="resources/img/semaforo/Circle_Silver.png" />';
+                                            } else {
+                                                return '<img src="resources/img/semaforo/Circle_Red.png" />';
+                                            }
+
+                                        }
+                                    }*/
 
                                 ]
                             }
@@ -379,7 +368,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotDisputeControl.RobotDisputeControl',
                             id: prototype.id + '-gridDetalle',
                             width: prototype.widthContenedor,
                             hidden: true,
-                            height: 600,
+                            height:600,
                             columnLines: true,
                             columns: {
                                 defaults: {
@@ -400,14 +389,14 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotDisputeControl.RobotDisputeControl',
                                     {
                                         text: 'Country', dataIndex: 'A3268PAIS', align: 'center', width: 70, sortable: false
                                     },
-                                    /* {text: 'Currency', dataIndex: 'A3388MDA', width: 80, align: 'center'},
-                                     {
-                                     text: 'Fare', dataIndex: 'A3388TARIF', width: 80, sortable: false,
-                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                     metaData.style = "text-align:right;";
-                                     return win.formatDblNumber(value);
-                                     }
-                                     },*/
+                                   /* {text: 'Currency', dataIndex: 'A3388MDA', width: 80, align: 'center'},
+                                    {
+                                        text: 'Fare', dataIndex: 'A3388TARIF', width: 80, sortable: false,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;";
+                                            return win.formatDblNumber(value);
+                                        }
+                                    },*/
                                     {
                                         text: 'Memo Number', dataIndex: 'A3268NMEMO', align: 'center', width: 100, sortable: false
                                     },
@@ -433,15 +422,15 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotDisputeControl.RobotDisputeControl',
                                         renderer: 'onRendererColumnOnStatus'
                                     }
                                     /*{text: '', dataIndex: '', width: 40, align: 'right',renderer: 'onRendererColumnOnStatus'
-                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                     if (value == 'Pending') {
-                                     return '<img src="resources/img/icon/16x16/loading_robot.png" />';
-                                     } else {
-                                     return '<img src="resources/img/icon/16x16/stado_habilita.png" />';
-                                     }
-                                     
-                                     }
-                                     }*/
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            if (value == 'Pending') {
+                                                return '<img src="resources/img/icon/16x16/loading_robot.png" />';
+                                            } else {
+                                                return '<img src="resources/img/icon/16x16/stado_habilita.png" />';
+                                            }
+
+                                        }
+                                    }*/
 
 
 
