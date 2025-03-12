@@ -86,6 +86,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DetailDispute
         me.beanINI.CNXPA = rec.data.A2548CNXPA;
         me.beanINI.FLAG = rec.data.A2548FLAG;
         me.beanIniTem = me.beanINI;
+        if(rec.data.A2548FLAG==='D'){
+             Ext.getCmp(prototype.id1 + '-ComboStatus').setVisible(true);
+        }else{
+             Ext.getCmp(prototype.id1 + '-ComboStatus').setVisible(false);
+        }
 
     },
     setStoresFilters: function () {
@@ -167,7 +172,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DetailDispute
             return;
         }
         if (Ext.getCmp(prototype.id1 + '-Argument').getValue() === '') {
-            Ext.MessageBox.alert('PRAXIS', "The Argument must not exceed 500 characters", function (btn, text) {
+            Ext.MessageBox.alert('PRAXIS', "The Argument must not exceed 2S00 characters", function (btn, text) {
                 if (btn === 'ok' || btn === 'cancel')
                     setTimeout("Ext.getCmp(prototype.id1 + '-Argument').focus();", 100);
             });
@@ -292,7 +297,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DetailDispute
 
 
     onWinFileViewerClick: function (rowIndex) {
-        var me = this;     
+        var me = this; 
+        rec2 = me.view.params.rec;
+        var NCNXPA=rec2.data.A2548CNXPA === '' ? me.beanTMP.A2553CNXPA : rec2.data.A2548CNXPA;
         var grid = Ext.getCmp(prototype.id1 + '-gridDispuRazon');
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
@@ -301,7 +308,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DetailDispute
             params: {
                 rec: rec,
                 nmemo: Ext.getCmp(prototype.id1 + '-nmemo').getValue(''),
-                CNXPA: me.beanTMP.A2553CNXPA
+                CNXPA: NCNXPA
             }
         });
         win.show();

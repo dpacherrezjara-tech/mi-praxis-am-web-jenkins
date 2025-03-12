@@ -720,7 +720,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.EMDStandaloneController', 
                 global.getFile(prototype.url + '/getXLSXMidle?beanString=' + paramsDetailEMD.beanString);
                 break;
             case  '-panelGridData':
-                global.getFile(prototype.url + '/getXLSX?beanString=' + paramsDetailEMD.beanString);
+                global.getFile(prototype.url + '/getXLSX?beanString=' + encodeURI(paramsDetailEMD.beanString));
                 break;
             default:
                 global.Msg(

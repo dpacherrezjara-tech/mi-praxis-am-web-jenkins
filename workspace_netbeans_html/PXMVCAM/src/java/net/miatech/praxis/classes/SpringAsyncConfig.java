@@ -4,8 +4,6 @@
  */
 package net.miatech.praxis.classes;
 
-import java.util.concurrent.RejectedExecutionHandler;
-import java.util.concurrent.ThreadPoolExecutor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +18,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @Configuration
 @EnableAsync
 @ComponentScan("net.miatech")
-public class SpringAsyncConfig {
+public class SpringAsyncConfig{
 
     @Bean
     public TaskExecutor taskExecutor1() {
@@ -33,20 +31,6 @@ public class SpringAsyncConfig {
         executor.initialize();
         return executor;
     }
-
-    @Bean(name = "sabreRobotExecutor")
-    public TaskExecutor sabreRobotExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(5); // Número de hilos que se mantendrán en el pool
-        executor.setMaxPoolSize(5); // Máximo número de hilos
-        executor.setQueueCapacity(5); // Capacidad de la cola
-        executor.setThreadNamePrefix("SabreRobot-");
-        executor.setWaitForTasksToCompleteOnShutdown(false);
-        // Establecer el manejador de rechazo para lanzar una excepción cuando la cola esté llena
-        executor.setRejectedExecutionHandler((Runnable r, ThreadPoolExecutor executor1) -> {
-            throw new RuntimeException("La cola está llena. No se puede aceptar más tareas.");
-        });
-        executor.initialize();
-        return executor;
-    }
+    
+    
 }

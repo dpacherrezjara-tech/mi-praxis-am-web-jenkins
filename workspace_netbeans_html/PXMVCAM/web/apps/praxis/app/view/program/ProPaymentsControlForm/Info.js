@@ -2194,6 +2194,307 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                             ]
                         },
                         // </editor-fold>
+                        // <editor-fold defaultstate="collapsed" desc="boxPayDelayMerchant">
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-boxPayDelayMerchant',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+                            width: 1474,
+                            height: 530,
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'vbox'
+//                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataPayDelayMerchant',
+                                    width: 1474,
+                                    height: 468,
+                                    columnLines: true,
+//                                    features: [{
+//                                        ftype: 'summary'
+//                                    }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Merchant',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Code', dataIndex: 'MERCHANT', width: 90,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left;";
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {text: 'Name', dataIndex: 'strDescription', width: 170,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left;";
+//                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Sales',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Tickets', dataIndex: 'QTY1', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'USD', dataIndex: 'SVFOPUS1', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%', dataIndex: 'perc1', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return  value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Days 1-30',
+                                                id: prototype.id + '-txtRange1111A',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Qty', dataIndex: 'QDAY30', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#e6f4ff;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'USD', dataIndex: 'ADAY30', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#e6f4ff;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Days 31 - 60',
+                                                id: prototype.id + '-txtRange2222A',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Qty', dataIndex: 'QDAY60', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#ffffff;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'USD', dataIndex: 'ADAY60', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#ffffff;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Days 61 - 90',
+                                                id: prototype.id + '-txtRange3333A',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Qty', dataIndex: 'QDAY90', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#e6f4ff;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'USD', dataIndex: 'ADAY90', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#e6f4ff;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Over 91',
+                                                id: prototype.id + '-txtRange4444A',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Qty', dataIndex: 'QOTHER', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#ffffff;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'USD', dataIndex: 'AOTHER', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#ffffff;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Total Pending',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Qty', dataIndex: 'diff1', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#ECF6CE;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'USD', dataIndex: 'diff2', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#ECF6CE;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%', dataIndex: 'perc3', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return  value;
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-panelDataPayDelayMerchant',
+                                    width: 1432,
+                                    align: 'left',
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center'
+                                    },
+                                    defaults: {
+                                        xtype: 'label',
+                                        align: 'center',
+                                        html: '' + '&nbsp',
+                                        height: 25,
+                                        padding: '5 5 5 0',
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
+                                    },
+                                    items: [
+                                        {width: 230},
+                                        {width: 80, id: prototype.id + '-totM_QSALES'},
+                                        {width: 100, id: prototype.id + '-totM_ASALES'},
+                                        {width: 60, id: prototype.id + '-totM_PERC'},
+                                        {width: 80, id: prototype.id + '-totM_QDAY30'},
+                                        {width: 100, id: prototype.id + '-totM_ADAY30'},
+                                        {width: 80, id: prototype.id + '-totM_QDAY60'},
+                                        {width: 100, id: prototype.id + '-totM_ADAY60'},
+                                        {width: 80, id: prototype.id + '-totM_QDAY90'},
+                                        {width: 100, id: prototype.id + '-totM_ADAY90'},
+                                        {width: 80, id: prototype.id + '-totM_QOTHER'},
+                                        {width: 100, id: prototype.id + '-totM_AOTHER'},
+                                        {width: 80, id: prototype.id + '-totM_QTOTAL'},
+                                        {width: 100, id: prototype.id + '-totM_ATOTAL'},
+                                        {width: 60, id: prototype.id + '-totM_PERTOT'}
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-panel%Merchant',
+                                    width: 1432,
+                                    align: 'left',
+                                    margin: '5 0 0 0 ',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center'
+                                    },
+                                    defaults: {
+                                        xtype: 'label',
+                                        align: 'center',
+                                        html: '' + '&nbsp',
+                                        height: 25,
+                                        padding: '5 5 5 0',
+                                        style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
+                                    },
+                                    items: [
+                                        {text: '%', width: 230, style: 'background:#A0BFD3;color:#244066;text-align:center;border: 0.3px #4A6371 solid;font-size:12px'},
+                                        {width: 80},
+                                        {width: 100},
+                                        {text: '100%', width: 60, id: prototype.id + '-100%Merchant'},
+                                        {width: 180, id: prototype.id + '-lblTotM_PERC_30'},
+                                        {width: 180, id: prototype.id + '-lblTotM_PERC_60'},
+                                        {width: 180, id: prototype.id + '-lblTotM_PERC_90'},
+                                        {width: 180, id: prototype.id + '-lblTotM_PERC_O20'},
+                                        {width: 240, id: prototype.id + '-lblTotM_PERC_PEND'}
+                                    ]
+                                }
+                            ]
+                        },
+                        // </editor-fold>
                         // <editor-fold defaultstate="collapsed" desc="boxMainDataStates">
                         {
                             xtype: 'panel',
@@ -5746,7 +6047,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1237,
+                            width: 1290,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox'
@@ -5756,7 +6057,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridGroupCLAtot',
-                                    width: 1237,
+                                    width: 1290,
+                                    height: 530,
                                     columnLines: true,
 //                                    features: [{
 //                                        ftype: 'summary'
@@ -5769,7 +6071,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Credit Card',
+                                                text: '',
                                                 id: prototype.id + '-adgTitGrouptot',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -5777,7 +6079,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Code', dataIndex: 'SENTDATE', width: 50},
+                                                    {text: 'Code', dataIndex: 'SENTDATE', width: 90,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left";
+                                                            return value;
+                                                        }
+                                                    },
                                                     {
                                                         text: 'Description', dataIndex: 'strDescripcion', width: 225,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -5974,7 +6281,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                 {
                                     xtype: 'panel',
                                     id: prototype.id + '-panelDataSummaryGroupCLAtot',
-                                    width: 1237,
+                                    width: 1290,
                                     align: 'left',
                                     margin: '0 0 0 0 ',
                                     layout: {
@@ -5990,7 +6297,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
                                     items: [
-                                        {width: 275},
+                                        {width: 315},
                                         {width: 80, id: prototype.id + '-lblTotQTYCLAR_Gt'},
                                         {width: 90, id: prototype.id + '-lblTotAMTCLAR_Gt'},
                                         {width: 80, id: prototype.id + '-lblTotQTYCLARP_Gt'},
@@ -6248,7 +6555,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1307,
+                            width: 1360,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox'
@@ -6258,7 +6565,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridGroupDataCLA',
-                                    width: 1307,
+                                    width: 1360,
+                                    height: 530,
                                     columnLines: true,
 //                                    features: [{
 //                                        ftype: 'summary'
@@ -6271,7 +6579,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Credit Card',
+                                                text: '',
                                                 id: prototype.id + '-adgTitGroup',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -6279,7 +6587,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Code', dataIndex: 'SENTDATE', width: 50},
+                                                    {text: 'Code', dataIndex: 'SENTDATE', width: 90},
                                                     {
                                                         text: 'Description', dataIndex: 'strDescripcion', width: 225,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -6451,9 +6759,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Info', {
                                         padding: '5 5 5 0',
                                         style: 'background:#A0BFD3;text-align:right;border: 0.3px #4A6371 solid;font-size:12px'
                                     },
-                                    items: [
-                                        {width: 50},
-                                        {width: 225},
+                                    items: [ 
+                                        {width: 315},
                                         {width: 80, id: prototype.id + '-lblTotQTYCLARS_G'},
                                         {width: 90, id: prototype.id + '-lblTotQTYCLARP_G'},
                                         {width: 80, id: prototype.id + '-lblTotQNMATCH_G'},

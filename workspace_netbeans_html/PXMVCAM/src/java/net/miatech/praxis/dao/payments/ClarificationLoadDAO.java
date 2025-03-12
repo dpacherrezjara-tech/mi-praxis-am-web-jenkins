@@ -202,6 +202,8 @@ public class ClarificationLoadDAO {
             } else {
                 strPRO = "SPPRO10572";
             }
+        } else if(strBanco.trim().equals("BBVA")){
+            strPRO = "SPPRO11951";
         } else if (strBanco.trim().equals("PP")) {
             //PAYPAL
             strPRO = "SPPRO10573";
@@ -491,9 +493,9 @@ public class ClarificationLoadDAO {
                     } else if (strBanco.equals("ST") && strTrama.trim().length() > 900) {
                         strTrama = strTrama.trim().substring(0, 900);
 
-                    }//else if(strBanco.equals("PP") && strTrama.trim().length() > 150){
-                    // strTrama = strTrama.trim().substring(0, 150);
-                    // }
+                    }else if(strBanco.equals("BBVA") && strTrama.trim().length() > 900){
+                     strTrama = strTrama.trim().substring(0, 900);
+                     }
                 }
                 if (strBanco.equals("PP") && strTrama.trim().length() > 150) {
                     strTrama = strTrama.trim().substring(0, 150);

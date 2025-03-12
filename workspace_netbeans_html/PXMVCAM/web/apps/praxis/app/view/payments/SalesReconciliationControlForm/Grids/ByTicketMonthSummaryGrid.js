@@ -40,8 +40,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     metaData.style = "text-align:center;font-weight:bold;color:#8B5199;";
                     if (record.data.a4496FPROC) {
                         value = record.data.a4496FPROC;
-                    } else {
+                    } else if (record.data.a4496FECVT) {
                         value = record.data.a4496FECVT;
+                    } else {
+                        value = record.data.a4501FEUP;
                     }
                     return value;
                 }

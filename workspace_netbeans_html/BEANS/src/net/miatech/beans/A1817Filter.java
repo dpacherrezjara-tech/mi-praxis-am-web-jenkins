@@ -101,6 +101,7 @@ public class A1817Filter extends A1817 {
     public double TOT_STOTAL = 0;
     public double TOT_ATOTAL = 0;
     public double VCPN = 0;
+    public double VCPMX = 0;
     public String RFIC = "";
     public String RECODE = "";
     public String DESC_RECODE = "";

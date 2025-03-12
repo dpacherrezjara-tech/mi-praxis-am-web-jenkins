@@ -87,7 +87,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreForm', {
                                                         {
                                                             xtype: 'fieldset',
                                                             border: true,
-                                                            width: 185,
+                                                            width: 260,
                                                             padding: '5 5 5 5',
                                                             items: [
                                                                 {

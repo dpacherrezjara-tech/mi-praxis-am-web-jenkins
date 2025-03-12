@@ -548,29 +548,170 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                     bodyStyle: 'background:#efe5e5;',
                                     margin: '10 2 2 8',
                                     items: [
-                                        {
-                                            xtype: 'label',
-                                            text: 'Valuation Date',
-                                            hidden: false,
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 100
+//                                        {
+//                                            xtype: 'label',
+//                                            text: 'Valuation Date',
+//                                            hidden: false,
+//                                            style: 'font-weight:bold;color:#0B333C;',
+//                                            width: 100
+//
+//                                        },
+//                                        {xtype: 'tbspacer', width: 7},
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-de-txtFECVAL',
+//                                            style: 'font-weight:bold;color:#0B333C;',
+//                                            fieldStyle: 'text-align:center;',
+//                                            width: 100,
+//                                        },
+//                                        {xtype: 'tbspacer', width: 20},
+//                                        {
+//                                            xtype: 'label',
+//                                            text: 'Currency',
+//                                            hidden: false,
+//                                            style: 'font-weight:bold;color:#0B333C;',
+//                                            width: 100
+//
+//                                        },
+//                                        {xtype: 'tbspacer', width: 7},
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-de-txtCURRENCY',
+//                                            style: 'font-weight:bold;color:#0B333C;',
+//                                            fieldStyle: 'text-align:center;',
+//                                            width: 100,
+//                                        },
+//                                        {xtype: 'tbspacer', width: 20},
+//                                        {
+//                                            xtype: 'label',
+//                                            text: 'Total Value',
+//                                            hidden: false,
+//                                            style: 'font-weight:bold;color:#0B333C;',
+//                                            width: 100
+//
+//                                        },
+//                                        {xtype: 'tbspacer', width: 7},
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-de-txtTOTAL',
+//                                            style: 'font-weight:bold;color:#0B333C;',
+//                                            fieldStyle: 'text-align:center;',
+//                                            width: 100,
+//                                        },
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    bodyStyle: 'background:#efe5e5;',
+                                    margin: '10 2 2 8',
+                                    items: [
+//                                        {
+//                                            xtype: 'label',
+//                                            text: 'YQ Value 16%',
+//                                            hidden: false,
+//                                            style: 'font-weight:bold;color:#0B333C;',
+//                                            width: 100
+//
+//                                        },
+//                                        {xtype: 'tbspacer', width: 7},
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-de-txtTN16',
+//                                            style: 'font-weight:bold;color:#0B333C;',
+//                                            fieldStyle: 'text-align:center;',
+//                                            width: 100,
+//                                        },
+//                                        {xtype: 'tbspacer', width: 20},
+//                                        {
+//                                            xtype: 'label',
+//                                            text: 'YQ Value 0%',
+//                                            hidden: false,
+//                                            style: 'font-weight:bold;color:#0B333C;',
+//                                            width: 100
+//
+//                                        },
+//                                        {xtype: 'tbspacer', width: 7},
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-de-txtTN00',
+//                                            style: 'font-weight:bold;color:#0B333C;',
+//                                            fieldStyle: 'text-align:center;',
+//                                            width: 100,
+//                                        },
+                                    ]
+                                },
+                            ]
+                        },
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    bodyStyle: 'background: transparent;"',
+                    layout: 'vbox',
+                    width: 930,
+                    defaults: {
+                        anchor: '100%'
+                    },
+                    items: [
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+//                            margin: '10 2 2 8',
+                            items: [
+                                {
+                                    xtype: 'label',
+                                    text: 'Value Information',
+                                    style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
+                                    bodyStyle: 'background:#E5ECEF;',
+                                    fontSize: '11',
+                                    width: 134,
+                                    height: 20,
+                                    margin: '4 2 4 3'
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'label',
+                                    text: 'Date',
+                                    hidden: false,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 2 4 3',
+                                    width: 65
 
-                                        },
-                                        {xtype: 'tbspacer', width: 7},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-de-txtFECVAL',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            fieldStyle: 'text-align:center;',
-                                            width: 100,
-                                        },
-                                        {xtype: 'tbspacer', width: 20},
+                                },
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtFECVAL',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    margin: '4 2 4 3',
+                                    width: 100,
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'vbox',
+                            border: false,
+                            bodyStyle: 'background:#efe5e5;',
+                            margin: '10 10 10 10',
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    bodyStyle: 'background:#efe5e5;',
+                                    margin: '10 2 2 8',
+                                    items: [
                                         {
                                             xtype: 'label',
                                             text: 'Currency',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 100
+                                            width: 70
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -579,7 +720,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             id: prototype.id + '-de-txtCURRENCY',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:center;',
-                                            width: 100,
+                                            width: 40,
                                         },
                                         {xtype: 'tbspacer', width: 20},
                                         {
@@ -587,7 +728,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             text: 'Total Value',
                                             hidden: false,
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 100
+                                            width: 70
 
                                         },
                                         {xtype: 'tbspacer', width: 7},
@@ -598,15 +739,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             fieldStyle: 'text-align:center;',
                                             width: 100,
                                         },
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    bodyStyle: 'background:#efe5e5;',
-                                    margin: '10 2 2 8',
-                                    items: [
+                                        {xtype: 'tbspacer', width: 20},
                                         {
                                             xtype: 'label',
                                             text: 'YQ Value 16%',
@@ -621,7 +754,7 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             id: prototype.id + '-de-txtTN16',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:center;',
-                                            width: 100,
+                                            width: 50,
                                         },
                                         {xtype: 'tbspacer', width: 20},
                                         {
@@ -638,12 +771,38 @@ Ext.define('Ext.Praxis.view.flown.EMDStandaloneForm.DataEntry', {
                                             id: prototype.id + '-de-txtTN00',
                                             style: 'font-weight:bold;color:#0B333C;',
                                             fieldStyle: 'text-align:center;',
-                                            width: 100,
+                                            width: 50,
                                         },
                                     ]
                                 },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    bodyStyle: 'background:#efe5e5;',
+                                    margin: '10 2 2 8',
+                                    items: [
+                                        {xtype: 'tbspacer', width: 137},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Aver. Fare',
+                                            hidden: false,
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 70
+
+                                        },
+                                        {xtype: 'tbspacer', width: 7},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtVCPMX',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            fieldStyle: 'text-align:center;',
+                                            width: 100,
+                                        },
+                                    ]
+                                }
                             ]
-                        },
+                        }
                     ]
                 },
                 {

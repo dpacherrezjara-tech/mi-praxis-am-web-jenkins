@@ -201,7 +201,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         var CmboType5 = Ext.getCmp(prototype.id01 + '-CmboType5');
         var CmboADMAssoci = Ext.getCmp(prototype.id01 + '-CmboADMAssoci');
         Ext.getCmp(prototype.id01 + '-txtPNR').setValue('');
-        Ext.getCmp(prototype.id01 + '-txtEPR').setValue('');         
+        Ext.getCmp(prototype.id01 + '-txtEPR').setValue('');
         switch (String(newValue)) {
             case 'ADM':
                 CmboType1.show();
@@ -1096,14 +1096,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         var ComboSource = Ext.getCmp(prototype.id01 + '-ComboSource').getValue();
         var txtObservation = Ext.getCmp(prototype.id01 + '-txtObservation').getValue();
         var CmboADMAssoci = Ext.getCmp(prototype.id01 + '-CmboADMAssoci').getValue();
-        
+
         var txtPNR = Ext.getCmp(prototype.id01 + '-txtPNR').getValue();
         var txtEPR = Ext.getCmp(prototype.id01 + '-txtEPR').getValue();
-        
+
         //alert(ComboSource);
-        
-        if(ComboSource===null){
-            ComboSource='';
+
+        if (ComboSource === null) {
+            ComboSource = '';
         }
 
         var grid03 = Ext.getCmp(prototype.id01 + '-gridrazon');
@@ -1132,15 +1132,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                 Ext.Msg.alert('.: PRAXIS :.', 'Select Channel');
                 bvalida = false;
             }
-            if(txtPNR==='') {
+            if (txtPNR === '') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Enter PNR');
                 bvalida = false;
             }
-            if(txtEPR==='') {
+            if (txtEPR === '') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Enter EPR');
                 bvalida = false;
             }
-            if(ComboArea!=='DI') {
+            if (ComboArea !== 'DI') {
                 Ext.Msg.alert('.: PRAXIS :.', 'You must select the direct sales area for the ASR source');
                 bvalida = false;
             }
@@ -1161,6 +1161,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
             Ext.Msg.alert('.: PRAXIS :.', 'Enter Ticket');
             bvalida = false;
         }
+        if (txtFrmaSerie.length !== 10) {
+            Ext.Msg.alert('.: PRAXIS :.', 'The Ticket must be 10 characteres');
+            bvalida = false;
+        }
+        if (ComboSource === 'ASR' && ComboChannel === 'FRA' && ComboCurrency!=='MXN') {
+            Ext.Msg.alert('.: PRAXIS :.', 'For franchise channel, it must be reported in national currency MXN');
+            bvalida = false;
+        }
+
         if (txtFDate === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'Select Issue Date');
             bvalida = false;
@@ -1184,12 +1193,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
             }
         }
         /*if (txtCTA !== '') {
-            if (txtCTA.length !== 29) {
-                Ext.Msg.alert('.: PRAXIS :.', 'La CTA debe tener 29 caracteres');
-                bvalida = false;
-            }
-
-        }*/
+         if (txtCTA.length !== 29) {
+         Ext.Msg.alert('.: PRAXIS :.', 'La CTA debe tener 29 caracteres');
+         bvalida = false;
+         }
+         
+         }*/
         if (ComboArea === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'Select Area');
             bvalida = false;
@@ -1323,13 +1332,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                         var txtA1740EQUI = Ext.getCmp(prototype.id01 + '-txtA1740EQUI').getValue();
                         var txtA1740ICIA = Ext.getCmp(prototype.id01 + '-txtA1740ICIA').getValue();
                         var txtClient = Ext.getCmp(prototype.id01 + '-txtClient').getValue();
-                        
+
                         var txtExchange = Ext.getCmp(prototype.id01 + '-txtExchange').getValue();
                         var txtObservation = Ext.getCmp(prototype.id01 + '-txtObservation').getValue();
                         var CmboADMAssoci = Ext.getCmp(prototype.id01 + '-CmboADMAssoci').getValue();
                         // 
                         var txtPNR = Ext.getCmp(prototype.id01 + '-txtPNR').getValue();
-                        var txtEPR = Ext.getCmp(prototype.id01 + '-txtEPR').getValue(); 
+                        var txtEPR = Ext.getCmp(prototype.id01 + '-txtEPR').getValue();
                         //FARRE
                         var txtFAREAero = Ext.getCmp(prototype.id01 + '-txtFAREAero').getValue().replace(new RegExp(',', 'g'), '');
                         var txtFAREAGENT = Ext.getCmp(prototype.id01 + '-txtFAREAGENT').getValue().replace(new RegExp(',', 'g'), '');
@@ -1367,7 +1376,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                             var bean = Ext.getCmp(prototype.id01 + '-gridrazon').getStore().data.items[i].data;
                             lstRazones.push(bean);
                         }
-                        
+
                         var lstTaxes = new Array();
                         //if (CmboTransaction !== 'ADM' && CmboTransaction !== 'ACM' && CmboTransaction !== 'NTC' && CmboTransaction !== 'NTD') {
                         var gridtax = Ext.getCmp(prototype.id01 + '-gridtaxAGENT');
@@ -1394,12 +1403,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                         me.beanGuardar.A2548FVTA = txtFDate;
                         me.beanGuardar.A2548IATA = txtIata;
                         me.beanGuardar.A2548NMEMO = txtADMAssoci;
-                        me.beanGuardar.A2548CTAC ='';// txtCTA;
+                        me.beanGuardar.A2548CTAC = '';// txtCTA;
                         me.beanGuardar.A2548TVTA = VL_TVTA;
                         me.beanGuardar.A2548OBSER = txtObservation;
                         me.beanGuardar.A2548ASOCI = CmboADMAssoci;
-                        me.beanGuardar.A2548PNR=txtPNR;
-                        me.beanGuardar.A2548EPR=txtEPR;
+                        me.beanGuardar.A2548PNR = txtPNR;
+                        me.beanGuardar.A2548EPR = txtEPR;
                         /*Para la CTA*/
                         me.beanGuardar.A2548CIA = txtA1740CIA;
                         me.beanGuardar.A2548UNID = txtA1740UNIDA;

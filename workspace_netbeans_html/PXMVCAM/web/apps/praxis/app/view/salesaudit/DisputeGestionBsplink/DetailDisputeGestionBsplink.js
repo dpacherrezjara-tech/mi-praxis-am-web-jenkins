@@ -342,7 +342,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DetailDisputeGestio
                             width: 850,
                             height: 80,
                             grow: true,
-                            maxLength: 500,
+                            maxLength: 200,
                             enforceMaxLength: true,
                             name: 'Argument',
                             fieldLabel: 'Argument'

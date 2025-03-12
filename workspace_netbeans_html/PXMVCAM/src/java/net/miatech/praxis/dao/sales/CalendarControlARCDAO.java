@@ -53,8 +53,7 @@ public class CalendarControlARCDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        //String SQLCLL01 = "{CALL PRAXIS.PX036S01A1527(?,?)}"; OLD
-        String SQLCLL01 = "{CALL PRAXIS.SQP05515(?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.PX036S01A1527(?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -62,7 +61,6 @@ public class CalendarControlARCDAO {
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_A1527PPED);
-            cstmt01.setString(3, filter.IN_VERSION);
 
             cstmt01.execute();
 
