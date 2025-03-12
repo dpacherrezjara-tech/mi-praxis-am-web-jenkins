@@ -459,7 +459,8 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.AgentsMasterFileControl
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 var int_result = res.int_result;
-                if(int_result>100000)
+                me.exportTxt();
+                /*if(int_result>100000)
                 {
                      global.Msg({
                             msg: 'Report cannot be exported, please contact system administrator.'
@@ -468,7 +469,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.AgentsMasterFileControl
                 else
                 {
                     me.exportTxt();
-                }
+                }*/
                 Ext.getBody().unmask();
             }
         });
