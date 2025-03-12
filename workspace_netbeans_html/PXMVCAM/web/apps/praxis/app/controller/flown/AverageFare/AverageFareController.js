@@ -14,6 +14,8 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
     gridActual: '',
     panelActual: '',
     searchParams: {},
+    bean: {},
+    beanDetail: {},
     paramsDetail: {},
     me: '',
     setContext: function () {
@@ -101,24 +103,42 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
         });
     },
     btnSearch_click: function(obj, e) {
-        this.setFormatParameter();
-        this.setGridData(obj, e);
+        
+//        if( Ext.getCmp(prototype.id + '-txtRFIC').getValue() !== '' || Ext.getCmp(prototype.id + '-txtRECODE').getValue() !== ''  ){
+//            this.beanDetail.RFIC = Ext.getCmp(prototype.id + '-txtRFIC').getValue()
+//            this.beanDetail.RECODE = Ext.getCmp(prototype.id + '-txtRECODE').getValue()
+//            this.beanDetail.IN_TTARIF = 'E'
+//            me.paramsDetail.beanString = JSON.stringify(this.beanDetail);
+//            console.log('wadafaaaaaa')
+//            this.setGridDataDetail();
+//        }else{
+            this.setFormatParameter();
+            this.setGridData(obj, e);  
+//        }
+        
     },
     setFormatParameter: function() {
-        var bean = {};
+        me.bean = {};
 
-        bean.VP_A1781ORIG = Ext.getCmp(prototype.id + '-cmbCDEPART').getValue();
-        bean.VP_A1781DEST = Ext.getCmp(prototype.id + '-cmbCARRIVA').getValue();
-        bean.VP_A1781RBD = Ext.getCmp(prototype.id + '-txtA1781RBD').getValue().trim();
-        bean.VP_A1781FARE = Ext.getCmp(prototype.id + '-txtFARE').getValue().trim();
-
-        var beanString = JSON.stringify(bean);
+        me.bean.VP_A1781ORIG = Ext.getCmp(prototype.id + '-cmbCDEPART').getValue();
+        me.bean.VP_A1781DEST = Ext.getCmp(prototype.id + '-cmbCARRIVA').getValue();
+        me.bean.VP_A1781RBD = Ext.getCmp(prototype.id + '-txtA1781RBD').getValue().trim();
+        me.bean.VP_A1781FARE = Ext.getCmp(prototype.id + '-txtFARE').getValue().trim();
+        me.bean.IN_RFIC = Ext.getCmp(prototype.id + '-txtRFIC').getValue().trim();
+        me.bean.IN_RECODE = Ext.getCmp(prototype.id + '-txtRECODE').getValue().trim();
+        me.bean.IN_TTARIF = Ext.getCmp(prototype.id + '-cmbTTARIF').getValue().trim();
+        
+        var beanString = JSON.stringify(me.bean);
         searchParams = {
             beanString: beanString
         };
     },
     setGridData: function(obj, val) {
         win.lblUser_toolTip("Estructura: A1804");
+        if (me.panelActual !== '-panelGridData') {
+            me.panelActual = '-panelGridData';
+            Ext.getCmp(prototype.id + '-gridData').setVisible(true);
+        }
         me.setWidthPie();
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.setFormatParameter();
@@ -155,12 +175,29 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
                 }
             });
             global.clear();
+            me.bean.IN_TTARIF == 'F' ? Ext.getCmp(prototype.id + '-clmRFIC1').hide() : Ext.getCmp(prototype.id + '-clmRFIC1').show()
+            me.bean.IN_TTARIF == 'F' ? Ext.getCmp(prototype.id + '-clmRECODE1').hide() : Ext.getCmp(prototype.id + '-clmRECODE1').show()
+//            me.bean.IN_TTARIF == 'F' ? Ext.getCmp(prototype.id + '-clmRFIC2').hide() : Ext.getCmp(prototype.id + '-clmRFIC2').show()
+//            me.bean.IN_TTARIF == 'F' ? Ext.getCmp(prototype.id + '-clmRECODE2').hide() : Ext.getCmp(prototype.id + '-clmRECODE2').show()
+            me.bean.IN_TTARIF == 'F' ? Ext.getCmp(prototype.id + '-clmCODEDESC1').hide() : Ext.getCmp(prototype.id + '-clmCODEDESC1').show()
+//            me.bean.IN_TTARIF == 'F' ? Ext.getCmp(prototype.id + '-clmCODEDESC2').hide() : Ext.getCmp(prototype.id + '-clmCODEDESC2').show()
+            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmA1781ORIG').hide() : Ext.getCmp(prototype.id + '-clmA1781ORIG').show()
+            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmA1781DEST').hide() : Ext.getCmp(prototype.id + '-clmA1781DEST').show()
+            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmVP_A1781FARE').hide() : Ext.getCmp(prototype.id + '-clmVP_A1781FARE').show()
+            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmA1781RBD').hide() : Ext.getCmp(prototype.id + '-clmA1781RBD').show()
+            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-gridData').setWidth(752) : Ext.getCmp(prototype.id + '-gridData').setWidth(765)
+//            me.bean.IN_TTARIF == 'E' ? Ext.getCmp(prototype.id + '-clmA1781PROME').hide() : Ext.getCmp(prototype.id + '-clmA1781PROME').show()
+            
             Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
-
+            
+            
         }
     },
     setGridDataDetail: function(data) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataDetail';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
         win.lblUser_toolTip("Estructura: A1804");
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
@@ -199,6 +236,18 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
         this.setGridDataDetail();
 
     },
+    OnChangeSelected: function (){
+        console.log('wadafaaaaa')
+        if( Ext.getCmp(prototype.id + '-cmbTTARIF').getValue() == 'E' ){
+            Ext.getCmp(prototype.id + '-txtRFIC').setDisabled(false)
+            Ext.getCmp(prototype.id + '-txtRECODE').setDisabled(false)
+        }else{
+            Ext.getCmp(prototype.id + '-txtRFIC').setValue('')
+            Ext.getCmp(prototype.id + '-txtRECODE').setValue('')
+            Ext.getCmp(prototype.id + '-txtRFIC').setDisabled(true)
+            Ext.getCmp(prototype.id + '-txtRECODE').setDisabled(true)
+        }
+    },
     validateFields: function() {
         var msj = '';
         return msj;
@@ -227,6 +276,8 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
         Ext.getCmp(prototype.id + '-cmbCDEPART').setValue('');
         Ext.getCmp(prototype.id + '-txtFARE').setValue('');
         Ext.getCmp(prototype.id + '-txtA1781RBD').setValue('');
+        Ext.getCmp(prototype.id + '-txtRFIC').setValue('');
+        Ext.getCmp(prototype.id + '-txtRECODE').setValue('');
 
     },
     btnExcel_click: function(obj, e) {
@@ -256,10 +307,10 @@ Ext.define('Ext.Praxis.controller.flown.AverageFare.AverageFareController', {
         this.setFormatParameter();
         switch (me.panelActual) {
             case  '-panelGridData':
-                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+                global.getFile(prototype.url + '/getXLSX?beanString=' + encodeURI(searchParams.beanString));
                 break;
             case  '-panelGridDataDetail':
-                global.getFile(prototype.url + '/getDetailXLSX?beanString=' + me.paramsDetail.beanString);
+                global.getFile(prototype.url + '/getDetailXLSX?beanString=' + encodeURI(me.paramsDetail.beanString));
                 break;
             default:
                 global.Msg(

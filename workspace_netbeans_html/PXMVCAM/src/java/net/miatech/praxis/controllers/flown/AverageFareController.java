@@ -183,7 +183,7 @@ public class AverageFareController extends BaseController {
                 String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
 
                 try {
-                  
+
                     int len = listaData.size();
                     Integer vi = 0;
                     String fileName = "Average Fare - " + Functions.getFechaActual() + ".txt";
@@ -195,23 +195,41 @@ public class AverageFareController extends BaseController {
 
                     PrintWriter writer = new PrintWriter(file, "UTF-8");
                     String cadena;
-
-                    cadena = "Route From | Route To | Fare Basis | RBD | Qty Coupons | Sales Total | Average | Currency";
-                    writer.println("" + cadena);
-
-                    for (vi = 0; vi < len; vi++) {
-                        cadena = "";
-                        cadena += "" + listaData.get(vi).A1781ORIG + "|";//
-                        cadena += "" + listaData.get(vi).A1781DEST + "|";//
-                        cadena += "" + listaData.get(vi).VP_A1781FARE + "|";//
-                        cadena += "" + listaData.get(vi).A1781RBD + "|";//
-                        cadena += "" + listaData.get(vi).A1781QCUPO + "|";//
-                        cadena += "" + listaData.get(vi).A1781TVALO + "|";//
-                        cadena += "" + listaData.get(vi).A1781PROME + "|";//
-                        cadena += "" + listaData.get(vi).A1781MONED ;//
-                        cadena = cadena.replaceAll("null", "");
+                    if (listaData.get(0).IN_TTARIF.equals("F")) {
+                        cadena = "Route From | Route To | Fare Basis | RBD | Qty Coupons | Sales Total | Average | Currency";
                         writer.println("" + cadena);
+
+                        for (vi = 0; vi < len; vi++) {
+                            cadena = "";
+                            cadena += "" + listaData.get(vi).A1781ORIG + "|";//
+                            cadena += "" + listaData.get(vi).A1781DEST + "|";//
+                            cadena += "" + listaData.get(vi).VP_A1781FARE + "|";//
+                            cadena += "" + listaData.get(vi).A1781RBD + "|";//
+                            cadena += "" + listaData.get(vi).A1781QCUPO + "|";//
+                            cadena += "" + listaData.get(vi).A1781TVALO + "|";//
+                            cadena += "" + listaData.get(vi).A1781PROME + "|";//
+                            cadena += "" + listaData.get(vi).A1781MONED;//
+                            cadena = cadena.replaceAll("null", "");
+                            writer.println("" + cadena);
+                        }
+                    } else {
+                        cadena = "Cod Reason | Sub Code | Code Desc. | Qty Coupons | Sales Total | Average | Currency";
+                        writer.println("" + cadena);
+
+                        for (vi = 0; vi < len; vi++) {
+                            cadena = "";
+                            cadena += "" + listaData.get(vi).RFIC + "|";//
+                            cadena += "" + listaData.get(vi).RECODE + "|";//
+                            cadena += "" + listaData.get(vi).CODEDESC + "|";//
+                            cadena += "" + listaData.get(vi).A1781QCUPO + "|";//
+                            cadena += "" + listaData.get(vi).A1781TVALO + "|";//
+                            cadena += "" + listaData.get(vi).A1781PROME + "|";//
+                            cadena += "" + listaData.get(vi).A1781MONED;//
+                            cadena = cadena.replaceAll("null", "");
+                            writer.println("" + cadena);
+                        }
                     }
+
                     writer.flush();
                     writer.close();
 
@@ -263,106 +281,179 @@ public class AverageFareController extends BaseController {
                 Iterator iter = listaData.iterator();
                 // ====== CREANDO TITULOS ======================================
 
-                // ======  Nivel 1 ==========
-                Row row1 = sheet.createRow(vj);
-                Cell CH1_0 = row1.createCell(0);
-                Cell CH1_1 = row1.createCell(1);
-                Cell CH1_2 = row1.createCell(2);
-                Cell CH1_3 = row1.createCell(3);
-                Cell CH1_4 = row1.createCell(4);
-                Cell CH1_5 = row1.createCell(5);
-                Cell CH1_6 = row1.createCell(6);
-                Cell CH1_7 = row1.createCell(7);
+                if (listaData.get(0).IN_TTARIF.equals("F")) {
+                    // ======  Nivel 1 ==========
+                    Row row1 = sheet.createRow(vj);
+                    Cell CH1_0 = row1.createCell(0);
+                    Cell CH1_1 = row1.createCell(1);
+                    Cell CH1_2 = row1.createCell(2);
+                    Cell CH1_3 = row1.createCell(3);
+                    Cell CH1_4 = row1.createCell(4);
+                    Cell CH1_5 = row1.createCell(5);
+                    Cell CH1_6 = row1.createCell(6);
+                    Cell CH1_7 = row1.createCell(7);
 
-                CH1_0.setCellValue("Route");
-                CH1_1.setCellValue("");
-                CH1_2.setCellValue("Fare Basis");
-                CH1_3.setCellValue("RBD");
-                CH1_4.setCellValue("Qty Coupons");
-                CH1_5.setCellValue("Sales Total");
-                CH1_6.setCellValue("Average");
-                CH1_7.setCellValue("Currency");
+                    CH1_0.setCellValue("Route");
+                    CH1_1.setCellValue("");
+                    CH1_2.setCellValue("Fare Basis");
+                    CH1_3.setCellValue("RBD");
+                    CH1_4.setCellValue("Qty Coupons");
+                    CH1_5.setCellValue("Sales Total");
+                    CH1_6.setCellValue("Average");
+                    CH1_7.setCellValue("Currency");
 
-                CH1_0.setCellStyle(headerStyle);
-                CH1_1.setCellStyle(headerStyle);
-                CH1_2.setCellStyle(headerStyle);
-                CH1_3.setCellStyle(headerStyle);
-                CH1_4.setCellStyle(headerStyle);
-                CH1_5.setCellStyle(headerStyle);
-                CH1_6.setCellStyle(headerStyle);
-                CH1_7.setCellStyle(headerStyle);
+                    CH1_0.setCellStyle(headerStyle);
+                    CH1_1.setCellStyle(headerStyle);
+                    CH1_2.setCellStyle(headerStyle);
+                    CH1_3.setCellStyle(headerStyle);
+                    CH1_4.setCellStyle(headerStyle);
+                    CH1_5.setCellStyle(headerStyle);
+                    CH1_6.setCellStyle(headerStyle);
+                    CH1_7.setCellStyle(headerStyle);
 
-                //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
-                sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
-                sheet.addMergedRegion(new CellRangeAddress(0, 1, 3, 3));
-                sheet.addMergedRegion(new CellRangeAddress(0, 1, 4, 4));
-                sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
-                sheet.addMergedRegion(new CellRangeAddress(0, 1, 6, 6));
-                sheet.addMergedRegion(new CellRangeAddress(0, 1, 7, 7));
-                ++vj;
-                //============================================
-
-                // ======  Nivel 2 ==========
-                Row row2 = sheet.createRow(vj);
-                Cell CH2_0 = row2.createCell(0);
-                Cell CH2_1 = row2.createCell(1);
-                Cell CH2_2 = row2.createCell(2);
-                Cell CH2_3 = row2.createCell(3);
-                Cell CH2_4 = row2.createCell(4);
-                Cell CH2_5 = row2.createCell(5);
-                Cell CH2_6 = row2.createCell(6);
-                Cell CH2_7 = row2.createCell(7);
-
-                CH2_0.setCellValue("From");
-                CH2_1.setCellValue("To");
-
-                CH2_0.setCellStyle(headerStyle);
-                CH2_1.setCellStyle(headerStyle);
-                CH2_2.setCellStyle(headerStyle);
-                CH2_3.setCellStyle(headerStyle);
-                CH2_4.setCellStyle(headerStyle);
-                CH2_5.setCellStyle(headerStyle);
-                CH2_6.setCellStyle(headerStyle);
-                CH2_7.setCellStyle(headerStyle);
-
-                //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-                //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-                ++vj;
-                //============================================
-
-                while (iter.hasNext()) {
-                    row1 = sheet.createRow(vj);
-                    Cell rcell0 = row1.createCell(0);
-                    Cell rcell1 = row1.createCell(1);
-                    Cell rcell2 = row1.createCell(2);
-                    Cell rcell3 = row1.createCell(3);
-                    Cell rcell4 = row1.createCell(4);
-                    Cell rcell5 = row1.createCell(5);
-                    Cell rcell6 = row1.createCell(6);
-                    Cell rcell7 = row1.createCell(7);
-
-                    rcell0.setCellValue(listaData.get(vi).A1781ORIG);
-                    rcell1.setCellValue(listaData.get(vi).A1781DEST);
-                    rcell2.setCellValue(listaData.get(vi).VP_A1781FARE);
-                    rcell3.setCellValue(listaData.get(vi).A1781RBD);
-                    rcell4.setCellValue(listaData.get(vi).A1781QCUPO);
-                    rcell5.setCellValue(listaData.get(vi).A1781TVALO);
-                    rcell6.setCellValue(listaData.get(vi).A1781PROME);
-                    rcell7.setCellValue(listaData.get(vi).A1781MONED);
-                    iter.next();
-                    ++vi;
+                    //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 1, 3, 3));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 1, 4, 4));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 1, 6, 6));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 1, 7, 7));
                     ++vj;
-                }
+                    //============================================
 
-                sheet.autoSizeColumn(0, true);
-                sheet.autoSizeColumn(1, true);
-                sheet.autoSizeColumn(2, true);
-                sheet.autoSizeColumn(3, true);
-                sheet.autoSizeColumn(4, true);
-                sheet.autoSizeColumn(5, true);
-                sheet.autoSizeColumn(6, true);
-                sheet.autoSizeColumn(7, true);
+                    // ======  Nivel 2 ==========
+                    Row row2 = sheet.createRow(vj);
+                    Cell CH2_0 = row2.createCell(0);
+                    Cell CH2_1 = row2.createCell(1);
+                    Cell CH2_2 = row2.createCell(2);
+                    Cell CH2_3 = row2.createCell(3);
+                    Cell CH2_4 = row2.createCell(4);
+                    Cell CH2_5 = row2.createCell(5);
+                    Cell CH2_6 = row2.createCell(6);
+                    Cell CH2_7 = row2.createCell(7);
+
+                    CH2_0.setCellValue("From");
+                    CH2_1.setCellValue("To");
+
+                    CH2_0.setCellStyle(headerStyle);
+                    CH2_1.setCellStyle(headerStyle);
+                    CH2_2.setCellStyle(headerStyle);
+                    CH2_3.setCellStyle(headerStyle);
+                    CH2_4.setCellStyle(headerStyle);
+                    CH2_5.setCellStyle(headerStyle);
+                    CH2_6.setCellStyle(headerStyle);
+                    CH2_7.setCellStyle(headerStyle);
+
+                    //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+                    //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+                    ++vj;
+                    //============================================
+
+                    while (iter.hasNext()) {
+                        row1 = sheet.createRow(vj);
+                        Cell rcell0 = row1.createCell(0);
+                        Cell rcell1 = row1.createCell(1);
+                        Cell rcell2 = row1.createCell(2);
+                        Cell rcell3 = row1.createCell(3);
+                        Cell rcell4 = row1.createCell(4);
+                        Cell rcell5 = row1.createCell(5);
+                        Cell rcell6 = row1.createCell(6);
+                        Cell rcell7 = row1.createCell(7);
+
+                        rcell0.setCellValue(listaData.get(vi).A1781ORIG);
+                        rcell1.setCellValue(listaData.get(vi).A1781DEST);
+                        rcell2.setCellValue(listaData.get(vi).VP_A1781FARE);
+                        rcell3.setCellValue(listaData.get(vi).A1781RBD);
+                        rcell4.setCellValue(listaData.get(vi).A1781QCUPO);
+                        rcell5.setCellValue(listaData.get(vi).A1781TVALO);
+                        rcell6.setCellValue(listaData.get(vi).A1781PROME);
+                        rcell7.setCellValue(listaData.get(vi).A1781MONED);
+                        iter.next();
+                        ++vi;
+                        ++vj;
+                    }
+
+                    sheet.autoSizeColumn(0, true);
+                    sheet.autoSizeColumn(1, true);
+                    sheet.autoSizeColumn(2, true);
+                    sheet.autoSizeColumn(3, true);
+                    sheet.autoSizeColumn(4, true);
+                    sheet.autoSizeColumn(5, true);
+                    sheet.autoSizeColumn(6, true);
+                    sheet.autoSizeColumn(7, true);
+                } else {
+                    // ======  Nivel 1 ==========
+                    Row row1 = sheet.createRow(vj);
+                    Cell CH1_0 = row1.createCell(0);
+                    Cell CH1_1 = row1.createCell(1);
+                    Cell CH1_2 = row1.createCell(2);
+                    Cell CH1_3 = row1.createCell(3);
+                    Cell CH1_4 = row1.createCell(4);
+                    Cell CH1_5 = row1.createCell(5);
+                    Cell CH1_6 = row1.createCell(6);
+
+                    CH1_0.setCellValue("Code Reason");
+                    CH1_1.setCellValue("Sub Code");
+                    CH1_2.setCellValue("Code Desc");
+                    CH1_3.setCellValue("Qty Coupons");
+                    CH1_4.setCellValue("Sales Total");
+                    CH1_5.setCellValue("Average");
+                    CH1_6.setCellValue("Currency");
+
+                    CH1_0.setCellStyle(headerStyle);
+                    CH1_1.setCellStyle(headerStyle);
+                    CH1_2.setCellStyle(headerStyle);
+                    CH1_3.setCellStyle(headerStyle);
+                    CH1_4.setCellStyle(headerStyle);
+                    CH1_5.setCellStyle(headerStyle);
+                    CH1_6.setCellStyle(headerStyle);
+
+                    //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
+
+                    ++vj;
+                    //============================================
+
+                   
+                    //============================================
+
+                    while (iter.hasNext()) {
+                        row1 = sheet.createRow(vj);
+                        Cell rcell0 = row1.createCell(0);
+                        Cell rcell1 = row1.createCell(1);
+                        Cell rcell2 = row1.createCell(2);
+                        Cell rcell3 = row1.createCell(3);
+                        Cell rcell4 = row1.createCell(4);
+                        Cell rcell5 = row1.createCell(5);
+                        Cell rcell6 = row1.createCell(6);
+
+                        rcell0.setCellValue(listaData.get(vi).RFIC);
+                        rcell1.setCellValue(listaData.get(vi).RECODE);
+                        rcell2.setCellValue(listaData.get(vi).CODEDESC);
+                        rcell3.setCellValue(listaData.get(vi).A1781QCUPO);
+                        rcell4.setCellValue(listaData.get(vi).A1781TVALO);
+                        rcell5.setCellValue(listaData.get(vi).A1781PROME);
+                        rcell6.setCellValue(listaData.get(vi).A1781MONED);
+                        iter.next();
+                        ++vi;
+                        ++vj;
+                    }
+
+                    sheet.autoSizeColumn(0, true);
+                    sheet.autoSizeColumn(1, true);
+                    sheet.autoSizeColumn(2, true);
+                    sheet.autoSizeColumn(3, true);
+                    sheet.autoSizeColumn(4, true);
+                    sheet.autoSizeColumn(5, true);
+                    sheet.autoSizeColumn(6, true);
+                }
 
                 //============================================
                 response.setContentType("application/vnd.openxml");

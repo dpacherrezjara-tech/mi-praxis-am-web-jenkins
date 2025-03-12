@@ -53,37 +53,44 @@ public class AverageFareDAO {
         ResultSet rs01 = null;
         String fActual = Functions.getFechaActual();
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP0026(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP0026(?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(6, Types.INTEGER);
-            cstmt01.registerOutParameter(7, Types.INTEGER);
-            cstmt01.registerOutParameter(8, Types.INTEGER);
             cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.VP_A1781ORIG);
             cstmt01.setString(3, filter.VP_A1781DEST);
             cstmt01.setString(4, filter.VP_A1781RBD);
             cstmt01.setString(5, filter.VP_A1781FARE);
+            cstmt01.setString(6, filter.IN_RFIC);
+            cstmt01.setString(7, filter.IN_RECODE);
+            cstmt01.setString(8, filter.IN_TTARIF);
 
-            cstmt01.setInt(6, filter.page.PAGNUM);
-            cstmt01.setInt(7, filter.page.PAGROW);
-            cstmt01.setInt(8, filter.page.TOTPAG);
-            cstmt01.setInt(9, filter.page.TOTROW);
+            cstmt01.setInt(9, filter.page.PAGNUM);
+            cstmt01.setInt(10, filter.page.PAGROW);
+            cstmt01.setInt(11, filter.page.TOTPAG);
+            cstmt01.setInt(12, filter.page.TOTROW);
             cstmt01.execute();
-            filter.page.PAGNUM = cstmt01.getInt(6);
-            filter.page.PAGROW = cstmt01.getInt(7);
-            filter.page.TOTPAG = cstmt01.getInt(8);
-            filter.page.TOTROW = cstmt01.getInt(9);
+            filter.page.PAGNUM = cstmt01.getInt(9);
+            filter.page.PAGROW = cstmt01.getInt(10);
+            filter.page.TOTPAG = cstmt01.getInt(11);
+            filter.page.TOTROW = cstmt01.getInt(12);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
                 objRtn = new PX086S01A1781Filter();
                 objRtn.strTitulo = "Period included From " + Functions.getMonthConvert(rs01.getString("DPERI")) + " to " + Functions.getMonthConvert(rs01.getString("DPERF"));
                 objRtn.VP_TFIL = filter.VP_TFIL;
+                objRtn.IN_TTARIF = filter.IN_TTARIF;
+                objRtn.IN_RFIC = filter.IN_RFIC;
+                objRtn.IN_RECODE = filter.IN_RECODE;
+                
                 objRtn.A1781ORIG = rs01.getString("CITYO");
                 objRtn.A1781DEST = rs01.getString("CITYD");
                 if (hmAeropuertos.containsKey(rs01.getString("CITYO").trim().toUpperCase())) {
@@ -98,6 +105,9 @@ public class AverageFareDAO {
                 objRtn.A1781MONED = rs01.getString("CURRENC");
                 objRtn.A1781PROME = rs01.getDouble("VALPRO");
                 objRtn.A1781RBD = rs01.getString("BOOKI");
+                objRtn.RFIC = rs01.getString("RFIC");
+                objRtn.RECODE = rs01.getString("RECODE");
+                objRtn.CODEDESC = rs01.getString("CODEDESC");
                 //Paginación
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -137,30 +147,33 @@ public class AverageFareDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00816(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00816(?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(6, Types.INTEGER);
-            cstmt01.registerOutParameter(7, Types.INTEGER);
-            cstmt01.registerOutParameter(8, Types.INTEGER);
             cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.A1781ORIG);
             cstmt01.setString(3, filter.A1781DEST);
             cstmt01.setString(4, filter.A1781RBD);
             cstmt01.setString(5, filter.VP_A1781FARE);
-            cstmt01.setInt(6, filter.page.PAGNUM);
-            cstmt01.setInt(7, filter.page.PAGROW);
-            cstmt01.setInt(8, filter.page.TOTPAG);
-            cstmt01.setInt(9, filter.page.TOTROW);
+            cstmt01.setString(6, filter.IN_TTARIF);
+            cstmt01.setString(7, filter.RFIC);
+            cstmt01.setString(8, filter.RECODE);
+            cstmt01.setInt(9, filter.page.PAGNUM);
+            cstmt01.setInt(10, filter.page.PAGROW);
+            cstmt01.setInt(11, filter.page.TOTPAG);
+            cstmt01.setInt(12, filter.page.TOTROW);
             cstmt01.execute();
-            filter.page.PAGNUM = cstmt01.getInt(6);
-            filter.page.PAGROW = cstmt01.getInt(7);
-            filter.page.TOTPAG = cstmt01.getInt(8);
-            filter.page.TOTROW = cstmt01.getInt(9);
+            filter.page.PAGNUM = cstmt01.getInt(9);
+            filter.page.PAGROW = cstmt01.getInt(10);
+            filter.page.TOTPAG = cstmt01.getInt(11);
+            filter.page.TOTROW = cstmt01.getInt(12);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -176,8 +189,9 @@ public class AverageFareDAO {
                 rs01 = cstmt01.getResultSet();
                 while (rs01.next()) {
                     objRtn = new A1803();
-                    objRtn.Titulo = " Route: " + rs01.getString("CITYO")
-                            + "  -  " + rs01.getString("CITYD");
+                    objRtn.Titulo = filter.IN_TTARIF.equals("F") ? " Route: " + rs01.getString("CITYO")
+                            + "  -  " + rs01.getString("CITYD") : filter.RFIC + " - " + filter.RECODE + " : " + filter.CODEDESC;
+                   
                     objRtn.strTicket = rs01.getString("CCIA") + " " + rs01.getString("FORMA") + " " + rs01.getString("SERIE") + " " + rs01.getString("CUPON");
                     objRtn.CITYO = rs01.getString("CITYO");
                     objRtn.CITYD = rs01.getString("CITYD");
@@ -195,6 +209,9 @@ public class AverageFareDAO {
                     objRtn.SERIE = rs01.getString("SERIE");
                     objRtn.CUPON = rs01.getString("CUPON");
                     objRtn.CLASE = rs01.getString("CLASE");
+                    objRtn.RFIC = rs01.getString("RFIC");
+                    objRtn.RECODE = rs01.getString("RECODE");
+                    objRtn.CODEDESC = rs01.getString("CODEDESC");
                     objRtn.CURRENC = rs01.getString("CURRENC");
                     objRtn.VALOR = rs01.getDouble("VALOR");
                     objRtn.totVAL = totVAL;

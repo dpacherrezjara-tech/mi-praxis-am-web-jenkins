@@ -125,8 +125,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
             IN_STCONL: type,
             ...view.searchParams
         };
-        params.IN_PRAXISID = obj.praxisid;
-        params.IN_IDFLEX = obj.idflex;
+        params.IN_PRAXISID = obj.praxisid || '';
+        params.IN_IDFLEX = obj.idflex || '';
         params.FECHA_FROM = obj.fecha;
         console.log('Detail Params: ', params);
         return params;

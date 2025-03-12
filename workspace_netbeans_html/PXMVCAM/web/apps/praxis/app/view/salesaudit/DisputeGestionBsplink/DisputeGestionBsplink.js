@@ -5,11 +5,11 @@ prototype.url = CONTEXTPATH + '/DisputeGestionBsplink';
 prototype.widthContenedor = 1400;
 prototype.heightContenedor = 550;
 
-Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBsplink',{
+Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBsplink', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.DisputeGestionBsplink',
 
-    requires:[
+    requires: [
         'Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeGestionBsplinkController',
         'Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DetailDisputeGestionBsplink'
     ],
@@ -27,13 +27,13 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
     border: false,
     scrollable: true,
 
-    defaults:{
+    defaults: {
         border: false
     },
-    listeners:{
+    listeners: {
         beforeShow: 'OnBeforeShow'
     },
-    items:[
+    items: [
         {
             xtype: 'panel',
             id: prototype.id + '-contenedor-form',
@@ -63,14 +63,14 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                                     id: prototype.id + '-pagination',
                                     boxLabel: 'Pagination?',
                                     checked: true,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onPaginationChkChange'
                                     }
                                 },
                                 {
                                     xtype: 'Paginator',
                                     id: prototype.id + '-pagginator-01',
-                                    pagInfo:[
+                                    pagInfo: [
                                         prototype.id + '-lbl-currentPage',
                                         prototype.id + '-lbl-pageCount',
                                         prototype.id + '-lbl-total'
@@ -177,7 +177,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                                             id: prototype.id + '-txtFilterDateFrom', hidden: true,
                                             fieldLabel: 'From',
                                             format: 'Y/m/d',
-                                            maxValue : Ext.Date.format(new Date(),'Y/m/d'),
+                                            maxValue: Ext.Date.format(new Date(), 'Y/m/d'),
                                             labelWidth: 40,
                                             labelAlign: 'right',
                                             width: 135,
@@ -190,7 +190,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                                             id: prototype.id + '-txtFilterDateTo', hidden: true,
                                             fieldLabel: 'To',
                                             format: 'Y/m/d',
-                                            maxValue : Ext.Date.format(new Date(),'Y/m/d'),
+                                            maxValue: Ext.Date.format(new Date(), 'Y/m/d'),
                                             labelWidth: 40,
                                             labelAlign: 'right',
                                             width: 135,
@@ -249,7 +249,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-nmemo', hidden: true,
-                                             maskRe: /[0-9]/,
+                                            maskRe: /[0-9]/,
                                             maxLength: 10,
                                             enforceMaxLength: 10,
                                             labelWidth: 50,
@@ -271,8 +271,25 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                                                 specialkey: 'onSearchkey',
                                                 change: 'onchange'
                                             }
+                                        },
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-ComboStatus',
+                                            fieldLabel: 'Status',
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            width: 200,
+                                            labelWidth: 50,
+                                            labelAlign: 'right',
+                                            emptyText: '',
+                                            listConfig: {
+                                                minWidth: 200
+                                            },
+                                            listeners: {
+                                                afterrender: 'onCmbStatusAfterRender'
+                                            }
                                         }
-
 
                                     ]
                                 },
@@ -303,7 +320,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                                             },
                                             listeners: {
                                                 afterrender: 'onCmbSourceAfterRender',
-                                                 select: 'onCmbSourceSelect'
+                                                select: 'onCmbSourceSelect'
                                             }
                                         }, {
                                             xtype: 'combo',
@@ -325,7 +342,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-country2',hidden: true,
+                                            id: prototype.id + '-country2', hidden: true,
                                             fieldLabel: 'Country',
                                             maskRe: /[A-Z,a-z,Ñ,ñ]/,
                                             maxLength: 2,
@@ -368,7 +385,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                                             id: prototype.id + '-Audit',
                                             fieldLabel: 'Audit',
                                             maskRe: /[A-Z,a-z,Ñ,ñ]/,
-                                           // readOnly: true,
+                                            // readOnly: true,
                                             maxLength: 10,
                                             enforceMaxLength: 10,
                                             labelWidth: 30,
@@ -380,7 +397,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                                         },
                                         {
                                             xtype: 'combo',
-                                            id: prototype.id+'-cmbError',
+                                            id: prototype.id + '-cmbError',
                                             fieldLabel: 'Reasons',
                                             queryMode: 'local',
                                             displayField: 'A2548DESC1',
@@ -389,7 +406,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                                             labelWidth: 50,
                                             labelAlign: 'right',
                                             emptyText: '',
-                                            listConfig:{
+                                            listConfig: {
                                                 minWidth: 200
                                             }
                                         }
@@ -417,7 +434,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridData',
-                           // flex: 1,
+                            // flex: 1,
                             width: prototype.widthContenedor,
                             height: prototype.heightContenedor,
                             columnLines: true,
@@ -428,131 +445,6 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                                     align: 'center'
                                 },
                                 items: [
-                                    {
-                                        text: 'Memo <br> number', dataIndex: 'A2548NMEMO', align: 'center', width: 90, 
-                                    },
-                                    {
-                                        text: 'Country', dataIndex: 'A2548PAIS', align: 'center', width: 60, 
-                                    },
-                                    {
-                                        text: 'IATA', dataIndex: 'A2548IATA', align: 'center', width: 70, 
-                                    },
-                                    {text: 'Agency', dataIndex: 'AGENCY', width: 200, align: 'left',
-                                        renderer: function(value, metadata) {
-                                            metadata.tdAttr = 'data-qtip="' + value + '"';
-                                            return value;
-                                        }
-                                    },
-                                    {text: 'Currency', dataIndex: 'A2548MDA', width: 70, align: 'center'},
-                                    {
-                                        text: 'Fare', dataIndex: 'A2548NETO', width: 80, sortable: false,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
-                                            return win.formatDblNumber(value);
-                                        }
-                                    },
-                                    {text: 'Source', dataIndex: 'A2548FTE', width: 55, align: 'center'},
-                                    {
-                                        text: 'Dispute <br> Date', dataIndex: 'A2548FDISP', align: 'center', width: 100, 
-                                    },
-                                  /*  {
-                                        text: 'Tour <br> Code', dataIndex: 'A2548CODIT', align: 'center', width: 100, sortable: false
-                                    },*/
-                                    {
-                                        text: 'System <br> Date', dataIndex: 'A2548FREGI', align: 'center', width: 70, 
-                                    },
-                                    {
-                                        text: 'Accounting / <br> Issue Date', dataIndex: 'A2548FCONT', align: 'center', width: 100, 
-                                    },
-                                    /*{
-                                        text: 'Processing <br> Date', dataIndex: 'A2548FPROC', align: 'center', width: 85, sortable: false
-                                    },*/
-                                    {text: 'Audit', dataIndex: 'A2548REGIS', width: 90, align: 'right'},
-                                    {
-                                        text: 'Origin', dataIndex: 'A2548BASE', align: 'center', width: 80, 
-                                    },
-                                    {
-                                        text: 'Area', dataIndex: 'A2548AREADES', align: 'center', width: 100, 
-                                    },
-                                    {
-                                        text: 'Status', dataIndex: 'A2548FLAG', flex: 1, sortable: false,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            var data = record.data;
-                                            var backgroundColor =
-                                                    data.A2548FLAG === 'A' ? "#99FFCC" :
-                                                    (data.A2548FLAG === 'U') ? "#0099FF" :
-                                                    (data.A2548FLAG === 'X') ? "#FF0000" :
-                                                    (data.A2548FLAG === 'C') ? "#D329E8" :
-                                                    (data.A2548FLAG === 'P') ? "#14C92F" :
-                                                    (data.A2548FLAG === 'I') ? "#14C92F" :
-                                                    (data.A2548FLAG === 'F') ? "#14C92F" :
-                                                    (data.A2548FLAG === 'Z') ? "#F8D169" :
-                                                    (data.A2548FLAG === 'R') ? "#F2A60D" :
-                                                    (data.A2548FLAG === 'J') ? "#69D3F8" :
-                                                    (data.A2548FLAG === 'D') ? "#FF9966" :
-                                                    (data.A2548FLAG === 'E') ? "#E8400C" :
-                                                    (data.A2548FLAG === 'W') ? "#A50C88" :
-                                                    (data.A2548FLAG === 'B') ? "#CC9966" :
-                                                    (data.A2548FLAG === 'Y') ? "#CCFF00" :
-                                                    (data.A2548FLAG === 'N') ? "#FF0000" :
-                                                    (data.A2548FLAG === 'O') ? "#B03A2E" :
-                                                    (data.A2548FLAG === 'Q') ? "#DC7633" :
-                                                    (data.A2548FLAG === 'L') ? "#B280CC" : "#FFFFFF";
-                                            var fontWeight = (data.A2548FLAG === 'X' ? 'bold' : 'bold');
-                                            metaData.style = "text-align:center;background-color:" + backgroundColor + ";font-weight:" + fontWeight + ";";
-                                            var dat = "";
-                                            if (data.A2548FLAG === "A")
-                                                dat = "Approved";
-                                            if (data.A2548FLAG === "U")
-                                                dat = "Cleared Up";
-                                            if (data.A2548FLAG === "X")
-                                                dat = "Canceled";
-                                            if (data.A2548FLAG === "C")
-                                                dat = "Condoned";
-                                            if (data.A2548FLAG === "I")
-                                                dat = "Billed GDS";
-                                            if (data.A2548FLAG === "P")
-                                                dat = "Billed";
-                                            if (data.A2548FLAG === "F")
-                                                dat = "Accredited";
-                                            if (data.A2548FLAG === "Z")
-                                                dat = "Authorized";
-                                            if (data.A2548FLAG === "N")
-                                                dat = "Rejected";
-                                            if (data.A2548FLAG === "R")
-                                                dat = "Reaudited";
-                                            if (data.A2548FLAG === "J")
-                                                dat = "Justified";
-                                            if (data.A2548FLAG === "D")
-                                                dat = "Disputed";
-                                            if (data.A2548FLAG === "E")
-                                                dat = "Rejecte Disputed";
-                                            if (data.A2548FLAG === "W")
-                                                dat = "Approve Disputed";
-                                            if (data.A2548FLAG === "B" && data.A2548TRNCU === 'ADMA')
-                                                dat = "Adm na BSPlink/MM";
-                                            if (data.A2548FLAG === "B" && data.A2548TRNCU !== 'ADMA')
-                                                dat = "Acm na BSPlink/MM";
-                                            if (data.A2548FLAG === "O")
-                                                dat = "IATA Disabled";
-                                            if (data.A2548FLAG === "Q")
-                                                dat = "Unregistered Client";
-                                            if (data.A2548FLAG === "L" && data.A2548TRNCU === 'ADMB')
-                                                dat = "Adm BSPlink/MM";
-                                            if (data.A2548FLAG === "L" && data.A2548TRNCU !== 'ADMB')
-                                                dat = "Acm BSPlink/MM";
-                                            if (data.A2548FLAG === "Y")
-                                                dat = "Pending";
-                                            return dat;
-                                        }
-                                    },
-                                    {text: 'Days', dataIndex: 'A2548DIAS', width: 50, align: 'center'},
-                                    {
-                                        text: '',
-                                        dataIndex: '',
-                                        width: 40,
-                                        renderer: 'onRendererColumnOnTime'
-                                    },
                                     {
                                         sortable: false,
                                         xtype: 'actioncolumn',
@@ -565,18 +457,144 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                                                 handler: 'onDetailClick'
                                             }
                                         ]
+                                    }, {
+                                        text: 'Memo <br> number', dataIndex: 'A2548NMEMO', align: 'center', width: 90,
+                                    },
+                                    {
+                                        text: 'Country', dataIndex: 'A2548PAIS', align: 'center', width: 60,
+                                    },
+                                    {
+                                        text: 'IATA', dataIndex: 'A2548IATA', align: 'center', width: 70,
+                                    },
+                                    {text: 'Agency', dataIndex: 'AGENCY', width: 200, align: 'left',
+                                        renderer: function (value, metadata) {
+                                            metadata.tdAttr = 'data-qtip="' + value + '"';
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'Currency', dataIndex: 'A2548MDA', width: 70, align: 'center'},
+                                    {
+                                        text: 'Fare', dataIndex: 'A2548NETO', width: 80, sortable: false,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;";
+                                            return win.formatDblNumber(value);
+                                        }
+                                    },
+                                    {text: 'Source', dataIndex: 'A2548FTE', width: 55, align: 'center'},
+                                    {
+                                        text: 'Dispute <br> Date', dataIndex: 'A2548FDISP', align: 'center', width: 100,
+                                    },
+                                    /*  {
+                                     text: 'Tour <br> Code', dataIndex: 'A2548CODIT', align: 'center', width: 100, sortable: false
+                                     },*/
+                                    {
+                                        text: 'System <br> Date', dataIndex: 'A2548FREGI', align: 'center', width: 70,
+                                    },
+                                    {
+                                        text: 'Accounting / <br> Issue Date', dataIndex: 'A2548FCONT', align: 'center', width: 100,
+                                    },
+                                    /*{
+                                     text: 'Processing <br> Date', dataIndex: 'A2548FPROC', align: 'center', width: 85, sortable: false
+                                     },*/
+                                    {text: 'Audit', dataIndex: 'A2548REGIS', width: 90, align: 'right'},
+                                    {
+                                        text: 'Origin', dataIndex: 'A2548BASE', align: 'center', width: 80,
+                                    },
+                                    {
+                                        text: 'Area', dataIndex: 'A2548AREADES', align: 'center', width: 100,
+                                    },
+                                    {text: 'Status', dataIndex: 'A2548FLAG', width: 130, sortable: false, renderer: 'onRendererColumnStatus'},
+                                    /*{
+                                     text: 'Status', dataIndex: 'A2548FLAG', flex: 1, sortable: false,
+                                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                     var data = record.data;
+                                     var backgroundColor =
+                                     data.A2548FLAG === 'A' ? "#99FFCC" :
+                                     (data.A2548FLAG === 'U') ? "#0099FF" :
+                                     (data.A2548FLAG === 'X') ? "#FF0000" :
+                                     (data.A2548FLAG === 'C') ? "#D329E8" :
+                                     (data.A2548FLAG === 'P') ? "#14C92F" :
+                                     (data.A2548FLAG === 'I') ? "#14C92F" :
+                                     (data.A2548FLAG === 'F') ? "#14C92F" :
+                                     (data.A2548FLAG === 'Z') ? "#F8D169" :
+                                     (data.A2548FLAG === 'R') ? "#F2A60D" :
+                                     (data.A2548FLAG === 'J') ? "#69D3F8" :
+                                     (data.A2548FLAG === 'D') ? "#FF9966" :
+                                     (data.A2548FLAG === 'E') ? "#E8400C" :
+                                     (data.A2548FLAG === 'W') ? "#A50C88" :
+                                     (data.A2548FLAG === 'B') ? "#CC9966" :
+                                     (data.A2548FLAG === 'Y') ? "#CCFF00" :
+                                     (data.A2548FLAG === 'N') ? "#FF0000" :
+                                     (data.A2548FLAG === 'O') ? "#B03A2E" :
+                                     (data.A2548FLAG === 'Q') ? "#DC7633" :
+                                     (data.A2548FLAG === 'L') ? "#B280CC" : "#FFFFFF";
+                                     var fontWeight = (data.A2548FLAG === 'X' ? 'bold' : 'bold');
+                                     metaData.style = "text-align:center;background-color:" + backgroundColor + ";font-weight:" + fontWeight + ";";
+                                     var dat = "";
+                                     if (data.A2548FLAG === "A")
+                                     dat = "Approved";
+                                     if (data.A2548FLAG === "U")
+                                     dat = "Cleared Up";
+                                     if (data.A2548FLAG === "X")
+                                     dat = "Canceled";
+                                     if (data.A2548FLAG === "C")
+                                     dat = "Condoned";
+                                     if (data.A2548FLAG === "I")
+                                     dat = "Billed GDS";
+                                     if (data.A2548FLAG === "P")
+                                     dat = "Billed";
+                                     if (data.A2548FLAG === "F")
+                                     dat = "Accredited";
+                                     if (data.A2548FLAG === "Z")
+                                     dat = "Authorized";
+                                     if (data.A2548FLAG === "N")
+                                     dat = "Rejected";
+                                     if (data.A2548FLAG === "R")
+                                     dat = "Reaudited";
+                                     if (data.A2548FLAG === "J")
+                                     dat = "Justified";
+                                     if (data.A2548FLAG === "D")
+                                     dat = "Disputed";
+                                     if (data.A2548FLAG === "E")
+                                     dat = "Rejecte Disputed";
+                                     if (data.A2548FLAG === "W")
+                                     dat = "Approve Disputed";
+                                     if (data.A2548FLAG === "B" && data.A2548TRNCU === 'ADMA')
+                                     dat = "Adm na BSPlink/MM";
+                                     if (data.A2548FLAG === "B" && data.A2548TRNCU !== 'ADMA')
+                                     dat = "Acm na BSPlink/MM";
+                                     if (data.A2548FLAG === "O")
+                                     dat = "IATA Disabled";
+                                     if (data.A2548FLAG === "Q")
+                                     dat = "Unregistered Client";
+                                     if (data.A2548FLAG === "L" && data.A2548TRNCU === 'ADMB')
+                                     dat = "Adm BSPlink/MM";
+                                     if (data.A2548FLAG === "L" && data.A2548TRNCU !== 'ADMB')
+                                     dat = "Acm BSPlink/MM";
+                                     if (data.A2548FLAG === "Y")
+                                     dat = "Pending";
+                                     return dat;
+                                     }
+                                     },*/
+                                    {text: 'Bsplink', dataIndex: 'A2548STCOR', width: 100, align: 'center'},
+                                    {text: 'Days', dataIndex: 'A2548DIAS', width: 50, align: 'center'},
+                                    {
+                                        text: '',
+                                        dataIndex: '',
+                                        width: 40,
+                                        renderer: 'onRendererColumnOnTime'
                                     }
                                     /*{
-                                        text: 'ADM<br>Tracing', dataIndex: '', width: 60, renderer: 'onRendererColumnOnLote'
-                                        listeners: {
-                                            click: 'searchDocumt'
-                                        },
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            var data = record.data;
-                                            var src = ( data.A2548NMEMO!=='') ? 'resources/img/icon/16x16/search_docum.png' : '';
-                                            return '<a href="#salesaudit-dispute-gestion-bsplink"><img src="'+src+'"></a>';
-                                        }
-                                    }*/
+                                     text: 'ADM<br>Tracing', dataIndex: '', width: 60, renderer: 'onRendererColumnOnLote'
+                                     listeners: {
+                                     click: 'searchDocumt'
+                                     },
+                                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                     var data = record.data;
+                                     var src = ( data.A2548NMEMO!=='') ? 'resources/img/icon/16x16/search_docum.png' : '';
+                                     return '<a href="#salesaudit-dispute-gestion-bsplink"><img src="'+src+'"></a>';
+                                     }
+                                     }*/
 
 
 
@@ -660,7 +678,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                 }
             ]
         }
-        
+
     ]
 });
 

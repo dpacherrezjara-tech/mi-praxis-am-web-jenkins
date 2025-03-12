@@ -163,7 +163,7 @@ public class BwrBSPLINKRFNDController extends BaseController {
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
         A3389Filter filter = new A3389Filter();
-
+        String vl_A3389FLAG = "ASSIGNED TO AUDITOR";
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -211,7 +211,7 @@ public class BwrBSPLINKRFNDController extends BaseController {
             Iterator iter = lst.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14,CH_15;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15;
 
             row = sheet.createRow(vj);
 
@@ -319,7 +319,53 @@ public class BwrBSPLINKRFNDController extends BaseController {
                 CH_11.setCellValue(lst.get(vi).A3389REGAS);
                 CH_12.setCellValue(lst.get(vi).A3389RACN);
                 CH_13.setCellValue(lst.get(vi).A3389STATO);
-                CH_14.setCellValue(lst.get(vi).A3389FLAG);
+
+                switch ((lst.get(vi).A3389FLAG).trim()) {
+                    case "A":
+                        vl_A3389FLAG = "ASSIGNED TO AUDITOR";
+                        break;
+                    case "R":
+                        vl_A3389FLAG = "REJECTED";
+                        break;
+                    case "F":
+                        vl_A3389FLAG = "AUTHORISED";
+                        break;
+                    case "Y":
+                        vl_A3389FLAG = "PENDING";
+                        break;
+                    case "X":
+                        vl_A3389FLAG = "VOID";
+                        break;
+                    case "D":
+                        vl_A3389FLAG = "REEMBOLSABLE";
+                        break;
+                    case "J":
+                        vl_A3389FLAG = "EXEC. OF THE ROBOT";
+                        break;
+                    case "G":
+                        vl_A3389FLAG = "NO REEMBOLSABLE";
+                        break;
+                    case "B":
+                        vl_A3389FLAG = "CHANGE FOR ANOTHER";
+                        break;
+                    case "C":
+                        vl_A3389FLAG = "INCONSISTENCY WITH THE ROBOT";
+                        break;
+                    case "":
+                        vl_A3389FLAG = "PENDING DOWNLOAD";
+                        break;
+                    case "E":
+                        vl_A3389FLAG = "ERROR IN THE PROCESS";
+                        break;
+                    case "Z":
+                        vl_A3389FLAG = "UNDER INVESTIGATION";
+                        break;
+                    case "K":
+                        vl_A3389FLAG = "CPN EVALUATION";
+                        break;
+                }
+                CH_14.setCellValue(vl_A3389FLAG);
+                //CH_14.setCellValue(lst.get(vi).A3389FLAG);
                 CH_15.setCellValue(lst.get(vi).A3389DIAS);
 
                 CH_00.setCellStyle(bodyStyle);
@@ -431,7 +477,7 @@ public class BwrBSPLINKRFNDController extends BaseController {
         receptores.add("notificaciones@miatech.net");
         List<String> Ccp = new ArrayList<String>();
         String[] parts = null;
-        String strMails = "ebarraza@aeromexico.com";
+        String strMails = "dngonzalezc@aeromexico.com";
         //strMails = "zperez@miatech.net";
         parts = strMails.split(";");
         for (int i = 0; i < parts.length; i++) {

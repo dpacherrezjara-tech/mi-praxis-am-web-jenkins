@@ -97,14 +97,14 @@ public class SpainInvoiceFormController extends BaseController {
     @RequestMapping(value = "export_Xls")
     public ResponseEntity<byte[]> getFileTxt(HttpServletRequest request, final HttpServletResponse response) throws Exception {
         String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
-        String v1_urlREST = "/api/spain-invoice/spaininvoice";
+        String v1_urlREST = "/spain-invoice/report";
 
         try {
             HashMap bodyData = new HashMap<>();
             bodyData.put("CCUST", "139");
             bodyData.put("FPROCINI", request.getParameter("VP_FROM").trim());
             bodyData.put("FPROCFIN", request.getParameter("VP_TO").trim());
-            bodyData.put("PATH", rutaFile);
+            //bodyData.put("PATH", rutaFile);
 
             System.out.println(bodyData);
 

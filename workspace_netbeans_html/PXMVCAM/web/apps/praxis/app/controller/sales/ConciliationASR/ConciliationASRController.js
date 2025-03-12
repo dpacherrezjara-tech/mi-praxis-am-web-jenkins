@@ -164,12 +164,12 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.ConciliationASRControlle
         if(mes < 10) mes = "0"+mes;
         Ext.getCmp(prototype.id+'-cmbDateFromMonth').setValue(mes);
         Ext.getCmp(prototype.id+'-cmbDateToMonth').setValue(mes);
-        var day = new Date().getDate()-4;
+        //var day = new Date().getDate()-4;
         //console.log('---->>' + day);
-        if(day < 10) day = "0"+day;
+        //if(day < 10) day = "0"+day;
         
-        Ext.getCmp(prototype.id+'-cmbDateFromDay').setValue(day);
-        Ext.getCmp(prototype.id+'-cmbDateToDay').setValue(day);
+        Ext.getCmp(prototype.id+'-cmbDateFromDay').setValue('01');
+        Ext.getCmp(prototype.id+'-cmbDateToDay').setValue('01');
 //        Ext.getCmp(prototype.id+'-cmbDateFromMonth').setValue('01');
 //        Ext.getCmp(prototype.id+'-cmbDateToMonth').setValue('01');
 //        Ext.getCmp(prototype.id+'-cmbDateFromDay').setValue('01');
@@ -534,7 +534,8 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.ConciliationASRControlle
         var fday = win.getValue('cmbDateFromDay');
         var tday = win.getValue('cmbDateToDay');
         
-        if(fyear === null || tyear === null || fmonth === null || tmonth === null || fday === null || tday === null){
+        
+        if(fyear === null || tyear === null || fmonth === null || tmonth === null){
             msg = 'Date Error. Please call our System Apartment.';
         }else{
             if(fyear !== '' && fmonth === '') {

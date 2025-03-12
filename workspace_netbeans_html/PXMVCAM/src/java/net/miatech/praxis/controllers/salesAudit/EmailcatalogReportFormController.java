@@ -71,6 +71,7 @@ public class EmailcatalogReportFormController extends BaseController {
 
             filter.IN_IATA = request.getParameter("IN_IATA");
             filter.IN_STATUS = request.getParameter("IN_STATUS");
+            filter.IN_TYPE = request.getParameter("IN_TYPE");
 
             if (!bExcel) {
                 filter.page.PAGROW = 20;
@@ -116,7 +117,7 @@ public class EmailcatalogReportFormController extends BaseController {
         map.put("data", result);
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "/getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -168,7 +169,7 @@ public class EmailcatalogReportFormController extends BaseController {
             Iterator iter = listaData.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -232,6 +233,7 @@ public class EmailcatalogReportFormController extends BaseController {
                 CH_07 = row.createCell(7);
                 CH_08 = row.createCell(8);
                 CH_09 = row.createCell(9);
+                CH_10 = row.createCell(10);
 
                 CH_00.setCellValue(listaData.get(vi).A3903CCUST);
                 CH_01.setCellValue(listaData.get(vi).A3903AGETE);
@@ -243,6 +245,7 @@ public class EmailcatalogReportFormController extends BaseController {
                 CH_07.setCellValue(listaData.get(vi).A3903REGIS);
                 CH_08.setCellValue(listaData.get(vi).A3903FREVI);
                 CH_09.setCellValue(listaData.get(vi).A3903REVIS);
+                CH_10.setCellValue(listaData.get(vi).A3903TYPEDES);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -254,6 +257,7 @@ public class EmailcatalogReportFormController extends BaseController {
                 CH_07.setCellStyle(bodyStyle);
                 CH_08.setCellStyle(bodyStyle);
                 CH_09.setCellStyle(bodyStyle);
+                CH_10.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;

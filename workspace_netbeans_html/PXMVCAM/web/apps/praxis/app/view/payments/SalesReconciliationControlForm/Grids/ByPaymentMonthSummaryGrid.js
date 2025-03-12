@@ -40,9 +40,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                     metaData.style = "text-align:center;font-weight:bold;color:#8B5199;";
                     if (record.data.paydate) {
-                        value = record.data.paydate;
-                    } else {
+                        value = record.data.paydate;    
+                    } 
+                    else if (record.data.prda) {
                         value = record.data.prda;
+                    }
+                    else {
+                        value = record.data.feup;
                     }
                     return value;
                 }

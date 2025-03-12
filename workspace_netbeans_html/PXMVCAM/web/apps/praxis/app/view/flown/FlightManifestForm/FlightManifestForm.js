@@ -1,22 +1,18 @@
-prototype.id = 'BaseOdForm';
-prototype.url = CONTEXTPATH + '/BaseOd';
-prototype.widthContenedor = 850;
-prototype.widthGrid = 825;
-
-Ext.define('Ext.Praxis.view.flown.BaseOdForm.BaseOdForm', {
+prototype.widthContenedor = 1660;
+console.log(prototype);
+Ext.define('Ext.Praxis.view.flown.FlightManifestForm.FlightManifestForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.BaseOdForm',
+    alias: 'widget.FlightManifestForm',
     requires: [
-          'Ext.Praxis.controller.flown.BaseOd.BaseOdController',
-          'Ext.Praxis.view.flown.BaseOdForm.Options',
-          'Ext.Praxis.view.flown.BaseOdForm.Filters',
-          'Ext.Praxis.view.flown.BaseOdForm.Info'
+        'Ext.Praxis.controller.flown.FlightManifest.FlightManifestController',
+        'Ext.Praxis.view.flown.FlightManifestForm.Options',
+        'Ext.Praxis.view.flown.FlightManifestForm.Filters',
+        'Ext.Praxis.view.flown.FlightManifestForm.Info'
     ],
-    controller: 'BaseOdController',
+    controller: 'FlightManifestController',
     layout: {
         type: 'fit'
     },
-    padding: '0 0 0 0',
     border: false,
     defaults: {
         border: false
@@ -29,7 +25,7 @@ Ext.define('Ext.Praxis.view.flown.BaseOdForm.BaseOdForm', {
             layout: 'fit',
             items: [
                 {
-                    id: prototype.id +'-form',
+                    id: prototype.id + '-form',
                     border: false,
                     bodyCls: 'colorFondo',
                     layout: 'fit',
@@ -41,12 +37,11 @@ Ext.define('Ext.Praxis.view.flown.BaseOdForm.BaseOdForm', {
                         {
                             xtype: 'panel',
                             region: 'center',
-//                          width: 900,
                             layout: 'border',
                             items: [
                                 {
                                     region: 'center',
-                                    id: prototype.id +'-centerC',
+                                    id: prototype.id + '-centerC',
                                     layout: {
                                         type: 'vbox',
                                         align: 'center'
@@ -59,35 +54,34 @@ Ext.define('Ext.Praxis.view.flown.BaseOdForm.BaseOdForm', {
                                     },
                                     items: [
                                         {
-                                            xtype:prototype.id + '-options'
+                                            xtype: prototype.id + '-options'
                                         }
                                         ,
                                         {
-                                            xtype:prototype.id+ '-filters',
-                                            id: prototype.id+'-contentFilter',
-                                            hidden: true
+                                            xtype: prototype.id + '-filters',
+                                            id: prototype.id + '-contentFilter'
                                         }
                                         ,
                                         {
                                             xtype: 'panel',
-                                            height: 580,
+                                            height: 640,
                                             layout: 'fit',
+                                            border: true,
                                             items: [
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.id+'-centerC-panel01',
                                                     layout: 'border',
                                                     align: 'center',
-                                                    border: true,
+                                                    border: false,
                                                     defaults: {
-                                                        border: true
+                                                        border: false
                                                     },
                                                     bodyStyle: 'background-color: white;',
                                                     items: [
                                                         {
                                                             region: 'center',
-                                                            xtype: prototype.id +'-info',
-                                                            id:prototype.id+'-contentInfo'
+                                                            xtype: prototype.id + '-info',
+                                                            id: prototype.id + '-contentInfo'
                                                         }
                                                     ]
                                                 }
@@ -103,6 +97,3 @@ Ext.define('Ext.Praxis.view.flown.BaseOdForm.BaseOdForm', {
         }
     ]
 });
-
-
-
