@@ -53,7 +53,6 @@ Ext.define('Ext.Praxis.view.sales.CalendarControlARCForm.Options', {
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel',
-                            hidden:true,
                             listeners: {
                                 click: 'btnExcel_click'
                             }
