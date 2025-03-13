@@ -8,73 +8,21 @@ Ext.define('Ext.Praxis.view.sales.CalendarControlARCForm.Options', {
     },
     items: [
         {
-            xtype: 'panel',
-            id: prototype.id+'-boxPaginacion',
-            hidden: true,
-            width: 100,
+            xtype: 'radiogroup',
+            id: prototype.id + '-calendarVersion-1',
+            columns: 2, // Muestra los radios en columna
+            vertical: false,
             border: false,
+            padding: 5,
+            width: 200,
             items: [
-                {
-                    xtype: 'toolbar',
-                    cls: 'x-toolbar-pag',
-                    items: [
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-pag-first',
-                            iconCls: 'prx-icon-pagination-first',
-                            tooltip: 'First Page',
-                            listeners: {
-                                click: 'pagFirst'
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-pag-previous',
-                            iconCls: 'prx-icon-pagination-previous',
-                            tooltip: 'Previous Page',
-                            listeners: {
-                                click: 'pagPrevious'
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-pag-next',
-                            iconCls: 'prx-icon-pagination-next',
-                            tooltip: 'Next Page',
-                            listeners: {
-                                click: 'pagNext'
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-pag-last',
-                            iconCls: 'prx-icon-pagination-last',
-                            tooltip: 'Last Page',
-                            listeners: {
-                                click: 'pagLast'
-                            }
-                        },
-                        {
-                            xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin',
-                            pageSize: 10,
-                            border: false,
-                            displayInfo: false,
-                            hidden: true
-                        },
-                        {
-                            xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin2',
-                            pageSize: 10,
-                            border: false,
-                            displayInfo: false,
-                            hidden: true
-                        }
-                    ]
-                }
-            ]
+                {boxLabel: '<span style="color: green; font-weight: bold;">New</span>', name: 'opcion', inputValue: 'ARC2', checked: true},
+                {boxLabel: '<span style="color: green; font-weight: bold;">Old</span>', name: 'opcion', inputValue: 'ARC'}
+            ],
+            listeners: {
+                change: 'onChangeVersion'
+            }
         },
-        {xtype: 'tbspacer', width: 20},
         {
             xtype: 'panel',
             border: true,
@@ -105,6 +53,7 @@ Ext.define('Ext.Praxis.view.sales.CalendarControlARCForm.Options', {
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel',
+                            hidden:true,
                             listeners: {
                                 click: 'btnExcel_click'
                             }
