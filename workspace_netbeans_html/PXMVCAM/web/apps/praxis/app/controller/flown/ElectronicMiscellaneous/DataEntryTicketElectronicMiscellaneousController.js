@@ -37,9 +37,9 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
     onFocusLeaveOpe: function(obj) {
         console.log(obj.getValue());
 
-        if (obj.getValue().trim() !== '5D' && obj.getValue().trim() !== 'AM') {
-            Ext.getCmp(prototype.id + '-t' + '-txtCARR').setValue('');
-        }
+//        if (obj.getValue().trim() !== '5D' && obj.getValue().trim() !== 'AM') {
+//            Ext.getCmp(prototype.id + '-t' + '-txtCARR').setValue('');
+//        }
     },
     setStoreData: function() {
         var cmbTEMD = Ext.getCmp(prototype.id + '-t' + '-cmbTEMD');
