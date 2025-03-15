@@ -369,6 +369,13 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
 
         var rec = this.p.rec.data;
         var msjResult = "";
+        
+        /* VALIDACION PARA CARRIER, SOLO PERMITIR AM O 5D */
+        
+        if (bean.CARR !== '' && bean.CARR !== 'AM' && bean.CARR !== '5D') {
+            msjResult = "The Carrier can only have the values '5D', 'AM', or be empty.";
+            return msjResult;
+        }
 
         if (bean.strTicket === '') {
             msjResult = "A Ticket number is required.";

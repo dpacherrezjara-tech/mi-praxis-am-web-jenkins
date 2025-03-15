@@ -955,20 +955,20 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntryTicket', 
                                     xtype: 'textfield',
                                     id: prototype.id + '-t' + '-txtCARR',
                                     required: true,
-                                    //readOnly: true,
                                     fieldLabel: '',
                                     width: 70,
                                     labelWidth: 0,
                                     labelAlign: 'left',
                                     enforceMaxLength: true,
                                     maxLength: 2,
-                                    maskRe: /[AMD5]/,
+                                    maskRe: /^[a-zA-Z0-9]+$/,  // Permite letras y números
                                     fieldStyle: 'text-align: left;',
                                     listeners: {
                                         change: 'onUpperValue',
-                                        focusleave:'onFocusLeaveOpe'
+                                        focusleave: 'onFocusLeaveOpe'
                                     }
-                                },
+                                }
+                                ,
                                 {
                                     xtype: 'label',
                                     labelAlign: 'left',
