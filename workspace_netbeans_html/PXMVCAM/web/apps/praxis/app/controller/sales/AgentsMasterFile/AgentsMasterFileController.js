@@ -403,7 +403,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.AgentsMasterFileControl
                 if(int_result>100000)
                 {
                      global.Msg({
-                            msg: 'Report cannot be exported, please contact system administrator.'
+                            msg: 'You have exceeded the maximum number of records that can be exported through this option. Please select the TXT option instead.'
                         });
                 }
                 else
