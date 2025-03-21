@@ -46,6 +46,23 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.Info02', {
                             width: 990,
                             height: 390,
                             padding: '0px 5px 1px 5px',
+                            selModel: {
+                                selType: 'checkboxmodel',
+                                listeners: { 
+//                                    beforeselect: function (grid, record, index, eOpts, metaData) {                                  
+//                                        if (Ext.String.trim(record.get('A4246STSPG')) === 'T') return false;
+//                                        else return true;
+//                                    },
+                                    selectionchange:function( this_grid, selected, eOpts ){
+                                          console.log(selected);
+//                                        var i = 0, vl_total = 0;
+//                                        for (; i < selected.length; ++i) {                                            
+//                                            vl_total += selected[i].get('A4246SALDP'); //OLD: A4246TOT
+//                                        }
+//                                        Ext.getCmp(prototype.id + '-total_sel').setValue( Ext.util.Format.number( vl_total, '0,000.00') );
+                                    }
+                                }
+                            },
                             columns: {
                                 items: [
                                     {
@@ -56,32 +73,16 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.Info02', {
                                     },
                                     {
                                         text: 'Seq', dataIndex: 'A4250SEQ', width: 40, align: 'center', locked: true
-                                    },
-//                                    {
-//                                        text: 'PNR', dataIndex: 'A4250PNR', width: 50, align: 'center', locked: true
-//                                    },
+                                    },                                   
                                     {
-                                        text: 'Estado', dataIndex: 'A4250STAT', align: 'center', width: 100, locked: true,
-//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-//                                            var VL_DES = 'Pendiente';
-//                                            if (record.get('A4250STAT') === '2')
-//                                                VL_DES = 'Error al obtener UUID';
-//                                            if (record.get('A4250STAT') === '1')
-//                                                VL_DES = 'OK';
-//                                            var html = '<img src="resources/img/semaforo/Circle_Silver.png" title="' + VL_DES + '">';
-//                                            if (value === '1')
-//                                                html = '<img src="resources/img/semaforo/Circle_Green.png" title="' + VL_DES + '" >';
-//                                            if (value === '2')
-//                                                html = '<img src="resources/img/semaforo/Circle_Red.png" title="' + VL_DES + '" >';
-//                                            return html;
-//                                        }
+                                        text: 'Estado', dataIndex: 'A4250STAT', align: 'center', width: 100, locked: true
                                     },
                                     {text: 'Trx.', dataIndex: 'A4250TRNCU', align: 'center', width: 60, locked: true},
                                     {text: 'Fecha<br>Contable', dataIndex: 'A4250FCONT', align: 'center', width: 70, locked: true},
                                     {
                                         text: 'Información Pre-Compra',
                                         columns: [
-                                            {text: '# Id', dataIndex: 'A4250IDANT', width: 60, align: 'left'},
+                                            {text: '# ID', dataIndex: 'A4250IDANT', width: 50, align: 'left'},
                                             {text: 'UUID', dataIndex: 'A4250CFDIP', width: 150, align: 'left'}
                                         ]
                                     },
@@ -117,6 +118,15 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.Info02', {
                                                         handler: 'onPreDonwloadDocumentXMLClick'
                                                     }
                                                 ]
+                                            },
+                                            // {text: 'Enviado a<br>Cliente', dataIndex: 'A4250IENV', width: 90, align: 'left'},
+                                            {
+                                                text: 'Enviado a <br>Cliente', dataIndex: 'A4250IENV', align: 'center', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    if (record.get('A4250IENV') === '1')
+                                                        metaData.style = 'font-weight:bold;color:green;';
+                                                    return value === '1' ? 'Si' : 'No';
+                                                }
                                             },
                                             {text: 'Estado', dataIndex: 'A4250STDE', width: 90, align: 'left'},
                                             {text: 'CDFI', dataIndex: 'A4250CFDI', width: 150, align: 'left'},

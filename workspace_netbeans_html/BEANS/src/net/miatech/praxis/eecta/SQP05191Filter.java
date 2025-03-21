@@ -20,6 +20,10 @@ public class SQP05191Filter extends A4250 {
     public String VP_TICKET = "";
     public String VP_CDCLI = "";
     public String VP_NLOTE = "";    
+    
+    public String RSOCI = "";
+    public String REFER = "";    
+            
     public Pagination page = new Pagination();
     
 }

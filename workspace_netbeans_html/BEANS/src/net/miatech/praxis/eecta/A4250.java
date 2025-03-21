@@ -44,4 +44,7 @@ public class A4250 {
     public String A4250RMSG = "";
     public String A4250PXML = "";
     public String A4250PPDF = "";
+    public String A4250IENV = "";
+    
+
 }
