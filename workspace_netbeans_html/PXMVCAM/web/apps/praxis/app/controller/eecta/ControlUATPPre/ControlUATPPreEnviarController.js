@@ -48,6 +48,16 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATPPre.ControlUATPPreEnviarContr
         });
     },
     onSaveClick: function () {
+        var grid = Ext.getCmp(prototype.id06 + '-gridData');
+        var store = grid.getStore();
+        //console.log(store.data.items);
+        if (store.data.items.length <= 0) {
+            global.Msg({
+                msg: "No hay documentos seleccionados"
+            });
+            return;
+        };
+
         var StrMsg = '¿Enviar los documentos seleccionados?';
         Ext.Msg.show({
             title: '.:PRAXIS:.',
