@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.sales.CalendarControlARCForm.Options', {
+Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Options', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-options',
     border: false,
@@ -8,24 +8,9 @@ Ext.define('Ext.Praxis.view.sales.CalendarControlARCForm.Options', {
     },
     items: [
         {
-            xtype: 'radiogroup',
-            id: prototype.id + '-calendarVersion-1',
-            columns: 2, // Muestra los radios en columna
-            vertical: false,
-            border: false,
-            padding: 5,
-            width: 200,
-            items: [
-                {boxLabel: '<span style="color: green; font-weight: bold;">New</span>', name: 'opcion', inputValue: 'ARC2', checked: true},
-                {boxLabel: '<span style="color: green; font-weight: bold;">Old</span>', name: 'opcion', inputValue: 'ARC'}
-            ],
-            listeners: {
-                change: 'onChangeVersion'
-            }
-        },
-        {
             xtype: 'panel',
-            border: true,
+            layout: 'hbox',
+            border: false,
             items: [
                 {
                     xtype: 'toolbar',
@@ -36,7 +21,7 @@ Ext.define('Ext.Praxis.view.sales.CalendarControlARCForm.Options', {
                             iconCls: 'prx-icon-search',
                             tooltip: 'Search',
                             listeners: {
-                                click: 'btnSearch_click'
+                                click: 'onClickSearchBtn'
                             }
                         },
                         {
@@ -45,16 +30,25 @@ Ext.define('Ext.Praxis.view.sales.CalendarControlARCForm.Options', {
                             iconCls: 'prx-icon-filter',
                             tooltip: 'Display filter',
                             listeners: {
-                                click: 'btnFilter_click'
+                                click: 'onClickFilterBtn'
                             }
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnExcel',
-                            iconCls: 'prx-icon-excel',
-                            tooltip: 'Export to Excel',
+                            id: prototype.id + '-btnLoadRobot',
+                            iconCls: 'prx-icon-processing',
+                            tooltip: 'Load Robot',
                             listeners: {
-                                click: 'btnExcel_click'
+                                click: 'onClickLoadRobot'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnRobotLog',
+                            iconCls: 'prx-icon-image-log',
+                            tooltip: 'Robot Log',
+                            listeners: {
+                                click: 'onClickRobot'
                             }
                         },
                         {
@@ -63,16 +57,7 @@ Ext.define('Ext.Praxis.view.sales.CalendarControlARCForm.Options', {
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options',
                             listeners: {
-                                click: 'btnClear_click'
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnBack',
-                            iconCls: 'prx-icon-back',
-                            tooltip: 'Back',
-                            listeners: {
-                                click: 'btnBack_click'
+                                click: 'onClearOptionsBtn'
                             }
                         }
                     ]
