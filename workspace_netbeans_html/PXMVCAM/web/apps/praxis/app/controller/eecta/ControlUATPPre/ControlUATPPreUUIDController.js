@@ -362,13 +362,13 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATPPre.ControlUATPPreUUIDControl
             this.search_det_loadbatch();
         }
     },
-    onPreDonwloadDocumentPDFClick: function( grid, rowIndex, colIndex )
-    {  
+    onPreDonwloadDocumentPDFClick: function (grid, rowIndex, colIndex)
+    {
         //console.log(vp_document_id); 
         var store = grid.getStore();
-        var rec = store.getAt(rowIndex);                   
+        var rec = store.getAt(rowIndex);
         var document_path = rec.get('A4250PPDF');
-        if(document_path === ''){
+        if (document_path === '') {
             global.Msg({msg: 'El documento no esta facturado'});
             return;
         }
@@ -379,20 +379,20 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATPPre.ControlUATPPreUUIDControl
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
-                if (btn === 'ok') {                        
-                    global.getFile(prototype.url + '/getPreDonwloadInvoice?document_path='+document_path);                        
+            fn: function (btn) {
+                if (btn === 'ok') {
+                    global.getFile(prototype.url + '/getPreDonwloadInvoice?document_path=' + document_path);
                 }
             }
         });
     },
-    onPreDonwloadDocumentXMLClick: function( grid, rowIndex, colIndex )
-    {  
+    onPreDonwloadDocumentXMLClick: function (grid, rowIndex, colIndex)
+    {
         //console.log(vp_document_id); 
         var store = grid.getStore();
-        var rec = store.getAt(rowIndex);                   
+        var rec = store.getAt(rowIndex);
         var document_path = rec.get('A4250PXML');
-         if(document_path === ''){
+        if (document_path === '') {
             global.Msg({msg: 'El documento no esta facturado'});
             return;
         }
@@ -403,12 +403,39 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATPPre.ControlUATPPreUUIDControl
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
-                if (btn === 'ok') {                        
-                    global.getFile(prototype.url + '/getPreDonwloadInvoice?document_path='+document_path);                        
+            fn: function (btn) {
+                if (btn === 'ok') {
+                    global.getFile(prototype.url + '/getPreDonwloadInvoice?document_path=' + document_path);
                 }
             }
         });
+    },
+
+    OnEnviarForm: function () {
+        var grid = Ext.getCmp(prototype.id03 + '-gridData');
+        // Obtener el modelo de seleccion
+        var selectionModel = grid.getSelectionModel();
+        // Obtener los registros seleccionados
+        var selectedRecords = selectionModel.getSelection();
+        // console.log(selectedRecords);
+        if (selectedRecords.length > 0) {
+            this.winDataEntry('E', selectedRecords);
+        } else {
+            global.Msg({
+                msg: 'Seleccionar registros!'
+            });
+        }
+    },
+    winDataEntry: function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+        Ext.create('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreEnviarForm', {
+            id: prototype.id06 + '-ControlUATPPreEnviarForm',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
     }
 });
 
