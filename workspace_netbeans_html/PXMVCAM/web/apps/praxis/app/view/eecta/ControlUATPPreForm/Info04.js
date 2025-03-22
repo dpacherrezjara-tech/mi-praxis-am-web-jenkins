@@ -43,9 +43,9 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.Info04', {
                             xtype: 'grid',
                             id: prototype.id05 + '-gridData',
                             columnLines: true,
-                            width: 990,
+                            width: 1200,
                             height: 390,
-                            padding: '0px 5px 1px 5px',
+                            padding: '1px 5px 1px 5px',
                             columns: {
                                 items: [
                                     {
@@ -101,6 +101,14 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.Info04', {
                                                 metaData.style = 'font-weight:bold;color:red;';
                                             return value;
                                         }
+                                    },
+                                    {
+                                        text: 'Enviado a <br>Cliente', dataIndex: 'A4516IENV', align: 'center', width: 80,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            if (record.get('A4516IENV') === '1')
+                                                metaData.style = 'font-weight:bold;color:green;';
+                                            return value==='1'?'Si':'No';
+                                        }
                                     }
                                 ],
                                 defaults: {
@@ -132,8 +140,8 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.Info04', {
                         {
                             xtype: 'panel',
                             id: prototype.id05 + '-pie',
-                            width: 780,
-                            height: 35,
+                            // width: 780,
+                            // height: 35,
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'
@@ -148,8 +156,8 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.Info04', {
                                 {
                                     xtype: 'panel',
                                     id: prototype.id05 + '-boxPaginacion',
-                                    width: 780,
-                                    border: false,
+                                    //width: '100%',
+                                    //border: false,
                                     items: [
                                         {
                                             xtype: 'toolbar',

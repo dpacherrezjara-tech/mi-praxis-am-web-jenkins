@@ -13,6 +13,7 @@ import net.miatech.praxis.A1527;
 public class PX036S01A1527Filter extends A1527 {
     public String IN_CCUST = "";
     public String IN_A1527PPED = "";
+    public String IN_VERSION ="";
     
     public int A1698_TAPES = 0;
     public int A1698_ERRORS = 0;

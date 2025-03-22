@@ -76,23 +76,25 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGridUatp', {
                                         text: 'Nbr.', dataIndex: 'A4244ITEM', align: 'right', locked: true, width: 50
                                     },
                                     {
-                                        text: 'UATP Number', dataIndex: 'A4244UATP', locked: true, align: 'left', width: 240,
+                                        text: 'UATP Number', dataIndex: 'A4244UATP', locked: true, align: 'left', width: 200,
                                         editor: {
                                             xtype: 'textfield',
                                             allowBlank: false,
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 20
+                                            maxLength: 19
                                         }
                                     },
                                     {
-                                        text: 'Type', dataIndex: 'A4244TIPO', align: 'left', width: 130,
+                                        text: 'Type', dataIndex: 'A4244TIPO', align: 'center', width: 130,
                                         editor: {
                                             xtype: 'textfield',
                                             allowBlank: false,
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 100
+                                            maxLength: 1,
+                                            maskRe: /[A/B/a/b]/,
+                                            emptyText: 'A=Anticipo o B=Beneficio'
                                         }
                                     },
                                     {
@@ -110,6 +112,12 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoContratosPreForm.InfoGridUatp', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
+//                                    {
+//                                        text: 'Balance', dataIndex: 'A4244SALDP', width: 110, align: 'right',
+//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+//                                            return Ext.util.Format.number(value, '0,000.00');
+//                                        }
+//                                    },
                                     {
                                         xtype: 'actioncolumn',
                                         sortable: false,

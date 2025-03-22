@@ -67,8 +67,8 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATPPre.ControlUATPPreProcesarCon
         var params = this.getDataEntryValues(strOption);
         var strMsg = this.validateForm(params);
         var StrMsgConfirm = ''; 
-        if (params.VP_PROCESO === 'UATP') StrMsgConfirm = '¿Procesar ventas UATP?';
-        if (params.VP_PROCESO === 'EECC') StrMsgConfirm = '¿Procesar Estados de Cuenta?';
+        if (params.VP_PROCESO === 'UATP') StrMsgConfirm = '¿Procesar la opción seleccionada?';
+        if (params.VP_PROCESO === 'EECC') StrMsgConfirm = '¿Procesar Estado de Cuenta?';
         
         if (strMsg.trim() !== '') {
             global.Msg({

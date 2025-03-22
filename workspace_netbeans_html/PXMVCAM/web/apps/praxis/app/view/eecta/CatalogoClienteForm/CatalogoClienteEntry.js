@@ -1115,11 +1115,15 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                                 {
                                                     xtype: 'textfield',
                                                     id: prototype.id + '-A3953REFER',
-                                                    fieldLabel: 'Correo', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                                    width: '70%',
+                                                    fieldLabel: 'Correo', 
+                                                    labelAlign: 'right', 
+                                                    labelStyle: 'font-weight: bold;', 
+                                                    labelWidth: 120,
+                                                    emptyText:'Más de un correo ingresar separados por ; ',
+                                                    width: '100%',
                                                     enableKeyEvents: true,
                                                     enforceMaxLength: true,
-                                                    maxLength: 50,
+                                                    maxLength: 150,
                                                     listeners: {
                                                         change: 'onUpperValue',
                                                         keypress: function (obj, e) {
