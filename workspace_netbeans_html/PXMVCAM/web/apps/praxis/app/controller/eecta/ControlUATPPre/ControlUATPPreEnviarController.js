@@ -8,9 +8,12 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATPPre.ControlUATPPreEnviarContr
         this.loadGridData();
     },
     loadGridData: function () {
+//        console.log(this.view.params.rec);
+        Ext.getCmp(prototype.id06 + '-gridData').getStore().removeAll();
         var selectedRecords = this.view.params.rec;
         var grid = Ext.getCmp(prototype.id06 + '-gridData');
         var store = grid.getStore();
+//        console.log(store);
         // Agregar los registros seleccionados al store del segundo grid
         store.add(selectedRecords);
 
