@@ -18,6 +18,7 @@ public class A3903Filter extends A3903 {
     public String IN_STATUS = "";
     public String IN_OPCION = "";
     public String IN_TYPE = "";
+    public String IN_EPR = "";
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();
     public DBException dbException = new DBException();
 

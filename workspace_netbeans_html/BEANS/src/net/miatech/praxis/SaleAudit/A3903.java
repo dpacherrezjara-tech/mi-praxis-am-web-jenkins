@@ -26,6 +26,7 @@ public class A3903 {
     public String A3903CORER;
     public String A3903TYPEDES;
     public String A3903TYPE;
+    public String A3903EPR;
 
     public String getA3903TYPEDES() {
         return A3903TYPEDES;
@@ -146,5 +147,14 @@ public class A3903 {
     public void setA3903HREVI(String A3903HREVI) {
         this.A3903HREVI = A3903HREVI;
     }
+
+    public String getA3903EPR() {
+        return A3903EPR;
+    }
+
+    public void setA3903EPR(String A3903EPR) {
+        this.A3903EPR = A3903EPR;
+    }
+    
 
 }

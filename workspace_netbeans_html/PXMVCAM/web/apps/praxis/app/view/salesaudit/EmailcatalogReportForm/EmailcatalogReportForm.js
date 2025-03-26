@@ -116,7 +116,7 @@ Ext.define('Ext.Praxis.view.salesaudit.EmailcatalogReportForm.EmailcatalogReport
                                     iconCls: 'prx-icon-excel',
                                     tooltip: 'Export to Excel',
                                     listeners: {
-                                        click: 'onExcelClick'
+                                        click: 'imgExcel_clickHandler'
                                     }
                                 },
                                 {
@@ -194,6 +194,19 @@ Ext.define('Ext.Praxis.view.salesaudit.EmailcatalogReportForm.EmailcatalogReport
                                             }
                                         },
                                         {
+                                            xtype: 'textfield',
+                                            id: prototype.idEmailca + '-txtEPR',
+                                            fieldLabel: 'EPR',
+                                            maskRe: /[A-Z,a-z,Ñ,ñ]/,
+                                            maxLength: 6,
+                                            enforceMaxLength: 6,
+                                            labelWidth: 30,
+                                            width: 120,
+                                            listeners: {
+                                                specialkey: 'onSearchkey'
+                                            }
+                                        },
+                                        {
                                             xtype: 'combo',
                                             id: prototype.idEmailca + '-CmbStatus',
                                             fieldLabel: 'Status',
@@ -252,9 +265,11 @@ Ext.define('Ext.Praxis.view.salesaudit.EmailcatalogReportForm.EmailcatalogReport
                                                 handler: 'onEditActionColumnClick'
                                             }
                                         ]
-                                    }, {text: 'CCUST', dataIndex: 'A3903CCUST', align: 'center', width: 75},
+                                    },
+                                    {text: 'CCUST', dataIndex: 'A3903CCUST', align: 'center', width: 75},
+                                    {text: 'EPR', dataIndex: 'A3903EPR', width: 65},
                                     {text: 'IATA', dataIndex: 'A3903AGETE', width: 65},
-                                    {text: 'Agency', dataIndex: 'A3903NOMAGENCY', width: 200, align: 'left', renderer: 'onRendererColumn'},
+                                    {text: 'Name', dataIndex: 'A3903NOMAGENCY', width: 200, align: 'left', renderer: 'onRendererColumn'},
                                     {text: 'Type', dataIndex: 'A3903TYPEDES', width: 200, align: 'left'},
                                     {text: 'Email<br> Airline', dataIndex: 'A3903CORER', width: 370, align: 'left', renderer: 'onRendererColumn'},
                                     {text: 'Email <br> Agency', dataIndex: 'A3903COREG', width: 370, align: 'left', renderer: 'onRendererColumn'},

@@ -116,6 +116,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.Emailcatalog
         me.bean.IN_IATA = Ext.getCmp(prototype.idEmailca + '-txtIATA').getValue();
         me.bean.IN_STATUS = Ext.getCmp(prototype.idEmailca + '-CmbStatus').getValue();
         me.bean.IN_TYPE =  Ext.getCmp(prototype.idEmailca + '-CmbType').getValue();
+        me.bean.IN_EPR =  Ext.getCmp(prototype.idEmailca + '-txtEPR').getValue();
         me.bean.pexcel = Ext.getCmp(prototype.id + '-pagination').getValue() ? 0 : 1;
 
         me.SearchReport(me.bean, obj === true ? obj : false);
