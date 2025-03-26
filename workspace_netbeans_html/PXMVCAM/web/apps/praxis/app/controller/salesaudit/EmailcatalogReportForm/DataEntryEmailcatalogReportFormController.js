@@ -31,7 +31,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
                 Ext.getCmp(prototype.idEmailcaDataEn + '-txtmailagency').setValue(rec.get('A3903COREG'));
                 Ext.getCmp(prototype.idEmailcaDataEn + '-txtmailAirline').setValue(rec.get('A3903CORER'));
                 Ext.getCmp(prototype.idEmailcaDataEn + '-CmbStatus').setValue(rec.get('A3903FLAG'));
-                Ext.getCmp(prototype.idEmailcaDataEn + '-CmbType').setValue(rec.get('A3903TYPE'));
+                Ext.getCmp(prototype.idEmailcaDataEn + '-CmbType').setValue(rec.get('A3903TYPE').trim());
+                Ext.getCmp(prototype.idEmailcaDataEn + '-txtEPR').setValue(rec.get('A3903EPR').trim());
 
 
                 Ext.getCmp(prototype.idEmailcaDataEn + '-txtA3406REGIS').setValue(rec.get('A3903REGIS'));
@@ -55,8 +56,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
                 Ext.getCmp(prototype.idEmailcaDataEn + '-txtA3406REVIS').setValue('');
                 Ext.getCmp(prototype.idEmailcaDataEn + '-txtA3406FREVI').setValue('');
                 Ext.getCmp(prototype.idEmailcaDataEn + '-txtA3406HREVI').setValue('');
-                 Ext.getCmp(prototype.idEmailcaDataEn + '-CmbType').setValue('');
-                
+                Ext.getCmp(prototype.idEmailcaDataEn + '-CmbType').setValue('');
+                Ext.getCmp(prototype.idEmailcaDataEn + '-txtEPR').setValue('');
+
 
                 break;
             default:
@@ -76,9 +78,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
                 {"code": "E", "name": "Disabled"}
             ]
         }));
-        
-        
-         CmbType.bindStore(Ext.create('Ext.data.Store', {
+
+
+        CmbType.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "SELECT"},
                 {"code": "EMPP", "name": "EMPLOYEES"},
@@ -94,11 +96,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
     },
     onUpdateClick: function (obj) {
         var me = this;
-         me.onGrabarClick('U');
+        me.onGrabarClick('U');
     },
     onDeleteClick: function (obj) {
         var me = this;
-         me.onGrabarClick('D');
+        me.onGrabarClick('D');
     },
     onGrabarClick: function (action) {
         var me = this;
@@ -112,6 +114,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
             me.beanTMP.A3903TYPE = Ext.getCmp(prototype.idEmailcaDataEn + '-CmbType').getValue();
             me.beanTMP.A3903CORRL = '';
             me.beanTMP.A3903FLAG = Ext.getCmp(prototype.idEmailcaDataEn + '-CmbStatus').getValue();
+            me.beanTMP.A3903EPR = Ext.getCmp(prototype.idEmailcaDataEn + '-txtEPR').getValue();
 
             if (me.beanTMP.A3903AGETE === '') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Iata');
@@ -129,6 +132,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
                 Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Type');
                 return;
             }
+            if (me.beanTMP.A3903TYPE === 'EMPP' && me.beanTMP.A3903EPR === '') {
+                Ext.Msg.alert('.: PRAXIS :.', 'Required Field, EPR');
+                return;
+            }
+
+
 
             Ext.Msg.show({
                 title: '.: PRAXIS :.',
@@ -177,6 +186,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
             me.beanTMP.A3903TYPE = Ext.getCmp(prototype.idEmailcaDataEn + '-CmbType').getValue();
             me.beanTMP.A3903CORRL = rec.get('A3903CORRL');
             me.beanTMP.A3903FLAG = Ext.getCmp(prototype.idEmailcaDataEn + '-CmbStatus').getValue();
+            me.beanTMP.A3903EPR = Ext.getCmp(prototype.idEmailcaDataEn + '-txtEPR').getValue();
 
             if (me.beanTMP.A3903AGETE === '') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Iata');
@@ -192,6 +202,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.EmailcatalogReportForm.DataEntryEma
             }
             if (me.beanTMP.A3903TYPE === '') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Type');
+                return;
+            }
+            if (me.beanTMP.A3903TYPE === 'EMPP' && me.beanTMP.A3903EPR === '') {
+                Ext.Msg.alert('.: PRAXIS :.', 'Required Field, EPR');
                 return;
             }
 
