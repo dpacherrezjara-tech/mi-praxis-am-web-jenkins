@@ -525,6 +525,7 @@ Ext.define('Ext.global.MtCalendar',{
                 cantiap = value.id.split('-')[12];
                 cantiar = value.id.split('-')[13];
                 text = value.id.split('-')[14];
+                //Ext.get(value).on('click', me.onItemCalendarClick, me, {qtr: qtr, month: month, week: week, op: op, commelw: commelw, commiap: commiap, commiar: commiar, cant: cant, error: error, cantsale: cantsale, cantelw: cantelw, cantiap: cantiap, cantiar: cantiar, text: text});
                 if(op !== 'WEDNESDAY2'){
                     Ext.get(value).on('click', me.onItemCalendarClick, me, {qtr: qtr, month: month, week: week, op: op, commelw: commelw, commiap: commiap, commiar: commiar, cant: cant, error: error, cantsale: cantsale, cantelw: cantelw, cantiap: cantiap, cantiar: cantiar, text: text});
                 }
