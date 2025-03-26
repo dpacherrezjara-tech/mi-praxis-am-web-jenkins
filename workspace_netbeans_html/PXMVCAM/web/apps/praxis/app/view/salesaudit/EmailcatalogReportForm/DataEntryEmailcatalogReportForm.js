@@ -65,6 +65,19 @@ Ext.define('Ext.Praxis.view.salesaudit.EmailcatalogReportForm.DataEntryEmailcata
                             queryMode: 'local'
                         },
                         {
+                            xtype: 'textfield',
+                            id: prototype.idEmailcaDataEn + '-txtEPR',
+                            fieldLabel: 'EPR',
+                            maskRe: /[A-Z,a-z,Ñ,ñ]/,
+                            maxLength: 6,
+                            enforceMaxLength: 6,
+                            labelWidth: 30,
+                            width: 120,
+                            listeners: {
+                                specialkey: 'onSearchkey'
+                            }
+                        },
+                        {
                             xtype: 'combo',
                             id: prototype.idEmailcaDataEn + '-CmbStatus',
                             fieldLabel: 'Status',
