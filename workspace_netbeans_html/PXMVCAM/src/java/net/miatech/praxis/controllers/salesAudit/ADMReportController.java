@@ -334,7 +334,7 @@ public class ADMReportController extends BaseController {
 
             Row row;
             Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11,
-                    CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25, CH_26, CH_27, CH_28, CH_29, CH_30;
+                    CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25, CH_26, CH_27, CH_28, CH_29, CH_30,CH_31;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -369,6 +369,7 @@ public class ADMReportController extends BaseController {
             CH_28 = row.createCell(28);
             CH_29 = row.createCell(29);
             CH_30 = row.createCell(30);
+            CH_31 = row.createCell(31);
 
             CH_00.setCellValue("");
             CH_01.setCellValue("Ticket");
@@ -401,6 +402,7 @@ public class ADMReportController extends BaseController {
             CH_28.setCellValue("EPR");
             CH_29.setCellValue("Issue Date");
             CH_30.setCellValue("Reference");
+            CH_31.setCellValue("ASRLINK");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -433,6 +435,7 @@ public class ADMReportController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 28, 28));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 29, 29));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 30, 30));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 31, 31));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -465,6 +468,7 @@ public class ADMReportController extends BaseController {
             CH_28.setCellStyle(headerStyle);
             CH_29.setCellStyle(headerStyle);
             CH_30.setCellStyle(headerStyle);
+            CH_31.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -503,6 +507,7 @@ public class ADMReportController extends BaseController {
                 CH_28 = row.createCell(28);
                 CH_29 = row.createCell(29);
                 CH_30 = row.createCell(30);
+                CH_31 = row.createCell(31);
 
                 CH_00.setCellValue("");
                 CH_01.setCellValue(listaData.get(vi).A2548TIKET);
@@ -638,6 +643,16 @@ public class ADMReportController extends BaseController {
                 CH_28.setCellValue(listaData.get(vi).A2548EPR);
                 CH_29.setCellValue(listaData.get(vi).A2548FVTA);
                 CH_30.setCellValue(listaData.get(vi).A2548CNREL);
+                
+                String correoasrlink = "";
+                if (listaData.get(vi).A2548CORR.equals("139") && listaData.get(vi).A2548FTE.equals("ASR")) {
+                    correoasrlink = "The email is registered";
+                } else if (!listaData.get(vi).A2548CORR.equals("139") && listaData.get(vi).A2548FTE.equals("ASR")) {
+                    correoasrlink = "It does not contain a registered email";
+                } else {
+                    correoasrlink = "";
+                }
+                CH_31.setCellValue(correoasrlink);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -670,6 +685,7 @@ public class ADMReportController extends BaseController {
                 CH_28.setCellStyle(bodyStyle);
                 CH_29.setCellStyle(bodyStyle);
                 CH_30.setCellStyle(bodyStyle);
+                CH_31.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;

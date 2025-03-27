@@ -138,7 +138,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReportForm.ADMReportFormControll
                 {"code": "Q", "name": "UNREGISTERED CLIENT"},
                 {"code": "N", "name": "REJECTED"},
                 {"code": "R", "name": "REAUDITED"}
-                
+
 
             ]
         }));
@@ -416,7 +416,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReportForm.ADMReportFormControll
                 break;
             case 'Y':
                 value = 'Pending';
-                break;            
+                break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
         return value;
@@ -524,6 +524,30 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReportForm.ADMReportFormControll
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
         return value;
     },
+    onRendererColumnASRLINK: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        var color = '#FFFFFF';
+        if (String(record.get('A2548FTE')) === 'ASR') {
+            switch (String(record.get('A2548CORR'))) {
+                case 'A':
+                    color = '#F5A9F2';
+                    value = 'Approved';
+                    break;
+                case '139':
+                    color = '#81F7BE';
+                    value = 'It does not contain a registered email';
+                    break;
+                case '':
+                    color = '#EFE41B';
+                    value = 'The email is registered';
+                    break;
+                    //{"code": "G", "name": "POST BILLING"},
+            }
+        }
+        metaData.tdAttr = 'data-qtip="' + value + '"';
+        metaData.style = "font-weight:bold !important; background:" + color + " !important";
+        return value;
+    },
+
     onRendererColumnAttr: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
         return value;
