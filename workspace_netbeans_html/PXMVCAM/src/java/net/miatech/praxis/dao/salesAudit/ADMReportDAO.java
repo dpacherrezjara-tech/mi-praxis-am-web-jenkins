@@ -280,6 +280,7 @@ public class ADMReportDAO {
                     objRtn.A2548NRCOR = rs01.getString("A2548NRCOR");
                     objRtn.A2548PNR = rs01.getString("A2548PNR");
                     objRtn.A2548EPR = rs01.getString("A2548EPR");
+                    objRtn.A2548CORR = rs01.getString("A2548CORR");
 
                     objRtn.A2548FCONT = rs01.getString("A2548FCONT");
                     objRtn.A2548CPN = rs01.getString("A2548CPN");
