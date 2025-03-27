@@ -176,12 +176,13 @@ public class SQP00911 {
     public String A2548NRCOR;
     public String A2548PNR;
     public String A2548EPR;
-    
+    public String A2548CORR;
+
     public Double TTIVACARGO;
     public Double TTCARGO;
     public Double PENDIGROUP;
     public Double PENDISCLIE;
-    
+
     public String A2548CIAF;
     public String A2548UNID;
     public String A2548CECO;
@@ -199,7 +200,7 @@ public class SQP00911 {
     public void setA3090STAT2(String A3090STAT2) {
         this.A3090STAT2 = A3090STAT2;
     }
-        
+
     public String getA2548STBSP() {
         return A2548STBSP;
     }
@@ -207,7 +208,7 @@ public class SQP00911 {
     public void setA2548STBSP(String A2548STBSP) {
         this.A2548STBSP = A2548STBSP;
     }
-       
+
     public String getA2548CLIE() {
         return A2548CLIE;
     }
@@ -215,7 +216,7 @@ public class SQP00911 {
     public void setA2548CLIE(String A2548CLIE) {
         this.A2548CLIE = A2548CLIE;
     }
-    
+
     public String getA2548CIAF() {
         return A2548CIAF;
     }
@@ -279,7 +280,7 @@ public class SQP00911 {
     public void setA2548SUBCU(String A2548SUBCU) {
         this.A2548SUBCU = A2548SUBCU;
     }
-     
+
     public Double getPENDIGROUP() {
         return PENDIGROUP;
     }
@@ -295,7 +296,7 @@ public class SQP00911 {
     public void setPENDISCLIE(Double PENDISCLIE) {
         this.PENDISCLIE = PENDISCLIE;
     }
-    
+
     public Double getTTIVACARGO() {
         return TTIVACARGO;
     }
@@ -327,6 +328,7 @@ public class SQP00911 {
     public void setA2548PRECR(String A2548PRECR) {
         this.A2548PRECR = A2548PRECR;
     }
+
     public String getA2548STCOR() {
         return A2548STCOR;
     }
