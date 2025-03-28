@@ -24,6 +24,7 @@ import java.util.Locale;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import net.miatech.beans.A1686Filter;
+import net.miatech.praxis.classes.ProMail;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
@@ -236,6 +237,18 @@ public class ClarificationLoadController extends BaseController {
         return msjError;
     }
 
+    public static boolean esNumeroValido(String valor) {
+        return valor.matches("\\d+"); // Solo números, sin punto ni exponentes
+    }
+
+    public static boolean contieneLetrasYNumeros(String valor) {
+        return valor.matches(".*[a-zA-Z].*") && valor.matches(".*\\d.*");
+    }
+    
+    public static boolean esAlfanumerico(String valor) {
+        return valor.matches("^[a-zA-Z0-9]+$");
+    }
+
     private String uploadSantanderAclaracionesCSV(byte[] bytes, String banco, String input) throws Exception {
 
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -251,6 +264,25 @@ public class ClarificationLoadController extends BaseController {
         int i = 0;
         String cad = "";
         boolean comma_in_amt = false;
+        boolean validationARN = false;
+        boolean validationClainCode = false;
+        boolean statusSendEmail = false;
+        ProMail proMail = new ProMail();
+        String asunto = "Error en la carga en Clarification Load";
+        String correoMask = "amaclaracionescontracargos@miatech.net";
+        List<String> receptores = new ArrayList<>();
+        List<String> archivos = new ArrayList<>();
+        List<String> Ccp = new ArrayList<>();
+        receptores.add("nbautista@aeromexico.com");
+        receptores.add("singa@miatech.net");
+        receptores.add("sara@miatech.net");
+        receptores.add("salesprocessing@miatech.net");
+        receptores.add("lagreda@miatech.net");
+        receptores.add("plopez@miatech.net");
+        receptores.add("eneves@miatech.net");
+        receptores.add("hlunal@aeromexico.com");
+        String mensaje = "Estimados señores de Aeromexico<br><br>";
+        mensaje = mensaje + "\n" + "Hemos detectado que";
 
         try {
 
@@ -303,7 +335,31 @@ public class ClarificationLoadController extends BaseController {
                 tarjeta_nro = fields[4].trim();//F
                 cod_aut = Functions.fillZeros(6, fields[5].trim());
                 arn = fields[6].trim();
+                
+                if (!arn.equals("ARN")) {
+                    System.out.println("validar ARN");
+                    validationARN = esNumeroValido(arn);
+                    if (!validationARN) {
+                        msj = " el formato de ARN en la fila " + cont + " no es valido<br><br><br><br>";
+                        mensaje = mensaje + msj;
+                        statusSendEmail = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net", this.serverSession.getServerSession());
+                        break;
+                    }
+                }
+
                 claim_code = fields[7].trim();
+
+                if (!claim_code.contains("aclaraci")) {
+                    System.out.println("validar Aclaracion");
+                    validationClainCode = esAlfanumerico(claim_code);
+                    if (!validationClainCode) {
+                        msj = " el formato de Codigo de Aclaracion en la fila " + cont +"  no es valido<br><br><br><br>";
+                        mensaje = mensaje + msj;
+                        statusSendEmail = proMail.enviaSalesAudit(emisor, asunto, receptores, Ccp, mensaje, "notificaciones@miatech.net", this.serverSession.getServerSession());
+                        break;
+                    }
+                }
+
                 procesador = fields[8].trim();
 
                 motivo = fields[9].trim();//reemplazarCaracteresRaros(fields[11+i].trim());//L
