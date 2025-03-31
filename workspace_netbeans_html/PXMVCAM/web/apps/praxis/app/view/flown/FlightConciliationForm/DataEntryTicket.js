@@ -1461,7 +1461,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'label',
-                                    text: 'MXN Amount',
+                                    text: 'Amount Average',
                                     style: 'font-weight:bold;color:#000;',
                                     width: 120,
                                     margin: '0 0 0 300'
