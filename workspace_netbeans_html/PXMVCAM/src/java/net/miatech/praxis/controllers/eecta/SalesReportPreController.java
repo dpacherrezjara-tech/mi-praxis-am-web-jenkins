@@ -104,55 +104,56 @@ public class SalesReportPreController extends BaseController {
             File archivoTXT = new File(rutaTmp + "reporte_venta_uatp.txt");
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivoTXT))) {
 
-                writer.write("REPORTE DE VENTAS N° " + listaData.get(0).rpteCab.A4245NRRPT);
-                writer.newLine();
-                writer.write("FECHA EMISIÓN: " + listaData.get(0).rpteCab.A4245FEECC);
-                writer.newLine();
-                writer.write("PERIODO: " + listaData.get(0).rpteCab.A4245INIPR + " AL " + listaData.get(0).rpteCab.A4245FINPR);
-                writer.newLine();
-
-                writer.write("CLIENTE:");
-                writer.newLine();
-                writer.write(listaData.get(0).tbl_client.A3953RSOCI);
-                writer.newLine();
-                writer.write(listaData.get(0).tbl_client.A3953DIRE1);
-                writer.newLine();
-                writer.write(listaData.get(0).tbl_client.A3953COLON);
-                writer.newLine();
-                writer.write(listaData.get(0).tbl_client.A3953DELEG);
-                writer.newLine();
-                writer.write("C.P." + listaData.get(0).tbl_client.A3953CP);
-                writer.newLine();
-                writer.write("N_Boleto;F_Emision;Nombre_Pasajero;Trx;Ruta;UUID;UUID_Anticipo;Mda;Total");
+//                writer.write("REPORTE DE VENTAS N° " + listaData.get(0).rpteCab.A4245NRRPT);
+//                writer.newLine();
+//                writer.write("FECHA EMISIÓN: " + listaData.get(0).rpteCab.A4245FEECC);
+//                writer.newLine();
+//                writer.write("PERIODO: " + listaData.get(0).rpteCab.A4245INIPR + " AL " + listaData.get(0).rpteCab.A4245FINPR);
+//                writer.newLine();
+//
+//                writer.write("CLIENTE:");
+//                writer.newLine();
+//                writer.write(listaData.get(0).tbl_client.A3953RSOCI);
+//                writer.newLine();
+//                writer.write(listaData.get(0).tbl_client.A3953DIRE1);
+//                writer.newLine();
+//                writer.write(listaData.get(0).tbl_client.A3953COLON);
+//                writer.newLine();
+//                writer.write(listaData.get(0).tbl_client.A3953DELEG);
+//                writer.newLine();
+//                writer.write("C.P." + listaData.get(0).tbl_client.A3953CP);
+//                writer.newLine();
+                writer.write("uatp;N_Boleto;F_Emision;Nombre_Pasajero;Trx;Ruta;UUID;UUID_Anticipo;Mda;Total");
                 writer.newLine();
                 
                 for (SQP04557Filter item : listaData) {
 
-                    if (item.rpteDet1.A4260TIPO.equals("01")) {
-                        writer.write("UATP:" + item.rpteDet1.A4260CAM01);
-                        writer.newLine();
-                    }
+//                    if (item.rpteDet1.A4260TIPO.equals("01")) {                  
+//                        writer.write("UATP:" + item.rpteDet1.A4260CAM01);
+//                        writer.newLine();
+//                    }
 //                    DETALLE 
                     if (item.rpteDet1.A4260TIPO.equals("02")) {
-                        String TXT = item.rpteDet1.A4260CAM01
+                        String TXT = item.rpteDet1.A4260NTARJ.trim()
+                                + ';' + item.rpteDet1.A4260CAM01
                                 + ';' + item.rpteDet1.A4260CAM02
-                                + ';' + item.rpteDet1.A4260CAM03
+                                + ';' + item.rpteDet1.A4260CAM03.trim()
                                 + ';' + item.rpteDet1.A4260CAM04
-                                + ';' + item.rpteDet1.A4260CAM05
-                                + ';' + item.rpteDet1.A4260CAM06
-                                + ';' + item.rpteDet1.A4260CAM07
+                                + ';' + item.rpteDet1.A4260CAM05.trim()
+                                + ';' + item.rpteDet1.A4260CAM06.trim()
+                                + ';' + item.rpteDet1.A4260CAM07.trim()
                                 + ';' + item.rpteDet1.A4260CAM08
-                                + ';' + item.rpteDet1.A4260CAM09;
+                                + ';' + item.rpteDet1.A4260CAM09.trim();
                         writer.write(TXT);
                         writer.newLine();
                     }
 //                    SUBTOTALES POR UATP
-                    if (item.rpteDet1.A4260TIPO.equals("03")) {
-                        writer.write(item.rpteDet1.A4260CAM01 + ' ' + item.rpteDet1.A4260CAM09);
-                        writer.newLine();
-                    }
+//                    if (item.rpteDet1.A4260TIPO.equals("03")) {
+//                        writer.write(item.rpteDet1.A4260CAM01 + ' ' + item.rpteDet1.A4260CAM09);
+//                        writer.newLine();
+//                    }
                 }
-                writer.write("GRAN TOTAL:" + formato_numero(listaData.get(0).rpteCab.A4245TOT));
+//                writer.write("GRAN TOTAL:" + formato_numero(listaData.get(0).rpteCab.A4245TOT));
             }
 
             // Crear ZIP
