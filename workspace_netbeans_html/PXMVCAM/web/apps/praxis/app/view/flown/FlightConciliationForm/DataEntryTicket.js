@@ -1864,7 +1864,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                     text: 'Save',
                     id: prototype.id + '-btn-save',
                     iconCls: 'prx-icon-save',
-                    hidden: true,
+//                    hidden: true,
                     listeners: {
                         click: 'onSaveClick'
                     }
@@ -1873,7 +1873,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                     text: 'Update',
                     id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
-                    hidden: true,
+//                    hidden: true,
                     listeners: {
                         click: 'onUpdateClick'
                     }
