@@ -16,6 +16,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         console.log(this.p);
     },
     afterRender: function(){
+        console.log('confirmo existencia')
+        console.log(this.p.actionCode)
         switch( this.p.actionCode ){
             case 'V':
                 this.mostrarData(this.p.bean);
@@ -73,7 +75,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
             case 'S':
                 this.limpiarData();
                 this.mostrarData(this.p.bean);
-                Ext.getCmp(prototype.id+'-btn-update').hide();
+//                Ext.getCmp(prototype.id+'-btn-update').hide();
+                Ext.getCmp(prototype.id+'-btn-save').hide();
                 Ext.getCmp(prototype.id+'-btn-delete').hide();
                 break;
         }
