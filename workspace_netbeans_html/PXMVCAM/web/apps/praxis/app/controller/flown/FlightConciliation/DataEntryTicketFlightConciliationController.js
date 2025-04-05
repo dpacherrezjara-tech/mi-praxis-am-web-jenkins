@@ -85,7 +85,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
             case 'S':
                 this.limpiarData();
                 this.mostrarData(this.p.bean);
-//                Ext.getCmp(prototype.id+'-btn-update').hide();
+                if (this.statusCont == 'Contabilizado.') {
+                    Ext.getCmp(prototype.id+'-btn-update').hide();
+                }
+
                 Ext.getCmp(prototype.id+'-btn-save').hide();
                 Ext.getCmp(prototype.id+'-btn-delete').hide();
                 break;
