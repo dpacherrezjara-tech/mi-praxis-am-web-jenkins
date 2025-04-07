@@ -3,6 +3,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
     alias: 'controller.DataEntryTicketFlightConciliationController',
     meEntryTick: '',
     p: {},
+    statusCont: '',
     bean: {},
     beanCons: {},
     oldSEQ:'',
@@ -14,6 +15,15 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         meEntryTick = this;
         this.p = this.view.params;
         console.log(this.p);
+        this.statusCont = (this.p && 
+                  this.p.lista && 
+                  this.p.lista.data && 
+                  this.p.lista.data.items && 
+                  this.p.lista.data.items[0] && 
+                  this.p.lista.data.items[0].data && 
+                  this.p.lista.data.items[0].data.strDescSTCON) || '';
+        
+        console.log(this.statusCont,'asdasd')
     },
     afterRender: function(){
         console.log('confirmo existencia')
@@ -321,6 +331,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
     
     //<editor-fold defaultstate="collapsed" desc="mostrarData">
     mostrarData: function(bean) {
+        
+        console.log(bean,'bean')
         this.setValue("txtTicket", bean.strTicket.replace(' ', '').replace(' ', ''));
         this.setValue("txtDCHEQ", bean.DCHEQ);
         if (bean.SEQ === '') {
@@ -432,7 +444,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
             else{
                 Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(true);
                 // CAMBIADO A PEDIDO LUIS FERNANDO AGREDA
-                Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
+                if (this.statusCont === 'Contabilizado.') {
+                    Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(true);
+                } else {
+                    Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
+                }
                 Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(true);
             }
             Ext.getCmp(prototype.id+'-cmbTVTA').disable(true);
