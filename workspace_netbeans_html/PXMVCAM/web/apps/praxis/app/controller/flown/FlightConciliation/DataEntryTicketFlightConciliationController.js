@@ -3,6 +3,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
     alias: 'controller.DataEntryTicketFlightConciliationController',
     meEntryTick: '',
     p: {},
+    statusCont: '',
     bean: {},
     beanCons: {},
     oldSEQ:'',
@@ -14,6 +15,15 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         meEntryTick = this;
         this.p = this.view.params;
         console.log(this.p);
+        this.statusCont = (this.p && 
+                  this.p.lista && 
+                  this.p.lista.data && 
+                  this.p.lista.data.items && 
+                  this.p.lista.data.items[0] && 
+                  this.p.lista.data.items[0].data && 
+                  this.p.lista.data.items[0].data.strDescSTCON) || '';
+        
+        console.log(this.statusCont,'asdasd')
     },
     afterRender: function(){
         console.log('confirmo existencia')
@@ -321,6 +331,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
     
     //<editor-fold defaultstate="collapsed" desc="mostrarData">
     mostrarData: function(bean) {
+        
+        console.log(bean,'bean')
         this.setValue("txtTicket", bean.strTicket.replace(' ', '').replace(' ', ''));
         this.setValue("txtDCHEQ", bean.DCHEQ);
         if (bean.SEQ === '') {
@@ -403,10 +415,6 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         this.setValue("txtVYQ0", this.getFormatNumber(bean.VYQ0));
         this.setValue("txtVYQ16", this.getFormatNumber(bean.VYQ16));
         
-        Ext.getCmp(prototype.id+'-cmbSTVAL').enable(false);
-        if(bean.STVAL!=='5'){
-            Ext.getCmp(prototype.id+'-cmbSTVAL').enable(true);
-        }
         //Sólo son editables si la información que viene es vacía (A pedido de Javier Toledo)
         if(bean.CDOC === '' && bean.TDOC === '' && bean.PSVVTA === ''
 		&& bean.AGTIA === '' && bean.FVTA === '' && bean.TVTA === '' 
@@ -418,28 +426,29 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
             Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
             Ext.getCmp(prototype.id+'-cmbTVTA').enable(true);
             Ext.getCmp(prototype.id+'-cmbTPAX').enable(true);
-            if(bean.USERK === 'KEYLAV' || bean.USERK === 'UAT182'|| bean.USERK === 'SAP52T' || bean.USERK === 'LAGREDA' || bean.USERK === 'HILDAA' || bean.USERK === 'USRWEB'){
+            if(bean.USERK === 'KEYLAV' || bean.USERK === 'UAT182'|| bean.USERK === 'SAP52T'){
                 Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(false);
                 Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
                 Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(false);
-                Ext.getCmp(prototype.id+'-cmbFVAL').disable(false);
-                Ext.getCmp(prototype.id+'-cmbSTVAL').enable(true);
             }
         } else {
             Ext.getCmp(prototype.id+'-txtCDOC').setReadOnly(true);
             Ext.getCmp(prototype.id+'-cmbTDOC').disable(true);
             Ext.getCmp(prototype.id+'-txtPSVVTA').setReadOnly(true);
             Ext.getCmp(prototype.id+'-txtAGTIA').setReadOnly(true);
-            if(bean.USERK === 'KEYLAV' || bean.USERK === 'UAT182'|| bean.USERK === 'SAP52T' || bean.USERK === 'LAGREDA' || bean.USERK === 'HILDAA' || bean.USERK === 'USRWEB'){
+            if(bean.USERK === 'KEYLAV' || bean.USERK === 'UAT182'|| bean.USERK === 'SAP52T'){
                 Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(false);
                 Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
                 Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(false);
-                Ext.getCmp(prototype.id+'-cmbFVAL').enable(true);
-                Ext.getCmp(prototype.id+'-cmbSTVAL').enable(true);
             }
             else{
                 Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(true);
-                //Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(true);
+                // CAMBIADO A PEDIDO LUIS FERNANDO AGREDA
+                if (this.statusCont === 'Contabilizado.') {
+                    Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(true);
+                } else {
+                    Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
+                }
                 Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(true);
             }
             Ext.getCmp(prototype.id+'-cmbTVTA').disable(true);
