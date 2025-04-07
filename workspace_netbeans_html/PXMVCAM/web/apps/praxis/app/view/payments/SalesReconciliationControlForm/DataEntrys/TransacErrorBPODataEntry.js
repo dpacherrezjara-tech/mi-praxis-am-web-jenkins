@@ -767,6 +767,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             width: 450
                         },
                         {
+                            xtype: 'checkbox',
+                            boxLabel: 'Adjustment',
+                            id: prototype.idDE + '-addStandByAdju',
+                            checked: false,
+                            listeners:{
+                                change: 'onChangeStandyByAdju'
+                            }
+                        },
+                        {
                             xtype: 'button',
                             id: prototype.idDE + '-addStandBy',
                             width: 25,
