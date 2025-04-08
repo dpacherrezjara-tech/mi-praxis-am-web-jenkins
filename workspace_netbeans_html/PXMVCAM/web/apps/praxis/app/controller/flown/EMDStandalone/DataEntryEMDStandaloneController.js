@@ -28,6 +28,7 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
     },
     
     afterRender: function () {
+        console.log(this.p,'ASSSSS')
 //        console.log('afterRender');
         this.obtainData();
         switch (this.actionCode) {
@@ -41,8 +42,14 @@ Ext.define('Ext.Praxis.controller.flown.EMDStandalone.DataEntryEMDStandaloneCont
             case 'U':
                 this.getData();
                 this.DeshabilitarCampoClave();
+                let showOptions = (this.p.rec.data.IDCON || '').toString().trim();
+                if (showOptions) {
+                    Ext.getCmp(prototype.id + '-btn-update').hide();
+                } else {
+                    Ext.getCmp(prototype.id + '-btn-update').show();
+                }
                 Ext.getCmp(prototype.id + '-btn-save').hide();
-                Ext.getCmp(prototype.id + '-btn-update').show();
+                
 //                Ext.getCmp(prototype.id + '-btn-delete').show();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;

@@ -18,14 +18,22 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
     afterRender: function() {
         this.setStoreData();
         this.p = this.view.params;
+        console.log(this.p,'LA OPCION P')
         switch (this.p.action) {
             case 'I':
                 Ext.getCmp(prototype.id + '-t' + '-btn-save').show();
                 this.disabledField();//La version de flex lo mantiene asi
                 break;
             case 'U':
-                Ext.getCmp(prototype.id + '-t' + '-btn-update').show();
-                Ext.getCmp(prototype.id + '-t' + '-btn-delete').show();
+                let showOptions = (this.p.rec.data.IDCON || '').toString().trim();
+                if (showOptions) {
+                    Ext.getCmp(prototype.id + '-t' + '-btn-update').hide();
+                    Ext.getCmp(prototype.id + '-t' + '-btn-delete').hide();
+                } else {
+                    Ext.getCmp(prototype.id + '-t' + '-btn-update').show();
+                    Ext.getCmp(prototype.id + '-t' + '-btn-delete').show();
+                }
+                
                 Ext.getCmp(prototype.id + '-t' + '-btn-cancel').show();
                 this.getDataInputs();
 //                this.disabledField();
