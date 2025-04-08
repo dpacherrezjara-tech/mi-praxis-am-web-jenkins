@@ -281,8 +281,8 @@ public class AircraftMasterController extends BaseController {
                             obj.PESOMAX = 0.0;
                         }
 
-                        obj.ESTADO = sheet.getCell(21) == null ? "" : sheet.getCell(21).toString().trim();
-                        if (obj.ESTADO.equals("Activo")) {
+                        obj.ESTADO = sheet.getCell(21) == null ? "" : sheet.getCell(21).toString().trim().toUpperCase();
+                        if (obj.ESTADO.equals("ACTIVO")) {
                             obj.ESTADO = "1";
                         } else {
                             obj.ESTADO = "";

@@ -15,19 +15,16 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         meEntryTick = this;
         this.p = this.view.params;
         console.log(this.p);
+    },
+    afterRender: function(){
         this.statusCont = (this.p && 
                   this.p.lista && 
                   this.p.lista.data && 
                   this.p.lista.data.items && 
-                  this.p.lista.data.items[0] && 
-                  this.p.lista.data.items[0].data && 
-                  this.p.lista.data.items[0].data.strDescSTCON) || '';
+                  this.p.lista.data.items[this.p.rowIndex] && 
+                  this.p.lista.data.items[this.p.rowIndex].data && 
+                  this.p.lista.data.items[this.p.rowIndex].data.strDescSTCON) || '';
         
-        console.log(this.statusCont,'asdasd')
-    },
-    afterRender: function(){
-        console.log('confirmo existencia')
-        console.log(this.p.actionCode)
         switch( this.p.actionCode ){
             case 'V':
                 this.mostrarData(this.p.bean);
@@ -78,14 +75,24 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 this.limpiarData();
                 this.mostrarData(this.p.bean);
                 Ext.getCmp(prototype.id+'-btn-save').hide();
-                me.validateProgram(Ext.getCmp(prototype.id+'-btn-update'), meEntryTick.NPROG, 'M');
+                if (this.statusCont === 'Contabilizado.') {
+                    Ext.getCmp(prototype.id+'-btn-update').hide();
+                } else {
+                    me.validateProgram(Ext.getCmp(prototype.id+'-btn-update'), meEntryTick.NPROG, 'M');
+                }
                 me.validateProgram(Ext.getCmp(prototype.id+'-btn-delete'), meEntryTick.NPROG, 'E');
                 this.cambiarEstadoDatosClave('Deshabilitar');
                 break;
             case 'S':
                 this.limpiarData();
                 this.mostrarData(this.p.bean);
-//                Ext.getCmp(prototype.id+'-btn-update').hide();
+                let showOptions = (this.p.bean.strDescSTCON || '').toString().trim();
+                if (this.statusCont === 'Contabilizado.') {
+                    Ext.getCmp(prototype.id+'-btn-update').hide();
+                } else {
+                    Ext.getCmp(prototype.id+'-btn-update').show();
+                }
+
                 Ext.getCmp(prototype.id+'-btn-save').hide();
                 Ext.getCmp(prototype.id+'-btn-delete').hide();
                 break;
@@ -444,6 +451,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
             else{
                 Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(true);
                 // CAMBIADO A PEDIDO LUIS FERNANDO AGREDA
+                console.log(this.statusCont,'this.statusCont')
                 if (this.statusCont === 'Contabilizado.') {
                     Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(true);
                 } else {
