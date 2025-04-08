@@ -265,10 +265,10 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
     public SQP05056Filter loadSQP05056Filter(SQP05056Filter filter) throws Exception {
         //<editor-fold defaultstate="collapsed" desc="SQL">
         final String sql = "INSERT INTO PRAXISMP.X3169 (CCUST,AREFNBR,CCIA,FORMA,SERIE,SEQ,CORRL,TDOC,PRDA,"
-                + "TRNCU,SDATE,TCORR) "
+                + "TRNCU,SDATE,TCORR,SVFOPS,SPNR) "
                 + "VALUES"
                 + "(:CCUST,:AREFNBR,:CCIA,:FORMA,:SERIE,:SEQ,:CORRL,:TDOC,:PRDA,"
-                + ":TRNCU,:SDATE,:TCORR)";
+                + ":TRNCU,:SDATE,:TCORR,:SVFOPS,:SPNR)";
         //</editor-fold>
         BeanPropertySqlParameterSource[] insertParams = new BeanPropertySqlParameterSource[filter.getDetail().size()];
         for (int i = 0; i < filter.getDetail().size(); i++) {
