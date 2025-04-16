@@ -56,6 +56,9 @@ public class A4361 {
     public String A4361FREVI;
     public String A4361HREVI;
     public String A4361DIAS;
+    
+    public String A4361CANTPROC;
+    public String A4361CANTPEDI;
 
     public int A4361RN;
     public int CANTPRO;
@@ -67,6 +70,24 @@ public class A4361 {
     public double A4361TOAGE = 0d;
     public double A4361TOARO = 0d;
     public double SUMAOK = 0d;
+
+    public String getA4361CANTPROC() {
+        return A4361CANTPROC;
+    }
+
+    public void setA4361CANTPROC(String A4361CANTPROC) {
+        this.A4361CANTPROC = A4361CANTPROC;
+    }
+
+    public String getA4361CANTPEDI() {
+        return A4361CANTPEDI;
+    }
+
+    public void setA4361CANTPEDI(String A4361CANTPEDI) {
+        this.A4361CANTPEDI = A4361CANTPEDI;
+    }
+    
+    
 
     public double getSUMAOK() {
         return SUMAOK;
