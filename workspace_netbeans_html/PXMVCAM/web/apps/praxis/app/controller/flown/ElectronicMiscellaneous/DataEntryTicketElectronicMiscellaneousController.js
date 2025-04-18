@@ -31,7 +31,7 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
                     Ext.getCmp(prototype.id + '-t' + '-btn-delete').hide();
                 } else {
                     Ext.getCmp(prototype.id + '-t' + '-btn-update').show();
-                    Ext.getCmp(prototype.id + '-t' + '-btn-delete').show();
+                    Ext.getCmp(prototype.id + '-t' + '-btn-delete').hide();
                 }
                 
                 Ext.getCmp(prototype.id + '-t' + '-btn-cancel').show();
