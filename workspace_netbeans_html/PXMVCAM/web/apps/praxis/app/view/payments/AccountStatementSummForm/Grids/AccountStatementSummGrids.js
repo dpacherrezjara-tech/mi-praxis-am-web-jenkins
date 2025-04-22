@@ -13,6 +13,7 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.Grids.AccountState
         border: false
     },
     items: [
+        //<editor-fold defaultstate="collapsed" desc="Tree Summary">
         {
             xtype: 'treepanel',
             id: prototype.id + '-treeSummary',
@@ -20,6 +21,7 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.Grids.AccountState
             minHeight: 250,
             maxHeight: 500,
             rootVisible: false,
+            hidden:true,
             viewConfig: {
                 stripeRows: true,
                 enableTextSelection: true,
@@ -90,6 +92,8 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.Grids.AccountState
                 ]
             }
         },
+        //</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc="Detail Summary">
         {
             xtype: 'grid',
             border: false,
@@ -120,8 +124,13 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.Grids.AccountState
                     {text: 'IATA Code', dataIndex: 'A4700IATA', width: 100},
                     {text: 'City Name', dataIndex: 'A4700NIATA', width: 300},
                     {text: 'Transaction<br>Type', dataIndex: 'A4700TRNCU', width: 100},
-                    {text: 'Amount<br>Rev (MXN)', dataIndex: 'A4700USMXN', width: 100},
-                    {text: 'Local<br>Amount', dataIndex: 'A4700AMOUN', width: 100},
+                    {text: 'Local<br>Amount', dataIndex: 'A4700AMOUN', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
                     {text: 'Currency<br>Code', dataIndex: 'A4700MDA', width: 100},
                     {text: 'Ticket<br>Number', dataIndex: 'TICKETNBR', width: 100},
                     {text: 'Document<br>Type', dataIndex: 'A4700TIPOD', width: 100},
@@ -193,6 +202,201 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.Grids.AccountState
                 xtype: 'pagingtoolbar',
                 displayInfo: true
             }
+        },
+        //</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc="Client Summary">
+        {
+            xtype: 'treepanel',
+            id: prototype.id + '-treeClient',
+            width: 1200,
+            minHeight: 250,
+            maxHeight: 500,
+            rootVisible: false,
+            hidden:true,
+            viewConfig: {
+                stripeRows: true,
+                enableTextSelection: true,
+                markDirty: false
+            },
+            columnLines: true,
+            autoScroll: true,
+            columns: {
+                defaults: {
+                    align: 'center',
+                    menuDisabled: true,
+                    sortable: true
+                },
+                items: [
+                    {xtype: 'treecolumn', text: 'Index', dataIndex: 'INDEX', flex: 1,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            if (record.data.COLOR === 'H') {
+                                metaData.style = "color:#226fec;text-align:center;font-weight:bold;";
+                            } else {
+                                metaData.style = "color:#29b8af;text-align:center;font-weight:bold;";
+                            }
+                            return value;
+                        }
+                    },
+                    {text: 'Total', dataIndex: 'TOTAL', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            if (record.data.COLOR === 'D') {
+                                metaData.style = "text-align:center;background-color:#e3e57b;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#2f9ef0;";
+                            }else{
+                                metaData.style = "text-align:center;background-color:#7be57f;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#2f9ef0;";
+                            }
+                            return value;
+                        },
+                        listeners: {
+                            click: 'loadTotalClien'
+                        }
+                    },
+                    {text: 'Amount', dataIndex: 'MONTO', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    
+                    {text: 'Match', dataIndex: 'TMATCH', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            if (record.data.COLOR === 'D') {
+                                metaData.style = "text-align:center;background-color:#e3e57b;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#2f9ef0;";
+                            }else{
+                                metaData.style = "text-align:center;background-color:#7be57f;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#2f9ef0;";
+                            }
+                            return value;
+                        },
+                        listeners: {
+                            click: 'loadConcilClien'
+                        }
+                    },
+                    {text: 'Amount<br>Match', dataIndex: 'VMATCH', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    {text: 'Pending', dataIndex: 'TPEND', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            if (record.data.COLOR === 'D') {
+                                metaData.style = "text-align:center;background-color:#e3e57b;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#f71a1a;";
+                            }else{
+                                metaData.style = "text-align:center;background-color:#7be57f;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#f71a1a;";
+                            }
+                            return value;
+                        },
+                        listeners: {
+                            click: 'loadPendingClien'
+                        }
+                    },
+                    {text: 'Amount<br>Pending', dataIndex: 'VPEND', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    }
+                ]
+            }
+        },
+        //</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc="Age Summary">
+        {
+            xtype: 'grid',
+            border: false,
+            width: 1100,
+            minHeight: 250,
+            hidden: true,
+            id: prototype.id + '-ageSummary',
+            viewConfig: {
+                stripeRows: true,
+                enableTextSelection: true,
+                markDirty: false
+            },
+            columnLines: true,
+            columns: {
+                defaults: {
+                    align: 'center',
+                    menuDisabled: true,
+                    sortable: true
+                },
+                items: [
+                    {text: 'Fecha<br>Transaccion', dataIndex: 'A4700FECVT', width: 100},
+                    {text: 'Cliente', dataIndex: 'A4700CLIEN', width: 100},
+                    {text: 'Titulo Contable', dataIndex: 'A4700TITU', flex: 1},
+                    {text: 'Monto', dataIndex: 'A4700AMOUN', width: 120,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    {text: 'Moneda', dataIndex: 'A4700MDA', width: 100},
+                    {text: '01 a 30 dias', dataIndex: '1D', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;background-color:#ade57b;text-decoration:underline;cursor:pointer;font-weight:bolder;color:red;";
+                            return value;
+                        },
+                        listeners:{
+                            click:'load1D'
+                        }
+                    },
+                    {text: '31 a 60 dias', dataIndex: '2D', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;background-color:#e5e27b;text-decoration:underline;cursor:pointer;font-weight:bolder;color:red;";
+                            return value;
+                        },
+                        listeners:{
+                            click:'load2D'
+                        }
+                    },
+                    {text: '61 a 90 dias', dataIndex: '3D', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;background-color:#e5b87b;text-decoration:underline;cursor:pointer;font-weight:bolder;color:red;";
+                            return value;
+                        },
+                        listeners:{
+                            click:'load3D'
+                        }
+                    },
+                    {text: '+91 dias', dataIndex: '4D', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;background-color:#ff4c4c;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#ffffff;";
+                            return value;
+                        },
+                        listeners:{
+                            click:'load4D'
+                        }
+                    }
+                ]
+            },
+            tbar: {
+                layout: {
+                    pack: 'end'
+                },
+                defaults: {
+                    scale: 'medium'
+                },
+                items: [
+                    {
+                        xtype: 'button',
+                        iconCls: 'prx-icon-excel',
+                        scale: 'small',
+                        tooltip: 'Export to Excel',
+                        listeners: {
+                            click: 'downloadaDetail'
+                        }
+                    }
+                ]
+            },
+            bbar: {
+                xtype: 'pagingtoolbar',
+                displayInfo: true
+            }
         }
+        //</editor-fold>
+
     ]
 });

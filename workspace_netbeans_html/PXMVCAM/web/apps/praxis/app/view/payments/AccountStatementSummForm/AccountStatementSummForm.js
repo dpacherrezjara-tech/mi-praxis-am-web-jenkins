@@ -9,7 +9,7 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.AccountStatementSu
     requires: [
         'Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatementSummController',
         'Ext.Praxis.view.payments.AccountStatementSummForm.Options',
-        'Ext.Praxis.view.payments.AccountStatementSummForm.Filters',
+        'Ext.Praxis.view.payments.AccountStatementSummForm.FiltersByTicket',
         'Ext.Praxis.view.payments.AccountStatementSummForm.Grids.AccountStatementSummGrids'
     ],
     controller: 'AccountStatementSummController',
@@ -58,7 +58,7 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.AccountStatementSu
                                             xtype: prototype.id + '-options'
                                         },
                                         {
-                                            xtype: prototype.id + '-filters',
+                                            xtype: prototype.id + '-filtersByTicket',
                                             id: prototype.id + '-contentFilter'
                                         },
                                         {
