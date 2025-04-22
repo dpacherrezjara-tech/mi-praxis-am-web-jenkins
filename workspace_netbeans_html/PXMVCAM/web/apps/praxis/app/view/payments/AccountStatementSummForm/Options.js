@@ -40,15 +40,6 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.Options', {
                             listeners: {
                                 click: 'onClickClearBtn'
                             }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnBack',
-                            iconCls: 'prx-icon-back',
-                            tooltip: 'Back to Main Menu',
-                            listeners: {
-                                click: 'onClickBackBtn'
-                            }
                         }
                     ]
                 }

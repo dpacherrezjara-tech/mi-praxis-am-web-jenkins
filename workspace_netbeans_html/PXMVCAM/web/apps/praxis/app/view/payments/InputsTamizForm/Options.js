@@ -32,12 +32,6 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Options', {
                             id: prototype.id + '-btnClear',
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options'
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnBack',
-                            iconCls: 'prx-icon-back',
-                            tooltip: 'Back'
                         }
                     ]
                 }
