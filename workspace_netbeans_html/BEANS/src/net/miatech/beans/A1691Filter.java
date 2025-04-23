@@ -45,6 +45,8 @@ public class A1691Filter extends A1691 {
     public String strDescFFLOW = "";
     public String strSQL = "";
     public String USRDESCRIP = "";
+    public String FECRDESCRIP = "";
+    public String HOCRDESCRIP = "";
     public long RN  = 0;
     
     public String FPROC   = "";
