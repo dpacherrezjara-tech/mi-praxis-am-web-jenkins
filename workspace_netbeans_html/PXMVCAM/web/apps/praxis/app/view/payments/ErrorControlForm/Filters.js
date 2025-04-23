@@ -16,95 +16,175 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Filters', {
                 type: 'vbox',
                 align: 'center'
             },
+            defaults: {
+                margin: '4 4 4 4'
+            },
             items: [
                 {
                     xtype: 'form',
                     border: false,
                     id: prototype.id + '-panelFilters',
                     bodyStyle: 'background: transparent',
-                    padding: '2px 5px 1px 5px',
                     layout: 'column',
                     defaults: {
                         fieldStyle: 'text-align: center;',
-                        padding: '5px 1px 5px 1px',
-                        anchor: '100%',
+                        hiddenLabel: false,
+                        labelAlign: 'right'
+                    },
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            name: 'IN_CCUST',
+                            value: '139',
+                            hidden: true
+                        },
+                        {
+                            xtype: 'datefield',
+                            fieldLabel: 'From',
+                            name: 'IN_DATEF',
+                            format: 'Ymd',
+                            labelWidth: 50,
+                            width: 150,
+                            value: new Date()
+                        },
+                        {
+                            xtype: 'datefield',
+                            fieldLabel: 'To',
+                            name: 'IN_DATET',
+                            format: 'Ymd',
+                            labelWidth: 30,
+                            width: 130,
+                            value: new Date()
+                        }
+                    ]
+                },
+                {
+                    xtype: 'form',
+                    border: false,
+                    hidden: true,
+                    id: prototype.id + '-panelFilters2',
+                    bodyStyle: 'background: transparent',
+                    layout: {
+                        type: 'hbox'
+                    },
+                    defaults: {
+                        fieldStyle: 'text-align: center;',
                         hiddenLabel: false,
                         labelAlign: 'right',
                         hidden: false
                     },
                     items: [
                         {
+                            xtype: 'datefield',
+                            name: 'DATE_FROM',
+                            fieldLabel: 'From',
+                            format: 'Ymd',
+                            labelWidth: 50,
+                            width: 150,
+                            value: new Date()
+                        },
+                        {
+                            xtype: 'datefield',
+                            fieldLabel: 'To',
+                            name: 'DATE_TO',
+                            format: 'Ymd',
+                            labelWidth: 30,
+                            width: 130,
+                            value: new Date()
+                        },
+                        {
                             xtype: 'combobox',
-                            fieldLabel: 'Date',
-                            id: prototype.id + '-cmbDate',
+                            id: prototype.id + '-cmbProcessor',
+                            name: 'TBL_PROC',
+                            fieldLabel: 'Processor',
+                            labelWidth: 70,
+                            width: 250,
+                            displayField: 'NAME',
+                            valueField: 'CODE',
+                            queryMode: 'local',
+                            editable: true,
+                            allowBlank: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            labelAlign: 'right',
+                            typeAhead: true,
+                            forceSelection: true,
+                            selectOnFocus: true,
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            value: '', // Valor inicial (vacío)
+                            emptyText: '(All)'
+                        },
+                        {
+                            xtype: 'combobox',
+                            id: prototype.id + '-cmbError',
+                            name: 'CERROR',
+                            fieldLabel: 'Error Code',
+                            labelWidth: 70,
+                            width: 350,
+                            displayField: 'NAME',
+                            valueField: 'CODE',
+                            queryMode: 'local',
+                            editable: true,
+                            allowBlank: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            labelAlign: 'right',
+                            typeAhead: true,
+                            forceSelection: true,
+                            selectOnFocus: true,
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            value: '', // Valor inicial (vacío)
+                            emptyText: '(All)',
+                            listeners: {
+                                change: 'onClickSearchBtn'
+                            }
+                        },
+                        {
+                            xtype: 'combobox',
+                            fieldLabel: 'Status Error',
                             store: Ext.create('Ext.data.SimpleStore', {
                                 fields: ['code', 'name'],
                                 data: [
-                                    ['FPROC', 'Processing Date']
+                                    ['', 'All'],
+                                    ['0', 'Pending'],
+                                    ['1', 'Audited'],
+                                    ['2', 'Pending System']
                                 ]
                             }),
+                            name: 'STS_ERROR',
                             labelWidth: 100,
                             width: 230,
                             displayField: 'name',
                             valueField: 'code',
                             queryMode: 'local',
                             editable: false,
-                            value: 'FPROC'
-                        },
-                        {
-                            xtype: 'datefield',
-                            fieldLabel: 'From',
-                            format: 'Ymd',
-                            labelWidth: 50,
-                            width: 150,
-                            id: prototype.id + '-dateFrom',
-                            value: new Date(new Date().getFullYear(), 0, 1),
-                            validator: 'validaFecha',
-                            listeners: {
-                                change: 'onChangeFechaBtn'
-                            }
-                        },
-                        {
-                            xtype: 'datefield',
-                            fieldLabel: 'To',
-                            format: 'Ymd',
-                            labelWidth: 30,
-                            width: 130,
-                            id: prototype.id + '-dateTo',
-                            value: new Date(),
-                            validator: 'validaFecha',
-                            listeners: {
-                                change: 'onChangeFechaBtn'
-                            }
-                        },
-                        {
-                            xtype: 'combobox',
-                            id: prototype.id + '-cmbProcessor',
-                            fieldLabel: 'Processor',
-                            labelWidth: 70,
-                            width: 200,
-                            displayField: 'a4451desc1',
-                            valueField: 'a4451key2',
-                            queryMode: 'local',
-                            editable: false,
                             value: ''
                         },
                         {
                             xtype: 'combobox',
-                            id: prototype.id + '-cmbError',
-                            fieldLabel: 'Error Code',
-                            labelWidth: 70,
-                            width: 350,
+                            fieldLabel: 'Status Rev.',
+                            store: Ext.create('Ext.data.SimpleStore', {
+                                fields: ['code', 'name'],
+                                data: [
+                                    ['', 'All'],
+                                    ['A', 'Automatic'],
+                                    ['F', 'Forced Match']
+                                ]
+                            }),
+                            name: 'TIPO_CORRECCION',
+                            labelWidth: 100,
+                            width: 230,
                             displayField: 'name',
                             valueField: 'code',
                             queryMode: 'local',
-                            value: '',
-                            listeners: {
-                                change: 'onClickSearchBtn'
-                            }
-                        },
+                            editable: false,
+                            value: ''
+                        }
                     ]
                 }
+
             ]
         }
     ]

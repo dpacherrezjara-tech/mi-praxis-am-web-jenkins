@@ -15,6 +15,34 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Options', {
                     xtype: 'toolbar',
                     items: [
                         {
+                            xtype: 'radiogroup',
+                            id: prototype.id + '-viewOption',
+                            //fieldLabel: 'Opciones',
+                            columns: 3, // Puedes ajustar el número de columnas según tus necesidades
+                            vertical: false, // Esto alinea los botones verticalmente,
+                            defaults: {
+                                margin: '0 5 0 5' // Margen entre los botones
+                            },
+                            items: [
+                                {boxLabel: '<b style="color:#148D28;">Load</b>', name: 'opcion', inputValue: 'L', checked: true, width: 100},
+                                {boxLabel: '<b style="color:#148D28;">Format</b>', name: 'opcion', inputValue: 'F', width: 80}
+                            ],
+                            listeners: {
+                                change: 'onChangeModule'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            xtype: 'panel',
+            border: true,
+            items: [
+                {
+                    xtype: 'toolbar',
+                    items: [
+                        {
                             xtype: 'button',
                             id: prototype.id + '-btnSearch',
                             iconCls: 'prx-icon-search',
@@ -32,15 +60,6 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Options', {
                                 click: 'onClickFilterBtn'
                             }
                         },
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.id + '-btnExcel',
-//                            iconCls: 'prx-icon-excel',
-//                            tooltip: 'Export to Excel',
-//                            listeners: {
-//                                click: 'onClickExcelBtn'
-//                            }
-//                        },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnClear',
@@ -48,15 +67,6 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Options', {
                             tooltip: 'Clear Options',
                             listeners: {
                                 click: 'onClickClearBtn'
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnBack',
-                            iconCls: 'prx-icon-back',
-                            tooltip: 'Back to Main Menu',
-                            listeners: {
-                                click: 'onClickBackBtn'
                             }
                         }
                     ]

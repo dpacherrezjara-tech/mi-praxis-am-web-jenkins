@@ -4,6 +4,15 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
     init: function (view) {
     },
     afterRender: async function (obj, e) {
+        this.loadFilters();
+    },
+    loadFilters:async function(){
+        const filters = Ext.getCmp(prototype.id + '-contentFilter');
+        filters.setLoading(true);
+        const res = await global.callStoreGet('PRAXISMP','SQP05276',{IN_STATUS:'1'});
+        const cmbPais = Ext.getCmp(prototype.id + '-cmbPaises');
+        global.setComboStore(cmbPais,res.lstRs.at(4),'CODE','NAME','');
+        filters.setLoading(false);
     },
     //<editor-fold defaultstate="collapsed" desc="Summary">
     formatSummaryParams: function () {

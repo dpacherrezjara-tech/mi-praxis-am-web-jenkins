@@ -137,7 +137,7 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.Grids.AccountState
                     {text: 'Subcode<br>de Razon', dataIndex: 'A4700RFIS', width: 100},
                     {text: 'Form of<br>Payment', dataIndex: 'A4700FOP', width: 100},
                     {text: 'Card Code', dataIndex: 'A4700TARJ', width: 100},
-                    {text: 'CIA CTA CONTABLE', dataIndex: 'A4700CIAF', width: 100},
+                    {text: 'CIA CTA<br>CONTABLE', dataIndex: 'A4700CIAF', width: 100},
                     {text: 'Unidad', dataIndex: 'A4700UNID', width: 100},
                     {text: 'Centro<br>de Costo', dataIndex: 'A4700CECO', width: 100},
                     {text: 'Ubicación', dataIndex: 'A4700UBICA', width: 100},
@@ -156,14 +156,67 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.Grids.AccountState
                     {text: 'Payment<br>Merchan', dataIndex: 'A4700PMERC', width: 130},
                     {text: 'Payment<br>Sale', dataIndex: 'A4700SMERC', width: 130},
                     {text: 'Payment<br>Date', dataIndex: 'A4700FECPG', width: 100},
-                    {text: 'Payment<br>Amount', dataIndex: 'A4700IMPOR', width: 100},
-                    {text: 'COM Amount', dataIndex: 'A4700COMM', width: 100},
-                    {text: 'COM MSI', dataIndex: 'A4700COMSI', width: 100},
-                    {text: 'COM VAT', dataIndex: 'A4700COVAT', width: 100},
-                    {text: 'MSI VAT', dataIndex: 'A4700VTMSI', width: 100},
-                    {text: 'OTROS', dataIndex: 'A4700OTROS', width: 100},
-                    {text: 'Processor', dataIndex: 'A4700PROCE', width: 100},
-                    {text: 'Status', dataIndex: 'A4700STVAL', width: 100},
+                    {text: 'Payment<br>Amount', dataIndex: 'A4700IMPOR', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    {text: 'COM Amount', dataIndex: 'A4700COMM', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    {text: 'COM MSI', dataIndex: 'A4700COMSI', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    {text: 'COM VAT', dataIndex: 'A4700COVAT', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    {text: 'MSI VAT', dataIndex: 'A4700VTMSI', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    {text: 'OTROS', dataIndex: 'A4700OTROS', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    {text: 'Processor', dataIndex: 'DESC_PRO', width: 160,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;background-color:#7ac970;font-weight:bolder;";
+                            return value;
+                        }
+                    },
+                    {text: 'Status', dataIndex: 'A4700STVAL', width: 120,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;background-color:#7ac970;font-weight:bolder;";
+                            let opts = {
+                              '0':'Stand By',
+                              '1':'Match',
+                              '5':'Manual Match',
+                              '6':'Forced Match',
+                              '7':'Compensation Match'
+                            };
+                            return opts[value]|| '';
+                        }
+                    },
                     {text: 'Memo', dataIndex: 'A4700STADM', width: 100},
                     {text: 'PRIDCON', dataIndex: 'A4700IDCMP', width: 350}
                 ]

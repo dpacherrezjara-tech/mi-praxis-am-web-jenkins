@@ -8,8 +8,8 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ErrorControlForm', {
         'Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
         'Ext.Praxis.view.payments.ErrorControlForm.Options',
         'Ext.Praxis.view.payments.ErrorControlForm.Filters',
-        'Ext.Praxis.view.payments.ErrorControlForm.FormatSummary',
-        'Ext.Praxis.view.payments.ErrorControlForm.ChargeSummary'
+        'Ext.Praxis.view.payments.ErrorControlForm.Grids.FormatErrorsGrids',
+        'Ext.Praxis.view.payments.ErrorControlForm.Grids.LoadErrorsGrids'
     ],
     controller: 'ErrorControlController',
     layout: {
@@ -63,45 +63,20 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ErrorControlForm', {
                                             xtype: 'panel',
                                             height: 670,
                                             width: 1400,
-                                            bodyStyle: 'background: transparent',
+                                            bodyStyle: 'background: #E3EAF9',
                                             layout: 'fit',
+                                            defaults: {
+                                                bodyStyle: 'background: transparent'
+                                            },
                                             items: [
                                                 {
-                                                    xtype: 'tabpanel',
-                                                    id: prototype.id + '-tabMain',
-                                                    width: 1400,
-                                                    height: 670,
-                                                    anchor: '100%',
-                                                    margin: '1 1 1 1',
-                                                    autoScroll: true,
-                                                    bodyStyle: 'background: transparent',
-                                                    listeners: {
-                                                        tabchange: 'onChangeTab'
-                                                    },
-                                                    items: [
-                                                        {
-                                                            id: prototype.id + '-tabFormat',
-                                                            title: 'Format',
-                                                            itemId: 'F',
-                                                            tabConfig: {
-                                                                flex: 1,
-                                                                style: {
-                                                                    'text-align': 'center'
-                                                                }
-                                                            }
-                                                        },
-                                                        {
-                                                            id: prototype.id + '-tabCharge',
-                                                            title: 'Load',
-                                                            itemId: 'C',
-                                                            tabConfig: {
-                                                                flex: 1,
-                                                                style: {
-                                                                    'text-align': 'center'
-                                                                }
-                                                            }
-                                                        }
-                                                    ]
+                                                    xtype: prototype.id + '-LoadErrorsGrids',
+                                                    id: prototype.id + '-contentLoad'
+                                                },
+                                                {
+                                                    xtype: prototype.id + '-FormatErrorsGrids',
+                                                    id: prototype.id + '-contentFormat',
+                                                    hidden: true
                                                 }
                                             ]
                                         }
