@@ -1133,7 +1133,7 @@ public class FlightConciliationDAO {
 
         try {
             //PX09500004
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04432(?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04432_V1(?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -1232,6 +1232,7 @@ public class FlightConciliationDAO {
                 beanCons.FECR = rst.getString("FECR").trim();
                 beanCons.HOCR = Functions.ConvertedTime(rst.getString("HOCR").trim());
                 beanCons.USUP = rst.getString("USUP").trim();
+                beanCons.USRDESCRIP = rst.getString("USRDESCRIP").trim();
 //                beanCons.FEUP = rst.getString("FEUP").trim();
                 beanCons.HOUP = Functions.ConvertedTime(rst.getString("HOUP").trim());
             }

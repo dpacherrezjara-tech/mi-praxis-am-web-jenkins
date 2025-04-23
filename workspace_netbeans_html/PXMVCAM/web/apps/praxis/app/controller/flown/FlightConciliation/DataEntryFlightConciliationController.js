@@ -216,6 +216,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         }
         Ext.getCmp(prototype.id+"-txtDESCRIP").setValue(bean.strDescripcion);
         Ext.getCmp(prototype.id+"-txtDESCRIP2").setValue(bean.strDescripcion2);
+        Ext.getCmp(prototype.id+"-txtDESCRIP-user").setValue(bean.USRDESCRIP);
         Ext.getCmp(prototype.id+"-txtFSENDVC").setValue(bean.FSENDVC);
         Ext.getCmp(prototype.id+"-txtQCPNVC").setValue(bean.QCPNVC);
         Ext.getCmp(prototype.id+"-txtQCPNMA").setValue(bean.QCPNMA);
