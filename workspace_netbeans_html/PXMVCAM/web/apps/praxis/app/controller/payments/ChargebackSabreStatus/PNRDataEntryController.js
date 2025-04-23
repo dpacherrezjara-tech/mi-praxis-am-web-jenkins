@@ -11,40 +11,29 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.PNRDataEntryCon
     fillData:function(params){
         Ext.getCmp(prototype.idDE + '-txtPNR').setValue(params.pnr);
     },
-    getData: function () {
+    getData: async function () {
         const view = this.view;
         const grid = Ext.getCmp(prototype.idDE + '-PNRGrid');
+        grid.setLoading(true);
         let params = this.formatParameters();
-        const store = Ext.create('Ext.data.Store', {
-            loadMask: true,
-            //pageSize: 20,
-            proxy: {
-                type: 'ajax',
-                //enablePaging: true,
-                url: `${view.url}/loadPNRInformation`,
-                extraParams: params,
-                timeout: 600000,
-                reader: {
-                    type: 'json',
-                    rootProperty: 'response',
-                    //totalProperty: 'total'
-                }
-            },
-            autoLoad: true,
-            listeners: {
-                load: function (store, records, successful, operation) {
-                    if (!successful) {
-                        global.Msg({msg: 'Data not Found'});
-                    } else {
-                        //console.log(records);
-                        if (records.length === 0) {
-                            global.Msg({msg: 'Data not Found'});
-                        }
-                    }
-                }
+        const res = await global.callStoreGet('PRAXISMP','SQP05560',params);
+        if(res.lstRs.length>0){
+            let data = res.lstRs.at(0);
+            if(data.length === 0) {
+                global.Msg({msg:'No data'});
+                this.view.close();
+            }else{
+                let store = new Ext.data.Store({
+                    data: data
+                });
+                grid.setStore(store);
             }
-        });
-        grid.setStore(store);
+            
+        }else{
+            global.Msg({msg:'Error on load'});
+            this.view.close();
+        }
+        grid.setLoading(false);
     },
     formatParameters:function(){
         //const view = this.view;
@@ -60,10 +49,10 @@ Ext.define('Ext.Praxis.controller.payments.ChargebackSabreStatus.PNRDataEntryCon
         this.view.close();
     },
     onViewTicket: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        if(record.data.ticket.trim()===''){
+        if(record.data.TICKET.trim()===''){
             return;
         }
-        const obj = record.data.ticket;
+        const obj = record.data.TICKET;
         prototypeProgram.view = 'payments-chargeback-sabre-status-form';
         prototypeProgram.nprog = 'PX00000635';
         prototypeProgram.title = 'Chargeback Sabre Status';
