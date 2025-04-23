@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
     title: 'Flight Manifest - Data Entry Form',
     header: true,
     height: 740,
-    width: 850,
+    width: 900,
     border: false,
     resizable: false,
     layout: 'fit',
@@ -704,9 +704,9 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     id: prototype.id + '-txtDESCRIP',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
-                                    maxLength: 100,
+                                    maxLength: 120,
                                     inputAttrTpl: "data-qtip='Enter an observation if is needed'",
-                                    width: 600,
+                                    width: 700,
                                     hidden: false
                                 },
                                 {
@@ -714,13 +714,58 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     id: prototype.id + '-txtDESCRIP2',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
-                                    maxLength: 100,
+                                    maxLength: 120,
                                     inputAttrTpl: "data-qtip='Enter an observation if is needed'",
-                                    width: 600,
+                                    width: 700,
                                     hidden: false
                                 } 
                                 ]
-                            }
+        }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'column',
+                            margin: '0 0 10 7',
+                            border: false,
+                            bodyStyle: 'background: #EFE9E5',
+                            items: [
+                                {
+                                    xtype: 'label',
+                                    padding: '0px 80px 0px 0px',
+                                    html: '<strong style="color:#000; ">User Update Description</strong>'
+                                },
+                                {
+                                    xtype: 'label',
+                                    id: prototype.id + '-txtDESCRIP-user2',
+                                    
+                                    hidden: false,
+                                    style: 'font-weight:bold;color:red;',
+                                    width: 20,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Mandatory Field'
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 300},
+                                {
+                                xtype: 'panel',
+                                border: false,
+                                bodyStyle: 'background: #EFE9E5',
+                                items:[
+                                   {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtDESCRIP-user',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 100,
+                                    inputAttrTpl: "data-qtip='Enter an observation if is needed'",
+                                    width: 100,
+                                    hidden: false,
+                                    disabled: true
+                                }
+                                ]
+        }
                             ]
                         },
                         {
