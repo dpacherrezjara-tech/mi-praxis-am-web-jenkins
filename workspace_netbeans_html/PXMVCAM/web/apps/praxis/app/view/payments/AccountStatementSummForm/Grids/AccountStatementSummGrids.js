@@ -439,7 +439,7 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.Grids.AccountState
                         scale: 'small',
                         tooltip: 'Export to Excel',
                         listeners: {
-                            click: 'downloadaDetail'
+                            click: 'downloadAgeSummary'
                         }
                     }
                 ]

@@ -1,17 +1,19 @@
 Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatementSummController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.AccountStatementSummController',
+    twin: '',
+    detailParams: null,
     init: function (view) {
     },
     afterRender: async function (obj, e) {
         this.loadFilters();
     },
-    loadFilters:async function(){
+    loadFilters: async function () {
         const filters = Ext.getCmp(prototype.id + '-contentFilter');
         filters.setLoading(true);
-        const res = await global.callStoreGet('PRAXISMP','SQP05276',{IN_STATUS:'1'});
+        const res = await global.callStoreGet('PRAXISMP', 'SQP05276', {IN_STATUS: '1'});
         const cmbPais = Ext.getCmp(prototype.id + '-cmbPaises');
-        global.setComboStore(cmbPais,res.lstRs.at(4),'CODE','NAME','');
+        global.setComboStore(cmbPais, res.lstRs.at(4), 'CODE', 'NAME', '');
         filters.setLoading(false);
     },
     //<editor-fold defaultstate="collapsed" desc="Summary">
@@ -264,7 +266,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
         const detail = Ext.getCmp(prototype.id + '-detailSummary');
         detail.getStore().removeAll();
         detail.hide();
-        
+
         let opt = Ext.getCmp(prototype.id + '-cmbReport').value;
         switch (opt) {
             case '1':
@@ -293,16 +295,18 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
             IN_STATUS: status,
             IN_CLIENTE: '',
             IN_TITU: '',
-            IN_MDA:''
+            IN_MDA: ''
         };
+        this.detailParams = res;
+        this.twin = 'D';
         return res;
     },
     formatDetailClienParams: function (data, status) {
         let res = {
             IN_CCUST: '139',
             IN_TDATE: data.TDATE,
-            IN_DATEF: data.DATE?data.DATE: data.DATEF ,
-            IN_DATET: data.DATE?data.DATE: data.DATET ,
+            IN_DATEF: data.DATE ? data.DATE : data.DATEF,
+            IN_DATET: data.DATE ? data.DATE : data.DATET,
             IN_FOP: '',
             IN_TARJ: '',
             IN_PAIS: '',
@@ -312,8 +316,10 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
             IN_STATUS: status,
             IN_CLIENTE: data.CLIEN,
             IN_TITU: data.TITU,
-            IN_MDA:data.MDA
+            IN_MDA: data.MDA
         };
+        this.detailParams = res;
+        this.twin = 'D';
         return res;
     },
     //</editor-fold>
@@ -321,20 +327,20 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
     formatAgeParams: function () {
         return Ext.getCmp(prototype.id + '-panelFilters3').getForm().getValues();
     },
-    searchAge: async function(){
+    searchAge: async function () {
         const grilla = Ext.getCmp(prototype.id + '-ageSummary');
         grilla.show();
         grilla.setLoading(true);
         let params = this.formatAgeParams();
         let res = await global.callStoreGet('PRAXISMP', 'SQP05556', params);
-        if(res.lstRs){
+        if (res.lstRs) {
             const data = res.lstRs.at(0);
             let store = new Ext.data.Store({
                 data: data,
                 pageSize: 20,
-                proxy:{
-                    type:'memory',
-                     enablePaging: true
+                proxy: {
+                    type: 'memory',
+                    enablePaging: true
                 }
             });
             grilla.setStore(store);
@@ -344,12 +350,14 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
     formatDetailAgeParams: function (data, status) {
         let res = {
             IN_CCUST: '139',
-            IN_DATE: data.A4700FECVT ,
+            IN_DATE: data.A4700FECVT,
             IN_STATUS: status,
             IN_CLIENTE: data.A4700CLIEN,
             IN_TITU: data.A4700TITU,
-            IN_MONEDA:data.A4700MDA
+            IN_MONEDA: data.A4700MDA
         };
+        this.detailParams = res;
+        this.twin = 'A';
         return res;
     },
     load1D: async function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
@@ -463,7 +471,117 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
                 break;
         }
     },
+    downloadSummaryDetail: function () {
+        const me = this;
+        let params = this.detailParams;
+        let sp = '';
+        if (me.twin === 'A') {
+            sp = 'SQP05557';
+        } else {
+            sp = 'SQP05553';
+        }
+        let notifier = new AWN();
+        const dwl = async () => {
+            const res = await global.callStorePagginExcel('PRAXISMP', sp, params);
+            if (res) {
+                if (res === 0) {
+                    global.Msg({msg: 'No data'});
+                }
+                let excel = res.map(x =>
+                    ({
+                        'Fecha Transaccion': x.A4700FECVT,
+                        'Fecha Carga': x.A4700FPROC,
+                        'Accounting Session Date': x.A4700FFILE,
+                        'PRAXIS ID': x.A4700IDCON,
+                        'Sale Location Country': x.A4700PAIS,
+                        'SOURCE': x.A4700FUENT,
+                        'SUBSOURCE': x.A4700SFUEN,
+                        'IATA Code': x.A4700IATA,
+                        'City Name': x.A4700NIATA,
+                        'Transaction Type': x.A4700TRNCU,
+                        'Local Amount': x.A4700AMOUN,
+                        'Currency Code': x.A4700MDA,
+                        'Ticket Number': x.TICKETNBR,
+                        'Document Type': x.A4700TIPOD,
+                        'Subcode de Razon': x.A4700RFIS,
+                        'Form of Payment': x.A4700FOP,
+                        'Card Code': x.A4700TARJ,
+                        'CIA CTA CONTABLE': x.A4700CIAF,
+                        'Unidad': x.A4700UNID,
+                        'Centro de Costo': x.A4700CECO,
+                        'Ubicación': x.A4700UBICA,
+                        'Cuenta': x.A4700CUENT,
+                        'Subcuenta': x.A4700SUBCU,
+                        'Equipo': x.A4700EQUI,
+                        'Intercia': x.A4700ICIA,
+                        'Cliente': x.A4700CLIEN,
+                        'Dirección': x.A4700DIREC,
+                        'Título Contable': x.A4700TITU,
+                        'Nro Tarjeta': x.A4700SCARD,
+                        'Auth': x.A4700AUTH,
+                        'Agente': x.A4700AGENT,
+                        'NRO PNR': x.A4700PNR,
+                        'FOP Agrupación': x.A4700FOPAG,
+                        'Payment Merchan': x.A4700PMERC,
+                        'Payment Sale': x.A4700SMERC,
+                        'Payment Date': x.A4700FECPG,
+                        'Payment Amount': x.A4700IMPOR,
+                        'COM Amount': x.A4700COMM,
+                        'COM MSI': x.A4700COMSI,
+                        'COM VAT': x.A4700COVAT,
+                        'MSI VAT': x.A4700VTMSI,
+                        'OTROS': x.A4700OTROS,
+                        'Processor': x.DESC_PRO,
+                        'Status': me.formatStatus(x.A4700STVAL),
+                        'Memo': x.A4700STADM,
+                        'PRIDCON': x.A4700IDCMP
+                    }));
+                global.writeExcelFromJson(excel, 'EECC Ticket Detail');
+            }
+        };
+        notifier.async(dwl(), 'Successfully Download', 'Error on Download', 'Downloading File');
+    },
+    downloadAgeSummary: function () {
+        const me = this;
+        let params = this.formatAgeParams();
+        let notifier = new AWN();
+        const dwl = async () => {
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05556', params);
+            if (res.lstRs) {
+                if (res.lstRs.at(0) === 0) {
+                    global.Msg({msg: 'No data'});
+                }
+                let excel = res.lstRs.at(0).map(x =>
+                    ({
+                        'Fecha Transaccion': x.A4700FECVT,
+                        'Cliente': x.A4700CLIEN,
+                        'Titulo Contable': x.A4700TITU,
+                        'Monto': x.A4700AMOUN,
+                        'Moneda': x.A4700MDA,
+                        '01 a 30 dias': x['1D'],
+                        '31 a 60 dias': x['2D'],
+                        '61 a 90 dias': x['3D'],
+                        '+91 dias': x['4D']
+                    }));
+                global.writeExcelFromJson(excel, 'EECC Age Summary');
+            }
+        };
+        notifier.async(dwl(), 'Successfully Download', 'Error on Download', 'Downloading File');
+    },
     //</editor-fold>
+    formatStatus: function (status) {
+        let opts = {
+            '0': 'Stand By',
+            '1': 'Match',
+            '3': 'Sales W/O Settlement',
+            '4': 'Match Difference',
+            '5': 'Match Manual',
+            '6': 'Forced Match',
+            '7': 'Compensation Match',
+            '8': 'Pending RFND'
+        };
+        return opts[status] || '';
+    }
 });
 
 
