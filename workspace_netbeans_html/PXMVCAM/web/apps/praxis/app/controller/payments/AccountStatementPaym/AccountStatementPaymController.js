@@ -1,6 +1,8 @@
 Ext.define('Ext.Praxis.controller.payments.AccountStatementPaym.AccountStatementPaymController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.AccountStatementPaymController',
+    detailParams: null,
+    saleParams: null,
     init: function (view) {
     },
     afterRender: async function (obj, e) {
@@ -71,6 +73,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementPaym.AccountStatement
             IN_PAIS: record.data.SCOUNTRY,
             IN_STATUS: 'M'
         };
+        this.detailParams = params;
         console.log(params);
         let store = await global.callStorePaggin('PRAXISMP', 'SQP05562', params);
         gridDet.setStore(store);
@@ -94,6 +97,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementPaym.AccountStatement
             IN_PAIS: record.data.SCOUNTRY,
             IN_STATUS: 'P'
         };
+        this.detailParams = params;
         console.log(params);
         let store = await global.callStorePaggin('PRAXISMP', 'SQP05562', params);
         gridDet.setStore(store);
@@ -114,6 +118,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementPaym.AccountStatement
             IN_PRDA: record.data.PRDA,
             IN_AREFNBR: record.data.AREFNBR
         };
+        this.saleParams = params;
         const res = await global.callStoreGet('PRAXISMP', 'SQP05563', params);
         if (res.lstRs) {
             let data = res.lstRs.at(0);
@@ -151,28 +156,111 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementPaym.AccountStatement
 
     downloadSummaryDetail: async function () {
         let params = Ext.getCmp(prototype.id + '-panelFilters').getForm().getValues();
-        const res = await global.callStoreGet('PRAXISMP', 'SQP05561', params);
-        if (res.lstRs) {
-            let data = res.lstRs.at(0);
-            if (data.length === 0) {
-                global.Msg({msg: 'No data'});
+        let notifier = new AWN();
+        const dwl = async () => {
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05561', params);
+            if (res.lstRs) {
+                let data = res.lstRs.at(0);
+                if (data.length === 0) {
+                    global.Msg({msg: 'No data'});
+                }
+                let excel = data.map(x =>
+                    ({
+                        'Processing Date': x.PRDA,
+                        'Accounting Date': x.FCONTL,
+                        'Processor': x.DESC_PRO,
+                        'Country': x.SCOUNTRY,
+                        'Currency': x.SCURRENCY,
+                        'Qty': x.TOTAL,
+                        'Amount': x.VTOTAL,
+                        'Qty Match': x.TMATCH,
+                        'Amount Match': x.VMATCH,
+                        'Qty Pending': x.TPEND,
+                        'Amount Pending': x.VPEND
+                    }));
+                global.writeExcelFromJson(excel, 'EECC By Payment Summary');
             }
-            let excel = data.map(x =>
-                ({
-                    'Processing Date': x.PRDA,
-                    'Accounting Date': x.FCONTL,
-                    'Processor': x.DESC_PRO,
-                    'Country': x.SCOUNTRY,
-                    'Currency': x.SCURRENCY,
-                    'Qty': x.TOTAL,
-                    'Amount': x.VTOTAL,
-                    'Qty Match': x.TMATCH,
-                    'Amount Match': x.VMATCH,
-                    'Qty Pending': x.TPEND,
-                    'Amount Pending': x.VPEND
-                }));
-            global.writeExcelFromJson(excel,'EECC By Payment Summary');
-        }
+
+        };
+        notifier.async(dwl(), 'Successfully Download', 'Error on Download', 'Downloading File');
+
+    },
+    downloadLiqDetail: async function () {
+        const me = this;
+        let params = this.detailParams;
+        let notifier = new AWN();
+        const dwl = async () => {
+            const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05562', params);
+            if (res) {
+                if (res === 0) {
+                    global.Msg({msg: 'No data'});
+                }
+                let excel = res.map(x =>
+                    ({
+                        'Processing Date': x.PRDA,
+                        'Acounting Date': x.FCONTL,
+                        'Processor': x.DESC_PRO,
+                        'Country': x.SCOUNTRY,
+                        'Currency': x.SCURRENCY,
+                        'Amount': x.TGROSAMOUN,
+                        'ID Sales': x.IDFLEX,
+                        'ID MPD': x.IDPRAXIS,
+                        'Qty Tkt': x.QTYTKT,
+                        'Status': me.formatStatus(x.STVAL),
+                        'Card Number': x.SCARDN,
+                        'Auth': x.SAUTHOC,
+                        'PNR': x.SPNR
+                    }));
+                global.writeExcelFromJson(excel, 'EECC Settlement Detail');
+            }
+        };
+        notifier.async(dwl(), 'Successfully Download', 'Error on Download', 'Downloading File');
+    },
+    downloadSaleDetail: async function () {
+        const me = this;
+        let params = this.saleParams;
+        let notifier = new AWN();
+        const dwl = async () => {
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05563', params);
+            if (res.lstRs) {
+                let data = res.lstRs.at(0);
+                if (data.length === 0) {
+                    global.Msg({msg: 'No data'});
+                }
+                let excel = data.map(x =>
+                    ({
+                        'Processing Date': x.PRDA,
+                        'Acounting Date': x.FCONTL,
+                        'Processor': x.DESC_PRO,
+                        'Country': x.SCOUNTRY,
+                        'Currency': x.SCURRENCY,
+                        'Amount': x.SVFOPS,
+                        'ID Sales': x.IDCON,
+                        'ID MPD': x.IDCONL,
+                        'Status': me.formatStatus(x.STVAL),
+                        'Ticket': x.TICKET,
+                        'IATA': x.SAGENT,
+                        'Card Number': x.SCARDN,
+                        'Auth': x.SAUTHOC,
+                        'PNR': x.SPNR
+                    }));
+                global.writeExcelFromJson(excel, 'EECC Sales Detail');
+            }
+        };
+        notifier.async(dwl(), 'Successfully Download', 'Error on Download', 'Downloading File');
+    },
+    formatStatus: function (status) {
+        let opts = {
+            '0': 'Stand By',
+            '1': 'Match',
+            '3': 'Sales W/O Settlement',
+            '4': 'Match Difference',
+            '5': 'Match Manual',
+            '6': 'Forced Match',
+            '7': 'Compensation Match',
+            '8': 'Pending RFND'
+        };
+        return opts[status] || '';
     }
 
 });

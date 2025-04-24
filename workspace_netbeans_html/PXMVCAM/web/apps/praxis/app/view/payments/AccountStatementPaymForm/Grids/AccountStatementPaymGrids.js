@@ -273,6 +273,7 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementPaymForm.Grids.AccountState
                             return opts[value]|| '';
                         }
                     },
+                    {text: 'Ticket', dataIndex: 'TICKET', width: 120},
                     {text: 'IATA', dataIndex: 'SAGENT', width: 120},
                     {text: 'Card Number', dataIndex: 'SCARDN', width: 190},
                     {text: 'Auth', dataIndex: 'SAUTHOC', width: 100},
