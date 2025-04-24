@@ -1967,7 +1967,7 @@ var LarSyrExt = function () {
         //Define Headers
         const headerStyle = {
             font: {bold: true, color: {rgb: "FFFFFF"}}, // Texto blanco y negrita
-            fill: {fgColor: {rgb: "FF0000"}}, // Fondo rojo
+            fill: {fgColor: {rgb: "020c41"}}, // Fondo rojo
             alignment: {horizontal: "center", vertical: "center"}, // Centrado
             border: {
                 top: {style: "thin", color: {rgb: "FFFFFF"}},
