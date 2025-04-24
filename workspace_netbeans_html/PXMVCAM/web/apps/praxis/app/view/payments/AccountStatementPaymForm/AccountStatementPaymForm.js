@@ -1,20 +1,22 @@
-prototype.id = 'ErrorControlForm';
-prototype.url = CONTEXTPATH + '/ErrorControl';
+// <editor-fold defaultstate="collapsed" desc="prototype">
+prototype.id = 'AccountStatementPaymForm';
+prototype.width = 1800;
+// </editor-fold>
 
-Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ErrorControlForm', {
+Ext.define('Ext.Praxis.view.payments.AccountStatementPaymForm.AccountStatementPaymForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.ErrorControlForm',
+    alias: 'widget.AccountStatementPaymForm',
     requires: [
-        'Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
-        'Ext.Praxis.view.payments.ErrorControlForm.Options',
-        'Ext.Praxis.view.payments.ErrorControlForm.Filters',
-        'Ext.Praxis.view.payments.ErrorControlForm.Grids.FormatErrorsGrids',
-        'Ext.Praxis.view.payments.ErrorControlForm.Grids.LoadErrorsGrids'
+        'Ext.Praxis.controller.payments.AccountStatementPaym.AccountStatementPaymController',
+        'Ext.Praxis.view.payments.AccountStatementPaymForm.Options',
+        'Ext.Praxis.view.payments.AccountStatementPaymForm.FiltersByPayment',
+        'Ext.Praxis.view.payments.AccountStatementPaymForm.Grids.AccountStatementPaymGrids'
     ],
-    controller: 'ErrorControlController',
+    controller: 'AccountStatementPaymController',
     layout: {
         type: 'fit'
     },
+    padding: '0 0 0 0',
     border: false,
     defaults: {
         border: false
@@ -35,7 +37,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ErrorControlForm', {
                         {
                             xtype: 'panel',
                             region: 'center',
-                            width: 1400,
+                            width: prototype.width,
                             layout: 'border',
                             items: [
                                 {
@@ -48,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ErrorControlForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1400,
+                                        width: prototype.width,
                                         align: 'center'
                                     },
                                     items: [
@@ -56,27 +58,22 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ErrorControlForm', {
                                             xtype: prototype.id + '-options'
                                         },
                                         {
-                                            xtype: prototype.id + '-filters',
+                                            xtype: prototype.id + '-FiltersByPayment',
                                             id: prototype.id + '-contentFilter'
                                         },
                                         {
                                             xtype: 'panel',
-                                            height: 670,
-                                            width: 1400,
-                                            bodyStyle: 'background: #E3EAF9',
-                                            layout: 'fit',
-                                            defaults: {
-                                                bodyStyle: 'background: transparent'
+                                            id: prototype.id + '-mainContent',
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            height: 630,
+                                            layout: {
+                                                type: 'vbox',
+                                                align: 'center'
                                             },
                                             items: [
                                                 {
-                                                    xtype: prototype.id + '-LoadErrorsGrids',
-                                                    id: prototype.id + '-contentLoad'
-                                                },
-                                                {
-                                                    xtype: prototype.id + '-FormatErrorsGrids',
-                                                    id: prototype.id + '-contentFormat',
-                                                    hidden: true
+                                                    xtype: prototype.id + '-AccountStatementPaymGrids',
+                                                    id: prototype.id + '-contentSumm'
                                                 }
                                             ]
                                         }
@@ -90,7 +87,3 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.ErrorControlForm', {
         }
     ]
 });
-
-
-
-

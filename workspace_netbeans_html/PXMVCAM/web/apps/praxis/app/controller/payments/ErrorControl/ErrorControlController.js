@@ -3,201 +3,147 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
     alias: 'controller.ErrorControlController',
     fecha: new Date(),
     url: CONTEXTPATH + '/ErrorControl',
-    searchParams: null,
-    searchUrl: null,
-    gridType: 'P',
+    loadParams: null,
+    formatParams: null,
     init: function (view) {
         prototype.id = 'ErrorControlForm';
         prototype.url = CONTEXTPATH + '/ErrorControl';
     },
     afterRender: async function (obj, e) {
-        await this.fillStoreCombos();
-        //await this.loadSummaryData();
+        await this.loadFilters();
         this.onClickSearchBtn();
     },
-    fillStoreCombos: async function () {
-        const me = this;
-        const panel = me.getCmp({id: '-panelFilters'});
-        panel.mask('Loading Filters...');
-
-        const res = await fetch(`${me.url}/loadFilters`);
-        const data = await res.json();
-        //console.log(data);
-        me.getCmp({id: '-cmbError'}).bindStore(me.createComboStore({data: data.lstError, valueField: 'code', displayField: 'name'}));
-        me.getCmp({id: '-cmbProcessor'})
-                .bindStore(me.createComboStore({
-                    data: data.lstProcs,
-                    valueField: 'a4451key2',
-                    displayField: 'a4451desc1'
-                }));
-        panel.unmask();
+    loadFilters:async function(){
+        const panelFilters = Ext.getCmp(prototype.id + '-contentFilter');
+        const errorCmb = Ext.getCmp(prototype.id + '-cmbError');
+        const procsCmb = Ext.getCmp(prototype.id + '-cmbProcessor');
+        //prototype.id + '-cmbProcessor'
+        panelFilters.setLoading(true);
+        const res = await global.callStoreGet('PRAXISMP','SQP05019',{});
+        let errores = res.lstRs.at(0);
+        let procesadores = res.lstRs.at(1);
+        global.setComboStore(errorCmb,errores,'CODE','NAME','');
+        global.setComboStore(procsCmb,procesadores,'CODE','NAME','');
+        panelFilters.setLoading(false);
     },
-    onClickSearchBtn: function () {
-        const me = this;
-        const tabPanel = me.getCmp({id:'-tabMain'});
-        me.onChangeTab(tabPanel,tabPanel.getActiveTab(),null);
-        //this.loadSummaryData();
-    },
-    onChangeTab:function(obj, current, before){
-        const me = this;
-        const opts = {
-          'F': async () => {
-              await me.loadFormatSummary(current);
-          },
-          'C': async () => {
-              await me.loadChargeSummary(current);
-          }
-        };
-        opts[current.itemId]();
-        //console.log(current.itemId);
-    },
-    loadFormatSummary: async function (panel) {
-        const me = this;
-        //console.log(panel.id);
-        const panelFormat = Ext.create('Ext.Praxis.view.payments.ErrorControlForm.FormatSummary',{
-            id:prototype.id + '-formatSummary',
-            searchParams:me.formatParameters(),
-            searchUrl:me.url
-        });
-        panel.removeAll();
-        panel.add(panelFormat);
-    },
-    loadChargeSummary: async function (panel) {
-        const me = this;
-        //console.log(panel.id);
-        const panelFormat = Ext.create('Ext.Praxis.view.payments.ErrorControlForm.ChargeSummary',{
-            id:prototype.id + '-chargeSummary',
-            searchParams:me.formatParameters(),
-            searchUrl:me.url
-        });
-        panel.removeAll();
-        panel.add(panelFormat);
-    },
-    formatParameters: function () {
-        const me = this;
-        const tdate = me.getCmp({id: '-cmbDate'}).getValue();
-        const from = me.getCmp({id: '-dateFrom'});
-        const to = me.getCmp({id: '-dateTo'});
-        if (!from.isValid() && !to.isValid()) {
-            global.Msg({msg: 'Ingrese Fecha Valida'});
+    onClickSearchBtn:function(){
+        const radioBtn = Ext.getCmp(prototype.id + '-viewOption').lastValue;
+        this.onChangeModule(null,radioBtn);
+        switch (radioBtn.opcion) {
+            case 'L':
+                this.searchLoadErrors();
+                break;
+            case 'F':
+                this.searchFormatErrors();
+                break;
         }
-        const procesador = me.getCmp({id: '-cmbProcessor'}).getValue();
-        const error = me.getCmp({id: '-cmbError'}).getValue();
+    },
+    onChangeModule: function (btn, value) {
+        const loadFilters = Ext.getCmp(prototype.id + '-panelFilters');
+        const formatFilters = Ext.getCmp(prototype.id + '-panelFilters2');
+        const loadContent = Ext.getCmp(prototype.id + '-contentLoad');
+        const formatContent = Ext.getCmp(prototype.id + '-contentFormat');
+        loadFilters.hide();
+        formatFilters.hide();
+        loadContent.hide();
+        formatContent.hide();
+        switch (value.opcion) {
+            case 'L':
+                loadFilters.show();
+                loadContent.show();
+                break;
+            case 'F':
+                formatFilters.show();
+                formatContent.show();
+                break;
+        }
+    },
+    searchLoadErrors:async function(){
+        const grid = Ext.getCmp(prototype.id + '-loadErrorGrid');
+        let params = this.formatLoadParams();
+        console.log(params);
+        let store = await global.callStorePaggin('PRAXISMP','SQP05559',params);
+        grid.setStore(store);
+    },
+    searchFormatErrors:async function(){
+        const grid = Ext.getCmp(prototype.id + '-formatErrorGrid');
+        grid.setLoading(true);
+        let params = this.formatFormatParams();
+        console.log(params);
+        const res = await global.callStoreGet('PRAXISMP','SQP05020',params);
+        if(res.lstRs){
+            let store = new Ext.data.Store({
+                data: res.lstRs.at(0),
+                pageSize:20,
+                proxy:{
+                    type:'memory',
+                    enablePaging: true
+                }
+            });
+            grid.setStore(store);
+        }
+        grid.setLoading(false);
+    },
+    loadFormatErrors: async function(grid, td, rowIndex, cellIndex, e, record, tr, eOpts){
+        const {A4481FPROC,A4481TYPEP} = record.data;
+        const gridSumm = Ext.getCmp(prototype.id + '-formatErrorGrid');
+        const gridDet = Ext.getCmp(prototype.id + '-formatErrorDetGrid');
+        gridSumm.hide();
+        gridDet.show();
+        let params= {
+            DATE_FROM:A4481FPROC,
+            ARCHIVO: A4481TYPEP.trim(),
+            CERROR: this.formatParams.CERROR,
+            STS_ERROR: this.formatParams.STS_ERROR,
+            TIPO_CORRECCION: this.formatParams.TIPO_CORRECCION
+        };
+        console.log(params);
+        let store = global.callStorePaggin('PRAXISMP','SQP05021',params);
+        gridDet.setStore(store);
+    },
+    openAuditDataEntry: function(grid, td, rowIndex, cellIndex, e, record, tr, eOpts){
+        let rec = record.data;
+        let url = CONTEXTPATH + '/ErrorControl';
         let params = {
-            TDATE: tdate,
-            DATE_FROM: Ext.Date.format(from.getValue(), 'Ymd'),
-            DATE_TO: Ext.Date.format(to.getValue(), 'Ymd'),
-            TBL_PROC: procesador,
-            CERROR: error
+            IN_CCUST: rec.A4481CCUST,
+            IN_PROCTYPE: rec.A4481TYPEP.trim(),
+            IN_TKT: rec.A4481CIA + rec.A4481FORMA + rec.A4481SERIE,
+            IN_IDREF: rec.A4481IDREF.trim()
         };
         console.log(params);
-        return params;
-    },
-    //<editor-fold defaultstate="collapsed" desc="Exceles">
-    downloadFormatSummary:function(obj){
-        const me = this;
-        let params = Object.assign({},me.formatParameters());
-        params.excel = true;
-        console.log(params);
-        global.getFile(`${me.url}/downloadErrorSummary?${new URLSearchParams(params)}`);
-    },
-    downloadLoadSummary:function(obj){
-        const me = this;
-        let params = Object.assign({},me.formatParameters());
-        params.excel = true;
-        console.log(params);
-        global.getFile(`${me.url}/downloadErrorArchSummary?${new URLSearchParams(params)}`);
-    },
-    //</editor-fold>
-
-    //<editor-fold defaultstate="collapsed" desc="Fechas Func">
-    onChangeFechaBtn: function (obj) {
-        const me = this;
-        let combo2 = null;
-        try {
-            let valor1 = Ext.Date.format(obj.getValue(), 'Ymd');
-            //valor1 = parseInt(valor1);
-            const opts = {
-                'dateTo': () => {
-                    combo2 = me.getCmp({id: '-dateFrom'});
-                    let valor2 = Ext.Date.format(combo2.getValue(), 'Ymd');
-                    //valor2 = parseInt(valor2);
-                    if (valor1 >= valor2 && valor2 !== '') {
-                        return;
-                    }
-                    combo2.setValue(obj.getValue());
-                },
-                'dateFrom': () => {
-                    combo2 = me.getCmp({id: '-dateTo'});
-                    combo2.setValue(obj.getValue());
-                }
-            };
-            opts[obj.id.split('-').at(-1)]();
-        } catch (err){
-            return;
-        }
-    },
-    validaFecha: function (value) {
-        // Validar la fecha aquí
-        // Devolver true si es válida, o un mensaje de error si no lo es
-        if (value === null || value === '') {
-            return 'Debe ingresar una fecha.';
-        }
-        try {
-            const selectedDate = Ext.Date.format(value, 'Ymd');
-            return true;
-        } catch (err) {
-            return 'Fecha no válida.';
-        }
-    },
-    //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="Utilitarios">
-    getCmp: function ( {id}){
-        return Ext.getCmp(prototype.id + id);
-    },
-    createComboStore: function ( {data, valueField, displayField}) {
-        //crea record vacio
-        let allRecord = {};
-        allRecord[displayField] = 'All';
-        allRecord[valueField] = '';
-        //limpia record de data
-        data.forEach(obj => {
-            for (let attr in obj) {
-                if (typeof obj[attr] === 'string') {
-                    obj[attr] = obj[attr].trimEnd();
-                }
+        const opts = {
+            'VN0002': () => {
+                const VN0002dataEntry = Ext.create('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry', {
+                    id: prototype.id + '-formatDataEntry',
+                    searchParams: params,
+                    searchUrl: url + '/loadVN0002Info'
+                });
+                VN0002dataEntry.show();
             }
-        });
-        //crea Store
-        let store = me.createStore({data: data});
-        //inserta record vacio
-        store.insert(0, allRecord);
-        return store;
-    },
-    createArrayStore: function ( {data}){
-        const store = new Ext.data.SimpleStore({
-            fields: ['code', 'name'],
-            data: data.map(x => {
-                return [x.code, x.name];
-            })
-        });
-        return store;
-    },
-    createStore: function ( {data}){
-        return Ext.create('Ext.data.Store', {
-            autoLoad: true,
-            data: data,
-            pageSize: 20
-        });
-    },
-    parseInt: function (number) {
-        if (number && number !== '') {
-            return parseInt(number);
+        };
+        if (opts[rec.A4481CODER]) {
+            opts[rec.A4481CODER]();
+        } else {
+            global.Msg({
+                msg: 'Function not implemented'
+            });
         }
-        ;
-        return number;
+    },
+    backFormatErrorSumm:function(){
+        const gridSumm = Ext.getCmp(prototype.id + '-formatErrorGrid');
+        const gridDet = Ext.getCmp(prototype.id + '-formatErrorDetGrid');
+        gridDet.hide();
+        gridSumm.show();
+    },
+    formatLoadParams: function(){
+        this.loadParams = Ext.getCmp(prototype.id + '-panelFilters').getForm().getValues();
+        return this.loadParams;
+    },
+    formatFormatParams: function(){
+        this.formatParams = Ext.getCmp(prototype.id + '-panelFilters2').getForm().getValues();
+        return this.formatParams;
     }
-    //</editor-fold>
+
 
 });
 
