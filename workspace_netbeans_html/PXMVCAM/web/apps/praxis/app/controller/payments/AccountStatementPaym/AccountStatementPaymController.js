@@ -87,6 +87,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementPaym.AccountStatement
         gridDet.show();
         let params = {
             IN_PRDA:record.data.PRDA,
+            IN_FCONTL:record.data.FCONTL,
             IN_PROCE:record.data.PROCTYPE,
             IN_PROSQ:record.data.PROCTYPESQ,
             IN_CUR:record.data.SCURRENCY,
