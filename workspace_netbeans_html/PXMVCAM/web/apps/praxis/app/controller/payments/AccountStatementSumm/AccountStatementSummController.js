@@ -2,7 +2,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
     extend: 'Ext.app.ViewController',
     alias: 'controller.AccountStatementSummController',
     twin: '',
+    summaryParams: null,
     detailParams: null,
+    cardcodes: [],
     init: function (view) {
     },
     afterRender: async function (obj, e) {
@@ -12,9 +14,28 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
         const filters = Ext.getCmp(prototype.id + '-contentFilter');
         filters.setLoading(true);
         const res = await global.callStoreGet('PRAXISMP', 'SQP05276', {IN_STATUS: '1'});
+        console.log(res.lstRs);
         const cmbPais = Ext.getCmp(prototype.id + '-cmbPaises');
         global.setComboStore(cmbPais, res.lstRs.at(4), 'CODE', 'NAME', '');
+        const cmbTcard = Ext.getCmp(prototype.id + '-cmbTcard');
+        global.setComboStore(cmbTcard, res.lstRs.at(7), 'CODE', 'NAME', '');
+        this.cardcodes = res.lstRs.at(3);
         filters.setLoading(false);
+    },
+    onChangeTcardCombo: function(cmb){
+        const cmbCardCode = Ext.getCmp(prototype.id + '-cmbCardCod');
+        if(cmb.value === ''){
+            cmbCardCode.setValue('');
+            cmbCardCode.getStore().removeAll();
+            cmbCardCode.hide();
+        } else {
+            let data = this.cardcodes.filter(x=>x.A4451CANT1 === cmb.value).map(x=>({
+                CODE:x.A4451KEY3.trim(),
+                NAME:x.A4451DESC1.trim()
+            }));
+            global.setComboStore(cmbCardCode,data,'CODE','NAME','');
+            cmbCardCode.show();
+        }
     },
     //<editor-fold defaultstate="collapsed" desc="Summary">
     formatSummaryParams: function () {
@@ -22,6 +43,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
     },
     searchSummary: async function () {
         let params = this.formatSummaryParams();
+        this.summaryParams = params;
         const tree = Ext.getCmp(prototype.id + '-treeSummary');
         tree.show();
         const opts = {
@@ -279,6 +301,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
         }
     },
     formatDetailParams: function (data, status) {
+        let sParams = this.summaryParams;
         let res = {
             IN_CCUST: '139',
             IN_TDATE: data.TDATE,
@@ -291,9 +314,14 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
             IN_SFUEN: data.SFUEN || '',
             IN_IDCON: (data.IDCON || '').trim() === '' ? 'NONE' : data.IDCON,
             IN_STATUS: status,
-            IN_CLIENTE: '',
-            IN_TITU: '',
-            IN_MDA: ''
+            IN_MDA: '',
+            IN_TICKET: sParams.IN_TICKET,
+            IN_IATA: sParams.IN_IATA,
+            IN_TCARD: sParams.IN_TCARD,
+            IN_CARDCOD: sParams.IN_CARDCOD,
+            IN_CLIENTE:sParams.IN_CLIENTE,
+            IN_SCARDN1 : sParams.IN_SCARDN1,
+            IN_SCARDN2 : sParams.IN_SCARDN2
         };
         this.detailParams = res;
         this.twin = 'D';
@@ -420,8 +448,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Handlers">
     onSearchClickBtn: function () {
-        let opt = Ext.getCmp(prototype.id + '-cmbReport').value;
-        switch (opt) {
+        let opt = Ext.getCmp(prototype.id + '-cmbReport');
+        this.onChangeByTicketReport(opt);
+        switch (opt.value) {
             case '1':
                 this.searchSummary();
                 break;
