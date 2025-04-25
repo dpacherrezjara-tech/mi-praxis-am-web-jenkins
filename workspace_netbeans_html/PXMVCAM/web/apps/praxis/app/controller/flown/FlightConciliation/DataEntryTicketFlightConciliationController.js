@@ -24,7 +24,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                   this.p.lista.data.items[this.p.rowIndex] && 
                   this.p.lista.data.items[this.p.rowIndex].data && 
                   this.p.lista.data.items[this.p.rowIndex].data.strDescSTCON) || '';
-        
+        console.log(this.p.actionCode,'ACTION CODE')
         switch( this.p.actionCode ){
             case 'V':
                 this.mostrarData(this.p.bean);
@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 this.limpiarData();
                 this.mostrarData(this.p.bean);
                 Ext.getCmp(prototype.id+'-btn-save').hide();
-                if (this.statusCont === 'Contabilizado.') {
+                if (this.statusCont === 'Contabilizado.' || this.statusCont === 'Contabilizado') {
                     Ext.getCmp(prototype.id+'-btn-update').hide();
                 } else {
                     me.validateProgram(Ext.getCmp(prototype.id+'-btn-update'), meEntryTick.NPROG, 'M');
@@ -87,7 +87,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 this.limpiarData();
                 this.mostrarData(this.p.bean);
                 let showOptions = (this.p.bean.strDescSTCON || '').toString().trim();
-                if (this.statusCont === 'Contabilizado.') {
+                if (this.statusCont === 'Contabilizado.'  || this.statusCont === 'Contabilizado') {
                     Ext.getCmp(prototype.id+'-btn-update').hide();
                 } else {
                     Ext.getCmp(prototype.id+'-btn-update').show();
@@ -452,7 +452,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(true);
                 // CAMBIADO A PEDIDO LUIS FERNANDO AGREDA
                 console.log(this.statusCont,'this.statusCont')
-                if (this.statusCont === 'Contabilizado.') {
+                if (this.statusCont === 'Contabilizado.'  || this.statusCont === 'Contabilizado') {
                     Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(true);
                 } else {
                     Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
