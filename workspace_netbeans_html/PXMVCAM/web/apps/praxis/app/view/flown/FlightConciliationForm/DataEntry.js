@@ -781,7 +781,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     disabled: true
                                 },
                                 
-                                
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
                                     text: 'Date Create',
@@ -831,7 +831,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     disabled: true
                                 },
                                 
-                                
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
                                     text: 'Date Update',
