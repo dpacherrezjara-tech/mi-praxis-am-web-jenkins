@@ -1133,7 +1133,7 @@ public class FlightConciliationDAO {
 
         try {
             //PX09500004
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04432_V2(?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04432_V3(?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -1314,7 +1314,7 @@ public class FlightConciliationDAO {
 
         try {
             //PX09500006
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04413(?,?,?,?,?,?,?,?,?,?"
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04413_V1(?,?,?,?,?,?,?,?,?,?"
                     + ",?,?,?,?,?,?,?,?,?,?"
                     + ",?,?,?,?,?,?,?,?,?,?"
                     + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
