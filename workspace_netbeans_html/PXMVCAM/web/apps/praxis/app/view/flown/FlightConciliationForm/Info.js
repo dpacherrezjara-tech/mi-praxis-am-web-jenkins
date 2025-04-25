@@ -883,7 +883,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background:#d5f4d5;";
                                                             if (record.data.DESCRIP !== '') {
-                                                                metaData.tdAttr = 'data-qtip="' + record.data.DESCRIP.substring(0,50).trim() + '<br>' + record.data.DESCRIP.substring(50,100).trim() + '"';
+                                                                metaData.tdAttr = 'data-qtip="' + record.data.DESCRIP.substring(0,50).trim() + '<br>' + 
+                                                                        record.data.DESCRIP.substring(50,100).trim() + '<br>' +
+                                                                        record.data.DESCRIP.substring(100,150).trim() + '<br>' +
+                                                                        record.data.DESCRIP2.substring(0,50).trim() + '<br>' +
+                                                                        record.data.DESCRIP2.substring(50,100).trim() + '<br>' +
+                                                                        record.data.DESCRIP2.substring(100,150).trim() + '"' 
+                          ;
+                                                                console.log(record.data,"Esta es mi descripcion")
                                                                 return 'Y';
                                                             } else {
                                                                 return 'N';

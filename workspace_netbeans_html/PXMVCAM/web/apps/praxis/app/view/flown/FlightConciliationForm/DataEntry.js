@@ -711,13 +711,52 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     id: prototype.id + '-txtDESCRIP',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
-                                    maxLength: 120,
+                                    maxLength: 150,
                                     inputAttrTpl: "data-qtip='Enter an observation if is needed'",
-                                    width: 650,
+                                    width: 800,
                                     hidden: false
                                 },
 
-                                {xtype: 'tbspacer', width: 30},
+                                {xtype: 'tbspacer', width: 30}
+
+
+
+
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            margin: '0 0 5 7',
+                            border: false,
+                            bodyStyle: 'background: #EFE9E5',
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtDESCRIP2',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 150,
+                                    inputAttrTpl: "data-qtip='Enter an observation if is needed'",
+                                    width: 800,
+                                    hidden: false
+                                },
+                                {xtype: 'tbspacer', width: 30}
+                            ]
+
+                        },
+                        {xtype: 'tbspacer', height: 5},
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '0 0 0 7',
+                            bodyStyle: 'background: #EFE9E5',
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+
                                 {
                                     xtype: 'label',
                                     text: 'User',
@@ -740,32 +779,8 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     width: 100,
                                     hidden: false,
                                     disabled: true
-                                }
-
-
-
-
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            margin: '0 0 5 7',
-                            border: false,
-                            bodyStyle: 'background: #EFE9E5',
-                            items: [
-                                {xtype: 'tbspacer', width: 7},
-
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-txtDESCRIP2',
-                                    fieldStyle: 'text-align:left',
-                                    enforceMaxLength: true,
-                                    maxLength: 120,
-                                    inputAttrTpl: "data-qtip='Enter an observation if is needed'",
-                                    width: 650,
-                                    hidden: false
                                 },
+                                
                                 {xtype: 'tbspacer', width: 30},
                                 {
                                     xtype: 'label',
@@ -790,11 +805,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     hidden: false,
                                     disabled: true
                                 },
-                                {xtype: 'tbspacer', height: 10},
-                            ]
 
+
+
+
+                            ]
                         },
-                        {xtype: 'tbspacer', height: 5},
 
                         {
                             xtype: 'panel',
