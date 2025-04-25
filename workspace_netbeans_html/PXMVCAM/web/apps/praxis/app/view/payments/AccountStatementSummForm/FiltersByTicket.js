@@ -268,7 +268,7 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.FiltersByTicket', 
                                     labelStyle: 'font-weight:bold;text-align:right;',
                                     labelWidth: 50,
                                     width: 150,
-                                    value:'9279',
+                                    value:'',
                                     enableKeyEvents: true,
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
@@ -348,7 +348,7 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.FiltersByTicket', 
                                     labelStyle: 'font-weight:bold;text-align:right;',
                                     labelWidth: 50,
                                     width: 150,
-                                    value:'9279',
+                                    value:'',
                                     enableKeyEvents: true,
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'

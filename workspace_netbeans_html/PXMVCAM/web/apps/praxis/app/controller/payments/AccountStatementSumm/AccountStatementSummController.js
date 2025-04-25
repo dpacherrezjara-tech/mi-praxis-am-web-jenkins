@@ -159,7 +159,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
             const grouped = {};
             rawData.forEach(item => {
 
-                let key = `${item.A4700CLIEN.trim()} - ${item.A4700TITU.trim()} - ${item.A4700MDA.trim()}`;
+                let key = `${item.A4700CLIEN.trim()} - ${item.A4700MDA.trim()}`;
                 if (!grouped[key]) {
                     grouped[key] = [];
                 }
@@ -176,7 +176,6 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
                     TDATE: params.IN_TDATE,
                     DATE: item.FECHA,
                     CLIEN: item.A4700CLIEN,
-                    TITU: item.A4700TITU,
                     COLOR: 'D'
                 });
             });
@@ -195,7 +194,6 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
                     DATEF: params.IN_DATEF,
                     DATET: params.IN_DATET,
                     CLIEN: grouped[key].at(0).CLIEN,
-                    TITU: grouped[key].at(0).TITU,
                     MDA: grouped[key].at(0).MDA,
                     children: grouped[key],
                     COLOR: 'H'
@@ -314,8 +312,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountStatementSumm.AccountStatement
             IN_SFUEN: '',
             IN_IDCON: '',
             IN_STATUS: status,
-            IN_CLIENTE: data.CLIEN,
-            IN_TITU: data.TITU,
+            IN_CLIENTE: data.CLIEN.trim() === '' ? 'NONE': data.CLIEN,
             IN_MDA: data.MDA
         };
         this.detailParams = res;
