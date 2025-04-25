@@ -711,36 +711,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     id: prototype.id + '-txtDESCRIP',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
-                                    maxLength: 120,
+                                    maxLength: 150,
                                     inputAttrTpl: "data-qtip='Enter an observation if is needed'",
-                                    width: 650,
+                                    width: 800,
                                     hidden: false
                                 },
 
-                                {xtype: 'tbspacer', width: 30},
-                                {
-                                    xtype: 'label',
-                                    text: 'User',
-                                    margin: '3 0 0 0',
-                                    style: 'font-weight:bold;color:#000;',
-                                    width: 35,
-                                    autoEl: {
-                                        tag: 'label',
-                                        'data-qtip': 'User'
-                                    }
-                                },
-
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-txtDESCRIP-user',
-                                    fieldStyle: 'text-align:left',
-                                    enforceMaxLength: true,
-                                    maxLength: 100,
-                                    inputAttrTpl: "data-qtip='Enter an observation if is needed'",
-                                    width: 100,
-                                    hidden: false,
-                                    disabled: true
-                                }
+                                {xtype: 'tbspacer', width: 30}
 
 
 
@@ -761,27 +738,40 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     id: prototype.id + '-txtDESCRIP2',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
-                                    maxLength: 120,
+                                    maxLength: 150,
                                     inputAttrTpl: "data-qtip='Enter an observation if is needed'",
-                                    width: 650,
+                                    width: 800,
                                     hidden: false
                                 },
-                                {xtype: 'tbspacer', width: 30},
+                                {xtype: 'tbspacer', width: 30}
+                            ]
+
+                        },
+                        {xtype: 'tbspacer', height: 5},
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '0 0 0 7',
+                            bodyStyle: 'background: #EFE9E5',
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+
                                 {
                                     xtype: 'label',
-                                    text: 'Date',
-                                    style: 'font-weight:bold;color:#000;',
+                                    text: 'User Create',
                                     margin: '3 0 0 0',
-                                    width: 35,
+                                    style: 'font-weight:bold;color:#000;',
+                                    width: 80,
                                     autoEl: {
                                         tag: 'label',
-                                        'data-qtip': 'Date'
+                                        'data-qtip': 'User'
                                     }
                                 },
 
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtDESCRIP-DATE',
+                                    id: prototype.id + '-txtDESCRIP-userCreate',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 100,
@@ -790,11 +780,87 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     hidden: false,
                                     disabled: true
                                 },
-                                {xtype: 'tbspacer', height: 10},
-                            ]
+                                
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: 'Date Create',
+                                    style: 'font-weight:bold;color:#000;',
+                                    margin: '3 0 0 0',
+                                    width: 80,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Date'
+                                    }
+                                },
 
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtDescrip-DateCreate',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 100,
+                                    inputAttrTpl: "data-qtip='Enter an observation if is needed'",
+                                    width: 100,
+                                    hidden: false,
+                                    disabled: true
+                                },
+                                {xtype: 'tbspacer', width: 7},
+
+                                {
+                                    xtype: 'label',
+                                    text: 'User Update',
+                                    margin: '3 0 0 0',
+                                    style: 'font-weight:bold;color:#000;',
+                                    width: 100,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'User'
+                                    }
+                                },
+
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtDescrip-userActualization',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 100,
+                                    inputAttrTpl: "data-qtip='Enter an observation if is needed'",
+                                    width: 100,
+                                    hidden: false,
+                                    disabled: true
+                                },
+                                
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: 'Date Update',
+                                    style: 'font-weight:bold;color:#000;',
+                                    margin: '3 0 0 0',
+                                    width: 100,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Date Act'
+                                    }
+                                },
+
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtDescrip-DateActualization',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 100,
+                                    inputAttrTpl: "data-qtip='Enter an observation if is needed'",
+                                    width: 100,
+                                    hidden: false,
+                                    disabled: true
+                                },
+
+
+
+
+                            ]
                         },
-                        {xtype: 'tbspacer', height: 5},
 
                         {
                             xtype: 'panel',
