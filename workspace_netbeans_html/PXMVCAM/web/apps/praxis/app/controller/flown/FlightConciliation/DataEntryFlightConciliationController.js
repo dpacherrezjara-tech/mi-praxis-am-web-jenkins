@@ -216,8 +216,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         }
         Ext.getCmp(prototype.id+"-txtDESCRIP").setValue(bean.strDescripcion);
         Ext.getCmp(prototype.id+"-txtDESCRIP2").setValue(bean.strDescripcion2);
-        Ext.getCmp(prototype.id+"-txtDESCRIP-user").setValue(bean.USRDESCRIP);
-        Ext.getCmp(prototype.id+"-txtDESCRIP-DATE").setValue(bean.FECRDESCRIP);
+        Ext.getCmp(prototype.id+"-txtDESCRIP-userCreate").setValue(bean.USCRDESCRIP);
+        Ext.getCmp(prototype.id+"-txtDescrip-DateCreate").setValue(bean.FECRDESCRIP);
+        Ext.getCmp(prototype.id+"-txtDescrip-userActualization").setValue(bean.USACDESCRIP);
+        Ext.getCmp(prototype.id+"-txtDescrip-DateActualization").setValue(bean.FEACDESCRIP);
         Ext.getCmp(prototype.id+"-txtFSENDVC").setValue(bean.FSENDVC);
         Ext.getCmp(prototype.id+"-txtQCPNVC").setValue(bean.QCPNVC);
         Ext.getCmp(prototype.id+"-txtQCPNMA").setValue(bean.QCPNMA);
@@ -277,7 +279,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
     btnUpdate_clickHandler: function () {
         this.FUNCION = 'UPDATE';
         var beanOption = {};
-        this.llenarData(beanOption, "U");
+            this.llenarData(beanOption, "U");
         var msjResult = this.validacionUpdate(beanOption);
         
         if(beanOption.STVAL === '3' && Ext.getCmp(prototype.id+'-txtQCPNOD').getValue().replace(',','') !==  Ext.getCmp(prototype.id+'-txtQCPNTOT').getValue().replace(',','') 
