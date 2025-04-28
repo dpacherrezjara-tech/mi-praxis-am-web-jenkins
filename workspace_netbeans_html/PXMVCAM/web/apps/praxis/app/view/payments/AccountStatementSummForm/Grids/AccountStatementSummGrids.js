@@ -359,7 +359,7 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.Grids.AccountState
         {
             xtype: 'grid',
             border: false,
-            width: 1100,
+            width: 900,
             minHeight: 250,
             hidden: true,
             id: prototype.id + '-ageSummary',
@@ -377,8 +377,7 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.Grids.AccountState
                 },
                 items: [
                     {text: 'Fecha<br>Transaccion', dataIndex: 'A4700FECVT', width: 100},
-                    {text: 'Cliente', dataIndex: 'A4700CLIEN', width: 100},
-                    {text: 'Titulo Contable', dataIndex: 'A4700TITU', flex: 1},
+                    {text: 'Cliente', dataIndex: 'A4700CLIEN', flex: 1},
                     {text: 'Monto', dataIndex: 'A4700AMOUN', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;";
