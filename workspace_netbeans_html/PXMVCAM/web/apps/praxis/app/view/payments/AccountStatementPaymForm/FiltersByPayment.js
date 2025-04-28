@@ -44,6 +44,26 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementPaymForm.FiltersByPayment',
                         {
                             items: [
                                 {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Date Type',
+                                    name: 'IN_TDATE',
+                                    id: prototype.id + '-cmbDate',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['PRDA', 'Processing Date'],
+                                            ['FCONTL', 'Accounting Date']
+                                        ]
+                                    }),
+                                    labelWidth: 80,
+                                    width: 210,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: 'PRDA'
+                                },
+                                {
                                     xtype: 'datefield',
                                     fieldLabel: 'From',
                                     name: 'IN_PRDAF',
