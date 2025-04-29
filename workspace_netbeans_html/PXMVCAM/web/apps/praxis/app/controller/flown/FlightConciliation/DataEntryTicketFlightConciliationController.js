@@ -75,12 +75,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 this.limpiarData();
                 this.mostrarData(this.p.bean);
                 Ext.getCmp(prototype.id+'-btn-save').hide();
+                console.log(this.statusCont,'this.statusCont')
                 if (this.statusCont === 'Contabilizado.' || this.statusCont === 'Contabilizado') {
                     Ext.getCmp(prototype.id+'-btn-update').hide();
                 } else {
-                    me.validateProgram(Ext.getCmp(prototype.id+'-btn-update'), meEntryTick.NPROG, 'M');
+                    Ext.getCmp(prototype.id+'-btn-update').show();
+//                    me.validateProgram(Ext.getCmp(prototype.id+'-btn-update'), meEntryTick.NPROG, 'M');
                 }
-                me.validateProgram(Ext.getCmp(prototype.id+'-btn-delete'), meEntryTick.NPROG, 'E');
+//                me.validateProgram(Ext.getCmp(prototype.id+'-btn-delete'), meEntryTick.NPROG, 'E');
                 this.cambiarEstadoDatosClave('Deshabilitar');
                 break;
             case 'S':
@@ -426,6 +428,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         if(bean.CDOC === '' && bean.TDOC === '' && bean.PSVVTA === ''
 		&& bean.AGTIA === '' && bean.FVTA === '' && bean.TVTA === '' 
 		&& bean.TPAX === ''){
+            console.log('HERE ONE')
             Ext.getCmp(prototype.id+'-txtCDOC').setReadOnly(false);
             Ext.getCmp(prototype.id+'-cmbTDOC').enable(true);
             Ext.getCmp(prototype.id+'-txtPSVVTA').setReadOnly(false);
@@ -439,6 +442,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(false);
             }
         } else {
+            console.log('HERE TWO')
             Ext.getCmp(prototype.id+'-txtCDOC').setReadOnly(true);
             Ext.getCmp(prototype.id+'-cmbTDOC').disable(true);
             Ext.getCmp(prototype.id+'-txtPSVVTA').setReadOnly(true);
