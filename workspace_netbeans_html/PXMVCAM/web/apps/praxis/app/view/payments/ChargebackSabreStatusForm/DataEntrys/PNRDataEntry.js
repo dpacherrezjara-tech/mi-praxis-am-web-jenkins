@@ -103,8 +103,8 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.DataEntrys.PNRDat
                             sortable: true
                         },
                         items: [
-                            {text: 'Pax Name', dataIndex: 'a720PAX', flex: 1},
-                            {text: 'Ticket', dataIndex: 'ticket', width: 150,
+                            {text: 'Pax Name', dataIndex: 'A4496PAX', flex: 1},
+                            {text: 'Ticket', dataIndex: 'TICKET', width: 150,
                                 listeners:{
                                     click:'onViewTicket'
                                 },
@@ -112,17 +112,13 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.DataEntrys.PNRDat
                                     metaData.style = "background-color:#FCF6DC;text-align:center;text-decoration:underline;cursor:pointer;color:#057ECB";
                                     return value;
                                 }},
-                            {text: 'PNR', dataIndex: 'a720PNR', width: 80},
-                            {text: 'Processing<br>Date', dataIndex: 'a720RPDA', width: 80},
-                            {text: 'Sale<br>Date', dataIndex: 'a720FECVTA', width: 80},
-                            {text: 'Fare<br>Currency', dataIndex: 'a720MONEDA', width: 50},
-                            {text: 'Fare<br>Amount', dataIndex: 'a720TARIFA', width: 100,
-                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                    metaData.style = "text-align:right;";
-                                    return Ext.util.Format.number(value, '0,000.00');
-                                }},
-                            {text: 'Eqv.<br>Currency', dataIndex: 'a720MDAPAG', width: 50},
-                            {text: 'Eqv.<br>Amount', dataIndex: 'a720TRFPAG', width: 100,
+                            {text: 'Source', dataIndex: 'A4496FUENT', width: 80},
+                            {text: 'Sub-Source', dataIndex: 'A4496SFUEN', width: 80},
+                            {text: 'EPR', dataIndex: 'A4496CODAG', width: 80},
+                            {text: 'PNR', dataIndex: 'A4496PNR', width: 80},
+                            {text: 'Sale<br>Date', dataIndex: 'A4496FECVT', width: 80},
+                            {text: 'Fare<br>Currency', dataIndex: 'A4496MDA', width: 50},
+                            {text: 'Fare<br>Amount', dataIndex: 'A4496TARIF', width: 100,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:right;";
                                     return Ext.util.Format.number(value, '0,000.00');
@@ -138,11 +134,11 @@ Ext.define('Ext.Praxis.view.payments.ChargebackSabreStatusForm.DataEntrys.PNRDat
                                     },
                                 },
                                 columns: [
-                                    {text: 'Fop<br>Type', dataIndex: 'a1531CFOP', width: 80},
-                                    {text: 'Card<br>Type', dataIndex: 'a1531TTARJ', width: 50},
-                                    {text: 'C. Card<br>Number', dataIndex: 'a1531NREF', width: 150, autoSizeColumn: true},
-                                    {text: 'Fop<br>Currency', dataIndex: 'a1531MFOP', width: 50},
-                                    {text: 'Fop<br>Amount', dataIndex: 'a1531VFOP', width: 100,
+                                    {text: 'Fop<br>Type', dataIndex: 'A4501CFOP', width: 80},
+                                    {text: 'Card<br>Type', dataIndex: 'A4501TTARJ', width: 50},
+                                    {text: 'C. Card<br>Number', dataIndex: 'A4501NREF', width: 150, autoSizeColumn: true},
+                                    {text: 'Fop<br>Currency', dataIndex: 'A4501MFOP', width: 50},
+                                    {text: 'Fop<br>Amount', dataIndex: 'A4501VFOP', width: 100,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#c0f0af;";
                                             return Ext.util.Format.number(value, '0,000.00');

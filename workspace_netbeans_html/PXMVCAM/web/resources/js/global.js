@@ -1649,7 +1649,7 @@ var LarSyrExt = function () {
             }
         }
     };
-    this.countBy = function(array, campo){
+    this.countBy = function (array, campo) {
         return array.reduce((acumulador, objeto) => {
             // Obtener el valor del campo
             const key = objeto[campo];
@@ -1665,18 +1665,18 @@ var LarSyrExt = function () {
             return acumulador;
         }, {});
     };
-    this.sumBy = function(array, campo){
+    this.sumBy = function (array, campo) {
         return array.reduce((acumulador, objeto) => {
             return acumulador + (objeto[campo] || 0); // Evitar valores indefinidos
         }, 0);
     };
-    this.sumByFilter = function(array, campo,campoFiltrado,valor){
+    this.sumByFilter = function (array, campo, campoFiltrado, valor) {
         return array.reduce((acumulador, objeto) => {
-            return (objeto[campoFiltrado] || '') === valor ?  
-                acumulador + (objeto[campo] || 0): acumulador; // Evitar valores indefinidos
+            return (objeto[campoFiltrado] || '') === valor ?
+                    acumulador + (objeto[campo] || 0) : acumulador; // Evitar valores indefinidos
         }, 0);
     };
-    this.getDistict = function(lst, key){
+    this.getDistict = function (lst, key) {
         let valoresVistos = {};
         // Filtra el array para eliminar duplicados según la columna "nombre"
         let resultado = lst.filter(function (item) {
@@ -1690,7 +1690,7 @@ var LarSyrExt = function () {
         });
         return resultado;
     };
-    this.setComboStore = function(cmp, data, valueField, displayField, value){
+    this.setComboStore = function (cmp, data, valueField, displayField, value) {
         //crea record vacio
         let allRecord = {};
         allRecord[displayField] = 'All';
@@ -1705,7 +1705,7 @@ var LarSyrExt = function () {
         });
         //crea Store
         let store = new Ext.data.Store({
-            autoLoad:true,
+            autoLoad: true,
             data: data
         });
         //inserta record vacio
@@ -1718,7 +1718,7 @@ var LarSyrExt = function () {
         cmp.setValue(value);
         cmp.resumeEvents();
     };
-    this.arrayAddUnique = function(newArray, array, keys){
+    this.arrayAddUnique = function (newArray, array, keys) {
         let prev = array.length;
         let added = newArray.length;
         let newObjs = newArray.filter(obj => !array.some(x =>
@@ -1728,12 +1728,12 @@ var LarSyrExt = function () {
 
         let post = array.length;
         return {
-            original : prev,
+            original: prev,
             added: added,
-            inserted : (post - prev),
-            duplicated : added - (post - prev),
-            modified : post,
-            data : array
+            inserted: (post - prev),
+            duplicated: added - (post - prev),
+            modified: post,
+            data: array
         };
     };
     this.arrayRemove = function (removeArray, array, keys) {
@@ -1752,25 +1752,25 @@ var LarSyrExt = function () {
             data: array
         };
     };
-    this.filterArrayByObj = function(array,obj,equals){
-        let lst = array.filter(x =>{
-            return Object.keys(obj).every(key=>{
+    this.filterArrayByObj = function (array, obj, equals) {
+        let lst = array.filter(x => {
+            return Object.keys(obj).every(key => {
                 return obj[key] === '' || (
                         //variable equals
                         equals ? obj[key] === x[key].trim() :
-                            obj[key] !== x[key].trim()
+                        obj[key] !== x[key].trim()
                         );
             });
         });
         return lst;
     };
     this.PX_UTILS_URL = 'js/praxis.ui-1.0/praxis.utils-1.0.js';
-    this.downloadFile = function(objAxios,url,params,typeFile = 'zip'){
+    this.downloadFile = function (objAxios, url, params, typeFile = 'zip') {
         new AWN().async(
-            objAxios.post(url,params? params : null, 
-        {
-            responseType: 'blob'  // Configuración para recibir un Blob
-        }).then(response => {
+                objAxios.post(url, params ? params : null,
+                        {
+                            responseType: 'blob'  // Configuración para recibir un Blob
+                        }).then(response => {
             // Procesar la descarga del archivo
             const contentDisposition = response.headers['content-disposition'];
             let nombreArchivo = `file.${typeFile}`;
@@ -1791,15 +1791,208 @@ var LarSyrExt = function () {
             a.remove();
             window.URL.revokeObjectURL(url);
         }),
-        'Sucessfully Downloaded',
-        'Error on Download');
+                'Sucessfully Downloaded',
+                'Error on Download');
     };
-    this.cleanPXobj = function(obj){
+    this.downloadFile2 = function (objAxios, url, params, typeFile = 'zip') {
+        new AWN().async(
+                objAxios.get(url,
+                        {
+                            params: params,
+                            responseType: 'blob'  // Configuración para recibir un Blob
+                        }).then(response => {
+            // Procesar la descarga del archivo
+            const contentDisposition = response.headers['content-disposition'];
+            let nombreArchivo = `file.${typeFile}`;
+
+            if (contentDisposition) {
+                const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                const matches = filenameRegex.exec(contentDisposition);
+                if (matches !== null && matches[1]) {
+                    nombreArchivo = matches[1].replace(/['"]/g, '');
+                }
+            }
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = nombreArchivo;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+        }),
+                'Sucessfully Downloaded',
+                'Error on Download');
+    };
+    this.cleanPXobj = function (obj) {
         for (let key in obj) {
             if (typeof obj[key] === 'string') {
                 obj[key] = obj[key].trimEnd();
             }
         }
+    };
+    this.maintenanceObj = function (jsonData) {
+        const resultado = {};
+        for (const clave in jsonData) {
+            if (jsonData.hasOwnProperty(clave)) {
+                // Convierte la clave a mayúsculas y añade "IN" como prefijo
+                const nuevaClave = `IN_${clave.toUpperCase()}`;
+
+                // Asigna el valor original a la nueva clave
+                resultado[nuevaClave] = jsonData[clave];
+            }
+        }
+        return resultado;
+    };
+    this.callStoreGet = async function (library, store, params) {
+        let response = {};
+        let request = axios.create({
+            baseURL: CONTEXTPATH + '/Generic',
+            timeout: 0
+        });
+        let parameters = {
+            library: library,
+            procedure: store
+        };
+        if (params) {
+            parameters.params = params;
+        } else {
+            parameters.params = {};
+        }
+        try {
+            const res = await request.post('CallStoreGet', parameters);
+            const {status, data} = res;
+            if (status === 200) {
+                response = data;
+            }
+        } catch (e) {
+            console.error('Error on load Grid', e);
+        }
+        return response;
+    };
+    this.callStorePost = async function (library, store, params) {
+        let request = axios.create({
+            baseURL: CONTEXTPATH + '/Generic',
+            timeout: 0
+        });
+        let parameters = {
+            library: library,
+            procedure: store,
+            params: params
+        };
+        try {
+            const res = await request.post('CallStorePost', parameters);
+            return res;
+        } catch (e) {
+            console.error('Error on load Grid', e);
+            return null;
+        }
+    };
+    this.callStorePostAsync = async function (library, store, params) {
+        let request = axios.create({
+            baseURL: CONTEXTPATH + '/Generic',
+            timeout: 0
+        });
+        let parameters = {
+            library: library,
+            procedure: store,
+            params: params
+        };
+        try {
+            const res = await request.post('CallStorePostAsync', parameters);
+            return res.status;
+        } catch (e) {
+            console.error('Error on load Grid', e);
+            return 500;
+        }
+    };
+    this.callStorePaggin = function (library, procedure, params) {
+        let store = new Ext.data.Store({
+            loadMask: true,
+            pageSize: 20,
+            proxy: {
+                type: 'ajax',
+                enablePaging: true,
+                url: `${CONTEXTPATH}/Generic/CallStorePaggin/${library}/${procedure}`,
+                extraParams: params,
+                timeout: 600000,
+                reader: {
+                    type: 'json',
+                    rootProperty: 'response',
+                    totalProperty: 'total'
+                }
+            },
+            autoLoad: true,
+            listeners: {
+                load: function (store, records, successful, operation) {
+                    if (!successful) {
+                        global.Msg({msg: 'Data not Found'});
+                    } else {
+                        //console.log(records);
+                        if (records.length === 0) {
+                            global.Msg({msg: 'Data not Found'});
+                        }
+                    }
+                }
+            }
+        });
+        return store;
+    };
+    this.callStorePagginExcel = async function (library, procedure, params) {
+        let request = axios.create({
+            baseURL: CONTEXTPATH + '/Generic',
+            timeout: 0
+        });
+        params.excel = true;
+        params.start = 0;
+        params.limit = -1;
+        try {
+            const res = await request.get(`CallStorePaggin/${library}/${procedure}`, {
+                params: params
+            });
+            const {status, data} = res;
+            if (status === 200) {
+                return data.response;
+            }
+        } catch (e) {
+            console.error('Error on load', e);
+            return null;
+        }
+    };
+    this.writeExcelFromJson = async function (data, name) {
+        const ws = XLSX.utils.json_to_sheet(data);
+
+        const headers = Object.keys(data[0]);
+
+        //Define Headers
+        const headerStyle = {
+            font: {bold: true, color: {rgb: "FFFFFF"}}, // Texto blanco y negrita
+            fill: {fgColor: {rgb: "020c41"}}, // Fondo rojo
+            alignment: {horizontal: "center", vertical: "center"}, // Centrado
+            border: {
+                top: {style: "thin", color: {rgb: "FFFFFF"}},
+                bottom: {style: "thin", color: {rgb: "FFFFFF"}},
+                left: {style: "thin", color: {rgb: "FFFFFF"}},
+                right: {style: "thin", color: {rgb: "FFFFFF"}}
+            }
+        };
+
+        // Aplicar estilos solo a los headers
+        headers.forEach((_, colIndex) => {
+            const cellAddress = XLSX.utils.encode_cell({r: 0, c: colIndex});
+            if (!ws[cellAddress]) {
+                ws[cellAddress] = {v: headers[colIndex]}; // Asegurar que la celda existe
+            }
+            ws[cellAddress].s = headerStyle;
+        });
+
+        // Crear libro de Excel
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "result");
+
+        let uuid = crypto.randomUUID().replace(/-/g, '').substring(0, 6);
+        // Descargar archivo
+        XLSX.writeFile(wb, name + "_" + uuid + ".xlsx");
     };
 };
 

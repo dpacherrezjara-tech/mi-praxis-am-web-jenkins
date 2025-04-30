@@ -158,16 +158,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 //    },
     showStandBy: function (show) {
         const standByBpo = Ext.getCmp(prototype.idDE + '-bpoComments');
+        const txtBpo = Ext.getCmp(prototype.idDE + '-bpocoment');
         const addStandBy = Ext.getCmp(prototype.idDE + '-addStandBy');
         const revStandBy = Ext.getCmp(prototype.idDE + '-revStandBy');
         const hideStandBy = Ext.getCmp(prototype.idDE + '-hideStandBy');
-        //debugger;
+        const adju = Ext.getCmp(prototype.idDE + '-addStandByAdju');
+        
         if (show) {
+            if((this.bean.cerror==='18' || this.bean.cerror==='19') && this.bean.stval === '0'){
+                txtBpo.setReadOnly(true);
+                adju.setValue(true); 
+                adju.setReadOnly(true);
+            }else{
+                txtBpo.setReadOnly(false);
+                adju.setValue(false); 
+                adju.setReadOnly(false);
+            }
             addStandBy.show();
             revStandBy.show();
             hideStandBy.hide();
             standByBpo.show();
         } else {
+            adju.setReadOnly(false);
             addStandBy.hide();
             revStandBy.hide();
             hideStandBy.show();
@@ -266,11 +278,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     },
     onChangeStandBy: async function () {
         const me = this;
-        me.view.mask('Loading...');
         const bpoComent = Ext.getCmp(prototype.idDE + '-bpocoment');
         //console.log(mainForm.getValues());
         let params = me.formatStandByParams(me.bean, bpoComent.getValue());
         console.log(params);
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to set Stand By?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            me.saveStandBy(params);
+                        }
+                    }
+                });
+    },
+    saveStandBy: async function(params){
+        const me = this;
+        me.view.mask('Loading...');
         const res = await fetch(`${me.url}/errorTransactionBPOsetStandBy`, {
             method: 'POST',
             headers: {
@@ -293,6 +322,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             me.afterRender();
         } else {
             global.Msg({msg: 'Error.'});
+        }
+    },
+    onChangeStandyByAdju:function(btn){
+        const txtBpo = Ext.getCmp(prototype.idDE + '-bpocoment');
+        txtBpo.setValue('');
+        if(btn.value){
+            txtBpo.setReadOnly(true);
+        }else{
+            txtBpo.setReadOnly(false);
         }
     },
     onReverseStandBy: function () {
@@ -926,6 +964,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     formatStandByParams: function (obj, comment) {
         const me = this;
         const gridBPO = Ext.getCmp(prototype.idDE + '-gridBPO').getStore();
+        const adju = Ext.getCmp(prototype.idDE + '-addStandByAdju').getValue();
         const details = [...gridBPO.data.items.map(x => me.requestObjectPX(x.data))]
                 .map(x => ({
                         CCUST: 139,
@@ -942,6 +981,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             IN_PROCTYPE: obj.proctype,
             IN_PROCTYPESQ: obj.proctypesq,
             IN_OBSERV: comment,
+            IN_ADJU: adju?'Y':'',
             detail: details
         };
         return params;

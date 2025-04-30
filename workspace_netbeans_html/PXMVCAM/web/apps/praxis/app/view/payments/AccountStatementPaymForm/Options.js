@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Options', {
+Ext.define('Ext.Praxis.view.payments.AccountStatementPaymForm.Options', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-options',
     border: false,
@@ -18,20 +18,28 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Options', {
                             xtype: 'button',
                             id: prototype.id + '-btnSearch',
                             iconCls: 'prx-icon-search',
-                            tooltip: 'Search'
+                            tooltip: 'Search',
+                            listeners:{
+                                click:'onSearchClickBtn'
+                            }
                         },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnFilter',
                             iconCls: 'prx-icon-filter',
-                            tooltip: 'Display filter'
-
+                            tooltip: 'Display filter',
+                            listeners: {
+                                click: 'onClickFilterBtn'
+                            }
                         },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnClear',
                             iconCls: 'prx-icon-clear',
-                            tooltip: 'Clear Options'
+                            tooltip: 'Clear Options',
+                            listeners: {
+                                click: 'onClickClearBtn'
+                            }
                         }
                     ]
                 }
