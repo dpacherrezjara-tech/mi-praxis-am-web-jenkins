@@ -139,8 +139,12 @@ public class ElectronicMiscellaneousDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX135S02A1817_1(?,?,?,?,?,?,?,?,?)}";
-
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX135S02A1817_2(?,?,?,?,?,?,?,?,?)}";
+        System.out.println("Ejecutando ----> " + SQLCLL01);
+        System.out.println(filter.page.PAGNUM);
+        System.out.println(filter.page.PAGROW);
+        System.out.println(filter.page.TOTPAG);
+        System.out.println(filter.page.TOTROW);  
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -167,8 +171,6 @@ public class ElectronicMiscellaneousDAO {
             filter.page.PAGROW = cstmt.getInt(7);
             filter.page.TOTPAG = cstmt.getInt(8);
             filter.page.TOTROW = cstmt.getInt(9);
-
-            cstmt.execute();
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
