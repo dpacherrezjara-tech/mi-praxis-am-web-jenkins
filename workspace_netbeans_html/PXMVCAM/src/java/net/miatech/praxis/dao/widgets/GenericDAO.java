@@ -8,11 +8,13 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.miatech.praxis.logic.widgets.GenericLogic;
-import net.miatech.praxis.payment.dto.CallStoreFilter;
-import net.miatech.praxis.payment.dto.CallStorePaggin;
+import net.miatech.praxis.generics.CallStoreFilter;
+import net.miatech.praxis.generics.CallStorePaggin;
+import net.miatech.praxis.generics.RecordsFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -108,4 +110,16 @@ public class GenericDAO implements GenericLogic {
         return res;
     }
 
+    @Override
+    public void loadRecordsOnTable(String LIBRARY, String TABLE, List<RecordsFilter> lst) throws Exception {
+        final String sql = "INSERT INTO "+LIBRARY+"."+TABLE+" (CUUID,FUUID,TRAMA) "
+                + "VALUES"
+                + "(:CUUID,:FUUID,:TRAMA)";
+        BeanPropertySqlParameterSource[] insertParams = new BeanPropertySqlParameterSource[lst.size()];
+        for (int i = 0; i < lst.size(); i++) {
+            insertParams[i] = new BeanPropertySqlParameterSource(lst.get(i));
+        }
+        jdbcUtils.executeNamedParam(sql, insertParams);
+    }
+    
 }
