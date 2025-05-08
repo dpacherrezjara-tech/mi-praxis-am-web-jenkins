@@ -1,4 +1,4 @@
-package net.miatech.praxis.payment.dto;
+package net.miatech.praxis.generics;
 
 import java.util.List;
 import java.util.Map;
