@@ -209,10 +209,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
                 notifier.success('Updated Successfully');
                 me.view.close();
             }else{
-                notifier.alert('Error on Update');
+                throw new Error('Update Failed');
             }
         } catch (e) {
             console.error(e);
+            notifier.alert('Update Failed');
         }
     },
     maintenanceParams: function (option) {
