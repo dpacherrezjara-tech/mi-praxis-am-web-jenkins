@@ -35,6 +35,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
 
                     defaults: {
                         xtype: 'panel',
+                        margin: '2 2 2 2',
                         border: false,
                         width: '100%',
                         layout: 'hbox',
