@@ -1,5 +1,4 @@
 prototype.idDE2 = prototype.id + '-TaxesExceptionsMassiveLoad';
-
 Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExceptionsMassiveLoad', {
     extend: 'Ext.window.Window',
     alias: 'widget.TaxesExceptionsMassiveLoad',
@@ -35,10 +34,15 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
             }
         },
         {
+            xtype: 'label',
+            width:'100%',
+            html: '<b style="color:#c82d2d;font-size:9px;text-align:right;display:block">Required Layout (*): TICKET-SALEDATE-TAXCODE-COMMENT</b>'
+        },
+        {
             xtype: 'grid',
             margin: '5 0 5 0',
             minHeight: 100,
-            hidden:true,
+            hidden: true,
             viewConfig: {
                 stripeRows: false,
                 enableTextSelection: true,
