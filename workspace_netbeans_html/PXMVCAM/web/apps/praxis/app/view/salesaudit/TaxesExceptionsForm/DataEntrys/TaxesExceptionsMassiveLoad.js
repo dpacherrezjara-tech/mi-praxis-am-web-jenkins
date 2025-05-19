@@ -9,7 +9,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
     controller: 'TaxesExceptionsMassiveLoadController',
     title: 'Tax Exception Massive - Form',
     header: true,
-    width: 400,
+    width: 600,
     resizable: false,
     layout: 'vbox',
     modal: true,
@@ -18,18 +18,48 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
     defaults: {
         border: false
     },
-    bodyPadding:10,
+    bodyPadding: 10,
     items: [
         {
             xtype: 'filefield',
-            id:prototype.idDE2 + '-massiveExcelFile',
+            id: prototype.idDE2 + '-massiveExcelFile',
             name: 'excelFile',
             fieldLabel: 'Excel File',
             labelWidth: 100,
             msgTarget: 'side',
             allowBlank: false,
             width: '100%',
-            buttonText: 'Select File'
+            buttonText: 'Select File',
+            listeners: {
+                change: 'onSelectField'
+            }
+        },
+        {
+            xtype: 'grid',
+            margin: '5 0 5 0',
+            minHeight: 100,
+            hidden:true,
+            viewConfig: {
+                stripeRows: false,
+                enableTextSelection: true,
+                markDirty: true
+            },
+            border: true,
+            columnLines: true,
+            id: prototype.idDE2 + '-gridErrors',
+            width: '100%',
+            maxHeight: 300,
+            columns: {
+                defaults: {
+                    align: 'center',
+                    menuDisabled: true,
+                    sortable: true
+                },
+                items: [
+                    {text: 'Ticket', dataIndex: 'TICKET', width: 100},
+                    {text: 'Error Comment', dataIndex: 'COMENTARIO', flex: 1}
+                ]
+            }
         }
     ],
     dockedItems: [

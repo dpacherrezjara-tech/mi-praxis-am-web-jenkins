@@ -10,7 +10,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
     loadForm: async function(){
         const me = this;
         const panelTktFilter = Ext.getCmp(prototype.idDE + 'panelTicketFilter');
-        const gridTickets =  Ext.getCmp(prototype.idDE + '-gridTickets');
+        const gridTickets =  Ext.getCmp(prototype.idDE + '-tabTickets');
+        const tabPending = Ext.getCmp(prototype.idDE + '-tabPending');
+        const tabLoaded = Ext.getCmp(prototype.idDE + '-tabLoaded');
         const taxFilters =  Ext.getCmp(prototype.idDE + '-taxFilters');
         const gridTaxes =  Ext.getCmp(prototype.idDE + '-gridTaxes');
         const btnUpdate = Ext.getCmp(prototype.idDE + '-btn-update');
@@ -19,6 +21,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
         const btnDeleteTkt = Ext.getCmp(prototype.idDE + '-deleteTkt');
         const controlData = Ext.getCmp(prototype.idDE + '-fsControlData');
         if(me.view.option==='U'){
+            tabPending.setTitle('Loaded Tickets');
+            tabLoaded.tab.hide();
             panelTktFilter.hide();
             gridTickets.show();
             taxFilters.show();
@@ -83,7 +87,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
     },
     onAddTicket: async function () {
         const form = Ext.getCmp(prototype.idDE + '-ticketFilters').getForm();
-        const grid = Ext.getCmp(prototype.idDE + '-gridTickets');
+        const tabTickets = Ext.getCmp(prototype.idDE + '-tabTickets');
+        const gridPending = Ext.getCmp(prototype.idDE + '-gridTickets');
+        const gridLoaded = Ext.getCmp(prototype.idDE + '-gridTicketsLoaded');
+        let notifier = new AWN();
         let params = form.getValues();
 
         if (params.IN_TICKET === '' && params.IN_SPNR === '') {
@@ -91,30 +98,45 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
             return;
         }
 
-        grid.show();
-        grid.setLoading(true);
+        tabTickets.show();
+        tabTickets.setLoading(true);
         try {
             const res = await global.callStoreGet('PXSAUDIT', 'SQP05585', params);
             console.log(res);
             if (res.lstRs.length > 0) {
-
-                let store = new Ext.data.Store({
-                    data: res.lstRs.at(0)
+                const data = res.lstRs.at(0);
+                const pending = data.filter(x=>x.QTYLOADS === 0);
+                let storePending = new Ext.data.Store({
+                    data: pending
                 });
-                grid.setStore(store);
+                gridPending.setStore(storePending);
+                const loaded = data.filter(x=>x.QTYLOADS > 0);
+                let storeLoaded = new Ext.data.Store({
+                    data: loaded
+                });
+                gridLoaded.setStore(storeLoaded);
+                notifier.success('Tickets to Add: ' + pending.length);
+                if (loaded.length > 0) {
+                    notifier.warning('Tickets Loaded: ' + loaded.length);
+                }
+                this.selectedTickets = pending;
+            }else{
+                notifier.alert('Tickets not found');
             }
         } catch (e) {
             console.error(e);
+            notifier.alert('Error on load Tickets');
         } finally {
-            grid.setLoading(false);
+            tabTickets.setLoading(false);
         }
     },
     onExceptTax: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const filters = Ext.getCmp(prototype.idDE + '-taxFilters');
         filters.getForm().reset();
         filters.show();
+        /*
         let lst = Ext.getCmp(prototype.idDE + '-gridTickets').getStore().getData().items;
-        this.selectedTickets = lst.map(x => ({...x.data}));
+        this.selectedTickets = lst.map(x => ({...x.data}));*/
         console.log(this.selectedTickets);
         this.exTaxes = [];
     },
@@ -168,6 +190,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
             global.Msg({msg: 'Invalid Parameters'});
         }
     },
+    onDeleteTicket: function(grid, td, rowIndex, cellIndex, e, record, tr, eOpts){
+        const me = this;
+        const {TICKET,SEQ} = record.data;
+        const gridTickets = Ext.getCmp(prototype.idDE + '-gridTickets');
+        const btnUpdate = Ext.getCmp(prototype.idDE + '-btn-update');
+        me.selectedTickets = me.selectedTickets.filter(x => x.TICKET+x.SEQ !== TICKET+SEQ);
+        let store = new Ext.data.Store({
+            data: me.selectedTickets
+        });
+        gridTickets.setStore(store);
+    },
     onDeleteTax: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
         const {CTAX} = record.data;
@@ -206,7 +239,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
             const res = await global.callStorePost('PXSAUDIT','SQP05587',params);
             console.log(res);
             if(res.status===201){
-                notifier.success('Updated Successfully');
+                notifier.info('Updated Successfully');
+                me.view.reloadGrid();
                 me.view.close();
             }else{
                 throw new Error('Update Failed');
@@ -238,7 +272,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
             const res = await global.callStorePost('PXSAUDIT','SQP05587',params);
             console.log(res);
             if(res.status===201){
-                notifier.success('Deleted Successfully');
+                notifier.warning('Deleted Successfully');
+                me.view.reloadGrid();
                 me.view.close();
             }else{
                 notifier.alert('Error on Delete');
@@ -250,7 +285,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
     onClearFilter:function(){
         Ext.getCmp(prototype.idDE + '-ticketFilters').getForm().reset();
         Ext.getCmp(prototype.idDE + '-gridTickets').setStore([]);
-        Ext.getCmp(prototype.idDE + '-gridTickets').hide();
+        Ext.getCmp(prototype.idDE + '-gridTicketsLoaded').setStore([]);
+        Ext.getCmp(prototype.idDE + '-tabTickets').hide();
         Ext.getCmp(prototype.idDE + '-taxFilters').hide();
         Ext.getCmp(prototype.idDE + '-gridTaxes').setStore([]);
         Ext.getCmp(prototype.idDE + '-gridTaxes').hide();
