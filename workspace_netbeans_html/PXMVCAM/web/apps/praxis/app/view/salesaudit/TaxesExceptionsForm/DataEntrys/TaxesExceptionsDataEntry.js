@@ -72,7 +72,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                         },
                         {
                             xtype: 'panel',
-                            width: 180,
+                            width: 130,
                             border: false,
                             id: prototype.id + '-tktFilter',
                             layout: 'hbox',
@@ -90,15 +90,6 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                                     maxLength: 13,
                                     maskRe: /^[0-9]$/,
                                     value: ''
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    name: 'IN_SEQ',
-                                    width: 50,
-                                    enforceMaxLength: true,
-                                    maxLength: 2,
-                                    value: '00',
-                                    maskRe: /^[0-9]$/
                                 }
                             ]
                         },
@@ -148,83 +139,160 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                 }
             ]
         },
+        //<editor-fold defaultstate="collapsed" desc="Tab Tickets">
         {
-            xtype: 'grid',
-            margin: '5 0 5 0',
-            minHeight: 100,
-            viewConfig: {
-                stripeRows: false,
-                enableTextSelection: true,
-                markDirty: true
-            },
-            border: true,
-            hidden: true,
-            columnLines: true,
-            id: prototype.idDE + '-gridTickets',
+            xtype: 'tabpanel',
+            id: prototype.idDE + '-tabTickets',
             width: '100%',
-            maxHeight: 300,
-            columns: {
-                defaults: {
-                    align: 'center',
-                    menuDisabled: true,
-                    sortable: true
+            height: 'auto',
+            border: false,
+            margin: '0 1 0 1',
+            bodyStyle: 'background: transparent',
+            defaults: {
+                height: 'auto',
+                autoScroll: false,
+                layout: 'fit'
+            },
+            items: [
+                {
+                    title: 'Pending Load',
+                    itemId: 'P',
+                    id: prototype.idDE + '-tabPending',
+                    items: [
+                        {
+                            xtype: 'grid',
+                            margin: '5 0 5 0',
+                            minHeight: 100,
+                            viewConfig: {
+                                stripeRows: false,
+                                enableTextSelection: true,
+                                markDirty: true
+                            },
+                            border: true,
+                            columnLines: true,
+                            id: prototype.idDE + '-gridTickets',
+                            width: '100%',
+                            maxHeight: 300,
+                            columns: {
+                                defaults: {
+                                    align: 'center',
+                                    menuDisabled: true,
+                                    sortable: true
+                                },
+                                items: [
+                                    {text: 'Client', dataIndex: 'CCUST', width: 50,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "font-weight:bold;";
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'Agent', dataIndex: 'CIATA', width: 100},
+                                    {text: 'Agent<br>Name', dataIndex: 'NIATA', width: 200},
+                                    {text: 'Sale<br>Country', dataIndex: 'PAISV', width: 60},
+                                    {text: 'Sale<br>Date', dataIndex: 'SDATE', width: 80},
+                                    {text: 'Trnx', dataIndex: 'TRNCU', width: 80},
+                                    {text: 'Doc.<br>Type', dataIndex: 'TDOC', width: 80},
+                                    {text: 'Ticket', dataIndex: 'TICKET', width: 140,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "font-weight:bold;";
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'SEQ', dataIndex: 'SEQ', width: 50},
+                                    {text: 'PNR', dataIndex: 'SPNR', width: 80},
+                                    {text: 'Pax Name', dataIndex: 'PAXNAME', width: 250},
+                                    {text: 'Itinerary', dataIndex: 'RUTABOL', width: 200},
+                                    {
+                                        sortable: false,
+                                        xtype: 'actioncolumn',
+                                        id: prototype.idDE + '-exceptTkt',
+                                        width: 50,
+                                        text: 'Edit',
+                                        align: 'center',
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-edit',
+                                                tooltip: 'Update',
+                                                handler: 'onExceptTax'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        sortable: false,
+                                        xtype: 'actioncolumn',
+                                        id: prototype.idDE + '-deleteTkt',
+                                        width: 50,
+                                        text: 'Dl.',
+                                        align: 'center',
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-image-trash',
+                                                tooltip: 'Delete',
+                                                handler: 'onDeleteTicket'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
                 },
-                items: [
-                    {text: 'Client', dataIndex: 'CCUST', width: 50,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "font-weight:bold;";
-                            return value;
-                        }
-                    },
-                    {text: 'Agent', dataIndex: 'CIATA', width: 100},
-                    {text: 'Agent<br>Name', dataIndex: 'NIATA', width: 200},
-                    {text: 'Sale<br>Country', dataIndex: 'PAISV', width: 60},
-                    {text: 'Sale<br>Date', dataIndex: 'SDATE', width: 80},
-                    {text: 'Trnx', dataIndex: 'TRNCU', width: 80},
-                    {text: 'Doc.<br>Type', dataIndex: 'TDOC', width: 80},
-                    {text: 'Ticket', dataIndex: 'TICKET', width: 140,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "font-weight:bold;";
-                            return value;
-                        }
-                    },
-                    {text: 'SEQ', dataIndex: 'SEQ', width: 50},
-                    {text: 'PNR', dataIndex: 'SPNR', width: 80},
-                    {text: 'Pax Name', dataIndex: 'PAXNAME', width: 250},
-                    {text: 'Itinerary', dataIndex: 'RUTABOL', width: 200},
-                    {
-                        sortable: false,
-                        xtype: 'actioncolumn',
-                        id: prototype.idDE + '-exceptTkt',
-                        width: 50,
-                        text: 'Edit',
-                        align: 'center',
-                        items: [
-                            {
-                                iconCls: 'prx-icon-edit',
-                                tooltip: 'Update',
-                                handler: 'onExceptTax'
+                {
+                    title: 'Loaded',
+                    itemId: 'L',
+                    id: prototype.idDE + '-tabLoaded',
+                    items:[
+                        {
+                            xtype: 'grid',
+                            margin: '5 0 5 0',
+                            minHeight: 100,
+                            viewConfig: {
+                                stripeRows: false,
+                                enableTextSelection: true,
+                                markDirty: true
+                            },
+                            border: true,
+                            columnLines: true,
+                            id: prototype.idDE + '-gridTicketsLoaded',
+                            width: '100%',
+                            maxHeight: 300,
+                            columns: {
+                                defaults: {
+                                    align: 'center',
+                                    menuDisabled: true,
+                                    sortable: true
+                                },
+                                items: [
+                                    {text: 'Client', dataIndex: 'CCUST', width: 50,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "font-weight:bold;";
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'Agent', dataIndex: 'CIATA', width: 100},
+                                    {text: 'Agent<br>Name', dataIndex: 'NIATA', width: 200},
+                                    {text: 'Sale<br>Country', dataIndex: 'PAISV', width: 60},
+                                    {text: 'Sale<br>Date', dataIndex: 'SDATE', width: 80},
+                                    {text: 'Trnx', dataIndex: 'TRNCU', width: 80},
+                                    {text: 'Doc.<br>Type', dataIndex: 'TDOC', width: 80},
+                                    {text: 'Ticket', dataIndex: 'TICKET', width: 140,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "font-weight:bold;";
+                                            return value;
+                                        }
+                                    },
+                                    {text: 'SEQ', dataIndex: 'SEQ', width: 50},
+                                    {text: 'PNR', dataIndex: 'SPNR', width: 80},
+                                    {text: 'Pax Name', dataIndex: 'PAXNAME', width: 250},
+                                    {text: 'Itinerary', dataIndex: 'RUTABOL', width: 200}
+                                ]
                             }
-                        ]
-                    },
-                    {
-                        sortable: false,
-                        xtype: 'actioncolumn',
-                        id: prototype.idDE + '-deleteTkt',
-                        width: 50,
-                        text: 'Dl.',
-                        align: 'center',
-                        items: [
-                            {
-                                iconCls: 'prx-icon-image-trash',
-                                tooltip: 'Delete',
-                                handler: 'onDeleteTicket'
-                            }
-                        ]
-                    }
-                ]
-            }
+                        }
+                    ]
+                }
+            ]
         },
+        //</editor-fold>
         {
             xtype: 'form',
             width: '100%',
@@ -260,15 +328,6 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                     id: prototype.idDE + '-taxName',
                     width: 200,
                     editable: false
-                },
-                {
-                    xtype: 'textfield',
-                    name: 'IN_SECTOR',
-                    fieldLabel: 'Sector',
-                    width: 170,
-                    enforceMaxLength: true,
-                    maxLength: 6,
-                    labelWidth: 60
                 },
                 {
                     xtype: 'textfield',
@@ -325,7 +384,6 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                         },
                         items: [
                             {text: 'Tax<br>Code', dataIndex: 'CTAX', width: 60},
-                            {text: 'Sector', dataIndex: 'SECTOR', width: 100},
                             {text: 'Comment', dataIndex: 'COMMENT', flex: 1},
                             {
                                 sortable: false,
@@ -350,7 +408,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
         {
             xtype: 'fieldset',
             id: prototype.idDE + '-fsControlData',
-            hidden:true,
+            hidden: true,
             title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:10px;">Control Data</span>',
             layout: {
                 type: 'vbox',

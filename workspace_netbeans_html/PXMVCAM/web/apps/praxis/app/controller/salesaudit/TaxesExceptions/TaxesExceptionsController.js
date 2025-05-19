@@ -42,16 +42,20 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
         const newWin = Ext.create('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExceptionsDataEntry',{
             id:prototype.id + '-TaxesExceptionsDataEntry-1',
             option:'C',
-            taxes:me.taxes
+            taxes:me.taxes,
+            reloadGrid: me.reloadGrid
         });
         newWin.show();
     },
     loadTaxDetails: function(grid, td, rowIndex, cellIndex, e, record, tr, eOpts){
+        const me = this;
+        
         const newWin = Ext.create('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExceptionsDataEntry',{
             id:prototype.id + '-TaxesExceptionsDataEntry-1',
             option:'U',
             obj: record.data,
-            taxes:me.taxes
+            taxes:me.taxes,
+            reloadGrid: me.reloadGrid
         });
         newWin.show();
     },
@@ -83,9 +87,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
     },
     onMassiveLoad: function(){
         const newWin = Ext.create('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExceptionsMassiveLoad',{
-            id:prototype.id + '-TaxesExceptionsMassiveLoad-1'
+            id:prototype.id + '-TaxesExceptionsMassiveLoad-1',
+            reloadGrid: this.reloadGrid
         });
         newWin.show();
+    },
+    reloadGrid: function(){
+        const grid = Ext.getCmp(prototype.id + '-gridExceptionTickets');
+        grid.getStore().load();
     }
 });
 
