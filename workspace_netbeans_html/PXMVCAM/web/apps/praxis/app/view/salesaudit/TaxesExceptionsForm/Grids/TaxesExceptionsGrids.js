@@ -70,6 +70,10 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Grids.TaxesExceptions
                             return opts[value];
                         }
                     },
+                    {text: 'User<br>Created', dataIndex: 'USCR', width: 100},
+                    {text: 'Date<br>Created', dataIndex: 'FECR', width: 80},
+                    {text: 'User<br>Updated', dataIndex: 'USUP', width: 100},
+                    {text: 'Date<br>Updated', dataIndex: 'FEUP', width: 80},
                     {
                         xtype: 'actioncolumn',
                         sortable: false,

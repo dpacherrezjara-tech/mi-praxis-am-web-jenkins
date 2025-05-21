@@ -78,7 +78,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
                        'PNR':x.SPNR,
                        'Pax Name':x.PAXNAME,
                        'Itinerary':x.RUTABOL,
-                       'Type Load':x.TIPOING
+                       'Type Load':x.TIPOING,
+                       'User Created':x.USCR,
+                       'Date Created':x.FECR,
+                       'User Update':x.USUP,
+                       'Date Update':x.FEUP
                     }));
                 global.writeExcelFromJson(data, 'Tax Exceptions');
             }
