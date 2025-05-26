@@ -26,7 +26,26 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.RobotExecutorDat
                 }
             });
             if (res.ok) {
-                alert('Procesado');
+                let responseBody = await res.json(); 
+                console.log("dp: RobotExecutorDataEntryController responseBody = ", responseBody);
+                let sqlRes = parseInt(responseBody.SQLRES);
+                let sqlMsg = responseBody.SQLMSG;
+
+                if (sqlRes === 1) {
+                    Ext.Msg.alert('Éxito', sqlMsg);
+                    const searchBtn = Ext.getCmp(prototype.id + '-btnSearch');
+                    if (searchBtn) {
+                        searchBtn.fireEvent('click', searchBtn);
+                    }
+                    
+                    Ext.getCmp(prototype.id + '-PnrsGrid-1').getStore().load();
+                    me.view.close();
+                } else {
+                    Ext.Msg.alert('Atención', 'El proceso no se ejecutó correctamente: ' + sqlMsg);
+                }
+            } else {
+                let errorBody = await res.text();
+                Ext.Msg.alert('Error', `Error al procesar: ${res.status} - ${errorBody}`);
             }
         } else {
             if (panelFile.isValid()) {

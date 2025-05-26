@@ -31,7 +31,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.PnrsGrid', {
                 width: 40 // Ancho de la columna de número de fila (ajusta según tus necesidades)
             },
             {text: 'Processing<br>Date', dataIndex: 'PRDA', width: 100},
-            {text: 'PNR', dataIndex: 'PNR', flex: 1,
+            {text: 'PNR', dataIndex: 'PNR', width: 100,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
                     metaData.style += "font-weight:bolder;color:#057ECB;";
@@ -57,8 +57,8 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.PnrsGrid', {
                     return sts[value.trim()];
                 }
             },
-            {text: 'Search<br>Nbr', dataIndex: 'NBRSEARCH', width: 70},
-            {text: 'Origin', dataIndex: 'TXTORIGIN', width: 100,
+//            {text: 'Search<br>Nbr', dataIndex: 'NBRSEARCH', width: 70},
+            {text: 'Origin', dataIndex: 'TXTORIGIN', flex: 1,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     const sts = {
@@ -77,7 +77,8 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.PnrsGrid', {
         },
         defaults: {
             scale: 'medium'
-        },
+        }
+        ,
         items: [
             {
                 xtype: 'button',
