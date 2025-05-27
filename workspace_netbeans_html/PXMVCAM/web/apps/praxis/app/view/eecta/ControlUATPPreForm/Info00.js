@@ -44,25 +44,35 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.Info00', {
                             xtype: 'grid',
                             id: prototype.id + '-gridData',
                             columnLines: true,                            
-                            width: 180,
+                            width: 250,
                             height: 500,
                             padding: '0px 5px 1px 5px',
                             columns: {
                                 items: [
-                                    {text: 'Fecha<br>Contable', dataIndex: 'A1530FCONT', width: 70, align: 'center'},
+                                    {text: 'Fecha', dataIndex: 'A1530FCONT', width: 70, align: 'center'},
                                     {
-                                        text: 'St.', dataIndex: 'A1530STS9', align: 'center', width: 30,
+                                        text: '', dataIndex: 'A1530STS9', align: 'center', width: 100,
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                                                                      
-                                            var html = '<img src="resources/img/semaforo/Circle_Silver.png" title="PENDIENTE" >';
-                                            if ( record.get('A1530STS9') === '1' )
-                                            var html = '<img src="resources/img/semaforo/Circle_Green.png" title="PROCESADO" >';
-                                            return html;
+                                            var html1 = '<img src="resources/img/semaforo/Circle_Silver.png" title="Pendiente carga" >';
+                                            var html2 = '<img src="resources/img/semaforo/Circle_Silver.png" title="Pendiente reporte" >';
+                                            var html3 = '<img src="resources/img/semaforo/Circle_Silver.png" title="Pendiente aplicacion" >';
+                                            var html4 = '<img src="resources/img/semaforo/Circle_Silver.png" title="Pendiente facturacion" >';
+                                            if ( record.get('A1530STS9') === '1')
+                                            var html1 = '<img src="resources/img/semaforo/Circle_Green.png" title="Venta cargada" >';
+                                            if ( record.get('RPTE') > 0 )
+                                            var html2 = '<img src="resources/img/semaforo/Circle_Green.png" title="Reporte generado" >';
+                                            if ( record.get('APL') > 0 )
+                                            var html3 = '<img src="resources/img/semaforo/Circle_Green.png" title="Venta Aplicada" >';
+                                            if ( record.get('FAC') > 0 )
+                                            var html4 = '<img src="resources/img/semaforo/Circle_Green.png" title="Facturado" >';
+                                            
+                                            return html1 + html2 + html3 + html4 ;
                                         }
                                     },                                    
                                     {
                                         xtype: 'actioncolumn',
                                         sortable: false,
-                                        width: 40,text: 'Det.',
+                                        width: 45,text: 'Det.',
                                         align: 'center',
                                         items: [
                                             {

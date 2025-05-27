@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.payments.ErrorControlForm.FormatDataEntry', {
+Ext.define('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.FormatDataEntry',
     requires: [

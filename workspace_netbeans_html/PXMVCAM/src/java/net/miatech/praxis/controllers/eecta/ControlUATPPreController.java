@@ -34,6 +34,7 @@ import net.miatech.praxis.eecta.SQP05189Filter;
 import net.miatech.praxis.eecta.SQP05190Filter;
 import net.miatech.praxis.eecta.SQP05191Filter;
 import net.miatech.praxis.eecta.SQP05192Filter;
+import net.miatech.praxis.eecta.SQP05524Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.ControlUATPPreLogic;
 import org.apache.commons.io.IOUtils;
@@ -136,17 +137,6 @@ public class ControlUATPPreController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             objRtn = logic.setSQP04530Filter(filter);
-            
-            //Enviar EXCEL para timbre individual            
-            if(filter.VP_PROCESO.equals("UATP") && filter.VP_FACTURAR.equals("Y") ){
-//                CALL SERVICIO PYTHON
-                  
-//                objRtn01 = this.setSQP03348Filter( filter );
-//                if(!objRtn01.dbException.SQLCODE.equals('1')){
-//                    objRtn.dbException.MESSAGE = objRtn01.dbException.MESSAGE;   
-//                    objRtn.dbException.SQLCODE = objRtn01.dbException.SQLCODE;   
-//                }                     
-            }                     
             map.put("objRtn", objRtn);
             map.put("success", true);
         } catch (Exception ex) {
@@ -160,7 +150,7 @@ public class ControlUATPPreController extends BaseController {
         return new Gson().toJson(map);
 
     }
-    
+
     //obtener UUID desde: amfeapprest.miatech.net/ws/rest/ApiGW   
     @RequestMapping(value = "set_procesarUUID")
     public @ResponseBody
@@ -208,7 +198,7 @@ public class ControlUATPPreController extends BaseController {
         String URL = "http://amfeapprest.miatech.net/ws/rest/ApiGW";
 
         ArrayList<String> list = new ArrayList<String>();//Creating arraylist 
-        
+
         String json_texto1;
         String json_texto = "";
         json_texto1 = "[";
@@ -243,33 +233,33 @@ public class ControlUATPPreController extends BaseController {
             obj.put("VP_SERIE", VL_SERIE);
             obj.put("VP_SEQ", VL_SEQ);
             obj.put("VP_TRNCU", VL_TRNCU);
-            obj.put("VP_GRUPO", VL_GRUPO);  
+            obj.put("VP_GRUPO", VL_GRUPO);
             //output
-            for (JsonElement row : gson_lin) {                         
-                JsonObject gsonObj = row.getAsJsonObject();                                                 
+            for (JsonElement row : gson_lin) {
+                JsonObject gsonObj = row.getAsJsonObject();
                 obj.put("TICKETNUMBER", gsonObj.get("TICKETNUMBER").getAsString());
-                obj.put("SERIE",gsonObj.get("SERIE").getAsString());
-                obj.put("TYPE_TRANS",gsonObj.get("TYPE_TRANS").getAsString());
-                obj.put("UUID",gsonObj.get("UUID").getAsString());
-                obj.put("FECHA",gsonObj.get("FECHA").getAsString());
-                obj.put("RFC",gsonObj.get("RFC").getAsString());
-                obj.put("NAME_RFC",gsonObj.get("NAME_RFC").getAsString());
-                obj.put("FPAGO",gsonObj.get("FPAGO").getAsString());
-                obj.put("MPAGO",gsonObj.get("MPAGO").getAsString());                                                                            
-            }                    
+                obj.put("SERIE", gsonObj.get("SERIE").getAsString());
+                obj.put("TYPE_TRANS", gsonObj.get("TYPE_TRANS").getAsString());
+                obj.put("UUID", gsonObj.get("UUID").getAsString());
+                obj.put("FECHA", gsonObj.get("FECHA").getAsString());
+                obj.put("RFC", gsonObj.get("RFC").getAsString());
+                obj.put("NAME_RFC", gsonObj.get("NAME_RFC").getAsString());
+                obj.put("FPAGO", gsonObj.get("FPAGO").getAsString());
+                obj.put("MPAGO", gsonObj.get("MPAGO").getAsString());
+            }
             String jsonText = JSONValue.toJSONString(obj);
             list.add(jsonText);
-            json_texto += jsonText + ",";                     
-        }        
+            json_texto += jsonText + ",";
+        }
         //grabar A PRAXIS
-        SQP03348Filter filter01 = new SQP03348Filter(); 
-        int length = json_texto.length(); 
-        json_texto1 +=  json_texto.substring(0,length-1);            
-        json_texto1 += "]";        
-        filter01.vp_json = json_texto1;            
-        objRtn = logic.setSQP03348Filter(filter01);       
+        SQP03348Filter filter01 = new SQP03348Filter();
+        int length = json_texto.length();
+        json_texto1 += json_texto.substring(0, length - 1);
+        json_texto1 += "]";
+        filter01.vp_json = json_texto1;
+        objRtn = logic.setSQP03348Filter(filter01);
         return objRtn;
-        
+
     }
 
     @RequestMapping(value = "/search_UUID")
@@ -287,11 +277,10 @@ public class ControlUATPPreController extends BaseController {
             filter.VP_FECHA2 = request.getParameter("VP_FDATE2");
             filter.VP_TICKET = request.getParameter("VP_TICKET");
             filter.VP_STAT = request.getParameter("VP_STAT");
-            
+
             filter.VP_CDCLI = request.getParameter("VP_CDCLI");
             filter.VP_NLOTE = request.getParameter("VP_NLOTE");
-            
-            
+
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
@@ -354,17 +343,17 @@ public class ControlUATPPreController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-      
+
     @RequestMapping(value = "set_procesarFE")
     public @ResponseBody
     String set_procesarFE(ModelMap map, HttpServletRequest request) {
-        SQP04229Filter filter = new SQP04229Filter();  
+        SQP04229Filter filter = new SQP04229Filter();
         SQP04229Filter objRtn = new SQP04229Filter();
         try {
             logic = new ControlUATPPreLogic();
             logic.setSession(this.serverSession.getServerSession());
-            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());            
-            objRtn = logic.setSQP04229Filter(filter);            
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            objRtn = logic.setSQP04229Filter(filter);
             map.put("objRtn", objRtn);
             map.put("success", true);
         } catch (Exception ex) {
@@ -377,6 +366,7 @@ public class ControlUATPPreController extends BaseController {
         return new Gson().toJson(map);
 
     }
+
     @RequestMapping(value = "/search_fac_cab")
     public @ResponseBody
     String search_fac_cab(ModelMap map, HttpServletRequest request) {
@@ -386,13 +376,13 @@ public class ControlUATPPreController extends BaseController {
         filter.page.TOTROW = -1;
         filter.page.START = 0;
         filter.page.LIMIT = 0;
-        try {            
+        try {
             filter.VP_FDATE1 = request.getParameter("VP_FDATE1");
             filter.VP_FDATE2 = request.getParameter("VP_FDATE2");
             filter.VP_LOTE = request.getParameter("VP_LOTE");
             filter.VP_STAT = request.getParameter("VP_STAT");
             filter.VP_TICKET = request.getParameter("VP_TICKET");
-            filter.VP_CDCLI = request.getParameter("VP_CDCLI");            
+            filter.VP_CDCLI = request.getParameter("VP_CDCLI");
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
@@ -416,70 +406,100 @@ public class ControlUATPPreController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     /*API descarga Documento facturas/xml
      */
     @RequestMapping(value = "getPreDonwloadInvoice")
     public @ResponseBody
     void getDonwloadDocumentInvoice(HttpServletRequest request, HttpServletResponse response) {
 //        String rutaTemp = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD_DJANGO").toString(); // NO USAR 
-        String rutaTemp = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();         
-        try {            
+        String rutaTemp = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        try {
             String vl_document_path = request.getParameter("document_path");
-            
-            String[] arrOfStr  = vl_document_path.split("/", 3);
-            System.out.println("" + Arrays.toString(arrOfStr) );
+
+            String[] arrOfStr = vl_document_path.split("/", 3);
+            System.out.println("" + Arrays.toString(arrOfStr));
 //            /miatech-aeromexico-factura-files/XML_TIMBRADOS/2023/IND/11/11/F_SALE_1392139323882_88357093-176B-52CF-B1CD-111D8B6BB3CD.pdf
 //            [, miatech-aeromexico-factura-files/XML_TIMBRADOS/2023/IND/12/19/F_SALE_1392142671733_DFB73134-E0A7-5B72-BD75-3ABA2EEF1425.pdf]
             String vl_bucket = arrOfStr[1];
             String vl_key = arrOfStr[2];
-            Unirest.setTimeouts(3600000, 3600000);           
-            HashMap bodyData = new HashMap<>();      
-            
+            Unirest.setTimeouts(3600000, 3600000);
+            HashMap bodyData = new HashMap<>();
+
             //bodyData.put("server_database", serverSession.getServerSession().getPropertySession().get("SERVER_DJANGO").toString());            
             bodyData.put("vp_bucket", vl_bucket); //"miatech-aeromexico-factura-files"                
             bodyData.put("vp_key", vl_key);       //"masivo/miatech-result-file-complemento/2021110510.xml"                
-            bodyData.put("vp_path_tmp", rutaTemp );                
-            
+            bodyData.put("vp_path_tmp", rutaTemp);
+
             String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
             //String urlREST = "http://127.0.0.1:5557";
-            String urlAPI  = "/api/praxis/facturacion_pre_descarga_factura/";  
-            HttpResponse<JsonNode> responseAPI = Unirest.post(urlREST + urlAPI )
-                    .header("content-type", "application/json") 
+            String urlAPI = "/api/praxis/facturacion_pre_descarga_factura/";
+            HttpResponse<JsonNode> responseAPI = Unirest.post(urlREST + urlAPI)
+                    .header("content-type", "application/json")
                     .header("cache-control", "no-cache")
                     .body(new Gson().toJson(bodyData))
                     .asJson();
-            
+
             String error_code = responseAPI.getBody().getObject().get("RESPONSE").toString();
             String error_msg = responseAPI.getBody().getObject().get("MESSAGE_TEXT").toString();
             String file_path = responseAPI.getBody().getObject().get("FILEPATH").toString();
             String file_name = responseAPI.getBody().getObject().get("FILENAME").toString();
-            
-            String fileNameDownload = file_path +"\\"+ file_name;
+
+            String fileNameDownload = file_path + "\\" + file_name;
             response.setContentType("application/vnd.openxml");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + file_name  + "\"");
-            InputStream is = new FileInputStream( fileNameDownload );
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + file_name + "\"");
+            InputStream is = new FileInputStream(fileNameDownload);
             IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();            
+            response.flushBuffer();
 // ZIP            
 //            response.setContentType("application/zip");
 //            response.setHeader("Content-Disposition", "attachment;filename=\"" + rutaFile + "\\" + filename + ".zip" + "\"");
 //            InputStream is = new FileInputStream(rutaFile + "\\" + filename + ".zip");
 //            IOUtils.copy(is, response.getOutputStream());
 //            response.flushBuffer();
-            
+
             delete_fichero(fileNameDownload);
-            
+
         } catch (Exception e) {
-            throw new SpringException(e);            
+            throw new SpringException(e);
         }
     }
-    
-    public Boolean delete_fichero( String fileName ) {
+
+    public Boolean delete_fichero(String fileName) {
         //String path = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
         String sFichero = fileName; //path + "\\" + fileName + ".pdf";
         File f = new File(sFichero);
         f.delete();
         return true;
     }
+
+    @RequestMapping(value = "setSendMail")
+    public @ResponseBody
+    String setSendMail(ModelMap map, HttpServletRequest request) {
+
+        SQP05524Filter objRtn = new SQP05524Filter();
+        try {
+            logic = new ControlUATPPreLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            SQP05524Filter filter = new SQP05524Filter();
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            JsonParser parser = new JsonParser();
+            JsonArray gson_data = parser.parse(request.getParameter("data")).getAsJsonArray();
+            filter.VP_DATA = gson_data;
+            //filter.VP_EMAILS = request.getParameter("VP_EMAILS");
+            
+            objRtn = logic.setQP05524Filter(filter);
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+        } catch (Exception ex) {
+            objRtn.dbException.SQLCODE = "0";
+            objRtn.dbException.MESSAGE = ex.getMessage();
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+
+    }
+
 }

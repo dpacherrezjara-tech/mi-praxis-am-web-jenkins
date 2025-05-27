@@ -5,6 +5,8 @@ prototype.id02 = 'ControlUATPPreProcesarForm';
 prototype.id03 = 'ControlUATPrePUUIDForm';
 prototype.id04 = 'ControlUATPPreErroresForm';
 prototype.id05 = 'ControlUATPPreFacturacionCab';
+prototype.id06 = 'ControlUATPPreEnviarForm';
+
 
 Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreForm', {
     extend: 'Ext.form.Panel',
@@ -87,7 +89,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreForm', {
                                                         {
                                                             xtype: 'fieldset',
                                                             border: true,
-                                                            width: 185,
+                                                            width: 260,
                                                             padding: '5 5 5 5',
                                                             items: [
                                                                 {

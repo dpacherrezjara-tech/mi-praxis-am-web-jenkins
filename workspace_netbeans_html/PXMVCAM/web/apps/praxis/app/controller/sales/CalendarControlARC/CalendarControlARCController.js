@@ -66,10 +66,13 @@ Ext.define('Ext.Praxis.controller.sales.CalendarControlARC.CalendarControlARCCon
                 msg: 'Enter Year'
             });
         } else {
+            let calendarVersion = Ext.getCmp(prototype.id + '-calendarVersion-1').lastValue.opcion;
+            //console.log(calendarVersion);
             Ext.Ajax.request({
                 url: prototype.url + '/search',
                 params: {
-                    IN_A1527PPED: bean.IN_A1527PPED
+                    IN_A1527PPED: bean.IN_A1527PPED,
+                    IN_VERSION: calendarVersion === 'ARC2'?'2':'1'
                 },
                 beforerequest: Ext.getCmp(prototype.id + '-contenedor-calendario').mask('Loading...'),
                 success: function(response, options) {
@@ -78,14 +81,21 @@ Ext.define('Ext.Praxis.controller.sales.CalendarControlARC.CalendarControlARCCon
                     res = res.data;
                     var panel = Ext.getCmp(prototype.id + '-contenedor-calendario');
                     var calendar = Ext.create('MtCalendar', {
-                        fuente: 'ARC',
+                        fuente: calendarVersion,
                         year: bean.IN_A1527PPED,
                         items: res,
                         listeners: {
                             onItemCalendarClick: function(qtr, month, week, op, commelw, commiap, commiar, cant, error, cantsale, cantelw, cantiap, cantiar, text) {
-                                if (parseInt(text) <= parseInt(Ext.Date.format(new Date(), 'Ymd')) && op !== 'MONDAY' && op !== 'TUESDAY' && (cant !== 3 || error > 0) && cantsale < 3) {
-                                    me.getRegularization(text, cantelw, cantiap, cantiar);
+                                if(calendarVersion==='ARC2'){
+                                    if (parseInt(text) <= parseInt(Ext.Date.format(new Date(), 'Ymd')) && op !== 'MONDAY' && op !== 'SUNDAY' && (cant !== 3 || error > 0) && cantsale < 3) {
+                                        me.getRegularization(text, cantelw, cantiap, cantiar);
+                                    }
+                                }else{
+                                    if (parseInt(text) <= parseInt(Ext.Date.format(new Date(), 'Ymd')) && op !== 'MONDAY' && op !== 'TUESDAY' && (cant !== 3 || error > 0) && cantsale < 3) {
+                                        me.getRegularization(text, cantelw, cantiap, cantiar);
+                                    }
                                 }
+                                
                             }
                         }
                     });
@@ -289,6 +299,9 @@ Ext.define('Ext.Praxis.controller.sales.CalendarControlARC.CalendarControlARCCon
     exportExcel: function() {
         if (this._path.length > 0)
             global.getFile(this._path);
+    },
+    onChangeVersion: function(){
+        this.btnSearch_click(null,null);
     },
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function(id) {

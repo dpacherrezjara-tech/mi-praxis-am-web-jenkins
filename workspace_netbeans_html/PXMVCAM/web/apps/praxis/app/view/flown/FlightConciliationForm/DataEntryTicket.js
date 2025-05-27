@@ -556,7 +556,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                     autoSelect: true,
                                     editable: true,
                                     width: 130,
-                                    disabled: true,
+                                    disabled: false,
                                     typeAhead: true,
                                     emptyText: '',
                                     valueField: 'code', displayField: 'name',
@@ -1253,7 +1253,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                     autoSelect: true,
                                     editable: true,
                                     width: 130,
-                                    disabled: true,
+                                    //disabled: true,
                                     typeAhead: true,
                                     emptyText: '',
                                     valueField: 'code', displayField: 'name',
@@ -1461,7 +1461,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'label',
-                                    text: 'MXN Amount',
+                                    text: 'Amount Average',
                                     style: 'font-weight:bold;color:#000;',
                                     width: 120,
                                     margin: '0 0 0 300'
@@ -1864,7 +1864,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                     text: 'Save',
                     id: prototype.id + '-btn-save',
                     iconCls: 'prx-icon-save',
-                    hidden: true,
+//                    hidden: true,
                     listeners: {
                         click: 'onSaveClick'
                     }
@@ -1873,7 +1873,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                     text: 'Update',
                     id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
-                    hidden: true,
+//                    hidden: true,
                     listeners: {
                         click: 'onUpdateClick'
                     }

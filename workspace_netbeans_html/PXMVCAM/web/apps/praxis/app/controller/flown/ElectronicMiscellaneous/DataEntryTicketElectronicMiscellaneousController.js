@@ -18,14 +18,22 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
     afterRender: function() {
         this.setStoreData();
         this.p = this.view.params;
+        console.log(this.p,'LA OPCION P')
         switch (this.p.action) {
             case 'I':
                 Ext.getCmp(prototype.id + '-t' + '-btn-save').show();
                 this.disabledField();//La version de flex lo mantiene asi
                 break;
             case 'U':
-                Ext.getCmp(prototype.id + '-t' + '-btn-update').show();
-                Ext.getCmp(prototype.id + '-t' + '-btn-delete').show();
+                let showOptions = (this.p.rec.data.IDCON || '').toString().trim();
+                if (showOptions) {
+                    Ext.getCmp(prototype.id + '-t' + '-btn-update').hide();
+                    Ext.getCmp(prototype.id + '-t' + '-btn-delete').hide();
+                } else {
+                    Ext.getCmp(prototype.id + '-t' + '-btn-update').show();
+                    Ext.getCmp(prototype.id + '-t' + '-btn-delete').hide();
+                }
+                
                 Ext.getCmp(prototype.id + '-t' + '-btn-cancel').show();
                 this.getDataInputs();
 //                this.disabledField();
@@ -38,9 +46,9 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
     onFocusLeaveOpe: function(obj) {
         console.log(obj.getValue());
 
-        if (obj.getValue().trim() !== '5D' && obj.getValue().trim() !== 'AM') {
-            Ext.getCmp(prototype.id + '-t' + '-txtCARR').setValue('');
-        }
+//        if (obj.getValue().trim() !== '5D' && obj.getValue().trim() !== 'AM') {
+//            Ext.getCmp(prototype.id + '-t' + '-txtCARR').setValue('');
+//        }
     },
     setStoreData: function() {
         var cmbTEMD = Ext.getCmp(prototype.id + '-t' + '-cmbTEMD');
@@ -371,6 +379,13 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
 
         var rec = this.p.rec.data;
         var msjResult = "";
+        
+        /* VALIDACION PARA CARRIER, SOLO PERMITIR AM O 5D */
+        
+        if (bean.CARR !== '' && bean.CARR !== 'AM' && bean.CARR !== '5D') {
+            msjResult = "The Carrier can only have the values '5D', 'AM', or be empty.";
+            return msjResult;
+        }
 
         if (bean.strTicket === '') {
             msjResult = "A Ticket number is required.";

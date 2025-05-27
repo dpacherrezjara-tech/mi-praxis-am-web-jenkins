@@ -841,8 +841,8 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMReportForm.ADMReportForm', {
                                     {text: 'Notice<br>Date', dataIndex: 'A2548FECOR', width: 90},
                                     {text: 'Status<br>Notice', dataIndex: 'A2548STCOR', width: 90,renderer: 'onRendererColumnNotice'},
                                     {text: 'PNR', dataIndex: 'A2548PNR', width: 90},
-                                    {text: 'EPR', dataIndex: 'A2548EPR', width: 90}
-                                    
+                                    {text: 'EPR', dataIndex: 'A2548EPR', width: 90},
+                                    {text: 'ASRLINK', dataIndex: 'A2548CORR', width: 100, sortable: false, renderer: 'onRendererColumnASRLINK'}
                                     //
 
                                 ], listeners: {

@@ -15,7 +15,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreUUIDForm', {
     ],
     title: 'Facturación de boletos',
     header: true,
-    width: 990,
+    width: 1050,
     height: 550,
     border: false,
     resizable: false,
@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreUUIDForm', {
                                     listeners: {
                                         keypress: function (obj, e) {
                                             if (e.getKey() === e.ENTER) {
-                                                Ext.getCmp(prototype.id + '-FECHA2').focus();
+                                                Ext.getCmp(prototype.id03 + '-FECHA2').focus();
                                             }
                                         }
                                     }
@@ -158,7 +158,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreUUIDForm', {
                                                     xtype: 'button',
                                                     id: prototype.id03 + '-btn-set-facturacion',
                                                     text: 'Timbrar',
-                                                    hidden:true,
+                                                    hidden: true,
                                                     icon: 'resources/img/botones/process.png',
                                                     listeners: {
                                                         click: 'onSaveFacturacionClick'
@@ -168,7 +168,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreUUIDForm', {
                                                     xtype: 'button',
                                                     id: prototype.id03 + '-btn-get-UUID',
                                                     text: 'Datos FE',
-                                                    hidden:true,
+                                                    hidden: true,
                                                     icon: 'resources/img/botones/download.png',
                                                     listeners: {
                                                         click: 'onSaveClick'
@@ -187,6 +187,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreUUIDForm', {
                     id: prototype.id03 + '-form02',
                     layout: 'hbox',
                     width: '100%',
+                    margin: '5 5 5 5',
                     hidden: true,
                     items: [
                         {
@@ -222,6 +223,15 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreUUIDForm', {
                                             listeners: {
                                                 click: 'Onsearch'
                                             }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id03 + '-btn-file',
+                                            text: 'Enviar facturas',
+                                            iconCls: 'prx-icon-process-send',
+                                            listeners: {
+                                                click: 'OnEnviarForm'
+                                            }
                                         }
                                     ]
                                 }
@@ -234,25 +244,13 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPPreForm.ControlUATPPreUUIDForm', {
                     xtype: 'panel',
                     id: prototype.id03 + '-panel-contenedor-grid',
                     layout: 'fit',
-                    width: 1000,
-                    items: [{
+                    items: [
+                        {
                             xtype: prototype.id05 + '-info04'
                         }
                     ]
                             // </editor-fold>                                                 
                 }
-//                {
-//                    // <editor-fold defaultstate="collapsed" desc="grid-det">
-//                    xtype: 'panel',
-//                    id: prototype.id03 + '-panel-contenedor-grid-det',
-//                    width: 920,
-//                    layout: 'fit',
-//                    items: [{
-//                            xtype: prototype.id03 + '-info02'
-//                        }
-//                    ]
-//                    // </editor-fold>
-//                }
             ]
         }
     ],

@@ -576,6 +576,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeGestionBspli
                                      return dat;
                                      }
                                      },*/
+                                    {text: 'Bsplink', dataIndex: 'A2548STCOR', width: 100, align: 'center'},
                                     {text: 'Days', dataIndex: 'A2548DIAS', width: 50, align: 'center'},
                                     {
                                         text: '',

@@ -114,6 +114,7 @@ public class SalesReconciliationDoublePayController {
     public ResponseEntity<?> downloadInfo(@ModelAttribute SQP05163Filter params){
         System.out.println("---------------SalesReconciliationDoublePay:downloadInfo-------------");
         try {
+            params.setExcel(true);
             SQP05163Filter filter = logic.loadSQP05163Filter(params);
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();

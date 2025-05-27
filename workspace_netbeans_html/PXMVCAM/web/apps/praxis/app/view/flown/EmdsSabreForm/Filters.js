@@ -25,6 +25,8 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Filters', {
             valueField: 'code',
             queryMode: 'local',
             editable: false,
+            hidden: true,
+            readOnly: true,
             value: 'S',
             listeners: {
                 change: 'onChangeFilters'
@@ -72,7 +74,26 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Filters', {
                                 hidden: false
                             },
                             items: [
-                                 {
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Search By',
+                                    name: 'IN_TDATE',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ["FPROC", "Processing Date"]
+                                        ]
+                                    }),
+                                    labelWidth: 60,
+                                    width: 180,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    readOnly: true,
+                                    value: 'FPROC'
+                                },
+                                {
                                     xtype: 'datefield',
                                     name: 'IN_FPROCF',
                                     fieldLabel: 'From',
@@ -130,8 +151,7 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Filters', {
                                             ['', 'All'],
                                             ['S', 'ASR'],
                                             ['A', 'ARC'],
-                                            ['B', 'BSP'],
-                                            ['C', 'CTN']
+                                            ['B', 'BSP']
                                         ]
                                     }),
                                     labelWidth: 60,
@@ -162,6 +182,19 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Filters', {
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Ticket Number',
+                                    labelWidth: 110,
+                                    width: 230,
+                                    name: 'IN_TICKET',
+                                    maxLength: 13, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
                                 }
                             ]
                         }
@@ -173,7 +206,7 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Filters', {
                 {
                     xtype: 'form',
                     border: false,
-                    hidden:true,
+                    hidden: true,
                     id: prototype.id + '-formFiltersB',
                     bodyStyle: 'background: transparent',
                     margin: '0 0 0 10',
@@ -201,7 +234,7 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Filters', {
                                 hidden: false
                             },
                             items: [
-                                 {
+                                {
                                     xtype: 'datefield',
                                     name: 'IN_FPROCF',
                                     fieldLabel: 'From',

@@ -44,6 +44,13 @@ public class A1691Filter extends A1691 {
     public String strDescCARRIVA = "";
     public String strDescFFLOW = "";
     public String strSQL = "";
+    public String USRDESCRIP = "";
+    public String FECRDESCRIP = "";
+    public String USACDESCRIP = "";
+    public String FEACDESCRIP = "";
+    public String HOACDESCRIP = "";
+    public String USCRDESCRIP = "";
+    public String HOCRDESCRIP = "";
     public long RN  = 0;
     
     public String FPROC   = "";

@@ -5,6 +5,7 @@
  */
 package net.miatech.praxis.dao.eecta;
 
+import com.google.gson.JsonArray;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,6 +23,7 @@ import net.miatech.praxis.eecta.SQP05189Filter;
 import net.miatech.praxis.eecta.SQP05190Filter;
 import net.miatech.praxis.eecta.SQP05191Filter;
 import net.miatech.praxis.eecta.SQP05192Filter;
+import net.miatech.praxis.eecta.SQP05524Filter;
 import org.apache.log4j.Logger;
 
 /**
@@ -86,6 +88,10 @@ public class ControlUATPPreDAO {
                 objRtn.A1530FCONT = rs01.getString("A1530FCONT");
                 objRtn.A1530STS9 = rs01.getString("A1530STS9");
                 objRtn.STS9 = rs01.getString("STS9");
+                objRtn.RPTE = rs01.getString("RPTE");
+                objRtn.APL = rs01.getString("APL");
+                objRtn.FAC = rs01.getString("FAC");
+
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
@@ -215,22 +221,21 @@ public class ControlUATPPreDAO {
 
     public SQP04530Filter setSQP04530Filter(SQP04530Filter filter) throws SQLException, Exception {
         CallableStatement cstmt = null;
-        String SQLCLL01 = "{CALL PXUATP.SQP04530(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXUATP.SQP04530(?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(6, Types.VARCHAR);
             cstmt.registerOutParameter(7, Types.VARCHAR);
-            cstmt.registerOutParameter(8, Types.VARCHAR);
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.VP_PROCESO);
             cstmt.setString(3, filter.VP_FDATE1);
-            cstmt.setString(4, filter.VP_FDATE2);
-            cstmt.setString(5, filter.VP_FEJEC);
-            cstmt.setString(6, filter.VP_CDCLI);
+            cstmt.setString(4, filter.VP_TIPO);
+            cstmt.setString(5, filter.VP_CDCLI);
             cstmt.execute();
-            filter.dbException.SQLCODE = cstmt.getString(7);
-            filter.dbException.MESSAGE = cstmt.getString(8);
+            filter.dbException.SQLCODE = cstmt.getString(6);
+            filter.dbException.MESSAGE = cstmt.getString(7);
 
         } finally {
             if (cstmt != null) {
@@ -397,6 +402,10 @@ public class ControlUATPPreDAO {
                 objRtn.A4250RMSG = rs01.getString("A4250RMSG");
                 objRtn.A4250PXML = rs01.getString("A4250PXML");
                 objRtn.A4250PPDF = rs01.getString("A4250PPDF");
+                objRtn.A4250IENV = rs01.getString("A4250IENV");
+
+                objRtn.RSOCI = rs01.getString("A3953RSOCI");
+                objRtn.REFER = rs01.getString("A3953REFER");
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -635,5 +644,35 @@ public class ControlUATPPreDAO {
         }
 
         return lstRtn;
+    }
+
+    public SQP05524Filter setSQP05524Filter(SQP05524Filter filter) throws SQLException, Exception {
+        CallableStatement cstmt = null;
+        String SQLCLL01 = "{CALL PXUATP.SQP05524(?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(4, Types.VARCHAR);
+            cstmt.registerOutParameter(5, Types.VARCHAR);
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.VP_EMAILS);
+            cstmt.setString(3, filter.VP_DATA.toString());
+            cstmt.execute();
+            filter.dbException.SQLCODE = cstmt.getString(4);
+            filter.dbException.MESSAGE = cstmt.getString(5);
+
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return filter;
     }
 }

@@ -33,7 +33,18 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.DetailGrid', {
             },
             {text: 'Seq', dataIndex: 'SEQ', width: 60},
             {text: 'Coupon', dataIndex: 'CUPON', width: 60},
-            {text: 'Source', dataIndex: 'FTE', width: 70},
+            {text: 'Source', dataIndex: 'FTE', width: 70,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#92ea84;";
+                            const opts = {
+                                'B': 'BSP',
+                                'A': 'ARC',
+                                'M': 'MAN',
+                                'S': 'ASR'
+                            };
+                            return opts[value];
+                        }
+            },
             {text: 'Group', dataIndex: 'GRUPO', width: 80},
             {
                 text: 'Process Information',
@@ -60,7 +71,25 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.DetailGrid', {
                         }
                     },
                     {text: 'BATCH', dataIndex: 'LOTE', width: 100},
-                    {text: 'Status<br>Changed', dataIndex: 'STCHG', width: 80}
+                    {text: 'Status<br>Changed', dataIndex: 'STUSE', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#84abea;";
+
+                            const {STUSE, STVAL} = record.data;
+                            if (STVAL === '1') {
+                                value = '#dae868';
+                            } else {
+                                if (record.data.STUSE.trim() === 'USED') {
+                                    value = 'green';
+                                    //return `${value} <img src="resources/img/icon/16x16/circle_green.png"/>`;
+                                } else {
+                                    value = 'red';
+                                    //return `${value} <img src="resources/img/icon/16x16/circle_red.png"/>`;
+                                }
+                            }
+                            return  `${STUSE} <i class="fas fa-circle" style="font-size: 16px; color: ${value} ;"></i>`;
+                        }
+                    }
                 ]
             },
             {
@@ -76,11 +105,22 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.DetailGrid', {
                 },
                 columns: [
                     {text: 'Doc.<br>Code', dataIndex: 'CDOC', width: 80},
-                    {text: 'Doc.<br>Type', dataIndex: 'TDOC', width: 80},
+                    {text: 'RFIC', dataIndex: 'RFIC', width: 80},
+                    {text: 'RFISC', dataIndex: 'RFIS', width: 80},
                     {text: 'Country', dataIndex: 'PSVVTA', width: 60},
                     {text: 'IATA<br>Code', dataIndex: 'AGTIA', width: 100},
                     {text: 'Sale<br>Date', dataIndex: 'FVTA', width: 90},
-                    {text: 'Pax<br>Type', dataIndex: 'TPAX', width: 100}
+                    {text: 'Pax<br>Type', dataIndex: 'TPAX', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#92ea84;";
+                            const opts = {
+                                'A': 'Adult',
+                                'C': 'Child',
+                                'I': 'Infant'
+                            };
+                            return opts[value];
+                        }
+                    }
                 ]
             },
             {
