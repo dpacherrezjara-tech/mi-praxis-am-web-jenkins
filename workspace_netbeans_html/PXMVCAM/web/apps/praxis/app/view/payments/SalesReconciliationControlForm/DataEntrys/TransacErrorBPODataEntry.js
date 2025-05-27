@@ -432,7 +432,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 '2': 'PNR',
                                                 '3': 'C.Card',
                                                 '4': 'Desg. Manual',
-                                                '5': 'Desg. Transac.'
+                                                '5': 'Desg. Transac.',
+                                                '6': 'Desg. Duplic.',
+                                                '7': 'Desg. Multip.'
                                             };
                                             field.setRawValue(opts[newValue] || '');
                                         }
@@ -604,7 +606,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             labelWidth: 65,
                                             width: 145,
                                             format: 'Ymd',
-                                            editable: false,
+                                            editable: true,
                                             value: new Date()
                                         },
                                         {
@@ -698,6 +700,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             enforceMaxLength: true,
                                             maskRe: /[a-zA-Z0-9]/
                                         },
+                                        
                                         {
                                             xtype: 'button',
                                             width: 110,

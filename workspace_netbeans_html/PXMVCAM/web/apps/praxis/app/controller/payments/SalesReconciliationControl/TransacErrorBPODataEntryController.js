@@ -6,11 +6,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     init: function (view) {
     },
     afterRender: async function () {
-        //console.log(this.view.obj);
-        this.view.mask('Loading...');
+        const me = this;
+        me.view.setLoading(true);
         await this.getCodeAdjustments();
         await this.getData();
-        this.view.unmask();
+        me.view.setLoading(false);
     },
     getData: async function () {
         const me = this;
@@ -42,7 +42,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     changePerspective: function () {
         const me = this;
         const userName = $('#menuUser').text();
-        const match = ["1", "5", "6", "7"];
+        const match = ["1", "5", "6", "7", "8", "9", "D"];
         const status = me.bean.stval;
         const {tgrosamoun, svfops} = me.bean;
         let diff = tgrosamoun - svfops;
@@ -163,15 +163,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const revStandBy = Ext.getCmp(prototype.idDE + '-revStandBy');
         const hideStandBy = Ext.getCmp(prototype.idDE + '-hideStandBy');
         const adju = Ext.getCmp(prototype.idDE + '-addStandByAdju');
-        
+
         if (show) {
-            if((this.bean.cerror==='18' || this.bean.cerror==='19') && this.bean.stval === '0'){
+            if ((this.bean.cerror === '18' || this.bean.cerror === '19') && this.bean.stval === '0') {
                 txtBpo.setReadOnly(true);
-                adju.setValue(true); 
+                adju.setValue(true);
                 adju.setReadOnly(true);
-            }else{
+            } else {
                 txtBpo.setReadOnly(false);
-                adju.setValue(false); 
+                adju.setValue(false);
                 adju.setReadOnly(false);
             }
             addStandBy.show();
@@ -297,7 +297,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     }
                 });
     },
-    saveStandBy: async function(params){
+    saveStandBy: async function (params) {
         const me = this;
         me.view.mask('Loading...');
         const res = await fetch(`${me.url}/errorTransactionBPOsetStandBy`, {
@@ -324,12 +324,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             global.Msg({msg: 'Error.'});
         }
     },
-    onChangeStandyByAdju:function(btn){
+    onChangeStandyByAdju: function (btn) {
         const txtBpo = Ext.getCmp(prototype.idDE + '-bpocoment');
         txtBpo.setValue('');
-        if(btn.value){
+        if (btn.value) {
             txtBpo.setReadOnly(true);
-        }else{
+        } else {
             txtBpo.setReadOnly(false);
         }
     },
@@ -389,7 +389,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     onUpdateClick: function (btn) {
         const me = this;
         let params = me.formatUpdateParams();
-        if (params.detail.filter(x=>x.SCURRENCY !== params.IN_SCURRENCY).length > 0){
+        if (params.detail.filter(x => x.SCURRENCY !== params.IN_SCURRENCY).length > 0) {
             global.Msg({msg: 'One or more tickets have differents currency!'});
             return;
         }
@@ -576,91 +576,164 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         scannerInputs.unmask();
     },
     onAddDuplicated: async function () {
+
         const me = this;
         const scannerInputs = Ext.getCmp(prototype.idDE + '-scannerInputs');
-        const adjuPanel = Ext.getCmp(prototype.idDE + '-panelAdjustments');
-        scannerInputs.mask('Loading...');
+        scannerInputs.setLoading(true);
         const scannerForm = Ext.getCmp(prototype.idDE + '-scannerForm').getForm();
         if (!scannerForm.isValid()) {
             global.Msg({msg: 'Invalid Parameters'});
-            scannerInputs.unmask();
+            scannerInputs.setLoading(false);
             return;
         }
         let params = {
             IN_CCUST: '139',
             IN_TDOC: me.bean.tdoc,
             IN_TRANSTYPE: me.bean.transtype,
+            IN_SMERCHID: me.bean.smerchid,
+            IN_SCARDN: '',
             ...scannerForm.getValues()
         };
-        if (params.creditcard.at(0) !== '' && params.creditcard.at(1) !== '') {
-            params.IN_SCARDN = `${params.creditcard.at(0)}%${params.creditcard.at(1)}%`;
-        }
+        console.log(params);
 
-        if (params.IN_TICKET === '' || params.IN_SAGENT === '' || params.IN_SPNR === '') {
+        if (!scannerForm.isValid()) {
             global.Msg({msg: 'Invalid Parameters'});
-            scannerInputs.unmask();
+            scannerInputs.setLoading(false);
             return;
         }
-        const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments');
-        const adjuStore = gridAdju.getStore();
-        adjuStore.removeAll();
-        const res = await fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`);
-        if (res.ok) {
-            const data = await res.json();
-            if (data.response.length === 0) {
-                global.Msg({msg: 'Not Found'});
-                scannerInputs.unmask();
-                return;
-            }
-            const adju = {
-                ...data.response.at(0)
-            };
-            adju.trncu = 'ADJU';
-            adju.svfops = me.bean.tgrosamoun;
-            adjuStore.insert(0, adju);
-            gridAdju.getView().refresh();
-            adjuPanel.show();
-            me.view.center();
-            console.log(data.response.at(0));
+
+        if (params.IN_TICKET === '' && params.IN_SDATE === '') {
+            global.Msg({msg: 'Invalid Parameters'});
+            scannerInputs.setLoading(false);
+            return;
         }
-        scannerInputs.unmask();
+
+        try {
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05062', params);
+
+            if (res.lstRs.length > 0) {
+                let tkt = res.lstRs.at(0).at(0);
+                const {CCIA, FORMA, SERIE, TDOC, SEQ, TCORR} = tkt;
+                const newWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.PagoDuplicadoDataEntry', {
+                    id: prototype.id + '-PagoDuplicadoDataEntry-2',
+                    ticket: {
+                        IN_CCUST: '139',
+                        IN_CIA: CCIA,
+                        IN_FORMA: FORMA,
+                        IN_SERIE: SERIE,
+                        IN_SEQ: SEQ,
+                        IN_CORRL: TCORR,
+                        IN_TDOCVTA: TDOC,
+                        IN_PRDA: me.bean.prda,
+                        IN_TDOC: me.bean.tdoc,
+                        IN_AREFNBR: me.bean.arefnbr
+                    },
+                    status: me.bean.stval,
+                    resetDataEntry: () => {
+                        me.afterRender();
+                    }
+                });
+                newWin.show();
+            } else {
+                global.Msg({msg: 'Not Found'});
+            }
+        } catch (e) {
+            global.Msg({msg: 'Error'});
+        } finally {
+            scannerInputs.setLoading(false);
+        }
+
+
+        /*
+         
+         const adjuPanel = Ext.getCmp(prototype.idDE + '-panelAdjustments');
+         const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments');
+         const adjuStore = gridAdju.getStore();
+         adjuStore.removeAll();
+         const res = await fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`);
+         if (res.ok) {
+         const data = await res.json();
+         if (data.response.length === 0) {
+         global.Msg({msg: 'Not Found'});
+         scannerInputs.unmask();
+         return;
+         }
+         const adju = {
+         ...data.response.at(0)
+         };
+         adju.trncu = 'ADJU';
+         adju.svfops = me.bean.tgrosamoun;
+         adjuStore.insert(0, adju);
+         gridAdju.getView().refresh();
+         adjuPanel.show();
+         me.view.center();
+         console.log(data.response.at(0));
+         }
+         scannerInputs.unmask();
+         */
+
     },
     onAddDuplicatedGrid: async function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
-        const blockedPanel = Ext.getCmp(prototype.idDE + '-tabBlocked');
-        blockedPanel.mask('Loading...');
-        const adjuPanel = Ext.getCmp(prototype.idDE + '-panelAdjustments');
-        const obj = record.data;
-        let params = {
-            IN_CCUST: '139',
-            IN_TDOC: me.bean.tdoc,
-            IN_TRANSTYPE: me.bean.transtype,
-            IN_TICKET: obj.ccia + obj.forma + obj.serie,
-            IN_SAGENT: obj.sagent,
-            IN_SDATE: obj.sdate
-        };
-        const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments');
-        const adjuStore = gridAdju.getStore();
-        adjuStore.removeAll();
-        const res = await fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`);
-        if (res.ok) {
-            const data = await res.json();
-            if (data.response.length === 0) {
-                global.Msg({msg: 'Not Found'});
-                return;
+        /*
+         const blockedPanel = Ext.getCmp(prototype.idDE + '-tabBlocked');
+         blockedPanel.mask('Loading...');
+         const adjuPanel = Ext.getCmp(prototype.idDE + '-panelAdjustments');
+         
+         const obj = record.data;
+         console.log(obj);
+         let params = {
+         IN_CCUST: '139',
+         IN_TDOC: me.bean.tdoc,
+         IN_TRANSTYPE: me.bean.transtype,
+         IN_TICKET: obj.ccia + obj.forma + obj.serie,
+         IN_SAGENT: obj.sagent,
+         IN_SDATE: obj.sdate
+         };
+         const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments');
+         const adjuStore = gridAdju.getStore();
+         adjuStore.removeAll();
+         const res = await fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`);
+         if (res.ok) {
+         const data = await res.json();
+         if (data.response.length === 0) {
+         global.Msg({msg: 'Not Found'});
+         return;
+         }
+         const adju = {
+         ...data.response.at(0)
+         };
+         adju.trncu = 'ADJU';
+         adju.svfops = me.bean.tgrosamoun;
+         adjuStore.insert(0, adju);
+         gridAdju.getView().refresh();
+         adjuPanel.show();
+         me.view.center();
+         console.log(data.response.at(0));
+         }
+         blockedPanel.unmask();
+         */
+        const {ccia, forma, serie, tdoc, seq, tcorr} = record.data;
+        const newWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.PagoDuplicadoDataEntry', {
+            id: prototype.id + '-PagoDuplicadoDataEntry-1',
+            ticket: {
+                IN_CCUST: '139',
+                IN_CIA: ccia,
+                IN_FORMA: forma,
+                IN_SERIE: serie,
+                IN_SEQ: seq,
+                IN_CORRL: tcorr,
+                IN_TDOCVTA: tdoc,
+                IN_PRDA: me.bean.prda,
+                IN_TDOC: me.bean.tdoc,
+                IN_AREFNBR: me.bean.arefnbr
+            },
+            status: me.bean.stval,
+            resetDataEntry: () => {
+                me.afterRender();
             }
-            const adju = {
-                ...data.response.at(0)
-            };
-            adju.trncu = 'ADJU';
-            adju.svfops = me.bean.tgrosamoun;
-            adjuStore.insert(0, adju);
-            gridAdju.getView().refresh();
-            adjuPanel.show();
-            me.view.center();
-            console.log(data.response.at(0));
-        }
-        blockedPanel.unmask();
+        });
+        newWin.show();
     },
     onClickMSITracking: function () {
         const me = this;
@@ -981,7 +1054,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             IN_PROCTYPE: obj.proctype,
             IN_PROCTYPESQ: obj.proctypesq,
             IN_OBSERV: comment,
-            IN_ADJU: adju?'Y':'',
+            IN_ADJU: adju ? 'Y' : '',
             detail: details
         };
         return params;
@@ -1042,7 +1115,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 o.TRNCU = o.TRNCO || '';
             }
             o.TDOC = obj.tdoc;
-            if(o.STMANUAL !== 'Adjustment' && o.TDOC !== o.TDOCO){
+            if (o.STMANUAL !== 'Adjustment' && o.TDOC !== o.TDOCO) {
                 o.CERROR === '79';
                 cerror = '79';
             }
