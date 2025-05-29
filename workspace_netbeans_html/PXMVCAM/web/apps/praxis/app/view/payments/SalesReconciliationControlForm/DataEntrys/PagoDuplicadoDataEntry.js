@@ -45,7 +45,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                             },
                             items: [
                                 {boxLabel: '<b style="color:#148D28;">Duplicated</b>', name: 'opcion', inputValue: 'D',checked: true, width: 90},
-                                {boxLabel: '<b style="color:#148D28;">Multi-Payment</b>', name: 'opcion', inputValue: 'M',  width: 120}
+                                {boxLabel: '<b style="color:#148D28;">Multi-Payment</b>', name: 'opcion', inputValue: 'M',  width: 120, readOnly:true}
                             ],
                             listeners: {
                                 change: 'onChangeOption'
