@@ -118,6 +118,24 @@ Ext.define('Ext.Praxis.controller.invoice.BillableCodeCatalog.MaintenanceDataEnt
         console.log(params);
         return params;
     },
+    onChangeType: function(btn){
+        const txtKey = Ext.getCmp(prototype.idDE + '-txtKey');
+        const txtCuent = Ext.getCmp(prototype.idDE + '-txtCuenta');
+        const txtScuen = Ext.getCmp(prototype.idDE + '-txtSubcuen');
+        
+        txtCuent.setValue('');
+        txtScuen.setValue('');
+        txtKey.setValue('');
+        txtKey.hide();
+        txtCuent.hide();
+        txtScuen.hide();
+        if(btn.value === 'CTA'){
+            txtCuent.show();
+            txtScuen.show();
+        }else{
+            txtKey.show();
+        }
+    },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){
         return Ext.getCmp(prototype.id + id);

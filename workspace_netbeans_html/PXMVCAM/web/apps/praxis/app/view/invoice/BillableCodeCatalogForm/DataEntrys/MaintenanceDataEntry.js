@@ -92,13 +92,10 @@ Ext.define('Ext.Praxis.view.invoice.BillableCodeCatalogForm.DataEntrys.Maintenan
                                             valueField: 'code',
                                             queryMode: 'local',
                                             editable: false,
-                                            value: 'CTA'
-                                        },
-                                        {
-                                            fieldLabel: 'Key',
-                                            name: 'CLAVE',
-                                            width: 160,
-                                            labelWidth: 40
+                                            value: 'CTA',
+                                            listeners: {
+                                                change: 'onChangeType'
+                                            }
                                         },
                                         {
                                             xtype: 'combobox',
@@ -123,6 +120,38 @@ Ext.define('Ext.Praxis.view.invoice.BillableCodeCatalogForm.DataEntrys.Maintenan
                                             queryMode: 'local',
                                             editable: false,
                                             value: '0'
+                                        }
+                                    ]
+                                },
+                                {
+                                    items: [
+                                        {
+                                            fieldLabel: 'Key',
+                                            name: 'CLAVE',
+                                            hidden: true,
+                                            id: prototype.idDE + '-txtKey',
+                                            width: 250,
+                                            labelWidth: 100
+                                        },
+                                        {
+                                            fieldLabel: 'Account',
+                                            name: 'CUENTA',
+                                            id: prototype.idDE + '-txtCuenta',
+                                            maxLength: 4, // Límite máximo de caracteres
+                                            enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                            width: 190,
+                                            labelWidth: 100,
+                                            maskRe: /^[0-9]$/
+                                        },
+                                        {
+                                            fieldLabel: 'Sub-Account',
+                                            id: prototype.idDE + '-txtSubcuen',
+                                            name: 'SUBCUEN',
+                                            maxLength: 5, // Límite máximo de caracteres
+                                            enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                            width: 190,
+                                            labelWidth: 90,
+                                            maskRe: /^[0-9]$/
                                         }
                                     ]
                                 },

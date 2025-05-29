@@ -13,6 +13,6 @@ import net.miatech.praxis.payment.entities.CustomPageImpl;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class SQP05356Filter extends CustomPageImpl{
-    private String IN_TIPO,IN_CLAVE,IN_DESCRIP,IN_CFACT,IN_FDESDE,IN_FFIN;
+    private String IN_TIPO,IN_CLAVE,IN_CUENTA,IN_SUBCUEN,IN_DESCRIP,IN_CFACT,IN_FDESDE,IN_FFIN;
     List<?> response = new ArrayList<>();
 }

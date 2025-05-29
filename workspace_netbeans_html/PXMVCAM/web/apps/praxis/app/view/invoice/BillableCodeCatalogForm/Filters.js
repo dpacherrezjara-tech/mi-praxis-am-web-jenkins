@@ -69,16 +69,50 @@ Ext.define('Ext.Praxis.view.invoice.BillableCodeCatalogForm.Filters', {
                                     valueField: 'code',
                                     queryMode: 'local',
                                     editable: false,
-                                    value: ''
+                                    value: '',
+                                    listeners:{
+                                        change:'onChangeFilter'
+                                    }
                                 },
                                 {
                                     xtype: 'textfield',
                                     fieldLabel: 'Key',
+                                    id: prototype.id + '-txtKey',
                                     labelWidth: 40,
                                     width: 180,
                                     name: 'IN_CLAVE',
                                     maxLength: 10, // Límite máximo de caracteres
                                     enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Account',
+                                    labelWidth: 70,
+                                    hidden: true,
+                                    id: prototype.id + '-txtCuenta1',
+                                    width: 150,
+                                    maskRe: /^[0-9]$/,
+                                    name: 'IN_CUENTA',
+                                    maxLength: 4, // Límite máximo de caracteres
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Sub-Account',
+                                    id: prototype.id + '-txtCuenta2',
+                                    hidden: true,
+                                    labelWidth: 80,
+                                    width: 160,
+                                    name: 'IN_SUBCUEN',
+                                    maxLength: 5, // Límite máximo de caracteres
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    maskRe: /^[0-9]$/,
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
