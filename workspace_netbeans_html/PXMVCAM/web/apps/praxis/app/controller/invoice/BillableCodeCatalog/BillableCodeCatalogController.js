@@ -45,6 +45,25 @@ Ext.define('Ext.Praxis.controller.invoice.BillableCodeCatalog.BillableCodeCatalo
         const filters = Ext.getCmp(prototype.id + '-formFilters');
         filters.getForm().reset();
     },
+    onChangeFilter: function(btn){
+        //Ext.getCmp(prototype.id + '-formFilters').getForm().reset();
+        const txtKey = Ext.getCmp(prototype.id + '-txtKey');
+        const txtCuent = Ext.getCmp(prototype.id + '-txtCuenta1');
+        const txtScuen = Ext.getCmp(prototype.id + '-txtCuenta2');
+        
+        txtCuent.setValue('');
+        txtScuen.setValue('');
+        txtKey.setValue('');
+        txtKey.hide();
+        txtCuent.hide();
+        txtScuen.hide();
+        if(btn.value === 'CTA'){
+            txtCuent.show();
+            txtScuen.show();
+        }else{
+            txtKey.show();
+        }
+    },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){
