@@ -1,4 +1,4 @@
-prototype.idDE2 = prototype.id + '-formPagoDuplicado';
+prototype.idDE6 = prototype.id + '-formPagoDuplicado';
 
 Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.PagoDuplicadoDataEntry', {
     extend: 'Ext.window.Window',
@@ -37,7 +37,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                     items: [
                         {
                             xtype: 'radiogroup',
-                            id: prototype.idDE2 + '-viewOption',
+                            id: prototype.idDE6 + '-viewOption',
                             columns: 2, 
                             vertical: false, 
                             defaults: {
@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                             xtype: 'grid',
                             border: false,
                             title: 'Ticket',
-                            id: prototype.idDE2 + '-gridTicket',
+                            id: prototype.idDE6 + '-gridTicket',
                             columnLines: true,
                             autoScroll: true,
                             minHeight: 130,
@@ -110,7 +110,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                 {
                     xtype: 'form',
                     hidden: true,
-                    id: prototype.idDE2 + '-liquiParams',
+                    id: prototype.idDE6 + '-liquiParams',
                     width: '100%',
                     border: false,
                     layout: {
@@ -177,7 +177,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                 },
                 {
                     xtype: 'tabpanel',
-                    id: prototype.idDE2 + '-tabLiquis',
+                    id: prototype.idDE6 + '-tabLiquis',
                     width: '100%',
                     height: 'auto',
                     border: false,
@@ -192,7 +192,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                         {
                             title: 'Pending Load',
                             itemId: 'P',
-                            id: prototype.idDE2 + '-tabPending',
+                            id: prototype.idDE6 + '-tabPending',
                             items: [
                                 {
                                     xtype: 'grid',
@@ -205,7 +205,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                     },
                                     border: true,
                                     columnLines: true,
-                                    id: prototype.idDE2 + '-gridLiqPend',
+                                    id: prototype.idDE6 + '-gridLiqPend',
                                     width: '100%',
                                     maxHeight: 300,
                                     columns: {
@@ -302,7 +302,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                                 hidden: true,
                                                 width: 40,
                                                 text: 'Del.',
-                                                id: prototype.idDE2 + '-gridLiqDelete',
+                                                id: prototype.idDE6 + '-gridLiqDelete',
                                                 align: 'center',
                                                 items: [
                                                     {
@@ -320,7 +320,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                         {
                             title: 'Loaded',
                             itemId: 'C',
-                            id: prototype.idDE2 + '-tabConcil',
+                            id: prototype.idDE6 + '-tabConcil',
                             items: [
                                 {
                                     xtype: 'grid',
@@ -333,7 +333,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                     },
                                     border: true,
                                     columnLines: true,
-                                    id: prototype.idDE2 + '-gridLiqConc',
+                                    id: prototype.idDE6 + '-gridLiqConc',
                                     width: '100%',
                                     maxHeight: 300,
                                     columns: {

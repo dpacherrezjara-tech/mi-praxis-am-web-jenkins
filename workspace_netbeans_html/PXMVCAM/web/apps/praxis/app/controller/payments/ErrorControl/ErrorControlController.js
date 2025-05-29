@@ -166,7 +166,7 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
                    'Delivery':opts[x.A4701DELIV],
                    'Format':opts[x.A4701FORMA],
                    'Status':x.A4701STAT === 'OK'? 'OK': 'ERROR',
-                   'Error Code':x.A4701TFILE,
+                   'Error Code':x.A4701CDERR,
                    'Message':x.A4701MSN
                 }));
                 global.writeExcelFromJson(data,'MDP Load Control');
