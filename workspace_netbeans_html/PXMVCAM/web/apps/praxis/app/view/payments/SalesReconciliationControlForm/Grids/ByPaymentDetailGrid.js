@@ -87,8 +87,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         '4': 'Match Diff.',
                         '5': 'Match Manual',
                         '6': 'Forced Match',
-                        '7': 'Compensation Match',
-                        '8': 'Pending RFND'
+                        '7': 'Match Compensation',
+                        '8': 'Match Transactional',
+                        '9': 'Match Void'
                     };
                     return opts[value] || '';
                 }

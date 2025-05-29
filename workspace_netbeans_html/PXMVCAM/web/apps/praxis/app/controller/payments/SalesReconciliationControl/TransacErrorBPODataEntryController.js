@@ -31,18 +31,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const res = await fetch(`${me.url}/loadFilters`);
         if (res.ok) {
             const data = await res.json();
-            const cmbAdju = Ext.getCmp(prototype.idDE + '-codAdjustment');
-            const storeAdju = Ext.create('Ext.data.Store', {
-                data: data.codadju
-            });
             me.users = data.admins.map(x => x.a4451key3.trimEnd());
-            cmbAdju.setStore(storeAdju);
         }
     },
     changePerspective: function () {
         const me = this;
         const userName = $('#menuUser').text();
-        const match = ["1", "5", "6", "7", "8", "9", "D"];
+        const match = ["1", "5", "6", "7", "8", "9"];
         const status = me.bean.stval;
         const {tgrosamoun, svfops} = me.bean;
         let diff = tgrosamoun - svfops;
@@ -602,7 +597,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             return;
         }
 
-        if (params.IN_TICKET === '' && params.IN_SDATE === '') {
+        if (params.IN_TICKET === '' || params.IN_SDATE === '') {
             global.Msg({msg: 'Invalid Parameters'});
             scannerInputs.setLoading(false);
             return;

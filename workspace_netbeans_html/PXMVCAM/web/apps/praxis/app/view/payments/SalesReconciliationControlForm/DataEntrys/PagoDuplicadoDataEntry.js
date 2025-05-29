@@ -28,6 +28,33 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
             items: [
                 {
                     xtype: 'panel',
+                    width: '100%',
+                    border: false,
+                    layout: {
+                        type: 'hbox',
+                        pack: 'end'
+                    },
+                    items: [
+                        {
+                            xtype: 'radiogroup',
+                            id: prototype.idDE2 + '-viewOption',
+                            columns: 2, 
+                            vertical: false, 
+                            defaults: {
+                                margin: '0 5 0 5'
+                            },
+                            items: [
+                                {boxLabel: '<b style="color:#148D28;">Duplicated</b>', name: 'opcion', inputValue: 'D',checked: true, width: 90},
+                                {boxLabel: '<b style="color:#148D28;">Multi-Payment</b>', name: 'opcion', inputValue: 'M',  width: 120}
+                            ],
+                            listeners: {
+                                change: 'onChangeOption'
+                            }
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
                     layout: 'hbox',
                     align: 'center',
                     width: '100%',
@@ -75,6 +102,74 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                     {text: 'Curr', dataIndex: 'SCURRENCY', width: 60},
                                     {text: 'Rolling', dataIndex: 'SEQROLL', width: 70}
                                 ]
+                            }
+
+                        }
+                    ]
+                },
+                {
+                    xtype: 'form',
+                    hidden: true,
+                    id: prototype.idDE2 + '-liquiParams',
+                    width: '100%',
+                    border: false,
+                    layout: {
+                        type: 'hbox',
+                        pack: 'start'
+                    },
+                    defaults: {
+                        xtype: 'textfield',
+                        margin: '2 5 2 5',
+                        labelStyle: 'text-align:right;font-weight: bolder;',
+                        fieldStyle: 'text-align:center;'
+                    },
+                    items: [
+                        {
+                            xtype: 'datefield',
+                            fieldLabel: 'Processing Date',
+                            name: 'IN_PRDA',
+                            labelWidth: 120,
+                            width: 200,
+                            format: 'Ymd',
+                            editable: true,
+                            value: new Date()
+                        },
+                        {
+                            name: 'IN_CARD6',
+                            fieldLabel: 'C. Card',
+                            labelWidth: 80,
+                            width: 160,
+                            maxLength: 6,
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/
+                        },
+                        {
+                            xtype: 'label',
+                            text: '*****(*)'
+                        },
+                        {
+                            width: 50,
+                            name: 'IN_CARD4',
+                            maxLength: 4,
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/
+                        },
+                        {
+                            fieldLabel: 'Auth',
+                            name: 'IN_SAUTHOC',
+                            labelWidth: 45,
+                            width: 115,
+                            maxLength: 6,
+                            enforceMaxLength: true,
+                            maskRe: /[a-zA-Z0-9]/
+                        },
+                        {
+                            xtype: 'button',
+                            width: 30,
+                            iconCls: 'prx-icon-add',
+                            tooltip: 'Add',
+                            listeners: {
+                                click: 'onAddSettlement'
                             }
 
                         }
@@ -204,6 +299,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                             {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',
+                                                hidden: true,
                                                 width: 40,
                                                 text: 'Del.',
                                                 id: prototype.idDE2 + '-gridLiqDelete',

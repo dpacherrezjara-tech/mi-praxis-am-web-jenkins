@@ -383,8 +383,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 '4': 'Match Diff.',
                                                 '5': 'Match Manual',
                                                 '6': 'Forced Match',
-                                                '7': 'Compensation Match',
-                                                '8': 'Pending RFND'
+                                                '7': 'Match Compensation',
+                                                '8': 'Match Transactional',
+                                                '9': 'Match Void'
                                             };
                                             field.setRawValue(opts[newValue] || '');
                                         }
@@ -623,6 +624,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             xtype: 'checkbox',
                                             id: prototype.idDE + '-chkForceBlock',
                                             //tooltip: 'Force add Blocked',
+                                            hidden:true,
                                             inputValue: true,
                                             listeners: {
                                                 change: function (checkbox, newValue, oldValue, eOpts) {
@@ -700,7 +702,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             enforceMaxLength: true,
                                             maskRe: /[a-zA-Z0-9]/
                                         },
-                                        
+
                                         {
                                             xtype: 'button',
                                             width: 110,
@@ -774,7 +776,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             boxLabel: 'Adjustment',
                             id: prototype.idDE + '-addStandByAdju',
                             checked: false,
-                            listeners:{
+                            listeners: {
                                 change: 'onChangeStandyByAdju'
                             }
                         },
@@ -1569,15 +1571,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         xtype: 'combo',
                                         id: prototype.idDE + '-codAdjustment',
                                         name: 'adjucode',
-                                        valueField: 'a4451key3',
-                                        displayField: 'a4451desc1',
+                                        valueField: 'code',
+                                        displayField: 'name',
                                         value: '',
                                         queryMode: 'local',
                                         emptyText: 'Select',
                                         editable: false,
                                         width: 220,
                                         labelWidth: 80,
-                                        fieldLabel: 'Adju. Type'
+                                        fieldLabel: 'Adju. Type',
+                                        store: Ext.create('Ext.data.SimpleStore', {
+                                            fields: ['code', 'name'],
+                                            data: [
+                                                ['01', 'Dif. Liq. vs Sales'],
+                                                ['03', 'ADM/Doble emisión TKT'],
+                                                ['04', 'TKTs VOID']
+                                            ]
+                                        })
                                     },
                                     {
                                         xtype: 'textfield',
