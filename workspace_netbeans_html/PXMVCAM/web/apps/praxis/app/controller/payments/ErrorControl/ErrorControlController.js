@@ -142,8 +142,40 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
     formatFormatParams: function(){
         this.formatParams = Ext.getCmp(prototype.id + '-panelFilters2').getForm().getValues();
         return this.formatParams;
+    },
+    downloadLoadErrors:async function(){
+        const me = this;
+        let notifier = new AWN();
+        let params = this.formatLoadParams();
+        
+        let onOk = async () => {
+            let loadExcel = async ()=>{
+                const res = await global.callStorePagginExcel('PRAXISMP','SQP05559',params);
+                const opts = {
+                  'Y':'OK',
+                  'N':'Error',
+                  'P':'Process'
+                };
+                let data = res.map(x=>({
+                   'Processing Date':x.A4701PRDA,
+                   'Process':x.A4701PROCE,
+                   'File':x.A4701TFILE,
+                   'File Name':x.A4701NFILE,
+                   'File Path':x.A4701PATH,
+                   'Transfer':opts[x.A4701UPLOA],
+                   'Delivery':opts[x.A4701DELIV],
+                   'Format':opts[x.A4701FORMA],
+                   'Status':x.A4701STAT === 'OK'? 'OK': 'ERROR',
+                   'Error Code':x.A4701TFILE,
+                   'Message':x.A4701MSN
+                }));
+                global.writeExcelFromJson(data,'MDP Load Control');
+            };
+            notifier.async(loadExcel());
+        };
+        notifier.confirm('Download Excel?',onOk,null);
+        
     }
-
 
 });
 
