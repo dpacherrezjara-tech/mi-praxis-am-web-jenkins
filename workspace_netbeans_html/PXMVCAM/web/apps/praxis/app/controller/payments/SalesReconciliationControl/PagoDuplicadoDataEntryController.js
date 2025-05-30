@@ -11,9 +11,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
     getTicketInfo: async function () {
         const me = this;
         me.view.setLoading(true);
-        const gridTkt = Ext.getCmp(prototype.idDE2 + '-gridTicket');
-        const gridPending = Ext.getCmp(prototype.idDE2 + '-gridLiqPend');
-        const gridConcil = Ext.getCmp(prototype.idDE2 + '-gridLiqConc');
+        const gridTkt = Ext.getCmp(prototype.idDE6 + '-gridTicket');
+        const gridPending = Ext.getCmp(prototype.idDE6 + '-gridLiqPend');
+        const gridConcil = Ext.getCmp(prototype.idDE6 + '-gridLiqConc');
         try {
             const res = await global.callStoreGet('PRAXISMP', 'SQP05602', me.view.ticket);
             me.tkt = res.lstRs.at(0);
@@ -36,7 +36,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
         let notifier = new AWN();
         let params = me.formatParams();
         let onOk = () => {
-            const rbOption = Ext.getCmp(prototype.idDE2 + '-viewOption').lastValue.opcion;
+            const rbOption = Ext.getCmp(prototype.idDE6 + '-viewOption').lastValue.opcion;
             if (rbOption === 'D') {
                 me.duplicatedConciliation(params);
             } else {
@@ -121,7 +121,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
         this.view.close();
     },
     onChangeOption: function (obj) {
-        const formParams = Ext.getCmp(prototype.idDE2 + '-liquiParams');
+        const formParams = Ext.getCmp(prototype.idDE6 + '-liquiParams');
         if (obj.lastValue.opcion === 'D') {
             this.codadju = '02';
             formParams.hide();
