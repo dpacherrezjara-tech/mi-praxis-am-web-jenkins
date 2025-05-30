@@ -18,5 +18,7 @@ public class A4586 {
             UREVIS,
             FREVIS,
             FDESDE,
-            FFIN;
+            FFIN,
+            CUENTA,
+            SUBCUEN;
 }
