@@ -88,8 +88,30 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.GridData', {
                                     }
                                 ]
                             },
+//                            {
+//                                text: 'Plusgrade',
+//                                defaults: {
+//                                    menuDisabled: true,
+//                                    sortable: false,
+//                                    align: 'center'
+//                                },
+//                                columns: [
+//                                    {
+//                                        text: 'VS AMEX', dataIndex: 'descFAMEX', width: 80
+//                                    },
+//                                    {
+//                                        text: 'Match Date', dataIndex: 'AMEXFECSELEC', width: 80
+//                                    },
+//                                    {
+//                                        text: 'VS Sales', dataIndex: 'descSTVAL', width: 80
+//                                    },
+//                                    {
+//                                        text: 'Match Date', dataIndex: 'descVSSales', width: 80
+//                                    },
+//                                ]
+//                            },
                             {
-                                text: 'Plusgrade',
+                                text: 'Plusgrade VS AMEX',
                                 defaults: {
                                     menuDisabled: true,
                                     sortable: false,
@@ -97,11 +119,27 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.GridData', {
                                 },
                                 columns: [
                                     {
-                                        text: 'VS AMEX', dataIndex: 'descFAMEX', width: 80
+                                        text: 'Status', dataIndex: 'descFAMEX', width: 80
                                     },
                                     {
-                                        text: 'VS Sales', dataIndex: 'descSTVAL', width: 80
+                                        text: 'Date', dataIndex: 'amexFECSELEC', width: 80
+                                    }
+                                ]
+                            },
+                            {
+                                text: 'Plusgrade VS Sales',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                columns: [
+                                    {
+                                        text: 'Status', dataIndex: 'descSTVAL', width: 80
                                     },
+                                    {
+                                        text: 'Date', dataIndex: 'descVSSales', width: 80
+                                    }
                                 ]
                             },
                             {

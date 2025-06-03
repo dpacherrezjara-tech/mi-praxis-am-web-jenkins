@@ -55,10 +55,12 @@ public class SalesComplementDAO implements SalesComplementLogic {
             //descSTVAL
             if (bean.getSTVAL().trim().equals("")) {
                 bean.setDescSTVAL("Pending");
-            } else if (bean.getSTVAL().equals("1") && bean.getSTCON().trim().equals("")) {
+            } else if (bean.getSTVAL().equals("1") && bean.getSTCON().trim().equals("") ) {
                 bean.setDescSTVAL("Match");
-            } else if (bean.getSTVAL().equals("1") && bean.getSTCON().equals("2")) {
+                bean.setDescVSSales(bean.getFECSELEC()); 
+            } else if (bean.getSTVAL().equals("1") && bean.getSTCON().equals("1") ) {
                 bean.setDescSTVAL("Accounted");
+                bean.setDescVSSales(bean.getFECSELEC());
             }
             //descFAMEXCHG
             if (bean.getFAMEXCHG().equals("1")) {
