@@ -48,7 +48,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                             valueField: 'code', displayField: 'name',
                             value: "SDATE",
                             labelWidth: 100,
-                            width: 100,
+                            width: 120,
                             anchor: '100%',
                             margin: '0 0 0 86',
                             listeners: {
