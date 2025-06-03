@@ -5,7 +5,8 @@
 prototype.widthContenedor = 1100;
 prototype.widthGrid = '100%';
 prototype.id = 'SimplifiedUsageFileControlForm'; 
-//prototype.url = 'SimplifiedUsageFile'; 
+prototype.id01 = 'SimplifiedUsageFileControlDetailError'; 
+ 
 
 Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.SimplifiedUsageFileControlForm', {
     extend: 'Ext.form.Panel',

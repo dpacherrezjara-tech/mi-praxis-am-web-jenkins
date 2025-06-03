@@ -48,7 +48,6 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                             xtype: 'grid',
                             id: prototype.id + '-gridData',
                             columnLines: true,
-                            //width: 990,
                             width: '99%',
                             height: 350,
                             padding: '0px 5px 1px 5px',
@@ -68,53 +67,105 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                                         columns: [
                                             {text: 'Lift', dataIndex: 'QTYLIFT', width: 70, align: 'center'},
                                             {text: 'Payable', dataIndex: 'QTYIPAY', width: 70, align: 'center'},
-                                            {text: 'Total', dataIndex: 'QTYTOTAL', width: 70, align: 'center'}
+                                            {
+                                                xtype: 'widgetcolumn',
+                                                text: 'Total',
+                                                dataIndex: 'QTYTOTAL',
+                                                width: 90,
+                                                widget: {
+                                                    xtype: 'button',
+                                                    iconCls: 'prx-icon-docum',
+                                                    padding: '1px 1px',
+                                                    handler: function (btn) {
+                                                        const record = btn.getWidgetRecord();
+                                                        const FECHA = record.get('FECHA'); 
+
+                                                        // Crear store con paginación
+                                                        const cuponesStore = Ext.create('Ext.data.Store', {
+                                                            pageSize: 20,
+                                                            proxy: {
+                                                                type: 'ajax',
+                                                                url: prototype.url + '/detail-cupons',
+                                                                extraParams: {VP_FECHA: FECHA},
+                                                                reader: {
+                                                                    type: 'json',
+                                                                    rootProperty: 'data',
+                                                                    totalProperty: 'total'  // del backend
+                                                                }
+                                                            },
+                                                            fields: ['ID', 'RECORD', 'TEXT'],
+                                                            autoLoad: true
+                                                        });
+
+                                                        const win = Ext.create('Ext.window.Window', {
+                                                            title: 'Detalle del archivo',
+                                                            modal: true,
+                                                            layout: 'fit',
+                                                            width: 500,
+                                                            height: 580,
+                                                            items: [{
+                                                                    xtype: 'grid',
+                                                                    store: cuponesStore,
+                                                                    columns: [
+                                                                        {text: 'Nbr', dataIndex: 'ID', width: 60},
+                                                                        {text: 'Record <br>Type', dataIndex: 'RECORD', width: 80},
+                                                                        {text: 'Text data', dataIndex: 'TEXT', flex: 1}
+                                                                    ],
+                                                                    bbar: {
+                                                                        xtype: 'pagingtoolbar',
+                                                                        displayInfo: true,
+                                                                        bind: {store: cuponesStore} // o directamente `store: cuponesStore` sin un ViewModel
+                                                                    }
+                                                                }],
+                                                            buttons: [{
+                                                                    text: 'Cerrar',
+                                                                    handler: function (btn) {
+                                                                        btn.up('window').close();
+                                                                    }
+                                                                }]
+                                                        });
+
+                                                        win.show();
+                                                    }
+                                                }
+                                            }
                                         ]
                                     },
                                     {text: 'Status', dataIndex: 'ESTADO_1', width: 100, align: 'left',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            
-                                            if (record.get('ESTADO') === '1' || record.get('ESTADO') === '3' )
+
+                                            if (record.get('ESTADO') === '1' || record.get('ESTADO') === '3')
                                                 metaData.style = 'font-weight:bold;color:blue;';
-                                                                                        
+
                                             return value;
                                         }
                                     },
                                     {text: 'Message', dataIndex: 'LOGTXT', width: 200, align: 'left',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            if (record.get('ESTADO') === '0' || record.get('ESTADO') === '2' )
+                                            if (record.get('ESTADO') === '0' || record.get('ESTADO') === '2')
                                                 metaData.style = 'font-weight:bold;color:green;';
-                                            if (record.get('ESTADO') === '1' || record.get('ESTADO') === '3' )
+                                            if (record.get('ESTADO') === '1' || record.get('ESTADO') === '3')
                                                 metaData.style = 'font-weight:bold;color:red;';
-                                            if (record.get('ESTADO') === '4' || record.get('ESTADO') === '5' )
+                                            if (record.get('ESTADO') === '4' || record.get('ESTADO') === '5')
                                                 metaData.style = 'font-weight:bold;color:orange;';
-                                            
+
                                             return value;
                                         }
                                     },
-//                                    {text: 'Fare', dataIndex: 'A3957FARE', width: 90, align: 'right',
-//                                        summaryType: 'sum',
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        },
-//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        }
-//                                    },
-
-//                                    {
-//                                        xtype: 'actioncolumn',
-//                                        sortable: false,
-//                                        width: 40,
-//                                        align: 'center',
-//                                        items: [
-//                                            {
-//                                                iconCls: 'prx-icon-pdf',
-//                                                tooltip: 'Detail',
-//                                                handler: 'onReportVentaUATP_PDF'
-//                                            }
-//                                        ]
-//                                    }
+                                    {
+                                        xtype: 'actioncolumn',
+                                        sortable: false,
+                                        width: 40,
+                                        align: 'center',
+                                        text: 'Log',
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-image-log',
+                                                tooltip: 'Detail',
+                                                handler: 'onDetailErrorClick'
+                                            }
+                                        ]
+                                    }
                                 ],
                                 defaults: {
                                     sortable: false,
@@ -127,7 +178,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                                 enableTextSelection: true,
                                 markDirty: false,
                                 getRowClass: function (record, rowIndex, rowParams, store) {
-                                    if (rowIndex % 2 == 0)
+                                    if (rowIndex % 2 === 0)
                                         return 'rowA';
                                 }
                             },

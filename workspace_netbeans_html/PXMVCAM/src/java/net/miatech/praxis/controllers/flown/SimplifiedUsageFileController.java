@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.flown.filter.SQP05607Filter;
+import net.miatech.praxis.flown.filter.SQP05612Filter;
+import net.miatech.praxis.flown.filter.SQP05613Filter;
 import net.miatech.praxis.logic.flown.SimplifiedUsageFileLogic;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -38,7 +40,7 @@ public class SimplifiedUsageFileController extends BaseController {
         filter.page.START = 0;
         filter.page.LIMIT = 0;
         try {
-            
+
             filter.VP_FECHADESDE = request.getParameter("VP_FECHADESDE");
             filter.VP_FECHAHASTA = request.getParameter("VP_FECHAHASTA");
             filter.VP_STAT = request.getParameter("VP_STAT");
@@ -48,6 +50,70 @@ public class SimplifiedUsageFileController extends BaseController {
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
             logic.setSession((IServerSession) serverSession.getServerSession());
             listaData = logic.getSQP05607Filter(filter);
+
+            map.put("success", true);
+            map.put("total", !listaData.isEmpty() ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/detail-error")
+    public @ResponseBody
+    String detailError(ModelMap map, HttpServletRequest request) {
+        List<SQP05612Filter> listaData;
+        SQP05612Filter filter;
+        filter = new SQP05612Filter();
+//        filter.page.TOTROW = -1;
+//        filter.page.START = 0;
+//        filter.page.LIMIT = 0;
+        try {
+
+            filter.VP_FECHA = request.getParameter("VP_FECHA");
+//            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+//            filter.page.PAGROW = 18;
+//            start = (start != 0 ? start : 0);
+//            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP05612Filter(filter);
+
+            map.put("success", true);
+            map.put("total", !listaData.isEmpty() ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/detail-cupons")
+    public @ResponseBody
+    String detailCupons(ModelMap map, HttpServletRequest request) {
+        List<SQP05613Filter> listaData;
+        SQP05613Filter filter;
+        filter = new SQP05613Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {
+
+            filter.VP_FECHA = request.getParameter("VP_FECHA");
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP05613Filter(filter);
 
             map.put("success", true);
             map.put("total", !listaData.isEmpty() ? listaData.get(0).page.TOTROW : 0);
