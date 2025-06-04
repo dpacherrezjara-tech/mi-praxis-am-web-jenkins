@@ -431,103 +431,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     value: ''
                                 },
                                 {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbMonedafBP',
-                                    name: 'IN_SCURRENCY',
-                                    queryMode: 'local',
-                                    allowBlank: true,
-                                    forceSelection: true,
-                                    selectOnFocus: true,
-                                    caseSensitive: false,
-                                    autoSelect: true,
-                                    fieldLabel: 'Currency',
-                                    labelWidth: 70,
-                                    labelAlign: 'right',
-                                    width: 140,
-                                    typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    enableKeyEvents: true,
-                                    triggerAction: 'all',
-                                    value: ''
-                                },
-                                {
-                                    xtype: 'combobox',
-                                    fieldLabel: 'Doc. Type',
-                                    name: 'IN_TRANSTYPE',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['', 'All'],
-                                            ['SALE', 'Sale'],
-                                            ['RFND', 'Refund'],
-                                            ['CHBK', 'All Chargeback'],
-                                            ['NCHBK', 'Chargeback'],
-                                            ['RCHBK', 'Rev. Chargeback'],
-                                            ['ADJU', 'Adjustment']
-                                        ]
-                                    }),
-                                    labelWidth: 80,
-                                    width: 200,
-                                    displayField: 'name',
-                                    valueField: 'code',
-                                    queryMode: 'local',
-                                    editable: false,
-                                    value: ''
-                                },
-                                {
-                                    xtype: 'checkbox',
-                                    fieldLabel: 'Void',
-                                    labelWidth: 40,
-                                    width: 70,
-                                    name: 'IN_FVOID',
-                                    inputValue: 'V',
-                                    uncheckedValue: '', // Establecer el valor cuando esté desmarcado como una cadena vacía
-                                    listeners: {
-                                        change: function (checkbox, newValue) {}
-                                    }
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    fieldLabel: 'Ref. Number',
-                                    hidden: true,
-                                    labelWidth: 80,
-                                    width: 250,
-                                    name: 'IN_AREFNBR',
-                                    maxLength: 23, // Límite máximo de caracteres
-                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
-                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
-                                    listeners: {
-                                        specialkey: 'onEnterKeyPress'
-                                    }
-                                },
-                                {
-                                    xtype: 'combobox',
-                                    fieldLabel: 'Status',
-                                    name: 'IN_STVAL',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['', 'All'],
-                                            ['0', 'Stand By'],
-                                            ['1', 'Match'],
-                                            ['3', 'Settl. Without Sales'],
-                                            ['4', 'Match Diff.'],
-                                            ['5', 'Match Manual'],
-                                            ['6', 'Forced Match'],
-                                            ['7', 'Compensation Match'],
-                                            ['8', 'Pending RFND']
-                                        ]
-                                    }),
-                                    labelWidth: 55,
-                                    width: 180,
-                                    displayField: 'name',
-                                    valueField: 'code',
-                                    queryMode: 'local',
-                                    editable: false,
-                                    value: ''
-                                },
-                                {
                                     xtype: 'checkbox',
                                     fieldLabel: 'MSI',
                                     labelWidth: 40,
@@ -556,30 +459,55 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                             },
                             items: [
                                 {
-                                    xtype: 'textfield',
-                                    fieldLabel: 'Ticket',
-                                    labelWidth: 60,
-                                    width: 160,
-                                    name: 'IN_TICKET',
-                                    maxLength: 13, // Límite máximo de caracteres
-                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
-                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
-                                    listeners: {
-                                        specialkey: 'onEnterKeyPress'
-                                    }
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Doc. Type',
+                                    name: 'IN_TRANSTYPE',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['SALE', 'Sale'],
+                                            ['RFND', 'Refund'],
+                                            ['CHBK', 'All Chargeback'],
+                                            ['NCHBK', 'Chargeback'],
+                                            ['RCHBK', 'Rev. Chargeback'],
+                                            ['ADJU', 'Adjustment']
+                                        ]
+                                    }),
+                                    labelWidth: 80,
+                                    width: 200,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
                                 },
                                 {
-                                    xtype: 'textfield',
-                                    fieldLabel: 'PNR',
-                                    labelWidth: 40,
-                                    width: 120,
-                                    name: 'IN_SPNR',
-                                    maxLength: 8, // Límite máximo de caracteres
-                                    maskRe: /[a-zA-Z0-9]/, // Expresión regular para permitir solo números
-                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
-                                    listeners: {
-                                        specialkey: 'onEnterKeyPress'
-                                    }
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Status',
+                                    name: 'IN_STVAL',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['0', 'Stand By'],
+                                            ['1', 'Match'],
+                                            ['3', 'Settl. Without Sales'],
+                                            ['4', 'Match Diff.'],
+                                            ['5', 'Match Manual'],
+                                            ['6', 'Forced Match'],
+                                            ['7', 'Match Compensation'],
+                                            ['8', 'Match Transactional'],
+                                            ['9', 'Match Void']
+                                        ]
+                                    }),
+                                    labelWidth: 55,
+                                    width: 180,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
                                 },
                                 {
                                     xtype: 'textfield',
@@ -620,6 +548,84 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     }
                                 },
                                 {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'PNR',
+                                    labelWidth: 40,
+                                    width: 120,
+                                    name: 'IN_SPNR',
+                                    maxLength: 8, // Límite máximo de caracteres
+                                    maskRe: /[a-zA-Z0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Amount',
+                                    labelWidth: 60,
+                                    width: 160,
+                                    name: 'IN_AMOUNT',
+                                    maxLength: 15,
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9\.\-]/, // Máscara para números y punto decimal
+                                    regex: /^[-]?\d+(\.\d{1,2})?$/, // Validación para permitir hasta 2 decimales
+                                    regexText: 'Invalid Amount', // Mensaje de error personalizado
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbMonedafBP',
+                                    name: 'IN_SCURRENCY',
+                                    queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    fieldLabel: 'Currency',
+                                    labelWidth: 70,
+                                    labelAlign: 'right',
+                                    width: 140,
+                                    typeAhead: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: ''
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5 1 5 1',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Ticket',
+                                    labelWidth: 60,
+                                    width: 160,
+                                    name: 'IN_TICKET',
+                                    maxLength: 13, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
                                     xtype: 'combobox',
                                     id: prototype.id + '-cmbCerrorb',
                                     fieldLabel: 'Error Code',
@@ -646,6 +652,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     value: ''
                                 },
                                 {
+                                    xtype: 'checkbox',
+                                    fieldLabel: 'Void',
+                                    labelWidth: 40,
+                                    width: 70,
+                                    name: 'IN_FVOID',
+                                    inputValue: 'V',
+                                    uncheckedValue: '', // Establecer el valor cuando esté desmarcado como una cadena vacía
+                                    listeners: {
+                                        change: function (checkbox, newValue) {}
+                                    }
+                                },
+                                {
                                     xtype: 'textfield',
                                     fieldLabel: 'S. Merchant',
                                     labelWidth: 70,
@@ -661,15 +679,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                 },
                                 {
                                     xtype: 'textfield',
-                                    fieldLabel: 'Amount',
-                                    labelWidth: 60,
-                                    width: 160,
-                                    name: 'IN_AMOUNT',
-                                    maxLength: 15,
-                                    enforceMaxLength: true,
-                                    maskRe:  /[0-9\.\-]/, // Máscara para números y punto decimal
-                                    regex: /^[-]?\d+(\.\d{1,2})?$/, // Validación para permitir hasta 2 decimales
-                                    regexText: 'Invalid Amount', // Mensaje de error personalizado
+                                    fieldLabel: 'Ref. Number',
+                                    labelWidth: 80,
+                                    width: 250,
+                                    name: 'IN_AREFNBR',
+                                    maxLength: 23, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
