@@ -52,7 +52,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Filters', {
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
-                                            ["1", "Fechas"]
+                                            ["1", "File Date"]
                                         ]
                                     }),
                                     queryMode: 'local',
@@ -97,22 +97,21 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Filters', {
                                             id: prototype.id + '-fecha1',
                                             fieldLabel: 'Date from', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
                                             width: 210,
-                                            //height: 26,
-                                            format: 'Ymd',
-                                            //formatText: '',
-                                            //invalidText: 'Type the date in the format: YYYY/MM/DD',
-                                            minValue: new Date(1990, 00, 01),
+                                            value: Ext.Date.getFirstDateOfMonth(new Date()),
+                                            format: 'Ymd',  
                                             maskRe: /[0-9/]/,
                                             editable: true,
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 10,
-                                            //padding:'2 2 2 2 ',                                            
+                                            maxLength: 8,                                           
                                             listeners: {
-                                                //change: 'onUpperValue',
+                                                change: function(obj){
+//                                                    console.log(obj);
+                                                    Ext.getCmp(prototype.id + '-fecha2').setValue(obj.rawValue);
+                                                },
                                                 keypress: function (obj, e) {
-                                                    if (e.getKey() === e.ENTER) {
-                                                        Ext.getCmp(prototype.id + '-fecha2').focus();
+                                                    if (e.getKey() === e.ENTER) { 
+                                                        Ext.getCmp(prototype.id + '-fecha2').focus(); 
                                                     }
                                                 }
                                             }
@@ -123,19 +122,22 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Filters', {
                                             fieldLabel: 'Date to', labelAlign: 'left', 
                                             labelStyle: 'font-weight: bold;', labelWidth: 50,
                                             width: 150,
-                                            // height: 26,
+                                            value: new Date(),
                                             format: 'Ymd',
-                                            minValue: new Date(1990, 00, 01),
+                                            maxValue: new Date(),
                                             maskRe: /[0-9/]/,
                                             editable: true,
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 10,
+                                            maxLength: 8,
                                             padding: '2 0 0 10 ',
                                             listeners: {
+                                                // change: function(obj){
+                                                    // Ext.getCmp(prototype.id + '-fecha2').setValue(obj.rawValue);
+                                                //},
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
-
+                                                        
                                                     }
                                                 }
                                             }
@@ -172,7 +174,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Filters', {
                                             enableKeyEvents: true,
                                             padding: '6 0',
                                             listeners: {
-                                                // change: 'cmbfiltro_clickHandler'
+                                                 change: 'search'
                                             }
                                         }
                                     ]
