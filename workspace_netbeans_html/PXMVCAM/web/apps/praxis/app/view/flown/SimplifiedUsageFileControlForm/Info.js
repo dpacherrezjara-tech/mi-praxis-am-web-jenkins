@@ -6,7 +6,6 @@
 Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-info',
-    //layout: 'border',
     align: 'center',
     bodyStyle: 'background-color: #E3EAEF;',
     defaults: {
@@ -49,7 +48,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                             id: prototype.id + '-gridData',
                             columnLines: true,
                             width: '99%',
-                            height: 350,
+                            height: 550,
                             padding: '0px 5px 1px 5px',
                             features: [
                                 {
@@ -78,7 +77,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                                                     padding: '1px 1px',
                                                     handler: function (btn) {
                                                         const record = btn.getWidgetRecord();
-                                                        const FECHA = record.get('FECHA'); 
+                                                        const FECHA = record.get('FECHA');
 
                                                         // Crear store con paginación
                                                         const cuponesStore = Ext.create('Ext.data.Store', {
@@ -103,6 +102,68 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                                                             layout: 'fit',
                                                             width: 500,
                                                             height: 580,
+                                                            bbar: [
+                                                                {
+                                                                    xtype: 'button',
+                                                                    text: 'Descargar TXT',
+                                                                    iconCls: 'prx-icon-download',
+                                                                    itemId: 'btnDownloadTxt',
+                                                                    originalText: 'Descargar TXT',
+                                                                    originalIconCls: 'prx-icon-download',
+                                                                    handler: function (btn) {
+                                                                        //tambien funciona, pero no tiene control asy 
+//                                                                        const originalText = btn.getText();
+//                                                                        btn.setText('Descargando...');
+//                                                                        btn.setDisabled(true);
+//                                                                        const url = prototype.url + '/detail-cupons-to-txt?VP_FECHA=' + FECHA;
+//                                                                        // Crear un enlace invisible para forzar descarga
+//                                                                        const a = document.createElement('a');
+//                                                                        a.href = url;
+//                                                                        document.body.appendChild(a);
+//                                                                        a.click();
+//                                                                        document.body.removeChild(a);
+//                                                                        // Restaurar luego de 5 segundos
+//                                                                        Ext.defer(function () {
+//                                                                            btn.setText(originalText);
+//                                                                            //btn.setIconCls(originalIcon);
+//                                                                            btn.setDisabled(false);
+//                                                                        }, 5000); // tiempo en milisegundos
+                                                                        const url = prototype.url + '/detail-cupons-to-txt?VP_FECHA=' + FECHA;
+                                                                        // Deshabilitar y mostrar estado de carga
+                                                                        const originalText = btn.text;
+                                                                        btn.setText('Descargando...');
+                                                                        btn.setDisabled(true);
+                                                                        
+                                                                        // Realizar la descarga con fetch
+                                                                        fetch(url)
+                                                                                .then(response => {
+                                                                                    if (!response.ok) {
+                                                                                        throw new Error('Error en la descarga');
+                                                                                    }
+                                                                                    return response.blob();
+                                                                                })
+                                                                                .then(blob => {
+                                                                                    // Crear enlace para forzar descarga
+                                                                                    const downloadUrl = URL.createObjectURL(blob);
+                                                                                    const a = document.createElement('a');
+                                                                                    a.href = downloadUrl;
+                                                                                    a.download = 'AM_USAGE_' + FECHA + '.txt';
+                                                                                    document.body.appendChild(a);
+                                                                                    a.click();
+                                                                                    a.remove();
+                                                                                    URL.revokeObjectURL(downloadUrl); // liberar recurso
+                                                                                })
+                                                                                .catch(error => {
+                                                                                    Ext.Msg.alert('Error', 'No se pudo descargar el archivo: ' + error.message);
+                                                                                })
+                                                                                .finally(() => {
+                                                                                    // Restaurar el botón
+                                                                                    btn.setText(originalText);
+                                                                                    btn.setDisabled(false);
+                                                                                });
+                                                                    }
+                                                                }
+                                                            ],
                                                             items: [{
                                                                     xtype: 'grid',
                                                                     store: cuponesStore,
@@ -119,6 +180,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                                                                 }],
                                                             buttons: [{
                                                                     text: 'Cerrar',
+                                                                    iconCls: 'prx-icon-cancel-action',
                                                                     handler: function (btn) {
                                                                         btn.up('window').close();
                                                                     }
@@ -162,7 +224,21 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                                             {
                                                 iconCls: 'prx-icon-image-log',
                                                 tooltip: 'Detail',
-                                                handler: 'onDetailErrorClick'
+                                                //handler: 'onDetailErrorClick',
+                                                handler: function (grid, rowIndex, colIndex, item, e, record) {
+                                                    // Protección extra si llegara a ejecutarse manualmente
+                                                    if (record.get('ESTADO') === '1' || record.get('ESTADO') === '3') {
+                                                        this.fireEvent('onDetailErrorClick', record);
+                                                    }
+                                                },
+                                                getClass: function (value, meta, record) {
+                                                    // Solo mostrar el ícono si ESTADO === 2
+                                                    if (record.get('ESTADO') === '1' || record.get('ESTADO') === '3') {
+                                                        return 'prx-icon-image-log'; // icono visible
+                                                    } else {
+                                                        return 'x-hidden'; // ocultar el ícono usando clase CSS
+                                                    }
+                                                }
                                             }
                                         ]
                                     }

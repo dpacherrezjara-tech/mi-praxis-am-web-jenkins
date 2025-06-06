@@ -72,7 +72,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.SimplifiedUsage
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-panel-contenedor-grid',
-                                            height: 400,
+                                            height: 600,
                                             layout: 'fit',
                                             items: [
                                                 {
