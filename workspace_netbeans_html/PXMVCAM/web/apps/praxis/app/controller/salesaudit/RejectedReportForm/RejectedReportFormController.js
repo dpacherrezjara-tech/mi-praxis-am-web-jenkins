@@ -290,7 +290,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RejectedReportForm.RejectedReportFo
         }
         this.bean2.IN_COUNTRY = rec.data.A3456PAIS;
         this.bean2.IN_SEQ = rec.data.A3456SEQ;
-        this.bean2.IN_STATUS ='';
+        this.bean2.IN_FLAG =rec.data.A3456TYPE;
         this.bean2.IN_NAME ='';
         Ext.getCmp(prototype.idRejecte + '-gridDetalle').getStore().removeAll();
         Ext.getCmp(prototype.idRejecte + '-Contenedor').mask('Please Wait....');
@@ -314,7 +314,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RejectedReportForm.RejectedReportFo
                 } else {
                      Ext.getCmp(prototype.idRejecte + '-lbl-totalDeta').setText('0');
                     global.Msg({msg: "Data not found.", icon: 2, fn: function () {
-                        }})
+                        }});
                 }
             }
         });
@@ -553,7 +553,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RejectedReportForm.RejectedReportFo
                         } else {
                              Ext.getCmp(prototype.idRejecte + '-lbl-total').setText('0');
                             global.Msg({msg: "Data not found.", icon: 2, fn: function () {
-                                }})
+                                }});
                         }
                     }
                 });
@@ -590,6 +590,18 @@ Ext.define('Ext.Praxis.controller.salesaudit.RejectedReportForm.RejectedReportFo
     onClearClick: function (obj, e) {
         Ext.getCmp(prototype.idRejecte + '-gridData').getStore().removeAll();
         Ext.getCmp(prototype.idRejecte + '-gridDetalle').getStore().removeAll();
+    },
+    onRendererColumnOnType: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        switch (String(Ext.String.trim(record.get('A3456TYPE')))) {
+            case 'DR':
+                value = 'Rejected documents';
+                break;
+            case 'AL':
+                value = 'Other status';
+                break;
+        }
+        metaData.tdAttr = 'data-qtip="' + value + '"';
+        return value;
     }
 
 });
