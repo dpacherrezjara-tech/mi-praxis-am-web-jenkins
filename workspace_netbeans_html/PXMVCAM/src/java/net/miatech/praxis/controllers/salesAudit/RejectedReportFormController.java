@@ -122,7 +122,7 @@ public class RejectedReportFormController extends BaseController {
             Iterator iter = lst.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06;
 
             row = sheet.createRow(vj);
 
@@ -132,6 +132,7 @@ public class RejectedReportFormController extends BaseController {
             CH_03 = row.createCell(3);
             CH_04 = row.createCell(4);
             CH_05 = row.createCell(5);
+            CH_06 = row.createCell(6);
 
             CH_00.setCellValue("System date");
             CH_01.setCellValue("Period");
@@ -139,6 +140,7 @@ public class RejectedReportFormController extends BaseController {
             CH_03.setCellValue("Total");
             CH_04.setCellValue("Processed");
             CH_05.setCellValue("Status");
+            CH_06.setCellValue("Type");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -146,6 +148,7 @@ public class RejectedReportFormController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -153,6 +156,7 @@ public class RejectedReportFormController extends BaseController {
             CH_03.setCellStyle(headerStyle);
             CH_04.setCellStyle(headerStyle);
             CH_05.setCellStyle(headerStyle);
+            CH_06.setCellStyle(headerStyle);
 
             ++vj;
 
@@ -165,6 +169,7 @@ public class RejectedReportFormController extends BaseController {
                 CH_03 = row.createCell(3);
                 CH_04 = row.createCell(4);
                 CH_05 = row.createCell(5);
+                CH_06 = row.createCell(6);
 
                 CH_00.setCellValue(lst.get(vi).A3456FREGI);
                 CH_01.setCellValue(lst.get(vi).A3456FDATE);
@@ -172,6 +177,21 @@ public class RejectedReportFormController extends BaseController {
                 CH_03.setCellValue(lst.get(vi).A3456TOTAL);
                 CH_04.setCellValue(lst.get(vi).A3456COUNT);
                 CH_05.setCellValue(lst.get(vi).A3456ESTAD);
+                String value = "";
+
+                switch (lst.get(vi).getA3456TYPE()) {
+                    case "DR":
+                        value = "Rejected documents";
+                        break;
+                    case "AL":
+                        value = "Other status";
+                        break;
+                    default:
+                        value = "Unknown status";
+                        break;
+                }
+
+                CH_06.setCellValue(value);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -179,6 +199,7 @@ public class RejectedReportFormController extends BaseController {
                 CH_03.setCellStyle(bodyStyle);
                 CH_04.setCellStyle(bodyStyle);
                 CH_05.setCellStyle(bodyStyle);
+                CH_06.setCellStyle(bodyStyle);
 
                 iter.next();
                 ++vi;
@@ -191,6 +212,7 @@ public class RejectedReportFormController extends BaseController {
             sheet.autoSizeColumn(3, true);
             sheet.autoSizeColumn(4, true);
             sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
 
             String fileNameDownload = String.format("RejectedDoc - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             response.setContentType("application/vnd.openxml");
