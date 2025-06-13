@@ -148,8 +148,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                         {
                             items: [
                                 {
-                                    fieldLabel: 'Ref. Number',
-                                    name: 'arefnbr',
+                                    fieldLabel: 'Zone',
+                                    name: 'zone',
                                     labelWidth: 120,
                                     width: 240
                                 },
@@ -429,25 +429,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
-                                                '0' : 'TKT+PNR+IATA+FE+I+T+A',
-                                                '1' : 'TKT+IATA+FE+I+T+A',
-                                                '2' : 'TKT+PNR+FE+I+T+A',
-                                                '3' : 'TKT+FE+I+T+A',
-                                                '4' : 'PNR+IATA+FE+I+T+A',
-                                                '5' : 'IATA+FE+I+T+A',
-                                                '6' : 'PNR+FE+I+T+A',
-                                                '7' : 'FE+I+T+A',
-                                                '8' : 'TKT+PNR+FE+I+T+A',
-                                                '9' : 'TKT+PNR+FE+ID+T+A',
-                                                'A' : 'PNR+FE+I+T',
-                                                'B' : 'PNR+FE+ID+T+A'
-//                                                '1': 'Ticket',
-//                                                '2': 'PNR',
-//                                                '3': 'C.Card',
-//                                                '4': 'Desg. Manual',
-//                                                '5': 'Desg. Transac.',
-//                                                '6': 'Desg. Duplic.',
-//                                                '7': 'Desg. Multip.'
+                                                '1': 'Ticket',
+                                                '2': 'PNR',
+                                                '3': 'C.Card',
+                                                '4': 'Desg. Manual',
+                                                '5': 'Desg. Transac.',
+                                                '6': 'Desg. Duplic.',
+                                                '7': 'Desg. Multip.'
                                             };
                                             field.setRawValue(opts[newValue] || '');
                                         }
@@ -739,14 +727,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         },
                                         {
                                             xtype: 'button',
-                                            // No se ingresaran comentarios de BPO 
-                                            hidden: true,
                                             width: 25,
                                             iconCls: 'prx-icon-bpo-comment',
                                             tooltip: 'Open BPO Comment',
                                             listeners: {
                                                 click: 'onOpenComments'
                                             }
+
                                         }
                                     ]
                                 }
@@ -828,7 +815,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                         }
                     ]
                 },
-                
                 //</editor-fold>
                 //<editor-fold defaultstate="collapsed" desc="Adju Comment">
                 {
@@ -858,37 +844,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             width: 450,
                             editable: false
                         },
-                    ]
-                },
-                //</editor-fold>
-                //<editor-fold defaultstate="collapsed" desc="Auto Comments">
-                {
-                    xtype: 'fieldset',
-                    id: prototype.idDE + '-CommentTransaction',
-                    title: '<span style="font-weight: bold; text-decoration-line: underline; font-size:12px;">Comments</span>',
-                    hidden: true,
-                    layout: {
-                        type: 'hbox',
-                        align: 'left'
-                    },
-                    border: true,
-                    width: '100%',
-                    style: {
-                        backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
-                    },
-                    defaults: {
-                        xtype: 'textfield',
-                        margin: '3 5 3 5',
-                        labelStyle: 'text-align:left;font-weight: bolder;'
-                    },
-                    items: [
-                        {
-                            id: prototype.idDE + '-InputCommentTransaction',
-                            fieldLabel: 'Comment',
-                            labelWidth: 120,
-                            width: 500,
-                            editable: false
-                        }
                     ]
                 },
                 //</editor-fold>
