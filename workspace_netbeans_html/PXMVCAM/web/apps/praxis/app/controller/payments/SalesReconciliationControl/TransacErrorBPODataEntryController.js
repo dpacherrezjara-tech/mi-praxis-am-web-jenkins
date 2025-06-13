@@ -37,7 +37,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     changePerspective: function () {
         const me = this;
         const userName = $('#menuUser').text();
-        const match = ["1", "5", "6", "7", "8", "9"];
+        const match = ["1", "4", "5", "6", "7", "8", "9"];
+        const matchComment = ["4"];
         const status = me.bean.stval;
         const {tgrosamoun, svfops} = me.bean;
         let diff = tgrosamoun - svfops;
@@ -52,6 +53,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const scanner = Ext.getCmp(prototype.idDE + '-scannerInputs');
         let adj = me.bean.codadju.trim() === '' ? false : true;
         const adjucoment = Ext.getCmp(prototype.idDE + '-bpoComments2');
+        const commentTransaction = Ext.getCmp(prototype.idDE + '-CommentTransaction');
 
         Ext.getCmp(prototype.idDE + '-panelAdjustments').hide();
         const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments').getStore();
@@ -84,7 +86,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 Ext.getCmp(prototype.idDE + '-adjucoment').setValue(me.bean.adjucoment);
                 adjucoment.show();
             }
-            //transacciones stand by    
+            // Comentarios automaticos
+            if (matchComment.includes(status)){
+                Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocoment);
+                commentTransaction.show();
+            }
+         //transacciones stand by    
         } else if (status === '0') {
             bpo.setDisabled(false);
             blocked.setDisabled(false);
@@ -357,12 +364,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         Ext.getCmp(prototype.idDE + '-scannerInputs').show();
         Ext.getCmp(prototype.idDE + '-hideStandBy').hide();
     },
-    onOpenComments: function () {
-        Ext.getCmp(prototype.idDE + '-bpoComments').show();
-        Ext.getCmp(prototype.idDE + '-addStandBy').show();
-        Ext.getCmp(prototype.idDE + '-hideStandBy').show();
-        Ext.getCmp(prototype.idDE + '-scannerInputs').hide();
-    },
+//    onOpenComments: function () {
+//        Ext.getCmp(prototype.idDE + '-bpoComments').show();
+//        Ext.getCmp(prototype.idDE + '-addStandBy').show();
+//        Ext.getCmp(prototype.idDE + '-hideStandBy').show();
+//        Ext.getCmp(prototype.idDE + '-scannerInputs').hide();
+//    },
     onReverseTransaction: function (btn) {
         const me = this;
         Ext.Msg.show(
@@ -384,6 +391,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     onUpdateClick: function (btn) {
         const me = this;
         let params = me.formatUpdateParams();
+        let msgAdd = "";
         if (params.detail.filter(x => x.SCURRENCY !== params.IN_SCURRENCY).length > 0) {
             global.Msg({msg: 'One or more tickets have differents currency!'});
             return;
@@ -393,8 +401,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             return;
         }
         if (params.difference !== 0) {
-            global.Msg({msg: 'There are differences in reconciliation.'});
-            return;
+//            global.Msg({msg: 'There are differences in reconciliation.'});
+//            return;
+            msgAdd = 'There are differences in reconciliation. ';
         }
         if (params.ajustes > 0 && params.IN_CODADJU === '') {
             global.Msg({msg: 'Unidentified Adjustment.'});
@@ -403,7 +412,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         Ext.Msg.show(
                 {
                     title: '.:PRAXIS:.',
-                    msg: 'Are you sure to update?',
+                    msg: msgAdd + 'Are you sure to update?',
                     buttons: Ext.MessageBox.YESNO,
                     scope: this,
                     animateTarget: btn,

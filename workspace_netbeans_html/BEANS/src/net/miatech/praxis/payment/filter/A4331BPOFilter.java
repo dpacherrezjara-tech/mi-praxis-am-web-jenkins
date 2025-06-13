@@ -7,7 +7,7 @@ import net.miatech.praxis.payment.entities.A4331;
  * @author Dvicente
  */
 public class A4331BPOFilter extends A4331{
-    private String DESC_PROC,DESC_ERROR,DESC_ADJU,SMERCHIDF,DESC_PMERCHID,DESC_SMERCHID,BPOCOMENT,ADJUCOMENT;
+    private String DESC_PROC,DESC_ERROR,DESC_ADJU,SMERCHIDF,DESC_PMERCHID,DESC_SMERCHID,BPOCOMENT,ADJUCOMENT,AUTOCOMENT;
     private Double F_TAX,F_TGROSAMOUN,F_TGROSAMPAY;
 
     public Double getF_TGROSAMPAY() {
@@ -97,5 +97,11 @@ public class A4331BPOFilter extends A4331{
 
     public void setADJUCOMENT(String ADJUCOMENT) {
         this.ADJUCOMENT = ADJUCOMENT;
+    }
+    public String getAUTOCOMENT() {
+        return AUTOCOMENT;
+    }
+    public void setAUTOCOMENT(String AUTOCOMENT) {
+        this.AUTOCOMENT = AUTOCOMENT;
     }
 }
