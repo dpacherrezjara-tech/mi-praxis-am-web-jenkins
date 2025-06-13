@@ -147,7 +147,9 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
         const me = this;
         let notifier = new AWN();
         let params = this.formatLoadParams();
-
+        
+        console.log("params = ",params);
+        
         let onOk = async () => {
             let loadExcel = async () => {
                 const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05559', params);
@@ -179,7 +181,9 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
     downloadFormatErrors: function () {
         let notifier = new AWN();
         let params = this.formatFormatParams();
-
+        
+        console.log("params = ",params);
+        
         let onOk = async () => {
             let loadExcel = async () => {
                 const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05021', params);
@@ -192,6 +196,10 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
                     'A': 'Automatic',
                     'F': 'Forced Match'
                 };
+                console.log("opts = ",opts);
+                console.log("opts2 = ",opts2);
+                console.log("res = ",res);
+                
                 let data = res.map(x => ({
                         'Processing Date': x.A4481FPROC,
                         'ID File': x.A4481IDFIL,
