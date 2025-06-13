@@ -79,7 +79,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                                                         const record = btn.getWidgetRecord();
                                                         const FECHA = record.get('FECHA');
                                                         const QTYTOTAL = record.get('QTYTOTAL');
-                                                        console.log(parseInt(QTYTOTAL))
+//                                                        console.log(parseInt(QTYTOTAL))
                                                         if ( parseInt(QTYTOTAL) === 0 ){
                                                             return;
                                                         }
