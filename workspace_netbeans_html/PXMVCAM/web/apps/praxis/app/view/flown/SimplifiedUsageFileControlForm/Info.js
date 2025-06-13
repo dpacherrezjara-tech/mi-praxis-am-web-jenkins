@@ -78,6 +78,11 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                                                     handler: function (btn) {
                                                         const record = btn.getWidgetRecord();
                                                         const FECHA = record.get('FECHA');
+                                                        const QTYTOTAL = record.get('QTYTOTAL');
+//                                                        console.log(parseInt(QTYTOTAL))
+                                                        if ( parseInt(QTYTOTAL) === 0 ){
+                                                            return;
+                                                        }
 
                                                         // Crear store con paginación
                                                         const cuponesStore = Ext.create('Ext.data.Store', {
@@ -133,7 +138,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                                                                         const originalText = btn.text;
                                                                         btn.setText('Descargando...');
                                                                         btn.setDisabled(true);
-                                                                        
+
                                                                         // Realizar la descarga con fetch
                                                                         fetch(url)
                                                                                 .then(response => {
@@ -224,16 +229,18 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                                             {
                                                 iconCls: 'prx-icon-image-log',
                                                 tooltip: 'Detail',
-                                                //handler: 'onDetailErrorClick',
-                                                handler: function (grid, rowIndex, colIndex, item, e, record) {
-                                                    // Protección extra si llegara a ejecutarse manualmente
-                                                    if (record.get('ESTADO') === '1' || record.get('ESTADO') === '3') {
-                                                        this.fireEvent('onDetailErrorClick', record);
-                                                    }
-                                                },
+                                                handler: 'onDetailErrorClick',
+//                                                handler: function (grid, rowIndex, colIndex, item, e, record) {
+//                                                    // Protección extra si llegara a ejecutarse manualmente
+//                                                    console.log(record.get('ESTADO'))
+//                                                    if (record.get('ESTADO') === '1' || record.get('ESTADO') === '3') {
+//                                                        console.log('xxxxxxxxx')
+//                                                        this.fireEvent('onDetailErrorClick', record);
+//                                                    }
+//                                                },
                                                 getClass: function (value, meta, record) {
                                                     // Solo mostrar el ícono si ESTADO === 2
-                                                    if (record.get('ESTADO') === '1' || record.get('ESTADO') === '3') {
+                                                    if (record.get('ESTADO') === '1' || record.get('ESTADO') === '3' || record.get('ESTADO') === '5') {
                                                         return 'prx-icon-image-log'; // icono visible
                                                     } else {
                                                         return 'x-hidden'; // ocultar el ícono usando clase CSS
