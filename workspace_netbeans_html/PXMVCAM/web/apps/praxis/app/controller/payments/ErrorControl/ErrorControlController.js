@@ -85,6 +85,7 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
         grid.setLoading(false);
     },
     loadFormatErrors: async function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
         const {A4481FPROC, A4481TYPEP} = record.data;
         const gridSumm = Ext.getCmp(prototype.id + '-formatErrorGrid');
         const gridDet = Ext.getCmp(prototype.id + '-formatErrorDetGrid');
@@ -92,11 +93,13 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
         gridDet.show();
         let params = {
             DATE_FROM: A4481FPROC,
-            ARCHIVO: A4481TYPEP.trim(),
+            DATE_TO: A4481FPROC,
+            TBL_PROC: A4481TYPEP.trim(),
             CERROR: this.formatParams.CERROR,
             STS_ERROR: this.formatParams.STS_ERROR,
             TIPO_CORRECCION: this.formatParams.TIPO_CORRECCION
         };
+        me.paramsFilterFormatError = params;
         console.log(params);
         let store = global.callStorePaggin('PRAXISMP', 'SQP05021', params);
         gridDet.setStore(store);
@@ -179,7 +182,7 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
     downloadFormatErrors: function () {
         let notifier = new AWN();
         let params = this.formatFormatParams();
-
+        console.log(params);
         let onOk = async () => {
             let loadExcel = async () => {
                 const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05021', params);
@@ -208,6 +211,45 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
                         'Audited Date': x.A4481FECFZ
                     }));
                 global.writeExcelFromJson(data, 'MDP Format Errors');
+            };
+            notifier.async(loadExcel());
+        };
+        notifier.confirm('Download Excel?', onOk, null);
+    },
+    downloadDetFormatErrors: function () {
+        let notifier = new AWN();
+        const me = this;
+        let params = me.paramsFilterFormatError;
+        console.log(params);
+        
+        let onOk = async () => {
+            let loadExcel = async () => {
+                const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05021', params);
+                let opts = {
+                    '0': 'Pending',
+                    '1': 'Audited',
+                    '2': 'Pending System'
+                };
+                let opts2 = {
+                    'A': 'Automatic',
+                    'F': 'Forced Match'
+                };
+                let data = res.map(x => ({
+                        'Processing Date': x.A4481FPROC,
+                        'ID File': x.A4481IDFIL,
+                        'Procesador': x.A4451DESC1,
+                        'Pais de Venta': x.A4481PSVTA,
+                        'ID Reference': x.A4481IDREF,
+                        'Ticket Number': x.A4481CIA + x.A4481FORMA + x.A4481SERIE,
+                        'Status Error': opts[x.A4481STSER],
+                        'Tipo de Correccion': opts2[x.A4481TIPCO],
+                        'Program': x.A4481PROG,
+                        'Error Code': x.A4481CODER,
+                        'Error Description': x.A4481DATA,
+                        'Audited By': x.A4481USRFZ,
+                        'Audited Date': x.A4481FECFZ
+                    }));
+                global.writeExcelFromJson(data, 'MDP Format Errors of Day');
             };
             notifier.async(loadExcel());
         };
