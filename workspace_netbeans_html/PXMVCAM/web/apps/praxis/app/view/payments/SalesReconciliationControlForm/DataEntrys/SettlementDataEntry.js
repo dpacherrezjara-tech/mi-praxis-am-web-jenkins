@@ -431,11 +431,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                                 '1': 'Match',
                                                 '2': 'Sales Without Sett.',
                                                 '3': 'Settl. Without Sales',
-                                                '4': 'Match Diff.',
+                                                '4': 'Match Parcial',
                                                 '5': 'Match Manual',
-                                                '6': 'Forced Match',
-                                                '7': 'Compensation Match',
-                                                '8': 'Pending RFND'
+                                                '6': 'Match Forzado',
+                                                '7': 'Match por Compensacion',
+                                                '8': 'Match Transaccional',
+                                                '9': 'Match Void'
                                             };
                                             field.setRawValue(opts[newValue] || '');
                                         }

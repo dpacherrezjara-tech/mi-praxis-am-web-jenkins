@@ -199,10 +199,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                             ['0', 'Stand By'],
                                             ['1', 'Match'],
                                             ['2', 'Sales Without Settl.'],
-                                            ['4', 'Match Diff.'],
+                                            ['4', 'Match Parcial'],
                                             ['5', 'Match Manual'],
-                                            ['6', 'Forced Match'],
-                                            ['7', 'Compensation Match']
+                                            ['6', 'Match Forzado'],
+                                            ['7', 'Match por Compensacion'],
+                                            ['8', 'Match Transaccional'],
+                                            ['9', 'Match Void']
                                         ]
                                     }),
                                     labelWidth: 55,
@@ -677,10 +679,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                             ['0', 'Stand By'],
                                             ['1', 'Match'],
                                             ['2', 'Sales Without Settl.'],
-                                            ['4', 'Match Diff.'],
+                                            ['4', 'Match Parcial'],
                                             ['5', 'Match Manual'],
-                                            ['6', 'Forced Match'],
-                                            ['7', 'Compensation Match']
+                                            ['6', 'Match Forzado'],
+                                            ['7', 'Match por Compensacion'],
+                                            ['8', 'Match Transaccional'],
+                                            ['9', 'Match Void']
                                         ]
                                     }),
                                     labelWidth: 55,
