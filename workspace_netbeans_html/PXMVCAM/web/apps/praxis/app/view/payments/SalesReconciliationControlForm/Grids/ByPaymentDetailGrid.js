@@ -84,11 +84,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         '1': 'Match',
                         '2': 'Sales Without Settl.',
                         '3': 'Settl. Without Sales',
-                        '4': 'Match Diff.',
+                        '4': 'Match Parcial',
                         '5': 'Match Manual',
-                        '6': 'Forced Match',
-                        '7': 'Match Compensation',
-                        '8': 'Match Transactional',
+                        '6': 'Match Forzado',
+                        '7': 'Match por Compensacion',
+                        '8': 'Match Transaccional',
                         '9': 'Match Void'
                     };
                     return opts[value] || '';
