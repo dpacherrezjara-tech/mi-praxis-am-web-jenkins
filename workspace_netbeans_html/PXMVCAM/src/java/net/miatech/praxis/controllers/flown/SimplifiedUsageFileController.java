@@ -5,18 +5,29 @@
 package net.miatech.praxis.controllers.flown;
 
 import com.google.gson.Gson;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.nio.file.Path;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
+import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.flown.filter.SQP05607Filter;
 import net.miatech.praxis.flown.filter.SQP05612Filter;
 import net.miatech.praxis.flown.filter.SQP05613Filter;
 import net.miatech.praxis.logic.flown.SimplifiedUsageFileLogic;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -127,4 +138,47 @@ public class SimplifiedUsageFileController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+
+    @RequestMapping(value = "/detail-cupons-to-txt", method = RequestMethod.GET)
+    public @ResponseBody
+    void detailCuponsToTxt(HttpServletRequest request, HttpServletResponse response) {
+        List<SQP05613Filter> listaData;
+        SQP05613Filter filter = new SQP05613Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+
+        try {
+            // Leer parámetros y preparar paginación (all)
+            filter.VP_FECHA = request.getParameter("VP_FECHA");
+
+            // Obtener datos
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP05613Filter(filter);
+
+            // Preparar respuesta HTTP para descarga
+            String nombreArchivo = "AM_USAGE_" + filter.VP_FECHA + "_" + System.currentTimeMillis() + ".txt";
+
+            response.setContentType("text/plain; charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + nombreArchivo + "\"");
+
+            // Escribir directamente en el OutputStream
+            PrintWriter writer = response.getWriter();
+            for (SQP05613Filter item : listaData) {
+                if (item.TEXT != null) {
+                    writer.println(item.TEXT);
+                }
+            }
+            writer.flush();
+            writer.close();
+
+        } catch (Exception ex) {
+            // Manejo de errores  
+            ex.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new SpringException(ex);
+        }
+    }
+
 }

@@ -71,7 +71,6 @@ Ext.define('Ext.Praxis.controller.flown.SimplifiedUsageFileControl.SimplifiedUsa
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-//        console.log(rec);
         Ext.create('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.SimplifiedUsageFileControlDetailError', {
             id: prototype.id01 + '-DetailError',
             params: {
@@ -79,5 +78,47 @@ Ext.define('Ext.Praxis.controller.flown.SimplifiedUsageFileControl.SimplifiedUsa
                 rec: rec
             }
         }).show();
+    },
+    btnFilter_click: function() {
+        var option = Ext.getCmp(prototype.id + '-contentFilter');
+        if (option.isVisible())
+            option.hide();
+        else
+            option.show();
+    },
+    btnClear_click: function(obj, e) {
+        Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
+        Ext.getCmp(prototype.id + '-cmbfiltroEstado').setValue("");
+        Ext.getCmp(prototype.id + '-fecha1').setValue( Ext.Date.getFirstDateOfMonth(new Date()) );
+        Ext.getCmp(prototype.id + '-fecha2').setValue( new Date());
+        
+    },
+    btnBack_click: function() {
+        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+            global.showMenu();
+        }
+    },
+    // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
+    pagFirst: function(obj, e) {
+        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+            Ext.getCmp(prototype.id + '-paggin').moveFirst();
+        }
+    },
+    pagPrevious: function(obj, e) {
+        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+            Ext.getCmp(prototype.id + '-paggin').movePrevious();
+        }
+    },
+    pagNext: function(obj, e) {
+        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+            Ext.getCmp(prototype.id + '-paggin').moveNext();
+        }
+    },
+    pagLast: function(obj, e) {
+        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+            Ext.getCmp(prototype.id + '-paggin').moveLast();
+        }
     }
+     // </editor-fold>
+    
 });
