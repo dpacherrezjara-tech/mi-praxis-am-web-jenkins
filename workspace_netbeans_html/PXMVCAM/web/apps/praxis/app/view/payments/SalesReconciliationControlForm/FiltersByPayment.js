@@ -499,11 +499,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                             ['6', 'Match Forzado'],
                                             ['7', 'Match por Compensacion'],
                                             ['8', 'Match Transaccional'],
-                                            ['9', 'Match Void']
+                                            ['9', 'Match Void'],
+                                            ['A', 'Match OC/Camepa'],
+                                            ['M', 'Match Multi-Payment'],
+                                            ['C', 'Match Complement']
                                         ]
                                     }),
                                     labelWidth: 55,
-                                    width: 180,
+                                    width: 210,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
