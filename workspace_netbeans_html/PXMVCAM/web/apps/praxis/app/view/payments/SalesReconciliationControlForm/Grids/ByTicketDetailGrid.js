@@ -156,13 +156,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                             const opts = {
                                 '0': 'Stand By',
                                 '1': 'Match',
-                                '2': 'Sales Without Settl.',
-                                '3': 'Settl. Without Sales',
-                                '4': 'Match Diff.',
+                                '2': 'Sales W/O Settl.',
+                                '3': 'Settl. W/O Sales',
+                                '4': 'Match Parcial',
                                 '5': 'Match Manual',
-                                '6': 'Forced Match',
-                                '7': 'Compensation Match',
-                                '8': 'Pending RFND'
+                                '6': 'Match Forzado',
+                                '7': 'Match por Compensacion',
+                                '8': 'Match Transaccional',
+                                '9': 'Match Void',
+                                'A': 'Match OC/Camepa',
+                                'M': 'Match Multi-Payment',
+                                'C': 'Match Complement'
                             };
                             return opts[value] || '';
                         }
