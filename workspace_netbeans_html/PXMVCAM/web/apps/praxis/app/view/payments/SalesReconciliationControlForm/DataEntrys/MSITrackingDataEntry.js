@@ -426,23 +426,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                 width: '100%',
                 items: [
                     {
-                        xtype: 'textfield',
-                        id: prototype.idMSI + '-bpo-comment',
-                        fieldLabel: 'BPO Comment',
-                        labelStyle: 'font-weight:bold;',
-                        labelWidth: 100,
-                        width: 500,
-                        maxLength: 100, // Límite máximo de caracteres
-                        enforceMaxLength: true,
-                        fieldStyle: 'text-align: left;',
-                        padding: '5 1 5 1',
-                        margin: '2 10 2 2',
-                        anchor: '100%',
-                        hiddenLabel: false,
-                        labelAlign: 'right',
-                        hidden: false
-                    },
-                    {
                         xtype: 'panel',
                         flex: 1,
                         border: false,
@@ -482,25 +465,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                 },
                 items: [
                     {
-                        text: 'Ref. Number', dataIndex: 'arefnbr', width: 150, hidden: true,
+                        text: 'Ref. Number', dataIndex: 'AREFNBR', width: 150, hidden: true,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;";
                             return value;
                         }
                     },
-                    {text: 'Processing<br>Date', dataIndex: 'prda', width: 80},
-                    {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
-                    {text: 'PNR', dataIndex: 'spnr', width: 70},
-                    {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
-                    {text: 'Error Description', dataIndex: 'des_CERROR', width: 120,
+                    {text: 'Processing<br>Date', dataIndex: 'PRDA', width: 80},
+                    {text: 'Payment<br>Date', dataIndex: 'PAYDATE', width: 80},
+                    {text: 'PNR', dataIndex: 'SPNR', width: 70},
+                    {text: 'Doc.<br>Type', dataIndex: 'TRANSTYPE', width: 60},
+                    {text: 'Error Description', dataIndex: 'DES_CERROR', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             const info = record.data;
-                            if (info.des_CERROR) {
-                                metaData.tdAttr = 'data-qtip="' + info.des_CERROR + '"';
+                            if (info.DES_CERROR) {
+                                metaData.tdAttr = 'data-qtip="' + info.DES_CERROR + '"';
                             }
                             return value;
                         }},
-                    {text: 'Adju. Description', dataIndex: 'desc_CODADJU', width: 120,
+                    {text: 'Adju. Description', dataIndex: 'DESC_CODADJU', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             const info = record.data;
                             if (info.desc_CODADJU) {
@@ -508,9 +491,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                             }
                             return value;
                         }},
-                    {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 140},
+                    {text: 'Payment<br>Merchant ID', dataIndex: 'PMERCHID', width: 140},
                     {
-                        text: 'Status', dataIndex: 'stval', width: 120,
+                        text: 'Status', dataIndex: 'STVAL', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                             const opts = {
@@ -540,13 +523,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                             }
                         },
                         columns: [
-                            {text: 'Plan', dataIndex: 'nbrinsta', width: 60},
-                            {text: 'Number', dataIndex: 'instanbr', width: 60}
+                            {text: 'Plan', dataIndex: 'NBRINSTA', width: 60},
+                            {text: 'Number', dataIndex: 'INSTANBR', width: 60}
                         ]
                     },
                     {text: 'Curr', dataIndex: 'scurrency', width: 60},
                     {
-                        text: 'Transac.<br>Amount', dataIndex: 'tgrosamoun', width: 120,
+                        text: 'Transac.<br>Amount', dataIndex: 'TGROSAMOUN', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -554,7 +537,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                         }
                     },
                     {
-                        text: 'Sales<br>Amount', dataIndex: 'svfops', width: 120,
+                        text: 'Sales<br>Amount', dataIndex: 'SVFOPS', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -562,10 +545,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                         }
                     },
                     {
-                        text: 'Card Number', dataIndex: 'scardn', width: 130
+                        text: 'Card Number', dataIndex: 'SCARDN', width: 130
                     },
                     {
-                        text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 75
+                        text: 'Auth<br>Code', dataIndex: 'SAUTHOC', width: 75
                     }
                 ]
             }

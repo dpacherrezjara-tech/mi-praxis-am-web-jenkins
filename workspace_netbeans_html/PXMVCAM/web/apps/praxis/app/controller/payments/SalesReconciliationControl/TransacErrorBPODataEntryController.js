@@ -37,8 +37,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     changePerspective: function () {
         const me = this;
         const userName = $('#menuUser').text();
-        const match = ["1", "4", "5", "6", "7", "8", "9"];
-        const matchComment = ["4"];
+        const match = ["1", "4", "5", "6", "7", "8", "9", "M", "C"];
+        const matchComment = ["4", "M", "C"];
         const status = me.bean.stval;
         const {tgrosamoun, svfops} = me.bean;
         let diff = tgrosamoun - svfops;
@@ -83,15 +83,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             btnMSI.show();
             me.setDesgloseGrid();
             if (adj) {
-                Ext.getCmp(prototype.idDE + '-adjucoment').setValue(me.bean.adjucoment);
-                adjucoment.show();
+                if (me.bean.adjucoment.trim() !== '') {
+                    Ext.getCmp(prototype.idDE + '-adjucoment').setValue(me.bean.adjucoment);
+                    adjucoment.show();
+                }
             }
             // Comentarios automaticos
-            if (matchComment.includes(status)){
+            if (matchComment.includes(status)) {
                 Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocoment);
                 commentTransaction.show();
             }
-         //transacciones stand by    
+            //transacciones stand by    
         } else if (status === '0') {
             bpo.setDisabled(false);
             blocked.setDisabled(false);
@@ -830,6 +832,90 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             obj: obj
         });
         dataEntry.show();
+    },
+
+    onChangeBalance: function () {
+        const upd1 = Ext.getCmp(prototype.idDE + '-btn-update');
+        const upd2 = Ext.getCmp(prototype.idDE + '-btn-update-balance');
+        const scan1 = Ext.getCmp(prototype.idDE + '-scannerForm');
+        const scan2 = Ext.getCmp(prototype.idDE + '-balanceScannerForm');
+        const grid1 = Ext.getCmp(prototype.idDE + '-panelGrids1');
+        const grid2 = Ext.getCmp(prototype.idDE + '-panelGrids2');
+        if (grid2.isVisible()) {
+            upd1.show();
+            upd2.hide();
+            scan1.show();
+            scan2.hide();
+            grid1.show();
+            grid2.hide();
+        } else {
+            upd1.hide();
+            upd2.show();
+            scan1.hide();
+            scan2.show();
+            grid1.hide();
+            grid2.show();
+        }
+    },
+    onAddBalanceClick: async function () {
+        const grid2 = Ext.getCmp(prototype.idDE + '-panelGrids2');
+        const balances = Ext.getCmp(prototype.idDE + '-gridBalances');
+        grid2.setLoading(true);
+        const scan2 = Ext.getCmp(prototype.idDE + '-balanceScannerForm').getForm();
+        try {
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05630', scan2.getValues());
+            balances.setStore(new Ext.data.Store({data: res.lstRs.at(0)}));
+        } catch (e) {
+        } finally {
+            grid2.setLoading(false);
+        }
+    },
+    onUpdateBalanceClick: function () {
+
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to reconcile?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            this.reconciliateBalance();
+                        }
+                    }
+                });
+
+    },
+    reconciliateBalance: async function () {
+        const me = this;
+        me.view.setLoading(true);
+        const balances = Ext.getCmp(prototype.idDE + '-gridBalances');
+        let stval = Ext.getCmp(prototype.idDE + '-balanceConcilType').value;
+        try {
+            let data = balances.getStore().getData().items.map(x => ({...x.data}));
+            const tmp = await global.loadRecordsOnTable('PRAXISMP', 'XTEMPO', data);
+            let params = {
+                IN_CCUST: me.bean.ccust,
+                IN_PRDA: me.bean.prda,
+                IN_TDOC: me.bean.tdoc,
+                IN_AREFNBR: me.bean.arefnbr,
+                IN_STVAL: stval,
+                IN_CUUID: tmp.cuuid,
+                IN_FUUID: tmp.fuuid
+            };
+            await global.callStorePost('PRAXISMP', 'SQP05627', params);
+
+        } catch (e) {
+            console.error(e);
+            global.Msg({msg: 'Error on Reconcile'});
+        } finally {
+            me.view.setLoading(false);
+            me.reloadErrorGrid();
+            me.getData();
+        }
+
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Grillas Scaneo">

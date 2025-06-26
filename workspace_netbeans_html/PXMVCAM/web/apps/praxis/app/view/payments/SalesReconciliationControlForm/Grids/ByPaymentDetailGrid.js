@@ -89,7 +89,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         '6': 'Match Forzado',
                         '7': 'Match por Compensacion',
                         '8': 'Match Transaccional',
-                        '9': 'Match Void'
+                        '9': 'Match Void',
+                        'A': 'Match OC/Camepa',
+                        'M': 'Match Multi-Payment',
+                        'C': 'Match Complement'
                     };
                     return opts[value] || '';
                 }
@@ -148,6 +151,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                     {text: 'PNR', dataIndex: 'spnr', width: 80},
                     {
                         text: 'Invoice<br>Refer. Number<br>PNR', dataIndex: 'invoirn', width: 130
+                    },
+                    {
+                        text: 'ARN', dataIndex: 'arn', width: 150
                     }
 
                 ]
