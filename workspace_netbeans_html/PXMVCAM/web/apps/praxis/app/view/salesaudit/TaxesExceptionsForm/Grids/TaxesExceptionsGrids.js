@@ -58,6 +58,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Grids.TaxesExceptions
                         }
                     },
                     {text: 'SEQ', dataIndex: 'SEQ', width: 50},
+                    {text: 'TAX EXCEPTIONS', dataIndex: 'TAX_EXCEPTIONS', width: 120},
                     {text: 'PNR', dataIndex: 'SPNR', width: 80},
                     {text: 'Pax Name', dataIndex: 'PAXNAME', flex: 1},
                     {text: 'Itinerary', dataIndex: 'RUTABOL', width: 200},
@@ -70,6 +71,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Grids.TaxesExceptions
                             return opts[value];
                         }
                     },
+                    {text: 'Status<br>Edit', dataIndex: 'STATUS', width: 80},
                     {text: 'User<br>Created', dataIndex: 'USCR', width: 100},
                     {text: 'Date<br>Created', dataIndex: 'FECR', width: 80},
                     {text: 'User<br>Updated', dataIndex: 'USUP', width: 100},
