@@ -5,6 +5,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
     exTaxes: [],
     selectedTickets: [],
     activeChanges: false,
+    isNewTicket: false,
     afterRender: function () {
         this.loadForm();
     },
@@ -34,6 +35,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
             btnDeleteTkt.hide();
             controlData.show();
             me.loadTicketInformation();
+            me.isNewTicket = false;
         }else{
             panelTktFilter.show();
             gridTickets.hide();
@@ -44,6 +46,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
             btnExceptTkt.show();
             btnDeleteTkt.show();
             controlData.hide();
+            me.isNewTicket = true;
         }
         me.loadActiveChangesTaxException();
     },
@@ -98,6 +101,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
         const gridLoaded = Ext.getCmp(prototype.idDE + '-gridTicketsLoaded');
         let notifier = new AWN();
         let params = form.getValues();
+        const me = this;
+        me.activeChanges = false;
 
         if (params.IN_TICKET === '' && params.IN_SPNR === '') {
             global.Msg({msg: 'Parameters Error'});
@@ -125,6 +130,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
                 if (pending.length > 0 ){
                     const btnUpdate = Ext.getCmp(prototype.idDE + '-btn-update');
                     btnUpdate.show();
+                    me.activeChanges = true ;
                     notifier.success('Tickets added succesfly: ' + pending.length);
                 }
                 if (loaded.length > 0) {
@@ -144,6 +150,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
             notifier.alert('Error on load Tickets');
         } finally {
             tabTickets.setLoading(false);
+            me.loadActiveChangesTaxException();
         }
     },
     onExceptTax: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
@@ -201,11 +208,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
                 data: me.exTaxes
             });
             grid.setStore(store);
-            btnUpdate.show();
+            
+            me.loadActiveChangesTaxException();
+            
+            form.findField('IN_CTAX').reset();
+            form.findField('IN_COMMENT').reset();
         }else{
             global.Msg({msg: 'Invalid Parameters'});
         }
-        me.loadActiveChangesTaxException();
     },
     onDeleteTicket: function(grid, td, rowIndex, cellIndex, e, record, tr, eOpts){
         const me = this;
@@ -315,9 +325,16 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
         const btnDelete = Ext.getCmp(prototype.idDE + '-btn-delete');
         btnUpdate.hide();
         btnDelete.hide();
-        if (me.activeChanges) {
-            btnUpdate.show();
-            btnDelete.show();
+        if (me.isNewTicket){
+            if (me.activeChanges) {
+                btnUpdate.show();
+            }
+        }
+        else{
+            if (me.activeChanges) {
+                btnUpdate.show();
+                btnDelete.show();
+            }
         }
     }
 });
