@@ -444,7 +444,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 '5': 'IATA+FE+I+T+A',
                                                 '6': 'PNR+FE+I+T+A',
                                                 '7': 'FE+I+T+A',
-                                                '8': 'TKT+PNR+FE+I+T+A',
+                                                '8': 'TKT+PNR+FE+I+T',
                                                 '9': 'TKT+PNR+FE+ID+T+A',
                                                 'A': 'PNR+FE+I+T',
                                                 'B': 'PNR+FE+ID+T+A'
