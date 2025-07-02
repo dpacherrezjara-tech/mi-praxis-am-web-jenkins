@@ -499,14 +499,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
             };
             
             const res = await global.callStorePost('PRAXISMP','SQP05625',params);
-            
-            global.Msg({msg:res.lstVals.OUT_MSG});
+            console.log(res);
+            global.Msg({
+                msg:res.data.lstVals.OUT_MSG
+            });
             me.view.setLoading(false);
             me.reloadMainGrid();
             me.reloadMainTransaction();
             me.view.close();
         } catch (e) {
-            global.Msg({msg:'Error on reconcile'});
+            global.Msg({msg:'System Error'});
             me.view.setLoading(false);
         }
     },

@@ -759,8 +759,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             id: prototype.idDE + '-MSITrackingDataEntry',
             searchParams: params,
             obj: me.bean,
-            callback: me.reloadErrorGrid,
-            reRender: me.afterRender
+            callback: () => {
+                me.reloadErrorGrid();
+            },
+            reRender: () => {
+                me.afterRender();
+            }
         });
         dataEntryMSI.show();
     },
