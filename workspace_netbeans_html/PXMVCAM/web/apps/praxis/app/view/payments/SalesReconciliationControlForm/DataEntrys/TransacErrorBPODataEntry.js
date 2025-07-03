@@ -779,6 +779,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 type: 'vbox',
                                 pack: 'center'
                             },
+                            hidden:true,
                             width: '100%',
                             border: false,
                             bodyStyle: 'background: transparent',
@@ -810,7 +811,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 fields: ['code', 'name'],
                                                 data: [
                                                     ['M', 'Multi-Payment'],
-                                                    ['C', 'Compensation']
+                                                    ['C', 'Complement']
                                                 ]
                                             }),
                                             labelWidth: 55,

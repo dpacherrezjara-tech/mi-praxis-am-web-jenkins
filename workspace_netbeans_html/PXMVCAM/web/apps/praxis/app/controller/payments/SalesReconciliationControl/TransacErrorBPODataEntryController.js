@@ -54,6 +54,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         let adj = me.bean.codadju.trim() === '' ? false : true;
         const adjucoment = Ext.getCmp(prototype.idDE + '-bpoComments2');
         const commentTransaction = Ext.getCmp(prototype.idDE + '-CommentTransaction');
+        commentTransaction.hide();
 
         Ext.getCmp(prototype.idDE + '-panelAdjustments').hide();
         const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments').getStore();
@@ -64,9 +65,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const btnUpdate = Ext.getCmp(prototype.idDE + '-btn-update');
         const btnReverse = Ext.getCmp(prototype.idDE + '-reverseTrnx');
         const btnMSI = Ext.getCmp(prototype.idDE + '-MatchMSITracking');
+        
+        const gridPanel1 = Ext.getCmp(prototype.idDE + '-panelGrids1');
+        const gridPanel2 = Ext.getCmp(prototype.idDE + '-panelGrids2');
+        const balanceScan = Ext.getCmp(prototype.idDE + '-balanceScannerForm');
+        const updateBalance = Ext.getCmp(prototype.idDE + '-btn-update-balance');
+        Ext.getCmp(prototype.idDE + '-gridBalances').getStore().removeAll();
+        gridPanel1.show();
+        gridPanel2.hide();
+        balanceScan.hide();
+        updateBalance.hide();
+        scanner.show();
 
         //transacciones match
         if (match.includes(status)) {
+            
             bpo.setDisabled(true);
             blocked.setDisabled(true);
             desglose.setDisabled(false);
@@ -759,8 +772,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             id: prototype.idDE + '-MSITrackingDataEntry',
             searchParams: params,
             obj: me.bean,
-            callback: me.reloadErrorGrid,
-            reRender: me.afterRender
+            callback: () => {
+                me.reloadErrorGrid();
+            },
+            reRender: () => {
+                me.afterRender();
+            }
         });
         dataEntryMSI.show();
     },

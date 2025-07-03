@@ -196,15 +196,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
-                                            ['0', 'Stand By'],
                                             ['1', 'Match'],
-                                            ['2', 'Sales Without Settl.'],
+                                            ['2', 'Sales W/O Settl.'],
                                             ['4', 'Match Parcial'],
                                             ['5', 'Match Manual'],
                                             ['6', 'Match Forzado'],
-                                            ['7', 'Match por Compensacion'],
+                                            ['7', 'Match Compensation'],
                                             ['8', 'Match Transaccional'],
-                                            ['9', 'Match Void']
+                                            ['9', 'Match Void'],
+                                            ['A', 'Match OC/Camepa'],
+                                            ['M', 'Match Multi-Payment'],
+                                            ['C', 'Match Complement']
                                         ]
                                     }),
                                     labelWidth: 55,
@@ -676,13 +678,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
-                                            ['0', 'Stand By'],
                                             ['1', 'Match'],
-                                            ['2', 'Sales Without Settl.'],
+                                            ['2', 'Sales W/O Settl.'],
                                             ['4', 'Match Parcial'],
                                             ['5', 'Match Manual'],
                                             ['6', 'Match Forzado'],
-                                            ['7', 'Match por Compensacion'],
+                                            ['7', 'Match Compensation'],
                                             ['8', 'Match Transaccional'],
                                             ['9', 'Match Void'],
                                             ['A', 'Match OC/Camepa'],
