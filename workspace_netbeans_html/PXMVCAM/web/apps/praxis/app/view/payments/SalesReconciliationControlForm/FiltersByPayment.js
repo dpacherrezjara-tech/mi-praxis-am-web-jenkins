@@ -247,15 +247,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
-                                            ['0', 'Stand By'],
                                             ['1', 'Match'],
-                                            ['3', 'Settl. Without Sales'],
+                                            ['3', 'Settlement W/O Sales'],
                                             ['4', 'Match Parcial'],
                                             ['5', 'Match Manual'],
                                             ['6', 'Match Forzado'],
-                                            ['7', 'Match por Compensacion'],
+                                            ['7', 'Match Compensation'],
                                             ['8', 'Match Transaccional'],
-                                            ['9', 'Match Void']
+                                            ['9', 'Match Void'],
+                                            ['M', 'Match Multi-Payment'],
+                                            ['C', 'Match Complement']
                                         ]
                                     }),
                                     labelWidth: 55,
@@ -491,7 +492,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
-                                            ['0', 'Stand By'],
                                             ['1', 'Match'],
                                             ['3', 'Settl. Without Sales'],
                                             ['4', 'Match Parcial'],
@@ -500,7 +500,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                             ['7', 'Match por Compensacion'],
                                             ['8', 'Match Transaccional'],
                                             ['9', 'Match Void'],
-                                            ['A', 'Match OC/Camepa'],
                                             ['M', 'Match Multi-Payment'],
                                             ['C', 'Match Complement']
                                         ]
