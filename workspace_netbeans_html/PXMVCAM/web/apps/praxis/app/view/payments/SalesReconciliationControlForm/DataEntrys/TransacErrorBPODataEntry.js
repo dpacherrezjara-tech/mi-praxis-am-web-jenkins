@@ -447,7 +447,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 '8': 'TKT+PNR+FE+I+T',
                                                 '9': 'TKT+PNR+FE+ID+T+A',
                                                 'A': 'PNR+FE+I+T',
-                                                'B': 'PNR+FE+ID+T+A'
+                                                'B': 'PNR+FE+ID+T+A',
+                                                'C': 'TKT+FE+I+T'
 //                                                '1': 'Ticket',
 //                                                '2': 'PNR',
 //                                                '3': 'C.Card',
