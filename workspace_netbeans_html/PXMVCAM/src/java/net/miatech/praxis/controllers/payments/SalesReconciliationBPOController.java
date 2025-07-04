@@ -1096,7 +1096,7 @@ public class SalesReconciliationBPOController {
                 valor = "Settl. without Sales";
                 break;
             case "4":
-                valor = "Match Difference";
+                valor = "Match Parcial";
                 break;
             case "5":
                 valor = "Match Manual";
@@ -1108,8 +1108,20 @@ public class SalesReconciliationBPOController {
                 valor = "Compensation Match";
                 break;
             case "8":
-                valor = "Pending RFND";
+                valor = "Match Transaccional";
                 break;
+            case "9":
+                valor = "Match Void";
+                break;
+            case "A":
+                valor = "Match OC/Camepa";
+                break;
+            case "C":
+                valor = "Match Complement";
+                break;
+            case "M":
+                valor = "Match Multi-Payment";
+                break;    
         }
         return valor;
     }
