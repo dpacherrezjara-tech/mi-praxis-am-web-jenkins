@@ -13,6 +13,7 @@ import net.miatech.praxis.payment.filter.SQP04979Filter;
 import net.miatech.praxis.payment.filter.SQP04980Filter;
 import net.miatech.praxis.payment.filter.SQP04981Filter;
 import net.miatech.praxis.payment.filter.SQP04982Filter;
+import net.miatech.praxis.payment.filter.SQP04983Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.utils.Functions;
@@ -34,28 +35,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Scope("request")
 @RequestMapping("/SalesComplement")
 public class SalesComplementController {
-    
+
     @Autowired
     private SalesComplementLogic logic;
-    
+
     @Autowired
     private ExportUtils exportUtils;
-    
+
     private static String controllerName = "Sales Complement";
-    
+
     //<editor-fold defaultstate="collapsed" desc="convierte obj">
-    private <T> T parseObject(Map<String, Object> params, Class<T> clazz) 
-            throws InstantiationException, IllegalAccessException 
-    {
+    private <T> T parseObject(Map<String, Object> params, Class<T> clazz)
+            throws InstantiationException, IllegalAccessException {
         //T instance = clazz.newInstance();
-        Gson gson =  new Gson();
+        Gson gson = new Gson();
         String json = gson.toJson(params);
         //System.out.println(json);
         T filter = (T) gson.fromJson(json, clazz);
         return filter;
     }
     //</editor-fold>
-    
+
     @RequestMapping(value = "getPlusgradeInfo")
     public ResponseEntity<?> getPlusgradeInfo(@RequestParam Map<String,Object> params){
         try {
@@ -67,10 +67,10 @@ public class SalesComplementController {
             System.out.println("Error: " + e.getMessage());
             //e.printStackTrace(); //solo en testing
         }
-        
+
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "getLigasInfo")
     public ResponseEntity<?> getLigasInfo(@RequestParam Map<String,Object> params){
         try {
@@ -84,7 +84,7 @@ public class SalesComplementController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "getTabletsInfo")
     public ResponseEntity<?> getTabletsInfo(@RequestParam Map<String,Object> params){
         try {
@@ -98,7 +98,7 @@ public class SalesComplementController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "getTicketsPg")
     public ResponseEntity<?> getTicketsPg(@RequestParam Map<String,Object> params){
         try {
@@ -112,7 +112,7 @@ public class SalesComplementController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "searchPNR")
     public ResponseEntity<?> searchPNR(@RequestParam Map<String,Object> params, ModelMap model){
         try {
@@ -131,7 +131,7 @@ public class SalesComplementController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "loadMasterInfo")
     public ResponseEntity<?> loadMasterTableInfo(@ModelAttribute SQP05004Filter filter){
         try {
@@ -144,7 +144,7 @@ public class SalesComplementController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "loadPaises")
     public ResponseEntity<?> loadPaises(){
         try {
@@ -156,14 +156,14 @@ public class SalesComplementController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "downloadPlusgradeInfo")
     public ResponseEntity<byte[]> downloadPlusgradeInfo(@RequestParam Map<String,Object> params){
         try {
             System.out.println("-------------Sales Complement: downloadPlusgradeInfo---------------");
             SQP04979Filter filter = this.parseObject(params,SQP04979Filter.class);
             filter = logic.getSQP04979Filter(filter);
-            
+
             List<Object[]> data = new ArrayList<>();
             //headers
             Object[] headers = new Object[31];
@@ -240,15 +240,14 @@ public class SalesComplementController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
-    
+
     @RequestMapping(value = "downloadLigasInfo")
     public ResponseEntity<byte[]> downloadLigasInfo(@RequestParam Map<String,Object> params){
         try {
             System.out.println("-------------Sales Complement: downloadLigasInfo---------------");
             SQP04980Filter filter = this.parseObject(params,SQP04980Filter.class);
             filter = logic.getSQP04980Filter(filter);
-            
+
             List<Object[]> data = new ArrayList<>();
             //headers
             Object[] headers = new Object[23];
@@ -309,14 +308,14 @@ public class SalesComplementController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(value = "downloadTabletInfo")
     public ResponseEntity<byte[]> downloadTabletInfo(@RequestParam Map<String,Object> params){
         try {
             System.out.println("-------------Sales Complement: downloadTabletInfo---------------");
             SQP04981Filter filter = this.parseObject(params,SQP04981Filter.class);
             filter = logic.getSQP04981Filter(filter);
-            
+
             List<Object[]> data = new ArrayList<>();
             //headers
             Object[] headers = new Object[23];
@@ -377,5 +376,5 @@ public class SalesComplementController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
 }
