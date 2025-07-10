@@ -29,9 +29,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
         let store = global.callStorePaggin('PXSAUDIT','SQP05583',params);
         grid.setStore(store);
     },
-    onClickSearchBtn:function(){
-        this.loadTickets();
-    },
     formatParams: function(){
         const form = Ext.getCmp(prototype.id + '-panelFilters').getForm();
         return form.getValues();
@@ -56,6 +53,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
             obj: record.data,
             taxes:me.taxes,
             reloadGrid: me.reloadGrid
+        });
+        newWin.show();
+    },
+    loadHistoryLogDetails: function(grid, td, rowIndex, cellIndex, e, record, tr, eOpts){
+        const me = this;
+        console.log("record.data", record.data);
+        const newWin = Ext.create('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExceptionsLog',{
+            id:prototype.id + '-TaxesExceptionsLog-1',
+            obj: record.data
         });
         newWin.show();
     },
@@ -99,6 +105,29 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
     reloadGrid: function(){
         const grid = Ext.getCmp(prototype.id + '-gridExceptionTickets');
         grid.getStore().load();
+    },
+    
+    //<editor-fold defaultstate="collapsed" desc="Options">
+    onClickSearchBtn:function(){
+        this.loadTickets();
+    },
+    onEnterKeyPress: function (field, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onClickSearchBtn();
+        }
+    },
+    onClickToggleFilterBtn: function () {
+        const panelFilters = Ext.getCmp(prototype.id + '-panelFilters');
+        if (panelFilters.isVisible())
+            panelFilters.hide();
+        else
+            panelFilters.show();
+    },
+    onClickClearOptionsBtn:function(){
+        const panelFilters = Ext.getCmp(prototype.id + '-panelFilters');
+        panelFilters.reset();
     }
+    //</editor-fold>
+    
 });
 

@@ -323,19 +323,34 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
         const me = this;
         const btnUpdate = Ext.getCmp(prototype.idDE + '-btn-update');
         const btnDelete = Ext.getCmp(prototype.idDE + '-btn-delete');
+        const btnViewLog = Ext.getCmp(prototype.idDE + '-btn-viewTaxesLog');
         btnUpdate.hide();
         btnDelete.hide();
         if (me.isNewTicket){
             if (me.activeChanges) {
                 btnUpdate.show();
             }
+            btnViewLog.hidden();
         }
         else{
             if (me.activeChanges) {
                 btnUpdate.show();
                 btnDelete.show();
             }
+            btnViewLog.show();
         }
+    },
+    onViewTaxesLog : function(grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
+        console.log( me.selectedTickets[0]);
+        
+        const newWin = Ext.create('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExceptionsLog',{
+            id:prototype.id + '-TaxesExceptionsLog-2',
+            obj: me.selectedTickets[0]
+        });
+        
+        newWin.show();
+        
     }
 });
 

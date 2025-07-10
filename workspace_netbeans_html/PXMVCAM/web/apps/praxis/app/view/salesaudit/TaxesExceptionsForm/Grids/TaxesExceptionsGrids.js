@@ -60,9 +60,9 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Grids.TaxesExceptions
                     {text: 'SEQ', dataIndex: 'SEQ', width: 50},
                     {text: 'TAX EXCEPTIONS', dataIndex: 'TAX_EXCEPTIONS', width: 120},
                     {text: 'PNR', dataIndex: 'SPNR', width: 80},
-                    {text: 'Pax Name', dataIndex: 'PAXNAME', flex: 1},
-                    {text: 'Itinerary', dataIndex: 'RUTABOL', width: 200},
-                    {text: 'Type<br>Load', dataIndex: 'TIPOING', width: 140,
+                    {text: 'Pax Name', dataIndex: 'PAXNAME', width: 200},
+                    {text: 'Itinerary', dataIndex: 'RUTABOL', width: 140},
+                    {text: 'Type<br>Load', dataIndex: 'TIPOING', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             const opts = {
                                 'I':'Form',
@@ -77,6 +77,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Grids.TaxesExceptions
                     {text: 'User<br>Updated', dataIndex: 'USUP', width: 100},
                     {text: 'Date<br>Updated', dataIndex: 'FEUP', width: 80},
                     {
+                        text: 'Detail',
                         xtype: 'actioncolumn',
                         sortable: false,
                         width: 50,
@@ -88,6 +89,22 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Grids.TaxesExceptions
                                 },
                                 tooltip: 'Detail',
                                 handler: 'loadTaxDetails'
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Log',
+                        xtype: 'actioncolumn',
+                        sortable: false,
+                        width: 50,
+                        align: 'center',
+                        items: [
+                            {
+                                getClass: function (value, metadata, record) {
+                                    return 'prx-icon-detail';
+                                },
+                                tooltip: 'History Log',
+                                handler: 'loadHistoryLogDetails'
                             }
                         ]
                     }
