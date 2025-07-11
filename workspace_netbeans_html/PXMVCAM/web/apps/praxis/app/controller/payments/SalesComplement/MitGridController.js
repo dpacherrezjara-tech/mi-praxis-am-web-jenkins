@@ -6,9 +6,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.MitGridController', {
         const view = me.view; // call view design
         this.getData(view);
     },
-    getData: async function ( view) {
-        let store = global.callStorePaggin('PRAXISMP','SQP05642',view.searchParams);
-        //view.bindStore(store);
+    
+    
+    getData: async function (view) {
+        let store = global.callStorePaggin('PRAXISMP', 'SQP05644', view.searchParams);
+        console.log(' data entry', store)
+        view.bindStore(store);
         this.view.setStore(store);
     },
     

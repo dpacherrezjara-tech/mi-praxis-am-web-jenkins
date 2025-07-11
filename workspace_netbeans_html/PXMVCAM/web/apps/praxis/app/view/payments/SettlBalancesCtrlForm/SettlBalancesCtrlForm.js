@@ -10,7 +10,8 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.SettlBalancesCtrlForm
         'Ext.Praxis.controller.payments.SettlBalancesCtrl.SettlBalancesCtrlController',
         'Ext.Praxis.view.payments.SettlBalancesCtrlForm.Options',
         'Ext.Praxis.view.payments.SettlBalancesCtrlForm.Filters',
-        //'Ext.Praxis.view.payments.SettlBalancesCtrlForm.Grids.SettlBalancesGrid'
+        'Ext.Praxis.view.payments.SettlBalancesCtrlForm.Grids.SettlBalancesCtrlGrid',  //cuando solo es una grilla se llama directamente
+//        'Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntrySettlBalances'    //no necesita
     ],
     controller: 'SettlBalancesCtrlController',
     layout: {
