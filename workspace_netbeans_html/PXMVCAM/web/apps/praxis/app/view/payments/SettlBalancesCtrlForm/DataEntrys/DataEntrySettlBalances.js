@@ -3,309 +3,205 @@ prototype.idDE = prototype.id + 'DataEntrySettlBalances';
 Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntrySettlBalances', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntrySettlBalances',
+
     requires: [
         'Ext.Praxis.controller.payments.SettlBalancesCtrl.DataEntrySettlBalancesCtrlController'
     ],
+
     controller: 'DataEntrySettlBalancesCtrlController',
-    title: 'Form',
+    title: 'Settlement Balances',
     header: true,
-//    height: 390,
-    width: 1200,
-    border: false,
+    width: 1000,
+    modal: true,
     resizable: false,
     layout: 'fit',
-    modal: true,
-    defaults: {
-        border: false
-    },
+
     items: [
         {
             xtype: 'form',
             id: prototype.idDE + '-informationForm',
             layout: {
                 type: 'vbox',
-                pack: 'center'
+                align: 'stretch'
             },
-            border: false,
-            width: '100%',
+            bodyPadding: 15,
             defaults: {
                 xtype: 'fieldset',
                 layout: {
                     type: 'vbox',
-                    pack: 'center'
+                    align: 'stretch'
                 },
-                border: true,
-                margin: '2 2 2 2',
-                width: '100%',
+                margin: '10 0',
                 style: {
-                    backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
+                    backgroundColor: '#fafafa',
+                    borderColor: '#d0d0d0'
                 },
                 defaults: {
-                    xtype: 'panel',
-                    layout: {
-                        type: 'hbox',
-                        pack: 'left'
-                    },
-                    width: '100%',
-                    border: false,
-                    bodyStyle: 'background: transparent',
+                    xtype: 'container',
+                    layout: 'hbox',
                     defaults: {
                         xtype: 'textfield',
-                        margin: '2 5 2 5',
-                        labelStyle: 'text-align:left;font-weight: bolder;',
-                        fieldStyle: 'text-align:center;',
-                        editable: false
+                        flex: 1,
+                        margin: '4',
+                        labelWidth: 100,
+                        labelAlign: 'right',
+                        labelStyle: 'font-weight:bold;',
+                        fieldStyle: 'text-align:center; background-color: #EEF3F9;',
+                        editable: false,
+//                        readOnly: true
                     }
                 }
             },
             items: [
+                // Ticket Information
                 {
+                    title: 'Ticket Information',
                     items: [
                         {
                             items: [
-                                {
-                                    fieldLabel: 'Ticket',
-                                    name: 'TICKET',
-                                    labelWidth: 60,
-                                    width: 200
-                                },
-                                {
-                                    fieldLabel: 'Seq',
-                                    name: 'SEQ',
-                                    labelWidth: 120,
-                                    width: 240
-                                },
-                                {
-                                    fieldLabel: 'CORRL',
-                                    name: 'pmerchid',
-                                    labelWidth: 120,
-                                    width: 240
-                                },
-                                {
-                                    fieldLabel: 'Rolling',
-                                    id: prototype.idDE + '-txtSMERCHID',
-                                    name: 'SEQROLL',
-                                    labelWidth: 120,
-                                    width: 240
-                                },
-                                  {
-                                    fieldLabel: 'Transaction',
-                                    id: prototype.idDE + '-txtSMERCHID',
-                                    name: 'TRNCU',
-                                    labelWidth: 120,
-                                    width: 240
-                                }
+                                {fieldLabel: 'Ticket', name: 'TICKET', readOnly: true, labelWidth: 50},
+                                {fieldLabel: 'Seq', name: 'SEQ', readOnly: true, },
+                                {fieldLabel: 'CORRL', name: 'CORRL', readOnly: true},
+                                {fieldLabel: 'Rolling', name: 'SEQROLL', readOnly: true},
+                                {fieldLabel: 'Transaction', name: 'TRNCU', readOnly: true}
                             ]
-                        },
-                    ]
-                },
-                //</editor-fold>
-                //<editor-fold defaultstate="collapsed" desc="Control Data">
-                {
-                    xtype: 'fieldset',
-                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:10px;">Credit Card</span>',
-                    layout: {
-                        type: 'vbox',
-                        pack: 'center'
-                    },
-                    border: true,
-                    margin: '5 5 5 5',
-                    width: '100%',
-                    style: {
-                        backgroundColor: '#EEF3F9' // Cambiar el color de fondo a gris claro (#f0f0f0)
-                    },
-                    defaults: {
-                        xtype: 'panel',
-                        layout: {
-                            type: 'hbox',
-                            pack: 'center'
-                        },
-                        width: '100%',
-                        border: false,
-                        bodyStyle: 'background: transparent',
-                        defaults: {
-                            xtype: 'textfield',
-                            margin: '5 8 5 8',
-                            labelStyle: 'text-align:left;font-weight: bolder;',
-                            fieldStyle: 'text-align:center;',
-                            editable: false
                         }
-                    },
+                    ]
+                },
+                // Credit Card
+                {
+                    title: 'Credit Card',
                     items: [
                         {
                             items: [
-                                {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'Code',
-                                    name: 'SCARDCOD'
-                                },
-                                {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'Number.',
-                                    name: 'SCARDN'
-                                },
-                                {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'Auth..',
-                                    name: 'SAUTHOC'
-                                }
+                                {fieldLabel: 'Code', name: 'SCARDCOD', readOnly: true},
+                                {fieldLabel: 'Number', name: 'SCARDN', readOnly: true},
+                                {fieldLabel: 'Auth.', name: 'SAUTHOC', readOnly: true}
                             ]
-                        },
+                        }
                     ]
                 },
-                //</editor-fold>
-                 {
+                // Processing Info
+                {
+                    title: 'Processing Info',
                     items: [
                         {
                             items: [
-                                {
-                                    fieldLabel: 'Proccesing Date',
-                                    name: 'SDATE',
-                                    labelWidth: 100,
-                                    width: 200
-                                },
-                                {
-                                    fieldLabel: 'Ref. Number',
-                                    name: 'AREFNBR',
-                                    labelWidth: 120,
-                                    width: 240
-                                },
-                                {
-                                    fieldLabel: 'Processor',
-                                    name: 'DESC_PRO',
-                                    labelWidth: 120,
-                                    width: 240
-                                },
-                                 
+                                {fieldLabel: 'Processing Date', name: 'SDATE', readOnly: true},
+                                {fieldLabel: 'Ref. Number', name: 'AREFNBR', readOnly: true},
+                                {fieldLabel: 'Processor', name: 'DESC_PRO', readOnly: true}
                             ]
                         },
-                         {
+                        {
                             items: [
-                                {
-                                    fieldLabel: 'Settl. Amount',
-                                    name: 'TGROSAMOUN',
-                                    labelWidth: 100,
-                                    width: 200
-                                },
-                                {
-                                    fieldLabel: 'Moneda',
-                                    name: 'MONEDA',
-                                    labelWidth: 120,
-                                    width: 240
-                                },
-                                {
-                                    fieldLabel: 'Error Code',
-                                    name: 'CERROR',
-                                    labelWidth: 120,
-                                    width: 240
-                                },
-                                
+                                {fieldLabel: 'Settl. Amount', name: 'TGROSAMOUN', readOnly: true},
+                                {fieldLabel: 'Currency', name: 'MONEDA', readOnly: true},
+                                {fieldLabel: 'Error Code', name: 'CERROR', readOnly: true}
                             ]
                         },
-                          {
+                        {
                             items: [
-                                {
-                                    fieldLabel: 'Balance Amount',
-                                    name: 'SALDO',
-                                    labelWidth: 100,
-                                    width: 200
-                                },
-                                {
-                                    fieldLabel: 'Status',
-                                    name: 'DESC_STVAL',
-                                    labelWidth: 120,
-                                    width: 240
-                                },
-                                {
-                                    fieldLabel: 'Diff. Type',
-                                    name: 'DESC_AJUSTE',
-                                    labelWidth: 120,
-                                    width: 240
-                                },
-                                
+                                {fieldLabel: 'Balance Amount', name: 'SALDO', readOnly: true},
+                                {fieldLabel: 'Status', name: 'DESC_STVAL', readOnly: true},
+                                {fieldLabel: 'Diff. Type', name: 'DESC_AJUSTE', readOnly: true}
                             ]
-                        },
+                        }
                     ]
                 },
+                // Control Data
+                {
+                    title: 'Control Data',
+                    items: [
+                        {
+                            items: [
+                                {fieldLabel: 'User Created', name: 'USCR', readOnly: true},
+                                {fieldLabel: 'Date Created', name: 'FECR', readOnly: true},
+                                {fieldLabel: 'Hour Created', name: 'HOCR', readOnly: true}
+                            ]
+                        },
+                        {
+                            items: [
+                                {fieldLabel: 'User Updated', name: 'USUP', readOnly: true},
+                                {fieldLabel: 'Date Updated', name: 'FEUP', readOnly: true},
+                                {fieldLabel: 'Hour Updated', name: 'HOUP', readOnly: true}
+                            ]
+                        }
+                    ]
+                },
+
                 {
                     xtype: 'fieldset',
-                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:10px;">Control Data</span>',
-                    layout: {
-                        type: 'vbox',
-                        pack: 'center'
-                    },
-                    border: true,
-                    margin: '5 5 5 5',
-                    width: '100%',
+                    title: 'Proceed Option',
+//                    xtype: 'container',
+                    layout: 'hbox',
+//                    margin: '10 0 0 10',
                     style: {
-                        backgroundColor: '#EEF3F9' // Cambiar el color de fondo a gris claro (#f0f0f0)
-                    },
-                    defaults: {
-                        xtype: 'panel',
-                        layout: {
-                            type: 'hbox',
-                            pack: 'center'
-                        },
-                        width: '100%',
-                        border: false,
-                        bodyStyle: 'background: transparent',
-                        defaults: {
-                            xtype: 'textfield',
-                            margin: '5 8 5 8',
-                            labelStyle: 'text-align:left;font-weight: bolder;',
-                            fieldStyle: 'text-align:center;',
-                            editable: false
-                        }
+//                        border: 'none',
+                        background: 'transparent'
                     },
                     items: [
                         {
+                            xtype: 'radiogroup',
+                            labelWidth: 60,
+                            columns: 2,
                             items: [
                                 {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'User Crt.',
-                                    name: 'USCR'
+                                    xtype: 'radio',
+                                    boxLabel: 'Proceed',
+                                    name: 'proceedStatus',
+                                    inputValue: '1',
+                                    id: prototype.idDE + '-proceed'
                                 },
                                 {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'Date Crt.',
-                                    name: 'FECR'
-                                },
-                                {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'Hour Crt.',
-                                    name: 'HOCR'
-                                }
-                            ]
-                        },
-                        {
-                            items: [
-                                {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'User Upd.',
-                                    name: 'USUP'
-                                },
-                                {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'Date Upd.',
-                                    name: 'FEUP'
-                                },
-                                {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'Hour Upd.',
-                                    name: 'HOUP'
+                                    xtype: 'radio',
+                                    boxLabel: 'Do Not Proceed',
+                                    name: 'proceedStatus',
+                                    inputValue: '2',
+                                    id: prototype.idDE + '-doNotProceed'
                                 }
                             ]
                         }
                     ]
+                }
+
+
+
+
+
+
+
+            ]
+        }
+    ],
+
+    dockedItems: [
+        {
+            xtype: 'toolbar',
+            dock: 'bottom',
+            ui: 'footer',
+            margin: '7 0 7 0',
+            layout: {
+                pack: 'center'
+            },
+            defaults: {
+                scale: 'medium'
+            },
+            items: [
+                {
+                    text: 'Update',
+                    id: prototype.idDE + '-btn-update',
+                    iconCls: 'prx-icon-update',
+                    listeners: {
+                        click: 'onUpdateClick'
+                    }
+                },
+                {
+                    text: 'Cancel',
+                    id: prototype.idDE + '-btn-cancel',
+                    iconCls: 'prx-icon-cancel',
+                    listeners: {
+                        click: 'onCancelClick'
+                    }
                 }
             ]
         }
