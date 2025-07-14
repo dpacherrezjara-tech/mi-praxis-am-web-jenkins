@@ -85,6 +85,7 @@ import net.miatech.praxis.payment.filter.SQP05311Filter;
 import net.miatech.praxis.payment.filter.SQP05312Filter;
 import net.miatech.praxis.payment.filter.SQP05313Filter;
 import net.miatech.praxis.payment.filter.SQP05319Filter;
+import net.miatech.praxis.payment.filter.SQP05646Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import net.miatech.praxis.utils.MailUtils;
@@ -431,6 +432,16 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         return filter;
     }
 
+    // Load v2 Summary by Ticket
+     @Override
+    public SQP05646Filter LoadSQP05646Filter(SQP05646Filter filter) throws Exception {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05646", params,
+                new BeanPropertyRowMapper<>(A4331SRFilter.class));
+        filter.setResponse((List<A4331SRFilter>) obj.get("result"));
+        return filter;
+    }
+     
     @Override
     public SQP05089Filter loadSQP05089Filter(SQP05089Filter filter) throws Exception {
         filter.setPage();

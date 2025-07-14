@@ -12,7 +12,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
     height: 'auto',
     minHeight: 300,
     maxHeight: prototype.height,
-    width: 870,
+    width: 1700,
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -35,9 +35,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
         items: [
             {
                 text: 'Sale<br>Date',
-                flex: 1,
-                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                listeners: {
+                    click: 'onClickDetail'
+                },
+                width: 80,
+                renderer: function (value, metaData, record, rowIndex, colIndex, dataIndex) {
                     metaData.style = "text-align:center;font-weight:bold;color:#8B5199;";
+                    
+                    console.log("record.data", record.data);
+                    
                     if (record.data.a4496FPROC) {
                         value = record.data.a4496FPROC;
                     } else if (record.data.a4496FECVT) {
@@ -49,7 +55,154 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                 }
             },
             {
-                text: 'Total General',
+//                text: 'Total General',
+                text: 'Total',
+                //width: 400,
+                defaults: {
+                    menuDisabled: true,
+                    sortable: true,
+                    align: 'center',
+                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                        metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;";
+                        metaData.style += "font-weight:bolder;color:#057ECB;";
+                        return value;
+                    }
+                },
+                columns: [
+//                    {
+//                        text: 'Total', dataIndex: 'total', align: 'center', width: 100,
+//                        listeners: {
+//                            click: 'onClickTotal'
+//                        },
+//                        summaryType: 'sum',
+//                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                            metaData.style = "text-align:center;font-weight:bold;";
+//                            return value;
+//                        }
+//                    },
+//                    {
+//                        text: 'Match', dataIndex: 'total_MATCH', align: 'center', width: 100,
+//                        listeners: {
+//                            click: 'onClickDetail'
+//                        },
+//                        summaryType: 'sum',
+//                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                            metaData.style = "text-align:center;font-weight:bold;";
+//                            return value;
+//                        }
+//                    },
+//                    {
+//                        text: 'Pending', dataIndex: 'total_PENDING', align: 'center', width: 100,
+//                        listeners: {
+//                            click: 'onClickDetail'
+//                        },
+//                        summaryType: 'sum',
+//                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                            metaData.style = "text-align:center;font-weight:bold;";
+//                            return value;
+//                        }
+//                    },
+//                    {
+//                        text: '%', align: 'center', width: 100,
+//                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                            metaData.style = "text-align:center;background-color:#d5f4d5;color:red;";
+//                            value = (record.data.total_PENDING / record.data.total) * 100;
+//                            return value.toFixed(2) + '%';
+//                        },
+//                        summaryType: 'customPercent',
+//                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+//                            metaData.style = "text-align:center;font-weight:bold;";
+//                            let atributos = Object.keys(summaryData);
+//                            let total = atributos[1];
+//                            let pending = atributos[3];
+//                            let percent = (summaryData[pending] / summaryData[total]) * 100;
+//                            return percent.toFixed(2) + '%';
+//                        }
+//                    },
+                    
+                    {
+                        text: 'AX', dataIndex: 'total_AX', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'VS/MC', dataIndex: 'total_VI_MC', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'DC', dataIndex: 'total_DC', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'TP', dataIndex: 'total_TP', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'BO', dataIndex: 'total_BO', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'OTHERS', dataIndex: 'total_OTHER', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'CA', dataIndex: 'total_CA', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    }
+                    
+                ]
+            },
+            
+            {
+                text: 'Match',
                 //width: 400,
                 defaults: {
                     menuDisabled: true,
@@ -63,18 +216,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                 },
                 columns: [
                     {
-                        text: 'Total', dataIndex: 'total', align: 'center', width: 100,
-                        listeners: {
-                            click: 'onClickTotal'
-                        },
-                        summaryType: 'sum',
-                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                            metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
-                        }
-                    },
-                    {
-                        text: 'Match', dataIndex: 'total_MATCH', align: 'center', width: 100,
+                        text: 'AX', dataIndex: 'total_MATCH_AX', align: 'center', width: 80,
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -85,7 +227,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         }
                     },
                     {
-                        text: 'Pending', dataIndex: 'total_PENDING', align: 'center', width: 100,
+                        text: 'VS/MC', dataIndex: 'total_MATCH_VI_MC', align: 'center', width: 80,
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -96,24 +238,168 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         }
                     },
                     {
-                        text: '%', align: 'center', width: 100,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;color:red;";
-                            value = (record.data.total_PENDING / record.data.total) * 100;
-                            return value.toFixed(2) + '%';
+                        text: 'DC', dataIndex: 'total_MATCH_DC', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
                         },
-                        summaryType: 'customPercent',
+                        summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            let atributos = Object.keys(summaryData);
-                            let total = atributos[1];
-                            let pending = atributos[3];
-                            let percent = (summaryData[pending] / summaryData[total]) * 100;
-                            return percent.toFixed(2) + '%';
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'TP', dataIndex: 'total_MATCH_TP', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'BO', dataIndex: 'total_MATCH_BO', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'OTHERS', dataIndex: 'total_MATCH_OTHER', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'CA', dataIndex: 'total_MATCH_CA', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
                         }
                     }
                 ]
+            },
+            
+            {
+                text: 'Pending',
+                //width: 400,
+                defaults: {
+                    menuDisabled: true,
+                    sortable: true,
+                    align: 'center',
+                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                        metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;";
+                        metaData.style += "font-weight:bolder;color:#057ECB;";
+                        return value;
+                    }
+                },
+                columns: [
+                    {
+                        text: 'AX', dataIndex: 'total_PENDING_AX', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'VS/MC', dataIndex: 'total_PENDING_VI_MC', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'DC', dataIndex: 'total_PENDING_DC', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'TP', dataIndex: 'total_PENDING_TP', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'BO', dataIndex: 'total_PENDING_BO', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'OTHERS', dataIndex: 'total_PENDING_OTHER', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    },
+                    {
+                        text: 'CA', dataIndex: 'total_PENDING_CA', align: 'center', width: 80,
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+                        }
+                    }
+                ]
+            },
+            {
+                text: 'Total<br>By Payment', dataIndex: 'total_BY_PAYMENT', align: 'center', width: 100,
+                listeners: {
+                    click: 'onClickDetail'
+                },
+                summaryType: 'sum',
+                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                    metaData.style = "text-align:center;font-weight:bold;";
+                    return value;
+                }
             }
+            
         ]
     },
     tbar: {

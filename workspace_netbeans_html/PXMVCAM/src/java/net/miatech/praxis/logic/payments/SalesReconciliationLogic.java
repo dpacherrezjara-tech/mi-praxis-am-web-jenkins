@@ -55,6 +55,7 @@ import net.miatech.praxis.payment.filter.SQP05311Filter;
 import net.miatech.praxis.payment.filter.SQP05312Filter;
 import net.miatech.praxis.payment.filter.SQP05313Filter;
 import net.miatech.praxis.payment.filter.SQP05319Filter;
+import net.miatech.praxis.payment.filter.SQP05646Filter;
 import org.springframework.ui.ModelMap;
 
 /**
@@ -118,6 +119,7 @@ public interface SalesReconciliationLogic {
     
     //storeds para listado de ticket
     SQP05088Filter loadSQP05088Filter(SQP05088Filter filter) throws Exception;
+    SQP05646Filter LoadSQP05646Filter(SQP05646Filter filter) throws Exception;
     SQP05089Filter loadSQP05089Filter(SQP05089Filter filter) throws Exception;
     
     SQP05126Filter loadSQP05126Filter(SQP05126Filter filter) throws Exception;
