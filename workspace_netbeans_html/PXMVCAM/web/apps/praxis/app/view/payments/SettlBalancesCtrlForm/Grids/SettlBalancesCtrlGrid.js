@@ -24,13 +24,13 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.Grids.SettlBalancesCt
             {
                 text: 'Ticket', dataIndex: 'TICKET', width: 110
             }, {
-                text: 'Seq', dataIndex: 'SEQ', width: 60
+                text: 'Seq', dataIndex: 'SEQ', width: 50
             },
             {
-                text: 'Corrl', dataIndex: 'CORRL', width: 60
+                text: 'Corrl', dataIndex: 'CORRL', width: 50
             },
             {
-                text: 'Rolling', dataIndex: 'SEQROLL', width: 80
+                text: 'Rolling', dataIndex: 'SEQROLL', width: 70
             },
             {
                 text: 'Transaction', dataIndex: 'TRNCU', width: 85
@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.Grids.SettlBalancesCt
                 },
                 columns: [
                     {
-                        text: 'Code', dataIndex: 'SCARDCOD', width: 80
+                        text: 'Code', dataIndex: 'SCARDCOD', width: 60
                     },
                     {
                         text: 'Number', dataIndex: 'SCARDN', width: 120
@@ -68,7 +68,7 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.Grids.SettlBalancesCt
                 text: 'Settl. Amount', dataIndex: 'TGROSAMOUN', width: 100
             },
             {
-                text: 'Moneda', dataIndex: 'MONEDA', width: 85
+                text: 'Moneda', dataIndex: 'MONEDA', width: 80
             },
             {
                 text: 'Error Code', dataIndex: 'CERROR', width: 85
