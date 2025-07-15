@@ -20,6 +20,7 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntryS
         {
             xtype: 'form',
             id: prototype.idDE + '-informationForm',
+            reference: 'informationForm',
             layout: {
                 type: 'vbox',
                 align: 'stretch'
@@ -133,6 +134,7 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntryS
                     xtype: 'fieldset',
                     title: 'Proceed Option',
 //                    xtype: 'container',
+                    id: prototype.idDE + '-proceedRadioGroup',
                     layout: 'hbox',
 //                    margin: '10 0 0 10',
                     style: {
@@ -191,6 +193,7 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntryS
                     text: 'Update',
                     id: prototype.idDE + '-btn-update',
                     iconCls: 'prx-icon-update',
+                    hidden:true,
                     listeners: {
                         click: 'onUpdateClick'
                     }
@@ -201,6 +204,15 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntryS
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'
+                    }
+                },
+                {
+                    text: 'Balance',
+                    id: prototype.idDE + '-btn-balance',
+//                    iconCls: 'prx-icon-detail';
+                    iconCls: 'prx-icon-image-log',
+                    listeners: {
+                        click: 'onClickBalanceConciliation'
                     }
                 }
             ]
