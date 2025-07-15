@@ -65,6 +65,7 @@ import net.miatech.praxis.payment.filter.SQP05311Filter;
 import net.miatech.praxis.payment.filter.SQP05312Filter;
 import net.miatech.praxis.payment.filter.SQP05313Filter;
 import net.miatech.praxis.payment.filter.SQP05319Filter;
+import net.miatech.praxis.payment.filter.SQP05646Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.ResponseUtils;
 import net.miatech.praxis.utils.SabreWebService;
@@ -484,6 +485,18 @@ public class SalesReconciliationBPOController {
         System.out.println("---------------SalesReconciliationBPO:loadByTicketSummary-------------");
         try {
             SQP05088Filter filter = logic.loadSQP05088Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @RequestMapping(value = "/v2/loadByTicketSummary")
+    public ResponseEntity<?> v2LoadByTicketSummary(@ModelAttribute SQP05646Filter params) {
+        System.out.println("--------------- v2 SalesReconciliationBPO:loadByTicketSummary -------------");
+        try {
+            SQP05646Filter filter = logic.LoadSQP05646Filter(params);
             System.out.println("Total: " + filter.getResponse().size());
             return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
