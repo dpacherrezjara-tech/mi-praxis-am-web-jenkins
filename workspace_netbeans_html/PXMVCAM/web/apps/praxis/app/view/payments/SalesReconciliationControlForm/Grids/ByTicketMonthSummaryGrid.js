@@ -6,6 +6,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
     requires: [
         'Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMonthSummaryGridController'
     ],
+    summaryIsMonth: true,
+    searchLastParams: {} ,
     controller: 'ByTicketMonthSummaryGridController',
     title: 'By Ticket Summary',
     titleAlign: 'center',
@@ -35,23 +37,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
         items: [
             {
                 text: 'Sale<br>Date',
-                listeners: {
-                    click: 'onClickDetail'
-                },
                 width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, dataIndex) {
                     metaData.style = "text-align:center;font-weight:bold;color:#8B5199;";
                     
                     console.log("record.data", record.data);
                     
-                    if (record.data.a4496FPROC) {
-                        value = record.data.a4496FPROC;
-                    } else if (record.data.a4496FECVT) {
-                        value = record.data.a4496FECVT;
+                    let fecha = "" ;
+                    
+//                    if (record.data.a4496FPROC) {
+//                        fecha = record.data.a4496FPROC;
+//                    } else 
+                    
+                    if (record.data.a4501FECVT) {
+                        fecha = record.data.a4501FECVT;
                     } else {
-                        value = record.data.a4501FEUP;
+                        fecha = record.data.a4501FEUP;
                     }
-                    return value;
+
+                    return `<span style="cursor:pointer;text-decoration:underline;color:#057ECB;font-weight:bold;">${fecha}</span>`;
+                },
+                listeners: {
+                    click : 'onClickDateSummaryCell'
                 }
             },
             {
@@ -122,6 +129,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     
                     {
                         text: 'AX', dataIndex: 'total_AX', align: 'center', width: 80,
+                        statusSummary: '',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -132,7 +140,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         }
                     },
                     {
-                        text: 'VS/MC', dataIndex: 'total_VI_MC', align: 'center', width: 80,
+                        text: 'VI/MC', dataIndex: 'total_VI_MC', align: 'center', width: 80,
+                        statusSummary: '',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -144,6 +153,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'DC', dataIndex: 'total_DC', align: 'center', width: 80,
+                        statusSummary: '',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -155,6 +165,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'TP', dataIndex: 'total_TP', align: 'center', width: 80,
+                        statusSummary: '',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -166,6 +177,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'BO', dataIndex: 'total_BO', align: 'center', width: 80,
+                        statusSummary: '',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -177,6 +189,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'OTHERS', dataIndex: 'total_OTHER', align: 'center', width: 80,
+                        statusSummary: '',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -188,6 +201,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'CA', dataIndex: 'total_CA', align: 'center', width: 80,
+                        statusSummary: '',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -217,6 +231,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                 columns: [
                     {
                         text: 'AX', dataIndex: 'total_MATCH_AX', align: 'center', width: 80,
+                        statusSummary: 'M',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -227,7 +242,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         }
                     },
                     {
-                        text: 'VS/MC', dataIndex: 'total_MATCH_VI_MC', align: 'center', width: 80,
+                        text: 'VI/MC', dataIndex: 'total_MATCH_VI_MC', align: 'center', width: 80,
+                        statusSummary: 'M',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -239,6 +255,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'DC', dataIndex: 'total_MATCH_DC', align: 'center', width: 80,
+                        statusSummary: 'M',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -250,6 +267,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'TP', dataIndex: 'total_MATCH_TP', align: 'center', width: 80,
+                        statusSummary: 'M',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -261,6 +279,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'BO', dataIndex: 'total_MATCH_BO', align: 'center', width: 80,
+                        statusSummary: 'M',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -272,6 +291,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'OTHERS', dataIndex: 'total_MATCH_OTHER', align: 'center', width: 80,
+                        statusSummary: 'M',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -283,6 +303,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'CA', dataIndex: 'total_MATCH_CA', align: 'center', width: 80,
+                        statusSummary: 'M',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -311,6 +332,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                 columns: [
                     {
                         text: 'AX', dataIndex: 'total_PENDING_AX', align: 'center', width: 80,
+                        statusSummary: 'P',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -321,7 +343,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         }
                     },
                     {
-                        text: 'VS/MC', dataIndex: 'total_PENDING_VI_MC', align: 'center', width: 80,
+                        text: 'VI/MC', dataIndex: 'total_PENDING_VI_MC', align: 'center', width: 80,
+                        statusSummary: 'P',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -333,6 +356,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'DC', dataIndex: 'total_PENDING_DC', align: 'center', width: 80,
+                        statusSummary: 'P',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -344,6 +368,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'TP', dataIndex: 'total_PENDING_TP', align: 'center', width: 80,
+                        statusSummary: 'P',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -355,6 +380,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'BO', dataIndex: 'total_PENDING_BO', align: 'center', width: 80,
+                        statusSummary: 'P',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -366,6 +392,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'OTHERS', dataIndex: 'total_PENDING_OTHER', align: 'center', width: 80,
+                        statusSummary: 'P',
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -377,6 +404,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'CA', dataIndex: 'total_PENDING_CA', align: 'center', width: 80,
+                        statusSummary: 'P',
                         listeners: {
                             click: 'onClickDetail'
                         },

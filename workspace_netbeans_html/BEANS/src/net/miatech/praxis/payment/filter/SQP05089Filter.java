@@ -11,7 +11,7 @@ import net.miatech.praxis.payment.entities.CustomPageImpl;
 public class SQP05089Filter extends CustomPageImpl{
     private String IN_CCUST,IN_DATE,IN_DATEFROM,IN_DATETO,IN_PROCTYPE,IN_TRNCU,IN_SCOUNTRY,
             IN_FVOID,IN_TICKET,IN_SCARDN,IN_SAUTHOC,IN_SPNR,IN_TYPE,IN_STVAL,
-            IN_SAGENT,IN_FUENT,IN_SFUEN,IN_TCARD,IN_CCARD,IN_SCURRENCY,IN_PAX,IN_TIPOD;
+            IN_SAGENT,IN_FUENT,IN_SFUEN,IN_TCARD,IN_CCARD,IN_SCURRENCY,IN_PAX,IN_TIPOD, IN_TFOP, IN_GCARD;
     private Double IN_AMOUNT;
     
     private List<A4496Filter> response = new ArrayList<>();
@@ -207,4 +207,19 @@ public class SQP05089Filter extends CustomPageImpl{
     public void setIN_TIPOD(String IN_TIPOD) {
         this.IN_TIPOD = IN_TIPOD;
     }
+    
+    public String getIN_TFOP() {
+        return IN_TFOP;
+    }
+    public void setIN_TFOP(String IN_TFOP) {
+        this.IN_TFOP = IN_TFOP;
+    }
+         
+    public String getIN_GCARD() {
+        return IN_GCARD;
+    }
+    public void setIN_GCARD(String IN_GCARD) {
+        this.IN_GCARD = IN_GCARD;
+    }
+    
 }
