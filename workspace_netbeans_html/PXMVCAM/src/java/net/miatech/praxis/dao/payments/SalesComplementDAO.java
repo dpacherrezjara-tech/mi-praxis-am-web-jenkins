@@ -17,6 +17,7 @@ import net.miatech.praxis.payment.filter.SQP04979Filter;
 import net.miatech.praxis.payment.filter.SQP04980Filter;
 import net.miatech.praxis.payment.filter.SQP04981Filter;
 import net.miatech.praxis.payment.filter.SQP04982Filter;
+import net.miatech.praxis.payment.filter.SQP04983Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
 import net.miatech.praxis.utils.JdbcUtils;
 import net.miatech.utils.Functions;
@@ -224,5 +225,4 @@ public class SalesComplementDAO implements SalesComplementLogic {
                 new BeanPropertyRowMapper<>(A3152.class));
         return ((List<A3152>) obj.get("result"));
     }
-
 }

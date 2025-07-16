@@ -1,0 +1,112 @@
+Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridController', {
+    extend: 'Ext.app.ViewController',
+    alias: 'controller.PlusgradeGridController',
+    afterRender: function (obj, e) {
+        const me = this;
+        const view = me.view;
+        this.getData(view);
+    },
+    getData: async function ( view) {
+        let store = global.callStorePaggin('PRAXISMP','SQP04979',view.searchParams);
+        //view.bindStore(store);
+        this.view.setStore(store);
+    },
+    
+    onViewPNR: function (grid, html, rowIndex, colIndex, obj) {
+        const record = obj.record.data;
+        let winPnrDataEntry = Ext.create('Ext.Praxis.view.payments.SalesComplementForm.PnrDataEntry', {
+            id: prototype.id + '-dataEntry-searchPnr',
+            params: record
+        });
+        winPnrDataEntry.show();
+    },
+    copySPNR: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        navigator.clipboard.writeText(rowData.data.PNR.trim());
+        global.Msg({
+            msg: 'SPNR Copied to clipboard!: ' + rowData.data.pnr.trim()
+        });
+    },
+    
+    
+    
+    
+    
+    onClickSearchTicket: function (grid, html, rowIndex, colIndex, obj) {
+        let data = obj.record.data;
+        console.log(data);
+        let strTkt = data.emdnumber || data.tkt;
+        let strSeq = data.seq || '00';
+        if (!strTkt) {
+            return;
+        }
+        prototypeProgram.view = 'payments-sales-complement-form';
+        prototypeProgram.nprog = 'PX00000627';
+        prototypeProgram.title = 'Sales Complement';
+        prototypeProgram.modulo = '';
+
+        let beanProMasterTicket = {};
+
+        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+        beanProMasterTicket.IN_SEQ = win.stringPad(strSeq, '0', 2);
+
+        console.log(beanProMasterTicket);
+
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },
+    
+    downloadExcelPlusgrade: function (){  //modal confirmar descarga
+        const me = this;
+        const notifier = new AWN();
+        notifier.confirm(
+            'Download Excel',
+            ()=>{
+                me.onDownloadExcel();
+            },
+            null
+        );
+    },
+    onDownloadExcel: async function(){
+        const me = this;
+        const view = me.view;
+        view.setLoading(true);
+        let res = await global.callStorePagginExcel('PRAXISMP','SQP04979',view.searchParams);  //trae toda la data completa
+        
+        let data = res.map(x=>({
+           'Plusgrade ID': x.PLUSGRAID ,
+           'Merchant': x.MERCHID,
+           'Processing Date': x.PRDA,
+           'Diff Days': x.PASSED_DAYS,
+           'Plusgrade VS AMEX': x.DESCFAMEX,
+           'Plusgrade VS Sales': x.DESCSTVAL,
+           'Sales Country': x.COUNTRY,
+           'Sales Date': x.SDATE,
+           'Credit Card Code': x.SCARCOD,
+           'Credit Card Number': x.SCARDN,
+           'Credit Card Auth.': x.SAUTHOC,
+           'Qty Pax': x.NBROFPAX,
+           'Currency Offer': x.CUROFFER,
+           'Total': x.SVFOP,
+           'Total Amount Off': x.AMOUNTOFF,
+           'Sales Amount': x.SVFOPS,
+           'Sales Difference': x.DIFF_AMOUNT,
+           'Sales Country': x.SCOUNTRY,
+           'Sales Date': x.SDATES,
+           'Qty Tkts': x.QTYTKT,
+           'Plusgrade VS Chargeback': x.DESCFAMEXCHG,
+           'PNR': x.PNR,
+           'EMD Number': x.EMDNUMBER,
+           'Accounting ID Sales FLEX': x.IDCONFLE,
+           'Accounting Date': x.FCONT,
+           'Accounting IF': x.ID,
+           'Error Code': x.CERROR,
+           'Add Pax EMD Number': x.ADDPAXEMD,
+           'Add Pax Ticket Number': x.ADDPAXTKT,
+           'Token': x.PAYTOKEN        
+        }));
+        await global.writeExcelFromJson(data,'Plusgrade Information'); 
+        view.setLoading(false);
+    }
+});
+

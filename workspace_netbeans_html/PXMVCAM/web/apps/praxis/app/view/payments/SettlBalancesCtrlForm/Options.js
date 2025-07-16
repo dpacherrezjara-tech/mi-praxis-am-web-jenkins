@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Options', {
+Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.Options', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-options',
     border: false,
@@ -15,40 +15,12 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Options', {
                     xtype: 'toolbar',
                     items: [
                         {
-                            xtype: 'radiogroup',
-                            id: prototype.id + '-viewOption',
-                            //fieldLabel: 'Opciones',
-                            columns: 2, // Puedes ajustar el número de columnas según tus necesidades
-                            vertical: false, // Esto alinea los botones verticalmente,
-                            defaults: {
-                                margin: '0 5 0 5' // Margen entre los botones
-                            },
-                            items: [
-                                {boxLabel: '<b style="color:#148D28;">Plusgrade</b>', name: 'opcion', inputValue: 'P', checked: true, width: 90},
-                                {boxLabel: '<b style="color:#148D28;">MIT</b>', name: 'opcion', inputValue: 'M', width: 60},
-                            ],
-                            listeners: {
-                                change: 'onChangeModule'
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            xtype: 'panel',
-            border: true,
-            items: [
-                {
-                    xtype: 'toolbar',
-                    items: [
-                        {
                             xtype: 'button',
                             id: prototype.id + '-btnSearch',
                             iconCls: 'prx-icon-search',
                             tooltip: 'Search',
-                            listeners: {
-                                click: 'onClickSearchBtn'
+                            listeners:{
+                                click:'onSearchClickBtn'
                             }
                         },
                         {

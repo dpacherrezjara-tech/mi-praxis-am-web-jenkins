@@ -1,18 +1,23 @@
-prototype.id = 'SalesComplement';
-prototype.url = CONTEXTPATH + '/SalesComplement';
+// <editor-fold defaultstate="collapsed" desc="prototype">
+prototype.id = 'SettlBalancesCtrlForm';
+prototype.width = 1800;
+// </editor-fold>
 
-Ext.define('Ext.Praxis.view.payments.SalesComplementForm.SalesComplementForm', {
+Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.SettlBalancesCtrlForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.SalesComplementForm',
+    alias: 'widget.SettlBalancesCtrlForm',
     requires: [
-        'Ext.Praxis.controller.payments.SalesComplement.SalesComplementController',
-        'Ext.Praxis.view.payments.SalesComplementForm.Filters',
-        'Ext.Praxis.view.payments.SalesComplementForm.Options'
+        'Ext.Praxis.controller.payments.SettlBalancesCtrl.SettlBalancesCtrlController',
+        'Ext.Praxis.view.payments.SettlBalancesCtrlForm.Options',
+        'Ext.Praxis.view.payments.SettlBalancesCtrlForm.Filters',
+        'Ext.Praxis.view.payments.SettlBalancesCtrlForm.Grids.SettlBalancesCtrlGrid',  //cuando solo es una grilla se llama directamente
+//        'Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntrySettlBalances'    //no necesita
     ],
-    controller: 'SalesComplementController',
+    controller: 'SettlBalancesCtrlController',
     layout: {
         type: 'fit'
     },
+    padding: '0 0 0 0',
     border: false,
     defaults: {
         border: false
@@ -33,7 +38,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.SalesComplementForm', {
                         {
                             xtype: 'panel',
                             region: 'center',
-                            width: 1700,
+                            width: prototype.width,
                             layout: 'border',
                             items: [
                                 {
@@ -46,7 +51,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.SalesComplementForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1700,
+                                        width: prototype.width,
                                         align: 'center'
                                     },
                                     items: [
@@ -60,12 +65,14 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.SalesComplementForm', {
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-mainContent',
-                                            height: 700,
                                             bodyStyle: 'background-color: #E3EAF9;',
+                                            height: 630,
                                             layout: {
                                                 type: 'vbox',
                                                 align: 'center'
-                                            }
+                                            },
+                                            items: [
+                                            ]
                                         }
                                     ]
                                 }
@@ -77,7 +84,3 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.SalesComplementForm', {
         }
     ]
 });
-
-
-
-

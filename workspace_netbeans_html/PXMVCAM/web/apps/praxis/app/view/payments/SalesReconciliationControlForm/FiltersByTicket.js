@@ -196,6 +196,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
+                                            ['0', 'Stand By'],
                                             ['1', 'Match'],
                                             ['2', 'Sales W/O Settl.'],
                                             ['4', 'Match Parcial'],
@@ -678,6 +679,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
+                                            ['0', 'Stand By'],
                                             ['1', 'Match'],
                                             ['2', 'Sales W/O Settl.'],
                                             ['4', 'Match Parcial'],

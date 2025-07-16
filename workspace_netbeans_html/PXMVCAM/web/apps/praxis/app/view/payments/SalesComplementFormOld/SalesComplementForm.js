@@ -1,13 +1,17 @@
-prototype.id = 'SalesComplement';
+
+prototype.id = 'SalesComplementForm';
 prototype.url = CONTEXTPATH + '/SalesComplement';
 
 Ext.define('Ext.Praxis.view.payments.SalesComplementForm.SalesComplementForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.SalesComplementForm',
     requires: [
-        'Ext.Praxis.controller.payments.SalesComplement.SalesComplementController',
+        'Ext.Praxis.view.payments.SalesComplementForm.Options',
         'Ext.Praxis.view.payments.SalesComplementForm.Filters',
-        'Ext.Praxis.view.payments.SalesComplementForm.Options'
+        'Ext.Praxis.view.payments.SalesComplementForm.GridData',
+        'Ext.Praxis.view.payments.SalesComplementForm.GridDataTicket',
+        'Ext.Praxis.controller.payments.SalesComplement.SalesComplementController',
+        'Ext.Praxis.view.payments.SalesComplementForm.PnrDataEntry'
     ],
     controller: 'SalesComplementController',
     layout: {
@@ -23,19 +27,19 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.SalesComplementForm', {
             border: false,
             autoScroll: false,
             layout: 'fit',
-            items: [
+            items:[
                 {
                     id: prototype.id + '-form',
                     border: false,
                     bodyCls: 'colorFondo',
                     layout: 'fit',
-                    items: [
+                    items:[
                         {
                             xtype: 'panel',
                             region: 'center',
-                            width: 1700,
+                            width: 980,
                             layout: 'border',
-                            items: [
+                            items:[
                                 {
                                     region: 'center',
                                     id: prototype.id + '-centerC',
@@ -46,10 +50,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.SalesComplementForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1700,
+                                        width: 1850,
                                         align: 'center'
                                     },
-                                    items: [
+                                    items:[
                                         {
                                             xtype: prototype.id + '-options'
                                         },
@@ -59,13 +63,24 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.SalesComplementForm', {
                                         },
                                         {
                                             xtype: 'panel',
-                                            id: prototype.id + '-mainContent',
-                                            height: 700,
-                                            bodyStyle: 'background-color: #E3EAF9;',
-                                            layout: {
-                                                type: 'vbox',
-                                                align: 'center'
-                                            }
+                                            height: 610,
+                                            width: 1850,
+                                            layout: 'fit',
+                                            items: [
+                                                {
+                                                    xtype: 'panel',
+                                                    id: prototype.id + '-centerC-panel01',
+                                                    width: 1850,
+                                                    layout: 'border',
+                                                    align: 'center',
+                                                    border: true,
+                                                    defaults: {
+                                                        border: false
+                                                    },
+                                                    bodyStyle: 'background-color: white;',
+                                                    items: []
+                                                }
+                                            ]
                                         }
                                     ]
                                 }

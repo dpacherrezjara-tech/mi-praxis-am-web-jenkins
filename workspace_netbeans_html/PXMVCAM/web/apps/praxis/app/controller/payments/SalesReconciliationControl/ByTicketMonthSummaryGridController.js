@@ -15,8 +15,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
         const view = this.view;
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent2');
         console.log(view.searchParams);
-        let tdate = view.searchParams.IN_DATE;
-        if (tdate === 'FECTV') {
+        let tdate = view.searchParams.IN_DATE;        
+        if (tdate === 'FECVT') {
             me.view.columns[0].setText('Sale<br>Date');
         } else if (tdate === 'PRDA') {
             me.view.columns[0].setText('Processing<br>Date');
@@ -32,7 +32,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
             loadMask: true,
             proxy: {
                 type: 'ajax',
-                url: `${view.url}/loadByTicketSummary`,
+//                url: `${view.url}/loadByTicketSummary`,
+                url: `${view.url}/v2/loadByTicketSummary`,
                 extraParams: view.searchParams,
                 timeout: 600000,
                 reader: {

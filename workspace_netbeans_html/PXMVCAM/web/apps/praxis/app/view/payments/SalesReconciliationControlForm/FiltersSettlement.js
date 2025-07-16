@@ -230,6 +230,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                                 fields: ['code', 'name'],
                                 data: [
                                     ['', 'All'],
+                                    ['0', 'Stand By'],
                                     ['1', 'Match'],
                                     ['2', 'Sales W/O Settl.'],
                                     ['4', 'Match Parcial'],

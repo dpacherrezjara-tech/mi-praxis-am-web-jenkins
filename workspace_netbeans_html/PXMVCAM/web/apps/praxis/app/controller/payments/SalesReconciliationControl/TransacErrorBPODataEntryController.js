@@ -412,10 +412,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             return;
         }
         if (params.detail.length === 0) {
-            global.Msg({msg: 'You must have at least one ticket.'});
-            return;
-        }
-        if (params.difference !== 0) {
+//            global.Msg({msg: 'You must have at least one ticket.'});  
+            msgAdd = "You haven't any ticket. The status will be changed to Stand By. ";
+
+        }else if (params.difference !== 0) {
 //            global.Msg({msg: 'There are differences in reconciliation.'});
 //            return;
             msgAdd = 'There are differences in reconciliation. ';
@@ -453,6 +453,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         if (res.ok) {
             const data = await res.json();
             const {status, response} = data;
+            console.log('status',status);
+            console.log('response',response);
             if (status === 1) {
                 Ext.toast({
                     html: `<b>${response}</b>`,
