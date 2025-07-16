@@ -92,7 +92,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         '9': 'Match Void',
                         'A': 'Match OC/Camepa',
                         'M': 'Match Multi-Payment',
-                        'C': 'Match Complement'
+                        'C': 'Match Complement',
+                        'D': 'Match Balance',
+                        'E': 'Match Duplicated'
                     };
                     return opts[value] || '';
                 }

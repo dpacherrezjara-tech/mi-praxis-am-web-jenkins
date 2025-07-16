@@ -12,6 +12,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
         this.getData({view: view});
     },
     getData: function ( {view}) {
+        console.log("view.searchParams",view.searchParams);
         let store = Ext.create('Ext.data.Store', {
             loadMask: true,
             pageSize: 20,

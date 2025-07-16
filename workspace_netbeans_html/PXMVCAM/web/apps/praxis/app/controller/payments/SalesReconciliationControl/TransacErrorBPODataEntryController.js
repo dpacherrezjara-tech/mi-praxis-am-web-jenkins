@@ -37,8 +37,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     changePerspective: function () {
         const me = this;
         const userName = $('#menuUser').text();
-        const match = ["1", "4", "5", "6", "7", "8", "9", "M", "C"];
-        const matchComment = ["4", "M", "C"];
+        const match = ["1", "4", "5", "6", "7", "8", "9", "M", "C","D","E"];
+        const matchComment = ["4", "M", "C",,"D","E"];
         const status = me.bean.stval;
         const {tgrosamoun, svfops} = me.bean;
         let diff = tgrosamoun - svfops;
@@ -65,7 +65,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const btnUpdate = Ext.getCmp(prototype.idDE + '-btn-update');
         const btnReverse = Ext.getCmp(prototype.idDE + '-reverseTrnx');
         const btnMSI = Ext.getCmp(prototype.idDE + '-MatchMSITracking');
-        
+
         const gridPanel1 = Ext.getCmp(prototype.idDE + '-panelGrids1');
         const gridPanel2 = Ext.getCmp(prototype.idDE + '-panelGrids2');
         const balanceScan = Ext.getCmp(prototype.idDE + '-balanceScannerForm');
@@ -79,7 +79,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 
         //transacciones match
         if (match.includes(status)) {
-            
+
             bpo.setDisabled(true);
             blocked.setDisabled(true);
             desglose.setDisabled(false);
@@ -415,7 +415,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 //            global.Msg({msg: 'You must have at least one ticket.'});  
             msgAdd = "You haven't any ticket. The status will be changed to Stand By. ";
 
-        }else if (params.difference !== 0) {
+        } else if (params.difference !== 0) {
 //            global.Msg({msg: 'There are differences in reconciliation.'});
 //            return;
             msgAdd = 'There are differences in reconciliation. ';
@@ -453,8 +453,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         if (res.ok) {
             const data = await res.json();
             const {status, response} = data;
-            console.log('status',status);
-            console.log('response',response);
+            console.log('status', status);
+            console.log('response', response);
             if (status === 1) {
                 Ext.toast({
                     html: `<b>${response}</b>`,
@@ -597,164 +597,85 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         scannerInputs.unmask();
     },
     onAddDuplicated: async function () {
-
-        const me = this;
-        const scannerInputs = Ext.getCmp(prototype.idDE + '-scannerInputs');
-        scannerInputs.setLoading(true);
-        const scannerForm = Ext.getCmp(prototype.idDE + '-scannerForm').getForm();
-        if (!scannerForm.isValid()) {
-            global.Msg({msg: 'Invalid Parameters'});
-            scannerInputs.setLoading(false);
-            return;
-        }
-        let params = {
-            IN_CCUST: '139',
-            IN_TDOC: me.bean.tdoc,
-            IN_TRANSTYPE: me.bean.transtype,
-            IN_SMERCHID: me.bean.smerchid,
-            IN_SCARDN: '',
-            ...scannerForm.getValues()
-        };
-        console.log(params);
-
-        if (!scannerForm.isValid()) {
-            global.Msg({msg: 'Invalid Parameters'});
-            scannerInputs.setLoading(false);
-            return;
-        }
-
-        if (params.IN_TICKET === '' || params.IN_SDATE === '') {
-            global.Msg({msg: 'Invalid Parameters'});
-            scannerInputs.setLoading(false);
-            return;
-        }
-
-        try {
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05062', params);
-
-            if (res.lstRs.length > 0) {
-                let tkt = res.lstRs.at(0).at(0);
-                const {CCIA, FORMA, SERIE, TDOC, SEQ, TCORR} = tkt;
-                const newWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.PagoDuplicadoDataEntry', {
-                    id: prototype.id + '-PagoDuplicadoDataEntry-2',
-                    ticket: {
-                        IN_CCUST: '139',
-                        IN_CIA: CCIA,
-                        IN_FORMA: FORMA,
-                        IN_SERIE: SERIE,
-                        IN_SEQ: SEQ,
-                        IN_CORRL: TCORR,
-                        IN_TDOCVTA: TDOC,
-                        IN_PRDA: me.bean.prda,
-                        IN_TDOC: me.bean.tdoc,
-                        IN_AREFNBR: me.bean.arefnbr
-                    },
-                    status: me.bean.stval,
-                    resetDataEntry: () => {
-                        me.afterRender();
-                    }
-                });
-                newWin.show();
-            } else {
-                global.Msg({msg: 'Not Found'});
-            }
-        } catch (e) {
-            global.Msg({msg: 'Error'});
-        } finally {
-            scannerInputs.setLoading(false);
-        }
-
-
         /*
-         
-         const adjuPanel = Ext.getCmp(prototype.idDE + '-panelAdjustments');
-         const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments');
-         const adjuStore = gridAdju.getStore();
-         adjuStore.removeAll();
-         const res = await fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`);
-         if (res.ok) {
-         const data = await res.json();
-         if (data.response.length === 0) {
-         global.Msg({msg: 'Not Found'});
-         scannerInputs.unmask();
+         const me = this;
+         const scannerInputs = Ext.getCmp(prototype.idDE + '-scannerInputs');
+         scannerInputs.setLoading(true);
+         const scannerForm = Ext.getCmp(prototype.idDE + '-scannerForm').getForm();
+         if (!scannerForm.isValid()) {
+         global.Msg({msg: 'Invalid Parameters'});
+         scannerInputs.setLoading(false);
          return;
          }
-         const adju = {
-         ...data.response.at(0)
-         };
-         adju.trncu = 'ADJU';
-         adju.svfops = me.bean.tgrosamoun;
-         adjuStore.insert(0, adju);
-         gridAdju.getView().refresh();
-         adjuPanel.show();
-         me.view.center();
-         console.log(data.response.at(0));
-         }
-         scannerInputs.unmask();
-         */
-
-    },
-    onAddDuplicatedGrid: async function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        const me = this;
-        /*
-         const blockedPanel = Ext.getCmp(prototype.idDE + '-tabBlocked');
-         blockedPanel.mask('Loading...');
-         const adjuPanel = Ext.getCmp(prototype.idDE + '-panelAdjustments');
-         
-         const obj = record.data;
-         console.log(obj);
          let params = {
          IN_CCUST: '139',
          IN_TDOC: me.bean.tdoc,
          IN_TRANSTYPE: me.bean.transtype,
-         IN_TICKET: obj.ccia + obj.forma + obj.serie,
-         IN_SAGENT: obj.sagent,
-         IN_SDATE: obj.sdate
+         IN_SMERCHID: me.bean.smerchid,
+         IN_SCARDN: '',
+         ...scannerForm.getValues()
          };
-         const gridAdju = Ext.getCmp(prototype.idDE + '-gridAdjustments');
-         const adjuStore = gridAdju.getStore();
-         adjuStore.removeAll();
-         const res = await fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`);
-         if (res.ok) {
-         const data = await res.json();
-         if (data.response.length === 0) {
-         global.Msg({msg: 'Not Found'});
+         console.log(params);
+         
+         if (!scannerForm.isValid()) {
+         global.Msg({msg: 'Invalid Parameters'});
+         scannerInputs.setLoading(false);
          return;
          }
-         const adju = {
-         ...data.response.at(0)
-         };
-         adju.trncu = 'ADJU';
-         adju.svfops = me.bean.tgrosamoun;
-         adjuStore.insert(0, adju);
-         gridAdju.getView().refresh();
-         adjuPanel.show();
-         me.view.center();
-         console.log(data.response.at(0));
+         
+         if (params.IN_TICKET === '' || params.IN_SDATE === '') {
+         global.Msg({msg: 'Invalid Parameters'});
+         scannerInputs.setLoading(false);
+         return;
          }
-         blockedPanel.unmask();
+         
+         try {
+         const res = await global.callStoreGet('PRAXISMP', 'SQP05062', params);
+         
+         if (res.lstRs.length > 0) {
+         let tkt = res.lstRs.at(0).at(0);
+         const {CCIA, FORMA, SERIE, TDOC, SEQ, TCORR} = tkt;
+         const newWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.PagoDuplicadoDataEntry', {
+         id: prototype.id + '-PagoDuplicadoDataEntry-2',
+         ticket: {
+         IN_CCUST: '139',
+         IN_CIA: CCIA,
+         IN_FORMA: FORMA,
+         IN_SERIE: SERIE,
+         IN_SEQ: SEQ,
+         IN_CORRL: TCORR,
+         IN_TDOCVTA: TDOC,
+         IN_PRDA: me.bean.prda,
+         IN_TDOC: me.bean.tdoc,
+         IN_AREFNBR: me.bean.arefnbr
+         },
+         status: me.bean.stval,
+         resetDataEntry: () => {
+         me.afterRender();
+         }
+         });
+         newWin.show();
+         } else {
+         global.Msg({msg: 'Not Found'});
+         }
+         } catch (e) {
+         global.Msg({msg: 'Error'});
+         } finally {
+         scannerInputs.setLoading(false);
+         }
+         
          */
-        const {ccia, forma, serie, tdoc, seq, tcorr} = record.data;
+        const me = this;
+
         const newWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.PagoDuplicadoDataEntry', {
             id: prototype.id + '-PagoDuplicadoDataEntry-1',
-            ticket: {
-                IN_CCUST: '139',
-                IN_CIA: ccia,
-                IN_FORMA: forma,
-                IN_SERIE: serie,
-                IN_SEQ: seq,
-                IN_CORRL: tcorr,
-                IN_TDOCVTA: tdoc,
-                IN_PRDA: me.bean.prda,
-                IN_TDOC: me.bean.tdoc,
-                IN_AREFNBR: me.bean.arefnbr
-            },
-            status: me.bean.stval,
+            obj: me.bean,
             resetDataEntry: () => {
                 me.afterRender();
             }
         });
         newWin.show();
+
     },
     onClickMSITracking: function () {
         const me = this;

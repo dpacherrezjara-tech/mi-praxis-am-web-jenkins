@@ -164,7 +164,7 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
-                                            ['4', 'Pending Rev'],
+                                            ['4', 'Match Parcial'],
                                             ['M', 'Multi-Payment'],
                                             ['C', 'Complement'],
                                             ['D', 'Duplicated']

@@ -11,18 +11,33 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
     getTicketInfo: async function () {
         const me = this;
         me.view.setLoading(true);
-        const gridTkt = Ext.getCmp(prototype.idDE6 + '-gridTicket');
+        const gridTkt = Ext.getCmp(prototype.idDE6 + '-gridLiq');
         const gridPending = Ext.getCmp(prototype.idDE6 + '-gridLiqPend');
-        const gridConcil = Ext.getCmp(prototype.idDE6 + '-gridLiqConc');
+        
+        let obj = me.view.obj;
+        
+        let pos = obj.proctype ==='BANORTE00'? -2:-4;
+        
+        let params = {
+            IN_PRDA : obj.prda,
+            IN_TDOC: obj.tdoc,
+            IN_SCARDN1: obj.scardn.slice(0,6),
+            IN_SCARDN2: obj.scardn.trim().slice(pos),
+            IN_DAYS: 30
+        };
+        
+        console.log(params);
         try {
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05602', me.view.ticket);
-            me.tkt = res.lstRs.at(0);
-            me.pending = res.lstRs.at(1);
-            me.concil = res.lstRs.at(2);
-
+            me.tkt = [me.view.obj];
             gridTkt.setStore(new Ext.data.Store({data: me.tkt}));
+            
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05655', params);
+            
+            me.pending = res.lstRs.at(0);
+            me.concil = res.lstRs.at(1);
+
+            
             gridPending.setStore(new Ext.data.Store({data: me.pending}));
-            gridConcil.setStore(new Ext.data.Store({data: me.concil}));
 
         } catch (e) {
             new AWN().alert('Error');
@@ -33,89 +48,58 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
     },
     onConciliateClick: async function () {
         const me = this;
+        
         let notifier = new AWN();
-        let params = me.formatParams();
+        
         let onOk = () => {
-            const rbOption = Ext.getCmp(prototype.idDE6 + '-viewOption').lastValue.opcion;
-            if (rbOption === 'D') {
-                me.duplicatedConciliation(params);
-            } else {
-                me.multiPaymentConciliation(params);
-            }
+            me.duplicatedConciliation();
         };
         notifier.confirm('Reconciliate?',onOk,null);
         
     },
-    duplicatedConciliation: async function (params) {
+    duplicatedConciliation: async function () {
         const me = this;
         me.view.setLoading(true);
-        if (me.tkt.at(0).SVFOPS !== me.pending.at(0).TGROSAMOUN) {
+        
+        const grid = Ext.getCmp(prototype.idDE6 + '-gridLiqPend');
+        const seleccionados = grid.getSelectionModel().getSelection();
+        
+        if (seleccionados.length === 0) {
+            global.Msg({msg: 'Select one Settlement'});
+            me.view.setLoading(false);
+            return;
+        }
+        
+        let objSel = seleccionados.at(0).data;
+        
+        if (me.view.obj.tgrosamoun !== objSel.TGROSAMOUN) {
             global.Msg({msg: 'Amount not match'});
             me.view.setLoading(false);
             return;
         }
         
-        try {
-            const {cuuid, fuuid} = await global.loadRecordsOnTable('PRAXISMP', 'XTEMPO', [params]);
-            const res = await global.callStorePost('PRAXISMP', 'SQP05603', {
-                IN_CUUID: cuuid,
-                IN_FUUID: fuuid
-            });
-            const {lstVals} = res.data;
-            new AWN().success(lstVals.OUT_MSG);
-        } catch (e) {
-            console.error(e);
-            new AWN().alert('Error');
-        } finally {
-            me.view.setLoading(false);
-            me.view.resetDataEntry();
-            me.view.close();
-        }
-    },
-    multiPaymentConciliation: async function (params) {
-        const me = this;
-        me.view.setLoading(true);
-
-        let tktValue = me.tkt.at(0).SVFOPS;
-        let stlConcValue = global.sumBy(me.concil, 'TGROSAMOUN');
-        let stlPendValue = global.sumBy(me.pending, 'TGROSAMOUN');
-
-        if (tktValue !== (stlConcValue + stlPendValue)) {
-            global.Msg({msg: 'Amount not match'});
-            me.view.setLoading(false);
-            return;
-        }
-        
-        try {
-            const {cuuid, fuuid} = await global.loadRecordsOnTable('PRAXISMP', 'XTEMPO', [params]);
-            const res = await global.callStorePost('PRAXISMP', 'SQP05603', {
-                IN_CUUID: cuuid,
-                IN_FUUID: fuuid
-            });
-            const {lstVals} = res.data;
-            new AWN().success(lstVals.OUT_MSG);
-        } catch (e) {
-            console.error(e);
-            new AWN().alert('Error');
-        } finally {
-            me.view.setLoading(false);
-            me.view.resetDataEntry();
-            me.view.close();
-        }
-    },
-    formatParams: function(){
-        const me = this;
-        let liqConcil = me.pending.map(x => ({
-                ...x,
-                ADJTYPE: me.codadju
-            }));
-
-        let req = {
-            tickets: me.tkt,
-            liquidacion: liqConcil
+        let params = {
+            IN_CCUST: '139',
+            IN_PRDA: me.view.obj.prda,
+            IN_TDOC: me.view.obj.tdoc,
+            IN_AREFNBR: me.view.obj.arefnbr,
+            IN_PRDA2: objSel.PRDA,
+            IN_TDOC2: objSel.TDOC,
+            IN_AREFNBR2: objSel.AREFNBR
         };
-        console.log(req);
-        return req;
+        
+        try {
+            //const {cuuid, fuuid} = await global.loadRecordsOnTable('PRAXISMP', 'XTEMPO', [params]);
+            const res = await global.callStorePost('PRAXISMP', 'SQP05653', params);
+            new AWN().success("Updated successfully");
+        } catch (e) {
+            console.error(e);
+            new AWN().alert('Error');
+        } finally {
+            me.view.setLoading(false);
+            me.view.resetDataEntry();
+            me.view.close();
+        }
     },
     onCancelClick: function () {
         this.view.close();

@@ -257,7 +257,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                             ['8', 'Match Transaccional'],
                                             ['9', 'Match Void'],
                                             ['M', 'Match Multi-Payment'],
-                                            ['C', 'Match Complement']
+                                            ['C', 'Match Complement'],
+                                            ['D', 'Match Balance'],
+                                            ['E', 'Match Duplicated']
                                         ]
                                     }),
                                     labelWidth: 55,
@@ -503,7 +505,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                             ['8', 'Match Transaccional'],
                                             ['9', 'Match Void'],
                                             ['M', 'Match Multi-Payment'],
-                                            ['C', 'Match Complement']
+                                            ['C', 'Match Complement'],
+                                            ['D', 'Match Balance'],
+                                            ['E', 'Match Duplicated']
                                         ]
                                     }),
                                     labelWidth: 55,

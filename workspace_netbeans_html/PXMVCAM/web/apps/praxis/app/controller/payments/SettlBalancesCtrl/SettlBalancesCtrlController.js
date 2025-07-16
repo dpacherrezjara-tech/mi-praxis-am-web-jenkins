@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.SettlBalancesCtrlCo
         mainPanel.removeAll();
         const filtro1 = Ext.getCmp(prototype.id + '-panelFilters');
         let params = filtro1.getForm().getValues();
-        console.log('params',params)
+//        console.log('params',params)
         const newGrid = Ext.create('Ext.Praxis.view.payments.SettlBalancesCtrlForm.Grids.SettlBalancesCtrlGrid', {
             id: prototype.id + '-SettlBalancesCtrlGrid',
             searchParams: params

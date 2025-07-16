@@ -17,17 +17,19 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.DataEntrySettlBalan
     getData: async function (view) {
         try {
             const res = await global.callStoreGet('PRAXISMP', 'SQP05645', view.searchParams);
-            const data = res.lstRs.at(0).at(0);
-            console.log('data', data);
+            const data = res.lstRs?.at(0)?.at(0) || {};
+//            console.log('data', data);
 
             // Guarda para el update
             this.ticketData = data;
 
-            const form = Ext.getCmp(prototype.idDE + '-informationForm').getForm();
+//            const form = Ext.getCmp(prototype.idDE + '-informationForm').getForm();
+            const form = this.lookupReference('informationForm').getForm();
             form.setValues({
                 ...data,
-                proceedStatus: data.STPROCEDE 
+                proceedStatus: data.STPROCEDE
             });
+            this.bindData();
         } catch (e) {
             console.error(e);
         }
@@ -38,11 +40,12 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.DataEntrySettlBalan
         me.view.setLoading(true);
 
         try {
-            const form = Ext.getCmp(prototype.idDE + '-informationForm').getForm();
+//            const form = Ext.getCmp(prototype.idDE + '-informationForm').getForm();
+            const form = this.lookupReference('informationForm').getForm();
             const selectedStatus = form.getValues().proceedStatus;
 
             const params = {
-                IN_CCUST:me.ticketData.CCUST,
+                IN_CCUST: me.ticketData.CCUST,
                 IN_CCIA: me.ticketData.CCIA,
                 IN_FORMA: me.ticketData.FORMA,
                 IN_SERIE: me.ticketData.SERIE,
@@ -56,12 +59,11 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.DataEntrySettlBalan
                 IN_STPROCEDE: selectedStatus
             };
 
-            console.log('Params para guardar:', params);
-
+//            console.log('Params para guardar:', params);
             const res = await global.callStorePost('PRAXISMP', 'SQP05650', params);
             const {lstVals} = res.data;
             new AWN().success(lstVals.OUT_MSG);
-
+            this.view.close();
         } catch (e) {
             console.error(e);
             new AWN().alert('Error');
@@ -71,7 +73,39 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.DataEntrySettlBalan
         }
     },
 
+    bindData: function () {
+        const me = this;
+        const radioGroup = Ext.getCmp(prototype.idDE + '-proceedRadioGroup');
+        const updBtbn = Ext.getCmp(prototype.idDE + '-btn-update');
+
+        const stval = me.ticketData.STVAL;
+//        console.log(me.ticketData);
+
+        if (stval === '4') {
+            updBtbn.show();
+            radioGroup.show();
+        } else {
+//            console.log('Ready');
+            radioGroup.hide();
+            updBtbn.hide();
+        }
+    },
+
     onCancelClick: function () {
         this.view.close();
+    },
+
+    onClickBalanceConciliation: function () {
+        const me = this;
+//        console.log('balance---', me.ticketData);
+        const obj = me.ticketData;
+
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntryBalanceConciliation', {
+            id: prototype.id + '-DataEntryBalanceConciliation',
+            searchParams: obj,
+            stval: me.ticketData.STVAL
+        });
+
+        dataEntry.show();
     }
 });

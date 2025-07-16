@@ -392,7 +392,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 '9': 'Match Void',
                                                 'A': 'Match OC/Camepa',
                                                 'M': 'Match Multi-Payment',
-                                                'C': 'Match Complement'
+                                                'C': 'Match Complement',
+                                                'D': 'Match Balance',
+                                                'E': 'Match Duplicated'
                                             };
                                             field.setRawValue(opts[newValue] || '');
                                         }
@@ -919,7 +921,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                     ]
                 },
                 //</editor-fold>
-                //<editor-fold defaultstate="collapsed" desc="Stand By Comment">
+                //<editor-fold defaultstate="collapsed" desc="Comments">
                 {
                     xtype: 'fieldset',
                     id: prototype.idDE + '-bpoComments',
@@ -1393,20 +1395,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                                 iconCls: 'prx-icon-detail',
                                                                 tooltip: 'Show Detail',
                                                                 handler: 'onShowTransactionMatch'
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        sortable: false,
-                                                        xtype: 'actioncolumn',
-                                                        width: 45,
-                                                        text: 'Dupl.',
-                                                        align: 'center',
-                                                        items: [
-                                                            {
-                                                                iconCls: 'prx-icon-add',
-                                                                tooltip: 'Add Duplicated',
-                                                                handler: 'onAddDuplicatedGrid'
                                                             }
                                                         ]
                                                     }

@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.SettlBalancesGridCo
     },
     getData: async function (view) {
         let store = global.callStorePaggin('PRAXISMP', 'SQP05644', view.searchParams);
-        console.log('stores', store)
+//        console.log('stores', store)
         view.bindStore(store);
         this.view.setStore(store);
     },
@@ -94,11 +94,11 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.SettlBalancesGridCo
 //    },
 
     detailSettlBalancesCtrl: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        console.log('click detalle')
+//        console.log('click detalle')
         //const obj = record.data;
 
 
-        const  {CCUST, CCIA, FORMA, SERIE, SEQ, CORRL, SEQROLL, TDOCVTA} = record.data;
+        const  {CCUST, CCIA, FORMA, SERIE, SEQ, CORRL, SEQROLL, TDOCVTA,STVAL} = record.data;
 
 
 
@@ -110,7 +110,8 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.SettlBalancesGridCo
             "IN_SEQ": SEQ,
             "IN_CORRL": CORRL,
             "IN_SEQROLL": SEQROLL,
-            "IN_TDOCVTA": TDOCVTA
+            "IN_TDOCVTA": TDOCVTA,
+            "IN_STVAL":STVAL
         };
 
 

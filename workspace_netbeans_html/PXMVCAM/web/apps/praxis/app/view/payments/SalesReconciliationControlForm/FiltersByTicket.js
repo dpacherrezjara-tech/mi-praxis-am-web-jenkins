@@ -346,6 +346,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'IN_TFOP',
+                                    labelWidth: 40,
+                                    width: 100,
+                                    hidden: true,
+                                    name: 'IN_TFOP',
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'IN_GCARD',
+                                    labelWidth: 40,
+                                    width: 100,
+                                    hidden: true,
+                                    name: 'IN_GCARD',
+                                    value: ''
                                 }
                             ]
                         }
