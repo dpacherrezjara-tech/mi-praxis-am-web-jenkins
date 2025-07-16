@@ -45,11 +45,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     
                     let fecha = "" ;
                     
-//                    if (record.data.a4496FPROC) {
-//                        fecha = record.data.a4496FPROC;
-//                    } else 
-                    
-                    if (record.data.a4501FECVT) {
+                    if (record.data.a4496FPROC) {
+                        fecha = record.data.a4496FPROC;
+                    } else if (record.data.a4501PRDA) {
+                        fecha = record.data.a4501PRDA;
+                    } else if (record.data.a4501FECVT) {
                         fecha = record.data.a4501FECVT;
                     } else {
                         fecha = record.data.a4501FEUP;
@@ -418,9 +418,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
             },
             {
                 text: 'Total<br>By Payment', dataIndex: 'total_BY_PAYMENT', align: 'center', width: 100,
-                listeners: {
-                    click: 'onClickDetail'
-                },
+//                listeners: {
+//                    click: 'onClickDetail'
+//                },
                 summaryType: 'sum',
                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                     metaData.style = "text-align:center;font-weight:bold;";

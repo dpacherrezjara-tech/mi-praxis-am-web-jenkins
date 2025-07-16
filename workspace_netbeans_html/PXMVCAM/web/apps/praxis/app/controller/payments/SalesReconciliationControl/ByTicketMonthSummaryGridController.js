@@ -76,7 +76,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
         let fecha = '';
         if (record.data.a4496FPROC) {
             fecha = record.data.a4496FPROC;
-        } else if (record.data.a4501FECVT) {
+        }
+        else if (record.data.a4501PRDA) {
+            fecha = record.data.a4501PRDA;
+        }  
+        else if (record.data.a4501FECVT) {
             fecha = record.data.a4501FECVT;
         } else {
             fecha = record.data.a4501FEUP;
@@ -132,6 +136,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
             let month = '';
             if (record.data.a4501FECVT) {
                 month = record.data.a4501FECVT;
+            } else if (record.data.a4501PRDA) {
+                month = record.data.a4501PRDA;
             } else if (record.data.a4496FPROC) {
                 month = record.data.a4496FPROC;
             } else {
@@ -149,6 +155,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
             let day = '';
             if (record.data.a4501FECVT) {
                 day = record.data.a4501FECVT;
+            } else if (record.data.a4501PRDA) {
+                day = record.data.a4501PRDA;
             } else if (obj.a4496FPROC) {
                 day = record.data.a4496FPROC;
             } else {
@@ -224,6 +232,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
         let month = '';
         if (obj.a4501FECVT) {
             month = obj.a4501FECVT;
+        } else if (obj.a4501PRDA) {
+            month = obj.a4501PRDA;
         } else if (obj.a4496FPROC) {
             month = obj.a4496FPROC;
         } else {
