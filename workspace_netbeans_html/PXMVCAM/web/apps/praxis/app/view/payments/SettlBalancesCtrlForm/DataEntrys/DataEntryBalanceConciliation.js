@@ -16,7 +16,7 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntryB
 
     title: 'Balance Conciliation',
     header: true,
-    width: 850,
+    width: 1000,
     height: 600,
     modal: true,
     resizable: false,
@@ -47,12 +47,21 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntryB
                 fieldStyle: 'border: none; box-shadow: none;text-align: center'
             },
             items: [
+                 {
+                    xtype: 'textfield',
+                    name: 'TDOC',
+                    fieldLabel: 'Type Document',
+                    labelWidth: 90,
+                    width: 130,
+                    readOnly: true,
+                },
                 {
                     xtype: 'textfield',
                     name: 'SALDO',
                     fieldLabel: 'Balance Amount',
                     labelWidth: 95,
                     width: 180,
+                    margin: '0 0 0 20',
                     readOnly: true,
                 },
                 {
@@ -107,20 +116,20 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntryB
                         checkOnly: true // Selecciona  usando el checkbox
                     },
                     columns: [
-                        {text: 'Ticket', dataIndex: 'TICKET', width: 120},
+                        {text: 'Ticket', dataIndex: 'TICKET', width: 140},
                         {
                             text: 'Credit Card',
                             columns: [
                                 {text: 'Code', dataIndex: 'SCARDCOD',
-                                    width: 70,
+                                    width: 90,
                                     flex: 1
                                 },
-                                {text: 'Number', dataIndex: 'SCARDN', width: 180},
-                                {text: 'Auth.', dataIndex: 'SAUTHOC', width: 80}
+                                {text: 'Number', dataIndex: 'SCARDN', width: 190},
+                                {text: 'Auth.', dataIndex: 'SAUTHOC', width: 90}
                             ]
                         },
-                        {text: 'Processing Date', dataIndex: 'SDATE', width: 120},
-                        {text: 'Moneda', dataIndex: 'MONEDA', width: 80},
+                        {text: 'Processing Date', dataIndex: 'SDATE', width: 140},
+                        {text: 'Moneda', dataIndex: 'MONEDA', width: 100},
                         {text: 'Balance Amount', dataIndex: 'SALDO',
 //                            width: 120,
                             flex: 1
