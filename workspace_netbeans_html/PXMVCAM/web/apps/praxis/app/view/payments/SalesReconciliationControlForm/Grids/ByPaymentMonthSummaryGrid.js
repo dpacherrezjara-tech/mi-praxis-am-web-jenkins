@@ -40,12 +40,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                     metaData.style = "text-align:center;font-weight:bold;color:#8B5199;";
                     if (record.data.paydate) {
-                        value = record.data.paydate;    
-                    } 
-                    else if (record.data.prda) {
+                        value = record.data.paydate;
+                    } else if (record.data.prda) {
                         value = record.data.prda;
-                    }
-                    else {
+                    } else {
                         value = record.data.feup;
                     }
                     return value;
@@ -61,7 +59,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                         metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;";
                         metaData.style += "font-weight:bolder;color:#057ECB;";
-                        return value;
+//                        return value;
+                        return Ext.util.Format.number(value, '0,000');
                     }
                 },
                 columns: [
@@ -73,7 +72,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+//                            return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
@@ -84,7 +84,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+//                            return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
@@ -95,7 +96,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+//                            return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
@@ -103,7 +105,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;background-color:#d5f4d5;color:red;";
                             value = (record.data.total_PENDING / record.data.total) * 100;
-                            return value.toFixed(2) + '%';
+//                            return value.toFixed(2) + '%';
+                            const value1 = value.toFixed(2) + '%';
+                            return Ext.util.Format.number(value1, '0,000');
                         },
                         summaryType: 'customPercent',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -112,7 +116,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                             let total = atributos[1];
                             let pending = atributos[3];
                             let percent = (summaryData[pending] / summaryData[total]) * 100;
-                            return percent.toFixed(2) + '%';
+//                            return percent.toFixed(2) + '%';
+                            const value1 = percent.toFixed(2) + '%';
+                            return Ext.util.Format.number(value1, '0,000');
+
                         }
                     }
                 ]
@@ -125,12 +132,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                     align: 'center',
                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                         metaData.style = "text-align:center;background-color:#BDE1FF;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
-                        return value;
+//                        return value;
+                        return Ext.util.Format.number(value, '0,000');
                     },
                     summaryType: 'sum',
                     summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                         metaData.style = "text-align:center;font-weight:bold;";
-                        return value;
+//                        return value;
+                        return Ext.util.Format.number(value, '0,000');
                     }
                 },
                 columns: [
@@ -160,12 +169,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         align: 'center',
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;background-color:#FFFFCD;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
-                            return value;
+//                            return value;
+                            return Ext.util.Format.number(value, '0,000');
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+//                            return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     }
                 },
