@@ -392,7 +392,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 '4': 'Match Partial',
                                                 '5': 'Match Manual',
                                                 '6': 'Match Forced',
-                                                '7': 'Match  for Compensation',
+                                                '7': 'Match Compensation',
                                                 '8': 'Match Transactional',
                                                 '9': 'Match Void'
                                             };
