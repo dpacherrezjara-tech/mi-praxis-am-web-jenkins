@@ -53,19 +53,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                 name: 'rb',
                                 inputValue: '1',
                                 checked: true,
-                                width:100
+                                width: 100
                             },
                             {
                                 boxLabel: 'SALE<br>Concil.',
                                 name: 'rb',
                                 inputValue: '2',
-                                width:100
+                                width: 100
                             },
                             {
                                 boxLabel: 'Manual<br>Concil.',
                                 name: 'rb',
                                 inputValue: '3',
-                                width:100
+                                width: 100
                             }
                         ],
                         listeners: {
@@ -197,15 +197,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                                     metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                                     const opts = {
+                                        'A': 'Match OC/Camepa',
+                                        'C': 'Match Complement',
+                                        'D': 'Match Balance',
+                                        'E': 'Match Duplicate Payment',
+                                        'M': 'Match Multi-Payment',
                                         '0': 'Stand By',
                                         '1': 'Match',
                                         '2': 'Sales Without Settl.',
                                         '3': 'Settl. Without Sales',
-                                        '4': 'Match Parcial',
+                                        '4': 'Match Partial',
                                         '5': 'Match Manual',
-                                        '6': 'Match Forzado',
-                                        '7': 'Match por Compensacion',
-                                        '8': 'Match Transaccional',
+                                        '6': 'Match Forced',
+                                        '7': 'Match Compensation',
+                                        '8': 'Match Transactional',
                                         '9': 'Match Void'
                                     };
                                     return opts[value] || '';
@@ -233,8 +238,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                             }
                         }
                     },
-                    listeners:{
-                        storechange:'storeChangeSale'
+                    listeners: {
+                        storechange: 'storeChangeSale'
                     },
                     columnLines: true,
                     autoScroll: true,
@@ -340,15 +345,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                                     metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                                     const opts = {
+                                        'A': 'Match OC/Camepa',
+                                        'C': 'Match Complement',
+                                        'D': 'Match Balance',
+                                        'E': 'Match Duplicate Payment',
+                                        'M': 'Match Multi-Payment',
                                         '0': 'Stand By',
                                         '1': 'Match',
                                         '2': 'Sales Without Settl.',
                                         '3': 'Settl. Without Sales',
-                                        '4': 'Match Parcial',
+                                        '4': 'Match Partial',
                                         '5': 'Match Manual',
-                                        '6': 'Match Forzado',
-                                        '7': 'Match por Compensacion',
-                                        '8': 'Match Transaccional',
+                                        '6': 'Match Forced',
+                                        '7': 'Match Compensation',
+                                        '8': 'Match Transactional',
                                         '9': 'Match Void'
                                     };
                                     return opts[value] || '';
@@ -607,15 +617,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                                             metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                                             const opts = {
+                                                'A': 'Match OC/Camepa',
+                                                'C': 'Match Complement',
+                                                'D': 'Match Balance',
+                                                'E': 'Match Duplicate Payment',
+                                                'M': 'Match Multi-Payment',
                                                 '0': 'Stand By',
                                                 '1': 'Match',
                                                 '2': 'Sales Without Settl.',
                                                 '3': 'Settl. Without Sales',
-                                                '4': 'Match Parcial',
+                                                '4': 'Match Partial',
                                                 '5': 'Match Manual',
-                                                '6': 'Match Forzado',
-                                                '7': 'Match por Compensacion',
-                                                '8': 'Match Transaccional',
+                                                '6': 'Match Forced',
+                                                '7': 'Match Compensation',
+                                                '8': 'Match Transactional',
                                                 '9': 'Match Void'
                                             };
                                             return opts[value] || '';

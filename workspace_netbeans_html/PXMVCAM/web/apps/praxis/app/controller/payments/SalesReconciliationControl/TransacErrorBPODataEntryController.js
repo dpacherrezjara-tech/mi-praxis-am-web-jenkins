@@ -37,8 +37,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     changePerspective: function () {
         const me = this;
         const userName = $('#menuUser').text();
-        const match = ["1", "4", "5", "6", "7", "8", "9", "M", "C","D","E"];
-        const matchComment = ["4", "M", "C",,"D","E"];
+        const match = ["1", "4", "5", "6", "7", "8", "9", "M", "C", "D", "E"];
+        const matchComment = ["0", "4", "M", "C", , "D", "E"];
         const status = me.bean.stval;
         const {tgrosamoun, svfops} = me.bean;
         let diff = tgrosamoun - svfops;
@@ -101,11 +101,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     adjucoment.show();
                 }
             }
-            // Comentarios automaticos
-            if (matchComment.includes(status)) {
-                Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocoment);
-                commentTransaction.show();
-            }
+//            // Comentarios automaticos
+//            if (matchComment.includes(status)) {
+//                Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocoment);
+//                commentTransaction.show();
+//            }
             //transacciones stand by    
         } else if (status === '0') {
             bpo.setDisabled(false);
@@ -132,6 +132,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             adjucoment.hide();
             me.scanCreditCard(me.bean);
         }
+
+        // Comentarios automaticos
+        if (matchComment.includes(status)) {
+            Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocoment);
+            commentTransaction.show();
+        }
+//            console.log('me.bean.autocoment',me.bean.autocoment)
         me.changeTrnxView(me.bean.transtype);
         //me.setUserInformation(me.bean);
     },

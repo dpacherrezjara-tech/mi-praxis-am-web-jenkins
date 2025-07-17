@@ -375,26 +375,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 {
                                     fieldLabel: 'Status',
                                     name: 'stval',
-                                    labelWidth: 120,
+                                    labelWidth: 250,
                                     width: 240,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
-                                                '0': 'Stand By',
-                                                '1': 'Match',
-                                                '2': 'Sales Without Sett.',
-                                                '3': 'Settl. Without Sales',
-                                                '4': 'Match Parcial',
-                                                '5': 'Match Manual',
-                                                '6': 'Match Forzado',
-                                                '7': 'Match Compensation',
-                                                '8': 'Match Transactional',
-                                                '9': 'Match Void',
                                                 'A': 'Match OC/Camepa',
-                                                'M': 'Match Multi-Payment',
                                                 'C': 'Match Complement',
                                                 'D': 'Match Balance',
-                                                'E': 'Match Duplicated'
+                                                'E': 'Match Duplicate Payment',
+                                                'M': 'Match Multi-Payment',
+                                                '0': 'Stand By',
+                                                '1': 'Match',
+                                                '2': 'Sales Without Settl.',
+                                                '3': 'Settl. Without Sales',
+                                                '4': 'Match Partial',
+                                                '5': 'Match Manual',
+                                                '6': 'Match Forced',
+                                                '7': 'Match Compensation',
+                                                '8': 'Match Transactional',
+                                                '9': 'Match Void'
                                             };
                                             field.setRawValue(opts[newValue] || '');
                                         }
@@ -781,7 +781,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 type: 'vbox',
                                 pack: 'center'
                             },
-                            hidden:true,
+                            hidden: true,
                             width: '100%',
                             border: false,
                             bodyStyle: 'background: transparent',
@@ -824,7 +824,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             editable: false,
                                             value: 'M'
                                         },
-                                        
+
                                         {
                                             xtype: 'datefield',
                                             fieldLabel: 'From',
@@ -2188,7 +2188,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                 {
                     text: 'Update',
                     id: prototype.idDE + '-btn-update-balance',
-                    hidden:true,
+                    hidden: true,
                     iconCls: 'prx-icon-update',
                     listeners: {
                         click: 'onUpdateBalanceClick'

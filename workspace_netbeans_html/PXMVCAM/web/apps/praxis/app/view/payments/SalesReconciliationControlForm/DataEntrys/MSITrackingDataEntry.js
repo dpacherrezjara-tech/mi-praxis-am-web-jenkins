@@ -130,15 +130,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                             const opts = {
+                                'A': 'Match OC/Camepa',
+                                'C': 'Match Complement',
+                                'D': 'Match Balance',
+                                'E': 'Match Duplicate Payment',
+                                'M': 'Match Multi-Payment',
                                 '0': 'Stand By',
                                 '1': 'Match',
                                 '2': 'Sales Without Settl.',
                                 '3': 'Settl. Without Sales',
-                                '4': 'Match Parcial',
+                                '4': 'Match Partial',
                                 '5': 'Match Manual',
-                                '6': 'Match Forzado',
-                                '7': 'Match por Compensacion',
-                                '8': 'Match Transaccional',
+                                '6': 'Match Forced',
+                                '7': 'Match Compensation',
+                                '8': 'Match Transactional',
                                 '9': 'Match Void'
                             };
                             return opts[value] || '';
@@ -390,15 +395,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                     fields: ['code', 'name'],
                                     data: [
                                         ['', 'All'],
+                                        ['A', 'Match OC/Camepa'],
+                                        ['C', 'Match Complement'],
+                                        ['D', 'Match Balance'],
+                                        ['E', 'Match Duplicate Payment'],
+                                        ['M', 'Match Multi-Payment'],
                                         ['0', 'Stand By'],
                                         ['1', 'Match'],
                                         ['3', 'Settl. Without Sales'],
-                                        ['4', 'Match Parcial'],
+                                        ['4', 'Match Partial'],
                                         ['5', 'Match Manual'],
-                                        ['6', 'Match Forzado'],
-                                        ['7', 'Match por Compensacion'],
-                                        ['8', 'Match Transaccional'],
-                                        ['9', 'Match Void']
+                                        ['6', 'Match Forced'],
+                                        ['7', 'Match Compensation'],
+                                        ['8', 'Match Transactional'],
+                                        ['8', 'Match Void'],
                                     ]
                                 }),
                                 displayField: 'name',
@@ -497,15 +507,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                             const opts = {
+                                'A': 'Match OC/Camepa',
+                                'C': 'Match Complement',
+                                'D': 'Match Balance',
+                                'E': 'Match Duplicate Payment',
+                                'M': 'Match Multi-Payment',
                                 '0': 'Stand By',
                                 '1': 'Match',
                                 '2': 'Sales Without Settl.',
                                 '3': 'Settl. Without Sales',
-                                '4': 'Match Parcial',
+                                '4': 'Match Partial',
                                 '5': 'Match Manual',
-                                '6': 'Match Forzado',
-                                '7': 'Match por Compensacion',
-                                '8': 'Match Transaccional',
+                                '6': 'Match Forced',
+                                '7': 'Match Compensation',
+                                '8': 'Match Transactional',
                                 '9': 'Match Void'
                             };
                             return opts[value] || '';

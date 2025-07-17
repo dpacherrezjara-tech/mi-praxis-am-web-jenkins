@@ -196,22 +196,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
+                                            ['A', 'Match OC/Camepa'],
+                                            ['C', 'Match Complement'],
+                                            ['D', 'Match Balance'],
+                                            ['E', 'Match Duplicate Payment'],
+                                            ['M', 'Match Multi-Payment'],
                                             ['0', 'Stand By'],
                                             ['1', 'Match'],
-                                            ['2', 'Sales W/O Settl.'],
-                                            ['4', 'Match Parcial'],
+                                            ['2', 'Sales Without Settl.'],
+                                            ['4', 'Match Partial'],
                                             ['5', 'Match Manual'],
-                                            ['6', 'Match Forzado'],
+                                            ['6', 'Match Forced'],
                                             ['7', 'Match Compensation'],
-                                            ['8', 'Match Transaccional'],
-                                            ['9', 'Match Void'],
-                                            ['A', 'Match OC/Camepa'],
-                                            ['M', 'Match Multi-Payment'],
-                                            ['C', 'Match Complement']
+                                            ['8', 'Match Transactional'],
+                                            ['8', 'Match Void'],
                                         ]
                                     }),
                                     labelWidth: 55,
-                                    width: 180,
+                                    width: 250,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -697,23 +699,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
+                                            ['A', 'Match OC/Camepa'],
+                                            ['C', 'Match Complement'],
+                                            ['D', 'Match Balance'],
+                                            ['E', 'Match Duplicate Payment'],
+                                            ['M', 'Match Multi-Payment'],
                                             ['0', 'Stand By'],
                                             ['1', 'Match'],
-                                            ['2', 'Sales W/O Settl.'],
-                                            ['4', 'Match Parcial'],
+                                            ['2', 'Sales Without Settl.'],
+                                            ['4', 'Match Partial'],
                                             ['5', 'Match Manual'],
-                                            ['6', 'Match Forzado'],
+                                            ['6', 'Match Forced'],
                                             ['7', 'Match Compensation'],
-                                            ['8', 'Match Transaccional'],
-                                            ['9', 'Match Void'],
-                                            ['A', 'Match OC/Camepa'],
-                                            ['M', 'Match Multi-Payment'],
-                                            ['C', 'Match Complement']
-                                            
+                                            ['8', 'Match Transactional'],
+                                            ['8', 'Match Void'],
                                         ]
                                     }),
                                     labelWidth: 55,
-                                    width: 180,
+                                    width: 250,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -769,7 +772,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     name: 'IN_AMOUNT',
                                     maxLength: 15,
                                     enforceMaxLength: true,
-                                    maskRe:  /[0-9\.\-]/, // Máscara para números y punto decimal
+                                    maskRe: /[0-9\.\-]/, // Máscara para números y punto decimal
                                     regex: /^[-]?\d+(\.\d{1,2})?$/, // Validación para permitir hasta 2 decimales
                                     regexText: 'Invalid Amount', // Mensaje de error personalizado
                                     listeners: {
