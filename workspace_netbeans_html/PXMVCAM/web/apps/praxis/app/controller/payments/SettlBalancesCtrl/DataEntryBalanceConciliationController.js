@@ -22,7 +22,7 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.DataEntryBalanceCon
         const me = this;
         const view = me.view;
         const a = view.searchParams;
-//        console.log('onLoadGrid--', view.searchParams);
+        console.log('onLoadGrid--', view.searchParams);
         const scardn = a.SCARDN.trim();
         const scardn1 = scardn.split('*')[0];
         const scardn2 = scardn.split('*').pop().trim();
@@ -30,17 +30,22 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.DataEntryBalanceCon
         const ajuste = a.AJUSTE === 'A' ? 'J'
                 : a.AJUSTE === 'J' ? 'A'
                 : a.AJUSTE;
+         
         const grid = Ext.getCmp(prototype.idDE2 + '-BalanceConciliationGrid');
         try {
-
+             console.log('ALL GRID DATA',a)
+//            console.log('MONTO',a.SALDO)
             grid.setLoading(true);
             let params = {
                 "IN_PROCTYPESQ": a.PROCTYPESQ.trim(),
                 "IN_SDATE": a.SDATE,
                 "IN_SCARDN1": scardn1,
                 "IN_SCARDN2": card2,
-                "IN_AJUSTE": ajuste,
-                "IN_DAYS": 15
+//                "IN_AJUSTE": ajuste,
+                "IN_AJUSTE": a.AJUSTE,
+                "IN_DAYS": 15,
+                "IN_TDOC":a.TDOC,
+//                "IN_SALDO":a.SALDO
             };
             const res = await global.callStoreGet('PRAXISMP', 'SQP05652', params);
             let data = res.lstRs[0];
