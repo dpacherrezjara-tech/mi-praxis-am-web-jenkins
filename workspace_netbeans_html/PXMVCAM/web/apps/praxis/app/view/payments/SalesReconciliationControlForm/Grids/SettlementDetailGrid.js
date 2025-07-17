@@ -60,15 +60,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;background-color:#C6E5B1;";
                     const opts = {
+                        'A': 'Match OC/Camepa',
+                        'C': 'Match Complement',
+                        'D': 'Match Balance',
+                        'E': 'Match Duplicate Payment',
+                        'M': 'Match Multi-Payment',
                         '0': 'Stand By',
                         '1': 'Match',
                         '2': 'Sales Without Settl.',
                         '3': 'Settl. Without Sales',
-                        '4': 'Match Parcial.',
+                        '4': 'Match Partial',
                         '5': 'Match Manual',
-                        '6': 'Match Forzado',
-                        '7': 'Match por Compensacion',
-                        '8': 'Match Transaccional',
+                        '6': 'Match Forced',
+                        '7': 'Match  for Compensation',
+                        '8': 'Match Transactional',
                         '9': 'Match Void'
                     };
                     return opts[value] || '';
@@ -149,7 +154,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                     },
                     {
                         text: 'Serv. Fee',
-                        dataIndex:'servicefee',
+                        dataIndex: 'servicefee',
                         width: 90,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA;";
@@ -276,11 +281,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                     sortable: false,
                     align: 'center'
                 },
-                columns:[
+                columns: [
                     {
                         text: 'Amount', dataIndex: 'f_ADJUSMENT', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "text-align:right;";                          
+                            metaData.style = "text-align:right;";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
                         }
