@@ -157,7 +157,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
                 day = record.data.a4501FECVT;
             } else if (record.data.a4501PRDA) {
                 day = record.data.a4501PRDA;
-            } else if (obj.a4496FPROC) {
+            } else if (record.data.a4496FPROC) {
                 day = record.data.a4496FPROC;
             } else {
                 day = record.data.a4501FEUP;
