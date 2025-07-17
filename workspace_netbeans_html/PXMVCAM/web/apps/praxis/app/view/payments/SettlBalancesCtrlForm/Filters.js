@@ -43,7 +43,7 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.Filters', {
                     items: [
                         {
                             items: [
-                                
+
                                 {
                                     xtype: 'datefield',
                                     fieldLabel: 'From',
@@ -90,7 +90,7 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.Filters', {
                                         ]
                                     }),
                                     labelWidth: 50,
-                                    width: 180,
+                                    width: 160,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -149,7 +149,7 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.Filters', {
                                         ]
                                     }),
                                     labelWidth: 80,
-                                    width: 180,
+                                    width: 150,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -164,7 +164,7 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
-                                            ['4', 'Match Parcial'],
+                                            ['4', 'Match Partial'],
                                             ['M', 'Multi-Payment'],
                                             ['C', 'Complement'],
                                             ['D', 'Duplicated']
@@ -186,12 +186,32 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
-                                            ['1', 'Revisado'],
-                                            ['2', 'Pendiente']
+                                            ['1', 'Reviewed'],
+                                            ['2', 'Pending']
                                         ]
                                     }),
-                                    labelWidth: 50,
-                                    width: 180,
+                                    labelWidth: 60,
+                                    width: 160,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Proceed',
+                                    name: 'IN_STPROCEDE',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['1', 'Yes'],
+                                            ['2', 'No']
+                                        ]
+                                    }),
+                                    labelWidth: 70,
+                                    width: 170,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',

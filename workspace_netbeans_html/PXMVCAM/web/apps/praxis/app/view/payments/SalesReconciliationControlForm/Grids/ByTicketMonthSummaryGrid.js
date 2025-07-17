@@ -130,85 +130,120 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     {
                         text: 'AX', dataIndex: 'total_AX', align: 'center', width: 80,
                         statusSummary: '',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'VI/MC', dataIndex: 'total_VI_MC', align: 'center', width: 80,
                         statusSummary: '',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'DC', dataIndex: 'total_DC', align: 'center', width: 80,
                         statusSummary: '',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'TP', dataIndex: 'total_TP', align: 'center', width: 80,
                         statusSummary: '',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'BO', dataIndex: 'total_BO', align: 'center', width: 80,
                         statusSummary: '',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'OTHERS', dataIndex: 'total_OTHER', align: 'center', width: 80,
                         statusSummary: '',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'CA', dataIndex: 'total_CA', align: 'center', width: 80,
                         statusSummary: '',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     }
                     
@@ -225,92 +260,128 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                         metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;";
                         metaData.style += "font-weight:bolder;color:#057ECB;";
-                        return value;
+                        //return value;
+                            return Ext.util.Format.number(value, '0,000');
                     }
                 },
                 columns: [
                     {
                         text: 'AX', dataIndex: 'total_MATCH_AX', align: 'center', width: 80,
                         statusSummary: 'M',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'VI/MC', dataIndex: 'total_MATCH_VI_MC', align: 'center', width: 80,
                         statusSummary: 'M',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'DC', dataIndex: 'total_MATCH_DC', align: 'center', width: 80,
                         statusSummary: 'M',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'TP', dataIndex: 'total_MATCH_TP', align: 'center', width: 80,
                         statusSummary: 'M',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'BO', dataIndex: 'total_MATCH_BO', align: 'center', width: 80,
                         statusSummary: 'M',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'OTHERS', dataIndex: 'total_MATCH_OTHER', align: 'center', width: 80,
                         statusSummary: 'M',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'CA', dataIndex: 'total_MATCH_CA', align: 'center', width: 80,
                         statusSummary: 'M',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     }
                 ]
@@ -326,92 +397,128 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                         metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;";
                         metaData.style += "font-weight:bolder;color:#057ECB;";
-                        return value;
+                        //return value;
+                            return Ext.util.Format.number(value, '0,000');
                     }
                 },
                 columns: [
                     {
                         text: 'AX', dataIndex: 'total_PENDING_AX', align: 'center', width: 80,
                         statusSummary: 'P',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'VI/MC', dataIndex: 'total_PENDING_VI_MC', align: 'center', width: 80,
                         statusSummary: 'P',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'DC', dataIndex: 'total_PENDING_DC', align: 'center', width: 80,
                         statusSummary: 'P',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'TP', dataIndex: 'total_PENDING_TP', align: 'center', width: 80,
                         statusSummary: 'P',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'BO', dataIndex: 'total_PENDING_BO', align: 'center', width: 80,
                         statusSummary: 'P',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'OTHERS', dataIndex: 'total_PENDING_OTHER', align: 'center', width: 80,
                         statusSummary: 'P',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {
                         text: 'CA', dataIndex: 'total_PENDING_CA', align: 'center', width: 80,
                         statusSummary: 'P',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
                         listeners: {
                             click: 'onClickDetail'
                         },
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-                            return value;
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
                         }
                     }
                 ]
@@ -424,7 +531,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                 summaryType: 'sum',
                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                     metaData.style = "text-align:center;font-weight:bold;";
-                    return value;
+                    //return value;
+                   return Ext.util.Format.number(value, '0,000');
                 }
             }
             
