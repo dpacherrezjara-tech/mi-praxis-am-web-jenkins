@@ -6,6 +6,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
     afterRender: async function () {
         await this.loadFilters();
         this.loadTickets();
+        this.loadCharts();
     },
     loadFilters: async function () {
         const me = this;
@@ -26,8 +27,35 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
         const me = this;
         const grid = Ext.getCmp(prototype.id + '-gridExceptionTickets');
         let params = me.formatParams();
-        let store = global.callStorePaggin('PXSAUDIT','SQP05583',params);
-        grid.setStore(store);
+        let storeGrid = global.callStorePaggin('PXSAUDIT','SQP05583',params);
+        grid.setStore(storeGrid);        
+    },
+    loadCharts: async function(){
+        const me = this;
+        const chartPie = Ext.getCmp(prototype.id + '-chartPieExceptionTickets');
+        const chartLineal = Ext.getCmp(prototype.id + '-chartLinealExceptionTickets');
+        console.log("chartPie", chartPie );
+        console.log("chartLineal", chartLineal );
+        let params = me.formatParams();
+        const res = await global.callStoreGet('PXSAUDIT', 'SQP05647', params);
+        let storeChartPie = res.lstRs.at(0);
+        let storeChartLineal = res.lstRs.at(0);
+        console.log("storeChartPie", storeChartPie );
+        console.log("storeChartLineal", storeChartLineal );
+        
+        // ocultar si no hay resultados
+        if (storeChartPie.length <= 0 || storeChartLineal.length <= 0 ){
+            chartPie.hide();
+            chartLineal.hide();
+            return ;
+        }
+        
+        chartPie.show();
+        chartLineal.show();
+        
+        chartPie.setStore(storeChartPie);
+        chartLineal.setStore(storeChartLineal);
+        
     },
     formatParams: function(){
         const form = Ext.getCmp(prototype.id + '-panelFilters').getForm();
@@ -110,6 +138,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
     //<editor-fold defaultstate="collapsed" desc="Options">
     onClickSearchBtn:function(){
         this.loadTickets();
+        this.loadCharts();
     },
     onEnterKeyPress: function (field, e) {
         if (e.getKey() === e.ENTER) {

@@ -7,7 +7,8 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.TaxesExceptionsForm',
         'Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsController',
         'Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Options',
         'Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters',
-        'Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Grids.TaxesExceptionsGrids'
+        'Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Grids.TaxesExceptionsGrids',
+        'Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Charts.TaxesExceptionsChart'
     ],
     controller: 'TaxesExceptionsController',
     layout: {
@@ -59,7 +60,8 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.TaxesExceptionsForm',
                                         },
                                         {
                                             xtype: 'panel',
-                                            height: 670,
+//                                            height: 500,
+                                            minHeight: 300,
                                             width: 1650,
                                             bodyStyle: 'background: #E3EAF9',
                                             layout: 'fit',
@@ -70,6 +72,22 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.TaxesExceptionsForm',
                                                 {
                                                     xtype: prototype.id + '-TaxesExceptionsGrids',
                                                     id: prototype.id + '-mainContent'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            height: 500,
+                                            width: 1650,
+                                            bodyStyle: 'background: #E3EAF9',
+                                            layout: 'fit',
+                                            defaults: {
+                                                bodyStyle: 'background: transparent'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: prototype.id + '-TaxesExceptionsChart',
+                                                    id: prototype.id + '-contentChart'
                                                 }
                                             ]
                                         }
