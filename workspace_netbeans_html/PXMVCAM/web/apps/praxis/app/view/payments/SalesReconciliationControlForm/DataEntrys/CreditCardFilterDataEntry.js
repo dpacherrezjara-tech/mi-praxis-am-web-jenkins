@@ -141,7 +141,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                 ]
                             }),
                             labelWidth: 55,
-                            width: 250,
+                            width: 180,
                             displayField: 'name',
                             valueField: 'code',
                             queryMode: 'local',

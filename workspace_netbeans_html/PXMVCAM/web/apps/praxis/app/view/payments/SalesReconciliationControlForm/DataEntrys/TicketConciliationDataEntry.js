@@ -275,7 +275,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         {
                                             fieldLabel: 'Status Concil.',
                                             name: 'A4501STVAL',
-                                            width: 250,
+                                            width: 230,
                                             labelWidth: 100,
                                             listeners: {
                                                 change: function (field, newValue) {
@@ -283,7 +283,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         'A': 'Match OC/Camepa',
                                                         'C': 'Match Complement',
                                                         'D': 'Match Balance',
-                                                        'E': 'Match Duplicate Payment',
+                                                        'E': 'Match Duplicate Pay.',
                                                         'M': 'Match Multi-Payment',
                                                         '0': 'Stand By',
                                                         '1': 'Match',

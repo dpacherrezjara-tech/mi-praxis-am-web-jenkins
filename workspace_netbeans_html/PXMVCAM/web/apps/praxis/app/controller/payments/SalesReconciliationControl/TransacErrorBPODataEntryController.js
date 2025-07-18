@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const me = this;
         const userName = $('#menuUser').text();
         const match = ["1", "4", "5", "6", "7", "8", "9", "M", "C", "D", "E"];
-        const matchComment = ["0", "4", "M", "C", , "D", "E"];
+        const matchComment = ["4", "M", "C", , "D", "E"];
         const status = me.bean.stval;
         const {tgrosamoun, svfops} = me.bean;
         let diff = tgrosamoun - svfops;
@@ -106,7 +106,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 //                Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocoment);
 //                commentTransaction.show();
 //            }
-            //transacciones stand by    
+        //transacciones stand by    
         } else if (status === '0') {
             bpo.setDisabled(false);
             blocked.setDisabled(false);
@@ -189,19 +189,29 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const adju = Ext.getCmp(prototype.idDE + '-addStandByAdju');
 
         if (show) {
-            if ((this.bean.cerror === '18' || this.bean.cerror === '19') && this.bean.stval === '0') {
-                txtBpo.setReadOnly(true);
-                adju.setValue(true);
-                adju.setReadOnly(true);
-            } else {
-                txtBpo.setReadOnly(false);
-                adju.setValue(false);
-                adju.setReadOnly(false);
-            }
             addStandBy.show();
             revStandBy.show();
             hideStandBy.hide();
             standByBpo.show();
+            
+            if ((this.bean.cerror === '18' || this.bean.cerror === '19'  ) && this.bean.stval === '0') {
+                txtBpo.setReadOnly(true);
+                adju.setValue(true);
+                adju.setReadOnly(true);
+            }
+            // stand by autocoment type SB
+            else if ( this.bean.bpocoment.length > 0 && this.bean.stval === '0' ){
+                txtBpo.setReadOnly(true);
+                adju.setValue(false);
+                adju.hide();
+                addStandBy.hide();
+            }
+            else {
+                txtBpo.setReadOnly(false);
+                adju.setValue(false);
+                adju.setReadOnly(false);
+            }
+            
         } else {
             adju.setReadOnly(false);
             addStandBy.hide();
