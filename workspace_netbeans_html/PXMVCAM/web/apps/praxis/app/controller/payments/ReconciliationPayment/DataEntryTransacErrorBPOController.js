@@ -151,7 +151,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationPayment.DataEntryTransa
         const revStandBy = Ext.getCmp(prototype.idDE + '-revStandBy');
         const hideStandBy = Ext.getCmp(prototype.idDE + '-hideStandBy');
         if (show) {
-            addStandBy.show();
+            addStandBy.hide();
             revStandBy.show();
             hideStandBy.hide();
             standByBpo.show();

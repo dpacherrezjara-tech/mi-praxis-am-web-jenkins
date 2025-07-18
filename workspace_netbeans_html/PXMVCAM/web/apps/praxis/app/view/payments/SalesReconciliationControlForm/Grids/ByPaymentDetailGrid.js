@@ -207,6 +207,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 ]
 
             },
+            {text: 'BPO Comment', dataIndex: 'bpocoment', width: 210},
             {text: 'User<br>Update', dataIndex: 'usup', width: 100},
             {text: 'Date<br>Update', dataIndex: 'feup', width: 80}
             //</editor-fold>
