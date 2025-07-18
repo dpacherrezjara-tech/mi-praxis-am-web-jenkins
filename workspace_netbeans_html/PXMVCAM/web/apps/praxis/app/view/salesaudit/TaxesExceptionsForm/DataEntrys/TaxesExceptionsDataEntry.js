@@ -293,6 +293,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
             ]
         },
         //</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc="Tab Form Add Tax">
         {
             xtype: 'form',
             width: '100%',
@@ -353,6 +354,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
             ]
 
         },
+        //</editor-fold>
         {
             xtype: 'panel',
             layout: {
@@ -539,6 +541,15 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'
+                    }
+                },
+                {
+                    text: 'History Log',
+                    id: prototype.idDE + '-btn-viewTaxesLog',
+                    iconCls: 'prx-icon-detail',
+                    hidden: true,
+                    listeners: {
+                        click: 'onViewTaxesLog'
                     }
                 }
             ]
