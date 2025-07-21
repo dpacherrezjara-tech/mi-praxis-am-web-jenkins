@@ -1109,16 +1109,16 @@ public class SalesReconciliationBPOController {
                 valor = "Settl. without Sales";
                 break;
             case "4":
-                valor = "Match Parcial";
+                valor = "Match Partial";
                 break;
             case "5":
                 valor = "Match Manual";
                 break;
             case "6":
-                valor = "Forced Match";
+                valor = "Match Forced";
                 break;
             case "7":
-                valor = "Compensation Match";
+                valor = "Match Compensation";
                 break;
             case "8":
                 valor = "Match Transaccional";
@@ -1131,6 +1131,12 @@ public class SalesReconciliationBPOController {
                 break;
             case "C":
                 valor = "Match Complement";
+                break;
+            case "D":
+                valor = "Match Balance";
+                break;
+            case "E":
+                valor = "Duplicate Payment";
                 break;
             case "M":
                 valor = "Match Multi-Payment";

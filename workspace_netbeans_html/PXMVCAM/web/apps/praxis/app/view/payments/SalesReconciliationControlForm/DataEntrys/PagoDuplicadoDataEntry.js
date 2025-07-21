@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                                 'A': 'Match OC/Camepa',
                                                 'C': 'Match Complement',
                                                 'D': 'Match Balance',
-                                                'E': 'Match Duplicate Payment',
+                                                'E': 'Duplicate Payment',
                                                 'M': 'Match Multi-Payment',
                                                 '0': 'Stand By',
                                                 '1': 'Match',
@@ -182,7 +182,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                                         'A': 'Match OC/Camepa',
                                                         'C': 'Match Complement',
                                                         'D': 'Match Balance',
-                                                        'E': 'Match Duplicate Payment',
+                                                        'E': 'Duplicate Payment',
                                                         'M': 'Match Multi-Payment',
                                                         '0': 'Stand By',
                                                         '1': 'Match',
@@ -193,7 +193,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                                         '6': 'Match Forced',
                                                         '7': 'Match Compensation',
                                                         '8': 'Match Transactional',
-                                                        '9': 'Match Void''
+                                                        '9': 'Match Void'
                                                     };
                                                     return opts[value] || '';
                                                 }

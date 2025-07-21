@@ -16,14 +16,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
         const view = this.view;
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent2');
         
+        me.searchLastParams = view.searchParams ;
+        console.log('me.searchLastParams', me.searchLastParams);
         
-        let tdate = me.view.typeDate;        
+        
+        let tdate = me.searchLastParams.IN_DATE;        
         if (tdate === 'FECVT') {
             me.view.columns[0].setText('Sale<br>Date');
         } else if (tdate === 'PRDA') {
             me.view.columns[0].setText('Processing<br>Date');
-        } else {
+        } else if (tdate === 'FEUP') {
             me.view.columns[0].setText('Update<br>Date');
+        } else {
+            me.view.columns[0].setText('Date');
         }
         
         //me.view.columns[0].setText(tdate);
@@ -34,8 +39,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
         me.view.summaryIsMonth = true;
         let params = view.searchParams ;
         params.IN_TDATE = me.view.summaryIsMonth ? 'M' : '',
-        me.searchLastParams = view.searchParams ;
         console.log(params);
+
         me.loadServiceSummaryByTicket(params);
 //        let store = Ext.create('Ext.data.Store', {
 //            loadMask: true,

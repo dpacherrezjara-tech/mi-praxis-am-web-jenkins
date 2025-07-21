@@ -59,7 +59,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                         metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;";
                         metaData.style += "font-weight:bolder;color:#057ECB;";
-//                        return value;
                         return Ext.util.Format.number(value, '0,000');
                     }
                 },
@@ -72,7 +71,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-//                            return value;
                             return Ext.util.Format.number(value, '0,000');
                         }
                     },
@@ -84,7 +82,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-//                            return value;
                             return Ext.util.Format.number(value, '0,000');
                         }
                     },
@@ -96,7 +93,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         summaryType: 'sum',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                             metaData.style = "text-align:center;font-weight:bold;";
-//                            return value;
                             return Ext.util.Format.number(value, '0,000');
                         }
                     },
@@ -105,9 +101,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;background-color:#d5f4d5;color:red;";
                             value = (record.data.total_PENDING / record.data.total) * 100;
-//                            return value.toFixed(2) + '%';
-                            const value1 = value.toFixed(2) + '%';
-                            return Ext.util.Format.number(value1, '0,000');
+                            return value.toFixed(2) + '%';
                         },
                         summaryType: 'customPercent',
                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -116,9 +110,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                             let total = atributos[1];
                             let pending = atributos[3];
                             let percent = (summaryData[pending] / summaryData[total]) * 100;
-//                            return percent.toFixed(2) + '%';
-                            const value1 = percent.toFixed(2) + '%';
-                            return Ext.util.Format.number(value1, '0,000');
+                            return percent.toFixed(2) + '%';
 
                         }
                     }
