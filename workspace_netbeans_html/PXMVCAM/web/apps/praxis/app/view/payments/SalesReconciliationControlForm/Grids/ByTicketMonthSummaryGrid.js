@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     sortable: true,
                     align: 'center',
                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                        metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;";
+                        metaData.style = "text-align:center;background-color:#bde1ff;text-decoration:underline;cursor:pointer;";
                         metaData.style += "font-weight:bolder;color:#057ECB;";
                         return value;
                     }
@@ -131,7 +131,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'AX', dataIndex: 'total_AX', align: 'center', width: 80,
                         statusSummary: '',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#bde1ff;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
@@ -148,7 +149,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'VI/MC', dataIndex: 'total_VI_MC', align: 'center', width: 80,
                         statusSummary: '',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#bde1ff;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
@@ -165,7 +166,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'DC', dataIndex: 'total_DC', align: 'center', width: 80,
                         statusSummary: '',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#bde1ff;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
@@ -182,7 +183,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'TP', dataIndex: 'total_TP', align: 'center', width: 80,
                         statusSummary: '',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#bde1ff;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
@@ -199,7 +200,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'BO', dataIndex: 'total_BO', align: 'center', width: 80,
                         statusSummary: '',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#bde1ff;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
@@ -216,7 +217,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'OTHERS', dataIndex: 'total_OTHER', align: 'center', width: 80,
                         statusSummary: '',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#bde1ff;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
@@ -233,7 +234,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'CA', dataIndex: 'total_CA', align: 'center', width: 80,
                         statusSummary: '',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#bde1ff;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
+                        }
+                    },
+                    {
+                        text: 'Summary<br>Ticket', dataIndex: 'total_TKT', align: 'center', width: 100,
+                        statusSummary: '',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#bde1ff;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
@@ -383,6 +401,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                             //return value;
                             return Ext.util.Format.number(value, '0,000');
                         }
+                    },
+                    {
+                        text: 'Summary<br>Ticket', dataIndex: 'total_MATCH_TKT', align: 'center', width: 100,
+                        statusSummary: '',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
+                        }
                     }
                 ]
             },
@@ -395,7 +430,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     sortable: true,
                     align: 'center',
                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                        metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;";
+                        metaData.style = "text-align:center;background-color:#FFFFCD;text-decoration:underline;cursor:pointer;";
                         metaData.style += "font-weight:bolder;color:#057ECB;";
                         //return value;
                             return Ext.util.Format.number(value, '0,000');
@@ -406,7 +441,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'AX', dataIndex: 'total_PENDING_AX', align: 'center', width: 80,
                         statusSummary: 'P',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#ffffcd;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
@@ -423,7 +458,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'VI/MC', dataIndex: 'total_PENDING_VI_MC', align: 'center', width: 80,
                         statusSummary: 'P',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#ffffcd;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
@@ -440,7 +475,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'DC', dataIndex: 'total_PENDING_DC', align: 'center', width: 80,
                         statusSummary: 'P',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#ffffcd;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
@@ -457,7 +492,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'TP', dataIndex: 'total_PENDING_TP', align: 'center', width: 80,
                         statusSummary: 'P',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#ffffcd;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
@@ -474,7 +509,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'BO', dataIndex: 'total_PENDING_BO', align: 'center', width: 80,
                         statusSummary: 'P',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#ffffcd;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
@@ -491,7 +526,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'OTHERS', dataIndex: 'total_PENDING_OTHER', align: 'center', width: 80,
                         statusSummary: 'P',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#ffffcd;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
@@ -508,7 +543,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         text: 'CA', dataIndex: 'total_PENDING_CA', align: 'center', width: 80,
                         statusSummary: 'P',
                         renderer: function (value, metaData, record) {
-                            metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            metaData.style = "text-align:center;background-color:#ffffcd;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000');
+                        },
+                        listeners: {
+                            click: 'onClickDetail'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            //return value;
+                            return Ext.util.Format.number(value, '0,000');
+                        }
+                    },
+                    {
+                        text: 'Summary<br>Ticket', dataIndex: 'total_PENDING_TKT', align: 'center', width: 100,
+                        statusSummary: '',
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "text-align:center;background-color:#ffffcd;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
                         },
                         listeners: {
