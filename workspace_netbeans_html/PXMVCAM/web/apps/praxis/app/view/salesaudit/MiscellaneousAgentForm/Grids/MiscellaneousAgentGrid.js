@@ -1,6 +1,9 @@
-Ext.define('Ext.Praxis.view.salesaudit.MiscellaneousAgentForm.Grids.MiscellaneousAgentGrid',{
+//prototype.idDE2 = prototype.id + 'MiscellaneousAgentGrid';
+
+Ext.define('Ext.Praxis.view.salesaudit.MiscellaneousAgentForm.Grids.MiscellaneousAgentGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.' + prototype.id + '-MiscellaneousAgent',
+//    itemId: prototype.idDE2 + '-MiscellaneousAgentGrid',
     requires: [
         'Ext.Praxis.controller.salesaudit.MiscellaneousAgentForm.MiscellaneousAgentGridController'
     ],
@@ -14,6 +17,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MiscellaneousAgentForm.Grids.Miscellaneou
         markDirty: false
     },
     columnLines: true,
+
     columns: {
         defaults: {
             align: 'center',
@@ -21,26 +25,30 @@ Ext.define('Ext.Praxis.view.salesaudit.MiscellaneousAgentForm.Grids.Miscellaneou
             sortable: true
         },
         items: [
+//            id: prototype.idDE2 + '-MiscellaneousAgentGrid',
+
             {
-                text: 'Key 1', dataIndex: 'A4593KEY1', 
-                width: 80
+                text: 'Key 1', dataIndex: 'A4593KEY1', width: 50
             }, {
-                text: 'Key 2', dataIndex: 'A4593KEY2', width: 150
+                text: 'Key 2', dataIndex: 'A4593KEY2', width: 120
             },
             {
-                text: 'Key 3', dataIndex: 'A4593KEY3', width: 150
+                text: 'Key 3', dataIndex: 'A4593KEY3', width: 100
             },
             {
-                text: 'Description 1', dataIndex: 'A4593DESC1', width: 200
+                text: 'Description 1', dataIndex: 'A4593DESC1', width: 250
             },
             {
-                text: 'Description 2', dataIndex: 'A4593DESC2', width: 200
+                text: 'Description 2', dataIndex: 'A4593DESC2', width: 250
             },
-              {
-                text: 'Status', dataIndex: 'A4593STS', width: 100
+            {
+                text: 'Status', dataIndex: 'A4593STS', width: 100,
+                renderer: function (value) {
+                    return value === '1' ? 'Activo' : 'Inactivo';
+                }
             },
-             {
-                text: 'Comment', dataIndex: 'A4593COMEN', width: 200
+            {
+                text: 'Comment', dataIndex: 'A4593COMEN', flex: 1
             },
             {
                 text: 'Created',
@@ -55,10 +63,10 @@ Ext.define('Ext.Praxis.view.salesaudit.MiscellaneousAgentForm.Grids.Miscellaneou
                     },
                     {
                         text: 'Date Time', dataIndex: 'A4593TSCR', width: 120
-                    }, 
+                    },
                 ]
             },
-             {
+            {
                 text: 'Update',
                 defaults: {
                     menuDisabled: true,
@@ -71,26 +79,40 @@ Ext.define('Ext.Praxis.view.salesaudit.MiscellaneousAgentForm.Grids.Miscellaneou
                     },
                     {
                         text: 'Date Time', dataIndex: 'A4593TSUP', width: 120
-                    }, 
+                    },
                 ]
             },
-          
+
             {
                 sortable: false,
                 xtype: 'actioncolumn',
-                width: 50,
-                text: 'Detail',
+                width: 40,
+                text: 'Edit',
                 align: 'center',
                 items: [
                     {
-                        iconCls: 'prx-icon-detail',
-//                        tooltip: 'copy SPNR',
-                        handler: 'detailSettlBalancesCtrl'
+                        iconCls: 'prx-icon-edit',
+                        tooltip: 'Edit',
+                        handler: 'detailDataEntryMiscellaneousAgent'
                     }
                 ]
             },
-            
-            
+            {
+                sortable: false,
+                xtype: 'actioncolumn',
+                width: 40,
+                text: 'Del',
+                align: 'center',
+                items: [
+                    {
+                        iconCls: 'prx-icon-image-trash',
+                        tooltip: 'Delete',
+                        handler: 'onDeleteClick'
+                    }
+                ]
+            }
+
+
         ]
     },
     tbar: {
