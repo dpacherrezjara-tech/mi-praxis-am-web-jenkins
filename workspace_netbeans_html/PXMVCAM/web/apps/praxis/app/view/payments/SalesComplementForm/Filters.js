@@ -343,6 +343,16 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                 },
                                 {
                                     xtype: 'textfield',
+                                    fieldLabel: 'PNR',
+                                    labelWidth: 40,
+                                    width: 120,
+                                    name: 'IN_PNR',
+                                    maxLength: 6, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                },
+                                {
+                                    xtype: 'textfield',
                                     fieldLabel: 'Card Number',
                                     labelWidth: 90,
                                     width: 150,
