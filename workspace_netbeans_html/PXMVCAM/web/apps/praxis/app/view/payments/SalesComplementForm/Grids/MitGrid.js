@@ -82,23 +82,23 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
                     align: 'center'
                 },
                 columns: [
-                    {
-                        text: 'Number', dataIndex: 'A4775NUMTJ', width: 120
-                    },
-                    {
-                        text: 'Auth.', dataIndex: 'A4775NUMAT', width: 80
-                    },
-                     {
-                        text: 'Type', dataIndex: 'A4775PRICD', width: 120
-                    },
-                    {
-                        text: 'Payment Type', dataIndex: 'A4775PLANP', width: 120
-                    },
-                    {
-                        text: 'Issuer', dataIndex: 'A4775EMISO', width: 85
-                    },  
-                        ]
-                    },
+                        {
+                            text: 'Number', dataIndex: 'A4775NUMTJ', width: 120
+                        },
+                        {
+                            text: 'Auth.', dataIndex: 'A4775NUMAT', width: 80
+                        },
+                         {
+                            text: 'Type', dataIndex: 'A4775PRICD', width: 120
+                        },
+                        {
+                            text: 'Payment Type', dataIndex: 'A4775PLANP', width: 120
+                        },
+                        {
+                            text: 'Issuer', dataIndex: 'A4775EMISO', width: 85
+                        },  
+                    
+                    
                     {
                         text: 'PNR', dataIndex: 'A4775PNR', width: 90
                     },
@@ -115,37 +115,19 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
                     {
                         text: 'Type Transaction', dataIndex: 'A4775TRXTP', width: 150
                     },
-                    {
-                        text: 'MIT ID', dataIndex: 'A4775SQNR', width: 85
-                    },
+//                    {
+//                        text: 'MIT ID', dataIndex: 'A4775SQNR', width: 85
+//                    },
                     {
                         text: 'Status', dataIndex: 'A4775STATU', width: 85
                     },
                     {
                         text: 'Status Transaction', dataIndex: 'A4775STVAL', width: 150
                     },
-//                    {
-//                        text: 'Accounting',
-//                        defaults: {
-//                            menuDisabled: true,
-//                            sortable: false,
-//                            align: 'center'
-//                        },
-//                        columns: [
-//                            {
-//                                text: 'User', dataIndex: 'A4775REGIS', width: 120
-//                            },
-//                            {
-//                                text: 'Fecha', dataIndex: 'A4775FREGI', width: 80
-//                            },
-//                             {
-//                                text: 'Hora', dataIndex: 'A4775HREGI', width: 120
-//                            },
-//                        ]
-//                    }
-
-
+                
             //</editor-fold>
+        ]
+    },
         ]
     },
     tbar: {
