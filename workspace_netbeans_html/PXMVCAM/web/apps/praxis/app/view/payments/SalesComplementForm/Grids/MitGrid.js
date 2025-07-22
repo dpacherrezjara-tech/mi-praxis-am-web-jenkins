@@ -22,9 +22,11 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
         },
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Cols">
-//            {
-//                text: 'MIT ID', dataIndex: 'RN', width: 85
-//            },
+            {
+                text: 'RN',
+                dataIndex: 'RN',
+                width: 40
+            },
             {
                 text: 'Processor', dataIndex: 'A4775PROCE', width: 85
             },
@@ -43,7 +45,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
                 ]
             },
             {
-                text: 'Merchand', dataIndex: 'A4775PROCE', width: 85
+                text: 'Merchand', dataIndex: 'A4775MERID', width: 85
             },
             {
                 text: 'Iata', dataIndex: 'A4775MERPG', width: 85
@@ -72,21 +74,21 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
                     align: 'center'
                 },
                 columns: [
-                        {
-                            text: 'Number', dataIndex: 'A4775NUMTJ', width: 120
-                        },
-                        {
-                            text: 'Auth.', dataIndex: 'A4775NUMAT', width: 80
-                        },
-                         {
-                            text: 'Type', dataIndex: 'A4775PRICD', width: 120
-                        },
-                        {
-                            text: 'Payment Type', dataIndex: 'A4775PLANP', width: 120
-                        },
-                        {
-                            text: 'Issuer', dataIndex: 'A4775EMISO', width: 85
-                        },
+                    {
+                        text: 'Number', dataIndex: 'A4775NUMTJ', width: 120
+                    },
+                    {
+                        text: 'Auth.', dataIndex: 'A4775NUMAT', width: 80
+                    },
+                     {
+                        text: 'Type', dataIndex: 'A4775PRICD', width: 120
+                    },
+                    {
+                        text: 'Payment Type', dataIndex: 'A4775PLANP', width: 120
+                    },
+                    {
+                        text: 'Issuer', dataIndex: 'A4775EMISO', width: 85
+                    },
                 ]
             },
             {
