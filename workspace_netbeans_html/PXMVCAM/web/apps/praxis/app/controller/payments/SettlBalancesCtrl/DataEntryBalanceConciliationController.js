@@ -13,8 +13,17 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.DataEntryBalanceCon
 
     onGetForm: function () {
         const me = this;
+
         const formObject = Ext.getCmp(prototype.idDE2 + 'BalanceConciliationForm').getForm();
+//        me.view.searchParams.SALDO = Ext.util.Format.number(me.view.searchParams.SALDO, '0,000.00');
+        const rawSaldo = me.view.searchParams.SALDO;
+
+        if (!Ext.isEmpty(rawSaldo) && !isNaN(rawSaldo)) {
+            me.view.searchParams.SALDO = Ext.util.Format.number(parseFloat(rawSaldo), '0,000.00');
+        }
+        console.log('me.view.searchParams.SALDO', me.view.searchParams.SALDO)
         formObject.setValues(me.view.searchParams);
+//        console.log('formObject', formObject)
         me.loadedData = me.view.searchParams;
 //        const old = formObject
     },
@@ -30,10 +39,10 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.DataEntryBalanceCon
         const ajuste = a.AJUSTE === 'A' ? 'J'
                 : a.AJUSTE === 'J' ? 'A'
                 : a.AJUSTE;
-         
+
         const grid = Ext.getCmp(prototype.idDE2 + '-BalanceConciliationGrid');
         try {
-             console.log('ALL GRID DATA',a)
+//            console.log('ALL GRID DATA', a)
 //            console.log('MONTO',a.SALDO)
             grid.setLoading(true);
             let params = {
@@ -44,7 +53,7 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.DataEntryBalanceCon
 //                "IN_AJUSTE": ajuste,
                 "IN_AJUSTE": a.AJUSTE,
                 "IN_DAYS": 15,
-                "IN_TDOC":a.TDOC,
+                "IN_TDOC": a.TDOC,
 //                "IN_SALDO":a.SALDO
             };
             const res = await global.callStoreGet('PRAXISMP', 'SQP05652', params);

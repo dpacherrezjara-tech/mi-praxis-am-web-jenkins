@@ -27,6 +27,8 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.DataEntrySettlBalan
             const form = this.lookupReference('informationForm').getForm();
             form.setValues({
                 ...data,
+                TGROSAMOUN: Ext.util.Format.number(data.TGROSAMOUN, '0,000.00'),
+                SALDO: Ext.util.Format.number(data.SALDO, '0,000.00'),
                 proceedStatus: data.STPROCEDE
             });
             this.bindData();
