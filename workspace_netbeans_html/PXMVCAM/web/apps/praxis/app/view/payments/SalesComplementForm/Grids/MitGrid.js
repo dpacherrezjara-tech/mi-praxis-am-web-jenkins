@@ -106,7 +106,11 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
                         text: 'Currency', dataIndex: 'A4775MONED', width: 85
                     },
                     {
-                        text: 'Amount', dataIndex: 'A4775IMPOR', width: 85
+                        text: 'Amount', dataIndex: 'A4775IMPOR', width: 85,
+                        renderer: function (value, metaData, record) {
+//                            metaData.style = "text-align:center;background-color:#bde1ff;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
+                            return Ext.util.Format.number(value, '0,000.00');
+                        },
                     },
                     {
                         text: 'Type Transaction', dataIndex: 'A4775TRXTP', width: 150
