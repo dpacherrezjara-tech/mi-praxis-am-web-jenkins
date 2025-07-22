@@ -404,7 +404,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'Summary<br>Ticket', dataIndex: 'total_MATCH_TKT', align: 'center', width: 100,
-                        statusSummary: '',
+                        statusSummary: 'M',
                         renderer: function (value, metaData, record) {
                             metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');
@@ -558,7 +558,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {
                         text: 'Summary<br>Ticket', dataIndex: 'total_PENDING_TKT', align: 'center', width: 100,
-                        statusSummary: '',
+                        statusSummary: 'P',
                         renderer: function (value, metaData, record) {
                             metaData.style = "text-align:center;background-color:#ffffcd;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
                             return Ext.util.Format.number(value, '0,000');

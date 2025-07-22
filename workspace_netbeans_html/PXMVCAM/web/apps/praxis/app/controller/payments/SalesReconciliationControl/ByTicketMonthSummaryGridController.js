@@ -174,6 +174,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
             params.IN_GCARD = typeCard === 'CA' ? '' : typeCard ;
             
         }
+        
+        // search all summary
+        if ( typeCard === "Summary<br>Ticket" ){
+            params.IN_TFOP = '' ;
+            params.IN_GCARD = '' ;
+        }
                 
         console.log('detail for params: ', params);
         me.openDetail(params);
