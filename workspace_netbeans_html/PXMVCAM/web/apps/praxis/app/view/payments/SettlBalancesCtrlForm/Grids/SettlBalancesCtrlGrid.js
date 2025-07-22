@@ -74,7 +74,10 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.Grids.SettlBalancesCt
                 text: 'Error Code', dataIndex: 'CERROR', width: 85
             },
             {
-                text: 'Balance Amount', dataIndex: 'SALDO', width: 120
+                text: 'Balance Amount', dataIndex: 'SALDO', width: 120,
+                renderer: function (value, metaData, record) {
+                    return Ext.util.Format.number(value, '0,000');
+                }
             },
             {
                 text: 'Status', dataIndex: 'DESC_STVAL', width: 140
