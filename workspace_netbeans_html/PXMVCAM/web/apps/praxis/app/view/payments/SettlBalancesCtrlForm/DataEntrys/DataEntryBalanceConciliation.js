@@ -47,7 +47,7 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntryB
                 fieldStyle: 'border: none; box-shadow: none;text-align: center'
             },
             items: [
-                 {
+                {
                     xtype: 'textfield',
                     name: 'TDOC',
                     fieldLabel: 'Type Document',
@@ -132,7 +132,10 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntryB
                         {text: 'Moneda', dataIndex: 'MONEDA', width: 100},
                         {text: 'Balance Amount', dataIndex: 'SALDO',
 //                            width: 120,
-                            flex: 1
+                            flex: 1,
+                            renderer: function (value, metaData, record) {
+                                return Ext.util.Format.number(value, '0,000');
+                            }
                         }
                     ],
 
@@ -168,7 +171,7 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntryB
                         {
                             text: 'Process',
                             id: prototype.idDE2 + '-btn-update',
-                            reference:'btnUpdateDataEntryBalanceConciliation',
+                            reference: 'btnUpdateDataEntryBalanceConciliation',
                             iconCls: 'prx-icon-image-process',
                             disabled: true,
                             listeners: {

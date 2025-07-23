@@ -22,12 +22,15 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
         },
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Cols">
-//            {
-//                text: 'MIT ID', dataIndex: 'RN', width: 85
-//            },
+            {
+                text: 'RN',
+                dataIndex: 'RN',
+                width: 40
+            },
             {
                 text: 'Processor', dataIndex: 'A4775PROCE', width: 85
             },
+            
             {
                 text: 'Processing',
                 defaults: {
@@ -42,21 +45,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
                 ]
             },
             {
-                text: 'Merchand',
-                defaults: {
-                    menuDisabled: true,
-                    sortable: false,
-                    align: 'center'
-                },
-                columns: [
-                    {
-                        text: 'ID', dataIndex: 'A4775MERID', width: 80
-                    },
-                    {
-                        text: 'PG', dataIndex: 'A4775MERPG', width: 80
-                    },
-                    
-                ]
+                text: 'Merchand', dataIndex: 'A4775MERID', width: 85
+            },
+            {
+                text: 'Iata', dataIndex: 'A4775MERPG', width: 85
             },
             {
                 text: 'Transaction',
@@ -96,52 +88,36 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
                     },
                     {
                         text: 'Issuer', dataIndex: 'A4775EMISO', width: 85
-                    },  
-                        ]
                     },
-                    {
-                        text: 'PNR', dataIndex: 'A4775PNR', width: 90
-                    },
-                    {
-                        text: 'Currency', dataIndex: 'A4775MONED', width: 85
-                    },
-                    {
-                        text: 'Amount', dataIndex: 'A4775IMPOR', width: 85
-                    },
-                    {
-                        text: 'Type Transaction', dataIndex: 'A4775TRXTP', width: 150
-                    },
-                    {
-                        text: 'MIT ID', dataIndex: 'A4775SQNR', width: 85
-                    },
-                    {
-                        text: 'Status', dataIndex: 'A4775STATU', width: 85
-                    },
-                    {
-                        text: 'Status Transaction', dataIndex: 'A4775STVAL', width: 150
-                    },
-//                    {
-//                        text: 'Accounting',
-//                        defaults: {
-//                            menuDisabled: true,
-//                            sortable: false,
-//                            align: 'center'
-//                        },
-//                        columns: [
-//                            {
-//                                text: 'User', dataIndex: 'A4775REGIS', width: 120
-//                            },
-//                            {
-//                                text: 'Fecha', dataIndex: 'A4775FREGI', width: 80
-//                            },
-//                             {
-//                                text: 'Hora', dataIndex: 'A4775HREGI', width: 120
-//                            },
-//                        ]
-//                    }
-
+                ]
+            },
+            {
+                text: 'PNR', dataIndex: 'A4775PNR', width: 90
+            },
+            {
+                text: 'Currency', dataIndex: 'A4775MONED', width: 85
+            },
+            {
+                text: 'Amount', dataIndex: 'A4775IMPOR', width: 85,
+                renderer: function (value, metaData, record) {
+                    return Ext.util.Format.number(value, '0,000.00');
+                }
+            },
+            {
+                text: 'Type Transaction', dataIndex: 'A4775TRXTP', width: 150
+            },
+            {
+                text: 'Number Operation', dataIndex: 'A4775NROOP', width: 85
+            },
+            {
+                text: 'Status', dataIndex: 'A4775STATU', width: 85
+            },
+            {
+                text: 'Status Transaction', dataIndex: 'A4775STVAL', width: 150
+            }
 
             //</editor-fold>
+        
         ]
     },
     tbar: {
