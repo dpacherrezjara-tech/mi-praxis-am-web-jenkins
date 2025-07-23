@@ -291,8 +291,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         '3': 'Settl. Without Sales',
                                                         '4': 'Match Partial',
                                                         '5': 'Match Manual',
-                                                        '6': 'Match Forced',
-                                                        '7': 'Match Compensation',
+//                                                        '6': 'Match Forced',
+//                                                        '7': 'Match Compensation',
                                                         '8': 'Match Transactional',
                                                         '9': 'Match Void'
                                                     };
@@ -751,6 +751,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     hidden: true,
                                     iconCls: 'prx-icon-reload',
                                     tooltip: 'Forced Match',
+                                    hidden:true,
                                     listeners: {
                                         click: 'onForceMatch'
                                     }

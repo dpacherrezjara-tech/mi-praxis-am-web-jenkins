@@ -71,8 +71,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         '3': 'Settl. Without Sales',
                         '4': 'Match Partial',
                         '5': 'Match Manual',
-                        '6': 'Match Forced',
-                        '7': 'Match Compensation',
+//                        '6': 'Match Forced',
+                        '7': 'Match CompenForcedsation',
                         '8': 'Match Transactional',
                         '9': 'Match Void'
                     };

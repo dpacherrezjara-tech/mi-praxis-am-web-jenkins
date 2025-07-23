@@ -170,8 +170,8 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementPaymForm.Grids.AccountState
                               '3':'Sales W/O Settlement',
                               '4':'Match Difference',
                               '5':'Match Manual',
-                              '6':'Forced Match',
-                              '7':'Compensation Match',
+//                              '6':'Forced Match',
+//                              '7':'Compensation Match',
                               '8':'Pending RFND'
                             };
                             return opts[value]|| '';
@@ -266,8 +266,8 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementPaymForm.Grids.AccountState
                               '3':'Sales W/O Settlement',
                               '4':'Match Difference',
                               '5':'Match Manual',
-                              '6':'Forced Match',
-                              '7':'Compensation Match',
+//                              '6':'Forced Match',
+//                              '7':'Compensation Match',
                               '8':'Pending RFND'
                             };
                             return opts[value]|| '';

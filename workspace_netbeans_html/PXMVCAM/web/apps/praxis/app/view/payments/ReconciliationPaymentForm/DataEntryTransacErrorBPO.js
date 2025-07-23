@@ -784,8 +784,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                                         '3': 'Settl. Without Sales',
                                                         '4': 'Match Diff.',
                                                         '5': 'Match Manual',
-                                                        '6': 'Forced Match',
-                                                        '7': 'Compensation Match',
+//                                                        '6': 'Forced Match',
+//                                                        '7': 'Compensation Match',
                                                         '8': 'Pending RFND'
                                                     };
                                                     field.setRawValue(opts[newValue] || '');

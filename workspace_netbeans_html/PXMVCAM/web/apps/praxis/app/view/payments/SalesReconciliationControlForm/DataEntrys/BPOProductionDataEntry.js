@@ -116,7 +116,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                                     ['', 'All'],
                                     ['0', 'Stand By'],
                                     ['5', 'Match Manual'],
-                                    ['6', 'Match Forzado']
+//                                    ['6', 'Match Forzado']
                                 ]
                             }),
                             labelWidth: 55,
@@ -292,8 +292,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                                                 '3': 'Settl. Without Sales',
                                                 '4': 'Match Partial',
                                                 '5': 'Match Manual',
-                                                '6': 'Match Forced',
-                                                '7': 'Match Compensation',
+//                                                '6': 'Match Forced',
+//                                                '7': 'Match Compensation',
                                                 '8': 'Match Transactional',
                                                 '9': 'Match Void'
                                             };
@@ -372,8 +372,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                                                 '3': 'Settl. Without Sales',
                                                 '4': 'Match Partial',
                                                 '5': 'Match Manual',
-                                                '6': 'Match Forced',
-                                                '7': 'Match Compensation',
+//                                                '6': 'Match Forced',
+//                                                '7': 'Match Compensation',
                                                 '8': 'Match Transactional',
                                                 '9': 'Match Void'
                                             };
