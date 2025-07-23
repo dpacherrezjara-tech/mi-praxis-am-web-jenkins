@@ -722,7 +722,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     margin: '0 8 0 0',
                                     padding: '5',
                                     style: 'color:#080808;font-weight:bold;font-size:16px;font-style:italic;background:#DF8E46;text-align:center;',
-                                    text: 'PENDING CONCILIATION'
+                                    text: 'PENDING RECONCILIATION'
                                 }
                             ]
                         },
