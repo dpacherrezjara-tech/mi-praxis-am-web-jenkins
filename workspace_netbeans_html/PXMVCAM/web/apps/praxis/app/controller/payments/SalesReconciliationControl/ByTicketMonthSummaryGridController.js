@@ -151,8 +151,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
             params.IN_DATEFROM = month + '01';
             params.IN_DATETO = month + '31';
             params.IN_TYPE = statusSummary ; // M , P , ''
-            params.IN_TFOP = typeCard === 'CA' ? 'CA' : 'CC' ;
-            params.IN_GCARD = typeCard === 'CA' ? '' : typeCard ;
+            params.IN_TFOP = typeCard === 'CASH' ? 'CA' : 'CC' ;
+            params.IN_GCARD = typeCard === 'CASH' ? '' : typeCard ;
             
         }
         else {
@@ -170,8 +170,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
             params.IN_DATEFROM = day;
             params.IN_DATETO = day;
             params.IN_TYPE = statusSummary ; // M , P , ''
-            params.IN_TFOP = typeCard === 'CA' ? 'CA' : 'CC' ;
-            params.IN_GCARD = typeCard === 'CA' ? '' : typeCard ;
+            params.IN_TFOP = typeCard === 'CASH' ? 'CA' : 'CC' ;
+            params.IN_GCARD = typeCard === 'CASH' ? '' : typeCard ;
             
         }
         
