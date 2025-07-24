@@ -66,6 +66,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
         Ext.getCmp(prototype.id + '-formFilters-1').getForm().reset();
         Ext.getCmp(prototype.id + '-formFilters-2').getForm().reset();
     },
+    onEnterKeyPress: function (field, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onClickSearchBtn();
+        }
+    },
 });
 
 

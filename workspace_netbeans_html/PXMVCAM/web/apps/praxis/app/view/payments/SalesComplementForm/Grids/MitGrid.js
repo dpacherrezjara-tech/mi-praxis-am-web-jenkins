@@ -25,24 +25,26 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
             {
                 text: 'RN',
                 dataIndex: 'RN',
-                width: 40
+                width: 40,
+                xtype: 'rownumberer'
             },
             {
                 text: 'Processor', dataIndex: 'A4775PROCE', width: 85
             },
             
             {
-                text: 'Processing',
-                defaults: {
-                    menuDisabled: true,
-                    sortable: false,
-                    align: 'center'
-                },
-                columns: [
-                    {
-                        text: 'Date', dataIndex: 'A4775PRDA', width: 90
-                    }
-                ]
+//                text: 'Processing',
+//                defaults: {
+//                    menuDisabled: true,
+//                    sortable: false,
+//                    align: 'center'
+//                },
+//                columns: [
+//                    {
+//                        text: 'Date', dataIndex: 'A4775PRDA', width: 90
+//                    }
+//                ]
+                text: 'Processing<br>Date', dataIndex: 'A4775PRDA', width: 90
             },
             {
                 text: 'Merchand', dataIndex: 'A4775MERID', width: 85
@@ -107,7 +109,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
                 text: 'Type Transaction', dataIndex: 'A4775TRXTP', width: 150
             },
             {
-                text: 'Number Operation', dataIndex: 'A4775NROOP', width: 85
+                text: 'Number Operation', dataIndex: 'A4775NROOP', width: 120
             },
             {
                 text: 'Status', dataIndex: 'A4775STATU', width: 85

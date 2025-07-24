@@ -5,6 +5,7 @@
 package net.miatech.praxis.utils;
 
 import com.google.gson.Gson;
+import java.nio.charset.StandardCharsets;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +19,9 @@ public class ResponseUtils<T> {
     public static ResponseEntity<?> ok(Object body){
         Gson gson = new Gson();
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+        // Forzar charset UTF-8 explícitamente
+        headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
         return new ResponseEntity(gson.toJson(body),headers,HttpStatus.OK);
     }
     

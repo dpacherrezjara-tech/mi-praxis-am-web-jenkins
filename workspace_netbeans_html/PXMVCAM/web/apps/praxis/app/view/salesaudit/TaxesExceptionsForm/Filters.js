@@ -125,7 +125,11 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     width: 160,
                                     enforceMaxLength: true,
                                     maxLength: 9,
-                                    maskRe: /^[0-9]$/
+                                    maskRe: /^[0-9]$/,
+                                    enableKeyEvents: true,
+                                    listeners: {
+                                        keypress: 'onEnterKeyPress'
+                                    }
                                 },
 
                                 {
@@ -159,7 +163,11 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     labelWidth: 50,
                                     width: 150,
                                     enforceMaxLength: true,
-                                    maxLength: 6
+                                    maxLength: 6,
+                                    enableKeyEvents: true,
+                                    listeners: {
+                                        keypress: 'onEnterKeyPress'
+                                    }
                                 },
                                 {
                                     xtype: 'textfield',
@@ -169,7 +177,11 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     width: 180,
                                     enforceMaxLength: true,
                                     maxLength: 13,
-                                    maskRe: /^[0-9]$/
+                                    maskRe: /^[0-9]$/,
+                                    enableKeyEvents: true,
+                                    listeners: {
+                                        keypress: 'onEnterKeyPress'
+                                    }
                                 },
                                 {
                                     xtype: 'textfield',
@@ -178,7 +190,11 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     labelWidth: 90,
                                     width: 300,
                                     enforceMaxLength: true,
-                                    maxLength: 50
+                                    maxLength: 50,
+                                    enableKeyEvents: true,
+                                    listeners: {
+                                        keypress: 'onEnterKeyPress'
+                                    }
                                 }
                             ]
                         }
