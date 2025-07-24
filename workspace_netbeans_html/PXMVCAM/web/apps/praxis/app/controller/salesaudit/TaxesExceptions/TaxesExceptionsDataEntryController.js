@@ -4,6 +4,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
     taxes: [],
     exTaxes: [],
     selectedTickets: [],
+    activeChanges: false,
+    isNewTicket: false,
     afterRender: function () {
         this.loadForm();
     },
@@ -15,8 +17,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
         const tabLoaded = Ext.getCmp(prototype.idDE + '-tabLoaded');
         const taxFilters =  Ext.getCmp(prototype.idDE + '-taxFilters');
         const gridTaxes =  Ext.getCmp(prototype.idDE + '-gridTaxes');
-        const btnUpdate = Ext.getCmp(prototype.idDE + '-btn-update');
-        const btnDelete = Ext.getCmp(prototype.idDE + '-btn-delete');
+//        const btnUpdate = Ext.getCmp(prototype.idDE + '-btn-update');
+//        const btnDelete = Ext.getCmp(prototype.idDE + '-btn-delete');
         const btnExceptTkt = Ext.getCmp(prototype.idDE + '-exceptTkt');
         const btnDeleteTkt = Ext.getCmp(prototype.idDE + '-deleteTkt');
         const controlData = Ext.getCmp(prototype.idDE + '-fsControlData');
@@ -27,23 +29,26 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
             gridTickets.show();
             taxFilters.show();
             gridTaxes.show();
-            btnUpdate.show();
-            btnDelete.show();
+//            btnUpdate.show();
+//            btnDelete.show();
             btnExceptTkt.hide();
             btnDeleteTkt.hide();
             controlData.show();
             me.loadTicketInformation();
+            me.isNewTicket = false;
         }else{
             panelTktFilter.show();
             gridTickets.hide();
             taxFilters.hide();
             gridTaxes.hide();
-            btnUpdate.hide();
-            btnDelete.hide();
+//            btnUpdate.hide();
+//            btnDelete.hide();
             btnExceptTkt.show();
             btnDeleteTkt.show();
             controlData.hide();
+            me.isNewTicket = true;
         }
+        me.loadActiveChangesTaxException();
     },
     loadTicketInformation: async function(){
         const me = this;
@@ -77,6 +82,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
                     data: res.lstRs.at(1)
                 });
                 gridTax.setStore(storeTax);
+                
+                me.activeChanges = res.lstRs[0]?.[0].ACTIVE_CHANGE === 1;
+                me.loadActiveChangesTaxException();
+                
             }
         } catch (e) {
             console.error(e);
@@ -92,6 +101,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
         const gridLoaded = Ext.getCmp(prototype.idDE + '-gridTicketsLoaded');
         let notifier = new AWN();
         let params = form.getValues();
+        const me = this;
+        me.activeChanges = false;
 
         if (params.IN_TICKET === '' && params.IN_SPNR === '') {
             global.Msg({msg: 'Parameters Error'});
@@ -102,7 +113,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
         tabTickets.setLoading(true);
         try {
             const res = await global.callStoreGet('PXSAUDIT', 'SQP05585', params);
-            console.log(res);
             if (res.lstRs.length > 0) {
                 const data = res.lstRs.at(0);
                 const pending = data.filter(x=>x.QTYLOADS === 0);
@@ -115,10 +125,22 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
                     data: loaded
                 });
                 gridLoaded.setStore(storeLoaded);
-                notifier.success('Tickets to Add: ' + pending.length);
-                if (loaded.length > 0) {
-                    notifier.warning('Tickets Loaded: ' + loaded.length);
+//                notifier.success('Tickets to Add: ' + pending.length);
+                
+                if (pending.length > 0 ){
+                    const btnUpdate = Ext.getCmp(prototype.idDE + '-btn-update');
+                    btnUpdate.show();
+                    me.activeChanges = true ;
+                    notifier.success('Tickets added succesfly: ' + pending.length);
                 }
+                if (loaded.length > 0) {
+                    notifier.warning('Tickets are already added: ' + loaded.length);
+                }
+                
+                if ( pending.length === 0 && loaded.length === 0 ){
+                    notifier.alert('Tickets not found');
+                }
+                
                 this.selectedTickets = pending;
             }else{
                 notifier.alert('Tickets not found');
@@ -128,6 +150,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
             notifier.alert('Error on load Tickets');
         } finally {
             tabTickets.setLoading(false);
+            me.loadActiveChangesTaxException();
         }
     },
     onExceptTax: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
@@ -185,7 +208,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
                 data: me.exTaxes
             });
             grid.setStore(store);
-            btnUpdate.show();
+            
+            me.loadActiveChangesTaxException();
+            
+            form.findField('IN_CTAX').reset();
+            form.findField('IN_COMMENT').reset();
         }else{
             global.Msg({msg: 'Invalid Parameters'});
         }
@@ -233,6 +260,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
     onUpdateClick: async function () {
         const me = this;
         let params = me.maintenanceParams(me.view.option);
+        
         let notifier = new AWN();
         me.view.setLoading(true);
         try {
@@ -290,6 +318,39 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
         Ext.getCmp(prototype.idDE + '-taxFilters').hide();
         Ext.getCmp(prototype.idDE + '-gridTaxes').setStore([]);
         Ext.getCmp(prototype.idDE + '-gridTaxes').hide();
+    },
+    loadActiveChangesTaxException:function(){
+        const me = this;
+        const btnUpdate = Ext.getCmp(prototype.idDE + '-btn-update');
+        const btnDelete = Ext.getCmp(prototype.idDE + '-btn-delete');
+        const btnViewLog = Ext.getCmp(prototype.idDE + '-btn-viewTaxesLog');
+        btnUpdate.hide();
+        btnDelete.hide();
+        if (me.isNewTicket){
+            if (me.activeChanges) {
+                btnUpdate.show();
+            }
+            btnViewLog.hidden();
+        }
+        else{
+            if (me.activeChanges) {
+                btnUpdate.show();
+                btnDelete.show();
+            }
+            btnViewLog.show();
+        }
+    },
+    onViewTaxesLog : function(grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
+        console.log( me.selectedTickets[0]);
+        
+        const newWin = Ext.create('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExceptionsLog',{
+            id:prototype.id + '-TaxesExceptionsLog-2',
+            obj: me.selectedTickets[0]
+        });
+        
+        newWin.show();
+        
     }
 });
 

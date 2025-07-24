@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Options', {
                             iconCls: 'prx-icon-filter',
                             tooltip: 'Display filter',
                             listeners: {
-                                click: 'onClickFilterBtn'
+                                click: 'onClickToggleFilterBtn'
                             }
                         },
                         {
@@ -47,7 +47,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Options', {
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options',
                             listeners: {
-                                click: 'onClickClearBtn'
+                                click: 'onClickClearOptionsBtn'
                             }
                         },
                         {
