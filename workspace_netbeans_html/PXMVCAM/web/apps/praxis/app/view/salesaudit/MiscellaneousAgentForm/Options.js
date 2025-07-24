@@ -32,6 +32,15 @@ Ext.define('Ext.Praxis.view.salesaudit.MiscellaneousAgentForm.Options', {
                                 click: 'onClickFilterBtn'
                             }
                         },
+                         {
+                            xtype: 'button',
+                            id: prototype.id + '-btnAdd',
+                            iconCls: 'prx-icon-add',
+                            tooltip: 'New',
+                            listeners: {
+                                click: 'onAddRecord'
+                            }
+                        },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnClear',

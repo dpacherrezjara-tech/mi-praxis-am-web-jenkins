@@ -10,27 +10,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.MiscellaneousAgentForm.Miscellaneou
 
         console.log('onSearchClickBtn');
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
-        console.log('mainPanel', mainPanel, );
         mainPanel.removeAll();
         const filtro1 = Ext.getCmp(prototype.id + '-panelFilters');
-        console.log('fffffffffffff', filtro1);
         let params = filtro1.getForm().getValues();
-        console.log('params', params);
 
-        let newparams = {
-            "IN_A4593CCUST": "139"
-        /*    "IN_A4593KEY1": "",
-            "IN_A4593KEY2": "",
-            "IN_A4593KEY3": "",
-            "IN_A4593DESC1": "",
-            "IN_A4593DESC2": "",
-            "IN_A4593COMEN": "",
-            "IN_A4593STS": ""*/
-        };
 
         const newGrid = Ext.create('Ext.Praxis.view.salesaudit.MiscellaneousAgentForm.Grids.MiscellaneousAgentGrid', {
             id: prototype.id + '-MiscellaneousAgentGrid',
-            searchParams: newparams
+            searchParams: params
         });
 
         mainPanel.add(newGrid);
@@ -48,6 +35,22 @@ Ext.define('Ext.Praxis.controller.salesaudit.MiscellaneousAgentForm.Miscellaneou
     },
     onClickClearBtn: function (obj) {
         Ext.getCmp(prototype.id + '-panelFilters').getForm().reset();
+    },
+
+    onAddRecord: function () {
+        let grid = Ext.getCmp(prototype.id + '-MiscellaneousAgentGrid');
+        console.log('grid',grid)
+        const dataEntry = Ext.create('Ext.Praxis.view.salesaudit.MiscellaneousAgentForm.DataEntrys.DataEntryMiscellaneousAgentForm', {
+            id: prototype.id + '-DataEntryMiscellaneousAgentForm',
+//            searchParams: params,
+            option: 'C',
+            reload: () => {
+                if(grid){
+                    grid.getStore().load();
+                }
+            }
+        });
+        dataEntry.show();
     },
 });
 
