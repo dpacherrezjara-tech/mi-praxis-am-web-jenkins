@@ -100,6 +100,7 @@ public class PaxRejectionsDAO {
                 objRtn.GROSSN = rs01.getDouble("GROSSN");
                 objRtn.ISCN = rs01.getDouble("ISCN");
                 objRtn.TAXN = rs01.getDouble("TAXN");
+                objRtn.VATRM = rs01.getDouble("VATRM");
                 objRtn.QRM = rs01.getLong("QRM");
                 objRtn.QSFIM = rs01.getInt("QSFIM");
                 objRtn.QSOPAUD = rs01.getInt("QSUPAUD");
@@ -175,6 +176,7 @@ public class PaxRejectionsDAO {
                     objRtn.GROSSN = rs01.getDouble("GROSSN");
                     objRtn.ISCN = rs01.getDouble("ISCN");
                     objRtn.TAXN = rs01.getDouble("TAXN");
+                    objRtn.VATRM = rs01.getDouble("VATRM");
                     objRtn.NETO = rs01.getDouble("NETO"); //setRejectAmount
                     objRtn.QRM = rs01.getLong("QRM");
                     /*if (rs01.getLong("NETI") > 0) {
@@ -525,6 +527,7 @@ public class PaxRejectionsDAO {
                 objRtn.QRM = rs01.getInt("QRM");
                 objRtn.QSFIM = rs01.getInt("QSFIM");
                 objRtn.QCORR = rs01.getInt("QCORR");
+                objRtn.VATRM = rs01.getDouble("VATRM");
 
                 objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
                 objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
@@ -560,6 +563,7 @@ public class PaxRejectionsDAO {
                     objRtn.NETI = rs01.getDouble("NETI");
                     objRtn.NETO = rs01.getDouble("NETO");
                     objRtn.QRM = rs01.getLong("QRM");
+                    objRtn.VATRM = rs01.getDouble("VATRM");
                     /*if (rs01.getLong("NETI") > 0) {
                      dblPERC = (rs01.getDouble("NETO") / rs01.getDouble("NETI")) * 100;
                      } else {

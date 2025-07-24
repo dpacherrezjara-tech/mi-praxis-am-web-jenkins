@@ -711,6 +711,21 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                             }
                                         }
                                     }
+                                },
+                                {xtype: 'tbspacer', width: 25},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtCodeErrorVo',
+                                    required: true,
+                                    readOnly: true,
+                                    fieldLabel: '<strong style="color:#000;">Code Error</strong>',
+                                    width: 150,
+                                    labelWidth: 80,
+                                    labelAlign: 'left',
+                                    padding: '1px 5px 0px 5',
+                                    enforceMaxLength: true,
+                                    fieldStyle: 'text-align: center;',
+                                    maxLength: 50
                                 }
                             ]
                         }
