@@ -41,7 +41,7 @@ Ext.define('Ext.Praxis.view.flown.CouponErrorsForm.Info', {
                             id: prototype.id + '-gridData',
                             margin: '15px 0 0 0px',
                             height: 490,
-                            width: 720,
+                            width: 712,
                             hidden: false,
                             columnLines: true,
                             columns: {
@@ -64,7 +64,6 @@ Ext.define('Ext.Praxis.view.flown.CouponErrorsForm.Info', {
                             }
                         },
                         {xtype: 'tbspacer', width: 10, height:20},
-                        {xtype: 'tbspacer', width: 10, height:20}
                     ]
                 },
                 {

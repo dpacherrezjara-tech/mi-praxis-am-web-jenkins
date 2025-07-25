@@ -218,6 +218,14 @@ Ext.define('Ext.Praxis.controller.flown.CouponErrors.CouponErrorsController', {
 
     },
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
+    onUpperValue: function(field, newValue, oldValue){
+        field.setValue(newValue.toUpperCase());
+    },
+    onTextKeypress: function(obj, e, eOpts){
+        if (e.getKey() === e.ENTER){
+            this.onSearchClick(); // O cualquier función que desees ejecutar
+        }
+    },
     getValue: function(id) {
         return Ext.getCmp(prototype.id+'-'+id).getValue();
     },
@@ -229,11 +237,6 @@ Ext.define('Ext.Praxis.controller.flown.CouponErrors.CouponErrorsController', {
     },
     onUpperValue: function(field, newValue, oldValue){
         field.setValue(newValue.toUpperCase());
-    },
-    onTextKeypress: function( obj , e , eOpts){
-        if ( e.getKey() === e.ENTER ){
-            this.imgSearch_clickHandler();
-        }
     },
     pagFirst: function (obj, e) {
         this.getPaggin();

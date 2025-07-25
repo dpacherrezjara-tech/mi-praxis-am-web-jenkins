@@ -29,7 +29,11 @@ Ext.define('Ext.Praxis.view.flown.CouponErrorsForm.Filters', {
                     maxLength: 6,
                     labelWidth: 65,
                     labelAlign: 'left',
-                    width: 150
+                    width: 150,
+                    listeners: {
+                        change: 'onUpperValue',
+                        specialkey: 'onTextKeypress'
+                    }
                 }
             ]
         }
