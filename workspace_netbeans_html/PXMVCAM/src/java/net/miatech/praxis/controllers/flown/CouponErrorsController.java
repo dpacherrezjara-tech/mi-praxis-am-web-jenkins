@@ -329,7 +329,7 @@ public class CouponErrorsController extends BaseController {
 
     @RequestMapping(value = "getXLSX")
     public @ResponseBody void getXLSX(HttpServletRequest request, HttpServletResponse response) {
-        String fileNameDownload = String.format("BPO Flown Coupon Errors - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Flown ST7 Errors - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
 
         try {
             Workbook workbook;
