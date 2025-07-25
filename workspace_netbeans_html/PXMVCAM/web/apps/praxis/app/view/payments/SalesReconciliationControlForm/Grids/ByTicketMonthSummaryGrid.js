@@ -231,7 +231,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         }
                     },
                     {
-                        text: 'CA', dataIndex: 'total_CA', align: 'center', width: 80,
+                        text: 'CASH', dataIndex: 'total_CA', align: 'center', width: 80,
                         statusSummary: '',
                         renderer: function (value, metaData, record) {
                             metaData.style = "text-align:center;background-color:#bde1ff;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
@@ -386,7 +386,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         }
                     },
                     {
-                        text: 'CA', dataIndex: 'total_MATCH_CA', align: 'center', width: 80,
+                        text: 'CASH', dataIndex: 'total_MATCH_CA', align: 'center', width: 80,
                         statusSummary: 'M',
                         renderer: function (value, metaData, record) {
                             metaData.style = "text-align:center;background-color:#d5f4d5;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";
@@ -540,7 +540,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         }
                     },
                     {
-                        text: 'CA', dataIndex: 'total_PENDING_CA', align: 'center', width: 80,
+                        text: 'CASH', dataIndex: 'total_PENDING_CA', align: 'center', width: 80,
                         statusSummary: 'P',
                         renderer: function (value, metaData, record) {
                             metaData.style = "text-align:center;background-color:#ffffcd;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#057ECB;";

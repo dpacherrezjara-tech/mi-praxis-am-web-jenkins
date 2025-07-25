@@ -134,8 +134,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                     ['3', 'Settl. Without Sales'],
                                     ['4', 'Match Partial'],
                                     ['5', 'Match Manual'],
-                                    ['6', 'Match Forced'],
-                                    ['7', 'Match Compensation'],
+//                                    ['6', 'Match Forced'],
+//                                    ['7', 'Match Compensation'],
                                     ['8', 'Match Transactional'],
                                     ['8', 'Match Void'],
                                 ]

@@ -240,8 +240,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                                     ['2', 'Sales Without Settl.'],
                                     ['4', 'Match Partial'],
                                     ['5', 'Match Manual'],
-                                    ['6', 'Match Forced'],
-                                    ['7', 'Match  for Compensation'],
+//                                    ['6', 'Match Forced'],
+//                                    ['7', 'Match  for Compensation'],
                                     ['8', 'Match Transactional'],
                                     ['8', 'Match Void'],
                                 ]

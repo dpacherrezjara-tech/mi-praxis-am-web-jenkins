@@ -349,7 +349,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     name: 'IN_PNR',
                                     maxLength: 6, // Límite máximo de caracteres
                                     maskRe: /[0-9]/, // Expresión regular para permitir solo números
-                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
                                 },
                                 {
                                     xtype: 'textfield',
@@ -389,9 +392,28 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                         specialkey: 'onEnterKeyPress'
                                     }
                                 },
-                                
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Status',
+                                    name: 'IN_STATUS',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['Aprobada', 'Aprobada'],
+                                            ['Rechazada', 'Rechazada']
+                                        ]
+                                    }),
+                                    labelWidth: 50,
+                                    width: 180,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                }
                             ]
-                        },
+                        }
                         
                     ]
                 }

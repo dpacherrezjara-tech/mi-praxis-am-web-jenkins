@@ -257,10 +257,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                             ['3', 'Settl. Without Sales'],
                                             ['4', 'Match Partial'],
                                             ['5', 'Match Manual'],
-                                            ['6', 'Match Forced'],
-                                            ['7', 'Match Compensation'],
+//                                            ['6', 'Match Forced'],
+//                                            ['7', 'Match Compensation'],
                                             ['8', 'Match Transactional'],
-                                            ['8', 'Match Void']
+//                                            ['8', 'Match Void']
                                         ]
                                     }),
                                     labelWidth: 55,
@@ -413,7 +413,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     typeAhead: true,
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
-                                    value: ''
+                                    value: '',
+                                    listeners: {
+                                        select: 'onProcessorSelect'
+                                    }
                                 },
                                 {
                                     xtype: 'combo',
@@ -506,10 +509,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                             ['3', 'Settl. Without Sales'],
                                             ['4', 'Match Partial'],
                                             ['5', 'Match Manual'],
-                                            ['6', 'Match Forced'],
-                                            ['7', 'Match Compensation'],
+//                                            ['6', 'Match Forced'],
+//                                            ['7', 'Match Compensation'],
                                             ['8', 'Match Transactional'],
-                                            ['8', 'Match Void'],
+//                                            ['8', 'Match Void'],
                                         ]
                                     }),
                                     labelWidth: 55,
@@ -526,24 +529,27 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     labelWidth: 80,
                                     width: 150,
                                     name: 'creditcard',
+                                    itemId: 'creditcard1',
                                     maxLength: 6, // Límite máximo de caracteres
                                     maskRe: /[0-9]/, // Expresión regular para permitir solo números
-                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                                 },
                                 {
                                     xtype: 'label',
-                                    text: '*****(*)'
+                                    text: '*****(*)',
+                                    itemId: 'maskLabel'
                                 },
                                 {
                                     xtype: 'textfield',
                                     name: 'creditcard2',
+                                    itemId: 'creditcard2',
                                     width: 50,
                                     maxLength: 4, // Límite máximo de caracteres
                                     maskRe: /[0-9]/, // Expresión regular para permitir solo números
                                     enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
-                                    listeners: {
-                                        specialkey: 'onEnterKeyPress'
-                                    }
+//                                    listeners: {
+                                    specialkey: 'onEnterKeyPress'
+//                                    }
                                 },
                                 {
                                     xtype: 'textfield',
