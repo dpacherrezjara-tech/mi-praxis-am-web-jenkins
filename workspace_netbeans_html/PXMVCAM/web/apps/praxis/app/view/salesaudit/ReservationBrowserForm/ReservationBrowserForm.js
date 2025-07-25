@@ -12,7 +12,8 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.ReservationBrowser
         'Ext.Praxis.view.salesaudit.ReservationBrowserForm.Options',
         'Ext.Praxis.view.salesaudit.ReservationBrowserForm.Filters',
         'Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.PnrsGrid',
-        'Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.TicketsGrid'
+        'Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.TicketsGrid',
+        'Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.CatalogGrid'
     ],
     controller: 'ReservationBrowserController',
     layout: {
