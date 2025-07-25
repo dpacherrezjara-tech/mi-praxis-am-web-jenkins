@@ -26,7 +26,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Cols">
             {
-                text: 'RN', dataIndex: 'rn', width: 40, hidden: true
+                text: 'RN', 
+                xtype: 'rownumberer',
+                dataIndex: 'RN', width: 40 //, hidden: true
             },
             {text: '', width: 80,
                 id: prototype.id + '-det-fechap',
@@ -60,17 +62,17 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
                     {text: 'Flex ID', dataIndex: 'idflex', width: 330,
                         id: prototype.id + '-colIDFlex',
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;background-color:#c0f0af;";
+                            return value;
+                        }
+                    },
+                    {text: 'PRAXIS ID', dataIndex: 'praxisid', width: 330,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;background-color:#c0f0af;text-decoration:underline;cursor:pointer;color:#057ECB";
                             return value;
                         },
                         listeners: {
                             click: 'onClickAccountingDetail'
-                        }
-                    },
-                    {text: 'PRAXIS ID', dataIndex: 'praxisid', width: 330,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "text-align:center;background-color:#c0f0af;text-decoration:underline;";
-                            return value;
                         }
                     },
                     {text: 'Date', dataIndex: 'fcontl', width: 65,
@@ -96,7 +98,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
                 text: 'Credit Card',
                 defaults: {
                     menuDisabled: true,
-                    sortable: false,
                     align: 'center'
                 },
                 columns: [
@@ -121,7 +122,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
                     return value;
                 }
             },
-            {text: 'Currency', dataIndex: 'scurrency', width: 70,
+            {text: 'Currency', dataIndex: 'scurrency', width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     return value;
