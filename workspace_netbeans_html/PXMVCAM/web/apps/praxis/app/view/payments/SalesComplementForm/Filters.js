@@ -348,7 +348,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     width: 120,
                                     name: 'IN_PNR',
                                     maxLength: 6, // Límite máximo de caracteres
-                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    maskRe: /[a-zA-Z0-9]/,
                                     enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'

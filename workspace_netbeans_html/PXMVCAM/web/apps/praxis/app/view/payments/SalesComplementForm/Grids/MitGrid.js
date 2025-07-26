@@ -72,7 +72,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
                 text: 'Credit Card',
                 defaults: {
                     menuDisabled: true,
-                    sortable: false,
+                    sortable: true,
                     align: 'center'
                 },
                 columns: [
