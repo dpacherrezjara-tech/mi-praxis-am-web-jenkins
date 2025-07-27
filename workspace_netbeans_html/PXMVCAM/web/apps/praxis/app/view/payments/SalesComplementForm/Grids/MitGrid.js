@@ -31,19 +31,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
             {
                 text: 'Processor', dataIndex: 'A4775PROCE', width: 85
             },
-            
             {
-//                text: 'Processing',
-//                defaults: {
-//                    menuDisabled: true,
-//                    sortable: false,
-//                    align: 'center'
-//                },
-//                columns: [
-//                    {
-//                        text: 'Date', dataIndex: 'A4775PRDA', width: 90
-//                    }
-//                ]
                 text: 'Processing<br>Date', dataIndex: 'A4775PRDA', width: 90
             },
             {
@@ -83,13 +71,13 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
                         text: 'Auth.', dataIndex: 'A4775NUMAT', width: 80
                     },
                      {
-                        text: 'Type', dataIndex: 'A4775PRICD', width: 120
+                        text: 'Type', dataIndex: 'A4775PRICD', width: 100
                     },
                     {
-                        text: 'Payment Type', dataIndex: 'A4775PLANP', width: 120
+                        text: 'Payment Type', dataIndex: 'A4775PLANP', width: 100
                     },
                     {
-                        text: 'Issuer', dataIndex: 'A4775EMISO', width: 85
+                        text: 'Issuer', dataIndex: 'A4775EMISO', width: 100
                     },
                 ]
             },
@@ -106,16 +94,16 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
                 }
             },
             {
-                text: 'Type Transaction', dataIndex: 'A4775TRXTP', width: 150
+                text: 'Type<br>Transaction', dataIndex: 'A4775TRXTP', width: 100
             },
             {
-                text: 'Number Operation', dataIndex: 'A4775NROOP', width: 120
+                text: 'Number<br>Operation', dataIndex: 'A4775NROOP', width: 100
             },
             {
-                text: 'Status', dataIndex: 'A4775STATU', width: 85
+                text: 'Status', dataIndex: 'A4775STATU', width: 100
             },
             {
-                text: 'Status Transaction', dataIndex: 'A4775STVAL', width: 150
+                text: 'Status<br>Transaction', dataIndex: 'A4775STVAL', width: 100
             }
 
             //</editor-fold>

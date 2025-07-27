@@ -8,8 +8,17 @@ import net.miatech.praxis.payment.entities.A4331;
  */
 public class A4331BPOFilter extends A4331{
     private String DESC_PROC,DESC_ERROR,DESC_ADJU,SMERCHIDF,DESC_PMERCHID,DESC_SMERCHID,BPOCOMENT,ADJUCOMENT,AUTOCOMENT;
-    private Double F_TAX,F_TGROSAMOUN,F_TGROSAMPAY;
+    private Double F_TAX,F_TGROSAMOUN,F_TGROSAMPAY,DIFFERENCE;
 
+    
+    public Double getDIFFERENCE() {
+        return DIFFERENCE;
+    }
+
+    public void setDIFFERENCE(Double DIFFERENCE) {
+        this.DIFFERENCE = DIFFERENCE;
+    }
+    
     public Double getF_TGROSAMPAY() {
         return F_TGROSAMPAY;
     }

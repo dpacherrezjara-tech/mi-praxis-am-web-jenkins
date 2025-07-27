@@ -393,6 +393,42 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     }
                                 },
                                 {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Amount',
+                                    labelWidth: 60,
+                                    width: 150,
+                                    name: 'IN_AMOUNT',
+                                    maxLength: 15,
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9\.\-]/, // Máscara para números y punto decimal
+                                    regex: /^[-]?\d+(\.\d{1,2})?$/, // Validación para permitir hasta 2 decimales
+                                    regexText: 'Invalid Amount', // Mensaje de error personalizado
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Type Transaction',
+                                    name: 'IN_TYPE_TRANSACTION',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['VENTA', 'Sale'],
+                                            ['CANCELACION', 'Cancelation'],
+                                            ['DEVOLUCION', 'Refund']
+                                        ]
+                                    }),
+                                    labelWidth: 100,
+                                    width: 250,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
                                     xtype: 'combobox',
                                     fieldLabel: 'Status',
                                     name: 'IN_STATUS',
