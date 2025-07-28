@@ -104,6 +104,12 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
             },
             {
                 text: 'Status<br>Transaction', dataIndex: 'A4775STVAL', width: 100
+            },
+            {
+                text: 'User', dataIndex: 'A4775USUAR', width: 100
+            },
+            {
+                text: 'User<br>Transaction', dataIndex: 'A4775USUAT', width: 100
             }
 
             //</editor-fold>
