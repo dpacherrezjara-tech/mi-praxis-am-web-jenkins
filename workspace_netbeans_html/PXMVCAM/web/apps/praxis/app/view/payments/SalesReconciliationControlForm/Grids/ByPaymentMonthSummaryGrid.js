@@ -226,6 +226,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         ]
                     }
                 ]
+            },
+            {
+                text: 'Total<br>By Ticket', dataIndex: 'total_BY_TICKET', align: 'center', width: 100,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                        return Ext.util.Format.number(value, '0,000');
+                    },
+                summaryType: 'sum',
+                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                    metaData.style = "text-align:center;font-weight:bold;";
+                   return Ext.util.Format.number(value, '0,000');
+                }
             }
         ]
     },

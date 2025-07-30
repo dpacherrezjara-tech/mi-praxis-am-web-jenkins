@@ -98,7 +98,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
                 text: 'Credit Card',
                 defaults: {
                     menuDisabled: true,
-                    align: 'center'
+                    align: 'center',
+                    sortable: true
                 },
                 columns: [
                     {text: 'Number', dataIndex: 'scardn', width: 150,

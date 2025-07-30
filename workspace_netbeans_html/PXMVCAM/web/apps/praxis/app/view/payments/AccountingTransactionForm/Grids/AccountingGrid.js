@@ -208,7 +208,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     return value;
                 }
             },
-            {text: 'Praxis ID', dataIndex: 'a4183idcon', width: 270, autoSizeColumn: true,
+            {text: 'Praxis ID', dataIndex: 'a4183idcon', width: 280, autoSizeColumn: true,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style += "text-align:center;";
                     return value;

@@ -577,9 +577,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
             },
             {
                 text: 'Total<br>By Payment', dataIndex: 'total_BY_PAYMENT', align: 'center', width: 100,
-//                listeners: {
-//                    click: 'onClickDetail'
-//                },
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                        return Ext.util.Format.number(value, '0,000');
+                    },
                 summaryType: 'sum',
                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                     metaData.style = "text-align:center;font-weight:bold;";
@@ -620,6 +620,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         const views = panel.items.items;
                         views.at(-1).destroy();
                         views.at(-1).show();
+                        summaryIsMonth = true;
                     }
                 }
             }

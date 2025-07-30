@@ -813,7 +813,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 fields: ['code', 'name'],
                                                 data: [
                                                     ['M', 'Multi-Payment'],
-                                                    ['C', 'Complement']
+                                                    ['5', 'Match Manual']  // --> ['C', 'Complement'] cambio de Match Complement a Match Manual
                                                 ]
                                             }),
                                             labelWidth: 55,
