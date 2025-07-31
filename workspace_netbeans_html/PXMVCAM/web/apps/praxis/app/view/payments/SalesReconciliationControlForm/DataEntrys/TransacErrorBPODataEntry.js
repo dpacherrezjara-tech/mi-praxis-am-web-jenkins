@@ -2201,31 +2201,35 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             width: 100
                                         },
                                         {
-                                            boxLabel: 'Do Not Proceed',
+                                            boxLabel: 'Reverse',
                                             name: 'proceedStatus',
                                             inputValue: '2',
                                             width: 130
                                         }
                                     ],
                                     listeners: {
-                                        change: function (group, newValue) {
-                                            const btn = Ext.getCmp(prototype.idDE + '-btn-update-status');
-                                            const selected = newValue.proceedStatus;
-                                            btn.setDisabled(!selected); // solo se habilita si hay valor
-                                        }
+                                       change: 'changeProcces',
+//                                       scope: this
                                     }
+
                                 },
                                 {
                                     xtype: 'button',
                                     text: 'Update',
                                     id: prototype.idDE + '-btn-update-status',
                                     iconCls: 'prx-icon-update',
+                                    disabled: true,
                                     hidden: true,
                                     disabled: true, // inicia deshabilitado
                                     width: 80,
                                     height: 30,
                                     listeners: {
                                         click: 'onUpdateClickStatus'
+//                                        click: function () {
+//                                            console.log('CLICK DETECTADO');
+//                                            this.onUpdateClickStatus();
+//                                        },
+//                                        scope: this
                                     }
                                 }
                             ]
