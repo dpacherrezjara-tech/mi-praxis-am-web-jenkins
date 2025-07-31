@@ -21,6 +21,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             const form = Ext.getCmp(prototype.idDE + '-informationForm').getForm();
             me.limpiaObjetoPX(data.response);
             me.bean = data.response;
+            me.dataInfo = data.response;
             form.reset();
             form.setValues(me.bean);
             me.changePerspective();
@@ -77,6 +78,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         updateBalance.hide();
         scanner.show();
 
+        const btnUpdateStatus = Ext.getCmp(prototype.idDE + '-btn-update-status');
+        const statusProceed = Ext.getCmp(prototype.idDE + '-proceedRadioGroup');
+
         //transacciones match
         if (match.includes(status)) {
 
@@ -106,7 +110,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 //                Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocoment);
 //                commentTransaction.show();
 //            }
-        //transacciones stand by    
+            //transacciones stand by    
         } else if (status === '0') {
             bpo.setDisabled(false);
             blocked.setDisabled(false);
@@ -138,6 +142,29 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocoment);
             commentTransaction.show();
         }
+
+//        console.log('ppppppppppp',me.bean)
+        if (me.bean.stval === "4") {
+            console.log('mostrar');
+            btnUpdateStatus.show();
+            statusProceed.show();
+
+//            const proceedVal = me.bean.stprocede;
+            console.log('me.dataInfo', me.dataInfo);
+            const proceedVal = me.dataInfo.stprocede;
+
+            if (proceedVal === "1") {
+                btnReverse.hide();
+            }
+            if (proceedVal === "1" || proceedVal === "2") {
+                const radioGroup = Ext.getCmp(prototype.idDE + '-proceedRadioGroup-inner');
+                if (radioGroup) {
+                    radioGroup.setValue({proceedStatus: proceedVal});
+                }
+            }
+        }
+
+
 //            console.log('me.bean.autocoment',me.bean.autocoment)
         me.changeTrnxView(me.bean.transtype);
         //me.setUserInformation(me.bean);
@@ -193,25 +220,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             revStandBy.show();
             hideStandBy.hide();
             standByBpo.show();
-            
-            if ((this.bean.cerror === '18' || this.bean.cerror === '19'  ) && this.bean.stval === '0') {
+
+            if ((this.bean.cerror === '18' || this.bean.cerror === '19') && this.bean.stval === '0') {
                 txtBpo.setReadOnly(true);
                 adju.setValue(true);
                 adju.setReadOnly(true);
             }
             // stand by autocoment type SB
-            else if ( this.bean.bpocoment.length > 0 && this.bean.stval === '0' ){
+            else if (this.bean.bpocoment.length > 0 && this.bean.stval === '0') {
                 txtBpo.setReadOnly(true);
                 adju.setValue(false);
                 adju.hide();
                 addStandBy.hide();
-            }
-            else {
+            } else {
                 txtBpo.setReadOnly(false);
                 adju.setValue(false);
                 adju.setReadOnly(false);
             }
-            
+
         } else {
             adju.setReadOnly(false);
             addStandBy.hide();
@@ -926,6 +952,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             if (res.ok) {
                 const data = await res.json();
                 console.log(data);
+
+                me.dataDesglose = data.response;
+
                 const storeDesglose = Ext.create('Ext.data.Store', {
                     data: data.response
                 });
@@ -941,6 +970,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             const res = await fetch(`${me.url}/loadErrorTransactionBPODesglose?${new URLSearchParams(params)}`);
             if (res.ok) {
                 const data = await res.json();
+                me.dataDesglose = data.response;
                 const storeDesglose = Ext.create('Ext.data.Store', {
                     data: data.response
                 });
@@ -1262,8 +1292,92 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             return total + item[key];
         }, 0);
         return sum;
-    }
-    //</editor-fold>
+    },
+    onClickMultipaymnentConciliation: function () {
+        const me = this;
+        console.log('onMatchForm <******** ');
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MatchMultiPaymentConciliationDataEntry', {
+            id: prototype.id + '-MatchMultiPaymentConciliationDataEntry'
+//            obj: obj
+        });
+        dataEntry.show();
+    },
+
+    //</editor-fold>z/
+
+
+    //<editor-fold defaultstate="collapsed" desc="Proceed">
+    onUpdateClickStatus: async function () {
+        const me = this;
+//        let params = me.formatUpdateParams();
+        me.view.setLoading(true);
+
+        const radioGroup = Ext.getCmp(prototype.idDE + '-proceedRadioGroup').down('radiogroup');
+        const selectedStatus = radioGroup.getValue()?.proceedStatus;
+        console.log('estado', selectedStatus);
+
+//        const dataS = me.dataDesglose[0]
+        const dataS = me.dataDesglose.find(item => item.exists_BALANCE === '1');
+
+
+        console.log('me.dataDesglose', me.dataDesglose)
+
+
+
+        try {
+
+
+            const params = {
+                IN_CCUST: dataS.ccust,
+                IN_CCIA: dataS.ccia,
+                IN_FORMA: dataS.forma,
+                IN_SERIE: dataS.serie,
+                IN_SEQ: dataS.seq,
+                IN_CORRL: dataS.corrl,
+                IN_TDOCVTA: dataS.tdoc,
+                IN_SEQROLL: dataS.corrl,
+                IN_TDOC: dataS.tdoc,
+                IN_PRDA: dataS.prda,
+                IN_AREFNBR: dataS.arefnbr,
+                IN_STPROCEDE: selectedStatus
+            };
+
+            console.log('paraam', params)
+
+            console.log('Params para guardar:', params);
+
+            let res;
+            if (selectedStatus === '1') {
+                const res = await global.callStorePost('PRAXISMP', 'SQP05650', params);
+                const {lstVals} = res.data;
+                new AWN().success(lstVals.OUT_MSG);
+//                me.getData(me.view);
+                me.dataInfo.stprocede = selectedStatus;
+            } else if (selectedStatus === '2') {
+                Ext.Msg.show({
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure reverse ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            console.log('reversa')
+//                            this.onReverseTransaction();
+                        }
+                    }
+                });
+            }
+
+        } catch (e) {
+            console.error(e);
+            new AWN().alert('Error');
+        } finally {
+            me.view.setLoading(false);
+//            me.getData(me.view);
+//            this.view.close();
+        }
+    },
+
 });
-
-
