@@ -61,7 +61,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         }
         const actualdate = Ext.Date.format(new Date(), 'Ymd');
         //console.log(actualdate,' ',procdate,' ',actualdate>procdate);
-
+        
         if (match.some(x => status === x)) {
             if (status === '6' && fvoid === 'V' && procesador.trim() === '') {
                 
@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         } else {
             Ext.getCmp(prototype.idDE2 + '-liquiInfo').hide();
             Ext.getCmp(prototype.idDE2 + '-addAdm').show();
-            if (adm === '') {
+            if (adm.trim() === '') {
                 Ext.getCmp(prototype.idDE2 + '-panelOptions').show();
                 Ext.getCmp(prototype.idDE2 + '-panelADM').hide();
                 Ext.getCmp(prototype.idDE2 + '-hideADM').show();

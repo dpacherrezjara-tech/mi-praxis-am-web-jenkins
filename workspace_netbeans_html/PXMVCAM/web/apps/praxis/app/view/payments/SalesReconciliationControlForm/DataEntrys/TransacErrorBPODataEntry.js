@@ -2158,7 +2158,86 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             ]
                         }
                     ]
+                },
+                {
+                    xtype: 'panel',
+                    width: '100%',
+                    layout: 'hbox',
+                    align: 'middle',
+                    margin: '10',
+                    border: false,
+                    defaults: {
+                        xtype: 'textfield',
+                        fieldStyle: 'text-align: center',
+                        padding: '10',
+                        hiddenLabel: true,
+                        labelAlign: 'right',
+                        hidden: true,
+                        align: 'middle'
+                    },
+                    items: [
+                        {
+                            xtype: 'fieldset',
+                            title: 'Proceed Option',
+                            id: prototype.idDE + '-proceedRadioGroup',
+                            hidden: true,
+                            layout: {
+                                type: 'hbox',
+                                align: 'middle'
+                            },
+                            style: {
+                                background: 'transparent'
+                            },
+                            items: [
+                                {
+                                    xtype: 'radiogroup',
+                                    id: prototype.idDE + '-proceedRadioGroup-inner',
+                                    columns: 2,
+                                    margin: '0 10 0 0',
+                                    items: [
+                                        {
+                                            boxLabel: 'Proceed',
+                                            name: 'proceedStatus',
+                                            inputValue: '1',
+                                            width: 100
+                                        },
+                                        {
+                                            boxLabel: 'Reverse',
+                                            name: 'proceedStatus',
+                                            inputValue: '2',
+                                            width: 130
+                                        }
+                                    ],
+                                    listeners: {
+                                       change: 'changeProcces',
+//                                       scope: this
+                                    }
+
+                                },
+                                {
+                                    xtype: 'button',
+                                    text: 'Update',
+                                    id: prototype.idDE + '-btn-update-status',
+                                    iconCls: 'prx-icon-update',
+                                    disabled: true,
+                                    hidden: true,
+                                    disabled: true, // inicia deshabilitado
+                                    width: 80,
+                                    height: 30,
+                                    listeners: {
+                                        click: 'onUpdateClickStatus'
+//                                        click: function () {
+//                                            console.log('CLICK DETECTADO');
+//                                            this.onUpdateClickStatus();
+//                                        },
+//                                        scope: this
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 }
+
                 //</editor-fold>
             ]
         }
@@ -2177,6 +2256,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                 scale: 'medium'
             },
             items: [
+//                 {
+//                    text: 'Multi-payment',
+//                    id: prototype.idDE + '-btn-form',
+//                    iconCls: 'prx-icon-update',
+//                    listeners: {
+//                        click: 'onClickMultipaymnentConciliation'
+//                    }
+//                },
                 {
                     text: 'Update',
                     id: prototype.idDE + '-btn-update',
