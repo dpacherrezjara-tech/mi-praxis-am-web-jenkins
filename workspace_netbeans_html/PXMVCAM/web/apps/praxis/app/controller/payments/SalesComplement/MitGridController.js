@@ -36,10 +36,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.MitGridController', {
         let data = res.map(x=>({
            'Processor': x.A4775PROCE ,
            'Proccesing Date': x.A4775PRDA,
-           'Merchand ID': x.A4775MERID,
-           'Merchand PG': x.A4775MERPG,
-           'Transaction Date': x.A4775FECTR,
-           'Transaction Time': x.A4775HORTR,
+           'Merchand':x.A4775MERID,
+           'Iata':x.A4775MERPG,
+           'Transaction Date':x.A4775FECTR,
+           'Transaction Time':x.A4775HORTR,
            'Credit Card Number': x.A4775NUMTJ,
            'Credit Card Auth': x.A4775NUMAT,
            'Credit Card Type': x.A4775PRICD,
@@ -49,9 +49,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.MitGridController', {
            'Currency': x.A4775MONED,
            'Amount': x.A4775IMPOR,
            'Type Transaction': x.A4775TRXTP,
-           'MIT ID': x.A4775SQNR,
+           'Number Operation': x.A4775NROOP,
            'Status': x.A4775STATU,
            'Status Transaction': x.A4775STVAL,
+           'User':x.A4775USUAR,
+           'User Transaction':x.A4775USUAT
            
         }));
         await global.writeExcelFromJson(data,'Mit Information'); // formatea la data para usarlo en la función de descarga

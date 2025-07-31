@@ -449,8 +449,37 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     value: ''
                                 }
                             ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '1 1 5 1',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Operation Number',
+                                    labelWidth: 130,
+                                    width: 230,
+                                    name: 'IN_NROOP',
+                                    maxLength: 10,
+                                    maskRe: /[a-zA-Z0-9]/,
+                                    enforceMaxLength: true,
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                }
+                            ]
                         }
-                        
+
                     ]
                 }
                 //</editor-fold>
