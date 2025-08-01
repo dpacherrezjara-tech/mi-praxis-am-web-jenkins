@@ -41,7 +41,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const match = ["1", "4", "5", "6", "7", "8", "9", "M", "C", "D", "E"];
         const matchComment = ["4", "M", "C", , "D", "E"];
         const status = me.bean.stval;
-        const { autocomment }  = me.bean;
+        const {autocomment} = me.bean;
 //        const {tgrosamoun, svfops} = me.bean;
 //        let diff = tgrosamoun - svfops;
 //        if (me.bean.transtype === 'CHBK') {
@@ -74,8 +74,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         balanceScan.hide();
         updateBalance.hide();
         scanner.show();
-        const btnUpdateStatus = Ext.getCmp(prototype.idDE + '-btn-update-status');
-        const statusProceed = Ext.getCmp(prototype.idDE + '-proceedRadioGroup');
+
         //transacciones match
         if (match.includes(status)) {
 
@@ -132,13 +131,27 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         }
 
         // Comentarios automaticos
-        if (matchComment.includes(status) || autocomment.length > 1 ) {
+        if (matchComment.includes(status) || autocomment.length > 1) {
             Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocoment);
             commentTransaction.show();
         }
 
+        this.changeIniProces();
+
+        me.changeTrnxView(me.bean.transtype);
+        //me.setUserInformation(me.bean);
+    },
+
+    changeIniProces: function () {
+        console.log('change Ini');
+
+        const me = this;
+        console.log('me', me);
+        const btnUpdateStatus = Ext.getCmp(prototype.idDE + '-btn-update-status');
+        const statusProceed = Ext.getCmp(prototype.idDE + '-proceedRadioGroup');
 
         if (me.bean.stval === "4") {
+
             console.log('mostrar');
             btnUpdateStatus.show();
             statusProceed.show();
@@ -147,39 +160,37 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             console.log('me.dataInfo', me.dataInfo);
 
             const radioGroup = Ext.getCmp(prototype.idDE + '-proceedRadioGroup-inner');
+
+
             if (radioGroup) {
+                this.changeProcces(radioGroup, {proceedStatus: '1'});
                 radioGroup.setValue({proceedStatus: proceedVal});
+                this.changeProcces(radioGroup, {proceedStatus: proceedVal});
+
             }
 
-//            if (proceedVal === "0") {
-//                        const selected = radioGroup.getValue();
-//                        console.log('selected',selected)
-//                        radioGroup.fireEvent('change', radioGroup, selected);
-//                    }
-            // Deshabilitar si vino con 1
             if (proceedVal === "1") {
                 btnUpdateStatus.setDisabled(true);
                 radioGroup.setDisabled(true);
-                // Marcar que ya fue procesado y no se puede modificar
                 me.__proceedLocked = true;
-            } else {
-                // Si vino con 0 o 2, dejar deshabilitado pero permitir cambios
-                btnUpdateStatus.setDisabled(true);
+            } else if (proceedVal === "0") {
                 radioGroup.setDisabled(false);
-                btnUpdateStatus.setDisabled(true);
+                btnUpdateStatus.setDisabled(false); // Activar el botón por defecto
+                me.__proceedLocked = false;
+            } else {
+                // Valor "2" u otro
+                radioGroup.setDisabled(false);
+                btnUpdateStatus.setDisabled(false); // Activar
                 me.__proceedLocked = false;
             }
         }
-        me.changeTrnxView(me.bean.transtype);
-        //me.setUserInformation(me.bean);
     },
 
     changeProcces: function (group, newValue) {
         const btn = Ext.getCmp(prototype.idDE + '-btn-update-status');
-        const selected = newValue.proceedStatus;
-
-        // Si seleccionó 1 o 2, activar el botón
-        btn.setDisabled(!(selected === "1" || selected === "2"));
+//        const selected = newValue.proceedStatus;
+        const selected = String(newValue.proceedStatus);
+        console.log('changeProcces: selected=', selected);
     },
     changeTrnxView: function (trnx) {
         const me = this;
@@ -553,6 +564,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                                 width: 300,
                                 timeout: 10000 // 10 segundos
                             });
+
+                            if (me.bean.stval === "4") {
+                                const proceedPanel = Ext.getCmp(prototype.idDE + '-proceedRadioGroup');
+                                if (proceedPanel) {
+                                    proceedPanel.hide();
+                                }
+                            }
+
                         } else {
                             Ext.MessageBox.show({
                                 title: 'Error',
@@ -1302,12 +1321,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         me.view.setLoading(true);
         const radioGroup = Ext.getCmp(prototype.idDE + '-proceedRadioGroup').down('radiogroup');
         const selectedStatus = radioGroup.getValue()?.proceedStatus;
-//        console.log('estado', selectedStatus);
-//        const dataS = me.dataDesglose[0]
+
+        if (!selectedStatus || selectedStatus === '0') {
+            me.view.setLoading(false);
+            Ext.Msg.alert('Warning', 'You must select an option to proceed.');
+            return;
+        }
         const dataS = me.dataDesglose.find(item => item.exists_BALANCE === '1');
-//        console.log('me.dataDesglose', me.dataDesglose)
-
-
 
         try {
 
@@ -1333,16 +1353,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             if (selectedStatus === '1') {
                 const res = await global.callStorePost('PRAXISMP', 'SQP05650', params);
                 const {lstVals} = res.data;
-//                new AWN().success(lstVals.OUT_MSG);
                 global.Msg({msg: lstVals.OUT_MSG});
                 me.getData(me.view);
                 me.dataInfo.stprocede = selectedStatus;
             } else if (selectedStatus === '2') {
                 this.onReverseTransaction();
-                const proceedPanel = Ext.getCmp(prototype.idDE + '-proceedRadioGroup');
-                if (proceedPanel) {
-                    proceedPanel.hide();
-                }
+//                const proceedPanel = Ext.getCmp(prototype.idDE + '-proceedRadioGroup');
+//                if (proceedPanel) {
+//                    proceedPanel.hide();
+//                }
             }
 
         } catch (e) {
