@@ -2198,17 +2198,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             boxLabel: 'Proceed',
                                             name: 'proceedStatus',
                                             inputValue: '1',
-                                            width: 100
+                                            width: 100,
                                         },
                                         {
                                             boxLabel: 'Reverse',
                                             name: 'proceedStatus',
                                             inputValue: '2',
-                                            width: 130
+                                            width: 130,
                                         }
                                     ],
                                     listeners: {
-                                       change: 'changeProcces',
+                                        change: 'changeProcces',
 //                                       scope: this
                                     }
 
@@ -2218,18 +2218,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     text: 'Update',
                                     id: prototype.idDE + '-btn-update-status',
                                     iconCls: 'prx-icon-update',
-                                    disabled: true,
                                     hidden: true,
-                                    disabled: true, // inicia deshabilitado
                                     width: 80,
                                     height: 30,
                                     listeners: {
                                         click: 'onUpdateClickStatus'
-//                                        click: function () {
-//                                            console.log('CLICK DETECTADO');
-//                                            this.onUpdateClickStatus();
-//                                        },
-//                                        scope: this
                                     }
                                 }
                             ]
