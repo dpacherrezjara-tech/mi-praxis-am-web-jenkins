@@ -133,7 +133,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 
         // Comentarios automaticos
         if (matchComment.includes(status) || autocomment.length > 1 ) {
-            Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocoment);
+            Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocomment);
             commentTransaction.show();
         }
 

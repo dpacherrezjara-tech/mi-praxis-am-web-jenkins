@@ -8,7 +8,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
     title: 'Accounting Detail',
     titleAlign: 'center',
     minHeight: 210,
+    maxHeight: 630,
     width: '100%',
+    layout: 'fit',
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
