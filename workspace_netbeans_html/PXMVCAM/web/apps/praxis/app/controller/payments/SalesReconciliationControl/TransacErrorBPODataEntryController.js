@@ -150,6 +150,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 radioGroup.setValue({proceedStatus: proceedVal});
             }
 
+//            if (proceedVal === "0") {
+//                        const selected = radioGroup.getValue();
+//                        console.log('selected',selected)
+//                        radioGroup.fireEvent('change', radioGroup, selected);
+//                    }
             // Deshabilitar si vino con 1
             if (proceedVal === "1") {
                 btnUpdateStatus.setDisabled(true);
@@ -1332,20 +1337,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 me.getData(me.view);
                 me.dataInfo.stprocede = selectedStatus;
             } else if (selectedStatus === '2') {
-                Ext.Msg.show({
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure reverse?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-//                            console.log('reversa')
-                            this.onReverseTransaction();
-                        }
-                    }
-                });
+                this.onReverseTransaction();
+                const proceedPanel = Ext.getCmp(prototype.idDE + '-proceedRadioGroup');
+                if (proceedPanel) {
+                    proceedPanel.hide();
+                }
             }
 
         } catch (e) {
