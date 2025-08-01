@@ -2218,17 +2218,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     text: 'Update',
                                     id: prototype.idDE + '-btn-update-status',
                                     iconCls: 'prx-icon-update',
-                                    disabled: false,
                                     hidden: true,
                                     width: 80,
                                     height: 30,
                                     listeners: {
                                         click: 'onUpdateClickStatus'
-//                                        click: function () {
-//                                            console.log('CLICK DETECTADO');
-//                                            this.onUpdateClickStatus();
-//                                        },
-//                                        scope: this
                                     }
                                 }
                             ]
