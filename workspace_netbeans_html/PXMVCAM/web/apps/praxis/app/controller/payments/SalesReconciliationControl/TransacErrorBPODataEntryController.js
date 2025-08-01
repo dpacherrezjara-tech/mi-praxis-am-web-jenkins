@@ -41,12 +41,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const match = ["1", "4", "5", "6", "7", "8", "9", "M", "C", "D", "E"];
         const matchComment = ["4", "M", "C", , "D", "E"];
         const status = me.bean.stval;
-        const {tgrosamoun, svfops} = me.bean;
-        let diff = tgrosamoun - svfops;
-        if (me.bean.transtype === 'CHBK') {
-            diff = tgrosamoun + svfops;
-        }
-        Ext.getCmp(prototype.idDE + '-txtDifference').setValue(diff);
+        const { autocomment }  = me.bean;
+//        const {tgrosamoun, svfops} = me.bean;
+//        let diff = tgrosamoun - svfops;
+//        if (me.bean.transtype === 'CHBK') {
+//            diff = tgrosamoun + svfops;
+//        }
+//        Ext.getCmp(prototype.idDE + '-txtDifference').setValue(diff);
         const bpo = Ext.getCmp(prototype.idDE + '-tabBPO');
         const blocked = Ext.getCmp(prototype.idDE + '-tabBlocked');
         const desglose = Ext.getCmp(prototype.idDE + '-tabDesglose');
@@ -131,12 +132,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         }
 
         // Comentarios automaticos
-        if (matchComment.includes(status)) {
+        if (matchComment.includes(status) || autocomment.length > 1 ) {
             Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocoment);
             commentTransaction.show();
         }
 
-//        console.log('ppppppppppp',me.bean)
+
         if (me.bean.stval === "4") {
             console.log('mostrar');
             btnUpdateStatus.show();
