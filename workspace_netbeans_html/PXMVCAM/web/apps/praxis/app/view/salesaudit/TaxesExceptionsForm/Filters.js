@@ -3,7 +3,8 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
     alias: 'widget.' + prototype.id + '-filters',
     border: true,
     bodyStyle: 'background-color: #E3EAF9;',
-    padding: '2px 0px 1px 0px',
+//    padding: '2px 0px 1px 0px',
+    padding: '3px',
     layout: 'vbox',
     items: [
         {
@@ -35,21 +36,22 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
 
                     defaults: {
                         xtype: 'panel',
-                        margin: '2 2 2 2',
+                        margin: '2px',
                         border: false,
                         width: '100%',
                         layout: 'hbox',
-                        padding: 3,
+                        padding: 5,
                         bodyStyle: 'background: transparent',
                         defaults: {
                             fieldStyle: 'text-align: center;',
                             hiddenLabel: false,
-                            labelAlign: 'right'
+                            labelAlign: 'left',
+                            margin: '5 10 0 5'
                         }
                     },
                     items: [
                         {
-                            items: [
+                            items: [    
                                 {
                                     xtype: 'textfield',
                                     name: 'IN_CCUST',
@@ -57,12 +59,31 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     hidden: true
                                 },
                                 {
+                                    xtype: 'combobox',
+                                    name: 'IN_TYPE_DATE',
+                                    fieldLabel: 'Date',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['FECR', 'Creation Date'],
+                                            ['SDATE', 'Issue date']
+                                        ]
+                                    }),
+                                    labelWidth: 30,
+                                    width: 150,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: 'FECR'
+                                },
+                                {
                                     xtype: 'datefield',
                                     fieldLabel: 'From',
                                     name: 'IN_DATEF',
                                     format: 'Ymd',
-                                    labelWidth: 50,
-                                    width: 150,
+                                    labelWidth: 30,
+                                    width: 130,
                                     value: new Date(new Date().getFullYear(), 0, 1)
                                 },
                                 {
@@ -70,7 +91,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     fieldLabel: 'To',
                                     name: 'IN_DATET',
                                     format: 'Ymd',
-                                    labelWidth: 30,
+                                    labelWidth: 20,
                                     width: 130,
                                     value: new Date()
                                 },
@@ -86,8 +107,8 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                             ['EXCH', 'EXCH']
                                         ]
                                     }),
-                                    labelWidth: 80,
-                                    width: 180,
+                                    labelWidth: 70,
+                                    width: 170,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -99,7 +120,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     id: prototype.id + '-cmbPaises',
                                     name: 'IN_PAIS',
                                     fieldLabel: 'Country',
-                                    labelWidth: 70,
+                                    labelWidth: 50,
                                     width: 250,
                                     displayField: 'NAME',
                                     valueField: 'CODE',
@@ -108,7 +129,6 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     allowBlank: true,
                                     caseSensitive: false,
                                     autoSelect: true,
-                                    labelAlign: 'right',
                                     typeAhead: true,
                                     forceSelection: true,
                                     selectOnFocus: true,
@@ -121,8 +141,8 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     xtype: 'textfield',
                                     name: 'IN_CIATA',
                                     fieldLabel: 'IATA',
-                                    labelWidth: 60,
-                                    width: 160,
+                                    labelWidth: 30,
+                                    width: 130,
                                     enforceMaxLength: true,
                                     maxLength: 9,
                                     maskRe: /^[0-9]$/,
@@ -131,7 +151,6 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                         keypress: 'onEnterKeyPress'
                                     }
                                 },
-
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Type Load',
@@ -144,14 +163,25 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                         ]
                                     }),
                                     name: 'IN_TIPOC',
-                                    labelWidth: 80,
-                                    width: 200,
+                                    labelWidth: 60,
+                                    width: 160,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
+                                },
+                                {
+                                    xtype: 'checkboxfield',
+                                    name: 'pagination',
+                                    boxLabel: 'Enable Pagination',
+                                    inputValue: true,
+                                    uncheckedValue: false,
+                                    checked: true,
+                                    labelWidth: 100,
+                                    width: 200
                                 }
+
                             ]
                         },
                         {
@@ -160,7 +190,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     xtype: 'textfield',
                                     name: 'IN_SPNR',
                                     fieldLabel: 'PNR',
-                                    labelWidth: 50,
+                                    labelWidth: 30,
                                     width: 150,
                                     enforceMaxLength: true,
                                     maxLength: 6,
@@ -173,8 +203,8 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     xtype: 'textfield',
                                     name: 'IN_TICKET',
                                     fieldLabel: 'Ticket',
-                                    labelWidth: 60,
-                                    width: 180,
+                                    labelWidth: 40,
+                                    width: 140,
                                     enforceMaxLength: true,
                                     maxLength: 13,
                                     maskRe: /^[0-9]$/,
@@ -187,8 +217,8 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     xtype: 'textfield',
                                     name: 'IN_PAX',
                                     fieldLabel: 'Pax Name',
-                                    labelWidth: 90,
-                                    width: 300,
+                                    labelWidth: 60,
+                                    width: 260,
                                     enforceMaxLength: true,
                                     maxLength: 50,
                                     enableKeyEvents: true,
