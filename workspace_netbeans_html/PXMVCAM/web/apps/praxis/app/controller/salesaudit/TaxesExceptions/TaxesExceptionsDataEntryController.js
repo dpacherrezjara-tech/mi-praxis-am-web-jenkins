@@ -132,6 +132,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
                     btnUpdate.show();
                     me.activeChanges = true ;
                     notifier.success('Tickets added succesfly: ' + pending.length);
+                    
+                    // ===>> Disparar manualmente onExceptTax con la primera fila
+                    const firstRecord = storePending.getAt(0);
+                    const view = gridPending.getView();
+                    const rowEl = view.getRow(0);
+                    me.onExceptTax(gridPending, null, 0, null, null, firstRecord, rowEl, null);
+
                 }
                 if (loaded.length > 0) {
                     notifier.warning('Tickets are already added: ' + loaded.length);
@@ -175,6 +182,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
         } else {
             taxName.setValue('Tax Not Found');
             taxName.setFieldStyle('text-align:center;background:#e75a5a;');
+        }
+    },
+    onEnterKeyPressComment: function (field, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onAddTax();
         }
     },
     onAddTax: function () {
@@ -241,7 +253,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
 
         if (me.exTaxes.length === 0) {
             gridTax.hide();
-            btnUpdate.hide();
+//            btnUpdate.hide();
         }
     },
     onChangeFilter: function (btn) {
@@ -257,8 +269,37 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
         }
         form.reset();
     },
-    onUpdateClick: async function () {
+    onUpdateClick: async function (btn) {
         const me = this;
+        //validar si existe un code tax escrito sin agregar 
+        const form = Ext.getCmp(prototype.idDE + '-taxFilters').getForm();
+        if (form.isValid()) {
+
+            let params = form.getValues();
+            if (params.IN_TAXNAME !== 'Tax Not Found') {
+                Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'There is a Tax Code not added, do you want to add it?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            this.onAddTax();
+                        }
+                    }
+                });
+                return ;
+            }
+        }
+        
+        if ( me.exTaxes.length === 0 ) {
+            Ext.Msg.alert('Warning', 'You must add at least one tax code.');
+            return;
+        }
         let params = me.maintenanceParams(me.view.option);
         
         let notifier = new AWN();
@@ -330,7 +371,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsData
             if (me.activeChanges) {
                 btnUpdate.show();
             }
-            btnViewLog.hidden();
+//            btnViewLog.hidden();
         }
         else{
             if (me.activeChanges) {
