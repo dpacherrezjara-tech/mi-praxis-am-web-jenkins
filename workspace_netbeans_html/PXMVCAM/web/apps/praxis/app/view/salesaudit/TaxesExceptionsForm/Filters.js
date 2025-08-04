@@ -151,7 +151,6 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                         keypress: 'onEnterKeyPress'
                                     }
                                 },
-
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Type Load',
@@ -171,7 +170,18 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
+                                },
+                                {
+                                    xtype: 'checkboxfield',
+                                    name: 'pagination',
+                                    boxLabel: 'Enable Pagination',
+                                    inputValue: true,
+                                    uncheckedValue: false,
+                                    checked: true,
+                                    labelWidth: 100,
+                                    width: 200
                                 }
+
                             ]
                         },
                         {

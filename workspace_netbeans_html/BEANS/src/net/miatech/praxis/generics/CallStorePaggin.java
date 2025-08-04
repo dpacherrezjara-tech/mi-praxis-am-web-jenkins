@@ -38,7 +38,16 @@ public class CallStorePaggin {
         if(this.params.containsKey("excel")){
             this.IO_PAGROW = -1;
             this.IO_PAGNUM = 1;
-        }else{
+        }
+        else if ( this.params.containsKey("pagination") ) {
+            String pagination = this.params.get("pagination").toString().toLowerCase() ;
+            if ( ! Boolean.parseBoolean(pagination) ) {
+                // Desactivar paginacion
+                this.IO_PAGROW = -1;
+                this.IO_PAGNUM = 1;
+            }
+        }
+        else{
             this.IO_PAGROW = 20;
             this.IO_PAGNUM = (start / this.IO_PAGROW) + 1;
         }

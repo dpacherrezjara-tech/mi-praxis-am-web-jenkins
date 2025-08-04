@@ -18,6 +18,8 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Grids.TaxesExceptions
             border: false,
             width: '100%',
             minHeight: 150,
+            maxHeight: 570,
+            scrollable: true,
             id: prototype.id + '-gridExceptionTickets',
             viewConfig: {
                 stripeRows: true,
