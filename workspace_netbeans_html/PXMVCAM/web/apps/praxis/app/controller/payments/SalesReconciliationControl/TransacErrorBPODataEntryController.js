@@ -2,6 +2,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     extend: 'Ext.app.ViewController',
     alias: 'controller.TransacErrorBPODataEntryController',
     url: CONTEXTPATH + '/SalesReconciliationBPO',
+    height: 800,
     bean: {},
     init: function (view) {
     },
@@ -131,8 +132,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         }
 
         // Comentarios automaticos
-        if (matchComment.includes(status) || autocomment.length > 1 ) {
-            Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(autocomment);
+        if (matchComment.includes(status) || autocomment.length > 1) {
+            Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocomment);
             commentTransaction.show();
         }
 
@@ -143,24 +144,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     },
 
     changeIniProces: function () {
-        console.log('change Ini');
+//        console.log('change Ini');
 
         const me = this;
-        console.log('me', me);
+//        console.log('me', me);
         const btnUpdateStatus = Ext.getCmp(prototype.idDE + '-btn-update-status');
         const statusProceed = Ext.getCmp(prototype.idDE + '-proceedRadioGroup');
 
+        const btnMultiPayment = Ext.getCmp(prototype.idDE + '-btn-multi-pay');
+
+//        btnMultiPayment.show();
+
+
         if (me.bean.stval === "4") {
 
-            console.log('mostrar');
+//            console.log('mostrar');
+
+            btnMultiPayment.show();
             btnUpdateStatus.show();
             statusProceed.show();
             const proceedVal = me.bean.stprocede;
-            console.log('proceedVal', proceedVal);
-            console.log('me.dataInfo', me.dataInfo);
+//            console.log('proceedVal', proceedVal);
+//            console.log('me.dataInfo', me.dataInfo);
 
             const radioGroup = Ext.getCmp(prototype.idDE + '-proceedRadioGroup-inner');
-
 
             if (radioGroup) {
                 this.changeProcces(radioGroup, {proceedStatus: '1'});
@@ -1304,9 +1311,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     onClickMultipaymnentConciliation: function () {
         const me = this;
         console.log('onMatchForm <******** ');
+//        console.log('me.dataInfo', me.dataInfo);
+//        console.log('me.dataDesglose', me.dataDesglose);
         const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MatchMultiPaymentConciliationDataEntry', {
-            id: prototype.id + '-MatchMultiPaymentConciliationDataEntry'
-//            obj: obj
+            id: prototype.id + '-MatchMultiPaymentConciliationDataEntry',
+            info: me.dataInfo,
+            desglose: me.dataDesglose
         });
         dataEntry.show();
     },
