@@ -60,9 +60,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;background-color:#C6E5B1;";
                     const opts = {
-                        'A': 'Match OC/Camepa',
+//                        'A': 'Match OC/Camepa',
                         'C': 'Match Complement',
-                        'D': 'Match Balance',
+//                        'D': 'Match Balance',
                         'E': 'Duplicate Payment',
                         'M': 'Match Multi-Payment',
                         '0': 'Stand By',
@@ -72,7 +72,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         '4': 'Match Partial',
                         '5': 'Match Manual',
 //                        '6': 'Match Forced',
-                        '7': 'Match CompenForcedsation',
+//                        '7': 'Match Compensation',
                         '8': 'Match Transactional',
                         '9': 'Match Void'
                     };

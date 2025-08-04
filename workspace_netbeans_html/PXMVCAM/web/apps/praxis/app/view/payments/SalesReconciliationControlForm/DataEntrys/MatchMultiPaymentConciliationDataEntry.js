@@ -200,9 +200,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                 {text: 'Status', dataIndex: 'stval', width: 180,
                                     renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         const opts = {
-                                            'A': 'Match OC/Camepa',
+//                                            'A': 'Match OC/Camepa',
                                             'C': 'Match Complement',
-                                            'D': 'Match Balance',
+//                                            'D': 'Match Balance',
                                             'E': 'Duplicate Payment',
                                             'M': 'Match Multi-Payment',
                                             '0': 'Stand By',
@@ -363,9 +363,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                 {text: 'Status', dataIndex: 'stval', width: 110,
                                     renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         const opts = {
-                                            'A': 'Match OC/Camepa',
+//                                            'A': 'Match OC/Camepa',
                                             'C': 'Match Complement',
-                                            'D': 'Match Balance',
+//                                            'D': 'Match Balance',
                                             'E': 'Duplicate Payment',
                                             'M': 'Match Multi-Payment',
                                             '0': 'Stand By',
