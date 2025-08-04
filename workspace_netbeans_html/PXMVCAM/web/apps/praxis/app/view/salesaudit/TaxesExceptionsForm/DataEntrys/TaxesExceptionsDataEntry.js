@@ -339,7 +339,11 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                     maxLength: 80,
                     labelWidth: 70,
                     fieldStyle: 'text-align:left;',
-                    allowBlank: false
+                    allowBlank: false,
+                    enableKeyEvents: true,
+                    listeners: {
+                        click: 'onEnterKeyPressComment'
+                    }
                 },
 
                 {

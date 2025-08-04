@@ -110,6 +110,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
                        'Ticket':x.CCIA + x.FORMA + x.SERIE,
                        'SEQ':x.SEQ,
                        'TAX EXCEPTIONS':x.TAX_EXCEPTIONS,
+                       'COMMENT EXCEPTIONS':x.COMMENT_EXCEPTIONS,
                        'PNR':x.SPNR,
                        'Pax Name':x.PAXNAME,
                        'Itinerary':x.RUTABOL,
