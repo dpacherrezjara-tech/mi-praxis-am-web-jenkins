@@ -200,7 +200,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                         'A': 'Match OC/Camepa',
                                         'C': 'Match Complement',
                                         'D': 'Match Balance',
-                                        'E': 'Match Duplicate Pay.',
+                                        'E': 'Duplicate Payment',
                                         'M': 'Match Multi-Payment',
                                         '0': 'Stand By',
                                         '1': 'Match',
