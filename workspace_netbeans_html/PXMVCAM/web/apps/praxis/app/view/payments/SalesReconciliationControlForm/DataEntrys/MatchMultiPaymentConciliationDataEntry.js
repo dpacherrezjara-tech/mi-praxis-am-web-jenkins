@@ -1,3 +1,5 @@
+prototype.idMP = prototype.id + '-MatchMultiPaymentConciliationDataEntry';
+
 Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MatchMultiPaymentConciliationDataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.MatchMultiPaymentConciliationDataEntry',
@@ -6,11 +8,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
     ],
     title: 'Multi-payment Conciliation',
     header: true,
-    width: 1600,
+    width: 1800,
     height: 700,
     resizable: true,
     layout: 'fit',
     modal: true,
+    controller: 'MatchMultiPaymentConciliationDataEntryController',
     border: false,
     scrollable: true,
     bodyStyle: 'background-color: white !important;',
@@ -132,160 +135,315 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
         ]
     },
     items: [
-    {
-        xtype: 'container',
-        layout: {
-            type: 'hbox',
-            align: 'stretch'
-        },
-        padding: 10,
-        style: 'background: white',
-        items: [
-            {
-                xtype: 'container',
-                layout: {
-                    type: 'vbox',
-                    align: 'stretch'
-                },
-                flex: 1,
-                margin: '0 10 0 0',
-                items: [
-                    {
-                        xtype: 'grid',
-                        title: 'Liquidation',
-                        flex: 1,
-                        style: 'background: white',
-                        columns: [
-                            { text: 'Amount', dataIndex: 'paydate', flex: 1 },
-                            { text: 'RefNumber', dataIndex: 'paydate', flex: 1 },
-                            { text: 'Currency', dataIndex: 'paydate', flex: 1 }
-                        ]
-                    },
-                    {
-                        xtype: 'container',
-                        layout: {
-                            type: 'hbox',
-                            pack: 'end'
-                        },
-                        items: [
-                            {
-                                xtype: 'displayfield',
-                                fieldLabel: 'Total Liquidation',
-                                labelWidth: 100,
-                                itemId: 'liquidationTotal',
-                                width: 200,
-                                value: '0.00',
-                                margin: '10 0 0 0',
-                                style: 'text-align: right'
-                            }
-                        ]
-                    }
-                ]
+        {
+            xtype: 'container',
+            layout: {
+                type: 'hbox',
+                align: 'stretch'
             },
-            {
-                xtype: 'container',
-                layout: {
-                    type: 'vbox',
-                    align: 'stretch'
-                },
-                flex: 1,
-                margin: '0 0 0 10',
-                items: [
-                    {
-                        xtype: 'grid',
-                        title: 'Tickets',
-                        flex: 1,
-                        style: 'background: white',
-                        columns: [
-                            { text: 'Ticket', dataIndex: 'paydate', flex: 1 },
-                            { text: 'Amount', dataIndex: 'paydate', flex: 1 },
-                            { text: 'Currency', dataIndex: 'paydate', flex: 1 }
-                        ]
+            padding: 10,
+            style: 'background: white',
+
+            items: [
+                {
+                    xtype: 'container',
+                    layout: {
+                        type: 'vbox',
+                        align: 'stretch'
                     },
-                    {
-                        xtype: 'container',
-                        layout: {
-                            type: 'hbox',
-                            pack: 'end'
+                    flex: 1,
+                    margin: '0 10 0 0',
+                    items: [
+                        {
+                            xtype: 'grid',
+                            title: 'Liquidation',
+                            id: prototype.idMP + '-grid-liquidation',
+                            flex: 1,
+                            style: 'background: white',
+                            columns: [
+//                                {text: 'Amount', dataIndex: 'svfops', flex: 1},
+                                {text: 'Ref. Number', dataIndex: 'arefnbr', width: 150,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Ticket', dataIndex: 'ticket', width: 110,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'PNR', dataIndex: 'spnr', width: 110,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Card<br>Number', dataIndex: 'scardn', width: 120,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 110,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Status', dataIndex: 'stval', width: 180,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        const opts = {
+                                            'A': 'Match OC/Camepa',
+                                            'C': 'Match Complement',
+                                            'D': 'Match Balance',
+                                            'E': 'Duplicate Payment',
+                                            'M': 'Match Multi-Payment',
+                                            '0': 'Stand By',
+                                            '1': 'Match',
+                                            '2': 'Sales Without Settl.',
+                                            '3': 'Settl. Without Sales',
+                                            '4': 'Match Partial',
+                                            '5': 'Match Manual',
+                                            '8': 'Match Transactional',
+                                            '9': 'Match Void'
+                                        };
+
+                                        const result = opts[value] || value;
+                                        metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
+                                        return result;
+                                    }},
+                                {text: 'Currency', dataIndex: 'scurrency', width: 100,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Doc. Type', dataIndex: 'transtype', width: 90,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Trans.<br>Amount', dataIndex: 'tgrosamoun', width: 110,
+                                    renderer: function (value, metaData, record) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return Ext.util.Format.number(value, '0,000.00');
+                                    }},
+                                {text: 'Sale<br>Amount', dataIndex: 'svfops', width: 110,
+                                    renderer: function (value, metaData, record) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return Ext.util.Format.number(value, '0,000.00');
+                                    }},
+                                {text: 'Diff.<br>Amount', dataIndex: 'difference', width: 110,
+                                    renderer: function (value, metaData, record) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return Ext.util.Format.number(value, '0,000.00');
+                                    }},
+                                {text: 'Exist', dataIndex: 'exist', width: 110,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {
+//                                    sortable: false,
+                                    xtype: 'actioncolumn',
+                                    width: 60,
+                                    text: 'Clear',
+                                    locked: true,
+                                    align: 'center',
+                                    items: [
+                                        {
+                                            iconCls: 'prx-icon-clear',
+                                            tooltip: 'Open Detail',
+                                            handler: 'onClickDelete',
+                                            getClass: function (v, meta, record) {
+                                                // Esto oculta visualmente el ícono si es 'yes'
+                                                return record.get('exist') === 'yes' ? 'x-hide-display' : 'prx-icon-clear';
+                                            }
+                                        }
+                                    ]
+                                },
+                            ],
                         },
-                        items: [
-                            {
-                                xtype: 'displayfield',
-                                fieldLabel: 'Total Tickets',
-                                labelWidth: 100,
-                                itemId: 'liquidationTotal2',
-                                width: 200,
-                                value: '0.00',
-                                margin: '10 0 0 0',
-                                style: 'text-align: right'
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    }
-],
+                        {
+                            xtype: 'container',
+                            layout: {
+                                type: 'hbox',
+                                pack: 'end'
+                            },
+                            items: [
+                                {
+                                    xtype: 'displayfield',
+                                    fieldLabel: 'Total Liquidation',
+                                    labelWidth: 100,
+                                    itemId: 'liquidationTotal',
+                                    width: 200,
+                                    value: '0.00',
+                                    margin: '10 0 0 0',
+                                    style: 'text-align: right'
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    xtype: 'container',
+                    layout: {
+                        type: 'vbox',
+                        align: 'stretch'
+                    },
+                    flex: 1,
+                    margin: '0 0 0 10',
+                    items: [
+                        {
+                            xtype: 'grid',
+                            title: 'Tickets',
+                            flex: 1,
+                            id: prototype.idMP + '-grid-ticket',
+                            style: 'background: white',
+                            columns: [
+//                                {text: 'Amount', dataIndex: 'svfops', flex: 1},
+                                {text: 'Ref. Number', dataIndex: 'arefnbr', width: 150,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Ticket', dataIndex: 'ticket', width: 110,
+                                    renderer: function (value, metaData, record) {
+                                        const ccia = record.get('ccia') || '';
+                                        const form = record.get('forma') || '';
+                                        const serie = record.get('serie') || '';
 
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
 
+                                        return `${ccia}${form}${serie}`;
+                                    }},
+                                {text: 'PNR', dataIndex: 'spnr', width: 110,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Card<br>Number', dataIndex: 'scardn', width: 120,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 110,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Status', dataIndex: 'stval', width: 110,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        const opts = {
+                                            'A': 'Match OC/Camepa',
+                                            'C': 'Match Complement',
+                                            'D': 'Match Balance',
+                                            'E': 'Duplicate Payment',
+                                            'M': 'Match Multi-Payment',
+                                            '0': 'Stand By',
+                                            '1': 'Match',
+                                            '2': 'Sales Without Settl.',
+                                            '3': 'Settl. Without Sales',
+                                            '4': 'Match Partial',
+                                            '5': 'Match Manual',
+                                            '8': 'Match Transactional',
+                                            '9': 'Match Void'
+                                        };
 
-//    items: [
-//        {
-//            xtype: 'container',
-//            layout: {
-//                type: 'hbox',
-//                align: 'stretch'
-//            },
-//            padding: 10,
-//            style: 'background: white',
-//            items: [
-//                {
-//                    xtype: 'grid',
-//                    title: 'Liquidation',
-//                    flex: 1,
-//                    margin: '0 10 0 0',
-////                    bodyStyle: 'background: white',
-//                    style: 'background: white',
-//                    columns: [
-//                        {text: 'Amount', dataIndex: 'paydate', flex: 1},
-//                        {text: 'RefNumber', dataIndex: 'paydate', flex: 1},
-//                        {text: 'Currency', dataIndex: 'paydate', flex: 1}
-//                    ]
-//                },
-//                {
-//                    xtype: 'displayfield',
-//                    fieldLabel: 'Total Liquidation',
-//                    labelWidth: 120,
-//                    itemId: 'liquidationTotal',
-//                    width: 250,
-//                    value: '0.00'
-//                },
-//                {
-//                    xtype: 'grid',
-//                    title: 'Tickets',
-//                    flex: 1,
-//                    margin: '0 0 0 10',
-////                    bodyStyle: 'background: transparent',
-//                    style: 'background: white',
-//                    columns: [
-//                        {text: 'Ticket', dataIndex: 'paydate', flex: 1},
-//                        {text: 'Amount', dataIndex: 'paydate', flex: 1},
-//                        {text: 'Currency', dataIndex: 'paydate', flex: 1}
-//                    ],
-//                    
-//                },
-//                {
-//                    xtype: 'displayfield',
-//                    fieldLabel: 'Total Ticket',
-//                    labelWidth: 120,
-//                    itemId: 'liquidationTotal2',
-//                    width: 250,
-//                    value: '0.00'
-//                },
-//            ]
-//        }
-//       
-//    ],
+                                        const result = opts[value] || value;
+                                        metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
+                                        return result;
+                                    }},
+                                {text: 'Currency', dataIndex: 'scurrency', width: 100,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Doc. Type', dataIndex: 'transtype', width: 90,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Trans.<br>Amount', dataIndex: 'tgrosamoun', width: 110,
+                                    renderer: function (value, metaData, record) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return Ext.util.Format.number(value, '0,000.00');
+                                    }},
+                                {text: 'Sale<br>Amount', dataIndex: 'svfops', width: 110,
+                                    renderer: function (value, metaData, record) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return Ext.util.Format.number(value, '0,000.00');
+                                    }},
+                                {text: 'Diff.<br>Amount', dataIndex: 'difference', width: 110,
+                                    renderer: function (value, metaData, record) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return Ext.util.Format.number(value, '0,000.00');
+                                    }},
+                                {text: 'Exist', dataIndex: 'exist', width: 110, },
+                            ]
+                        },
+                        {
+                            xtype: 'container',
+                            layout: {
+                                type: 'hbox',
+                                pack: 'end'
+                            },
+                            items: [
+                                {
+                                    xtype: 'displayfield',
+                                    fieldLabel: 'Total Tickets',
+                                    labelWidth: 100,
+                                    itemId: 'liquidationTotal2',
+                                    width: 200,
+                                    value: '0.00',
+                                    margin: '10 0 0 0',
+                                    style: 'text-align: right'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
 
     dockedItems: [
         {
