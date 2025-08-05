@@ -520,7 +520,9 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ["", "All"], ["Y", "Suggested"], ["A", "Accepted"], ["N", "Rejected"], ["R", "Reaudited"], ["D", "IATA Disabled"],
-                                            ["C", "Unregistered Client"], ["F", "Match Forced"], ["T", "ADM Direct"], ["J", "Justified"], ["Z", "Authorized"]
+                                            ["C", "Unregistered Client"], 
+                                            ["F", "Match Forced"], 
+                                            ["T", "ADM Direct"], ["J", "Justified"], ["Z", "Authorized"]
                                         ]
                                     }),
                                     queryMode: 'local',

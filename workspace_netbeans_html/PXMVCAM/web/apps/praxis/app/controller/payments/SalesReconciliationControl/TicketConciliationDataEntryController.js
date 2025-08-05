@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         me.view.unmask();
     },
     changePerspective: function (status, adm, fvoid, procesador, procdate) {
-        const match = ['0', '1', '4', '5', '6', '7', '8', '9','A','M','C'];
+        const match = ['0', '1', '4', '5', '6', '7', '8', '9', 'A', 'M', 'C'];
         if (fvoid === 'V') {
             Ext.getCmp(prototype.idDE2 + '-panelVoid').show();
         } else {
@@ -61,16 +61,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         }
         const actualdate = Ext.Date.format(new Date(), 'Ymd');
         //console.log(actualdate,' ',procdate,' ',actualdate>procdate);
-
+        
         if (match.some(x => status === x)) {
             if (status === '6' && fvoid === 'V' && procesador.trim() === '') {
+                
                 Ext.getCmp(prototype.idDE2 + '-liquiInfo').hide();
                 Ext.getCmp(prototype.idDE2 + '-panelOptions').show();
                 Ext.getCmp(prototype.idDE2 + '-revForcedMatchVoid').show();
                 Ext.getCmp(prototype.idDE2 + '-forcedMatchVoid').hide();
                 Ext.getCmp(prototype.idDE2 + '-addAdm').hide();
             } else {
-                Ext.getCmp(prototype.idDE2 + '-liquiInfo').show();
+                if(status!=='A'){
+                    Ext.getCmp(prototype.idDE2 + '-liquiInfo').show();
+                }else{
+                    Ext.getCmp(prototype.idDE2 + '-liquiInfo').hide();
+                }
                 Ext.getCmp(prototype.idDE2 + '-panelOptions').hide();
             }
             this.setDesglose();
@@ -81,7 +86,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         } else {
             Ext.getCmp(prototype.idDE2 + '-liquiInfo').hide();
             Ext.getCmp(prototype.idDE2 + '-addAdm').show();
-            if (adm === '') {
+            if (adm.trim() === '') {
                 Ext.getCmp(prototype.idDE2 + '-panelOptions').show();
                 Ext.getCmp(prototype.idDE2 + '-panelADM').hide();
                 Ext.getCmp(prototype.idDE2 + '-hideADM').show();
@@ -113,21 +118,27 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
     },
     setDesglose: function () {
         const desglose = this.bean.desglose;
+        const gridDesglose = Ext.getCmp(prototype.idDE2 + '-gridDesglose');
         const {A4496CIA, A4496FORMA, A4496SERIE, A4496SEQ} = this.bean;
         let ticket = A4496CIA + A4496FORMA + A4496SERIE + A4496SEQ;
         //marca ticket activo
-        desglose.forEach(x => {
-            let ticketDesglose = x.CCIA + x.FORMA + x.SERIE + x.SEQ;
-            if (ticketDesglose === ticket) {
-                x.main = true;
-            }
-        });
+        if (desglose) {
+            desglose.forEach(x => {
+                let ticketDesglose = x.CCIA + x.FORMA + x.SERIE + x.SEQ;
+                if (ticketDesglose === ticket) {
+                    x.main = true;
+                }
+            });
+            gridDesglose.view.mask('Loading...');
+            gridDesglose.setStore(Ext.create('Ext.data.Store', {
+                data: desglose
+            }));
+        } else {
+            gridDesglose.hide();
+        }
         console.log('Desglose Liq. : ', desglose);
-        const gridDesglose = Ext.getCmp(prototype.idDE2 + '-gridDesglose');
-        gridDesglose.view.mask('Loading...');
-        gridDesglose.setStore(Ext.create('Ext.data.Store', {
-            data: desglose
-        }));
+
+
         gridDesglose.view.unmask();
     },
     //<editor-fold defaultstate="collapsed" desc="Handlers">
@@ -376,7 +387,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Format Parameters">
-    
+
     formatAdmParams: function () {
         const obj = this.bean;
         const observ = Ext.getCmp(prototype.idDE2 + '-ADM-BPOCOMEN').getValue();

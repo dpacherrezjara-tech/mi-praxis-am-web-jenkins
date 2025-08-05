@@ -65,6 +65,7 @@ import net.miatech.praxis.payment.filter.SQP05311Filter;
 import net.miatech.praxis.payment.filter.SQP05312Filter;
 import net.miatech.praxis.payment.filter.SQP05313Filter;
 import net.miatech.praxis.payment.filter.SQP05319Filter;
+import net.miatech.praxis.payment.filter.SQP05646Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.ResponseUtils;
 import net.miatech.praxis.utils.SabreWebService;
@@ -484,6 +485,18 @@ public class SalesReconciliationBPOController {
         System.out.println("---------------SalesReconciliationBPO:loadByTicketSummary-------------");
         try {
             SQP05088Filter filter = logic.loadSQP05088Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            return new ResponseEntity<>(filter, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @RequestMapping(value = "/v2/loadByTicketSummary")
+    public ResponseEntity<?> v2LoadByTicketSummary(@ModelAttribute SQP05646Filter params) {
+        System.out.println("--------------- v2 SalesReconciliationBPO:loadByTicketSummary -------------");
+        try {
+            SQP05646Filter filter = logic.LoadSQP05646Filter(params);
             System.out.println("Total: " + filter.getResponse().size());
             return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
@@ -1096,20 +1109,38 @@ public class SalesReconciliationBPOController {
                 valor = "Settl. without Sales";
                 break;
             case "4":
-                valor = "Match Difference";
+                valor = "Match Partial";
                 break;
             case "5":
                 valor = "Match Manual";
                 break;
             case "6":
-                valor = "Forced Match";
+                valor = "Match Forced";
                 break;
             case "7":
-                valor = "Compensation Match";
+                valor = "Match Compensation";
                 break;
             case "8":
-                valor = "Pending RFND";
+                valor = "Match Transaccional";
                 break;
+            case "9":
+                valor = "Match Void";
+                break;
+            case "A":
+                valor = "Match OC/Camepa";
+                break;
+            case "C":
+                valor = "Match Complement";
+                break;
+            case "D":
+                valor = "Match Balance";
+                break;
+            case "E":
+                valor = "Duplicate Payment";
+                break;
+            case "M":
+                valor = "Match Multi-Payment";
+                break;    
         }
         return valor;
     }

@@ -192,6 +192,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         const me = this;
         const grid = Ext.getCmp(prototype.idMSI + '-gridVoidTracking');
         grid.setLoading(true);
+        
         const formFilter = Ext.getCmp(prototype.idMSI + '-filtersManual').getForm().getValues();
         const store = grid.getStore();
         let obj = Object.assign({}, me.view.obj);
@@ -199,6 +200,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         let trncs = [];
         let procesador = obj.proctype.trim();
         let scardn = new String();
+        
         if (procesador === 'BANORTE00') {
             scardn = `${obj.scardn.slice(0, 6)}%${obj.scardn.slice(-2)}%`;
         } else {
@@ -211,13 +213,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
             IN_SCARDN: scardn,
             ...formFilter
         };
-
+        
+//        grid.getStore().removeAll();
 
         try {
             const res = await global.callStoreGet('PRAXISMP', 'SQP05259', params);
             trncs = res.lstRs.at(0);
             trncs = trncs.filter(x => {
-                let index = store.find('AREFNBR', x.arefnbr);
+                let index = store.find('AREFNBR', x.AREFNBR);
                 return index === -1;
             });
             store.add(trncs);
@@ -249,40 +252,44 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         const grid = Ext.getCmp(prototype.idMSI + '-gridVoidTracking');
         grid.getView().mask('Loading...');
         const data = grid.getStore().getData().items;
-        if (data.length === 0) {
-            global.Msg({msg: 'No data in Scanner'});
-            grid.getView().unmask();
-            return;
-        }
-        const existeAuth = data.some(x =>
-            x.data.sauthoc.trim() === obj.IN_SAUTHOC);
-        const existePnr = data.some(x =>
-            x.data.spnr.trim() === obj.IN_SPNR);
-        let foundRegis = {};
-        if (existeAuth) {
-            foundRegis = grid.getStore().queryBy(function (registro) {
-                return registro.get('sauthoc').trim() === obj.IN_SAUTHOC;
-            });
-            grid.getStore().removeAll();
-            foundRegis.items.forEach(x => {
-                grid.getStore().add(x);
-            });
-        } else if (existePnr) {
-            foundRegis = grid.getStore().queryBy(function (registro) {
-                return registro.get('spnr').trim() === obj.IN_SPNR;
-            });
-            grid.getStore().removeAll();
-            foundRegis.items.forEach(x => {
-                grid.getStore().add(x);
-            });
-        }
         try {
-            let bean = grid.getStore().findRecord('arefnbr', this.view.obj.arefnbr);
+            if (data.length === 0) {
+                global.Msg({msg: 'No data in Scanner'});
+                grid.getView().unmask();
+                return;
+            }
+            const existeAuth = data.some(x =>
+                x.data.SAUTHOC.trim() === obj.IN_SAUTHOC);
+            const existePnr = data.some(x =>
+                x.data.SPNR.trim() === obj.IN_SPNR);
+            let foundRegis = {};
+            if (existeAuth) {
+                foundRegis = grid.getStore().queryBy(function (registro) {
+                    return registro.get('SAUTHOC').trim() === obj.IN_SAUTHOC;
+                });
+                grid.getStore().removeAll();
+                foundRegis.items.forEach(x => {
+                    grid.getStore().add(x);
+                });
+            } else if (existePnr) {
+                foundRegis = grid.getStore().queryBy(function (registro) {
+                    return registro.get('SPNR').trim() === obj.IN_SPNR;
+                });
+                grid.getStore().removeAll();
+                foundRegis.items.forEach(x => {
+                    grid.getStore().add(x);
+                });
+            }
+
+            let bean = grid.getStore().findRecord('AREFNBR', this.view.obj.arefnbr); 
             grid.getSelectionModel().select(bean, true);
+            
         } catch (err) {
             console.error('Obj no encontrado: ', err);
         }
-        grid.getView().unmask();
+        finally {
+            grid.getView().unmask();
+        }
     },
     reloadGrid: function () {
         this.loadMainTransaction();
@@ -499,14 +506,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
             };
             
             const res = await global.callStorePost('PRAXISMP','SQP05625',params);
-            
-            global.Msg({msg:res.lstVals.OUT_MSG});
+            console.log(res);
+            global.Msg({
+                msg:res.data.lstVals.OUT_MSG
+            });
             me.view.setLoading(false);
             me.reloadMainGrid();
             me.reloadMainTransaction();
             me.view.close();
         } catch (e) {
-            global.Msg({msg:'Error on reconcile'});
+            global.Msg({msg:'System Error'});
             me.view.setLoading(false);
         }
     },

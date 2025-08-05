@@ -280,15 +280,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             listeners: {
                                                 change: function (field, newValue) {
                                                     const opts = {
+//                                                        'A': 'Match OC/Camepa',
+                                                        'C': 'Match Complement',
+//                                                        'D': 'Match Balance',
+                                                        'E': 'Match Duplicate Pay.',
+                                                        'M': 'Match Multi-Payment',
                                                         '0': 'Stand By',
                                                         '1': 'Match',
-                                                        '2': 'Sales Without Sett.',
+                                                        '2': 'Sales Without Settl.',
                                                         '3': 'Settl. Without Sales',
-                                                        '4': 'Match Parcial',
+                                                        '4': 'Match Partial',
                                                         '5': 'Match Manual',
-                                                        '6': 'Match Forzado',
-                                                        '7': 'Match por Compensacion',
-                                                        '8': 'Match Transaccional',
+//                                                        '6': 'Match Forced',
+//                                                        '7': 'Match Compensation',
+                                                        '8': 'Match Transactional',
                                                         '9': 'Match Void'
                                                     };
                                                     field.setRawValue(opts[newValue] || '');
@@ -717,7 +722,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     margin: '0 8 0 0',
                                     padding: '5',
                                     style: 'color:#080808;font-weight:bold;font-size:16px;font-style:italic;background:#DF8E46;text-align:center;',
-                                    text: 'PENDING CONCILIATION'
+                                    text: 'PENDING RECONCILIATION'
                                 }
                             ]
                         },
@@ -746,6 +751,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     hidden: true,
                                     iconCls: 'prx-icon-reload',
                                     tooltip: 'Forced Match',
+                                    hidden:true,
                                     listeners: {
                                         click: 'onForceMatch'
                                     }

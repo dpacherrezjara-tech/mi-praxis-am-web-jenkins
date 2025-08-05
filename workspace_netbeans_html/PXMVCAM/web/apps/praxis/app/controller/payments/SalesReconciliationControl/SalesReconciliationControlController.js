@@ -98,6 +98,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.showProcessBtn(me.users);
             me.showProductionBtn(me.users);
             me.showAddTicketBtn(me.users);
+
         }
         filterPanel.unmask();
     },
@@ -112,20 +113,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         const activeFilter = Ext.getCmp(prototype.id + '-filtersByPayment-1');
         if (activeFilter.isVisible()) {
             if (userName.slice(0, 3) === 'SAP') {
-                lstBtns.forEach(btn=>{
+                lstBtns.forEach(btn => {
                     btn.show();
                 });
             } else if (users.includes(userName)) {
-                lstBtns.forEach(btn=>{
+                lstBtns.forEach(btn => {
                     btn.show();
                 });
             } else {
-                lstBtns.forEach(btn=>{
+                lstBtns.forEach(btn => {
                     btn.hide();
                 });
             }
         } else {
-            lstBtns.forEach(btn=>{
+            lstBtns.forEach(btn => {
                 btn.hide();
             });
         }
@@ -434,7 +435,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         });
         logBatch.show();
     },
-    onClickConciliationBtn:function(){
+    onClickConciliationBtn: function () {
         const me = this;
         Ext.Msg.show(
                 {
@@ -641,8 +642,40 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             return true;
         });
         return resultado;
-    }
+    },
     //</editor-fold>
+
+
+    onProcessorSelect: function (combo, record) {
+
+        const type = record.get('a4451key2');
+
+        const credit1 = Ext.ComponentQuery.query('#creditcard1')[0];
+        const credit2 = Ext.ComponentQuery.query('#creditcard2')[0];
+        const label = Ext.ComponentQuery.query('#maskLabel')[0];
+
+        if (credit1 && credit1.inputEl) {
+            if (type === 'ATCAN00') {
+                credit1.setWidth(200);
+                credit1.maxLength = 19;
+                credit1.inputEl.dom.maxLength = 10;
+
+                if (credit2)
+                    credit2.hide();
+                if (label)
+                    label.hide();
+            } else {
+                credit1.setWidth(150);
+                credit1.maxLength = 6;
+                credit1.inputEl.dom.maxLength = 6;
+
+                if (credit2)
+                    credit2.show();
+                if (label)
+                    label.show();
+            }
+        }
+    }
 
 });
 

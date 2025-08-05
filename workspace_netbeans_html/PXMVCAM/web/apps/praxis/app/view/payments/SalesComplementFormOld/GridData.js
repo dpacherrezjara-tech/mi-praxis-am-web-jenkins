@@ -1000,6 +1000,46 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.GridData', {
                     paggin: prototype.id + `-tablet-paggin01`
                 };
             },
+            'M': () => {
+                win.lblUser_toolTip("Estructura: A4775");
+                //<editor-fold defaultstate="collapsed" desc="tablet store">
+                let tabletStore = Ext.create('Ext.data.Store', {
+                    storeId: prototype.id + `-MIT-store`,
+                    loadMask: true,
+                    pageSize: 20,
+                    proxy: {
+                        type: 'ajax',
+                        enablePaging: true,
+                        url: me.searchUrl,
+                        extraParams: me.searchParams,
+                        timeout: 600000,
+                        reader: {
+                            type: 'json',
+                            rootProperty: 'result',
+                            totalProperty: 'total'
+                        }
+                    },
+                    autoLoad: true,
+                    listeners: {
+                        load: function (store, records, successful, operation) {
+                            if (!successful) {
+                                global.Msg({msg: 'Data not Found'});
+                                //console.log(records);
+                            } else {
+                                if (records.length === 0) {
+                                    global.Msg({msg: 'Data not Found'});
+                                }
+                            }
+                        }
+                    }
+                });
+                //</editor-fold>
+                return {
+                    id: prototype.id + '-grid-tablet-01',
+                    store: tabletStore,
+                    paggin: prototype.id + `-MIT-paggin01`
+                };
+            },
         };
         let selectedGrid = storeOpts[gridType]();
         //console.log(selectedGrid);

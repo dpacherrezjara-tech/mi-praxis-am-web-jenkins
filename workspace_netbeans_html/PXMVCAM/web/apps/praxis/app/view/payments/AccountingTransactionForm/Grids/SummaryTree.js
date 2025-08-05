@@ -61,13 +61,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                             metaData.style = "font-weight:bold;color:#0000FF;";
                             break;
                         case 'detail':
-                            metaData.style = "font-weight:bold;color:#057ECB;text-decoration:underline;cursor:pointer";
+                            metaData.style = "font-weight:bold;color:#008000;";
                             break;
                     }
                     return value;
-                },
-                listeners: {
-                    click: 'onClickTotal'
                 }
             },
             {
@@ -98,7 +95,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                 text: '...',
                 id: prototype.idTree + '-colFechaN',
                 width: 350,
-                //dataIndex: 'idflex',
+                //dataIndex: 'Praxis ID',
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                     const {type} = record.data;
                     switch (type) {
@@ -106,10 +103,13 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                             metaData.style = "font-weight:bold;color:#0000FF;";
                             break;
                         case 'detail':
-                            metaData.style = "font-weight:bold;color:#008000;";
+                            metaData.style = "font-weight:bold;color:#057ECB;text-decoration:underline;cursor:pointer;";
                             break;
                     }
                     return value;
+                },
+                listeners: {
+                    click: 'onClickTotal'
                 }
             },
             {text: 'Processor', dataIndex: 'proc_DESC', align: 'center', flex: 1},

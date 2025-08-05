@@ -211,8 +211,8 @@ Ext.define('Ext.Praxis.view.payments.AccountStatementSummForm.Grids.AccountState
                               '0':'Stand By',
                               '1':'Match',
                               '5':'Manual Match',
-                              '6':'Forced Match',
-                              '7':'Compensation Match'
+//                              '6':'Forced Match',
+//                              '7':'Compensation Match'
                             };
                             return opts[value]|| '';
                         }

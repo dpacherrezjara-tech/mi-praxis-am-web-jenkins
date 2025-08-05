@@ -4,30 +4,29 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
     border: true,
     bodyStyle: 'background-color: #E3EAF9;',
     padding: '2px 0px 1px 0px',
-    layout: 'column',
+    layout: 'hbox',
     items: [
         {
             xtype: 'panel',
             border: false,
-            id: prototype.id + '-panelFilters',
             bodyStyle: 'background: transparent',
             height: 'auto',
-            margin: '0 0 0 0 ',
+            margin: '0 0 0 0',
             layout: {
                 type: 'vbox',
                 align: 'center'
             },
             items: [
+                //<editor-fold defaultstate="collapsed" desc="Plusgrade">
                 {
                     xtype: 'form',
                     border: false,
+                    id: prototype.id + '-formFilters-1',
                     bodyStyle: 'background: transparent',
-                    padding: '2px 5px 1px 5px',
-                    layout: 'column',
+                    layout: 'vbox',
                     defaults: {
-//                labelStyle: 'font-weight:bold;',
                         fieldStyle: 'text-align: center;',
-                        padding: '5px 1px 5px 1px',
+                        padding: '5 1 5 1',
                         anchor: '100%',
                         hiddenLabel: false,
                         labelAlign: 'right',
@@ -35,216 +34,242 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                     },
                     items: [
                         {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbFecFiltro',
-                            fieldStyle: 'text-align:left;',
-                            queryMode: 'local',
-                            editable: false,
-                            triggerAction: 'all',
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            hidden: false,
-                            valueField: 'code', displayField: 'name',
-                            value: "SDATE",
-                            labelWidth: 100,
-                            width: 100,
-                            anchor: '100%',
-                            margin: '0 0 0 86',
-                            listeners: {
-                                change: 'cmbfiltro_clickHandler'
-                            }
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateFromYear',
-                            fieldLabel: 'From',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            editable: false,
-                            triggerAction: 'all',
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            hidden: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            emptyText: 'All',
-                            labelWidth: 60,
-                            width: 150,
-                            anchor: '100%',
-                            listeners:{
-                                change:'onChangeFechaBtn'
-                            }
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateFromMonth',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            hidden: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            emptyText: 'All',
-                            width: 70,
-                            anchor: '100%',
-                            listeners:{
-                                change:'onChangeFechaBtn'
-                            }
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateFromDay',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            hidden: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            emptyText: 'All',
-                            width: 70,
-                            anchor: '100%',
-                            listeners:{
-                                change:'onChangeFechaBtn'
-                            }
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateToYear',
-                            fieldLabel: 'To',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            editable: false,
-                            triggerAction: 'all',
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            hidden: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            emptyText: 'All',
-                            labelWidth: 60,
-                            width: 150,
-                            anchor: '100%',
-                            listeners:{
-                                change:'onChangeFechaBtn'
-                            }
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateToMonth',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            hidden: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            emptyText: 'All',
-                            width: 70,
-                            anchor: '100%',
-                            listeners:{
-                                change:'onChangeFechaBtn'
-                            }
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateToDay',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            hidden: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            emptyText: 'All',
-                            width: 70,
-                            anchor: '100%',
-                            listeners:{
-                                change:'onChangeFechaBtn'
-                            }
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbFindByFAMEX',
-                            queryMode: 'local',
-                            allowBlank: true,
-                            forceSelection: true,
-                            selectOnFocus: true,
-                            caseSensitive: false,
-                            autoSelect: true,
-                            editable: false,
-                            fieldLabel: 'Complements vs AMEX',
-                            labelWidth: 150,
-                            labelAlign: 'right',
-                            hidden: false,
-                            width: 250,
-                            typeAhead: true,
-                            valueField: 'code', displayField: 'name',
-                            enableKeyEvents: true,
-                            triggerAction: 'all',
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbFindBySTVAL',
-                            queryMode: 'local',
-                            allowBlank: true,
-                            forceSelection: true,
-                            selectOnFocus: true,
-                            caseSensitive: false,
-                            autoSelect: true,
-                            editable: false,
-                            fieldLabel: 'Complements vs Sales',
-                            labelWidth: 150,
-                            labelAlign: 'right',
-                            hidden: false,
-                            width: 250,
-                            typeAhead: true,
-                            valueField: 'code', displayField: 'name',
-                            enableKeyEvents: true,
-                            triggerAction: 'all',
-                        },
-                        {xtype: 'tbspacer', width: 50},
-                        {
-                            xtype: 'radiogroup',
-                            id: prototype.id + '-radiogroupTypeX',
-                            width: 360,
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5 1 5 1',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
                             items: [
-                                {boxLabel: '<b style="color:#148D28;">Plusgrade</b>', id: prototype.id + '-radiogroupTypeXPlusgrade', inputValue: 'P', name: 'rbgTypeX', checked: true},
-                                {boxLabel: '<b style="color:#148D28;">Ligas de Pago</b>', id: prototype.id + '-radiogroupTypeXLigas', inputValue: 'L', name: 'rbgTypeX'},
-                                {boxLabel: '<b style="color:#148D28;">Tablet</b>', id: prototype.id + '-radiogroupTypeXTablet', inputValue: 'T', name: 'rbgTypeX'},
-                            ],
-                            listeners: {
-                                change: 'rbChangeType'
-                            }
+                                {
+                                    xtype: 'textfield',
+                                    name: 'IN_CCUST',
+                                    value: '139',
+                                    hidden: true
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Date',
+                                    //id: prototype.id + '-cmbDate',
+                                    name: 'IN_DATE',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['SDATE', 'Sale Date']
+                                        ]
+                                    }),
+                                    labelWidth: 50,
+                                    width: 180,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: 'SDATE'
+                                },
+                                {
+                                    xtype: 'datefield',
+                                    name: 'IN_DATEFROM',
+                                    fieldLabel: 'From',
+                                    format: 'Ymd',
+                                    editable: false, // Deshabilita la edición del campo
+                                    labelWidth: 50,
+                                    width: 150,
+                                    value: new Date()
+                                },
+                                {
+                                    xtype: 'datefield',
+                                    name: 'IN_DATETO',
+                                    fieldLabel: 'From',
+                                    format: 'Ymd',
+                                    editable: false, // Deshabilita la edición del campo
+                                    labelWidth: 50,
+                                    width: 150,
+                                    value: new Date()
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Complements VS Amex',
+                                    name: 'IN_FAMEX',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['X', 'All'],
+                                            ['1', 'Match'],
+                                            ['', 'Pending']
+                                        ]
+                                    }),
+                                    labelWidth: 150,
+                                    width: 280,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: 'X'
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Complements vs Sales',
+                                    name: 'IN_STVAL',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['X', 'All'],
+                                            ['1', 'Match'],
+                                            ['', 'Pending'],
+                                            ['2', 'Accounted']
+                                        ]
+                                    }),
+                                    labelWidth: 160,
+                                    width: 280,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: 'X'
+                                },
+                            ]
                         },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5 1 5 1',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Ticket',
+                                    labelWidth: 70,
+                                    width: 190,
+                                    name: 'IN_TKT',
+                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
+                                    maxLength: 13, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'PNR',
+                                    labelWidth: 60,
+                                    width: 130,
+                                    name: 'IN_PNR',
+                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
+                                    maxLength: 6, // Límite máximo de caracteres
+                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbPaisesPG',
+                                    name: 'IN_COUNTRY',
+                                    queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    fieldLabel: 'Country',
+                                    labelWidth: 65,
+                                    labelAlign: 'right',
+                                    width: 200,
+                                    typeAhead: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Card Type',
+                                    name: 'IN_TCARD',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['1', 'Visa'],
+                                            ['2', 'Master Card'],
+                                            ['3', 'American Express']
+                                        ]
+                                    }),
+                                    labelWidth: 100,
+                                    width: 200,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Merchant',
+                                    labelWidth: 70,
+                                    width: 185,
+                                    name: 'IN_MERCHID',
+                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
+                                    maxLength: 10, // Límite máximo de caracteres
+                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Card Number',
+                                    labelWidth: 100,
+                                    width: 160,
+                                    name: 'IN_SCARDN1',
+                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
+                                    maxLength: 6, // Límite máximo de caracteres
+                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: '*****(*)'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    width: 80,
+                                    name: 'IN_SCARDN2',
+                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
+                                    maxLength: 4, // Límite máximo de caracteres
+                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Auth',
+                                    labelWidth: 50,
+                                    width: 120,
+                                    name: 'IN_SAUTHOC',
+                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
+                                    maxLength: 8, // Límite máximo de caracteres
+                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                }
+                            ]
+                        }
                     ]
                 },
+                //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="MIT">
                 {
                     xtype: 'form',
                     border: false,
+                    id: prototype.id + '-formFilters-2',
                     bodyStyle: 'background: transparent',
-                    padding: '2px 5px 1px 5px',
-                    layout: 'column',
+                    hidden: true,
+                    layout: 'vbox',
                     defaults: {
-//                labelStyle: 'font-weight:bold;',
                         fieldStyle: 'text-align: center;',
-                        padding: '5px 1px 5px 1px',
+                        padding: '5 1 5 1',
                         anchor: '100%',
                         hiddenLabel: false,
                         labelAlign: 'right',
@@ -252,245 +277,213 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                     },
                     items: [
                         {
-                            xtype: 'label',
-                            text: 'Ticket:',
-                            padding: '8px 1px 2px 1px',
-                            width: 50,
-//                            autoEl: {
-//                                tag: 'label',
-//                                'data-qtip': 'Authorization Number'
-//                            }
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5 1 5 1',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items: [
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Date',
+                                    name: 'IN_PRDA',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['PRDA', 'Processing Date'],
+//                                            ['PAYDATE', 'Payment Date'],
+//                                            ['FEUP', 'Update Date']
+                                        ]
+                                    }),
+                                    labelWidth: 50,
+                                    width: 180,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: 'PRDA'
+                                },
+                                {
+                                    xtype: 'datefield',
+                                    name: 'IN_PRDA_FROM',
+                                    fieldLabel: 'From',
+                                    format: 'Ymd',
+                                    editable: false, // Deshabilita la edición del campo
+                                    labelWidth: 50,
+                                    width: 150,
+                                    value: new Date(),
+                                    validator: 'validaFecha',
+                                    listeners: {
+                                        change: 'onChangeDateBPBtn'
+                                    },
+                                    id: prototype.id + '-datefieldFromBP'
+                                },
+                                {
+                                    xtype: 'datefield',
+                                    name: 'IN_PRDA_TO',
+                                    fieldLabel: 'To',
+                                    format: 'Ymd',
+                                    altFormats: 'm',
+                                    editable: false, // Deshabilita la edición del campo
+                                    labelWidth: 30,
+                                    width: 130,
+                                    value: new Date(),
+                                    validator: 'validaFecha',
+                                    listeners: {
+                                        change: 'onChangeDateBPBtn'
+                                    },
+                                    id: prototype.id + '-datefieldToBP'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'PNR',
+                                    labelWidth: 40,
+                                    width: 120,
+                                    name: 'IN_PNR',
+                                    maxLength: 6, // Límite máximo de caracteres
+                                    maskRe: /[a-zA-Z0-9]/,
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Card Number',
+                                    labelWidth: 90,
+                                    width: 150,
+                                    name: 'IN_NUMTJ_1',
+                                    maxLength: 6, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: '*****(*)'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    name: 'IN_NUMTJ_2',
+                                    width: 50,
+                                    maxLength: 4, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Auth',
+                                    labelWidth: 40,
+                                    width: 100,
+                                    name: 'IN_NUMAT',
+                                    maxLength: 6, // Límite máximo de caracteres
+                                    maskRe: /[a-zA-Z0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Amount',
+                                    labelWidth: 60,
+                                    width: 150,
+                                    name: 'IN_AMOUNT',
+                                    maxLength: 15,
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9\.\-]/, // Máscara para números y punto decimal
+                                    regex: /^[-]?\d+(\.\d{1,2})?$/, // Validación para permitir hasta 2 decimales
+                                    regexText: 'Invalid Amount', // Mensaje de error personalizado
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Type Transaction',
+                                    name: 'IN_TYPE_TRANSACTION',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['VENTA', 'Sale'],
+                                            ['CANCELACION', 'Cancelation'],
+                                            ['DEVOLUCION', 'Refund']
+                                        ]
+                                    }),
+                                    labelWidth: 100,
+                                    width: 250,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Status',
+                                    name: 'IN_STATUS',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['Aprobada', 'Aprobada'],
+                                            ['Rechazada', 'Rechazada']
+                                        ]
+                                    }),
+                                    labelWidth: 50,
+                                    width: 180,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                }
+                            ]
                         },
                         {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtTKT',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[0-9]/,
-                            maxLength: 13,
-                            width: 100,
-                            enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'txtField_keyDownHandler'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'label',
-                            text: 'PNR:',
-                            padding: '8px 1px 2px 1px',
-                            width: 50,
-//                            autoEl: {
-//                                tag: 'label',
-//                                'data-qtip': 'Authorization Number'
-//                            }
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtPNR',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[a-zA-Z]/,
-                            maxLength: 6,
-                            width: 100,
-                            enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'txtField_keyDownHandler'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbFindByCountry',
-                            queryMode: 'local',
-                            allowBlank: true,
-                            forceSelection: true,
-                            selectOnFocus: true,
-                            caseSensitive: false,
-                            autoSelect: true,
-                            //editable: false,
-                            fieldLabel: 'Country',
-                            labelWidth: 50,
-                            labelAlign: 'right',
-                            width: 230,
-                            typeAhead: true,
-                            valueField: 'code', 
-                            displayField: 'name',
-                            enableKeyEvents: true,
-                            triggerAction: 'all'
-                        },
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'label',
-                            id: prototype.id + '-lblOPERATNBR',
-                            text: 'Op. Nbr.:',
-                            padding: '8px 1px 2px 1px',
-                            width: 50,
-//                            autoEl: {
-//                                tag: 'label',
-//                                'data-qtip': 'Authorization Number'
-//                            }
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtOPERATNBR',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[0-9]/,
-                            maxLength: 10,
-                            width: 100,
-                            enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'txtField_keyDownHandler'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbFindByCreditCard',
-                            queryMode: 'local',
-                            allowBlank: true,
-                            forceSelection: true,
-                            selectOnFocus: true,
-                            caseSensitive: false,
-                            autoSelect: true,
-                            editable: false,
-                            fieldLabel: 'Card Type:',
-                            labelWidth: 60,
-                            labelAlign: 'right',
-                            width: 200,
-                            typeAhead: true,
-                            valueField: 'a4451key3', 
-                            displayField: 'a4451desc1',
-                            enableKeyEvents: true,
-                            triggerAction: 'all'
-                        },
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'label',
-                            text: 'Credit Card:',
-                            padding: '8px 1px 2px 1px',
-                            width: 70
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtCC1',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[0-9]/,
-                            maxLength: 6,
-                            width: 80,
-                            enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'filterPNRSettlement'
-                            }
-                        },
-                        {
-                            xtype: 'label',
-                            text: '******',
-                            padding: '8px 1px 2px 1px',
-                            width: 40
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtCC2',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[0-9]/,
-                            maxLength: 4,
-                            width: 60,
-                            enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'filterPNRSettlement'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'label',
-                            text: 'Auth:',
-                            padding: '8px 1px 2px 1px',
-                            width: 40,
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtAuth',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[0-9]/,
-                            maxLength: 6,
-                            width: 60,
-                            enableKeyEvents: true,
-                            listeners: {
-                                keypress: 'filterPNRSettlement'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbFindByPlusgrade',
-                            queryMode: 'local',
-                            allowBlank: true,
-                            forceSelection: true,
-                            selectOnFocus: true,
-                            caseSensitive: false,
-                            autoSelect: true,
-                            editable: false,
-                            fieldLabel: 'Sales Merchant',
-                            labelWidth: 100,
-                            labelAlign: 'right',
-                            width: 230,
-                            typeAhead: true,
-                            valueField: 'a4451key3', 
-                            displayField: 'a4451desc2',
-                            enableKeyEvents: true,
-                            triggerAction: 'all',
-                            hidden:true
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbFindByLigas',
-                            queryMode: 'local',
-                            allowBlank: true,
-                            forceSelection: true,
-                            selectOnFocus: true,
-                            caseSensitive: false,
-                            autoSelect: true,
-                            editable: false,
-                            fieldLabel: 'Sales Merchant',
-                            labelWidth: 100,
-                            labelAlign: 'right',
-                            width: 230,
-                            typeAhead: true,
-                            valueField: 'a4451key3', 
-                            displayField: 'a4451desc2',
-                            enableKeyEvents: true,
-                            triggerAction: 'all',
-                            hidden:true
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbFindByTablet',
-                            queryMode: 'local',
-                            allowBlank: true,
-                            forceSelection: true,
-                            selectOnFocus: true,
-                            caseSensitive: false,
-                            autoSelect: true,
-                            editable: false,
-                            fieldLabel: 'Sales Merchant',
-                            labelWidth: 100,
-                            labelAlign: 'right',
-                            //hidden: false,
-                            width: 230,
-                            typeAhead: true,
-                            valueField: 'a4451key3', displayField: 'a4451desc2',
-                            enableKeyEvents: true,
-                            triggerAction: 'all',
-                            hidden:true
-                        },
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '1 1 5 1',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Operation Number',
+                                    labelWidth: 130,
+                                    width: 230,
+                                    name: 'IN_NROOP',
+                                    maxLength: 10,
+                                    maskRe: /[a-zA-Z0-9]/,
+                                    enforceMaxLength: true,
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                }
+                            ]
+                        }
+
                     ]
-                },
+                }
+                //</editor-fold>
             ]
-        },
+        }
     ]
 });

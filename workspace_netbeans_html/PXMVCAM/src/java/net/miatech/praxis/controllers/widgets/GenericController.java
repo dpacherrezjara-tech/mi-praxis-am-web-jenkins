@@ -29,7 +29,7 @@ public class GenericController {
     @Autowired
     private GenericLogic logic;
     
-    @RequestMapping(value = "CallStoreGet",method = RequestMethod.POST)
+    @RequestMapping(value = "CallStoreGet",method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public ResponseEntity<?> CallStoreGet(@RequestBody CallStoreFilter params) throws Exception {
         System.out.println("***** Generic - CallStoreGet *****");
         System.out.println("Parameters: " + params.getLibrary() + "." + params.getProcedure());

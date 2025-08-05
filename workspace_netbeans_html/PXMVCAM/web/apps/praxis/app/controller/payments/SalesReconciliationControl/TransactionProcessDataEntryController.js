@@ -32,50 +32,61 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
     },
     processDate: function (date, proctype) {
         const me = this;
-        me.view.mask('Processing...');
+        me.view.setLoading(true);
         let params = {
             VP_CCUST: '139',
             VP_FPROC: date,
             VP_PROCESADOR: proctype
         };
-        fetch(`${me.url}/processTransactionsBatch`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(params)
-        }).then(async res => {
-            if (res.ok) {
-                const data = await res.json();
-                const {vp_CANT} = data;
-                Ext.toast({
-                    html: `<b>Process Success<br>Total Affected: ${vp_CANT}</b>`,
-                    title: 'Notification',
-                    align: 't',
-                    closable: true,
-                    width: 300,
-                    timeout: 10000 // 10 segundos
-                });
-                Ext.getCmp(prototype.id + '-processDownloadResult').show();
-            } else {
-                Ext.MessageBox.show({
-                    title: 'Error',
-                    message: 'Error in Process',
-                    icon: Ext.MessageBox.ERROR,
-                    buttons: Ext.MessageBox.OK
-                });
-            }
-        }).catch(err => {
-            console.error(err);
-            Ext.MessageBox.show({
-                title: 'Error',
-                message: 'Error in Process',
-                icon: Ext.MessageBox.ERROR,
-                buttons: Ext.MessageBox.OK
-            });
-        }).finally(() => {
-            me.view.unmask();
-        });
+        console.log(params);
+        try {
+            global.callStorePostAsync('PRAXISMP','SQP05074',params);
+            new AWN().success('Process Running');
+            me.view.setLoading(false);
+            this.view.close();
+        } catch (e) {
+            
+        }
+
+        
+//        fetch(`${me.url}/processTransactionsBatch`, {
+//            method: 'POST',
+//            headers: {
+//                'Content-Type': 'application/json'
+//            },
+//            body: JSON.stringify(params)
+//        }).then(async res => {
+//            if (res.ok) {
+//                const data = await res.json();
+//                const {vp_CANT} = data;
+//                Ext.toast({
+//                    html: `<b>Process Success<br>Total Affected: ${vp_CANT}</b>`,
+//                    title: 'Notification',
+//                    align: 't',
+//                    closable: true,
+//                    width: 300,
+//                    timeout: 10000 // 10 segundos
+//                });
+//                Ext.getCmp(prototype.id + '-processDownloadResult').show();
+//            } else {
+//                Ext.MessageBox.show({
+//                    title: 'Error',
+//                    message: 'Error in Process',
+//                    icon: Ext.MessageBox.ERROR,
+//                    buttons: Ext.MessageBox.OK
+//                });
+//            }
+//        }).catch(err => {
+//            console.error(err);
+//            Ext.MessageBox.show({
+//                title: 'Error',
+//                message: 'Error in Process',
+//                icon: Ext.MessageBox.ERROR,
+//                buttons: Ext.MessageBox.OK
+//            });
+//        }).finally(() => {
+//            me.view.unmask();
+//        });
     },
     onCancelClick: function () {
         this.view.close();

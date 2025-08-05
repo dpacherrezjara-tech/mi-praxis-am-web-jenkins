@@ -8,7 +8,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
     title: 'Accounting Detail',
     titleAlign: 'center',
     minHeight: 210,
+    maxHeight: 630,
     width: '100%',
+    layout: 'fit',
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -36,7 +38,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
         items: [
             //<editor-fold defaultstate="collapsed" desc="Summary Cols">
             {
-                text: 'RN', dataIndex: 'rn', width: 40, hidden: true
+                text: 'RN', dataIndex: 'RN',
+                xtype: 'rownumberer', width: 40//, hidden: true
             },
             {text: 'Ticket',
                 width: 120,
@@ -119,7 +122,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     }
                 ]
             },
-            {text: 'Account Number', dataIndex: 'a4183cuent', width: 240,
+            {text: 'Account Number', dataIndex: 'a4183cuent', width: 120,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     return value;
@@ -207,7 +210,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     return value;
                 }
             },
-            {text: 'Jornal <br> Entry', dataIndex: 'a4183idcon', width: 250, autoSizeColumn: true,
+            {text: 'Praxis ID', dataIndex: 'a4183idcon', width: 280, autoSizeColumn: true,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style += "text-align:center;";
                     return value;

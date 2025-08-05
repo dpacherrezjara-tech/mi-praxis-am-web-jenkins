@@ -168,8 +168,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                             editable: false,
                             value: ''
                         },
-
-                        
                     ]
                 },
                 {
@@ -232,19 +230,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                                 fields: ['code', 'name'],
                                 data: [
                                     ['', 'All'],
+//                                    ['A', 'Match OC/Camepa'],
+                                    ['C', 'Match Complement'],
+//                                    ['D', 'Match Balance'],
+                                    ['E', 'Duplicate Payment'],
+                                    ['M', 'Match Multi-Payment'],
                                     ['0', 'Stand By'],
                                     ['1', 'Match'],
                                     ['2', 'Sales Without Settl.'],
-                                    ['4', 'Match Parcial'],
+                                    ['4', 'Match Partial'],
                                     ['5', 'Match Manual'],
-                                    ['6', 'Match Forzado'],
-                                    ['7', 'Match por Compensacion'],
-                                    ['8', 'Match Transaccional'],
-                                    ['9', 'Match Void']
+//                                    ['6', 'Match Forced'],
+//                                    ['7', 'Match  for Compensation'],
+                                    ['8', 'Match Transactional'],
+                                    ['8', 'Match Void'],
                                 ]
                             }),
                             labelWidth: 55,
-                            width: 180,
+                            width: 250,
                             displayField: 'name',
                             valueField: 'code',
                             queryMode: 'local',

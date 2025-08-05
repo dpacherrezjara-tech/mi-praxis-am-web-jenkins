@@ -6,6 +6,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
     afterRender: async function () {
         await this.loadFilters();
         this.loadTickets();
+        this.loadCharts();
     },
     loadFilters: async function () {
         const me = this;
@@ -26,11 +27,35 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
         const me = this;
         const grid = Ext.getCmp(prototype.id + '-gridExceptionTickets');
         let params = me.formatParams();
-        let store = global.callStorePaggin('PXSAUDIT','SQP05583',params);
-        grid.setStore(store);
+        let storeGrid = global.callStorePaggin('PXSAUDIT','SQP05583',params);
+        grid.setStore(storeGrid);        
     },
-    onClickSearchBtn:function(){
-        this.loadTickets();
+    loadCharts: async function(){
+        const me = this;
+        const chartPie = Ext.getCmp(prototype.id + '-chartPieExceptionTickets');
+        const chartLineal = Ext.getCmp(prototype.id + '-chartLinealExceptionTickets');
+        console.log("chartPie", chartPie );
+        console.log("chartLineal", chartLineal );
+        let params = me.formatParams();
+        const res = await global.callStoreGet('PXSAUDIT', 'SQP05647', params);
+        let storeChartPie = res.lstRs.at(0);
+        let storeChartLineal = res.lstRs.at(0);
+        console.log("storeChartPie", storeChartPie );
+        console.log("storeChartLineal", storeChartLineal );
+        
+        // ocultar si no hay resultados
+        if (storeChartPie.length <= 0 || storeChartLineal.length <= 0 ){
+            chartPie.hide();
+            chartLineal.hide();
+            return ;
+        }
+        
+        chartPie.show();
+        chartLineal.show();
+        
+        chartPie.setStore(storeChartPie);
+        chartLineal.setStore(storeChartLineal);
+        
     },
     formatParams: function(){
         const form = Ext.getCmp(prototype.id + '-panelFilters').getForm();
@@ -59,6 +84,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
         });
         newWin.show();
     },
+    loadHistoryLogDetails: function(grid, td, rowIndex, cellIndex, e, record, tr, eOpts){
+        const me = this;
+        console.log("record.data", record.data);
+        const newWin = Ext.create('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExceptionsLog',{
+            id:prototype.id + '-TaxesExceptionsLog-1',
+            obj: record.data
+        });
+        newWin.show();
+    },
     downloadMainGrid: async function(){
         let notifier = new AWN();
         let params = this.formatParams();
@@ -75,6 +109,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
                        'Doc. Type':x.TDOC,
                        'Ticket':x.CCIA + x.FORMA + x.SERIE,
                        'SEQ':x.SEQ,
+                       'TAX EXCEPTIONS':x.TAX_EXCEPTIONS,
+                       'COMMENT EXCEPTIONS':x.COMMENT_EXCEPTIONS,
                        'PNR':x.SPNR,
                        'Pax Name':x.PAXNAME,
                        'Itinerary':x.RUTABOL,
@@ -99,6 +135,30 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
     reloadGrid: function(){
         const grid = Ext.getCmp(prototype.id + '-gridExceptionTickets');
         grid.getStore().load();
+    },
+    
+    //<editor-fold defaultstate="collapsed" desc="Options">
+    onClickSearchBtn:function(){
+        this.loadTickets();
+        this.loadCharts();
+    },
+    onEnterKeyPress: function (field, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onClickSearchBtn();
+        }
+    },
+    onClickToggleFilterBtn: function () {
+        const panelFilters = Ext.getCmp(prototype.id + '-panelFilters');
+        if (panelFilters.isVisible())
+            panelFilters.hide();
+        else
+            panelFilters.show();
+    },
+    onClickClearOptionsBtn:function(){
+        const panelFilters = Ext.getCmp(prototype.id + '-panelFilters');
+        panelFilters.reset();
     }
+    //</editor-fold>
+    
 });
 
