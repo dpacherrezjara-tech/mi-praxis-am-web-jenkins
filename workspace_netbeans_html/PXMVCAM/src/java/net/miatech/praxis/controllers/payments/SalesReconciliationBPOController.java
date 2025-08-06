@@ -653,7 +653,7 @@ public class SalesReconciliationBPOController {
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();
             //headers
-            Object[] headers = new Object[27];
+            Object[] headers = new Object[28];
             headers[0] = "Processing Date";
             headers[1] = "Payment Date";
             headers[2] = "Processor";
@@ -672,18 +672,19 @@ public class SalesReconciliationBPOController {
             headers[15] = "Ticket";
             headers[16] = "PNR";
             headers[17] = "Invoice Refer. Number PNR";
-            headers[18] = "Currency";
-            headers[19] = "Transaction Amount";
-            headers[20] = "Error Code";
-            headers[21] = "Description";
-            headers[22] = "Adju. Code";
-            headers[23] = "Description";
-            headers[24] = "User Update";
-            headers[25] = "Date Update";
-            headers[26] = "BPO Comment";
+            headers[18] = "Ref. Number";
+            headers[19] = "Currency";
+            headers[20] = "Transaction Amount";
+            headers[21] = "Error Code";
+            headers[22] = "Description";
+            headers[23] = "Adju. Code";
+            headers[24] = "Description";
+            headers[25] = "User Update";
+            headers[26] = "Date Update";
+            headers[27] = "BPO Comment";
             data.add(headers);
             for (A4331Filter obj : filter.getResponse()) {
-                Object[] row = new Object[27];
+                Object[] row = new Object[28];
                 row[0] = obj.getPrda();
                 row[1] = obj.getPaydate();
                 row[2] = obj.getDESC_PROCTYPE();
@@ -702,18 +703,19 @@ public class SalesReconciliationBPOController {
                 row[15] = obj.getTicket();
                 row[16] = obj.getSpnr();
                 row[17] = obj.getInvoirn();
-                row[18] = obj.getScurrency();
-                row[19] = obj.getTgrosamoun();
-                row[20] = obj.getCerror();
-                row[21] = obj.getDES_CERROR();
-                row[22] = obj.getCodadju();
-                row[23] = obj.getDESC_CODADJU();
-                row[24] = obj.getUsup();
-                row[25] = obj.getFeup();
+                row[18] = obj.getArefnbr();
+                row[19] = obj.getScurrency();
+                row[20] = obj.getTgrosamoun();
+                row[21] = obj.getCerror();
+                row[22] = obj.getDES_CERROR();
+                row[23] = obj.getCodadju();
+                row[24] = obj.getDESC_CODADJU();
+                row[25] = obj.getUsup();
+                row[26] = obj.getFeup();
                 if (obj.getBPOCOMENT().isEmpty()) {
-                    row[26] = obj.getADJUCOMENT();
+                    row[27] = obj.getADJUCOMENT();
                 } else {
-                    row[26] = obj.getBPOCOMENT();
+                    row[27] = obj.getBPOCOMENT();
                 }
                 data.add(row);
             }
