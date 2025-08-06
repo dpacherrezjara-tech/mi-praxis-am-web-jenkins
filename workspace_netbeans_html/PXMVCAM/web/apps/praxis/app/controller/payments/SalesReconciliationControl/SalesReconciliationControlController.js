@@ -94,6 +94,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const cmbMdasbST = Ext.getCmp(prototype.id + '-cmbMonedabST');
             me.setComboStore({cmp: cmbMdasbST, data: monedas,
                 valueField: 'code', displayField: 'name', value: ''});
+            
+            const dataAutoComments = data.autocomments.map(x => ({name: `${x.a4451key3.trim()} - ${x.a4451desc1}`, code: x.a4451key3}));
+            const cmbAutoComments = Ext.getCmp(prototype.id + '-cmbAutoComment');
+            me.setComboStore({cmp: cmbAutoComments, data: dataAutoComments,
+                valueField: 'code', displayField: 'name', value: ''});
+            
             //</editor-fold>
             me.showProcessBtn(me.users);
             me.showProductionBtn(me.users);

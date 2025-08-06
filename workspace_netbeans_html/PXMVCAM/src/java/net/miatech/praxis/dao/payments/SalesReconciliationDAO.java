@@ -161,6 +161,9 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         mappers.add(new BeanPropertyRowMapper(A3152.class));
         mappers.add(new BeanPropertyRowMapper(A006.class));
         mappers.add(new BeanPropertyRowMapper(A4451MP.class));
+        mappers.add(new BeanPropertyRowMapper(A4451MP.class));
+        mappers.add(new BeanPropertyRowMapper(A4451MP.class));
+        mappers.add(new BeanPropertyRowMapper(A4451MP.class));
         Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05276",
                 params, mappers);
         filter.setCERROR((List<A4451MP>) obj.get("result0"));
@@ -170,6 +173,8 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         filter.setPAISES((List<A3152>) obj.get("result4"));
         filter.setMONEDAS((List<A006>) obj.get("result5"));
         filter.setADMINS((List<A4451MP>) obj.get("result6"));
+        filter.setSTVALS((List<A4451MP>) obj.get("result8"));
+        filter.setAUTOCOMMENTS((List<A4451MP>) obj.get("result9"));
         return filter;
     }
 

@@ -1,37 +1,111 @@
 Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MatchMultiPaymentConciliationDataEntryController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.MatchMultiPaymentConciliationDataEntryController',
-    url: CONTEXTPATH + '/MatchMultiPaymentConciliationDataEntry',
-
+    url: CONTEXTPATH + '/SalesReconciliationBPO',
+    info: {},
+    desglose: {},
     init: function (view) {
         // Por ahora vacío
+        const me = this;
+        console.log('me', me);
+        console.log('info desde la vista:', me.view.info);
+        console.log('desglose desde la vista:', me.view.desglose);
     },
 
     afterRender: async function () {
         const me = this;
-        me.view.setLoading(true);
-        await me.getData(me.view);
-        me.view.setLoading(false);
+        console.log('meeee', me)
+        this.fillIni();
+//        me.view.setLoading(true);
+//        await me.getData(me.view);
+//        this.getData();
+//        me.view.setLoading(false);
+//         console.log('info render',info)
     },
 
-    getData: async function (view) {
+    fillIni: function () {
+        console.log('fillIni', )
+        const me = this;
+
+        const gridLiquidation = Ext.getCmp(prototype.idMP + '-grid-liquidation');
+        const gridTicket = Ext.getCmp(prototype.idMP + '-grid-ticket');
+
+        gridLiquidation.setLoading(true);
+        gridTicket.setLoading(true);
+
+//        
+
+        if (Array.isArray(me.view.info)) {
+            me.view.info.forEach((item, index) => {item.exist = 'yes';});
+        } else if (typeof me.view.info === 'object' && me.view.info !== null) {
+            me.view.info.exist = 'yes';
+        }
+
+
+        if (Array.isArray(me.view.desglose)) {
+            me.view.desglose.forEach((item, index) => {item.exist = 'yes';});
+        } else if (typeof me.view.desglose === 'object' && me.view.desglose !== null) {
+            me.view.desglose.exist = 'yes';
+        }
+        
+        
+        let info = new Ext.data.Store({data: me.view.info});
+        let desglose = new Ext.data.Store({data: me.view.desglose});
+
+//        me.view.info.forEach(item => item.exist = 'yes');
+//        me.view.info.exist = 'yes';
+
+        gridLiquidation.setStore(info);
+        gridTicket.setStore(desglose);
+        gridLiquidation.setLoading(false);
+        gridTicket.setLoading(false);
+
+
+
+    },
+
+    getData: function (view) {
+        console.log('get data')
         try {
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05645', view.searchParams);
-            const data = res.lstRs?.at(0)?.at(0) || {};
+//            const res = await global.callStoreGet('PRAXISMP', 'SQP05645', view.searchParams);
+//            const data = res.lstRs?.at(0)?.at(0) || {};
 //            console.log('data', data);
+//
+//            // Guarda para el update
+//            this.ticketData = data;
+//
+////            const form = Ext.getCmp(prototype.idDE + '-informationForm').getForm();
+//            const form = this.lookupReference('informationForm').getForm();
+//            form.setValues({
+//                ...data,
+//                TGROSAMOUN: Ext.util.Format.number(data.TGROSAMOUN, '0,000.00'),
+//                SALDO: Ext.util.Format.number(data.SALDO, '0,000.00'),
+//                proceedStatus: data.STPROCEDE
+//            });
+//            this.bindData();
 
-            // Guarda para el update
-            this.ticketData = data;
+            const me = this;
 
-//            const form = Ext.getCmp(prototype.idDE + '-informationForm').getForm();
-            const form = this.lookupReference('informationForm').getForm();
-            form.setValues({
-                ...data,
-                TGROSAMOUN: Ext.util.Format.number(data.TGROSAMOUN, '0,000.00'),
-                SALDO: Ext.util.Format.number(data.SALDO, '0,000.00'),
-                proceedStatus: data.STPROCEDE
-            });
-            this.bindData();
+            const nuevos = 'llamada servicio'
+
+            const nuevosInfo = nuevos.info.map(item => ({
+                    ...item,
+                    exist: 'no'
+                }));
+
+            const nuevosDesglose = nuevos.desglose.map(item => ({
+                    ...item,
+                    exist: 'no'
+                }));
+
+            // Agregarlos al final del store actual
+            const gridLiquidation = Ext.getCmp(prototype.idMP + '-grid-liquidation');
+            const gridTicket = Ext.getCmp(prototype.idMP + '-grid-ticket');
+
+            gridLiquidation.getStore().add(nuevosInfo);
+            gridTicket.getStore().add(nuevosDesglose);
+
+
         } catch (e) {
             console.error(e);
         }
@@ -75,39 +149,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MatchMulti
         }
     },
 
-    bindData: function () {
-        const me = this;
-        const radioGroup = Ext.getCmp(prototype.idDE + '-proceedRadioGroup');
-        const updBtbn = Ext.getCmp(prototype.idDE + '-btn-update');
-
-        const stval = me.ticketData.STVAL;
-//        console.log(me.ticketData);
-
-        if (stval === '4') {
-            updBtbn.show();
-            radioGroup.show();
-        } else {
-//            console.log('Ready');
-            radioGroup.hide();
-            updBtbn.hide();
-        }
-    },
-
     onCancelClick: function () {
         this.view.close();
     },
 
-    onClickBalanceConciliation: function () {
-        const me = this;
-//        console.log('balance---', me.ticketData);
-        const obj = me.ticketData;
-
-        const dataEntry = Ext.create('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntryBalanceConciliation', {
-            id: prototype.id + '-DataEntryBalanceConciliation',
-            searchParams: obj,
-            stval: me.ticketData.STVAL
-        });
-
-        dataEntry.show();
-    }
 });

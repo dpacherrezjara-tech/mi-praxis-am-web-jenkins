@@ -197,10 +197,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                                     metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                                     const opts = {
-                                        'A': 'Match OC/Camepa',
+//                                        'A': 'Match OC/Camepa',
                                         'C': 'Match Complement',
-                                        'D': 'Match Balance',
-                                        'E': 'Match Duplicate Pay.',
+//                                        'D': 'Match Balance',
+                                        'E': 'Duplicate Payment',
                                         'M': 'Match Multi-Payment',
                                         '0': 'Stand By',
                                         '1': 'Match',
@@ -345,9 +345,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                                     metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                                     const opts = {
-                                        'A': 'Match OC/Camepa',
+//                                        'A': 'Match OC/Camepa',
                                         'C': 'Match Complement',
-                                        'D': 'Match Balance',
+//                                        'D': 'Match Balance',
                                         'E': 'Duplicate Payment',
                                         'M': 'Match Multi-Payment',
                                         '0': 'Stand By',
@@ -617,9 +617,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                                             metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                                             const opts = {
-                                                'A': 'Match OC/Camepa',
+//                                                'A': 'Match OC/Camepa',
                                                 'C': 'Match Complement',
-                                                'D': 'Match Balance',
+//                                                'D': 'Match Balance',
                                                 'E': 'Duplicate Payment',
                                                 'M': 'Match Multi-Payment',
                                                 '0': 'Stand By',

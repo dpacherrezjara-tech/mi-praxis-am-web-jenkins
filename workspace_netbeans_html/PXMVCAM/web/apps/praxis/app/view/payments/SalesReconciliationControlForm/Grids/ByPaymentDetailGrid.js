@@ -80,9 +80,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                     metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                     const opts = {
-                        'A': 'Match OC/Camepa',
+//                        'A': 'Match OC/Camepa',
                         'C': 'Match Complement',
-                        'D': 'Match Balance',
+//                        'D': 'Match Balance',
                         'E': 'Duplicate Payment',
                         'M': 'Match Multi-Payment',
                         '0': 'Stand By',
@@ -144,24 +144,27 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         ]
                     },
                     {
-                        text: 'Ticket', dataIndex: 'ticket', width: 110,
+                        text: 'Ticket', dataIndex: 'ticket', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;background-color:#F0D094;font-weight:bold;";
                             return value;
                         }
                     },
-                    {text: 'PNR', dataIndex: 'spnr', width: 80},
+                    {text: 'PNR', dataIndex: 'spnr', width: 60},
                     {
                         text: 'Invoice<br>Refer. Number<br>PNR', dataIndex: 'invoirn', width: 130
                     },
                     {
                         text: 'ARN', dataIndex: 'arn', width: 150
+                    },
+                    {
+                        text: 'Ref. Number', dataIndex: 'arefnbr', width: 150
                     }
 
                 ]
             },
             {
-                text: 'Curr', dataIndex: 'scurrency', width: 60,
+                text: 'Curr', dataIndex: 'scurrency', width: 50,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;background-color:#B2DAFA";
                     return value;
@@ -192,33 +195,33 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 }
             },
             {
-                text: 'Qty<br>Tkts', dataIndex: 'qtytkt', width: 50,
+                text: 'Qty<br>Tkts', dataIndex: 'qtytkt', width: 40,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;background-color:#B2DAFA";
                     return value;
                 }
             },
             {
-                text: 'Error', width: 300,
+                text: 'Error',
                 defaults: {
                     align: 'center',
                     menuDisabled: true,
                     sortable: true
                 },
                 columns: [
-                    {text: 'Code', dataIndex: 'cerror', width: 60},
+                    {text: 'Code', dataIndex: 'cerror', width: 50},
                     {text: 'Description', dataIndex: 'des_CERROR', width: 240}
                 ]
             },
             {
-                text: 'Adjustments', width: 220,
+                text: 'Adjustments',
                 defaults: {
                     align: 'center',
                     menuDisabled: true,
                     sortable: true
                 },
                 columns: [
-                    {text: 'Code', dataIndex: 'codadju', width: 60},
+                    {text: 'Code', dataIndex: 'codadju', width: 50},
                     {text: 'Description', dataIndex: 'desc_CODADJU', width: 160}
                 ]
 

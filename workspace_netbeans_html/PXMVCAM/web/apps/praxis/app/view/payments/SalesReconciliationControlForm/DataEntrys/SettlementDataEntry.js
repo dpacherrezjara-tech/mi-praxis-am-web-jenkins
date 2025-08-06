@@ -427,10 +427,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
-                                                'A': 'Match OC/Camepa',
+//                                                'A': 'Match OC/Camepa',
                                                 'C': 'Match Complement',
-                                                'D': 'Match Balance',
-                                                'E': 'Match Duplicate Pay.',
+//                                                'D': 'Match Balance',
+                                                'E': 'Duplicate Payment',
                                                 'M': 'Match Multi-Payment',
                                                 '0': 'Stand By',
                                                 '1': 'Match',
