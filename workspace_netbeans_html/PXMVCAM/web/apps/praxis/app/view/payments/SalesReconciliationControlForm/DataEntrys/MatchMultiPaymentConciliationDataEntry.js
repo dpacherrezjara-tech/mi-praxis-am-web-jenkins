@@ -19,9 +19,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
     bodyStyle: 'background-color: white !important;',
 
     tbar: {
-        xtype: 'panel',
+        xtype: 'form',
         border: false,
         style: 'background: white',
+        id: prototype.idMP + '-viewOption',
         layout: {
             type: 'hbox',
             align: 'middle',
@@ -30,10 +31,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
         padding: 10,
         items: [
             {
+                xtype: 'textfield',
+                name: 'IN_CCUST',
+                hidden: true,
+                value: '139'
+            },
+            {
                 xtype: 'datefield',
                 margin: '0 20 0 0',
                 fieldLabel: 'From',
-                name: 'IN_FROM',
+                name: 'IN_PRDA_FROM',
                 format: 'Ymd',
                 editable: false,
                 labelWidth: 30,
@@ -44,7 +51,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                 xtype: 'datefield',
                 margin: '0 20 0 0',
                 fieldLabel: 'To',
-                name: 'IN_TO',
+                name: 'IN_PRDA_TO',
                 format: 'Ymd',
                 editable: false,
                 labelWidth: 20,
@@ -53,11 +60,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
             },
             {
                 xtype: 'textfield',
+                margin: '0 20 0 0',
+                fieldLabel: 'Ref. Number',
+                labelWidth: 75,
+                width: 220,
+                name: 'IN_AREFNBR',
+                itemId: 'IN_AREFNBR',
+                maxLength: 19,
+                maskRe: /[0-9]/,
+                enforceMaxLength: true,
+                listeners: {
+                    specialkey: 'onEnterKeyPress'
+                }
+            },
+            {
+                xtype: 'textfield',
                 fieldLabel: 'Card Number',
                 labelWidth: 80,
-                width: 140,
-                name: 'creditcard',
-                itemId: 'creditcard1',
+                width: 135,
+                name: 'IN_SCARDN1',
+                itemId: 'IN_SCARDN1',
                 maxLength: 6,
                 maskRe: /[0-9]/,
                 enforceMaxLength: true,
@@ -72,23 +94,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
             },
             {
                 xtype: 'textfield',
-                name: 'creditcard2',
-                itemId: 'creditcard2',
-                width: 40,
-                maxLength: 4,
-                maskRe: /[0-9]/,
-                enforceMaxLength: true,
+                name: 'IN_SCARDN2',
                 margin: '0 20 0 0',
+                width: 40,
+                maxLength: 4, // Límite máximo de caracteres
+                maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                 listeners: {
                     specialkey: 'onEnterKeyPress'
                 }
             },
             {
                 xtype: 'textfield',
-                margin: '0 20 0 0',
                 fieldLabel: 'Auth',
-                width: 100,
                 labelWidth: 30,
+                width: 95,
+                name: 'IN_SAUTHOC',
+                margin: '0 20 0 0',
+                maxLength: 6,
+                maskRe: /[a-zA-Z0-9]/,
+                enforceMaxLength: true,
                 listeners: {
                     specialkey: 'onEnterKeyPress'
                 }
@@ -112,8 +137,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                 fieldLabel: 'PNR',
                 labelWidth: 30,
                 margin: '0 20 0 0',
-                width: 110,
-                name: 'IN_SPNR',
+                width: 100,
+                name: 'IN_PNR',
                 maxLength: 8, // Límite máximo de caracteres
                 maskRe: /[a-zA-Z0-9]/, // Expresión regular para permitir solo números
                 enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
@@ -122,9 +147,54 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                 }
             },
             {
+                xtype: 'textfield',
+                fieldLabel: 'Transac. Amount',
+                labelWidth: 95,
+                margin: '0 20 0 0',
+                width: 220,
+                name: 'IN_AMOUNT',
+                maxLength: 15,
+                enforceMaxLength: true,
+                maskRe: /[0-9.]/, // permite solo números y punto
+//                validator: function (value) {
+//                    if (!value)
+//                        return true;
+//                    return /^\d+(\.\d{0,2})?$/.test(value)
+//                            ? true
+//                            : 'Solo se permiten números con hasta 2 decimales';
+//                },
+                listeners: {
+                    specialkey: 'onEnterKeyPress'
+                }
+            },
+            {
+                xtype: 'combobox',
+                fieldLabel: 'Doc. Type',
+                margin: '30 10 10 10',
+//                id: prototype.id + '-cmbFiltersBP',  IN_TDOC
+                store: Ext.create('Ext.data.SimpleStore', {
+                    fields: ['code', 'name'],
+                    data: [
+                        ['S', 'SALE'],
+                        ['R', 'REFUND']
+                    ]
+                }),
+                labelWidth: 60,
+                width: 150,
+                displayField: 'name',
+                valueField: 'code',
+                name: 'IN_TDOC',
+                queryMode: 'local',
+                editable: false,
+                value: 'S',
+                listeners: {
+                    change: 'onChangeFiltersBP'
+                }
+            },
+            {
                 xtype: 'button',
                 iconCls: 'prx-icon-search',
-                margin: '0 20 0 0',
+                margin: '0 40 0 0',
                 width: 25,
                 height: 25,
                 tooltip: 'Search in Grid',
@@ -161,43 +231,52 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                             flex: 1,
                             style: 'background: white',
                             columns: [
-//                                {text: 'Amount', dataIndex: 'svfops', flex: 1},
-                                {text: 'Ref. Number', dataIndex: 'arefnbr', width: 150,
+                                {text: 'Ref. Number', dataIndex: 'AREFNBR', width: 150,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+
+
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Card<br>Number', dataIndex: 'SCARDN', width: 110,
                                     renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
                                         }
                                         return value;
                                     }},
+                                {text: 'Auth<br>Code', dataIndex: 'SAUTHOC', width: 60,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'PNR', dataIndex: 'SPNR', width: 80,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+
                                 {text: 'Ticket', dataIndex: 'ticket', width: 110,
                                     renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
                                         }
-                                        return value;
+                                        const cia = record.get('CCIA') || '';
+                                        const forma = record.get('FORMA') || '';
+                                        const serie = record.get('SERIE') || '';
+
+                                        // Formato del ticket, por ejemplo: "139-FAC-A123"
+                                        const ticket = `${cia}${forma}${serie}`;
+                                        console.log('tiiii', ticket)
+                                        return ticket;
                                     }},
-                                {text: 'PNR', dataIndex: 'spnr', width: 110,
-                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
-                                        if (record.get('exist') === 'yes') {
-                                            metaData.style = "background-color: #e0e0e0;";
-                                        }
-                                        return value;
-                                    }},
-                                {text: 'Card<br>Number', dataIndex: 'scardn', width: 120,
-                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
-                                        if (record.get('exist') === 'yes') {
-                                            metaData.style = "background-color: #e0e0e0;";
-                                        }
-                                        return value;
-                                    }},
-                                {text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 110,
-                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
-                                        if (record.get('exist') === 'yes') {
-                                            metaData.style = "background-color: #e0e0e0;";
-                                        }
-                                        return value;
-                                    }},
-                                {text: 'Status', dataIndex: 'stval', width: 180,
+                                {text: 'Status', dataIndex: 'STVAL', width: 120,
                                     renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         const opts = {
 //                                            'A': 'Match OC/Camepa',
@@ -219,42 +298,42 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                         metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                                         return result;
                                     }},
-                                {text: 'Currency', dataIndex: 'scurrency', width: 100,
+                                {text: 'Currency', dataIndex: 'SCURRENCY', width: 80,
                                     renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
                                         }
                                         return value;
                                     }},
-                                {text: 'Doc. Type', dataIndex: 'transtype', width: 90,
+                                {text: 'Doc.<br>Type', dataIndex: 'TDOC', width: 50,
                                     renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
                                         }
                                         return value;
                                     }},
-                                {text: 'Trans.<br>Amount', dataIndex: 'tgrosamoun', width: 110,
+                                {text: 'Trans.<br>Amount', dataIndex: 'TGROSAMOUN', width: 110,
                                     renderer: function (value, metaData, record) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
                                         }
                                         return Ext.util.Format.number(value, '0,000.00');
                                     }},
-                                {text: 'Sale<br>Amount', dataIndex: 'svfops', width: 110,
+                                {text: 'Sale<br>Amount', dataIndex: 'SVFOPS', width: 110,
                                     renderer: function (value, metaData, record) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
                                         }
                                         return Ext.util.Format.number(value, '0,000.00');
                                     }},
-                                {text: 'Diff.<br>Amount', dataIndex: 'difference', width: 110,
+                                {text: 'Diff.<br>Amount', dataIndex: 'DIFFERENCE', width: 110,
                                     renderer: function (value, metaData, record) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
                                         }
                                         return Ext.util.Format.number(value, '0,000.00');
                                     }},
-                                {text: 'Exist', dataIndex: 'exist', width: 110,
+                                {text: 'Exist', dataIndex: 'exist', width: 110, hidden: true,
                                     renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
@@ -274,10 +353,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                             tooltip: 'Open Detail',
                                             handler: 'onClickDelete',
                                             getClass: function (v, meta, record) {
-                                                // Esto oculta visualmente el ícono si es 'yes'
+                                                if (record.get('exist') === 'yes') {
+                                                    metaData.style = "background-color: #e0e0e0;";
+                                                }
                                                 return record.get('exist') === 'yes' ? 'x-hide-display' : 'prx-icon-clear';
-                                            }
-                                        }
+                                            },
+                                        },
                                     ]
                                 },
                             ],
@@ -288,16 +369,39 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                 type: 'hbox',
                                 pack: 'end'
                             },
+                            padding: 10,
+                            margin: '10 0 0 0',
+                            style: {
+                                border: '1px solid #ccc',
+                                borderRadius: '5px',
+                                backgroundColor: '#f9f9f9'
+                            },
                             items: [
                                 {
                                     xtype: 'displayfield',
-                                    fieldLabel: 'Total Liquidation',
+                                    fieldLabel: 'Transaction Amount',
+                                    itemId: 'TGROSAMOUN_LIQUIDATION', // importante para que puedas consultarlo con ComponentQuery
+                                    width: 250,
+                                    value: '0.00',
+                                    labelWidth: 130,
+                                    margin: '20 0 0 0',
+                                    style: 'text-align: right',
+//                                    fieldStyle: 'text-align: right; font-weight: bold;'
+                                    labelStyle: 'font-weight: bold;'
+
+                                },
+
+                                {
+                                    xtype: 'displayfield',
+                                    fieldLabel: 'Sale Amount',
                                     labelWidth: 100,
-                                    itemId: 'liquidationTotal',
+                                    itemId: 'SVFOPS_LIQUIDATION',
                                     width: 200,
                                     value: '0.00',
-                                    margin: '10 0 0 0',
-                                    style: 'text-align: right'
+                                    margin: '20 0 0 0',
+                                    style: 'text-align: right',
+//                                    fieldStyle: 'text-align: right; font-weight: bold;'
+                                    labelStyle: 'font-weight: bold;'
                                 }
                             ]
                         }
@@ -319,48 +423,52 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                             id: prototype.idMP + '-grid-ticket',
                             style: 'background: white',
                             columns: [
-//                                {text: 'Amount', dataIndex: 'svfops', flex: 1},
-                                {text: 'Ref. Number', dataIndex: 'arefnbr', width: 150,
+                                {text: 'Ref. Number', dataIndex: 'AREFNBR', width: 150,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+
+
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'Card<br>Number', dataIndex: 'SCARDN', width: 110,
                                     renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
                                         }
                                         return value;
                                     }},
+                                {text: 'Auth<br>Code', dataIndex: 'SAUTHOC', width: 60,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+                                {text: 'PNR', dataIndex: 'SPNR', width: 80,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        return value;
+                                    }},
+
                                 {text: 'Ticket', dataIndex: 'ticket', width: 110,
-                                    renderer: function (value, metaData, record) {
-                                        const ccia = record.get('ccia') || '';
-                                        const form = record.get('forma') || '';
-                                        const serie = record.get('serie') || '';
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
+                                        if (record.get('exist') === 'yes') {
+                                            metaData.style = "background-color: #e0e0e0;";
+                                        }
+                                        const cia = record.get('CCIA') || '';
+                                        const forma = record.get('FORMA') || '';
+                                        const serie = record.get('SERIE') || '';
 
-                                        if (record.get('exist') === 'yes') {
-                                            metaData.style = "background-color: #e0e0e0;";
-                                        }
-
-                                        return `${ccia}${form}${serie}`;
+                                        // Formato del ticket, por ejemplo: "139-FAC-A123"
+                                        const ticket = `${cia}${forma}${serie}`;
+                                        console.log('tiiii', ticket)
+                                        return ticket;
                                     }},
-                                {text: 'PNR', dataIndex: 'spnr', width: 110,
-                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
-                                        if (record.get('exist') === 'yes') {
-                                            metaData.style = "background-color: #e0e0e0;";
-                                        }
-                                        return value;
-                                    }},
-                                {text: 'Card<br>Number', dataIndex: 'scardn', width: 120,
-                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
-                                        if (record.get('exist') === 'yes') {
-                                            metaData.style = "background-color: #e0e0e0;";
-                                        }
-                                        return value;
-                                    }},
-                                {text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 110,
-                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
-                                        if (record.get('exist') === 'yes') {
-                                            metaData.style = "background-color: #e0e0e0;";
-                                        }
-                                        return value;
-                                    }},
-                                {text: 'Status', dataIndex: 'stval', width: 110,
+                                {text: 'Status', dataIndex: 'STVAL', width: 120,
                                     renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         const opts = {
 //                                            'A': 'Match OC/Camepa',
@@ -382,60 +490,81 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                                         metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                                         return result;
                                     }},
-                                {text: 'Currency', dataIndex: 'scurrency', width: 100,
+                                {text: 'Currency', dataIndex: 'SCURRENCY', width: 80,
                                     renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
                                         }
                                         return value;
                                     }},
-                                {text: 'Doc. Type', dataIndex: 'transtype', width: 90,
+                                {text: 'Doc.<br>Type', dataIndex: 'TDOC', width: 50,
                                     renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
                                         }
                                         return value;
                                     }},
-                                {text: 'Trans.<br>Amount', dataIndex: 'tgrosamoun', width: 110,
+                                {text: 'Trans.<br>Amount', dataIndex: 'TGROSAMOUC', width: 110,
                                     renderer: function (value, metaData, record) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
                                         }
                                         return Ext.util.Format.number(value, '0,000.00');
                                     }},
-                                {text: 'Sale<br>Amount', dataIndex: 'svfops', width: 110,
+                                {text: 'Sale<br>Amount', dataIndex: 'SVFOPS', width: 110,
                                     renderer: function (value, metaData, record) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
                                         }
                                         return Ext.util.Format.number(value, '0,000.00');
                                     }},
-                                {text: 'Diff.<br>Amount', dataIndex: 'difference', width: 110,
-                                    renderer: function (value, metaData, record) {
+                                {text: 'Exist', dataIndex: 'exist', width: 110, hidden: true,
+                                    renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         if (record.get('exist') === 'yes') {
                                             metaData.style = "background-color: #e0e0e0;";
                                         }
-                                        return Ext.util.Format.number(value, '0,000.00');
+                                        return value;
                                     }},
-                                {text: 'Exist', dataIndex: 'exist', width: 110, },
-                            ]
+                            ],
                         },
                         {
                             xtype: 'container',
+                            border: true,
                             layout: {
                                 type: 'hbox',
                                 pack: 'end'
                             },
+                            padding: 10,
+                            margin: '10 0 0 0',
+                            style: {
+                                border: '1px solid #ccc',
+                                borderRadius: '5px',
+                                backgroundColor: '#f9f9f9'
+                            },
                             items: [
                                 {
                                     xtype: 'displayfield',
-                                    fieldLabel: 'Total Tickets',
+                                    fieldLabel: 'Transaction Amount',
+                                    labelWidth: 130,
+                                    itemId: 'TGROSAMOUN_TICKET',
+                                    width: 250,
+                                    value: '0.00',
+                                    margin: '20 0 0 0',
+                                    style: 'text-align: right',
+                                    labelStyle: 'font-weight: bold;'
+//                                    fieldStyle: 'text-align: right; font-weight: bold;'
+                                },
+                                {
+                                    xtype: 'displayfield',
+                                    fieldLabel: 'Sale Amount',
                                     labelWidth: 100,
-                                    itemId: 'liquidationTotal2',
+                                    itemId: 'SVFOPS_TICKET',
                                     width: 200,
                                     value: '0.00',
-                                    margin: '10 0 0 0',
-                                    style: 'text-align: right'
+                                    margin: '20 0 0 0',
+                                    style: 'text-align: right',
+//                                    fieldStyle: 'text-align: right; font-weight: bold;'
+                                    labelStyle: 'font-weight: bold;'
                                 }
                             ]
                         }
@@ -456,7 +585,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
             items: [
                 {
                     text: 'Save',
-                    id: prototype.idMatch2 + '-saveTicketBtn',
+                    id: prototype.idMP + '-saveTicketBtn',
                     hidden: true,
                     iconCls: 'prx-icon-save',
                     listeners: {click: 'onSaveTicket'}

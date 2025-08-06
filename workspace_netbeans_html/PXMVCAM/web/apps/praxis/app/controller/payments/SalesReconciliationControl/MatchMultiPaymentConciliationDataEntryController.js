@@ -7,23 +7,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MatchMulti
     init: function (view) {
         // Por ahora vacío
         const me = this;
-        console.log('me', me);
-        console.log('info desde la vista:', me.view.info);
-        console.log('desglose desde la vista:', me.view.desglose);
     },
 
     afterRender: async function () {
         const me = this;
         console.log('meeee', me)
-        this.fillIni();
-//        me.view.setLoading(true);
-//        await me.getData(me.view);
-//        this.getData();
-//        me.view.setLoading(false);
-//         console.log('info render',info)
+        await this.fillIni();
     },
 
-    fillIni: function () {
+    fillIni: async function () {
         console.log('fillIni', )
         const me = this;
 
@@ -33,124 +25,257 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MatchMulti
         gridLiquidation.setLoading(true);
         gridTicket.setLoading(true);
 
-//        
+        me.initialInfo = me.view.info || [];
 
-        if (Array.isArray(me.view.info)) {
-            me.view.info.forEach((item, index) => {item.exist = 'yes';});
-        } else if (typeof me.view.info === 'object' && me.view.info !== null) {
-            me.view.info.exist = 'yes';
+//        prda , transtype, arefnbr
+
+        const params = {
+            IN_CCUST: '139',
+            IN_PRDA_FROM: me.view.info.prda,
+            IN_PNR: '',
+            IN_PRDA_TO: me.view.info.prda,
+            IN_AREFNBR: me.view.info.arefnbr,
+            IN_TDOC: me.view.info.tdoc,
+            IN_SCARDN1: '',
+            IN_SCARDN2: '',
+            IN_SAUTHOC: '',
+            IN_TICKET: '',
+            IN_AMOUNT: '',
+
+        };
+
+
+
+
+        const res = await global.callStoreGet('PRAXISMP', 'SQP05693 ', params);
+
+        console.log('res', res);
+        const data = res.lstRs?.at(0)?.at(0) || {};
+        const liquidacion = res.lstRs?.[0] || {};
+        const tickets = res.lstRs?.[1] || {};
+        const monto = res.lstRs?.[2] || {};  //diferencias
+
+
+        me.dataIni = liquidacion;
+        
+        if (Array.isArray(liquidacion)) {
+            liquidacion.forEach((item, index) => {
+                item.exist = 'yes';
+            });
+        } else if (typeof liquidacion === 'object' && liquidacion !== null) {
+            liquidacion.exist = 'yes';
         }
 
-
-        if (Array.isArray(me.view.desglose)) {
-            me.view.desglose.forEach((item, index) => {item.exist = 'yes';});
-        } else if (typeof me.view.desglose === 'object' && me.view.desglose !== null) {
-            me.view.desglose.exist = 'yes';
+        if (Array.isArray(tickets)) {
+            tickets.forEach((item, index) => {
+                item.exist = 'yes';
+            });
+        } else if (typeof tickets === 'object' && tickets !== null) {
+            tickets.exist = 'yes';
         }
-        
-        
-        let info = new Ext.data.Store({data: me.view.info});
-        let desglose = new Ext.data.Store({data: me.view.desglose});
 
-//        me.view.info.forEach(item => item.exist = 'yes');
-//        me.view.info.exist = 'yes';
+        let liquidationIni = new Ext.data.Store({data: liquidacion});
+        let ticketIni = new Ext.data.Store({data: tickets});
 
-        gridLiquidation.setStore(info);
-        gridTicket.setStore(desglose);
+
+        gridLiquidation.setStore(liquidationIni);
+        gridTicket.setStore(ticketIni);
         gridLiquidation.setLoading(false);
         gridTicket.setLoading(false);
 
+        this.updateDisplaySum(prototype.idMP + '-grid-liquidation', 'TGROSAMOUN', 'TGROSAMOUN_LIQUIDATION');
+        this.updateDisplaySum(prototype.idMP + '-grid-liquidation', 'SVFOPS', 'SVFOPS_LIQUIDATION');
 
+        this.updateDisplaySum(prototype.idMP + '-grid-ticket', 'TGROSAMOUN', 'TGROSAMOUN_TICKET');
+        this.updateDisplaySum(prototype.idMP + '-grid-ticket', 'SVFOPS', 'SVFOPS_TICKET');
 
     },
 
-    getData: function (view) {
-        console.log('get data')
-        try {
-//            const res = await global.callStoreGet('PRAXISMP', 'SQP05645', view.searchParams);
-//            const data = res.lstRs?.at(0)?.at(0) || {};
-//            console.log('data', data);
-//
-//            // Guarda para el update
-//            this.ticketData = data;
-//
-////            const form = Ext.getCmp(prototype.idDE + '-informationForm').getForm();
-//            const form = this.lookupReference('informationForm').getForm();
-//            form.setValues({
-//                ...data,
-//                TGROSAMOUN: Ext.util.Format.number(data.TGROSAMOUN, '0,000.00'),
-//                SALDO: Ext.util.Format.number(data.SALDO, '0,000.00'),
-//                proceedStatus: data.STPROCEDE
-//            });
-//            this.bindData();
+    onSearchTransaction: async function (view) {
+        console.log('get data', view);
 
-            const me = this;
-
-            const nuevos = 'llamada servicio'
-
-            const nuevosInfo = nuevos.info.map(item => ({
-                    ...item,
-                    exist: 'no'
-                }));
-
-            const nuevosDesglose = nuevos.desglose.map(item => ({
-                    ...item,
-                    exist: 'no'
-                }));
-
-            // Agregarlos al final del store actual
-            const gridLiquidation = Ext.getCmp(prototype.idMP + '-grid-liquidation');
-            const gridTicket = Ext.getCmp(prototype.idMP + '-grid-ticket');
-
-            gridLiquidation.getStore().add(nuevosInfo);
-            gridTicket.getStore().add(nuevosDesglose);
-
-
-        } catch (e) {
-            console.error(e);
-        }
-    },
-
-    onUpdateClick: async function () {
         const me = this;
-        me.view.setLoading(true);
+
+        console.log('me.bean', me);
+
+        const gridLiquidation = Ext.getCmp(prototype.idMP + '-grid-liquidation');
+        const gridTicket = Ext.getCmp(prototype.idMP + '-grid-ticket');
+
+        const buttonSave = Ext.getCmp(prototype.idMP + '-saveTicketBtn');
 
         try {
-//            const form = Ext.getCmp(prototype.idDE + '-informationForm').getForm();
-            const form = this.lookupReference('informationForm').getForm();
-            const selectedStatus = form.getValues().proceedStatus;
 
-            const params = {
-                IN_CCUST: me.ticketData.CCUST,
-                IN_CCIA: me.ticketData.CCIA,
-                IN_FORMA: me.ticketData.FORMA,
-                IN_SERIE: me.ticketData.SERIE,
-                IN_SEQ: me.ticketData.SEQ,
-                IN_CORRL: me.ticketData.CORRL,
-                IN_TDOCVTA: me.ticketData.TDOCVTA,
-                IN_SEQROLL: me.ticketData.SEQROLL,
-                IN_TDOC: me.ticketData.TDOC,
-                IN_PRDA: me.ticketData.PRDA,
-                IN_AREFNBR: me.ticketData.AREFNBR,
-                IN_STPROCEDE: selectedStatus
-            };
 
-//            console.log('Params para guardar:', params);
-            const res = await global.callStorePost('PRAXISMP', 'SQP05650', params);
-            const {lstVals} = res.data;
-            new AWN().success(lstVals.OUT_MSG);
-            this.view.close();
+
+            gridLiquidation.setLoading(true);
+            gridTicket.setLoading(true);
+
+            const form = Ext.getCmp(prototype.idMP + '-viewOption');
+            const values = form.getForm().getValues();  //obtiene datos del form para la busqeuda
+
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05693 ', values);
+
+            console.log('res', res);
+            const data = res.lstRs?.at(0)?.at(0) || {};
+            const liquidacion = res.lstRs?.[0] || {};
+            const tickets = res.lstRs?.[1] || {};
+            const monto = res.lstRs?.[2] || {};
+
+            console.log('data store', data);
+            console.log('data store', liquidacion);
+            console.log('data tickets', tickets);
+            console.log('data monto', monto);
+
+
+
+            let nuevosLiquidacion;
+            let nuevoTicket;
+
+            if (Array.isArray(liquidacion)) {
+                nuevosLiquidacion = liquidacion.map(item => ({
+                        ...item,
+                        exist: 'no'
+                    }));
+            } else if (typeof liquidacion === 'object' && liquidacion !== null && liquidacion !== null) {
+                nuevosLiquidacion = {
+                    ...liquidacion,
+                    exist: 'no'
+                };
+            }
+
+
+            if (Array.isArray(tickets)) {
+                nuevoTicket = tickets.map(item => ({
+                        ...item,
+                        exist: 'no'
+                    }));
+            } else if (typeof tickets === 'object' && tickets !== null && tickets !== null) {
+                nuevoTicket = {
+                    ...tickets,
+                    exist: 'no'
+                };
+            }
+
+
+            console.log('nuevosLiquidacion:', nuevosLiquidacion);
+            console.log('nuevoTicket:', nuevoTicket);
+
+
+//            const store = Ext.getCmp(prototype.idMP + '-grid-liquidation').getStore();
+
+
+            const store = gridLiquidation.getStore();
+            console.log('store', store);
+            const arefnbrsExistentes = store.getRange().map(rec => rec.get('AREFNBR'));
+            console.log('existennnn', arefnbrsExistentes);
+
+            const nuevoAreFnbr = nuevosLiquidacion[0].AREFNBR;
+            console.log('nuevoAreFnbr', nuevoAreFnbr);
+
+
+            if (arefnbrsExistentes.includes(nuevoAreFnbr)) {
+                global.Msg({msg: 'Este registro ya fue agregado.'});
+            } else {
+                console.log('Se agrega nuevo');
+                gridLiquidation.getStore().add(nuevosLiquidacion);
+                gridTicket.getStore().add(nuevoTicket);
+                buttonSave.show();
+            }
+
+            console.log('getTODO', gridLiquidation.getStore());
+
+            gridLiquidation.setLoading(false);
+            gridTicket.setLoading(false);
+
+            this.updateDisplaySum(prototype.idMP + '-grid-liquidation', 'TGROSAMOUN', 'TGROSAMOUN_LIQUIDATION');
+            this.updateDisplaySum(prototype.idMP + '-grid-liquidation', 'SVFOPS', 'SVFOPS_LIQUIDATION');
+
+            this.updateDisplaySum(prototype.idMP + '-grid-ticket', 'TGROSAMOUN', 'TGROSAMOUN_TICKET');
+            this.updateDisplaySum(prototype.idMP + '-grid-ticket', 'SVFOPS', 'SVFOPS_TICKET');
+
+
+
         } catch (e) {
             console.error(e);
-            new AWN().alert('Error');
-        } finally {
-            me.view.setLoading(false);
-            me.getData(me.view);
+            gridLiquidation.setLoading(false);
+            gridTicket.setLoading(false);
         }
     },
 
+    
     onCancelClick: function () {
         this.view.close();
     },
 
+    onClickDelete: function (grid, rowIndex) {
+        const me = this;
+        const liquidationGrid = grid;
+        const liquidationStore = liquidationGrid.getStore();
+        const liquidationRecord = liquidationStore.getAt(rowIndex);
+
+        if (!liquidationRecord)
+            return;
+
+        const refToDelete = liquidationRecord.get('AREFNBR');
+
+        const liquidationToRemove = liquidationStore.getRange().filter(record => {
+            return record.get('AREFNBR') === refToDelete;
+        });
+        liquidationStore.remove(liquidationToRemove);
+
+        const gridTicket = Ext.getCmp(prototype.idMP + '-grid-ticket');
+        const ticketStore = gridTicket.getStore();
+
+        const ticketToRemove = ticketStore.getRange().filter(record => {
+            return record.get('AREFNBR') === refToDelete;
+        });
+        ticketStore.remove(ticketToRemove);
+
+        this.updateDisplaySum(prototype.idMP + '-grid-liquidation', 'TGROSAMOUN', 'TGROSAMOUN_LIQUIDATION');
+        this.updateDisplaySum(prototype.idMP + '-grid-liquidation', 'SVFOPS', 'SVFOPS_LIQUIDATION');
+        this.updateDisplaySum(prototype.idMP + '-grid-ticket', 'TGROSAMOUN', 'TGROSAMOUN_TICKET');
+        this.updateDisplaySum(prototype.idMP + '-grid-ticket', 'SVFOPS', 'SVFOPS_TICKET');
+
+        // Verificar si quedan solo registros originales
+        const dataIniAREFNBR = (me.dataIni || []).map(item => item.AREFNBR?.trim());
+        const currentAREFNBRs = liquidationStore.getRange().map(rec => rec.get('AREFNBR')?.trim());
+
+        const tieneExtras = currentAREFNBRs.some(ref => !dataIniAREFNBR.includes(ref));
+
+        const buttonSave = Ext.getCmp(prototype.idMP + '-saveTicketBtn');
+        if (!tieneExtras) {
+            buttonSave.hide();
+        } else {
+            buttonSave.show();
+        }
+
+    },
+
+    onSaveTicket: function () {
+        console.log('save');
+
+    },
+
+    updateDisplaySum: function (gridId, dataFieldName, displayFieldItemId) {
+        const store = Ext.getCmp(gridId)?.getStore();
+
+        if (!store) {
+            console.warn(`[updateDisplaySum] Store no encontrado para grid: ${gridId}`);
+            return;
+        }
+
+        const values = store.getRange().map(rec => Number(rec.get(dataFieldName)) || 0);
+        console.log('values', values);
+        const total = values.reduce((acc, val) => acc + val, 0);
+        console.log('total', total);
+
+        const field = Ext.ComponentQuery.query('#' + displayFieldItemId)[0];
+        console.log('field', field);
+
+        if (field && typeof field.setValue === 'function') {
+            field.setValue(Ext.util.Format.number(total, '0,000.00'));
+        } else {
+            console.warn(`[updateDisplaySum] Displayfield con itemId "${displayFieldItemId}" no encontrado o inválido`);
+        }
+    }
 });
