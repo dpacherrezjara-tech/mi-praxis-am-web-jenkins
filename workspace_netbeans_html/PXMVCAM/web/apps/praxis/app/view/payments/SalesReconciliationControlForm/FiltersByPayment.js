@@ -706,6 +706,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    id: prototype.id + '-cmbAutoComment',
+                                    fieldLabel: 'Auto. Comment',
+                                    name: 'IN_CODEAUTOCOMMENT',
+                                    labelWidth: 100,
+                                    width: 320,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
                                 }
                             ]
                         }

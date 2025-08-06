@@ -118,6 +118,8 @@ public class SalesReconciliationBPOController {
             model.put("paises", webFilters.getPAISES());
             model.put("monedas", webFilters.getMONEDAS());
             model.put("admins", webFilters.getADMINS());
+            model.put("stvals", webFilters.getSTVALS());
+            model.put("autocomments", webFilters.getAUTOCOMMENTS());
             System.out.println("Total: " + model.size());
             return new ResponseEntity<>(model, HttpStatus.OK);
         } catch (Exception e) {

@@ -202,7 +202,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 }
             },
             {
-                text: 'Error', width: 300,
+                text: 'Error',
                 defaults: {
                     align: 'center',
                     menuDisabled: true,
@@ -214,7 +214,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 ]
             },
             {
-                text: 'Adjustments', width: 220,
+                text: 'Adjustments',
                 defaults: {
                     align: 'center',
                     menuDisabled: true,
