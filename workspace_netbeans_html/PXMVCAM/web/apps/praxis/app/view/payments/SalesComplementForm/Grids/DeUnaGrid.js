@@ -56,7 +56,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.DeUnaGrid', {
                 },
                 columns: [
                     {
-                        text: 'Number', dataIndex: 'A4791CARDN', width: 120
+                        text: 'Number', dataIndex: 'SCARDN', width: 120,
                     },
                     {
                         text: 'Auth.', dataIndex: 'A4791AUTH', width: 80
@@ -72,7 +72,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.DeUnaGrid', {
                     },
                 ]
             },
-             {
+            {
                 text: 'Merchand',
                 defaults: {
                     menuDisabled: true,
@@ -149,7 +149,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.DeUnaGrid', {
                 text: 'Date Create', dataIndex: 'A4791FECPG', width: 180
             },
             {
-                text: 'Status', dataIndex: 'A4791STATU', width:90
+                text: 'Status', dataIndex: 'A4791STATU', width: 90
             },
             {
                 text: 'Currency', dataIndex: 'A4791CURRE', width: 100
