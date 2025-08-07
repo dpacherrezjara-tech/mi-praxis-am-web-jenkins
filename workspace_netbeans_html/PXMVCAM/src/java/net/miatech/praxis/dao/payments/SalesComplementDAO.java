@@ -52,27 +52,32 @@ public class SalesComplementDAO implements SalesComplementLogic {
         Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP04979", params,
                 new BeanPropertyRowMapper<>(A4453Filter.class));
         List<A4453Filter> response = (List<A4453Filter>) obj.get("result");
-        for (A4453Filter bean : response) {
-            //descSTVAL
-            if (bean.getSTVAL().trim().equals("")) {
-                bean.setDescSTVAL("Pending");
-            } else if (bean.getSTVAL().equals("1") && bean.getSTCON().trim().equals("")) {
-                bean.setDescSTVAL("Match");
-            } else if (bean.getSTVAL().equals("1") && bean.getSTCON().equals("2")) {
-                bean.setDescSTVAL("Accounted");
-            }
-            //descFAMEXCHG
-            if (bean.getFAMEXCHG().equals("1")) {
-                bean.setDescFAMEXCHG("Match");
-            }
-            //descFAMEX
-            if (bean.getFAMEX().trim().equals("")) {
-                bean.setDescFAMEX("Pending");
-            } else if (bean.getFAMEX().equals("1")) {
-                bean.setDescFAMEX("Match");
-                bean.setPASSED_DAYS("00");
-            }
-        }
+//        for (A4453Filter bean : response) {
+//            //descSTVAL
+//            if (bean.getSTVAL().trim().equals("")) {
+//                bean.setDescSTVAL("Pending");
+//            } else if (bean.getSTVAL().equals("1") && bean.getSTCON().trim().equals("") ) {
+//                bean.setDescSTVAL("Match");
+//                bean.setDescVSSales(bean.getFECSELEC()); 
+//            } else if (bean.getSTVAL().equals("1") && bean.getSTCON().equals("1") ) {
+//                bean.setDescSTVAL("Accounted");
+//                bean.setDescVSSales(bean.getFECSELEC());
+//            } else if (bean.getSTVAL().equals("4") && bean.getSTCON().trim().equals("") ) {
+//                bean.setDescSTVAL("Match Diference");
+//                bean.setDescVSSales(bean.getFECSELEC()); 
+//            }
+//            //descFAMEXCHG
+//            if (bean.getFAMEXCHG().equals("1")) {
+//                bean.setDescFAMEXCHG("Match");
+//            }
+//            //descFAMEX
+//            if (bean.getFAMEX().trim().equals("")) {
+//                bean.setDescFAMEX("Pending");
+//            } else if (bean.getFAMEX().equals("1")) {
+//                bean.setDescFAMEX("Match");
+//                bean.setPASSED_DAYS("00");
+//            }
+//        }}
         filter.setResult(response);
         filter.setPageOut(obj);
         return filter;

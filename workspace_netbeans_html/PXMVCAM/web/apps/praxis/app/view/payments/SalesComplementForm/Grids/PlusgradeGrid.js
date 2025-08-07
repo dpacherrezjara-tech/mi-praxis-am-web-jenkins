@@ -26,7 +26,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                 text: 'Plusgrade ID', dataIndex: 'PLUSGRAID', width: 85
             },
             {
-                text: 'Merchant', dataIndex: 'MERCHID', width: 90
+                text: 'Merchant', dataIndex: 'MERCHID', width: 110
             },
             {
                 text: 'Processing',
@@ -60,8 +60,24 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                     }
                 ]
             },
+//            {
+//                text: 'Plusgrade',
+//                defaults: {
+//                    menuDisabled: true,
+//                    sortable: false,
+//                    align: 'center'
+//                },
+//                columns: [
+//                    {
+//                        text: 'VS AMEX', dataIndex: 'DESCFAMEX', width: 80
+//                    },
+//                    {
+//                        text: 'VS Sales', dataIndex: 'DESCSTVAL', width: 80
+//                    },
+//                ]
+//            },
             {
-                text: 'Plusgrade',
+                text: 'Plusgrade VS AMEX',
                 defaults: {
                     menuDisabled: true,
                     sortable: false,
@@ -69,13 +85,30 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                 },
                 columns: [
                     {
-                        text: 'VS AMEX', dataIndex: 'DESCFAMEX', width: 80
+                        text: 'Status', dataIndex: 'DESCFAMEX', width: 80
                     },
                     {
-                        text: 'VS Sales', dataIndex: 'DESCSTVAL', width: 80
-                    },
+                        text: 'Date', dataIndex: 'AMEXFECSELEC', width: 80
+                    }
                 ]
             },
+            {
+                text: 'Plusgrade VS Sales',
+                defaults: {
+                    menuDisabled: true,
+                    sortable: false,
+                    align: 'center'
+                },
+                columns: [
+                    {
+                        text: 'Status', dataIndex: 'DESCSTVAL', width: 80
+                    },
+                    {
+                        text: 'Date', dataIndex: 'DESCVSSALES', width: 80
+                    }
+                ]
+            },
+
             {
                 text: 'Sales',
                 defaults: {
@@ -338,7 +371,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                 ]
             },
             {
-                text: 'Token', dataIndex: 'PAYTOKEN', width: 140,
+                text: 'Token', dataIndex: 'PAYTOKEN', width: 150,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     value = '<b>' + value + '</b>';
                     metaData.style = "text-align:center;";

@@ -23,19 +23,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
     copySPNR: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         navigator.clipboard.writeText(rowData.data.PNR.trim());
         global.Msg({
-            msg: 'SPNR Copied to clipboard!: ' + rowData.data.pnr.trim()
+            msg: 'SPNR Copied to clipboard!: ' + rowData.data.PNR.trim()
         });
     },
-    
-    
-    
     
     
     onClickSearchTicket: function (grid, html, rowIndex, colIndex, obj) {
         let data = obj.record.data;
         console.log(data);
-        let strTkt = data.emdnumber || data.tkt;
-        let strSeq = data.seq || '00';
+        let strTkt = data.EMDNUMBER || data.TKT;
+        let strSeq = data.SEQ || '00';
         if (!strTkt) {
             return;
         }
