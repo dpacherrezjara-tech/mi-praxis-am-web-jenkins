@@ -65,7 +65,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.DeUnaGrid', {
                         text: 'Issue.', dataIndex: 'A4791ISSBK', width: 80
                     },
                     {
-                        text: 'Method<br>Type', dataIndex: 'METHOD_TYPE', width: 80
+                        text: 'Method<br>Type', dataIndex: 'A4791MTYPE', width: 80
                     },
                     {
                         text: 'Card Brand', dataIndex: 'A4791CARDB', width: 80
