@@ -2768,13 +2768,21 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                                             },
                                                                             items: [
                                                                                 {
-                                                                                    xtype: 'textfield',
+                                                                                    xtype: 'checkboxfield',
                                                                                     id: prototype.id + '-lblChargeback',
-                                                                                    value: '',
+                                                                                    boxLabel: '<strong style="color:#0B333C;">Clarification</strong>',
+                                                                                    checked: true,
                                                                                     readOnly: true,
-                                                                                    fieldStyle: 'color:#ff0000;font-weight:bold;text-align:center;font-size:20px',
-                                                                                    width: 150
+                                                                                    width: 120
                                                                                 }
+//                                                                                {
+//                                                                                    xtype: 'textfield',
+//                                                                                    id: prototype.id + '-lblChargeback',
+//                                                                                    value: '',
+//                                                                                    readOnly: true,
+//                                                                                    fieldStyle: 'color:#ff0000;font-weight:bold;text-align:center;font-size:20px',
+//                                                                                    width: 150
+//                                                                                }
                                                                             ]
                                                                         }
                                                                     ]
