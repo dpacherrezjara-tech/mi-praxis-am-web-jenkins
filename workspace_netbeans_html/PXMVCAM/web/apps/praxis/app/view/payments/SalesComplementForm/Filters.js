@@ -61,7 +61,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
                                         data: [
-                                            ['SDATE', 'Sale Date']
+                                            ['PRDA', 'Processing Date'],
+                                            ['SDATE', 'Sale Date'],
+                                            ['FECSELEC', 'Match Date Sales'],
+                                            ['AMEXFECSELEC', 'Match Date Amex']
                                         ]
                                     }),
                                     labelWidth: 50,
@@ -164,7 +167,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     xtype: 'textfield',
                                     fieldLabel: 'PNR',
                                     labelWidth: 60,
-                                    width: 130,
+                                    width: 120,
                                     name: 'IN_PNR',
                                     //allowBlank: false, // Puedes configurar esto para requerir un valor
                                     maxLength: 6, // Límite máximo de caracteres
@@ -183,10 +186,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     fieldLabel: 'Country',
                                     labelWidth: 65,
                                     labelAlign: 'right',
-                                    width: 200,
+                                    width: 220,
                                     typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''

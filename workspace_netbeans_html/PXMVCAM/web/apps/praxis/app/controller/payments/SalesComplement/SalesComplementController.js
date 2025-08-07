@@ -7,7 +7,51 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
     searchUrl: null,
     gridType: 'P',
     afterRender: async function (obj, e) {
-       
+       this.loadFilters();
+    },
+    loadFilters: async function(){
+        try {
+            // filters Plusgrade
+            const me = this;
+            const res = await global.callStoreGet('PRAXISMP','SQP05016');
+            const data = res.lstRs[0] || {};
+            
+            const filterCountry = Ext.getCmp(prototype.id + '-cmbPaisesPG');
+
+            filterCountry.suspendEvents(false);
+            filterCountry.bindStore(me.createComboStore({data: data, valueField: 'CODE', displayField: 'NAME'}));
+            filterCountry.setValue('');
+            filterCountry.resumeEvents();
+            
+        } catch (e) {
+            console.log(e);
+        }
+    },
+    createComboStore: function ( {data, valueField, displayField}) {
+        //crea record vacio
+        let allRecord = {};
+        allRecord[displayField] = 'All';
+        allRecord[valueField] = '';
+        //limpia record de data
+        data.forEach(obj => {
+            for (let attr in obj) {
+                if (typeof obj[attr] === 'string') {
+                    obj[attr] = obj[attr].trimEnd();
+                }
+            }
+        });
+        //crea Store
+        let store = me.createStore({data: data});
+        //inserta record vacio
+        store.insert(0, allRecord);
+        return store;
+    },
+    createStore: function ( {data}){
+        return Ext.create('Ext.data.Store', {
+            autoLoad: true,
+            data: data,
+            pageSize: 20
+        });
     },
     onChangeModule: function(btn){
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent');

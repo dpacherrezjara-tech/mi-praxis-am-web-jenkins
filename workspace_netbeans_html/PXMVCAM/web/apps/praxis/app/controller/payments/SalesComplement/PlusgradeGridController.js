@@ -23,19 +23,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
     copySPNR: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         navigator.clipboard.writeText(rowData.data.PNR.trim());
         global.Msg({
-            msg: 'SPNR Copied to clipboard!: ' + rowData.data.pnr.trim()
+            msg: 'SPNR Copied to clipboard!: ' + rowData.data.PNR.trim()
         });
     },
-    
-    
-    
     
     
     onClickSearchTicket: function (grid, html, rowIndex, colIndex, obj) {
         let data = obj.record.data;
         console.log(data);
-        let strTkt = data.emdnumber || data.tkt;
-        let strSeq = data.seq || '00';
+        let strTkt = data.EMDNUMBER || data.TKT;
+        let strSeq = data.SEQ || '00';
         if (!strTkt) {
             return;
         }
@@ -79,7 +76,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
            'Processing Date': x.PRDA,
            'Diff Days': x.PASSED_DAYS,
            'Plusgrade VS AMEX': x.DESCFAMEX,
+           'Match Date (Plusgrade VS Amex)': x.AMEXFECSELEC,
            'Plusgrade VS Sales': x.DESCSTVAL,
+           'Match Date (Plusgrade VS Sales)': x.DESCVSSALES,
            'Sales Country': x.COUNTRY,
            'Sales Date': x.SDATE,
            'Credit Card Code': x.SCARCOD,
@@ -87,20 +86,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
            'Credit Card Auth.': x.SAUTHOC,
            'Qty Pax': x.NBROFPAX,
            'Currency Offer': x.CUROFFER,
-           'Total': x.SVFOP,
+           'Total Amount': x.SVFOP,
            'Total Amount Off': x.AMOUNTOFF,
            'Sales Amount': x.SVFOPS,
            'Sales Difference': x.DIFF_AMOUNT,
            'Sales Country': x.SCOUNTRY,
            'Sales Date': x.SDATES,
-           'Qty Tkts': x.QTYTKT,
+           'Qty Tickets': x.QTYTKT,
            'Plusgrade VS Chargeback': x.DESCFAMEXCHG,
            'PNR': x.PNR,
            'EMD Number': x.EMDNUMBER,
            'Accounting ID Sales FLEX': x.IDCONFLE,
            'Accounting Date': x.FCONT,
-           'Accounting IF': x.ID,
+           'Accounting ID': x.ID,
            'Error Code': x.CERROR,
+           'Error Description': x.DES_CERROR,
            'Add Pax EMD Number': x.ADDPAXEMD,
            'Add Pax Ticket Number': x.ADDPAXTKT,
            'Token': x.PAYTOKEN        
