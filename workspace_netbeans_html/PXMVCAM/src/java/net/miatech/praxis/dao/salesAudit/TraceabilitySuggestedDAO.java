@@ -97,6 +97,7 @@ public class TraceabilitySuggestedDAO {
                 reporte_1.CANTADMGDS = rs01.getInt("CANTADMGDS");
                 reporte_1.CANTASR = rs01.getInt("CANTASR");
                 reporte_1.CANTBSP = rs01.getInt("CANTBSP");
+                reporte_1.CANTPYR = rs01.getInt("CANTPYR");
                 reporte_1.CANTJUSTIADMREPORT = rs01.getInt("CANTJUSTIADMREPORT");
 
                 reporte_1.CANTARC = rs01.getInt("CANTARC");

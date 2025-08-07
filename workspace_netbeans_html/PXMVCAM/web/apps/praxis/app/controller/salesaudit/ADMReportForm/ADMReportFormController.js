@@ -107,6 +107,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReportForm.ADMReportFormControll
             data: [
                 {"code": "", "name": "ALL"},
                 {"code": "PR", "name": "AUTOMATIC"},
+                {"code": "AP", "name": "BENEFITS AUDIT"},
                 {"code": "MA", "name": "MANUAL"},
                 {"code": "QR", "name": "QUERYS"},
                 {"code": "MS", "name": "MASSIVE"},
@@ -380,6 +381,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReportForm.ADMReportFormControll
         switch (String(record.get('A2548BASE'))) {
             case 'PR':
                 value = 'Proceso Regular';
+                break;
+             case 'AP':
+                value = 'Benefits Audit';
                 break;
             case 'UP':
                 value = 'UpFront';

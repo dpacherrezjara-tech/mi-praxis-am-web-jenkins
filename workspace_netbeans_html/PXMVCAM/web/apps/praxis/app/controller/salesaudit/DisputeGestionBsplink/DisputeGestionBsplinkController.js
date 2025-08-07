@@ -195,6 +195,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DisputeGestio
             data: [
                 {"code": "", "name": "ALL"},
                 {"code": "PR", "name": "AUTOMATIC"},
+                {"code": "AP", "name": "BENEFITS AUDIT"},
                 {"code": "BK", "name": "BACKEND"},
                 {"code": "MA", "name": "MANUAL"},
                 {"code": "MS", "name": "MASSIVE"},
