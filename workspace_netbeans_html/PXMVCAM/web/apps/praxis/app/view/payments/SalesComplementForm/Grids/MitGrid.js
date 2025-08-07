@@ -97,7 +97,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.MitGrid', {
                 text: 'Type<br>Transaction', dataIndex: 'A4775TRXTP', width: 100
             },
             {
-                text: 'Issuing Bank', dataIndex: 'A4775BANCO', width: 180
+                text: 'Issuing Bank', dataIndex: 'A4775BANCO', width: 250
             },
             {
                 text: 'Number<br>Operation', dataIndex: 'A4775NROOP', width: 100
