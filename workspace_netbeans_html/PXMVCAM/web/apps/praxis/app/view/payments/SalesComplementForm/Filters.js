@@ -481,8 +481,174 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                         }
 
                     ]
-                }
+                },
                 //</editor-fold>
+                //<editor-fold defaultstate="collapsed" desc="DE UNA">
+                {
+                    xtype: 'form',
+                    border: false,
+                    id: prototype.id + '-formFilters-3',
+                    bodyStyle: 'background: transparent',
+                    hidden: true,
+                    layout: 'vbox',
+                    defaults: {
+                        fieldStyle: 'text-align: center;',
+                        padding: '5 1 5 1',
+                        anchor: '100%',
+                        hiddenLabel: false,
+                        labelAlign: 'right',
+                        hidden: false
+                    },
+                    items: [
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5 1 5 1',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items: [
+                                {
+                                    xtype: 'datefield',
+                                    name: 'IN_PRDA_FROM',
+                                    fieldLabel: 'From',
+                                    format: 'Ymd',
+                                    editable: false, // Deshabilita la edición del campo
+                                    labelWidth: 50,
+                                    width: 150,
+                                    value: new Date(),
+                                    validator: 'validaFecha',
+//                                    listeners: {
+//                                        change: 'onChangeDateBPBtn'
+//                                    },
+//                                    id: prototype.id + '-datefieldFromBP'
+                                },
+                                {
+                                    xtype: 'datefield',
+                                    name: 'IN_PRDA_TO',
+                                    fieldLabel: 'To',
+                                    format: 'Ymd',
+                                    editable: false, // Deshabilita la edición del campo
+                                    labelWidth: 50,
+                                    width: 150,
+                                    value: new Date(),
+                                    validator: 'validaFecha',
+//                                    listeners: {
+//                                        change: 'onChangeDateBPBtn'
+//                                    },
+//                                    id: prototype.id + '-datefieldFromBP'
+                                },
+
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Card Number',
+                                    labelWidth: 90,
+                                    width: 150,
+                                    name: 'IN_CARDN1',
+                                    maxLength: 6, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: '*****(*)'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    name: 'IN_CARDN2',
+                                    width: 50,
+                                    maxLength: 4, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Auth',
+                                    labelWidth: 40,
+                                    width: 100,
+                                    name: 'IN_AUTH',
+                                    maxLength: 6,
+                                    maskRe: /[a-zA-Z0-9]/,
+                                    enforceMaxLength: true,
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Ticket',
+                                    labelWidth: 40,
+                                    width: 120,
+                                    name: 'IN_TICKET',
+                                    maxLength: 13, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/,
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'PNR',
+                                    labelWidth: 40,
+                                    width: 120,
+                                    name: 'IN_PNR',
+                                    maxLength: 15, // Límite máximo de caracteres
+                                    maskRe: /[a-zA-Z0-9]/,
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Status',
+                                    name: 'IN_STATUS',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['pending', 'Pending'],
+                                            ['refunding', 'Refunding'],
+                                            ['refunded', 'Refunded'],
+                                            ['voided', 'Voided'],
+                                            ['captured', 'Captured']
+                                        ]
+                                    }),
+                                    labelWidth: 50,
+                                    width: 180,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Amount',
+                                    labelWidth: 80,
+                                    width: 200,
+                                    name: 'IN_TOTAL',
+                                    maxLength: 20,
+                                    maskRe: /[0-9.]/,
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                            ],
+                        }
+                    ]
+                },
             ]
         }
     ]
