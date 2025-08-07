@@ -743,6 +743,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.TraceabilitySuggested.TraceabilityS
             case 'MA':
                 value = 'Manual';
                 break;
+            case 'AP':
+                value = 'Benefits Audit';
+                break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
         return value;

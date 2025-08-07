@@ -152,6 +152,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.LoadMassiveDebitsForm.LoadMassiveDe
             case 'PR':
                 value = 'Automatic';
                 break;
+            case 'AP':
+                value = 'Benefits Audit';
+                break;
             case 'MA':
                 value = 'Manual';
                 break;
