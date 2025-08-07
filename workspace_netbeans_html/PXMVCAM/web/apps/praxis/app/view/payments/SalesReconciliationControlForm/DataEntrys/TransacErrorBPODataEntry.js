@@ -12,7 +12,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
     title: 'Transaction Error - Form',
     header: true,
     width: 1205,
-    maxHeight: 800,
+    maxHeight: 820,
     resizable: false,
     layout: 'fit',
     modal: true,
