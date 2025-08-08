@@ -58,14 +58,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
         mainPanel.removeAll();
         const filtro1=Ext.getCmp(prototype.id + '-formFilters-1');
         const filtro2 = Ext.getCmp(prototype.id + '-formFilters-2');
+        const filtro3 = Ext.getCmp(prototype.id + '-formFilters-3');
         filtro1.hide();
         filtro2.hide();
+        filtro3.hide();
         let opts={
             'P':()=>{
                 filtro1.show();
             },
             'M':()=>{
                 filtro2.show();
+            },
+            'U':()=>{
+                filtro3.show();
             }
         };
         opts[btn.lastValue.opcion]();
@@ -75,6 +80,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
         mainPanel.removeAll();
         const filtro1=Ext.getCmp(prototype.id + '-formFilters-1');
         const filtro2 = Ext.getCmp(prototype.id + '-formFilters-2');
+        const filtro3 = Ext.getCmp(prototype.id + '-formFilters-3');
         const radioBtn = Ext.getCmp(prototype.id + '-viewOption');
         let opts={
             'P':()=>{
@@ -94,6 +100,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                 });
                 console.log(newPanel);
                 mainPanel.add(newPanel);
+            },
+             'U':()=>{
+                let params = filtro3.getForm().getValues();
+                const newPanel = Ext.create('Ext.Praxis.view.payments.SalesComplementForm.Grids.DeUnaGrid',{
+                    id: prototype.id + '-DeUnaGrid-1',
+                    searchParams: params
+                });
+                console.log(newPanel);
+                mainPanel.add(newPanel);
             }
         };
         opts[radioBtn.lastValue.opcion]();
@@ -109,6 +124,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
      onClickClearBtn: function (obj) {
         Ext.getCmp(prototype.id + '-formFilters-1').getForm().reset();
         Ext.getCmp(prototype.id + '-formFilters-2').getForm().reset();
+        Ext.getCmp(prototype.id + '-formFilters-3').getForm().reset();
     },
     onEnterKeyPress: function (field, e) {
         if (e.getKey() === e.ENTER) {
