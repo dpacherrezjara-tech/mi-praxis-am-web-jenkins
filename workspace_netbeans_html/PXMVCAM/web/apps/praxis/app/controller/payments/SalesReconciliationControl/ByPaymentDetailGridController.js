@@ -58,6 +58,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
         });
         dataEntry.show();
     },
+    
+     onClickLog: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const obj = record.data;
+//        console.log('obj',obj);
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.LogDataEntry', {
+            id: prototype.id + '-LogDataEntry-1',
+            obj: obj,
+            callback: () => {
+                grid.getStore().load();
+            }
+        });
+        dataEntry.show();
+    },
+    
     downloadExcel: function (btn) {
         const me = this;
         let params = Object.assign({}, me.view.searchParams);

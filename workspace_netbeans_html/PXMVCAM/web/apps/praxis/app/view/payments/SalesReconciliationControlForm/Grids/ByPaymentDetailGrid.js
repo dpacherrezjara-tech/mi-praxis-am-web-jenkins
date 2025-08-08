@@ -53,6 +53,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 ]
             },
             {
+                sortable: false,
+                xtype: 'actioncolumn',
+                width: 40,
+                text: 'Log',
+                locked: true,
+                align: 'center',
+                items: [
+                    {
+                        iconCls: 'prx-icon-image-log',
+                        tooltip: 'Open Log',
+                        handler: 'onClickLog'
+                    }
+                ]
+            },
+            {
                 text: 'Ref. Number', dataIndex: 'arefnbr', width: 150,
                 hidden: true,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
