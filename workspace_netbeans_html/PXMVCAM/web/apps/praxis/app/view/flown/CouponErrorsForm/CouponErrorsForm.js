@@ -1,25 +1,16 @@
-// <editor-fold defaultstate="collapsed" desc="prototype">
-prototype.id = 'PaxRejectionsForm';
-prototype.url = CONTEXTPATH+'/PaxRejections';
-prototype.widthContenedor = 1600;
-prototype.widthGrid = 1500;
-prototype.widthGrid2 = 1290;
-prototype.widthGrid3 = 1410;
-prototype.widthGrid4 = 1020;
-prototype.widthGrid5 = 1200;
-prototype.widthGrid6 = 900;
-// </editor-fold>
-
-Ext.define('Ext.Praxis.view.interline.PaxRejectionsForm.PaxRejectionsForm', {
+prototype.id = 'CouponErrorsForm';
+prototype.url = CONTEXTPATH + '/CouponErrors';
+//Comentario
+Ext.define('Ext.Praxis.view.flown.CouponErrorsForm.CouponErrorsForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.PaxRejectionsForm',
+    alias: 'widget.CouponErrorsForm',
     requires: [
-        'Ext.Praxis.controller.interline.PaxRejections.PaxRejectionsController',
-        'Ext.Praxis.view.interline.PaxRejectionsForm.Options',
-        'Ext.Praxis.view.interline.PaxRejectionsForm.Filters',
-        'Ext.Praxis.view.interline.PaxRejectionsForm.Info'
+          'Ext.Praxis.controller.flown.CouponErrors.CouponErrorsController',
+          'Ext.Praxis.view.flown.CouponErrorsForm.Options',
+          'Ext.Praxis.view.flown.CouponErrorsForm.Filters',
+          'Ext.Praxis.view.flown.CouponErrorsForm.Info'
     ],
-    controller: 'PaxRejectionsController',
+    controller: 'CouponErrorsController',
     layout: {
         type: 'fit'
     },
@@ -30,11 +21,12 @@ Ext.define('Ext.Praxis.view.interline.PaxRejectionsForm.PaxRejectionsForm', {
     items: [
         {
             id: prototype.id + '-xpanel',
+            border: false,
             autoScroll: false,
             layout: 'fit',
             items: [
                 {
-                    id: prototype.id + '-form',
+                    id: prototype.id +'-form',
                     border: false,
                     bodyCls: 'colorFondo',
                     layout: 'fit',
@@ -46,49 +38,52 @@ Ext.define('Ext.Praxis.view.interline.PaxRejectionsForm.PaxRejectionsForm', {
                         {
                             xtype: 'panel',
                             region: 'center',
+                            width: 1000,
                             layout: 'border',
                             items: [
                                 {
                                     region: 'center',
-                                    id: prototype.id + '-centerC',
+                                    id: prototype.id +'-centerC',
                                     layout: {
                                         type: 'vbox',
                                         align: 'center'
                                     },
-                                    border: true,
+                                    border: false,
                                     autoScroll: true,
                                     defaults: {
-                                        width: prototype.widthContenedor,
+                                        width: 1500,
                                         align: 'center'
                                     },
                                     items: [
                                         {
-                                            xtype: prototype.id + '-options'
+                                            xtype:prototype.id + '-options',
+                                            style:'margin-top:20px'
                                         }
                                         ,
                                         {
-                                            xtype: prototype.id + '-filters',
-                                            id: prototype.id + '-contentFilter'
-                                        }
-                                        ,
+                                            xtype:prototype.id+ '-filters',
+                                            id: prototype.id+'-contentFilter'
+                                        },
                                         {
                                             xtype: 'panel',
-                                            height: 740,
+                                            height: 650,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
+                                                    id: prototype.id+'-centerC-panel01',
                                                     layout: 'border',
                                                     align: 'center',
-                                                    border: true,
+                                                    border: false,
                                                     defaults: {
                                                         border: true
                                                     },
+                                                    bodyStyle: 'background-color: white;',
                                                     items: [
                                                         {
                                                             region: 'center',
-                                                            xtype: prototype.id + '-info',
-                                                            id: prototype.id + '-contentInfo'
+                                                            xtype: prototype.id +'-info',
+                                                            id:prototype.id+'-contentInfo'
                                                         }
                                                     ]
                                                 }
