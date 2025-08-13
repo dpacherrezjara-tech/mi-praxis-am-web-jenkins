@@ -8,8 +8,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.L
     ],
     title: 'Log By Payment',
     header: true,
-    width: 950,
-    maxHeight: 700,
+    width: 1000,
+    height: 400,
     resizable: true,
     layout: 'fit',
     modal: true,
@@ -17,6 +17,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.L
     border: false,
     scrollable: true,
     bodyStyle: 'background-color: white !important;',
+    viewConfig: {
+        stripeRows: true,
+        enableTextSelection: true,
+        markDirty: false,
+    },
 
     tbar: {
         layout: {
@@ -45,29 +50,38 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.L
                 type: 'hbox',
                 align: 'stretch'
             },
-            padding: 10,
+            flex: 1,
+            padding: 8,
             style: 'background: white',
-
             items: [
                 {
                     xtype: 'container',
                     layout: {
-                        type: 'vbox',
+                        type: 'hbox',
                         align: 'stretch'
                     },
+                    padding: 8,
                     flex: 1,
-                    margin: '0 10 0 0',
+                    style: 'background: white',
                     items: [
                         {
                             xtype: 'grid',
                             id: prototype.idLog + '-grid-Log',
-                            flex: 1,
                             style: 'background: white',
+//                            maxHeight: 550,
+                            flex: 1,
+                            viewConfig: {
+                                enableTextSelection: true
+                            },
                             columns: [
                                 {text: 'Ref. Number', dataIndex: 'AREFNBR', align: 'center', width: 170},
                                 {text: 'Corrl', dataIndex: 'CORRL', align: 'center', width: 60},
                                 {text: 'Merchand ID', dataIndex: 'SMERCHID', align: 'center', width: 130},
-                                {text: 'Status', dataIndex: 'STVAL', align: 'center', flex:1,
+                                {
+                                    text: 'Status',
+                                    dataIndex: 'STVAL',
+                                    align: 'center',
+                                    flex: 1,
                                     renderer: function (value, metaData, record, rowIndex, colIndex) {
                                         metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                                         const opts = {
@@ -84,7 +98,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.L
                                             '9': 'Match Void'
                                         };
                                         return opts[value] || '';
-                                    }},
+                                    }
+                                },
                                 {
                                     text: 'Created',
                                     defaults: {
@@ -97,13 +112,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.L
                                         {text: 'Date', dataIndex: 'FECR', width: 110},
                                         {text: 'Time', dataIndex: 'HOCR', width: 110}
                                     ]
-
-                                },
-                            ],
-                        },
+                                }
+                            ]
+                        }
                     ]
-                },
+                }
             ]
+
+
         }
     ],
 });
