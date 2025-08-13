@@ -11,189 +11,216 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MatchMulti
 
     afterRender: async function () {
         const me = this;
-        console.log('meeee', me)
         await this.fillIni();
     },
 
     fillIni: async function () {
-        console.log('fillIni', )
         const me = this;
-
         const gridLiquidation = Ext.getCmp(prototype.idMP + '-grid-liquidation');
         const gridTicket = Ext.getCmp(prototype.idMP + '-grid-ticket');
 
         gridLiquidation.setLoading(true);
         gridTicket.setLoading(true);
 
-        me.initialInfo = me.view.info || [];
+        try {
+            me.initialInfo = me.view.info || [];
 
-//        prda , transtype, arefnbr
+            const params = {
+                IN_CCUST: '139',
+                IN_PRDA_FROM: me.view.info.prda,
+                IN_PNR: '',
+                IN_PRDA_TO: me.view.info.prda,
+                IN_AREFNBR: me.view.info.arefnbr,
+                IN_TDOC: me.view.info.tdoc,
+                IN_SCARDN1: '',
+                IN_SCARDN2: '',
+                IN_SAUTHOC: '',
+                IN_TICKET: '',
+                IN_AMOUNT: '',
+            };
 
-        const params = {
-            IN_CCUST: '139',
-            IN_PRDA_FROM: me.view.info.prda,
-            IN_PNR: '',
-            IN_PRDA_TO: me.view.info.prda,
-            IN_AREFNBR: me.view.info.arefnbr,
-            IN_TDOC: me.view.info.tdoc,
-            IN_SCARDN1: '',
-            IN_SCARDN2: '',
-            IN_SAUTHOC: '',
-            IN_TICKET: '',
-            IN_AMOUNT: '',
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05693', params);
 
-        };
+            // Validar que lstRs[0] tenga datos
+            const liquidacion = res?.lstRs?.[0] || [];
+            const tickets = res?.lstRs?.[1] || [];
 
+            if (!Array.isArray(liquidacion) || liquidacion.length === 0) {
+                global.Msg({msg: 'Data not found.'});
+                return;
+            }
 
+            // Marcar registros como EXIST
+            liquidacion.forEach(item => item.EXIST = 'YES');
+            tickets.forEach(item => item.EXIST = 'YES');
 
-
-        const res = await global.callStoreGet('PRAXISMP', 'SQP05693 ', params);
-
-        console.log('res', res);
-        const data = res.lstRs?.at(0)?.at(0) || {};
-        const liquidacion = res.lstRs?.[0] || {};
-        const tickets = res.lstRs?.[1] || {};
-        const monto = res.lstRs?.[2] || {};  //diferencias
-
-
-        me.dataIni = liquidacion;
-        
-        if (Array.isArray(liquidacion)) {
-            liquidacion.forEach((item, index) => {
-                item.exist = 'yes';
+            let liquidationIni = Ext.create('Ext.data.Store', {
+                model: 'LiquidationRecord',
+                data: liquidacion.map(item => ({
+                        ...item,
+                        TGROSAMOUN: parseFloat(item.TGROSAMOUN) || 0
+                    }))
             });
-        } else if (typeof liquidacion === 'object' && liquidacion !== null) {
-            liquidacion.exist = 'yes';
-        }
 
-        if (Array.isArray(tickets)) {
-            tickets.forEach((item, index) => {
-                item.exist = 'yes';
+            let ticketIni = Ext.create('Ext.data.Store', {
+                model: 'TicketRecord',
+                data: tickets.map(item => ({
+                        ...item,
+                        SVFOPS: parseFloat(item.SVFOPS) || 0
+                    }))
             });
-        } else if (typeof tickets === 'object' && tickets !== null) {
-            tickets.exist = 'yes';
+
+
+            gridLiquidation.setStore(liquidationIni);
+            gridTicket.setStore(ticketIni);
+
+            gridTicket.getStore().loadData(tickets.map(item => ({
+                    ...item,
+                    SVFOPS: parseFloat(item.SVFOPS) || 0
+                })));
+
+            gridLiquidation.getStore().loadData(liquidacion.map(item => ({
+                    ...item,
+                    TGROSAMOUN: parseFloat(item.TGROSAMOUN) || 0
+                })));
+
+
+            gridLiquidation.setStore(liquidationIni);
+            gridTicket.setStore(ticketIni);
+
+        } catch (err) {
+            console.error('Error en fillIni:', err);
+            global.Msg({msg: 'Data not found.'});
+        } finally {
+            gridLiquidation.setLoading(false);
+            gridTicket.setLoading(false);
         }
-
-        let liquidationIni = new Ext.data.Store({data: liquidacion});
-        let ticketIni = new Ext.data.Store({data: tickets});
-
-
-        gridLiquidation.setStore(liquidationIni);
-        gridTicket.setStore(ticketIni);
-        gridLiquidation.setLoading(false);
-        gridTicket.setLoading(false);
-
-        this.updateDisplaySum(prototype.idMP + '-grid-liquidation', 'TGROSAMOUN', 'TGROSAMOUN_LIQUIDATION');
-        this.updateDisplaySum(prototype.idMP + '-grid-liquidation', 'SVFOPS', 'SVFOPS_LIQUIDATION');
-
-        this.updateDisplaySum(prototype.idMP + '-grid-ticket', 'TGROSAMOUN', 'TGROSAMOUN_TICKET');
-        this.updateDisplaySum(prototype.idMP + '-grid-ticket', 'SVFOPS', 'SVFOPS_TICKET');
-
     },
 
     onSearchTransaction: async function (view) {
-        console.log('get data', view);
 
         const me = this;
 
-        console.log('me.bean', me);
-
         const gridLiquidation = Ext.getCmp(prototype.idMP + '-grid-liquidation');
         const gridTicket = Ext.getCmp(prototype.idMP + '-grid-ticket');
-
         const buttonSave = Ext.getCmp(prototype.idMP + '-saveTicketBtn');
 
         try {
-
-
-
             gridLiquidation.setLoading(true);
             gridTicket.setLoading(true);
 
             const form = Ext.getCmp(prototype.idMP + '-viewOption');
-            const values = form.getForm().getValues();  //obtiene datos del form para la busqeuda
+            const values = form.getForm().getValues();
 
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05693 ', values);
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05693', values);
 
-            console.log('res', res);
-            const data = res.lstRs?.at(0)?.at(0) || {};
-            const liquidacion = res.lstRs?.[0] || {};
-            const tickets = res.lstRs?.[1] || {};
-            const monto = res.lstRs?.[2] || {};
+            if (
+                    !res.lstRs ||
+                    (Array.isArray(res.lstRs) &&
+                            res.lstRs.every(arr => Array.isArray(arr) && arr.length === 0))
+                    ) {
+                gridLiquidation.setLoading(false);
+                gridTicket.setLoading(false);
+                global.Msg({msg: 'Data not found'})
+            }
 
-            console.log('data store', data);
-            console.log('data store', liquidacion);
-            console.log('data tickets', tickets);
-            console.log('data monto', monto);
+            const liquidacion = res.lstRs?.[0] || [];
+            const tickets = res.lstRs?.[1] || [];
 
-
-
-            let nuevosLiquidacion;
-            let nuevoTicket;
+            let nuevosLiquidacion = [];
+            let nuevoTicket = [];
 
             if (Array.isArray(liquidacion)) {
-                nuevosLiquidacion = liquidacion.map(item => ({
-                        ...item,
-                        exist: 'no'
-                    }));
-            } else if (typeof liquidacion === 'object' && liquidacion !== null && liquidacion !== null) {
-                nuevosLiquidacion = {
-                    ...liquidacion,
-                    exist: 'no'
-                };
+                nuevosLiquidacion = liquidacion.map(item => ({...item, EXIST: 'NO'}));
+            } else if (liquidacion && typeof liquidacion === 'object') {
+                nuevosLiquidacion = [{...liquidacion, EXIST: 'NO'}];
             }
-
 
             if (Array.isArray(tickets)) {
-                nuevoTicket = tickets.map(item => ({
-                        ...item,
-                        exist: 'no'
-                    }));
-            } else if (typeof tickets === 'object' && tickets !== null && tickets !== null) {
-                nuevoTicket = {
-                    ...tickets,
-                    exist: 'no'
-                };
+                nuevoTicket = tickets.map(item => ({...item, EXIST: 'NO'}));
+            } else if (tickets && typeof tickets === 'object') {
+                nuevoTicket = [{...tickets, EXIST: 'NO'}];
             }
 
+            me.view.info = me.view.info || {};
+            me.view.info.tickets = nuevoTicket;
 
-            console.log('nuevosLiquidacion:', nuevosLiquidacion);
-            console.log('nuevoTicket:', nuevoTicket);
+            const storeLiquidation = gridLiquidation.getStore();
+            const storeTicket = gridTicket.getStore();
 
+            // Guardar data inicial si no existe
+            me.initialLiquidations = me.initialLiquidations || storeLiquidation.getRange().map(rec => ({
+                    AREFNBR: rec.get('AREFNBR')?.trim() || '',
+                    TKT: (rec.get('CCIA') || '') + (rec.get('FORMA') || '') + (rec.get('SERIE') || '')
+                }));
 
-//            const store = Ext.getCmp(prototype.idMP + '-grid-liquidation').getStore();
+            me.initialTickets = me.initialTickets || storeTicket.getRange().map(rec => ({
+                    AREFNBR: rec.get('AREFNBR')?.trim() || '',
+                    TKT: (rec.get('CCIA') || '') + (rec.get('FORMA') || '') + (rec.get('SERIE') || '')
+                }));
 
+            // Funciones para obtener TKT
+            const getTktFromRecord = rec =>
+                (rec.get('CCIA') || '') + (rec.get('FORMA') || '') + (rec.get('SERIE') || '');
 
-            const store = gridLiquidation.getStore();
-            console.log('store', store);
-            const arefnbrsExistentes = store.getRange().map(rec => rec.get('AREFNBR'));
-            console.log('existennnn', arefnbrsExistentes);
+            const getTktFromItem = item =>
+                (item.CCIA || '') + (item.FORMA || '') + (item.SERIE || '');
 
-            const nuevoAreFnbr = nuevosLiquidacion[0].AREFNBR;
-            console.log('nuevoAreFnbr', nuevoAreFnbr);
+            // Verifica si es duplicado en el store actual
+            const isDuplicateInStore = (store, item) => {
+                return store.getRange().some(rec =>
+                    (rec.get('AREFNBR')?.trim() || '') === (item.AREFNBR?.trim() || '') &&
+                            getTktFromRecord(rec) === getTktFromItem(item)
+                );
+            };
 
+            // Verifica si estaba en la data inicial
+            const isInInitialData = (initialData, item) => {
+                return initialData.some(data =>
+                    data.AREFNBR === (item.AREFNBR?.trim() || '') &&
+                            data.TKT === getTktFromItem(item)
+                );
+            };
 
-            if (arefnbrsExistentes.includes(nuevoAreFnbr)) {
-                global.Msg({msg: 'Este registro ya fue agregado.'});
-            } else {
-                console.log('Se agrega nuevo');
-                gridLiquidation.getStore().add(nuevosLiquidacion);
-                gridTicket.getStore().add(nuevoTicket);
+            // Contadores
+            let liquidationAdded = 0;
+            let liquidationSkipped = 0;
+
+            // Agregar liquidaciones
+            nuevosLiquidacion.forEach(item => {
+                if (isDuplicateInStore(storeLiquidation, item)) {
+                    if (!isInInitialData(me.initialLiquidations, item)) {
+                        liquidationSkipped++; // solo contamos si NO estaba en la data inicial
+                    }
+                } else {
+                    storeLiquidation.add(item);
+                    liquidationAdded++;
+                }
+            });
+
+            // Agregar tickets
+            const nuevosTicketsAgregados = nuevoTicket.filter(item => !isDuplicateInStore(storeTicket, item));
+            nuevosTicketsAgregados.forEach(item => storeTicket.add(item));
+
+            // Mostrar botón guardar solo si se agregó algo nuevo
+            if (liquidationAdded > 0 || nuevosTicketsAgregados.length > 0) {
                 buttonSave.show();
             }
 
-            console.log('getTODO', gridLiquidation.getStore());
+            // Mensaje final solo de liquidaciones
+            if (liquidationAdded > 0 || liquidationSkipped > 0) {
+                const msgParts = [];
+                if (liquidationAdded > 0) {
+                    msgParts.push(`${liquidationAdded} liquidation record${liquidationAdded > 1 ? 's' : ''} added`);
+                }
+                if (liquidationSkipped > 0) {
+                    msgParts.push(`${liquidationSkipped} skipped (duplicate)`);
+                }
+                global.Msg({msg: 'Liquidation: ' + msgParts.join(', ')});
+            }
 
             gridLiquidation.setLoading(false);
             gridTicket.setLoading(false);
-
-            this.updateDisplaySum(prototype.idMP + '-grid-liquidation', 'TGROSAMOUN', 'TGROSAMOUN_LIQUIDATION');
-            this.updateDisplaySum(prototype.idMP + '-grid-liquidation', 'SVFOPS', 'SVFOPS_LIQUIDATION');
-
-            this.updateDisplaySum(prototype.idMP + '-grid-ticket', 'TGROSAMOUN', 'TGROSAMOUN_TICKET');
-            this.updateDisplaySum(prototype.idMP + '-grid-ticket', 'SVFOPS', 'SVFOPS_TICKET');
-
-
 
         } catch (e) {
             console.error(e);
@@ -202,7 +229,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MatchMulti
         }
     },
 
-    
     onCancelClick: function () {
         this.view.close();
     },
@@ -231,12 +257,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MatchMulti
         });
         ticketStore.remove(ticketToRemove);
 
-        this.updateDisplaySum(prototype.idMP + '-grid-liquidation', 'TGROSAMOUN', 'TGROSAMOUN_LIQUIDATION');
-        this.updateDisplaySum(prototype.idMP + '-grid-liquidation', 'SVFOPS', 'SVFOPS_LIQUIDATION');
-        this.updateDisplaySum(prototype.idMP + '-grid-ticket', 'TGROSAMOUN', 'TGROSAMOUN_TICKET');
-        this.updateDisplaySum(prototype.idMP + '-grid-ticket', 'SVFOPS', 'SVFOPS_TICKET');
 
-        // Verificar si quedan solo registros originales
         const dataIniAREFNBR = (me.dataIni || []).map(item => item.AREFNBR?.trim());
         const currentAREFNBRs = liquidationStore.getRange().map(rec => rec.get('AREFNBR')?.trim());
 
@@ -251,31 +272,100 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MatchMulti
 
     },
 
-    onSaveTicket: function () {
-        console.log('save');
+    onSaveTicket: async function () {
+        const me = this;
+        me.view.setLoading(true);
+//        console.log('save');
+        const gridLiquidation = Ext.getCmp(prototype.idMP + '-grid-liquidation');
+//        console.log('grid', gridLiquidation.getStore().getData().items);
+
+        const gridTicket = Ext.getCmp(prototype.idMP + '-grid-ticket');
+
+        const storeDataLiquidation = gridLiquidation.getStore().getData().items;
+        const storeDataTicket = gridTicket.getStore().getData().items;
+
+        // --- Calcular totales ---
+        const totalLiquidation = storeDataLiquidation.reduce((sum, rec) => {
+            return sum + (parseFloat(rec.data.TGROSAMOUN) || 0);
+        }, 0);
+
+        const totalTicket = storeDataTicket.reduce((sum, rec) => {
+            return sum + (parseFloat(rec.data.SVFOPS) || 0);
+        }, 0);
+
+//        console.log('Total TGROSAMOUN:', totalLiquidation);
+//        console.log('Total SVFOPS:', totalTicket);
+
+        // --- Validación ---
+        if (totalLiquidation !== totalTicket) {
+            global.Msg({
+                msg: 'The totals for liquidation and tickets do not match.'
+            });
+            return; 
+        }
+
+        try {
+
+            let recs = storeDataLiquidation.map(x => ({
+                    ...x.data
+                }));
+
+            console.log('recs', recs);
+
+
+            const tmp = await global.loadRecordsOnTable('PRAXISMP', 'XTEMPO', recs);
+            console.log('tmp', tmp);
+
+            let params = {
+                IN_CUUID: tmp.cuuid,
+                IN_FUUID: tmp.fuuid
+            };
+
+            const res = await global.callStorePost('PRAXISMP', 'SQP05671 ', params);
+            console.log(res);
+            global.Msg({
+                msg: res.data.lstVals.OUT_MSG
+            });
+
+            const view = me.getView();
+            const callback = view.callbackFn;
+            const parentCtrl = view.parentController;
+
+            me.view.setLoading(false);
+            me.view.close(); 
+            
+            if (typeof callback === 'function') {
+                callback(parentCtrl);
+            }
+
+
+
+        } catch (e) {
+            console.log(e)
+            me.view.setLoading(false);
+        }
 
     },
 
-    updateDisplaySum: function (gridId, dataFieldName, displayFieldItemId) {
-        const store = Ext.getCmp(gridId)?.getStore();
+    onChangeMonthBPBtn: function (obj) {
+        let option = obj.id.split('-').at(-1);
+        const from = Ext.getCmp(prototype.id + '-monthfieldFromMatch');
+        const to = Ext.getCmp(prototype.id + '-monthfieldToMatch');
 
-        if (!store) {
-            console.warn(`[updateDisplaySum] Store no encontrado para grid: ${gridId}`);
-            return;
-        }
+        const opts = {
+            'monthfieldFromMatch': () => {
+                to.setValue(from.getValue());
+            },
+            'monthfieldToMatch': () => {
+                if (to.getValue() < from.getValue()) {
+                    from.setValue(to.getValue());
+                }
+            }
+        };
 
-        const values = store.getRange().map(rec => Number(rec.get(dataFieldName)) || 0);
-        console.log('values', values);
-        const total = values.reduce((acc, val) => acc + val, 0);
-        console.log('total', total);
-
-        const field = Ext.ComponentQuery.query('#' + displayFieldItemId)[0];
-        console.log('field', field);
-
-        if (field && typeof field.setValue === 'function') {
-            field.setValue(Ext.util.Format.number(total, '0,000.00'));
-        } else {
-            console.warn(`[updateDisplaySum] Displayfield con itemId "${displayFieldItemId}" no encontrado o inválido`);
+        if (opts[option]) {
+            opts[option]();
         }
     }
+
 });
