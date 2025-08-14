@@ -2251,7 +2251,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
             },
             items: [
                  {
-                    text: 'Multi-payment',
+                    text: 'Multi-partial',
                     id: prototype.idDE + '-btn-multi-pay',
                     iconCls: 'prx-icon-update',
                     hidden: true,

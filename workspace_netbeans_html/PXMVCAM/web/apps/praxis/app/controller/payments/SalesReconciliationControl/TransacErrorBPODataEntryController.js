@@ -1316,7 +1316,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MatchMultiPaymentConciliationDataEntry', {
             id: prototype.id + '-MatchMultiPaymentConciliationDataEntry',
             info: me.dataInfo,
-            desglose: me.dataDesglose
+            desglose: me.dataDesglose,
+            parentController: me,
+            callbackFn: function (parentController) {
+                if (parentController) {
+                    parentController.reloadErrorGrid();
+                    const parentView = parentController.getView();
+//                    parentView?.unmask?.();
+//                    parentController.afterRender?.();
+                    parentView?.close?.();
+                } else {
+                    console.warn("parentController no disponible en callback.");
+                }
+            }
         });
         dataEntry.show();
     },
