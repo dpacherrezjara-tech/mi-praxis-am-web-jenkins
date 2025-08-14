@@ -164,7 +164,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
                     //metaData.style = "text-align:center;background-color:#FCF6DC";
                     return value;
                 }
-            }
+            },
+            {text: 'corrl', dataIndex: 'corrl', with: 20, hidden: true},
+            {text: 'seq', dataIndex: 'seq', with: 20, hidden: true},
+            {text: 'ccust', dataIndex: 'ccust', with: 20, hidden: true}
             //</editor-fold>
         ]
     },

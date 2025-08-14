@@ -8,7 +8,7 @@ import net.miatech.praxis.payment.entities.A4331;
  */
 public class A4331Filter extends A4331{
     private String DESC_ERROR,DES_MERCHANT,DES_SMERCHANT,DES_CERROR,
-            DESC_CODADJU,DESC_PROCTYPE,BPOCOMENT,ADJUCOMENT,IDFLEX,PRAXISID,STMAIN;
+            DESC_CODADJU,DESC_PROCTYPE,BPOCOMENT,ADJUCOMENT,IDFLEX,PRAXISID,STMAIN, CORRL;
     private Double F_TAX,F_ADJUSMENT, DIFFERENCE;
 
     public Double getDIFFERENCE() {
@@ -131,4 +131,11 @@ public class A4331Filter extends A4331{
     public void setSTMAIN(String STMAIN) {
         this.STMAIN = STMAIN;
     }
+    public String getCORRL() {
+        return CORRL;
+    }
+
+    public void setCORRL(String CORRL) {
+        this.CORRL = CORRL;
+    }            
 }
