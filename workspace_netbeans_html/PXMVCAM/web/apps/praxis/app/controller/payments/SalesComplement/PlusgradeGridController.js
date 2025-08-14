@@ -98,7 +98,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
            'EMD Number': x.EMDNUMBER,
            'Accounting ID Sales FLEX': x.IDCONFLE,
            'Accounting Date': x.FCONT,
-           'Accounting ID': x.ID,
+           'Accounting ID': x.IDCON,
            'Error Code': x.CERROR,
            'Error Description': x.DES_CERROR,
            'Add Pax EMD Number': x.ADDPAXEMD,
