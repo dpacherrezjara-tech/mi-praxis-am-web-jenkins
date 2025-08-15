@@ -2565,7 +2565,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                                             defaults: {
                                                                                 anchor: '100%'
                                                                             },
-                                                                            items: [
+                                                                            items: [/*
                                                                                 {
                                                                                     xtype: 'textfield',
                                                                                     id: prototype.id + '-lblChargeback',
@@ -2573,7 +2573,16 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                                                     readOnly: true,
                                                                                     fieldStyle: 'color:#ff0000;font-weight:bold;text-align:center;font-size:20px',
                                                                                     width: 150
+                                                                                },*/
+                                                                                {
+                                                                                    xtype: 'checkboxfield',
+                                                                                    id: prototype.id + '-lblChargeback',
+                                                                                    boxLabel: '<strong style="color:#0B333C;">Clarification</strong>',
+                                                                                    checked: true,
+                                                                                    readOnly: true,
+                                                                                    width: 140
                                                                                 }
+                                                                                
                                                                             ]
                                                                         }
                                                                     ]
