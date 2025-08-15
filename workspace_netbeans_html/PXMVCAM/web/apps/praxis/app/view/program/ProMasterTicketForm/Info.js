@@ -1,10 +1,6 @@
 Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-info',
-    requires: [
-        'Ext.Praxis.view.widgets.facsimil',
-        'Ext.Praxis.view.widgets.prorrate'
-    ],
     border: false,
     layout: 'column',
     bodyStyle: 'background-color: #E3EAEF;',
@@ -12,7 +8,6 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
         width: prototype.widthContenedor,
         bodyStyle: 'background: transparent;'
     },
-    
     items: [
         {
             xtype: 'panel',
@@ -968,14 +963,14 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                         },
                                         {
                                             xtype: 'button',
-                                            id: prototype.id + '-btnDeliveryARC',
+                                            id: prototype.id + '-btnDelivery',
                                             margin: '0 0 0 30',
                                             text: '<strong style="color:white;">Delivery<strong>',
                                             cls: 'x-btn-sent',
                                             overCls: 'x-btn-sent-over',
-                                            width: 95,
+                                            width: 80,
                                             listeners: {
-                                                click: 'btnDeliveryARC_clickHandler'
+                                                click: 'btnDelivery_clickHandler'
                                             }
                                         },
                                         {
@@ -1046,18 +1041,6 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                             width: 70,
                                             listeners: {
                                                 click: 'btnPNR_clickHandler'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            id: prototype.id + '-btnRFTX',
-                                            margin: '0 0 0 30',
-                                            text: '<strong style="color:white;">Refund Tax<strong>',
-                                            cls: 'x-btn-sent',
-                                            overCls: 'x-btn-sent-over',
-                                            width: 100,
-                                            listeners: {
-                                                click: 'btnRFTX_clickHandler'
                                             }
                                         }
                                     ]
@@ -1256,54 +1239,6 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                     ]
                                 }
                             ]
-                        },
-                        {xtype: 'tbspacer', width: 30},
-                        // <editor-fold defaultstate="collapsed" desc="Compensated Ticket">
-                        {
-                            xtype: 'panel',
-                            layout: 'vbox',
-                            border: false,
-                            bodyStyle: 'background: transparent',
-                            defaults: {
-                                anchor: '100%',
-                                width: 185
-                            },
-                            items: [
-                                {
-                                    xtype: 'label',
-                                    text: 'Compensated Ticket',
-                                    style: 'font-weight:bold;text-align:center;color:#0B333C;',
-                                    padding: '4 0 5 0'
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-lblCompensatedTicket',
-                                    value: '',
-                                    readOnly: true,
-                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;'
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-lblCompensatedTicket2',
-                                    value: '',
-                                    readOnly: true,
-                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;'
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-lblCompensatedTicket3',
-                                    value: '',
-                                    readOnly: true,
-                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;'
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-lblCompensatedTicket4',
-                                    value: '',
-                                    readOnly: true,
-                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;'
-                                }
-                            ]
                         }
                     ]
                 },
@@ -1432,7 +1367,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataTktRealUses',
-                                    width: 811,
+                                    width: 800,
                                     columnLines: true,
                                     columns: {
                                         defaults: {
@@ -1488,7 +1423,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                         text: 'DATE', dataIndex: 'DATE', width: 65
                                                     },
                                                     {
-                                                        text: 'STAT', dataIndex: 'STAT', width: 75
+                                                        text: 'STAT', dataIndex: 'STAT', width: 70
                                                     },
                                                     {
                                                         text: 'REF', dataIndex: 'REF', flex: 1
@@ -1524,145 +1459,9 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                             ]
                         }
                     ]
-                } 
-            ]
-            
-        },
-        {
-            xtype: 'panel',
-            id: prototype.id + '-vskOpcionPurge',
-            border: true,
-            margin: '2 0 0 0',
-            activeTab: 1,
-            fieldStyle: 'text-align:right;',
-            //overflowY: 'scroll',
-            resizable: {
-                handles: 's'
-            },
-            defaults: {
-                bodyStyle: 'background-color: #E3EAF9;',
-//                border: true,
-                height: 25
-            },
-            layout: {
-                type: 'hbox',
-                pack: 'end'
-            },
-            items: [
-                
-                {
-                    xtype: 'button',
-                    id: prototype.id + '-btnPurge',
-                    margin: '0 30 0 0',
-                    text: '<strong style="color:white;">Purge<strong>',
-                    cls: 'x-btn-sent',
-                    overCls: 'x-btn-sent-over',
-                    width: 100,
-                    listeners: {
-                        click: 'btnButtonPurge_clickHandler'
-                    }
                 }
-                  
             ]
         },
-        // <editor-fold defaultstate="collapsed" desc="gridDataPurge">
-        {
-            xtype: 'panel',
-            id: prototype.id + '-vskDataPurge',
-            border: true,
-            margin: '2 0 0 0',
-            activeTab: 1,
-            //overflowY: 'scroll',
-            resizable: {
-                handles: 's'
-            },
-            defaults: {
-                bodyStyle: 'background-color: #E3EAF9;',
-//                border: true,
-                height: 50
-            },
-            items: [
-                
-                {
-                    xtype: 'grid',
-                    id: prototype.id + '-gridDataPurge',
-                    width: 1752,
-                    height: 50,
-                    layout: 'fit',
-                    resizable: {
-                        handles: 's'
-                    },
-                    border: true,
-                    columnLines: true,
-                    columns: {
-                        defaults: {
-                            menuDisabled: true,
-                            sortable: false,
-                            align: 'center'
-                        },
-                        items: [
-                            {
-                                text: 'MODE', dataIndex: 'A4474MODO', width: 60,
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            var data = record.data;
-                                            metaData.style = 'text-align:center;';                                                   
-
-                                            var rtn = '';
-                                            switch(data.A4474MODO.trim()){
-                                                    case 'S': rtn = 'SALE'; break;
-                                                    case 'M': rtn = 'MEMO'; break;
-                                                    case 'J': rtn = 'EXCH'; break;
-                                                    case 'I': rtn = 'TAXC'; break;
-                                                    case 'R': 
-                                                                if(data.A4474MODO.trim() === 'RFTX')
-                                                                    rtn = 'RFTX';
-                                                                else
-                                                                    rtn = 'RFND';
-                                                                break;                                                        
-                                                    case 'F': rtn = 'FLWN'; break;
-                                                    case 'C': rtn = 'COMM'; break;
-                                                    case 'L': rtn = 'IPAY'; break;
-                                                    case 'A': 
-                                                                if(data.A4474MODO.trim() === 'R')
-                                                                    rtn = 'PYMR';
-                                                                else if(data.A4474MODO.trim() === 'S')
-                                                                    rtn = 'PYMS';
-                                                                else
-                                                                    rtn = 'PYMT';
-                                                                break;
-                                                    case 'K': rtn = 'PYMT'; break;
-                                                    case 'P': rtn = 'PLSG'; break;
-                                                    case 'B': rtn = 'CBCK'; break;
-                                                    case 'O': rtn = 'COMM'; break;
-                                                    case 'V': rtn = 'FLWN'; break;
-                                                    default: rtn = data.A4474MODO.trim();
-                                            }
-
-                                            return rtn;
-                                        }
-                            },
-                            {
-                                text: 'PROCESS DATE', dataIndex: 'A4474FPROC', width: 120
-                            },
-                            {
-                                text: 'CIA', dataIndex: 'A4474CIA', width: 80
-                            },
-                            {
-                                text: 'FORMA', dataIndex: 'A4474FORMA', width: 80
-                            },
-                            {
-                                text: 'SERIE', dataIndex: 'A4474SERIE', width: 80
-                            },
-                            {
-                                text: 'SEQ', dataIndex: 'A4474SEQRO', width: 80
-                            }
-                        ]
-                    }
-                }
-                  
-            ]
-        },
-        // </editor-fold> 
         {
             xtype: 'panel',
             id: prototype.id + '-vskData',
@@ -1995,7 +1794,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                     padding: '4px 4px 0px 4px',
                                     defaults: {
                                         anchor: '100%',
-                                        width: 1250
+                                        width: 1050
                                     },
                                     items: [
                                         {
@@ -2766,96 +2565,31 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                                             defaults: {
                                                                                 anchor: '100%'
                                                                             },
-                                                                            items: [
+                                                                            items: [/*
+                                                                                {
+                                                                                    xtype: 'textfield',
+                                                                                    id: prototype.id + '-lblChargeback',
+                                                                                    value: '',
+                                                                                    readOnly: true,
+                                                                                    fieldStyle: 'color:#ff0000;font-weight:bold;text-align:center;font-size:20px',
+                                                                                    width: 150
+                                                                                },*/
                                                                                 {
                                                                                     xtype: 'checkboxfield',
                                                                                     id: prototype.id + '-lblChargeback',
                                                                                     boxLabel: '<strong style="color:#0B333C;">Clarification</strong>',
                                                                                     checked: true,
                                                                                     readOnly: true,
-                                                                                    width: 120
+                                                                                    width: 140
                                                                                 }
-//                                                                                {
-//                                                                                    xtype: 'textfield',
-//                                                                                    id: prototype.id + '-lblChargeback',
-//                                                                                    value: '',
-//                                                                                    readOnly: true,
-//                                                                                    fieldStyle: 'color:#ff0000;font-weight:bold;text-align:center;font-size:20px',
-//                                                                                    width: 150
-//                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                // </editor-fold>
-                                                                {xtype: 'tbspacer', width: 15},
-                                                                // <editor-fold defaultstate="collapsed" desc="Fila 4 Columna 5">
-                                                                {
-                                                                    xtype: 'panel',
-                                                                    layout: 'vbox',
-                                                                    border: false,
-                                                                    bodyStyle: 'background: transparent',
-                                                                    defaults: {
-                                                                        anchor: '100%'
-                                                                    },
-                                                                    items: [
-                                                                        {
-                                                                            xtype: 'panel',
-                                                                            layout: 'hbox',
-                                                                            border: false,
-                                                                            bodyStyle: 'background: transparent',
-                                                                            defaults: {
-                                                                                anchor: '100%'
-                                                                            },
-                                                                            items: [
-                                                                                {
-                                                                                    xtype: 'label',
-                                                                                    text: 'STATUS MP',
-                                                                                    style: 'font-weight:bold;text-align:left;color:#0B333C;',
-                                                                                    padding: '4 0 5 0',
-                                                                                    width: 90
-                                                                                },
-                                                                                {
-                                                                                    xtype: 'textfield',
-                                                                                    id: prototype.id + '-lblMP1',
-                                                                                    value: '',
-                                                                                    readOnly: true,
-                                                                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;',
-                                                                                    width: 90
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            xtype: 'panel',
-                                                                            layout: 'hbox',
-                                                                            border: false,
-                                                                            bodyStyle: 'background: transparent',
-                                                                            defaults: {
-                                                                                anchor: '100%'
-                                                                            },
-                                                                            items: [
-                                                                                {
-                                                                                    xtype: 'label',
-                                                                                    text: 'STATUS MP',
-                                                                                    style: 'font-weight:bold;text-align:left;color:#0B333C;',
-                                                                                    padding: '4 0 5 0',
-                                                                                    width: 90
-                                                                                },
-                                                                                {
-                                                                                    xtype: 'textfield',
-                                                                                    id: prototype.id + '-lblMP2',
-                                                                                    value: '',
-                                                                                    readOnly: true,
-                                                                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;',
-                                                                                    width: 90
-                                                                                }
+                                                                                
                                                                             ]
                                                                         }
                                                                     ]
                                                                 },
                                                                 // </editor-fold>
                                                                 {xtype: 'tbspacer', width: 40},
-                                                                // <editor-fold defaultstate="collapsed" desc="Fila 4 Columna 6">
+                                                                // <editor-fold defaultstate="collapsed" desc="Fila 4 Columna 5">
                                                                 {
                                                                     xtype: 'panel',
                                                                     layout: 'vbox',
@@ -3241,7 +2975,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                         },
                         items: [
                             {
-                                text: 'MODE', dataIndex: 'A1716MODO', width: 60,
+                                text: 'MODE', dataIndex: 'A1716MODO', width: 50,
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             var data = record.data;
                                             metaData.style = 'text-align:right;';                                                   
@@ -3252,29 +2986,10 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                     case 'M': rtn = 'MEMO'; break;
                                                     case 'J': rtn = 'EXCH'; break;
                                                     case 'I': rtn = 'TAXC'; break;
-                                                    case 'R': 
-                                                                if(data.A1716CFOP.trim() === 'RFTX')
-                                                                    rtn = 'RFTX';
-                                                                else
-                                                                    rtn = 'RFND';
-                                                                break;                                                        
+                                                    case 'R': rtn = 'RFND'; break;
                                                     case 'F': rtn = 'FLWN'; break;
-                                                    case 'D': rtn = 'FLWND'; break;
                                                     case 'C': rtn = 'COMM'; break;
                                                     case 'L': rtn = 'IPAY'; break;
-                                                    case 'A': 
-                                                                if(data.A1716TDOC.trim() === 'R')
-                                                                    rtn = 'PYMR';
-                                                                else if(data.A1716TDOC.trim() === 'S')
-                                                                    rtn = 'PYMS';
-                                                                else
-                                                                    rtn = 'PYMT';
-                                                                break;
-                                                    case 'K': rtn = 'PYMT'; break;
-                                                    case 'P': rtn = 'PLSG'; break;
-                                                    case 'B': rtn = 'CBCK'; break;
-                                                    case 'O': rtn = 'COMM'; break;
-                                                    case 'V': rtn = 'FLWN'; break;
                                                     default: rtn = data.A1716MODO.trim();
                                             }
 
