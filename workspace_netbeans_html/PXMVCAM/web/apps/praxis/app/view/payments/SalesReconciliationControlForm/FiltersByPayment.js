@@ -260,7 +260,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
 //                                            ['6', 'Match Forced'],
 //                                            ['7', 'Match Compensation'],
                                             ['8', 'Match Transactional'],
-//                                            ['8', 'Match Void']
+//                                            ['9', 'Match Void']
                                         ]
                                     }),
                                     labelWidth: 55,
@@ -512,7 +512,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
 //                                            ['6', 'Match Forced'],
 //                                            ['7', 'Match Compensation'],
                                             ['8', 'Match Transactional'],
-//                                            ['8', 'Match Void'],
+//                                            ['9', 'Match Void'],
                                         ]
                                     }),
                                     labelWidth: 55,
