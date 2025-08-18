@@ -739,6 +739,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
          
          */
         const me = this;
+        
+        // validate tdoc and close
+        if (me.bean.tdoc !== "S" ) {
+            global.Msg({msg: "Duplicate payment is only enabled for Sale" });
+            return ;
+        }
+        
         const newWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.PagoDuplicadoDataEntry', {
             id: prototype.id + '-PagoDuplicadoDataEntry-1',
             obj: me.bean,
