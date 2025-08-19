@@ -31,7 +31,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntryLogs', {
             title: 'Process Log',
             id: prototype.idDE2 + '-gridLogger',
             width: '100%',
-            maxHeight:450,
+            maxHeight: 450,
             columns: {
                 defaults: {
                     align: 'center',
@@ -47,7 +47,16 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntryLogs', {
                     },
                     {text: 'Date Process', dataIndex: 'A4492FPROC', width: 100},
                     {text: 'Module', dataIndex: 'A4492MODUL', width: 120},
-                    {text: 'Program', dataIndex: 'A4492PROG', width: 150},
+                    {text: 'Status', dataIndex: 'A4492PROG', width: 150,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            if (value.trim() === 'Completed') {
+                                metaData.style = "text-align:center;font-weight:bold;background-color:#27F565;";
+                            } else {
+                                metaData.style = "text-align:center;font-weight:bold;background-color:#F54627;";
+                            }
+                            return value;
+                        }
+                    },
                     {text: 'Description', dataIndex: 'A4492DESC', flex: 1},
                     {text: 'Date', dataIndex: 'A4492FREGI', width: 80},
                     {text: 'Hour', dataIndex: 'A4492HREGI', width: 80}

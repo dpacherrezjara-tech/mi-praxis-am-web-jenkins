@@ -28,15 +28,16 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
 
         switch (this.p.action) {
             case 'I':
-                Ext.getCmp(prototype.id + '-btn-save').show();
+                Ext.getCmp(prototype.idDE + '-btn-save').show();
                 break;
             case 'U':
                 this.getDataInputs();
-                Ext.getCmp(prototype.id + '-btn-save').hide();
+                Ext.getCmp(prototype.idDE + '-btn-save').hide();
+                
                 if (this.p.rec.data.ESTADO === 'Error') {
-                    Ext.getCmp(prototype.id + '-btn-delete').show();
+                    Ext.getCmp(prototype.idDE + '-btn-delete').show();
                 } else {
-                    Ext.getCmp(prototype.id + '-btn-delete').hide();
+                    Ext.getCmp(prototype.idDE + '-btn-delete').hide();
                 }
                 this.view.setHeight(this.view.getHeight());
                 break;
@@ -55,7 +56,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
     }
     ,
     setStoreData: function () {
-        var cbxModulo = Ext.getCmp(prototype.id + '-de-cbxModulo');
+        var cbxModulo = Ext.getCmp(prototype.idDE + '-de-cbxModulo');
         cbxModulo.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: true,
             fields: ['code', 'name'],
@@ -70,8 +71,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
     }
     ,
     onSaveClick: function (btn) {
-        var module = Ext.getCmp(prototype.id + '-de-cbxModulo').getValue();
-        var date = Ext.getCmp(prototype.id + '-de-txtProcessDate');
+        var module = Ext.getCmp(prototype.idDE + '-de-cbxModulo').getValue();
+        var date = Ext.getCmp(prototype.idDE + '-de-txtProcessDate');
         var msj = '';
         if (module === '') {
             msj = 'Select Module.';
@@ -128,7 +129,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
     }
     ,
     onDeleteClick: function (btn) {
-        var cbxModulo = Ext.getCmp(prototype.id + '-de-cbxModulo').getValue();
+        var cbxModulo = Ext.getCmp(prototype.idDE + '-de-cbxModulo').getValue();
 
         switch (cbxModulo) {
             case "PFLOWNPRE" :
@@ -226,7 +227,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                     fn: function () {
                         //exito
                         Ext.getCmp('DataEntryAccountingMasterProcessForm').close();
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        Ext.getCmp(prototype.idDE + '-btnSearch').fireEvent('click', {});
                     }
                 });
 
@@ -252,7 +253,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                     fn: function () {
                         //exito
                         Ext.getCmp('DataEntryAccountingMasterProcessForm').close();
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        Ext.getCmp(prototype.idDE + '-btnSearch').fireEvent('click', {});
                     }
                 });
 
@@ -265,17 +266,17 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
 
         if (PERML === 'Y') {
             console.log('opcion PERML: ' + PERML);
-            console.log(Ext.getCmp(prototype.id + '-de-chkConsistencia'));
-            Ext.getCmp(prototype.id + '-de-chkConsistencia').setValue(true);
-            Ext.getCmp(prototype.id + '-de-chkConsistencia').disable();
+            console.log(Ext.getCmp(prototype.idDE + '-de-chkConsistencia'));
+            Ext.getCmp(prototype.idDE + '-de-chkConsistencia').setValue(true);
+            Ext.getCmp(prototype.idDE + '-de-chkConsistencia').disable();
         }
     },
     // </editor-fold>
     getDataEntryValues: function (strOption) {
 
-        var A1955MODUL = Ext.getCmp(prototype.id + '-de-cbxModulo').getValue();
-        var IN_ENVIO = Ext.getCmp(prototype.id + '-de-chkConsistencia').getValue();
-        var IN_FECHA_PROCESO = Ext.getCmp(prototype.id + '-de-txtProcessDate').getValue();
+        var A1955MODUL = Ext.getCmp(prototype.idDE + '-de-cbxModulo').getValue();
+        var IN_ENVIO = Ext.getCmp(prototype.idDE + '-de-chkConsistencia').getValue();
+        var IN_FECHA_PROCESO = Ext.getCmp(prototype.idDE + '-de-txtProcessDate').getValue();
         IN_FECHA_PROCESO = Ext.util.Format.date(IN_FECHA_PROCESO, 'Ymd');
 
         console.log("A1955MODUL : " + A1955MODUL);
@@ -301,24 +302,24 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
     getDataInputs: function () {
         var rec = this.p.rec;
 
-        Ext.getCmp(prototype.id + '-de-cbxModulo').setValue(rec.get('A1955MODUL').trim());
+        Ext.getCmp(prototype.idDE + '-de-cbxModulo').setValue(rec.get('A1955MODUL').trim());
         var fecha = rec.get('A1955FPROC');
         var fecha = fecha.substring(0, 4) + '/' + fecha.substring(4, 6) + '/' + fecha.substring(6, 8);
-        Ext.getCmp(prototype.id + '-de-txtProcessDate').setValue(fecha);
+        Ext.getCmp(prototype.idDE + '-de-txtProcessDate').setValue(fecha);
 
-        Ext.getCmp(prototype.id + '-USCR').setValue(rec.get('A1955USRIN'));
-        Ext.getCmp(prototype.id + '-FECR').setValue(rec.get('A1955FECIN'));
-        Ext.getCmp(prototype.id + '-HOCR').setValue(rec.get('A1955HORIN'));
-        Ext.getCmp(prototype.id + '-USUP').setValue(rec.get('A1955USRAC'));
-        Ext.getCmp(prototype.id + '-FEUP').setValue(rec.get('A1955FECAC'));
-        Ext.getCmp(prototype.id + '-HOUP').setValue(rec.get('A1955HORAC'));
+        Ext.getCmp(prototype.idDE + '-USCR').setValue(rec.get('A1955USRIN'));
+        Ext.getCmp(prototype.idDE + '-FECR').setValue(rec.get('A1955FECIN'));
+        Ext.getCmp(prototype.idDE + '-HOCR').setValue(rec.get('A1955HORIN'));
+        Ext.getCmp(prototype.idDE + '-USUP').setValue(rec.get('A1955USRAC'));
+        Ext.getCmp(prototype.idDE + '-FEUP').setValue(rec.get('A1955FECAC'));
+        Ext.getCmp(prototype.idDE + '-HOUP').setValue(rec.get('A1955HORAC'));
 
     },
     setReverse: function (objDT) {
         //console.log(objDT.data);        
 
         /*Ext.create('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntryReverse', {
-         id: prototype.id + '-dataEntryReverse',
+         id: prototype.idDE + '-dataEntryReverse',
          params: {
          //rec: res.data,
          obj: objDT.data
@@ -335,7 +336,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                 //console.log(res);
                 if (res.success) {
                     Ext.create('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntryReverse', {
-                        id: prototype.id + '-dataEntryReverse',
+                        id: prototype.idDE + '-dataEntryReverse',
                         params: {
                             rec: res.data,
                             obj: objDT.data
@@ -360,7 +361,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
             IN_FPROC: date
         };
         const newWin = Ext.create('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntryLogs', {
-            id: prototype.id + '-DataEntryLogs-1',
+            id: prototype.idDE + '-DataEntryLogs-1',
             searchParams: params
         });
         newWin.show();
