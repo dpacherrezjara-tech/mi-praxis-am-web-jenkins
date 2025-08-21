@@ -244,7 +244,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 {
                                     items: [
                                         {
-                                            fieldLabel: 'Card Type',
+                                            fieldLabel: 'Card Code',
                                             name: 'A4501TTARJ',
                                             width: 120,
                                             labelWidth: 80
