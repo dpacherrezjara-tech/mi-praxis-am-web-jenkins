@@ -7,7 +7,7 @@ import net.miatech.praxis.payment.entities.A4496;
  * @author Dvicente
  */
 public class A4496Filter extends A4496{
-    private String DESC_PROCTYPE,DESC_TARJ,TICKET;
+    private String DESC_PROCTYPE,DESC_TARJ,TICKET,CARDTYPE;
     private String PROCDATE,PAYDATE,CHARGEBACK;
     private String BPO_COMEN,BPO_COMEN2,ADM_COMEN;
 
@@ -82,4 +82,12 @@ public class A4496Filter extends A4496{
     public void setCHARGEBACK(String CHARGEBACK) {
         this.CHARGEBACK = CHARGEBACK;
     }
+    public String getCARDTYPE() {
+        return CARDTYPE;
+    }
+
+    public void setCARDTYPE(String CARDTYPE) {
+        this.CARDTYPE = CARDTYPE;
+    }
+    
 }

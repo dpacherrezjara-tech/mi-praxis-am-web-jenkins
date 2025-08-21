@@ -85,6 +85,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     }
                 },
                 columns: [
+                    {text: 'Card<br>Type', dataIndex: 'cardtype', width: 55},
                     {text: 'Card<br>Code', dataIndex: 'a4501TTARJ', width: 55},
                     {text: 'Card Number', dataIndex: 'a4501NREF', width: 130},
                     {text: 'Auth<br>Number', dataIndex: 'a4501CAPL', width: 60},
