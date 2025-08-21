@@ -652,6 +652,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                         }
                     ]
                 },
+                //</editor-fold>
             ]
         }
     ]
