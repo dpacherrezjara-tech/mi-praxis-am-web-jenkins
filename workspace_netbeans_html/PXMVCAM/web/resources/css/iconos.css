@@ -16,6 +16,9 @@
 .prx-icon-add {
   background-image: url("../img/botones/add.png");
 }
+.prx-icon-query {
+  background-image: url("../img/botones/query.png");
+}
 .prx-icon-back {
   background-image: url("../img/botones/back.png");
 }
@@ -30,6 +33,12 @@
 }
 .prx-icon-save {
   background-image: url("../img/botones/24x24/1337982029_3floppy_unmount.png");
+}
+.prx-icon-save-blue-16 {
+  background-image: url("../img/botones/16x16/icons8-save-blue-16.png");
+}
+.prx-icon-save-blue-24 {
+  background-image: url("../img/botones/24x24/icons8-save-blue-24.png");
 }
 .prx-icon-update {
   background-image: url("../img/botones/24x24/1337982080_system-software-update.png");

@@ -13,6 +13,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.InputsTamizForm', {
         'Ext.Praxis.view.payments.InputsTamizForm.GridData',
         'Ext.Praxis.view.payments.InputsTamizForm.GridDataDetail',
         'Ext.Praxis.view.payments.InputsTamizForm.GridDataDetailC',
+        'Ext.Praxis.view.payments.InputsTamizForm.DataEntrys.DaysReceiptSettlementDataEntry',
         'Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController'
     ],
     controller: 'InputsTamizController',

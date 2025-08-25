@@ -213,7 +213,52 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                                             'not found': {
                                                 style: {
                                                     backgroundColor: 'transparent',
+                                                    color: 'black',
+                                                    fontWeight: 'bold',
+                                                    cursor: 'pointer'
+                                                },
+                                                listeners: {
+                                                    afterrender: function (label) {
+                                                        label.getEl().on('click', function () {
+                                                            me.clickCallback(label);
+                                                        });
+                                                    }
+                                                }
+                                            },
+                                            'not received': {
+                                                style: {
+                                                    backgroundColor: 'transparent',
                                                     color: 'red',
+                                                    fontWeight: 'bold',
+                                                    cursor: 'pointer'
+                                                },
+                                                listeners: {
+                                                    afterrender: function (label) {
+                                                        label.getEl().on('click', function () {
+                                                            me.clickCallback(label);
+                                                        });
+                                                    }
+                                                }
+                                            },
+                                            'awaiting settlement': {
+                                                style: {
+                                                    backgroundColor: 'transparent',
+                                                    color: 'gray',
+                                                    fontWeight: 'bold',
+                                                    cursor: 'pointer'
+                                                },
+                                                listeners: {
+                                                    afterrender: function (label) {
+                                                        label.getEl().on('click', function () {
+                                                            me.clickCallback(label);
+                                                        });
+                                                    }
+                                                }
+                                            },
+                                            'with observation': {
+                                                style: {
+                                                    backgroundColor: 'transparent',
+                                                    color: 'blue',
                                                     fontWeight: 'bold',
                                                     cursor: 'pointer'
                                                 },

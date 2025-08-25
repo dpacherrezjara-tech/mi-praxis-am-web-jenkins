@@ -86,6 +86,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
                 Ext.getCmp(prototype.id + '-cmbFileType').hide();
                 Ext.getCmp(prototype.id + '-cmbFUENTE').show();
                 Ext.getCmp(prototype.id + '-cmbFUENTE-det-PROC').hide();
+                Ext.getCmp(prototype.id + '-btnDaysReceiptSettlement').show();
                 me.setCalendarParameters();
             },
             'D': () => {
@@ -97,6 +98,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
                 Ext.getCmp(prototype.id + '-cmbFileType').show();
                 Ext.getCmp(prototype.id + '-cmbFUENTE').hide();
                 Ext.getCmp(prototype.id + '-cmbFUENTE-det-PROC').show();
+                Ext.getCmp(prototype.id + '-btnDaysReceiptSettlement').hide();
                 me.setDetailParameters();
             }
         };
@@ -453,6 +455,12 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
         } else {
             opts.show();
         }
+    },
+    onClickViewDaysReceiptSettlement: function () {
+        let dataEntry = Ext.create('Ext.Praxis.view.payments.InputsTamizForm.DataEntrys.DaysReceiptSettlementDataEntry', {
+            id: prototype.id + '-DaysReceiptSettlementDataEntry-01'
+        });
+        dataEntry.show();
     },
     //<editor-fold defaultstate="collapsed" desc="Descarga Exceles">
     downloadProcessor: function (obj) {

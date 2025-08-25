@@ -248,8 +248,20 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
                     listeners: {
                         select: 'onClickSearchBtn'
                     }
+                },
+                {
+                    xtype: 'button',
+                    text: 'Days Receipt',
+                    margin: '0px 0px 0px 20px',
+                    padding: '3px 5px',
+                    hidden: true,
+                    id: prototype.id + '-btnDaysReceiptSettlement',
+                    iconCls: 'prx-icon-query',
+                    tooltip: 'Days Receipt of Settlement',
+                    listeners: {
+                        click: 'onClickViewDaysReceiptSettlement'
+                    }
                 }
-                
             ]
         }
 
