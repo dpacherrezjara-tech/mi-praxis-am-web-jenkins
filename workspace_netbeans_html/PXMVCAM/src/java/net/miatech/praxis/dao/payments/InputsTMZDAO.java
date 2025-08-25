@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import net.miatech.beans.Pagination;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.classes.CurrentSession;
@@ -75,10 +77,25 @@ public class InputsTMZDAO implements InputsTmzLogic {
             SQP04972Filter res = new SQP04972Filter();
             SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
             Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP04972", params);
+            
+            SqlParameterSource onlyTipo = new MapSqlParameterSource()
+                .addValue("IN_PROCESSOR", filter.getTIPO());
+            Map<String, Object> dayReceipt = jdbcUtils.executeSQP(LIBRARY, "SQP05672", onlyTipo);
+            
             res.setSTS((String) obj.get("STS"));
             if (res.getSTS().equals("1")) {
+                // dp obtenemos la matriz de días habilitados desde dayReceipt
+                List<Map<String, Object>> configDias = (List<Map<String, Object>>) dayReceipt.get("#result-set-1");
+                Map<String, Object> config = configDias.get(0); // solo un registro por procesador
+
                 //obtiene listado de fechas activas
                 res.setLstFechas((List<Map<String, String>>) obj.get("#result-set-1"));
+                //obtiene listado de fechas con observacion
+                List<Map<String, Object>> daysObservations = (List<Map<String, Object>>) obj.get("#result-set-2");
+                Set<String> datesWithObservation = daysObservations.stream()
+                    .map(d -> (String) d.get("prda"))
+                    .collect(Collectors.toSet());
+                
                 //numero de archivos por procesador
                 res.setNumFiles((int) obj.get("NUM_FILES"));
                 //listado de fechas agrupadas
@@ -95,6 +112,7 @@ public class InputsTMZDAO implements InputsTmzLogic {
                 List<LocalDate> fechas = this.obtenerFechasLaborales(Integer.parseInt(filter.getFROM_YEAR()));
                 //valida fecha
                 for (LocalDate fecha : fechas) {
+                    
                     String fechaString = new StringBuilder()
                             .append(fecha.getYear())
                             .append(String.format("%02d", fecha.getMonthValue()))
@@ -103,14 +121,36 @@ public class InputsTMZDAO implements InputsTmzLogic {
                     CalendarTmz fechaStatus = new CalendarTmz();
                     fechaStatus.setFecha(fechaString);
                     fechaStatus.setProcesador(filter.getTIPO());
-                    fechaStatus.setDayName(fecha.getDayOfWeek().name());
-                    if (!fechaPorProcesador.containsKey(fechaString)) {
-                        fechaStatus.setStatus("not found");
+                    
+                    String dayColumn = fecha.getDayOfWeek().name();
+                    fechaStatus.setDayName(dayColumn);
+                    
+                    boolean enabledReceipt = ((Number) config.get(dayColumn)).intValue() == 1;
+                    
+                    if (datesWithObservation.contains(fechaString)) {
+                        fechaStatus.setStatus("with observation"); // azul // con observacion
+                    }
+                    // Evaluar si ha llegado insumos
+                    else if (!fechaPorProcesador.containsKey(fechaString)) {
+                        
+                        // validar si es dia habilitado 
+                        if (enabledReceipt) {
+                            
+                            if (fecha.isAfter(LocalDate.now())) {
+                                fechaStatus.setStatus("awaiting settlement"); // gray // programado pero aún no es fecha 
+                            } else {
+                                fechaStatus.setStatus("not received");  // red // programado para recibir pero no llegó
+                            }
+                            
+                        } else{
+                            // dia habilitado pero no llego insumo
+                            fechaStatus.setStatus("not found"); // black // no encontado y no programado
+                        }
                     } else {
                         if (fechaPorProcesador.get(fechaString).size() != res.getNumFiles()) {
-                            fechaStatus.setStatus("incomplete");
+                            fechaStatus.setStatus("incomplete"); // yellow // data incompleto
                         } else {
-                            fechaStatus.setStatus("ok");
+                            fechaStatus.setStatus("ok"); // green // completo
                         }
                     }
                     result.add(fechaStatus);
@@ -125,11 +165,11 @@ public class InputsTMZDAO implements InputsTmzLogic {
     private List<LocalDate> obtenerFechasLaborales(int year) {
         LocalDate startDate = LocalDate.ofYearDay(year, 1);
         LocalDate endDate;
-        if (year == LocalDate.now().getYear()) {
-            endDate = LocalDate.now();
-        } else {
+//        if (year == LocalDate.now().getYear()) {
+//            endDate = LocalDate.now();
+//        } else {
             endDate = LocalDate.ofYearDay(year, 365); // O 366 si es bisiesto
-        }
+//        }
         LocalDate date = startDate;
         List<LocalDate> result = new ArrayList<>();
         //update: plopez comento que debe considerarse sabado y domingo

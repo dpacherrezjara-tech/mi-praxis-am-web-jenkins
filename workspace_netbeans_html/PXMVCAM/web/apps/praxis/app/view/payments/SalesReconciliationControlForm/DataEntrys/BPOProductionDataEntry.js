@@ -210,7 +210,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                             autoScroll: true,
                             minHeight: 180,
                             width: 340,
-                            maxHeight: 200,
+                            maxHeight: 300,
                             margin: '5 5 5 5',
                             viewConfig: {
                                 stripeRows: true,
@@ -254,7 +254,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                             titleAlign: 'center',
                             id: prototype.idDeProd + '-gridDetail',
                             minHeight: 180,
-                            maxHeight: 200,
+                            maxHeight: 300,
                             flex: 1,
                             margin: '5 5 5 5',
                             viewConfig: {
@@ -322,7 +322,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                             id: prototype.idDeProd + '-gridDetail2',
                             hidden: true,
                             minHeight: 180,
-                            maxHeight: 200,
+                            maxHeight: 300,
                             flex: 1,
                             margin: '5 5 5 5',
                             viewConfig: {
