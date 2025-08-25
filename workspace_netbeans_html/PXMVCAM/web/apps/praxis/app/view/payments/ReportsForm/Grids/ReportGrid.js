@@ -6,6 +6,7 @@ Ext.define('Ext.Praxis.view.payments.ReportsForm.Grids.ReportGrid', {
     ],
     controller: 'GridReportController',
     maxHeight: prototype.height,
+    id: prototype.id + '-gridData',
     minHeight: 200,
     height: 'auto',
     width: prototype.width,
@@ -31,14 +32,28 @@ Ext.define('Ext.Praxis.view.payments.ReportsForm.Grids.ReportGrid', {
         },
         items: [
 
-            {text: 'Start Date', dataIndex: 'DATE', width: 100},
-            {text: 'End Date', dataIndex: 'ENDDATE', width: 100},
-            {text: 'Report Code', dataIndex: 'RCODE', width: 100},
-            {text: 'Procces Type', dataIndex: 'PROTYPE', width: 100},
-            {text: 'Country', dataIndex: 'COUNTRY', width: 100},
-            {text: 'Email', dataIndex: 'MAIL', width: 100},
+            {text: 'Start Date', dataIndex: 'A4803FPRO', width: 100},
+            {text: 'End Date', dataIndex: 'A4803FCUL', width: 100},
+            {text: 'Report Code', dataIndex: 'A4803CODRE', width: 100},
+            {text: 'Process Type', dataIndex: 'A4803TYPE', width: 100},
+            {text: 'Email', dataIndex: 'A4803EMAIL', width: 100},
             {text: 'Total', dataIndex: 'TOTAL', width: 100},
-            {text: 'Status', dataIndex: 'STATUS', width: 100},
+            {text: 'Status', dataIndex: 'A4803FLAGDESC', width: 100},
+            {text: 'Auditor', dataIndex: 'A4803REGIS', width: 100},
+            {
+                sortable: false,
+                xtype: 'actioncolumn',
+                text: 'Edit',
+                width: 50,
+                align: 'center',
+                items: [
+                    {
+                        iconCls: 'prx-icon-1400209639_24',
+                        tooltip: 'Download',
+                        handler: 'viewDataEntry_clickHandler'
+                    }
+                ]
+            }
         ]
     },
 

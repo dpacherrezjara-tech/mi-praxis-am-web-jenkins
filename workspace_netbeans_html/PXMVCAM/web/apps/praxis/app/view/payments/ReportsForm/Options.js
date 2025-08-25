@@ -9,6 +9,26 @@ Ext.define('Ext.Praxis.view.payments.ReportsForm.Options', {
     items: [
         {
             xtype: 'panel',
+            layout: 'hbox',
+            border: false,
+            defaults: {
+                style: 'padding: 4px; margin: 1px;'
+            },
+            items: [
+                {
+                    xtype: 'Paginator',
+                    id: prototype.id + '-pagginator-01',
+                    pagInfo: [
+                        prototype.id + '-lbl-currentPage',
+                        prototype.id + '-lbl-pageCount',
+                        prototype.id + '-lbl-total'
+                    ]
+                }
+            ]
+        },
+        {xtype: 'tbspacer', width: 50},
+        {
+            xtype: 'panel',
             border: true,
             items: [
                 {
@@ -19,11 +39,11 @@ Ext.define('Ext.Praxis.view.payments.ReportsForm.Options', {
                             id: prototype.id + '-btnSearch',
                             iconCls: 'prx-icon-search',
                             tooltip: 'Search',
-                            listeners:{
-                                click:'onSearchClickBtn'
+                            listeners: {
+                                click: 'onSearchClickBtn'
                             }
                         },
-                          {
+                        {
                             xtype: 'button',
                             id: prototype.id + '-btnAdd',
                             iconCls: 'prx-icon-add',
@@ -31,6 +51,12 @@ Ext.define('Ext.Praxis.view.payments.ReportsForm.Options', {
                             listeners: {
                                 click: 'onClickAddBtn'
                             }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnExcel',
+                            iconCls: 'prx-icon-excel',
+                            tooltip: 'Export to Excel'
                         },
                         {
                             xtype: 'button',

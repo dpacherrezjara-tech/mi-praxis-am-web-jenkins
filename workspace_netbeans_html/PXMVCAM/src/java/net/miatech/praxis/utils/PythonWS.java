@@ -60,7 +60,7 @@ public class PythonWS {
         String status = jsonObject.getString("status");
         String url = jsonObject.getString("url");
         // Si la respuesta HTTP tiene éxito, leemos los datos de la respuesta
-        if (status.equals("success")) {
+        if (status.equals("success") || status.equals("SUCCESS")) {
 
             byte[] responseBody = downloadFile(url);
             //
