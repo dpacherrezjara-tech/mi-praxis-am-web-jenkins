@@ -22,8 +22,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
             IN_PRDA : obj.prda,
             IN_TDOC: obj.tdoc,
             IN_SCARDN1: obj.scardn.slice(0,6),
-            IN_SCARDN2: obj.scardn.trim().slice(pos),
-            IN_DAYS: 30
+            IN_SCARDN2: obj.scardn.trim().slice(pos)
+//            IN_DAYS: 30
         };
         
         console.log(params);
@@ -88,17 +88,32 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
             IN_AREFNBR2: objSel.AREFNBR
         };
         
+        let status_res = 0 ;
+        let message = "" ;
+        
         try {
             //const {cuuid, fuuid} = await global.loadRecordsOnTable('PRAXISMP', 'XTEMPO', [params]);
             const res = await global.callStorePost('PRAXISMP', 'SQP05653', params);
-            new AWN().success("Updated successfully");
+            
+            console.log("result", res);
+            status_res = parseInt( res.data.lstVals.OUT_RES ) ;
+            message = res.data.lstVals.OUT_MSG ;
+            
         } catch (e) {
-            console.error(e);
-            new AWN().alert('Error');
+            status_res = 0 ;
+            message = e ;
         } finally {
-            me.view.setLoading(false);
-            me.view.resetDataEntry();
-            me.view.close();
+            
+            if ( status_res === 1) {
+                
+                new AWN().success(message);  
+                me.view.setLoading(false);
+                me.view.resetDataEntry();
+                me.view.close();
+            }
+            else {
+                new AWN().alert(message);
+            }
         }
     },
     onCancelClick: function () {

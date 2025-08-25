@@ -808,7 +808,7 @@ public class SalesReconciliationBPOController {
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();
             //headers
-            Object[] headers = new Object[27];
+            Object[] headers = new Object[28];
             headers[0] = "Sale Date";
             headers[1] = "IATA";
             headers[2] = "Source";
@@ -823,22 +823,23 @@ public class SalesReconciliationBPOController {
             headers[11] = "Pax Name";
             headers[12] = "Ticket";
             headers[13] = "PNR";
-            headers[14] = "Card Code";
-            headers[15] = "Card Number";
-            headers[16] = "Auth Code";
-            headers[17] = "Amount";
-            headers[18] = "Currency";
-            headers[19] = "Expected Date";
-            headers[20] = "Payment Date";
-            headers[21] = "Difference";
-            headers[22] = "Processing Date";
-            headers[23] = "Status";
-            headers[24] = "Processor";
-            headers[25] = "ADM St.";
-            headers[26] = "BPO Comment";
+            headers[14] = "Card Type";
+            headers[15] = "Card Code";
+            headers[16] = "Card Number";
+            headers[17] = "Auth Code";
+            headers[18] = "Amount";
+            headers[19] = "Currency";
+            headers[20] = "Expected Date";
+            headers[21] = "Payment Date";
+            headers[22] = "Difference";
+            headers[23] = "Processing Date";
+            headers[24] = "Status";
+            headers[25] = "Processor";
+            headers[26] = "ADM St.";
+            headers[27] = "BPO Comment";
             data.add(headers);
             for (A4496Filter obj : filter.getResponse()) {
-                Object[] row = new Object[27];
+                Object[] row = new Object[28];
                 row[0] = obj.getA4496FECVT();
                 row[1] = obj.getA4496AGENT();
                 row[2] = obj.getA4496FUENT();
@@ -853,22 +854,23 @@ public class SalesReconciliationBPOController {
                 row[11] = obj.getA4496PAX();
                 row[12] = obj.getA4496CIA() + obj.getA4496FORMA() + obj.getA4496SERIE();
                 row[13] = obj.getA4496PNR();
-                row[14] = obj.getA4501TTARJ();
-                row[15] = obj.getA4501NREF();
-                row[16] = obj.getA4501CAPL();
-                row[17] = obj.getA4501VFOP();
-                row[18] = obj.getA4501MFOP();
-                row[19] = obj.getPROCDATE();
-                row[20] = obj.getPAYDATE();
-                row[21] = restaFechas(obj.getPROCDATE(), obj.getPAYDATE());
-                row[22] = obj.getA4501PRDA();
-                row[23] = convertStatus(obj.getA4501STVAL());
-                row[24] = obj.getDESC_PROCTYPE();
-                row[25] = obj.getA4501STADM();
+                row[14] = obj.getCARDTYPE(); 
+                row[15] = obj.getA4501TTARJ();
+                row[16] = obj.getA4501NREF();
+                row[17] = obj.getA4501CAPL();
+                row[18] = obj.getA4501VFOP();
+                row[19] = obj.getA4501MFOP();
+                row[20] = obj.getPROCDATE();
+                row[21] = obj.getPAYDATE();
+                row[22] = restaFechas(obj.getPROCDATE(), obj.getPAYDATE());
+                row[23] = obj.getA4501PRDA();
+                row[24] = convertStatus(obj.getA4501STVAL());
+                row[25] = obj.getDESC_PROCTYPE();
+                row[26] = obj.getA4501STADM();
                 if (obj.getA4501STADM().trim().isEmpty()) {
-                    row[26] = !obj.getBPO_COMEN2().isEmpty() ? obj.getBPO_COMEN2() : obj.getBPO_COMEN();
+                    row[27] = !obj.getBPO_COMEN2().isEmpty() ? obj.getBPO_COMEN2() : obj.getBPO_COMEN();
                 } else {
-                    row[26] = obj.getADM_COMEN();
+                    row[27] = obj.getADM_COMEN();
                 }
                 data.add(row);
             }

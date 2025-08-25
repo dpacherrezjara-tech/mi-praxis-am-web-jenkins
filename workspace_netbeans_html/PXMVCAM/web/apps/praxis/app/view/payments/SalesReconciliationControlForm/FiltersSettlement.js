@@ -242,8 +242,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                                     ['5', 'Match Manual'],
 //                                    ['6', 'Match Forced'],
 //                                    ['7', 'Match  for Compensation'],
-                                    ['8', 'Match Transactional'],
-                                    ['8', 'Match Void'],
+                                    ['8', 'Match Transactional']
                                 ]
                             }),
                             labelWidth: 55,

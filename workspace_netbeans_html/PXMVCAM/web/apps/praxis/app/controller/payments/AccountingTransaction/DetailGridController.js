@@ -106,9 +106,39 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.DetailGridContr
         mainPanel.add(ticketPanel);
     },
     onClickTicketInfo: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        if (record.data.ticket.trim() === '') {
-            return;
+        try {
+            if (record.data.ticket.trim() === '') {
+                return;
+            }
+//            const obj = record.data.ticket;
+//            console.log("ticket : ", obj.substr(0, 3) , obj.substr(3, 4) , obj.substr(7, 6) ) ;
+
+            let { ccust, ticket, tdoc, seq, corrl } = record.data;
+            
+            let params = {
+                IN_CCUST: ccust,
+                IN_CIA: ticket.substr(0, 3),
+                IN_FORMA: ticket.substr(3, 4),
+                IN_SERIE: ticket.substr(7, 6),
+                IN_SEQ: seq,
+                IN_TDOC: tdoc,
+                IN_CORRL: corrl
+            };
+            
+            const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TicketConciliationDataEntry', {
+                id: prototype.id + '-TicketConciliationDataEntry-1',
+                searchParams: params
+    //            obj: obj,
+    //            callback: () => {
+    //                grid.getStore().load();
+    //            }
+            });
+            dataEntry.show();
+            
+        } catch (e) {
+            console.error(e);
         }
+        /*
         const obj = record.data.ticket;
         prototypeProgram.view = 'payments-accounting-transaction-form';
         prototypeProgram.nprog = 'PX00000628';
@@ -124,7 +154,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.DetailGridContr
         console.log(beanProMasterTicket);
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
-        
+        */
 //        const obj = record.data.ticket;
 //        prototypeProgram.view = 'payments-sales-reconciliation-control-form';
 //        prototypeProgram.nprog = 'PX00000636';
