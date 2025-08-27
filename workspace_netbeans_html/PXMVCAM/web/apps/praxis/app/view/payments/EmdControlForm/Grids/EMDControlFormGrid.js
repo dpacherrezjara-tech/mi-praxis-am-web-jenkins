@@ -93,7 +93,7 @@ Ext.define('Ext.Praxis.view.payments.EMDControlForm.Grids.EMDControlFormGrid', {
 //            },
 
             {
-                text: 'Status', dataIndex: 'STVAL', flex:1,
+                text: 'Status', dataIndex: 'STVAL', width: 150,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                     metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                     const opts = {
@@ -115,6 +115,15 @@ Ext.define('Ext.Praxis.view.payments.EMDControlForm.Grids.EMDControlFormGrid', {
                     };
                     return opts[value] || '';
                 }
+            },
+            {
+                text: 'Doc. Type', dataIndex: 'TIPOD', width: 80
+            },
+            {
+                text: 'Fuente', dataIndex: 'FUENTE', width: 80
+            },
+            {
+                text: 'Document', dataIndex: 'TDOC', width: 80
             },
         ]
     },
