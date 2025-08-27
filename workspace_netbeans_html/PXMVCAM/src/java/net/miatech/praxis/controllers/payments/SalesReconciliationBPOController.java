@@ -655,7 +655,7 @@ public class SalesReconciliationBPOController {
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();
             //headers
-            Object[] headers = new Object[28];
+            Object[] headers = new Object[31];
             headers[0] = "Processing Date";
             headers[1] = "Payment Date";
             headers[2] = "Processor";
@@ -677,16 +677,19 @@ public class SalesReconciliationBPOController {
             headers[18] = "Ref. Number";
             headers[19] = "Currency";
             headers[20] = "Transaction Amount";
-            headers[21] = "Error Code";
-            headers[22] = "Description";
-            headers[23] = "Adju. Code";
-            headers[24] = "Description";
-            headers[25] = "User Update";
-            headers[26] = "Date Update";
-            headers[27] = "BPO Comment";
+            headers[21] = "Sale Amount";
+            headers[22] = "Difference Amount";
+            headers[23] = "Quantity Ticket";
+            headers[24] = "Error Code";
+            headers[25] = "Description";
+            headers[26] = "Adju. Code";
+            headers[27] = "Description";
+            headers[28] = "User Update";
+            headers[29] = "Date Update";
+            headers[30] = "BPO Comment";
             data.add(headers);
             for (A4331Filter obj : filter.getResponse()) {
-                Object[] row = new Object[28];
+                Object[] row = new Object[31];
                 row[0] = obj.getPrda();
                 row[1] = obj.getPaydate();
                 row[2] = obj.getDESC_PROCTYPE();
@@ -708,16 +711,19 @@ public class SalesReconciliationBPOController {
                 row[18] = obj.getArefnbr();
                 row[19] = obj.getScurrency();
                 row[20] = obj.getTgrosamoun();
-                row[21] = obj.getCerror();
-                row[22] = obj.getDES_CERROR();
-                row[23] = obj.getCodadju();
-                row[24] = obj.getDESC_CODADJU();
-                row[25] = obj.getUsup();
-                row[26] = obj.getFeup();
+                row[21] = obj.getSvfops();
+                row[22] = obj.getDIFFERENCE();
+                row[23] = obj.getQtytkt();
+                row[24] = obj.getCerror();
+                row[25] = obj.getDES_CERROR();
+                row[26] = obj.getCodadju();
+                row[27] = obj.getDESC_CODADJU();
+                row[28] = obj.getUsup();
+                row[29] = obj.getFeup();
                 if (obj.getBPOCOMENT().isEmpty()) {
-                    row[27] = obj.getADJUCOMENT();
+                    row[30] = obj.getADJUCOMENT();
                 } else {
-                    row[27] = obj.getBPOCOMENT();
+                    row[30] = obj.getBPOCOMENT();
                 }
                 data.add(row);
             }
@@ -1252,87 +1258,93 @@ public class SalesReconciliationBPOController {
 
             if (filter.getIN_ORIG().equals("P")) {
                 //headers
-                Object[] headers = new Object[16];
+                Object[] headers = new Object[18];
                 headers[0] = "Worked Date";
-                headers[1] = "Username";
-                headers[2] = "Doc. Type";
-                headers[3] = "Processor";
-                headers[4] = "Country";
-                headers[5] = "Processing Date";
-                headers[6] = "Status";
-                headers[7] = "Card Number";
-                headers[8] = "Auth Code";
-                headers[9] = "Amount";
-                headers[10] = "Currency";
-                headers[11] = "PNR";
-                headers[12] = "Qty Tkts";
-                headers[13] = "Ticket";
-                headers[14] = "Adjustment";
-                headers[15] = "BPO Comment";
+                headers[1] = "Worked Hour";
+                headers[2] = "Username";
+                headers[3] = "Doc. Type";
+                headers[4] = "Processor";
+                headers[5] = "Country";
+                headers[6] = "Processing Date";
+                headers[7] = "Status";
+                headers[8] = "Card Number";
+                headers[9] = "Auth Code";
+                headers[10] = "Amount";
+                headers[11] = "Currency";
+                headers[12] = "PNR";
+                headers[13] = "Qty Tkts";
+                headers[14] = "Ticket";
+                headers[15] = "Reference Number";
+                headers[16] = "Adjustment";
+                headers[17] = "BPO Comment";
                 data.add(headers);
                 for (Object line : filter.getResponse()) {
                     A4331Filter obj = (A4331Filter) line;
-                    Object[] row = new Object[16];
+                    Object[] row = new Object[18];
                     row[0] = obj.getFeup();
-                    row[1] = obj.getUsup();
-                    row[2] = obj.getTranstype();
-                    row[3] = obj.getDESC_PROCTYPE();
-                    row[4] = obj.getScountry();
-                    row[5] = obj.getPrda();
-                    row[6] = convertStatus(obj.getStval());
-                    row[7] = obj.getScardn();
-                    row[8] = obj.getSauthoc();
-                    row[9] = obj.getTgrosamoun();
-                    row[10] = obj.getScurrency();
-                    row[11] = obj.getSpnr();
-                    row[12] = obj.getQtytkt();
-                    row[13] = obj.getTicket();
-                    row[14] = obj.getCodadju();
-                    row[15] = obj.getBPOCOMENT();
+                    row[1] = obj.getHoup();
+                    row[2] = obj.getUsup();
+                    row[3] = obj.getTranstype();
+                    row[4] = obj.getDESC_PROCTYPE();
+                    row[5] = obj.getScountry();
+                    row[6] = obj.getPrda();
+                    row[7] = convertStatus(obj.getStval());
+                    row[8] = obj.getScardn();
+                    row[9] = obj.getSauthoc();
+                    row[10] = obj.getTgrosamoun();
+                    row[11] = obj.getScurrency();
+                    row[12] = obj.getSpnr();
+                    row[13] = obj.getQtytkt();
+                    row[14] = obj.getTicket();
+                    row[15] = obj.getArefnbr();
+                    row[16] = obj.getCodadju();
+                    row[17] = obj.getBPOCOMENT();
                     data.add(row);
                 }
                 title = controllerName + " - ByPayment Production ";
             } else {
                 //headers
-                Object[] headers = new Object[15];
+                Object[] headers = new Object[17];
                 headers[0] = "Worked Date";
-                headers[1] = "Username";
-                headers[2] = "Doc. Type";
-                headers[3] = "Processor";
-                headers[4] = "Country";
-                headers[5] = "Sale Date";
-                headers[6] = "Status";
-                headers[7] = "Card Number";
-                headers[8] = "Auth Code";
-                headers[9] = "Amount";
-                headers[10] = "Currency";
-                headers[11] = "PNR";
-                headers[12] = "Card Type";
-                headers[13] = "Ticket";
-                headers[14] = "BPO Comment";
-                headers[15] = "ADM Comment";
+                headers[1] = "Worked Hour";
+                headers[2] = "Username";
+                headers[3] = "Doc. Type";
+                headers[4] = "Processor";
+                headers[5] = "Country";
+                headers[6] = "Sale Date";
+                headers[7] = "Status";
+                headers[8] = "Card Number";
+                headers[9] = "Auth Code";
+                headers[10] = "Amount";
+                headers[11] = "Currency";
+                headers[12] = "PNR";
+                headers[13] = "Card Type";
+                headers[14] = "Ticket";
+                headers[15] = "BPO Comment";
+                headers[16] = "ADM Comment";
                 data.add(headers);
                 for (Object line : filter.getResponse()) {
                     A4496Filter obj = (A4496Filter) line;
-                    Object[] row = new Object[15];
+                    Object[] row = new Object[17];
                     row[0] = obj.getA4501FEUP();
-                    row[1] = obj.getA4501USUP();
-                    row[2] = obj.getA4496TRNCU();
-                    row[3] = obj.getDESC_PROCTYPE();
-                    row[4] = obj.getA4496PAIS();
-                    row[5] = obj.getA4496FECVT();
-                    row[6] = convertStatus(obj.getA4501STVAL());
-                    row[7] = obj.getA4501NREF();
-                    row[8] = obj.getA4501CAPL();
-                    row[9] = obj.getA4501VFOP();
-                    row[10] = obj.getA4501MFOP();
-                    row[11] = obj.getA4496PNR();
-                    row[12] = obj.getDESC_TARJ();
-                    row[13] = obj.getTICKET();
-                    row[14] = obj.getBPO_COMEN().trim().isEmpty()
+                    row[1] = obj.getA4501HOUP();
+                    row[2] = obj.getA4501USUP();
+                    row[3] = obj.getA4496TRNCU();
+                    row[4] = obj.getDESC_PROCTYPE();
+                    row[5] = obj.getA4496PAIS();
+                    row[6] = obj.getA4496FECVT();
+                    row[7] = convertStatus(obj.getA4501STVAL());
+                    row[8] = obj.getA4501NREF();
+                    row[9] = obj.getA4501CAPL();
+                    row[10] = obj.getA4501VFOP();
+                    row[11] = obj.getA4501MFOP();
+                    row[12] = obj.getA4496PNR();
+                    row[13] = obj.getDESC_TARJ();
+                    row[14] = obj.getTICKET();
+                    row[15] = obj.getBPO_COMEN().trim().isEmpty()
                             ? obj.getBPO_COMEN2()
                             : obj.getBPO_COMEN();
-                    row[15] = obj.getADM_COMEN();
+                    row[16] = obj.getADM_COMEN();
                     data.add(row);
                 }
                 title = controllerName + " - ByTicket Production ";
