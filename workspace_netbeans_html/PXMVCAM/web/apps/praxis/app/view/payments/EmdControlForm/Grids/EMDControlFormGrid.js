@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.EMDControlForm.Grids.EMDControlFormGrid', {
                         text: 'Code', dataIndex: 'SCARDCOD', width: 60
                     },
                     {
-                        text: 'Number', dataIndex: 'SCARDN', width: 120
+                        text: 'Number', dataIndex: 'SCARDN2', width: 120
                     },
                     {
                         text: 'Auth.', dataIndex: 'SAUTHOC', width: 80
