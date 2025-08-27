@@ -161,8 +161,9 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
                 };
                 let data = res.map(x => ({
                         'Processing Date': x.A4701PRDA,
-                        'Process': x.A4701PROCE,
+                        'Processor': x.A4701PROCE,
                         'File': x.A4701TFILE,
+                        'Sequence': x.A4701SEQ,
                         'File Name': x.A4701NFILE,
                         'File Path': x.A4701PATH,
                         'Transfer': opts[x.A4701UPLOA],
@@ -170,7 +171,9 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
                         'Format': opts[x.A4701FORMA],
                         'Status': x.A4701STAT === 'OK' ? 'OK' : 'ERROR',
                         'Error Code': x.A4701CDERR,
-                        'Message': x.A4701MSN
+                        'Message': x.A4701MSN,
+                        'Processed Date': x.A4701FPROC,
+                        'Processed Hour': x.A4701HPROC
                     }));
                 global.writeExcelFromJson(data, 'MDP Load Control');
             };
