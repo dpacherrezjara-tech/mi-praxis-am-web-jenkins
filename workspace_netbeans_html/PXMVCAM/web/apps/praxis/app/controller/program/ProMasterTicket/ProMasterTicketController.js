@@ -1443,8 +1443,11 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         win.setValue('lblIssuedInExchangeFor', strIssuedInExchangeFor);
                         win.setValue('lblOriDes', me01.beanResultSet01.fileA720.A720ACCO + '-' + me01.beanResultSet01.fileA720.A720ACCD);
                         win.setValue('lblDocumentType', me01.beanResultSet01.fileA720.A720TDOC);
-                        //win.setValue('lblDocumentTypeCod', me01.beanResultSet01.fileA720.A720TDOC_COD);
-                        //win.setValue('lblDocumentTypeCon', me01.beanResultSet01.fileA720.A720TDOC_CON);
+                        if(me01.beanResultSet01.fileA720.A720TDOC === 'EMD'||me01.beanResultSet01.fileA720.A720TDOC === 'EMDA'){
+                            win.setValue('lblDocumentTypeCod', me01.beanResultSet01.fileA720.A720TDOC_COD);
+                            win.setValue('lblDocumentTypeCon', me01.beanResultSet01.fileA720.A720TDOC_CON);
+                        }//Cuando sea VOU se usara el SearchEMD automaticamente que se encuentra mas abajo
+                        
                         win.setValue('chkOverCommision', false);
                         win.setValue('chkAccounted', (me01.beanResultSet01.fileA1530.A1530FCONT !== '') ? true : false);
                         win.setValue('chkElectronicticket', (me01.beanResultSet01.fileA720.A720ETKT === 'E') ? true : false);
