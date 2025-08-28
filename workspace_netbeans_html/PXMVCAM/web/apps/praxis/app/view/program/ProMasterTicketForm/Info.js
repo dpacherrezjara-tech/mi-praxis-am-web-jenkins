@@ -2571,7 +2571,8 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                                                     id: prototype.id + '-lblChargeback',
                                                                                     value: '',
                                                                                     readOnly: true,
-                                                                                    fieldStyle: 'color:#ff0000;font-weight:bold;text-align:center;font-size:20px',
+//                                                                                    fieldStyle: 'color:#ff0000;font-weight:bold;text-align:center;font-size:20px',
+                                                                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;',
                                                                                     width: 150
                                                                                 },*/
                                                                                 {
