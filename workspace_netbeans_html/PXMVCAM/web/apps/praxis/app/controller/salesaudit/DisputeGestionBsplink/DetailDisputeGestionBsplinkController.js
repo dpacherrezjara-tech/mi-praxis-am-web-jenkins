@@ -86,10 +86,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DetailDispute
         me.beanINI.CNXPA = rec.data.A2548CNXPA;
         me.beanINI.FLAG = rec.data.A2548FLAG;
         me.beanIniTem = me.beanINI;
-        if(rec.data.A2548FLAG==='D'){
-             Ext.getCmp(prototype.id1 + '-ComboStatus').setVisible(true);
-        }else{
-             Ext.getCmp(prototype.id1 + '-ComboStatus').setVisible(false);
+        if (rec.data.A2548FLAG === 'D') {
+            Ext.getCmp(prototype.id1 + '-ComboStatus').setVisible(true);
+        } else {
+            Ext.getCmp(prototype.id1 + '-ComboStatus').setVisible(false);
         }
 
     },
@@ -212,27 +212,60 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DetailDispute
             var form = Ext.getCmp(prototype.id1 + '-form-01').getForm();
             form.submit({
                 url: prototype.url + '/insertTracingFile/',
-                waitMsg: 'Uploading your sure to upload the file...',
+                waitMsg: 'Uploading your file...',
                 params: {beanString: JSON.stringify(me.beanTMP)},
                 success: function (fp, o) {
                     var res = Ext.decode(o.response.responseText);
-                    Ext.Msg.alert('Success', 'Your sure to upload the file "' + res.result + '" has been uploaded.');
-                    var vp_icon = 0;
-                    if (res.result === 'The record was saved successfully.') {
-                        vp_icon = 1;
-                    }
-                    global.Msg({msg: res.result, icon: vp_icon, fn: function () {
+                    console.log("SUCCESS:", res);
+
+                    var vp_icon = res.success ? 1 : 0;
+                    global.Msg({
+                        msg: res.result,
+                        icon: vp_icon,
+                        fn: function () {
                             if (vp_icon === 1) {
                                 Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler(false);
-                                //Ext.getCmp('DetailBsplinkRefundQueryRFND').close();
                                 me.view.close();
-
                             }
-
-
-                        }});
+                        }
+                    });
+                },
+                failure: function (fp, o) {
+                    try {
+                        var res = Ext.decode(o.response.responseText);
+                        console.log("FAILURE:", res);
+                        global.Msg({msg: res.result, icon: 0});
+                    } catch (e) {
+                        console.log("FAILURE RAW:", o);
+                        global.Msg({msg: "Server error", icon: 0});
+                    }
                 }
             });
+
+            /*form.submit({
+             url: prototype.url + '/insertTracingFile/',
+             waitMsg: 'Uploading your sure to upload the file...',
+             params: {beanString: JSON.stringify(me.beanTMP)},
+             success: function (fp, o) {
+             var res = Ext.decode(o.response.responseText);
+             console.log(res);
+             //Ext.Msg.alert('Success', 'Your sure to upload the file "' + res.result + '" has been uploaded.');
+             var vp_icon = 1;
+             if (!res.success) {
+             var vp_icon = 0;
+             }
+             global.Msg({msg: res.result, icon: vp_icon, fn: function () {
+             if (vp_icon === 1) {
+             Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler(false);
+             //Ext.getCmp('DetailBsplinkRefundQueryRFND').close();
+             me.view.close();
+             
+             }
+             
+             
+             }});
+             }
+             });*/
         } else {
             global.Msg({
                 msg: 'Insert Data?',
@@ -297,9 +330,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputeGestionBsplink.DetailDispute
 
 
     onWinFileViewerClick: function (rowIndex) {
-        var me = this; 
+        var me = this;
         rec2 = me.view.params.rec;
-        var NCNXPA=rec2.data.A2548CNXPA === '' ? me.beanTMP.A2553CNXPA : rec2.data.A2548CNXPA;
+        var NCNXPA = rec2.data.A2548CNXPA === '' ? me.beanTMP.A2553CNXPA : rec2.data.A2548CNXPA;
         var grid = Ext.getCmp(prototype.id1 + '-gridDispuRazon');
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);

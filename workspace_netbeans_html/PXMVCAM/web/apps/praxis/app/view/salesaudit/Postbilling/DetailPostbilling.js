@@ -94,8 +94,8 @@ Ext.define('Ext.Praxis.view.salesaudit.Postbilling.DetailPostbilling', {
                             value: 'xxxxxx',
                             readOnly: true
                         }
-                        
-                        
+
+
                     ]
                 },
                 {
@@ -125,14 +125,14 @@ Ext.define('Ext.Praxis.view.salesaudit.Postbilling.DetailPostbilling', {
                             readOnly: true
                         },
                         /*{
-                            xtype: 'textfield',
-                            id: prototype.id1 + '-BillingPeriod',
-                            fieldLabel: 'Billing Period',
-                            labelWidth: 80,
-                            width: 150,
-                            value: 'xxxxxx',
-                            readOnly: true
-                        },  */                                              
+                         xtype: 'textfield',
+                         id: prototype.id1 + '-BillingPeriod',
+                         fieldLabel: 'Billing Period',
+                         labelWidth: 80,
+                         width: 150,
+                         value: 'xxxxxx',
+                         readOnly: true
+                         },  */
                         {
                             xtype: 'textfield',
                             id: prototype.id1 + '-PBDate',
@@ -169,8 +169,8 @@ Ext.define('Ext.Praxis.view.salesaudit.Postbilling.DetailPostbilling', {
                             value: 'xxxxxx',
                             readOnly: true
                         },
-                        {xtype: 'textfield',id: prototype.id1 + '-txtpreme', hidden: true},
-                        {xtype: 'textfield',id: prototype.id1 + '-txtconxp', hidden: true}
+                        {xtype: 'textfield', id: prototype.id1 + '-txtpreme', hidden: true},
+                        {xtype: 'textfield', id: prototype.id1 + '-txtconxp', hidden: true}
                     ]
                 },
                 {
@@ -195,7 +195,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Postbilling.DetailPostbilling', {
                             columns: {
                                 items: [
                                     {text: 'Ticket', dataIndex: 'A2548TIKET', width: 100},
-                                    {text: 'Document', dataIndex: 'A2548NMEMO', width: 100,hidden: true},
+                                    {text: 'Document', dataIndex: 'A2548NMEMO', width: 100, hidden: true},
                                     {text: 'Cur.', dataIndex: 'A2548MDA', flex: 1},
                                     {text: 'Fare', dataIndex: 'A2548TARID', width: 90, align: 'right',
                                         summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
@@ -217,7 +217,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Postbilling.DetailPostbilling', {
                                     menuDisabled: true,
                                     align: 'center'
                                 }
-                            },viewConfig: {
+                            }, viewConfig: {
                                 //trackOver: false,
                                 stripeRows: true,
                                 enableTextSelection: true
@@ -240,7 +240,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Postbilling.DetailPostbilling', {
                                         listeners: {
                                             click: 'metadata_detalle'
                                         },
-                                        renderer: function(value, metadata) {
+                                        renderer: function (value, metadata) {
                                             metadata.tdAttr = 'data-qtip="' + value + '"';
                                             return value;
                                         }
@@ -290,7 +290,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Postbilling.DetailPostbilling', {
                                         listeners: {
                                             click: 'metadata_razon'
                                         },
-                                        renderer: function(value, metadata) {
+                                        renderer: function (value, metadata) {
                                             metadata.tdAttr = 'data-qtip="' + value + '"';
                                             return value;
                                         }
@@ -380,6 +380,67 @@ Ext.define('Ext.Praxis.view.salesaudit.Postbilling.DetailPostbilling', {
                             buttonText: 'Select file...',
                             buttonConfig: {
                                 glyph: 'xf3b6@Ionicons'
+                            },
+                            listeners: {
+                                change: function (field, value) {
+                                    let fileName = value.replace(/^.*[\\\/]/, ''); // quitar C:\fakepath\
+                                    const file = field.fileInputEl.dom.files[0];
+                                    const fullPath = field.fileInputEl.dom.value;
+                                    if (!file)
+                                        return;
+
+                                    // 1. Validar extensión permitida
+                                    let regexExt = /\.(pdf|docx|xlsx|png|jpe?g)$/i;
+                                    if (!regexExt.test(fileName)) {
+                                        Ext.Msg.alert('Error', 'Solo se permiten archivos PDF, DOCX, XLSX, PNG, JPG o JPEG.');
+                                        field.reset();
+                                        return;
+                                    }
+
+                                    // 2. Validar MIME real
+                                    const allowedTypes = [
+                                        "application/pdf",
+                                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // docx
+                                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // xlsx
+                                        "image/png",
+                                        "image/jpeg"
+                                    ];
+                                    if (!allowedTypes.includes(file.type)) {
+                                        Ext.Msg.alert("Error", "El archivo no coincide con el tipo permitido (PDF, DOCX, XLSX, PNG, JPG, JPEG).");
+                                        field.reset();
+                                        return;
+                                    }
+
+                                    // 3. Validar caracteres válidos en el nombre
+                                    let regexChars = /^[a-zA-Z0-9._-]+$/;
+                                    if (!regexChars.test(fileName)) {
+                                        Ext.Msg.alert('Error', 'El nombre del archivo contiene caracteres no permitidos. Solo se permiten letras, números, guiones, guiones bajos y punto.');
+                                        field.reset();
+                                        return;
+                                    }
+
+                                    // 4. Bloquear accesos directos (OneDrive/SharePoint .lnk/.url)
+                                    if (/\.(lnk|url)$/i.test(fileName)) {
+                                        Ext.Msg.alert('Error', 'No se permiten accesos directos ni rutas remotas.');
+                                        field.reset();
+                                        return;
+                                    }
+
+                                    // 5. Validar tamaño máximo (10 MB)
+                                    if (file.size > 10 * 1024 * 1024) {
+                                        Ext.Msg.alert("Error", "El archivo excede el tamaño máximo permitido (10 MB).");
+                                        field.reset();
+                                        return;
+                                    }
+                                    // 6. Validar origen (OneDrive/SharePoint)
+                                    if (/onedrive|sharepoint/i.test(fullPath)) {
+                                        Ext.Msg.alert("Error", "No se permiten archivos desde OneDrive o SharePoint.");
+                                        field.reset();
+                                        return;
+                                    }
+
+
+                                }
                             }
                         }
                     ]
@@ -404,6 +465,67 @@ Ext.define('Ext.Praxis.view.salesaudit.Postbilling.DetailPostbilling', {
                             buttonText: 'Select file...',
                             buttonConfig: {
                                 glyph: 'xf3b6@Ionicons'
+                            },
+                            listeners: {
+                                change: function (field, value) {
+                                    let fileName = value.replace(/^.*[\\\/]/, ''); // quitar C:\fakepath\
+                                    const file = field.fileInputEl.dom.files[0];
+                                    const fullPath = field.fileInputEl.dom.value;
+                                    if (!file)
+                                        return;
+
+                                    // 1. Validar extensión permitida
+                                    let regexExt = /\.(pdf|docx|xlsx|png|jpe?g)$/i;
+                                    if (!regexExt.test(fileName)) {
+                                        Ext.Msg.alert('Error', 'Solo se permiten archivos PDF, DOCX, XLSX, PNG, JPG o JPEG.');
+                                        field.reset();
+                                        return;
+                                    }
+
+                                    // 2. Validar MIME real
+                                    const allowedTypes = [
+                                        "application/pdf",
+                                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // docx
+                                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // xlsx
+                                        "image/png",
+                                        "image/jpeg"
+                                    ];
+                                    if (!allowedTypes.includes(file.type)) {
+                                        Ext.Msg.alert("Error", "El archivo no coincide con el tipo permitido (PDF, DOCX, XLSX, PNG, JPG, JPEG).");
+                                        field.reset();
+                                        return;
+                                    }
+
+                                    // 3. Validar caracteres válidos en el nombre
+                                    let regexChars = /^[a-zA-Z0-9._-]+$/;
+                                    if (!regexChars.test(fileName)) {
+                                        Ext.Msg.alert('Error', 'El nombre del archivo contiene caracteres no permitidos. Solo se permiten letras, números, guiones, guiones bajos y punto.');
+                                        field.reset();
+                                        return;
+                                    }
+
+                                    // 4. Bloquear accesos directos (OneDrive/SharePoint .lnk/.url)
+                                    if (/\.(lnk|url)$/i.test(fileName)) {
+                                        Ext.Msg.alert('Error', 'No se permiten accesos directos ni rutas remotas.');
+                                        field.reset();
+                                        return;
+                                    }
+
+                                    // 5. Validar tamaño máximo (10 MB)
+                                    if (file.size > 10 * 1024 * 1024) {
+                                        Ext.Msg.alert("Error", "El archivo excede el tamaño máximo permitido (10 MB).");
+                                        field.reset();
+                                        return;
+                                    }
+                                    // 6. Validar origen (OneDrive/SharePoint)
+                                    if (/onedrive|sharepoint/i.test(fullPath)) {
+                                        Ext.Msg.alert("Error", "No se permiten archivos desde OneDrive o SharePoint.");
+                                        field.reset();
+                                        return;
+                                    }
+
+
+                                }
                             }
                         }
                     ]
@@ -428,6 +550,67 @@ Ext.define('Ext.Praxis.view.salesaudit.Postbilling.DetailPostbilling', {
                             buttonText: 'Select file...',
                             buttonConfig: {
                                 glyph: 'xf3b6@Ionicons'
+                            },
+                            listeners: {
+                                change: function (field, value) {
+                                    let fileName = value.replace(/^.*[\\\/]/, ''); // quitar C:\fakepath\
+                                    const file = field.fileInputEl.dom.files[0];
+                                    const fullPath = field.fileInputEl.dom.value;
+                                    if (!file)
+                                        return;
+
+                                    // 1. Validar extensión permitida
+                                    let regexExt = /\.(pdf|docx|xlsx|png|jpe?g)$/i;
+                                    if (!regexExt.test(fileName)) {
+                                        Ext.Msg.alert('Error', 'Solo se permiten archivos PDF, DOCX, XLSX, PNG, JPG o JPEG.');
+                                        field.reset();
+                                        return;
+                                    }
+
+                                    // 2. Validar MIME real
+                                    const allowedTypes = [
+                                        "application/pdf",
+                                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // docx
+                                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // xlsx
+                                        "image/png",
+                                        "image/jpeg"
+                                    ];
+                                    if (!allowedTypes.includes(file.type)) {
+                                        Ext.Msg.alert("Error", "El archivo no coincide con el tipo permitido (PDF, DOCX, XLSX, PNG, JPG, JPEG).");
+                                        field.reset();
+                                        return;
+                                    }
+
+                                    // 3. Validar caracteres válidos en el nombre
+                                    let regexChars = /^[a-zA-Z0-9._-]+$/;
+                                    if (!regexChars.test(fileName)) {
+                                        Ext.Msg.alert('Error', 'El nombre del archivo contiene caracteres no permitidos. Solo se permiten letras, números, guiones, guiones bajos y punto.');
+                                        field.reset();
+                                        return;
+                                    }
+
+                                    // 4. Bloquear accesos directos (OneDrive/SharePoint .lnk/.url)
+                                    if (/\.(lnk|url)$/i.test(fileName)) {
+                                        Ext.Msg.alert('Error', 'No se permiten accesos directos ni rutas remotas.');
+                                        field.reset();
+                                        return;
+                                    }
+
+                                    // 5. Validar tamaño máximo (10 MB)
+                                    if (file.size > 10 * 1024 * 1024) {
+                                        Ext.Msg.alert("Error", "El archivo excede el tamaño máximo permitido (10 MB).");
+                                        field.reset();
+                                        return;
+                                    }
+                                    // 6. Validar origen (OneDrive/SharePoint)
+                                    if (/onedrive|sharepoint/i.test(fullPath)) {
+                                        Ext.Msg.alert("Error", "No se permiten archivos desde OneDrive o SharePoint.");
+                                        field.reset();
+                                        return;
+                                    }
+
+
+                                }
                             }
                         }
                     ]
