@@ -56,6 +56,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.Map;
@@ -377,6 +379,7 @@ public class DisputeGestionBsplinkController extends BaseController {
         String VL_ARCHI = "";
         String result2 = "";
         boolean result = false;
+        boolean valifile = false;
         File archivo1;
         File archivo2 = null;
         File archivo3 = null;
@@ -390,92 +393,141 @@ public class DisputeGestionBsplinkController extends BaseController {
             String A2553ARCHV2 = file2.getOriginalFilename();
             String A2553ARCHV3 = file3.getOriginalFilename();
             //
-            if (!A2553ARCHV.equals("")) {
-                A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV));
-            }
-            if (!A2553ARCHV2.equals("")) {
-                A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV2));
-            }
-            if (!A2553ARCHV.equals("")) {
-                A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV));
-            }
-            if (!A2553ARCHV3.equals("")) {
-                A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV3));
-            }
-            listenvio.A2553TRNCU = filter.A2553TRNCU;
-            listenvio.A2553STAT = filter.A2553STAT;
-            listenvio.A2553NMEMO = filter.A2553NMEMO;
-            listenvio.A2553DESCR = replaceSpecialComent(fixEncoding(filter.A2553DESCR));
-            listenvio.A2553STAT2 = filter.A2553STAT2;
-            listenvio.A2553ARCHV = A2553ARCHV;
-            listenvio.A2553ARCHV2 = A2553ARCHV2;
-            listenvio.A2553ARCHV3 = A2553ARCHV3;
-            listenvio.A2553PAIS = filter.A2553PAIS;
-            listenvio.A2553CNXPA = filter.A2553CNXPA;
-            listenvio.A2553FOLIO = "";
-
-            result2 = logic.insertTracing(listenvio);
-            if (result2.equals("RECORD INSERTED")) {
-                // para achivos 1
-                archivo1 = new File(file1.getOriginalFilename());
-                file1.transferTo(archivo1);
-                // para achivos 2
-                if (!file2.getOriginalFilename().equals("")) {
-                    archivo2 = new File(file2.getOriginalFilename());
-                    file2.transferTo(archivo2);
-                }
-                // para achivos 3
-                if (!file3.getOriginalFilename().equals("")) {
-                    archivo3 = new File(file3.getOriginalFilename());
-                    file3.transferTo(archivo3);
-                }
-
-                result = upload_s3(listenvio, archivo1, archivo2, archivo3);
-                if (result) {
-                    result2 = "The record was saved successfully.";
-                } else {
-                    result2 = "An error ocurred when trying to upload the file.";
-                }
+            if (A2553ARCHV2.toLowerCase().endsWith(".lnk") || A2553ARCHV2.toLowerCase().endsWith(".url") || A2553ARCHV3.toLowerCase().endsWith(".lnk") || A2553ARCHV3.toLowerCase().endsWith(".url") || A2553ARCHV.toLowerCase().endsWith(".lnk") || A2553ARCHV.toLowerCase().endsWith(".url")) {
+                result2 = "No se permiten accesos directos ni rutas de OneDrive/SharePoint";
+                map.put("success", false);
+                map.put("result", result2);
             } else {
-                result2 = "An error ocurred when trying to upload the file.";
-            }
-
-            /*  
-            String result = logic.insertTracing(listenvio);
-            if (result.equals("RECORD INSERTED")) {
-                result = "The record was saved successfully.";
                 if (!A2553ARCHV.equals("")) {
-                   // byte[] bytes = file.getBytes();
-                   // result = upload(bytes, filter.A2553CNXPA, A2553ARCHV);
-                    VL_ARCHI = "1";
+                    A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV));
+                    valifile = validateFileSource(file1, "fileaudito");
+
                 }
                 if (!A2553ARCHV2.equals("")) {
-                    byte[] bytes2 = file2.getBytes();
-                    result = upload(bytes2, filter.A2553CNXPA, A2553ARCHV2);
-                    VL_ARCHI = "1";
+                    A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV2));
+                    valifile = validateFileSource(file2, "fileaudito2");
                 }
                 if (!A2553ARCHV3.equals("")) {
-                    byte[] bytes3 = file3.getBytes();
-                    result = upload(bytes3, filter.A2553CNXPA, A2553ARCHV3);
-                    VL_ARCHI = "1";
+                    A2553ARCHV = replaceSpecialCharacters(fixEncoding(filter.A2553ARCHV3));
+                    valifile = validateFileSource(file3, "fileaudito3");
                 }
-                if (VL_ARCHI.equals("1")) {
-                    result2 = upload_s3(filter.A2553CNXPA);
+                //
+                if (valifile) {
+                    listenvio.A2553TRNCU = filter.A2553TRNCU;
+                    listenvio.A2553STAT = filter.A2553STAT;
+                    listenvio.A2553NMEMO = filter.A2553NMEMO;
+                    listenvio.A2553DESCR = replaceSpecialComent(fixEncoding(filter.A2553DESCR));
+                    listenvio.A2553STAT2 = filter.A2553STAT2;
+                    listenvio.A2553ARCHV = A2553ARCHV;
+                    listenvio.A2553ARCHV2 = A2553ARCHV2;
+                    listenvio.A2553ARCHV3 = A2553ARCHV3;
+                    listenvio.A2553PAIS = filter.A2553PAIS;
+                    listenvio.A2553CNXPA = filter.A2553CNXPA;
+                    listenvio.A2553FOLIO = "";
+                    //
+                    // para achivos 1
+                    archivo1 = new File(file1.getOriginalFilename());
+                    file1.transferTo(archivo1);
+                    // para achivos 2
+                    if (!file2.getOriginalFilename().equals("")) {
+                        archivo2 = new File(file2.getOriginalFilename());
+                        file2.transferTo(archivo2);
+                    }
+                    // para achivos 3
+                    if (!file3.getOriginalFilename().equals("")) {
+                        archivo3 = new File(file3.getOriginalFilename());
+                        file3.transferTo(archivo3);
+                    }
+
+                    result = upload_s3(listenvio, archivo1, archivo2, archivo3);
+                    if (result) {
+                        result2 = logic.insertTracing(listenvio);
+                        if (result2.equals("RECORD INSERTED")) {
+                            map.put("success", true);
+                            result2 = "The record was saved successfully.";
+                            map.put("result", result2);
+                        } else {
+                            map.put("success", false);
+                            result2 = "An error ocurred when trying to upload the file.";
+                            map.put("result", result2);
+                        }
+
+                    } else {
+                        map.put("success", false);
+                        result2 = "An error ocurred when trying to upload the file.";
+                        map.put("result", result2);
+                    }
+                } else {
+                    map.put("success", false);
+                    result2 = "El archivo parece provenir de OneDrive/SharePoint: ";
+                    map.put("result", result2);
                 }
-            } else {
-                result = "An error ocurred when trying to upload the file.";
+
             }
-             */
-            map.put("success", true);
-            map.put("result", result2);
+
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
+            result2 = "An error ocurred when trying to upload the file.";
+            map.put("result", result2);
         } catch (Exception e) {
             map.put("success", false);
+            result2 = "An error ocurred when trying to upload the file.";
+            map.put("result", result2);
             map.put("sesion", SESSION_CONTROL);
         }
         return new Gson().toJson(map);
+    }
+
+    /**
+     * Valida que el archivo no provenga de OneDrive o SharePoint
+     */
+    private boolean validateFileSource(MultipartFile file, String fieldName) {
+        if (file == null || file.isEmpty()) {
+            return true; // Archivos vacíos son válidos (se omite validación)
+        }
+
+        String originalFilename = file.getOriginalFilename();
+        String contentType = file.getContentType();
+
+        // 1. Verificar nombre de archivo sospechoso
+        if (originalFilename != null) {
+            String lowerFilename = originalFilename.toLowerCase();
+
+            // Patrones comunes de OneDrive/SharePoint
+            if (lowerFilename.contains("onedrive")
+                    || lowerFilename.contains("sharepoint")
+                    || lowerFilename.contains("-web.")
+                    || lowerFilename.contains("_web.")
+                    || lowerFilename.matches(".*\\([0-9]+\\)\\.[a-zA-Z]+$")) { // Archivos con (1), (2), etc.
+
+                return false; // Archivo inválido por nombre sospechoso
+            }
+        }
+
+        // 2. Verificar contenido del archivo para detectar marcadores de OneDrive/SharePoint
+        try {
+            byte[] content = file.getBytes();
+            String fileContent = new String(content, StandardCharsets.UTF_8);
+
+            // Buscar marcadores específicos en el contenido
+            if (fileContent.contains("sharepoint.com")
+                    || fileContent.contains("onedrive.live.com")
+                    || fileContent.contains("1drv.ms")
+                    || fileContent.contains("office365.com")
+                    || fileContent.contains("microsoftonline.com")) {
+
+                return false; // Archivo inválido por contenido sospechoso
+            }
+
+        } catch (UnsupportedEncodingException e) {
+            // Si no se puede leer como texto, continuar con otras validaciones
+            // No es necesariamente un error, algunos archivos binarios no se pueden leer como UTF-8
+        } catch (IOException e) {
+            return false; // Error leyendo archivo, considerarlo inválido
+        }
+
+        return true; // Archivo válido si pasa todas las validaciones
     }
 
     public boolean upload_s3(A2553 filter, File archiv, File archiv2, File archiv3) throws SQLException, Exception {
