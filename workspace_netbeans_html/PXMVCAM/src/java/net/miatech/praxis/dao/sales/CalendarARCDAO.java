@@ -52,7 +52,7 @@ public class CalendarARCDAO {
         List<PX034S01A1527Filter> lstRtn = new ArrayList<>(0);
         PX034S01A1527Filter objRtn;
 
-        strSQL = "{CALL PRAXIS.SQP05516(?,?,?,?,?,?)}";
+        strSQL = "{CALL PX034S01A1527(?,?,?,?,?,?)}";
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection(); 
             cs = cnx.prepareCall(strSQL);

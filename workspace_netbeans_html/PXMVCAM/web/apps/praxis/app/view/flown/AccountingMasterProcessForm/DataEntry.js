@@ -256,14 +256,6 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                     }
                 },
                 {
-                    text: 'Logs',
-                    id: prototype.id + '-btn-log',
-                    iconCls: 'prx-icon-image-log',
-                    listeners: {
-                       click: 'onLogsClick'
-                    }
-                },
-                {
                     text: 'Cancel',
                     id: prototype.id + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',

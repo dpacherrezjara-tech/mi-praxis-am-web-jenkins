@@ -21,7 +21,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliation.SalesReconciliati
     beanboxDetTktS2: {},
     beanboxDetTktS3: {},
     beanboxDetTktS4: {},
-    beanboxDetTktS5: {},
     init: function(view) {
         me = this;
         prototypeProgram.view = 'payments-sales-reconciliation-form';
@@ -810,9 +809,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliation.SalesReconciliati
                     global.getFileExcelPost('searchDetMERCHAT', JSON.stringify(me.beanboxDetTktS4), Ext.getCmp(prototype.id + '-gridDetTktByStval').config.columns.items);
                 }
                 break;
-            case prototype.id + '-boxDetTicket':
-                global.getFileExcelPost('searchDetTicket', JSON.stringify(me.beanboxDetTktS5), Ext.getCmp(prototype.id + '-gridDetTicket').config.columns.items);
-                break;
             case prototype.id + '-boxDetTktMatch':
                 global.getFileExcelPost('searchDetTktByStval', JSON.stringify(me.beanboxDetTktS2), Ext.getCmp(prototype.id + '-gridDetTktMatch').config.columns.items);
                 break;
@@ -1109,7 +1105,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliation.SalesReconciliati
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchDetTicket">
     searchDetTicket: function(beanDet) {
-        me.beanboxDetTktS5 = beanDet;
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetTicket'

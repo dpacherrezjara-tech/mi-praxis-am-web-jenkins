@@ -3249,7 +3249,7 @@ public class ProrrateoNewDAO {
 
             try {
                 rst.close();
-                String root =  ubica + "TESTING\\"+ A4470NFILE;
+                String root =  ubica + "PRODUCTION\\" + A4470NFILE;
                 File myObj = new File(root);
                 Scanner myReader = new Scanner(myObj);
                 while (myReader.hasNextLine()) {

@@ -1,11 +1,11 @@
 // <editor-fold defaultstate="collapsed" desc="prototype">
 prototype.id = 'PaxRejectionsForm';
 prototype.url = CONTEXTPATH+'/PaxRejections';
-prototype.widthContenedor = 1600;
-prototype.widthGrid = 1500;
+prototype.widthContenedor = 1500;
+prototype.widthGrid = 1457;
 prototype.widthGrid2 = 1290;
 prototype.widthGrid3 = 1410;
-prototype.widthGrid4 = 1020;
+prototype.widthGrid4 = 970;
 prototype.widthGrid5 = 1200;
 prototype.widthGrid6 = 900;
 // </editor-fold>

@@ -11,10 +11,6 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryElectro
     url: CONTEXTPATH + '/ElectronicMiscellaneous',
     id: prototype.id + '-controller',  
     meDE: '',
-    CDEPART_OLD: '',
-    CARRIVA_OLD: '',
-    NFLIGHT_OLD: '',
-    DFLIGHT_OLD: '',
     init: function(view) {
         meDE = this;
 
@@ -102,7 +98,7 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryElectro
     disabledField: function() {
         Ext.getCmp(prototype.id + '-txtCDEPART').setReadOnly(true);
         Ext.getCmp(prototype.id + '-txtCARRIVA').setReadOnly(true);
-        //Ext.getCmp(prototype.id + '-txtDFLIGHT').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-txtDFLIGHT').setReadOnly(true);
         Ext.getCmp(prototype.id + '-txtNFLIGHT').setReadOnly(true);
     },
     onUpperValue: function(field, newValue, oldValue) {
@@ -351,10 +347,6 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryElectro
     },
     showDataInputs: function(rec) {
 
-        CDEPART_OLD = rec.CDEPART.trim();
-        CARRIVA_OLD = rec.CARRIVA.trim();
-        NFLIGHT_OLD = rec.NFLIGHT.trim();
-        DFLIGHT_OLD = rec.DFLIGHT.trim();
         Ext.getCmp(prototype.id + '-txtCDEPART').setValue(rec.CDEPART.trim());
         Ext.getCmp(prototype.id + '-txtCARRIVA').setValue(rec.CARRIVA.trim());
         Ext.getCmp(prototype.id + '-txtZONE').setValue(rec.ZONA.trim());
@@ -381,9 +373,6 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryElectro
         Ext.getCmp(prototype.id + '-txtFEUP').setValue(rec.FEUP.trim());
         Ext.getCmp(prototype.id + '-txtHOUP').setValue(rec.HOUP.trim());
 
-        //if ( rec.USUP1.trim()==="LAGREDA" || rec.USUP1.trim()==="HILDAA" || rec.USUP1.trim()==="USRWEB" ){
-        //    Ext.getCmp(prototype.id + '-txtDFLIGHT').setReadOnly(false);
-        //}
     }
 });
 

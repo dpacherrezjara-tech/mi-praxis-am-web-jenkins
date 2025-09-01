@@ -10,21 +10,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.monitorjbl.xlsx.StreamingReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
-import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.praxis.controllers.BaseController;
@@ -38,8 +33,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import net.miatech.beans.A3344Filter;
 import net.miatech.utils.Functions;
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
@@ -64,8 +62,6 @@ public class ADJMassiveaccountingFormController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private ADJMassiveaccountingFormLogic logic;
-
-    private static final Pattern DATE_PATTERN = Pattern.compile("\\d{8}"); // YYYYMMDD pattern
 
     @RequestMapping(value = "search")
     public @ResponseBody
@@ -204,8 +200,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
         ArrayList<A3344Filter> lstGeneral = new ArrayList<A3344Filter>(0);
         A3344Filter fileA3344;
         String mensaje = "";
+        int i = 0;
+        Integer cont = 0;
         Integer cont1 = 0;
         String vl_A3344TKT = "";
+        String VP_A3344TKT;
         double vl_A3344DBLOC = 0;
         double vl_A3344CRLOC = 0;
         double vl_A3344DBREV = 0;
@@ -230,26 +229,26 @@ public class ADJMassiveaccountingFormController extends BaseController {
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             logic = new ADJMassiveaccountingFormLogic();
             logic.setSession(this.serverSession.getServerSession());
-
             DecimalFormat formatter = new DecimalFormat(".##");
             formatter.setRoundingMode(RoundingMode.HALF_UP);
-
             String filename = excelfile.getOriginalFilename();
-
-            StreamingReader sr = StreamingReader.builder()
-                    .rowCacheSize(100)
-                    .bufferSize(4096)
-                    .sheetIndex(0)
-                    .read(excelfile.getInputStream());
-            for (Row currentRow : sr) {
+            XSSFWorkbook workbook = new XSSFWorkbook(excelfile.getInputStream());
+            Sheet datatypeSheet = workbook.getSheetAt(0);
+            Iterator<Row> iterator = datatypeSheet.iterator();
+            HSSFCell cell;
+            while (iterator.hasNext()) {
                 fileA3344 = new A3344Filter();
-                if (currentRow.getRowNum() > 0) {
+                cont++;
+                Row currentRow = iterator.next();
+                Iterator<Cell> cellIterator = currentRow.iterator();
+                if (cont > 1) {
+
                     if (currentRow.getCell(0) != null) {
                         cont1++;
                         fileA3344.A3344CCUST = "139";
                         fileA3344.VP_TYPE = filter.VP_OPTION;
                         //obteniendo el TKT
-                        fileA3344.A3344TKT = currentRow.getCell(0).getStringCellValue();
+                        fileA3344.A3344TKT = currentRow.getCell(0).toString();
                         if (fileA3344.A3344TKT.equals("")) {
                             mensaje = "Ticket Number Required";
                             break;
@@ -258,15 +257,12 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "THE Ticket MUST BE 13 CHARACTERES  " + fileA3344.A3344TKT;
                             break;
                         }
-                        if (!containsOnlyNumbers(fileA3344.A3344TKT)) {
-                            mensaje = "THE Ticket MUST CONTAIN ONLY NUMBERS: " + fileA3344.A3344TKT;
-                        }
                         //seq
                         if (currentRow.getCell(1) == null) {
                             mensaje = "Seq Number Required";
                             break;
                         } else {
-                            fileA3344.A3344SEQ = currentRow.getCell(1).getStringCellValue();
+                            fileA3344.A3344SEQ = currentRow.getCell(1).toString();
                             if (fileA3344.A3344SEQ.equals("")) {
                                 mensaje = "Sale Date  OR USE Required";
                                 break;
@@ -275,17 +271,13 @@ public class ADJMassiveaccountingFormController extends BaseController {
                                 mensaje = "SALE DATE OR USE  MUST BE 8 CHARACTERES  " + fileA3344.A3344SEQ;
                                 break;
                             }
-                            if (!isValidDate(fileA3344.A3344SEQ)) {
-                                mensaje = "Fecha no válida: " + fileA3344.A3344SEQ + " El formato correcto es: YYYYMMDD.";
-                                break;
-                            }
                         }
                         //cpn
                         if (currentRow.getCell(2) == null) {
                             mensaje = "Cupón Number Required";
                             break;
                         } else {
-                            fileA3344.A3344CPN = currentRow.getCell(2).getStringCellValue();
+                            fileA3344.A3344CPN = currentRow.getCell(2).toString();
                             if (fileA3344.A3344CPN.equals("")) {
                                 mensaje = "Cupón Number Required";
                                 break;
@@ -300,14 +292,14 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "Transaction type Required";
                             break;
                         } else {
-                            fileA3344.A3344TRNCU = currentRow.getCell(3).getStringCellValue();
+                            fileA3344.A3344TRNCU = currentRow.getCell(3).toString();
                             if (fileA3344.A3344TRNCU.equals("")) {
                                 mensaje = "Transaction type Required";
                                 break;
                             }
                             if (filter.VP_OPTION.equals("IXP")) {
                                 if (fileA3344.A3344TRNCU.length() != 3) {
-                                    mensaje = "THE Transaction type MUST BE 3 CHARACTERES  " + fileA3344.A3344TRNCU;
+                                    mensaje = "THE Transaction type MUST BE 4 CHARACTERES  " + fileA3344.A3344TRNCU;
                                     break;
                                 }
                             } else {
@@ -318,7 +310,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             }
                         }
                         //pais solo para ventas y caducos
-                        fileA3344.A3344PAIS = currentRow.getCell(4) == null ? "" : currentRow.getCell(4).getStringCellValue();
+                        if (currentRow.getCell(4) == null) {
+                            fileA3344.A3344PAIS = "";
+                        } else {
+                            fileA3344.A3344PAIS = currentRow.getCell(4).toString();
+                        }
                         if (fileA3344.A3344PAIS.equals("")) {
                             mensaje = "Country Required";
                             break;
@@ -327,12 +323,12 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "THE Country MUST BE 2 CHARACTERES  " + fileA3344.A3344PAIS;
                             break;
                         }
-                        if (!fileA3344.A3344PAIS.matches("[a-zA-Z]+")) {
-                            mensaje = "THE Country IS NOT VALID  " + fileA3344.A3344PAIS;
-                            break;
-                        }
                         //fuente solo para ventas y caducos
-                        fileA3344.A3344FUENT = currentRow.getCell(5) == null ? "" : currentRow.getCell(5).getStringCellValue();
+                        if (currentRow.getCell(5) == null) {
+                            fileA3344.A3344FUENT = "";
+                        } else {
+                            fileA3344.A3344FUENT = currentRow.getCell(5).toString();
+                        }
                         if (fileA3344.A3344FUENT.equals("")) {
                             mensaje = "Source Required";
                             break;
@@ -346,7 +342,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             break;
                         }
                         //sub_fuente solo para ventas y caducos
-                        fileA3344.A3344SUBFU = currentRow.getCell(6) == null ? "" : currentRow.getCell(6).getStringCellValue();
+                        if (currentRow.getCell(6) == null) {
+                            fileA3344.A3344SUBFU = "";
+                        } else {
+                            fileA3344.A3344SUBFU = currentRow.getCell(6).toString();
+                        }
                         if (!filter.VP_OPTION.equals("DISC")) {
                             if (fileA3344.A3344SUBFU.equals("")) {
                                 mensaje = "Channel Required";
@@ -359,7 +359,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
 
                         }
                         //CARRIER solo para ventas y caducos
-                        fileA3344.A3344CARRIR = currentRow.getCell(7) == null ? "" : currentRow.getCell(7).getStringCellValue();
+                        if (currentRow.getCell(7) == null) {
+                            fileA3344.A3344CARRIR = "";
+                        } else {
+                            fileA3344.A3344CARRIR = currentRow.getCell(7).toString();
+                        }
                         if (filter.VP_OPTION.equals("DISC")) {
                             if (fileA3344.A3344CARRIR.equals("")) {
                                 mensaje = "Carrier Required";
@@ -376,7 +380,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
                         }
 
                         //Concepto 1 solo para ventas y caducos
-                        fileA3344.A3344CONP1 = currentRow.getCell(8) == null ? "" : currentRow.getCell(8).getStringCellValue();
+                        if (currentRow.getCell(8) == null) {
+                            fileA3344.A3344CONP1 = "";
+                        } else {
+                            fileA3344.A3344CONP1 = currentRow.getCell(8).toString();
+                        }
                         if (fileA3344.A3344CONP1.equals("")) {
                             mensaje = "Concepto 1 Required";
                             break;
@@ -388,23 +396,74 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             }
                         }
                         /// concepto 2
-                        fileA3344.A3344CONP2 = currentRow.getCell(9) == null ? "" : currentRow.getCell(9).getStringCellValue().trim();
+                        if (currentRow.getCell(9) == null) {
+                            fileA3344.A3344CONP2 = "";
+                        } else {
+                            fileA3344.A3344CONP2 = currentRow.getCell(9).toString().trim();
+                        }
                         if (!filter.VP_OPTION.equals("DISC")) {
                             if (fileA3344.A3344CONP2.equals("")) {
                                 mensaje = "Concepto 2 Required";
                                 break;
                             }
+                            /* if (!fileA3344.A3344CONP2.equals("TQ") && !fileA3344.A3344CONP2.equals("QO") && !fileA3344.A3344CONP2.equals("AR") && !fileA3344.A3344CONP2.equals("ZK")
+                                    && !fileA3344.A3344CONP2.equals("BR") && !fileA3344.A3344CONP2.equals("CA") && !fileA3344.A3344CONP2.equals("SQ") && !fileA3344.A3344CONP2.equals("XG")
+                                    && !fileA3344.A3344CONP2.equals("XQ") && !fileA3344.A3344CONP2.equals("ZQ") && !fileA3344.A3344CONP2.equals("JS") && !fileA3344.A3344CONP2.equals("CO")
+                                    && !fileA3344.A3344CONP2.equals("DG") && !fileA3344.A3344CONP2.equals("YS") && !fileA3344.A3344CONP2.equals("CR") && !fileA3344.A3344CONP2.equals("OU")
+                                    && !fileA3344.A3344CONP2.equals("NW") && !fileA3344.A3344CONP2.equals("IK") && !fileA3344.A3344CONP2.equals("FS") && !fileA3344.A3344CONP2.equals("EC")
+                                    && !fileA3344.A3344CONP2.equals("WT") && !fileA3344.A3344CONP2.equals("ED") && !fileA3344.A3344CONP2.equals("QB") && !fileA3344.A3344CONP2.equals("QI")
+                                    && !fileA3344.A3344CONP2.equals("IG") && !fileA3344.A3344CONP2.equals("IM") && !fileA3344.A3344CONP2.equals("IF") && !fileA3344.A3344CONP2.equals("SV")
+                                    && !fileA3344.A3344CONP2.equals("JD") && !fileA3344.A3344CONP2.equals("QV") && !fileA3344.A3344CONP2.equals("FR") && !fileA3344.A3344CONP2.equals("QX")
+                                    && !fileA3344.A3344CONP2.equals("QW") && !fileA3344.A3344CONP2.equals("IZ") && !fileA3344.A3344CONP2.equals("XC") && !fileA3344.A3344CONP2.equals("XB")
+                                    && !fileA3344.A3344CONP2.equals("QQ") && !fileA3344.A3344CONP2.equals("HN") && !fileA3344.A3344CONP2.equals("GB") && !fileA3344.A3344CONP2.equals("QE")
+                                    && !fileA3344.A3344CONP2.equals("NI") && !fileA3344.A3344CONP2.equals("FD") && !fileA3344.A3344CONP2.equals("FC") && !fileA3344.A3344CONP2.equals("PE")
+                                    && !fileA3344.A3344CONP2.equals("HW") && !fileA3344.A3344CONP2.equals("DY") && !fileA3344.A3344CONP2.equals("US") && !fileA3344.A3344CONP2.equals("AY")
+                                    && !fileA3344.A3344CONP2.equals("XA") && !fileA3344.A3344CONP2.equals("XY") && !fileA3344.A3344CONP2.equals("XF") && !fileA3344.A3344CONP2.equals("YC")
+                                    && !fileA3344.A3344CONP2.equals("ZP") && !fileA3344.A3344CONP2.equals("YN") && !fileA3344.A3344CONP2.equals("AJ") && !fileA3344.A3344CONP2.equals("VE")
+                                    && !fileA3344.A3344CONP2.equals("AK") && !fileA3344.A3344CONP2.equals("EU") && !fileA3344.A3344CONP2.equals("MX") && !fileA3344.A3344CONP2.equals("XO")
+                                    && !fileA3344.A3344CONP2.equals("YQ") && !fileA3344.A3344CONP2.equals("AA") && !fileA3344.A3344CONP2.equals("AH") && !fileA3344.A3344CONP2.equals("A1")
+                                    && !fileA3344.A3344CONP2.equals("BP") && !fileA3344.A3344CONP2.equals("CJ") && !fileA3344.A3344CONP2.equals("CN") && !fileA3344.A3344CONP2.equals("CP")
+                                    && !fileA3344.A3344CONP2.equals("DO") && !fileA3344.A3344CONP2.equals("FZ") && !fileA3344.A3344CONP2.equals("OI") && !fileA3344.A3344CONP2.equals("PA")
+                                    && !fileA3344.A3344CONP2.equals("PI") && !fileA3344.A3344CONP2.equals("PJ") && !fileA3344.A3344CONP2.equals("PX") && !fileA3344.A3344CONP2.equals("RC")
+                                    && !fileA3344.A3344CONP2.equals("RN") && !fileA3344.A3344CONP2.equals("SW") && !fileA3344.A3344CONP2.equals("UB") && !fileA3344.A3344CONP2.equals("UX")
+                                    && !fileA3344.A3344CONP2.equals("UY") && !fileA3344.A3344CONP2.equals("VB") && !fileA3344.A3344CONP2.equals("XR") && !fileA3344.A3344CONP2.equals("F3")
+                                    && !fileA3344.A3344CONP2.equals("B1") && !fileA3344.A3344CONP2.equals("D1") && !fileA3344.A3344CONP2.equals("D2") && !fileA3344.A3344CONP2.equals("F4")
+                                    && !fileA3344.A3344CONP2.equals("F5") && !fileA3344.A3344CONP2.equals("F6") && !fileA3344.A3344CONP2.equals("E2") && !fileA3344.A3344CONP2.equals("CU")
+                                    && !fileA3344.A3344CONP2.equals("MF") && !fileA3344.A3344CONP2.equals("XD") && !fileA3344.A3344CONP2.equals("XV") && !fileA3344.A3344CONP2.equals("UK")
+                                    && !fileA3344.A3344CONP2.equals("YR") && !fileA3344.A3344CONP2.equals("F7") && !fileA3344.A3344CONP2.equals("F8") && !fileA3344.A3344CONP2.equals("G2")
+                                    && !fileA3344.A3344CONP2.equals("G1") && !fileA3344.A3344CONP2.equals("G3") && !fileA3344.A3344CONP2.equals("G8") && !fileA3344.A3344CONP2.equals("G5")
+                                    && !fileA3344.A3344CONP2.equals("F9") && !fileA3344.A3344CONP2.equals("H3") && !fileA3344.A3344CONP2.equals("Z2") && !fileA3344.A3344CONP2.equals("Z3")
+                                    && !fileA3344.A3344CONP2.equals("J9") && !fileA3344.A3344CONP2.equals("B7") && !fileA3344.A3344CONP2.equals("J8") && !fileA3344.A3344CONP2.equals("AE")
+                                    && !fileA3344.A3344CONP2.equals("CC") && !fileA3344.A3344CONP2.equals("CA") && !fileA3344.A3344CONP2.equals("TT") && !fileA3344.A3344CONP2.equals("CM")
+                                    && !fileA3344.A3344CONP2.equals("TV") && !fileA3344.A3344CONP2.equals("L8") && !fileA3344.A3344CONP2.equals("CC") && !fileA3344.A3344CONP2.equals("IVA")
+                                    ) {
+
+                                mensaje = "The Concept 2  incorrect " + fileA3344.A3344CONP2;
+                                break;
+                            }*/
                         }
                         /// concepto 3
-                        fileA3344.A3344CONP3 = currentRow.getCell(10) == null ? "" : currentRow.getCell(10).getStringCellValue().trim();
+                        if (currentRow.getCell(10) == null) {
+                            fileA3344.A3344CONP3 = "";
+                        } else {
+                            fileA3344.A3344CONP3 = currentRow.getCell(10).toString().trim();
+                        }
                         //Document type  TKT  
-                        fileA3344.A3344TDOC = currentRow.getCell(11) == null ? "" : currentRow.getCell(11).getStringCellValue();
+                        if (currentRow.getCell(11) == null) {
+                            fileA3344.A3344TDOC = "";
+                        } else {
+                            fileA3344.A3344TDOC = currentRow.getCell(11).toString();
+                        }
                         if (fileA3344.A3344TDOC.equals("")) {
                             mensaje = "Document type  Required";
                             break;
                         }
                         //CUENTA 
-                        fileA3344.A3344CTAC = currentRow.getCell(12) == null ? "" : currentRow.getCell(12).getStringCellValue();
+                        if (currentRow.getCell(12) == null) {
+                            fileA3344.A3344CTAC = "";
+                        } else {
+                            fileA3344.A3344CTAC = currentRow.getCell(12).toString();
+                        }
                         if (fileA3344.A3344CTAC.equals("")) {
                             mensaje = "Cuenta  Required";
                             break;
@@ -413,12 +472,12 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "THE Cuenta MUST BE 36 CHARACTERES  " + fileA3344.A3344CTAC;
                             break;
                         }
-                        if (!isValidCuenta(fileA3344.A3344CTAC)){
-                            mensaje = "THE Cuenta IS NOT VALID  " + fileA3344.A3344CTAC;
-                            break;
-                        }
                         //TITULO 
-                        fileA3344.A3344TITUC = currentRow.getCell(13) == null ? "" : currentRow.getCell(13).getStringCellValue();
+                        if (currentRow.getCell(13) == null) {
+                            fileA3344.A3344TITUC = "";
+                        } else {
+                            fileA3344.A3344TITUC = currentRow.getCell(13).toString();
+                        }
                         if (fileA3344.A3344TITUC.equals("")) {
                             mensaje = "Titulo  Required";
                             break;
@@ -428,7 +487,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             break;
                         }
                         //tipo de poliza
-                        fileA3344.A3344FILE = currentRow.getCell(14) == null ? "" : currentRow.getCell(14).getStringCellValue();
+                        if (currentRow.getCell(14) == null) {
+                            fileA3344.A3344FILE = "";
+                        } else {
+                            fileA3344.A3344FILE = currentRow.getCell(14).toString();
+                        }
                         if (fileA3344.A3344FILE.equals("")) {
                             mensaje = "File  Required";
                             break;
@@ -442,7 +505,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             break;
                         }
                         //marca de la poliza
-                        fileA3344.A3344MARCA = currentRow.getCell(15) == null ? "" : currentRow.getCell(15).getStringCellValue();
+                        if (currentRow.getCell(15) == null) {
+                            fileA3344.A3344MARCA = "";
+                        } else {
+                            fileA3344.A3344MARCA = currentRow.getCell(15).toString();
+                        }
                         if (!fileA3344.A3344MARCA.equals("")) {
                             if (filter.VP_OPTION.equals("FLWN")) {
                                 fileA3344.A3344MARCA = "X";
@@ -470,7 +537,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
                         }
 
                         //cliente
-                        fileA3344.A3344CLIEN = currentRow.getCell(16) == null ? "" : currentRow.getCell(16).getStringCellValue();
+                        if (currentRow.getCell(16) == null) {
+                            fileA3344.A3344CLIEN = "";
+                        } else {
+                            fileA3344.A3344CLIEN = currentRow.getCell(16).toString();
+                        }
                         if (fileA3344.A3344FILE.equals("AR")) {
                             if (fileA3344.A3344CLIEN.equals("")) {
                                 mensaje = "MUST ENTER THE Client OF AR  " + fileA3344.A3344TKT;
@@ -481,14 +552,14 @@ public class ADJMassiveaccountingFormController extends BaseController {
                                     mensaje = " THE CLIENT MUST BE 5 CHARACTERES" + fileA3344.A3344TKT;
                                     break;
                                 }
-                                if (!containsOnlyNumbers(fileA3344.A3344CLIEN)) {
-                                    mensaje = "THE CLIENT MUST CONTAIN ONLY NUMBERS: " + fileA3344.A3344CLIEN;
-                                    break;
-                                }
                             }
                         }
                         //provedor
-                        fileA3344.A3344PROVE = currentRow.getCell(17) == null ? "" : currentRow.getCell(17).getStringCellValue();
+                        if (currentRow.getCell(17) == null) {
+                            fileA3344.A3344PROVE = "";
+                        } else {
+                            fileA3344.A3344PROVE = currentRow.getCell(17).toString();
+                        }
                         if (fileA3344.A3344PROVE.equals("AP")) {
                             if (fileA3344.A3344PROVE.equals("")) {
                                 mensaje = "MUST ENTER THE PROVIDER OF AP  " + fileA3344.A3344TKT;
@@ -502,9 +573,17 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             }
                         }
                         //direccion
-                        fileA3344.A3344DIREC = currentRow.getCell(18) == null ? "" : currentRow.getCell(18).getStringCellValue();
+                        if (currentRow.getCell(18) == null) {
+                            fileA3344.A3344DIREC = "";
+                        } else {
+                            fileA3344.A3344DIREC = currentRow.getCell(18).toString();
+                        }
                         //direccion
-                        fileA3344.A3344ORAC = currentRow.getCell(19) == null ? "" : currentRow.getCell(19).getStringCellValue();
+                        if (currentRow.getCell(19) == null) {
+                            fileA3344.A3344ORAC = "";
+                        } else {
+                            fileA3344.A3344ORAC = currentRow.getCell(19).toString();
+                        }
                         if (fileA3344.A3344FILE.equals("AR")) {
                             if (fileA3344.A3344DIREC.equals("")) {
                                 mensaje = "MUST ENTER THE ADRESS OF AR  " + fileA3344.A3344TKT;
@@ -516,39 +595,51 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             }
                         }
                         //mda
-                        fileA3344.A3344MDA = currentRow.getCell(20) == null ? "" : currentRow.getCell(20).getStringCellValue();
+                        if (currentRow.getCell(20) == null) {
+                            fileA3344.A3344MDA = "";
+                        } else {
+                            fileA3344.A3344MDA = currentRow.getCell(20).toString();
+                        }
                         if (fileA3344.A3344MDA.equals("")) {
                             mensaje = "MUST ENTER THE Currency  " + fileA3344.A3344TKT;
                             break;
                         }
                         //MONTO_ACTIVO_LOCAL
-                        if (!isParsableToDouble(currentRow.getCell(21).getStringCellValue())) {
-                            mensaje = "THE MONTO_ACTIVO_LOCAL IS NOT VALID: " + currentRow.getCell(21).getStringCellValue();
-                            break;
+                        if (currentRow.getCell(21) == null) {
+                            fileA3344.A3344DBLOC = 0;
+                        } else {
+                            fileA3344.A3344DBLOC = Double.parseDouble(currentRow.getCell(21).toString());
                         }
-                        fileA3344.A3344DBLOC = currentRow.getCell(21) == null ? 0 : Double.parseDouble(currentRow.getCell(21).getStringCellValue());
                         //MONTO_PASIVO_LOCAL
-                        if (!isParsableToDouble(currentRow.getCell(22).getStringCellValue())) {
-                            mensaje = "THE MONTO_PASIVO_LOCAL IS NOT VALID: " + currentRow.getCell(22).getStringCellValue();
-                            break;
+                        if (currentRow.getCell(22) == null) {
+                            fileA3344.A3344CRLOC = 0;
+                        } else {
+                            fileA3344.A3344CRLOC = Double.parseDouble(currentRow.getCell(22).toString());
                         }
-                        fileA3344.A3344CRLOC = currentRow.getCell(22) == null ? 0 : Double.parseDouble(currentRow.getCell(22).getStringCellValue());
                         //MONTO_ACTIVO_REVENUE
-                        if (!isParsableToDouble(currentRow.getCell(23).getStringCellValue())) {
-                            mensaje = "THE MONTO_ACTIVO_REVENUE IS NOT VALID: " + currentRow.getCell(23).getStringCellValue();
-                            break;
+                        if (currentRow.getCell(23) == null) {
+                            fileA3344.A3344DBREV = 0;
+                        } else {
+                            fileA3344.A3344DBREV = Double.parseDouble(currentRow.getCell(23).toString());
                         }
-                        fileA3344.A3344DBREV = currentRow.getCell(23) == null ? 0 : Double.parseDouble(currentRow.getCell(23).getStringCellValue());
                         //MONTO_PASIVO_REVUE
-                        if (!isParsableToDouble(currentRow.getCell(24).getStringCellValue())) {
-                            mensaje = "THE MONTO_PASIVO_REVUE IS NOT VALID: " + currentRow.getCell(24).getStringCellValue();
-                            break;
+                        if (currentRow.getCell(24) == null) {
+                            fileA3344.A3344CRREV = 0;
+                        } else {
+                            fileA3344.A3344CRREV = Double.parseDouble(currentRow.getCell(24).toString());
                         }
-                        fileA3344.A3344CRREV = currentRow.getCell(24) == null ? 0 : Double.parseDouble(currentRow.getCell(24).getStringCellValue());
                         //TKT REFERECIA
-                        fileA3344.A3344TKTAS = currentRow.getCell(25) == null ? "" : currentRow.getCell(25).getStringCellValue();
+                        if (currentRow.getCell(25) == null) {
+                            fileA3344.A3344TKTAS = "";
+                        } else {
+                            fileA3344.A3344TKTAS = currentRow.getCell(25).toString();
+                        }
                         //TKT_SEQ_REFEREC
-                        fileA3344.A3344ASSEQ = currentRow.getCell(26) == null ? "" : currentRow.getCell(26).getStringCellValue();
+                        if (currentRow.getCell(26) == null) {
+                            fileA3344.A3344ASSEQ = "";
+                        } else {
+                            fileA3344.A3344ASSEQ = currentRow.getCell(26).toString();
+                        }
                         if (fileA3344.A3344TRNCU.equals("EXCP")) {
                             if (fileA3344.A3344TKTAS.equals("")) {
                                 mensaje = "TKT REFERENCIA  Required " + fileA3344.A3344TKT;
@@ -569,7 +660,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             }
                         }
                         //TYPE_TRANSACA
-                        fileA3344.A3344ESTTR = currentRow.getCell(27) == null ? "" : currentRow.getCell(27).getStringCellValue();
+                        if (currentRow.getCell(27) == null) {
+                            fileA3344.A3344ESTTR = "";
+                        } else {
+                            fileA3344.A3344ESTTR = currentRow.getCell(27).toString();
+                        }
                         if (!fileA3344.A3344ESTTR.equals("")) {
                             if (fileA3344.A3344ESTTR.equals("")) {
                                 mensaje = "TYPE TRANSACTION Required";
@@ -589,23 +684,35 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             }
                         }
                         //ANAULAR
-                        fileA3344.A3344TKTVO = currentRow.getCell(28) == null ? "" : currentRow.getCell(28).getStringCellValue();
+                        if (currentRow.getCell(28) == null) {
+                            fileA3344.A3344TKTVO = "";
+                        } else {
+                            fileA3344.A3344TKTVO = currentRow.getCell(28).toString();
+                        }
                         //IMPORTE_LOCAL
-                        if (!isParsableToDouble(currentRow.getCell(29).getStringCellValue())) {
-                            mensaje = "THE IMPORTE_LOCAL IS NOT VALID: " + currentRow.getCell(29).getStringCellValue();
-                            break;
+                        if (currentRow.getCell(29) == null) {
+                            fileA3344.A3344VLTAX = 0;
+                        } else {
+                            fileA3344.A3344VLTAX = Double.parseDouble(currentRow.getCell(29).toString());
                         }
-                        fileA3344.A3344VLTAX = currentRow.getCell(29) == null ? 0 : Double.parseDouble(currentRow.getCell(29).getStringCellValue());
                         //IMPORTE_REVENUE
-                        if (!isParsableToDouble(currentRow.getCell(30).getStringCellValue())) {
-                            mensaje = "THE IMPORTE_REVENUE IS NOT VALID: " + currentRow.getCell(30).getStringCellValue();
-                            break;
+                        if (currentRow.getCell(30) == null) {
+                            fileA3344.A3344VLTAR = 0;
+                        } else {
+                            fileA3344.A3344VLTAR = Double.parseDouble(currentRow.getCell(30).toString());
                         }
-                        fileA3344.A3344VLTAR = currentRow.getCell(30) == null ? 0 : Double.parseDouble(currentRow.getCell(30).getStringCellValue());
                         //AFFECTATION IATA
-                        fileA3344.A3344IATAU = currentRow.getCell(31) == null ? "" : currentRow.getCell(31).getStringCellValue();
+                        if (currentRow.getCell(31) == null) {
+                            fileA3344.A3344IATAU = "";
+                        } else {
+                            fileA3344.A3344IATAU = currentRow.getCell(31).toString();
+                        }
                         //TIPO_TARJ
-                        fileA3344.A3344TTARJ = currentRow.getCell(32) == null ? "" : currentRow.getCell(32).getStringCellValue();
+                        if (currentRow.getCell(32) == null) {
+                            fileA3344.A3344TTARJ = "";
+                        } else {
+                            fileA3344.A3344TTARJ = currentRow.getCell(32).toString();
+                        }
                         if (!fileA3344.A3344TTARJ.equals("")) {
                             if (fileA3344.A3344TTARJ.length() > 2) {
                                 mensaje = "THE TYPE CARD MUST BE 2 CHARACTERES  " + fileA3344.A3344TTARJ;
@@ -613,7 +720,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             }
                         }
                         //NUMERO_ATRJETA
-                        fileA3344.A3344NTARJ = currentRow.getCell(33) == null ? "" : currentRow.getCell(33).getStringCellValue();
+                        if (currentRow.getCell(33) == null) {
+                            fileA3344.A3344NTARJ = "";
+                        } else {
+                            fileA3344.A3344NTARJ = currentRow.getCell(33).toString();
+                        }
                         if (!fileA3344.A3344NTARJ.equals("")) {
                             if (fileA3344.A3344NTARJ.length() > 19) {
                                 mensaje = "THE CARD NUMBER MUST BE 19 CHARACTERES  " + fileA3344.A3344NTARJ;
@@ -621,20 +732,28 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             }
                         }
                         //JUSTICACION
-                        fileA3344.A3344DESCR = currentRow.getCell(34) == null ? "" : currentRow.getCell(34).getStringCellValue();
-                        //IATA_VENTA
-                        fileA3344.A3344AGENT = currentRow.getCell(35) == null ? "" : currentRow.getCell(35).getStringCellValue();
-                        //TIPO DE CAMBIO
-                        if (!isParsableToDouble(currentRow.getCell(36).getStringCellValue())) {
-                            mensaje = "THE TIPO DE CAMBIO IS NOT VALID: " + currentRow.getCell(36).getStringCellValue();
-                            break;
+                        if (currentRow.getCell(34) == null) {
+                            fileA3344.A3344DESCR = "";
+                        } else {
+                            fileA3344.A3344DESCR = currentRow.getCell(34).toString();
                         }
-                        fileA3344.A3344TCAMB = currentRow.getCell(36) == null ? 0 : Double.parseDouble(currentRow.getCell(36).getStringCellValue());
+                        //IATA_VENTA
+                        if (currentRow.getCell(35) == null) {
+                            fileA3344.A3344AGENT = "";
+                        } else {
+                            fileA3344.A3344AGENT = currentRow.getCell(35).toString();
+                        }
+                        //TIPO DE CAMBIO
+                        if (currentRow.getCell(36) == null) {
+                            fileA3344.A3344TCAMB = 0;
+                        } else {
+                            fileA3344.A3344TCAMB = Double.parseDouble(currentRow.getCell(36).toString());
+                        }
                         ///FECHA DE PROCESO
-                        fileA3344.A3344FPROC = currentRow.getCell(37) == null ? "" : currentRow.getCell(37).getStringCellValue();
-                        if (fileA3344.A3344TRNCU.equals("SALE") &&!isValidDate(fileA3344.A3344FPROC)) {
-                                mensaje = "Fecha de Proceso no válida: " + fileA3344.A3344FPROC + ". El formato correcto es: YYYYMMDD.";
-                                break;
+                        if (currentRow.getCell(37) == null) {
+                            fileA3344.A3344FPROC = "";
+                        } else {
+                            fileA3344.A3344FPROC = currentRow.getCell(37).toString();
                         }
 
                         /*if(!fileA3344.A3344FPROC.equals("")){
@@ -694,10 +813,6 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "AFFECTATION IATA  Required";
                             break;
                         }
-                        if (!containsOnlyNumbers(fileA3344.A3344IATAU)){
-                            mensaje = "THE AFFECTATION IATA MUST CONTAIN ONLY NUMBERS: " + fileA3344.A3344IATAU;
-                            break;
-                        }
                         if (fileA3344.A3344IATAU.length() != 8) {
                             mensaje = "THE AFFECTATION IATA MUST BE 8 CHARACTERES  " + fileA3344.A3344IATAU;
                             break;
@@ -725,19 +840,13 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "THE JUSTICACION MUST BE 200 CHARACTERES  " + fileA3344.A3344DESCR;
                             break;
                         }
-                        if (fileA3344.A3344AGENT.equals("")) {
-                            mensaje = "IATA  Required" + fileA3344.A3344AGENT;
-                            break;
+
+                        if (!fileA3344.A3344AGENT.equals("")) {
+                            if (fileA3344.A3344AGENT.length() != 8) {
+                                mensaje = "THE IATA MUST BE 8 CHARACTERES  " + fileA3344.A3344TKT;
+                                break;
+                            }
                         }
-                        if (fileA3344.A3344AGENT.length() != 8) {
-                            mensaje = "THE IATA MUST BE 8 CHARACTERES  " + fileA3344.A3344AGENT;
-                            break;
-                        }
-                        if (!containsOnlyNumbers(fileA3344.A3344AGENT)) {
-                            mensaje = "THE IATA MUST CONTAIN ONLY NUMBERS: " + fileA3344.A3344AGENT;
-                            break;
-                        }
-                        
                         //validacion para volados
                         if (cont1 == 1) {
                             vl_A3344TKT = fileA3344.A3344TKT + "" + fileA3344.A3344SEQ;//+ "" + fileA3344.A3344CPN;
@@ -901,6 +1010,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
         ArrayList<A3344Filter> lstGeneral = new ArrayList<A3344Filter>(0);
         A3344Filter fileA3344;
         String mensaje = "";
+        int i = 0;
         String vl_A3344TKT = "";
         String VP_A3344TKT;
         double vl_A3344DBLOC = 0;
@@ -935,6 +1045,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
         double vl_A3344CRLOCAM = 0;
         double vl_A3344DBREVAM = 0;
         double vl_A3344CRREVAM = 0;
+        Integer cont = 0;
         Integer cont1 = 0;
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -943,24 +1054,24 @@ public class ADJMassiveaccountingFormController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
             DecimalFormat formatter = new DecimalFormat(".##");
             formatter.setRoundingMode(RoundingMode.HALF_UP);
-
             String filename = excelfile.getOriginalFilename();
-
-            StreamingReader sr = StreamingReader.builder()
-                    .rowCacheSize(100)
-                    .bufferSize(4096)
-                    .sheetIndex(0)
-                    .read(excelfile.getInputStream());
-
-            for (Row currentRow : sr) {
+            XSSFWorkbook workbook = new XSSFWorkbook(excelfile.getInputStream());
+            Sheet datatypeSheet = workbook.getSheetAt(0);
+            Iterator<Row> iterator = datatypeSheet.iterator();
+            HSSFCell cell;
+            while (iterator.hasNext()) {
                 fileA3344 = new A3344Filter();
-                if (currentRow.getRowNum() > 0) {
+                cont++;
+                Row currentRow = iterator.next();
+                Iterator<Cell> cellIterator = currentRow.iterator();
+                if (cont > 1) {
+
                     if (currentRow.getCell(0) != null) {
                         cont1++;
                         fileA3344.A3344CCUST = "139";
                         fileA3344.VP_TYPE = filter.VP_OPTION;
                         //obteniendo el TKT
-                        fileA3344.A3344TKT = currentRow.getCell(0).getStringCellValue();
+                        fileA3344.A3344TKT = currentRow.getCell(0).toString();
                         if (fileA3344.A3344TKT.equals("")) {
                             mensaje = "Ticket Number Required";
                             break;
@@ -969,15 +1080,12 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "THE Ticket MUST BE 13 CHARACTERES  " + fileA3344.A3344TKT;
                             break;
                         }
-                        if (!containsOnlyNumbers(fileA3344.A3344TKT)) {
-                            mensaje = "THE Ticket MUST CONTAIN ONLY NUMBERS: " + fileA3344.A3344TKT;
-                        }
                         //seq
                         if (currentRow.getCell(1) == null) {
                             mensaje = "required field flown or IXP sale date and Retention Date for IXC";
                             break;
                         } else {
-                            fileA3344.A3344SEQ = currentRow.getCell(1).getStringCellValue();
+                            fileA3344.A3344SEQ = currentRow.getCell(1).toString();
                             if (fileA3344.A3344SEQ.equals("")) {
                                 mensaje = "required field flown or IXP sale date and Retention Date for IXC";
                                 break;
@@ -986,17 +1094,13 @@ public class ADJMassiveaccountingFormController extends BaseController {
                                 mensaje = "THE sale date or retention date MUST BE 8 CHARACTERES  " + fileA3344.A3344SEQ;
                                 break;
                             }
-                            if (!isValidDate(fileA3344.A3344SEQ)) {
-                                mensaje = "Fecha no válida: " + fileA3344.A3344SEQ + ". El formato correcto es: YYYYMMDD.";
-                                break;
-                            }
                         }
                         //cpn
                         if (currentRow.getCell(2) == null) {
                             mensaje = "Cupón Number Required";
                             break;
                         } else {
-                            fileA3344.A3344CPN = currentRow.getCell(2).getStringCellValue();
+                            fileA3344.A3344CPN = currentRow.getCell(2).toString();
                             if (fileA3344.A3344CPN.equals("")) {
                                 mensaje = "Cupón Number Required";
                                 break;
@@ -1011,7 +1115,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "Transaction type Required";
                             break;
                         } else {
-                            fileA3344.A3344TRNCU = currentRow.getCell(3).getStringCellValue();
+                            fileA3344.A3344TRNCU = currentRow.getCell(3).toString();
                             if (fileA3344.A3344TRNCU.equals("")) {
                                 mensaje = "Transaction type Required";
                                 break;
@@ -1029,7 +1133,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             }
                         }
                         //pais solo para ventas y caducos
-                        fileA3344.A3344PAIS = currentRow.getCell(4) == null ? "" : currentRow.getCell(4).getStringCellValue();
+                        if (currentRow.getCell(4) == null) {
+                            fileA3344.A3344PAIS = "";
+                        } else {
+                            fileA3344.A3344PAIS = currentRow.getCell(4).toString();
+                        }
                         if (!filter.VP_OPTION.equals("FLWN") && !filter.VP_OPTION.equals("IXP") && !filter.VP_OPTION.equals("IXC")) {
                             if (fileA3344.A3344PAIS.equals("")) {
                                 mensaje = "Country Required";
@@ -1039,13 +1147,14 @@ public class ADJMassiveaccountingFormController extends BaseController {
                                 mensaje = "THE Country MUST BE 2 CHARACTERES  " + fileA3344.A3344PAIS;
                                 break;
                             }
-                            if (!fileA3344.A3344PAIS.matches("[a-zA-Z]+")) {
-                                mensaje = "THE Country IS NOT VALID  " + fileA3344.A3344PAIS;
-                                break;
-                            }
+
                         }
                         //fuente solo para ventas y caducos
-                        fileA3344.A3344FUENT = currentRow.getCell(5) == null ? "" : currentRow.getCell(5).getStringCellValue();
+                        if (currentRow.getCell(5) == null) {
+                            fileA3344.A3344FUENT = "";
+                        } else {
+                            fileA3344.A3344FUENT = currentRow.getCell(5).toString();
+                        }
                         if (!filter.VP_OPTION.equals("FLWN") && !filter.VP_OPTION.equals("IXP") && !filter.VP_OPTION.equals("IXC")) {
                             if (fileA3344.A3344FUENT.equals("")) {
                                 mensaje = "Source Required";
@@ -1058,7 +1167,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
 
                         }
                         //sub_fuente solo para ventas y caducos
-                        fileA3344.A3344SUBFU = currentRow.getCell(6) == null ? "" : currentRow.getCell(6).getStringCellValue();
+                        if (currentRow.getCell(6) == null) {
+                            fileA3344.A3344SUBFU = "";
+                        } else {
+                            fileA3344.A3344SUBFU = currentRow.getCell(6).toString();
+                        }
                         if (!filter.VP_OPTION.equals("FLWN") && !filter.VP_OPTION.equals("IXP") && !filter.VP_OPTION.equals("DISC") && !filter.VP_OPTION.equals("IXC")) {
                             if (fileA3344.A3344SUBFU.equals("")) {
                                 mensaje = "Channel Required";
@@ -1072,7 +1185,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
                         }
 
                         //CARRIER solo para ventas y caducos
-                        fileA3344.A3344CARRIR = currentRow.getCell(7) == null ? "" : currentRow.getCell(7).getStringCellValue();
+                        if (currentRow.getCell(7) == null) {
+                            fileA3344.A3344CARRIR = "";
+                        } else {
+                            fileA3344.A3344CARRIR = currentRow.getCell(7).toString();
+                        }
                         if (filter.VP_OPTION.equals("FLWN")) {
                             if (fileA3344.A3344CARRIR.equals("")) {
                                 mensaje = "Carrier Required";
@@ -1089,23 +1206,43 @@ public class ADJMassiveaccountingFormController extends BaseController {
                         }
 
                         //Concepto 1 solo para ventas y caducos
-                        fileA3344.A3344CONP1 = currentRow.getCell(8) == null ? "" : currentRow.getCell(8).getStringCellValue();
+                        if (currentRow.getCell(8) == null) {
+                            fileA3344.A3344CONP1 = "";
+                        } else {
+                            fileA3344.A3344CONP1 = currentRow.getCell(8).toString();
+                        }
                         if (fileA3344.A3344CONP1.equals("")) {
                             mensaje = "Concepto 1 Required";
                             break;
                         }
                         /// concepto 2
-                        fileA3344.A3344CONP2 = currentRow.getCell(9) == null ? "" : currentRow.getCell(9).getStringCellValue();
+                        if (currentRow.getCell(9) == null) {
+                            fileA3344.A3344CONP2 = "";
+                        } else {
+                            fileA3344.A3344CONP2 = currentRow.getCell(9).toString();
+                        }
                         /// concepto 3
-                        fileA3344.A3344CONP3 = currentRow.getCell(10) == null ? "" : currentRow.getCell(10).getStringCellValue();
+                        if (currentRow.getCell(10) == null) {
+                            fileA3344.A3344CONP3 = "";
+                        } else {
+                            fileA3344.A3344CONP3 = currentRow.getCell(10).toString();
+                        }
                         //Document type  TKT  
-                        fileA3344.A3344TDOC = currentRow.getCell(11) == null ? "" : currentRow.getCell(11).getStringCellValue();
+                        if (currentRow.getCell(11) == null) {
+                            fileA3344.A3344TDOC = "";
+                        } else {
+                            fileA3344.A3344TDOC = currentRow.getCell(11).toString();
+                        }
                         if (fileA3344.A3344TDOC.equals("")) {
                             mensaje = "Document type  Required";
                             break;
                         }
                         //CUENTA 
-                        fileA3344.A3344CTAC = currentRow.getCell(12) == null ? "" : currentRow.getCell(12).getStringCellValue();
+                        if (currentRow.getCell(12) == null) {
+                            fileA3344.A3344CTAC = "";
+                        } else {
+                            fileA3344.A3344CTAC = currentRow.getCell(12).toString();
+                        }
                         if (fileA3344.A3344CTAC.equals("")) {
                             mensaje = "Cuenta  Required";
                             break;
@@ -1114,12 +1251,12 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "THE Cuenta MUST BE 36 CHARACTERES  " + fileA3344.A3344CTAC;
                             break;
                         }
-                        if (!isValidCuenta(fileA3344.A3344CTAC)){
-                            mensaje = "THE Cuenta IS NOT VALID  " + fileA3344.A3344CTAC;
-                            break;
-                        }
                         //TITULO 
-                        fileA3344.A3344TITUC = currentRow.getCell(13) == null ? "" : currentRow.getCell(13).getStringCellValue();
+                        if (currentRow.getCell(13) == null) {
+                            fileA3344.A3344TITUC = "";
+                        } else {
+                            fileA3344.A3344TITUC = currentRow.getCell(13).toString();
+                        }
                         if (fileA3344.A3344TITUC.equals("")) {
                             mensaje = "Titulo  Required";
                             break;
@@ -1129,7 +1266,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             break;
                         }
                         //tipo de poliza
-                        fileA3344.A3344FILE = currentRow.getCell(14) == null ? "" : currentRow.getCell(14).getStringCellValue();
+                        if (currentRow.getCell(14) == null) {
+                            fileA3344.A3344FILE = "";
+                        } else {
+                            fileA3344.A3344FILE = currentRow.getCell(14).toString();
+                        }
                         if (fileA3344.A3344FILE.equals("")) {
                             mensaje = "File  Required";
                             break;
@@ -1143,7 +1284,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             break;
                         }
                         //marca de la poliza
-                        fileA3344.A3344MARCA = currentRow.getCell(15) == null ? "" : currentRow.getCell(15).getStringCellValue();
+                        if (currentRow.getCell(15) == null) {
+                            fileA3344.A3344MARCA = "";
+                        } else {
+                            fileA3344.A3344MARCA = currentRow.getCell(15).toString();
+                        }
                         if (!fileA3344.A3344MARCA.equals("")) {
                             if (filter.VP_OPTION.equals("FLWN")) {
                                 fileA3344.A3344MARCA = "X";
@@ -1153,76 +1298,163 @@ public class ADJMassiveaccountingFormController extends BaseController {
                         }
 
                         //cliente
-                        fileA3344.A3344CLIEN = currentRow.getCell(16) == null ? "" : currentRow.getCell(16).getStringCellValue();
+                        if (currentRow.getCell(16) == null) {
+                            fileA3344.A3344CLIEN = "";
+                        } else {
+                            fileA3344.A3344CLIEN = currentRow.getCell(16).toString();
+                        }
                         //provedor
-                        fileA3344.A3344PROVE = currentRow.getCell(17) == null ? "" : currentRow.getCell(17).getStringCellValue();
+                        if (currentRow.getCell(17) == null) {
+                            fileA3344.A3344PROVE = "";
+                        } else {
+                            fileA3344.A3344PROVE = currentRow.getCell(17).toString();
+                        }
                         //direccion
-                        fileA3344.A3344DIREC = currentRow.getCell(18) == null ? "" : currentRow.getCell(18).getStringCellValue();
+                        if (currentRow.getCell(18) == null) {
+                            fileA3344.A3344DIREC = "";
+                        } else {
+                            fileA3344.A3344DIREC = currentRow.getCell(18).toString();
+                        }
                         //direccion
-                        fileA3344.A3344ORAC = currentRow.getCell(19) == null ? "" : currentRow.getCell(19).getStringCellValue();
+                        if (currentRow.getCell(19) == null) {
+                            fileA3344.A3344ORAC = "";
+                        } else {
+                            fileA3344.A3344ORAC = currentRow.getCell(19).toString();
+                        }
                         //mda
-                        fileA3344.A3344MDA = currentRow.getCell(20) == null ? "" : currentRow.getCell(20).getStringCellValue();
+                        if (currentRow.getCell(20) == null) {
+                            fileA3344.A3344MDA = "";
+                        } else {
+                            fileA3344.A3344MDA = currentRow.getCell(20).toString();
+                        }
                         //MONTO_ACTIVO_LOCAL
-                        if (!isParsableToDouble(currentRow.getCell(21).getStringCellValue())) {
-                            mensaje = "THE MONTO_ACTIVO_LOCAL IS NOT VALID: " + currentRow.getCell(21).getStringCellValue();
-                            break;
+                        if (currentRow.getCell(21) == null) {
+                            fileA3344.A3344DBLOC = 0;
+                        } else {
+                            if (currentRow.getCell(21).equals("")) {
+                                fileA3344.A3344DBLOC = 0;
+                            } else {
+                                fileA3344.A3344DBLOC = Double.parseDouble(currentRow.getCell(21).toString());
+                            }
+
                         }
-                        fileA3344.A3344DBLOC = (currentRow.getCell(21) == null || currentRow.getCell(21).getStringCellValue().equals("")) ? 0 : Double.parseDouble(currentRow.getCell(21).getStringCellValue());
                         //MONTO_PASIVO_LOCAL
-                        if (!isParsableToDouble(currentRow.getCell(22).getStringCellValue())) {
-                            mensaje = "THE MONTO_PASIVO_LOCAL IS NOT VALID: " + currentRow.getCell(22).getStringCellValue();
-                            break;
+                        if (currentRow.getCell(22) == null) {
+                            fileA3344.A3344CRLOC = 0;
+                        } else {
+                            if (currentRow.getCell(22).equals("")) {
+                                fileA3344.A3344CRLOC = 0;
+                            } else {
+                                fileA3344.A3344CRLOC = Double.parseDouble(currentRow.getCell(22).toString());
+                            }
+
                         }
-                        fileA3344.A3344CRLOC = (currentRow.getCell(22) == null || currentRow.getCell(22).getStringCellValue().equals("")) ? 0 : Double.parseDouble(currentRow.getCell(22).getStringCellValue());
                         //MONTO_ACTIVO_REVENUE
-                        if (!isParsableToDouble(currentRow.getCell(23).getStringCellValue())) {
-                            mensaje = "THE MONTO_ACTIVO_REVENUE IS NOT VALID: " + currentRow.getCell(23).getStringCellValue();
-                            break;
+                        if (currentRow.getCell(23) == null) {
+                            fileA3344.A3344DBREV = 0;
+                        } else {
+                            if (currentRow.getCell(23).equals("")) {
+                                fileA3344.A3344DBREV = 0;
+                            } else {
+                                fileA3344.A3344DBREV = Double.parseDouble(currentRow.getCell(23).toString());
+                            }
+
                         }
-                        fileA3344.A3344DBREV = (currentRow.getCell(23) == null || currentRow.getCell(23).getStringCellValue().equals("")) ? 0 : Double.parseDouble(currentRow.getCell(23).getStringCellValue());
                         //MONTO_PASIVO_REVUE
-                        if (!isParsableToDouble(currentRow.getCell(24).getStringCellValue())) {
-                            mensaje = "THE MONTO_PASIVO_REVUE IS NOT VALID: " + currentRow.getCell(24).getStringCellValue();
-                            break;
+                        if (currentRow.getCell(24) == null) {
+                            fileA3344.A3344CRREV = 0;
+                        } else {
+                            if (currentRow.getCell(24).equals("")) {
+                                fileA3344.A3344CRREV = 0;
+                            } else {
+                                fileA3344.A3344CRREV = Double.parseDouble(currentRow.getCell(24).toString());
+                            }
                         }
-                        fileA3344.A3344CRREV = (currentRow.getCell(24) == null || currentRow.getCell(24).getStringCellValue().equals("")) ? 0 : Double.parseDouble(currentRow.getCell(24).getStringCellValue());
                         //TKT REFERECIA
-                        fileA3344.A3344TKTAS = currentRow.getCell(25) == null ? "" : currentRow.getCell(25).getStringCellValue();
+                        if (currentRow.getCell(25) == null) {
+                            fileA3344.A3344TKTAS = "";
+                        } else {
+                            fileA3344.A3344TKTAS = currentRow.getCell(25).toString();
+                        }
                         //TKT_SEQ_REFEREC
-                        fileA3344.A3344ASSEQ = currentRow.getCell(26) == null ? "" : currentRow.getCell(26).getStringCellValue();
+                        if (currentRow.getCell(26) == null) {
+                            fileA3344.A3344ASSEQ = "";
+                        } else {
+                            fileA3344.A3344ASSEQ = currentRow.getCell(26).toString();
+                        }
                         //TYPE_TRANSACA
-                        fileA3344.A3344ESTTR = currentRow.getCell(27) == null ? "" : currentRow.getCell(27).getStringCellValue();
+                        if (currentRow.getCell(27) == null) {
+                            fileA3344.A3344ESTTR = "";
+                        } else {
+                            fileA3344.A3344ESTTR = currentRow.getCell(27).toString();
+                        }
                         //ANAULAR
-                        fileA3344.A3344TKTVO = currentRow.getCell(28) == null ? "" : currentRow.getCell(28).getStringCellValue();
+                        if (currentRow.getCell(28) == null) {
+                            fileA3344.A3344TKTVO = "";
+                        } else {
+                            fileA3344.A3344TKTVO = currentRow.getCell(28).toString();
+                        }
                         //IMPORTE_LOCAL
-                        if (!isParsableToDouble(currentRow.getCell(29).getStringCellValue())) {
-                            mensaje = "THE IMPORTE_LOCAL IS NOT VALID: " + currentRow.getCell(29).getStringCellValue();
-                            break;
+                        if (currentRow.getCell(29) == null) {
+                            fileA3344.A3344VLTAX = 0;
+                        } else {
+                            if (currentRow.getCell(29).equals("")) {
+                                fileA3344.A3344VLTAX = 0;
+                            } else {
+                                fileA3344.A3344VLTAX = Double.parseDouble(currentRow.getCell(29).toString());
+                            }
                         }
-                        fileA3344.A3344VLTAX = (currentRow.getCell(29) == null || currentRow.getCell(29).getStringCellValue().equals("")) ? 0 : Double.parseDouble(currentRow.getCell(29).getStringCellValue());
                         //IMPORTE_REVENUE
-                        if (!isParsableToDouble(currentRow.getCell(30).getStringCellValue())) {
-                            mensaje = "THE IMPORTE_REVENUE IS NOT VALID: " + currentRow.getCell(30).getStringCellValue();
-                            break;
+                        if (currentRow.getCell(30) == null) {
+                            fileA3344.A3344VLTAR = 0;
+                        } else {
+                            if (currentRow.getCell(30).equals("")) {
+                                fileA3344.A3344VLTAR = 0;
+                            } else {
+                                fileA3344.A3344VLTAR = Double.parseDouble(currentRow.getCell(30).toString());
+                            }
                         }
-                        fileA3344.A3344VLTAR = (currentRow.getCell(30) == null || currentRow.getCell(30).getStringCellValue().equals("")) ? 0 : Double.parseDouble(currentRow.getCell(30).getStringCellValue());
                         //AFFECTATION IATA
-                        fileA3344.A3344IATAU = currentRow.getCell(31) == null ? "" : currentRow.getCell(31).getStringCellValue();
+                        if (currentRow.getCell(31) == null) {
+                            fileA3344.A3344IATAU = "";
+                        } else {
+                            fileA3344.A3344IATAU = currentRow.getCell(31).toString();
+                        }
                         //TIPO_TARJ
-                        fileA3344.A3344TTARJ = currentRow.getCell(32) == null ? "" : currentRow.getCell(32).getStringCellValue();
+                        if (currentRow.getCell(32) == null) {
+                            fileA3344.A3344TTARJ = "";
+                        } else {
+                            fileA3344.A3344TTARJ = currentRow.getCell(32).toString();
+                        }
                         //NUMERO_ATRJETA
-                        fileA3344.A3344NTARJ = currentRow.getCell(33) == null ? "" : currentRow.getCell(33).getStringCellValue();
+                        if (currentRow.getCell(33) == null) {
+                            fileA3344.A3344NTARJ = "";
+                        } else {
+                            fileA3344.A3344NTARJ = currentRow.getCell(33).toString();
+                        }
                         //JUSTICACION
-                        fileA3344.A3344DESCR = currentRow.getCell(34) == null ? "" : currentRow.getCell(34).getStringCellValue();
+                        if (currentRow.getCell(34) == null) {
+                            fileA3344.A3344DESCR = "";
+                        } else {
+                            fileA3344.A3344DESCR = currentRow.getCell(34).toString();
+                        }
                         //IATA_VENTA
-                        fileA3344.A3344AGENT = currentRow.getCell(35) == null ? "" : currentRow.getCell(35).getStringCellValue();
+                        if (currentRow.getCell(35) == null) {
+                            fileA3344.A3344AGENT = "";
+                        } else {
+                            fileA3344.A3344AGENT = currentRow.getCell(35).toString();
+                        }
                         //TIPO DE CAMBIO
-                        fileA3344.A3344TCAMB = currentRow.getCell(36) == null ? 0 : Double.parseDouble(currentRow.getCell(36).getStringCellValue());
+                        if (currentRow.getCell(36) == null) {
+                            fileA3344.A3344TCAMB = 0;
+                        } else {
+                            fileA3344.A3344TCAMB = Double.parseDouble(currentRow.getCell(36).toString());
+                        }
                         ///FECHA DE PROCESO
-                        fileA3344.A3344FPROC = currentRow.getCell(37) == null ? "" : currentRow.getCell(37).getStringCellValue();
-                        if (fileA3344.A3344TRNCU.equals("FLWN") && !isValidDate(fileA3344.A3344FPROC)) {
-                                mensaje = "Fecha de Proceso no válida: " + fileA3344.A3344FPROC + ". El formato correcto es: YYYYMMDD.";
-                                break;
+                        if (currentRow.getCell(37) == null) {
+                            fileA3344.A3344FPROC = "";
+                        } else {
+                            fileA3344.A3344FPROC = currentRow.getCell(37).toString();
                         }
 
                         /* if(!fileA3344.A3344FPROC.equals("")){
@@ -1280,10 +1512,6 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "AFFECTATION IATA  Required";
                             break;
                         }
-                        if (!containsOnlyNumbers(fileA3344.A3344IATAU)){
-                            mensaje = "THE AFFECTATION IATA MUST CONTAIN ONLY NUMBERS: " + fileA3344.A3344IATAU;
-                            break;
-                        }
                         if (fileA3344.A3344IATAU.length() != 8) {
                             mensaje = "THE AFFECTATION IATA MUST BE 8 CHARACTERES  " + fileA3344.A3344IATAU;
                             break;
@@ -1313,15 +1541,11 @@ public class ADJMassiveaccountingFormController extends BaseController {
                         }
 
                         if (fileA3344.A3344AGENT.equals("")) {
-                            mensaje = "IATA  Required" + fileA3344.A3344AGENT;
-                            break;
-                        }
-                        if (!containsOnlyNumbers(fileA3344.A3344AGENT)) {
-                            mensaje = "THE IATA MUST CONTAIN ONLY NUMBERS: " + fileA3344.A3344AGENT;
+                            mensaje = "IATA  Required" + fileA3344.A3344TKT;
                             break;
                         }
                         if (fileA3344.A3344AGENT.length() != 8) {
-                            mensaje = "THE IATA MUST BE 8 CHARACTERES  " + fileA3344.A3344AGENT;
+                            mensaje = "THE IATA MUST BE 8 CHARACTERES  " + fileA3344.A3344TKT;
                             break;
                         }
 
@@ -1334,10 +1558,6 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             }
                             if (fileA3344.A3344FILE.equals("AR") && fileA3344.A3344CLIEN.equals("")) {
                                 mensaje = "Cliente Required " + fileA3344.A3344CTAC;
-                                break;
-                            }
-                            if (fileA3344.A3344FILE.equals("AR") && !containsOnlyNumbers(fileA3344.A3344CLIEN)) {
-                                mensaje = "THE CLIENT MUST CONTAIN ONLY NUMBERS: " + fileA3344.A3344CLIEN;
                                 break;
                             }
                             if (fileA3344.A3344FILE.equals("AR") && fileA3344.A3344DIREC.equals("")) {
@@ -1825,100 +2045,59 @@ public class ADJMassiveaccountingFormController extends BaseController {
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
-            map.put("result", e.getMessage());
-            System.out.println("Error SQLException");
         } catch (Exception e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
-            map.put("result", e.getMessage());
-            System.out.println("Error Exception: " + e.getLocalizedMessage());
-            e.printStackTrace();
         }
         return new Gson().toJson(map);
     }
 
-    private static boolean isValidDate(String dateStr) {
-        if (DATE_PATTERN.matcher(dateStr).matches()) {
-            try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-                LocalDate.parse(dateStr, formatter);
-                return true;
-            } catch (DateTimeParseException e) {
-                return false;
+    private String getCellValue(Cell cell) {
+        String cellValue = "";
+        DataFormatter formatter = new DataFormatter();
+        if (cell != null) {
+            switch (cell.getCellType()) {
+                case Cell.CELL_TYPE_NUMERIC:
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        cellValue = formatter.formatCellValue(cell);
+                    } else {
+                        double value = cell.getNumericCellValue();
+                        int intValue = (int) value;
+                        cellValue = value - intValue == 0 ? String
+                                .valueOf(intValue) : String.valueOf(value);
+                    }
+                    break;
+                case Cell.CELL_TYPE_STRING:
+                    cellValue = cell.getStringCellValue();
+                    break;
+                case Cell.CELL_TYPE_BOOLEAN:
+                    cellValue = String.valueOf(cell.getBooleanCellValue());
+                    break;
+                case Cell.CELL_TYPE_FORMULA:
+                    //cellValue = String.valueOf(cell.getCellFormula());
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        cellValue = formatter.formatCellValue(cell);
+                    } else {
+                        double value = cell.getNumericCellValue();
+                        int intValue = (int) value;
+                        cellValue = value - intValue == 0 ? String
+                                .valueOf(intValue) : String.valueOf(value);
+                    }
+                    break;
+                case Cell.CELL_TYPE_BLANK:
+                    cellValue = "";
+                    break;
+                case Cell.CELL_TYPE_ERROR:
+                    cellValue = "";
+                    break;
+                default:
+                    cellValue = cell.toString().trim();
+                    break;
             }
         }
-        return false;
+        return cellValue.trim();
     }
-    
-    private static boolean isParsableToDouble(String str) {
-        if (str == null || str.isEmpty()) {
-            return true;
-        }
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-    
-    private static boolean containsOnlyNumbers(String str) {
-        return str.matches("^\\d+$");
-    }
-    
-    private static boolean isValidCuenta(String str) {
-    String expr = "^\\d{2}-\\d{2}-\\d{6}-\\d{4}-\\d{4}-\\d{5}-\\d{4}-\\d{2}$";
-    return str.matches(expr);
-}
 
-
-
-    // Código invalidado por Johnny Arias
-//    private String getCellValue(Cell cell) {
-//        String cellValue = "";
-//        DataFormatter formatter = new DataFormatter();
-//        if (cell != null) {
-//            switch (cell.getCellType()) {
-//                case Cell.CELL_TYPE_NUMERIC:
-//                    if (DateUtil.isCellDateFormatted(cell)) {
-//                        cellValue = formatter.formatCellValue(cell);
-//                    } else {
-//                        double value = cell.getNumericCellValue();
-//                        int intValue = (int) value;
-//                        cellValue = value - intValue == 0 ? String
-//                                .valueOf(intValue) : String.valueOf(value);
-//                    }
-//                    break;
-//                case Cell.CELL_TYPE_STRING:
-//                    cellValue = cell.getStringCellValue();
-//                    break;
-//                case Cell.CELL_TYPE_BOOLEAN:
-//                    cellValue = String.valueOf(cell.getBooleanCellValue());
-//                    break;
-//                case Cell.CELL_TYPE_FORMULA:
-//                    //cellValue = String.valueOf(cell.getCellFormula());
-//                    if (DateUtil.isCellDateFormatted(cell)) {
-//                        cellValue = formatter.formatCellValue(cell);
-//                    } else {
-//                        double value = cell.getNumericCellValue();
-//                        int intValue = (int) value;
-//                        cellValue = value - intValue == 0 ? String
-//                                .valueOf(intValue) : String.valueOf(value);
-//                    }
-//                    break;
-//                case Cell.CELL_TYPE_BLANK:
-//                    cellValue = "";
-//                    break;
-//                case Cell.CELL_TYPE_ERROR:
-//                    cellValue = "";
-//                    break;
-//                default:
-//                    cellValue = cell.toString().trim();
-//                    break;
-//            }
-//        }
-//        return cellValue.trim();
-//    }
     @RequestMapping(value = "/getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {

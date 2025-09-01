@@ -799,9 +799,9 @@ public class FacsimilDAO {
             if (OU_SEQ.equals("220")) {
                 OU_NROID = cs.getString(4);
                 //artificio para los RFND
-//                if (filter.TRNC.equals("RFND") || filter.TRNC.equals("RFTX")) {
-//                    OU_NROID = "RFND     ";
-//                }
+                if (filter.TRNC.equals("RFND") || filter.TRNC.equals("RFTX")) {
+                    OU_NROID = "RFND     ";
+                }
                 session.getCNXIBMDB2().openSystem();
                 ProgramCall program = new ProgramCall(session.getCNXIBMDB2().getSystem());
                 try {

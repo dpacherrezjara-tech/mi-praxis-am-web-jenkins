@@ -13,14 +13,6 @@
 .prx-icon-clear {
   background-image: url("../img/botones/clear.png");
 }
-.prx-icon-key {
-  background-image: url("../img/botones/key.png");
-  background-position: center center;
-  background-size: 16px;
-}
-.prx-icon-run {
-  background-image: url("../img/botones/run.png");
-}
 .prx-icon-add {
   background-image: url("../img/botones/add.png");
 }

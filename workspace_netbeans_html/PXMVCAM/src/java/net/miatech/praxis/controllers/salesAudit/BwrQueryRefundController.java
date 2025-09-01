@@ -705,7 +705,7 @@ public class BwrQueryRefundController extends BaseController {
             queryParams.put("type", "directory");
             queryParams.put("remotePath", urlREST);
 
-            res = pws.downloadFilesVisorPython(v1_urlREST, (HashMap) queryParams, sesion);
+            res = pws.downloadFilesVisorPython(v1_urlREST, queryParams, sesion);
             //("success", true);
         } catch (Exception e) {
             throw new SpringException(e);
