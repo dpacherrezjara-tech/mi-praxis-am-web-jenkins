@@ -8,11 +8,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.RobotSabreDataEn
         this.getData();
     },
     getData: async function () {
-        const me = this;
-        const grid = Ext.getCmp(prototype.idDE + '-gridLog');
+        let me = this;
+        let grid = Ext.getCmp(prototype.idDE + '-gridLog');
         grid.mask('Loading...');
         let params = me.formatParameters();
-        const res = await fetch(`${me.url}/loadRobotLog?${new URLSearchParams(params)}`);
+        let res = await fetch(`${me.url}/loadRobotLog?${new URLSearchParams(params)}`);
+        
         if (res.ok) {
             const data = await res.json();
             let store = new Ext.data.Store({
@@ -31,6 +32,40 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.RobotSabreDataEn
         let params = Object.assign({}, formFilters.getValues());
         params.IN_CCUST = '139';
         return params;
+    },
+    onExecuteRobotClick: async function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        let me = this;
+        
+        let params = {
+            OPTION: 'P',
+            CCUST: '139',
+            FECR : record.data.FECR,
+            CUUID: record.data.CUUID
+        };
+        me.view.mask('Loading...');
+        let res = await fetch(`${me.url}/executeRobot`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        });
+        
+        me.view.unmask();
+        if (res.ok) {
+            const data = await res.json();
+            console.log("dp: RobotSabreDataEntryController data = ", data);
+            let status = parseInt(data.status);
+            let message = data.message;
+            
+            if (status === 200) {
+                Ext.Msg.alert('Éxito', message, function () {
+                    me.getData(); // Recarga la grilla luego del OK
+                });
+            } else {
+                Ext.Msg.alert('Atención', 'El proceso no se ejecutó correctamente: ' + message);
+            }
+        }
     },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){

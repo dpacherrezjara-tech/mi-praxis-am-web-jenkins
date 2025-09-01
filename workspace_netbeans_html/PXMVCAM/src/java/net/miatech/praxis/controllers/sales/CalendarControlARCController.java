@@ -799,6 +799,7 @@ public class CalendarControlARCController extends BaseController {
             File file = File.createTempFile(fileNameDownload, ".xlsx");
 
             filter.IN_A1527PPED = request.getParameter("IN_A1527PPED");
+            filter.IN_VERSION = request.getParameter("IN_VERSION");
 
             logic = new CalendarControlARCLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
