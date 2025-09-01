@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.payments.EMDControlForm.EMDControlForm', {
         'Ext.Praxis.controller.payments.EMDControlForm.EMDControlFormController',
         'Ext.Praxis.view.payments.EMDControlForm.Options',
         'Ext.Praxis.view.payments.EMDControlForm.Filters',
-        'Ext.Praxis.view.payments.EMDControlForm.Grids.EMDControlFormGrid', 
+        'Ext.Praxis.view.payments.EMDControlForm.Grids.EMDControlFormGrid'
     ],
     controller: 'EMDControlFormController',
     layout: {
