@@ -406,7 +406,7 @@ public class PostbillingController extends BaseController {
             if (!A3537ARCHV3.equals("")) {
                 A3537ARCHV3 = replaceSpecialCharacters(fixEncoding(filter.A3537ARCHV3));
             }
-
+            // 
             listenvio.IN_CNXPA = filter.IN_CNXPA;
             listenvio.IN_PREME = filter.IN_PREME;
             listenvio.IN_DESCRI = replaceSpecialComent(fixEncoding(filter.IN_DESCRI));
@@ -423,42 +423,56 @@ public class PostbillingController extends BaseController {
             } else {
                 CAMPO = listenvio.IN_PREME;
             }
-            if (A3537ARCHV3.toLowerCase().endsWith(".lnk") || A3537ARCHV3.toLowerCase().endsWith(".url") || A3537ARCHV2.toLowerCase().endsWith(".lnk") || A3537ARCHV2.toLowerCase().endsWith(".url") || A3537ARCHV.toLowerCase().endsWith(".lnk") || A3537ARCHV.toLowerCase().endsWith(".url")) {
-                result = "No se permiten accesos directos ni rutas de OneDrive/SharePoint";
-                map.put("success", false);
-                map.put("result", result);
-            } else {
-                // para achivos 1
-                archivo1 = new File(file.getOriginalFilename());
-                file.transferTo(archivo1);
-                // para achivos 2
-                if (!file2.getOriginalFilename().equals("")) {
-                    archivo2 = new File(file2.getOriginalFilename());
-                    file2.transferTo(archivo2);
-                }
-                // para achivos 3
-                if (!file3.getOriginalFilename().equals("")) {
-                    archivo3 = new File(file3.getOriginalFilename());
-                    file3.transferTo(archivo3);
-                }
-
-                result2 = upload_s3(CAMPO, archivo1, archivo2, archivo3);
-                if (result2) {
-                    //result = logic.insertTracing(listenvio);
-                    if (result.equals("RECORD INSERTED")) {
-                        result = "The record was saved successfully.";
-                        map.put("success", true);
-                        map.put("result", result);
-                    } else {
-                        map.put("success", true);
-                        map.put("result", result);
-                    }
+            // cuando no tiene archivos
+            if (A3537ARCHV.equals("") && A3537ARCHV2.equals("") && A3537ARCHV3.equals("")) {
+                result = logic.insertTracing(listenvio);
+                if (result.equals("RECORD INSERTED")) {
+                    result = "The record was saved successfully.";
+                    map.put("success", true);
+                    map.put("result", result);
                 } else {
-                    result = "An error ocurred when trying to upload the file.";
-                    map.put("success", false);
+                    map.put("success", true);
                     map.put("result", result);
                 }
+            } else {
+                if (A3537ARCHV3.toLowerCase().endsWith(".lnk") || A3537ARCHV3.toLowerCase().endsWith(".url") || A3537ARCHV2.toLowerCase().endsWith(".lnk") || A3537ARCHV2.toLowerCase().endsWith(".url") || A3537ARCHV.toLowerCase().endsWith(".lnk") || A3537ARCHV.toLowerCase().endsWith(".url")) {
+                    result = "No se permiten accesos directos ni rutas de OneDrive/SharePoint";
+                    map.put("success", false);
+                    map.put("result", result);
+                } else {
+                    // para achivos 1
+                    archivo1 = new File(file.getOriginalFilename());
+                    file.transferTo(archivo1);
+                    // para achivos 2
+                    if (!file2.getOriginalFilename().equals("")) {
+                        archivo2 = new File(file2.getOriginalFilename());
+                        file2.transferTo(archivo2);
+                    }
+                    // para achivos 3
+                    if (!file3.getOriginalFilename().equals("")) {
+                        archivo3 = new File(file3.getOriginalFilename());
+                        file3.transferTo(archivo3);
+                    }
+
+                    result2 = upload_s3(CAMPO, archivo1, archivo2, archivo3);
+                    if (result2) {
+                        result = logic.insertTracing(listenvio);
+                        if (result.equals("RECORD INSERTED")) {
+                            result = "The record was saved successfully.";
+                            map.put("success", true);
+                            map.put("result", result);
+                        } else {
+                            map.put("success", true);
+                            map.put("result", result);
+                        }
+                    } else {
+                        result = "An error ocurred when trying to upload the file.";
+                        map.put("success", false);
+                        map.put("result", result);
+                    }
+                }
             }
+
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
