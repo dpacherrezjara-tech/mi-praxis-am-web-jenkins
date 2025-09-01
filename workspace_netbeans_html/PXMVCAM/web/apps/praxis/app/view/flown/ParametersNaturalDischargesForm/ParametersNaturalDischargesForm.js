@@ -6,7 +6,9 @@ Ext.define('Ext.Praxis.view.flown.ParametersNaturalDischargesForm.ParametersNatu
     alias: 'widget.ParametersNaturalDischargesForm',
     requires: [
         'Ext.Praxis.controller.flown.ParametersNaturalDischarges.ParametersNaturalDischargesController',
-        'Ext.Praxis.view.flown.ParametersNaturalDischargesForm.Grids.ParametersNaturalDischargesGrids'
+        'Ext.Praxis.view.flown.ParametersNaturalDischargesForm.Grids.ParametersNaturalDischargesGrids',
+        'Ext.Praxis.view.flown.ParametersNaturalDischargesForm.DataEntrys.ParameterNaturalDischargesDataEntry',
+        'Ext.Praxis.view.flown.ParametersNaturalDischargesForm.Options'
     ],
     controller: 'ParametersNaturalDischargesController',
     layout: {
@@ -32,7 +34,7 @@ Ext.define('Ext.Praxis.view.flown.ParametersNaturalDischargesForm.ParametersNatu
                         {
                             xtype: 'panel',
                             region: 'center',
-                            width: 1650,
+                            width: 950,
                             layout: 'border',
                             items: [
                                 {
@@ -45,15 +47,18 @@ Ext.define('Ext.Praxis.view.flown.ParametersNaturalDischargesForm.ParametersNatu
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1650,
+                                        width: 950,
                                         align: 'center'
                                     },
                                     items: [
                                         {
+                                            xtype: prototype.id + '-options'
+                                        },
+                                        {
                                             xtype: 'panel',
                                             marginTop: 50,
                                             minHeight: 300,
-                                            width: 1650,
+                                            width: 950,
                                             bodyStyle: 'background: #E3EAF9',
                                             layout: 'fit',
                                             defaults: {
