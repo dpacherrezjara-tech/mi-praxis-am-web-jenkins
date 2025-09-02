@@ -12,7 +12,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
     },
     getData: async function () {
         const me = this;
-        let params = me.formatParameters(me.view.obj);
+        let params = me.formatParametersapi(me.view.obj);
+//        console.log('params data entry',params)
         const res = await fetch(`${me.url}/loadErrorTransactionBPOInfo?${new URLSearchParams(params)}`);
         if (res.ok) {
             const data = await res.json();
@@ -55,6 +56,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
         const me = this;
         const panelDesglose = Ext.getCmp(prototype.idDE3 + '-panelDesglose');
         panelDesglose.mask('Loading..');
+//        console.log('me.bean---',me.bean);
         let params = me.formatParameters(me.bean);
         const gridDesglose = Ext.getCmp(prototype.idDE3 + '-gridDesglose');
         const gridDesgloseCHBK = Ext.getCmp(prototype.idDE3 + '-gridDesgloseCHBK');
@@ -88,8 +90,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
     onCancelClick: function () {
         this.view.close();
     },
+    //<editor-fold defaultstate="collapsed" desc="Formateo de Parametros api">
+    formatParametersapi: function (obj) {
+//        console.log('obj----',obj)
+        let params = {
+            IN_CCUST: obj.CCUST,
+            IN_PRDA: obj.PRDA,
+            IN_TDOC: obj.TDOC,
+            IN_AREFNBR: obj.AREFNBR
+        };
+        return params;
+    },
+    //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Formateo de Parametros">
     formatParameters: function (obj) {
+//        console.log('obj----',obj)
         let params = {
             IN_CCUST: obj.ccust,
             IN_PRDA: obj.prda,

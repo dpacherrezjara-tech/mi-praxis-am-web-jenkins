@@ -54,6 +54,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
         params.IN_SCOUNTRY = obj.scountry;
         params.IN_SCURRENCY = obj.scurrency;
         params.IN_PCURRENCY = obj.pcurrency;
+        params.IN_SCARDN = '';
         return params;
     },
     downloadExcel:function(){
