@@ -431,5 +431,17 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                 //Ext.getCmp('DataEntryAccountingMasterProcess2Form').unmask();
             }
         });
+    },
+    onLogsClick: function () {
+        let date = this.p.rec.get('A1955FPROC');
+        let params = {
+            IN_FPROC: date,
+            IN_MODUL: 'PSALES'
+        };
+        const newWin = Ext.create('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntryLogs', {
+            id: prototype.idDE + '-DataEntryLogs-1',
+            searchParams: params
+        });
+        newWin.show();
     }
 });
