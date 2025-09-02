@@ -636,7 +636,7 @@ public class ElectronicMiscellaneousDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL PX135S06A1818(?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PX135S06A1818_VSEBAS(?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -704,6 +704,8 @@ public class ElectronicMiscellaneousDAO {
                 objRtn.VCPUS = rs01.getDouble("VCPUS");
                 objRtn.FCONT = rs01.getString("FCONT");
                 objRtn.IDCON = rs01.getString("IDCON");
+                objRtn.CODER_EXTRA = rs01.getString("CODER_EXTRA");
+                objRtn.DESC_ERROR_EXTRA = rs01.getString("DESC_ERROR_EXTRA");
                 objRtn.USCR = rs01.getString("USCR");
                 objRtn.FECR = rs01.getString("FECR").trim();
                 objRtn.HOCR = Functions.ConvertedTime(rs01.getString("HOCR").trim());

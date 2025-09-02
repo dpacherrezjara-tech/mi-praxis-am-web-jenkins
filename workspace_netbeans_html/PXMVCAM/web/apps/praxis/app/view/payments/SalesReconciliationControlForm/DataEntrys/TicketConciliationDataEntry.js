@@ -76,7 +76,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         },
                                         {
                                             fieldLabel: 'Seq',
-                                            name: 'a4496SEQ',
+                                            name: 'A4496SEQ',
                                             width: 80,
                                             labelWidth: 35
                                         },
@@ -93,13 +93,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         },
                                         {
                                             fieldLabel: 'Pax Name',
-                                            name: 'a4496PAX',
+                                            name: 'A4496PAX',
                                             width: 300,
                                             labelWidth: 75
                                         },
                                         {
                                             fieldLabel: 'Expected Date',
-                                            name: 'procdate',
+                                            name: 'PROCDATE',
                                             fieldStyle: 'text-align:center;background: #C0EDB3;',
                                             width: 180,
                                             labelWidth: 100
@@ -130,31 +130,31 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     items: [
                                         {
                                             fieldLabel: 'Sale Date',
-                                            name: 'a4496FECVT',
+                                            name: 'A4496FECVT',
                                             width: 160,
                                             labelWidth: 80
                                         },
                                         {
                                             fieldLabel: 'Agent',
-                                            name: 'a4496AGENT',
+                                            name: 'A4496AGENT',
                                             width: 140,
                                             labelWidth: 60
                                         },
                                         {
                                             fieldLabel: 'Agent Name',
-                                            name: 'agent_NAME',
+                                            name: 'AGENT_NAME',
                                             width: 300,
                                             labelWidth: 80
                                         },
                                         {
                                             fieldLabel: 'Transaction',
-                                            name: 'a4496TRNCU',
+                                            name: 'A4496TRNCU',
                                             width: 150,
                                             labelWidth: 80
                                         },
                                         {
                                             fieldLabel: 'Doc. Type',
-                                            name: 'a4496TIPOD',
+                                            name: 'A4496TIPOD',
                                             width: 130,
                                             labelWidth: 70
                                         }
@@ -164,43 +164,43 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     items: [
                                         {
                                             fieldLabel: 'Source',
-                                            name: 'a4496FUENT',
+                                            name: 'A4496FUENT',
                                             width: 135,
                                             labelWidth: 80
                                         },
                                         {
                                             fieldLabel: 'Channel',
-                                            name: 'a4496SFUEN',
+                                            name: 'A4496SFUEN',
                                             width: 120,
                                             labelWidth: 60
                                         },
                                         {
                                             fieldLabel: 'Country',
-                                            name: 'a4496PAIS',
+                                            name: 'A4496PAIS',
                                             width: 110,
                                             labelWidth: 60
                                         },
                                         {
                                             fieldLabel: 'EPR Code',
-                                            name: 'a4496CODAG',
+                                            name: 'A4496CODAG',
                                             width: 140,
                                             labelWidth: 70
                                         },
                                         {
                                             fieldLabel: 'PNR',
-                                            name: 'a4496PNR',
+                                            name: 'A4496PNR',
                                             width: 125,
                                             labelWidth: 45
                                         },
                                         {
                                             fieldLabel: 'RFIC',
-                                            name: 'a4496RFIC',
+                                            name: 'A4496RFIC',
                                             width: 75,
                                             labelWidth: 45
                                         },
                                         {
                                             fieldLabel: 'RFIS',
-                                            name: 'a4496RFIS1',
+                                            name: 'A4496RFIS1',
                                             width: 85,
                                             labelWidth: 45
                                         }
@@ -245,25 +245,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     items: [
                                         {
                                             fieldLabel: 'Card Type',
-                                            name: 'a4501TTARJ',
+                                            name: 'A4501TTARJ',
                                             width: 120,
                                             labelWidth: 80
                                         },
                                         {
                                             fieldLabel: 'Card Number',
-                                            name: 'a4501NREF',
+                                            name: 'A4501NREF',
                                             width: 220,
                                             labelWidth: 90
                                         },
                                         {
                                             fieldLabel: 'Auth Number',
-                                            name: 'a4501CAPL',
+                                            name: 'A4501CAPL',
                                             width: 165,
                                             labelWidth: 90
                                         },
                                         {
                                             fieldLabel: 'Total Amount',
-                                            name: 'a4501VFOP',
+                                            name: 'A4501VFOP',
                                             width: 170,
                                             labelWidth: 90,
                                             listeners: {
@@ -274,21 +274,27 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         },
                                         {
                                             fieldLabel: 'Status Concil.',
-                                            name: 'a4501STVAL',
+                                            name: 'A4501STVAL',
                                             width: 230,
                                             labelWidth: 100,
                                             listeners: {
                                                 change: function (field, newValue) {
                                                     const opts = {
+//                                                        'A': 'Match OC/Camepa',
+                                                        'C': 'Match Complement',
+//                                                        'D': 'Match Balance',
+                                                        'E': 'Match Duplicate Pay.',
+                                                        'M': 'Match Multi-Payment',
                                                         '0': 'Stand By',
                                                         '1': 'Match',
-                                                        '2': 'Sales Without Sett.',
+                                                        '2': 'Sales Without Settl.',
                                                         '3': 'Settl. Without Sales',
-                                                        '4': 'Match Diff.',
+                                                        '4': 'Match Partial',
                                                         '5': 'Match Manual',
-                                                        '6': 'Forced Match',
-                                                        '7': 'Compensation Match',
-                                                        '8': 'Pending RFND'
+//                                                        '6': 'Match Forced',
+//                                                        '7': 'Match Compensation',
+                                                        '8': 'Match Transactional',
+                                                        '9': 'Match Void'
                                                     };
                                                     field.setRawValue(opts[newValue] || '');
                                                 }
@@ -338,37 +344,37 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     items: [
                                         {
                                             fieldLabel: 'Processing Date',
-                                            name: 'prda',
+                                            name: 'PRDA',
                                             width: 200,
                                             labelWidth: 120
                                         },
                                         {
                                             fieldLabel: 'Sale Date',
-                                            name: 'sdate',
+                                            name: 'SDATE',
                                             width: 150,
                                             labelWidth: 70
                                         },
                                         {
                                             fieldLabel: 'Transac. Date',
-                                            name: 'transdate',
+                                            name: 'TRANSDATE',
                                             width: 170,
                                             labelWidth: 90
                                         },
                                         {
                                             fieldLabel: 'Payment Date',
-                                            name: 'paydate',
+                                            name: 'PAYDATE',
                                             width: 170,
                                             labelWidth: 90
                                         },
                                         {
                                             fieldLabel: 'Doc. Type',
-                                            name: 'transtype',
+                                            name: 'TRANSTYPE',
                                             width: 140,
                                             labelWidth: 80
                                         },
                                         {
                                             fieldLabel: 'Void',
-                                            name: 'fvoid',
+                                            name: 'FVOID',
                                             width: 80,
                                             labelWidth: 40
                                         }
@@ -378,31 +384,31 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     items: [
                                         {
                                             fieldLabel: 'Processor',
-                                            name: 'proc_NAME',
+                                            name: 'PROC_NAME',
                                             width: 230,
                                             labelWidth: 120
                                         },
                                         {
                                             fieldLabel: 'Country',
-                                            name: 'scountry',
+                                            name: 'SCOUNTRY',
                                             width: 110,
                                             labelWidth: 60
                                         },
                                         {
                                             fieldLabel: 'Currency',
-                                            name: 'scurrency',
+                                            name: 'SCURRENCY',
                                             width: 120,
                                             labelWidth: 70
                                         },
                                         {
                                             fieldLabel: 'Agent',
-                                            name: 'sagent',
+                                            name: 'SAGENT',
                                             width: 130,
                                             labelWidth: 55
                                         },
                                         {
                                             fieldLabel: 'Flag Selec',
-                                            name: 'fselec',
+                                            name: 'FSELEC',
                                             width: 150,
                                             labelWidth: 80,
                                             listeners: {
@@ -417,7 +423,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         },
                                         {
                                             fieldLabel: 'Flag Compl.',
-                                            name: 'fcompl',
+                                            name: 'FCOMPL',
                                             width: 160,
                                             labelWidth: 80,
                                             listeners: {
@@ -438,25 +444,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     items: [
                                         {
                                             fieldLabel: 'P. Merchant ID',
-                                            name: 'pmerchid',
+                                            name: 'PMERCHID',
                                             width: 210,
                                             labelWidth: 120
                                         },
                                         {
                                             //fieldLabel: 'Description',
-                                            name: 'des_MERCHANT',
+                                            name: 'DES_MERCHANT',
                                             width: 180
                                                     //labelWidth: 70
                                         },
                                         {
                                             fieldLabel: 'Sale Merchant ID',
-                                            name: 'smerchid',
+                                            name: 'SMERCHID',
                                             width: 210,
                                             labelWidth: 120
                                         },
                                         {
                                             //fieldLabel: 'Description',
-                                            name: 'des_SMERCHANT',
+                                            name: 'DES_SMERCHANT',
                                             width: 180
                                                     //labelWidth: 40
                                         }
@@ -466,37 +472,37 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     items: [
                                         {
                                             fieldLabel: 'Invoice Ref. Nbr.',
-                                            name: 'invoirn',
+                                            name: 'INVOIRN',
                                             width: 230,
                                             labelWidth: 120
                                         },
                                         {
                                             fieldLabel: 'Ticket',
-                                            name: 'ticket',
+                                            name: 'TICKET',
                                             width: 160,
                                             labelWidth: 55
                                         },
                                         {
                                             fieldLabel: 'PNR',
-                                            name: 'spnr',
+                                            name: 'SPNR',
                                             width: 110,
                                             labelWidth: 40
                                         },
                                         {
                                             fieldLabel: 'Inst. Plan',
-                                            name: 'nbrinsta',
+                                            name: 'NBRINSTA',
                                             width: 100,
                                             labelWidth: 70
                                         },
                                         {
                                             fieldLabel: 'Inst. Number',
-                                            name: 'instanbr',
+                                            name: 'INSTANBR',
                                             width: 120,
                                             labelWidth: 90
                                         },
                                         {
                                             fieldLabel: 'Qty. TKT',
-                                            name: 'qtytkt',
+                                            name: 'QTYTKT',
                                             width: 100,
                                             labelWidth: 70
                                         }
@@ -506,19 +512,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     items: [
                                         {
                                             fieldLabel: 'Card Number',
-                                            name: 'scardn',
+                                            name: 'SCARDN',
                                             width: 260,
                                             labelWidth: 120
                                         },
                                         {
                                             fieldLabel: 'Auth Number',
-                                            name: 'sauthoc',
+                                            name: 'SAUTHOC',
                                             width: 165,
                                             labelWidth: 90
                                         },
                                         {
                                             fieldLabel: 'Total Amount',
-                                            name: 'tgrosamoun',
+                                            name: 'TGROSAMOUN',
                                             width: 170,
                                             labelWidth: 90,
                                             listeners: {
@@ -529,7 +535,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         },
                                         {
                                             fieldLabel: 'Concil. Amount',
-                                            name: 'svfops',
+                                            name: 'SVFOPS',
                                             width: 185,
                                             labelWidth: 100,
                                             listeners: {
@@ -540,6 +546,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                         },
                                         {
                                             fieldLabel: 'Difference',
+                                            name: 'MATCHDIFF',
                                             id: prototype.idDE2 + '-difference',
                                             width: 165,
                                             labelWidth: 80,
@@ -556,23 +563,34 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     items: [
                                         {
                                             fieldLabel: 'Sett. vs Sales',
-                                            name: 'cerror',
+                                            name: 'CERROR',
                                             width: 170,
                                             labelWidth: 120
                                         },
                                         {
-                                            name: 'desc_CERROR',
+                                            name: 'DESC_CERROR',
                                             width: 200
                                         },
                                         {
                                             fieldLabel: 'Adjustment',
-                                            name: 'codadju',
+                                            name: 'CODADJU',
                                             width: 150,
                                             labelWidth: 100
                                         },
                                         {
-                                            name: 'desc_CODADJU',
+                                            name: 'DESC_CODADJU',
                                             width: 200
+                                        }
+                                    ]
+                                },
+                                {
+                                    items: [
+                                        {
+                                            id: prototype.idDE2 + '-bpocoment',
+                                            fieldLabel: 'BPO Comment',
+                                            fieldStyle: 'padding-left:5px;text-align:left;',
+                                            labelWidth: 120,
+                                            width: 750
                                         }
                                     ]
                                 },
@@ -602,7 +620,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 }
                                             },
                                             {
-                                                text: 'Src', dataIndex: 'fuente', width: 45,
+                                                text: 'Src', dataIndex: 'FUENTE', width: 45,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     const opts = {
                                                         'S': 'ASR',
@@ -614,7 +632,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 }
                                             },
                                             {
-                                                text: 'Doc.<br>Type', dataIndex: 'trncu', width: 60
+                                                text: 'Doc.<br>Type', dataIndex: 'TRNCU', width: 60
                                             },
                                             {
                                                 text: 'Credit Card',
@@ -625,49 +643,49 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Cod', dataIndex: 'scarcod', width: 45
+                                                        text: 'Cod', dataIndex: 'SCARCOD', width: 45
                                                     },
                                                     {
-                                                        text: 'Number', dataIndex: 'scardn', width: 130
+                                                        text: 'Number', dataIndex: 'SCARDN', width: 130
                                                     },
                                                     {
-                                                        text: 'Auth', dataIndex: 'sauthoc', width: 55
+                                                        text: 'Auth', dataIndex: 'SAUTHOC', width: 55
                                                     }
                                                 ]
                                             },
                                             {
-                                                text: 'Curr', dataIndex: 'scurrency', width: 50
+                                                text: 'Curr', dataIndex: 'SCURRENCY', width: 50
                                             },
                                             {
-                                                text: 'Amount', dataIndex: 'svfops', width: 100,
+                                                text: 'Amount', dataIndex: 'SVFOPS', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
                                                     return Ext.util.Format.number(value, '0,000.00');
                                                 }
                                             },
                                             {
-                                                text: 'Sales<br>Date', dataIndex: 'sdate', width: 80
+                                                text: 'Sales<br>Date', dataIndex: 'SDATE', width: 80
                                             },
                                             {
-                                                text: 'PNR', dataIndex: 'spnr', width: 70
+                                                text: 'PNR', dataIndex: 'SPNR', width: 70
                                             },
                                             {
                                                 text: 'Ticket', width: 120,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "background-color:#FCF6DC;font-weight:bold;";
                                                     const obj = record.data;
-                                                    const ticket = obj.ccia + obj.forma + obj.serie;
+                                                    const ticket = obj.CCIA + obj.FORMA + obj.SERIE;
                                                     return ticket;
                                                 }
                                             },
                                             {
-                                                text: 'Corrl', width: 45, dataIndex: 'corrl'
+                                                text: 'Corrl', width: 45, dataIndex: 'CORRL'
                                             },
                                             {
-                                                text: 'Void', width: 40, dataIndex: 'fvoid'
+                                                text: 'Void', width: 40, dataIndex: 'FVOID'
                                             },
                                             {
-                                                text: 'Agent', dataIndex: 'sagent', width: 80
+                                                text: 'Agent', dataIndex: 'SAGENT', width: 80
                                             },
                                             {text: 'Sel.', flex: 1,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -704,7 +722,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     margin: '0 8 0 0',
                                     padding: '5',
                                     style: 'color:#080808;font-weight:bold;font-size:16px;font-style:italic;background:#DF8E46;text-align:center;',
-                                    text: 'PENDING CONCILIATION'
+                                    text: 'PENDING RECONCILIATION'
                                 }
                             ]
                         },
@@ -733,6 +751,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     hidden: true,
                                     iconCls: 'prx-icon-reload',
                                     tooltip: 'Forced Match',
+                                    hidden:true,
                                     listeners: {
                                         click: 'onForceMatch'
                                     }
@@ -758,81 +777,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     tooltip: 'Add ADM',
                                     listeners: {
                                         click: 'onADMClick'
-                                    }
-                                },
-                                {
-                                    xtype: 'button',
-                                    id: prototype.idDE2 + '-showStandBy',
-                                    text: 'Stand By',
-                                    width: 100,
-                                    iconCls: 'prx-icon-bpo-comment',
-                                    tooltip: 'Open BPO Comment',
-                                    listeners: {
-                                        click: 'onOpenComments'
-                                    }
-
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'fieldset',
-                            hidden: true,
-                            id: prototype.idDE2 + '-panelStandBy',
-                            title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:12px;">Stand By</span>',
-                            layout: {
-                                type: 'hbox',
-                                pack: 'left'
-                            },
-                            border: true,
-                            margin: '5 5 5 5',
-                            width: '100%',
-                            style: {
-                                backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
-                            },
-                            defaults: {
-                                xtype: 'textfield',
-                                margin: '3 5 3 5',
-                                labelStyle: 'text-align:center;font-weight: bolder;'
-                            },
-                            items: [
-                                {
-                                    id: prototype.idDE2 + '-bpocoment',
-                                    fieldLabel: 'BPO Comment',
-                                    labelWidth: 100,
-                                    maxLength: 100,
-                                    enforceMaxLength: true,
-                                    width: 600
-                                },
-                                {
-                                    xtype: 'button',
-                                    id: prototype.idDE2 + '-addStandBy',
-                                    width: 25,
-                                    iconCls: 'prx-icon-image-update',
-                                    tooltip: 'Update Stand By',
-                                    listeners: {
-                                        click: 'onChangeStandBy'
-                                    }
-                                },
-                                {
-                                    xtype: 'button',
-                                    id: prototype.idDE2 + '-revStandBy',
-                                    width: 25,
-                                    iconCls: 'prx-icon-update',
-                                    hidden: true,
-                                    tooltip: 'Reverse Stand By',
-                                    listeners: {
-                                        click: 'onReverseStandBy'
-                                    }
-                                },
-                                {
-                                    xtype: 'button',
-                                    id: prototype.idDE2 + '-hideStandBy',
-                                    width: 25,
-                                    iconCls: 'prx-icon-cancel-action',
-                                    tooltip: 'Cancel',
-                                    hidden: true,
-                                    listeners: {
-                                        click: 'onCancelStandBy'
                                     }
                                 }
                             ]
@@ -991,19 +935,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     items: [
                                         {
                                             fieldLabel: 'User Update',
-                                            name: 'a4501USUP',
+                                            name: 'A4501USUP',
                                             width: 220,
                                             labelWidth: 120
                                         },
                                         {
                                             fieldLabel: 'Date Update',
-                                            name: 'a4501FEUP',
+                                            name: 'A4501FEUP',
                                             width: 200,
                                             labelWidth: 120
                                         },
                                         {
                                             fieldLabel: 'Hour Update',
-                                            name: 'a4501HOUP',
+                                            name: 'A4501HOUP',
                                             width: 180,
                                             labelWidth: 120
                                         }

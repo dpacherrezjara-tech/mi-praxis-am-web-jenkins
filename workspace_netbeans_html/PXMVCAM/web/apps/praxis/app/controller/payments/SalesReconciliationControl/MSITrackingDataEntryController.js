@@ -143,7 +143,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         const me = this;
         let obj = Object.assign({}, me.view.obj);
         const grid = Ext.getCmp(prototype.idMSI + '-gridVoidTracking');
-        grid.view.mask('Loading...');
+        grid.setLoading(true);
         let trncs = [];
         let procesador = obj.proctype.trim();
         let scardn = new String(), spnr = new String();
@@ -164,34 +164,35 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
             IN_FROM: me.sumDate(obj.prda, -15),
             IN_TO: me.sumDate(obj.prda, 15),
             IN_SCARDN: scardn,
+            IN_SAUTHOC: '',
             IN_SPNR: spnr,
             IN_TICKET: ticket
         };
-        const res = await fetch(`${me.url}/loadMSITrackingManualInfo?${new URLSearchParams(params)}`);
-        if (res.ok) {
-            const data = await res.json();
-            if (data.response.length > 0) {
-                trncs = data.response;
-                trncs.forEach(x => {
-                    if (x.arefnbr.trim() === obj.arefnbr.trim()) {
-                        x.main = true;
-                    }
-                });
-                const store = Ext.create('Ext.data.Store', {
-                    data: trncs
-                });
-                grid.setStore(store);
-                let bean = store.findRecord('arefnbr', obj.arefnbr);
-                grid.getSelectionModel().select(bean, true);
-            }
+        try {
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05259', params);
+            trncs = res.lstRs.at(0);
+            trncs.forEach(x => {
+                if (x.AREFNBR.trim() === obj.arefnbr.trim()) {
+                    x.main = true;
+                }
+            });
+            const store = Ext.create('Ext.data.Store', {
+                data: trncs
+            });
+            grid.setStore(store);
+            let bean = store.findRecord('AREFNBR', obj.arefnbr);
+            grid.getSelectionModel().select(bean, true);
+        } catch (e) {
+            console.error(e);
         }
-        grid.view.unmask();
+        grid.setLoading(false);
 
     },
     onAddTransaction: async function () {
         const me = this;
         const grid = Ext.getCmp(prototype.idMSI + '-gridVoidTracking');
-        grid.view.mask('Loading...');
+        grid.setLoading(true);
+        
         const formFilter = Ext.getCmp(prototype.idMSI + '-filtersManual').getForm().getValues();
         const store = grid.getStore();
         let obj = Object.assign({}, me.view.obj);
@@ -199,6 +200,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         let trncs = [];
         let procesador = obj.proctype.trim();
         let scardn = new String();
+        
         if (procesador === 'BANORTE00') {
             scardn = `${obj.scardn.slice(0, 6)}%${obj.scardn.slice(-2)}%`;
         } else {
@@ -211,22 +213,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
             IN_SCARDN: scardn,
             ...formFilter
         };
+        
+//        grid.getStore().removeAll();
 
-        const res = await fetch(`${me.url}/loadMSITrackingManualInfo?${new URLSearchParams(params)}`);
-        if (res.ok) {
-            const data = await res.json();
-            //debugger;
-            if (data.response.length > 0) {
-                trncs = data.response;
-                trncs = trncs.filter(x => {
-                    let index = store.find('arefnbr', x.arefnbr);
-                    return index === -1;
-                });
-                store.add(trncs);
-                global.Msg({msg: `${trncs.length} tickets added`});
-            }
+        try {
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05259', params);
+            trncs = res.lstRs.at(0);
+            trncs = trncs.filter(x => {
+                let index = store.find('AREFNBR', x.AREFNBR);
+                return index === -1;
+            });
+            store.add(trncs);
+            global.Msg({msg: `${trncs.length} tickets added`});
+        } catch (e) {
+            console.error(e);
         }
-        grid.view.unmask();
+
+        grid.setLoading(false);
     },
     onUpdateManual: function () {
         Ext.Msg.show(
@@ -249,40 +252,44 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         const grid = Ext.getCmp(prototype.idMSI + '-gridVoidTracking');
         grid.getView().mask('Loading...');
         const data = grid.getStore().getData().items;
-        if (data.length === 0) {
-            global.Msg({msg: 'No data in Scanner'});
-            grid.getView().unmask();
-            return;
-        }
-        const existeAuth = data.some(x =>
-            x.data.sauthoc.trim() === obj.IN_SAUTHOC);
-        const existePnr = data.some(x =>
-            x.data.spnr.trim() === obj.IN_SPNR);
-        let foundRegis = {};
-        if (existeAuth) {
-            foundRegis = grid.getStore().queryBy(function (registro) {
-                return registro.get('sauthoc').trim() === obj.IN_SAUTHOC;
-            });
-            grid.getStore().removeAll();
-            foundRegis.items.forEach(x => {
-                grid.getStore().add(x);
-            });
-        } else if (existePnr) {
-            foundRegis = grid.getStore().queryBy(function (registro) {
-                return registro.get('spnr').trim() === obj.IN_SPNR;
-            });
-            grid.getStore().removeAll();
-            foundRegis.items.forEach(x => {
-                grid.getStore().add(x);
-            });
-        }
         try {
-            let bean = grid.getStore().findRecord('arefnbr', this.view.obj.arefnbr);
+            if (data.length === 0) {
+                global.Msg({msg: 'No data in Scanner'});
+                grid.getView().unmask();
+                return;
+            }
+            const existeAuth = data.some(x =>
+                x.data.SAUTHOC.trim() === obj.IN_SAUTHOC);
+            const existePnr = data.some(x =>
+                x.data.SPNR.trim() === obj.IN_SPNR);
+            let foundRegis = {};
+            if (existeAuth) {
+                foundRegis = grid.getStore().queryBy(function (registro) {
+                    return registro.get('SAUTHOC').trim() === obj.IN_SAUTHOC;
+                });
+                grid.getStore().removeAll();
+                foundRegis.items.forEach(x => {
+                    grid.getStore().add(x);
+                });
+            } else if (existePnr) {
+                foundRegis = grid.getStore().queryBy(function (registro) {
+                    return registro.get('SPNR').trim() === obj.IN_SPNR;
+                });
+                grid.getStore().removeAll();
+                foundRegis.items.forEach(x => {
+                    grid.getStore().add(x);
+                });
+            }
+
+            let bean = grid.getStore().findRecord('AREFNBR', this.view.obj.arefnbr); 
             grid.getSelectionModel().select(bean, true);
+            
         } catch (err) {
             console.error('Obj no encontrado: ', err);
         }
-        grid.getView().unmask();
+        finally {
+            grid.getView().unmask();
+        }
     },
     reloadGrid: function () {
         this.loadMainTransaction();
@@ -326,64 +333,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         }, 0);
         const totalFormat = Ext.util.Format.number(sumaTotal, '0,000.00');
         Ext.getCmp(prototype.idMSI + '-totalDiff').setValue(totalFormat);
-    },
-    //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="Format Parameters">
-    formatManualParameters: function (sales, refunds) {
-        let params = {};
-        let bpocomment = Ext.getCmp(prototype.idMSI + '-bpo-comment').getValue();
-        if (refunds.length >= 1 && sales.length === 1) {
-            let sale = sales.at(0).data;
-            let sumTgrosamounRef = refunds.reduce((total, x) => total + x.data.tgrosamoun, 0);
-            let rfndChilds = refunds.map(x => ({
-                    IN_CCUST: '139',
-                    IN_PRDA: sale.prda,
-                    IN_TDOC: sale.tdoc,
-                    IN_AREFNBR: sale.arefnbr,
-                    IN_HPRDA: x.data.prda,
-                    IN_HTDOC: x.data.tdoc,
-                    IN_HAREFNBR: x.data.arefnbr,
-                    IN_TGROSAMOUN: sale.tgrosamoun,
-                    IN_HTGROSAMOUN: sumTgrosamounRef,
-                    IN_COMEN: bpocomment
-                }));
-            params = {
-                IN_CCUST: '139',
-                IN_PRDA: sale.prda,
-                IN_TDOC: sale.tdoc,
-                IN_AREFNBR: sale.arefnbr,
-                IN_TGROSAMOUN: sale.tgrosamoun,
-                IN_HTGROSAMOUN: sumTgrosamounRef,
-                childs: rfndChilds
-            };
-            console.log('Sale Main: ', params);
-        } else {
-            let refund = refunds.at(0).data;
-            let sumTgrosamounSal = sales.reduce((total, x) => total + x.data.tgrosamoun, 0);
-            let saleChilds = sales.map(x => ({
-                    IN_CCUST: '139',
-                    IN_PRDA: refund.prda,
-                    IN_TDOC: refund.tdoc,
-                    IN_AREFNBR: refund.arefnbr,
-                    IN_HPRDA: x.prda,
-                    IN_HTDOC: x.tdoc,
-                    IN_HAREFNBR: x.arefnbr,
-                    IN_TGROSAMOUN: refund.tgrosamoun,
-                    IN_HTGROSAMOUN: sumTgrosamounSal,
-                    IN_COMENT: bpocomment
-                }));
-            params = {
-                IN_CCUST: '139',
-                IN_PRDA: refund.prda,
-                IN_TDOC: refund.tdoc,
-                IN_AREFNBR: refund.arefnbr,
-                IN_TGROSAMOUN: refund.tgrosamoun,
-                IN_HTGROSAMOUN: sumTgrosamounSal,
-                childs: saleChilds
-            };
-            console.log('Refund Main: ', params);
-        }
-        return params;
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Maintenance">
@@ -512,12 +461,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
             global.Msg({msg: 'You must select two or more transactions'});
             return;
         }
-        let sales = seleccionados.filter(x => x.data.transtype.trim() === 'SALE');
+        let sales = seleccionados.filter(x => x.data.TRANSTYPE.trim() === 'SALE');
         if (sales.length === 0) {
             global.Msg({msg: 'You must select one or more sales'});
             return;
         }
-        let refunds = seleccionados.filter(x => x.data.transtype.trim() === 'RFND');
+        let refunds = seleccionados.filter(x => x.data.TRANSTYPE.trim() === 'RFND');
         if (refunds.length === 0) {
             global.Msg({msg: 'You must select one or more refunds'});
             return;
@@ -526,39 +475,51 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
             global.Msg({msg: 'You only need to select one main transaction'});
             return;
         }
-        me.view.mask('Loading...');
-        let params = me.formatManualParameters(sales, refunds);
-        const res = await fetch(`${me.url}/maintenanceConcilTransacMan`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(params)
-        });
-        if (res.ok) {
-            Ext.MessageBox.show({
-                title: '.:PRAXIS:.',
-                message: 'Updated Successfully',
-                buttons: Ext.MessageBox.OK,
-                icon: Ext.MessageBox.INFO
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to reconcile?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            me.callManualMatch(seleccionados);
+                        }
+                    }
+                });
+        
+    },
+    callManualMatch: async function(seleccionados){
+        const me = this;
+        me.view.setLoading(true);
+        try {
+            let recs = seleccionados.map(x => ({
+                    ...x.data
+                }));
+            const tmp = await global.loadRecordsOnTable('PRAXISMP','XTEMPO',recs);
+            
+            let params = {
+                IN_CUUID: tmp.cuuid,
+                IN_FUUID: tmp.fuuid
+            };
+            
+            const res = await global.callStorePost('PRAXISMP','SQP05625',params);
+            console.log(res);
+            global.Msg({
+                msg:res.data.lstVals.OUT_MSG
             });
-            //dataEntry.getController().afterRender();
-            //gridDet.getStore().load();
-            me.view.unmask();
-            me.reloadMainTransaction();
+            me.view.setLoading(false);
             me.reloadMainGrid();
+            me.reloadMainTransaction();
             me.view.close();
-        } else {
-            Ext.MessageBox.show({
-                title: '.:PRAXIS:.',
-                message: 'Error on Update',
-                buttons: Ext.MessageBox.OK,
-                icon: Ext.MessageBox.ERROR
-            });
-            this.loadMainTransaction();
-            me.view.unmask();
+        } catch (e) {
+            global.Msg({msg:'System Error'});
+            me.view.setLoading(false);
         }
     },
+    
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     limpiaObjetoPX: function (obj) {

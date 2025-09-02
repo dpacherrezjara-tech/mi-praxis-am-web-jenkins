@@ -247,18 +247,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
+//                                            ['A', 'Match OC/Camepa'],
+                                            ['C', 'Match Complement'],
+//                                            ['D', 'Match Balance'],
+                                            ['E', 'Duplicate Payment'],
+                                            ['M', 'Match Multi-Payment'],
                                             ['0', 'Stand By'],
                                             ['1', 'Match'],
                                             ['3', 'Settl. Without Sales'],
-                                            ['4', 'Match Diff.'],
+                                            ['4', 'Match Partial'],
                                             ['5', 'Match Manual'],
-                                            ['6', 'Forced Match'],
-                                            ['7', 'Compensation Match'],
-                                            ['8', 'Pending RFND']
+//                                            ['6', 'Match Forced'],
+//                                            ['7', 'Match Compensation'],
+                                            ['8', 'Match Transactional'],
+//                                            ['8', 'Match Void']
                                         ]
                                     }),
                                     labelWidth: 55,
-                                    width: 180,
+                                    width: 250,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -407,7 +413,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     typeAhead: true,
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
-                                    value: ''
+                                    value: '',
+                                    listeners: {
+                                        select: 'onProcessorSelect'
+                                    }
                                 },
                                 {
                                     xtype: 'combo',
@@ -490,19 +499,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
+//                                            ['A', 'Match OC/Camepa'],
+                                            ['C', 'Match Complement'],
+//                                            ['D', 'Match Balance'],
+                                            ['E', 'Duplicate Payment'],
+                                            ['M', 'Match Multi-Payment'],
                                             ['0', 'Stand By'],
                                             ['1', 'Match'],
                                             ['3', 'Settl. Without Sales'],
-                                            ['4', 'Match Diff.'],
+                                            ['4', 'Match Partial'],
                                             ['5', 'Match Manual'],
-                                            ['6', 'Forced Match'],
-                                            ['7', 'Match Compensation'],
+//                                            ['6', 'Match Forced'],
+//                                            ['7', 'Match Compensation'],
                                             ['8', 'Match Transactional'],
-                                            ['9', 'Match Void']
+//                                            ['8', 'Match Void'],
                                         ]
                                     }),
                                     labelWidth: 55,
-                                    width: 180,
+                                    width: 250,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -515,24 +529,27 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     labelWidth: 80,
                                     width: 150,
                                     name: 'creditcard',
+                                    itemId: 'creditcard1',
                                     maxLength: 6, // Límite máximo de caracteres
                                     maskRe: /[0-9]/, // Expresión regular para permitir solo números
-                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                                 },
                                 {
                                     xtype: 'label',
-                                    text: '*****(*)'
+                                    text: '*****(*)',
+                                    itemId: 'maskLabel'
                                 },
                                 {
                                     xtype: 'textfield',
                                     name: 'creditcard2',
+                                    itemId: 'creditcard2',
                                     width: 50,
                                     maxLength: 4, // Límite máximo de caracteres
                                     maskRe: /[0-9]/, // Expresión regular para permitir solo números
                                     enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
-                                    listeners: {
-                                        specialkey: 'onEnterKeyPress'
-                                    }
+//                                    listeners: {
+                                    specialkey: 'onEnterKeyPress'
+//                                    }
                                 },
                                 {
                                     xtype: 'textfield',

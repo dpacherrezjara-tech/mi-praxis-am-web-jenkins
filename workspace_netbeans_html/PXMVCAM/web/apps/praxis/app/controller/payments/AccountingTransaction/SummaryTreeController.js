@@ -153,9 +153,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
         const view = this.view;
         const tdate = view.tdate;
         if (tdate === 'P') {
-            navigator.clipboard.writeText(rowData.data.idflex.trim());
-        } else {
             navigator.clipboard.writeText(rowData.data.praxisid.trim());
+        } else {
+            navigator.clipboard.writeText(rowData.data.idflex.trim());
         }
         global.Msg({
             msg: 'Copied to clipboard!'

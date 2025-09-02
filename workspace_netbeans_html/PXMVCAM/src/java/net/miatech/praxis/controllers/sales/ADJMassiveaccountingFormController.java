@@ -413,7 +413,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "THE Cuenta MUST BE 36 CHARACTERES  " + fileA3344.A3344CTAC;
                             break;
                         }
-                        if (!isValidCuenta(fileA3344.A3344CTAC)){
+                        if (!isValidCuenta(fileA3344.A3344CTAC)) {
                             mensaje = "THE Cuenta IS NOT VALID  " + fileA3344.A3344CTAC;
                             break;
                         }
@@ -632,9 +632,9 @@ public class ADJMassiveaccountingFormController extends BaseController {
                         fileA3344.A3344TCAMB = currentRow.getCell(36) == null ? 0 : Double.parseDouble(currentRow.getCell(36).getStringCellValue());
                         ///FECHA DE PROCESO
                         fileA3344.A3344FPROC = currentRow.getCell(37) == null ? "" : currentRow.getCell(37).getStringCellValue();
-                        if (fileA3344.A3344TRNCU.equals("SALE") &&!isValidDate(fileA3344.A3344FPROC)) {
-                                mensaje = "Fecha de Proceso no válida: " + fileA3344.A3344FPROC + ". El formato correcto es: YYYYMMDD.";
-                                break;
+                        if (fileA3344.A3344TRNCU.equals("SALE") && !isValidDate(fileA3344.A3344FPROC)) {
+                            mensaje = "Fecha de Proceso no válida: " + fileA3344.A3344FPROC + ". El formato correcto es: YYYYMMDD.";
+                            break;
                         }
 
                         /*if(!fileA3344.A3344FPROC.equals("")){
@@ -694,7 +694,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "AFFECTATION IATA  Required";
                             break;
                         }
-                        if (!containsOnlyNumbers(fileA3344.A3344IATAU)){
+                        if (!containsOnlyNumbers(fileA3344.A3344IATAU)) {
                             mensaje = "THE AFFECTATION IATA MUST CONTAIN ONLY NUMBERS: " + fileA3344.A3344IATAU;
                             break;
                         }
@@ -737,7 +737,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "THE IATA MUST CONTAIN ONLY NUMBERS: " + fileA3344.A3344AGENT;
                             break;
                         }
-                        
+
                         //validacion para volados
                         if (cont1 == 1) {
                             vl_A3344TKT = fileA3344.A3344TKT + "" + fileA3344.A3344SEQ;//+ "" + fileA3344.A3344CPN;
@@ -1114,7 +1114,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "THE Cuenta MUST BE 36 CHARACTERES  " + fileA3344.A3344CTAC;
                             break;
                         }
-                        if (!isValidCuenta(fileA3344.A3344CTAC)){
+                        if (!isValidCuenta(fileA3344.A3344CTAC)) {
                             mensaje = "THE Cuenta IS NOT VALID  " + fileA3344.A3344CTAC;
                             break;
                         }
@@ -1221,8 +1221,8 @@ public class ADJMassiveaccountingFormController extends BaseController {
                         ///FECHA DE PROCESO
                         fileA3344.A3344FPROC = currentRow.getCell(37) == null ? "" : currentRow.getCell(37).getStringCellValue();
                         if (fileA3344.A3344TRNCU.equals("FLWN") && !isValidDate(fileA3344.A3344FPROC)) {
-                                mensaje = "Fecha de Proceso no válida: " + fileA3344.A3344FPROC + ". El formato correcto es: YYYYMMDD.";
-                                break;
+                            mensaje = "Fecha de Proceso no válida: " + fileA3344.A3344FPROC + ". El formato correcto es: YYYYMMDD.";
+                            break;
                         }
 
                         /* if(!fileA3344.A3344FPROC.equals("")){
@@ -1280,7 +1280,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "AFFECTATION IATA  Required";
                             break;
                         }
-                        if (!containsOnlyNumbers(fileA3344.A3344IATAU)){
+                        if (!containsOnlyNumbers(fileA3344.A3344IATAU)) {
                             mensaje = "THE AFFECTATION IATA MUST CONTAIN ONLY NUMBERS: " + fileA3344.A3344IATAU;
                             break;
                         }
@@ -1849,7 +1849,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
         }
         return false;
     }
-    
+
     private static boolean isParsableToDouble(String str) {
         if (str == null || str.isEmpty()) {
             return true;
@@ -1861,17 +1861,15 @@ public class ADJMassiveaccountingFormController extends BaseController {
             return false;
         }
     }
-    
+
     private static boolean containsOnlyNumbers(String str) {
         return str.matches("^\\d+$");
     }
-    
+
     private static boolean isValidCuenta(String str) {
-    String expr = "^\\d{2}-\\d{2}-\\d{6}-\\d{4}-\\d{4}-\\d{5}-\\d{4}-\\d{2}$";
-    return str.matches(expr);
-}
-
-
+        String expr = "^\\d{2}-\\d{2}-\\d{6}-[A-Z0-9]{4}-\\d{4}-\\d{5}-\\d{4}-\\d{2}$";
+        return str.matches(expr);
+    }
 
     // Código invalidado por Johnny Arias
 //    private String getCellValue(Cell cell) {

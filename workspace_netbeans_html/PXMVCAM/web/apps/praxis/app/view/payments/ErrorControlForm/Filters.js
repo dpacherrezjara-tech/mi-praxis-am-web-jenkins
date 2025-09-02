@@ -170,7 +170,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Filters', {
                                 data: [
                                     ['', 'All'],
                                     ['A', 'Automatic'],
-                                    ['F', 'Forced Match']
+//                                    ['F', 'Forced Match']
                                 ]
                             }),
                             name: 'TIPO_CORRECCION',

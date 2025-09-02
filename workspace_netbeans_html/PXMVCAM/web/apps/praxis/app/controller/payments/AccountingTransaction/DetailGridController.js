@@ -124,6 +124,24 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.DetailGridContr
         console.log(beanProMasterTicket);
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+        
+//        const obj = record.data.ticket;
+//        prototypeProgram.view = 'payments-sales-reconciliation-control-form';
+//        prototypeProgram.nprog = 'PX00000636';
+//        prototypeProgram.title = 'Payments Reconciliation';
+//        prototypeProgram.modulo = '';
+//        
+//        console.log("prototypeProgram", prototypeProgram);
+//        
+//        var beanProMasterTicket = {};
+//        
+//        beanProMasterTicket.IN_CIA = obj.substr(0, 3);
+//        beanProMasterTicket.IN_FORMA = obj.substr(3, 4);
+//        beanProMasterTicket.IN_SERIE = obj.substr(7, 6);
+//
+//        console.log("beanProMasterTicket", beanProMasterTicket);
+//        
+//        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
     downloadExcel:function(){
         const view = this.view;

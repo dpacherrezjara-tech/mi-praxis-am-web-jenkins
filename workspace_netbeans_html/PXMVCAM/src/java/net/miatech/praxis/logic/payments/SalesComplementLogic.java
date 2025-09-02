@@ -8,6 +8,7 @@ import net.miatech.praxis.payment.filter.SQP04980Filter;
 import net.miatech.praxis.payment.filter.SQP04981Filter;
 import net.miatech.praxis.payment.filter.SQP04982Filter;
 import net.miatech.praxis.payment.filter.SQP05004Filter;
+import net.miatech.praxis.payment.filter.SQP04983Filter;
 
 /**
  *

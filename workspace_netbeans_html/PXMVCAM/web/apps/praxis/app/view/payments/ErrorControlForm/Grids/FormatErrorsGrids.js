@@ -156,7 +156,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Grids.FormatErrorsGrids', 
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             let opts = {
                                 'A': 'Automatic',
-                                'F': 'Forced Match'
+//                                'F': 'Forced Match'
                             };
                             return opts[value] || '';
                         }
@@ -211,7 +211,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Grids.FormatErrorsGrids', 
                         scale: 'small',
                         tooltip: 'Export to Excel',
                         listeners: {
-                            click: 'downloadFormatErrors'
+                            click: 'downloadDetFormatErrors'
                         }
                     },
                     {

@@ -11,7 +11,7 @@ public class A4335Filter extends A4335{
     //total del a4331
     private Double SVFOPS_TOTAL;
     //datos de contabilidad mp
-    private String LIQ_STCON,LIQ_IDCON,LIQ_FCON,DESC_CODADJU;
+    private String LIQ_STCON, LIQ_IDCON, LIQ_FCON, DESC_CODADJU, EXISTS_BALANCE ;
 
     public String getRN() {
         return RN;
@@ -68,4 +68,13 @@ public class A4335Filter extends A4335{
     public void setDESC_CODADJU(String DESC_CODADJU) {
         this.DESC_CODADJU = DESC_CODADJU;
     }
+    
+    public String getEXISTS_BALANCE() {
+        return EXISTS_BALANCE;
+    }
+
+    public void setEXISTS_BALANCE(String EXISTS_BALANCE) {
+        this.EXISTS_BALANCE = EXISTS_BALANCE;
+    }
+            
 }

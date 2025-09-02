@@ -77,10 +77,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
             },
             {
                 text: 'Qty<br>Transactions', dataIndex: 'qtytrn', width: 85,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    return Ext.util.Format.number(value, '0,000');
+                },
                 summaryType: 'sum',
                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                    metaData.style = 'text-align:center; margin-right:3px ';
-                    return '<b>' + value + '<b>';
+                    metaData.style = 'text-align:center;font-weight:bold;';
+                    value = Ext.util.Format.number(value, '0,000');
+                    return value;
                 }
             },
             {
@@ -99,16 +103,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 },
                 summaryType: 'sum',
                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                    metaData.style = 'text-align:right; margin-right:3px ';
-                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                    metaData.style = 'text-align:right;font-weight:bold;';
+                    return Ext.util.Format.number(value, '0,000.00');
                 }
             },
             {
                 text: 'GROSS<br>Amount', dataIndex: 'tgrosamoun_WCA', width: 130,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:right;background-color:#B2DAFA";
-                    value = Ext.util.Format.number(value, '0,000.00');
-                    return value;
+                    return Ext.util.Format.number(value, '0,000.00');
+                },
+                summaryType: 'sum',
+                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                    metaData.style = 'text-align:right;font-weight:bold;';
+                    return Ext.util.Format.number(value, '0,000.00');
                 }
             },
             {
@@ -123,16 +131,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         text: 'Amount', dataIndex: 'discamoun', width: 90,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
-                            value = Ext.util.Format.number(value, '0,000.00');
-                            return value;
+                            return Ext.util.Format.number(value, '0,000.00');
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
                     {
                         text: 'VAT', dataIndex: 'discamouni', width: 90,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
-                            value = Ext.util.Format.number(value, '0,000.00');
-                            return value;
+                            return Ext.util.Format.number(value, '0,000.00');
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     }
                 ]
@@ -153,6 +169,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
                     {
@@ -161,6 +182,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     }
                 ]
@@ -179,6 +205,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
                     {
@@ -187,6 +218,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
                     {
@@ -195,6 +231,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     }
                 ]
@@ -213,6 +254,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
                     {
@@ -221,6 +267,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
                     {
@@ -229,6 +280,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     }
                 ]
@@ -239,6 +295,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                     metaData.style = "text-align:right;background-color:#B2DAFA";
                     value = Ext.util.Format.number(value, '0,000.00');
                     return value;
+                },
+                summaryType: 'sum',
+                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                    metaData.style = 'text-align:right;font-weight:bold;';
+                    return Ext.util.Format.number(value, '0,000.00');
                 }
             },
             {
@@ -249,6 +310,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                     metaData.style = "text-align:right;background-color:#B2DAFA";
                     value = Ext.util.Format.number(value, '0,000.00');
                     return value;
+                },
+                summaryType: 'sum',
+                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                    metaData.style = 'text-align:right;font-weight:bold;';
+                    return Ext.util.Format.number(value, '0,000.00');
                 }
             },
             {
@@ -272,6 +338,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             metaData.style = "text-align:right;background-color:#FCF6DC";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
                     {
@@ -280,6 +351,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             metaData.style = "text-align:right;background-color:#FCF6DC";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
                     {
@@ -296,6 +372,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                                     metaData.style = "text-align:right;background-color:#FCF6DC";
                                     value = Ext.util.Format.number(value, '0,000.00');
                                     return value;
+                                },
+                                summaryType: 'sum',
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    metaData.style = 'text-align:right;font-weight:bold;';
+                                    return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
                             {
@@ -304,6 +385,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                                     metaData.style = "text-align:right;background-color:#FCF6DC";
                                     value = Ext.util.Format.number(value, '0,000.00');
                                     return value;
+                                },
+                                summaryType: 'sum',
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    metaData.style = 'text-align:right;font-weight:bold;';
+                                    return Ext.util.Format.number(value, '0,000.00');
                                 }
                             }
                         ]
@@ -324,6 +410,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                                     metaData.style = "text-align:right;background-color:#FCF6DC";
                                     value = Ext.util.Format.number(value, '0,000.00');
                                     return value;
+                                },
+                                summaryType: 'sum',
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    metaData.style = 'text-align:right;font-weight:bold;';
+                                    return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
                             {
@@ -332,6 +423,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                                     metaData.style = "text-align:right;background-color:#FCF6DC";
                                     value = Ext.util.Format.number(value, '0,000.00');
                                     return value;
+                                },
+                                summaryType: 'sum',
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    metaData.style = 'text-align:right;font-weight:bold;';
+                                    return Ext.util.Format.number(value, '0,000.00');
                                 }
                             }
                         ]
@@ -342,6 +438,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             metaData.style = "text-align:right;background-color:#FCF6DC";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
                     {
@@ -352,6 +453,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                             metaData.style = "text-align:right;background-color:#FCF6DC";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = 'text-align:right;font-weight:bold;';
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     }
                 ]
