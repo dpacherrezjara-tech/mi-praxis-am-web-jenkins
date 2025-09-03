@@ -1,18 +1,14 @@
 package net.miatech.praxis.SaleAudit.entities;
 
 import lombok.Data;
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  *
  * @author dvicente
  */
 @Data
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class A4592 {
-    private String CCUST,
+    private String CCUST,   
                 PRDAF,   
                 PRDAT,   
                 CUUID,   
@@ -26,6 +22,5 @@ public class A4592 {
                 USUP,  
                 FEUP,  
                 HOUP,  
-                PGMUP,
-                NOTE; 
+                PGMUP; 
 }

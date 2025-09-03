@@ -877,11 +877,25 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationPaymentForm.DataEntryTransacE
                                             listeners: {
                                                 change: function (field, newValue) {
                                                     const opts = {
-                                                        '1': 'Ticket',
-                                                        '2': 'PNR',
-                                                        '3': 'C.Card',
-                                                        '4': 'Desg. Manual',
-                                                        '5': 'Desg. Transac.'
+//                                                        '1': 'Ticket',
+//                                                        '2': 'PNR',
+//                                                        '3': 'C.Card',
+//                                                        '4': 'Desg. Manual',
+//                                                        '5': 'Desg. Transac.'
+                                                        '0': 'TKT+PNR+IATA+FE+I+T+A',
+                                                        '1': 'TKT+IATA+FE+I+T+A',
+                                                        '2': 'TKT+PNR+FE+I+T+A',
+                                                        '3': 'TKT+FE+I+T+A',
+                                                        '4': 'PNR+IATA+FE+I+T+A',
+                                                        '5': 'IATA+FE+I+T+A',
+                                                        '6': 'PNR+FE+I+T+A',
+                                                        '7': 'FE+I+T+A',
+                                                        '8': 'TKT+PNR+FE+I+T',
+                                                        '9': 'TKT+PNR+FE+ID+T+A',
+                                                        'A': 'PNR+FE+I+T',
+                                                        'B': 'PNR+FE+ID+T+A',
+                                                        'C': 'TKT+FE+I+T',
+                                                        'D': 'FE+I+T',
                                                     };
                                                     field.setRawValue(opts[newValue] || '');
                                                 }

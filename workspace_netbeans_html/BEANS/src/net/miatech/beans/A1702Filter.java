@@ -19,8 +19,6 @@ public class A1702Filter extends  A1702{
     public String IN_FECHA_TO = "";
     public String IN_VALORTXT = "";
     public String IN_TIPOTXT = ""; 
-    public String IN_ERRORCODE = ""; 
-    public Pagination page = new Pagination();
     
     public int TOTALA=0;
     public int TOTALB=0;

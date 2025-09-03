@@ -13,7 +13,6 @@ import net.miatech.praxis.flown.A1817;
 public class A1817Filter extends A1817 {
 
     public int RN = 0;
-    public String USUP1 = "";
     public String DATE = "";
     public String IN_TYPE = "";
     public String DRILL = "";

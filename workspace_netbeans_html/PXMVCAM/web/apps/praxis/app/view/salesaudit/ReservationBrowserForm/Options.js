@@ -17,15 +17,6 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Options', {
                     items: [
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnKeyRobot',
-                            iconCls: 'prx-icon-key',
-                            tooltip: 'Key Command Center',
-                            listeners: {
-                                click: 'onClickKeyRobotBtn'
-                            }
-                        },
-                        {
-                            xtype: 'button',
                             id: prototype.id + '-btnSearch',
                             iconCls: 'prx-icon-search',
                             tooltip: 'Search',
@@ -46,7 +37,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Options', {
                             xtype: 'button',
                             id: prototype.id + '-btnLoadRobot',
                             iconCls: 'prx-icon-processing',
-                            tooltip: 'Execute Robot',
+                            tooltip: 'Load Robot',
                             listeners: {
                                 click: 'onClickLoadRobot'
                             }

@@ -18,18 +18,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.ReservationBrows
         return params;
     },
     //<editor-fold defaultstate="collapsed" desc="Handlers">
-    
-    // option for panel maganament keys robots
-    onClickKeyRobotBtn: function () {
-        const me = this;
-        const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
-        mainPanel.removeAll();
-        
-        const keyGrid = Ext.create('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.CatalogGrid', {
-            id: prototype.id + '-CatalogGrid-1'
-        });
-        mainPanel.add(keyGrid);
-    },
     onClickSearchBtn: function () {
         this.searchReservations();
     },

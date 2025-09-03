@@ -64,27 +64,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.PnrsGridControll
             IN_FROM: obj.PRDA,
             IN_TO: obj.PRDA
         };
-        return params;
-    },
-    downloadExcel: function () {
-        const me = this;
-        const view = this.view;
-        let params = Object.assign({}, view.searchParams);
-        params.excel = true;
-        Ext.Msg.show(
-            {
-                title: '.:PRAXIS:.',
-                msg: 'Download Excel?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function (btn) {
-                    if (btn === 'yes') {
-                        global.getFile(`${me.url}/downloadPNR?${new URLSearchParams(params)}`);
-                    }
-                }
-            });
+        return params
     },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){

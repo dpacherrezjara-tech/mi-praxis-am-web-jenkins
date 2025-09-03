@@ -212,22 +212,6 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntryTicket', 
                                             valueField: 'code',
                                             displayField: 'name',
                                             margin: '1px 5px 0px 5px'
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-t' + '-txtCodeErrorVo',
-                                            required: true,
-                                            readOnly: true,
-                                            fieldLabel: '<strong style="color:#000;">Code Error</strong>',
-                                            width: 150,
-                                            labelWidth: 80,
-                                            labelAlign: 'left',
-                                            padding: '1px 5px 0px 5',
-                                            enforceMaxLength: true,
-                                            fieldStyle: 'text-align: center;',
-                                            maxLength: 50
-                                                    //maskRe: /[0-9]/
                                         }
                                     ]
                                 }
@@ -290,7 +274,9 @@ Ext.define('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntryTicket', 
                                             enforceMaxLength: true,
                                             fieldStyle: 'text-align: center;',
                                             maxLength: 50
+                                                    //maskRe: /[0-9]/
                                         }
+
                                     ]
                                 }
                             ]

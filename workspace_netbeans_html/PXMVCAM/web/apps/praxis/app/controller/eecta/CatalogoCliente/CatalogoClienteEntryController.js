@@ -179,7 +179,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         var VL_A3953STSDV = 'N';
         if (Ext.getCmp(prototype.id + '-A3953STSDV').getValue())
             VL_A3953STSDV = 'S';
-		
+
         var VL_A3953DOMFR = Ext.getCmp(prototype.id + '-A3953DOMFR').getValue();
         var VL_A3953REGFI = Ext.getCmp(prototype.id + '-A3953REGFI').getValue();
         var VL_A3953UCFDI = Ext.getCmp(prototype.id + '-A3953UCFDI').getValue();

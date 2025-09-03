@@ -98,7 +98,7 @@ public class test {
         
     }
     
-    public static void mainRefund(String[] args) { // mainRefund
+    public static void main(String[] args) { // mainRefund
         // TODO code application logic here
         
         StringWriter sw = new StringWriter();
@@ -203,7 +203,7 @@ public class test {
         }
     }
     
-    public static void main(String[] args) { //maineMAIL
+    public static void maineMAIL(String[] args) { //maineMAIL
         // TODO code application logic here
         
         StringWriter sw = new StringWriter();
@@ -220,7 +220,7 @@ public class test {
         
         // Emails CC
         List<String> Ccp = new ArrayList<>();
-        String strMails = "lzambrano@miatech.net";
+        String strMails = "jsolano@miatech.net";
 
         //temporal borrar
         //strMails = "asifuentes@miatech.net;oldman_100_6@hotmail.com";
@@ -228,11 +228,11 @@ public class test {
         for (int i = 0; i < parts.length; i++) {
             Ccp.add(parts[i]);
         }
-        String emisor = "notificaciones@miatech.net"; // "notificaciones@miatech.net";
+        String emisor = "amaclaracionescontracargos@miatech.net"; // "notificaciones@miatech.net";
         String asunto = "Demo Email";
         String mensaje = "Mensaje Demo Email";
         List<String> archivos = new ArrayList<>();
-        boolean boRpta = sendEmailMDP(emisor, asunto, receptores, Ccp, mensaje, archivos, "notificaciones@miatech.net");
+        boolean boRpta = sendEmailMDP(emisor, asunto, receptores, Ccp, mensaje, archivos, "amaclaracionescontracargos@miatech.net");
         System.out.println("Results: Total -> ");
 
         }
@@ -262,7 +262,6 @@ public class test {
             /*props.put("mail.smtp.host", serverSession.getProperty("APP_SERVER_MAIL_HOST"));
             props.put("mail.smtp.port", serverSession.getProperty("APP_SERVER_MAIL_PORT"));
             props.put("mail.smtp.starttls.enable","true");*/
-            
             props.put("mail.smtp.host","smtp.office365.com" );
             props.put("mail.smtp.port", "587");
             props.put("mail.smtp.starttls.enable","true");
@@ -274,7 +273,11 @@ public class test {
             props.setProperty("mail.smtp.auth", "true");
             //Authenticator auth = new SMTPAuthenticator("notificaciones@miatech.net", "notificaciones123"); // Tener Clave del quien Envia 
             Authenticator auth;
-            auth = new SMTPAuthenticator("notificaciones@miatech.net", "Notific@ciones");
+            if(emisor.contains("amcscaclaracioncontracargousaeur")){
+                auth = new SMTPAuthenticator("amcscaclaracioncontracargousaeur@miatech.net", "Amcargo365");
+            }else{
+                auth = new SMTPAuthenticator("amaclaracionescontracargos@miatech.net", "Am@claraciones");
+            }
             
             Session session = Session.getInstance(props, auth);            
             //Se obtiene sesi&amp;oacute;n desde el servidor de correos               

@@ -22,11 +22,9 @@ Ext.define('Ext.Praxis.controller.sales.CalendarControlARC.CalendarControlARCCon
     },
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function(obj, e) {
-        let calendarVersion = Ext.getCmp(prototype.id + '-calendarVersion-1').lastValue.opcion;
         this.bean.IN_A1527PPED = this.getValue("txtFilterDate");
         this.beanExcel.IN_A1527PPED = this.bean.IN_A1527PPED;
-        this.beanExcel.IN_VERSION = calendarVersion === 'ARC2'?'2':'1';
-        this._path = prototype.url + '/getXLSX?' + new URLSearchParams(this.beanExcel);
+        this._path = prototype.url + '/getXLSX?IN_A1527PPED=' + this.beanExcel.IN_A1527PPED;
         this.search(this.bean);
     },
     btnFilter_click: function() {

@@ -1,4 +1,4 @@
-prototype.idDE1 = prototype.id + '-RobotSabreDataEntry';
+prototype.idDE = prototype.id + '-RobotSabreDataEntry';
 
 Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.DataEntrys.RobotSabreDataEntry', {
     extend: 'Ext.window.Window',
@@ -7,9 +7,9 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.DataEntrys.RobotSa
         'Ext.Praxis.controller.salesaudit.ReservationBrowser.RobotSabreDataEntryController'
     ],
     controller: 'RobotSabreDataEntryController',
-    title: 'Robot Sabre Log - Form',
+    title: 'Robot Sabre - Form',
     header: true,
-    width: 1220,
+    width: 850,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -132,20 +132,6 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.DataEntrys.RobotSa
                                 text: 'Queue', dataIndex: 'JOBQUEUE', width: 100
                             },
                             {
-                                text: 'UID', dataIndex: 'CUUID', width: 100,
-                                renderer: function (value, metaData) {
-                                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
-                                    return value;
-                                }
-                            },
-                            {
-                                text: 'Note', dataIndex: 'NOTE', width: 200,
-                                renderer: function (value, metaData) {
-                                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
-                                    return value;
-                                }
-                            },
-                            {
                                 text: 'Create',
                                 defaults: {
                                     align: 'center',
@@ -197,32 +183,10 @@ Ext.define('Ext.Praxis.view.salesaudit.ReservationBrowserForm.DataEntrys.RobotSa
                                         'X': () => {
                                             metaData.tdAttr = 'data-qtip="Error"';
                                             return '<img src="resources/img/icon/delete.png"/>';
-                                        },
-                                        'N': () => {
-                                            metaData.tdAttr = 'data-qtip="Not Found"';
-                                            return '<img src="resources/img/icon/list-error.png"/>';
                                         }
                                     };
                                     return opcion[value]();
                                 }
-                            },
-                            {
-                                sortable: false,
-                                xtype: 'actioncolumn',
-                                width: 60,
-                                text: 'Execute',
-                                align: 'center',
-                                items: [
-                                    {
-                                        iconCls: 'prx-icon-run',
-                                        tooltip: 'Execute',
-                                        handler: 'onExecuteRobotClick',
-                                        isDisabled: function(view, rowIndex, colIndex, item, record) {
-                                            const status = record.get('STSEARCH');
-                                            return !(status === 'X' || status === 'N');
-                                        }
-                                    }
-                                ]
                             }
                         ]
                     }

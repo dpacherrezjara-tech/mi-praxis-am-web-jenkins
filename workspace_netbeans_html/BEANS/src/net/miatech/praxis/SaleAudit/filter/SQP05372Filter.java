@@ -20,6 +20,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SQP05372Filter {
     
+    
     private String IN_CCUST,IN_FROM,IN_TO,IN_QUEUE,IN_OPTION;
     
     @Getter
@@ -29,7 +30,6 @@ public class SQP05372Filter {
     
     private Integer SQLRES;
     private String SQLMSG;
-    private String SQLFECR;    
     
     public void setRandomUUID(){
         this.IN_UUID = UUID.randomUUID().toString().replace("-", "");
