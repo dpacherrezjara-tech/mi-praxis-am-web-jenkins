@@ -1,10 +1,10 @@
-Ext.define('Ext.Praxis.view.payments.EMDControlForm.Grids.EMDControlFormGrid', {
+Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid', {
     extend: 'Ext.grid.Panel',
-    alias: 'widget.' + prototype.id + '-EMDControlFormGrid',
+    alias: 'widget.' + prototype.id + '-EmdsControlGrid',
     requires: [
-        'Ext.Praxis.controller.payments.EMDControlForm.EMDControlFormGridController'
+        'Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController'
     ],
-    controller: 'EMDControlFormGridController',
+    controller: 'EmdsControlGridController',
     minHeight: 200,
     height: 'auto',
     width: 1700,

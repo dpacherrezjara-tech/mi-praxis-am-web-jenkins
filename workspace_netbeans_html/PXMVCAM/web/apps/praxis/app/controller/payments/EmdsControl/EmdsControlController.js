@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.payments.EMDControlForm.EMDControlFormController', {
+Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.EMDControlFormController',
+    alias: 'controller.EmdsControlController',
     init: function (view) {
 
     },
@@ -13,8 +13,8 @@ Ext.define('Ext.Praxis.controller.payments.EMDControlForm.EMDControlFormControll
         const filtro1 = Ext.getCmp(prototype.id + '-panelFilters');
         let params = filtro1.getForm().getValues();
 //        console.log('params',params)
-        const newGrid = Ext.create('Ext.Praxis.view.payments.EMDControlForm.Grids.EMDControlFormGrid', {
-            id: prototype.id + '-EMDControlFormGrid',
+        const newGrid = Ext.create('Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid', {
+            id: prototype.id + '-EmdsControlGrid',
             searchParams: params
         });
 

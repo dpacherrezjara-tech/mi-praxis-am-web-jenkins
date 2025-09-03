@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.payments.EMDControlForm.Filters', {
+Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Filters', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-filters',
     border: true,
