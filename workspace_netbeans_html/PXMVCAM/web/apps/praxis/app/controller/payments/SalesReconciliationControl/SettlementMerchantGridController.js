@@ -55,6 +55,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
         params.IN_SCURRENCY = obj.scurrency;
         params.IN_PCURRENCY = obj.pcurrency;
         params.IN_SCARDN = '';
+        params.IN_AREFNBR = '';
+        params.IN_TICKET = '';
         return params;
     },
     downloadExcel:function(){

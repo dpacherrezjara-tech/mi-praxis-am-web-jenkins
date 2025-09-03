@@ -588,7 +588,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                                             labelWidth: 40,
                                             width: 120,
                                             name: 'IN_PNR',
-                                            maxLength: 8, // Límite máximo de caracteres
+                                            maxLength: 6, // Límite máximo de caracteres
                                             maskRe: /[a-zA-Z0-9]/, // Expresión regular para permitir solo números
                                             enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                                             listeners: {
@@ -614,7 +614,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                                             labelWidth: 70,
                                             width: 220,
                                             name: 'IN_AREFNBR',
-                                            maxLength: 15, // Límite máximo de caracteres
+                                            maxLength: 23, // Límite máximo de caracteres
                                             maskRe: /[0-9]/, // Expresión regular para permitir solo números
                                             enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                                             listeners: {
