@@ -54,7 +54,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ['P', 'Processing Date'],
-                                            ['S', 'Sale Date']
+                                            ['S', 'Sale Date'],
+//                                            ['X', 'Execute Date'],
+//                                            ['A', 'Accounting Date']
                                         ]
                                     }),
                                     labelWidth: 50,
@@ -66,10 +68,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     value: 'P'
                                 },
                                 {
-                                    xtype: 'monthfield',
+                                    xtype: 'datefield',
                                     fieldLabel: 'From',
-                                    format: 'Ym',
-                                    altFormats: 'm/Y',
+                                    format: 'Ymd',
+//                                    altFormats: 'm/Y',
                                     editable: false, // Deshabilita la edición del campo
                                     labelWidth: 50,
                                     width: 150,
@@ -82,10 +84,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     }
                                 },
                                 {
-                                    xtype: 'monthfield',
+                                    xtype: 'datefield',
                                     fieldLabel: 'To',
-                                    format: 'Ym',
-                                    altFormats: 'm',
+                                    format: 'Ymd',
+//                                    altFormats: 'm',
                                     editable: false, // Deshabilita la edición del campo
                                     lastDay: true,
                                     labelWidth: 30,
@@ -131,7 +133,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                         ]
                                     }),
                                     queryMode: 'local',
-                                    value: 'SALE',
+                                    value: '',
                                     listeners: {
                                         change: 'onClickSearchBtn'
                                     }

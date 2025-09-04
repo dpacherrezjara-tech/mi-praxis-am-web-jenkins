@@ -24,6 +24,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const procesadores = data.procesadores;
             const monedas = data.monedas.map(x => ({code: x.a006PAIS, name: `${x.a006PAIS}`}));
             const errores = data.cerror.map(x => ({name: `${x.a4451key3.trim()} - ${x.a4451desc1}`, code: x.a4451key3}));
+
             me.creditcards = data.creditcards;
             me.users = data.admins.map(x => x.a4451key3.trimEnd());
             //<editor-fold defaultstate="collapsed" desc="Combos">
@@ -114,6 +115,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.setComboStore({cmp: cmbAutoComments, data: dataAutoComments,
                 valueField: 'code', displayField: 'name', value: ''});
 
+            
+            const dataReglas = data.reglas.map(x => ({name: `${x.a4451key3.trim()}:  ${x.a4451desc1}`, code: x.a4451key3, comment: x.a4451comen }));
+            console.log('data.reglas', data.reglas[0] );
+            console.log('dataReglas', dataReglas );
+            
+            const cmbReglas = Ext.getCmp(prototype.id + '-cmbReglas');
+            me.setComboStore({cmp: cmbReglas, data: dataReglas,
+                valueField: 'code', displayField: 'name',
+                fields: ['code', 'name', 'comment'],
+                value: ''});
 
             //</editor-fold>
             me.showProcessBtn(me.users);

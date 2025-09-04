@@ -440,6 +440,48 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     value: ''
                                 },
                                 {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbReglas',
+                                    name: 'IN_FREGLA',
+                                    queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    fieldLabel: 'Regla',
+                                    labelWidth: 50,
+                                    labelAlign: 'right',
+                                    width: 250,
+                                    typeAhead: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: '',
+                                    editable: false,
+                                    listeners: {
+                                        render: function(combo) {
+                                            // Inicializamos QuickTipManager y registramos un tooltip base
+                                            Ext.tip.QuickTipManager.init();
+                                            Ext.tip.QuickTipManager.register({
+                                                target: combo.getId(),
+                                                text: 'Seleccione una regla para ver detalle'
+                                            });
+                                        },
+                                        select: function(combo, record) {
+                                            let comentario = record.get('comment') || 'Sin descripción';
+
+                                            // Actualizamos el tooltip dinámicamente
+                                            Ext.tip.QuickTipManager.unregister(combo.getId());
+                                            Ext.tip.QuickTipManager.register({
+                                                target: combo.getId(),
+                                                text: comentario
+                                            });
+                                        }
+                                    }
+                                },
+                                {
                                     xtype: 'checkbox',
                                     fieldLabel: 'MSI',
                                     labelWidth: 40,

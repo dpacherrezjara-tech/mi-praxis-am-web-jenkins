@@ -61,7 +61,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.DetailGridContr
         this.view.getView().refresh();
     },
     onClickAccountingDetail: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        if (record.data.idflex.trim() === '') {
+        if (record.data.praxisid.trim() === '') {
             global.Msg({
                 msg: 'Empty ID'
             });

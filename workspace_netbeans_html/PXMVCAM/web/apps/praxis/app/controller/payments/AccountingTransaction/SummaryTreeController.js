@@ -58,17 +58,21 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeCont
             const fechan = Ext.getCmp(prototype.idTree + '-colFechaN');
             if (tdate === 'P') {
                 fechap.setText('Processing Date');
-                fechah.setText('ID FLEX');
-                fechah.dataIndex = 'idflex';
-                fechan.setText('PRAXIS ID');
-                fechan.dataIndex = 'praxisid';
+//                fechah.setText('ID FLEX');
+//                fechah.dataIndex = 'idflex';
+//                fechan.setText('PRAXIS ID');
+//                fechan.dataIndex = 'praxisid';
             } else {
                 fechap.setText('Sale Date');
-                fechah.setText('PRAXIS ID');
-                fechah.dataIndex = 'praxisid';
-                fechan.setText('ID FLEX');
-                fechan.dataIndex = 'idflex';
+//                fechah.setText('PRAXIS ID');
+//                fechah.dataIndex = 'praxisid';
+//                fechan.setText('ID FLEX');
+//                fechan.dataIndex = 'idflex';
             }
+            fechah.setText('ID FLEX');
+            fechah.dataIndex = 'idflex';
+            fechan.setText('PRAXIS ID');
+            fechan.dataIndex = 'praxisid';
             //Ext.getCmp(prototype.idTree + '-colFechaP').setText(tdate === 'P' ? 'Processing Date' : ' Date');
             //Ext.getCmp(prototype.idTree + '-colFechaH').setText(tdate === 'P' ? 'FLEX ID' : 'PRAXIS ID');
             me.view.setStore(storeTree);

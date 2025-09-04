@@ -192,7 +192,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                         },
                     ]
                 },
-                //</editor-fold>
+                //</editor-fold>zm
                 //<editor-fold defaultstate="collapsed" desc="Accounting Information">
                 {
                     title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Accounting Information</span>',
@@ -295,7 +295,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                 //</editor-fold>
                 //<editor-fold defaultstate="collapsed" desc="Sale Information">
                 {
-                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Sale Information</span>',
+                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Settlement Sale Information</span>',
                     id: prototype.idDE + '-fsSaleInfo',
                     items: [
                         {

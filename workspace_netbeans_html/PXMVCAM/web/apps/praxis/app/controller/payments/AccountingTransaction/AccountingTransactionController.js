@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
     afterRender: async function (obj, e) {
         const me = this;
         await me.fillFilters();
-        await me.onClickSearchBtn();
+//        await me.onClickSearchBtn();
     },
     fillFilters: async function () {
         const me = this;

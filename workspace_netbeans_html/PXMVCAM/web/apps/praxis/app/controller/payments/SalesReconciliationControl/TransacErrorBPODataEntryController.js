@@ -207,12 +207,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const salesAmt = Ext.getCmp(prototype.idDE + '-txtSVFOPS');
         if (trnx === 'RFND') {
             smerchid.setFieldLabel('Refund Merchant');
-            trnxInfo.setTitle('<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Refund Information</span>');
+            trnxInfo.setTitle('<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Settlement Refund Information</span>');
             saleDate.setFieldLabel('Refund Date');
             salesAmt.setFieldLabel('Refund Amount');
         } else {
             smerchid.setFieldLabel('Sale Merchant');
-            trnxInfo.setTitle('<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Sale Information</span>');
+            trnxInfo.setTitle('<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Settlement Sale Information</span>');
             saleDate.setFieldLabel('Sale Date');
             salesAmt.setFieldLabel('Sale Amount');
         }
