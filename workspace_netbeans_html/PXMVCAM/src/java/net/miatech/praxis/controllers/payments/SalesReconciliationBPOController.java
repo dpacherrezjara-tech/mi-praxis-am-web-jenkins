@@ -198,8 +198,8 @@ public class SalesReconciliationBPOController {
             return new ResponseEntity<>(filter, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "processTransactionsBatch", method = RequestMethod.POST)
