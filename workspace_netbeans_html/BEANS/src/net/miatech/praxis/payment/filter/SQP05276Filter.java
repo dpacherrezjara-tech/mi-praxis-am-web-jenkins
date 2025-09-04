@@ -21,6 +21,8 @@ public class SQP05276Filter {
     private List<A4451MP> ADMINS;
     private List<A4451MP> STVALS;
     private List<A4451MP> AUTOCOMMENTS;
+    private List<A4451MP> REGLAS;
+    
     
     public SQP05276Filter(String IN_STATUS) {
         this.IN_STATUS = IN_STATUS;
@@ -105,6 +107,14 @@ public class SQP05276Filter {
 
     public void setAUTOCOMMENTS(List<A4451MP> AUTOCOMMENTS) {
         this.AUTOCOMMENTS = AUTOCOMMENTS;
+    }
+    
+     public List<A4451MP> getREGLAS() {
+        return REGLAS;
+    }
+
+    public void setREGLAS(List<A4451MP> REGLAS) {
+        this.REGLAS = REGLAS;
     }
     
             

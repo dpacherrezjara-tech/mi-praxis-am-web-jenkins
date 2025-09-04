@@ -125,6 +125,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 }
             },
             {text: 'Void', dataIndex: 'fvoid', width: 45},
+            {text: 'Code<br>Rule', dataIndex: 'fregla', width: 45},
             {
                 text: 'Transaction',
                 defaults: {

@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.payments.EMDControlForm.Options', {
+Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Options', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-options',
     border: false,

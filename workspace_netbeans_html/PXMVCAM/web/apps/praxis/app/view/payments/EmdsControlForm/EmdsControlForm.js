@@ -1,18 +1,18 @@
 // <editor-fold defaultstate="collapsed" desc="prototype">
-prototype.id = 'EMDControlForm';
+prototype.id = 'EmdsControlForm';
 prototype.width = 1800;
 // </editor-fold>
 
-Ext.define('Ext.Praxis.view.payments.EMDControlForm.EMDControlForm', {
+Ext.define('Ext.Praxis.view.payments.EmdsControlForm.EmdsControlForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.EMDControlForm',
+    alias: 'widget.EmdsControlForm',
     requires: [
-        'Ext.Praxis.controller.payments.EMDControlForm.EMDControlFormController',
-        'Ext.Praxis.view.payments.EMDControlForm.Options',
-        'Ext.Praxis.view.payments.EMDControlForm.Filters',
-        'Ext.Praxis.view.payments.EMDControlForm.Grids.EMDControlFormGrid'
+        'Ext.Praxis.controller.payments.EmdsControl.EmdsControlController',
+        'Ext.Praxis.view.payments.EmdsControlForm.Options',
+        'Ext.Praxis.view.payments.EmdsControlForm.Filters',
+        'Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid'
     ],
-    controller: 'EMDControlFormController',
+    controller: 'EmdsControlController',
     layout: {
         type: 'fit'
     },

@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.payments.EMDControlForm.EMDControlFormGridController', {
+Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.EMDControlFormGridController',
+    alias: 'controller.EmdsControlGridController',
     afterRender: function (obj, e) {
         const me = this; //call controller
         const view = me.view; // call view design
