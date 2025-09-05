@@ -293,9 +293,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                     ]
                 },
                 //</editor-fold>
-                //<editor-fold defaultstate="collapsed" desc="Sale Information">
+                //<editor-fold defaultstate="collapsed" desc="Settlement Information">
                 {
-                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Settlement Sale Information</span>',
+                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Settlement Information</span>',
                     id: prototype.idDE + '-fsSaleInfo',
                     items: [
                         {
@@ -451,7 +451,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 '8': 'TKT+PNR+FE+I+T',
                                                 '9': 'TKT+PNR+FE+ID+T+A',
                                                 'A': 'PNR+FE+I+T',
-                                                'B': 'PNR+FE+ID+T+A'
+                                                'B': 'PNR+FE+ID+T+A',
+                                                'C': 'TKT+FE+I+T',
+                                                'D': 'FE+I+T',
+                                                'E': 'FE+I+PNR'
 //                                                '1': 'Ticket',
 //                                                '2': 'PNR',
 //                                                '3': 'C.Card',

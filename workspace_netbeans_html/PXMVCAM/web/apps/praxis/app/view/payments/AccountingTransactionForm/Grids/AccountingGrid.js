@@ -192,11 +192,17 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     }
                 ]
             },
-            {text: 'Concept', dataIndex: 'a4183titu', flex: 1,
-                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = "text-align:left;";
-                    return value;
-                }
+            {
+                text: 'Concept', flex: 1,
+                defaults: {
+                    menuDisabled: true,
+                    sortable: false,
+                    align: 'center'
+                },
+                columns: [
+                    {text: 'Code', dataIndex: 'a4183orig', width: 60 },
+                    {text: 'Description', dataIndex: 'a4183titu', flex: 1 } 
+                ]
             },
             {text: 'Client', dataIndex: 'a4183cope', width: 70,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {

@@ -12,6 +12,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
     layout: 'fit',
     modal: true,
     border: false,
+    dataFilters: [],
     defaults: {
         border: false
     },
@@ -41,8 +42,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                     labelWidth: 70,
                     width: 250,
                     margin: '5 5 5 5',
-                    valueField: 'code',
-                    displayField: 'name',
+                    valueField: 'a4451key2',
+                    displayField: 'a4451desc1',
                     fieldLabel: 'Processor',
                     queryMode: 'local',
                     editable: false,
@@ -53,14 +54,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                     typeAhead: true,
                     enableKeyEvents: true,
                     triggerAction: 'all',
-                    value: 'AMEX',
-                    store: Ext.create('Ext.data.SimpleStore', {
-                        fields: ['code', 'name'],
-                        data: [
-                            ['GETMEX00', 'Getnet MX'],
-                            ['AMEX', 'American Express']
-                        ]
-                    })
+                    forceSelection: true,
+                    
+//                    value: 'AMEX',
+//                    store: Ext.create('Ext.data.SimpleStore', {
+//                        fields: ['code', 'name'],
+//                        data: [
+//                            ['GETMEX00', 'Getnet MX'],
+//                            ['AMEX', 'American Express']
+//                        ]
+//                    })
                 }
             ]
         }

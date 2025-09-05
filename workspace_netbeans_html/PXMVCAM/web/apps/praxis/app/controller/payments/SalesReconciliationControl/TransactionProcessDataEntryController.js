@@ -6,7 +6,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
     init: function (view) {
     },
     afterRender: function (obj, e) {
-
+        const me = this;
+        const data = me.view.dataFilters ;
+        const procesadores = data.procesadores;
+        
+        // combo
+        const cmbProcessProctype = Ext.getCmp(prototype.id + '-processProctype');
+        // set combo
+        global.setComboStoreWithoutAll(cmbProcessProctype, procesadores, 'a4451key2', 'a4451desc1', '');
+        
     },
     onProcessClick: function (btn) {
         const me = this;
@@ -30,7 +38,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
                     }
                 });
     },
-    processDate: function (date, proctype) {
+    processDate: async function (date, proctype) {
         const me = this;
         me.view.setLoading(true);
         let params = {
@@ -40,8 +48,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
         };
         console.log(params);
         try {
-            global.callStorePostAsync('PRAXISMP','SQP05074',params);
-            new AWN().success('Process Running');
+//            res = global.callStorePostAsync('PRAXISMP','SQP05074',params);
+            const res = await global.callStorePost('PRAXISMP','SQP05074',params);
+            
+            const {lstVals, lstRs} = res.data;
+            console.log(lstVals);
+            if (lstVals.VP_CANT > 0) {
+                new AWN().success('Process Succefully, ' + lstVals.VP_CANT );
+            }
+            else {
+                new AWN().warning('Nothing Data');
+            }
+//            new AWN().success('Process Running' );
+            
             me.view.setLoading(false);
             this.view.close();
         } catch (e) {
