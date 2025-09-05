@@ -9,6 +9,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         prototype.width = 1850;
         prototype.height = 630;
     },
+    dataFilters:[],
     afterRender: async function (obj, e) {
         const me = this;
         await me.fillFilters();
@@ -21,6 +22,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         if (res.ok) {
             const data = await res.json();
             console.log('Filtros: ', data);
+            me.dataFilters = data ;
             const procesadores = data.procesadores;
             const monedas = data.monedas.map(x => ({code: x.a006PAIS, name: `${x.a006PAIS}`}));
             const errores = data.cerror.map(x => ({name: `${x.a4451key3.trim()} - ${x.a4451desc1}`, code: x.a4451key3}));
@@ -43,7 +45,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const cmbProctypeSettl2 = Ext.getCmp(prototype.id + '-cmbProctypeSettl2');
             me.setComboStore({cmp: cmbProctypeSettl2, data: procesadores,
                 valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
-
 
 
             const cmbPaisesSettl2 = Ext.getCmp(prototype.id + '-cmbPaisesSettl2');
@@ -132,6 +133,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.showAddTicketBtn(me.users);
 
         }
+        
+        // Catalogs in session Storage
+        
+        // End Catalogs
+        
         filterPanel.unmask();
     },
     //<editor-fold defaultstate="collapsed" desc="Option Buttons">
@@ -429,7 +435,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     },
     onClickProcessBtn: function () {
         const processWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransactionProcessDataEntry', {
-            id: prototype.id + '-TransactionProcessDataEntry-1'
+            id: prototype.id + '-TransactionProcessDataEntry-1',
+            dataFilters: this.dataFilters
         });
         processWin.show();
     },

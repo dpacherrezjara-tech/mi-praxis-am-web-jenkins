@@ -352,32 +352,44 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 }
             },
             {
-                text: 'Rule', dataIndex: 'FREGLA', width: 85,
-                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    metaData.style = "text-align:center;";
-                    const opts = {
-//                        '1': 'Ticket',
-//                        '2': 'PNR',
-//                        '3': 'C.Card',
-//                        '4': 'Desg. Manual',
-//                        '5': 'Desg. Transac.'
-                        '0': 'TKT+PNR+IATA+FE+I+T+A',
-                        '1': 'TKT+IATA+FE+I+T+A',
-                        '2': 'TKT+PNR+FE+I+T+A',
-                        '3': 'TKT+FE+I+T+A',
-                        '4': 'PNR+IATA+FE+I+T+A',
-                        '5': 'IATA+FE+I+T+A',
-                        '6': 'PNR+FE+I+T+A',
-                        '7': 'FE+I+T+A',
-                        '8': 'TKT+PNR+FE+I+T',
-                        '9': 'TKT+PNR+FE+ID+T+A',
-                        'A': 'PNR+FE+I+T',
-                        'B': 'PNR+FE+ID+T+A',
-                        'C': 'TKT+FE+I+T',
-                        'D': 'FE+I+T',
-                    };
-                    return opts[value] || '';
-                }
+                text: 'Rule',
+                defaults: {
+                    menuDisabled: true,
+                    sortable: false,
+                    align: 'center'
+                },
+                columns: [
+                    { text: 'Code', dataIndex: 'FREGLA', width: 60 },
+                    {
+                        text: 'Description', dataIndex: 'FREGLA', width: 110,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:center;";
+                            const opts = {
+        //                        '1': 'Ticket',
+        //                        '2': 'PNR',
+        //                        '3': 'C.Card',
+        //                        '4': 'Desg. Manual',
+        //                        '5': 'Desg. Transac.'
+                                '0': 'TKT+PNR+IATA+FE+I+T+A',
+                                '1': 'TKT+IATA+FE+I+T+A',
+                                '2': 'TKT+PNR+FE+I+T+A',
+                                '3': 'TKT+FE+I+T+A',
+                                '4': 'PNR+IATA+FE+I+T+A',
+                                '5': 'IATA+FE+I+T+A',
+                                '6': 'PNR+FE+I+T+A',
+                                '7': 'FE+I+T+A',
+                                '8': 'TKT+PNR+FE+I+T',
+                                '9': 'TKT+PNR+FE+ID+T+A',
+                                'A': 'PNR+FE+I+T',
+                                'B': 'PNR+FE+ID+T+A',
+                                'C': 'TKT+FE+I+T',
+                                'D': 'FE+I+T',
+                                'E': 'FE+I+PNR'
+                            };
+                            return opts[value] || '';
+                        }
+                    }
+                ]
             },
             {
                 text: 'Flag <br> Complement', dataIndex: 'FCOMPL', width: 100,

@@ -474,6 +474,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                                 'B': 'PNR+FE+ID+T+A',
                                                 'C': 'TKT+FE+I+T',
                                                 'D': 'FE+I+T',
+                                                'E': 'FE+I+PNR'
                                             };
                                             field.setRawValue(opts[newValue] || '');
                                         }

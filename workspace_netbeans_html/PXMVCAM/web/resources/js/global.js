@@ -1739,6 +1739,28 @@ var LarSyrExt = function () {
         cmp.setValue(value);
         cmp.resumeEvents();
     };
+    this.setComboStoreWithoutAll = function (cmp, data, valueField, displayField, value) {
+        //limpia record de data
+        data.forEach(obj => {
+            for (let attr in obj) {
+                if (typeof obj[attr] === 'string') {
+                    obj[attr] = obj[attr].trimEnd();
+                }
+            }
+        });
+        //crea Store
+        let store = new Ext.data.Store({
+            autoLoad: true,
+            data: data
+        });
+        //renderiza Combo
+        cmp.valueField = valueField;
+        cmp.displayField = displayField;
+        cmp.suspendEvents(false);
+        cmp.bindStore(store);
+        cmp.setValue(value);
+        cmp.resumeEvents();
+    };
     this.arrayAddUnique = function (newArray, array, keys) {
         let prev = array.length;
         let added = newArray.length;
