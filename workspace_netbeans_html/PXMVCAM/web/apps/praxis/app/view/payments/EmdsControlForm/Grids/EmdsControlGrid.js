@@ -24,9 +24,19 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid', {
             {
                 text: 'Ticket', dataIndex: 'TICKET', width: 110,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                    return record.get('CCIA') + record.get('FORMA') + record.get('SERIE');
+                    let ticket = record.get('CCIA') + record.get('FORMA') + record.get('SERIE') ;
+                    if (ticket.trim() === '') {
+                        metaData.style = "background-color:#FCF6DC;";
+                    } else {
+                        metaData.style = "background-color:#FCF6DC;font-weight:bold;color:#057ECB;text-decoration:underline;cursor:pointer";
+                    }
+                    return ticket ;
+                },
+                listeners: {
+                    click: 'onClickInfo'
                 }
-            }, {
+            },
+            {
                 text: 'Seq', dataIndex: 'SEQ', width: 50
             },
             {
@@ -62,7 +72,14 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid', {
                 text: 'Processing Date', dataIndex: 'SDATE', width: 120
             },
             {
-                text: 'Ref. Number', dataIndex: 'AREFNBR', width: 160
+                text: 'Ref. Number', dataIndex: 'AREFNBR', width: 160,
+                listeners: {
+                    click: 'onClickInfo'
+                },
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-decoration:underline;cursor:pointer;color:#057ECB";
+                    return value;
+                }
             },
             {
                 text: 'Trans. Amount', dataIndex: 'TGROSAMOUN', width: 120,
@@ -91,7 +108,9 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid', {
 //            {
 //                text: 'Error<br>Code', dataIndex: 'CERROR', flex: 1
 //            },
-
+            {
+                text: 'Status<br>Robot', dataIndex: 'STBOT', width: 80
+            },
             {
                 text: 'Status', dataIndex: 'STVAL', width: 150,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {

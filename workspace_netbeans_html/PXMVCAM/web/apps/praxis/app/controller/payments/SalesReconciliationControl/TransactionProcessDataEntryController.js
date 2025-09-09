@@ -53,18 +53,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
             
             const {lstVals, lstRs} = res.data;
             console.log(lstVals);
-            if (lstVals.VP_CANT > 0) {
-                new AWN().success('Process Succefully, ' + lstVals.VP_CANT );
-            }
-            else {
-                new AWN().warning('Nothing Data');
-            }
+//            if (lstVals.VP_CANT > 0) {
+//                new AWN().success('Process Succefully, ' + lstVals.VP_CANT );
+//            }
+//            else {
+//                new AWN().warning('Nothing Data');
+//            }
 //            new AWN().success('Process Running' );
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: `Process successfully completed.<br/>Total records: <b>${lstVals.VP_CANT}</b>`,
+                buttons: Ext.Msg.OK,
+                icon: Ext.Msg.INFO
+            });
             
-            me.view.setLoading(false);
-            this.view.close();
         } catch (e) {
-            
+            Ext.Msg.show({
+                title: 'Error',
+                msg: 'An unexpected error occurred while processing.',
+                buttons: Ext.Msg.OK,
+                icon: Ext.Msg.ERROR
+            });
+        }
+        finally {
+            me.view.setLoading(false);
         }
 
         

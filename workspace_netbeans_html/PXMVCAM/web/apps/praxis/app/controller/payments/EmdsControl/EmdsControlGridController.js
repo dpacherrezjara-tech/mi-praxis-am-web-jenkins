@@ -42,7 +42,19 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController
         await global.writeExcelFromJson(data, 'SettlBalances Information'); // formatea la data para usarlo en la función de descarga
         view.setLoading(false);
     },
-
+    onClickInfo: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {  
+        const me = this;
+        const obj = record.data;
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry', {
+            id: prototype.id + '-TransacErrorBPODataEntry-1',
+            obj: obj,
+//            callback: () => {
+//                grid.getStore().load();
+//            }
+        });
+        dataEntry.show();
+        
+    }
    
 });
 

@@ -121,7 +121,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.M
                         width: 220,
                         name: 'IN_AREFNBR',
                         itemId: 'IN_AREFNBR',
-                        maxLength: 19,
+                        maxLength: 25,
                         maskRe: /[0-9]/,
                         enforceMaxLength: true,
                         listeners: {
