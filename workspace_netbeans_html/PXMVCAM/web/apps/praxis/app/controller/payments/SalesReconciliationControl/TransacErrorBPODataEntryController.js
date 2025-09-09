@@ -1388,23 +1388,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             Ext.Msg.alert('Warning', 'You must select an option to proceed.');
             return;
         }
-        const dataS = me.dataDesglose.find(item => item.exists_BALANCE === '1');
+        const dataS = me.dataDesglose.find(item => item.EXISTS_BALANCE === 1); 
 
         try {
 
 
             const params = {
-                IN_CCUST: dataS.ccust,
-                IN_CCIA: dataS.ccia,
-                IN_FORMA: dataS.forma,
-                IN_SERIE: dataS.serie,
-                IN_SEQ: dataS.seq,
-                IN_CORRL: dataS.corrl,
-                IN_TDOCVTA: dataS.tdoc,
-                IN_SEQROLL: dataS.corrl,
-                IN_TDOC: dataS.tdoc,
-                IN_PRDA: dataS.prda,
-                IN_AREFNBR: dataS.arefnbr,
+                IN_CCUST: dataS.CCUST,
+                IN_CCIA: dataS.CCIA,
+                IN_FORMA: dataS.FORMA,
+                IN_SERIE: dataS.SERIE,
+                IN_SEQ: dataS.SEQ,
+                IN_CORRL: dataS.CORRL,
+                IN_TDOCVTA: dataS.TDOC,
+                IN_SEQROLL: dataS.CORRL,
+                IN_TDOC: dataS.TDOC,
+                IN_PRDA: dataS.PRDA,
+                IN_AREFNBR: dataS.AREFNBR,
                 IN_STPROCEDE: selectedStatus
             };
 //            console.log('paraam', params)
