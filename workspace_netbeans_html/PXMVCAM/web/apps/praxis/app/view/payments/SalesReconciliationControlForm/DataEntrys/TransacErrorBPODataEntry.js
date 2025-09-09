@@ -1477,7 +1477,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         }
                                                     },
                                                     {
-                                                        text: 'Src', dataIndex: 'fuente', width: 45,
+                                                        text: 'Src', dataIndex: 'FUENTE', width: 45,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             const opts = {
                                                                 'S': 'ASR',
@@ -1489,7 +1489,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         }
                                                     },
                                                     {
-                                                        text: 'Doc.<br>Type', dataIndex: 'trncu', width: 60
+                                                        text: 'Doc.<br>Type', dataIndex: 'TRNCU', width: 60
                                                     },
                                                     {
                                                         text: 'Credit Card',
@@ -1500,49 +1500,49 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Cod', dataIndex: 'scarcod', width: 45
+                                                                text: 'Cod', dataIndex: 'SCARCOD', width: 45
                                                             },
                                                             {
-                                                                text: 'Number', dataIndex: 'scardn', width: 130
+                                                                text: 'Number', dataIndex: 'SCARDN', width: 130
                                                             },
                                                             {
-                                                                text: 'Auth', dataIndex: 'sauthoc', width: 55
+                                                                text: 'Auth', dataIndex: 'SAUTHOC', width: 55
                                                             },
                                                         ]
                                                     },
                                                     {
-                                                        text: 'Curr', dataIndex: 'scurrency', width: 50
+                                                        text: 'Curr', dataIndex: 'SCURRENCY', width: 50
                                                     },
                                                     {
-                                                        text: 'Amount', dataIndex: 'svfops', width: 100,
+                                                        text: 'Amount', dataIndex: 'SVFOPS', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
                                                             return Ext.util.Format.number(value, '0,000.00');
                                                         }
                                                     },
                                                     {
-                                                        text: 'Sales<br>Date', dataIndex: 'sdate', width: 80
+                                                        text: 'Sales<br>Date', dataIndex: 'SDATE', width: 80
                                                     },
                                                     {
-                                                        text: 'PNR', dataIndex: 'spnr', width: 70
+                                                        text: 'PNR', dataIndex: 'SPNR', width: 70
                                                     },
                                                     {
                                                         text: 'Ticket', width: 120,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background-color:#FCF6DC;font-weight:bold;";
                                                             const obj = record.data;
-                                                            const ticket = obj.ccia + obj.forma + obj.serie;
+                                                            const ticket = obj.CCIA + obj.FORMA + obj.SERIE;
                                                             return ticket;
                                                         }
                                                     },
                                                     {
-                                                        text: 'Corrl', width: 45, dataIndex: 'corrl'
+                                                        text: 'Corrl', width: 45, dataIndex: 'CORRL'
                                                     },
                                                     {
-                                                        text: 'Void', width: 40, dataIndex: 'fvoid'
+                                                        text: 'Void', width: 40, dataIndex: 'FVOID'
                                                     },
                                                     {
-                                                        text: 'Agent', dataIndex: 'sagent', width: 80
+                                                        text: 'Agent', dataIndex: 'SAGENT', width: 80
                                                     }
                                                 ]
                                             },
@@ -1717,6 +1717,89 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 ]
                                             }
                                         }
+                                    ]
+                                },
+                                //</editor-fold>
+                                //<editor-fold defaultstate="collapsed" desc="Settlement Tab">
+                                {
+                                    title: 'Settlement',
+                                    itemId: 'T',
+                                    id: prototype.idDE + '-tabRelationSettlement',
+//                                    hidden: true,
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            border: false,
+                                            id: prototype.idDE + '-gridRelationSettlement',
+                                            maxHeight: 165,
+                                            emptyText: 'No relations settlements',
+                                            columns: {
+                                                defaults: {
+                                                    align: 'center',
+                                                    menuDisabled: true,
+                                                    sortable: true
+                                                },
+                                                items: [
+                                                    { text: 'RN', xtype: 'rownumberer', dataIndex: 'POSITION', width: 40 },
+                                                    { text: 'Ref. Number', width: 150, dataIndex: 'AREFNBR',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#FCF6DC;font-weight:bold;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    { text: 'Processing<br>Date', width: 80, dataIndex: 'PRDA' },
+                                                    { text: 'Doc.<br>Type', width: 50, dataIndex: 'TDOC' },
+                                                    {
+                                                        text: 'Credit Card',
+                                                        defaults: {
+                                                            align: 'center',
+                                                            menuDisabled: true,
+                                                            sortable: true
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Cod.', dataIndex: 'SCARCOD', width: 50
+                                                            },
+                                                            {
+                                                                text: 'Number', dataIndex: 'SCARDN', width: 120
+                                                            },
+                                                            {
+                                                                text: 'Auth', dataIndex: 'SAUTHOC', width: 60
+                                                            }
+                                                        ]
+                                                    },
+                                                    { text: 'Currency', width: 70, dataIndex: 'MONEDA' },
+                                                    {
+                                                        text: 'Transaction<br>Amount', dataIndex: 'TGROSAMOUN', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    { text: 'PNR', dataIndex: 'SPNR', width: 70 },
+                                                    { text: 'Status', dataIndex: 'STVAL_DESC', width: 130 },
+                                                    {
+                                                        text: 'Error<br>Description', dataIndex: 'DES_CERROR', flex: 1,
+                                                        renderer: function (value, metaData) {
+                                                            if (value) {
+                                                                metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
+                                                            }
+                                                            return value;
+                                                        }
+                                                    },
+                                                    { text: 'Sel.', dataIndex: 'IS_SELECT', width: 40,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if (value === 1 ) {
+                                                                metaData.tdAttr = 'data-qtip="Selected"';
+                                                                return '<img src="resources/img/botones/back.png"/>';
+                                                            }
+                                                            return null;
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                        
                                     ]
                                 }
                                 //</editor-fold>

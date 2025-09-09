@@ -53,6 +53,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const blocked = Ext.getCmp(prototype.idDE + '-tabBlocked');
         const desglose = Ext.getCmp(prototype.idDE + '-tabDesglose');
         const scanner = Ext.getCmp(prototype.idDE + '-scannerInputs');
+        const relationSettlement = Ext.getCmp(prototype.idDE + '-tabRelationSettlement');
+        
         let adj = me.bean.codadju.trim() === '' ? false : true;
         const adjucoment = Ext.getCmp(prototype.idDE + '-bpoComments2');
         const commentTransaction = Ext.getCmp(prototype.idDE + '-CommentTransaction');
@@ -78,10 +80,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 
         //transacciones match
         if (match.includes(status)) {
-
+            
             bpo.setDisabled(true);
             blocked.setDisabled(true);
             desglose.setDisabled(false);
+            relationSettlement.setDisabled(false);
             scanner.hide();
             me.showStandBy(false);
             if (userName.slice(0, 3) === 'SAP') {
@@ -110,6 +113,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             bpo.setDisabled(false);
             blocked.setDisabled(false);
             desglose.setDisabled(true);
+            relationSettlement.setDisabled(true);
             scanner.hide();
             me.showStandBy(true);
             btnReverse.hide();
@@ -122,6 +126,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             bpo.setDisabled(false);
             blocked.setDisabled(false);
             desglose.setDisabled(true);
+            relationSettlement.setDisabled(true);
             scanner.show();
             me.showStandBy(false);
             btnReverse.hide();
@@ -977,6 +982,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         panelScan.mask('Scanning...');
         const gridDesglose = Ext.getCmp(prototype.idDE + '-gridDesglose');
         const gridDesgloseCHBK = Ext.getCmp(prototype.idDE + '-gridDesgloseCHBK');
+        const gridRelationSettlement = Ext.getCmp(prototype.idDE + '-gridRelationSettlement');
+//        const relationSettlement = Ext.getCmp(prototype.idDE + '-tabRelationSettlement');
+        
+        
         if (me.bean.transtype === 'CHBK') {
             gridDesglose.hide();
             gridDesgloseCHBK.show();
@@ -997,18 +1006,41 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         } else {
             gridDesglose.show();
             gridDesgloseCHBK.hide();
-            const res = await fetch(`${me.url}/loadErrorTransactionBPODesglose?${new URLSearchParams(params)}`);
-            if (res.ok) {
-                const data = await res.json();
-                me.dataDesglose = data.response;
+//            const res = await fetch(`${me.url}/loadErrorTransactionBPODesglose?${new URLSearchParams(params)}`);
+//            if (res.ok) {
+//                const data = await res.json();
+//                me.dataDesglose = data.response;
+//                const storeDesglose = Ext.create('Ext.data.Store', {
+//                    data: data.response
+//                });
+//                gridDesglose.setStore(storeDesglose);
+//                const qty = Ext.getCmp(prototype.idDE + '-totDTickets');
+//                const amt = Ext.getCmp(prototype.idDE + '-totDAmount');
+//                qty.setValue(data.response.length);
+//                amt.setValue(Ext.util.Format.number(storeDesglose.sum('svfops'), '0,000.00'));
+//            }
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05055', params);
+            if (res.lstRs.length > 0) {
+                me.dataDesglose = res.lstRs.at(0);
+                me.dataRelationSettlement = res.lstRs.at(1);
+//                const storeDesglose = Ext.data.Store({
+//                    data: res.lstRs.at(0)
+//                });
                 const storeDesglose = Ext.create('Ext.data.Store', {
-                    data: data.response
+                    data: res.lstRs.at(0)
                 });
                 gridDesglose.setStore(storeDesglose);
+                
+                const storeRelationSettlement = Ext.create('Ext.data.Store', {
+                    data: res.lstRs.at(1)
+                });
+                gridRelationSettlement.setStore(storeRelationSettlement);
+                
                 const qty = Ext.getCmp(prototype.idDE + '-totDTickets');
                 const amt = Ext.getCmp(prototype.idDE + '-totDAmount');
-                qty.setValue(data.response.length);
-                amt.setValue(Ext.util.Format.number(storeDesglose.sum('svfops'), '0,000.00'));
+                qty.setValue(me.dataDesglose.length);
+                amt.setValue(Ext.util.Format.number(storeDesglose.sum('SVFOPS'), '0,000.00'));
+                
             }
         }
         panelScan.unmask();
