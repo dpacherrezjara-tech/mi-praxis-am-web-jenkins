@@ -39,12 +39,8 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.ADJAccountingController', 
         Ext.getCmp(prototype.idadj + '-pagginator-01').setStore(store01);
     },
     onPagingBeforeChange01: function (obj, page, opts) {
-        var store = obj.getStore();
-        var totRow = store.getCount() !== 0 ? store.totalCount : 0;
-        obj.store.proxy.extraParams = {
-            beanString: JSON.stringify(this.bean),
-            totRow: totRow
-        };
+        var me = this;
+        obj.store.proxy.extraParams = me.bean;
     },
     onCmbSearchAfterRender: function (obj) {
         obj.setValue('');
@@ -289,12 +285,12 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.ADJAccountingController', 
                     return;
                 }
                 /*if (Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()) !== '' &&
-                        Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()) !== '') {
-                    if (global.validate_fechaMayorQue(Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()), Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()))) {
-                        Ext.Msg.alert('.: PRAXIS :.', 'the starting date must be less than the end date');
-                        return;
-                    }
-                }*/
+                 Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()) !== '') {
+                 if (global.validate_fechaMayorQue(Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()), Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()))) {
+                 Ext.Msg.alert('.: PRAXIS :.', 'the starting date must be less than the end date');
+                 return;
+                 }
+                 }*/
             }
         }
 
