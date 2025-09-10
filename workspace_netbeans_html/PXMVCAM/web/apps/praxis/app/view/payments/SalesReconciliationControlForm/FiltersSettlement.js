@@ -610,8 +610,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                                         },
                                         {
                                             xtype: 'textfield',
-                                            fieldLabel: 'Reference',
-                                            labelWidth: 70,
+                                            fieldLabel: 'Ref. Number',
+                                            labelWidth: 90,
                                             width: 220,
                                             name: 'IN_AREFNBR',
                                             maxLength: 23, // Límite máximo de caracteres

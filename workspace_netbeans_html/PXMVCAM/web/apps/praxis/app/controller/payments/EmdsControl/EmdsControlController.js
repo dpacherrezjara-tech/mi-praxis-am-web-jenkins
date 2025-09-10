@@ -20,7 +20,6 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlController', {
 
         mainPanel.add(newGrid);
 
-
     },
 
     onClickFilterBtn: function (obj) {
@@ -33,6 +32,11 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlController', {
     },
     onClickClearBtn: function (obj) {
         Ext.getCmp(prototype.id + '-panelFilters').getForm().reset();
+    },
+    onEnterKeyPress: function (field, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onSearchClickBtn();
+        }
     }
 
 });

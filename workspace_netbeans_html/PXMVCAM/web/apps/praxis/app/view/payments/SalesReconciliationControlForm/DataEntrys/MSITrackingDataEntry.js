@@ -1,4 +1,6 @@
 prototype.idMSI = prototype.id + '-MSITrackingDataEntry';
+fechaActual = new Date(),mesActual = fechaActual.getMonth(),anioActual = fechaActual.getFullYear();
+
 Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.MSITrackingDataEntry',

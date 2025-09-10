@@ -116,29 +116,6 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Filters', {
                                         specialkey: 'onEnterKeyPress'
                                     }
                                 },
-                                
-//                                {
-//                                    xtype: 'combobox',
-//                                    fieldLabel: 'Status',
-//                                    name: 'IN_STATUS',
-//                                    store: Ext.create('Ext.data.SimpleStore', {
-//                                        fields: ['code', 'name'],
-//                                        data: [
-//                                            ['', 'All'],
-//                                            ['4', 'Match Partial'],
-//                                            ['M', 'Multi-Payment'],
-//                                            ['C', 'Complement'],
-//                                            ['D', 'Duplicated']
-//                                        ]
-//                                    }),
-//                                    labelWidth: 50,
-//                                    width: 180,
-//                                    displayField: 'name',
-//                                    valueField: 'code',
-//                                    queryMode: 'local',
-//                                    editable: false,
-//                                    value: ''
-//                                },
                                 {
                                     xtype: 'textfield',
                                     fieldLabel: 'PNR Sale',
@@ -147,7 +124,10 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Filters', {
                                     name: 'IN_PNR_VENTA',
                                     maxLength: 6, // Límite máximo de caracteres
                                     maskRe: /[0-9]/, // Expresión regular para permitir solo números
-                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
                                 },
                                 {
                                     xtype: 'textfield',
@@ -157,17 +137,23 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Filters', {
                                     name: 'IN_PNR_LIQUIDACION',
                                     maxLength: 6, // Límite máximo de caracteres
                                     maskRe: /[0-9]/, // Expresión regular para permitir solo números
-                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
                                 },
-                                 {
+                                {
                                     xtype: 'textfield',
-                                    fieldLabel: 'Reference',
+                                    fieldLabel: 'Ref. Number',
                                     labelWidth: 80,
-                                    width: 190,
+                                    width: 250,
                                     name: 'IN_REFER',
-                                    maxLength: 19, // Límite máximo de caracteres
+                                    maxLength: 25, // Límite máximo de caracteres
                                     maskRe: /[0-9]/, // Expresión regular para permitir solo números
-                                    enforceMaxLength: true // Aplicar la longitud máxima de caracteres
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
                                 },
                                 
                             ]

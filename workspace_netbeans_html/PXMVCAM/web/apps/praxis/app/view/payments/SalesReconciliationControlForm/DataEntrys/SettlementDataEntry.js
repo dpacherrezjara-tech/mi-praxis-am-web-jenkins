@@ -266,6 +266,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Trans. Amount',
                                     name: 'f_TGROSAMOUN',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230,
                                     listeners: {
@@ -278,12 +279,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Currency',
                                     name: 'scurrency',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230
                                 },
                                 {
                                     fieldLabel: 'Concil. Amount',
                                     name: 'svfops',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230,
                                     listeners: {
@@ -299,6 +302,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'MSI Rate',
                                     name: 'sfeerate',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230,
                                     listeners: {
@@ -310,12 +314,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'MSI Fee',
                                     name: 'servicefee',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230
                                 },
                                 {
                                     fieldLabel: 'Comm. Rate',
                                     name: 'discrate',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230,
                                     listeners: {
@@ -327,6 +333,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Comm. Amount',
                                     name: 'discamoun',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230
                                 }
@@ -338,6 +345,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'VAT Rate',
                                     name: 'discratei',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230,
                                     listeners: {
@@ -349,18 +357,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Comm. VAT',
                                     name: 'discamouni',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230
                                 },
                                 {
                                     fieldLabel: 'MSI VAT',
                                     name: 'overcom12',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230
                                 },
                                 {
                                     fieldLabel: 'TAX',
                                     name: 'f_TAX',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230
                                 }
@@ -375,6 +386,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Payment Amount',
                                     name: 'f_TGROSAMPAY',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230,
                                     listeners: {
@@ -386,18 +398,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'P. Currency',
                                     name: 'pcurrency',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230
                                 },
                                 {
                                     fieldLabel: 'Exch. Rate',
                                     name: 'exchrate',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230
                                 },
                                 {
                                     fieldLabel: 'NET Amount',
                                     name: 'netopay',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     fieldStyle: 'background-color:#8AE884;font-weight:bold;text-align:center;',
                                     width: 230,
@@ -422,6 +437,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Status',
                                     name: 'stval',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 230,
                                     listeners: {
@@ -450,6 +466,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Rule',
                                     name: 'fregla',
+                                    readOnly: true,
                                     labelWidth: 50,
                                     width: 160,
                                     listeners: {
@@ -483,6 +500,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Flag Compl.',
                                     name: 'fcompl',
+                                    readOnly: true,
                                     labelWidth: 90,
                                     width: 190,
                                     listeners: {
@@ -501,12 +519,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.S
                                 {
                                     fieldLabel: 'Adjustment',
                                     name: 'codadju',
+                                    readOnly: true,
                                     labelWidth: 80,
                                     width: 120
                                 },
                                 {
                                     fieldLabel: 'Description',
                                     name: 'desc_ADJU',
+                                    readOnly: true,
                                     labelWidth: 85,
                                     width: 200
                                 }
