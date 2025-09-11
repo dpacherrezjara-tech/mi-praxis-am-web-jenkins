@@ -1041,6 +1041,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 qty.setValue(me.dataDesglose.length);
                 amt.setValue(Ext.util.Format.number(storeDesglose.sum('SVFOPS'), '0,000.00'));
                 
+                // validar si existe diferencia guardado como saldo
+                const existsBalance = me.dataDesglose.some(item => item.EXISTS_BALANCE === 1);
+                gridDesglose.down('gridcolumn[dataIndex=EXISTS_BALANCE]').setVisible(existsBalance);
+                
             }
         }
         panelScan.unmask();

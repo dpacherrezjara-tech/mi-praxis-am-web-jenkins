@@ -31,13 +31,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
     onClickMerchant: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
         const obj = record.data;
-        console.log(me.formatMerchantParams(obj));
+        const params = me.formatMerchantParams(obj);
+        console.log("params",params);
+        
         const mainPanel = Ext.getCmp(prototype.id + '-mainContentSettl');
         const drillDown = mainPanel.items.items;
         drillDown.at(-1).hide();
+        
         const panelDet = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SettlementDetailGrid', {
             id: prototype.id + '-SettlementDetailGrid-1',
-            searchParams: me.formatMerchantParams(obj),
+            searchParams: params,
             url: me.view.url,
             backButton: true
         });

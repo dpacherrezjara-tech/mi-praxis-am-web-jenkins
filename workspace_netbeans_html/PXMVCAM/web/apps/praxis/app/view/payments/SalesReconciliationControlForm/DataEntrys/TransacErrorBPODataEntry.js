@@ -1552,14 +1552,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                             return ticket;
                                                         }
                                                     },
-                                                    {
-                                                        text: 'Corrl', width: 45, dataIndex: 'CORRL'
-                                                    },
-                                                    {
-                                                        text: 'Void', width: 40, dataIndex: 'FVOID'
-                                                    },
-                                                    {
-                                                        text: 'Agent', dataIndex: 'SAGENT', width: 80
+                                                    { text: 'Corrl', width: 45, dataIndex: 'CORRL' },
+                                                    { text: 'Void', width: 40, dataIndex: 'FVOID' },
+                                                    { text: 'Agent', dataIndex: 'SAGENT', width: 80 },
+                                                    
+                                                    { text: 'Current<br>Balance', dataIndex: 'EXISTS_BALANCE', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if (value === 1 ) {
+                                                                metaData.tdAttr = 'data-qtip="Selected"';
+                                                                return '<img src="resources/img/botones/back.png"/>';
+                                                            }
+                                                            return null;
+                                                        }
                                                     }
                                                 ]
                                             },
