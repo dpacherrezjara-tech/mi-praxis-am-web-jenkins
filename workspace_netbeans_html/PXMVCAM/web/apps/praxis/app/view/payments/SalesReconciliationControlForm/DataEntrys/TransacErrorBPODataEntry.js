@@ -176,6 +176,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     name: 'fcompl',
                                     labelWidth: 120,
                                     width: 280,
+                                    readOnly: true,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -204,6 +205,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     name: 'stconl',
                                     labelWidth: 120,
                                     width: 280,
+                                    readOnly: true,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -265,6 +267,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     name: 'fselec',
                                     labelWidth: 120,
                                     width: 280,
+                                    readOnly: true,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -279,12 +282,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 {
                                     fieldLabel: 'Code',
                                     name: 'cerror',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 280
                                 },
                                 {
                                     fieldLabel: 'Description',
                                     name: 'desc_ERROR',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 360
                                 }
@@ -379,6 +384,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     name: 'stval',
                                     labelWidth: 120,
                                     width: 280,
+                                    readOnly: true,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -407,6 +413,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Currency',
                                     name: 'scurrency',
                                     labelWidth: 120,
+                                    readOnly: true,
                                     width: 280
                                 },
 
@@ -414,6 +421,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Qty Tkts',
                                     name: 'qtytkt',
                                     labelWidth: 120,
+                                    readOnly: true,
                                     width: 280
                                 },
                                 {
@@ -422,6 +430,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     labelWidth: 120,
                                     width: 280,
                                     fieldStyle: 'text-align:right;',
+                                    readOnly: true,
                                     listeners: {
                                         change: function (field, newValue) {
                                             field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
@@ -437,6 +446,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     name: 'fregla',
                                     labelWidth: 120,
                                     width: 280,
+                                    readOnly: true,
                                     listeners: {
                                         change: function (field, newValue) {
                                             const opts = {
@@ -470,12 +480,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 {
                                     fieldLabel: 'Doc. Type',
                                     name: 'transtype',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 280
                                 },
                                 {
                                     fieldLabel: 'Void',
                                     name: 'fvoid',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 280
                                 },
@@ -483,6 +495,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     fieldLabel: 'Sale Amount',
                                     name: 'svfops',
                                     id: prototype.idDE + '-txtSVFOPS',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 280,
                                     fieldStyle: 'text-align:right;',
@@ -499,24 +512,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 {
                                     fieldLabel: 'ADM',
                                     name: 'fadm',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 280
                                 },
                                 {
                                     fieldLabel: 'Reverse Policy',
                                     name: 'freversa',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 280
                                 },
                                 {
                                     fieldLabel: 'Reversa ADM',
                                     name: 'frevadm',
+                                    readOnly: true,
                                     labelWidth: 120,
                                     width: 280
                                 },
                                 {
                                     fieldLabel: 'Diff. Amount',
                                     name: 'difference',
+                                    readOnly: true,
                                     id: prototype.idDE + '-txtDifference',
                                     labelWidth: 120,
                                     fieldStyle: 'text-align:right;',

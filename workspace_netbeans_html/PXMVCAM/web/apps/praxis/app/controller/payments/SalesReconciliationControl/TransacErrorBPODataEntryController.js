@@ -1118,9 +1118,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     formatParameters: function (obj) {
         let params = {
             IN_CCUST: '139',
-            IN_PRDA: obj.prda,
-            IN_TDOC: obj.tdoc,
-            IN_AREFNBR: obj.arefnbr
+            IN_PRDA: obj.prda ?? obj.PRDA,
+            IN_TDOC: obj.tdoc ?? obj.TDOC,
+            IN_AREFNBR: obj.arefnbr ?? obj.AREFNBR
         };
         return params;
     },

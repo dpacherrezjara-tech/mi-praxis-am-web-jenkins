@@ -63,9 +63,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.setComboStore({cmp: cmbPaisesBT, data: data.paises,
                 valueField: 'code', displayField: 'name', value: ''});
 
-//            const cmbPaisesfBT = Ext.getCmp(prototype.id + '-cmbPaisesfBT');
-//            me.setComboStore({cmp: cmbPaisesfBT, data: data.paises,
-//                valueField: 'code', displayField: 'name', value: ''});
+            const cmbPaisesfBT = Ext.getCmp(prototype.id + '-cmbPaisesfBT');
+            me.setComboStore({cmp: cmbPaisesfBT, data: data.paises,
+                valueField: 'code', displayField: 'name', value: ''});
 
             const cmbPaisesSettl = Ext.getCmp(prototype.id + '-cmbPaisesSettl');
             me.setComboStore({cmp: cmbPaisesSettl, data: data.paises,
