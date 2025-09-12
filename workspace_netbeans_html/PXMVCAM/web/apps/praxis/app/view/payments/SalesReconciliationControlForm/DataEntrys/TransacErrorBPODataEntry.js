@@ -1564,7 +1564,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                             }
                                                             return null;
                                                         }
-                                                    }
+                                                    },
+                                                    {
+                                                        xtype: 'checkcolumn',
+                                                        itemId: 'colSelect',
+                                                        text: 'Select PNR',
+                                                        dataIndex: 'selected',
+                                                        width: 120,
+                                                        hidden: true,
+                                                        listeners: {
+                                                            checkchange: 'listenerSelectPNR' 
+                                                        },
+                                                                                                        }
                                                 ]
                                             },
                                             bbar: {
@@ -2189,112 +2200,32 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                     ]
                 },
                 //</editor-fold>
-                //<editor-fold defaultstate="collapsed" desc="Control Data">
+                //<editor-fold defaultstate="collapsed" desc="Control Data - Proccess">
                 {
-                    xtype: 'fieldset',
-                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:10px;">Control Data</span>',
+                    xtype: 'container',
                     layout: {
-                        type: 'vbox',
-                        pack: 'center'
+                        type: 'hbox',
+                        align: 'stretch'
                     },
-                    border: true,
-                    margin: '5 5 5 5',
                     width: '100%',
                     style: {
-                        backgroundColor: '#EEF3F9' // Cambiar el color de fondo a gris claro (#f0f0f0)
-                    },
-                    defaults: {
-                        xtype: 'panel',
-                        layout: {
-                            type: 'hbox',
-                            pack: 'center'
-                        },
-                        width: '100%',
-                        border: false,
-                        bodyStyle: 'background: transparent',
-                        defaults: {
-                            xtype: 'textfield',
-                            margin: '5 8 5 8',
-                            labelStyle: 'text-align:left;font-weight: bolder;',
-                            fieldStyle: 'text-align:center;',
-                            editable: false
-                        }
-                    },
-                    items: [
-                        {
-                            items: [
-                                {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'User Crt.',
-                                    name: 'uscr'
-                                },
-                                {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'Date Crt.',
-                                    name: 'fecr'
-                                },
-                                {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'Hour Crt.',
-                                    name: 'hocr'
-                                }
-                            ]
-                        },
-                        {
-                            items: [
-                                {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'User Upd.',
-                                    name: 'usup'
-                                },
-                                {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'Date Upd.',
-                                    name: 'feup'
-                                },
-                                {
-                                    labelWidth: 75,
-                                    width: 175,
-                                    fieldLabel: 'Hour Upd.',
-                                    name: 'houp'
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    width: '100%',
-                    layout: 'hbox',
-                    align: 'middle',
-                    margin: '10',
-                    border: false,
-                    defaults: {
-                        xtype: 'textfield',
-                        fieldStyle: 'text-align: center',
-                        padding: '10',
-                        hiddenLabel: true,
-                        labelAlign: 'right',
-                        hidden: true,
-                        align: 'middle'
+                        background: 'white' // sin color de fondo
                     },
                     items: [
                         {
                             xtype: 'fieldset',
-                            title: 'Proceed Option',
+                            flex: 1,
+                            title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:10px;">Proceed Option</span>',
                             id: prototype.idDE + '-proceedRadioGroup',
                             hidden: true,
+                            margin: '5 5 5 5',
                             layout: {
                                 type: 'hbox',
                                 align: 'middle'
                             },
+                            border: true,
                             style: {
-                                background: 'transparent'
+                                background: 'white' // sin color de fondo
                             },
                             items: [
                                 {
@@ -2303,24 +2234,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     columns: 2,
                                     margin: '0 10 0 0',
                                     items: [
-                                        {
-                                            boxLabel: 'Proceed',
-                                            name: 'proceedStatus',
-                                            inputValue: '1',
-                                            width: 100,
-                                        },
-                                        {
-                                            boxLabel: 'Reverse',
-                                            name: 'proceedStatus',
-                                            inputValue: '2',
-                                            width: 130,
-                                        }
+                                        {boxLabel: 'Proceed', name: 'proceedStatus', inputValue: '1', width: 100},
+                                        {boxLabel: 'Reverse', name: 'proceedStatus', inputValue: '2', width: 130}
                                     ],
                                     listeners: {
-                                        change: 'changeProcces',
-//                                       scope: this
+                                        change: 'changeProcces'
                                     }
-
                                 },
                                 {
                                     xtype: 'button',
@@ -2335,9 +2254,58 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                     }
                                 }
                             ]
+                        },
+                        {
+                            xtype: 'fieldset',
+                            flex: 2,
+                            title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:10px;">Control Data</span>',
+                            layout: {
+                                type: 'vbox',
+                                pack: 'center'
+                            },
+                            border: true,
+                            margin: '5 5 5 5',
+                            style: {
+                                backgroundColor: 'white' // este sí con color
+                            },
+                            defaults: {
+                                xtype: 'panel',
+                                layout: {
+                                    type: 'hbox',
+                                    pack: 'center'
+                                },
+                                width: '100%',
+                                border: false,
+                                bodyStyle: 'background: transparent',
+                                defaults: {
+                                    xtype: 'textfield',
+                                    margin: '5 8 5 8',
+                                    labelStyle: 'text-align:left;font-weight: bolder;',
+                                    fieldStyle: 'text-align:center;',
+                                    editable: false
+                                }
+                            },
+                            items: [
+                                {
+                                    items: [
+                                        {labelWidth: 75, width: 175, fieldLabel: 'User Crt.', name: 'uscr'},
+                                        {labelWidth: 75, width: 175, fieldLabel: 'Date Crt.', name: 'fecr'},
+                                        {labelWidth: 75, width: 175, fieldLabel: 'Hour Crt.', name: 'hocr'}
+                                    ]
+                                },
+                                {
+                                    items: [
+                                        {labelWidth: 75, width: 175, fieldLabel: 'User Upd.', name: 'usup'},
+                                        {labelWidth: 75, width: 175, fieldLabel: 'Date Upd.', name: 'feup'},
+                                        {labelWidth: 75, width: 175, fieldLabel: 'Hour Upd.', name: 'houp'}
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }
+                
+                
 
                 //</editor-fold>
             ]
