@@ -1033,12 +1033,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 gridDesglose.setStore(storeDesglose);
                 console.log('me.dataDesglose.response',me.dataDesglose);
                 
+                // ocultar select
+                let proceedVal = me.bean.stprocede === "1" ? true : false;
+                gridDesglose.down('gridcolumn[dataIndex=selected]').setVisible(!proceedVal);
+                
                 
 //                PNR MULTIPLE
                 const colSelect = gridDesglose.down('#colSelect');
                     if (colSelect) {
                         // obtenemos todos los valores únicos de spnr
                         let pnrSet = new Set(me.dataDesglose.map(r => r.SPNR));
+                        console.log('colset',pnrSet)
 
                         if (pnrSet.size > 1) {
                             // hay más de un PNR distinto → mostramos columna
@@ -1047,7 +1052,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                         } else {
                             // todos los PNR son iguales → ocultamos columna
                             me.requiresPNRSelection = false;
-                            colSelect.hide();
+                            gridDesglose.down('gridcolumn[dataIndex=selected]').setVisible(false);
     //                        data.response[0].selected = true;
                         }
                     }
@@ -1068,11 +1073,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 const existsBalance = me.dataDesglose.some(item => item.EXISTS_BALANCE === 1);
                 gridDesglose.down('gridcolumn[dataIndex=EXISTS_BALANCE]').setVisible(existsBalance);
                 
-                // ocultar select
-               
-                let proceedVal = me.bean.stprocede === "1" ? true : false;
-                
-                 gridDesglose.down('gridcolumn[dataIndex=selected]').setVisible(!proceedVal);
+            
                 
             }
         }
