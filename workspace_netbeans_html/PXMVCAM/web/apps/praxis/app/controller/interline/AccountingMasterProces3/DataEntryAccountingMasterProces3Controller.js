@@ -298,14 +298,37 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterProces3.DataEntryAcc
     },
     onLogsClick: function () {
         let date = this.p.rec.get('A1955FPROC');
+        let A1955MODUL = "";
+        switch(this.getValue('cbxModulo')){
+            case "PAPINT" : 
+                A1955MODUL= "PIXPLOG";
+                break;
+            case "PARINT" : 
+                A1955MODUL= "PIXCLOG";
+                break;
+            case 'PIXPEST': 
+                A1955MODUL= "PIXPESTLOG";
+                break;
+            case 'PIXCEST': 
+                A1955MODUL= "PIXPREVLOG";
+                break;
+            case 'PIXPREV': 
+                A1955MODUL= "PIXCESTLOG";
+                break;
+            case 'PIXCREV':
+                A1955MODUL= "PIXCREVLOG";
+                break;
+        }
         let params = {
             IN_FPROC: date,
-            IN_MODUL: "'PIXPLOG','PIXCLOG','PIXPESTLOG','PIXPREVLOG','PIXCESTLOG','PIXCREVLOG'"
+            IN_MODUL: A1955MODUL
         };
-        const newWin = Ext.create('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntryLogs', {
-            id: prototype.idDE + '-DataEntryLogs-1',
-            searchParams: params
-        });
-        newWin.show();
+        if(A1955MODUL!== ''){
+            const newWin = Ext.create('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntryLogs', {
+                id: prototype.idDE + '-DataEntryLogs-1',
+                searchParams: params
+            });
+            newWin.show();
+        }
     }
 });
