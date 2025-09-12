@@ -611,6 +611,14 @@ Ext.define('Ext.Praxis.view.interline.AccountingMasterProces3Form.DataEntry',{
                     }
                 },
                 {
+                    text: 'Logs',
+                    id: prototype.idDE + '-btn-log',
+                    iconCls: 'prx-icon-image-log',
+                    listeners: {
+                       click: 'onLogsClick'
+                    }
+                },
+                {
                     text: 'Cancel',
                     id:prototype.id+'-btn-cancel',
                     iconCls: 'prx-icon-cancel',
