@@ -295,5 +295,17 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterProces3.DataEntryAcc
             A1955KEY4: A1955KEY4,
             strOption: this.view.params.action
         };
+    },
+    onLogsClick: function () {
+        let date = this.p.rec.get('A1955FPROC');
+        let params = {
+            IN_FPROC: date,
+            IN_MODUL: "'PIXPLOG','PIXCLOG','PIXPESTLOG','PIXPREVLOG','PIXCESTLOG','PIXCREVLOG'"
+        };
+        const newWin = Ext.create('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntryLogs', {
+            id: prototype.idDE + '-DataEntryLogs-1',
+            searchParams: params
+        });
+        newWin.show();
     }
 });
