@@ -436,7 +436,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
         let date = this.p.rec.get('A1955FPROC');
         let params = {
             IN_FPROC: date,
-            IN_MODUL: "'PSALESLOG'"
+            IN_MODUL: 'PSALESLOG'
         };
         const newWin = Ext.create('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntryLogs', {
             id: prototype.idDE + '-DataEntryLogs-1',
