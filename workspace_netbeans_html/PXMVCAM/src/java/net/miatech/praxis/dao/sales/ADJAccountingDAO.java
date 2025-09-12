@@ -552,7 +552,7 @@ public class ADJAccountingDAO {
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
-                objRtn.page.TOTROW = filter.page.TOTROW;///
+                objRtn.page.TOTROW = filter.page.TOTROW;
 
                 lstRtn.add(objRtn);
             }

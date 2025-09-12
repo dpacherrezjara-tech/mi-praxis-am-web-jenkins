@@ -2642,7 +2642,7 @@ public class ProMasterTicketDAO {
                 + " ORDER BY"
                 + "   A720SEQ ASC";
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP02665(?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP02665_V1(?,?,?,?,?)}";
         //String SQLCLL01 = "{CALL SQP00249_1(?,?,?,?,?)}";
 
         //</editor-fold>
