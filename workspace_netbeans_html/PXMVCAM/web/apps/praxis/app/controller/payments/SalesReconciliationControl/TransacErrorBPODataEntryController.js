@@ -1019,6 +1019,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 //                qty.setValue(data.response.length);
 //                amt.setValue(Ext.util.Format.number(storeDesglose.sum('svfops'), '0,000.00'));
 //            }
+            console.log('res else',params);
             const res = await global.callStoreGet('PRAXISMP', 'SQP05055', params);
             if (res.lstRs.length > 0) {
                 me.dataDesglose = res.lstRs.at(0);
@@ -1030,6 +1031,33 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     data: res.lstRs.at(0)
                 });
                 gridDesglose.setStore(storeDesglose);
+                console.log('me.dataDesglose.response',me.dataDesglose);
+                
+                // ocultar select
+                let proceedVal = me.bean.stprocede === "1" ? true : false;
+                gridDesglose.down('gridcolumn[dataIndex=selected]').setVisible(!proceedVal);
+                
+                
+//                PNR MULTIPLE
+                const colSelect = gridDesglose.down('#colSelect');
+                    if (colSelect) {
+                        // obtenemos todos los valores únicos de spnr
+                        let pnrSet = new Set(me.dataDesglose.map(r => r.SPNR));
+                        console.log('colset',pnrSet)
+
+                        if (pnrSet.size > 1) {
+                            // hay más de un PNR distinto → mostramos columna
+                            colSelect.show();
+                            me.requiresPNRSelection = true;
+                        } else {
+                            // todos los PNR son iguales → ocultamos columna
+                            me.requiresPNRSelection = false;
+                            gridDesglose.down('gridcolumn[dataIndex=selected]').setVisible(false);
+    //                        data.response[0].selected = true;
+                        }
+                    }
+
+//
                 
                 const storeRelationSettlement = Ext.create('Ext.data.Store', {
                     data: res.lstRs.at(1)
@@ -1040,6 +1068,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 const amt = Ext.getCmp(prototype.idDE + '-totDAmount');
                 qty.setValue(me.dataDesglose.length);
                 amt.setValue(Ext.util.Format.number(storeDesglose.sum('SVFOPS'), '0,000.00'));
+                
+                // validar si existe diferencia guardado como saldo
+                const existsBalance = me.dataDesglose.some(item => item.EXISTS_BALANCE === 1);
+                gridDesglose.down('gridcolumn[dataIndex=EXISTS_BALANCE]').setVisible(existsBalance);
+                
+            
                 
             }
         }
@@ -1389,6 +1423,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             return;
         }
         const dataS = me.dataDesglose.find(item => item.EXISTS_BALANCE === 1); 
+        
+        const gridDesglose = Ext.getCmp(prototype.idDE + '-gridDesglose');
+        const store = gridDesglose.getStore();
+
+        
+        let select = false;
+        me.dataEnvio = null;
+        if (me.requiresPNRSelection) {
+            // varios PNR → debe elegir uno
+            const dataSele = store.findRecord('selected', true);
+            if (!dataSele) {
+//                console.log('no hay seleccionado');
+                me.view.setLoading(false);
+                Ext.Msg.alert('Warning', 'You must select a PNR to proceed.');
+                return;
+            } else {
+                select = true;
+                me.dataEnvio = dataSele.data;
+            }
+        } else {
+            me.dataEnvio = dataS;
+//            console.log('no necesita seleccion')
+        }
+        
 
         try {
 
@@ -1412,17 +1470,43 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 //            console.log('Params para guardar:', params);
             let res;
             if (selectedStatus === '1') {
-                const res = await global.callStorePost('PRAXISMP', 'SQP05650', params);
-                const {lstVals} = res.data;
-                global.Msg({msg: lstVals.OUT_MSG});
-                me.getData(me.view);
-                me.dataInfo.stprocede = selectedStatus;
+//                console.log('dataEnviar', me.dataEnvio);
+                
+                const recs = me.dataEnvio;
+                if(select){
+//                    console.log('entro al select',recs);
+                    
+                     const param = {
+                        IN_CCUST: recs.CCUST,
+                        IN_TDOC: recs.TDOC,
+                        IN_PRDA: recs.PRDA,
+                        IN_AREFNBR: recs.AREFNBR,
+                        IN_CCIA: recs.CCIA,
+                        IN_FORMA: recs.FORMA,
+                        IN_SERIE: recs.SERIE,
+                        IN_SEQ: recs.SEQ,
+                        IN_CORRL: recs.CORRL,
+                        IN_TDOCVTA:recs.TDOCVTA,
+                        IN_STPROCEDE: selectedStatus
+                    };
+//                    console.log('param',param);
+                    const res = await global.callStorePost('PRAXISMP','SQP05722',param);
+//                    console.log('select res',res);
+                    
+                    global.Msg({msg: res.data.lstVals.OUT_MSG});
+                    me.getData(me.view);
+                    
+                }else{
+                    const res = await global.callStorePost('PRAXISMP', 'SQP05650', params);
+                    const {lstVals} = res.data;
+                    global.Msg({msg: lstVals.OUT_MSG});
+                    me.getData(me.view);
+                    me.dataInfo.stprocede = selectedStatus;
+                }
+                
+                
             } else if (selectedStatus === '2') {
                 this.onReverseTransaction();
-//                const proceedPanel = Ext.getCmp(prototype.idDE + '-proceedRadioGroup');
-//                if (proceedPanel) {
-//                    proceedPanel.hide();
-//                }
             }
 
         } catch (e) {
@@ -1434,4 +1518,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 //            this.view.close();
         }
     },
+    
+    listenerSelectPNR: function (col, rowIndex, checked, record) {
+        const grid = col.up('grid');
+        const store = grid.getStore();
+
+        if (checked) {
+            // desmarcar todos
+//            console.log('checked')
+            store.each(r => r.set('selected', false));
+            // marcar solo el actual
+            record.set('selected', true);
+        } else {
+            console.log('checked NO')
+            record.set('selected', false);
+        }
+    }
 });
