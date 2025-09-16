@@ -1,6 +1,7 @@
 Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SettlementMerchantGridController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.SettlementMerchantGridController',
+    filters: {},
     init: function (view) {
         if (view.backButton) {
             let tbar = view.getDockedItems('toolbar[dock="top"]')[0];
@@ -16,6 +17,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
         view.mask('Loading...');
         const tdate = view.searchParams.IN_DATE === 'PRDA' ? 'Processing<br>Date' : 'Payment<br>Date';
         view.columns[0].setText(tdate);
+        this.filters = view.searchParams ;
         const res = await fetch(`${view.url}/loadSettlementSummary?${new URLSearchParams(view.searchParams)}`);
         if (res.ok) {
             const data = await res.json();
@@ -57,9 +59,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
         params.IN_SCOUNTRY = obj.scountry;
         params.IN_SCURRENCY = obj.scurrency;
         params.IN_PCURRENCY = obj.pcurrency;
-        params.IN_SCARDN = '';
-        params.IN_AREFNBR = '';
-        params.IN_TICKET = '';
+        params.IN_SCARDN = this.filters.IN_SCARDN ?? '';
+        params.IN_AREFNBR = this.filters.IN_AREFNBR ?? '';
+        params.IN_TICKET = this.filters.IN_TICKET ?? '';
         return params;
     },
     downloadExcel:function(){

@@ -1,6 +1,7 @@
 Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryGridController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.ATSummaryGridController',
+    filters: {},
     init: function (view) {
     },
     afterRender: async function (obj, e) {
@@ -10,6 +11,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryGridCont
         const view = this.view;
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
         mainPanel.mask('Loading...');
+        this.filters = view.searchParams;
         const res = await fetch(`${view.url}/loadSummary?${new URLSearchParams(view.searchParams)}`);
         if (res.ok) {
             const data = await res.json();
@@ -35,7 +37,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryGridCont
 
         let params = me.formatMonthParameters(record.data);
         console.log('Summary Tree Params: ', params);
-
+        
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
         const drillDown = mainPanel.items.items;
         drillDown.at(0).hide();
@@ -58,7 +60,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryGridCont
             IN_TDOC: viewParams.IN_TDOC,
             IN_PNR: viewParams.IN_PNR,
             IN_PRAXISID: viewParams.IN_PRAXISID,
-            IN_FLEXID: viewParams.IN_FLEXID
+            IN_FLEXID: viewParams.IN_FLEXID,
+            IN_TICKET: this.filters.IN_TICKET,
+            IN_AREFNBR: this.filters.IN_AREFNBR
         };
     },
     downloadExcel: function () {

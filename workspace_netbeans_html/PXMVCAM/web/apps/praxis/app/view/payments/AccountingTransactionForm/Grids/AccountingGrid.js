@@ -108,7 +108,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     align: 'center'
                 },
                 columns: [
-                    {text: 'Date', dataIndex: 'a4183fpro', width: 80,
+                    {text: 'Date', dataIndex: 'a4183ffile', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;

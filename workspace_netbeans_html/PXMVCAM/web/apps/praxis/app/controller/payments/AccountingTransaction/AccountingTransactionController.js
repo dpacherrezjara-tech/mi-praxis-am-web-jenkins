@@ -17,6 +17,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
         const res = await fetch(`${me.url}/loadFilters`);
         const panelFilters = Ext.getCmp(prototype.id + '-contentFilter');
         panelFilters.mask('Loading Filters...');
+        
         if (res.ok) {
             const data = await res.json();
             
@@ -44,6 +45,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
         mainPanel.removeAll();
         let params = me.formatParameters();
         console.log('Summary Grid Params: ',params);
+        
         const summaryGrid = Ext.create('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryGrid', {
             id: prototype.id + '-gridSummary',
             searchParams: params,
@@ -75,6 +77,49 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
         if (e.getKey() === e.ENTER) {
             this.onClickSearchBtn();
         }
+    },
+    downloadAllDetailAccountingExcel: async function(){
+        const me = this;
+        const view = me.view;
+        
+        let notifier = new AWN();
+
+        let params = me.formatParameters();
+        console.table(params);
+        
+        
+        const dwl = async () => {
+            const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05724', params);
+            if (res) {
+                let data = res.map(x=>({
+                       'Ticket': x.TICKET,
+                       'File Type': x.FILETYPE,
+                       'Mode': x.A4183MODO,
+                       'SRC': x.A4183FUENT,
+                       'Sub SRC': x.A4183SUBFU,
+                       'FOP': x.A4183FP,
+                       'CPN': x.A4183CUPON,
+                       'SEQ': x.A4183SEQ,
+                       'Settlement Date': x.A4183FFILE,
+                       'Accounting Date': x.A4183FCONT,
+                       'Account Number': x.A4183CUENT,
+                       'Currency': x.A4183CUR,
+                       'Debit': x.A4183ACTIV,
+                       'Credit': x.A4183PASIV,
+                       'Code Concept': x.A4183ORIG,
+                       'Description Concept': x.A4183TITU,
+                       'Client': x.A4183CLIEN,
+                       'PNR': x.A4183COPE,
+                       'Provider': x.A4183PROV,
+                       'Praxis ID': x.A4183IDCON,
+                       'Flex ID': x.A4183IDFLE,
+                       'Reference Number': x.A4183AREFN,
+                       'Processor': x.PROCESSOR_DESCRIPTION
+                    }));
+                global.writeExcelFromJson(data, 'Detail Accounting');
+            }
+        };
+        notifier.async(dwl(),'Successfully Download', 'Error on Download', 'Downloading File');
     },
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">
     onChangeFechaBtn: function (obj) {

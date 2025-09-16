@@ -49,6 +49,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                     editable: false,
                     allowBlank: true,
                     caseSensitive: false,
+                    caseSensitive: false,
                     autoSelect: true,
                     labelAlign: 'right',
                     typeAhead: true,

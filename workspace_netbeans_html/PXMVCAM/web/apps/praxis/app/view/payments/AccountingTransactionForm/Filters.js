@@ -46,6 +46,12 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                         {
                             items: [
                                 {
+                                    xtype: 'textfield',
+                                    name: 'IN_CCUST',
+                                    value: '139',
+                                    hidden: true
+                                },
+                                {
                                     xtype: 'combobox',
                                     fieldLabel: 'Date',
                                     name: 'IN_TFECHA',
@@ -60,7 +66,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                         ]
                                     }),
                                     labelWidth: 50,
-                                    width: 180,
+                                    width: 200,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -106,7 +112,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     name: 'IN_PROCESADOR',
                                     fieldLabel: 'Processor',
                                     labelWidth: 70,
-                                    width: 200,
+                                    width: 250,
                                     displayField: 'a4451desc1',
                                     valueField: 'a4451key2',
                                     queryMode: 'local',
@@ -187,12 +193,31 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     id: prototype.id + '-txtPNR',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
-                                    maskRe: /[a-zA-Z]/,
+                                    maskRe: /[a-zA-Z0-9]/,
                                     maxLength: 6,
                                     fieldLabel: 'PNR',
                                     name: 'IN_PNR',
-                                    labelWidth: 70,
-                                    width: 170,
+                                    labelWidth: 50,
+                                    width: 120,
+                                    enableKeyEvents: true,
+                                    listeners:{
+                                        specialkey: 'onEnterKeyPress',
+                                        change: function(field, newValue) {
+                                            field.setValue(newValue.toUpperCase());
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtTICKET',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 13,
+                                    fieldLabel: 'TICKET',
+                                    name: 'IN_TICKET',
+                                    labelWidth: 60,
+                                    width: 160,
                                     enableKeyEvents: true,
                                     listeners:{
                                         specialkey: 'onEnterKeyPress'
@@ -225,6 +250,22 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     fieldLabel: 'FLEX ID',
                                     labelWidth: 100,
                                     width: 390,
+                                    enableKeyEvents: true,
+                                    listeners:{
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtAREFNBR',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 23,
+                                    fieldLabel: 'AREFNBR',
+                                    name: 'IN_AREFNBR',
+                                    labelWidth: 80,
+                                    width: 240,
                                     enableKeyEvents: true,
                                     listeners:{
                                         specialkey: 'onEnterKeyPress'
