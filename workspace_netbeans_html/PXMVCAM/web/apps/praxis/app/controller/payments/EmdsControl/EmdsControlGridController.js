@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController
         
         let notifier = new AWN();
 //        let params = this.formatParams();
-console.table(view.searchParams);
+//        console.table(view.searchParams);
         
         const dwl = async () => {
             const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05717', view.searchParams);

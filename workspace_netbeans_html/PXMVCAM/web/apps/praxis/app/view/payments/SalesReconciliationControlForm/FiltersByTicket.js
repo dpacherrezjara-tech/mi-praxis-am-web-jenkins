@@ -107,7 +107,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     listeners: {
                                         change: 'onChangeMonthBTBtn'
                                     },
-                                    name: 'month',
+                                    name: 'IN_DATEFROM',
                                     id: prototype.id + '-monthfieldFromBT'
                                 },
                                 {
@@ -123,7 +123,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     listeners: {
                                         change: 'onChangeMonthBTBtn'
                                     },
-                                    name: 'month',
+                                    name: 'IN_DATETO',
                                     id: prototype.id + '-monthfieldToBT'
                                 },
                                 {
