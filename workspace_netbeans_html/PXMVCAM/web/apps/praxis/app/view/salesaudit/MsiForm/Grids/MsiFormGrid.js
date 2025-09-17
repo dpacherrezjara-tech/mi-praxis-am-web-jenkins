@@ -56,31 +56,31 @@ Ext.define('Ext.Praxis.view.salesaudit.MsiForm.Grids.MsiFormGrid', {
                 ]
             },
             {
-                text: 'INSTANBR', dataIndex: 'INSTANBR', width: 110
+                text: 'Installment Number', dataIndex: 'INSTANBR', width: 110
             },
             {
-                text: 'NBRINSTA', dataIndex: 'NBRINSTA', width: 110
+                text: 'Number Installments', dataIndex: 'NBRINSTA', width: 110
             },
             {
-                text: 'MDABOL', dataIndex: 'MDABOL', width: 110
+                text: 'Local Currency', dataIndex: 'MDABOL', width: 110
             },
             {
-                text: 'MDALIQ', dataIndex: 'MDALIQ', width: 110
+                text: 'Liquidation Currency', dataIndex: 'MDALIQ', width: 110
             },
             {
                 text: 'Liquidation', dataIndex: 'MONTOLIQ', width: 110
             },
             {
-                text: 'RFIC', dataIndex: 'RFIC', width: 110
+                text: 'Cod Reason', dataIndex: 'RFIC', width: 110
             },
             {
-                text: 'RFIS', dataIndex: 'RFIS', width: 110
+                text: 'Subcod Reason', dataIndex: 'RFIS', width: 110
             },
             {
-                text: 'TARIFBOL', dataIndex: 'TARIFBOL', width: 110
+                text: 'Val FOP Loc', dataIndex: 'TARIFBOL', width: 110
             },
             {
-                text: 'BANK', dataIndex: 'BANCO', width: 110
+                text: 'Bank', dataIndex: 'BANCO', width: 110
             },
         ]
     },
