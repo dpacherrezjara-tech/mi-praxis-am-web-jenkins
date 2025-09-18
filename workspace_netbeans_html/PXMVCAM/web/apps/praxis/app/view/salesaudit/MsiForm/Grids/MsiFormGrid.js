@@ -56,19 +56,24 @@ Ext.define('Ext.Praxis.view.salesaudit.MsiForm.Grids.MsiFormGrid', {
                 ]
             },
             {
-                text: 'Installment Number', dataIndex: 'INSTANBR', width: 110
+                text: 'Installment<br>Number', dataIndex: 'INSTANBR', width: 110
+            },
+//            {
+//                text: 'Number<br>Installments', dataIndex: 'NBRINSTA', width: 110
+//            },
+            {
+                text: 'Local<br>Currency', dataIndex: 'MDABOL', width: 80
             },
             {
-                text: 'Number Installments', dataIndex: 'NBRINSTA', width: 110
+                text: 'Liquidation<br>Currency', dataIndex: 'MDALIQ', width: 110
             },
             {
-                text: 'Local Currency', dataIndex: 'MDABOL', width: 110
-            },
-            {
-                text: 'Liquidation Currency', dataIndex: 'MDALIQ', width: 110
-            },
-            {
-                text: 'Liquidation', dataIndex: 'MONTOLIQ', width: 110
+                text: 'Liquidation', dataIndex: 'MONTOLIQ', width: 110,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:right";
+                    value = Ext.util.Format.number(value, '0,000.00');
+                    return value;
+                }
             },
             {
                 text: 'Cod Reason', dataIndex: 'RFIC', width: 110
@@ -77,11 +82,16 @@ Ext.define('Ext.Praxis.view.salesaudit.MsiForm.Grids.MsiFormGrid', {
                 text: 'Subcod Reason', dataIndex: 'RFIS', width: 110
             },
             {
-                text: 'Val FOP Loc', dataIndex: 'TARIFBOL', width: 110
+                text: 'Val FOP Loc', dataIndex: 'TARIFBOL', width: 110,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:right";
+                    value = Ext.util.Format.number(value, '0,000.00');
+                    return value;
+                }
             },
             {
-                text: 'Bank', dataIndex: 'BANCO', width: 110
-            },
+                text: 'Bank', dataIndex: 'BANCO', flex:1
+            }
         ]
     },
     tbar: {
