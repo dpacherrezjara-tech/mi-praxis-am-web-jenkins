@@ -8,7 +8,12 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
     maxHeight: prototype.height,
     minHeight: 200,
     height: 'auto',
-    width: 1000,
+    width: 1300,
+    features: [
+        {
+            ftype: 'summary' // Agrega la característica de resumen al grid
+        }
+    ],
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -28,6 +33,12 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "font-weight:bold";
                     return value;
+                },
+                summaryType: 'sum',
+                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                    metaData.style = "text-align:center;font-weight:bold;";
+                    return value;
+//                            return Ext.util.Format.number(value, '0,000');
                 }
             },
             {text: 'Curr.', dataIndex: 'RMDA', width: 60},
@@ -36,6 +47,12 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
                     metaData.style = "text-align:right";
                     value = Ext.util.Format.number(value, '0,000.00');
                     return value;
+                },
+                summaryType: 'sum',
+                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                    metaData.style = "text-align:right;font-weight:bold;";
+//                    return value;
+                    return Ext.util.Format.number(value, '0,000.00');
                 }
             },
             {
@@ -55,8 +72,14 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
                             metaData.style = "text-align:center;background-color:#91fc63;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#3f77cd;";
                             return value;
                         },
-                        listeners:{
+                        listeners: {
                             click: 'loadUsed'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+//                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {text: 'Fare', dataIndex: 'UTARIF', width: 120,
@@ -64,6 +87,12 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
                             metaData.style = "text-align:right;background-color:#91fc63";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:right;font-weight:bold;";
+//                            return value;
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     }
                 ]
@@ -85,8 +114,14 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
                             metaData.style = "text-align:center;background-color:#F0D094;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#3f77cd;";
                             return value;
                         },
-                        listeners:{
+                        listeners: {
                             click: 'loadNotUsed'
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:center;font-weight:bold;";
+                            return value;
+//                            return Ext.util.Format.number(value, '0,000');
                         }
                     },
                     {text: 'Fare', dataIndex: 'PTARIF', width: 120,
@@ -94,22 +129,111 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
                             metaData.style = "text-align:right;background-color:#F0D094";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
-                        }
-                    },
-                    {text: 'Status<br>Changed', dataIndex: 'CSTS', width: 90,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "text-align:center;background-color:#F0D094;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#3f77cd;";
-                            return value;
                         },
-                        listeners:{
-                            click: 'loadStatusChanged'
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:right;font-weight:bold;";
+//                            return value;
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
+//                    {text: 'Status<br>Changed', dataIndex: 'CSTS', width: 90,
+//                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                            metaData.style = "text-align:center;background-color:#F0D094;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#3f77cd;";
+//                            return value;
+//                        },
+//                        listeners:{
+//                            click: 'loadStatusChanged'
+//                                }
+//                            },
+                    {text: 'Status Changed', align: 'center', headerAlign: 'center',
+                        columns: [
+                            {
+                                text: 'Total',
+                                dataIndex: 'CSTS',
+                                width: 90,
+                                align: 'center',
+                                renderer: function (value, metaData) {
+                                    metaData.style = "text-align:center;background-color:#F0D094;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#3f77cd;";
+                                    return value;
+                                },
+                                summaryType: 'sum',
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    metaData.style = "text-align:center;font-weight:bold;";
+                                    return value;
+                                },
+                                listeners: {
+                                    click: 'loadStatusChanged'
+                                }
+                            },
+                            {
+                                text: 'Used',
+                                dataIndex: 'STATUSED',
+                                width: 90,
+                                align: 'center',
+                                renderer: function (value, metaData) {
+                                    metaData.style = "text-align:center;background-color:#F0D094;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#3f77cd;";
+                                    return value;
+                                },
+                                summaryType: 'sum',
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    metaData.style = "text-align:center;font-weight:bold;";
+                                    return value;
+                                },
+                                 listeners: {
+                                    click: 'loadNotUsedUsed'
+                                }
+                            },
+                            {
+                                text: 'Diff Used',
+                                dataIndex: 'STATOTHER',
+                                width: 90,
+                                align: 'center',
+                                renderer: function (value, metaData) {
+                                    metaData.style = "text-align:center;background-color:#F0D094;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#3f77cd;";
+                                    return value;
+                                },
+                                summaryType: 'sum',
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    metaData.style = "text-align:center;font-weight:bold;";
+                                    return value;
+                                },
+                                 listeners: {
+                                    click: 'loadNotUsedDiffUsed'
+                                }
+                            },
+                            {
+                                text: 'OK',
+                                dataIndex: 'STATOK',
+                                width: 90,
+                                align: 'center',
+                                renderer: function (value, metaData) {
+                                    metaData.style = "text-align:center;background-color:#F0D094;text-decoration:underline;cursor:pointer;font-weight:bolder;color:#3f77cd;";
+                                    return value;
+                                },
+                                summaryType: 'sum',
+                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                    metaData.style = "text-align:center;font-weight:bold;";
+                                    return value;
+                                },
+                                 listeners: {
+                                    click: 'loadNotUsedOk'
+                                }
+                            }
+                        ]
+                    },
+
                     {text: 'Fare<br>St. Chg', dataIndex: 'CSTTARIF', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#F0D094";
                             value = Ext.util.Format.number(value, '0,000.00');
                             return value;
+                        },
+                        summaryType: 'sum',
+                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                            metaData.style = "text-align:right;font-weight:bold;";
+//                            return value;
+                            return Ext.util.Format.number(value, '0,000.00');
                         }
                     }
                 ]
@@ -130,7 +254,6 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
                 iconCls: 'prx-icon-excel',
                 scale: 'small',
                 tooltip: 'Export to Excel',
-                hidden:true,
                 listeners: {
                     click: 'downloadExcel'
                 }
