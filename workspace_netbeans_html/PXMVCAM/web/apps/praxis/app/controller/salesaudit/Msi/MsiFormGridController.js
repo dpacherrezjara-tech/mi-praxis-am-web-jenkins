@@ -38,41 +38,37 @@ Ext.define('Ext.Praxis.controller.salesaudit.Msi.MsiFormGridController', {
         const data = (res?.length > 0)
                 ? res.map(x => ({
                         'Processor': x.PROCESADOR,
-                        'Processing Date': x.FPROC,
-                        'Sale Date': x.FVTA,
+                        'ProcessingDate': x.FPROC,
+                        'SaleDate': x.FVTA,
                         'Ticket': x.TKT,
                         'Channel': x.CANAL,
-                        'Number': x.TARJETA,
-                        'Auth': x.AUTH,
-                        'INSTANBR': x.INSTANBR,
-                        'NBRINSTA': x.NBRINSTA,
-                        'MDABOL': x.MDABOL,
-                        'MDALIQ': x.MDALIQ,
-                        'Liquidation': x.MONTOLIQ,
-                        'RFIC': x.RFIC,
-                        'RFIS': x.RFIS,
-                        'TARIFBOL': x.TARIFBOL,
-                        'BANK': x.BANCO,
-
+                        'CardNumber': x.TARJETA,
+                        'AuthCode': x.AUTH,
+                        'InstallmentNumber': x.INSTANBR,
+                        'LocalCurrency': x.MDABOL,
+                        'SettlementCurrency': x.MDALIQ,
+                        'SettlementAmount': x.MONTOLIQ,
+                        'ReasonCode': x.RFIC,
+                        'SubReasonCode': x.RFIS,
+                        'FareLocal': x.TARIFBOL,
+                        'Bank': x.BANCO
                     }))
                 : [{
                         'Processor': "",
-                        'Processing Date': "",
-                        'Sale Date': "",
+                        'ProcessingDate': "",
+                        'SaleDate': "",
                         'Ticket': "",
                         'Channel': "",
-                        'Number': "",
-                        'Auth': "",
-                        'INSTANBR': "",
-                        'NBRINSTA': "",
-                        'MDABOL': "",
-                        'MDALIQ': "",
-                        'Liquidation': "",
-                        'RFIC': "",
-                        'RFIS': "",
-                        'TARIFBOL': "",
-                        'BANK': ""
-
+                        'CardNumber': "",
+                        'AuthCode': "",
+                        'InstallmentNumber': "",
+                        'LocalCurrency': "",
+                        'SettlementCurrency': "",
+                        'SettlementAmount': "",
+                        'ReasonCode': "",
+                        'SubReasonCode': "",
+                        'FareLocal': "",
+                        'Bank': ""
                     }];
 
 
