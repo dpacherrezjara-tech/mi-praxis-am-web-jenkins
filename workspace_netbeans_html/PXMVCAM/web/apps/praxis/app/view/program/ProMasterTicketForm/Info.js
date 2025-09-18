@@ -3244,6 +3244,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                     case 'M': rtn = 'MEMO'; break;
                                                     case 'J': rtn = 'EXCH'; break;
                                                     case 'I': rtn = 'TAXC'; break;
+                                                    case 'D': rtn = 'DRTC'; break;
                                                     case 'R': 
                                                                 if(data.A1716CFOP.trim() === 'RFTX')
                                                                     rtn = 'RFTX';

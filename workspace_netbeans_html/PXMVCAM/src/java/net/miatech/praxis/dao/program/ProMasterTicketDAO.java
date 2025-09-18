@@ -1963,7 +1963,61 @@ public class ProMasterTicketDAO {
 
                                                                     lstRtn.add(objRtn);
                                                                 }
-                                                                    
+                                                                if (cstmt01.getMoreResults()) {
+                                                                    rs17 = cstmt01.getResultSet();
+                                                                    while (rs17.next()) {
+                                                                        objRtn = new PX040S01A1716Filter();
+                                                                        objRtn.A1716CCUST = rs17.getString("A4846CCUST");
+                                                                        objRtn.A1716CIA = rs17.getString("A4846CIA");
+                                                                        objRtn.A1716FORMA = rs17.getString("A4846FORMA");
+                                                                        objRtn.A1716SERIE = rs17.getString("A4846SERIE");
+                                                                        objRtn.A1716CUPON = rs17.getString("A4846CUPON");
+                                                                        objRtn.A1716SEQT = rs17.getString("A4846SEQT");
+                                                                        objRtn.A1716SEQ = rs17.getString("A4846SEQ");
+
+                                                                        objRtn.A1716MODO = rs17.getString("A4846MODO");
+                                                                        objRtn.A1716FUENT = rs17.getString("A4846FUENT");
+                                                                        objRtn.A1716SUBFU = rs17.getString("A4846SUBFU");
+                                                                        objRtn.A1716FP = rs17.getString("A4846FP");
+
+                                                                        objRtn.A1716FUENT = rs17.getString("A4846FUENT");
+                                                                        objRtn.A1716ESTAD = rs17.getString("A4846ESTAD");
+                                                                        objRtn.A1716FFILE = rs17.getString("A4846FFILE");
+                                                                        objRtn.A1716FPRO = rs17.getString("A4846FPRO");
+                                                                        objRtn.A1716GRUPO = rs17.getString("A4846GRUPO");
+                                                                        objRtn.A1716CUR = rs17.getString("A4846CUR");
+                                                                        objRtn.A1716ACTIV = rs17.getDouble("A4846ACTIV");
+                                                                        objRtn.A1716PASIV = rs17.getDouble("A4846PASIV");
+                                                                        objRtn.A1716CURRV = rs17.getString("A4846CURRV");
+                                                                        objRtn.A1716ACTRV = rs17.getDouble("A4846ACTRV");
+                                                                        objRtn.A1716PASRV = rs17.getDouble("A4846PASRV");
+                                                                        objRtn.A1716CUENT = rs17.getString("A4846CUENT");
+                                                                        objRtn.A1716SUBCU = rs17.getString("A4846SUBCU");
+                                                                        objRtn.A1716IDFIL = rs17.getString("A4846IDFIL");
+                                                                        objRtn.A1716TIDOC = rs17.getString("A4846TIDOC");
+                                                                        objRtn.A1716ORIG = rs17.getString("A4846ORIG");
+                                                                        objRtn.A1716FCONT = rs17.getString("A4846FCONT");
+
+                                                                        objRtn.A1716TITU = rs17.getString("A4846TITU");
+
+                                                                        objRtn.A1716COPE = rs17.getString("A4846COPE");
+                                                                        objRtn.A1716PROV = rs17.getString("A4846PROV");
+
+                                                                        objRtn.A1716IDCON = rs17.getString("A4846IDCON");
+
+                                                                        objRtn.TCOL = rs17.getString("TCOL");
+                                                                        //                    
+                                                                        //                     if(objRtn.A1716CIA.length() >= 5 && objRtn.A1716CIA.substring(0, 5).equals("TOTAL")){
+                                                                        //
+                                                                        //                     }
+                                                                        //                    
+                                                                        if (objRtn.A1716MODO.isEmpty() || objRtn.A1716MODO.equals("---------")) {
+                                                                            objRtn.A1716MODO = objRtn.A1716CIA; //Format example: "TOTAL AR S100-499:".
+                                                                        }
+
+                                                                        lstRtn.add(objRtn);
+                                                                    }
+                                                                }
                                                                 if (cstmt01.getMoreResults()) {
                                                                     rs18 = cstmt01.getResultSet();
                                                                     while (rs18.next()) {
