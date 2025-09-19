@@ -203,8 +203,8 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Grids.SummaryGrid', {
                                 }
                             },
                             {
-                                text: 'OK',
-                                dataIndex: 'STATOK',
+                                text: 'Pending',
+                                dataIndex: 'STATPEND',
                                 width: 90,
                                 align: 'center',
                                 renderer: function (value, metaData) {

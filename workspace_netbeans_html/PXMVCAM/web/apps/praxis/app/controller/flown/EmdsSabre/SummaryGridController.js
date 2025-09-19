@@ -182,7 +182,7 @@ Ext.define('Ext.Praxis.controller.flown.EmdsSabre.SummaryGridController', {
     
     loadNotUsedOk: function(grid, td, rowIndex, cellIndex, e, record, tr, eOpts){
         const me = this;
-        const {FPROC,STATOK} = record.data;
+        const {FPROC,STATPEND} = record.data;
         let params = {
             IN_CCUST: '139',
             IN_FPROCF:FPROC,
@@ -191,10 +191,10 @@ Ext.define('Ext.Praxis.controller.flown.EmdsSabre.SummaryGridController', {
             IN_TPAX: me.view.searchParams.IN_TPAX,
             IN_FTE: me.view.searchParams.IN_FTE,
             IN_TICKET: me.view.searchParams.IN_TICKET,
-             IN_STNOTUSED:"OK"
+            IN_STNOTUSED:"OK"
         };
         
-        if (record.data.STATOK === 0){
+        if (record.data.STATPEND === 0){
             global.Msg({msg: 'Data not Found'});
             return;
         };
@@ -260,7 +260,7 @@ Ext.define('Ext.Praxis.controller.flown.EmdsSabre.SummaryGridController', {
                 'Status Changed All': x.CSTS,
                 'Status Changed Used': x.STATUSED,
                 'Status Changed Diff Used': x.STATOTHER,
-                'Status Changed OK': x.STATOK,
+                'Status Changed OK': x.STATPEND,
                 'Fare St. Chg': x.CSTTARIF
 
             }));
