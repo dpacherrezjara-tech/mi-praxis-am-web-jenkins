@@ -509,8 +509,8 @@ public class ProReportCommFOB {
                         + formato_numero(Data.lstRws.get(i).A1729POCCA) + ";"
                         
                         + formato_numero(Data.lstRws.get(i).A1729VTXRF) + ";"
-                        + formato_numero(Data.lstRws.get(i).A1729CDTXS) + ";"
-                        + formato_numero(Data.lstRws.get(i).A1729CCST) + ";"
+                        + Data.lstRws.get(i).A1729CDTXS + ";"
+                        + Data.lstRws.get(i).A1729CCST + ";"
                         
                         + Data.lstRws.get(i).A1729LOTE);
 

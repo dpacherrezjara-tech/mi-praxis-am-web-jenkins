@@ -542,8 +542,8 @@ public class ProReportCommCTIA {
                         + formato_numero(Data.lstRws.get(i).A2445POCAN) + ";"
                         
                         + formato_numero(Data.lstRws.get(i).A2445VTXRF) + ";"
-                        + formato_numero(Data.lstRws.get(i).A2445CDTXS) + ";"
-                        + formato_numero(Data.lstRws.get(i).A2445CCST) + ";"
+                        + Data.lstRws.get(i).A2445CDTXS + ";"
+                        + Data.lstRws.get(i).A2445CCST + ";"
                         
                         + Data.lstRws.get(i).A2445LOTE);
 
