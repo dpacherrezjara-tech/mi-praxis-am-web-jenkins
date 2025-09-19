@@ -43,11 +43,17 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.Filters', {
                     items: [
                         {
                             items: [
+                                {
+                                    xtype: 'textfield',
+                                    name: 'IN_CCUST',
+                                    hidden: true,
+                                    value: '139'
+                                },
 
                                 {
                                     xtype: 'datefield',
                                     fieldLabel: 'From',
-                                    name: 'IN_PRDA_FROM',
+                                    name: 'IN_DATE_FROM',
                                     format: 'Ymd',
                                     editable: false,
                                     labelWidth: 50,
@@ -57,7 +63,7 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.Filters', {
                                 {
                                     xtype: 'datefield',
                                     fieldLabel: 'To',
-                                    name: 'IN_PRDA_TO',
+                                    name: 'IN_DATE_TO',
                                     format: 'Ymd',
                                     editable: false,
                                     labelWidth: 30,
@@ -66,28 +72,32 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.Filters', {
                                 },
                                 {
                                     xtype: 'combo',
-                                    id: prototype.id + '-cmbProctypeSettl2',
-                                    name: 'IN_PROCTYPESQ',
-                                    labelWidth: 70,
-                                    width: 250,
-                                    valueField: 'a4451key2',
-                                    displayField: 'a4451desc1',
-                                    fieldLabel: 'Processor',
+                                    id: prototype.id + '-cmbProcessor',
+                                    name: 'IN_PROCESSOR',
                                     queryMode: 'local',
-                                    editable: false,
                                     allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
                                     caseSensitive: false,
                                     autoSelect: true,
+                                    fieldLabel: 'Processor',
+                                    labelWidth: 70,
                                     labelAlign: 'right',
+                                    width: 250,
                                     typeAhead: true,
+                                    valueField: 'A4451KEY2',
+                                    displayField: 'A4451DESC1',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''
+//                                    listeners: {
+//                                        select: 'onProcessorSelect'
+//                                    }
                                 },
                                 {
                                     xtype: 'combo',
-                                    id: prototype.id + '-cmbMonedabST2',
-                                    name: 'IN_SCURRENCY',
+                                    id: prototype.id + '-cmbMonedafBP',
+                                    name: 'IN_CURRENCY',
                                     queryMode: 'local',
                                     allowBlank: true,
                                     forceSelection: true,
@@ -99,8 +109,8 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.Filters', {
                                     labelAlign: 'right',
                                     width: 140,
                                     typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''
@@ -114,4 +124,3 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.Filters', {
         }
     ]
 });
-
