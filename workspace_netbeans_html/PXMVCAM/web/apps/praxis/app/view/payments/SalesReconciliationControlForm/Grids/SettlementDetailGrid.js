@@ -80,7 +80,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 }
             },
             {
-                text: 'Processor', dataIndex: 'DESC_PROCTYPE', width: 200
+                text: 'Update Status', dataIndex: 'FEUP', width: 100
+            },
+            {
+                text: 'Sale Merchant', dataIndex: 'SMERCHID', width: 110,
+            },
+            {
+                text: 'Payment <br> Merchant', dataIndex: 'PMERCHID', width: 110,
+            },
+            {
+                text: 'Processor', dataIndex: 'DESC_PROCTYPE', width: 150
             },
             {
                 text: 'Country', dataIndex: 'SCOUNTRY', width: 80
@@ -93,9 +102,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
             },
             {text: 'Invoice<br>Refer. Number<br>PNR', dataIndex: 'INVOIRN', width: 100,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    const {proctypesq, pwref} = record.data;
-                    if (proctypesq === 'BANORTE00') {
-                        value = pwref;
+                    const {PROCTYPESQ, PWREF} = record.data;
+                    if (PROCTYPESQ === 'BANORTE00') {
+                        value = PWREF;
                     }
                     metaData.style = "text-align:center;";
                     return value;
@@ -404,7 +413,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                     };
                     return opts[value] || '';
                 }
+            },
+            
+            {
+                text: 'Praxis ID', dataIndex: 'IDCONL', width: 100
+            },
+            {
+                text: 'Accounting <br> Date', dataIndex: 'FCONTL', width: 100
             }
+            
             //</editor-fold>
         ]
     },

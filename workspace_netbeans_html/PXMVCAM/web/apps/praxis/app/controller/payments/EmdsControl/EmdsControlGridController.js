@@ -99,7 +99,7 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController
 
             // Solo los que cambiaron de 0 -> 1
             let dataChanged = storeData
-                .filter(x => x.data.CHECK_ORIGIN === 0 && x.data.CHECK === true ) // solo los que cambiaron
+                .filter(x => x.data.CHECK_ORIGIN === 0 && ( x.data.CHECK === 1 || x.data.CHECK === true ) ) // solo los que cambiaron
                 .map(x => ({
                     ...x.data
                 })
