@@ -152,7 +152,7 @@ Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.PaymentAnalyticsGrid
             return;
         }
         
-        // Campos estáticos que siempre están presentes
+        // Campos estáticos
         const staticFields = ['CCUST', 'PROCTYPE', 'PROCTYPESQ', 'STVAL', 'PROCESSOR', 'STATUS'];
         
         // Obtener campos dinámicos (monedas) excluyendo los estáticos
@@ -224,9 +224,6 @@ Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.PaymentAnalyticsGrid
 
     downloadExcel: function (btn) {
         const me = this;
-        let params = Object.assign({}, me.view.searchParams);
-        params.excel = true;
-        console.log(params);
         Ext.Msg.show(
                 {
                     title: '.:PRAXIS:.',
@@ -247,20 +244,47 @@ Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.PaymentAnalyticsGrid
         const me = this;
         const view = me.view;
         view.setLoading(true);
-        let res = await global.callStorePagginExcel('PRAXISMP', 'SQP05725', view.searchParams); //trae toda la data completa
+        
+        try {
+            let res = await global.callStoreGet('PRAXISMP', 'SQP05725', view.searchParams); 
+            let data = res.lstRs.at(0);
 
-        const data = (res?.length > 0)
-                ? res.map(x => ({
-                        Ticket: x.TICKET
-                    }))
-                : [{
-                        Ticket: ""
-                    }];
-        await global.writeExcelFromJson(data, 'SettlBalances Information'); // formatea la data para usarlo en la función de descarga
-        view.setLoading(false);
+            if (data.length === 0) {
+                global.Msg({ msg: 'Data not Found' });
+                view.setLoading(false);
+                return;
+            }
+            
+            const staticFields = ['CCUST', 'PROCTYPE', 'PROCTYPESQ', 'STVAL', 'PROCESSOR', 'STATUS'];
+            const firstRow = data[0] || {};
+            const currencyFields = Object.keys(firstRow).filter(key => !staticFields.includes(key));
+
+           
+            let excel = data.map(row => {
+                // armar objeto para excel
+                let obj = {
+                    'Processor': row.PROCESSOR,
+                    'Status': row.STATUS
+                };
+
+                // añadir dinámicos (monedas)
+                currencyFields.forEach(field => {
+                    obj[field] = row[field];
+                });
+
+                return obj;
+            });
+
+            // Generar Excel
+            await global.writeExcelFromJson(excel, 'Summary Analytics Payments');
+            
+        } catch (e) {
+            console.log(e);
+        }
+        finally {
+            view.setLoading(false);
+        }
     }
 
-
 });
-
 
