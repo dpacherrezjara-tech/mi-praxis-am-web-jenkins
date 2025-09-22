@@ -1,21 +1,18 @@
-prototype.id = 'PaymentAnalyticsForm';
-prototype.width = 1800;
-
-Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.PaymentAnalyticsForm', {
+prototype.id = 'DownloadThePaymentFilesForm';
+prototype.url = CONTEXTPATH + '/DownloadThePaymentFiles';
+Ext.define('Ext.Praxis.view.payments.DownloadThePaymentFilesForm.DownloadThePaymentFilesForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.PaymentAnalyticsForm',
+    alias: 'widget.DownloadThePaymentFilesForm',
     requires: [
-        'Ext.Praxis.controller.payments.PaymentAnalytics.PaymentAnalyticsController',
-        'Ext.Praxis.view.payments.PaymentAnalyticsForm.Options',
-        'Ext.Praxis.view.payments.PaymentAnalyticsForm.Filters',
-        'Ext.Praxis.view.payments.PaymentAnalyticsForm.Grids.AnalyticsGrid',
-        'Ext.Praxis.controller.payments.PaymentAnalytics.PaymentAnalyticsGridController',
+        'Ext.Praxis.view.payments.DownloadThePaymentFilesForm.Options',
+        'Ext.Praxis.view.payments.DownloadThePaymentFilesForm.Filters',
+        'Ext.Praxis.view.payments.DownloadThePaymentFilesForm.Info',
+        'Ext.Praxis.controller.payments.DownloadThePaymentFiles.DownloadThePaymentFilesController'
     ],
-    controller: 'PaymentAnalyticsController',
+    controller: 'DownloadThePaymentFilesController',
     layout: {
         type: 'fit'
     },
-    padding: '0 0 0 0',
     border: false,
     defaults: {
         border: false
@@ -36,8 +33,9 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.PaymentAnalyticsForm',
                         {
                             xtype: 'panel',
                             region: 'center',
-                            width: prototype.width,
+                            width: 980,
                             layout: 'border',
+
                             items: [
                                 {
                                     region: 'center',
@@ -49,7 +47,7 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.PaymentAnalyticsForm',
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: prototype.width,
+                                        width: 1200,
                                         align: 'center'
                                     },
                                     items: [
@@ -62,19 +60,35 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.PaymentAnalyticsForm',
                                         },
                                         {
                                             xtype: 'panel',
-                                            id: prototype.id + '-mainContent',
-                                            bodyStyle: 'background-color: #E3EAF9;',
-                                            height: 630,
-                                            layout: {
-                                                type: 'vbox',
-                                                align: 'center'
-                                            },
+                                            height: 600,
+                                            width: 1200,
+                                            layout: 'fit',
                                             items: [
+                                                {
+                                                    xtype: 'panel',
+                                                    id: prototype.id + '-centerC-panel01',
+                                                    width: 1200,
+                                                    layout: 'border',
+                                                    align: 'center',
+                                                    border: true,
+                                                    defaults: {
+                                                        border: false
+                                                    },
+                                                    bodyStyle: 'background-color: white;',
+                                                    items: [
+                                                        {
+                                                            region: 'center',
+                                                            xtype: prototype.id + '-info',
+                                                            id: prototype.id + '-contentInfo'
+                                                        }
+                                                    ]
+                                                }
                                             ]
                                         }
                                     ]
                                 }
                             ]
+
                         }
                     ]
                 }
@@ -82,3 +96,7 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.PaymentAnalyticsForm',
         }
     ]
 });
+
+
+
+
