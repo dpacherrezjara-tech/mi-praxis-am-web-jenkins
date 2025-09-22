@@ -233,6 +233,10 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
         switch (String(record.get('A4497FLAG'))) {
             case 'A':
                 color = '#F5A9F2';
+                value = 'Processed';
+                break;
+             case 'P':
+                color = '#E3DAED';
                 value = 'Approved';
                 break;
             case 'O':
@@ -432,6 +436,145 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
         txtIATA.setValue("");
         CmbStatus.setValue("");
         txtcountry.setValue("");
+    },
+    img_clickHandler_save_List: function () {
+        var grid = Ext.getCmp(prototype.idAmdsControl + '-gridData');
+        var selection = grid.getSelectionModel().getSelection();
+
+        if (!selection || selection.length === 0) {
+            return global.Msg({msg: 'You must select at least one record'});
+        }
+
+        var lstNew = [];
+        // Validación de selección múltiple
+
+        selection.forEach(function (row) {
+            if (Ext.String.trim(row.get('A4497FLAG')) === 'Y') {
+                lstNew.push({
+                    IN_OPTION: '2',
+                    A4497CIA: row.get('A4497CIA'),
+                    A4497FORMA: row.get('A4497FORMA'),
+                    A4497SERIE: row.get('A4497SERIE'),
+                    A4497SEQ: row.get('A4497SEQ'),
+                    A4497TRNCU: row.get('A4497TRNCU'),
+                    A4497SEQTB: row.get('A4497SEQTB'),
+                    A4497FTE: row.get('A4497FTE'),
+                    A4497FLAG: row.get('A4497FLAG'),
+                    A4497IATA: row.get('A4497IATA'),
+                    A4497EPR: row.get('A4497EPR'),
+                    A4497PAIS: row.get('A4497PAIS')
+                });
+            }
+        });
+
+        if (lstNew.length === 0) {
+            return Ext.Msg.alert('.: PRAXIS :.', 'You must select at least one record');
+        }
+        global.Msg({
+            msg: 'Are you sure to update?',
+            icon: 3,
+            buttons: 3,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    var mask = new Ext.LoadMask(Ext.getCmp(prototype.idAmdsControl + '-Contenedor'), {
+                        msg: 'Please Wait....'
+                    });
+                    mask.show();
+
+                    Ext.Ajax.request({
+                        url: prototype.url + '/VeriUpadaStatus/',
+                        timeout: 60000000,
+                        method: 'POST',
+                        params: {beanlst: JSON.stringify(lstNew)},
+                        success: function (response) {
+                            mask.hide();
+                            var res = Ext.JSON.decode(response.responseText);
+                            var vp_icon = (res.data === 'RECORD INSERTED') ? 1 : 0;
+
+                            global.Msg({
+                                msg: res.data,
+                                icon: vp_icon,
+                                fn: function () {
+                                    if (vp_icon === 1) {
+                                        Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    },
+    img_clickHandler_save: function () {
+        var grid = Ext.getCmp(prototype.idAmdsControl + '-gridData');
+        var selection = grid.getSelectionModel().getSelection();
+
+        if (!selection || selection.length === 0) {
+            return global.Msg({msg: 'You must select at least one record'});
+        }
+
+        var lstNew = [];
+        // Validación de selección múltiple
+
+        selection.forEach(function (row) {
+            if (Ext.String.trim(row.get('A4497FLAG')) === 'O' || Ext.String.trim(row.get('A4497FLAG')) === 'C' || Ext.String.trim(row.get('A4497FLAG')) === 'D') {
+                lstNew.push({
+                    IN_OPTION: '1',
+                    A4497CIA: row.get('A4497CIA'),
+                    A4497FORMA: row.get('A4497FORMA'),
+                    A4497SERIE: row.get('A4497SERIE'),
+                    A4497SEQ: row.get('A4497SEQ'),
+                    A4497TRNCU: row.get('A4497TRNCU'),
+                    A4497SEQTB: row.get('A4497SEQTB'),
+                    A4497FTE: row.get('A4497FTE'),
+                    A4497FLAG: row.get('A4497FLAG'),
+                    A4497IATA: row.get('A4497IATA'),
+                    A4497EPR: row.get('A4497EPR'),
+                    A4497PAIS: row.get('A4497PAIS')
+                });
+            }
+        });
+
+        if (lstNew.length === 0) {
+            return Ext.Msg.alert('.: PRAXIS :.', 'You must select at least one record');
+        }
+        global.Msg({
+            msg: 'Are you sure to update?',
+            icon: 3,
+            buttons: 3,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    var mask = new Ext.LoadMask(Ext.getCmp(prototype.idAmdsControl + '-Contenedor'), {
+                        msg: 'Please Wait....'
+                    });
+                    mask.show();
+
+                    Ext.Ajax.request({
+                        url: prototype.url + '/VeriUpadaStatus/',
+                        timeout: 60000000,
+                        method: 'POST',
+                        params: {beanlst: JSON.stringify(lstNew)},
+                        success: function (response) {
+                            mask.hide();
+                            var res = Ext.JSON.decode(response.responseText);
+                            var vp_icon = (res.data === 'RECORD INSERTED') ? 1 : 0;
+
+                            global.Msg({
+                                msg: res.data,
+                                icon: vp_icon,
+                                fn: function () {
+                                    if (vp_icon === 1) {
+                                        Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
     }
+
 });
 
