@@ -257,6 +257,11 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
                 color = '#FF9966';
                 value = 'Unregistered E-mail';
                 break;
+            case 'M':
+                color = '#F3EFB6';
+                value = 'Below 5 USD';
+                break;
+
         }
 
         metaData.tdAttr = 'data-qtip="' + value + '"';
