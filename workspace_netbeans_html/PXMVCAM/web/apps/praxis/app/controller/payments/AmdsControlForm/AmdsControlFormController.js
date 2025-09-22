@@ -49,9 +49,11 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
         CmbStatus.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
-                {"code": "A", "name": "Approved"},
+                {"code": "A", "name": "Processed"},
+                {"code": "P", "name": "Approved"},
                 {"code": "O", "name": "Agency Disabled"},
                 {"code": "Y", "name": "Pending"},
+                {"code": "M", "name": "Below 5 USD"},
                 {"code": "C", "name": "Unregistered Client"},
                 {"code": "D", "name": "Unregistered E-mail"}
             ]
@@ -235,7 +237,7 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
                 color = '#F5A9F2';
                 value = 'Processed';
                 break;
-             case 'P':
+            case 'P':
                 color = '#E3DAED';
                 value = 'Approved';
                 break;
