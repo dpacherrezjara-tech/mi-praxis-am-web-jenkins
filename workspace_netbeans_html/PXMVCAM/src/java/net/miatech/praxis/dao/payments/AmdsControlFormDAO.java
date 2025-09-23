@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.payment.filter.A4497Filter;
+import net.miatech.utils.Functions;
 import static net.miatech.utils.Functions.pasarGarbageCollector;
 import net.miatech.utils.TimeFormatToday;
 import net.miatech.utils.WorkStation;
@@ -173,4 +174,57 @@ public class AmdsControlFormDAO {
         }
         return lstRtn;
     }
+
+    public String VeriUpadaStatus(ArrayList<A4497Filter> filter) throws SQLException, Exception {
+        CallableStatement cs = null;
+        ResultSet rst = null;
+        String strSQL;
+        String STR_RESULT = "";
+
+        session.getCNXIBMDB2().open();
+        try {
+            String SQLCLL01 = "{CALL PRAXISMP.SQP05708(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+            for (A4497Filter obj : filter) {
+
+                cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
+                cs.setString("IN_OPTION", obj.IN_OPTION);
+                cs.setString("IN_A4497CIA", obj.A4497CIA);
+                cs.setString("IN_A4497FORMA", obj.A4497FORMA);
+                cs.setString("IN_A4497SERIE", obj.A4497SERIE);
+                cs.setString("IN_A4497SEQ", obj.A4497SEQ);
+                cs.setString("IN_A4497TRNCU", obj.A4497TRNCU);
+                cs.setInt("IN_A4497SEQTB", obj.A4497SEQTB);
+                cs.setString("IN_A4497FTE", obj.A4497FTE);
+                cs.setString("IN_A4497FLAG", obj.A4497FLAG);
+                cs.setString("IN_A4497IATA", obj.A4497IATA);
+                cs.setString("IN_A4497EPR", obj.A4497EPR);
+                cs.setString("IN_A4497PAIS", obj.A4497PAIS);
+
+                cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
+                cs.setString("IN_FREGI", Functions.getFechaActual());
+                cs.setString("IN_HREGI", Functions.getHoraActual());
+
+                cs.execute();
+            }
+            rst = cs.getResultSet();
+
+            while (rst.next()) {
+                STR_RESULT = rst.getString("VMESSAGE");
+            }
+            cs.close();
+        } catch (SQLException e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            STR_RESULT = e.getMessage();
+        } catch (Exception e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            STR_RESULT = e.getMessage();
+        } finally {
+            strSQL = null;
+            session.getCNXIBMDB2().close();
+        }
+
+        return STR_RESULT;
+    }
+
 }

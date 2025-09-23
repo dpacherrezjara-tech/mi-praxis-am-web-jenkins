@@ -89,6 +89,24 @@ Ext.define('Ext.Praxis.view.payments.AmdsControlForm.AmdsControlForm', {
                                 },
                                 {
                                     xtype: 'button',
+                                    id: prototype.idAmdsControl + '-Save_refresh',
+                                    icon: 'resources/img/icon/16x16/Save_refresh-16.png',
+                                    tooltip: 'Verifica y cambia a Pending los estados Agency Disabled, Unregistered Client y Unregistered E-mail',
+                                    listeners: {
+                                        click: 'img_clickHandler_save'
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    id: prototype.idAmdsControl + '-Save_List',
+                                    icon: 'resources/img/icon/16x16/task-save.png',
+                                    tooltip: 'Esta acción actualiza el estado a Aprobado, permitiendo su ejecución en el proceso de ADMs.',
+                                    listeners: {
+                                        click: 'img_clickHandler_save_List'
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
                                     id: prototype.idAmdsControl + '-btn-filter',
                                     iconCls: 'prx-icon-filter',
                                     tooltip: 'Hidden/Show filter',
@@ -416,7 +434,7 @@ Ext.define('Ext.Praxis.view.payments.AmdsControlForm.AmdsControlForm', {
                                 }
                             ]
                         }
-                        
+
                     ]
                 },
                 {
@@ -438,7 +456,21 @@ Ext.define('Ext.Praxis.view.payments.AmdsControlForm.AmdsControlForm', {
                             id: prototype.idAmdsControl + '-gridData',
                             width: 1390,
                             height: 480,
-                            columnLines: true,                            
+                            columnLines: true,
+                            selModel: {
+                                selType: 'checkboxmodel',
+                                listeners: {
+                                    beforeselect: function (grid, record, index, eOpts, metaData) {
+
+                                        if (Ext.String.trim(record.get('A4497FLAG')) !== 'M' || Ext.String.trim(record.get('A4497FLAG')) !== 'A' || Ext.String.trim(record.get('A2548FLAG')) !== 'X') {
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+                                    }
+                                }
+
+                            },
                             columns: {
                                 defaults: {
                                     menuDisabled: true,
@@ -452,7 +484,7 @@ Ext.define('Ext.Praxis.view.payments.AmdsControlForm.AmdsControlForm', {
                                     {text: 'Sale<br>Date', dataIndex: 'A4497FVTA', width: 70},
                                     {text: 'Settlement<br>Date', dataIndex: 'A4497PRDA', width: 70},
                                     {text: 'Country', dataIndex: 'A4497PAIS', width: 60},
-                                    {text: 'Cur.', dataIndex: 'A4497MDA', width: 40},                                    
+                                    {text: 'Cur.', dataIndex: 'A4497MDA', width: 40},
                                     {text: 'Amount', dataIndex: 'A4497NETO', width: 120, renderer: 'onColumnAmountRenderer'},
                                     {text: 'Agency', dataIndex: 'A4497IATA', width: 70},
                                     {text: 'Agency Name', dataIndex: 'AGENCY', width: 150, renderer: 'onRendererColumnAttr'},

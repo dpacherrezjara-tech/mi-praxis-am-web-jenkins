@@ -6,8 +6,13 @@
 package net.miatech.praxis.controllers.payments;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -312,6 +317,50 @@ public class AmdsControlFormController extends BaseController {
             throw new SpringException(e);
         }
 
+    }
+
+    @RequestMapping(value = "VeriUpadaStatus")
+    public @ResponseBody
+    String VeriUpadaStatus(ModelMap map, HttpServletRequest request) {
+        String result = "";
+        ArrayList<A4497Filter> gridData = new ArrayList<A4497Filter>();
+
+        try {
+
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            JsonParser parser = new JsonParser();
+            // Obtain Array
+            JsonArray gsonArr = parser.parse(request.getParameter("beanlst")).getAsJsonArray();
+            for (JsonElement obj : gsonArr) {
+                JsonObject gsonObj = obj.getAsJsonObject();
+                A4497Filter data = new A4497Filter();
+                data.IN_OPTION = gsonObj.get("IN_OPTION").getAsString();
+                data.A4497CIA = gsonObj.get("A4497CIA").getAsString();
+                data.A4497FORMA = gsonObj.get("A4497FORMA").getAsString();
+                data.A4497SERIE = gsonObj.get("A4497SERIE").getAsString();
+                data.A4497SEQ = gsonObj.get("A4497SEQ").getAsString();
+                data.A4497TRNCU = gsonObj.get("A4497TRNCU").getAsString();
+                data.A4497SEQTB = gsonObj.get("A4497SEQTB").getAsInt();
+
+                data.A4497FTE = gsonObj.get("A4497FTE").getAsString();
+                data.A4497FLAG = gsonObj.get("A4497FLAG").getAsString();
+                data.A4497IATA = gsonObj.get("A4497IATA").getAsString();
+                data.A4497EPR = gsonObj.get("A4497EPR").getAsString();
+                data.A4497PAIS = gsonObj.get("A4497PAIS").getAsString();
+
+                gridData.add(data);
+
+            }
+            logic = new AmdsControlFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            result = logic.VeriUpadaStatus(gridData);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        map.put("success", true);
+        map.put("data", result);
+        return new Gson().toJson(map);
     }
 
 }
