@@ -57,8 +57,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
-//                            global.getFile(`${me.view.url}/downloadSettlementDetail?${new URLSearchParams(params)}`);
-                            me.onDownloadExcel();
+                            global.getFile(`${me.view.url}/downloadSettlementDetail?${new URLSearchParams(params)}`);
+//                            me.onDownloadExcel();
                         }
                     }
                 });
@@ -134,9 +134,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
         } catch (e) {
             console.log(e);
             view.setLoading(false);
-
-        }},
-    
+        }
+    },
     formatSettlementVsSales: function (status) {
         let opts = {
              'A': 'Match OC/Camepa',

@@ -9,7 +9,7 @@ import net.miatech.praxis.payment.entities.CustomPageImpl;
  * @author Dvicente
  */
 public class SQP05134Filter extends CustomPageImpl{
-    private String IN_CCUST,IN_DATEFROM,IN_DATE,IN_MERCHANT,IN_STVAL,IN_PNR,IN_TRANSTYPE,IN_PROCTYPE,IN_PROCTYPESQ,
+    private String IN_CCUST,IN_DATEFROM,IN_DATETO,IN_DATE,IN_MERCHANT,IN_STVAL,IN_PNR,IN_TRANSTYPE,IN_PROCTYPE,IN_PROCTYPESQ,
             IN_SCOUNTRY,IN_SCURRENCY,IN_PCURRENCY,IN_SCARDN,IN_SAUTHOC, IN_AREFNBR, IN_TICKET;
     private List<A4331Filter> response = new ArrayList<>();
 
@@ -27,6 +27,14 @@ public class SQP05134Filter extends CustomPageImpl{
 
     public void setIN_DATEFROM(String IN_DATEFROM) {
         this.IN_DATEFROM = IN_DATEFROM;
+    }
+    
+    public String getIN_DATETO() {
+        return IN_DATETO;
+    }
+
+    public void setIN_DATETO(String IN_DATETO) {
+        this.IN_DATETO = IN_DATETO;
     }
 
     public String getIN_DATE() {

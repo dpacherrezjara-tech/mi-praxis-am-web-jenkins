@@ -35,10 +35,20 @@ Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.PaymentAnalyticsCont
         });
 
         mainPanel.add(newGrid);
-
-
     },
-    
+    onChangeDateFromPA: function (obj) {
+        let option = obj.id.split('-').at(-1);
 
+        const from = Ext.getCmp(prototype.id + '-dateFieldFromPADF');
+        
+        const to = Ext.getCmp(prototype.id + '-dateFieldToPADT');
+        
+        const opts = {
+            'dateFieldFromPADF': () => {
+                to.setValue(from.getValue());
+            }
+        };
+        opts[option]();
+    }
 
 });
