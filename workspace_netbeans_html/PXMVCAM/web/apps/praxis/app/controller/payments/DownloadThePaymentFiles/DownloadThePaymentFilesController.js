@@ -75,15 +75,16 @@ Ext.define('Ext.Praxis.controller.payments.DownloadThePaymentFiles.DownloadThePa
             fields: ['code', 'name'],
             data: [
                 ["", "ALL"],
-                ["PSE", "PSE"],
-                ["CRDO", "Credomatic"],
+                ["NIU", "NIUBIZ"],
+                ["AMP", "AMEX-PE"]
+                /*["CRDO", "Credomatic"],
                 ["WOIQ", "Worldpay IQ"],
                 ["ECAD", "Elavon CAD"],
                 ["EEUR", "Elavon EUR"],
                 ["PBDI", "PB-DINERS"],
                 ["PBPV", "PB-PVA"],
                 ["SAFE", "SAFETYPAY"],
-                ["CODE", "CODENSA"]
+                ["CODE", "CODENSA"]*/
             ]
         }));
         CmbTypeprocesa.setValue("");
@@ -340,31 +341,8 @@ Ext.define('Ext.Praxis.controller.payments.DownloadThePaymentFiles.DownloadThePa
         var me = this;
         var rec = grid.getStore().getAt(rowIndex);
         if (Ext.String.trim(rec.data.A4719ESTAT) === 'A') {
-            var type = '';
-            if (Ext.String.trim(rec.data.A4719TYPE) === 'PBPV') {
-                type = 'PRODUBANCO/ECUADOR/PVA';
-            } else if (Ext.String.trim(rec.data.A4719TYPE) === 'PSE') {
-                type = 'PSE';
-            } else if (Ext.String.trim(rec.data.A4719TYPE) === 'CRDO') {
-                type = 'CREDOMATIC';
-            } else if (Ext.String.trim(rec.data.A4719TYPE) === 'PBDI') {
-                type = 'PRODUBANCO/ECUADOR/Diners';
-            } else if (Ext.String.trim(rec.data.A4719TYPE) === 'WOIQ') {
-                type = 'WPIQ';
-            } else if (Ext.String.trim(rec.data.A4719TYPE) === 'CODE') {
-                type = 'CODE';
-            } else if (Ext.String.trim(rec.data.A4719TYPE) === 'SAFE') {
-                type = 'SAFE';
-            } else {
-                type = Ext.String.trim(rec.data.A4719TYPE);
-            }
-
-
-
-
             me.beanDownload.IN_DATETO = rec.data.A4719FCARG;
-            me.beanDownload.IN_TYPEPROCES = rec.data.A4719TYPE;
-            me.beanDownload.IN_PROCESADOR = type;
+            me.beanDownload.IN_TYPEPROCES = rec.data.A4719TYPEDES;
             me.exportFiles(prototype.url + '/DownloadFiles_python?beanString=' + encodeURI(JSON.stringify(me.beanDownload)));
         } else {
             Ext.Msg.alert('.: PRAXIS :.', 'The process status must be completed in order to perform the download.');
