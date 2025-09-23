@@ -896,23 +896,24 @@ public class SalesReconciliationBPOController {
         try {
             SQP05134Filter filter = logic.loadSQP05134Filter(params);
             System.out.println("Total: " + filter.getResponse().size());
-            String procesador = filter.getResponse().get(0).getDESC_PROCTYPE().trim();
-            String title = procesador + "-" + params.getIN_MERCHANT().trim() + "_" + params.getIN_DATEFROM();
             List<List<CustomExcelCell>> data = new ArrayList<>();
             List<CustomExcelCell> header = new ArrayList<>();
             header.add(new CustomExcelCell("Processing\nDate"));
             header.add(new CustomExcelCell("Payment\nDate"));
             header.add(new CustomExcelCell("Sales\nDate"));
-            header.add(new CustomExcelCell("Settl. VS Sales"));
+            header.add(new CustomExcelCell("Settlement\nVS Sales"));
+            header.add(new CustomExcelCell("Update Status"));
+            header.add(new CustomExcelCell("Sale Merchant"));
+            header.add(new CustomExcelCell("Payment Merchant"));
             header.add(new CustomExcelCell("Processor"));
             header.add(new CustomExcelCell("Country"));
             header.add(new CustomExcelCell("Qty\nTkts"));
             header.add(new CustomExcelCell("Invoice\nRef. Number\nPNR"));
             header.add(new CustomExcelCell("PNR"));
-            header.add(new CustomExcelCell("Doc. Type"));
+            header.add(new CustomExcelCell("Document\nType"));
             header.add(new CustomExcelCell("Indust. Speci.\nRef. Nbr."));
             header.add(new CustomExcelCell("Card Number"));
-            header.add(new CustomExcelCell("Auth"));
+            header.add(new CustomExcelCell("Auth."));
             header.add(new CustomExcelCell("Installment\nPlan"));
             header.add(new CustomExcelCell("Installment\nNumber"));
             header.add(new CustomExcelCell("Currency"));
@@ -937,8 +938,11 @@ public class SalesReconciliationBPOController {
             header.add(new CustomExcelCell("NET Amount"));
             header.add(new CustomExcelCell("NET Amount\nTo Reveive AM"));
             header.add(new CustomExcelCell("Currency\nSettlement"));
-            header.add(new CustomExcelCell("Rule"));
+            header.add(new CustomExcelCell("Code\nRule"));
+            header.add(new CustomExcelCell("Description\nRule"));
             header.add(new CustomExcelCell("Flag\nCompl."));
+            header.add(new CustomExcelCell("Praxis\nID"));
+            header.add(new CustomExcelCell("Accounting\nDate"));
             data.add(header);
 
             //colores
@@ -950,6 +954,9 @@ public class SalesReconciliationBPOController {
                 row.add(new CustomExcelCell(obj.getPaydate()));
                 row.add(new CustomExcelCell(obj.getSdate()));
                 row.add(new CustomExcelCell(convertStatus(obj.getStval())));
+                row.add(new CustomExcelCell(obj.getFeup()));
+                row.add(new CustomExcelCell(obj.getSmerchid()));
+                row.add(new CustomExcelCell(obj.getPmerchid()));
                 row.add(new CustomExcelCell(obj.getDESC_PROCTYPE()));
                 row.add(new CustomExcelCell(obj.getScountry()));
                 row.add(new CustomExcelCell(obj.getQtytkt()));
@@ -996,13 +1003,16 @@ public class SalesReconciliationBPOController {
                 row.add(new CustomExcelCell(obj.getNeto(), c2));
                 row.add(new CustomExcelCell(obj.getNetopay(), c2));
                 row.add(new CustomExcelCell(obj.getPcurrency(), c2));
+                row.add(new CustomExcelCell(obj.getFregla()));
                 row.add(new CustomExcelCell(convertRegla(obj.getFregla())));
                 row.add(new CustomExcelCell(convertFcompl(obj.getFcompl())));
+                row.add(new CustomExcelCell(obj.getIdconl()));
+                row.add(new CustomExcelCell(obj.getFcontl()));
+                
                 data.add(row);
             }
 
-            return exportUtils.createCustomExcel(data,
-                    "Settlement Detail " + title);
+            return exportUtils.createCustomExcel(data, controllerName + " - Settlement Detail " + Functions.getFechaActual());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -1163,21 +1173,66 @@ public class SalesReconciliationBPOController {
     private static String convertRegla(String fregla) {
         String valor = "";
         switch (fregla) {
+//            case "1":
+//                valor = "Ticket";
+//                break;
+//            case "2":
+//                valor = "PNR";
+//                break;
+//            case "3":
+//                valor = "C. Card";
+//                break;
+//            case "4":
+//                valor = "Desg. Manual";
+//                break;
+//            case "5":
+//                valor = "Desg. Transac.";
+//                break;
+            case "0":
+                    valor = "TKT+PNR+IATA+FE+I+T+A";
+                    break;
             case "1":
-                valor = "Ticket";
-                break;
+                    valor = "TKT+IATA+FE+I+T+A";
+                    break;
             case "2":
-                valor = "PNR";
-                break;
+                    valor = "TKT+PNR+FE+I+T+A";
+                    break;
             case "3":
-                valor = "C. Card";
-                break;
+                    valor = "TKT+FE+I+T+A";
+                    break;
             case "4":
-                valor = "Desg. Manual";
-                break;
+                    valor = "PNR+IATA+FE+I+T+A";
+                    break;
             case "5":
-                valor = "Desg. Transac.";
-                break;
+                    valor = "IATA+FE+I+T+A";
+                    break;
+            case "6":
+                    valor = "PNR+FE+I+T+A";
+                    break;
+            case "7":
+                    valor = "FE+I+T+A";
+                    break;
+            case "8":
+                    valor = "TKT+PNR+FE+I+T";
+                    break;
+            case "9":
+                    valor = "TKT+PNR+FE+ID+T+A";
+                    break;
+            case "A":
+                    valor = "PNR+FE+I+T";
+                    break;
+            case "B":
+                    valor = "PNR+FE+ID+T+A";
+                    break;
+            case "C":
+                    valor = "TKT+FE+I+T";
+                    break;
+            case "D":
+                    valor = "FE+I+T";
+                    break;
+            case "E":
+                    valor = "FE+I+PNR";
+                    break;
         }
         return valor;
     }

@@ -58,7 +58,11 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.Filters', {
                                     editable: false,
                                     labelWidth: 50,
                                     width: 150,
-                                    value: new Date()
+                                    value: new Date(),
+                                    listeners: {
+                                        change: 'onChangeDateFromPA'
+                                    },
+                                    id: prototype.id + '-dateFieldFromPADF'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -68,7 +72,8 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.Filters', {
                                     editable: false,
                                     labelWidth: 30,
                                     width: 130,
-                                    value: new Date()
+                                    value: new Date(),
+                                    id: prototype.id + '-dateFieldToPADT'
                                 },
                                 {
                                     xtype: 'combo',
@@ -80,6 +85,7 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.Filters', {
                                     selectOnFocus: true,
                                     caseSensitive: false,
                                     autoSelect: true,
+                                    editable: false,
                                     fieldLabel: 'Processor',
                                     labelWidth: 70,
                                     labelAlign: 'right',

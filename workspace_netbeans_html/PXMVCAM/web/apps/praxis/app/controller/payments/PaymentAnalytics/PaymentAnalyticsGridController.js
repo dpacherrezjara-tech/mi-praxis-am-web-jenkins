@@ -199,11 +199,11 @@ Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.PaymentAnalyticsGrid
             columns: dynamicCurrencyColumns
         };
 
-        // --- Columnas finales para el grid ---
+        // Columnas finales para el grid
         const finalColumns = [...staticColumns, amountGroupColumn];
         
         
-        // --- Crear store dinámico con los campos correctos ---
+        // Crear store dinámico con los campos correctos
         const storeFields = [...staticFields, ...currencyFields];
         const newStore = Ext.create('Ext.data.Store', {
             fields: storeFields,

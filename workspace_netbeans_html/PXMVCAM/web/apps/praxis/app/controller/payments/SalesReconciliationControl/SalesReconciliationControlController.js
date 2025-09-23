@@ -610,22 +610,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         };
         opts[option]();
     },
-    onChangeMonthBTBtn: function (obj) {
-        let option = obj.id.split('-').at(-1);
-        const from = Ext.getCmp(prototype.id + '-monthfieldFromBT');
-        const to = Ext.getCmp(prototype.id + '-monthfieldToBT');
-        const opts = {
-            'monthfieldFromBT': () => {
-                to.setValue(from.getValue());
-            },
-            'monthfieldToBT': () => {
-                if (to.getValue() < from.getValue()) {
-                    from.setValue(to.getValue());
-                }
-            }
-        };
-        opts[option]();
-    },
     onChangeMonthSTBtn: function (obj) {
         let option = obj.id.split('-').at(-1);
         const from = Ext.getCmp(prototype.id + '-datefieldFromST');
@@ -635,6 +619,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 to.setValue(from.getValue());
             },
             'datefieldToST': () => {
+                if (to.getValue() < from.getValue()) {
+                    from.setValue(to.getValue());
+                }
+            }
+        };
+        opts[option]();
+    },
+    onChangeDateBPBtn: function (obj) {
+        let option = obj.id.split('-').at(-1);
+        const from = Ext.getCmp(prototype.id + '-datefieldFromBP');
+        const to = Ext.getCmp(prototype.id + '-datefieldToBP');
+        const opts = {
+            'datefieldFromBP': () => {
+                to.setValue(from.getValue());
+            },
+            'datefieldToBP': () => {
                 if (to.getValue() < from.getValue()) {
                     from.setValue(to.getValue());
                 }
@@ -679,7 +679,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 to2.setValue(from2.getValue());
             },
             'datefieldToST2': () => {
-                if (to.getValue() < from2.getValue()) {
+                if (to2.getValue() < from2.getValue()) {
                     from2.setValue(to2.getValue());
                 }
             }
