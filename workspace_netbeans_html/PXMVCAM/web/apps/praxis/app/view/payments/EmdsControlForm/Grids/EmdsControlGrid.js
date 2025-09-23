@@ -170,6 +170,12 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid', {
                             metaData.style = "background-color:#C2FFBD;";
                             return Ext.util.Format.number(value, '0,000.00');
                         }
+                    },
+                    { text: 'Total BPO', dataIndex: 'TOTALBPO', width: 100,
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "background-color:#C2FFBD;";
+                            return Ext.util.Format.number(value, '0,000.00');
+                        }
                     }
                 ]
             },

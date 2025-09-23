@@ -586,8 +586,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 
                         } else {
                             Ext.MessageBox.show({
-                                title: 'Error',
-                                message: 'Error in reverse',
+                                title: 'Information',
+                                message: response,
                                 icon: Ext.MessageBox.ERROR,
                                 buttons: Ext.MessageBox.OK
                             });
