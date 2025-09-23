@@ -217,24 +217,22 @@ public class DownloadThePaymentFilesController extends BaseController {
         }
 
     }
-
+    
     @RequestMapping(value = "DownloadFiles_python")
     public ResponseEntity<byte[]> DownloadFiles_python(HttpServletRequest request, final HttpServletResponse response) throws Exception {
         A4719Filter filter = new A4719Filter();
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
 
-        String v1_urlREST = "/medios-pago/get-directory";
+        String v1_urlREST = "/util/download-files" ; //-2025/20250921/NIUBIZ";
 
         try {
-                
             Map<String, Object> queryParams = new HashMap<>();
-            queryParams.put("fecha", filter.IN_DATETO);
-            queryParams.put("anio", filter.IN_DATETO.substring(0, 4)); 
-            queryParams.put("procesador", filter.IN_PROCESADOR);
-            queryParams.put("PREFIX", "MEDIOSPAGO");
+            queryParams.put("client", "am");
+            queryParams.put("type", "directory");
+            queryParams.put("remotePath", "MediosPago/Procesadores/"+ filter.IN_DATETO.substring(0, 4) +"/"+  filter.IN_DATETO +"/"+filter.IN_TYPEPROCES);
 
-            ResponseEntity<byte[]> res = pws.downloadFilesFromPython(v1_urlREST, queryParams);
+            ResponseEntity<byte[]> res = pws.downloadFilesDirectorioFromPython(v1_urlREST, queryParams);
             return res;
 
         } catch (Exception e) {
