@@ -69,4 +69,8 @@ public class A1729 {
     public String A1729AGRCA = "";
     public String A1729MDCA  = "";
     
+    public double A1729VTXRF  = 0.0;    
+    public String A1729CDTXS  = "";
+    //public String A1729CCST  = "";
+    
 }
