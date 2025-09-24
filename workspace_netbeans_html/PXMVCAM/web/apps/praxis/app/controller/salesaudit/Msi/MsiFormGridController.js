@@ -51,6 +51,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.Msi.MsiFormGridController', {
                         'ReasonCode': x.RFIC,
                         'SubReasonCode': x.RFIS,
                         'FareLocal': x.TARIFBOL,
+                        'Tax': x.TAX,     
+                        'SalesAmount': x.MONTOVTA,
                         'Bank': x.BANCO
                     }))
                 : [{
@@ -68,6 +70,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.Msi.MsiFormGridController', {
                         'ReasonCode': "",
                         'SubReasonCode': "",
                         'FareLocal': "",
+                        'Tax': "",     
+                        'SalesAmount': "",
                         'Bank': ""
                     }];
 
