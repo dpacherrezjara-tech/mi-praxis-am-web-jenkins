@@ -538,7 +538,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TraceabilitySuggested.TraceabilitySuggest
                                                                     {text: 'BSP', dataIndex: 'CANTABSP', width: 80, align: 'right', summaryType: 'sum', summaryRenderer: 'OnIntSummary', renderer: 'OnColumnIntRenderer'},
                                                                     {text: 'ARC', dataIndex: 'CANTARC', width: 80, align: 'right', summaryType: 'sum', summaryRenderer: 'OnIntSummary', renderer: 'OnColumnIntRenderer'},
                                                                     {text: 'ASR', dataIndex: 'CANTASR', width: 80, align: 'right', summaryType: 'sum', summaryRenderer: 'OnIntSummary', renderer: 'OnColumnIntRenderer'},
-                                                                    {text: 'PYR', dataIndex: 'CANTPYR', width: 80, align: 'right', summaryType: 'sum', summaryRenderer: 'OnIntSummary', renderer: 'OnColumnIntRenderer'},
+                                                                    {text: 'PYD', dataIndex: 'CANTPYR', width: 80, align: 'right', summaryType: 'sum', summaryRenderer: 'OnIntSummary', renderer: 'OnColumnIntRenderer'},
                                                                     {text: 'Sub Total', dataIndex: 'CANTOTAL', width: 80, align: 'right', summaryType: 'sum', summaryRenderer: 'OnIntSummary', renderer: 'OnColumnProcessingDateRenderer'}
                                                                     //{text: 'Justified <br> ADM <br> Report', dataIndex: 'CANTJUSTIADMREPORT', width: 100, align: 'right', summaryType: 'sum', summaryRenderer: 'OnIntSummary', renderer: 'OnColumnIntRenderer'}
                                                                 ]
