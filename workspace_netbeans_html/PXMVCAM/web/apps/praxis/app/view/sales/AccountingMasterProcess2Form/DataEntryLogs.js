@@ -1,4 +1,4 @@
-prototype.idDE2 = prototype.id + '-LoggerDataEntry';
+prototype.idDE2 = prototype.id + '-LoggerDataEntrySales';
 
 Ext.define('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntryLogs', {
     extend: 'Ext.window.Window',
