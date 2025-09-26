@@ -262,6 +262,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TraceabilitySuggested.TraceabilityS
                     Ext.getCmp(prototype.id + '-gridReport2').getStore().loadData(res.lst_reporte1);
                     me.beanDatos = res.lst_reporte1;
                     me.onCreateChartReal(res.lst_reporte1);
+                    //console.log(res.lst_reporte1);
 
                 }
             });
