@@ -102,7 +102,7 @@ public class TraceabilitySuggestedDAO {
 
                 reporte_1.CANTARC = rs01.getInt("CANTARC");
                 reporte_1.CANTABSP = rs01.getInt("CANTABSP");
-                reporte_1.CANTOTAL = rs01.getInt("CANTABSP") + rs01.getInt("CANTARC") + rs01.getInt("CANTASR");
+                reporte_1.CANTOTAL = rs01.getInt("CANTABSP") + rs01.getInt("CANTARC") + rs01.getInt("CANTASR") + rs01.getInt("CANTPYR");
                 reporte_1.TOTALGROUP = rs01.getInt("CANTADMPENGROUP") + rs01.getInt("CANTADMSINCLIE") + rs01.getInt("CANTADMJUSTI") + rs01.getInt("CANTADMREUDITE") + rs01.getInt("CANTADMAUTORI") + rs01.getInt("CANTADMIATADISA");
                 if (filter.VP_OPTION.equals("2")) {
                     reporte_1.A1672IATAO = rs01.getString("AGENCY");
