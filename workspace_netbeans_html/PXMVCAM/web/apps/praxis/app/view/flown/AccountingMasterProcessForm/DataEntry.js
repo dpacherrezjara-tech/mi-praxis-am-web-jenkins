@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-prototype.idDE=prototype.id + '-DataEntryAccountingMPFlown';
 Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.' + prototype.id + '-dataEntry',
@@ -26,7 +25,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
         {
             region: 'center',
             xtype: 'form',
-            id: prototype.idDE + '-DataEntry-center',
+            id: prototype.id + '-DataEntry-center',
             border: false,
             layout: {
                 type: 'vbox'
@@ -63,7 +62,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                                 },
                                 {
                                     xtype: 'combo',
-                                    id: prototype.idDE + '-de-cbxModulo',
+                                    id: prototype.id + '-de-cbxModulo',
                                     padding: '1 5 0 10',
                                     fieldLabel: '',
                                     queryMode: 'local',
@@ -79,7 +78,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                                 },
                                 {
                                     xtype: 'checkboxfield',
-                                    id: prototype.idDE + '-de-chkConsistencia',
+                                    id: prototype.id + '-de-chkConsistencia',
                                     margin: '1 0 0 20',
                                     width: 160,
                                     boxLabel: 'Apply Consistency',
@@ -114,7 +113,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                                     format: 'Y/m/d',
                                     fieldLabel: '',
                                     anchor: '100%',
-                                    id: prototype.idDE + '-de-txtProcessDate',
+                                    id: prototype.id + '-de-txtProcessDate',
                                     fieldStyle: 'text-align:center',
                                     margin: '1 0 0 10',
                                     maskRe: /[0-9/]/,
@@ -128,7 +127,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                 ,
                 {
                     xtype: 'fieldset',
-                    id: prototype.idDE + '-ControlData',
+                    id: prototype.id + '-ControlData',
                     title: 'Control Data',
                     width: 650,
                     margin: '1 20 0 20',
@@ -148,7 +147,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                             items: [
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.idDE + '-USCR',
+                                    id: prototype.id + '-USCR',
                                     fieldLabel: '<strong style="color:#000;">Creator User</strong>',
                                     labelWidth: 100,
                                     margin: '0 10 0 0',
@@ -157,7 +156,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.idDE + '-FECR',
+                                    id: prototype.id + '-FECR',
                                     fieldLabel: '<strong style="color:#000;">Creation Date</strong>',
                                     labelWidth: 100,
                                     margin: '0 10 0 0',
@@ -166,7 +165,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.idDE + '-HOCR',
+                                    id: prototype.id + '-HOCR',
                                     fieldLabel: '<strong style="color:#000;">Creation Time</strong>',
                                     labelWidth: 100,
                                     margin: '0 10 0 0',
@@ -185,7 +184,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                             items: [
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.idDE + '-USUP',
+                                    id: prototype.id + '-USUP',
                                     fieldLabel: '<strong style="color:#000;">User Update</strong>',
                                     labelWidth: 100,
                                     readOnly: true,
@@ -194,7 +193,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.idDE + '-FEUP',
+                                    id: prototype.id + '-FEUP',
                                     fieldLabel: '<strong style="color:#000;">Update Date</strong>',
                                     labelWidth: 100,
                                     readOnly: true,
@@ -203,7 +202,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.idDE + '-HOUP',
+                                    id: prototype.id + '-HOUP',
                                     fieldLabel: '<strong style="color:#000;">Update Time</strong>',
                                     labelWidth: 100,
                                     readOnly: true,
@@ -230,7 +229,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
             items: [
                 {
                     text: 'Save',
-                    id: prototype.idDE + '-btn-save',
+                    id: prototype.id + '-btn-save',
                     iconCls: 'prx-icon-save',
                     //hidden: true,
                     listeners: {
@@ -239,7 +238,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                 },
                 {
                     text: 'Update',
-                    id: prototype.idDE + '-btn-update',
+                    id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
                     hidden: true,
                     listeners: {
@@ -248,7 +247,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                 },
                 {
                     text: 'Delete',
-                    id: prototype.idDE + '-btn-delete',
+                    id: prototype.id + '-btn-delete',
                     iconCls: 'prx-icon-delete',
                     hidden: true,
                     listeners: {
@@ -257,7 +256,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                 },
                 {
                     text: 'Logs',
-                    id: prototype.idDE + '-btn-log',
+                    id: prototype.id + '-btn-log',
                     iconCls: 'prx-icon-image-log',
                     listeners: {
                        click: 'onLogsClick'
@@ -265,7 +264,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                 },
                 {
                     text: 'Cancel',
-                    id: prototype.idDE + '-btn-cancel',
+                    id: prototype.id + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'
