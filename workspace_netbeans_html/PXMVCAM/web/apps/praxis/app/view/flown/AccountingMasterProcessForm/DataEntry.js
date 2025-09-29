@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-prototype.idDE=prototype.id + '-DataEntryAccountingMP';
+prototype.idDE=prototype.id + '-DataEntryAccountingMPFlown';
 Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.' + prototype.id + '-dataEntry',

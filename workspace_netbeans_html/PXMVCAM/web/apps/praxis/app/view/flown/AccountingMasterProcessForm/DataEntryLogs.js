@@ -1,13 +1,13 @@
-prototype.idDE2 = prototype.id + '-LoggerDataEntryFlown';
+prototype.idDEFlown = prototype.id + '-LoggerDataEntryFlown';
 
 Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntryLogs', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryLogs',
     requires: [
-        'Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryLogsAMPController'
+        'Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryLogsFlownController'
     ],
-    controller: 'DataEntryLogsAMPController',
-    title: 'Logger - Form',
+    controller: 'DataEntryLogsFlownController',
+    title: 'Logger Flown - Form',
     header: true,
     width: 950,
     resizable: false,
@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntryLogs', {
             },
             columnLines: true,
             title: 'Process Log',
-            id: prototype.idDE2 + '-gridLogger',
+            id: prototype.idDEFlown + '-gridLogger',
             width: '100%',
             maxHeight: 450,
             columns: {
@@ -89,7 +89,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntryLogs', {
                 },
                 {
                     text: 'Cancel',
-                    id: prototype.idDE2 + '-btn-cancel',
+                    id: prototype.idDEFlown + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'
