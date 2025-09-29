@@ -48,6 +48,20 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid', {
             },
             { text: 'lastedCheck', dataIndex: 'CHECK_ORIGIN', readOnly: true, width: 80, xtype: 'checkcolumn', hidden: true },
             {
+                sortable: false,
+                xtype: 'actioncolumn',
+                width: 40,
+                text: 'Detail',
+                align: 'center',
+                items: [
+                    {
+                        iconCls: 'prx-icon-detail',
+                        tooltip: 'Open Detail',
+                        handler: 'onClickInfo'
+                    }
+                ]
+            },
+            {
                 text: 'Ticket', dataIndex: 'TICKET', width: 110, 
                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                     let ticket = record.get('CCIA') + record.get('FORMA') + record.get('SERIE') ;
