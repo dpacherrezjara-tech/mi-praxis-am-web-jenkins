@@ -77,18 +77,23 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 Ext.getCmp(prototype.id+'-btn-save').hide();
                 
                 var menuUser = document.getElementById('menuUser').innerText;
-                if (menuUser !== "LAGREDA") {
-                    console.log(this.statusCont,'this.statusCont')
-                    if (this.statusCont === 'Contabilizado.' || this.statusCont === 'Contabilizado') {
-                        Ext.getCmp(prototype.id+'-btn-update').hide();
-                    } else {
-                        Ext.getCmp(prototype.id+'-btn-update').show();
-    //                    me.validateProgram(Ext.getCmp(prototype.id+'-btn-update'), meEntryTick.NPROG, 'M');
-                    }
-    //                me.validateProgram(Ext.getCmp(prototype.id+'-btn-delete'), meEntryTick.NPROG, 'E');
-                    this.cambiarEstadoDatosClave('Deshabilitar');
+                
+                if (this.statusCont === 'Contabilizado.' || this.statusCont === 'Contabilizado') {
+                    Ext.getCmp(prototype.id+'-btn-update').hide();
                 }
                 
+                /* BK ASI ESTABA ANTES */
+                //                if (menuUser !== "LAGREDA") {
+//                    console.log(this.statusCont,'this.statusCont')
+//                    if (this.statusCont === 'Contabilizado.' || this.statusCont === 'Contabilizado') {
+//                        Ext.getCmp(prototype.id+'-btn-update').hide();
+//                    } else {
+//                        Ext.getCmp(prototype.id+'-btn-update').show();
+//    //                    me.validateProgram(Ext.getCmp(prototype.id+'-btn-update'), meEntryTick.NPROG, 'M');
+//                    }
+//    //                me.validateProgram(Ext.getCmp(prototype.id+'-btn-delete'), meEntryTick.NPROG, 'E');
+//                    this.cambiarEstadoDatosClave('Deshabilitar');
+//                }
                 
                 break;
             case 'S':
@@ -97,15 +102,21 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 let showOptions = (this.p.bean.strDescSTCON || '').toString().trim();
                 
                 var menuUser = document.getElementById('menuUser').innerText;
-
-                if (menuUser !== "LAGREDA") {
-                    if (this.statusCont === 'Contabilizado.'  || this.statusCont === 'Contabilizado') {
+                
+                if (this.statusCont === 'Contabilizado.'  || this.statusCont === 'Contabilizado') {
                     Ext.getCmp(prototype.id+'-btn-update').hide();
-                    } else {
-                        Ext.getCmp(prototype.id+'-btn-update').show();
-                    }
-                    
                 }
+
+                
+                /* BKP ASI ESTABA ANTES */
+//                if (menuUser !== "LAGREDA") {
+//                    if (this.statusCont === 'Contabilizado.'  || this.statusCont === 'Contabilizado') {
+//                    Ext.getCmp(prototype.id+'-btn-update').hide();
+//                    } else {
+//                        Ext.getCmp(prototype.id+'-btn-update').show();
+//                    }
+//                    
+//                }
                 
                 
                 
