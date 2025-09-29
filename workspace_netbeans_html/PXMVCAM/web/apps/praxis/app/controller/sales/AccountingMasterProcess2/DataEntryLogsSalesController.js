@@ -1,13 +1,13 @@
-Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryLogsAMPController', {
+Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryLogsSalesController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.DataEntryLogsAMPController',
+    alias: 'controller.DataEntryLogsSalesController',
     url: CONTEXTPATH + '/AccountingReport',
     afterRender: function () {
         this.loadLogger();
     },
     loadLogger: async function () {
         const me = this;
-        const grid = Ext.getCmp(prototype.idDE2 + '-gridLogger');
+        const grid = Ext.getCmp(prototype.idDESales + '-gridLogger');
         try {
             grid.setLoading(true);
             const res = await global.callStoreGet('PRAXIS', 'SQP05726', me.view.searchParams);

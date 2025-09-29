@@ -1,3 +1,4 @@
+prototype.idDE=prototype.id + '-DataEntryAccountingMPSales';
 Ext.define('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntry',{
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryAccountingMasterProcess2Form',

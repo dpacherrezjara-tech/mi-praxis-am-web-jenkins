@@ -1,14 +1,15 @@
-Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryLogsAMPController', {
+Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryLogsFlownController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.DataEntryLogsAMPController',
+    alias: 'controller.DataEntryLogsFlownController',
     url: CONTEXTPATH + '/AccountingReport',
     afterRender: function () {
         this.loadLogger();
     },
     loadLogger: async function () {
         const me = this;
-        const grid = Ext.getCmp(prototype.idDE2 + '-gridLogger');
+        const grid = Ext.getCmp(prototype.idDEFlown + '-gridLogger');
         try {
+            console.log(grid);
             grid.setLoading(true);
             const res = await global.callStoreGet('PRAXIS', 'SQP05711', me.view.searchParams);
             if (res.lstRs.length) {
