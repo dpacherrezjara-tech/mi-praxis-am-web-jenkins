@@ -66,15 +66,9 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController
     onClickInfo: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {  
         const me = this;
         const obj = record.data;
-        
-//        let params = {
-//            IN_CCUST : obj.CCUST,
-//            IN_PRDA : obj.PRDA,
-//            IN_TDOC : obj.TDOC,
-//            IN_AREFNBR : obj.AREFNBR
-//        };
-        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry', {
-            id: prototype.id + '-TransacErrorBPODataEntry-1',
+         
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.EmdsControlForm.DataEntrys.DetailEmdsDataEntry', {
+            id: prototype.id + '-DetailEmdsDataEntry-1',
             obj: obj,
 //            callback: () => {
 //                grid.getStore().load();

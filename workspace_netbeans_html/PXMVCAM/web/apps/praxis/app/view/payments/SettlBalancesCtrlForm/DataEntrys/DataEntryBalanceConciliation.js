@@ -1,8 +1,3 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
- */
-
 
 prototype.idDE2 = prototype.id + 'DataEntryBalanceConciliation';
 
@@ -146,11 +141,11 @@ Ext.define('Ext.Praxis.view.payments.SettlBalancesCtrlForm.DataEntrys.DataEntryB
                     listeners: {
                         selectionchange: function (selModel, selected) {
                             var updateBtn = Ext.getCmp(prototype.idDE2 + '-btn-update');
-                            if (selected.length > 0) {
-                                updateBtn.setDisabled(false);
-                            } else {
-                                updateBtn.setDisabled(true);
-                            }
+//                            if (selected.length > 0) {
+//                                updateBtn.setDisabled(false);
+//                            } else {
+//                                updateBtn.setDisabled(true);
+//                            }
                         }
                     }
                 },
