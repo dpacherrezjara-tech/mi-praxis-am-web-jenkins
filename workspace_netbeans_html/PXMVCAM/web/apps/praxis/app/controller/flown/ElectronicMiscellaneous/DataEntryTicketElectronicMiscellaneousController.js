@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
                 
                 
                 
-                if (menuUser !== "LAGREDA") {
+//                if (menuUser !== "LAGREDA") {
                     
                     let showOptions = (this.p.rec.data.IDCON || '').toString().trim();
                     if (showOptions) {
@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
                         Ext.getCmp(prototype.id + '-t' + '-btn-delete').hide();
                     }
                     
-                }
+//                }
                 
                 
                 
@@ -52,12 +52,12 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
         }
         // global.AccessControlMaganer();
         console.log(menuUser !== "LAGREDA","validacion")
-        if (menuUser !== "LAGREDA") {
-            global.AccessControlMaganerByMode(this.p);
-            
-        } else {
-            Ext.getCmp(prototype.id + '-t' + '-btn-update').show();
-        }
+//        if (menuUser !== "LAGREDA") {
+//            global.AccessControlMaganerByMode(this.p);
+//            
+//        } else {
+//            Ext.getCmp(prototype.id + '-t' + '-btn-update').show();
+//        }
         
         
     },
