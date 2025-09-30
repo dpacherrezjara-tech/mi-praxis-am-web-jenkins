@@ -1,3 +1,4 @@
+prototype.idDEF=prototype.id + '-DataEntryAccountingMPSales';
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -229,7 +230,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
             items: [
                 {
                     text: 'Save',
-                    id: prototype.id + '-btn-save',
+                    id: prototype.idDEF + '-btn-save',
                     iconCls: 'prx-icon-save',
                     //hidden: true,
                     listeners: {
@@ -238,7 +239,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                 },
                 {
                     text: 'Update',
-                    id: prototype.id + '-btn-update',
+                    id: prototype.idDEF + '-btn-update',
                     iconCls: 'prx-icon-update',
                     hidden: true,
                     listeners: {
@@ -247,7 +248,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                 },
                 {
                     text: 'Delete',
-                    id: prototype.id + '-btn-delete',
+                    id: prototype.idDEF + '-btn-delete',
                     iconCls: 'prx-icon-delete',
                     hidden: true,
                     listeners: {
@@ -256,7 +257,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                 },
                 {
                     text: 'Logs',
-                    id: prototype.id + '-btn-log',
+                    id: prototype.idDEF + '-btn-log',
                     iconCls: 'prx-icon-image-log',
                     listeners: {
                        click: 'onLogsClick'
@@ -264,7 +265,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
                 },
                 {
                     text: 'Cancel',
-                    id: prototype.id + '-btn-cancel',
+                    id: prototype.idDEF + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'

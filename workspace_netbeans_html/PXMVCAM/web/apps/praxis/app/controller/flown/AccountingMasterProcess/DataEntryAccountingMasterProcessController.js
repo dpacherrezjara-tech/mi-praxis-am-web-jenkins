@@ -28,16 +28,17 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
 
         switch (this.p.action) {
             case 'I':
-                Ext.getCmp(prototype.id + '-btn-save').show();
+                Ext.getCmp(prototype.idDEF + '-btn-save').show();
                 break;
             case 'U':
                 this.getDataInputs();
-                Ext.getCmp(prototype.id + '-btn-save').hide();
+                Ext.getCmp(prototype.idDEF + '-btn-save').hide();
+                console.log(Ext.getCmp(prototype.idDEF + '-btn-save'));
                 
                 if (this.p.rec.data.ESTADO === 'Error') {
-                    Ext.getCmp(prototype.id + '-btn-delete').show();
+                    Ext.getCmp(prototype.idDEF + '-btn-delete').show();
                 } else {
-                    Ext.getCmp(prototype.id + '-btn-delete').hide();
+                    Ext.getCmp(prototype.idDEF + '-btn-delete').hide();
                 }
                 this.view.setHeight(this.view.getHeight());
                 break;
