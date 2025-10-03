@@ -22,6 +22,16 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
         },
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Cols">
+//            {
+//                text: 'RN', dataIndex: 'RN', width: 50
+//            },
+            {
+                text: 'RN',
+                locked: true,
+                dataIndex: 'RN',
+                xtype: 'rownumberer', // Columna de número de fila
+                width: 40 // Ancho de la columna de número de fila (ajusta según tus necesidades)
+            },
             {
                 text: 'Plusgrade ID', dataIndex: 'PLUSGRAID', width: 85
             },
@@ -377,7 +387,19 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                     metaData.style = "text-align:center;";
                     return value;
                 }
-            }
+            },
+            {
+                text: 'Updated',
+                defaults: {
+                    menuDisabled: true,
+                    sortable: false,
+                    align: 'center'
+                },
+                columns: [
+                    { text: 'User', dataIndex: 'USUP', width: 80 },
+                    { text: 'Date', dataIndex: 'FEUP', width: 80 }
+                ]
+            },
             //</editor-fold>
         ]
     },
