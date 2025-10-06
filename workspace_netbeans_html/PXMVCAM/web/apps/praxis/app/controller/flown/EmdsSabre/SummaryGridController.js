@@ -260,7 +260,7 @@ Ext.define('Ext.Praxis.controller.flown.EmdsSabre.SummaryGridController', {
                 'Status Changed All': x.CSTS,
                 'Status Changed Used': x.STATUSED,
                 'Status Changed Diff Used': x.STATOTHER,
-                'Status Changed OK': x.STATPEND,
+                'Status Changed Pending': x.STATPEND,
                 'Fare St. Chg': x.CSTTARIF
 
             }));
