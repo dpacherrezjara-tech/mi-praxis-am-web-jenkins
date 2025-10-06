@@ -131,6 +131,46 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             this.onClickSearchBtn();
         }
     },
+    onChangeDateComplement: function (obj) {
+        let option = obj.id.split('-').at(-1);
+        
+        const fromPlusgrade = Ext.getCmp(prototype.id + '-datefieldFromPlusgrade');
+        const toPlusgrade = Ext.getCmp(prototype.id + '-datefieldToPlusgrade');
+        const fromMIT = Ext.getCmp(prototype.id + '-datefieldFromMIT');
+        const toMIT = Ext.getCmp(prototype.id + '-datefieldToMIT');
+        const fromDEUNA = Ext.getCmp(prototype.id + '-datefieldFromDEUNA');
+        const toDEUNA = Ext.getCmp(prototype.id + '-datefieldToDEUNA');
+        
+        const opts = {
+            'datefieldFromPlusgrade': () => {
+                toPlusgrade.setValue(fromPlusgrade.getValue());
+            },
+            'datefieldToPlusgrade': () => {
+                if (toPlusgrade.getValue() < fromPlusgrade.getValue()) {
+                    fromPlusgrade.setValue(toPlusgrade.getValue());
+                }
+            },
+            
+            'datefieldFromMIT': () => {
+                toMIT.setValue(fromMIT.getValue());
+            },
+            'datefieldToMIT': () => {
+                if (toMIT.getValue() < fromMIT.getValue()) {
+                    fromMIT.setValue(toMIT.getValue());
+                }
+            },
+            
+            'datefieldFromDEUNA': () => {
+                toDEUNA.setValue(fromDEUNA.getValue());
+            },
+            'datefieldToDEUNA': () => {
+                if (toDEUNA.getValue() < fromDEUNA.getValue()) {
+                    fromDEUNA.setValue(toDEUNA.getValue());
+                }
+            }
+        };
+        opts[option]();
+    }
 });
 
 
