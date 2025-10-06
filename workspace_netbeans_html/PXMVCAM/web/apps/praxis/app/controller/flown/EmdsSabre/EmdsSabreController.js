@@ -8,6 +8,7 @@ Ext.define('Ext.Praxis.controller.flown.EmdsSabre.EmdsSabreController', {
     init: function (view) {
     },
     afterRender: async function (obj, e) {
+        this.onClickSearchBtn();
     },
     //<editor-fold defaultstate="collapsed" desc="Parameters">
     formatSearchParams: function (type) {
@@ -54,6 +55,7 @@ Ext.define('Ext.Praxis.controller.flown.EmdsSabre.EmdsSabreController', {
     onClickClearBtn: function () {
         Ext.getCmp(prototype.id + '-formFiltersS').getForm().reset();
         Ext.getCmp(prototype.id + '-formFiltersB').getForm().reset();
+        Ext.getCmp(prototype.id + '-filters').getForm().reset();
     },
     onClickFilterBtn: function () {
         const panelFilters = Ext.getCmp(prototype.id + '-contentFilter');
