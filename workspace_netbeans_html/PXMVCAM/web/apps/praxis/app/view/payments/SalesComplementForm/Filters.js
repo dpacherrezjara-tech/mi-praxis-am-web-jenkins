@@ -64,7 +64,8 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                             ['PRDA', 'Processing Date'],
                                             ['SDATE', 'Sale Date'],
                                             ['FECSELEC', 'Match Date Sales'],
-                                            ['AMEXFECSELEC', 'Match Date Amex']
+                                            ['AMEXFECSELEC', 'Match Date Amex'],
+                                            ['FCONT', 'Accounting Date']
                                         ]
                                     }),
                                     labelWidth: 50,
@@ -73,7 +74,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     valueField: 'code',
                                     queryMode: 'local',
                                     editable: false,
-                                    value: 'SDATE'
+                                    value: 'PRDA'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -83,7 +84,11 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     editable: false, // Deshabilita la edición del campo
                                     labelWidth: 50,
                                     width: 150,
-                                    value: new Date()
+                                    value: new Date(),
+                                    listeners: {
+                                        change: 'onChangeDateComplement'
+                                    },
+                                    id: prototype.id + '-datefieldFromPlusgrade'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -93,7 +98,11 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     editable: false, // Deshabilita la edición del campo
                                     labelWidth: 50,
                                     width: 150,
-                                    value: new Date()
+                                    value: new Date(),
+                                    listeners: {
+                                        change: 'onChangeDateComplement'
+                                    },
+                                    id: prototype.id + '-datefieldToPlusgrade'
                                 },
                                 {
                                     xtype: 'combobox',
@@ -123,9 +132,13 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ['X', 'All'],
-                                            ['1', 'Match'],
                                             ['', 'Pending'],
-                                            ['2', 'Accounted']
+                                            ['1', 'Match'],
+                                            ['3', 'Settl. Without Sales'],
+                                            ['4', 'Match Partial'],
+                                            ['6', 'Match Forced'],
+                                            ['E', 'Duplicate Payment'],
+                                            ['5', 'Match Manual']
                                         ]
                                     }),
                                     labelWidth: 160,
@@ -136,6 +149,48 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     editable: false,
                                     value: 'X'
                                 },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbPaisesPG',
+                                    name: 'IN_COUNTRY',
+                                    queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    fieldLabel: 'Country',
+                                    labelWidth: 65,
+                                    labelAlign: 'right',
+                                    width: 220,
+                                    typeAhead: true,
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Card Type',
+                                    name: 'IN_TCARD',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['1', 'Visa'],
+                                            ['2', 'Master Card'],
+                                            ['3', 'American Express']
+                                        ]
+                                    }),
+                                    labelWidth: 80,
+                                    width: 210,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                }
                             ]
                         },
                         {
@@ -180,46 +235,30 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     }
                                 },
                                 {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-cmbPaisesPG',
-                                    name: 'IN_COUNTRY',
-                                    queryMode: 'local',
-                                    allowBlank: true,
-                                    forceSelection: true,
-                                    selectOnFocus: true,
-                                    caseSensitive: false,
-                                    autoSelect: true,
-                                    fieldLabel: 'Country',
-                                    labelWidth: 65,
-                                    labelAlign: 'right',
-                                    width: 220,
-                                    typeAhead: true,
-                                    valueField: 'CODE',
-                                    displayField: 'NAME',
-                                    enableKeyEvents: true,
-                                    triggerAction: 'all',
-                                    value: ''
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Plusgrade ID',
+                                    labelWidth: 90,
+                                    width: 170,
+                                    name: 'IN_PLUSGRAID',
+                                    maxLength: 8,
+                                    maskRe: /[0-9]/,
+                                    enforceMaxLength: true,
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
                                 },
                                 {
-                                    xtype: 'combobox',
-                                    fieldLabel: 'Card Type',
-                                    name: 'IN_TCARD',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['', 'All'],
-                                            ['1', 'Visa'],
-                                            ['2', 'Master Card'],
-                                            ['3', 'American Express']
-                                        ]
-                                    }),
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Ref. Number',
                                     labelWidth: 80,
-                                    width: 210,
-                                    displayField: 'name',
-                                    valueField: 'code',
-                                    queryMode: 'local',
-                                    editable: false,
-                                    value: ''
+                                    width: 220,
+                                    name: 'IN_AREFNBR',
+                                    maxLength: 23,
+                                    maskRe: /[0-9]/,
+                                    enforceMaxLength: true,
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
                                 },
                                 {
                                     xtype: 'textfield',
@@ -339,9 +378,9 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     value: new Date(),
                                     validator: 'validaFecha',
                                     listeners: {
-                                        change: 'onChangeDateBPBtn'
+                                        change: 'onChangeDateComplement'
                                     },
-                                    id: prototype.id + '-datefieldFromBP'
+                                    id: prototype.id + '-datefieldFromMIT'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -355,9 +394,9 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     value: new Date(),
                                     validator: 'validaFecha',
                                     listeners: {
-                                        change: 'onChangeDateBPBtn'
+                                        change: 'onChangeDateComplement'
                                     },
-                                    id: prototype.id + '-datefieldToBP'
+                                    id: prototype.id + '-datefieldToMIT'
                                 },
                                 {
                                     xtype: 'textfield',
@@ -542,10 +581,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     width: 150,
                                     value: new Date(),
                                     validator: 'validaFecha',
-//                                    listeners: {
-//                                        change: 'onChangeDateBPBtn'
-//                                    },
-//                                    id: prototype.id + '-datefieldFromBP'
+                                    listeners: {
+                                        change: 'onChangeDateComplement'
+                                    },
+                                    id: prototype.id + '-datefieldFromDEUNA'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -557,10 +596,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     width: 150,
                                     value: new Date(),
                                     validator: 'validaFecha',
-//                                    listeners: {
-//                                        change: 'onChangeDateBPBtn'
-//                                    },
-//                                    id: prototype.id + '-datefieldFromBP'
+                                    listeners: {
+                                        change: 'onChangeDateComplement'
+                                    },
+                                    id: prototype.id + '-datefieldToDEUNA'
                                 },
 
                                 {
@@ -620,7 +659,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     labelWidth: 40,
                                     width: 120,
                                     name: 'IN_PNR',
-                                    maxLength: 15, // Límite máximo de caracteres
+                                    maxLength: 6, // Límite máximo de caracteres
                                     maskRe: /[a-zA-Z0-9]/,
                                     enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                                     listeners: {

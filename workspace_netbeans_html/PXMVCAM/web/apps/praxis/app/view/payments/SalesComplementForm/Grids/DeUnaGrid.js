@@ -23,29 +23,25 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.DeUnaGrid', {
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Cols">
             {
-                text: 'Process<br>Date', dataIndex: 'A4791PRDA', width: 90
+                text: 'RN',
+                dataIndex: 'RN',
+                xtype: 'rownumberer', // Columna de número de fila
+                width: 40 // Ancho de la columna de número de fila (ajusta según tus necesidades)
             },
             {
-                text: 'Ticket', dataIndex: 'A4791TKT', width: 90
+                text: 'Order ID', dataIndex: 'A4791ORDER', width: 170
             },
             {
-                text: 'PNR', dataIndex: 'A4791PNR', width: 90
+                text: 'Processing<br>Date', dataIndex: 'A4791PRDA', width: 80
             },
             {
-                text: 'Order ID', dataIndex: 'A4791ORDER', width: 180
+                text: 'Ticket', dataIndex: 'A4791TKT', width: 100
             },
             {
-                text: 'Transaction',
-                defaults: {
-                    menuDisabled: true,
-                    sortable: false,
-                    align: 'center'
-                },
-                columns: [
-                    {
-                        text: 'Id', dataIndex: 'A4791TRANS', width: 180
-                    },
-                ]
+                text: 'PNR', dataIndex: 'A4791PNR', width: 80
+            },
+            {
+                text: 'Transaction<br>Id', dataIndex: 'A4791TRANS', width: 150
             },
             {
                 text: 'Credit Card',
@@ -62,10 +58,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.DeUnaGrid', {
                         text: 'Auth.', dataIndex: 'A4791AUTH', width: 80
                     },
                     {
-                        text: 'Issue.', dataIndex: 'A4791ISSBK', width: 80
+                        text: 'Issue.', dataIndex: 'A4791ISSBK', width: 70
                     },
                     {
-                        text: 'Method<br>Type', dataIndex: 'A4791MTYPE', width: 80
+                        text: 'Method<br>Type', dataIndex: 'A4791MTYPE', width: 70
                     },
                     {
                         text: 'Card Brand', dataIndex: 'A4791CARDB', width: 80
@@ -73,20 +69,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.DeUnaGrid', {
                 ]
             },
             {
-                text: 'Merchand',
-                defaults: {
-                    menuDisabled: true,
-                    sortable: false,
-                    align: 'center'
-                },
-                columns: [
-                    {
-                        text: 'Id', dataIndex: 'A4791MERID', width: 150
-                    },
-                    {
-                        text: 'Country', dataIndex: 'A4791MERPS', width: 80
-                    },
-                ]
+                text: 'Currency', dataIndex: 'A4791CURRE', width: 80,
+                renderer: function (metaData) {
+                    metaData.style = "text-align:center;background-color:#B2DAFA";
+                }
             },
             {
                 text: 'Total', dataIndex: 'A4791TOTAL', width: 100,
@@ -146,16 +132,38 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.DeUnaGrid', {
                 }
             },
             {
-                text: 'Date Create', dataIndex: 'A4791FECPG', width: 180
+                text: 'Status<br>Complement', dataIndex: 'A4791STATU', width: 100
             },
             {
-                text: 'Status', dataIndex: 'A4791STATU', width: 90
+                text: 'Reconciliation',
+                defaults: {
+                    menuDisabled: true,
+                    sortable: false,
+                    align: 'center',
+                    backgroundColor: '#B2DAFA'
+                },
+                columns: [
+                    { text: 'Status', dataIndex: 'STVAL_DESCRIPTION', width: 80 },
+                    { text: 'Proceesor', dataIndex: 'PROSQ_DESCRIPTION', width: 100 },
+                    { text: 'Proccessing<br>Date', dataIndex: 'A4791PRDAL', width: 90 },
+                    { text: 'Ref. Number', dataIndex: 'A4791AREFN', width: 150 },
+                ]
             },
             {
-                text: 'Currency', dataIndex: 'A4791CURRE', width: 100
-            },
-            {
-                text: 'Concilitiaon<br>Status', dataIndex: 'A4791STVAL', width: 100
+                text: 'Merchand',
+                defaults: {
+                    menuDisabled: true,
+                    sortable: false,
+                    align: 'center'
+                },
+                columns: [
+                    {
+                        text: 'Id', dataIndex: 'A4791MERID', width: 150
+                    },
+                    {
+                        text: 'Country', dataIndex: 'A4791MERPS', width: 70
+                    },
+                ]
             },
             {
                 text: 'Interest Rater', dataIndex: 'A4791RATE', width: 100
@@ -174,6 +182,22 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.DeUnaGrid', {
                     return value;
                 }
             },
+            {
+                text: 'Date Create', dataIndex: 'A4791FECPG', width: 140
+            },
+            {
+                text: 'Updated',
+                defaults: {
+                    menuDisabled: true,
+                    sortable: false,
+                    align: 'center'
+                },
+                columns: [
+                    { text: 'User', dataIndex: 'A4791REVIS', width: 80 },
+                    { text: 'Date', dataIndex: 'A4791FREVI', width: 80 }
+                ]
+            },
+            
         ]
     },
     tbar: {
