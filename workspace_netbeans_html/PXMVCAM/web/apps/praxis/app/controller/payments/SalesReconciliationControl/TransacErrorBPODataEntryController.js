@@ -1019,7 +1019,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 //                qty.setValue(data.response.length);
 //                amt.setValue(Ext.util.Format.number(storeDesglose.sum('svfops'), '0,000.00'));
 //            }
-            console.log('res else',params);
             const res = await global.callStoreGet('PRAXISMP', 'SQP05055', params);
             if (res.lstRs.length > 0) {
                 me.dataDesglose = res.lstRs.at(0);
@@ -1405,8 +1404,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         });
         dataEntry.show();
     },
-    //</editor-fold>z/
-
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Proceed">
     onUpdateClickStatus: async function () {
@@ -1534,4 +1532,5 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             record.set('selected', false);
         }
     }
+    //</editor-fold>
 });

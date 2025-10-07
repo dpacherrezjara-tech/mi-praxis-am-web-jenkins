@@ -26,8 +26,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
             msg: 'SPNR Copied to clipboard!: ' + rowData.data.PNR.trim()
         });
     },
-    
-    
     onClickSearchTicket: function (grid, html, rowIndex, colIndex, obj) {
         let data = obj.record.data;
         console.log(data);
@@ -51,6 +49,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
         console.log(beanProMasterTicket);
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },
+    onClickOpenReconciliation: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const obj = record.data;
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeReconciliationDataEntry', {
+            id: prototype.id + '-PlusgradeReconciliationDataEntry-1',
+            obj: obj,
+//            callback: () => {
+//                grid.getStore().load();
+//            }
+        });
+        dataEntry.show();
     },
     
     downloadExcelPlusgrade: function (){  //modal confirmar descarga
@@ -96,14 +105,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
            'Plusgrade VS Chargeback': x.DESCFAMEXCHG,
            'PNR': x.PNR,
            'EMD Number': x.EMDNUMBER,
-           'Accounting ID Sales FLEX': x.IDCONFLE,
+           'Accounting Status': x.STCON_DESCRIPTION,
            'Accounting Date': x.FCONT,
-           'Accounting ID': x.IDCON,
+           'Accounting Praxis ID': x.IDCON,
+           'Accounting ID FLEX': x.IDCONFLE,
+           
            'Error Code': x.CERROR,
            'Error Description': x.DES_CERROR,
            'Add Pax EMD Number': x.ADDPAXEMD,
            'Add Pax Ticket Number': x.ADDPAXTKT,
-           'Token': x.PAYTOKEN        
+           'Token': x.PAYTOKEN,
+           'User Updated': x.USUP,
+           'Updated ': x.FEUP
+           
         }));
         await global.writeExcelFromJson(data,'Plusgrade Information'); 
         view.setLoading(false);
