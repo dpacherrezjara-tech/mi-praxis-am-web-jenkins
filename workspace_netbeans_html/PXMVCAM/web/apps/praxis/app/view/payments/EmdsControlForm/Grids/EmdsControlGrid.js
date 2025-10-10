@@ -78,7 +78,7 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid', {
                     return ticket ;
                 },
                 listeners: {
-                    click: 'onClickInfo'
+                    click: 'onClickByPayment'
                 }
             },
             {
@@ -121,7 +121,7 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid', {
             {
                 text: 'Ref. Number', dataIndex: 'AREFNBR', width: 160,
                 listeners: {
-                    click: 'onClickInfo'
+                    click: 'onClickByPayment'
                 },
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "background-color:#FCF6DC;font-weight:bold;color:#057ECB;text-decoration:underline;cursor:pointer";
