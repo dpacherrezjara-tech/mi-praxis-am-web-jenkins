@@ -1,3 +1,4 @@
+prototype.idDE=prototype.id + '-DataEntryAccountingMPSales';
 Ext.define('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntry',{
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryAccountingMasterProcess2Form',
@@ -612,6 +613,14 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntry',{
                     iconCls: 'prx-icon-delete',
                     listeners:{
                         click: 'onDeleteClick'
+                    }
+                },
+                {
+                    text: 'Logs',
+                    id: prototype.idDE + '-btn-log',
+                    iconCls: 'prx-icon-image-log',
+                    listeners: {
+                       click: 'onLogsClick'
                     }
                 },
                 {

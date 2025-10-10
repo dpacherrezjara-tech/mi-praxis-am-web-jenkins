@@ -1447,6 +1447,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                                         bvalida = false;
                                         return;
                                     }
+                                }
+                                if (gridPAYMENT.getStore().getAt(p).get('A3653TYCAR') === 'BR') {
+                                    if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653NTARJ')).length !== 16) {
+                                        Ext.Msg.alert('.: PRAXIS :.', 'The Fop BR must have BR characters');
+                                        bvalida = false;
+                                        return;
+                                    }
                                 } else {
                                     if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653NTARJ')).length > 16 || Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653NTARJ')).length > 14) {
                                         Ext.Msg.alert('.: PRAXIS :.', 'The Fop must have 14 or 16 characters');
@@ -1466,9 +1473,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
 
                     }
                     vl_netofop = (vl_netofop + parseFloat(gridPAYMENT.getStore().getAt(p).get('A3653TOTAL')));
-                    
+
                 }
-            }           
+            }
             vl_netofop = (txtTotalram - vl_netofop.toFixed(2));
             if (vl_netofop !== 0) {
                 Ext.Msg.alert('.: PRAXIS :.', 'the total fop must be equal to the total refund');

@@ -2206,7 +2206,9 @@ public class SalesReportControoller extends BaseController {
             if (!res.isEmpty()) {
                 return new ResponseEntity(res, HttpStatus.OK);
             } else {
-                throw new NullPointerException("No existen Elementos");
+//                throw new NullPointerException("No existen Elementos");
+            // ignora el impuesto 0 , muestra la data
+                return new ResponseEntity(Collections.emptyList(), HttpStatus.OK);
             }
         } catch (NullPointerException nex) {
             return new ResponseEntity(Collections.singletonMap("msg", nex.getMessage()), HttpStatus.NO_CONTENT);
