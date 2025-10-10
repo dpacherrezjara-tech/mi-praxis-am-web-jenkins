@@ -20,10 +20,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
         });
         winPnrDataEntry.show();
     },
-    copySPNR: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        navigator.clipboard.writeText(rowData.data.PNR.trim());
+    copyEMDTKT: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        navigator.clipboard.writeText(rowData.data.EMDNUMBER.trim());
         global.Msg({
-            msg: 'SPNR Copied to clipboard!: ' + rowData.data.PNR.trim()
+            msg: 'EMD NUMBER Copied to clipboard!: ' + rowData.data.EMDNUMBER.trim()
         });
     },
     onClickSearchTicket: function (grid, html, rowIndex, colIndex, obj) {
