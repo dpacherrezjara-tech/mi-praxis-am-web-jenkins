@@ -209,37 +209,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
         const gridBPO = Ext.getCmp(prototype.idPlus + '-gridBPO');
         const bpoStore = gridBPO.getStore();
         const dataStore = bpoStore.getData().getRange();
-        const addedCount = 0 ;
-
-        console.log('params',params);
+        let added = 0;
+        let repeats = 0;
+        // console.log('params',params);
         // search
         const res = await global.callStoreGet('PRAXISMP', 'SQP05748', params);
          
         const { lstRs } = res;
         if ( lstRs.length > 0 ) {
             const data = lstRs.at(0);
-            // Añadir la data que no esta en la grilla de dataStore, diferenciando por el número de ticket (campo 'TICKET')
-            // data: la data nueva (objeto), dataStore: array de los existentes en la grilla
-
-            // Primero, obtener todos los números de ticket que ya existen en la grilla
-            const existingTickets = new Set(dataStore.map(item => item.TICKET));
-             
-            // Filtrar solo los tickets que no están en la grilla
-            // Filtrar solo los tickets que no están en la grilla (por TICKET)
-            const toAdd = data.filter(item => {
-                // Normalizar el ticket a string y trim
-                const tkt = (item.TICKET || '').toString().trim();
-                return !existingTickets.has(tkt);
-            });
             
-            // Agregar al store solo los nuevos elementos
-            if (toAdd.length > 0) {
-                bpoStore.add(toAdd);
-            }
 
-            // Puedes contar cuantos se agregan así:
-            addedCount = toAdd.length;
-            console.log(`Tickets agregados: ${addedCount}`, toAdd);
+            data.forEach(item => {
+                const tkt = (item.TICKET || '').toString().trim();
+                let isRepeat = dataStore.some( d => d.data.TICKET === tkt );
+                if (isRepeat) {
+                    console.log("repeat :",item);
+                    repeats++;
+                } else {
+                    console.log("new :",item);
+                    bpoStore.insert(0, item);
+                    added++;
+                }
+            });
+            console.log(`Tickets agregados: ${added}`);
 
             // Actualiza los totales de la grilla BPO después de agregar
             this.setGridAndSummary({
@@ -251,7 +244,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
             });
         }
         
-        global.Msg({msg: `Se agregaron ${addedCount} ticket(s).`});
+        global.Msg({msg: `Se agregaron ${added} ticket(s).`});
 
         me.view.setLoading(false);
 
