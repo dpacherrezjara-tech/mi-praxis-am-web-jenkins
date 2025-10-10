@@ -2642,7 +2642,7 @@ public class ProMasterTicketDAO {
                 + " ORDER BY"
                 + "   A720SEQ ASC";
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP02665(?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP02665_V1(?,?,?,?,?)}";
         //String SQLCLL01 = "{CALL SQP00249_1(?,?,?,?,?)}";
 
         //</editor-fold>
@@ -3127,7 +3127,7 @@ public class ProMasterTicketDAO {
                                                             objRtn11.fileA1692.SERIE = rs11.getString("SERIE");
                                                             objRtn11.fileA1692.CUPON = rs11.getString("CUPON");
                                                             objRtn11.fileA1692.SEQ = rs11.getString("SEQ");
-                                                            objRtn11.fileA1692.SEQRO = "00"; // = rs11.getString("SEQRO");
+                                                            objRtn11.fileA1692.SEQRO = rs11.getString("SEQRO");
                                                             objRtn11.fileA1692.CDEPART = rs11.getString("CDEPART");
                                                             objRtn11.fileA1692.CARRIVA = rs11.getString("CARRIVA");
                                                             objRtn11.fileA1692.CARR = rs11.getString("CARR");

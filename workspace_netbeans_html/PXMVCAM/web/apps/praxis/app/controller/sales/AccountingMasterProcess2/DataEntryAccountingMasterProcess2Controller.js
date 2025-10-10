@@ -11,14 +11,20 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
     },
     afterRender: function(){
         this.p = this.view.params;
+        global.AccessControlMaganer();
         
         switch( this.p.action ){
             case 'U':
                 this.mostrarData(this.p.rec);
                 Ext.getCmp(prototype.id+'-btn-save').hide();
-                Ext.getCmp(prototype.id+'-btn-update').hide();
+                //Ext.getCmp(prototype.id+'-btn-update').hide();
                 if(this.p.rec.data.ESTADO === 'Error'){
                     Ext.getCmp(prototype.id+'-btn-delete').show();
+                }
+                else if(this.p.rec.data.ESTADO === 'Completed'){
+                    Ext.getCmp(prototype.id+'-btn-delete').hide();
+                    Ext.getCmp(prototype.id+'-btn-save').hide();
+                    Ext.getCmp(prototype.id+'-btn-update').hide();
                 }else{
                     Ext.getCmp(prototype.id+'-btn-delete').hide();
                 }                            
@@ -34,7 +40,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                 break;
                 
         }
-        global.AccessControlMaganer();
+        
     },
     onMostrarCampoChange: function(cmp, newValue, oldValue, eOpts) {
         this.limpiarCampos();
@@ -431,5 +437,17 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                 //Ext.getCmp('DataEntryAccountingMasterProcess2Form').unmask();
             }
         });
+    },
+    onLogsClick: function () {
+        let date = this.p.rec.get('A1955FPROC');
+        let params = {
+            IN_FPROC: date,
+            IN_MODUL: 'PSALESLOG'
+        };
+        const newWin = Ext.create('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntryLogs', {
+            id: prototype.idDE + '-DataEntryLogs-1',
+            searchParams: params
+        });
+        newWin.show();
     }
 });
