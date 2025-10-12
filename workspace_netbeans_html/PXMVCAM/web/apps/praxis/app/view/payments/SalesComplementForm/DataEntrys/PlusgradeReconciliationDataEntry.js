@@ -11,6 +11,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
     header: true,
     width: 845,
     maxHeight: 820,
+    // maxHeight: 780,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -28,7 +29,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
             },
             border: false,
             width: '100%',
-            scrollable: true, 
+            scrollable: true,
             defaults: {
                 xtype: 'fieldset',
                 layout: {
@@ -104,8 +105,8 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                     width: 260
                                 },
                                 {
-                                    fieldLabel: 'Type',
-                                    name: 'UPGRATYPE',
+                                    fieldLabel: 'Sale Date',
+                                    name: 'SDATE',
                                     labelWidth: 110,
                                     width: 260
                                 }
@@ -151,6 +152,12 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                     labelWidth: 110,
                                     width: 260
                                 },
+                                {
+                                    fieldLabel: 'Type',
+                                    name: 'UPGRATYPE',
+                                    labelWidth: 110,
+                                    width: 260
+                                }
                             ]
                         }
 
@@ -287,10 +294,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                 {
                                     fieldLabel: 'Transac. Amount',
                                     name: 'SVFOP',
+                                    readOnly: true,
                                     labelWidth: 110,
                                     width: 260,
                                     fieldStyle: 'text-align:right;',
-                                    readOnly: true,
                                     listeners: {
                                         change: function (field, newValue) {
                                             field.setRawValue(Ext.util.Format.number(newValue, '0,000.00'));
@@ -544,10 +551,62 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                                 },
                                                 items: [
                                                     {
-                                                        text: 'Status', width: 70,
+                                                        sortable: false,
+                                                        xtype: 'actioncolumn',
+                                                        width: 40,
+                                                        text: 'Del.',
+                                                        align: 'center',
+                                                        items: [
+                                                            {
+                                                                iconCls: 'prx-icon-image-trash',
+                                                                tooltip: 'Delete',
+                                                                handler: 'onDeleteRecordBPO'
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Status', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             return 'Pending';
                                                         }
+                                                    },
+                                                    {
+                                                        text: 'Cur.', dataIndex: 'A4501MFOP', width: 45
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'A4501VFOP', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Sales<br>Date', dataIndex: 'A4501FECVT', width: 80
+                                                    },
+                                                    {
+                                                        text: 'PNR', dataIndex: 'A4501PNR', width: 65
+                                                    },
+                                                    {
+                                                        text: 'Ticket', width: 110, dataIndex: 'TICKET',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#FCF6DC;font-weight:bold;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Corrl', width: 50, dataIndex: 'A4501CORRL'
+                                                    },
+                                                    {
+                                                        text: 'Pax', dataIndex: 'A4496PAX', width: 90,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if (value !== undefined && value !== null) {
+                                                                metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
+                                                            }
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Iata', dataIndex: 'A4501AGENT', width: 75
                                                     },
                                                     {
                                                         text: 'Src', dataIndex: 'fuente', width: 45
@@ -571,49 +630,6 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                                             },
                                                             {
                                                                 text: 'Auth', dataIndex: 'A4501CAPL', width: 70
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        text: 'Curr', dataIndex: 'A4501MFOP', width: 50
-                                                    },
-                                                    {
-                                                        text: 'Amount', dataIndex: 'A4501VFOP', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
-                                                            return Ext.util.Format.number(value, '0,000.00');
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Sales<br>Date', dataIndex: 'A4501FECVT', width: 80
-                                                    },
-                                                    {
-                                                        text: 'PNR', dataIndex: 'A4501PNR', width: 65
-                                                    },
-                                                    {
-                                                        text: 'Ticket', width: 120, dataIndex: 'TICKET',
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "background-color:#FCF6DC;font-weight:bold;";
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Corrl', width: 50, dataIndex: 'A4501CORRL'
-                                                    },
-                                                    {
-                                                        text: 'Iata', dataIndex: 'A4501AGENT', width: 75
-                                                    },
-                                                    {
-                                                        sortable: false,
-                                                        xtype: 'actioncolumn',
-                                                        width: 40,
-                                                        text: 'Del.',
-                                                        align: 'center',
-                                                        items: [
-                                                            {
-                                                                iconCls: 'prx-icon-image-trash',
-                                                                tooltip: 'Delete',
-                                                                handler: 'onDeleteRecordBPO'
                                                             }
                                                         ]
                                                     }
@@ -661,7 +677,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                                 iconCls: 'prx-icon-reload',
                                                 tooltip: 'Reload Grid',
                                                 listeners: {
-                                                    click: 'reloadGridBPO'
+                                                    click: 'onclickReloadGridSuggestAndBlocked'
                                                 }
                                             },
                                             {
@@ -670,7 +686,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                                 iconCls: 'prx-icon-delete',
                                                 tooltip: 'Clean Grid',
                                                 listeners: {
-                                                    click: 'cleanGridBPO'
+                                                    click: 'onClickcleanGridBPO'
                                                 }
                                             }
                                         ]
@@ -697,10 +713,48 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                                 },
                                                 items: [
                                                     {
-                                                        text: 'Status', width: 70,
+                                                        text: 'Status', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             return 'Blocked';
                                                         }
+                                                    },
+                                                    {
+                                                        text: 'Cur.', dataIndex: 'A4501MFOP', width: 45
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'A4501VFOP', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Sales<br>Date', dataIndex: 'A4501FECVT', width: 80
+                                                    },
+                                                    {
+                                                        text: 'PNR', dataIndex: 'A4501PNR', width: 65
+                                                    },
+                                                    {
+                                                        text: 'Ticket', width: 110, dataIndex: 'TICKET',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#FCF6DC;font-weight:bold;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Corrl', width: 50, dataIndex: 'A4501CORRL'
+                                                    },
+                                                    {
+                                                        text: 'Pax', dataIndex: 'A4496PAX', width: 90,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if (value !== undefined && value !== null) {
+                                                                metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
+                                                            }
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Iata', dataIndex: 'A4501AGENT', width: 75
                                                     },
                                                     {
                                                         text: 'Src', dataIndex: 'fuente', width: 45
@@ -717,7 +771,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Cod', dataIndex: 'A4501MFOP', width: 50
+                                                                text: 'Cod', dataIndex: 'A4501TTARJ', width: 50
                                                             },
                                                             {
                                                                 text: 'Number', dataIndex: 'A4501NREF', width: 130
@@ -726,33 +780,8 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                                                 text: 'Auth', dataIndex: 'A4501CAPL', width: 70
                                                             }
                                                         ]
-                                                    },
-                                                    {
-                                                        text: 'Curr', dataIndex: 'A4501MFOP', width: 50
-                                                    },
-                                                    {
-                                                        text: 'Amount', dataIndex: 'A4501VFOP', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
-                                                            return Ext.util.Format.number(value, '0,000.00');
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Sales<br>Date', dataIndex: 'A4501FECVT', width: 80
-                                                    },
-                                                    {
-                                                        text: 'PNR', dataIndex: 'A4501PNR', width: 65
-                                                    },
-                                                    {
-                                                        text: 'Ticket', width: 120, dataIndex: 'TICKET',
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "background-color:#FCF6DC;font-weight:bold;";
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Iata', dataIndex: 'A4501AGENT', width: 75
-                                                    }                                                ]
+                                                    }
+                                                ]
                                             }
                                         }
                                     ],
@@ -794,7 +823,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                                 iconCls: 'prx-icon-reload',
                                                 tooltip: 'Reload Grid',
                                                 listeners: {
-                                                    click: 'reloadGridBPO'
+                                                    click: 'onclickReloadGridSuggestAndBlocked'
                                                 }
                                             }
                                         ]
@@ -811,7 +840,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                             xtype: 'grid',
                                             border: false,
                                             id: prototype.idPlus + '-gridMatch',
-                                            
+                                            maxHeight: 180,
                                             emptyText: 'No tickets available',
                                             columns: {
                                                 defaults: {
@@ -935,18 +964,18 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                     ]
                                 },
                                 //</editor-fold>
-                                //<editor-fold defaultstate="collapsed" desc="Group Plus Tab">
+                                //<editor-fold defaultstate="collapsed" desc="Group Plusgrade Tab">
                                 {
-                                    title: 'Group Plus',
+                                    title: 'Group Plusgrade',
                                     itemId: 'T',
-                                    id: prototype.idPlus + '-tabGroupPlus',
+                                    id: prototype.idPlus + '-tabGroupPlusgrade',
 //                                    hidden: true,
                                     items: [
                                         {
                                             xtype: 'grid',
                                             border: false,
-                                            id: prototype.idPlus + '-gridGroupPlus',
-                                            maxHeight: 165,
+                                            id: prototype.idPlus + '-gridGroupPlusgrade',
+                                            maxHeight: 180,
                                             emptyText: 'No relations settlements',
                                             columns: {
                                                 defaults: {
@@ -956,14 +985,36 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                                 },
                                                 items: [
                                                     { text: 'RN', xtype: 'rownumberer', dataIndex: 'POSITION', width: 40 },
-                                                    { text: 'Ref. Number', width: 150, dataIndex: 'AREFNBR',
+                                                    { text: 'EMD Number', width: 120, dataIndex: 'EMDNUMBER',
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background-color:#FCF6DC;font-weight:bold;";
                                                             return value;
                                                         }
                                                     },
-                                                    { text: 'Processing<br>Date', width: 80, dataIndex: 'PRDA' },
-                                                    { text: 'Doc.<br>Type', width: 50, dataIndex: 'TDOC' },
+                                                    { text: 'Currency', width: 70, dataIndex: 'CUROFFER' },
+                                                    {
+                                                        text: 'Amount EMD', dataIndex: 'TOTALEMD', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Sale Amount', dataIndex: 'SVFOPS', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Difference', dataIndex: 'DIFF_AMOUNT', width: 90,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    { text: 'PNR', dataIndex: 'PNR', width: 70 },
+                                                    { text: 'Status', dataIndex: 'STVAL_DESCRIPTION', width: 120 },
                                                     {
                                                         text: 'Credit Card',
                                                         defaults: {
@@ -972,37 +1023,12 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                                             sortable: true
                                                         },
                                                         columns: [
-                                                            {
-                                                                text: 'Cod.', dataIndex: 'SCARCOD', width: 50
-                                                            },
-                                                            {
-                                                                text: 'Number', dataIndex: 'SCARDN', width: 120
-                                                            },
-                                                            {
-                                                                text: 'Auth', dataIndex: 'SAUTHOC', width: 60
-                                                            }
+                                                            { text: 'Code', dataIndex: 'SCARCOD', width: 50 },
+                                                            { text: 'Number', dataIndex: 'SCARDN', width: 120 },
+                                                            { text: 'Auth', dataIndex: 'SAUTHOC', width: 60 }
                                                         ]
                                                     },
-                                                    { text: 'Currency', width: 70, dataIndex: 'MONEDA' },
-                                                    {
-                                                        text: 'Amount', dataIndex: 'AMOUNTOFF', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
-                                                            return Ext.util.Format.number(value, '0,000.00');
-                                                        }
-                                                    },
-                                                    { text: 'PNR', dataIndex: 'SPNR', width: 70 },
-                                                    { text: 'Status', dataIndex: 'STVAL_DESC', width: 130 },
-                                                    {
-                                                        text: 'Error<br>Description', dataIndex: 'DES_CERROR', flex: 1,
-                                                        renderer: function (value, metaData) {
-                                                            if (value) {
-                                                                metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
-                                                            }
-                                                            return value;
-                                                        }
-                                                    },
-                                                    { text: 'Sel.', dataIndex: 'IS_SELECT', width: 40,
+                                                    { text: 'Selected', dataIndex: 'CURRENT_SELECTED', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (value === 1 ) {
                                                                 metaData.tdAttr = 'data-qtip="Selected"';
@@ -1030,7 +1056,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                                 },
                                                 items: [
                                                     {
-                                                        id: prototype.idPlus + '-totGroupPlusTickets',
+                                                        id: prototype.idPlus + '-totGroupPlusgradeTickets',
                                                         fieldLabel: 'Total Tickets',
                                                         submitValue: false,
                                                         labelWidth: 110,
@@ -1038,7 +1064,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                                                         value: '0'
                                                     },
                                                     {
-                                                        id: prototype.idPlus + '-totGroupPlusAmount',
+                                                        id: prototype.idPlus + '-totGroupPlusgradeAmount',
                                                         fieldLabel: 'Sum Amount',
                                                         submitValue: false,
                                                         labelWidth: 110,
@@ -1061,7 +1087,6 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                 //<editor-fold defaultstate="collapsed" desc="Control Data">
                 {
                     xtype: 'fieldset',
-                    flex: 2,
                     title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:10px;">Control Data</span>',
                     layout: {
                         type: 'vbox',
@@ -1128,10 +1153,19 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                 
                 {
                     text: 'Update',
-                    id: prototype.idPlus + '-btn-update',
+                    id: prototype.idPlus + '-btnUpdate',
                     iconCls: 'prx-icon-update',
                     listeners: {
-                        click: 'onUpdateClick'
+                        click: 'onClickUpdate'
+                    }
+                },
+                {
+                    text: 'Reverse Match',
+                    // hidden: true,
+                    id: prototype.idPlus + '-btnReverse',
+                    iconCls: 'prx-icon-delete',
+                    listeners: {
+                        click: 'onClickReverseMatch'
                     }
                 },
                 {

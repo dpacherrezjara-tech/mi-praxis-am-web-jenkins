@@ -14,15 +14,27 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             // filters Plusgrade
             const me = this;
             const res = await global.callStoreGet('PRAXISMP','SQP05016');
-            const data = res.lstRs[0] || {};
+            console.log(res.lstRs);
+            const dataCountry = res.lstRs[0] || {};
+            const dataCerror = res.lstRs[1] || {};
             
+            console.log(dataCountry);
+            console.log(dataCerror);
+
             const filterCountry = Ext.getCmp(prototype.id + '-cmbPaisesPG');
+            const filterCerror = Ext.getCmp(prototype.id + '-cmbCerrorPG');
 
             filterCountry.suspendEvents(false);
-            filterCountry.bindStore(me.createComboStore({data: data, valueField: 'CODE', displayField: 'NAME'}));
+            filterCountry.bindStore(me.createComboStore({data: dataCountry, valueField: 'CODE', displayField: 'NAME'}));
             filterCountry.setValue('');
             filterCountry.resumeEvents();
-            
+
+            // Añadir opción 'All' al principio
+            filterCerror.suspendEvents(false);
+            filterCerror.bindStore(me.createComboStore({data: dataCerror, valueField: 'CODE', displayField: 'DESCRIPTION'}));
+            filterCerror.setValue('');
+            filterCerror.resumeEvents();
+        
         } catch (e) {
             console.log(e);
         }

@@ -14,114 +14,156 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
         const me = this;
         let params = me.formatParameters(me.view.obj);
         
-        console.log('params',params);
-        const res = await global.callStoreGet('PRAXISMP', 'SQP05746', params);
-         
-        const { lstVals, lstRs } = res;
+        me.view.setLoading(true);
 
-
-        if (lstRs.length > 0) {
-
-            const data = res.lstRs.at(0);
-            const form = Ext.getCmp(prototype.idPlus + '-informationForm').getForm();
-            me.dataHeader = me.cleanDataSpaces(data.at(0));
-            form.setValues(me.dataHeader);
+        try{
+                
+            console.log('params',params);
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05746', params);
             
-            const tabMain = Ext.getCmp(prototype.idPlus + '-tabMain');
-            const tabBPO = Ext.getCmp(prototype.idPlus + '-tabBPO');
-            const tabBlocked = Ext.getCmp(prototype.idPlus + '-tabBlocked');
-            const tabMatch = Ext.getCmp(prototype.idPlus + '-tabMatch');
-            const tabGroupPlus = Ext.getCmp(prototype.idPlus + '-tabBlocked');
+            const { lstVals, lstRs } = res;
 
-            const gridBPO = Ext.getCmp(prototype.idPlus + '-gridBPO');            
-            const gridBlocked = Ext.getCmp(prototype.idPlus + '-gridBlocked');
-            const gridMatch = Ext.getCmp(prototype.idPlus + '-gridMatch');
-            const gridGroupPlus = Ext.getCmp(prototype.idPlus + '-gridBlocked');
-            
-            tabMain.mask('Scanning...');
+            if (lstRs.length > 0) {
 
-            const dataBPO = lstRs.at(1) ;
-            const dataBlocked = lstRs.at(2) ;
-            const dataMatch = lstRs.at(3) ;
-            const dataGroupPlus = lstRs.at(4);
+                const data = res.lstRs.at(0);
+                const form = Ext.getCmp(prototype.idPlus + '-informationForm').getForm();
+                me.dataHeader = me.cleanDataSpaces(data.at(0));
+                form.setValues(me.dataHeader);
+                
+                const tabMain = Ext.getCmp(prototype.idPlus + '-tabMain');
+                const tabBPO = Ext.getCmp(prototype.idPlus + '-tabBPO');
+                const tabBlocked = Ext.getCmp(prototype.idPlus + '-tabBlocked');
+                const tabMatch = Ext.getCmp(prototype.idPlus + '-tabMatch');
+                const tabGroupPlusgrade = Ext.getCmp(prototype.idPlus + '-tabGroupPlusgrade');
 
-            
-            // Procesar y mostrar datos en todas las grillas y totales
-            
-            // --- BPO ---
-            if (lstVals.OUT_ADD_BPO == 1) {
-                this.setGridAndSummary({
-                    grid: gridBPO,
-                    data: dataBPO,
-                    quantityElementTktId: prototype.idPlus + '-totBPOTickets',
-                    amountElementTktId: prototype.idPlus + '-totBPOAmount',
-                    amountFieldOfSummary: 'A4501VFOP'
-                });
+                const gridBPO = Ext.getCmp(prototype.idPlus + '-gridBPO');            
+                const gridBlocked = Ext.getCmp(prototype.idPlus + '-gridBlocked');
+                const gridMatch = Ext.getCmp(prototype.idPlus + '-gridMatch');
+                const gridGroupPlusgrade = Ext.getCmp(prototype.idPlus + '-gridGroupPlusgrade');
+                
+                const scannerInputs = Ext.getCmp(prototype.idPlus + '-scannerInputs');
+                const buttonUpdate = Ext.getCmp(prototype.idPlus + '-btnUpdate');
+                const buttonReverse = Ext.getCmp(prototype.idPlus + '-btnReverse');
+
+                const dataBPO = lstRs.at(1) ;
+                const dataBlocked = lstRs.at(2) ;
+                const dataMatch = lstRs.at(3) ;
+                const dataGroupPlusgrade = lstRs.at(4);
+
+                
+                // hidden and enable
+                const { OUT_ACTIVE_ADD_BPO , OUT_ACTIVE_BLOCKED , OUT_ACTIVE_MATCH , OUT_ACTIVE_GROUP , OUT_ACTIVE_SCANNER, OUT_ACTIVE_UPDATE ,OUT_ACTIVE_REVERSE } = lstVals;
+
+                tabBPO.setDisabled(!OUT_ACTIVE_ADD_BPO);            // 0 is false =>  setDiabled ( ! false )  -> setDiabled ( true ) 
+                tabBlocked.setDisabled(!OUT_ACTIVE_BLOCKED);
+                tabMatch.setDisabled(!OUT_ACTIVE_MATCH);
+                tabGroupPlusgrade.setDisabled(!OUT_ACTIVE_GROUP);
+                scannerInputs.setVisible(!!OUT_ACTIVE_SCANNER);     // 0 is false =>  setVisible ( !! false ) -> setVisible ( false )
+                buttonUpdate.setVisible(!!OUT_ACTIVE_UPDATE);
+                buttonReverse.setVisible(!!OUT_ACTIVE_REVERSE);
+                
+
+                // --- BPO ---
+                if (OUT_ACTIVE_ADD_BPO == 1) {
+                    tabMain.setActiveTab('A');
+                    this.setGridAndSummary({
+                        grid: gridBPO,
+                        data: dataBPO,
+                        quantityElementTktId: prototype.idPlus + '-totBPOTickets',
+                        amountElementTktId: prototype.idPlus + '-totBPOAmount',
+                        amountFieldOfSummary: 'A4501VFOP'
+                    });
+                }
+
+                // --- BLOCKED ---
+                if (OUT_ACTIVE_BLOCKED == 1) {
+                    this.setGridAndSummary({
+                        grid: gridBlocked,
+                        data: dataBlocked,
+                        quantityElementTktId: prototype.idPlus + '-totBlockedTickets',
+                        amountElementTktId: prototype.idPlus + '-totBlockedAmount',
+                        amountFieldOfSummary: 'A4501VFOP'
+                    });
+                }
+
+                // --- MATCH ---
+                if (OUT_ACTIVE_MATCH == 1) {
+                    tabMain.setActiveTab('M');
+                    this.setGridAndSummary({
+                        grid: gridMatch,
+                        data: dataMatch,
+                        quantityElementTktId: prototype.idPlus + '-totalMatchTickets',
+                        amountElementTktId: prototype.idPlus + '-totalMachAmount',
+                        amountFieldOfSummary: 'SVFOP'
+                    });
+                }
+
+                // --- GROUP PLUS ---
+                if (OUT_ACTIVE_GROUP == 1) {
+                    this.setGridAndSummary({
+                        grid: gridGroupPlusgrade,
+                        data: dataGroupPlusgrade,
+                        quantityElementTktId: prototype.idPlus + '-totGroupPlusgradeTickets',
+                        amountElementTktId: prototype.idPlus + '-totGroupPlusgradeAmount',
+                        amountFieldOfSummary: 'SVFOPS'
+                    });
+                }
+
+                
             }
-
-            // --- BLOCKED ---
-            if (lstVals.OUT_BLOCKED == 1) {
-                this.setGridAndSummary({
-                    grid: gridBlocked,
-                    data: dataBlocked,
-                    quantityElementTktId: prototype.idPlus + '-totBlockedTickets',
-                    amountElementTktId: prototype.idPlus + '-totBlockedAmount',
-                    amountFieldOfSummary: 'A4501VFOP'
-                });
+            else {
+                global.Msg({msg: 'Not found'});
             }
-
-            // --- MATCH ---
-            if (lstVals.OUT_MATCH == 1) {
-                tabMain.setActiveTab('M');
-                this.setGridAndSummary({
-                    grid: gridMatch,
-                    data: dataMatch,
-                    quantityElementTktId: prototype.idPlus + '-totalMatchTickets',
-                    amountElementTktId: prototype.idPlus + '-totalMachAmount',
-                    amountFieldOfSummary: 'SVFOP'
-                });
-            }
-
-            // --- GROUP PLUS ---
-            if (lstVals.OUT_GROUP == 1) {
-                this.setGridAndSummary({
-                    grid: gridGroupPlus,
-                    data: dataGroupPlus,
-                    quantityElementTktId: prototype.idPlus + '-totGroupPlusTickets',
-                    amountElementTktId: prototype.idPlus + '-totGroupPlusAmount',
-                    amountFieldOfSummary: 'AMOUNTOFF'
-                });
-            }
-
-            tabMain.unmask();
-            
-// OUT_ADD_BPO
-// OUT_BLOCKED
-// OUT_MATCH
-// OUT_GROUP
-            
-            
+        } catch (e) {
+            notifier.alert('System Error');
+        } finally {
+            me.view.setLoading(false);
         }
-        else {
-            global.Msg({msg: 'Not found'});
-        }
-
-//            const data = await res.json();
-//            const form = Ext.getCmp(prototype.idPlus + '-informationForm').getForm();
-//            me.limpiaObjetoPX(data.response);
-//            me.bean = data.response;
-//            me.dataInfo = data.response;
-//            form.reset();
-//            form.setValues(me.bean);
-//            me.changePerspective();
-        
     },
-    
+    reverseTransaction: async function () {
+        const me = this;
+        let success = false;
+        let message = "" ;
+        let notifier = new AWN();
+
+        me.view.setLoading(true);
+
+        try{
+                
+            let params = {
+                IN_CCUST: 139,
+                IN_PLUSGRAID: me.view.obj.PLUSGRAID.trim(),
+                IN_PRDA: me.view.obj.PRDA.trim()
+            };
+            
+            console.log('params',params);
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05749', params);
+            
+            success = res.lstVals.IO_RESPONSE === 1 ;
+            message = res.lstVals.IO_MESSAGE ;
+                
+            if ( success ) {
+                notifier.success(message);
+
+                // Load search
+                await this.getData();
+
+            }else{
+                notifier.warning('Error: ' + message);        
+            }
+
+        } catch (e) {
+            notifier.alert('System Error');
+        } finally {
+            me.view.setLoading(false);
+        }
+
+    },
     //<editor-fold defaultstate="collapsed" desc="Handlers">
     onCancelClick: function () {
         this.view.close();
     },
-    onUpdateClick: async function () {
+    onClickUpdate: async function () {
 
         const me = this;
         let success = false;
@@ -185,6 +227,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
         }
 
     },
+    onClickReverseMatch: async function (btn) {
+        const me = this;
+        Ext.Msg.show(
+            {
+                title: '.:PRAXIS:.',
+                msg: 'Are you sure to reverse?',
+                buttons: Ext.MessageBox.YESNO,
+                scope: this,
+                animateTarget: btn,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function (btn) {
+                    if (btn === 'yes') {
+                        me.reverseTransaction();
+                    }
+                }
+            });
+    },
     onClickAddTicketsSearch: async function (){
         const me = this;
         const scannerInputs = Ext.getCmp(prototype.idPlus + '-scannerInputs');
@@ -211,7 +271,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
         const dataStore = bpoStore.getData().getRange();
         let added = 0;
         let repeats = 0;
-        // console.log('params',params);
+        
         // search
         const res = await global.callStoreGet('PRAXISMP', 'SQP05748', params);
          
@@ -219,7 +279,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
         if ( lstRs.length > 0 ) {
             const data = lstRs.at(0);
             
-
             data.forEach(item => {
                 const tkt = (item.TICKET || '').toString().trim();
                 let isRepeat = dataStore.some( d => d.data.TICKET === tkt );
@@ -249,6 +308,56 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
         me.view.setLoading(false);
 
     },
+    onclickReloadGridSuggestAndBlocked: async function () {
+        const me = this;
+        const tabMain = Ext.getCmp(prototype.idPlus + '-tabMain');
+        const gridBPO = Ext.getCmp(prototype.idPlus + '-gridBPO');
+        const gridBlocked = Ext.getCmp(prototype.idPlus + '-gridBlocked');
+
+        tabMain.mask('Scanning...');
+
+        try {
+
+            let params = me.formatParameters(me.view.obj);
+            
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05750', params);
+            
+            const { lstRs } = res;
+
+            if (lstRs.length > 0) {
+                
+                const dataBPO = lstRs.at(0) ;
+                const dataBlocked = lstRs.at(1) ;
+                
+                // --- BPO ---
+                this.setGridAndSummary({
+                    grid: gridBPO,
+                    data: dataBPO,
+                    quantityElementTktId: prototype.idPlus + '-totBPOTickets',
+                    amountElementTktId: prototype.idPlus + '-totBPOAmount',
+                    amountFieldOfSummary: 'A4501VFOP'
+                });
+
+                // --- BLOCKED ---
+                this.setGridAndSummary({
+                    grid: gridBlocked,
+                    data: dataBlocked,
+                    quantityElementTktId: prototype.idPlus + '-totBlockedTickets',
+                    amountElementTktId: prototype.idPlus + '-totBlockedAmount',
+                    amountFieldOfSummary: 'A4501VFOP'
+                });
+
+            }
+            else {
+                global.Msg({msg: 'Not found'});
+            }
+
+        } catch (e) {
+            notifier.alert('System Error');
+        } finally {
+            tabMain.unmask();
+        }
+    },
     onClickClearScannerInputs: async function (){
         const scannerForm = Ext.getCmp(prototype.idPlus + '-scannerForm').getForm();
         scannerForm.reset();
@@ -260,7 +369,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
         }
         
         const gridBPO = Ext.getCmp(prototype.idPlus + '-gridBPO');
-        const dataBPO = gridBPO.getStore().getData().getRange();
+        const dataBPO = gridBPO.getStore().getData().getRange().map(record => record.getData());
+        
         this.setGridAndSummary({
             grid: gridBPO,
             data: dataBPO,
@@ -268,6 +378,31 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
             amountElementTktId: prototype.idPlus + '-totBPOAmount',
             amountFieldOfSummary: 'A4501VFOP'
         });
+    },
+    onClickcleanGridBPO: function (btn) {
+        const gridBPO = Ext.getCmp(prototype.idPlus + '-gridBPO').getStore();
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to remove all records?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            gridBPO.removeAll();
+                            this.setGridAndSummary({
+                                grid: gridBPO,
+                                data: [],
+                                quantityElementTktId: prototype.idPlus + '-totBPOTickets',
+                                amountElementTktId: prototype.idPlus + '-totBPOAmount',
+                                amountFieldOfSummary: 'A4501VFOP'
+                            });
+                        }
+                    }
+                });
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Utils">
@@ -290,7 +425,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
             format = '0,000.00'
         } = config;
 
-        if (grid && data) {
+        if (grid && data && data.length > 0) {
             grid.setStore(data);
             if (show && typeof grid.show === 'function') grid.show();
         }
