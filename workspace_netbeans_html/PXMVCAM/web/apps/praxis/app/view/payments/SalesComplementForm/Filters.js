@@ -133,11 +133,12 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                         data: [
                                             ['X', 'All'],
                                             ['', 'Pending'],
+                                            ['0', 'Stand By'],
                                             ['1', 'Match'],
                                             ['3', 'Settl. Without Sales'],
                                             ['4', 'Match Partial'],
                                             ['6', 'Match Forced'],
-                                            ['E', 'Duplicate Payment'],
+                                            ['E', 'Duplicate'],
                                             ['5', 'Match Manual']
                                         ]
                                     }),
@@ -211,7 +212,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     xtype: 'textfield',
                                     fieldLabel: 'Ticket',
                                     labelWidth: 50,
-                                    width: 180,
+                                    width: 150,
                                     name: 'IN_TKT',
                                     //allowBlank: false, // Puedes configurar esto para requerir un valor
                                     maxLength: 13, // Límite máximo de caracteres
@@ -225,7 +226,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     xtype: 'textfield',
                                     fieldLabel: 'PNR',
                                     labelWidth: 50,
-                                    width: 150,
+                                    width: 120,
                                     name: 'IN_PNR',
                                     //allowBlank: false, // Puedes configurar esto para requerir un valor
                                     maxLength: 6, // Límite máximo de caracteres
@@ -264,7 +265,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     xtype: 'textfield',
                                     fieldLabel: 'Merchant',
                                     labelWidth: 70,
-                                    width: 185,
+                                    width: 180,
                                     name: 'IN_MERCHID',
                                     //allowBlank: false, // Puedes configurar esto para requerir un valor
                                     maxLength: 10, // Límite máximo de caracteres
@@ -310,6 +311,21 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    id: prototype.id + '-cmbCerrorPG',
+                                    fieldLabel: 'Error Code',
+                                    name: 'IN_CERROR',
+                                    labelWidth: 70,
+                                    width: 270,
+                                    editable: false,
+                                    typeAhead: true,
+                                    valueField: 'CODE',
+                                    displayField: 'DESCRIPTION',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: ''
                                 }
                             ]
                         }

@@ -175,6 +175,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
             },
             {
                 text: 'Total<br>Amount', dataIndex: 'SVFOP', width: 80,
+                tooltip: 'Monto Total de Plusgrade ID',
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:right;background-color:#8ac6eb";
                     return Ext.util.Format.number(value, '0,000.00');
@@ -182,6 +183,15 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
             },
             {
                 text: 'Total<br>Amount Off', dataIndex: 'AMOUNTOFF', width: 80,
+                tooltip: 'Monto Total de linea agrupada',
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:right;background-color:#8ac6eb";
+                    return Ext.util.Format.number(value, '0,000.00');
+                }
+            },
+            {
+                text: 'Amount<br>EMD', dataIndex: 'TOTALEMD', width: 80,
+                tooltip: 'Monto del EMD',
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:right;background-color:#8ac6eb";
                     return Ext.util.Format.number(value, '0,000.00');
