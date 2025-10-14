@@ -17,6 +17,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         console.log(this.p);
     },
     afterRender: function(){
+        prototype.idDET = 'FlightConciliationForm';
+        console.log(prototype.idDET);
         this.statusCont = (this.p && 
                   this.p.lista && 
                   this.p.lista.data && 
@@ -66,23 +68,23 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 break;
             case 'I':
                 this.limpiarData();
-                me.validateProgram(Ext.getCmp(prototype.id+'-btn-save'), meEntryTick.NPROG, 'C');
-                Ext.getCmp(prototype.id+'-btn-update').hide();
-                Ext.getCmp(prototype.id+'-btn-delete').hide();
+                me.validateProgram(Ext.getCmp(prototype.idDET+'-btn-save'), meEntryTick.NPROG, 'C');
+                Ext.getCmp(prototype.idDET+'-btn-update').hide();
+                Ext.getCmp(prototype.idDET+'-btn-delete').hide();
                 this.cambiarEstadoDatosClave('Habilitar');
                 break;
             case 'U':
                 this.limpiarData();
                 this.mostrarData(this.p.bean);
-                Ext.getCmp(prototype.id+'-btn-save').hide();
+                Ext.getCmp(prototype.idDET+'-btn-save').hide();
                 console.log(this.statusCont,'this.statusCont')
                 if (this.statusCont === 'Contabilizado.' || this.statusCont === 'Contabilizado') {
-                    Ext.getCmp(prototype.id+'-btn-update').hide();
+                    Ext.getCmp(prototype.idDET+'-btn-update').hide();
                 } else {
-                    Ext.getCmp(prototype.id+'-btn-update').show();
-//                    me.validateProgram(Ext.getCmp(prototype.id+'-btn-update'), meEntryTick.NPROG, 'M');
+                    Ext.getCmp(prototype.idDET+'-btn-update').show();
+//                    me.validateProgram(Ext.getCmp(prototype.idDET+'-btn-update'), meEntryTick.NPROG, 'M');
                 }
-//                me.validateProgram(Ext.getCmp(prototype.id+'-btn-delete'), meEntryTick.NPROG, 'E');
+//                me.validateProgram(Ext.getCmp(prototype.idDET+'-btn-delete'), meEntryTick.NPROG, 'E');
                 this.cambiarEstadoDatosClave('Deshabilitar');
                 break;
             case 'S':
@@ -90,70 +92,70 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 this.mostrarData(this.p.bean);
                 let showOptions = (this.p.bean.strDescSTCON || '').toString().trim();
                 if (this.statusCont === 'Contabilizado.'  || this.statusCont === 'Contabilizado') {
-                    Ext.getCmp(prototype.id+'-btn-update').hide();
+                    Ext.getCmp(prototype.idDET+'-btn-update').hide();
                 } else {
-                    Ext.getCmp(prototype.id+'-btn-update').show();
+                    Ext.getCmp(prototype.idDET+'-btn-update').show();
                 }
 
-                Ext.getCmp(prototype.id+'-btn-save').hide();
-                Ext.getCmp(prototype.id+'-btn-delete').hide();
+                Ext.getCmp(prototype.idDET+'-btn-save').hide();
+                Ext.getCmp(prototype.idDET+'-btn-delete').hide();
                 break;
         }
     },
     //<editor-fold defaultstate="collapsed" desc="limpiarData">
     limpiarData: function () {
-        Ext.getCmp(prototype.id + '-txtTicket').setValue("");
-        Ext.getCmp(prototype.id + '-txtDCHEQ').setValue("");
-        Ext.getCmp(prototype.id + '-txtSEQ').setValue("");
-        Ext.getCmp(prototype.id + '-txtSEQRO').setValue("");
-        Ext.getCmp(prototype.id + '-txtFCONT').setValue("");
-        Ext.getCmp(prototype.id + '-txtID').setValue("");
-        Ext.getCmp(prototype.id + '-txtCDEPART').setValue("");
-        Ext.getCmp(prototype.id + '-txtCARRIVA').setValue("");
-        Ext.getCmp(prototype.id + '-txtZONE').setValue("");
-        Ext.getCmp(prototype.id + '-txtNFLIGHT').setValue("");
-        Ext.getCmp(prototype.id + '-txtDFLIGHT').setValue("");
-        Ext.getCmp(prototype.id + '-txtFOPERZUL').setValue("");
-        Ext.getCmp(prototype.id + '-txtNPLANE').setValue("");
-        Ext.getCmp(prototype.id + '-txtLEGSEQ').setValue("");
-        Ext.getCmp(prototype.id + '-txtFDUP').setValue("");
-        Ext.getCmp(prototype.id + '-cmbFTE').setValue("");
-        Ext.getCmp(prototype.id + '-cmbSTORG').setValue("");
-        Ext.getCmp(prototype.id + '-cmbSTVAL').setValue("");
-        Ext.getCmp(prototype.id + '-cmbFVAL').setValue("");
-        Ext.getCmp(prototype.id + '-cmbSTCON').setValue("");
-        Ext.getCmp(prototype.id + '-cmbFINVO').setValue("");
-        Ext.getCmp(prototype.id + '-cmbFload').setValue("");
-        Ext.getCmp(prototype.id + '-txtCDOC').setValue("");
-        Ext.getCmp(prototype.id + '-cmbTDOC').setValue("");
-        Ext.getCmp(prototype.id + '-txtPSVVTA').setValue("");
-        Ext.getCmp(prototype.id + '-txtAGTIA').setValue("");
-        Ext.getCmp(prototype.id + '-txtFVTA').setValue("");
-        Ext.getCmp(prototype.id + '-cmbTVTA').setValue("");
-        Ext.getCmp(prototype.id + '-cmbTPAX').setValue("");
-        Ext.getCmp(prototype.id + '-cmbTOPUS').setValue("");
-        Ext.getCmp(prototype.id + '-txtCARR').setValue("");
-        Ext.getCmp(prototype.id + '-txtCABI').setValue("");
-        Ext.getCmp(prototype.id + '-txtCLAS').setValue("");
-        Ext.getCmp(prototype.id + '-txtFBASE').setValue("");
-        Ext.getCmp(prototype.id + '-txtVCPN').setValue("0");
-        Ext.getCmp(prototype.id + '-txtVCPN0').setValue("0");
-        Ext.getCmp(prototype.id + '-txtVCPN16').setValue("0");
-        Ext.getCmp(prototype.id + '-cmbMDACP').setValue("");
-        Ext.getCmp(prototype.id + '-txtCOMISI').setValue("0");
-        Ext.getCmp(prototype.id + '-txtVTAX').setValue("0");
-        Ext.getCmp(prototype.id + '-txtVCPMX').setValue("0");
-        Ext.getCmp(prototype.id + '-txtUSCR').setValue("");
-        Ext.getCmp(prototype.id + '-txtFECR').setValue("");
-        Ext.getCmp(prototype.id + '-txtHOCR').setValue("");
-        Ext.getCmp(prototype.id + '-txtUSUP').setValue("");
-        Ext.getCmp(prototype.id + '-txtFEUP').setValue("");
-        Ext.getCmp(prototype.id + '-txtHOUP').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtTicket').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtDCHEQ').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtSEQ').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtSEQRO').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtFCONT').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtID').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtCDEPART').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtCARRIVA').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtZONE').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtNFLIGHT').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtDFLIGHT').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtFOPERZUL').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtNPLANE').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtLEGSEQ').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtFDUP').setValue("");
+        Ext.getCmp(prototype.idDET + '-cmbFTE').setValue("");
+        Ext.getCmp(prototype.idDET + '-cmbSTORG').setValue("");
+        Ext.getCmp(prototype.idDET + '-cmbSTVAL').setValue("");
+        Ext.getCmp(prototype.idDET + '-cmbFVAL').setValue("");
+        Ext.getCmp(prototype.idDET + '-cmbSTCON').setValue("");
+        Ext.getCmp(prototype.idDET + '-cmbFINVO').setValue("");
+        Ext.getCmp(prototype.idDET + '-cmbFload').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtCDOC').setValue("");
+        Ext.getCmp(prototype.idDET + '-cmbTDOC').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtPSVVTA').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtAGTIA').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtFVTA').setValue("");
+        Ext.getCmp(prototype.idDET + '-cmbTVTA').setValue("");
+        Ext.getCmp(prototype.idDET + '-cmbTPAX').setValue("");
+        Ext.getCmp(prototype.idDET + '-cmbTOPUS').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtCARR').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtCABI').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtCLAS').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtFBASE').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtVCPN').setValue("0");
+        Ext.getCmp(prototype.idDET + '-txtVCPN0').setValue("0");
+        Ext.getCmp(prototype.idDET + '-txtVCPN16').setValue("0");
+        Ext.getCmp(prototype.idDET + '-cmbMDACP').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtCOMISI').setValue("0");
+        Ext.getCmp(prototype.idDET + '-txtVTAX').setValue("0");
+        Ext.getCmp(prototype.idDET + '-txtVCPMX').setValue("0");
+        Ext.getCmp(prototype.idDET + '-txtUSCR').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtFECR').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtHOCR').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtUSUP').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtFEUP').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtHOUP').setValue("");
         this.recalculoVuelo = "";
-        Ext.getCmp(prototype.id + '-txtFECVAL').setValue("");
-        Ext.getCmp(prototype.id + '-txtVYQ').setValue("0");
-        Ext.getCmp(prototype.id + '-txtVYQ0').setValue("0");
-        Ext.getCmp(prototype.id + '-txtVYQ16').setValue("0");
+        Ext.getCmp(prototype.idDET + '-txtFECVAL').setValue("");
+        Ext.getCmp(prototype.idDET + '-txtVYQ').setValue("0");
+        Ext.getCmp(prototype.idDET + '-txtVYQ0').setValue("0");
+        Ext.getCmp(prototype.idDET + '-txtVYQ16').setValue("0");
     },
     //</editor-fold>
     btnFacsimil_clickHandler: function() {
@@ -192,7 +194,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
 //            me.post_to_url(CONTEXTPATH + '/Home?'
 //                + 'data=' + JSON.stringify(bean104) + '&'
 //                + 'backBox=' + this.p.boxActual + '&'
-//                + 'ticket=' + Ext.getCmp(prototype.id+'-txtTicket').getValue()+ '&'
+//                + 'ticket=' + Ext.getCmp(prototype.idDET+'-txtTicket').getValue()+ '&'
 //                + 'back=FlightConciliation&'
 ////                + 'lblTitleReporte="Facsimil Information"'
 //                + '#program-pro-facsimil-form', {}, 'post', 'ProFacsimilForm');
@@ -211,7 +213,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
     buscarDatosVenta: function(textfield, newValue, oldValue) {
         if (this.p.actionCode === 'I') {
             this.onValidarChange();
-            var txtTicket = Ext.getCmp(prototype.id + '-txtTicket').getValue();
+            var txtTicket = Ext.getCmp(prototype.idDET + '-txtTicket').getValue();
             if (txtTicket.length === 14) {
                 var beanOption = {};
                 this.llenarData(beanOption);
@@ -224,14 +226,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         }
     },
     onValidarChange: function() {
-        var list = Ext.getCmp(prototype.id + '-txtTicket').getValue().replace(/\s/g, "").split("");
+        var list = Ext.getCmp(prototype.idDET + '-txtTicket').getValue().replace(/\s/g, "").split("");
         var txtTicket = '';
         for (var i = 0; i < list.length; i++) {
             if (this.esNumero(list[i])) {
                 txtTicket += list[i];
             }
         }
-        Ext.getCmp(prototype.id + '-txtTicket').setValue(txtTicket.substring(0, 14));
+        Ext.getCmp(prototype.idDET + '-txtTicket').setValue(txtTicket.substring(0, 14));
     },
     esNumero: function(valor) {
         return valor.toLowerCase() === valor.toUpperCase();
@@ -245,10 +247,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         this.recalculoVuelo = '';
         
         if(beanOption.strTicket.length === 14){
-            beanOption.CCIA = Ext.getCmp(prototype.id + '-txtTicket').getValue().trim().substring(0, 3);
-            beanOption.FORMA = Ext.getCmp(prototype.id + '-txtTicket').getValue().trim().substring(3, 7);
-            beanOption.SERIE = Ext.getCmp(prototype.id + '-txtTicket').getValue().trim().substring(7, 13);
-            beanOption.CUPON = Ext.getCmp(prototype.id + '-txtTicket').getValue().trim().substring(13, 14);
+            beanOption.CCIA = Ext.getCmp(prototype.idDET + '-txtTicket').getValue().trim().substring(0, 3);
+            beanOption.FORMA = Ext.getCmp(prototype.idDET + '-txtTicket').getValue().trim().substring(3, 7);
+            beanOption.SERIE = Ext.getCmp(prototype.idDET + '-txtTicket').getValue().trim().substring(7, 13);
+            beanOption.CUPON = Ext.getCmp(prototype.idDET + '-txtTicket').getValue().trim().substring(13, 14);
 
             var msjResult = this.validacionUpdate(beanOption);
             if(msjResult === ''){
@@ -360,12 +362,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         this.setValue("txtID", bean.IDCON);
         this.setValue("txtCDEPART", bean.CDEPART);
         Ext.create('Ext.tip.ToolTip', {
-            target: prototype.id+'-txtCDEPART',
+            target: prototype.idDET+'-txtCDEPART',
             html: bean.strDescCDEPART
         });
         this.setValue("txtCARRIVA", bean.CARRIVA);
         Ext.create('Ext.tip.ToolTip', {
-            target: prototype.id+'-txtCARRIVA',
+            target: prototype.idDET+'-txtCARRIVA',
             html: bean.strDescCARRIVA
         });
         this.setValue("txtZONE", bean.ZONA);
@@ -391,7 +393,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         this.setValue("cmbTDOC", bean.TDOC);
         this.setValue("txtPSVVTA", bean.PSVVTA);
         Ext.create('Ext.tip.ToolTip', {
-            target: prototype.id+'-txtPSVVTA',
+            target: prototype.idDET+'-txtPSVVTA',
             html: bean.strDescPSVVTA
         });
         this.setValue("txtAGTIA", bean.AGTIA);
@@ -429,42 +431,42 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
 		&& bean.AGTIA === '' && bean.FVTA === '' && bean.TVTA === '' 
 		&& bean.TPAX === ''){
             console.log('HERE ONE')
-            Ext.getCmp(prototype.id+'-txtCDOC').setReadOnly(false);
-            Ext.getCmp(prototype.id+'-cmbTDOC').enable(true);
-            Ext.getCmp(prototype.id+'-txtPSVVTA').setReadOnly(false);
-            Ext.getCmp(prototype.id+'-txtAGTIA').setReadOnly(false);
-            Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
-            Ext.getCmp(prototype.id+'-cmbTVTA').enable(true);
-            Ext.getCmp(prototype.id+'-cmbTPAX').enable(true);
+            Ext.getCmp(prototype.idDET+'-txtCDOC').setReadOnly(false);
+            Ext.getCmp(prototype.idDET+'-cmbTDOC').enable(true);
+            Ext.getCmp(prototype.idDET+'-txtPSVVTA').setReadOnly(false);
+            Ext.getCmp(prototype.idDET+'-txtAGTIA').setReadOnly(false);
+            Ext.getCmp(prototype.idDET+'-txtFVTA').setReadOnly(false);
+            Ext.getCmp(prototype.idDET+'-cmbTVTA').enable(true);
+            Ext.getCmp(prototype.idDET+'-cmbTPAX').enable(true);
             if(bean.USERK === 'KEYLAV' || bean.USERK === 'UAT182'|| bean.USERK === 'SAP52T'){
-                Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(false);
-                Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
-                Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(false);
+                Ext.getCmp(prototype.idDET+'-txtSEQRO').setReadOnly(false);
+                Ext.getCmp(prototype.idDET+'-txtFVTA').setReadOnly(false);
+                Ext.getCmp(prototype.idDET+'-txtSEQ').setReadOnly(false);
             }
         } else {
             console.log('HERE TWO')
-            Ext.getCmp(prototype.id+'-txtCDOC').setReadOnly(true);
-            Ext.getCmp(prototype.id+'-cmbTDOC').disable(true);
-            Ext.getCmp(prototype.id+'-txtPSVVTA').setReadOnly(true);
-            Ext.getCmp(prototype.id+'-txtAGTIA').setReadOnly(true);
+            Ext.getCmp(prototype.idDET+'-txtCDOC').setReadOnly(true);
+            Ext.getCmp(prototype.idDET+'-cmbTDOC').disable(true);
+            Ext.getCmp(prototype.idDET+'-txtPSVVTA').setReadOnly(true);
+            Ext.getCmp(prototype.idDET+'-txtAGTIA').setReadOnly(true);
             if(bean.USERK === 'KEYLAV' || bean.USERK === 'UAT182'|| bean.USERK === 'SAP52T'){
-                Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(false);
-                Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
-                Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(false);
+                Ext.getCmp(prototype.idDET+'-txtSEQRO').setReadOnly(false);
+                Ext.getCmp(prototype.idDET+'-txtFVTA').setReadOnly(false);
+                Ext.getCmp(prototype.idDET+'-txtSEQ').setReadOnly(false);
             }
             else{
-                Ext.getCmp(prototype.id+'-txtSEQRO').setReadOnly(true);
+                Ext.getCmp(prototype.idDET+'-txtSEQRO').setReadOnly(true);
                 // CAMBIADO A PEDIDO LUIS FERNANDO AGREDA
                 console.log(this.statusCont,'this.statusCont')
                 if (this.statusCont === 'Contabilizado.'  || this.statusCont === 'Contabilizado') {
-                    Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(true);
+                    Ext.getCmp(prototype.idDET+'-txtFVTA').setReadOnly(true);
                 } else {
-                    Ext.getCmp(prototype.id+'-txtFVTA').setReadOnly(false);
+                    Ext.getCmp(prototype.idDET+'-txtFVTA').setReadOnly(false);
                 }
-                Ext.getCmp(prototype.id+'-txtSEQ').setReadOnly(true);
+                Ext.getCmp(prototype.idDET+'-txtSEQ').setReadOnly(true);
             }
-            Ext.getCmp(prototype.id+'-cmbTVTA').disable(true);
-            Ext.getCmp(prototype.id+'-cmbTPAX').disable(true);
+            Ext.getCmp(prototype.idDET+'-cmbTVTA').disable(true);
+            Ext.getCmp(prototype.idDET+'-cmbTPAX').disable(true);
         }
     },
     //</editor-fold>
@@ -587,42 +589,42 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
     //<editor-fold defaultstate="collapsed" desc="cambiarEstadoDatosClave">
     cambiarEstadoDatosClave: function (accion) {
         if(accion === 'Habilitar'){
-            Ext.getCmp(prototype.id + '-txtTicket').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-txtTicket').setReadOnly(false);
             //Sales Information
-            Ext.getCmp(prototype.id + '-txtCDOC').setReadOnly(false);
-            Ext.getCmp(prototype.id + '-cmbTDOC').enable(true);
-            Ext.getCmp(prototype.id + '-txtPSVVTA').setReadOnly(false);
-            Ext.getCmp(prototype.id + '-txtAGTIA').setReadOnly(false);
-            Ext.getCmp(prototype.id + '-txtFVTA').enable(true);
-            Ext.getCmp(prototype.id + '-txtFVTA').setReadOnly(false);
-            Ext.getCmp(prototype.id + '-cmbTVTA').enable(true);
-            Ext.getCmp(prototype.id + '-cmbTPAX').enable(true);
+            Ext.getCmp(prototype.idDET + '-txtCDOC').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-cmbTDOC').enable(true);
+            Ext.getCmp(prototype.idDET + '-txtPSVVTA').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-txtAGTIA').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-txtFVTA').enable(true);
+            Ext.getCmp(prototype.idDET + '-txtFVTA').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-cmbTVTA').enable(true);
+            Ext.getCmp(prototype.idDET + '-cmbTPAX').enable(true);
             
-            Ext.getCmp(prototype.id + '-txtVCPN').setReadOnly(true);
-            Ext.getCmp(prototype.id + '-cmbMDACP').disable(true);
-            Ext.getCmp(prototype.id + '-txtCOMISI').setReadOnly(true);
-            Ext.getCmp(prototype.id + '-txtVTAX').setReadOnly(true);
-            Ext.getCmp(prototype.id + '-txtFECVAL').setReadOnly(true);
-            Ext.getCmp(prototype.id + '-txtVYQ').setReadOnly(true);
-            Ext.getCmp(prototype.id + '-txtVYQ0').setReadOnly(true);
-            Ext.getCmp(prototype.id + '-txtVYQ16').setReadOnly(true);
+            Ext.getCmp(prototype.idDET + '-txtVCPN').setReadOnly(true);
+            Ext.getCmp(prototype.idDET + '-cmbMDACP').disable(true);
+            Ext.getCmp(prototype.idDET + '-txtCOMISI').setReadOnly(true);
+            Ext.getCmp(prototype.idDET + '-txtVTAX').setReadOnly(true);
+            Ext.getCmp(prototype.idDET + '-txtFECVAL').setReadOnly(true);
+            Ext.getCmp(prototype.idDET + '-txtVYQ').setReadOnly(true);
+            Ext.getCmp(prototype.idDET + '-txtVYQ0').setReadOnly(true);
+            Ext.getCmp(prototype.idDET + '-txtVYQ16').setReadOnly(true);
             
-            Ext.getCmp(prototype.id + '-txtVCPN0').setReadOnly(true);
-            Ext.getCmp(prototype.id + '-txtVCPN16').setReadOnly(true);
+            Ext.getCmp(prototype.idDET + '-txtVCPN0').setReadOnly(true);
+            Ext.getCmp(prototype.idDET + '-txtVCPN16').setReadOnly(true);
         } else {
-            Ext.getCmp(prototype.id + '-txtTicket').setReadOnly(true);
+            Ext.getCmp(prototype.idDET + '-txtTicket').setReadOnly(true);
             
-            Ext.getCmp(prototype.id + '-txtVCPN').setReadOnly(false);
-            Ext.getCmp(prototype.id + '-cmbMDACP').enable(true);
-            Ext.getCmp(prototype.id + '-txtCOMISI').setReadOnly(false);
-            Ext.getCmp(prototype.id + '-txtVTAX').setReadOnly(false);
-            Ext.getCmp(prototype.id + '-txtFECVAL').setReadOnly(false);
-            Ext.getCmp(prototype.id + '-txtVYQ').setReadOnly(false);
-            Ext.getCmp(prototype.id + '-txtVYQ0').setReadOnly(false);
-            Ext.getCmp(prototype.id + '-txtVYQ16').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-txtVCPN').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-cmbMDACP').enable(true);
+            Ext.getCmp(prototype.idDET + '-txtCOMISI').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-txtVTAX').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-txtFECVAL').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-txtVYQ').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-txtVYQ0').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-txtVYQ16').setReadOnly(false);
             
-            Ext.getCmp(prototype.id + '-txtVCPN0').setReadOnly(false);
-            Ext.getCmp(prototype.id + '-txtVCPN16').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-txtVCPN0').setReadOnly(false);
+            Ext.getCmp(prototype.idDET + '-txtVCPN16').setReadOnly(false);
         }
     },
     //</editor-fold>
@@ -637,47 +639,47 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
             && beanOption.CABI !== '' && beanOption.CLAS !== ''
             && beanOption.FBASE !== ''){
             // <editor-fold defaultstate="collapsed" desc="Errores">
-            var errors = Ext.getCmp(prototype.id+'-txtTicket').getErrors();//Devuelve un arreglo
+            var errors = Ext.getCmp(prototype.idDET+'-txtTicket').getErrors();//Devuelve un arreglo
             if (errors.length>0) {
                 msjResult = 'Invalid Ticket Number.';
             }
-            if (Ext.getCmp(prototype.id+'-txtDCHEQ').getErrors().length>0) {
+            if (Ext.getCmp(prototype.idDET+'-txtDCHEQ').getErrors().length>0) {
                 msjResult = 'Invalid Check Digit.';
             }
-            if (Ext.getCmp(prototype.id+'-txtCDEPART').getErrors().length>0) {
+            if (Ext.getCmp(prototype.idDET+'-txtCDEPART').getErrors().length>0) {
                 msjResult = 'Invalid Departure City.';
             }
-            if (Ext.getCmp(prototype.id+'-txtCARRIVA').getErrors().length>0) {
+            if (Ext.getCmp(prototype.idDET+'-txtCARRIVA').getErrors().length>0) {
                 msjResult = 'Invalid Arrival City.';
             }
-            if (Ext.getCmp(prototype.id+'-txtDFLIGHT').getErrors().length>0) {
+            if (Ext.getCmp(prototype.idDET+'-txtDFLIGHT').getErrors().length>0) {
                 msjResult = 'Invalid Flight Date.';
             }
-            if (Ext.getCmp(prototype.id+'-txtNFLIGHT').getErrors().length>0) {
+            if (Ext.getCmp(prototype.idDET+'-txtNFLIGHT').getErrors().length>0) {
                 msjResult = 'Invalid Flight Number.';
             }
-            if (Ext.getCmp(prototype.id+'-txtCABI').getErrors().length>0) {
+            if (Ext.getCmp(prototype.idDET+'-txtCABI').getErrors().length>0) {
                 msjResult = 'Invalid Cabin.';
             }
-            if (Ext.getCmp(prototype.id+'-txtCLAS').getErrors().length>0) {
+            if (Ext.getCmp(prototype.idDET+'-txtCLAS').getErrors().length>0) {
                 msjResult = 'Invalid Class.';
             }
-            if (Ext.getCmp(prototype.id+'-txtFBASE').getErrors().length>0) {
+            if (Ext.getCmp(prototype.idDET+'-txtFBASE').getErrors().length>0) {
                 msjResult = 'Invalid Fare Basis.';
             }
-            if (Ext.getCmp(prototype.id+'-txtVCPN').getErrors().length>0) {
+            if (Ext.getCmp(prototype.idDET+'-txtVCPN').getErrors().length>0) {
                 msjResult = 'Invalid Amount value.';
             }
-            if (Ext.getCmp(prototype.id+'-txtCOMISI').getErrors().length>0) {
+            if (Ext.getCmp(prototype.idDET+'-txtCOMISI').getErrors().length>0) {
                 msjResult = 'Invalid Commission value.';
             }
-            if (Ext.getCmp(prototype.id+'-txtVTAX').getErrors().length>0) {
+            if (Ext.getCmp(prototype.idDET+'-txtVTAX').getErrors().length>0) {
                 msjResult = 'Invalid TAX value.';
             }
-            if (Ext.getCmp(prototype.id+'-txtFVTA').getErrors().length>0) {
+            if (Ext.getCmp(prototype.idDET+'-txtFVTA').getErrors().length>0) {
                 msjResult = 'Invalid Sales Date.';
             }
-            if (Ext.getCmp(prototype.id+'-txtFOPERZUL').getErrors().length>0) {
+            if (Ext.getCmp(prototype.idDET+'-txtFOPERZUL').getErrors().length>0) {
                 msjResult = 'Invalid ZULU Date.';
             }
             // </editor-fold>
@@ -752,22 +754,22 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         return value;
     },
     setEditable: function(id, b) {
-        Ext.getCmp(prototype.id+'-'+id).setReadOnly(!b);
+        Ext.getCmp(prototype.idDET+'-'+id).setReadOnly(!b);
     },
     setEnabled: function(id, b) {
-        if(b) Ext.getCmp(prototype.id+'-'+id).enable(true);
-        else Ext.getCmp(prototype.id+'-'+id).disable(true);
+        if(b) Ext.getCmp(prototype.idDET+'-'+id).enable(true);
+        else Ext.getCmp(prototype.idDET+'-'+id).disable(true);
     },
     
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function(id) {
-        return Ext.getCmp(prototype.id+'-'+id).getValue();
+        return Ext.getCmp(prototype.idDET+'-'+id).getValue();
     },
     focus: function(id) {
-        Ext.getCmp(prototype.id+'-'+id).focus();
+        Ext.getCmp(prototype.idDET+'-'+id).focus();
     },
     setValue: function(id, txt) {
-        return Ext.getCmp(prototype.id+'-'+id).setValue(txt);
+        return Ext.getCmp(prototype.idDET+'-'+id).setValue(txt);
     },
     onUpperValue: function(field, newValue, oldValue){
         field.setValue(newValue.toUpperCase());

@@ -1,3 +1,4 @@
+prototype.idDET = 'FlightConciliationForm';
 Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryTicketFlightConciliationForm',
@@ -19,7 +20,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
     items: [
         {
             xtype: 'form',
-            id: prototype.id + '-formDataEntryTicket',
+            id: prototype.idDET + '-formDataEntryTicket',
             defaults: {
                 style: 'margin: 3px;',
                 border: false
@@ -44,7 +45,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                         {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtTicket',
+                            id: prototype.idDET + '-txtTicket',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
                             allowBlank: false,
@@ -83,7 +84,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                         {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtDCHEQ',
+                            id: prototype.idDET + '-txtDCHEQ',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
                             allowBlank: false,
@@ -106,7 +107,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                         {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtSEQ',
+                            id: prototype.idDET + '-txtSEQ',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
                             readOnly: true,
@@ -123,7 +124,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                         {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtSEQRO',
+                            id: prototype.idDET + '-txtSEQRO',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
                             readOnly: true,
@@ -146,7 +147,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                         {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtLEGSEQ',
+                            id: prototype.idDET + '-txtLEGSEQ',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
                             readOnly: true,
@@ -163,7 +164,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                         {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtFDUP',
+                            id: prototype.idDET + '-txtFDUP',
                             fieldStyle: 'text-align:center',
                             readOnly: true,
                             width: 90
@@ -222,7 +223,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtCDEPART',
+                                    id: prototype.idDET + '-txtCDEPART',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     minLength: 3,
@@ -263,7 +264,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtCARRIVA',
+                                    id: prototype.idDET + '-txtCARRIVA',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     minLength: 3,
@@ -290,7 +291,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtZONE',
+                                    id: prototype.idDET + '-txtZONE',
                                     fieldStyle: 'text-align:left',
                                     readOnly: true,
                                     enforceMaxLength: true,
@@ -333,7 +334,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'datefield',
-                                    id: prototype.id + '-txtDFLIGHT',
+                                    id: prototype.idDET + '-txtDFLIGHT',
                                     fieldStyle: 'text-align:left',
                                     value: '',
                                     minValue: new Date(2000, 00, 01),
@@ -371,7 +372,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtNFLIGHT',
+                                    id: prototype.idDET + '-txtNFLIGHT',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     allowBlank: false,
@@ -397,7 +398,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtNPLANE',
+                                    id: prototype.idDET + '-txtNPLANE',
                                     fieldStyle: 'text-align:left',
                                     readOnly: true,
                                     enforceMaxLength: true,
@@ -426,7 +427,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbFTE',
+                                    id: prototype.idDET + '-cmbFTE',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -480,7 +481,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbSTORG',
+                                    id: prototype.idDET + '-cmbSTORG',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -532,7 +533,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbSTVAL',
+                                    id: prototype.idDET + '-cmbSTVAL',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -597,7 +598,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'datefield',
-                                    id: prototype.id + '-txtFOPERZUL',
+                                    id: prototype.idDET + '-txtFOPERZUL',
                                     fieldStyle: 'text-align:left',
                                     value: '',
                                     minValue: new Date(2000, 00, 01),
@@ -621,7 +622,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbFINVO',
+                                    id: prototype.idDET + '-cmbFINVO',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -667,7 +668,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbFload',
+                                    id: prototype.idDET + '-cmbFload',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -759,7 +760,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtCDOC',
+                                    id: prototype.idDET + '-txtCDOC',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 4,
@@ -779,7 +780,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbTDOC',
+                                    id: prototype.idDET + '-cmbTDOC',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -831,7 +832,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtPSVVTA',
+                                    id: prototype.idDET + '-txtPSVVTA',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 2,
@@ -859,7 +860,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtAGTIA',
+                                    id: prototype.idDET + '-txtAGTIA',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 8,
@@ -878,7 +879,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'datefield',
-                                    id: prototype.id + '-txtFVTA',
+                                    id: prototype.idDET + '-txtFVTA',
                                     fieldStyle: 'text-align:left',
                                     value: '',
                                     minValue: new Date(2000, 00, 01),
@@ -902,7 +903,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbTVTA',
+                                    id: prototype.idDET + '-cmbTVTA',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -961,7 +962,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbTPAX',
+                                    id: prototype.idDET + '-cmbTPAX',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -1046,7 +1047,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbTOPUS',
+                                    id: prototype.idDET + '-cmbTOPUS',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -1100,7 +1101,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtCARR',
+                                    id: prototype.idDET + '-txtCARR',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 2,
@@ -1129,7 +1130,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtCABI',
+                                    id: prototype.idDET + '-txtCABI',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 1,
@@ -1172,7 +1173,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtFBASE',
+                                    id: prototype.idDET + '-txtFBASE',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     minLength: 1,
@@ -1207,7 +1208,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtCLAS',
+                                    id: prototype.idDET + '-txtCLAS',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 1,
@@ -1231,7 +1232,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbFVAL',
+                                    id: prototype.idDET + '-cmbFVAL',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -1294,7 +1295,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtFECVAL',
+                                    id: prototype.idDET + '-txtFECVAL',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maskRe: /[0-9]/,
@@ -1311,7 +1312,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtQTYPAX',
+                                    id: prototype.idDET + '-txtQTYPAX',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     value: '1',
@@ -1329,7 +1330,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbMDACP',
+                                    id: prototype.idDET + '-cmbMDACP',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -1388,7 +1389,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtVCPN',
+                                    id: prototype.idDET + '-txtVCPN',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maskRe: /[0-9.]/,
@@ -1406,7 +1407,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtCOMISI',
+                                    id: prototype.idDET + '-txtCOMISI',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maskRe: /[0-9.]/,
@@ -1424,7 +1425,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtVTAX',
+                                    id: prototype.idDET + '-txtVTAX',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maskRe: /[0-9.]/,
@@ -1451,7 +1452,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtVYQ',
+                                    id: prototype.idDET + '-txtVYQ',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     value: '0.00',
@@ -1468,7 +1469,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtVCPMX',
+                                    id: prototype.idDET + '-txtVCPMX',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -1503,7 +1504,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtVCPN16',
+                                    id: prototype.idDET + '-txtVCPN16',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maxLength: 15,
@@ -1520,7 +1521,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtVCPN0',
+                                    id: prototype.idDET + '-txtVCPN0',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maxLength: 15,
@@ -1546,7 +1547,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtVYQ16',
+                                    id: prototype.idDET + '-txtVYQ16',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maxLength: 15,
@@ -1563,7 +1564,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtVYQ0',
+                                    id: prototype.idDET + '-txtVYQ0',
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     maxLength: 15,
@@ -1607,7 +1608,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtID',
+                                    id: prototype.idDET + '-txtID',
                                     fieldStyle: 'text-align:left',
                                     readOnly: true,
                                     width: 390,
@@ -1635,7 +1636,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtFCONT',
+                                    id: prototype.idDET + '-txtFCONT',
                                     fieldStyle: 'text-align:center',
 //                                    enforceMaxLength: true,
                                     readOnly: true,
@@ -1656,7 +1657,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'combobox',
-                                    id: prototype.id + '-cmbSTCON',
+                                    id: prototype.idDET + '-cmbSTCON',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -1709,7 +1710,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                 //<editor-fold defaultstate="collapsed" desc="ControlData">
                 {
                     xtype: 'fieldset',
-                    id: prototype.id + '-ControlData',
+                    id: prototype.idDET + '-ControlData',
                     title: '<strong style="color:#000; text-decoration: underline; ">Control Data</strong>',
                     width: 760,
                     border: true,
@@ -1735,7 +1736,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtUSCR',
+                                    id: prototype.idDET + '-txtUSCR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
@@ -1752,7 +1753,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtFECR',
+                                    id: prototype.idDET + '-txtFECR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
@@ -1769,7 +1770,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtHOCR',
+                                    id: prototype.idDET + '-txtHOCR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
@@ -1796,7 +1797,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtUSUP',
+                                    id: prototype.idDET + '-txtUSUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
@@ -1813,7 +1814,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtFEUP',
+                                    id: prototype.idDET + '-txtFEUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
@@ -1830,7 +1831,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtHOUP',
+                                    id: prototype.idDET + '-txtHOUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
@@ -1862,7 +1863,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
             items: [
                 {
                     text: 'Save',
-                    id: prototype.id + '-btn-save',
+                    id: prototype.idDET + '-btn-save',
                     iconCls: 'prx-icon-save',
 //                    hidden: true,
                     listeners: {
@@ -1871,7 +1872,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                 },
                 {
                     text: 'Update',
-                    id: prototype.id + '-btn-update',
+                    id: prototype.idDET + '-btn-update',
                     iconCls: 'prx-icon-update',
 //                    hidden: true,
                     listeners: {
@@ -1880,7 +1881,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                 },
                 {
                     text: 'Delete',
-                    id: prototype.id + '-btn-delete',
+                    id: prototype.idDET + '-btn-delete',
                     iconCls: 'prx-icon-delete',
                     hidden: true,
                     listeners: {
@@ -1889,7 +1890,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                 },
                 {
                     text: 'Cancel',
-                    id: prototype.id + '-btn-cancel',
+                    id: prototype.idDET + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'
@@ -1905,7 +1906,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                 {xtype: 'tbspacer', width: 30},
 //                {
 //                    text: '<strong style="color:black;font-size:13px;">Facsimil</strong>',
-//                    id: prototype.id + '-btn-facsimil',
+//                    id: prototype.idDET + '-btn-facsimil',
 //                    widht: 80,
 //                    scale: 'small',
 //                    listeners: {
@@ -1915,7 +1916,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                 {xtype: 'tbspacer', width: 30},
                 {
                     xtype: 'button',
-                    id: prototype.id + '-btn-prev',
+                    id: prototype.idDET + '-btn-prev',
                     icon: 'resources/img/botones/prev.png',
                     tooltip: 'View Previous Flight Manifest',
                     border: false,
@@ -1925,7 +1926,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                 },
                 {
                     xtype: 'button',
-                    id: prototype.id + '-btn-next',
+                    id: prototype.idDET + '-btn-next',
                     icon: 'resources/img/botones/next2.png',
                     tooltip: 'View Next Flight Manifest',
                     border: false,
