@@ -84,7 +84,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ControlFigures.ControlFiguresContro
             fields: ['code', 'name'],
             data: [
                 ["1", "Processing Date"]
-                //["2", "System Date"]
+                        //["2", "System Date"]
             ]
         }));
 
@@ -112,6 +112,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ControlFigures.ControlFiguresContro
         console.log(me.bean);
     },
     btnSearch_click: function(obj, e) {
+        this.hideResumen();
         this.setFormatParameter();
         this.setGridData();
     },
@@ -133,28 +134,40 @@ Ext.define('Ext.Praxis.controller.salesaudit.ControlFigures.ControlFiguresContro
                 proxy: {
                     url: prototype.url + '/search'
                 }, listeners: {
-                    beforeload: function(obj) {
+
+                    beforeload: function (obj) {
                         obj.proxy.extraParams = searchParams;
+//                        const panelResumen = Ext.getCmp(prototype.id + '-panelResumen');
+//                        panelResumen.getEl().mask('Loading...', 'x-mask-loading');
                     },
-                    load: function(obj) {
+                    load: function (store, records, successful) {
+
                         var pag = Ext.getCmp(prototype.id + '-paggin');
                         var pagData = pag.getPageData();
+
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                         Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
                         Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-                        if (obj.data.length === 0) {
-                            global.Msg({
-                                msg: 'Data not found.'
-                            });
-                        } else {
-                            var item = obj.data.items[0];
-                            console.log(item);
-                            Ext.getCmp(prototype.id + '-txaReference').setValue(item.data.DESCR);
+
+                        // Verificar si existen registros
+                        if (!records || records.length === 0) {
+//                            const panelResumen = Ext.getCmp(prototype.id + '-panelResumen');
+//                            panelResumen.getEl().unmask();
+                            return global.Msg({msg: 'Data not found.'});
                         }
-                    }
-                }
+
+                        const raw = store.getProxy().getReader().rawData || {};
+                        const first = records[0];
+
+                        Ext.getCmp(prototype.id + '-txaReference').setValue(first.get('DESCR'));
+                        me.getDataResumen(raw);
+
+
+                    }}
             });
             global.clear();
+
+            console.log('storeGridDatas', storeGridDatas)
             Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
         }
@@ -317,6 +330,93 @@ Ext.define('Ext.Praxis.controller.salesaudit.ControlFigures.ControlFiguresContro
     getDoubleColor3: function(value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#FCF5F2';
         return Ext.util.Format.number(value, '0,000.00');
+    },
+
+    getDataResumen: function (raw) {
+//        console.log('getDataResumen', raw);
+
+        const mapData = (arr) => {
+            return (arr || []).map(item => ({
+                    TRX: item.TRX || '',
+                    BSP: item.CANTBSP || 0,
+                    ARC: item.CANTARC || 0,
+                    ASR: item.TRX === 'EXONERATED' ? (item.DIF + item.CANTASR) : (item.CANTASR || 0),
+                    MANUAL: item.CANTMAN || 0,
+                    DIF: item.DIF || 0
+                }));
+        };
+
+        const pintarGrid = (panelId, data) => {
+            const panel = Ext.getCmp(prototype.id + panelId);
+
+//            const panelResumen = Ext.getCmp(prototype.id + '-panelResumen');
+//            
+//            panelResumen.getEl().mask('Loading...', 'x-mask-loading');
+
+            if (!panel) return;
+
+            const grid = panel.down('grid');
+            if (!grid)
+                return;
+
+
+            if (!data || data.length === 0) {
+                panel.hide();
+                return;
+            }
+
+            panel.show();
+
+            const mapped = mapData(data);
+            const store = grid.getStore() || Ext.create('Ext.data.Store', {
+                fields: ['TRX', 'BSP', 'ARC', 'ASR', 'MANUAL', 'DIF']
+            });
+            store.loadData(mapped);
+            grid.bindStore(store);
+
+            const firstColumn = grid.columns[0];
+            if (firstColumn) {
+                firstColumn.renderer = function (value, meta, record) {
+                    meta.style = "background-color:#F0F0F0; font-weight:bold;";
+                    return record.get('TRX');
+                };
+            }
+        };
+
+        const calcularTotal = (arr) => {
+            const data = mapData(arr);
+            return data.reduce((acc, rec) => acc + rec.BSP + rec.ARC + rec.ASR + rec.MANUAL, 0);
+        };
+
+        const setValorTotal = (id, valor) => {
+            const cmp = Ext.getCmp(prototype.id + id);
+            if (cmp)
+                cmp.setValue(Ext.util.Format.number(valor, '0,000.00'));
+        };
+        
+//        panelResumen.getEl().unmask();
+
+
+        setValorTotal('-TOTALVENTAS', calcularTotal(raw.ventas || []));
+        setValorTotal('-TOTALAUDITORIA', calcularTotal(raw.auditoria || []));
+        setValorTotal('-TOTALRESTANTE', calcularTotal(raw.restante || []));
+
+        pintarGrid('-gridVentas', raw.ventas || []);
+        pintarGrid('-gridAuditoria', raw.auditoria || []);
+        pintarGrid('-gridRestante', raw.restante || []);
+
+        
+
+    },
+
+    hideResumen: function () {
+        const panelRestante = Ext.getCmp(prototype.id + '-gridRestante');
+        const panelVentas = Ext.getCmp(prototype.id + '-gridVentas');
+        const panelAuditoria = Ext.getCmp(prototype.id + '-gridAuditoria');
+        panelRestante.hide();
+        panelVentas.hide();
+        panelAuditoria.hide();
+
     }
 
 
