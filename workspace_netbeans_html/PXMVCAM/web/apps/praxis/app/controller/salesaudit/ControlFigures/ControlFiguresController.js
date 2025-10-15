@@ -168,7 +168,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ControlFigures.ControlFiguresContro
             global.clear();
 
             console.log('storeGridDatas', storeGridDatas)
-            Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
         }
     },
