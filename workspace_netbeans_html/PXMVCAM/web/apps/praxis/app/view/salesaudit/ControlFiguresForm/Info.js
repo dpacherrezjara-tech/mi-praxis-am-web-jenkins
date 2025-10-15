@@ -55,7 +55,6 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
                             },
                             border: false,
                             frame: false,
-                            bodyStyle: 'background-color: #E3EAEF; border:none;',
                             items: [
                                 {
                                     xtype: 'panel',
@@ -111,6 +110,13 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
                                                             {text: 'Processing <br>Date', width: 80, dataIndex: 'FECPRO'},
                                                             {text: 'System Date', width: 85, dataIndex: 'FECSYS'},
                                                             {text: 'Accounting <br>Date', width: 85, dataIndex: 'FECPRO'},
+                                                            {text: 'Memo', width: 80, dataIndex: 'QTYSAMEMO', //renderer: 'getInt',
+                                                                summaryType: 'sum',
+                                                                summaryRenderer: function (value,summaryData, dataIndex, metaData, record) {
+                                                                    metaData.style = "text-align:center;font-weight:bold;";
+                                                                    return Ext.util.Format.number(value, '0,000');
+                                                                }
+                                                            },
                                                             {text: 'Tickets QTY',
                                                                 defaults: {
                                                                     menuDisabled: true,
@@ -119,8 +125,13 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
                                                                     border: true
                                                                 },
                                                                 columns: [
-                                                                    {text: 'Memo', width: 80, dataIndex: 'QTYSAMEMO', renderer: 'getInt'},
-                                                                    {text: 'Praxis', width: 80, dataIndex: 'QTYPXFA', renderer: 'getInt'},
+
+                                                                    {text: 'Praxis', width: 80, dataIndex: 'QTYPXFA', renderer: 'getInt',
+                                                                        summaryType: 'sum',
+                                                                        summaryRenderer: function (value,summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;font-weight:bold;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        }},
                                                                     {text: 'Sales Audit',
                                                                         defaults: {
                                                                             menuDisabled: true,
@@ -129,12 +140,32 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
                                                                             border: true
                                                                         },
                                                                         columns: [
-                                                                            {text: 'Processed', width: 80, dataIndex: 'QTYSAFAPR', renderer: 'getInt'},
-                                                                            {text: 'Void', width: 70, dataIndex: 'QTYSAFAVO', renderer: 'getInt'},
-                                                                            {text: 'Exonerated(*)', width: 90, dataIndex: 'QTYSAFAEX', renderer: 'getInt'}
+                                                                            {text: 'Processed', width: 80, dataIndex: 'QTYSAFAPR', renderer: 'getInt',
+                                                                                summaryType: 'sum',
+                                                                                summaryRenderer: function (value,summaryData, dataIndex, metaData, record) {
+                                                                                    metaData.style = "text-align:right;font-weight:bold;";
+                                                                                    return Ext.util.Format.number(value, '0,000');
+                                                                                }},
+                                                                            {text: 'Void', width: 70, dataIndex: 'QTYSAFAVO', renderer: 'getInt',
+                                                                                summaryType: 'sum',
+                                                                                summaryRenderer: function (value,summaryData, dataIndex, metaData, record) {
+                                                                                    metaData.style = "text-align:right;font-weight:bold;";
+                                                                                    return Ext.util.Format.number(value, '0,000');
+                                                                                }},
+                                                                            {text: 'Exonerated(*)', width: 90, dataIndex: 'QTYSAFAEX', renderer: 'getInt',
+                                                                                summaryType: 'sum',
+                                                                                summaryRenderer: function (value,summaryData, dataIndex, metaData, record) {
+                                                                                    metaData.style = "text-align:right;font-weight:bold;";
+                                                                                    return Ext.util.Format.number(value, '0,000');
+                                                                                }}
                                                                         ]
                                                                     },
-                                                                    {text: 'Difference', width: 80, dataIndex: 'DIFFARE', renderer: 'getInt'}
+                                                                    {text: 'Difference', width: 80, dataIndex: 'DIFFARE', renderer: 'getInt',
+                                                                        summaryType: 'sum',
+                                                                        summaryRenderer: function (value,summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;font-weight:bold;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        }}
                                                                 ]
                                                             },
                                                             {text: 'Tax QTY',
@@ -145,9 +176,24 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
                                                                     border: true
                                                                 },
                                                                 columns: [
-                                                                    {text: 'Praxis', width: 80, dataIndex: 'QTYPXTX', renderer: 'getInt'},
-                                                                    {text: 'Sales Audit<br>Processed', width: 80, dataIndex: 'QTYSATX', renderer: 'getInt'},
-                                                                    {text: 'Difference', width: 80, dataIndex: 'DIFTAX', renderer: 'getInt'}
+                                                                    {text: 'Praxis', width: 80, dataIndex: 'QTYPXTX', renderer: 'getInt',
+                                                                    summaryType: 'sum',
+                                                                        summaryRenderer: function (value,summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;font-weight:bold;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        }},
+                                                                    {text: 'Sales Audit<br>Processed', width: 80, dataIndex: 'QTYSATX', renderer: 'getInt',
+                                                                    summaryType: 'sum',
+                                                                        summaryRenderer: function (value,summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;font-weight:bold;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        }},
+                                                                    {text: 'Difference', width: 80, dataIndex: 'DIFTAX', renderer: 'getInt',
+                                                                    summaryType: 'sum',
+                                                                        summaryRenderer: function (value,summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;font-weight:bold;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        }}
                                                                 ]
                                                             },
                                                             {text: 'Formatting <br> Status', width: 95, dataIndex: 'FLAGF',
@@ -167,7 +213,12 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
                                                                 }
                                                             }
                                                         ]
-                                                    }
+                                                    },
+                                                    features: [
+                                                        {
+                                                            ftype: 'summary' // Agrega la característica de resumen al grid
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         },
@@ -230,7 +281,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
                                                             xtype: 'grid',
                                                             height: 140,
                                                             width: '100%',
-                                                            align:'center',
+                                                            align: 'center',
                                                             store: Ext.create('Ext.data.Store', {
                                                                 fields: ['BSP', 'ARC', 'ASR', 'MANUAL']
                                                             }),
@@ -246,35 +297,35 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
                                                                         return 'TOTAL';
                                                                     }},
                                                                 // Columnas de datos
-                                                                {text: 'BSP', dataIndex: 'BSP', flex: 1, summaryType: 'sum',  align:'right',
+                                                                {text: 'BSP', dataIndex: 'BSP', flex: 1, summaryType: 'sum', align: 'right',
                                                                     renderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     },
                                                                     summaryRenderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     }},
-                                                                {text: 'ARC', dataIndex: 'ARC', flex: 1, summaryType: 'sum',  align:'right',
+                                                                {text: 'ARC', dataIndex: 'ARC', flex: 1, summaryType: 'sum', align: 'right',
                                                                     renderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     },
                                                                     summaryRenderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     }},
-                                                                {text: 'ASR', dataIndex: 'ASR', flex: 1, summaryType: 'sum',  align:'right',
+                                                                {text: 'ASR', dataIndex: 'ASR', flex: 1, summaryType: 'sum', align: 'right',
                                                                     renderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     },
                                                                     summaryRenderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     }},
-                                                                {text: 'MANUAL', dataIndex: 'MANUAL', flex: 1, summaryType: 'sum',  align:'right',
+                                                                {text: 'MANUAL', dataIndex: 'MANUAL', flex: 1, summaryType: 'sum', align: 'right',
                                                                     renderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     },
                                                                     summaryRenderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     }},
-                                                                {text: 'TOTAL', dataIndex: 'total', flex: 1,  align:'right',renderer: function (value, meta, record) {
+                                                                {text: 'TOTAL', dataIndex: 'total', flex: 1, align: 'right', renderer: function (value, meta, record) {
                                                                         var sum = record.get('BSP') + record.get('ARC') + record.get('ASR') + record.get('MANUAL');
                                                                         meta.tdCls = 'x-grid-cell-special';
                                                                         meta.style = "background-color:#D9EDF7;font-weight:bold;";
@@ -340,7 +391,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
                                                             xtype: 'grid',
                                                             height: 140,
                                                             width: '100%',
-                                                            align:'center',
+                                                            align: 'center',
                                                             store: Ext.create('Ext.data.Store', {
                                                                 fields: ['BSP', 'ARC', 'ASR', 'MANUAL']
                                                             }),
@@ -355,7 +406,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
                                                                         return 'TOTAL';
                                                                     }},
                                                                 // Columnas de datos
-                                                                {text: 'BSP', dataIndex: 'BSP', flex: 1, summaryType: 'sum',  align:'right',
+                                                                {text: 'BSP', dataIndex: 'BSP', flex: 1, summaryType: 'sum', align: 'right',
                                                                     renderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     },
@@ -363,7 +414,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
 //                                                                        return value
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     }},
-                                                                {text: 'ARC', dataIndex: 'ARC', flex: 1, summaryType: 'sum',  align:'right',
+                                                                {text: 'ARC', dataIndex: 'ARC', flex: 1, summaryType: 'sum', align: 'right',
                                                                     renderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     },
@@ -371,7 +422,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
 //                                                                        return value;
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     }},
-                                                                {text: 'ASR', dataIndex: 'ASR', flex: 1, summaryType: 'sum',  align:'right',
+                                                                {text: 'ASR', dataIndex: 'ASR', flex: 1, summaryType: 'sum', align: 'right',
                                                                     renderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     },
@@ -379,7 +430,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
 //                                                                        return value;
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     }},
-                                                                {text: 'MANUAL', dataIndex: 'MANUAL', flex: 1, summaryType: 'sum',  align:'right',
+                                                                {text: 'MANUAL', dataIndex: 'MANUAL', flex: 1, summaryType: 'sum', align: 'right',
                                                                     renderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     },
@@ -387,7 +438,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
 //                                                                        return value;
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     }},
-                                                                {text: 'TOTAL', dataIndex: 'total', flex: 1,   align:'right',renderer: function (value, meta, record) {
+                                                                {text: 'TOTAL', dataIndex: 'total', flex: 1, align: 'right', renderer: function (value, meta, record) {
                                                                         var sum = record.get('BSP') + record.get('ARC') + record.get('ASR') + record.get('MANUAL');
                                                                         meta.tdCls = 'x-grid-cell-special';
                                                                         meta.style = "background-color:#D9EDF7;font-weight:bold;";
@@ -451,7 +502,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
                                                             xtype: 'grid',
                                                             height: 95,
                                                             width: '100%',
-                                                            align:'center',
+                                                            align: 'center',
                                                             store: Ext.create('Ext.data.Store', {
                                                                 fields: ['BSP', 'ARC', 'ASR', 'MANUAL']
                                                             }),
@@ -466,7 +517,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
                                                                         return 'TOTAL';
                                                                     }},
                                                                 // Columnas de datos
-                                                                {text: 'BSP', dataIndex: 'BSP', flex: 1, summaryType: 'sum',  align:'right',
+                                                                {text: 'BSP', dataIndex: 'BSP', flex: 1, summaryType: 'sum', align: 'right',
                                                                     renderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     },
@@ -474,7 +525,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
 //                                                                        return value;
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     }},
-                                                                {text: 'ARC', dataIndex: 'ARC', flex: 1, summaryType: 'sum',  align:'right',
+                                                                {text: 'ARC', dataIndex: 'ARC', flex: 1, summaryType: 'sum', align: 'right',
                                                                     renderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     },
@@ -482,14 +533,14 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
 //                                                                        return value;
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     }},
-                                                                {text: 'ASR', dataIndex: 'ASR', flex: 1, summaryType: 'sum',  align:'right',
+                                                                {text: 'ASR', dataIndex: 'ASR', flex: 1, summaryType: 'sum', align: 'right',
                                                                     renderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     }, summaryRenderer: function (value) {
 //                                                                        return value;
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     }},
-                                                                {text: 'MANUAL', dataIndex: 'MANUAL', flex: 1, summaryType: 'sum',  align:'right',
+                                                                {text: 'MANUAL', dataIndex: 'MANUAL', flex: 1, summaryType: 'sum', align: 'right',
                                                                     renderer: function (value) {
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     },
@@ -497,7 +548,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ControlFiguresForm.Info', {
 //                                                                        return value;
                                                                         return Ext.util.Format.number(value, '0,000')
                                                                     }},
-                                                                {text: 'TOTAL', dataIndex: 'total', flex: 1,  align:'right', renderer: function (value, meta, record) {
+                                                                {text: 'TOTAL', dataIndex: 'total', flex: 1, align: 'right', renderer: function (value, meta, record) {
                                                                         var sum = record.get('BSP') + record.get('ARC') + record.get('ASR') + record.get('MANUAL');
                                                                         meta.tdCls = 'x-grid-cell-special';
                                                                         meta.style = "background-color:#D9EDF7;font-weight:bold;";
