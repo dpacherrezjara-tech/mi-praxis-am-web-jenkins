@@ -60,7 +60,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                         locked: true
                                     },
                                     {text: 'Country', dataIndex: 'COUNTRY', width: 120, align: 'left', locked: true,
-                                        summaryType: function () {                                            
+                                        summaryType: function () {
                                             return  'Total HOT`s';
                                         }
                                     },
@@ -73,24 +73,38 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS1', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL1') === 'R')
+                                                    if (record.get('LABEL1') === 'R'){
                                                         metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
+                                                        metaData.tdCls = 'clickable-warning';
+                                                        return `
+                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
+                                                            <span style="font-size:14px;">💬️</span>
+                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
+                                                                ${value ?? ''}
+                                                            </button>
+                                                        </div>
+            
+                                                    `;
+                                                    }
                                                     if (record.get('LABEL1') === 'A')
                                                         metaData.style = 'font-weight:bold;background:#5B9BD5;color:white;';
-                                                    if (record.get('STATUS1') === '' && record.get('FLG1') === 'Y' && record.get('LABEL1') !== 'A' )
+                                                    if (record.get('STATUS1') === '' && record.get('FLG1') === 'Y' && record.get('LABEL1') !== 'A')
                                                         metaData.style = 'font-weight:bold;background:#8688DB;color:white;';
-                                                    
+
                                                     Ext.getCmp(prototype.id + '-dia1').setText(record.get('PRDA1_') + '.-' + record.get('PRDA1'));
                                                     return value; //Ext.util.Format.number(value, '0,000.00');
                                                 },
                                                 summaryType: function (records) {
                                                     var i = 0, total = 0, record;
-                                                    for (;i < records.length; ++i) {
+                                                    for (; i < records.length; ++i) {
                                                         record = records[i];
                                                         if (record.get('STATUS1') !== '' && record.get('LABEL1') !== 'R' && record.get('FLG1') !== 'Y')
                                                             total += 1;
                                                     }
                                                     return  Ext.util.Format.number(total, '0,000');
+                                                },
+                                                listeners: {
+                                                    click: 'onClickComment'
                                                 }
                                             },
                                             {
@@ -174,15 +188,30 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                         columns: [
                                             {
                                                 text: 'Status', dataIndex: 'STATUS2', width: 70, align: 'right',
+                                                id: prototype.id + '-Status2',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL2') === 'R')
+                                                    if (record.get('LABEL2') === 'R') {
                                                         metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
+                                                        metaData.tdCls = 'clickable-warning';
+                                                        return `
+                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
+                                                            <span style="font-size:14px;">💬️</span>
+                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
+                                                                ${value ?? ''}
+                                                            </button>
+                                                        </div>
+            
+                                                    `;
+                                                    }
                                                     if (record.get('LABEL2') === 'A')
                                                         metaData.style = 'font-weight:bold;background:#5B9BD5;color:white;';
                                                     if (record.get('STATUS2') === '' && record.get('FLG2') === 'Y' && record.get('LABEL2') !== 'A')
                                                         metaData.style = 'font-weight:bold;background:#8688DB;color:white;';
                                                     Ext.getCmp(prototype.id + '-dia2').setText(record.get('PRDA2_') + '.-' + record.get('PRDA2'));
+
                                                     return value;
+
+
                                                 },
                                                 summaryType: function (records) {
                                                     var i = 0, total = 0, record;
@@ -194,7 +223,12 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                             total += 1;
                                                     }
                                                     return  Ext.util.Format.number(total, '0,000');
+                                                },
+                                                listeners: {
+                                                    click: 'onClickComment'
                                                 }
+
+
                                             },
                                             {
                                                 text: 'Issue date', dataIndex: 'ISSUDT2', width: 90, align: 'center',
@@ -267,8 +301,9 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                         metaData.style = 'font-weight:bold;background:#8688DB;color:white;';
                                                     return Ext.util.Format.number(value, '0,000');
                                                 }
-                                            }
-                                        ]
+                                            },
+                                        ],
+
                                     },
                                     // </editor-fold>  
                                     // <editor-fold defaultstate="collapsed" desc="dia3">   
@@ -278,8 +313,19 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS3', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL3') === 'R')
+                                                    if (record.get('LABEL3') === 'R'){
                                                         metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
+                                                        metaData.tdCls = 'clickable-warning';
+                                                        return `
+                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
+                                                            <span style="font-size:14px;">💬️</span>
+                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
+                                                                ${value ?? ''}
+                                                            </button>
+                                                        </div>
+            
+                                                    `;
+                                                    }
                                                     if (record.get('LABEL3') === 'A')
                                                         metaData.style = 'font-weight:bold;background:#5B9BD5;color:white;';
                                                     if (record.get('STATUS3') === '' && record.get('FLG3') === 'Y' && record.get('LABEL3') !== 'A')
@@ -293,9 +339,12 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                         record = records[i];
                                                         if (record.get('STATUS3') !== '' && record.get('LABEL3') !== 'R' && record.get('FLG3') !== 'Y')
                                                             total += 1;
-                                                        
+
                                                     }
                                                     return  Ext.util.Format.number(total, '0,000');
+                                                },
+                                                listeners: {
+                                                    click: 'onClickComment'
                                                 }
                                             },
                                             {
@@ -380,8 +429,19 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS4', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL4') === 'R')
+                                                    if (record.get('LABEL4') === 'R'){
                                                         metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
+                                                        metaData.tdCls = 'clickable-warning';
+                                                        return `
+                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
+                                                            <span style="font-size:14px;">💬️</span>
+                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
+                                                                ${value ?? ''}
+                                                            </button>
+                                                        </div>
+            
+                                                    `;
+                                                    }
                                                     if (record.get('LABEL4') === 'A')
                                                         metaData.style = 'font-weight:bold;background:#5B9BD5;color:white;';
                                                     if (record.get('STATUS4') === '' && record.get('FLG4') === 'Y' && record.get('LABEL4') !== 'A')
@@ -397,6 +457,9 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                             total += 1;
                                                     }
                                                     return  Ext.util.Format.number(total, '0,000');
+                                                },
+                                                listeners: {
+                                                    click: 'onClickComment'
                                                 }
                                             },
                                             {
@@ -482,13 +545,26 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                 text: 'Status', dataIndex: 'STATUS5', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                                     if (record.get('LABEL5') === 'R')
+//                                                        metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
+                                                    {
                                                         metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
+                                                        metaData.tdCls = 'clickable-warning';
+                                                        return `
+                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
+                                                            <span style="font-size:14px;">💬️</span>
+                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
+                                                                ${value ?? ''}
+                                                            </button>
+                                                        </div>
+            
+                                                    `;
+                                                    }
                                                     if (record.get('LABEL5') === 'A')
                                                         metaData.style = 'font-weight:bold;background:#5B9BD5;color:white;';
                                                     if (record.get('STATUS5') === '' && record.get('FLG5') === 'Y' && record.get('LABEL5') !== 'A')
                                                         metaData.style = 'font-weight:bold;background:#8688DB;color:white;';
                                                     Ext.getCmp(prototype.id + '-dia5').setText(record.get('PRDA5_') + '.-' + record.get('PRDA5'));
-                                                    return value; 
+                                                    return value;
                                                 },
                                                 summaryType: function (records) {
                                                     var i = 0, total = 0, record;
@@ -498,6 +574,9 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                             total += 1;
                                                     }
                                                     return  Ext.util.Format.number(total, '0,000');
+                                                },
+                                                listeners: {
+                                                    click: 'onClickComment'
                                                 }
                                             },
                                             {
@@ -582,14 +661,25 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS6', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL6') === 'R')
+                                                    if (record.get('LABEL6') === 'R'){
                                                         metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
+                                                        metaData.tdCls = 'clickable-warning';
+                                                        return `
+                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
+                                                            <span style="font-size:14px;">💬️</span>
+                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
+                                                                ${value ?? ''}
+                                                            </button>
+                                                        </div>
+            
+                                                    `;
+                                                    }
                                                     if (record.get('LABEL6') === 'A')
                                                         metaData.style = 'font-weight:bold;background:#5B9BD5;color:white;';
                                                     if (record.get('STATUS6') === '' && record.get('FLG6') === 'Y' && record.get('LABEL6') !== 'A')
                                                         metaData.style = 'font-weight:bold;background:#8688DB;color:white;';
                                                     Ext.getCmp(prototype.id + '-dia6').setText(record.get('PRDA6_') + '.-' + record.get('PRDA6'));
-                                                    return value;  
+                                                    return value;
                                                 },
                                                 summaryType: function (records) {
                                                     var i = 0, total = 0, record;
@@ -599,6 +689,9 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                             total += 1;
                                                     }
                                                     return  Ext.util.Format.number(total, '0,000');
+                                                },
+                                                listeners: {
+                                                    click: 'onClickComment'
                                                 }
                                             },
                                             {
@@ -683,8 +776,19 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS7', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL7') === 'R')
-                                                        metaData.style = 'font-weight:bold;background-color:#FF0000;color:white';
+                                                    if (record.get('LABEL7') === 'R'){
+                                                        metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
+                                                        metaData.tdCls = 'clickable-warning';
+                                                        return `
+                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
+                                                            <span style="font-size:14px;">💬️</span>
+                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
+                                                                ${value ?? ''}
+                                                            </button>
+                                                        </div>
+            
+                                                    `;
+                                                    }
                                                     if (record.get('LABEL7') === 'A')
                                                         metaData.style = 'font-weight:bold;background-color:#5B9BD5;color:white';
                                                     if (record.get('STATUS7') === '' && record.get('FLG7') === 'Y' && record.get('LABEL7') !== 'A')
@@ -700,6 +804,9 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                             total += 1;
                                                     }
                                                     return  Ext.util.Format.number(total, '0,000');
+                                                },
+                                                listeners: {
+                                                    click: 'onClickComment'
                                                 }
                                             },
                                             {
