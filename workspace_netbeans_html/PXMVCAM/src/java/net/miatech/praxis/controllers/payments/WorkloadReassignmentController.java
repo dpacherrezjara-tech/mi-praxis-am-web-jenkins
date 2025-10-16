@@ -69,6 +69,7 @@ public class WorkloadReassignmentController extends BaseController {
             filter.IN_DATETO = request.getParameter("IN_DATETO").trim();
             filter.IN_USER = request.getParameter("IN_USER").trim();
             filter.IN_PROCESADOR = request.getParameter("IN_PROCESADOR").trim();
+            filter.page.PAGROW = 20;
 
             lst = logic.SearchGroupTaskAssignment(filter);
         } catch (Exception e) {
@@ -218,6 +219,11 @@ public class WorkloadReassignmentController extends BaseController {
             logic = new WorkloadReassignmentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
+            int start = Integer.parseInt(request.getParameter("start"));
+
+            int pExcel = Integer.parseInt(request.getParameter("pexcel"));
+            Boolean bExcel = pExcel == 1 ? true : false;
+
             filter.IN_OPTION = request.getParameter("IN_OPTION").trim();
             filter.AUASI = request.getParameter("AUASI").trim();
             filter.PRDA1 = request.getParameter("PRDA1").trim();
@@ -225,50 +231,24 @@ public class WorkloadReassignmentController extends BaseController {
             filter.PROCTYPE1 = request.getParameter("PROCTYPE1").trim();
             filter.PROCTYPESQ1 = request.getParameter("PROCTYPESQ1").trim();
 
-            lst = logic.SearchTaskAssignmentDetail(filter);
-            Boolean chk = false;
-            for (int vi = 0; vi < lst.size(); ++vi) {
-                mapProperties = new HashMap<>();
-                mapProperties.put("CCUST1", lst.get(vi).CCUST1);
-                mapProperties.put("PRDA1", lst.get(vi).PRDA1);
-                mapProperties.put("PRTIME1", lst.get(vi).PRTIME1);
-                mapProperties.put("RECTYPE1", lst.get(vi).RECTYPE1);
-                mapProperties.put("PROCTYPE1", lst.get(vi).PROCTYPE1);
-                mapProperties.put("PROCTYPESQ1", lst.get(vi).PROCTYPESQ1);
-                mapProperties.put("SMERCHID1", lst.get(vi).SMERCHID1);
-                mapProperties.put("AREFNBR1", lst.get(vi).AREFNBR1);
-                mapProperties.put("SDATE1", lst.get(vi).SDATE1);
-                mapProperties.put("STIME1", lst.get(vi).STIME1);
-                mapProperties.put("SCARDN1", lst.get(vi).SCARDN1);
-                mapProperties.put("SEQNBR1", lst.get(vi).SEQNBR1);
-                mapProperties.put("AUASI1", lst.get(vi).AUASI);
-                mapProperties.put("SAUTHOC1", lst.get(vi).SAUTHOC1);
-                mapProperties.put("TICKET1", lst.get(vi).TICKET1);
-                mapProperties.put("SCOUNTRY1", lst.get(vi).SCOUNTRY1);
-                mapProperties.put("STVAL1", lst.get(vi).STVAL1);
-                mapProperties.put("PMERCHID1", lst.get(vi).PMERCHID1);
-                mapProperties.put("TGROSAMOUN1", lst.get(vi).TGROSAMOUN1);
-
-                switch (lst.get(vi).STVAL1.trim()) {
-                    case "3":
-                        chk = true;
-                        break;
-                    default:
-                        chk = false;
-                        break;
-                }
-                mapProperties.put("CHK", chk);
-
-                lstData.add(mapProperties);
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
             }
+
+            lst = logic.SearchTaskAssignmentDetail(filter);
 
         } catch (Exception e) {
             throw new SpringException(e);
         }
 
         map.put("success", true);
-        map.put("total", lstData.size());
-        map.put("data", lstData);
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
 
         return new Gson().toJson(map);
     }
