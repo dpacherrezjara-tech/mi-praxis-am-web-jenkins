@@ -32,6 +32,7 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
         var CmbStatus = Ext.getCmp(prototype.idAmdsControl + '-CmbStatus');
         var CmbSource = Ext.getCmp(prototype.idAmdsControl + '-ComboSource');
         var CmbChannel = Ext.getCmp(prototype.idAmdsControl + '-ComboChannel');
+        var ComboType = Ext.getCmp(prototype.idAmdsControl + '-CmbProcess');
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
@@ -40,7 +41,9 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
                 {"code": "2", "name": "Sale Date"},
                 {"code": "3", "name": "System Date"},
                 {"code": "4", "name": "Settlement Date"},
-                {"code": "5", "name": "Ticket"}
+                {"code": "5", "name": "Ticket"},
+                {"code": "6", "name": "Ref.Number"},
+                {"code": "7", "name": "Card Number"}
 
 
             ]
@@ -77,6 +80,14 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
                 {"code": "CTO", "name": "CTO"},
                 {"code": "WEB", "name": "WEB"},
                 {"code": "FRA", "name": "FRA"}
+            ]
+        }));
+
+        ComboType.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "ALL"},
+                {"code": "BT", "name": "BY TICKET"},
+                {"code": "BP", "name": "BY PAYMENT"}
             ]
         }));
 
@@ -120,7 +131,13 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
         var CmbStatus = Ext.getCmp(prototype.idAmdsControl + '-CmbStatus');
         var txtcountry = Ext.getCmp(prototype.idAmdsControl + '-country');
         var filter2 = Ext.getCmp(prototype.idAmdsControl + '-box-filter-02');
-
+        var txtA4497ARN = Ext.getCmp(prototype.idAmdsControl + '-txtA4497ARN');
+        var txtA4497SCARD = Ext.getCmp(prototype.idAmdsControl + '-txtA4497SCARD');
+        var txtA4497SCARD = Ext.getCmp(prototype.idAmdsControl + '-txtA4497SCARD');
+        var CmbProcess = Ext.getCmp(prototype.idAmdsControl + '-CmbProcess');
+        var txtAmount = Ext.getCmp(prototype.idAmdsControl + '-txtAmount');
+        // {"code": "6", "name": "Ref.Number"},
+        //{"code": "7", "name": "C.C.Number"}
         //campo_cantidad.hide();
         if (obj.getValue() === "1") {
             txtNumber.show();
@@ -134,11 +151,21 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
             txtCia.hide();
             txtFrmaSerie.hide();
             txtSeq.hide();
+            txtA4497SCARD.hide();
+            txtA4497ARN.hide();
+            txtAmount.hide();
+            CmbProcess.hide();
+
+            txtA4497SCARD.setValue("");
+            txtA4497ARN.setValue("");
             //
             CmbStatus.setValue("");
             txtIATA.setValue("");
             txtFrmaSerie.setValue("");
             txtSeq.setValue("");
+            txtAmount.setValue("");
+            CmbProcess.setValue("");
+            //
         } else if (obj.getValue() === "2" || obj.getValue() === "3" || obj.getValue() === "4") {
 
             txtFilterDateFrom.show();
@@ -146,13 +173,19 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
             filter2.show();
             txtIATA.show();
             CmbStatus.show();
-
+            txtAmount.show();
+            CmbProcess.show();
 
             txtCia.hide();
             txtFrmaSerie.hide();
             txtSeq.hide();
             txtNumber.hide();
             txtcountry.hide();
+            txtA4497SCARD.hide();
+            txtA4497ARN.hide();
+
+            txtA4497SCARD.setValue("");
+            txtA4497ARN.setValue("");
             //
             txtFrmaSerie.setValue("");
             txtSeq.setValue("");
@@ -171,17 +204,88 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
             txtIATA.hide();
             CmbStatus.hide();
             txtcountry.hide();
+            txtA4497SCARD.hide();
+            txtA4497ARN.hide();
+            txtAmount.hide();
+            CmbProcess.hide();
+
+            txtA4497SCARD.setValue("");
+            txtA4497ARN.setValue("");
             //
             txtNumber.setValue("");
             txtIATA.setValue("");
             CmbStatus.setValue("");
             txtcountry.setValue("");
+            txtA4497SCARD.setValue("");
+            txtA4497ARN.setValue("");
+            txtAmount.setValue("");
+            CmbProcess.setValue("");
+
+        } else if (obj.getValue() === "6") {
+
+            txtA4497ARN.show();
+            //
+            txtCia.hide();
+            txtFrmaSerie.hide();
+            txtSeq.hide();
+            txtAmount.hide();
+            CmbProcess.hide();
+
+            txtNumber.hide();
+            txtFilterDateFrom.hide();
+            txtFilterDateTo.hide();
+            filter2.hide();
+            txtIATA.hide();
+            CmbStatus.hide();
+            txtcountry.hide();
+            txtA4497SCARD.hide();
+            //
+            txtNumber.setValue("");
+            txtIATA.setValue("");
+            CmbStatus.setValue("");
+            txtcountry.setValue("");
+            txtFrmaSerie.setValue("");
+            txtSeq.setValue("");
+            txtA4497SCARD.setValue("");
+            txtAmount.setValue("");
+            CmbProcess.setValue("");
+
+        } else if (obj.getValue() === "7") {
+
+            txtA4497SCARD.show();
+            //
+            txtCia.hide();
+            txtFrmaSerie.hide();
+            txtSeq.hide();
+            txtAmount.hide();
+            CmbProcess.hide();
+
+            txtNumber.hide();
+            txtFilterDateFrom.hide();
+            txtFilterDateTo.hide();
+            filter2.hide();
+            txtIATA.hide();
+            CmbStatus.hide();
+            txtcountry.hide();
+            txtA4497ARN.hide();
+            //
+            txtNumber.setValue("");
+            txtIATA.setValue("");
+            CmbStatus.setValue("");
+            txtcountry.setValue("");
+            txtFrmaSerie.setValue("");
+            txtSeq.setValue("");
+            txtA4497ARN.setValue("");
+            txtAmount.setValue("");
+            CmbProcess.setValue("");
 
         } else {
             txtCia.hide();
             txtFrmaSerie.hide();
             txtSeq.hide();
             txtNumber.hide();
+            txtAmount.hide();
+            CmbProcess.hide();
 
             txtFilterDateFrom.hide();
             txtFilterDateTo.hide();
@@ -189,10 +293,16 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
             txtIATA.hide();
             CmbStatus.hide();
             txtcountry.hide();
+            txtA4497SCARD.hide();
+            txtA4497ARN.hide();
 
+            txtA4497SCARD.setValue("");
+            txtA4497ARN.setValue("");
             txtIATA.setValue("");
             CmbStatus.setValue("");
             txtcountry.setValue("");
+            txtAmount.setValue("");
+            CmbProcess.setValue("");
         }
     },
 
@@ -268,6 +378,14 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
         return value;
     },
+    onPaginationChkChange: function (obj, newValue, oldValue, eOpts) {
+        Ext.getCmp(prototype.idAmdsControl + '-btn-search').fireEvent('click', {});
+        if (!newValue) {
+            Ext.getCmp(prototype.idAmdsControl + '-pagginator-01').disable();
+        } else {
+            Ext.getCmp(prototype.idAmdsControl + '-pagginator-01').enable();
+        }
+    },
     imgSearch_clickHandler: function (obj, e) {
 
         if (obj !== true) {
@@ -286,6 +404,31 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
         var CmbStatus = Ext.getCmp(prototype.idAmdsControl + '-CmbStatus').getValue();
         var CombSource = Ext.getCmp(prototype.idAmdsControl + '-ComboSource').getValue();
         var CombChannel = Ext.getCmp(prototype.idAmdsControl + '-ComboChannel').getValue();
+
+        var txtA4497ARN = Ext.getCmp(prototype.idAmdsControl + '-txtA4497ARN').getValue();
+        var txtA4497SCARD = Ext.getCmp(prototype.idAmdsControl + '-txtA4497SCARD').getValue();
+        var CmbProcess = Ext.getCmp(prototype.idAmdsControl + '-CmbProcess').getValue();
+        var txtAmount = Ext.getCmp(prototype.idAmdsControl + '-txtAmount').getValue().replace(new RegExp(',', 'g'), '');
+        //
+        if (ComboBy === "6") {
+            if (txtA4497ARN === '') {
+                Ext.MessageBox.alert('PRAXIS', 'Enter Ref.Number', function (btn, text) {
+                    if (btn === 'ok' || btn === 'cancel')
+                        setTimeout("Ext.getCmp(prototype.idAmdsControl + '-txtA4497ARN').focus();", 100);
+                });
+                return;
+            }
+        }
+        if (ComboBy === "7") {
+            if (txtA4497SCARD === '') {
+                Ext.MessageBox.alert('PRAXIS', 'Enter Card Number', function (btn, text) {
+                    if (btn === 'ok' || btn === 'cancel')
+                        setTimeout("Ext.getCmp(prototype.idAmdsControl + '-txtA4497SCARD').focus();", 100);
+                });
+                return;
+            }
+        }
+
         if (ComboBy === '') {
             global.Msg({msg: 'Select Of By'});
             return;
@@ -341,19 +484,6 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
             }
         }
 
-        var ComboBy = Ext.getCmp(prototype.idAmdsControl + '-search-type').getValue();
-        var txtIATA = Ext.getCmp(prototype.idAmdsControl + '-txtIATA').getValue();
-        var txtFilterDateFrom = Ext.getCmp(prototype.idAmdsControl + '-txtFilterDateFrom').getRawValue();
-        var txtFilterDateTo = Ext.getCmp(prototype.idAmdsControl + '-txtFilterDateTo').getRawValue();
-        var txtCia = Ext.getCmp(prototype.idAmdsControl + '-txtCia').getValue();
-        var txtFrmaSerie = Ext.getCmp(prototype.idAmdsControl + '-txtFrmaSerie').getValue();
-        var txtSeq = Ext.getCmp(prototype.idAmdsControl + '-txtSeq').getValue();
-        var txtNumber = Ext.getCmp(prototype.idAmdsControl + '-txtNumber').getValue();
-        var txtcountry = Ext.getCmp(prototype.idAmdsControl + '-country').getValue();
-        var CmbStatus = Ext.getCmp(prototype.idAmdsControl + '-CmbStatus').getValue();
-        var CombSource = Ext.getCmp(prototype.idAmdsControl + '-ComboSource').getValue();
-        var CombChannel = Ext.getCmp(prototype.idAmdsControl + '-ComboChannel').getValue();
-
         this.bean.IN_OPTION = ComboBy;
         this.bean.IN_IATA = txtIATA;
         this.bean.IN_DATEFROM = txtFilterDateFrom;
@@ -366,6 +496,11 @@ Ext.define('Ext.Praxis.controller.payments.AmdsControlForm.AmdsControlFormContro
         this.bean.IN_STATUS = CmbStatus;
         this.bean.IN_SOURCE = CombSource;
         this.bean.IN_CHANNEL = CombChannel;
+        //
+        this.bean.IN_A4497TRSRC = CmbProcess;
+        this.bean.IN_A4497SCARD = txtA4497SCARD;
+        this.bean.IN_A4497ARN = txtA4497ARN;
+        this.bean.IN_A4497NETO = txtAmount === '' ? 0 : txtAmount;
 
         this.bean.pexcel = 1;
         this.SearchReport(this.bean, obj === true ? obj : false);

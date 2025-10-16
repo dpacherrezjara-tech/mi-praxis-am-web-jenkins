@@ -4,7 +4,7 @@
  * Migrado por: Luis Remicio
  */
 prototype.idAmdsControl = 'AmdsControlForm';
-prototype.widthContenedor = 1395;
+prototype.widthContenedor = 1400;
 prototype.heightContenedor = 605;
 prototype.url = CONTEXTPATH + '/AmdsControlForm';
 
@@ -252,7 +252,32 @@ Ext.define('Ext.Praxis.view.payments.AmdsControlForm.AmdsControlForm', {
                                             maskRe: /[0-9]/,
                                             maxLength: 10,
                                             enforceMaxLength: 10,
-                                            width: 80,
+                                            width: 100,
+                                            hidden: true,
+                                            listeners: {
+                                                specialkey: 'onSearchkey'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.idAmdsControl + '-txtA4497ARN',
+                                            hideLabel: true,
+                                            maskRe: /[0-9]/,
+                                            maxLength: 23,
+                                            enforceMaxLength: 23,
+                                            width: 200,
+                                            hidden: true,
+                                            listeners: {
+                                                specialkey: 'onSearchkey'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.idAmdsControl + '-txtA4497SCARD',
+                                            hideLabel: true,
+                                            maxLength: 19,
+                                            enforceMaxLength: 19,
+                                            width: 200,
                                             hidden: true,
                                             listeners: {
                                                 specialkey: 'onSearchkey'
@@ -305,6 +330,41 @@ Ext.define('Ext.Praxis.view.payments.AmdsControlForm.AmdsControlForm', {
                                             hidden: true,
                                             listeners: {
                                                 afterrender: 'onCmbSearchAfterRender',
+                                                specialkey: 'onSearchkey'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.idAmdsControl + '-CmbProcess',
+                                            fieldLabel: 'Process',
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            width: 200,
+                                            labelWidth: 50,
+                                            labelAlign: 'right',
+                                            emptyText: '',
+                                            listConfig: {
+                                                minWidth: 200
+                                            },
+                                            listeners: {
+                                                afterrender: 'onCmbSearchAfterRender'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            fieldLabel: 'Amount',
+                                            labelWidth: 60,
+                                            id: prototype.idAmdsControl + '-txtAmount',
+                                            width: 160,
+                                            name: 'IN_AMOUNT',
+                                            maxLength: 15,
+                                            value: '0',
+                                            enforceMaxLength: true,
+                                            maskRe: /[0-9\.\-]/, // Máscara para números y punto decimal
+                                            regex: /^[-]?\d+(\.\d{1,2})?$/, // Validación para permitir hasta 2 decimales
+                                            regexText: 'Invalid Amount', // Mensaje de error personalizado
+                                            listeners: {
                                                 specialkey: 'onSearchkey'
                                             }
                                         }
@@ -454,7 +514,7 @@ Ext.define('Ext.Praxis.view.payments.AmdsControlForm.AmdsControlForm', {
                         {
                             xtype: 'grid',
                             id: prototype.idAmdsControl + '-gridData',
-                            width: 1390,
+                            width: 1400,
                             height: 480,
                             columnLines: true,
                             selModel: {
@@ -493,7 +553,12 @@ Ext.define('Ext.Praxis.view.payments.AmdsControlForm.AmdsControlForm', {
                                     {text: 'Transaction', dataIndex: 'A4497TRNCU', width: 80},
                                     {text: 'Status', dataIndex: 'A4497FLAG', width: 130, sortable: false, renderer: 'onRendererColumnStatus'},
                                     {text: 'PNR', dataIndex: 'A4497PNR', width: 90},
-                                    {text: 'EPR', dataIndex: 'A4497EPR', width: 90}
+                                    {text: 'EPR', dataIndex: 'A4497EPR', width: 90},
+                                    //
+                                    {text: '"Ref.Number', dataIndex: 'A4497ARN', width: 120},
+                                    {text: 'Card Number', dataIndex: 'A4497SCARD', width: 150},
+                                    {text: 'Process', dataIndex: 'A4497TRSRC', width: 90},
+                                    {text: 'Auditor', dataIndex: 'A4497REGIS', width: 90}
 
                                 ], listeners: {
                                     beforecellmousedown: function () {
