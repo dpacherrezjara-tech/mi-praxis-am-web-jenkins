@@ -55,17 +55,17 @@ public class AmdsControlFormDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL PRAXISMP.SQP05139(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXISMP.SQP05139(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(13, Types.INTEGER);
-            cstmt01.registerOutParameter(14, Types.INTEGER);
-            cstmt01.registerOutParameter(15, Types.INTEGER);
-            cstmt01.registerOutParameter(16, Types.INTEGER);
+            cstmt01.registerOutParameter(17, Types.INTEGER);
+            cstmt01.registerOutParameter(18, Types.INTEGER);
+            cstmt01.registerOutParameter(19, Types.INTEGER);
+            cstmt01.registerOutParameter(20, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_OPTION);
@@ -80,19 +80,25 @@ public class AmdsControlFormDAO {
             cstmt01.setString(10, filter.IN_STATUS);
             cstmt01.setString(11, filter.IN_SOURCE);
             cstmt01.setString(12, filter.IN_CHANNEL);
-
-            cstmt01.setInt(13, filter.page.PAGNUM);
-            cstmt01.setInt(14, filter.page.PAGROW);
-            cstmt01.setInt(15, filter.page.TOTPAG);
-            cstmt01.setInt(16, filter.page.TOTROW);
+            
+            cstmt01.setString(13, filter.IN_A4497TRSRC);
+            cstmt01.setString(14, filter.IN_A4497SCARD);
+            cstmt01.setString(15, filter.IN_A4497ARN);
+            cstmt01.setString(16, filter.IN_A4497NETO);
+            
+            
+            cstmt01.setInt(17, filter.page.PAGNUM);
+            cstmt01.setInt(18, filter.page.PAGROW);
+            cstmt01.setInt(19, filter.page.TOTPAG);
+            cstmt01.setInt(20, filter.page.TOTROW);
 
             cstmt01.execute();
 
             //*System.out.println("Aqui entro con Filtro Categoria: ");
-            filter.page.PAGNUM = cstmt01.getInt(13);
-            filter.page.PAGROW = cstmt01.getInt(14);
-            filter.page.TOTPAG = cstmt01.getInt(15);
-            filter.page.TOTROW = cstmt01.getInt(16);
+            filter.page.PAGNUM = cstmt01.getInt(17);
+            filter.page.PAGROW = cstmt01.getInt(18);
+            filter.page.TOTPAG = cstmt01.getInt(19);
+            filter.page.TOTROW = cstmt01.getInt(20);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -144,6 +150,8 @@ public class AmdsControlFormDAO {
                 objRtn.A4497ARN = rs01.getString("A4497ARN");
                 objRtn.A4497PRDA = rs01.getString("A4497PRDA");
                 objRtn.A4497FLAGDES = rs01.getString("A4497FLAGDES");
+                objRtn.A4497SCARD = rs01.getString("A4497SCARD");
+                objRtn.A4497TRSRC = rs01.getString("A4497TRSRC");
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;

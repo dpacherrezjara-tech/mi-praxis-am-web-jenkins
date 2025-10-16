@@ -189,7 +189,7 @@ Ext.define('Ext.Praxis.controller.payments.MaintenanceAnalysts.MaintenanceAnalys
         var store01 = Ext.create('Ext.data.Store', {
             storeId: prototype.id + '-store-grid01',
             pageSize: 20,
-            groupField: 'A4836PROCE',
+            groupField: 'A4836DESCR',
             fields: [
                 {name: 'A4836CCUST', type: 'string'},
                 {name: 'A4836USER', type: 'string'},

@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.view.payments.WorkloadReassignmentForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             padding: '1',
                             border: true,
-                            height: 560,
+                            height: 480,
                             width: 1040,
                             layout: {
                                 type: 'vbox',
@@ -251,10 +251,6 @@ Ext.define('Ext.Praxis.view.payments.WorkloadReassignmentForm.Info', {
                                             width: 50
                                         },
                                         {xtype: 'tbspacer', width: 20},
-                                        {
-                                            text: 'Total ADMs',
-                                            width: 80
-                                        },
                                         {
                                             id: prototype.id + '-lblRowsTotalADM',
                                             text: '0',
