@@ -9,7 +9,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
     controller: 'PlusgradeReconciliationController',
     title: 'Plusgrade Reconciliation - Form',
     header: true,
-    width: 845,
+    width: 848,
     maxHeight: 820,
     // maxHeight: 780,
     resizable: false,

@@ -17,33 +17,42 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             console.log(res.lstRs);
             const dataCountry = res.lstRs[0] || {};
             const dataCerror = res.lstRs[1] || {};
+            const dataStval = res.lstRs[2] || {};
             
             console.log(dataCountry);
             console.log(dataCerror);
 
             const filterCountry = Ext.getCmp(prototype.id + '-cmbPaisesPG');
             const filterCerror = Ext.getCmp(prototype.id + '-cmbCerrorPG');
+            const filterStval = Ext.getCmp(prototype.id + '-cmbStvalPG');
+            
 
             filterCountry.suspendEvents(false);
-            filterCountry.bindStore(me.createComboStore({data: dataCountry, valueField: 'CODE', displayField: 'NAME'}));
+            filterCountry.bindStore(await me.createComboStore({data: dataCountry, valueField: 'CODE', displayField: 'NAME'}));
             filterCountry.setValue('');
             filterCountry.resumeEvents();
 
-            // Añadir opción 'All' al principio
             filterCerror.suspendEvents(false);
-            filterCerror.bindStore(me.createComboStore({data: dataCerror, valueField: 'CODE', displayField: 'DESCRIPTION'}));
+            filterCerror.bindStore(await me.createComboStore({data: dataCerror, valueField: 'CODE', displayField: 'DESCRIPTION'}));
             filterCerror.setValue('');
             filterCerror.resumeEvents();
+
+            filterStval.suspendEvents(false);
+            filterStval.bindStore(await me.createComboStore({data: dataStval, valueField: 'STVAL', displayField: 'DESCRIPTION', addElementAll: false}));
+            filterStval.setValue('X');
+            filterStval.resumeEvents();
         
         } catch (e) {
             console.log(e);
         }
     },
-    createComboStore: function ( {data, valueField, displayField}) {
+    createComboStore: async function ( {data, valueField, displayField, addElementAll = true}) {
         //crea record vacio
         let allRecord = {};
-        allRecord[displayField] = 'All';
-        allRecord[valueField] = '';
+        if (addElementAll) {
+            allRecord[displayField] = 'All';
+            allRecord[valueField] = '';
+        }
         //limpia record de data
         data.forEach(obj => {
             for (let attr in obj) {

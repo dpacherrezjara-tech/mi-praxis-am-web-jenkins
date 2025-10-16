@@ -126,29 +126,34 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                 },
                                 {
                                     xtype: 'combobox',
+                                    id: prototype.id + '-cmbStvalPG',
                                     fieldLabel: 'Complements vs Sales',
                                     name: 'IN_STVAL',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['X', 'All'],
-                                            ['', 'Pending'],
-                                            ['0', 'Stand By'],
-                                            ['1', 'Match'],
-                                            ['3', 'Settl. Without Sales'],
-                                            ['4', 'Match Partial'],
-                                            ['6', 'Match Forced'],
-                                            ['E', 'Duplicate'],
-                                            ['5', 'Match Manual']
-                                        ]
-                                    }),
+                                    queryMode: 'local',
+                                    // store: Ext.create('Ext.data.SimpleStore', {
+                                    //     fields: ['code', 'name'],
+                                    //     data: [
+                                    //         ['X', 'All'],
+                                    //         ['', 'Pending'],
+                                    //         ['0', 'Stand By'],
+                                    //         ['1', 'Match'],
+                                    //         ['3', 'Settl. Without Sales'],
+                                    //         ['4', 'Match Partial'],
+                                    //         ['6', 'Match Forced'],
+                                    //         ['E', 'Duplicate'],
+                                    //         ['5', 'Match Manual'],
+                                    //         ['I', 'Record Invalid']
+                                    //     ]
+                                    // }),
                                     labelWidth: 160,
                                     width: 280,
-                                    displayField: 'name',
-                                    valueField: 'code',
-                                    queryMode: 'local',
                                     editable: false,
-                                    value: 'X'
+                                    typeAhead: true,
+                                    valueField: 'STVAL',
+                                    displayField: 'DESCRIPTION',
+                                    enableKeyEvents: true,
+                                    // triggerAction: 'all',
+                                    // value: 'X'
                                 },
                                 {
                                     xtype: 'combo',

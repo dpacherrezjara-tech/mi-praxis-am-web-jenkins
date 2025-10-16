@@ -1,6 +1,7 @@
-Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.PaymentAnalyticsGridController', {
+
+Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.AnalyticsSettlementGridController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.PaymentAnalyticsGridController',
+    alias: 'controller.AnalyticsSettlementGridController',
     afterRender: async function (obj, e) {
         const me = this;
         me.view.setLoading(true);
@@ -276,7 +277,7 @@ Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.PaymentAnalyticsGrid
             });
 
             // Generar Excel
-            await global.writeExcelFromJson(excel, 'Summary Analytics Payments');
+            await global.writeExcelFromJson(excel, 'Summary Settlement Analytics');
             
         } catch (e) {
             console.log(e);
