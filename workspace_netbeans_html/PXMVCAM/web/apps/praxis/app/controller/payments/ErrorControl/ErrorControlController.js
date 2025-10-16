@@ -67,7 +67,15 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
     },
     searchFormatErrors: async function () {
         const grid = Ext.getCmp(prototype.id + '-formatErrorGrid');
+        const gridDet = Ext.getCmp(prototype.id + '-formatErrorDetGrid');
+        grid.show();
+         
+        if(gridDet){
+            gridDet.hide();
+        }
+       
         grid.setLoading(true);
+        
         let params = this.formatFormatParams();
         console.log(params);
         const res = await global.callStoreGet('PRAXISMP', 'SQP05020', params);

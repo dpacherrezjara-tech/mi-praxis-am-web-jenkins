@@ -1,12 +1,12 @@
-Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.Grids.AnalyticsGrid', {
+Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.Grids.AnalyticsSettlementGrid', {
     extend: 'Ext.grid.Panel', //  Ext.tree.Panel
-    alias: 'widget.' + prototype.id + '-AnalyticsGrid',
-    id: prototype.id + '-AnalyticsGrid',
+    alias: 'widget.' + prototype.id + '-AnalyticsSettlementGrid',
+    id: prototype.id + '-AnalyticsSettlementGrid',
     requires: [
-        'Ext.Praxis.controller.payments.PaymentAnalytics.PaymentAnalyticsGridController'
+        'Ext.Praxis.controller.payments.PaymentAnalytics.AnalyticsSettlementGridController'
     ],
-    controller: 'PaymentAnalyticsGridController',
-    title: 'Payment Summary Analytics',
+    controller: 'AnalyticsSettlementGridController',
+    title: 'Summary Settlement Analytics',
     titleAlign: 'center',
     minHeight: 200,
     height: 600,
