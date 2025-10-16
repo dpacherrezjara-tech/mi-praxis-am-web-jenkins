@@ -77,25 +77,40 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 this.limpiarData();
                 this.mostrarData(this.p.bean);
                 Ext.getCmp(prototype.idDET+'-btn-save').hide();
-                console.log(this.statusCont,'this.statusCont')
-                if (this.statusCont === 'Contabilizado.' || this.statusCont === 'Contabilizado') {
-                    Ext.getCmp(prototype.idDET+'-btn-update').hide();
-                } else {
-                    Ext.getCmp(prototype.idDET+'-btn-update').show();
-//                    me.validateProgram(Ext.getCmp(prototype.idDET+'-btn-update'), meEntryTick.NPROG, 'M');
+                
+                var menuUser = document.getElementById('menuUser').innerText;
+                if (menuUser !== "LAGREDA") {
+                    console.log(this.statusCont,'this.statusCont')
+                    if (this.statusCont === 'Contabilizado.' || this.statusCont === 'Contabilizado') {
+                        Ext.getCmp(prototype.idDET+'-btn-update').hide();
+                    } else {
+                        Ext.getCmp(prototype.idDET+'-btn-update').show();
+    //                    me.validateProgram(Ext.getCmp(prototype.idDET+'-btn-update'), meEntryTick.NPROG, 'M');
+                    }
+    //                me.validateProgram(Ext.getCmp(prototype.idDET+'-btn-delete'), meEntryTick.NPROG, 'E');
+                    this.cambiarEstadoDatosClave('Deshabilitar');
                 }
-//                me.validateProgram(Ext.getCmp(prototype.idDET+'-btn-delete'), meEntryTick.NPROG, 'E');
-                this.cambiarEstadoDatosClave('Deshabilitar');
+                
+                
                 break;
             case 'S':
                 this.limpiarData();
                 this.mostrarData(this.p.bean);
                 let showOptions = (this.p.bean.strDescSTCON || '').toString().trim();
-                if (this.statusCont === 'Contabilizado.'  || this.statusCont === 'Contabilizado') {
+                
+                var menuUser = document.getElementById('menuUser').innerText;
+
+                if (menuUser !== "LAGREDA") {
+                    if (this.statusCont === 'Contabilizado.'  || this.statusCont === 'Contabilizado') {
                     Ext.getCmp(prototype.idDET+'-btn-update').hide();
-                } else {
-                    Ext.getCmp(prototype.idDET+'-btn-update').show();
+                    } else {
+                        Ext.getCmp(prototype.idDET+'-btn-update').show();
+                    }
+                    
                 }
+                
+                
+                
 
                 Ext.getCmp(prototype.idDET+'-btn-save').hide();
                 Ext.getCmp(prototype.idDET+'-btn-delete').hide();
@@ -343,7 +358,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
     //<editor-fold defaultstate="collapsed" desc="mostrarData">
     mostrarData: function(bean) {
         
-        console.log(bean,'bean')
+        console.log(bean,'beanWAAAA')
         this.setValue("txtTicket", bean.strTicket.replace(' ', '').replace(' ', ''));
         this.setValue("txtDCHEQ", bean.DCHEQ);
         if (bean.SEQ === '') {
@@ -372,6 +387,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         });
         this.setValue("txtZONE", bean.ZONA);
         this.setValue("txtNFLIGHT", bean.NFLIGHT);
+        this.setValue("txtCodeErrorVo", bean.CODER_EXTRA);
+        
+        Ext.tip.QuickTipManager.register({
+            target: prototype.idDET + '-txtCodeErrorVo',
+            text: bean.DESC_ERROR_EXTRA
+        });
+        
+        
         this.setValue("txtDFLIGHT", bean.DFLIGHT);
         this.setValue("txtFOPERZUL", bean.FOPERZUL);
         this.setValue("txtNPLANE", bean.NPLANE);
@@ -455,14 +478,19 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 Ext.getCmp(prototype.idDET+'-txtSEQ').setReadOnly(false);
             }
             else{
-                Ext.getCmp(prototype.idDET+'-txtSEQRO').setReadOnly(true);
-                // CAMBIADO A PEDIDO LUIS FERNANDO AGREDA
-                console.log(this.statusCont,'this.statusCont')
-                if (this.statusCont === 'Contabilizado.'  || this.statusCont === 'Contabilizado') {
-                    Ext.getCmp(prototype.idDET+'-txtFVTA').setReadOnly(true);
-                } else {
-                    Ext.getCmp(prototype.idDET+'-txtFVTA').setReadOnly(false);
+                var menuUser = document.getElementById('menuUser').innerText;
+
+                if (menuUser !== "LAGREDA") {
+                    // CAMBIADO A PEDIDO LUIS FERNANDO AGREDA
+                    if (this.statusCont === 'Contabilizado.'  || this.statusCont === 'Contabilizado') {
+                        Ext.getCmp(prototype.idDET+'-txtFVTA').setReadOnly(true);
+                    } else {
+                        Ext.getCmp(prototype.idDET+'-txtFVTA').setReadOnly(false);
+                    }
+                    console.log(this.statusCont,'this.statusCont')
                 }
+
+                Ext.getCmp(prototype.idDET+'-txtSEQRO').setReadOnly(true);
                 Ext.getCmp(prototype.idDET+'-txtSEQ').setReadOnly(true);
             }
             Ext.getCmp(prototype.idDET+'-cmbTVTA').disable(true);
@@ -682,6 +710,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
             if (Ext.getCmp(prototype.idDET+'-txtFOPERZUL').getErrors().length>0) {
                 msjResult = 'Invalid ZULU Date.';
             }
+            
+            var menuUser = document.getElementById('menuUser').innerText;
+            
             // </editor-fold>
             if (msjResult === "") {
                 try {
@@ -689,11 +720,13 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                         msjResult= "Sales Date cannot be higher than Flight Date";
                     }else{
                         var fechaHoy = new Date().getTime();
-                        if(this.getValue("txtFVTA").getTime() > fechaHoy){
-                            msjResult= "Sales Date cannot be higher than Current Date";						
-                        }
-                        if(this.getValue("txtDFLIGHT").getTime() > fechaHoy){
-                            msjResult= "Flight Date cannot be higher than Current Date";						
+                        if (menuUser !== "LAGREDA") {
+                            if(this.getValue("txtFVTA").getTime() > fechaHoy){
+                                msjResult= "Sales Date cannot be higher than Current Date";						
+                            }
+                            if(this.getValue("txtDFLIGHT").getTime() > fechaHoy){
+                                msjResult= "Flight Date cannot be higher than Current Date";						
+                            }
                         }
                         if(beanOption.TDOC === 'F' && beanOption.QTYPAX === 0){
                             msjResult= "You must enter a Qty Pax.";
@@ -702,11 +735,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 } catch(e) {
                     if (e instanceof TypeError) {
                         var fechaHoy = new Date().getTime();
-                        if(this.getValue("txtDFLIGHT").getTime() > fechaHoy){
-                            msjResult= "Flight Date cannot be higher than Current Date";						
-                        }
-                        if(beanOption.TDOC === 'F' && beanOption.QTYPAX === 0){
-                            msjResult= "You must enter a Qty Pax.";
+                        
+                        if (menuUser !== "LAGREDA") {
+                            if(this.getValue("txtDFLIGHT").getTime() > fechaHoy){
+                                msjResult= "Flight Date cannot be higher than Current Date";						
+                            }
+                            if(beanOption.TDOC === 'F' && beanOption.QTYPAX === 0){
+                                msjResult= "You must enter a Qty Pax.";
+                            }
                         }
                     }
                 }
