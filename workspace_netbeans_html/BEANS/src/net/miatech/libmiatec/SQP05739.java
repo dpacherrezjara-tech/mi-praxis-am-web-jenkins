@@ -33,7 +33,16 @@ public class SQP05739 {
     public String STVAL1;
     public String PMERCHID1;
     public Double TGROSAMOUN1;
+    public String CHK;
 
+    public String getCHK() {
+        return CHK;
+    }
+
+    public void setCHK(String CHK) {
+        this.CHK = CHK;
+    }
+    
     public String getPRDA2() {
         return PRDA2;
     }

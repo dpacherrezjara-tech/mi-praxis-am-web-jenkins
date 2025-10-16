@@ -27,7 +27,12 @@ public class A4497Filter extends A4497 {
     public String IN_STATUS = "";
     public String IN_SOURCE = "";
     public String IN_CHANNEL = "";
-
+    
+    public String IN_A4497TRSRC = "";
+    public String IN_A4497SCARD = "";
+    public String IN_A4497ARN = "";
+    public String IN_A4497NETO = "0";
+    
     public Pagination page = new Pagination();
     public DBException dbException = new DBException();
 }
