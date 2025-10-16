@@ -25,7 +25,10 @@ Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.AnalyticsAccountingG
         const data = storeResponse?.lstRs[0] || [] ;
         const firstRow = data[0] || [];
         if (data.length === 0) {
-            view.reconfigure(Ext.create('Ext.data.Store', { fields: [], data: [] }), []); // limpiar grid
+            const emptyStore = Ext.create('Ext.data.TreeStore', { 
+                root: { text: '.', expanded: false, children: [] } 
+            });
+            view.setStore(emptyStore);
             return;
         }
         
@@ -35,69 +38,216 @@ Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.AnalyticsAccountingG
         // Obtener campos dinámicos (dates) excluyendo los estáticos
         const dateFields = Object.keys(firstRow).filter(key => !staticFields.includes(key));
 
-        console.log('Currency fields found:', dateFields);
+        console.log('Date fields found:', dateFields);
         console.log('Sample data First Row:', firstRow);
 
-
-        // Construir columnas estáticas que siempre quiero mostrar
-        const staticColumns = [
-            { text: 'Processor', dataIndex: 'PROCESSOR', width: 160, locked: true },
-            {
-                text: 'Status', dataIndex: 'STVAL', width: 150, locked: true,
-                renderer: function (value, meta, rec) {
-                    return rec.data.STATUS || value; 
-                }
-            },
-            { text: 'Currency', dataIndex: 'CURRENCY', width: 80, locked: true },
-        ];
-
-
-        // Crear las columnas dinámicas
-        const dynamicCurrencyColumns = dateFields.map(field => ({
-            text: field,
-            dataIndex: field,
-            width: 120,
-            align: 'right',
-            renderer: function (v) {
-                if (v === null || v === undefined) return '';
-                return Ext.util.Format.number(v, '0,000.00');
-            }
-//            renderer: Ext.util.Format.numberRenderer('0,0.00') // ejemplo: formato numérico
-        }));
+        // Generar estructura jerárquica similar a SummaryTree
+        const tree = me.buildTreeStructure(data, dateFields);
         
-        console.log("dynamicCurrencyColumns", dynamicCurrencyColumns) ;
+        console.log("Tree structure:", tree);
         
-        // --- Agrupar las columnas dinámicas dentro de Amount ---
-        const amountGroupColumn = {
-            text: 'Amount',
-            // usa itemId para buscar más tarde si necesitas
-            itemId: prototype.id + '-Amount',
-            // id si lo quieres en el ComponentManager: id: prototype.id + '-Amount'
-            columns: dynamicCurrencyColumns
-        };
-
-        // Columnas finales para el grid
-        const finalColumns = [...staticColumns, amountGroupColumn];
-        
-        
-        // Crear store dinámico con los campos correctos
-        const storeFields = [...staticFields, ...dateFields];
-        const newStore = Ext.create('Ext.data.Store', {
-            fields: storeFields,
-            data: data
+        // Crear TreeStore
+        const storeTree = Ext.create('Ext.data.TreeStore', {
+            root: { text: '.', expanded: false, children: tree }
         });
         
-        console.log("newStore", newStore) ;
+        // Configurar columnas dinámicas
+        me.configureDynamicColumns(dateFields);
         
-        // Reconfigurar el grid con store + columnas 
-        view.reconfigure(newStore, finalColumns);
+        // Configurar el tree panel con store
+        view.setStore(storeTree);
         
-        // opcional: forzar refresco de vista
-//        view.getView().refresh();
-    
         return;
-        
     },
+
+    configureDynamicColumns: function(dateFields) {
+        const me = this;
+        const view = me.view;
+        
+        // Para TreePanel, necesitamos reconstruir las columnas completamente
+        const baseColumns = [
+            {
+                xtype: 'treecolumn',
+                text: 'Group',
+                dataIndex: 'text',
+                width: 240,
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    switch (record.data.type) {
+                        case 'header':
+                            metaData.style = "text-align:left;font-weight:bold;color:#302CFF;";
+                            break;
+                        case 'detail':
+                            metaData.style = "text-align:left;font-weight:bold;color:#008000;";
+                            break;
+                    }
+                    return value;
+                }
+            },
+            {
+                text: 'Processor',
+                dataIndex: 'PROCESSOR',
+                width: 160,
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    switch (record.data.type) {
+                        case 'header':
+                            metaData.style = "font-weight:bold;color:#302CFF;";
+                            break;
+                        case 'detail':
+                            metaData.style = "font-weight:bold;color:#008000;";
+                            break;
+                    }
+                    return value || '';
+                }
+            },
+            {
+                text: 'Status',
+                dataIndex: 'STATUS',
+                width: 150,
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    switch (record.data.type) {
+                        case 'header':
+                            metaData.style = "font-weight:bold;color:#302CFF;";
+                            break;
+                        case 'detail':
+                            metaData.style = "font-weight:bold;color:#008000;";
+                            break;
+                    }
+                    return value || '';
+                }
+            },
+            {
+                text: 'Currency',
+                dataIndex: 'CURRENCY',
+                width: 80,
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    switch (record.data.type) {
+                        case 'header':
+                            metaData.style = "font-weight:bold;color:#302CFF;";
+                            break;
+                        case 'detail':
+                            metaData.style = "font-weight:bold;color:#008000;";
+                            break;
+                    }
+                    return value || '';
+                }
+            }
+        ];
+
+        // Crear agrupamiento de columnas dinámicas (fechas) bajo "Amount"
+        const amountGroupDynamicColumn = {
+            text: 'Amount',
+            columns: dateFields.map(field => ({
+                text: field,
+                dataIndex: field,
+                width: 120,
+                align: 'right',
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    if (value === null || value === undefined) return '';
+                    
+                    switch (record.data.type) {
+                        case 'header':
+                            metaData.style = "font-weight:bold;text-align:right"; //;background-color:#84AFCA
+                            break;
+                        case 'detail':
+                            metaData.style = "text-align:right;background-color:#6FCA96";
+                            break;
+                    }
+                    
+                    return Ext.util.Format.number(value, '0,000.00');
+                }
+            }))
+        };
+
+        // Combinar todas las columnas
+        const allColumns = [...baseColumns, amountGroupDynamicColumn];
+        
+        // Reconfigurar el grid con las nuevas columnas
+        view.reconfigure(allColumns);
+    },
+
+    buildTreeStructure: function(data, dateFields) {
+        const me = this;
+        
+        // Agrupar por Processor primero
+        const processorGroups = me.groupBy({ data: data, key: 'PROCESSOR' });
+        
+        const tree = Object.entries(processorGroups).map(([processor, processorData]) => {
+            // Calcular totales del procesador
+            const processorTotals = {};
+            dateFields.forEach(field => {
+                processorTotals[field] = me.sumBy({ data: processorData, key: field });
+            });
+            
+            // Agrupar por Currency dentro del procesador (eliminando Status)
+            const currencyGroups = me.groupBy({ data: processorData, key: 'CURRENCY' });
+            
+            const currencyNodes = Object.entries(currencyGroups).map(([currency, currencyData]) => {
+                // Calcular totales de la moneda
+                const currencyTotals = {};
+                dateFields.forEach(field => {
+                    currencyTotals[field] = me.sumBy({ data: currencyData, key: field });
+                });
+                
+                // Crear nodos hoja (registros individuales)
+                const leafNodes = currencyData.map(row => ({
+                    text: `${row.PROCESSOR} - ${row.STATUS} - ${row.CURRENCY}`,
+                    type: 'detail',
+                    leaf: true,
+                    PROCESSOR: row.PROCESSOR,
+                    STATUS: row.STATUS,
+                    CURRENCY: row.CURRENCY,
+                    ...row
+                }));
+                
+                return {
+                    text: `${currency} (${currencyData.length} items)`,
+                    type: 'header',
+                    expanded: false,
+                    leaf: false,
+                    PROCESSOR: processor,
+                    STATUS: '',
+                    CURRENCY: currency,
+                    ...currencyTotals,
+                    children: leafNodes
+                };
+            });
+            
+            return {
+                text: `${processor} (${processorData.length} items)`,
+                type: 'header',
+                expanded: true,
+                leaf: false,
+                PROCESSOR: processor,
+                STATUS: '',
+                CURRENCY: '',
+                ...processorTotals,
+                children: currencyNodes
+            };
+        });
+        
+        return tree;
+    },
+
+    //<editor-fold defaultstate="collapsed" desc="Utilitarios">
+    groupBy: function({data, key}) {
+        let grouped = data.reduce((groups, item) => {
+            let obj = item[key];
+            if (!groups[obj]) {
+                groups[obj] = [];
+            }
+            groups[obj].push(item);
+            return groups;
+        }, {});
+        return grouped;
+    },
+    
+    sumBy: function({data, key}) {
+        let sum = data.reduce(function (total, item) {
+            return total + (parseFloat(item[key]) || 0);
+        }, 0);
+        return sum;
+    },
+    //</editor-fold>
 
     downloadExcel: function (btn) {
         const me = this;

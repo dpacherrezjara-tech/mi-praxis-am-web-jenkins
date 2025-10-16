@@ -1,5 +1,5 @@
 Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.Grids.AnalyticsAccountingGrid', {
-    extend: 'Ext.grid.Panel', //  Ext.tree.Panel
+    extend: 'Ext.tree.Panel',
     alias: 'widget.' + prototype.id + '-AnalyticsAccountingGrid',
     id: prototype.id + '-AnalyticsAccountingGrid',
     requires: [
@@ -13,46 +13,28 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.Grids.AnalyticsAccount
     width: 1700,
     reserveScrollbar: false,
     scrollable: true,
+    useArrows: true,
+    rootVisible: false,
+    multiSelect: false,
+    columnLines: true,
+    rowLines: true,
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
         markDirty: false
     },
-    columnLines: true,
 //    store: {
 //        fields: [], 
 //        data: []
 //    },
     columns: {
         defaults: {
-            align: 'center',
             menuDisabled: true,
-            sortable: true
+            sortable: true,
+            align: 'center'
         },
         items: [
-//
-//            {
-//                text: 'Processor', dataIndex: 'PROCESSOR', width: 120,locked: true
-//            },
-//            {
-//                text: 'Status', dataIndex: 'STVAL', width: 150,locked: true, 
-//                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-//                    let data = record.data.STATUS;
-//                    return data;
-//                }
-//            },
-//            {
-//                text: 'Ammount',
-//                id: prototype.id + '-AnalyticsGridAmount',
-//                defaults: {
-//                    menuDisabled: true,
-//                    sortable: false,
-//                    align: 'center'
-//                },
-//                columns: [
-//                ]
-//            }
-            
+            // Las columnas se configuran dinámicamente desde el controlador
         ]
     },
     tbar: {
@@ -70,6 +52,31 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.Grids.AnalyticsAccount
                 tooltip: 'Export to Excel',
                 listeners: {
                     click: 'downloadExcel'
+                }
+            }
+        ]
+    },
+    lbar: {
+        border: false,
+        items: [
+            {
+                xtype: 'button',
+                icon: 'resources/img/botones/expanded.png',
+                tooltip: 'Expand the tree',
+                listeners: {
+                    click: function (button) {
+                        button.up().up().expandAll();
+                    }
+                }
+            },
+            {
+                xtype: 'button',
+                icon: 'resources/img/botones/collaped.png',
+                tooltip: 'Collapse the tree',
+                listeners: {
+                    click: function (button) {
+                        button.up().up().collapseAll();
+                    }
                 }
             }
         ]
