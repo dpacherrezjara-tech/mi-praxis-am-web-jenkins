@@ -9,14 +9,17 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.DataEntrys.DataEntryLoad
     ],
     controller: 'DataEntryLoadControlReportController',
 
-    title: 'Reason',
+    title: 'Comment',
     header: true,
-    height: 220,
-    width: 400,
+    height: 200,
+    width: 230,
     modal: true,
     resizable: false,
     layout: 'fit',
-
+    defaults: {
+        border: false,
+        style: 'border: none; background: transparent; box-shadow: none;'
+    },
     items: [
         {
             xtype: 'form',
@@ -26,21 +29,33 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.DataEntrys.DataEntryLoad
                 type: 'vbox',
                 align: 'stretch'
             },
-            bodyPadding: 5,
+//            bodyPadding: 5,
 
             items: [
                 {
                     xtype: 'textareafield',
                     id: prototype.idDE + '-txt-reason',
                     name: 'reason',
-                    fieldLabel: 'Comment',
-                    labelAlign: 'top',
-                    allowBlank: false,
-                    height: 100,
+                    allowBlank: true,
+                    readOnly: false,
+                    height: '110%',
                     width: '100%',
                     grow: true,
-                    margin: '0 0 10 0' 
+                    growMax: 300,
+                    maxLength: 300,
+                    enforceMaxLength: true,
+                    fieldStyle: 'border: none; background: transparent; box-shadow: none; overflow-x: hidden;',
+                    emptyText: 'Enter comment',
+                    listeners: {
+                        afterrender: function (field) {
+                            field.setValue('');
+                            field.inputEl.dom.wrap = 'soft';
+                        }
+                    }
                 }
+
+
+
             ]
         }
     ],
@@ -55,7 +70,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.DataEntrys.DataEntryLoad
                 pack: 'center'
             },
             defaults: {
-                scale: 'medium'
+                scale: 'medium',
             },
             items: [
                 {
