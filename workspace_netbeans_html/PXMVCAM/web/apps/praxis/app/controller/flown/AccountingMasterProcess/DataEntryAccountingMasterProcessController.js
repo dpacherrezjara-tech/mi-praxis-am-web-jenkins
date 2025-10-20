@@ -16,27 +16,28 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
     /**
      * Constructor
      */
-    init: function(view) {
+    init: function (view) {
         var me = this;
     },
     /**
      * Se ejecuta luego de haber cargado todos los componentes
      */
-    afterRender: function() {
+    afterRender: function () {
         this.p = this.view.params;
         this.setStoreData();
-        
+
         switch (this.p.action) {
             case 'I':
-                Ext.getCmp(prototype.id + '-btn-save').show();                
+                Ext.getCmp(prototype.idDE + '-btn-save').show();
                 break;
             case 'U':
                 this.getDataInputs();
-                Ext.getCmp(prototype.id + '-btn-save').hide();
-                if(this.p.rec.data.ESTADO === 'Error'){
-                    Ext.getCmp(prototype.id+'-btn-delete').show();
-                }else{
-                    Ext.getCmp(prototype.id+'-btn-delete').hide();
+                Ext.getCmp(prototype.idDE + '-btn-save').hide();
+                
+                if (this.p.rec.data.ESTADO === 'Error') {
+                    Ext.getCmp(prototype.idDE + '-btn-delete').show();
+                } else {
+                    Ext.getCmp(prototype.idDE + '-btn-delete').hide();
                 }
                 this.view.setHeight(this.view.getHeight());
                 break;
@@ -45,17 +46,17 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
         console.log('PERML');
         console.log(userAccess);
         console.log(optionSelect);
-        $.each(userAccess, function(x, y) {
-            if (y.NPROG === optionSelect.nprog) {                
+        $.each(userAccess, function (x, y) {
+            if (y.NPROG === optionSelect.nprog) {
                 PERML = y.PERML;
-                console.log('Access:'+PERML);
+                console.log('Access:' + PERML);
             }
         });
         this.controlConsistency();
     }
     ,
-    setStoreData: function() {
-        var cbxModulo = Ext.getCmp(prototype.id + '-de-cbxModulo');
+    setStoreData: function () {
+        var cbxModulo = Ext.getCmp(prototype.idDE + '-de-cbxModulo');
         cbxModulo.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: true,
             fields: ['code', 'name'],
@@ -66,12 +67,12 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
             ]}));
         cbxModulo.setValue("");
     },
-    onUpdateClick: function(btn) {
+    onUpdateClick: function (btn) {
     }
     ,
-    onSaveClick: function(btn) {
-        var module = Ext.getCmp(prototype.id + '-de-cbxModulo').getValue();
-        var date = Ext.getCmp(prototype.id + '-de-txtProcessDate');
+    onSaveClick: function (btn) {
+        var module = Ext.getCmp(prototype.idDE + '-de-cbxModulo').getValue();
+        var date = Ext.getCmp(prototype.idDE + '-de-txtProcessDate');
         var msj = '';
         if (module === '') {
             msj = 'Select Module.';
@@ -84,10 +85,10 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                 }
             }
         }
-        
+
         if (msj === '') {
             switch (module) {
-                case "PFLOWNPRE" : 
+                case "PFLOWNPRE" :
                     Ext.Msg.show({
                         title: '.:PRAXIS:.',
                         msg: 'Are you sure to insert?',
@@ -95,7 +96,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                         scope: this,
                         icon: Ext.MessageBox.QUESTION,
                         modal: true,
-                        fn: function(btn) {
+                        fn: function (btn) {
                             if (btn === 'yes') {
                                 this.p.action = "I";
                                 this.validation();
@@ -111,15 +112,15 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                         scope: this,
                         icon: Ext.MessageBox.QUESTION,
                         modal: true,
-                        fn: function(btn) {
+                        fn: function (btn) {
                             if (btn === 'yes') {
                                 this.p.action = "I";
                                 this.crudPending();
                             }
                         }
                     });
-                    break;            
-            }                              
+                    break;
+            }
         } else {
             global.Msg({
                 msg: msj
@@ -127,11 +128,11 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
         }
     }
     ,
-    onDeleteClick: function(btn){
-        var cbxModulo = Ext.getCmp(prototype.id + '-de-cbxModulo').getValue();
-        
+    onDeleteClick: function (btn) {
+        var cbxModulo = Ext.getCmp(prototype.idDE + '-de-cbxModulo').getValue();
+
         switch (cbxModulo) {
-            case "PFLOWNPRE" : 
+            case "PFLOWNPRE" :
                 dataentryParams = {};
                 dataentryParams.IN_MODULO = 'FLOWN';
                 dataentryParams.IN_FECHA_PROCESO = this.p.rec.get('A1955FPROC');
@@ -145,17 +146,17 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                     scope: this,
                     icon: Ext.MessageBox.QUESTION,
                     modal: true,
-                    fn: function(btn) {
+                    fn: function (btn) {
                         if (btn === 'yes') {
                             this.p.action = "D";
                             this.crudPending();
                         }
                     }
                 });
-                break;            
-        }                  
+                break;
+        }
     },
-    validation: function() {
+    validation: function () {
         var rec = this.p.rec;
         var strOption = this.p.action;
         var me = this;
@@ -165,21 +166,21 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
             method: 'POST',
             timeout: 60000000,
             params: this.getDataEntryValues(strOption),
-            success: function(response) {
+            success: function (response) {
                 var res = Ext.JSON.decode(response.responseText);
                 var result = res.data;
                 var val_flown = result.IN_FLOWN;
                 var val_emd = result.IN_EMD;
-                if(val_flown!==-99)
+                if (val_flown !== -99)
                 {
-                    if (val_flown === 0){
-                    /*Ext.Msg.show({
-                        title: '.:Flown Validation:.',
-                        msg: 'Flown Valuation is pendinng'
-                    });*/
-                    Ext.Msg.alert('.:Flown Validation:.','Flown Valuation is pending');
-                    } else{
-                        if(val_emd === 0){
+                    if (val_flown === 0) {
+                        /*Ext.Msg.show({
+                         title: '.:Flown Validation:.',
+                         msg: 'Flown Valuation is pendinng'
+                         });*/
+                        Ext.Msg.alert('.:Flown Validation:.', 'Flown Valuation is pending');
+                    } else {
+                        if (val_emd === 0) {
                             Ext.Msg.show({
                                 title: '.:PRAXIS:.',
                                 msg: 'EMDs Valuation is pending. Are you sure to insert ?',
@@ -187,28 +188,27 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                                 scope: me,
                                 icon: Ext.MessageBox.QUESTION,
                                 modal: true,
-                                fn: function(btn) {
+                                fn: function (btn) {
                                     if (btn === 'yes') {
                                         me.p.action = "I";
-                                        me.crud();                                    
+                                        me.crud();
                                     }
                                 }
                             });
                         } else {
                             me.p.action = "I";
-                            me.crud();                        
+                            me.crud();
                         }
                     }
-                }
-                else
+                } else
                 {
-                    Ext.Msg.alert('.:Flown Validation:.','RECORD EXISTS');
-                    
-                }                
+                    Ext.Msg.alert('.:Flown Validation:.', 'RECORD EXISTS');
+
+                }
             }
         });
     },
-    crud: function(){
+    crud: function () {
         var rec = this.p.rec;
         var strOption = this.p.action;
         console.log(strOption);
@@ -217,24 +217,24 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
             method: 'POST',
             timeout: 60000000,
             params: this.getDataEntryValues(strOption),
-            success: function(response, options) {
+            success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 var result = res.result;
                 //console.log(result);
                 global.Msg({
                     msg: result,
                     icon: 1,
-                    fn: function() {
+                    fn: function () {
                         //exito
                         Ext.getCmp('DataEntryAccountingMasterProcessForm').close();
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        Ext.getCmp(prototype.idDE + '-btnSearch').fireEvent('click', {});
                     }
                 });
 
             }
         });
     },
-    crudPending: function() {
+    crudPending: function () {
         var rec = this.p.rec;
         var strOption = this.p.action;
         console.log('opcion : ' + strOption);
@@ -243,17 +243,17 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
             method: 'POST',
             timeout: 60000000,
             params: this.getDataEntryValues(strOption),
-            success: function(response, options) {
+            success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 var result = res.result;
                 //console.log(result);
                 global.Msg({
                     msg: result,
                     icon: 1,
-                    fn: function() {
+                    fn: function () {
                         //exito
                         Ext.getCmp('DataEntryAccountingMasterProcessForm').close();
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        Ext.getCmp(prototype.idDE + '-btnSearch').fireEvent('click', {});
                     }
                 });
 
@@ -263,20 +263,20 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
     ,
     //<editor-fold defaultstate="collapsed" desc="controlLight">
     controlConsistency: function () {
-        
-        if(PERML === 'Y'){
+
+        if (PERML === 'Y') {
             console.log('opcion PERML: ' + PERML);
-            console.log(Ext.getCmp(prototype.id + '-de-chkConsistencia'));
-            Ext.getCmp(prototype.id + '-de-chkConsistencia').setValue(true);            
-            Ext.getCmp(prototype.id + '-de-chkConsistencia').disable();            
+            console.log(Ext.getCmp(prototype.idDE + '-de-chkConsistencia'));
+            Ext.getCmp(prototype.idDE + '-de-chkConsistencia').setValue(true);
+            Ext.getCmp(prototype.idDE + '-de-chkConsistencia').disable();
         }
     },
     // </editor-fold>
-    getDataEntryValues: function(strOption) {
+    getDataEntryValues: function (strOption) {
 
-        var A1955MODUL = Ext.getCmp(prototype.id + '-de-cbxModulo').getValue();
-        var IN_ENVIO = Ext.getCmp(prototype.id + '-de-chkConsistencia').getValue();
-        var IN_FECHA_PROCESO = Ext.getCmp(prototype.id + '-de-txtProcessDate').getValue();
+        var A1955MODUL = Ext.getCmp(prototype.idDE + '-de-cbxModulo').getValue();
+        var IN_ENVIO = Ext.getCmp(prototype.idDE + '-de-chkConsistencia').getValue();
+        var IN_FECHA_PROCESO = Ext.getCmp(prototype.idDE + '-de-txtProcessDate').getValue();
         IN_FECHA_PROCESO = Ext.util.Format.date(IN_FECHA_PROCESO, 'Ymd');
 
         console.log("A1955MODUL : " + A1955MODUL);
@@ -291,57 +291,57 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
         };
     }
     ,
-    onCancelClick: function(btn) {
+    onCancelClick: function (btn) {
         this.view.close();
     }
     ,
-    onUpperValue: function(field, newValue, oldValue) {
+    onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     }
     ,
-    getDataInputs: function() {
+    getDataInputs: function () {
         var rec = this.p.rec;
 
-        Ext.getCmp(prototype.id + '-de-cbxModulo').setValue(rec.get('A1955MODUL').trim());
+        Ext.getCmp(prototype.idDE + '-de-cbxModulo').setValue(rec.get('A1955MODUL').trim());
         var fecha = rec.get('A1955FPROC');
         var fecha = fecha.substring(0, 4) + '/' + fecha.substring(4, 6) + '/' + fecha.substring(6, 8);
-        Ext.getCmp(prototype.id + '-de-txtProcessDate').setValue(fecha);
+        Ext.getCmp(prototype.idDE + '-de-txtProcessDate').setValue(fecha);
 
-        Ext.getCmp(prototype.id + '-USCR').setValue(rec.get('A1955USRIN'));
-        Ext.getCmp(prototype.id + '-FECR').setValue(rec.get('A1955FECIN'));
-        Ext.getCmp(prototype.id + '-HOCR').setValue(rec.get('A1955HORIN'));
-        Ext.getCmp(prototype.id + '-USUP').setValue(rec.get('A1955USRAC'));
-        Ext.getCmp(prototype.id + '-FEUP').setValue(rec.get('A1955FECAC'));
-        Ext.getCmp(prototype.id + '-HOUP').setValue(rec.get('A1955HORAC'));
+        Ext.getCmp(prototype.idDE + '-USCR').setValue(rec.get('A1955USRIN'));
+        Ext.getCmp(prototype.idDE + '-FECR').setValue(rec.get('A1955FECIN'));
+        Ext.getCmp(prototype.idDE + '-HOCR').setValue(rec.get('A1955HORIN'));
+        Ext.getCmp(prototype.idDE + '-USUP').setValue(rec.get('A1955USRAC'));
+        Ext.getCmp(prototype.idDE + '-FEUP').setValue(rec.get('A1955FECAC'));
+        Ext.getCmp(prototype.idDE + '-HOUP').setValue(rec.get('A1955HORAC'));
 
-    },    
-    setReverse: function(objDT){
+    },
+    setReverse: function (objDT) {
         //console.log(objDT.data);        
-        
+
         /*Ext.create('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntryReverse', {
-            id: prototype.id + '-dataEntryReverse',
-            params: {
-                //rec: res.data,
-                obj: objDT.data
-            }
-        }).show();  */
+         id: prototype.idDE + '-dataEntryReverse',
+         params: {
+         //rec: res.data,
+         obj: objDT.data
+         }
+         }).show();  */
         Ext.Ajax.request({
             url: prototype.url + '/searchReversa',
             method: 'POST',
             timeout: 60000000,
             params: dataentryParams,
             //beforerequest: Ext.getCmp('DataEntryAccountingMasterProcess2Form').mask('Loading...'),
-            success: function(response, options) {
+            success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 //console.log(res);
-                if (res.success) {                    
+                if (res.success) {
                     Ext.create('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntryReverse', {
-                        id: prototype.id + '-dataEntryReverse',
+                        id: prototype.idDE + '-dataEntryReverse',
                         params: {
                             rec: res.data,
                             obj: objDT.data
                         }
-                    }).show();                   
+                    }).show();
                 } else {
                     global.Msg({
                         msg: res.sesion
@@ -349,12 +349,23 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                 }
                 //Ext.getCmp('DataEntryAccountingMasterProcess2Form').unmask();
             },
-            failure: function(response, opts) {
+            failure: function (response, opts) {
                 console.log('server-side failure with status code ' + response.status);
                 //Ext.getCmp('DataEntryAccountingMasterProcess2Form').unmask();
             }
         });
     },
+    onLogsClick: function () {
+        let date = this.p.rec.get('A1955FPROC');
+        let params = {
+            IN_FPROC: date
+        };
+        const newWin = Ext.create('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntryLogs', {
+            id: prototype.idDE + '-DataEntryLogs-1',
+            searchParams: params
+        });
+        newWin.show();
+    }
 });
 
 
