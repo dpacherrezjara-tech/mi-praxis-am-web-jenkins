@@ -169,22 +169,41 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportContr
             Ext.getCmp(prototype.id + '-fecha01-excel').enable();
             Ext.getCmp(prototype.id + '-fecha02-excel').enable();
             Ext.getCmp(prototype.id + '-fecha01-excel').focus();
-        } else{
+        } else {
             Ext.getCmp(prototype.id + '-fecha01-excel').disable();
             Ext.getCmp(prototype.id + '-fecha02-excel').disable();
         }
 
     },
 
-    onClickComment: function (view, record, item, index, e) {
+    onClickComment: function (view, cellEl, rowIndex, cellIndex, e, record) {
+
+        const target = Ext.fly(e.target).findParent('.comment-cell', view.el, true);
+      
+        const dayNum = target.getAttribute('data-daynum');
+        const fecha = record.get(`PRDA${dayNum}`);
+        const dia = record.get(`PRDA${dayNum}_`);
+        const nhot = record.get('NHOT');
+        const status = record.get(`STATUS${dayNum}`);
+        const comentario = record.get(`COMMENT${dayNum}`) || '';
+        const rowData = record.getData();
+        
+
+//        console.log('dataaaa',rowData);
+//        console.log('comentario',comentario);
         const dataEntry = Ext.create('Ext.Praxis.view.sales.LoadControlReportForm.DataEntrys.DataEntryLoadControlReport', {
-            id: prototype.idDE + '-DataEntryLoadControlReport'
+            id: prototype.idDE + '-DataEntryLoadControlReport',
+            rowId: nhot, 
+            dayNum: dayNum, 
+            dia: dia,
+            fecha: fecha,
+            status:status,
+            comentario:comentario,
+            rowData: rowData
         });
+
         dataEntry.show();
-
     }
-
-
 
 
 });
