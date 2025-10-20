@@ -73,18 +73,25 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS1', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL1') === 'R'){
-                                                        metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
-                                                        metaData.tdCls = 'clickable-warning';
+                                                    if (record.get('LABEL1') === 'R') {
+                                                        const dia = record.get('PRDA1_');
+                                                        const fecha = record.get('PRDA1');
+                                                        const status = record.get('STATUS1');
+
+                                                        metaData.style = 'font-weight:bold;background:#A30D0D;color:white;';
+                                                        metaData.tdCls = 'clickable-comment';
+
                                                         return `
-                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
-                                                            <span style="font-size:14px;">💬️</span>
-                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
-                                                                ${value ?? ''}
-                                                            </button>
+                                                            <div class="comment-cell" 
+                                                             data-dia="${dia}" 
+                                                             data-fecha="${fecha}" 
+                                                             data-status="${status}"
+                                                             data-daynum="1" 
+                                                             style="cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;color:white;">
+                                                             <span class="x-btn-icon prx-icon-bpo-comment" style="width:16px;height:13px;display:inline-block;filter:brightness(0) invert(1)"></span>
+                                                            <span style="font-weight:bold;color:white;">${Ext.String.htmlEncode(value ?? '')}</span>
                                                         </div>
-            
-                                                    `;
+                                                        `;
                                                     }
                                                     if (record.get('LABEL1') === 'A')
                                                         metaData.style = 'font-weight:bold;background:#5B9BD5;color:white;';
@@ -191,18 +198,28 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                 id: prototype.id + '-Status2',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                                     if (record.get('LABEL2') === 'R') {
-                                                        metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
-                                                        metaData.tdCls = 'clickable-warning';
+                                                        const dia = record.get('PRDA2_');
+                                                        const fecha = record.get('PRDA2');
+                                                        const status = record.get('STATUS2');
+
+                                                        metaData.style = 'font-weight:bold;background:#A30D0D;color:white;';
+                                                        metaData.tdCls = 'clickable-comment';
                                                         return `
-                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
-                                                            <span style="font-size:14px;">💬️</span>
-                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
-                                                                ${value ?? ''}
-                                                            </button>
+                                                        <div class="comment-cell" 
+                                                             data-dia="${dia}" 
+                                                             data-fecha="${fecha}" 
+                                                             data-status="${status}"
+                                                             data-daynum="2" 
+                                                             style="cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;color:white;">
+                                                             <span class="x-btn-icon prx-icon-bpo-comment" style="width:16px;height:13px;display:inline-block;filter:brightness(0) invert(1)"></span>
+                                                            <span style="font-weight:bold;color:white;">${Ext.String.htmlEncode(value ?? '')}</span>
                                                         </div>
-            
                                                     `;
+
+
+
                                                     }
+
                                                     if (record.get('LABEL2') === 'A')
                                                         metaData.style = 'font-weight:bold;background:#5B9BD5;color:white;';
                                                     if (record.get('STATUS2') === '' && record.get('FLG2') === 'Y' && record.get('LABEL2') !== 'A')
@@ -313,18 +330,25 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS3', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL3') === 'R'){
-                                                        metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
-                                                        metaData.tdCls = 'clickable-warning';
+                                                    if (record.get('LABEL3') === 'R') {
+                                                        const dia = record.get('PRDA3_');
+                                                        const fecha = record.get('PRDA3');
+                                                        const status = record.get('STATUS3');
+
+                                                        metaData.style = 'font-weight:bold;background:#A30D0D;color:white;';
+                                                        metaData.tdCls = 'clickable-comment';
+
                                                         return `
-                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
-                                                            <span style="font-size:14px;">💬️</span>
-                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
-                                                                ${value ?? ''}
-                                                            </button>
+                                                            <div class="comment-cell" 
+                                                             data-dia="${dia}" 
+                                                             data-fecha="${fecha}" 
+                                                             data-status="${status}"
+                                                             data-daynum="3" 
+                                                             style="cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;color:white;">
+                                                             <span class="x-btn-icon prx-icon-bpo-comment" style="width:16px;height:13px;display:inline-block;filter:brightness(0) invert(1)"></span>
+                                                            <span style="font-weight:bold;color:white;">${Ext.String.htmlEncode(value ?? '')}</span>
                                                         </div>
-            
-                                                    `;
+                                                        `;
                                                     }
                                                     if (record.get('LABEL3') === 'A')
                                                         metaData.style = 'font-weight:bold;background:#5B9BD5;color:white;';
@@ -429,18 +453,25 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS4', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL4') === 'R'){
-                                                        metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
-                                                        metaData.tdCls = 'clickable-warning';
+                                                    if (record.get('LABEL4') === 'R') {
+                                                        const dia = record.get('PRDA4_');
+                                                        const fecha = record.get('PRDA4');
+                                                        const status = record.get('STATUS4');
+
+                                                        metaData.style = 'font-weight:bold;background:#A30D0D;color:white;';
+                                                        metaData.tdCls = 'clickable-comment';
+
                                                         return `
-                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
-                                                            <span style="font-size:14px;">💬️</span>
-                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
-                                                                ${value ?? ''}
-                                                            </button>
+                                                            <div class="comment-cell" 
+                                                                data-dia="${dia}" 
+                                                                data-fecha="${fecha}" 
+                                                                data-status="${status}"
+                                                                data-daynum="4" 
+                                                                style="cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;color:white;">
+                                                                <span class="x-btn-icon prx-icon-bpo-comment" style="width:16px;height:13px;display:inline-block;filter:brightness(0) invert(1)"></span>
+                                                               <span style="font-weight:bold;color:white;">${Ext.String.htmlEncode(value ?? '')}</span>
                                                         </div>
-            
-                                                    `;
+                                                        `;
                                                     }
                                                     if (record.get('LABEL4') === 'A')
                                                         metaData.style = 'font-weight:bold;background:#5B9BD5;color:white;';
@@ -544,20 +575,25 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS5', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL5') === 'R')
-//                                                        metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
-                                                    {
-                                                        metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
-                                                        metaData.tdCls = 'clickable-warning';
+                                                    if (record.get('LABEL5') === 'R') {
+                                                        const dia = record.get('PRDA5_');
+                                                        const fecha = record.get('PRDA5');
+                                                        const status = record.get('STATUS5');
+
+                                                        metaData.style = 'font-weight:bold;background:#A30D0D;color:white;';
+                                                        metaData.tdCls = 'clickable-comment';
+
                                                         return `
-                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
-                                                            <span style="font-size:14px;">💬️</span>
-                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
-                                                                ${value ?? ''}
-                                                            </button>
+                                                            <div class="comment-cell" 
+                                                                data-dia="${dia}" 
+                                                                data-fecha="${fecha}" 
+                                                                data-status="${status}"
+                                                                data-daynum="5" 
+                                                                style="cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;color:white;">
+                                                                <span class="x-btn-icon prx-icon-bpo-comment" style="width:16px;height:13px;display:inline-block;filter:brightness(0) invert(1)"></span>
+                                                               <span style="font-weight:bold;color:white;">${Ext.String.htmlEncode(value ?? '')}</span>
                                                         </div>
-            
-                                                    `;
+                                                        `;
                                                     }
                                                     if (record.get('LABEL5') === 'A')
                                                         metaData.style = 'font-weight:bold;background:#5B9BD5;color:white;';
@@ -661,18 +697,25 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS6', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL6') === 'R'){
-                                                        metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
-                                                        metaData.tdCls = 'clickable-warning';
+                                                    if (record.get('LABEL6') === 'R') {
+                                                        const dia = record.get('PRDA6_');
+                                                        const fecha = record.get('PRDA6');
+                                                        const status = record.get('STATUS6');
+
+                                                        metaData.style = 'font-weight:bold;background:#A30D0D;color:white;';
+                                                        metaData.tdCls = 'clickable-comment';
+
                                                         return `
-                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
-                                                            <span style="font-size:14px;">💬️</span>
-                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
-                                                                ${value ?? ''}
-                                                            </button>
+                                                            <div class="comment-cell" 
+                                                                data-dia="${dia}" 
+                                                                data-fecha="${fecha}" 
+                                                                data-status="${status}"
+                                                                data-daynum="6" 
+                                                                style="cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;color:white;">
+                                                                <span class="x-btn-icon prx-icon-bpo-comment" style="width:16px;height:13px;display:inline-block;filter:brightness(0) invert(1)"></span>
+                                                               <span style="font-weight:bold;color:white;">${Ext.String.htmlEncode(value ?? '')}</span>
                                                         </div>
-            
-                                                    `;
+                                                        `;
                                                     }
                                                     if (record.get('LABEL6') === 'A')
                                                         metaData.style = 'font-weight:bold;background:#5B9BD5;color:white;';
@@ -776,18 +819,25 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS7', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL7') === 'R'){
-                                                        metaData.style = 'font-weight:bold;background:#FF0000;color:white;';
-                                                        metaData.tdCls = 'clickable-warning';
+                                                    if (record.get('LABEL7') === 'R') {
+                                                        const dia = record.get('PRDA7_');
+                                                        const fecha = record.get('PRDA7');
+                                                        const status = record.get('STATUS7');
+
+                                                        metaData.style = 'font-weight:bold;background:#A30D0D;color:white;';
+                                                        metaData.tdCls = 'clickable-comment';
+
                                                         return `
-                                                        <div style="display:flex;align-items:center;justify-content:center;gap:4px;width:100%;">
-                                                            <span style="font-size:14px;">💬️</span>
-                                                            <button style="background:none;border:none;color:white;font-weight:bold;cursor:default;">
-                                                                ${value ?? ''}
-                                                            </button>
+                                                            <div class="comment-cell" 
+                                                                data-dia="${dia}" 
+                                                                data-fecha="${fecha}" 
+                                                                data-status="${status}"
+                                                                data-daynum="7" 
+                                                                style="cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;color:white;">
+                                                                <span class="x-btn-icon prx-icon-bpo-comment" style="width:16px;height:13px;display:inline-block;filter:brightness(0) invert(1)"></span>
+                                                               <span style="font-weight:bold;color:white;">${Ext.String.htmlEncode(value ?? '')}</span>
                                                         </div>
-            
-                                                    `;
+                                                        `;
                                                     }
                                                     if (record.get('LABEL7') === 'A')
                                                         metaData.style = 'font-weight:bold;background-color:#5B9BD5;color:white';
