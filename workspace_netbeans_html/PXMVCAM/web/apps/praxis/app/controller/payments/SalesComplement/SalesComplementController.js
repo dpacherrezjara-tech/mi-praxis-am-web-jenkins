@@ -18,6 +18,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             const dataCountry = res.lstRs[0] || {};
             const dataCerror = res.lstRs[1] || {};
             const dataStval = res.lstRs[2] || {};
+            const dataProcessorInsumo = res.lstRs[3] || {};
+            const dataProcessorMatch = res.lstRs[4] || {};
+
             
             console.log(dataCountry);
             console.log(dataCerror);
@@ -25,6 +28,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             const filterCountry = Ext.getCmp(prototype.id + '-cmbPaisesPG');
             const filterCerror = Ext.getCmp(prototype.id + '-cmbCerrorPG');
             const filterStval = Ext.getCmp(prototype.id + '-cmbStvalPG');
+            const filterProcessorInsumo = Ext.getCmp(prototype.id + '-cmbProcessorInsumo');
+            const filterProcessorMatch = Ext.getCmp(prototype.id + '-cmbProcessorMatch');
+
             
 
             filterCountry.suspendEvents(false);
@@ -41,6 +47,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             filterStval.bindStore(await me.createComboStore({data: dataStval, valueField: 'STVAL', displayField: 'DESCRIPTION', addElementAll: false}));
             filterStval.setValue('X');
             filterStval.resumeEvents();
+            
+            filterProcessorInsumo.suspendEvents(false);
+            filterProcessorInsumo.setStore(await me.createComboStore({data: dataProcessorInsumo, valueField: 'CODE', displayField: 'DESCRIPTION',addElementAll: false}));
+            filterProcessorInsumo.setValue('');
+            filterProcessorInsumo.resumeEvents();
+            
+            filterProcessorMatch.suspendEvents(false);
+            filterProcessorMatch.setStore(await me.createComboStore({data: dataProcessorMatch, valueField: 'A4451KEY2', displayField: 'A4451DESC1'}));
+            filterProcessorMatch.setValue('');
+            filterProcessorMatch.resumeEvents();
         
         } catch (e) {
             console.log(e);

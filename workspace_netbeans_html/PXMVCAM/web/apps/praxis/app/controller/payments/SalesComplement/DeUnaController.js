@@ -11,8 +11,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.DeUnaController', {
         console.log('detDta', view)
         let store = global.callStorePaggin('PRAXISMP', 'SQP05697', view.searchParams);
         console.log(' data entry', store)
-        view.bindStore(store);
+
+//        view.bindStore(store);
         this.view.setStore(store);
+
     },
 
     downloadExcelMit: function () {  //modal confirmar descarga
