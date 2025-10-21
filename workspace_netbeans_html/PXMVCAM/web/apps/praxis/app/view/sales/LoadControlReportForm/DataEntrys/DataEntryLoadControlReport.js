@@ -12,7 +12,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.DataEntrys.DataEntryLoad
     title: 'Comment',
     header: true,
     height: 200,
-    width: 230,
+    width: 350,
     modal: true,
     resizable: false,
     layout: 'fit',
@@ -32,6 +32,27 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.DataEntrys.DataEntryLoad
 //            bodyPadding: 5,
 
             items: [
+//                {
+//                    xtype: 'combobox',
+//                    fieldLabel: 'Option',
+//                    name: 'IN_REASON',
+//                    store: Ext.create('Ext.data.SimpleStore', {
+//                        fields: ['code', 'name'],
+//                        data: [
+//                            ['', 'All'],
+//                            ['1', 'El archivo o sus ventas fueron recibidos en una fecha posterior a la programada'],
+//                            ['2', 'La fecha de recepción del archivo coincidió con un día feriado o no laborable confirmado por AM'],
+//                            ['3', 'AM validó expresamente que el archivo no debía recibirse ese día por cualquier motivo operativo o comercial'],
+//                        ]
+//                    }),
+//                    labelWidth: 50,
+//                    width: 180,
+//                    displayField: 'name',
+//                    valueField: 'code',
+//                    queryMode: 'local',
+//                    editable: false,
+//                    value: ''
+//                },
                 {
                     xtype: 'textareafield',
                     id: prototype.idDE + '-txt-reason',
