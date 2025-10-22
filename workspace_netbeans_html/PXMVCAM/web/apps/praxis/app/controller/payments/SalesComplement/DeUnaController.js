@@ -2,8 +2,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.DeUnaController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.DeUnaController',
     afterRender: function (obj, e) {
-        const me = this; //call controller
-        const view = me.view; // call view design
+        const me = this;
+        const view = me.view;
         this.getData(view);
     },
 

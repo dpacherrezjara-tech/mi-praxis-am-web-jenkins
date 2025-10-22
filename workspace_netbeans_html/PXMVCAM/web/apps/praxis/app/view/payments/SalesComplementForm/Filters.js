@@ -745,19 +745,19 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     fieldLabel: 'DEUNA Processor', // INSUMO
                                     name: 'IN_PROCINSUMO',
                                     id: prototype.id + '-cmbProcessorInsumo',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['CODE', 'DESCRIPTION'],
-                                        data: [
-                                            ['', 'All'],
-                                            ['aplazo', 'Aplazo'],
-                                            ['bbva', 'Bbva'],
-                                            ['kueski', 'Kueski'],
-                                            ['mercadopago', 'Mercado Pago'],
-                                            ['mercadopago_wallet', 'Mercadopago Wallet'],
-                                            ['paypal_wallet', 'Paypal Wallet'],
-                                            ['worldpay', 'Worldpay'],
-                                        ]
-                                    }),
+                                    // store: Ext.create('Ext.data.SimpleStore', {
+                                    //     fields: ['CODE', 'DESCRIPTION'],
+                                    //     data: [
+                                    //         ['', 'All'],
+                                    //         ['aplazo', 'Aplazo'],
+                                    //         ['bbva', 'Bbva'],
+                                    //         ['kueski', 'Kueski'],
+                                    //         ['mercadopago', 'Mercado Pago'],
+                                    //         ['mercadopago_wallet', 'Mercadopago Wallet'],
+                                    //         ['paypal_wallet', 'Paypal Wallet'],
+                                    //         ['worldpay', 'Worldpay'],
+                                    //     ]
+                                    // }),
                                     labelWidth: 100,
                                     width: 250,
                                     displayField: 'DESCRIPTION',
@@ -771,10 +771,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     fieldLabel: 'Match Processor', //MATCH
                                     name: 'IN_PROCMATCH',
                                     id: prototype.id + '-cmbProcessorMatch',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['A4451KEY2', 'A4451DESC1'],
-                                        data: []
-                                    }),
+                                    // store: Ext.create('Ext.data.SimpleStore', {
+                                    //     fields: ['A4451KEY2', 'A4451DESC1'],
+                                    //     data: []
+                                    // }),
                                     labelWidth: 110,
                                     width: 280,
                                     displayField: 'A4451DESC1',

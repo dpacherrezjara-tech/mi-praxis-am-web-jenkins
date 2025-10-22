@@ -14,7 +14,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             // filters Plusgrade
             const me = this;
             const res = await global.callStoreGet('PRAXISMP','SQP05016');
-            console.log(res.lstRs);
+            // console.log(res.lstRs);
             const dataCountry = res.lstRs[0] || {};
             const dataCerror = res.lstRs[1] || {};
             const dataStval = res.lstRs[2] || {};
@@ -22,8 +22,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             const dataProcessorMatch = res.lstRs[4] || {};
 
             
-            console.log(dataCountry);
-            console.log(dataCerror);
+            // console.log(dataCountry);
+            // console.log(dataCerror);
 
             const filterCountry = Ext.getCmp(prototype.id + '-cmbPaisesPG');
             const filterCerror = Ext.getCmp(prototype.id + '-cmbCerrorPG');
@@ -32,14 +32,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             const filterProcessorMatch = Ext.getCmp(prototype.id + '-cmbProcessorMatch');
 
             
-
             filterCountry.suspendEvents(false);
             filterCountry.bindStore(await me.createComboStore({data: dataCountry, valueField: 'CODE', displayField: 'NAME'}));
             filterCountry.setValue('');
             filterCountry.resumeEvents();
 
             filterCerror.suspendEvents(false);
-            filterCerror.bindStore(await me.createComboStore({data: dataCerror, valueField: 'CODE', displayField: 'DESCRIPTION'}));
+            filterCerror.bindStore(await me.createComboStore({data: dataCerror, valueField: 'CODE', displayField: 'DESCRIPTION', addElementAll: false}));
             filterCerror.setValue('');
             filterCerror.resumeEvents();
 
@@ -126,7 +125,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                     id: prototype.id + '-PlusgradeGrid-1',
                     searchParams: params
                 });
-                console.log(newPanel);
+                // console.log(newPanel);
                 mainPanel.add(newPanel);
             },
             'M':()=>{
@@ -135,7 +134,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                     id: prototype.id + '-MitGrid-1',
                     searchParams: params
                 });
-                console.log(newPanel);
+                // console.log(newPanel);
                 mainPanel.add(newPanel);
             },
              'U':()=>{
@@ -144,7 +143,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                     id: prototype.id + '-DeUnaGrid-1',
                     searchParams: params
                 });
-                console.log(newPanel);
+                // console.log(newPanel);
                 mainPanel.add(newPanel);
             }
         };
