@@ -74,7 +74,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                                                 widget: {
                                                     xtype: 'button',
                                                     iconCls: 'prx-icon-docum',
-                                                    padding: '1px 1px',
+                                                    margin: '2px 2px 2px 2px',
                                                     handler: function (btn) {
                                                         const record = btn.getWidgetRecord();
                                                         const FECHA = record.get('FECHA');
@@ -239,12 +239,14 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
 //                                                    }
 //                                                },
                                                 getClass: function (value, meta, record) {
+                                                    // Siempre debe mostrar log
+                                                    return 'prx-icon-image-log'; 
                                                     // Solo mostrar el ícono si ESTADO === 2
-                                                    if (record.get('ESTADO') === '1' || record.get('ESTADO') === '3' || record.get('ESTADO') === '5') {
-                                                        return 'prx-icon-image-log'; // icono visible
-                                                    } else {
-                                                        return 'x-hidden'; // ocultar el ícono usando clase CSS
-                                                    }
+//                                                    if (record.get('ESTADO') === '1' || record.get('ESTADO') === '3' || record.get('ESTADO') === '5') {
+//                                                        return 'prx-icon-image-log'; // icono visible
+//                                                    } else {
+//                                                        return 'x-hidden'; // ocultar el ícono usando clase CSS
+//                                                    }
                                                 }
                                             }
                                         ]

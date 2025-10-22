@@ -10,25 +10,36 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
+import net.miatech.praxis.dto.UploadSFTPRequest;
+import net.miatech.praxis.dto.UploadSFTPResponse;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.flown.filter.SQP05607Filter;
 import net.miatech.praxis.flown.filter.SQP05612Filter;
 import net.miatech.praxis.flown.filter.SQP05613Filter;
 import net.miatech.praxis.logic.flown.SimplifiedUsageFileLogic;
+import net.miatech.praxis.service.SFTPUploadService;
+import net.miatech.praxis.utils.ResponseUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 /**
  *
@@ -38,7 +49,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Scope("request")
 @RequestMapping("/SimplifiedUsageFileControl")
 public class SimplifiedUsageFileController extends BaseController {
-
+    
+    @Autowired
+    private SFTPUploadService sftpUploadService;
     private final SimplifiedUsageFileLogic logic = new SimplifiedUsageFileLogic();
 
     @RequestMapping(value = "/search")
@@ -178,6 +191,90 @@ public class SimplifiedUsageFileController extends BaseController {
             ex.printStackTrace();
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             throw new SpringException(ex);
+        }
+    }
+    
+    /**
+     * Endpoint para llamada ASINCRONA a la API de carga SFTP
+     * Retorna inmediatamente con un mensaje de confirmación mientras el proceso se ejecuta en background
+     * 
+     * Ejemplo de uso con parámetros de request:
+     * POST /SimplifiedUsageFileControl/upload-sftp-async
+     * VP_CCUST=139&VP_FECHA1=20250822&VP_FECHA2=20250822&VP_TOPE=1
+     * 
+     * @param request HttpServletRequest con los parámetros
+     * @return ResponseEntity con mensaje de confirmación
+     */
+    @RequestMapping(value = "/upload-sftp-async", method = RequestMethod.POST)
+    public ResponseEntity<?> uploadSFTPAsync(HttpServletRequest request) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            // Construir objeto de solicitud desde parámetros
+            UploadSFTPRequest uploadRequest = new UploadSFTPRequest();
+            uploadRequest.setVP_CCUST(request.getParameter("VP_CCUST"));
+            uploadRequest.setVP_FECHA1(request.getParameter("VP_FECHA1"));
+            uploadRequest.setVP_FECHA2(request.getParameter("VP_FECHA2"));
+            
+            String topeParam = request.getParameter("VP_TOPE");
+            if (topeParam != null && !topeParam.isEmpty()) {
+                uploadRequest.setVP_TOPE(Integer.parseInt(topeParam));
+            }
+            
+            // Llamada asíncrona - no espera resultado
+           String API_URL = serverSession.getServerSession().getPropertySession().get("API_MI_AUTOSKER").toString();
+           sftpUploadService.uploadFileAsync(uploadRequest, API_URL );
+            
+            // Retorna inmediatamente
+            response.put("success", true);
+            response.put("message", "Solicitud de carga SFTP iniciada. El proceso continuará en background.");
+            response.put("timestamp", System.currentTimeMillis());
+            return ResponseUtils.ok(response);
+            
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }   
+    
+     /**
+     * Endpoint para llamada ASÍNCRONA a la API de carga SFTP con JSON Body
+     * Retorna inmediatamente con un mensaje de confirmación mientras el proceso se ejecuta en background
+     * 
+     * Ejemplo de uso con JSON:
+     * POST /SimplifiedUsageFileControl/upload-sftp-async-json
+     * Content-Type: application/json
+     * {
+     *   "VP_CCUST": "139",
+     *   "VP_FECHA1": "20250822",
+     *   "VP_FECHA2": "20250822",
+     *   "VP_TOPE": 1
+     * }
+     * 
+     * @param uploadRequest Objeto con los parámetros de la solicitud
+     * @return ResponseEntity con mensaje de confirmación
+     */
+    @RequestMapping(value = "/upload-sftp-async-json", method = RequestMethod.POST)
+    public ResponseEntity<?> uploadSFTPAsyncJSON(@RequestBody UploadSFTPRequest uploadRequest) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            // Llamada asíncrona - no espera resultado
+            String API_URL = serverSession.getServerSession().getPropertySession().get("API_MI_AUTOSKER").toString();
+            sftpUploadService.uploadFileAsync(uploadRequest, API_URL);
+            
+            response.put("success", true);
+            response.put("message", "Solicitud de carga SFTP iniciada. El proceso continuará en background.");
+            response.put("timestamp", System.currentTimeMillis());
+            response.put("request", uploadRequest);
+            
+            return ResponseUtils.ok(response);
+            
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);  
         }
     }
 
