@@ -91,6 +91,7 @@ public class LoadControlReportDAO {
                 objRtn.VOID1 = rs01.getInt("VOID1");
                 objRtn.LABEL1 = rs01.getString("LABEL1");
                 objRtn.FLG1 = rs01.getString("FLG1");
+                objRtn.COMMENT1 = rs01.getString("COMMENT1");
 
                 objRtn.PRDA2 = rs01.getString("PRDA2");
                 objRtn.PRDA2_ = rs01.getString("PRDA2_");
@@ -103,6 +104,7 @@ public class LoadControlReportDAO {
                 objRtn.VOID2 = rs01.getInt("VOID2");
                 objRtn.LABEL2 = rs01.getString("LABEL2");
                 objRtn.FLG2 = rs01.getString("FLG2");
+                objRtn.COMMENT2 = rs01.getString("COMMENT2");
 
                 objRtn.PRDA3 = rs01.getString("PRDA3");
                 objRtn.PRDA3_ = rs01.getString("PRDA3_");
@@ -115,6 +117,7 @@ public class LoadControlReportDAO {
                 objRtn.VOID3 = rs01.getInt("VOID3");
                 objRtn.LABEL3 = rs01.getString("LABEL3");
                 objRtn.FLG3 = rs01.getString("FLG3");
+                objRtn.COMMENT3 = rs01.getString("COMMENT3");
 
                 objRtn.PRDA4 = rs01.getString("PRDA4");
                 objRtn.PRDA4_ = rs01.getString("PRDA4_");
@@ -127,6 +130,7 @@ public class LoadControlReportDAO {
                 objRtn.VOID4 = rs01.getInt("VOID4");
                 objRtn.LABEL4 = rs01.getString("LABEL4");
                 objRtn.FLG4 = rs01.getString("FLG4");
+                objRtn.COMMENT4 = rs01.getString("COMMENT4");
 
                 objRtn.PRDA5 = rs01.getString("PRDA5");
                 objRtn.PRDA5_ = rs01.getString("PRDA5_");
@@ -139,6 +143,7 @@ public class LoadControlReportDAO {
                 objRtn.VOID5 = rs01.getInt("VOID5");
                 objRtn.LABEL5 = rs01.getString("LABEL5");
                 objRtn.FLG5 = rs01.getString("FLG5");
+                objRtn.COMMENT5 = rs01.getString("COMMENT5");
 
                 objRtn.PRDA6 = rs01.getString("PRDA6");
                 objRtn.PRDA6_ = rs01.getString("PRDA6_");
@@ -151,6 +156,7 @@ public class LoadControlReportDAO {
                 objRtn.VOID6 = rs01.getInt("VOID6");
                 objRtn.LABEL6 = rs01.getString("LABEL6");
                 objRtn.FLG6 = rs01.getString("FLG6");
+                objRtn.COMMENT6 = rs01.getString("COMMENT6");
 
                 objRtn.PRDA7 = rs01.getString("PRDA7");
                 objRtn.PRDA7_ = rs01.getString("PRDA7_");
@@ -163,6 +169,7 @@ public class LoadControlReportDAO {
                 objRtn.VOID7 = rs01.getInt("VOID7");
                 objRtn.LABEL7 = rs01.getString("LABEL7");
                 objRtn.FLG7 = rs01.getString("FLG7");
+                objRtn.COMMENT7 = rs01.getString("COMMENT7");
                 
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
