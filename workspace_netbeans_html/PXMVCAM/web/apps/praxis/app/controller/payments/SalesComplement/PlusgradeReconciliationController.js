@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
 
         try{
                 
-            console.log('params',params);
+            // console.log('params',params);
             const res = await global.callStoreGet('PRAXISMP', 'SQP05746', params);
             
             const { lstVals, lstRs } = res;
@@ -136,7 +136,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
                 IN_PRDA: me.view.obj.PRDA.trim()
             };
             
-            console.log('params',params);
+            // console.log('params',params);
             const res = await global.callStoreGet('PRAXISMP', 'SQP05749', params);
             
             success = res.lstVals.IO_RESPONSE === 1 ;
@@ -192,7 +192,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
             }
 
             const tmp = await global.loadRecordsOnTable('PRAXISMP', 'XTEMPO', tickets);
-            console.log('tmp', tmp);
+            // console.log('tmp', tmp);
 
             // params para procesar match
             const params = {
@@ -203,10 +203,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
                 IN_FUUID: tmp.fuuid || ''
             };
 
-            console.log('params',params);
+            // console.log('params',params);
 
             const res = await global.callStorePost('PRAXISMP', 'SQP05747', params);
-            console.log(res);
+            // console.log(res);
             
             success = res.data.lstVals.IO_RESPONSE === 1 ;
             message = res.data.lstVals.IO_MESSAGE ;
@@ -283,15 +283,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
                 const tkt = (item.TICKET || '').toString().trim();
                 let isRepeat = dataStore.some( d => d.data.TICKET === tkt );
                 if (isRepeat) {
-                    console.log("repeat :",item);
                     repeats++;
                 } else {
-                    console.log("new :",item);
                     bpoStore.insert(0, item);
                     added++;
                 }
             });
-            console.log(`Tickets agregados: ${added}`);
+            // console.log(`Tickets agregados: ${added}`);
 
             // Actualiza los totales de la grilla BPO después de agregar
             this.setGridAndSummary({
@@ -433,9 +431,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
         const qtyCmp = Ext.getCmp(quantityElementTktId);
         const amtCmp = Ext.getCmp(amountElementTktId);
         
-        console.log(config)
-        console.log(qtyCmp)
-        console.log(amtCmp)
+        // console.log(config)
+        // console.log(qtyCmp)
+        // console.log(amtCmp)
 
         let totalTickets = Array.isArray(data) ? data.length : 0;
         let totalAmount = Array.isArray(data)
@@ -448,6 +446,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
     formatParameters : function (obj) {
         let params = {
             IN_CCUST: '139',
+            IN_PRDA: obj.PRDA.trim(),
             IN_PLUSGRAID: obj.PLUSGRAID.trim(),
             IN_TICKET: obj.EMDNUMBER.trim(),
             IN_PNR: obj.PNR.trim(),
