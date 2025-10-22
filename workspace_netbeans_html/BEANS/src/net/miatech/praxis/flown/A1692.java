@@ -67,6 +67,8 @@ public class A1692 {
     public String FCONT = "";
     public String A1964FCONT = "";
     public String IDCON = "";
+    public String CODER_EXTRA = "";
+    public String DESC_ERROR_EXTRA = "";
     
     public double VCPN0 = 0;
     public double VCPN16 = 0;

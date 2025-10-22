@@ -1551,7 +1551,7 @@ public class FlightConciliationDAO {
         String Flag = "", tktpadre = "";
 
         //PX09500007
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX095S06A1692_1(?,?,?,?,?,?,?)}";//Schema
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX095S06A1692_1_CBAS(?,?,?,?,?,?,?)}";//Schema
 
         Connection cnx = null;
         try {
@@ -1607,6 +1607,8 @@ public class FlightConciliationDAO {
                     beanCons.DCHEQ = rst.getString("DCHEQ").trim();
                     beanCons.SEQ = rst.getString("SEQ").trim();
                     beanCons.STVAL = rst.getString("STVAL").trim();
+                    beanCons.CODER_EXTRA = rst.getString("CODER_EXTRA");
+                    beanCons.DESC_ERROR_EXTRA = rst.getString("DESC_ERROR_EXTRA");
                     beanCons.FVAL = rst.getString("FVAL").trim();
                     beanCons.STCON = rst.getString("STCON").trim();
                     beanCons.FTE = rst.getString("FTE").trim();

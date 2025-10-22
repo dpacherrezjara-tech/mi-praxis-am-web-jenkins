@@ -180,8 +180,10 @@ public class SalesReconciliationController extends BaseController {
 
     @RequestMapping(value = "/searchDetTicket")
     public @ResponseBody
-    String searchDetTicket(ModelMap map, HttpServletRequest request) {
+    String searchDetTicket(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
         A2290Filter filter = new A2290Filter();
+        boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
+
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -198,6 +200,15 @@ public class SalesReconciliationController extends BaseController {
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2290Filter> listaData = logic.loadPX263SQP00658(filter);
+            
+            if (dw_excel) {
+                ExportUtil.exportFields(request, response, listaData);
+//                map.put("nameExcel", nameExcel);
+            }else{
+                map.put("success", true);
+                map.put("data", listaData);
+                map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            }
 
             map.put("success", true);
             map.put("data", listaData);
@@ -209,7 +220,8 @@ public class SalesReconciliationController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        return new Gson().toJson(map);
+        return (dw_excel) ? null : (new Gson().toJson(map));
+
     }
 
     @RequestMapping(value = "/searchCashMonth")
