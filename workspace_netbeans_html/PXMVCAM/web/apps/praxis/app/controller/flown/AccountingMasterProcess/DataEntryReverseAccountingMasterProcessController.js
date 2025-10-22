@@ -63,7 +63,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryReverse
             method: 'POST',
             timeout: 60000000,
             params: this.beanParam,
-            //beforerequest: Ext.getCmp(prototype.id + '-dataEntryReverse').mask('Loading...'), // Esta linea arroja error en consola al eliminar registro. Revisar web console (F12)
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntryReverse').mask('Loading...'),
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
