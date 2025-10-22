@@ -6,6 +6,7 @@
 package net.miatech.praxis.logic.payments;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.AmdsControlFormDAO;
@@ -25,5 +26,8 @@ public class AmdsControlFormLogic {
 
     public List<A4497Filter> SearchReport(A4497Filter filter) throws SQLException, Exception {
         return objDAO.SearchReport(filter);
+    }
+    public String VeriUpadaStatus(ArrayList<A4497Filter> filter) throws SQLException, Exception {
+        return objDAO.VeriUpadaStatus(filter);
     }
 }

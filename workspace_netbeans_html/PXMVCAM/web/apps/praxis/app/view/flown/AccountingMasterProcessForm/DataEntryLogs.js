@@ -1,4 +1,4 @@
-prototype.idDE2 = prototype.id + '-LoggerDataEntry';
+prototype.idDE2 = prototype.id + '-LoggerDataEntryFlown';
 
 Ext.define('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntryLogs', {
     extend: 'Ext.window.Window',

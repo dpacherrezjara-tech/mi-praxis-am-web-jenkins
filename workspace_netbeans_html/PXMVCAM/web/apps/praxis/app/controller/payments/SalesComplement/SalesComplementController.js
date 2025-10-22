@@ -14,24 +14,60 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             // filters Plusgrade
             const me = this;
             const res = await global.callStoreGet('PRAXISMP','SQP05016');
-            const data = res.lstRs[0] || {};
-            
-            const filterCountry = Ext.getCmp(prototype.id + '-cmbPaisesPG');
+            // console.log(res.lstRs);
+            const dataCountry = res.lstRs[0] || {};
+            const dataCerror = res.lstRs[1] || {};
+            const dataStval = res.lstRs[2] || {};
+            const dataProcessorInsumo = res.lstRs[3] || {};
+            const dataProcessorMatch = res.lstRs[4] || {};
 
+            
+            // console.log(dataCountry);
+            // console.log(dataCerror);
+
+            const filterCountry = Ext.getCmp(prototype.id + '-cmbPaisesPG');
+            const filterCerror = Ext.getCmp(prototype.id + '-cmbCerrorPG');
+            const filterStval = Ext.getCmp(prototype.id + '-cmbStvalPG');
+            const filterProcessorInsumo = Ext.getCmp(prototype.id + '-cmbProcessorInsumo');
+            const filterProcessorMatch = Ext.getCmp(prototype.id + '-cmbProcessorMatch');
+
+            
             filterCountry.suspendEvents(false);
-            filterCountry.bindStore(me.createComboStore({data: data, valueField: 'CODE', displayField: 'NAME'}));
+            filterCountry.bindStore(await me.createComboStore({data: dataCountry, valueField: 'CODE', displayField: 'NAME'}));
             filterCountry.setValue('');
             filterCountry.resumeEvents();
+
+            filterCerror.suspendEvents(false);
+            filterCerror.bindStore(await me.createComboStore({data: dataCerror, valueField: 'CODE', displayField: 'DESCRIPTION', addElementAll: false}));
+            filterCerror.setValue('');
+            filterCerror.resumeEvents();
+
+            filterStval.suspendEvents(false);
+            filterStval.bindStore(await me.createComboStore({data: dataStval, valueField: 'STVAL', displayField: 'DESCRIPTION', addElementAll: false}));
+            filterStval.setValue('X');
+            filterStval.resumeEvents();
             
+            filterProcessorInsumo.suspendEvents(false);
+            filterProcessorInsumo.setStore(await me.createComboStore({data: dataProcessorInsumo, valueField: 'CODE', displayField: 'DESCRIPTION',addElementAll: false}));
+            filterProcessorInsumo.setValue('');
+            filterProcessorInsumo.resumeEvents();
+            
+            filterProcessorMatch.suspendEvents(false);
+            filterProcessorMatch.setStore(await me.createComboStore({data: dataProcessorMatch, valueField: 'A4451KEY2', displayField: 'A4451DESC1'}));
+            filterProcessorMatch.setValue('');
+            filterProcessorMatch.resumeEvents();
+        
         } catch (e) {
             console.log(e);
         }
     },
-    createComboStore: function ( {data, valueField, displayField}) {
+    createComboStore: async function ( {data, valueField, displayField, addElementAll = true}) {
         //crea record vacio
         let allRecord = {};
-        allRecord[displayField] = 'All';
-        allRecord[valueField] = '';
+        if (addElementAll) {
+            allRecord[displayField] = 'All';
+            allRecord[valueField] = '';
+        }
         //limpia record de data
         data.forEach(obj => {
             for (let attr in obj) {
@@ -89,7 +125,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                     id: prototype.id + '-PlusgradeGrid-1',
                     searchParams: params
                 });
-                console.log(newPanel);
+                // console.log(newPanel);
                 mainPanel.add(newPanel);
             },
             'M':()=>{
@@ -98,7 +134,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                     id: prototype.id + '-MitGrid-1',
                     searchParams: params
                 });
-                console.log(newPanel);
+                // console.log(newPanel);
                 mainPanel.add(newPanel);
             },
              'U':()=>{
@@ -107,7 +143,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                     id: prototype.id + '-DeUnaGrid-1',
                     searchParams: params
                 });
-                console.log(newPanel);
+                // console.log(newPanel);
                 mainPanel.add(newPanel);
             }
         };
@@ -131,6 +167,46 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             this.onClickSearchBtn();
         }
     },
+    onChangeDateComplement: function (obj) {
+        let option = obj.id.split('-').at(-1);
+        
+        const fromPlusgrade = Ext.getCmp(prototype.id + '-datefieldFromPlusgrade');
+        const toPlusgrade = Ext.getCmp(prototype.id + '-datefieldToPlusgrade');
+        const fromMIT = Ext.getCmp(prototype.id + '-datefieldFromMIT');
+        const toMIT = Ext.getCmp(prototype.id + '-datefieldToMIT');
+        const fromDEUNA = Ext.getCmp(prototype.id + '-datefieldFromDEUNA');
+        const toDEUNA = Ext.getCmp(prototype.id + '-datefieldToDEUNA');
+        
+        const opts = {
+            'datefieldFromPlusgrade': () => {
+                toPlusgrade.setValue(fromPlusgrade.getValue());
+            },
+            'datefieldToPlusgrade': () => {
+                if (toPlusgrade.getValue() < fromPlusgrade.getValue()) {
+                    fromPlusgrade.setValue(toPlusgrade.getValue());
+                }
+            },
+            
+            'datefieldFromMIT': () => {
+                toMIT.setValue(fromMIT.getValue());
+            },
+            'datefieldToMIT': () => {
+                if (toMIT.getValue() < fromMIT.getValue()) {
+                    fromMIT.setValue(toMIT.getValue());
+                }
+            },
+            
+            'datefieldFromDEUNA': () => {
+                toDEUNA.setValue(fromDEUNA.getValue());
+            },
+            'datefieldToDEUNA': () => {
+                if (toDEUNA.getValue() < fromDEUNA.getValue()) {
+                    fromDEUNA.setValue(toDEUNA.getValue());
+                }
+            }
+        };
+        opts[option]();
+    }
 });
 
 

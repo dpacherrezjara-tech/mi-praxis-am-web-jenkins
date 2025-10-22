@@ -144,6 +144,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
             data: [
                 {"code": "", "name": "ALL"},
                 {"code": "PR", "name": "AUTOMATIC"},
+                {"code": "AP", "name": "BENEFITS AUDIT"},
                 {"code": "MA", "name": "MANUAL"},
                 {"code": "MS", "name": "MASSIVE"},
                 {"code": "QR", "name": "QUERYS"},

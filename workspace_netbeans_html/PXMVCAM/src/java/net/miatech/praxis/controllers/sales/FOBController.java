@@ -258,7 +258,7 @@ public class FOBController extends BaseController {
         iboolean = proMail.envia_html(emisor, asunto, receptores, Ccp, mensaje, 
                 archivos, 
 //                "notificaciones@miatech.net", 
-                "amcontrolventasfranquicias@aeromexico.com", 
+                "notifications@miatech.net", 
                 this.serverSession.getServerSession());
         return iboolean;
     }

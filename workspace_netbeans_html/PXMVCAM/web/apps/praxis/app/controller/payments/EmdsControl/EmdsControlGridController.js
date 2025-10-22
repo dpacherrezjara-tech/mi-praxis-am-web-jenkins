@@ -66,6 +66,19 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController
     onClickInfo: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {  
         const me = this;
         const obj = record.data;
+         
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.EmdsControlForm.DataEntrys.DetailEmdsDataEntry', {
+            id: prototype.id + '-DetailEmdsDataEntry-1',
+            obj: obj,
+//            callback: () => {
+//                grid.getStore().load();
+//            }
+        });
+        dataEntry.show();
+    },
+    onClickByPayment: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {  
+        const me = this;
+        const obj = record.data;
         
 //        let params = {
 //            IN_CCUST : obj.CCUST,
@@ -76,9 +89,6 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController
         const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry', {
             id: prototype.id + '-TransacErrorBPODataEntry-1',
             obj: obj,
-//            callback: () => {
-//                grid.getStore().load();
-//            }
         });
         dataEntry.show();
     },
@@ -99,7 +109,7 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController
 
             // Solo los que cambiaron de 0 -> 1
             let dataChanged = storeData
-                .filter(x => x.data.CHECK_ORIGIN === 0 && x.data.CHECK === true ) // solo los que cambiaron
+                .filter(x => x.data.CHECK_ORIGIN === 0 && ( x.data.CHECK === 1 || x.data.CHECK === true ) ) // solo los que cambiaron
                 .map(x => ({
                     ...x.data
                 })
@@ -117,7 +127,7 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController
             const tmp = await global.loadRecordsOnTable('PRAXISMP', 'XTEMPO', dataChanged);
             console.log('tmp', tmp);
             
-             let params = {
+            let params = {
                 IN_CUUID: tmp.cuuid,
                 IN_FUUID: tmp.fuuid
             };
@@ -135,7 +145,7 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController
                 notifier.warning('Error: ' + message);        
             }
             
-            // Lload search
+            // Load search
             this.getData(me.view);
             
             

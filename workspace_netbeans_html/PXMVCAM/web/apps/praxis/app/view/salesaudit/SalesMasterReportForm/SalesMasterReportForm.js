@@ -591,6 +591,25 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesMasterReportForm.SalesMasterReportFo
                                                 specialkey: 'onSearchkey'
                                             }
                                         },
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-ComboBene',
+                                            fieldLabel: 'Benefits Audit',
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            width: 260,
+                                            labelWidth: 100,
+                                            labelAlign: 'right',
+                                            emptyText: '',
+                                            listConfig: {
+                                                minWidth: 150
+                                            },
+                                            listeners: {
+                                                afterrender: 'onCmbSearchAfterRender',
+                                                specialkey: 'onSearchkey'
+                                            }
+                                        }
                                     ]
                                 }
                             ]

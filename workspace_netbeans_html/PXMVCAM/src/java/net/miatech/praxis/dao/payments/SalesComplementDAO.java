@@ -77,7 +77,7 @@ public class SalesComplementDAO implements SalesComplementLogic {
 //                bean.setDescFAMEX("Match");
 //                bean.setPASSED_DAYS("00");
 //            }
-//        }}
+//        }
         filter.setResult(response);
         filter.setPageOut(obj);
         return filter;

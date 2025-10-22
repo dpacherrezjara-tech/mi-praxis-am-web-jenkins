@@ -20,6 +20,8 @@ public class A4453Filter extends A4453{
     private String DES_CERROR;
     private String IN_SCARDN1;
     private String IN_SCARDN2;
+    private String descVSSales;
+    private String amexFECSELEC;
 
     public long getRN() {
         return RN;
@@ -116,5 +118,16 @@ public class A4453Filter extends A4453{
     public void setIN_SCARDN2(String IN_SCARDN2) {
         this.IN_SCARDN2 = IN_SCARDN2;
     }
-    
+    public String getDescVSSales() {
+        return descVSSales;
+    }
+    public void setDescVSSales(String descVSSales) {
+        this.descVSSales = descVSSales;
+    }
+    public String getAmexFECSELEC() {
+        return amexFECSELEC;
+    }
+    public void setAmexFECSELEC(String amexFECSELEC) {
+        this.amexFECSELEC = amexFECSELEC;
+    }    
 }

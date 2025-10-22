@@ -48,6 +48,20 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid', {
             },
             { text: 'lastedCheck', dataIndex: 'CHECK_ORIGIN', readOnly: true, width: 80, xtype: 'checkcolumn', hidden: true },
             {
+                sortable: false,
+                xtype: 'actioncolumn',
+                width: 40,
+                text: 'Detail',
+                align: 'center',
+                items: [
+                    {
+                        iconCls: 'prx-icon-detail',
+                        tooltip: 'Open Detail',
+                        handler: 'onClickInfo'
+                    }
+                ]
+            },
+            {
                 text: 'Ticket', dataIndex: 'TICKET', width: 110, 
                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                     let ticket = record.get('CCIA') + record.get('FORMA') + record.get('SERIE') ;
@@ -64,7 +78,7 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid', {
                     return ticket ;
                 },
                 listeners: {
-                    click: 'onClickInfo'
+                    click: 'onClickByPayment'
                 }
             },
             {
@@ -107,7 +121,7 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid', {
             {
                 text: 'Ref. Number', dataIndex: 'AREFNBR', width: 160,
                 listeners: {
-                    click: 'onClickInfo'
+                    click: 'onClickByPayment'
                 },
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "background-color:#FCF6DC;font-weight:bold;color:#057ECB;text-decoration:underline;cursor:pointer";
@@ -166,6 +180,12 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Grids.EmdsControlGrid', {
                     },
                     { text: 'Quantity<br>Tkts', dataIndex: 'QTYRB', width: 80 },
                     { text: 'Difference', dataIndex: 'DIFFRB', width: 100,
+                        renderer: function (value, metaData, record) {
+                            metaData.style = "background-color:#C2FFBD;";
+                            return Ext.util.Format.number(value, '0,000.00');
+                        }
+                    },
+                    { text: 'Total BPO', dataIndex: 'TOTALBPO', width: 100,
                         renderer: function (value, metaData, record) {
                             metaData.style = "background-color:#C2FFBD;";
                             return Ext.util.Format.number(value, '0,000.00');

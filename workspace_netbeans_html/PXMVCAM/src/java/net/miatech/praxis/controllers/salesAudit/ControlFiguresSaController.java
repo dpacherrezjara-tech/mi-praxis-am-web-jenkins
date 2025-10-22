@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SaleAudit.SQP00942Filter;
@@ -64,11 +65,51 @@ public class ControlFiguresSaController extends BaseController {
     public @ResponseBody
     String search(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- ControlFigures : Search-------------");
+//        map.put("success", true);
+//        List<SQP00942Filter> lst = this.getList(request, false);
+//        System.out.println("Total : " + lst.size());
+//        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+//        map.put("data", lst);
+//        return new Gson().toJson(map);
+
         map.put("success", true);
+
+        // Llamada al DAO
         List<SQP00942Filter> lst = this.getList(request, false);
         System.out.println("Total : " + lst.size());
+
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
+
+        // 🔹 Crear placeholders para los extras
+        map.put("ventas", new ArrayList<>());
+        map.put("auditoria", new ArrayList<>());
+        map.put("restante", new ArrayList<>());
+
+        // Incluir ResultSets extra si existen
+        if (!lst.isEmpty() && lst.get(0).extraResults != null) {
+            int i = 1;
+            for (Map.Entry<Integer, List<Map<String, Object>>> entry : lst.get(0).extraResults.entrySet()) {
+                switch (i) {
+                    case 1:
+                        map.put("ventas", entry.getValue());
+                        break;
+                    case 2:
+                        map.put("auditoria", entry.getValue());
+                        break;
+                    case 3:
+                        map.put("restante", entry.getValue());
+                        break;
+                    default:
+                        map.put("extra" + i, entry.getValue());
+                        break;
+                }
+                i++;
+            }
+        } else {
+            System.out.println("️No hay ResultSets extra en la respuesta del DAO.");
+        }
+
         return new Gson().toJson(map);
     }
 
@@ -149,7 +190,7 @@ public class ControlFiguresSaController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -227,7 +268,7 @@ public class ControlFiguresSaController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 18, 18));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 19, 19));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -309,7 +350,7 @@ public class ControlFiguresSaController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 16, 16));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 17, 17));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 3 ==========
             Row row3 = sheet.createRow(vj);

@@ -64,7 +64,8 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                             ['PRDA', 'Processing Date'],
                                             ['SDATE', 'Sale Date'],
                                             ['FECSELEC', 'Match Date Sales'],
-                                            ['AMEXFECSELEC', 'Match Date Amex']
+                                            ['AMEXFECSELEC', 'Match Date Amex'],
+                                            ['FCONT', 'Accounting Date']
                                         ]
                                     }),
                                     labelWidth: 50,
@@ -73,7 +74,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     valueField: 'code',
                                     queryMode: 'local',
                                     editable: false,
-                                    value: 'SDATE'
+                                    value: 'PRDA'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -83,7 +84,11 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     editable: false, // Deshabilita la edición del campo
                                     labelWidth: 50,
                                     width: 150,
-                                    value: new Date()
+                                    value: new Date(),
+                                    listeners: {
+                                        change: 'onChangeDateComplement'
+                                    },
+                                    id: prototype.id + '-datefieldFromPlusgrade'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -93,7 +98,11 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     editable: false, // Deshabilita la edición del campo
                                     labelWidth: 50,
                                     width: 150,
-                                    value: new Date()
+                                    value: new Date(),
+                                    listeners: {
+                                        change: 'onChangeDateComplement'
+                                    },
+                                    id: prototype.id + '-datefieldToPlusgrade'
                                 },
                                 {
                                     xtype: 'combobox',
@@ -117,67 +126,34 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                 },
                                 {
                                     xtype: 'combobox',
+                                    id: prototype.id + '-cmbStvalPG',
                                     fieldLabel: 'Complements vs Sales',
                                     name: 'IN_STVAL',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['X', 'All'],
-                                            ['1', 'Match'],
-                                            ['', 'Pending'],
-                                            ['2', 'Accounted']
-                                        ]
-                                    }),
+                                    queryMode: 'local',
+                                    // store: Ext.create('Ext.data.SimpleStore', {
+                                    //     fields: ['code', 'name'],
+                                    //     data: [
+                                    //         ['X', 'All'],
+                                    //         ['', 'Pending'],
+                                    //         ['0', 'Stand By'],
+                                    //         ['1', 'Match'],
+                                    //         ['3', 'Settl. Without Sales'],
+                                    //         ['4', 'Match Partial'],
+                                    //         ['6', 'Match Forced'],
+                                    //         ['E', 'Duplicate'],
+                                    //         ['5', 'Match Manual'],
+                                    //         ['I', 'Record Invalid']
+                                    //     ]
+                                    // }),
                                     labelWidth: 160,
                                     width: 280,
-                                    displayField: 'name',
-                                    valueField: 'code',
-                                    queryMode: 'local',
                                     editable: false,
-                                    value: 'X'
-                                },
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            bodyStyle: 'background: transparent',
-                            defaults: {
-                                fieldStyle: 'text-align: center;',
-                                padding: '5 1 5 1',
-                                anchor: '100%',
-                                hiddenLabel: false,
-                                labelAlign: 'right',
-                                hidden: false
-                            },
-                            items: [
-                                {
-                                    xtype: 'textfield',
-                                    fieldLabel: 'Ticket',
-                                    labelWidth: 50,
-                                    width: 180,
-                                    name: 'IN_TKT',
-                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
-                                    maxLength: 13, // Límite máximo de caracteres
-                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
-                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres 
-                                    listeners: {
-                                        specialkey: 'onEnterKeyPress'
-                                    }
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    fieldLabel: 'PNR',
-                                    labelWidth: 50,
-                                    width: 150,
-                                    name: 'IN_PNR',
-                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
-                                    maxLength: 6, // Límite máximo de caracteres
-                                    enforceMaxLength: true,
-                                    listeners: {
-                                        specialkey: 'onEnterKeyPress'
-                                    }
+                                    typeAhead: true,
+                                    valueField: 'STVAL',
+                                    displayField: 'DESCRIPTION',
+                                    enableKeyEvents: true,
+                                    // triggerAction: 'all',
+                                    // value: 'X'
                                 },
                                 {
                                     xtype: 'combo',
@@ -220,12 +196,81 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5 1 5 1',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Ticket',
+                                    labelWidth: 50,
+                                    width: 150,
+                                    name: 'IN_TKT',
+                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
+                                    maxLength: 13, // Límite máximo de caracteres
+                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    enforceMaxLength: true, // Aplicar la longitud máxima de caracteres 
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'PNR',
+                                    labelWidth: 50,
+                                    width: 120,
+                                    name: 'IN_PNR',
+                                    //allowBlank: false, // Puedes configurar esto para requerir un valor
+                                    maxLength: 6, // Límite máximo de caracteres
+                                    enforceMaxLength: true,
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Plusgrade ID',
+                                    labelWidth: 90,
+                                    width: 170,
+                                    name: 'IN_PLUSGRAID',
+                                    maxLength: 8,
+                                    maskRe: /[0-9]/,
+                                    enforceMaxLength: true,
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Ref. Number',
+                                    labelWidth: 80,
+                                    width: 220,
+                                    name: 'IN_AREFNBR',
+                                    maxLength: 23,
+                                    maskRe: /[0-9]/,
+                                    enforceMaxLength: true,
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
                                 },
                                 {
                                     xtype: 'textfield',
                                     fieldLabel: 'Merchant',
                                     labelWidth: 70,
-                                    width: 185,
+                                    width: 180,
                                     name: 'IN_MERCHID',
                                     //allowBlank: false, // Puedes configurar esto para requerir un valor
                                     maxLength: 10, // Límite máximo de caracteres
@@ -271,6 +316,21 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    id: prototype.id + '-cmbCerrorPG',
+                                    fieldLabel: 'Error Code',
+                                    name: 'IN_CERROR',
+                                    labelWidth: 70,
+                                    width: 270,
+                                    editable: false,
+                                    typeAhead: true,
+                                    valueField: 'CODE',
+                                    displayField: 'DESCRIPTION',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: ''
                                 }
                             ]
                         }
@@ -339,9 +399,9 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     value: new Date(),
                                     validator: 'validaFecha',
                                     listeners: {
-                                        change: 'onChangeDateBPBtn'
+                                        change: 'onChangeDateComplement'
                                     },
-                                    id: prototype.id + '-datefieldFromBP'
+                                    id: prototype.id + '-datefieldFromMIT'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -355,9 +415,9 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     value: new Date(),
                                     validator: 'validaFecha',
                                     listeners: {
-                                        change: 'onChangeDateBPBtn'
+                                        change: 'onChangeDateComplement'
                                     },
-                                    id: prototype.id + '-datefieldToBP'
+                                    id: prototype.id + '-datefieldToMIT'
                                 },
                                 {
                                     xtype: 'textfield',
@@ -542,10 +602,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     width: 150,
                                     value: new Date(),
                                     validator: 'validaFecha',
-//                                    listeners: {
-//                                        change: 'onChangeDateBPBtn'
-//                                    },
-//                                    id: prototype.id + '-datefieldFromBP'
+                                    listeners: {
+                                        change: 'onChangeDateComplement'
+                                    },
+                                    id: prototype.id + '-datefieldFromDEUNA'
                                 },
                                 {
                                     xtype: 'datefield',
@@ -557,10 +617,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     width: 150,
                                     value: new Date(),
                                     validator: 'validaFecha',
-//                                    listeners: {
-//                                        change: 'onChangeDateBPBtn'
-//                                    },
-//                                    id: prototype.id + '-datefieldFromBP'
+                                    listeners: {
+                                        change: 'onChangeDateComplement'
+                                    },
+                                    id: prototype.id + '-datefieldToDEUNA'
                                 },
 
                                 {
@@ -620,7 +680,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     labelWidth: 40,
                                     width: 120,
                                     name: 'IN_PNR',
-                                    maxLength: 15, // Límite máximo de caracteres
+                                    maxLength: 6, // Límite máximo de caracteres
                                     maskRe: /[a-zA-Z0-9]/,
                                     enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                                     listeners: {
@@ -662,12 +722,73 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
-                                },
+                                }
+
                             ],
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5 1 5 17',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items: [
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'DEUNA Processor', // INSUMO
+                                    name: 'IN_PROCINSUMO',
+                                    id: prototype.id + '-cmbProcessorInsumo',
+                                    // store: Ext.create('Ext.data.SimpleStore', {
+                                    //     fields: ['CODE', 'DESCRIPTION'],
+                                    //     data: [
+                                    //         ['', 'All'],
+                                    //         ['aplazo', 'Aplazo'],
+                                    //         ['bbva', 'Bbva'],
+                                    //         ['kueski', 'Kueski'],
+                                    //         ['mercadopago', 'Mercado Pago'],
+                                    //         ['mercadopago_wallet', 'Mercadopago Wallet'],
+                                    //         ['paypal_wallet', 'Paypal Wallet'],
+                                    //         ['worldpay', 'Worldpay'],
+                                    //     ]
+                                    // }),
+                                    labelWidth: 100,
+                                    width: 250,
+                                    displayField: 'DESCRIPTION',
+                                    valueField: 'CODE',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Match Processor', //MATCH
+                                    name: 'IN_PROCMATCH',
+                                    id: prototype.id + '-cmbProcessorMatch',
+                                    // store: Ext.create('Ext.data.SimpleStore', {
+                                    //     fields: ['A4451KEY2', 'A4451DESC1'],
+                                    //     data: []
+                                    // }),
+                                    labelWidth: 110,
+                                    width: 280,
+                                    displayField: 'A4451DESC1',
+                                    valueField: 'A4451KEY2',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                }
+                            ]
                         }
+
                     ]
                 },
-                //</editor-fold>
+                        //</editor-fold>
             ]
         }
     ]
