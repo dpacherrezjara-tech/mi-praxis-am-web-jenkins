@@ -707,8 +707,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     setComboStore: function ( {cmp, data, valueField, displayField, value}){
         const me = this;
         cmp.suspendEvents(false);
-        cmp.bindStore(me.createComboStore({data: data
-            , valueField: valueField, displayField: displayField}));
+        cmp.bindStore(me.createComboStore({data: data, valueField: valueField, displayField: displayField}));
         cmp.setValue(value);
         cmp.resumeEvents();
     },
