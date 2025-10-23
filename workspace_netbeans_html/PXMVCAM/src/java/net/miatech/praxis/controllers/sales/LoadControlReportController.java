@@ -171,69 +171,76 @@ public class LoadControlReportController extends BaseController {
 
                 styleName = "cell_normal";
                 Cell cel25 = row.createCell(0);
-                cel25.setCellValue(oList.get(vi).A4493PRDA);
+                cel25.setCellValue(oList.get(vi).a4493.A4493PRDA);
                 cel25.setCellStyle(styles.get(styleName));
 
                 Cell cell0 = row.createCell(1);
-                Number value0 = (Number) oList.get(vi).A4493HOTN;
+                Number value0 = (Number) oList.get(vi).a4493.A4493HOTN;
                 cell0.setCellValue(value0.doubleValue());
                 cell0.setCellStyle(styles.get(styleName));
 
                 Cell cell1 = row.createCell(2);
-                cell1.setCellValue(oList.get(vi).A4493PAISD);
+                cell1.setCellValue(oList.get(vi).a4493.A4493PAISD);
                 cell1.setCellStyle(styles.get(styleName));
 
                 Cell cell2 = row.createCell(3);
-                cell2.setCellValue(oList.get(vi).A4493PAIS);
+                cell2.setCellValue(oList.get(vi).a4493.A4493PAIS);
                 cell2.setCellStyle(styles.get(styleName));
 
                 Cell cell3 = row.createCell(4);
-                cell3.setCellValue(oList.get(vi).A4493MDA);
+                cell3.setCellValue(oList.get(vi).a4493.A4493MDA);
                 cell3.setCellStyle(styles.get(styleName));
 
                 Cell cell4 = row.createCell(5);
-                cell4.setCellValue(oList.get(vi).A4493STAT);
+                cell4.setCellValue(oList.get(vi).a4493.A4493STAT);
                 cell4.setCellStyle(styles.get(styleName));
 
                 Cell cell5 = row.createCell(6);
-                cell5.setCellValue(oList.get(vi).A4493ISSUD);
+                cell5.setCellValue(oList.get(vi).a4493.A4493ISSUD);
                 cell5.setCellStyle(styles.get(styleName));
 
                 styleName = "cell_normal_formato_right";
                 Cell cell6 = row.createCell(7);
-                Number value = (Number) oList.get(vi).A4493SALE;
+                Number value = (Number) oList.get(vi).a4493.A4493SALE;
                 cell6.setCellValue(value.doubleValue());
                 cell6.setCellStyle(styles.get(styleName));
 
                 Cell cell7 = row.createCell(8);
-                Number value1 = (Number) oList.get(vi).A4493EXCH;
+                Number value1 = (Number) oList.get(vi).a4493.A4493EXCH;
                 cell7.setCellValue(value1.doubleValue());
                 cell7.setCellStyle(styles.get(styleName));
 
                 Cell cel20 = row.createCell(9);
-                Number value2 = (Number) oList.get(vi).A4493RFND;
+                Number value2 = (Number) oList.get(vi).a4493.A4493RFND;
                 cel20.setCellValue(value2.doubleValue());
                 cel20.setCellStyle(styles.get(styleName));
 
                 Cell cel21 = row.createCell(10);
-                Number value3 = (Number) oList.get(vi).A4493MEMO;
+                Number value3 = (Number) oList.get(vi).a4493.A4493MEMO;
                 cel21.setCellValue(value3.doubleValue());
                 cel21.setCellStyle(styles.get(styleName));
 
                 Cell cel22 = row.createCell(11);
-                Number value4 = (Number) oList.get(vi).A4493VOID;
+                Number value4 = (Number) oList.get(vi).a4493.A4493VOID;
                 cel22.setCellValue(value4.doubleValue());
                 cel22.setCellStyle(styles.get(styleName));
 
                 styleName = "cell_normal";
                 Cell cel23 = row.createCell(12);
-                String value5 = oList.get(vi).A4493LABEL;
-                String value6 = oList.get(vi).A4493FLAG;
-                String value7 = oList.get(vi).A4493STAT.trim();
+                String value5 = oList.get(vi).a4493.A4493LABEL;
+                String value6 = oList.get(vi).a4493.A4493FLAG;
+                String value7 = oList.get(vi).a4493.A4493STAT.trim();
+                String value8 = oList.get(vi).a4859.A4859COME == null ? "" : oList.get(vi).a4859.A4859COME.trim();
+                System.out.println("value 8: " + value8);
                 String etiqueta = "";
 
                 if (value5.equals("R")) {
-                    etiqueta = "File not reported";
+//                    etiqueta = "File not reported";
+                    if (value8.isEmpty()) {
+                            etiqueta = "File not reported";
+                    } else {
+                            etiqueta = "File not reported – justified";
+                    }
                 }
 
                 if (value5.equals("A")) {
@@ -243,7 +250,7 @@ public class LoadControlReportController extends BaseController {
                 if (value7.equals("") && value6.equals("Y")) {
                     etiqueta = "Currency File not reported";
                 }
-
+                
                 cel23.setCellValue(etiqueta);
                 cel23.setCellStyle(styles.get(styleName));
                 
