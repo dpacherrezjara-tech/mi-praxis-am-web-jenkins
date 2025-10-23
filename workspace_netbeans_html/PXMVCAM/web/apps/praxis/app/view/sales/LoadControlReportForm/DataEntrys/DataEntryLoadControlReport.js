@@ -103,7 +103,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.DataEntrys.DataEntryLoad
                     }
                 },
                 {
-                    text: 'Create',
+                    text: 'Save',
                     id: prototype.idDE + '-btn-create',
                     iconCls: 'prx-icon-save',
                     listeners: {
