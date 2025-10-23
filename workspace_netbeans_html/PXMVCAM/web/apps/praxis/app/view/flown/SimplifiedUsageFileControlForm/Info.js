@@ -48,14 +48,14 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                             id: prototype.id + '-gridData',
                             columnLines: true,
                             width: '99%',
-                            height: 550,
+                            height: 450, //550
                             padding: '0px 5px 1px 5px',
-                            features: [
-                                {
-                                    dock: 'bottom',
-                                    ftype: 'summary'
-                                }
-                            ],
+//                            features: [
+//                                {
+//                                    dock: 'bottom',
+//                                    ftype: 'summary'
+//                                }
+//                            ],
                             columns: {
                                 items: [
                                     {text: 'Nbr ID', dataIndex: 'RN', width: 80, align: 'center'},
@@ -74,7 +74,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Info', {
                                                 widget: {
                                                     xtype: 'button',
                                                     iconCls: 'prx-icon-docum',
-                                                    margin: '2px 2px 2px 2px',
+                                                    margin: '0px 0px 2px 0px',
                                                     handler: function (btn) {
                                                         const record = btn.getWidgetRecord();
                                                         const FECHA = record.get('FECHA');
