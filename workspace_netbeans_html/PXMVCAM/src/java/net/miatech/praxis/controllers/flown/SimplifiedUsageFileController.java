@@ -69,7 +69,7 @@ public class SimplifiedUsageFileController extends BaseController {
             filter.VP_FECHAHASTA = request.getParameter("VP_FECHAHASTA");
             filter.VP_STAT = request.getParameter("VP_STAT");
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
-            filter.page.PAGROW = 18;
+            filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
             logic.setSession((IServerSession) serverSession.getServerSession());
