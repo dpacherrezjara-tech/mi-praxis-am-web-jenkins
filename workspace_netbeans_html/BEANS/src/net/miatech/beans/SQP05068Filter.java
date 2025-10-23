@@ -9,8 +9,14 @@ package net.miatech.beans;
  *
  * @author vhidalgo
  */
-public class SQP05068Filter extends A4493 {
+//public class SQP05068Filter extends A4493  {
+public class SQP05068Filter {
+
     public String VP_FPROC1 = "";
     public String VP_FPROC2 = "";
+    
+    public A4493 a4493 = new A4493();
+    public A4859 a4859 = new A4859();
+    
     public Pagination page = new Pagination();    
 }

@@ -233,23 +233,24 @@ public class LoadControlReportDAO {
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
                 objRtn = new SQP05068Filter();
-                objRtn.A4493CCUST = rs01.getString("A4493CCUST");
-                objRtn.A4493PRDA = rs01.getString("A4493PRDA");
-                objRtn.A4493HOTN = rs01.getInt("A4493HOTN");
-                objRtn.A4493FUENT = rs01.getString("A4493FUENT");                
-                objRtn.A4493PAIS = rs01.getString("A4493PAIS");                
-                objRtn.A4493PAISD = rs01.getString("A4493PAISD");
-                objRtn.A4493MDA = rs01.getString("A4493MDA");                                              
+                objRtn.a4493.A4493CCUST = rs01.getString("A4493CCUST");
+                objRtn.a4493.A4493PRDA = rs01.getString("A4493PRDA");
+                objRtn.a4493.A4493HOTN = rs01.getInt("A4493HOTN");
+                objRtn.a4493.A4493FUENT = rs01.getString("A4493FUENT");                
+                objRtn.a4493.A4493PAIS = rs01.getString("A4493PAIS");                
+                objRtn.a4493.A4493PAISD = rs01.getString("A4493PAISD");
+                objRtn.a4493.A4493MDA = rs01.getString("A4493MDA");                                              
                                 
-                objRtn.A4493STAT = rs01.getString("A4493STAT");
-                objRtn.A4493ISSUD = rs01.getString("A4493ISSUD");
-                objRtn.A4493SALE = rs01.getInt("A4493SALE");
-                objRtn.A4493EXCH = rs01.getInt("A4493EXCH");
-                objRtn.A4493RFND = rs01.getInt("A4493RFND");
-                objRtn.A4493MEMO = rs01.getInt("A4493MEMO");
-                objRtn.A4493VOID = rs01.getInt("A4493VOID");
-                objRtn.A4493LABEL = rs01.getString("A4493LABEL");
-                objRtn.A4493FLAG = rs01.getString("A4493FLAG");
+                objRtn.a4493.A4493STAT = rs01.getString("A4493STAT");
+                objRtn.a4493.A4493ISSUD = rs01.getString("A4493ISSUD");
+                objRtn.a4493.A4493SALE = rs01.getInt("A4493SALE");
+                objRtn.a4493.A4493EXCH = rs01.getInt("A4493EXCH");
+                objRtn.a4493.A4493RFND = rs01.getInt("A4493RFND");
+                objRtn.a4493.A4493MEMO = rs01.getInt("A4493MEMO");
+                objRtn.a4493.A4493VOID = rs01.getInt("A4493VOID");
+                objRtn.a4493.A4493LABEL = rs01.getString("A4493LABEL");
+                objRtn.a4493.A4493FLAG = rs01.getString("A4493FLAG");
+                objRtn.a4859.A4859COME = rs01.getString("A4859COME");
                 
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
