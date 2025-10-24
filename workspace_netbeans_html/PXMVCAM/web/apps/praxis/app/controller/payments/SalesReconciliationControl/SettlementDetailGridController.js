@@ -91,6 +91,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
                 'Country' : x.SCOUNTRY,
                 'Qty Tkts' : x.QTYTKT,
                 'Invoice Refer. Number PNR' : me.formatInvRefNumber(x),
+                'ARN' : x.ARN,
                 'Ref. Number' : x.AREFNBR,
                 'PNR' : x.SPNR,
                 'Document Type' : x.TRANSTYPE,
