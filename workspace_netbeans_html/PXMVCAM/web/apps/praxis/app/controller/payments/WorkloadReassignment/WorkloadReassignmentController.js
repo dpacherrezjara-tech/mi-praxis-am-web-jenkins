@@ -312,7 +312,7 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         var txtUser = Ext.getCmp(prototype.id + '-txtUser').getValue();
         //
         me.beanTMP.IN_OPTION = cmbFecFiltro;
-        me.beanTMP.IN_PROCESADOR = CmbTypeprocesa;
+        me.beanTMP.IN_PROCESADOR = (CmbTypeprocesa === 'All') ? '' : CmbTypeprocesa;  
         me.beanTMP.IN_DATEFROM = txtFilterDateFrom;
         me.beanTMP.IN_DATETO = txtFilterDateTo;
         me.beanTMP.IN_USER = (txtUser === 'ALL') ? '' : txtUser;
@@ -333,7 +333,7 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         var txtUser = Ext.getCmp(prototype.id + '-txtUser').getValue();
         //
         me.beanEXCEL.IN_OPTION = cmbFecFiltro;
-        me.beanEXCEL.IN_PROCESADOR = CmbTypeprocesa;
+        me.beanEXCEL.IN_PROCESADOR =  (CmbTypeprocesa === 'All') ? '' : CmbTypeprocesa;  
         me.beanEXCEL.IN_DATEFROM = txtFilterDateFrom;
         me.beanEXCEL.IN_DATETO = txtFilterDateTo;
         me.beanEXCEL.IN_USER = (txtUser === 'ALL') ? '' : txtUser;
@@ -797,10 +797,13 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         }
     },
     btnClear_click: function (obj, e) {
-        Ext.getCmp(prototype.id + '-CmbTypeprocesa').setValue('');
-        Ext.getCmp(prototype.id + '-txtFilterDateTo').setValue('');
-        Ext.getCmp(prototype.id + '-txtFilterDateFrom').setValue('');
-        Ext.getCmp(prototype.id + '-cmbFecFiltro').setValue('1');
+       Ext.getCmp(prototype.id + '-txtFilterDateFrom').setValue('');
+       Ext.getCmp(prototype.id + '-txtFilterDateTo').setValue('');
+       Ext.getCmp(prototype.id + '-cmbProctypeSettl').setValue('All');
+       Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue('1');
+       Ext.getCmp(prototype.id + '-txtUser').setValue('ALL');
+       Ext.getCmp(prototype.id + '-gridDataMain').getStore().removeAll();  
+       Ext.getCmp(prototype.id + '-gridDETALLE').getStore().removeAll();
     },
     btnFilter_click: function (obj) {
         var option = Ext.getCmp(prototype.id + '-contFilter');

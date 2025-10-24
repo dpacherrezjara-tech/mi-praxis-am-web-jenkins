@@ -60,6 +60,9 @@ public class MaintenanceAnalystsController extends BaseController {
             int limit = Integer.parseInt(request.getParameter("limit"));
             int start = Integer.parseInt(request.getParameter("start"));
 
+            int pExcel = Integer.parseInt(request.getParameter("pexcel"));
+            Boolean bExcel = pExcel == 1 ? true : false;
+
             filter.IN_OPTION = request.getParameter("IN_OPTION");
             filter.IN_TYPEREPORT = request.getParameter("IN_TYPEREPORT");
             filter.IN_USER = request.getParameter("IN_USER");
@@ -67,9 +70,14 @@ public class MaintenanceAnalystsController extends BaseController {
             filter.IN_DATEFROM = request.getParameter("IN_DATEFROM");
             filter.IN_STATUS = request.getParameter("IN_STATUS");
 
-            filter.page.PAGROW = 20;
-            start = (start != 0 ? start : 0);
-            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
 
             lst = logic.SearchMantAuditor(filter);
         } catch (Exception e) {
@@ -82,6 +90,7 @@ public class MaintenanceAnalystsController extends BaseController {
 
         return new Gson().toJson(map);
     }
+
     @RequestMapping(value = "loadDataAuditor")
     public @ResponseBody
     String loadDataAuditor(ModelMap map, HttpServletRequest request) {
@@ -115,30 +124,29 @@ public class MaintenanceAnalystsController extends BaseController {
 
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "mantenimientoAuditor")
     public @ResponseBody
     String mantenimientoAuditor(ModelMap map, HttpServletRequest request) {
-        String result="";
+        String result = "";
         A4836Filter filter = new A4836Filter();
-        
-        try{
-            
+
+        try {
+
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             logic = new MaintenanceAnalystsLogic();
             logic.setSession(this.serverSession.getServerSession());
             result = logic.mantenimientoAuditor(filter);
-        
-            
+
         } catch (Exception e) {
             throw new SpringException(e);
         }
         map.put("success", true);
         map.put("data", result);
-         return new Gson().toJson(map);
+        return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "/getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -205,7 +213,7 @@ public class MaintenanceAnalystsController extends BaseController {
             CH_03.setCellValue("discontinuity  date");
             CH_04.setCellValue("Description");
             CH_05.setCellValue("Status");
-            
+
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));

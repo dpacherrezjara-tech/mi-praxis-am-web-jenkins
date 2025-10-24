@@ -206,6 +206,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             }
         };
         opts[option]();
+    },
+    onClickAnalyzeReconciliationErrors: function () {
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.AnalyzeReconciliationErrorsDataEntry', {
+            id: prototype.id + '-AnalyzeReconciliationErrorsDataEntry-1'
+        });
+        dataEntry.show();
     }
 });
 

@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.view.payments.MaintenanceAnalystsForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             padding: '1',
                             border: true,
-                            height: 560,
+                            height: 500,
                             width: 1040,
                             layout: {
                                 type: 'vbox',
@@ -48,7 +48,7 @@ Ext.define('Ext.Praxis.view.payments.MaintenanceAnalystsForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMain',
-                                    height: 520,
+                                     height: 500,
                                     width: 950,
                                     columnLines: true,
                                     features: [{ftype: 'grouping', startCollapsed: true}],
@@ -91,6 +91,7 @@ Ext.define('Ext.Praxis.view.payments.MaintenanceAnalystsForm.Info', {
                         {
                             xtype: 'panel',
                             id: prototype.id + '-pagginator-legend',
+                            hidden:true,
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'
@@ -145,10 +146,6 @@ Ext.define('Ext.Praxis.view.payments.MaintenanceAnalystsForm.Info', {
                                             width: 50
                                         },
                                         {xtype: 'tbspacer', width: 20},
-                                        {
-                                            text: 'Total ADMs',
-                                            width: 80
-                                        },
                                         {
                                             id: prototype.id + '-lblRowsTotalADM',
                                             text: '0',

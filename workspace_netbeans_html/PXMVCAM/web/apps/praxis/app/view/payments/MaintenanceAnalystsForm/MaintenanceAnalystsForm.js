@@ -1,5 +1,4 @@
 prototype.id = 'MaintenanceAnalystsForm';
-prototype.url = CONTEXTPATH + '/MaintenanceAnalysts';
 Ext.define('Ext.Praxis.view.payments.MaintenanceAnalystsForm.MaintenanceAnalystsForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.MaintenanceAnalystsForm',

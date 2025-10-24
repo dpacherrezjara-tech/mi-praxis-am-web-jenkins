@@ -10,7 +10,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 @Data
 public class ScannerFilter {
     private String CCUST,TRNCU,SPNR,SDATE,SAGENT,FUENTE,
-            SEQ,CCIA,FORMA,SERIE,CORRL,
+            SEQ,CCIA,FORMA,SERIE,CORRL,SCOUNTRY,
             CARDTYPE,SCARDCOD,SCURRENCY,SCARDN,SAUTHOC,FVOID,
             CODEPR,GRUPO,CANAL,
             CIAP,FORMAP,SERIEP,
