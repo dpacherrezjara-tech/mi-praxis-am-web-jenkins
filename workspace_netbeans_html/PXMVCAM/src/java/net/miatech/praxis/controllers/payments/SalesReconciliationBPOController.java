@@ -656,7 +656,7 @@ public class SalesReconciliationBPOController {
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();
             //headers
-            Object[] headers = new Object[33];
+            Object[] headers = new Object[34];
             headers[0] = "Processing Date";
             headers[1] = "Payment Date";
             headers[2] = "Processor";
@@ -677,22 +677,23 @@ public class SalesReconciliationBPOController {
             headers[17] = "Ticket";
             headers[18] = "PNR";
             headers[19] = "Invoice Refer. Number PNR";
-            headers[20] = "Ref. Number";
-            headers[21] = "Currency";
-            headers[22] = "Transaction Amount";
-            headers[23] = "Sale Amount";
-            headers[24] = "Difference Amount";
-            headers[25] = "Quantity Ticket";
-            headers[26] = "Error Code";
-            headers[27] = "Description";
-            headers[28] = "Adju. Code";
-            headers[29] = "Description";
-            headers[30] = "User Update";
-            headers[31] = "Date Update";
-            headers[32] = "BPO Comment";
+            headers[20] = "ARN";
+            headers[21] = "Ref. Number";
+            headers[22] = "Currency";
+            headers[23] = "Transaction Amount";
+            headers[24] = "Sale Amount";
+            headers[25] = "Difference Amount";
+            headers[26] = "Quantity Ticket";
+            headers[27] = "Error Code";
+            headers[28] = "Description";
+            headers[29] = "Adju. Code";
+            headers[30] = "Description";
+            headers[31] = "User Update";
+            headers[32] = "Date Update";
+            headers[33] = "BPO Comment";
             data.add(headers);
             for (A4331Filter obj : filter.getResponse()) {
-                Object[] row = new Object[33];
+                Object[] row = new Object[34];
                 row[0] = obj.getPrda();
                 row[1] = obj.getPaydate();
                 row[2] = obj.getDESC_PROCTYPE();
@@ -713,22 +714,23 @@ public class SalesReconciliationBPOController {
                 row[17] = obj.getTicket();
                 row[18] = obj.getSpnr();
                 row[19] = obj.getInvoirn();
-                row[20] = obj.getArefnbr();
-                row[21] = obj.getScurrency();
-                row[22] = obj.getTgrosamoun();
-                row[23] = obj.getSvfops();
-                row[24] = obj.getDIFFERENCE();
-                row[25] = obj.getQtytkt();
-                row[26] = obj.getCerror();
-                row[27] = obj.getDES_CERROR();
-                row[28] = obj.getCodadju();
-                row[29] = obj.getDESC_CODADJU();
-                row[30] = obj.getUsup();
-                row[31] = obj.getFeup();
+                row[20] = obj.getArn();
+                row[21] = obj.getArefnbr();
+                row[22] = obj.getScurrency();
+                row[23] = obj.getTgrosamoun();
+                row[24] = obj.getSvfops();
+                row[25] = obj.getDIFFERENCE();
+                row[26] = obj.getQtytkt();
+                row[27] = obj.getCerror();
+                row[28] = obj.getDES_CERROR();
+                row[29] = obj.getCodadju();
+                row[30] = obj.getDESC_CODADJU();
+                row[31] = obj.getUsup();
+                row[32] = obj.getFeup();
                 if (obj.getBPOCOMENT().isEmpty()) {
-                    row[32] = obj.getADJUCOMENT();
+                    row[33] = obj.getADJUCOMENT();
                 } else {
-                    row[32] = obj.getBPOCOMENT();
+                    row[33] = obj.getBPOCOMENT();
                 }
                 data.add(row);
             }
@@ -911,6 +913,7 @@ public class SalesReconciliationBPOController {
             header.add(new CustomExcelCell("Country"));
             header.add(new CustomExcelCell("Qty\nTkts"));
             header.add(new CustomExcelCell("Invoice\nRef. Number\nPNR"));
+            header.add(new CustomExcelCell("ARN"));
             header.add(new CustomExcelCell("PNR"));
             header.add(new CustomExcelCell("Document\nType"));
             header.add(new CustomExcelCell("Indust. Speci.\nRef. Nbr."));
@@ -963,6 +966,7 @@ public class SalesReconciliationBPOController {
                 row.add(new CustomExcelCell(obj.getScountry()));
                 row.add(new CustomExcelCell(obj.getQtytkt()));
                 row.add(new CustomExcelCell(obj.getInvoirn()));
+                row.add(new CustomExcelCell(obj.getArn()));
                 row.add(new CustomExcelCell(obj.getSpnr()));
                 row.add(new CustomExcelCell(obj.getTranstype()));
                 row.add(new CustomExcelCell(obj.getIsrefnbr()));
