@@ -97,9 +97,8 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                             return value;
                         }
                     },
-                    {
-                        text: 'Date', dataIndex: 'DESCVSSALES', width: 70
-                    }
+                    { text: 'Date', dataIndex: 'DESCVSSALES', width: 70 },
+                    { text: 'Rule', dataIndex: 'FREGLA_DESCRIPTION', width: 100 }
                 ]
             },
 

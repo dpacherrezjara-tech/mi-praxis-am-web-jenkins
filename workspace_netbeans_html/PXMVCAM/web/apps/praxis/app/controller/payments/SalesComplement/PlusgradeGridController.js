@@ -88,6 +88,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
            'Match Date (Plusgrade VS Amex)': x.AMEXFECSELEC,
            'Plusgrade VS Sales': x.DESCSTVAL,
            'Match Date (Plusgrade VS Sales)': x.DESCVSSALES,
+           'Rule Description': x.FREGLA_DESCRIPTION,
            'Sales Country': x.COUNTRY,
            'Sales Date': x.SDATE,
            'Credit Card Code': x.SCARCOD,
