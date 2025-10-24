@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.controller.payments.MaintenanceAnalysts.MaintenanceAnalys
     paginActual: '',
     gridActual: '',
     panelActual: '',
-    procesadores:'',
+    procesadores: '',
     reg99: 0,
     me: '',
     url2: CONTEXTPATH + '/SalesReconciliationBPO',
@@ -37,11 +37,14 @@ Ext.define('Ext.Praxis.controller.payments.MaintenanceAnalysts.MaintenanceAnalys
             '#MaintenanceAnalystsForm-btnAdd': {
                 click: this.btnAdd_click
             },
-            '#DownloadThePaymentFilesForm-btnClear': {
+            '#MaintenanceAnalystsForm-btnClear': {
                 click: this.btnClear_click
             },
-            '#DownloadThePaymentFilesForm-btnExcel': {
+            '#MaintenanceAnalystsForm-btnExcel': {
                 click: this.btnExcel_click
+            },
+            '#MaintenanceAnalystsForm-btnFilter': {
+                click: this.btnFilter_click
             }
         });
     },
@@ -51,6 +54,7 @@ Ext.define('Ext.Praxis.controller.payments.MaintenanceAnalysts.MaintenanceAnalys
         this.onLoadUsers();
         this.loadFilters();
         Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, this);
+         Ext.getCmp(prototype.id + '-pagginator-legend').show(); 
     },
     eventKey: function (e, eOpts) {
         if (eOpts.getKey() === 13) {
@@ -60,6 +64,14 @@ Ext.define('Ext.Praxis.controller.payments.MaintenanceAnalysts.MaintenanceAnalys
 
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
+    },
+    onPaginationChkChange: function (obj, newValue, oldValue, eOpts) {
+        this.onSearchClick();
+        if (!newValue) {
+            Ext.getCmp(prototype.id + '-pagginator-01').disable();
+        } else {
+            Ext.getCmp(prototype.id + '-pagginator-01').enable();
+        }
     },
     onLoadUsers: function () {
         var cmbUser = Ext.getCmp(prototype.id + '-txtUser');
@@ -93,7 +105,7 @@ Ext.define('Ext.Praxis.controller.payments.MaintenanceAnalysts.MaintenanceAnalys
         if (res.ok) {
             const data = await res.json();
             const procesadores = data.procesadores;
-            this.procesadores=procesadores;
+            this.procesadores = procesadores;
             //<editor-fold defaultstate="collapsed" desc="Combos">
 
             const cmbProctypeSettl = Ext.getCmp(prototype.id + '-cmbProctypeSettl');
@@ -271,6 +283,7 @@ Ext.define('Ext.Praxis.controller.payments.MaintenanceAnalysts.MaintenanceAnalys
         var cmbFecFiltro = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
         var txtUser = Ext.getCmp(prototype.id + '-txtUser').getValue();
         var Cmbstatus = Ext.getCmp(prototype.id + '-Cmbstatus').getValue();
+        me.beanTMP.pexcel = Ext.getCmp(prototype.id + '-pagination').getValue() ? 0 : 1;
         if (cmbFecFiltro === '3') {
             me.beanTMP.IN_OPTION = cmbFecFiltro;
             me.beanTMP.IN_TYPEREPORT = CmbTypeprocesa;
@@ -295,22 +308,27 @@ Ext.define('Ext.Praxis.controller.payments.MaintenanceAnalysts.MaintenanceAnalys
     },
     btnExcel_click: function (obj, e) {
         var me = this;
-        var txtFilterDateFrom = Ext.getCmp(prototype.id + '-txtFilterDateFrom').getValue();
-        var txtFilterDateTo = Ext.getCmp(prototype.id + '-txtFilterDateTo').getValue();
-        var CmbTypeprocesa = Ext.getCmp(prototype.id + '-CmbTypeprocesa').getValue();
+        var txtFilterDateFrom = Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue();
+        var txtFilterDateTo = Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue();
+        var CmbTypeprocesa = Ext.getCmp(prototype.id + '-cmbProctypeSettl').getValue();
         var cmbFecFiltro = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
-
-        if (Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()) !== '' &&
-                Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()) !== '') {
-            if (this.compareDate(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue(), Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue())) {
-                Ext.Msg.alert('.: PRAXIS :.', 'the starting date must be less than the end date');
-                return;
-            }
+        var txtUser = Ext.getCmp(prototype.id + '-txtUser').getValue();
+        var Cmbstatus = Ext.getCmp(prototype.id + '-Cmbstatus').getValue();
+        if (cmbFecFiltro === '3') {
+            me.beanEXCEL.IN_OPTION = cmbFecFiltro;
+            me.beanEXCEL.IN_TYPEREPORT = CmbTypeprocesa;
+            me.beanEXCEL.IN_DATETO = '';
+            me.beanEXCEL.IN_DATEFROM = '';
+            me.beanEXCEL.IN_USER = txtUser;
+            me.beanEXCEL.IN_STATUS = Cmbstatus;
+        } else {
+            me.beanEXCEL.IN_OPTION = cmbFecFiltro;
+            me.beanEXCEL.IN_TYPEREPORT = CmbTypeprocesa;
+            me.beanEXCEL.IN_DATETO = txtFilterDateTo;
+            me.beanEXCEL.IN_DATEFROM = txtFilterDateFrom;
+            me.beanEXCEL.IN_USER = '';
+            me.beanEXCEL.IN_STATUS = Cmbstatus;
         }
-        me.beanEXCEL.IN_OPTION = cmbFecFiltro;
-        me.beanEXCEL.IN_TYPEPROCES = CmbTypeprocesa;
-        me.beanEXCEL.IN_DATETO = txtFilterDateTo;
-        me.beanEXCEL.IN_DATEFROM = txtFilterDateFrom;
 
         Ext.Msg.show({
             title: '.:PRAXIS:.',
@@ -466,7 +484,7 @@ Ext.define('Ext.Praxis.controller.payments.MaintenanceAnalysts.MaintenanceAnalys
     },
     onPagingBeforeChange01: function (obj, page, opts) {
         var me = this;
-        obj.store.proxy.extraParams = me.beanTM;
+        obj.store.proxy.extraParams = me.beanTMP;
     },
     exportFiles: function (_path) {
         Ext.Msg.show({
@@ -502,10 +520,13 @@ Ext.define('Ext.Praxis.controller.payments.MaintenanceAnalysts.MaintenanceAnalys
         }
     },
     btnClear_click: function (obj, e) {
-        Ext.getCmp(prototype.id + '-CmbTypeprocesa').setValue('');
-        Ext.getCmp(prototype.id + '-txtFilterDateTo').setValue('');
         Ext.getCmp(prototype.id + '-txtFilterDateFrom').setValue('');
+        Ext.getCmp(prototype.id + '-txtFilterDateTo').setValue('');
+        Ext.getCmp(prototype.id + '-cmbProctypeSettl').setValue('');
         Ext.getCmp(prototype.id + '-cmbFecFiltro').setValue('1');
+        Ext.getCmp(prototype.id + '-txtUser').setValue('ALL');
+        Ext.getCmp(prototype.id + '-Cmbstatus').setValue('');
+        Ext.getCmp(prototype.id + '-gridDataMain').getStore().removeAll(); 
     },
     btnFilter_click: function (obj) {
         var option = Ext.getCmp(prototype.id + '-contFilter');
@@ -627,7 +648,7 @@ Ext.define('Ext.Praxis.controller.payments.MaintenanceAnalysts.MaintenanceAnalys
                 rec: rec,
                 instancia: me,
                 panel: me.panelActual,
-                data:this.procesadores
+                data: this.procesadores
             }
         }).show();
     },

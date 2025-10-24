@@ -9,11 +9,22 @@ Ext.define('Ext.Praxis.view.payments.MaintenanceAnalystsForm.Options', {
     items: [
         {
             xtype: 'panel',
-            id: prototype.id + '-boxPaginacion',
-            hidden: false,
-            width: prototype.widthContenedor,
+            layout: 'hbox',
+            id: prototype.id + '-pagi12',
             border: false,
+            defaults: {
+                style: 'padding: 4px; margin: 1px;'
+            },
             items: [
+                {
+                    xtype: 'checkbox',
+                    id: prototype.id + '-pagination',
+                    boxLabel: 'Pagination?',
+                    checked: true,
+                    listeners: {
+                        change: 'onPaginationChkChange'
+                    }
+                },
                 {
                     xtype: 'Paginator',
                     id: prototype.id + '-pagginator-01',
