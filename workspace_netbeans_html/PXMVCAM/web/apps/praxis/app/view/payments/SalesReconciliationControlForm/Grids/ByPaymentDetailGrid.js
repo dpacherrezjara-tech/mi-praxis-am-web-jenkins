@@ -90,6 +90,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                     return value;
                 }
             },
+            {text: 'Iata', dataIndex: 'iata', width: 80},
             {
                 text: 'Status<br>Settl. VS Sales', dataIndex: 'stval', width: 150, autoSizeColumn: true,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {

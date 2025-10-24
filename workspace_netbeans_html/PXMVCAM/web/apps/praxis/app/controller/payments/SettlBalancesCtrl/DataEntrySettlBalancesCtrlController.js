@@ -83,14 +83,14 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.DataEntrySettlBalan
         const stval = me.ticketData.STVAL;
 //        console.log(me.ticketData);
 
-        if (stval === '4') {
-            updBtbn.show();
-            radioGroup.show();
-        } else {
-//            console.log('Ready');
-            radioGroup.hide();
-            updBtbn.hide();
-        }
+//        if (stval === '4') {
+//            updBtbn.show();
+//            radioGroup.show();
+//        } else {
+////            console.log('Ready');
+//            radioGroup.hide();
+//            updBtbn.hide();
+//        }
     },
 
     onCancelClick: function () {

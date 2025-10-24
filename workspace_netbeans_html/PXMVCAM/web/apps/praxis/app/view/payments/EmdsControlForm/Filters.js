@@ -17,7 +17,7 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Filters', {
                 align: 'center'
             },
             items: [
-                //<editor-fold defaultstate="collapsed" desc="Summary">
+                //<editor-fold defaultstate="collapsed" desc="Filters">
                 {
                     xtype: 'form',
                     border: false,
@@ -123,7 +123,7 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Filters', {
                                     width: 150,
                                     name: 'IN_PNR_VENTA',
                                     maxLength: 6, // Límite máximo de caracteres
-                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    maskRe: /[a-zA-Z0-9]/, // Expresión regular para permitir solo números
                                     enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
@@ -136,7 +136,7 @@ Ext.define('Ext.Praxis.view.payments.EmdsControlForm.Filters', {
                                     width: 250,
                                     name: 'IN_PNR_LIQUIDACION',
                                     maxLength: 6, // Límite máximo de caracteres
-                                    maskRe: /[0-9]/, // Expresión regular para permitir solo números
+                                    maskRe: /[a-zA-Z0-9]/, // Expresión regular para permitir solo números
                                     enforceMaxLength: true, // Aplicar la longitud máxima de caracteres
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'

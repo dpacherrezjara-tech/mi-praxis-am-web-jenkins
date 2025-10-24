@@ -193,7 +193,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                         },
                     ]
                 },
-                //</editor-fold>zm
+                //</editor-fold>
                 //<editor-fold defaultstate="collapsed" desc="Accounting Information">
                 {
                     title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Accounting Information</span>',
@@ -1207,7 +1207,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         text: 'Void', width: 45, dataIndex: 'fvoid'
                                                     },
                                                     {
-                                                        text: 'Agent', dataIndex: 'sagent', width: 75
+                                                        text: 'Iata', dataIndex: 'sagent', width: 75
                                                     },
                                                     {
                                                         sortable: false,
@@ -1403,7 +1403,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         text: 'Void', width: 45, dataIndex: 'fvoid'
                                                     },
                                                     {
-                                                        text: 'Agent', dataIndex: 'sagent', width: 75
+                                                        text: 'Iata', dataIndex: 'sagent', width: 75
                                                     },
                                                     {
                                                         sortable: false,
@@ -1554,7 +1554,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                     },
                                                     { text: 'Corrl', width: 45, dataIndex: 'CORRL' },
                                                     { text: 'Void', width: 40, dataIndex: 'FVOID' },
-                                                    { text: 'Agent', dataIndex: 'SAGENT', width: 80 },
+                                                    { text: 'Iata', dataIndex: 'SAGENT', width: 80 },
                                                     
                                                     { text: 'Current<br>Balance', dataIndex: 'EXISTS_BALANCE', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {

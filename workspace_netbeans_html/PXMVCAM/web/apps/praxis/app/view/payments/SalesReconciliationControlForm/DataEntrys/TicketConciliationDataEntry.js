@@ -135,7 +135,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             labelWidth: 80
                                         },
                                         {
-                                            fieldLabel: 'Agent',
+                                            fieldLabel: 'Iata',
                                             name: 'A4496AGENT',
                                             width: 140,
                                             labelWidth: 60
@@ -401,7 +401,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                             labelWidth: 70
                                         },
                                         {
-                                            fieldLabel: 'Agent',
+                                            fieldLabel: 'Iata',
                                             name: 'SAGENT',
                                             width: 130,
                                             labelWidth: 55
