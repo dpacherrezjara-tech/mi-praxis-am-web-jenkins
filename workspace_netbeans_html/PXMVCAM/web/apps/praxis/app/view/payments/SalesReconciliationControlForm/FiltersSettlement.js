@@ -274,7 +274,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                                             ['M', 'Match Multi-Payment'],
                                             ['0', 'Stand By'],
                                             ['1', 'Match'],
-                                            ['2', 'Sales Without Settl.'],
+                                            ['3', 'Settl. Without Sales'],
                                             ['4', 'Match Partial'],
                                             ['5', 'Match Manual'],
 //                                    ['6', 'Match Forced'],
@@ -568,7 +568,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                                                     ['M', 'Match Multi-Payment'],
                                                     ['0', 'Stand By'],
                                                     ['1', 'Match'],
-                                                    ['2', 'Sales Without Settl.'],
+                                                    ['3', 'Settl. Without Sales'],
                                                     ['4', 'Match Partial'],
                                                     ['5', 'Match Manual'],
                                                     ['8', 'Match Transactional']

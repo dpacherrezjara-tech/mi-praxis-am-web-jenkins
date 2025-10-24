@@ -77,6 +77,9 @@
 .prx-icon-image-log {
   background-image: url("../img/botones/log.png");
 }
+.prx-icon-image-list-error {
+  background-image: url("../img/botones/list-error.png");
+}
 .prx-icon-image-trash {
   background-image: url("../img/icon/trash.png");
 }

@@ -722,12 +722,73 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
-                                },
+                                }
+
                             ],
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5 1 5 17',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items: [
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'DEUNA Processor', // INSUMO
+                                    name: 'IN_PROCINSUMO',
+                                    id: prototype.id + '-cmbProcessorInsumo',
+                                    // store: Ext.create('Ext.data.SimpleStore', {
+                                    //     fields: ['CODE', 'DESCRIPTION'],
+                                    //     data: [
+                                    //         ['', 'All'],
+                                    //         ['aplazo', 'Aplazo'],
+                                    //         ['bbva', 'Bbva'],
+                                    //         ['kueski', 'Kueski'],
+                                    //         ['mercadopago', 'Mercado Pago'],
+                                    //         ['mercadopago_wallet', 'Mercadopago Wallet'],
+                                    //         ['paypal_wallet', 'Paypal Wallet'],
+                                    //         ['worldpay', 'Worldpay'],
+                                    //     ]
+                                    // }),
+                                    labelWidth: 100,
+                                    width: 250,
+                                    displayField: 'DESCRIPTION',
+                                    valueField: 'CODE',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Match Processor', //MATCH
+                                    name: 'IN_PROCMATCH',
+                                    id: prototype.id + '-cmbProcessorMatch',
+                                    // store: Ext.create('Ext.data.SimpleStore', {
+                                    //     fields: ['A4451KEY2', 'A4451DESC1'],
+                                    //     data: []
+                                    // }),
+                                    labelWidth: 110,
+                                    width: 280,
+                                    displayField: 'A4451DESC1',
+                                    valueField: 'A4451KEY2',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                }
+                            ]
                         }
+
                     ]
                 },
-                //</editor-fold>
+                        //</editor-fold>
             ]
         }
     ]

@@ -1260,7 +1260,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 .map(x => ({
                         CCUST: 139,
                         STVAL: '5',
-                        SCOUNTRY: obj.scountry,
+                        SCOUNTRY: x.scountry,
                         PMERCHID: obj.pmerchid,
                         SMERCHID: obj.smerchid,
                         PAYDATE: obj.paydate,
