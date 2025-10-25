@@ -492,6 +492,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     listeners: {
                                         change: function (checkbox, newValue) {}
                                     }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'User Assigned',
+                                    id: prototype.id + '-filterUserAssigned',
+                                    labelWidth: 90,
+                                    width: 160,
+                                    name: 'IN_USER_ASSIGNED',
+                                    maxLength: 10,
+                                    maskRe: /[a-zA-Z0-9]/,
+                                    enforceMaxLength: true,
                                 }
                             ]
                         },
