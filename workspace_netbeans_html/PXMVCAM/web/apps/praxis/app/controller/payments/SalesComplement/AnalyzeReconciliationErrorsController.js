@@ -24,47 +24,39 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.AnalyzeReconciliation
             const formData = form.getValues();
             const params = {
                 IN_CCUST: formData.IN_CCUST || '139',
-                IN_DATE_FROM: formData.IN_DATE_FROM,
-                IN_DATE_TO: formData.IN_DATE_TO,
-                IN_PLUSGRAID: formData.IN_PLUSGRAID || '',
-                IN_STATUS: formData.IN_STATUS || ''
+                IN_TYPE_DATE: 'PRDA',
+                IN_PRDA_FROM: formData.IN_DATE_FROM,
+                IN_PRDA_TO: formData.IN_DATE_TO,
+                IN_PNR: '',
+                TRANSACTID: formData.IN_PLUSGRAID || '',
+                IN_STATUS: formData.IN_STATUS || '',
+                IN_PROCTYPESQ: 'PLUSG00'
             };
 
-            console.log('Params for SQP05755:', params);
-
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05755', params);
+            console.log('Params for SQP05756:', params);
             
-            if (res.lstRs && res.lstRs.length > 0) {
-                const data = res.lstRs.at(0);
-                
-                // Crear store con los datos
-                const store = Ext.create('Ext.data.Store', {
-                    fields: [
-                        'PLUSGRAID', 'PRDA', 'MERCHID', 'COUNTRY', 'SDATE', 'PNR', 'EMDNUMBER',
-                        'SVFOP', 'STATUS', 'ERROR_CODE', 'ERROR_DESCRIPTION', 'RESOLUTION_DATE',
-                        'USER_RESOLVED', 'DAYS_PENDING', 'CREATED_DATE', 'UPDATED_DATE'
-                    ],
-                    data: data
-                });
+            const store = await global.callStorePaggin('PRAXISMP', 'SQP05756', params);
+            
+            console.log("store", store); 
 
-                grid.setStore(store);
+            grid.setStore(store);
+            
+            
+            // if (res.lstRs && res.lstRs.length > 0) {
+
+            //     const data = res.lstRs.at(0);
+            //     console.table(data);
+            //     grid.setStore(data);
                 
-                // Actualizar paging toolbar
-                const pagingToolbar = Ext.getCmp(prototype.idAnalyze + '-pagingToolbar');
-                if (pagingToolbar) {
-                    pagingToolbar.bindStore(store);
-                }
+            //     // Actualizar paging toolbar
+            //     const pagingToolbar = Ext.getCmp(prototype.idAnalyze + '-pagingToolbar');
+            //     if (pagingToolbar) {
+            //         pagingToolbar.bindStore(store);
+            //     }
                 
-            } else {
-                global.Msg({msg: 'No data found'});
-                grid.setStore(Ext.create('Ext.data.Store', {
-                    fields: [
-                        'PLUSGRAID', 'PRDA', 'MERCHID', 'COUNTRY', 'SDATE', 'PNR', 'EMDNUMBER',
-                        'SVFOP', 'STATUS', 'ERROR_CODE', 'ERROR_DESCRIPTION', 'RESOLUTION_DATE',
-                        'USER_RESOLVED', 'DAYS_PENDING', 'CREATED_DATE', 'UPDATED_DATE'
-                    ]
-                }));
-            }
+            // } else {
+            //     global.Msg({msg: 'No data found'});
+            // }
             
         } catch (error) {
             console.error('Error loading data:', error);

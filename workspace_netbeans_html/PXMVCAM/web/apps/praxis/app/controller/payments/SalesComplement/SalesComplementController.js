@@ -13,15 +13,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
         try {
             // filters Plusgrade
             const me = this;
-            const res = await global.callStoreGet('PRAXISMP','SQP05016');
-            // console.log(res.lstRs);
-            const dataCountry = res.lstRs[0] || {};
-            const dataCerror = res.lstRs[1] || {};
-            const dataStval = res.lstRs[2] || {};
-            const dataProcessorInsumo = res.lstRs[3] || {};
-            const dataProcessorMatch = res.lstRs[4] || {};
+            const res = await global.callStoreGet('PRAXISMP','SQP05016',{IN_CCUST:'139'});
 
+            const { lstVals, lstRs } = res; 
             
+            const dataCountry = lstRs[0] || {};
+            const dataCerror = lstRs[1] || {};
+            const dataStval = lstRs[2] || {};
+            const dataProcessorInsumo = lstRs[3] || {};
+            const dataProcessorMatch = lstRs[4] || {};
+            const quantityAnalyzePending = lstVals.IO_QUANITY_ANALYZE_PENDING ;
+
             // console.log(dataCountry);
             // console.log(dataCerror);
 
@@ -57,8 +59,27 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             filterProcessorMatch.setValue('');
             filterProcessorMatch.resumeEvents();
         
+            me.changeAnalyzePending(quantityAnalyzePending);
+
         } catch (e) {
             console.log(e);
+        }
+    },
+    changeAnalyzePending: function(quantity = 0){
+        const optionAnalyze = Ext.getCmp(prototype.id + '-btnAnalyzeReconciliationErrors');
+        if (optionAnalyze) {
+
+            const originalText = optionAnalyze.defaultText || '';
+            if (!optionAnalyze.defaultText) {
+                optionAnalyze.defaultText = originalText;
+            }
+            if (quantity > 0) {
+                optionAnalyze.setText(
+                    originalText + ` <span style="color: red; font-weight: bold;">(${quantity})</span>`
+                );
+            } else {
+                optionAnalyze.setText(originalText);
+            }
         }
     },
     createComboStore: async function ( {data, valueField, displayField, addElementAll = true}) {
