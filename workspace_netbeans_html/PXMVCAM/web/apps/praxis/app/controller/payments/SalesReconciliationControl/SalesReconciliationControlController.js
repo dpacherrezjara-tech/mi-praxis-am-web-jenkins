@@ -131,6 +131,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.showProcessBtn(me.users);
             me.showProductionBtn(me.users);
             me.showAddTicketBtn(me.users);
+            
+            // Establecer usuario por defecto en el campo IN_USER_ASSIGNED
+            me.setDefaultUser();
 
         }
         
@@ -194,6 +197,27 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             }
         } else {
             btn.hide();
+        }
+    },
+    setDefaultUser: function () {
+        const me = this;
+        try {
+            // Obtener el usuario del elemento #menuUser
+            const menuUserElement = document.getElementById('menuUser');
+            if (menuUserElement) {
+                const currentUser = menuUserElement.textContent.trim();
+                
+                // Establecer usuario default
+                const userAssignedField = Ext.getCmp(prototype.id + '-filterUserAssigned');
+                if (userAssignedField) {
+                    userAssignedField.setValue(currentUser);
+                    console.log('Usuario establecido en IN_USER_ASSIGNED:', currentUser);
+                }
+            } else {
+                console.warn('No se encontró el elemento #menuUser');
+            }
+        } catch (error) {
+            console.error('Error al establecer usuario por defecto:', error);
         }
     },
     //</editor-fold>
@@ -451,6 +475,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         } else {
             filtroFil.show();
             filtroSumm.hide();
+            // Establecer usuario por defecto cuando se cambie a Browser
+            this.setDefaultUser();
         }
     },
     onChangeFiltersBT: function (obj) {
