@@ -9,6 +9,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.AnalyzeReconciliation
 
     afterRender: function () {
         const me = this;
+        // Configurar visibilidad inicial de campos de fecha
+        me.updateDateFieldsVisibility();
         // Cargar datos iniciales
         me.loadData();
     },
@@ -24,40 +26,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.AnalyzeReconciliation
             const formData = form.getValues();
             const params = {
                 IN_CCUST: formData.IN_CCUST || '139',
-                IN_TYPE_DATE: 'PRDA',
-                IN_PRDA_FROM: formData.IN_DATE_FROM,
-                IN_PRDA_TO: formData.IN_DATE_TO,
-                IN_PNR: '',
-                TRANSACTID: formData.IN_PLUSGRAID || '',
+                IN_TYPE_DATE: formData.IN_TYPE_DATE || '',
+                IN_PRDA_FROM: formData.IN_DATE_FROM || '',
+                IN_PRDA_TO: formData.IN_DATE_TO || '',
+                IN_PNR: formData.IN_PNR || '',
+                IN_TRANSACTID: formData.IN_PLUSGRAID || '',
                 IN_STATUS: formData.IN_STATUS || '',
                 IN_PROCTYPESQ: 'PLUSG00'
             };
-
-            console.log('Params for SQP05756:', params);
-            
+ 
             const store = await global.callStorePaggin('PRAXISMP', 'SQP05756', params);
             
             console.log("store", store); 
 
             grid.setStore(store);
             
-            
-            // if (res.lstRs && res.lstRs.length > 0) {
-
-            //     const data = res.lstRs.at(0);
-            //     console.table(data);
-            //     grid.setStore(data);
-                
-            //     // Actualizar paging toolbar
-            //     const pagingToolbar = Ext.getCmp(prototype.idAnalyze + '-pagingToolbar');
-            //     if (pagingToolbar) {
-            //         pagingToolbar.bindStore(store);
-            //     }
-                
-            // } else {
-            //     global.Msg({msg: 'No data found'});
-            // }
-            
+             
         } catch (error) {
             console.error('Error loading data:', error);
             global.Msg({msg: 'Error loading data'});
@@ -87,6 +71,41 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.AnalyzeReconciliation
         // Se puede agregar lógica adicional si es necesario
     },
 
+    updateDateFieldsVisibility: function () {
+        const filterTypeDate = Ext.getCmp(prototype.idAnalyze + '-filterTypeDate');
+        const filterDateFrom = Ext.getCmp(prototype.idAnalyze + '-filterDateFrom');
+        const filterDateTo = Ext.getCmp(prototype.idAnalyze + '-filterDateTo');
+        
+        if (filterTypeDate && filterDateFrom && filterDateTo) {
+            const currentValue = filterTypeDate.getValue();
+            if (currentValue === '' || currentValue === null) {
+                // Si el valor inicial es "All", ocultar los campos
+                filterDateFrom.hide();
+                filterDateTo.hide();
+            } else {
+                // Si tiene un valor, mostrar los campos
+                filterDateFrom.show();
+                filterDateTo.show();
+            }
+        }
+    },
+
+    onFilterTypeDateChange: function (field, newValue, oldValue) {
+        this.updateDateFieldsVisibility();
+        // const filterDateFrom = Ext.getCmp(prototype.idAnalyze + '-filterDateFrom');
+        // const filterDateTo = Ext.getCmp(prototype.idAnalyze + '-filterDateTo');
+        
+        // if (newValue === '' || newValue === null) {
+        //     // Si se selecciona "All", ocultar los campos de fecha
+        //     if (filterDateFrom) filterDateFrom.hide();
+        //     if (filterDateTo) filterDateTo.hide();
+        // } else {
+        //     // Si se selecciona un tipo de fecha específico, mostrar los campos
+        //     if (filterDateFrom) filterDateFrom.show();
+        //     if (filterDateTo) filterDateTo.show();
+        // }
+    },
+
     onEnterKeyPress: function (field, e) {
         if (e.getKey() === e.ENTER) {
             this.onClickSearch();
@@ -114,16 +133,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.AnalyzeReconciliation
             IN_STATUS: ''
         });
         
-        // Limpiar grilla
-        grid.setStore(Ext.create('Ext.data.Store', {
-            fields: [
-                'PLUSGRAID', 'PRDA', 'MERCHID', 'COUNTRY', 'SDATE', 'PNR', 'EMDNUMBER',
-                'SVFOP', 'STATUS', 'ERROR_CODE', 'ERROR_DESCRIPTION', 'RESOLUTION_DATE',
-                'USER_RESOLVED', 'DAYS_PENDING', 'CREATED_DATE', 'UPDATED_DATE'
-            ]
-        }));
+        // Actualizar visibilidad de campos de fecha después de limpiar
+        this.updateDateFieldsVisibility();
     },
-
     onClickExportExcel: function () {
         const me = this;
         const notifier = new AWN();
@@ -136,7 +148,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.AnalyzeReconciliation
             null
         );
     },
-
     downloadExcel: async function () {
         const me = this;
         const view = me.view;
@@ -146,48 +157,38 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.AnalyzeReconciliation
         
         try {
             const formData = form.getValues();
+            
+            // Usar los mismos parámetros que en loadData
             const params = {
                 IN_CCUST: formData.IN_CCUST || '139',
-                IN_DATE_FROM: formData.IN_DATE_FROM,
-                IN_DATE_TO: formData.IN_DATE_TO,
-                IN_PLUSGRAID: formData.IN_PLUSGRAID || '',
-                IN_STATUS: formData.IN_STATUS || ''
+                IN_TYPE_DATE: formData.IN_TYPE_DATE || '',
+                IN_PRDA_FROM: formData.IN_DATE_FROM || '',
+                IN_PRDA_TO: formData.IN_DATE_TO || '',
+                IN_PNR: formData.IN_PNR || '',
+                IN_TRANSACTID: formData.IN_PLUSGRAID || '',
+                IN_STATUS: formData.IN_STATUS || '',
+                IN_PROCTYPESQ: 'PLUSG00'
             };
 
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05755', params);
+            // Obtener todos los datos sin paginación
+            const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05756', params);
             
-            if (res.lstRs && res.lstRs.length > 0) {
-                const data = res.lstRs.at(0);
-                
-                const statusMap = {
-                    'R': 'Resolved',
-                    'P': 'Pending'
-                };
-                
-                const excelData = data.map(item => ({
-                    'Plusgrade ID': item.PLUSGRAID,
-                    'Processing Date': item.PRDA,
-                    'Merchant ID': item.MERCHID,
-                    'Country': item.COUNTRY,
-                    'Sale Date': item.SDATE,
-                    'PNR': item.PNR,
-                    'EMD Number': item.EMDNUMBER,
-                    'Amount': item.SVFOP,
-                    'Status': statusMap[item.STATUS] || item.STATUS,
-                    'Error Code': item.ERROR_CODE,
-                    'Error Description': item.ERROR_DESCRIPTION,
-                    'Resolution Date': item.RESOLUTION_DATE,
-                    'User Resolved': item.USER_RESOLVED,
-                    'Days Pending': item.DAYS_PENDING,
-                    'Created Date': item.CREATED_DATE,
-                    'Updated Date': item.UPDATED_DATE
-                }));
-                
-                await global.writeExcelFromJson(excelData, 'Analyze Reconciliation Errors');
-                
-            } else {
-                global.Msg({msg: 'No data to export'});
-            }
+            let excelData = res.map((item, index) => ({
+                 'RN': index + 1,
+                 'Plusgrade ID': item.TRANSACTID || '',
+                 'Processing Date': item.PRDA || '',
+                 'PNR': item.PNR || '',
+                 'Amount': item.AMOUNT || 0,
+                 'Status': item.STATUS_DESCRIPTION || '',
+                 'Error Code': item.ACERROR || '',
+                 'Error Description': item.ERROR_DESCRIPTION || '',
+                 'Created Date': item.FEAN || '',
+                 'Solved By': item.SOLVED_BY || '',
+                 'Solved Date': item.FEUP || '',
+                 'User Solved': item.USUP || ''
+             }));
+
+            await global.writeExcelFromJson(excelData, 'Analyze Reconciliation Errors');
             
         } catch (error) {
             console.error('Error exporting Excel:', error);

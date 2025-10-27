@@ -10,9 +10,9 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.AnalyzeRecon
     title: 'Analyze Reconciliation Errors',
     header: true,
     width: 1200,
-    height: 500,
+    height: 600,
     maxHeight: 600,
-    resizable: true,
+    resizable: false,
     scrollable: true,
     layout: 'fit',
     modal: true,
@@ -37,7 +37,8 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.AnalyzeRecon
                 padding: '5 5 5 5',
                 defaults: {
                     margin: '2 5 2 5',
-                    labelStyle: 'text-align:right;font-weight: bolder;'
+                    labelStyle: 'text-align:right;font-weight: bolder;',
+                    fieldStyle: 'text-align:center;',
                 },
                 items: [
                     {
@@ -46,9 +47,36 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.AnalyzeRecon
                         value: '139'
                     },
                     {
+                        xtype: 'combobox',
+                        fieldLabel: 'Search By Date',
+                        name: 'IN_TYPE_DATE',
+                        id: prototype.idAnalyze + '-filterTypeDate',
+                        labelWidth: 100,
+                        width: 200,
+                        store: Ext.create('Ext.data.SimpleStore', {
+                            fields: ['code', 'name'],
+                            data: [
+                                ['', 'All'],
+                                ['PRDA', 'Processing'],
+                                ['SDATE', 'Sale'],
+                                ['FEAN', 'Analyze'],
+                                ['FEUP', 'Solved'],
+                            ]
+                        }),
+                        displayField: 'name',
+                        valueField: 'code',
+                        queryMode: 'local',
+                        editable: false,
+                        value: '',
+                        listeners: {
+                            change: 'onFilterTypeDateChange'
+                        }
+                    },
+                    {
                         xtype: 'datefield',
                         fieldLabel: 'Date From',
                         name: 'IN_DATE_FROM',
+                        id: prototype.idAnalyze + '-filterDateFrom',
                         format: 'Ymd',
                         labelWidth: 80,
                         width: 160,
@@ -62,8 +90,9 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.AnalyzeRecon
                         xtype: 'datefield',
                         fieldLabel: 'Date To',
                         name: 'IN_DATE_TO',
+                        id: prototype.idAnalyze + '-filterDateTo',
                         format: 'Ymd',
-                        labelWidth: 70,
+                        labelWidth: 80,
                         width: 160,
                         value: new Date(),
                         editable: false,
@@ -76,7 +105,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.AnalyzeRecon
                         fieldLabel: 'Plusgrade ID',
                         name: 'IN_PLUSGRAID',
                         labelWidth: 100,
-                        width: 250,
+                        width: 180,
                         maxLength: 8,
                         maskRe: /[0-9]/,
                         enforceMaxLength: true,
@@ -88,10 +117,10 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.AnalyzeRecon
                         xtype: 'textfield',
                         fieldLabel: 'PNR',
                         name: 'IN_PNR',
-                        labelWidth: 60,
-                        width: 120,
+                        labelWidth: 40,
+                        width: 100,
                         maxLength: 6,
-                        maskRe: /[A-Z0-9]/,
+                        maskRe: /[A-Za-z0-9]/,
                         enforceMaxLength: true,
                         listeners: {
                             specialkey: 'onEnterKeyPress'
@@ -122,31 +151,28 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.AnalyzeRecon
                     },
                     {
                         xtype: 'button',
-                        text: 'Search',
+                        tooltip: 'Search',
                         iconCls: 'prx-icon-search',
-                        width: 100,
                         listeners: {
                             click: 'onClickSearch'
                         }
                     },
-                    // {
-                    //     xtype: 'button',
-                    //     text: 'Clear',
-                    //     iconCls: 'prx-icon-clear',
-                    //     width: 100,
-                    //     listeners: {
-                    //         click: 'onClickClear'
-                    //     }
-                    // },
-                    // {
-                    //     xtype: 'button',
-                    //     text: 'Export Excel',
-                    //     iconCls: 'prx-icon-excel',
-                    //     width: 120,
-                    //     listeners: {
-                    //         click: 'onClickExportExcel'
-                    //     }
-                    // }
+                    {
+                        xtype: 'button',
+                        tooltip: 'Clear',
+                        iconCls: 'prx-icon-clear',
+                        listeners: {
+                            click: 'onClickClear'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        tooltip: 'Export to Excel',
+                        iconCls: 'prx-icon-excel',
+                        listeners: {
+                            click: 'onClickExportExcel'
+                        }
+                    }
                 ]
             }
         ]
@@ -171,23 +197,30 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.AnalyzeRecon
                 },
                 items: [
                     {
+                        text: 'RN',
+                        locked: true,
+                        dataIndex: 'RN',
+                        xtype: 'rownumberer',
+                        width: 40
+                    },
+                    {
                         text: 'Plusgrade ID',
                         dataIndex: 'TRANSACTID',
-                        width: 120,
+                        width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "background-color:#FCF6DC;font-weight:bold;";
                             return value;
                         }
                     },
                     {
-                        text: 'Processing Date',
+                        text: 'Processing<br>Date',
                         dataIndex: 'PRDA',
-                        width: 120
+                        width: 100
                     },
                     {
                         text: 'PNR',
                         dataIndex: 'PNR',
-                        width: 100
+                        width: 80
                     },
                     {
                         text: 'Amount',
@@ -212,48 +245,52 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.AnalyzeRecon
                         }
                     },
                     {
-                        text: 'Error Code',
-                        dataIndex: 'ACERROR',
-                        width: 100
+                        text: 'Error',
+                        defaults: {
+                            menuDisabled: true,
+                            sortable: false,
+                            align: 'center'
+                        },
+                        columns: [
+                            {
+                                text: 'Code',
+                                dataIndex: 'ACERROR',
+                                width: 60
+                            },
+                            {
+                                text: 'Description',
+                                dataIndex: 'ERROR_DESCRIPTION',
+                                width: 260,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    if (value && value.length > 30) {
+                                        metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
+                                        return value.substring(0, 30) + '...';
+                                    }
+                                    return value;
+                                }
+                            },
+                        ]
                     },
                     {
-                        text: 'Error Description',
-                        dataIndex: 'ERROR_DESCRIPTION',
-                        width: 200,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            if (value && value.length > 30) {
-                                metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
-                                return value.substring(0, 30) + '...';
-                            }
-                            return value;
-                        }
-                    },{
-                        text: 'Created Date',
+                        text: 'Created<br>Date',
                         dataIndex: 'FEAN',
-                        width: 130
+                        width: 80
                     },
                     {
-                        text: 'Resolution Date',
+                        text: 'Solved<br>By',
+                        dataIndex: 'SOLVED_BY',
+                        width: 80
+                    },
+                    {
+                        text: 'Solved<br>Date',
                         dataIndex: 'FEUP',
-                        width: 130
+                        width: 80
                     },
                     {
-                        text: 'User Resolved',
+                        text: 'User<br>Solved',
                         dataIndex: 'USUP',
-                        width: 120
+                        width: 80
                     },
-                    // {
-                    //     text: 'Days Pending',
-                    //     dataIndex: 'DAYS_PENDING',
-                    //     width: 120,
-                    //     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    //         if (value > 7) {
-                    //             metaData.style = "text-align:center;font-weight:bold;background-color:#FFA07A;color:#000;";
-                    //         }
-                    //         return value;
-                    //     }
-                    // },
-                    
                 ]
             },
             bbar: {
