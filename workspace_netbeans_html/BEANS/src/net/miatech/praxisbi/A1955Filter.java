@@ -45,6 +45,8 @@ public class A1955Filter extends A1955 {
     public String IN_SEQ = "";
     public String IN_SEQREG = "";
     
+    public String IN_LOTEREG = "";
+    
     //Campos actualizar
     public String IN_FECHA_CONTABLE = "";
     public String IN_COMENTARIO = "";
