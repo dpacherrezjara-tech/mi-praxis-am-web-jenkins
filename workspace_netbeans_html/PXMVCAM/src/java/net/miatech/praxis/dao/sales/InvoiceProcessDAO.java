@@ -122,6 +122,7 @@ public class InvoiceProcessDAO {
                 objRtn.A1955FUENT = rst.getString("A1956FUENT").trim();
                 objRtn.IN_SEQ = rst.getString("A1956LIB").trim();
                 objRtn.IN_SEQREG = rst.getString("A1956NFILE").trim();
+                objRtn.IN_LOTEREG = rst.getString("A1956RUTA").trim();
                 
                 objRtn.page.PAGNUM = filter.page.PAGNUM/filter.page.PAGROW + 1;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -130,7 +131,10 @@ public class InvoiceProcessDAO {
 
                 lstRtn.add(objRtn);
             }        
-         }finally {
+         }catch(Exception ex){
+             String str = ex.getMessage();
+        }
+        finally {
             setClose();
         }
          
@@ -140,7 +144,7 @@ public class InvoiceProcessDAO {
     public String accountMaintance(A1955Filter filter, String strOption) throws SQLException, Exception {
         String STR_RESULT = "";
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP03890(?,?,?,?,?,?,?,?,?,?,?,?)}"; 
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP03890(?,?,?,?,?,?,?,?,?,?,?,?,?)}"; 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  
             cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
@@ -156,6 +160,7 @@ public class InvoiceProcessDAO {
             cs.setString(10, filter.IN_ENVIO); // TRUE = ONLY TEXT / FALSE = COMPLETED PROCESS
             cs.setString(11, filter.IN_SEQ);
             cs.setString(12, filter.IN_SEQREG);
+            cs.setString(13, filter.IN_LOTEREG);
             cs.execute();
             
             rst = cs.getResultSet();
@@ -163,7 +168,10 @@ public class InvoiceProcessDAO {
                 STR_RESULT = rst.getString("VMESSAGE");
             }
 //            try { cs.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }
-        } finally {
+        }catch(Exception ex){
+             String str = ex.getMessage();
+        }
+        finally {
             setClose();
         }
 
