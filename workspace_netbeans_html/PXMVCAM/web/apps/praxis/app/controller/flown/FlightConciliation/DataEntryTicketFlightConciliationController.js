@@ -100,13 +100,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
                 
                 var menuUser = document.getElementById('menuUser').innerText;
 
-                if (menuUser !== "LAGREDA") {
-                    if (this.statusCont === 'Contabilizado.'  || this.statusCont === 'Contabilizado') {
+                if (this.statusCont === 'Contabilizado.' || this.statusCont === 'Contabilizado') {
                     Ext.getCmp(prototype.idDET+'-btn-update').hide();
-                    } else {
-                        Ext.getCmp(prototype.idDET+'-btn-update').show();
-                    }
-                    
                 }
                 
                 
