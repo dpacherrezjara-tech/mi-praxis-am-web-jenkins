@@ -50,78 +50,70 @@ Ext.define('Ext.Praxis.view.sales.OdvCitysForm.Filters', {
                                     value: '139'
                                 },
                                 {
-                                    xtype: 'textfield',
-                                    fieldLabel: 'Destination Code', //
-                                    labelWidth: 100,
-                                    width: 200,
-                                    name: 'IN_CATTO',
-                                    maxLength: 3, 
-//                                    maskRe: /[0-9]/,
-                                    enforceMaxLength: true, 
-                                    listeners: {
-                                        specialkey: 'onEnterKeyPress'
-                                    }
+                                    xtype: 'label',
+                                    html: '<strong style="color:#000;">Search By: </strong>',
+                                    align: 'center'
                                 },
+                                {xtype: 'tbspacer', width: 8},
                                 {
-                                    xtype: 'textfield',
-                                    fieldLabel: 'City Code', //
-                                    labelWidth: 60,
-                                    width: 160,
-                                    name: 'IN_CCITY',
-                                    maxLength: 3, 
-//                                    maskRe: /[0-9]/,
-                                    enforceMaxLength: true, 
-                                    listeners: {
-                                        specialkey: 'onEnterKeyPress'
-                                    }
-                                },
-                                {
-                                    xtype: 'combobox',
-                                    fieldLabel: 'Country Code',
-                                    name: 'IN_PAIS',
-                                    store: Ext.create('Ext.data.SimpleStore', {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cbxFiltro',
+                                    name: 'IN_OPTION',
+                                    store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
-                                            ['EG', 'ADM'],
-                                            ['J', 'Adjustment']
+                                            ['1', 'Destination'],
+                                            ['2', 'City'],
+                                            ['3', 'Country'],
+                                            ['4', 'Zone'],
+                                            ['5', 'Region'],
+                                            ['6', 'Sub Region']
                                         ]
                                     }),
-                                    labelWidth: 100,
-                                    width: 260,
-                                    displayField: 'name',
-                                    valueField: 'code',
                                     queryMode: 'local',
-                                    editable: false,
-                                    value: ''
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    editable: true,
+                                    width: 120,
+                                    value: '',
+                                    typeAhead: true,
+                                    valueField: 'code', displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    listeners: {
+                                        change: 'onChangeCombo'
+                                    }
                                 },
                                 {
                                     xtype: 'textfield',
-                                    fieldLabel: 'Zone', //
+                                    fieldLabel: 'Code',
                                     labelWidth: 60,
-                                    width: 160,
-                                    name: 'IN_ZONE',
-                                    maxLength: 3, 
-//                                    maskRe: /[0-9]/,
-                                    enforceMaxLength: true, 
+                                    width: 100,
+                                    id: prototype.id + '-txtCode',
+                                    name: 'IN_CODE',
+                                    maxLength: 3,
+                                    enforceMaxLength: true,
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
                                 },
                                 {
                                     xtype: 'textfield',
-                                    fieldLabel: 'Region', //
+                                    fieldLabel: 'Name',
                                     labelWidth: 60,
-                                    width: 160,
-                                    name: 'IN_CREGI',
-                                    maxLength: 3, 
-//                                    maskRe: /[0-9]/,
-                                    enforceMaxLength: true, 
+                                    width: 300,
+                                    id: prototype.id + '-txtName',
+                                    name: 'IN_NAME',
+                                    maxLength: 50,
+                                    enforceMaxLength: true,
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
                                 },
-                                
                             ]
                         }
                     ]

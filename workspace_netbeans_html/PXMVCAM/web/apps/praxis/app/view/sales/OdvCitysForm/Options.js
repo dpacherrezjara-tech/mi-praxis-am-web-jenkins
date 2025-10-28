@@ -25,6 +25,15 @@ Ext.define('Ext.Praxis.view.sales.OdvCitysForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnAdd',
+                            iconCls: 'prx-icon-add',
+                            tooltip: 'New',
+                            listeners: {
+                                click: 'onAddOdvCitys'
+                            }
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnFilter',
                             iconCls: 'prx-icon-filter',
                             tooltip: 'Display filter',

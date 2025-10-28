@@ -5,9 +5,10 @@ Ext.define('Ext.Praxis.view.sales.OdvCitysForm.Grids.OdvCitysFormGrid', {
         'Ext.Praxis.controller.sales.OdvCitys.OdvCitysGridController'
     ],
     controller: 'OdvCitysGridController',
+//    id: prototype.id + '-gridOdvCitys',
     minHeight: 200,
     height: 'auto',
-    width: 1700,
+    width: 1800,
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -29,68 +30,71 @@ Ext.define('Ext.Praxis.view.sales.OdvCitysForm.Grids.OdvCitysFormGrid', {
             {
                 text: 'Destination',
                 columns: [
-                    {text: 'Code', dataIndex: 'A2936CATTO', width: 80},
-                    {text: 'Name', dataIndex: 'A2936NATTO', width: 200},
+                    {text: 'Code', dataIndex: 'A2936CATTO', width: 50},
+                    {text: 'Name', dataIndex: 'A2936NATTO', width: 250 },
                 ]
             },
             {
                 text: 'City',
                 columns: [
-                    {text: 'Code', dataIndex: 'A2936CCITY', width: 70},
-                    {text: 'Name', dataIndex: 'A2936NCITY', width: 150},
+                    {text: 'Code', dataIndex: 'A2936CCITY', width: 50},
+                    {text: 'Name', dataIndex: 'A2936NCITY', width: 250},
                 ]
             },
             {
                 text: 'Country',
                 columns: [
-                    {text: 'Code', dataIndex: 'A2936CPAIS', width: 80},
-                    {text: 'Name', dataIndex: 'A2936NPAIS', width: 150},
+                    {text: 'Code', dataIndex: 'A2936CPAIS', width: 50},
+                    {text: 'Name', dataIndex: 'A2936NPAIS', width: 250},
                 ]
             },
             {
                 text: 'Zone',
                 columns: [
-                    {text: 'Code', dataIndex: 'A2936IDZON', width: 70},
-                    {text: 'Name', dataIndex: 'A2936NZONE', width: 150},
+                    {text: 'Code', dataIndex: 'A2936IDZON', width: 50},
+                    {text: 'Name', dataIndex: 'A2936NZONE', width: 250},
                 ]
             },
             {
                 text: 'Region',
                 columns: [
-                    {text: 'Code', dataIndex: 'A2936CREGI', width: 70},
-                    {text: 'Name', dataIndex: 'A2936NREGI', width: 150},
+                    {text: 'Code', dataIndex: 'A2936CREGI', width: 50},
+                    {text: 'Name', dataIndex: 'A2936NREGI', width: 250},
                 ]
             },
             {
                 text: 'Sub Region',
                 columns: [
-                    {text: 'Code', dataIndex: 'A2936CSREG', width: 90},
-                    {text: 'Name', dataIndex: 'A2936NCSRG', width: 150},
+                    {text: 'Code', dataIndex: 'A2936CSREG', width: 50},
+                    {text: 'Name', dataIndex: 'A2936NCSRG', width: 250},
                 ]
             },
             {
-                text: 'Hub / Gateway',
-                columns: [
-                    {text: 'Hub', dataIndex: 'A2936IDHUB', width: 70},
-                    {text: 'Gateway', dataIndex: 'A2936GATTO', width: 100},
-                ]
+                text: 'Hub',
+                dataIndex: 'A2936IDHUB',
+                width: 50
             },
             {
-                text: 'Created',
-                columns: [
-                    {text: 'User', dataIndex: 'A2936INGRE', width: 80},
-                    {text: 'Date', dataIndex: 'A2936FINGR', width: 90},
-                    {text: 'Time', dataIndex: 'A2936HINGR', width: 80},
-                ]
+                text: 'Gateway',
+                dataIndex: 'A2936GATTO',
+                width: 100
             },
-            {
-                text: 'Update',
-                columns: [
-                    {text: 'User', dataIndex: 'A2936MODIF', width: 80},
-                    {text: 'Date', dataIndex: 'A2936FMODI', width: 100},
-                    {text: 'Time', dataIndex: 'A2936HMODI', width: 80},
-                ]
-            },
+            /*{
+             text: 'Created',
+             columns: [
+             {text: 'User', dataIndex: 'A2936INGRE', width: 80},
+             {text: 'Date', dataIndex: 'A2936FINGR', width: 90},
+             {text: 'Time', dataIndex: 'A2936HINGR', width: 80},
+             ]
+             },
+             {
+             text: 'Update',
+             columns: [
+             {text: 'User', dataIndex: 'A2936MODIF', width: 80},
+             {text: 'Date', dataIndex: 'A2936FMODI', width: 100},
+             {text: 'Time', dataIndex: 'A2936HMODI', width: 80},
+             ]
+             },*/
 
             {
                 text: 'Edit',
@@ -102,7 +106,7 @@ Ext.define('Ext.Praxis.view.sales.OdvCitysForm.Grids.OdvCitysFormGrid', {
                     {
                         iconCls: 'prx-icon-edit',
                         tooltip: 'Edit',
-                        handler: 'onEditClick'
+                        handler: 'onEditOdvCitys'
                     }
                 ]
             }
