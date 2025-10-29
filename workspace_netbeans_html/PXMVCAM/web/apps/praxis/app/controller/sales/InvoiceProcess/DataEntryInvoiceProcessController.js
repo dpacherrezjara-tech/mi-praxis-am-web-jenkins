@@ -156,6 +156,7 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceProcess.DataEntryInvoiceProcessCo
         
         var IN_SEQ = Ext.getCmp(prototype.id + '-de-txtSEQ').getValue();
         var IN_SEQREG = Ext.getCmp(prototype.id + '-de-txtSEQREG').getValue();
+        var IN_LOTEREG = Ext.getCmp(prototype.id + '-de-txtLOTEREG').getValue();
         
         IN_FECHA_PROCESO = Ext.util.Format.date(IN_FECHA_PROCESO, 'Ymd');
 
@@ -171,7 +172,8 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceProcess.DataEntryInvoiceProcessCo
             IN_ENVIO: IN_ENVIO,
             IN_FECHA_PROCESO: IN_FECHA_PROCESO,
             IN_SEQ: IN_SEQ,
-            IN_SEQREG: IN_SEQREG
+            IN_SEQREG: IN_SEQREG,
+            IN_LOTEREG: IN_LOTEREG
         };
     }
     ,
@@ -194,6 +196,7 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceProcess.DataEntryInvoiceProcessCo
         Ext.getCmp(prototype.id + '-de-chkConsistencia').setValue(rec.get('A1955FUENT').trim()==="1" ? true : false);
         Ext.getCmp(prototype.id + '-de-txtSEQ').setValue(rec.get('IN_SEQ').trim());
         Ext.getCmp(prototype.id + '-de-txtSEQREG').setValue(rec.get('IN_SEQREG').trim());
+        Ext.getCmp(prototype.id + '-de-txtLOTEREG').setValue(rec.get('IN_LOTEREG').trim());
 
         Ext.getCmp(prototype.id + '-USCR').setValue(rec.get('A1955USRIN'));
         Ext.getCmp(prototype.id + '-FECR').setValue(rec.get('A1955FECIN'));

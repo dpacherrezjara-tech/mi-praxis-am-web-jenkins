@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
                 
                 
                 
-                if (menuUser !== "LAGREDA") {
+//                if (menuUser !== "LAGREDA") {
                     
                     let showOptions = (this.p.rec.data.IDCON || '').toString().trim();
                     if (showOptions) {
@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
                         Ext.getCmp(prototype.id + '-t' + '-btn-delete').hide();
                     }
                     
-                }
+//                }
                 
                 
                 
@@ -52,12 +52,12 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
         }
         // global.AccessControlMaganer();
         console.log(menuUser !== "LAGREDA","validacion")
-        if (menuUser !== "LAGREDA") {
-            global.AccessControlMaganerByMode(this.p);
-            
-        } else {
-            Ext.getCmp(prototype.id + '-t' + '-btn-update').show();
-        }
+//        if (menuUser !== "LAGREDA") {
+//            global.AccessControlMaganerByMode(this.p);
+//            
+//        } else {
+//            Ext.getCmp(prototype.id + '-t' + '-btn-update').show();
+//        }
         
         
     },
@@ -291,6 +291,12 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
         //Fecha Contable (x ahora lo saca de la Fecha de Vuelo a pedido de ENS)
         var FCONT = Ext.util.Format.date(Ext.getCmp(prototype.id + '-t' + '-txtFCONT').getValue(), 'Ymd');
         var DFLIGHT = Ext.util.Format.date(Ext.getCmp(prototype.id + '-t' + '-txtDFLIGHT').getValue(), 'Ymd');
+        
+        var CDEPART_OLD = this.CDEPART_OLD;
+        var CARRIVA_OLD = this.CARRIVA_OLD;
+        var NFLIGHT_OLD = this.NFLIGHT_OLD;
+        var DFLIGHT_OLD = this.DFLIGHT_OLD;
+        
         /*
         if (FCONT === '' && DFLIGHT.length === 8) {
             FCONT = DFLIGHT.substring(0, 6);
@@ -393,6 +399,10 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
             TCMUS: TCMUS,
             VCPUS: VCPUS,
             NFLIGHT: NFLIGHT,
+            CDEPART_OLD : CDEPART_OLD,
+            CARRIVA_OLD: CARRIVA_OLD,
+            NFLIGHT_OLD: NFLIGHT_OLD,
+            DFLIGHT_OLD: DFLIGHT_OLD
         };
     },
     validationFields: function(bean) {
