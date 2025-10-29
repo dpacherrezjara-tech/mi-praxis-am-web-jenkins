@@ -807,7 +807,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                     padding: 3,
                                     width: '100%',
                                     html: '<label style="background:#FF0000;color:white;padding:10px;line-height:3;">File not reported</label> \n\
-\n\<label style="background:#5B9BD5;color:white;padding:10px;line-height:3;">Weekend file</label>\n\
+\n\<label style="background:#5B9BD5;color:white;padding:10px;line-height:3;">Unscheduled File</label>\n\
 \n\<label style="background:#8688DB;color:white;padding:10px;line-height:3;">Currency File not reported</label>'
                                 }
                             ]
