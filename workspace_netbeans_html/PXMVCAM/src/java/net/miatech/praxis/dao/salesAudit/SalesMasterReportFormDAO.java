@@ -53,14 +53,14 @@ public class SalesMasterReportFormDAO {
         ResultSet rs01 = null;
 
         try {
-            String SQLCLL01 = "{CALL PXSAUDIT.SQP01011(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL PXSAUDIT.SQP01011(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(21, Types.INTEGER);
             cstmt01.registerOutParameter(22, Types.INTEGER);
             cstmt01.registerOutParameter(23, Types.INTEGER);
             cstmt01.registerOutParameter(24, Types.INTEGER);
+            cstmt01.registerOutParameter(25, Types.INTEGER);
 
             cstmt01.setInt(1, filter.VP_FILTER);
             cstmt01.setString(2, session.getUserView().getCustomerInfo().CCUST);
@@ -82,18 +82,19 @@ public class SalesMasterReportFormDAO {
             cstmt01.setString(18, filter.VP_STREVISION);
             cstmt01.setString(19, filter.VP_TDOC);
             cstmt01.setString(20, filter.VP_PAIS);
+            cstmt01.setString(21, filter.VP_PRESTACIO);
 
-            cstmt01.setInt(21, filter.page.PAGNUM);
-            cstmt01.setInt(22, filter.page.PAGROW);
-            cstmt01.setInt(23, filter.page.TOTPAG);
-            cstmt01.setInt(24, filter.page.TOTROW);
+            cstmt01.setInt(22, filter.page.PAGNUM);
+            cstmt01.setInt(23, filter.page.PAGROW);
+            cstmt01.setInt(24, filter.page.TOTPAG);
+            cstmt01.setInt(25, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(21);
-            filter.page.PAGROW = cstmt01.getInt(22);
-            filter.page.TOTPAG = cstmt01.getInt(23);
-            filter.page.TOTROW = cstmt01.getInt(24);
+            filter.page.PAGNUM = cstmt01.getInt(22);
+            filter.page.PAGROW = cstmt01.getInt(23);
+            filter.page.TOTPAG = cstmt01.getInt(24);
+            filter.page.TOTROW = cstmt01.getInt(25);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {

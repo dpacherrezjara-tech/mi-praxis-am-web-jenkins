@@ -14,7 +14,7 @@ prototype.id9 = 'DataEntrySalesAuditAccepted';
 prototype.idSalesMasterEmail = 'SalesMasterDataEntryEmail';
 prototype.url = CONTEXTPATH + '/SalesAuditAccepted';
 prototype.url2 = CONTEXTPATH + '/SalesMasterReportForm';
-prototype.widthContenedor = 1600;
+prototype.widthContenedor = 1710;
 prototype.heightContenedor = 605;
 
 Ext.define('Ext.Praxis.view.salesaudit.SalesMasterReportForm.SalesMasterReportForm', {
@@ -391,7 +391,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesMasterReportForm.SalesMasterReportFo
                                                 afterrender: 'onCmbSearchAfterRender',
                                                 specialkey: 'onSearchkey'
                                             }
-                                        }
+                                        }                                        
 
                                     ]
                                 },

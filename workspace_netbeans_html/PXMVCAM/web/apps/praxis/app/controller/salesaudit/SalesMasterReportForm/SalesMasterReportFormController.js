@@ -130,7 +130,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
         var txtIT = Ext.getCmp(prototype.id + '-txtIT').getValue();
         var cmbOpcionAudit = Ext.getCmp(prototype.id + '-cmbOpcionAudit').getValue();
         var cmbTypeMemo = Ext.getCmp(prototype.id + '-cmbTypeMemo').getValue();
-        var CombBene = Ext.getCmp(prototype.id + '-ComboBene');
+        var CombBene = Ext.getCmp(prototype.id + '-ComboBene').getValue();
 
         if (cmbSearch === '') {
             global.Msg({msg: 'Select Of By'});
