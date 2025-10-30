@@ -58,7 +58,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.InfoGridDetErro
 //                            ],
                             columns: {
                                 items: [
-                                    {text: 'Nbr ID', dataIndex: 'IDLOG', width: 80, align: 'center'},
+                                    {text: 'Nbr ID', dataIndex: 'SEQ', width: 80, align: 'center'},
                                     {text: 'File Date', dataIndex: 'FECHA', align: 'center', width: 80},
                                     {text: 'Message', dataIndex: 'LOGTXT', flex:1, width: 200, align: 'left',
                                         renderer: function (value, metaData) {

@@ -6,6 +6,7 @@ prototype.widthContenedor = 1100;
 prototype.widthGrid = '100%';
 prototype.id = 'SimplifiedUsageFileControlForm'; 
 prototype.id01 = 'SimplifiedUsageFileControlDetailError'; 
+prototype.id02 = 'SimplifiedUsageFileControlLoadSFTPForm';
  
 
 Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.SimplifiedUsageFileControlForm', {
@@ -72,7 +73,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.SimplifiedUsage
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-panel-contenedor-grid',
-                                            height: 600,
+                                            height: 500, //600
                                             layout: 'fit',
                                             items: [
                                                 {

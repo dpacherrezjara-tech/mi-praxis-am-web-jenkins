@@ -109,6 +109,15 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnAPI',
+                            iconCls: 'prx-icon-image-process',
+                            tooltip: 'Procesar carga a SFP',
+                            listeners: {
+                                click: 'btnLoadSFTP_click'
+                            }
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnClear',
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options',

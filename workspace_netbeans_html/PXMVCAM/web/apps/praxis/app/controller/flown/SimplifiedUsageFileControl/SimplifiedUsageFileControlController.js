@@ -98,6 +98,22 @@ Ext.define('Ext.Praxis.controller.flown.SimplifiedUsageFileControl.SimplifiedUsa
             global.showMenu();
         }
     },
+    btnLoadSFTP_click: function(){
+//        console.log('btnLoadSFTP_click');
+        var rec = null;
+        this.winDataEntryLoadSFTP('U', rec);
+    },
+    winDataEntryLoadSFTP: function(action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+        Ext.create('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.SimplifiedUsageFileControlLoadSFTPForm', {
+            id: prototype.id02 + '-LoadSFTPForm',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    },
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
     pagFirst: function(obj, e) {
         if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
@@ -120,5 +136,4 @@ Ext.define('Ext.Praxis.controller.flown.SimplifiedUsageFileControl.SimplifiedUsa
         }
     }
      // </editor-fold>
-    
 });
