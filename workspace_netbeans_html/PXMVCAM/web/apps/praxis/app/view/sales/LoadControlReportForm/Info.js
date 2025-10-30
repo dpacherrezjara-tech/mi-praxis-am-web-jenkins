@@ -73,7 +73,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS1', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL1') === 'R') {
+                                                    if (record.get('LABEL1') === 'R' && record.get('FLG1') !== 'Y') {
                                                         const dia = record.get('PRDA1_');
                                                         const fecha = record.get('PRDA1');
                                                         const status = record.get('STATUS1');
@@ -245,7 +245,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                                 text: 'Status', dataIndex: 'STATUS2', width: 70, align: 'right',
                                                 id: prototype.id + '-Status2',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL2') === 'R') {
+                                                    if (record.get('LABEL2') === 'R' && record.get('FLG2') !== 'Y') {
                                                         const dia = record.get('PRDA2_');
                                                         const fecha = record.get('PRDA2');
                                                         const status = record.get('STATUS2');
@@ -427,7 +427,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS3', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL3') === 'R') {
+                                                    if (record.get('LABEL3') === 'R' && record.get('FLG3') !== 'Y') {
                                                         const dia = record.get('PRDA3_');
                                                         const fecha = record.get('PRDA3');
                                                         const status = record.get('STATUS3');
@@ -592,7 +592,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS4', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL4') === 'R') {
+                                                    if (record.get('LABEL4') === 'R' && record.get('FLG4') !== 'Y') {
                                                         const dia = record.get('PRDA4_');
                                                         const fecha = record.get('PRDA4');
                                                         const status = record.get('STATUS4');
@@ -755,7 +755,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS5', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL5') === 'R') {
+                                                    if (record.get('LABEL5') === 'R' && record.get('FLG5') !== 'Y') {
                                                         const dia = record.get('PRDA5_');
                                                         const fecha = record.get('PRDA5');
                                                         const status = record.get('STATUS5');
@@ -918,7 +918,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS6', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL6') === 'R') {
+                                                    if (record.get('LABEL6') === 'R' && record.get('FLG6') !== 'Y') {
                                                         const dia = record.get('PRDA6_');
                                                         const fecha = record.get('PRDA6');
                                                         const status = record.get('STATUS6');
@@ -1081,7 +1081,7 @@ Ext.define('Ext.Praxis.view.sales.LoadControlReportForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'STATUS7', width: 70, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                                    if (record.get('LABEL7') === 'R') {
+                                                    if (record.get('LABEL7') === 'R' && record.get('FLG7') !== 'Y') {
                                                         const dia = record.get('PRDA7_');
                                                         const fecha = record.get('PRDA7');
                                                         const status = record.get('STATUS7');
