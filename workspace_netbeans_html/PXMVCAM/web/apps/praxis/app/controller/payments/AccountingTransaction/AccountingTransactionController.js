@@ -82,44 +82,56 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.AccountingTrans
         const me = this;
         const view = me.view;
         
+        me.view.setLoading(true);
         let notifier = new AWN();
-
-        let params = me.formatParameters();
-        console.table(params);
         
-        
-        const dwl = async () => {
-            const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05724', params);
-            if (res) {
-                let data = res.map(x=>({
-                       'Ticket': x.TICKET,
-                       'File Type': x.FILETYPE,
-                       'Mode': x.A4183MODO,
-                       'SRC': x.A4183FUENT,
-                       'Sub SRC': x.A4183SUBFU,
-                       'FOP': x.A4183FP,
-                       'CPN': x.A4183CUPON,
-                       'SEQ': x.A4183SEQ,
-                       'Settlement Date': x.A4183FFILE,
-                       'Accounting Date': x.A4183FCONT,
-                       'Account Number': x.A4183CUENT,
-                       'Currency': x.A4183CUR,
-                       'Debit': x.A4183ACTIV,
-                       'Credit': x.A4183PASIV,
-                       'Code Concept': x.A4183ORIG,
-                       'Description Concept': x.A4183TITU,
-                       'Client': x.A4183CLIEN,
-                       'PNR': x.A4183COPE,
-                       'Provider': x.A4183PROV,
-                       'Praxis ID': x.A4183IDCON,
-                       'Flex ID': x.A4183IDFLE,
-                       'Reference Number': x.A4183AREFN,
-                       'Processor': x.PROCESSOR_DESCRIPTION
-                    }));
-                global.writeExcelFromJson(data, 'Detail Accounting');
+        try {
+            // obtener la grilla summary
+            const gridData = Ext.getCmp(prototype.id + '-gridSummary');
+            
+            if (!gridData) {
+                global.Msg({ msg: 'Summary grid not found', icon: 2 });
+                me.view.setLoading(false);
+                return;
             }
-        };
-        notifier.async(dwl(),'Successfully Download', 'Error on Download', 'Downloading File');
+            
+            const storeData = gridData.getStore().getData().items;
+            
+            // Obtener solo las filas marcadas con CHECK
+            let dataSelected = storeData
+                .filter(x => x.data.CHECK === true || x.data.CHECK === 1)
+                .map(x => ({ ...x.data }));
+            
+            // Si no hay selección, avisar y no llamar nada
+            if (dataSelected.length === 0) {
+                global.Msg({ msg: 'Please select at least one record to download', icon: 1 });
+                me.view.setLoading(false);
+                return;
+            }
+            
+            // Guardar selección en tabla temporal XTEMPO
+            const tmp = await global.loadRecordsOnTable('PRAXISMP', 'XTEMPO', dataSelected);
+            
+            if (!tmp.success) {
+                global.Msg({ msg: 'Error saving selection to temporary table', icon: 2 });
+                me.view.setLoading(false);
+                return;
+            }
+            
+            let params = me.formatParameters();
+            params.IN_CUUID = tmp.cuuid;
+            params.IN_FUUID = tmp.fuuid;
+            
+            // Llamar al endpoint de descarga
+            global.getFile(`${me.url}/downloadAllDetailAccounted?${new URLSearchParams(params)}`);
+            
+        } catch (e) {
+            console.log(e);
+            notifier.alert('System Error on Download');
+        }
+        finally {
+            me.view.setLoading(false);
+        }
     },
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">
     onChangeFechaBtn: function (obj) {

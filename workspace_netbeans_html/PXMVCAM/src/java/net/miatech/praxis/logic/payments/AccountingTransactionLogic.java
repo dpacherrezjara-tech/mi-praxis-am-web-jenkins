@@ -8,6 +8,7 @@ import net.miatech.praxis.payment.filter.SQP05037Filter;
 import net.miatech.praxis.payment.filter.SQP05041Filter;
 import net.miatech.praxis.payment.filter.SQP05042Filter;
 import net.miatech.praxis.payment.filter.SQP05043Filter;
+import net.miatech.praxis.payment.filter.SQP05724Filter;
 
 /**
  *
@@ -26,6 +27,8 @@ public interface AccountingTransactionLogic {
     SQP05042Filter getSQP05042Filter(SQP05042Filter filter)throws Exception;
     //obtiene detalle de tickets desglosados
     SQP05043Filter getSQP05043Filter(SQP05043Filter filter)throws Exception;
+    //obtiene detalle completo de accounting con selección por procesadores
+    SQP05724Filter getSQP05724Filter(SQP05724Filter filter)throws Exception;
     //Monedas
     List<A006> getMonedas() throws Exception;
 }

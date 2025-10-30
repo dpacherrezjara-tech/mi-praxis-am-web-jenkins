@@ -35,7 +35,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.AnalyzeReconciliation
                 IN_PROCTYPESQ: 'PLUSG00'
             };
  
-            const store = await global.callStorePaggin('PRAXISMP', 'SQP05756', params);
+            const store = await global.callStorePaggin('PRAXISMP', 'SQP05754', params);
             
             console.log("store", store); 
 
@@ -171,7 +171,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.AnalyzeReconciliation
             };
 
             // Obtener todos los datos sin paginación
-            const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05756', params);
+            const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05754', params);
             
             let excelData = res.map((item, index) => ({
                  'RN': index + 1,

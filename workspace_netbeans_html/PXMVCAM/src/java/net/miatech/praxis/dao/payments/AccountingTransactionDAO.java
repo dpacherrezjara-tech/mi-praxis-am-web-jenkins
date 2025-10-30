@@ -6,6 +6,7 @@ import net.miatech.praxis.logic.payments.AccountingTransactionLogic;
 import net.miatech.praxis.payment.entities.A006;
 import net.miatech.praxis.payment.entities.A4451MP;
 import net.miatech.praxis.payment.filter.A4183Filter;
+import net.miatech.praxis.payment.filter.A4183DetailAccounting;
 import net.miatech.praxis.payment.filter.A4331AT1Filter;
 import net.miatech.praxis.payment.filter.A4331AT2Filter;
 import net.miatech.praxis.payment.filter.A4331Filter;
@@ -16,6 +17,7 @@ import net.miatech.praxis.payment.filter.SQP05037Filter;
 import net.miatech.praxis.payment.filter.SQP05041Filter;
 import net.miatech.praxis.payment.filter.SQP05042Filter;
 import net.miatech.praxis.payment.filter.SQP05043Filter;
+import net.miatech.praxis.payment.filter.SQP05724Filter;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -90,6 +92,15 @@ public class AccountingTransactionDAO implements AccountingTransactionLogic{
         Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05043", params,
                 new BeanPropertyRowMapper<>(A4335Filter.class));
         filter.setResponse((List<A4335Filter>) obj.get("result"));
+        return filter;
+    }
+
+    @Override
+    public SQP05724Filter getSQP05724Filter(SQP05724Filter filter) throws Exception {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05724", params,
+                new BeanPropertyRowMapper<>(A4183DetailAccounting.class));
+        filter.setResponse((List<A4183DetailAccounting>) obj.get("result"));
         return filter;
     }
     
