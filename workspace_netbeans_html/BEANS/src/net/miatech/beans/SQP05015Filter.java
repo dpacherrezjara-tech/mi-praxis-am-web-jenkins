@@ -32,6 +32,7 @@ public class SQP05015Filter {
     public Integer VOID1 = 0; // INT,
     public String LABEL1 = ""; //CHAR(1),
     public String FLG1 = ""; //CHAR(3),
+    public String COMMENT1 = ""; //VARCHAR(300)
 
     public String PRDA2 = ""; //CHAR(8),
     public String PRDA2_ = ""; //CHAR(8),
@@ -44,6 +45,7 @@ public class SQP05015Filter {
     public Integer VOID2 = 0; // INT,
     public String LABEL2 = ""; //CHAR(1),
     public String FLG2 = ""; //CHAR(3),
+    public String COMMENT2 = ""; //VARCHAR(300)
 
     public String PRDA3 = ""; //CHAR(8),
     public String PRDA3_ = ""; //CHAR(8),
@@ -56,6 +58,7 @@ public class SQP05015Filter {
     public Integer VOID3 = 0; // INT,
     public String LABEL3 = ""; //CHAR(1),
     public String FLG3 = ""; //CHAR(3),
+    public String COMMENT3 = ""; //VARCHAR(300)
 
     public String PRDA4 = ""; //CHAR(8),
     public String PRDA4_ = ""; //CHAR(8),
@@ -68,6 +71,7 @@ public class SQP05015Filter {
     public Integer VOID4 = 0; // INT,
     public String LABEL4 = ""; //CHAR(1),
     public String FLG4 = ""; //CHAR(3),
+    public String COMMENT4 = ""; //VARCHAR(300)
 
     public String PRDA5 = ""; //CHAR(8),
     public String PRDA5_ = ""; //CHAR(8),
@@ -80,6 +84,7 @@ public class SQP05015Filter {
     public Integer VOID5 = 0; // INT,
     public String LABEL5 = ""; //CHAR(1),
     public String FLG5 = ""; //CHAR(3),
+    public String COMMENT5 = ""; //VARCHAR(300)
 
     public String PRDA6 = ""; //CHAR(8),
     public String PRDA6_ = ""; //CHAR(8),
@@ -92,6 +97,7 @@ public class SQP05015Filter {
     public Integer VOID6 = 0; // INT,
     public String LABEL6 = ""; //CHAR(1),
     public String FLG6 = ""; //CHAR(3),
+    public String COMMENT6 = ""; //VARCHAR(300)
 
     public String PRDA7 = ""; //CHAR(8),
     public String PRDA7_ = ""; //CHAR(8),
@@ -104,4 +110,5 @@ public class SQP05015Filter {
     public Integer VOID7 = 0; // INT,
     public String LABEL7 = ""; //CHAR(1),
     public String FLG7 = ""; //CHAR(3),
+    public String COMMENT7 = ""; //VARCHAR(300)
 }
