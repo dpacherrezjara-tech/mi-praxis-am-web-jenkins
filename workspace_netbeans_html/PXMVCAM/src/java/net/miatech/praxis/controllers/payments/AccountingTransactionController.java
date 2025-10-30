@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.miatech.praxis.logic.payments.AccountingTransactionLogic;
 import net.miatech.praxis.payment.filter.A4183Filter;
+import net.miatech.praxis.payment.filter.A4183DetailAccounting;
 import net.miatech.utils.CustomExcelCell;
 import net.miatech.praxis.payment.filter.A4331AT1Filter;
 import net.miatech.praxis.payment.filter.A4331AT2Filter;
@@ -16,6 +17,7 @@ import net.miatech.praxis.payment.filter.SQP05037Filter;
 import net.miatech.praxis.payment.filter.SQP05041Filter;
 import net.miatech.praxis.payment.filter.SQP05042Filter;
 import net.miatech.praxis.payment.filter.SQP05043Filter;
+import net.miatech.praxis.payment.filter.SQP05724Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.utils.Functions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,7 +154,9 @@ public class AccountingTransactionController {
                 row.add(new CustomExcelCell(obj.getQTY_TOTAL()));
                 data.add(row);
             }
-            return exportUtils.createCustomExcel(data, controllerName + " - Summary " + Functions.getFechaActual());
+            
+            return exportUtils.createCustomExcel(data, controllerName + " - Summary " + params.getFECHA_FROM());
+//            return exportUtils.createCustomExcel(data, controllerName + " - Summary " + Functions.getFechaActual());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -215,7 +219,8 @@ public class AccountingTransactionController {
                 row.add(new CustomExcelCell(obj.getQTY_TOTAL()));
                 data.add(row);
             }
-            return exportUtils.createCustomExcel(data, controllerName + " - SummaryTree " + Functions.getFechaActual());
+            
+            return exportUtils.createCustomExcel(data, controllerName + " - SummaryTree " + params.getFECHA_FROM());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -287,7 +292,7 @@ public class AccountingTransactionController {
                 row.add(new CustomExcelCell(obj.getTicket()));
                 data.add(row);
             }
-            return exportUtils.createCustomExcel(data, controllerName + " - SummaryDetail " + Functions.getFechaActual());
+            return exportUtils.createCustomExcel(data, controllerName + " - SummaryDetail " + params.getFECHA_FROM());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -345,13 +350,13 @@ public class AccountingTransactionController {
                 row.add(new CustomExcelCell(obj.getA4183idcon()));
                 data.add(row);
             }
-            return exportUtils.createCustomExcel(data, controllerName + " - Detail Accounted " + Functions.getFechaActual());
+            return exportUtils.createCustomExcel(data, controllerName + " - Detail Accounted " + params.getIN_PRDA());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
+  
     @RequestMapping(value = "downloadDetailTickets")
     public ResponseEntity<?> downloadDetailTickets(@ModelAttribute SQP05043Filter params) {
         try {
@@ -402,6 +407,74 @@ public class AccountingTransactionController {
                 data.add(row);
             }
             return exportUtils.createCustomExcel(data, controllerName + " - Detail Tickets " + Functions.getFechaActual());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "downloadAllDetailAccounted")
+    public ResponseEntity<?> downloadAllDetailAccounted(@ModelAttribute SQP05724Filter params) {
+        try {
+            System.out.println("*******************Accounting Transaction: downloadAllDetailAccounted*********************");
+            SQP05724Filter filter = logic.getSQP05724Filter(params);
+            System.out.println("Total: " + filter.getResponse().size());
+            List<List<CustomExcelCell>> data = new ArrayList<>();
+            //headers
+            List<CustomExcelCell> headers = new ArrayList<>();
+            headers.add(new CustomExcelCell("Ticket"));
+            headers.add(new CustomExcelCell("File Type"));
+            headers.add(new CustomExcelCell("Mode"));
+            headers.add(new CustomExcelCell("SRC"));
+            headers.add(new CustomExcelCell("Sub\nSRC"));
+            headers.add(new CustomExcelCell("FOP"));
+            headers.add(new CustomExcelCell("CPN"));
+            headers.add(new CustomExcelCell("SEQ"));
+            headers.add(new CustomExcelCell("Settlement Date"));
+            headers.add(new CustomExcelCell("Accounting Date"));
+            headers.add(new CustomExcelCell("Account Number"));
+            headers.add(new CustomExcelCell("Currency"));
+            headers.add(new CustomExcelCell("Debit"));
+            headers.add(new CustomExcelCell("Credit"));
+            headers.add(new CustomExcelCell("Code Concept"));
+            headers.add(new CustomExcelCell("Description Concept"));
+            headers.add(new CustomExcelCell("Client"));
+            headers.add(new CustomExcelCell("PNR"));
+            headers.add(new CustomExcelCell("Provider"));
+            headers.add(new CustomExcelCell("Praxis ID"));
+            headers.add(new CustomExcelCell("Flex ID"));
+            headers.add(new CustomExcelCell("Reference Number"));
+            headers.add(new CustomExcelCell("Processor"));
+            data.add(headers);
+
+            for (A4183DetailAccounting obj : filter.getResponse()) {
+                List<CustomExcelCell> row = new ArrayList<>();
+                row.add(new CustomExcelCell(obj.getTICKET()));
+                row.add(new CustomExcelCell(obj.getFILETYPE()));
+                row.add(new CustomExcelCell(obj.getA4183modo()));
+                row.add(new CustomExcelCell(obj.getA4183fuent()));
+                row.add(new CustomExcelCell(obj.getA4183subfu()));
+                row.add(new CustomExcelCell(obj.getA4183fp()));
+                row.add(new CustomExcelCell(obj.getA4183cupon()));
+                row.add(new CustomExcelCell(obj.getA4183seq()));
+                row.add(new CustomExcelCell(obj.getA4183FFILE()));
+                row.add(new CustomExcelCell(obj.getA4183fcont()));
+                row.add(new CustomExcelCell(obj.getA4183cuent()));
+                row.add(new CustomExcelCell(obj.getA4183cur()));
+                row.add(new CustomExcelCell(obj.getA4183activ()));
+                row.add(new CustomExcelCell(obj.getA4183pasiv()));
+                row.add(new CustomExcelCell(obj.getA4183orig()));
+                row.add(new CustomExcelCell(obj.getA4183titu()));
+                row.add(new CustomExcelCell(obj.getA4183CLIEN()));
+                row.add(new CustomExcelCell(obj.getA4183cope()));
+                row.add(new CustomExcelCell(obj.getA4183prov()));
+                row.add(new CustomExcelCell(obj.getA4183idcon()));
+                row.add(new CustomExcelCell(obj.getA4183idfle()));
+                row.add(new CustomExcelCell(obj.getA4183AREFN()));
+                row.add(new CustomExcelCell(obj.getPROCESSOR_DESCRIPTION()));
+                data.add(row);
+            }
+            return exportUtils.createCustomExcel(data, controllerName + " - All Detail Accounting " + params.getFECHA_FROM());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
