@@ -233,7 +233,12 @@ public class LoadControlReportController extends BaseController {
                 String value8 = oList.get(vi).a4859.A4859COME == null ? "" : oList.get(vi).a4859.A4859COME.trim();
                 System.out.println("value 8: " + value8);
                 String etiqueta = "";
+                
+                String paisField = oList.get(vi).a4493.A4493PAIS == null ? "" : oList.get(vi).a4493.A4493PAIS.trim();
+                String fuenteField = oList.get(vi).a4493.A4493FUENT == null ? "" : oList.get(vi).a4493.A4493FUENT.trim();
+                String dia = oList.get(vi).a4493.A4493PRDD == null ? "" : oList.get(vi).a4493.A4493PRDD.trim();
 
+	
                 if (value5.equals("R")) {
 //                    etiqueta = "File not reported";
                     if (value8.isEmpty()) {
@@ -244,12 +249,21 @@ public class LoadControlReportController extends BaseController {
                 }
 
                 if (value5.equals("A")) {
-                    etiqueta = "Weekend file";
+                    etiqueta = "Unscheduled file";
                 }
 
                 if (value7.equals("") && value6.equals("Y")) {
                     etiqueta = "Currency File not reported";
                 }
+                
+                if (paisField.equals("VE")) {
+                    etiqueta = "Unscheduled file";
+                }
+
+                if (fuenteField.equals("ARC") && dia.equals("Martes")) {
+                    etiqueta = "Unscheduled file";
+                }
+                
                 
                 cel23.setCellValue(etiqueta);
                 cel23.setCellStyle(styles.get(styleName));

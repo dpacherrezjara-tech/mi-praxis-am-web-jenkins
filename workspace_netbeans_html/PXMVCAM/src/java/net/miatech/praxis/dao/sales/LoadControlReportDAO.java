@@ -251,6 +251,7 @@ public class LoadControlReportDAO {
                 objRtn.a4493.A4493LABEL = rs01.getString("A4493LABEL");
                 objRtn.a4493.A4493FLAG = rs01.getString("A4493FLAG");
                 objRtn.a4859.A4859COME = rs01.getString("A4859COME");
+                objRtn.a4493.A4493PRDD = rs01.getString("A4493PRDD");
                 
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
