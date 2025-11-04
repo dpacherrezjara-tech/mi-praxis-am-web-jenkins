@@ -11,7 +11,7 @@ import net.miatech.praxis.payment.entities.CustomPageImpl;
 public class SQP05060Filter extends CustomPageImpl{
     private String IN_CCUST,IN_DATE,IN_MONTH,IN_DATEFROM,IN_DATETO,IN_PROCTYPE,IN_PROCTYPESQ,
             IN_SMERCHID,IN_TRANSTYPE,IN_SCOUNTRY,IN_FVOID,IN_TICKET,IN_SCARDN,IN_SAUTHOC,IN_SPNR,
-            IN_TYPE,IN_STVAL,IN_CERROR,IN_CODADJU,IN_AREFNBR,IN_SCURRENCY,IN_NBRINSTA,IN_CODEAUTOCOMMENT,IN_FREGLA ;
+            IN_TYPE,IN_STVAL,IN_CERROR,IN_CODADJU,IN_AREFNBR,IN_SCURRENCY,IN_NBRINSTA,IN_CODEAUTOCOMMENT,IN_FREGLA, IN_ARN,IN_USER_ASSIGNED;
     private Double IN_AMOUNT;
     
     private List<A4331Filter> response = new ArrayList<>();
@@ -222,6 +222,22 @@ public class SQP05060Filter extends CustomPageImpl{
 
     public void setIN_FREGLA(String IN_FREGLA) {
         this.IN_FREGLA = IN_FREGLA;
+    }
+    
+    public String getIN_ARN() {
+        return IN_ARN;
+    }
+
+    public void setIN_ARN(String IN_ARN) {
+        this.IN_ARN = IN_ARN;
+    }
+    
+    public String getIN_USER_ASSIGNED() {
+        return IN_USER_ASSIGNED;
+    }
+
+    public void setIN_USER_ASSIGNED(String IN_USER_ASSIGNED) {
+        this.IN_USER_ASSIGNED = IN_USER_ASSIGNED;
     }
     
 }

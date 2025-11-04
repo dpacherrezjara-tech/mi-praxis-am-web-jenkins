@@ -108,8 +108,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryGrid
                             metaData.style = "text-align:right;background-color:#6BA9CF";
                             return value;
                         }
-                    }
-
+                    },
+                    { text: 'min_date', dataIndex: 'min_DATE', width: 80, hidden: true },
+                    { text: 'max_date', dataIndex: 'max_DATE', width: 80, hidden: true },
+                    { text: 'Select<br>Download', headerCheckbox: false, dataIndex: 'CHECK', width: 70, xtype: 'checkcolumn' }
                 ]
             }
             //</editor-fold>

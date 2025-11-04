@@ -13,25 +13,82 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
         try {
             // filters Plusgrade
             const me = this;
-            const res = await global.callStoreGet('PRAXISMP','SQP05016');
-            const data = res.lstRs[0] || {};
-            
-            const filterCountry = Ext.getCmp(prototype.id + '-cmbPaisesPG');
+            const res = await global.callStoreGet('PRAXISMP','SQP05016',{IN_CCUST:'139'});
 
+            const { lstVals, lstRs } = res; 
+            
+            const dataCountry = lstRs[0] || {};
+            const dataCerror = lstRs[1] || {};
+            const dataStval = lstRs[2] || {};
+            const dataProcessorInsumo = lstRs[3] || {};
+            const dataProcessorMatch = lstRs[4] || {};
+            const quantityAnalyzePending = lstVals.IO_QUANITY_ANALYZE_PENDING ;
+
+            // console.log(dataCountry);
+            // console.log(dataCerror);
+
+            const filterCountry = Ext.getCmp(prototype.id + '-cmbPaisesPG');
+            const filterCerror = Ext.getCmp(prototype.id + '-cmbCerrorPG');
+            const filterStval = Ext.getCmp(prototype.id + '-cmbStvalPG');
+            const filterProcessorInsumo = Ext.getCmp(prototype.id + '-cmbProcessorInsumo');
+            const filterProcessorMatch = Ext.getCmp(prototype.id + '-cmbProcessorMatch');
+
+            
             filterCountry.suspendEvents(false);
-            filterCountry.bindStore(me.createComboStore({data: data, valueField: 'CODE', displayField: 'NAME'}));
+            filterCountry.bindStore(await me.createComboStore({data: dataCountry, valueField: 'CODE', displayField: 'NAME'}));
             filterCountry.setValue('');
             filterCountry.resumeEvents();
+
+            filterCerror.suspendEvents(false);
+            filterCerror.bindStore(await me.createComboStore({data: dataCerror, valueField: 'CODE', displayField: 'DESCRIPTION', addElementAll: false}));
+            filterCerror.setValue('');
+            filterCerror.resumeEvents();
+
+            filterStval.suspendEvents(false);
+            filterStval.bindStore(await me.createComboStore({data: dataStval, valueField: 'STVAL', displayField: 'DESCRIPTION', addElementAll: false}));
+            filterStval.setValue('X');
+            filterStval.resumeEvents();
             
+            filterProcessorInsumo.suspendEvents(false);
+            filterProcessorInsumo.setStore(await me.createComboStore({data: dataProcessorInsumo, valueField: 'CODE', displayField: 'DESCRIPTION',addElementAll: false}));
+            filterProcessorInsumo.setValue('');
+            filterProcessorInsumo.resumeEvents();
+            
+            filterProcessorMatch.suspendEvents(false);
+            filterProcessorMatch.setStore(await me.createComboStore({data: dataProcessorMatch, valueField: 'A4451KEY2', displayField: 'A4451DESC1'}));
+            filterProcessorMatch.setValue('');
+            filterProcessorMatch.resumeEvents();
+        
+            me.changeAnalyzePending(quantityAnalyzePending);
+
         } catch (e) {
             console.log(e);
         }
     },
-    createComboStore: function ( {data, valueField, displayField}) {
+    changeAnalyzePending: function(quantity = 0){
+        const optionAnalyze = Ext.getCmp(prototype.id + '-btnAnalyzeReconciliationErrors');
+        if (optionAnalyze) {
+
+            const originalText = optionAnalyze.defaultText || '';
+            if (!optionAnalyze.defaultText) {
+                optionAnalyze.defaultText = originalText;
+            }
+            if (quantity > 0) {
+                optionAnalyze.setText(
+                    originalText + ` <span style="color: red; font-weight: bold;">(${quantity})</span>`
+                );
+            } else {
+                optionAnalyze.setText(originalText);
+            }
+        }
+    },
+    createComboStore: async function ( {data, valueField, displayField, addElementAll = true}) {
         //crea record vacio
         let allRecord = {};
-        allRecord[displayField] = 'All';
-        allRecord[valueField] = '';
+        if (addElementAll) {
+            allRecord[displayField] = 'All';
+            allRecord[valueField] = '';
+        }
         //limpia record de data
         data.forEach(obj => {
             for (let attr in obj) {
@@ -89,7 +146,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                     id: prototype.id + '-PlusgradeGrid-1',
                     searchParams: params
                 });
-                console.log(newPanel);
+                // console.log(newPanel);
                 mainPanel.add(newPanel);
             },
             'M':()=>{
@@ -98,7 +155,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                     id: prototype.id + '-MitGrid-1',
                     searchParams: params
                 });
-                console.log(newPanel);
+                // console.log(newPanel);
                 mainPanel.add(newPanel);
             },
              'U':()=>{
@@ -107,7 +164,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                     id: prototype.id + '-DeUnaGrid-1',
                     searchParams: params
                 });
-                console.log(newPanel);
+                // console.log(newPanel);
                 mainPanel.add(newPanel);
             }
         };
@@ -121,7 +178,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             panelFilter.show();
         }
     },
-     onClickClearBtn: function (obj) {
+    onClickClearBtn: function (obj) {
         Ext.getCmp(prototype.id + '-formFilters-1').getForm().reset();
         Ext.getCmp(prototype.id + '-formFilters-2').getForm().reset();
         Ext.getCmp(prototype.id + '-formFilters-3').getForm().reset();
@@ -170,6 +227,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             }
         };
         opts[option]();
+    },
+    onClickAnalyzeReconciliationErrors: function () {
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.AnalyzeReconciliationErrorsDataEntry', {
+            id: prototype.id + '-AnalyzeReconciliationErrorsDataEntry-1'
+        });
+        dataEntry.show();
     }
 });
 

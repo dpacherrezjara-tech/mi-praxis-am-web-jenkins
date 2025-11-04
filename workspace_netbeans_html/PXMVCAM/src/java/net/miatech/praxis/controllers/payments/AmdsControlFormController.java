@@ -80,6 +80,11 @@ public class AmdsControlFormController extends BaseController {
             filter.IN_SOURCE = request.getParameter("IN_SOURCE");
             filter.IN_CHANNEL = request.getParameter("IN_CHANNEL");
 
+            filter.IN_A4497TRSRC = request.getParameter("IN_A4497TRSRC");
+            filter.IN_A4497SCARD = request.getParameter("IN_A4497SCARD");
+            filter.IN_A4497ARN = request.getParameter("IN_A4497ARN");
+            filter.IN_A4497NETO = request.getParameter("IN_A4497NETO");
+
             if (!bExcel) {
                 filter.page.PAGROW = 20;
                 start = (start != 0 ? start : 0);
@@ -152,7 +157,7 @@ public class AmdsControlFormController extends BaseController {
             Iterator iter = lst.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19;
 
             row = sheet.createRow(vj);
 
@@ -172,6 +177,10 @@ public class AmdsControlFormController extends BaseController {
             CH_13 = row.createCell(13);
             CH_14 = row.createCell(14);
             CH_15 = row.createCell(15);
+            CH_16 = row.createCell(16);
+            CH_17 = row.createCell(17);
+            CH_18 = row.createCell(18);
+            CH_19 = row.createCell(19);
 
             CH_00.setCellValue("Ticket");
             CH_01.setCellValue("Memo Number");
@@ -190,6 +199,11 @@ public class AmdsControlFormController extends BaseController {
             CH_14.setCellValue("PNR");
             CH_15.setCellValue("EPR");
 
+            CH_16.setCellValue("Ref.Number");
+            CH_17.setCellValue("Card Number");
+            CH_18.setCellValue("Process");
+            CH_19.setCellValue("Auditor");
+
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
@@ -206,6 +220,10 @@ public class AmdsControlFormController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 18, 18));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 19));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -223,6 +241,11 @@ public class AmdsControlFormController extends BaseController {
             CH_13.setCellStyle(headerStyle);
             CH_14.setCellStyle(headerStyle);
             CH_15.setCellStyle(headerStyle);
+
+            CH_16.setCellStyle(headerStyle);
+            CH_17.setCellStyle(headerStyle);
+            CH_18.setCellStyle(headerStyle);
+            CH_19.setCellStyle(headerStyle);
 
             ++vj;
 
@@ -245,6 +268,10 @@ public class AmdsControlFormController extends BaseController {
                 CH_13 = row.createCell(13);
                 CH_14 = row.createCell(14);
                 CH_15 = row.createCell(15);
+                CH_16 = row.createCell(16);
+                CH_17 = row.createCell(17);
+                CH_18 = row.createCell(18);
+                CH_19 = row.createCell(19);
 
                 CH_00.setCellValue(lst.get(vi).A4497TKT);
                 CH_01.setCellValue(lst.get(vi).A4497NMEMO);
@@ -261,7 +288,11 @@ public class AmdsControlFormController extends BaseController {
                 CH_12.setCellValue(lst.get(vi).A4497TRNCU);
                 CH_13.setCellValue(lst.get(vi).A4497FLAGDES);
                 CH_14.setCellValue(lst.get(vi).A4497PNR);
-                CH_14.setCellValue(lst.get(vi).A4497EPR);
+                CH_15.setCellValue(lst.get(vi).A4497EPR);
+                CH_16.setCellValue(lst.get(vi).A4497ARN);
+                CH_17.setCellValue(lst.get(vi).A4497SCARD);
+                CH_18.setCellValue(lst.get(vi).A4497TRSRC);
+                CH_19.setCellValue(lst.get(vi).A4497REGIS);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -279,6 +310,10 @@ public class AmdsControlFormController extends BaseController {
                 CH_13.setCellStyle(bodyStyle);
                 CH_14.setCellStyle(bodyStyle);
                 CH_15.setCellStyle(bodyStyle);
+                CH_16.setCellStyle(bodyStyle);
+                CH_17.setCellStyle(bodyStyle);
+                CH_18.setCellStyle(bodyStyle);
+                CH_19.setCellStyle(bodyStyle);
 
                 iter.next();
                 ++vi;

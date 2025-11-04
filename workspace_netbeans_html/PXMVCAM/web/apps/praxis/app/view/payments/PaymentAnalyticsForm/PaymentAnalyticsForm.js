@@ -8,8 +8,10 @@ Ext.define('Ext.Praxis.view.payments.PaymentAnalyticsForm.PaymentAnalyticsForm',
         'Ext.Praxis.controller.payments.PaymentAnalytics.PaymentAnalyticsController',
         'Ext.Praxis.view.payments.PaymentAnalyticsForm.Options',
         'Ext.Praxis.view.payments.PaymentAnalyticsForm.Filters',
-        'Ext.Praxis.view.payments.PaymentAnalyticsForm.Grids.AnalyticsGrid',
-        'Ext.Praxis.controller.payments.PaymentAnalytics.PaymentAnalyticsGridController',
+        'Ext.Praxis.view.payments.PaymentAnalyticsForm.Grids.AnalyticsSettlementGrid',
+        'Ext.Praxis.view.payments.PaymentAnalyticsForm.Grids.AnalyticsAccountingGrid',
+        'Ext.Praxis.controller.payments.PaymentAnalytics.AnalyticsSettlementGridController',
+        'Ext.Praxis.controller.payments.PaymentAnalytics.AnalyticsAccountingGridController'
     ],
     controller: 'PaymentAnalyticsController',
     layout: {

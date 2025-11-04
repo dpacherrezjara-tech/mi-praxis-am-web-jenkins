@@ -126,28 +126,34 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                 },
                                 {
                                     xtype: 'combobox',
+                                    id: prototype.id + '-cmbStvalPG',
                                     fieldLabel: 'Complements vs Sales',
                                     name: 'IN_STVAL',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['X', 'All'],
-                                            ['', 'Pending'],
-                                            ['1', 'Match'],
-                                            ['3', 'Settl. Without Sales'],
-                                            ['4', 'Match Partial'],
-                                            ['6', 'Match Forced'],
-                                            ['E', 'Duplicate Payment'],
-                                            ['5', 'Match Manual']
-                                        ]
-                                    }),
+                                    queryMode: 'local',
+                                    // store: Ext.create('Ext.data.SimpleStore', {
+                                    //     fields: ['code', 'name'],
+                                    //     data: [
+                                    //         ['X', 'All'],
+                                    //         ['', 'Pending'],
+                                    //         ['0', 'Stand By'],
+                                    //         ['1', 'Match'],
+                                    //         ['3', 'Settl. Without Sales'],
+                                    //         ['4', 'Match Partial'],
+                                    //         ['6', 'Match Forced'],
+                                    //         ['E', 'Duplicate'],
+                                    //         ['5', 'Match Manual'],
+                                    //         ['I', 'Record Invalid']
+                                    //     ]
+                                    // }),
                                     labelWidth: 160,
                                     width: 280,
-                                    displayField: 'name',
-                                    valueField: 'code',
-                                    queryMode: 'local',
                                     editable: false,
-                                    value: 'X'
+                                    typeAhead: true,
+                                    valueField: 'STVAL',
+                                    displayField: 'DESCRIPTION',
+                                    enableKeyEvents: true,
+                                    // triggerAction: 'all',
+                                    // value: 'X'
                                 },
                                 {
                                     xtype: 'combo',
@@ -211,7 +217,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     xtype: 'textfield',
                                     fieldLabel: 'Ticket',
                                     labelWidth: 50,
-                                    width: 180,
+                                    width: 150,
                                     name: 'IN_TKT',
                                     //allowBlank: false, // Puedes configurar esto para requerir un valor
                                     maxLength: 13, // Límite máximo de caracteres
@@ -225,7 +231,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     xtype: 'textfield',
                                     fieldLabel: 'PNR',
                                     labelWidth: 50,
-                                    width: 150,
+                                    width: 120,
                                     name: 'IN_PNR',
                                     //allowBlank: false, // Puedes configurar esto para requerir un valor
                                     maxLength: 6, // Límite máximo de caracteres
@@ -264,7 +270,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     xtype: 'textfield',
                                     fieldLabel: 'Merchant',
                                     labelWidth: 70,
-                                    width: 185,
+                                    width: 180,
                                     name: 'IN_MERCHID',
                                     //allowBlank: false, // Puedes configurar esto para requerir un valor
                                     maxLength: 10, // Límite máximo de caracteres
@@ -310,6 +316,21 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    id: prototype.id + '-cmbCerrorPG',
+                                    fieldLabel: 'Error Code',
+                                    name: 'IN_CERROR',
+                                    labelWidth: 70,
+                                    width: 270,
+                                    editable: false,
+                                    typeAhead: true,
+                                    valueField: 'CODE',
+                                    displayField: 'DESCRIPTION',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: ''
                                 }
                             ]
                         }
@@ -701,12 +722,73 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Filters', {
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
-                                },
+                                }
+
                             ],
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5 1 5 17',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
+                            items: [
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'DEUNA Processor', // INSUMO
+                                    name: 'IN_PROCINSUMO',
+                                    id: prototype.id + '-cmbProcessorInsumo',
+                                    // store: Ext.create('Ext.data.SimpleStore', {
+                                    //     fields: ['CODE', 'DESCRIPTION'],
+                                    //     data: [
+                                    //         ['', 'All'],
+                                    //         ['aplazo', 'Aplazo'],
+                                    //         ['bbva', 'Bbva'],
+                                    //         ['kueski', 'Kueski'],
+                                    //         ['mercadopago', 'Mercado Pago'],
+                                    //         ['mercadopago_wallet', 'Mercadopago Wallet'],
+                                    //         ['paypal_wallet', 'Paypal Wallet'],
+                                    //         ['worldpay', 'Worldpay'],
+                                    //     ]
+                                    // }),
+                                    labelWidth: 100,
+                                    width: 250,
+                                    displayField: 'DESCRIPTION',
+                                    valueField: 'CODE',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Match Processor', //MATCH
+                                    name: 'IN_PROCMATCH',
+                                    id: prototype.id + '-cmbProcessorMatch',
+                                    // store: Ext.create('Ext.data.SimpleStore', {
+                                    //     fields: ['A4451KEY2', 'A4451DESC1'],
+                                    //     data: []
+                                    // }),
+                                    labelWidth: 110,
+                                    width: 280,
+                                    displayField: 'A4451DESC1',
+                                    valueField: 'A4451KEY2',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
+                                }
+                            ]
                         }
+
                     ]
                 },
-                //</editor-fold>
+                        //</editor-fold>
             ]
         }
     ]

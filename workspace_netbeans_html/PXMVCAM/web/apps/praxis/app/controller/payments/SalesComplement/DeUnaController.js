@@ -2,8 +2,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.DeUnaController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.DeUnaController',
     afterRender: function (obj, e) {
-        const me = this; //call controller
-        const view = me.view; // call view design
+        const me = this;
+        const view = me.view;
         this.getData(view);
     },
 
@@ -11,8 +11,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.DeUnaController', {
         console.log('detDta', view)
         let store = global.callStorePaggin('PRAXISMP', 'SQP05697', view.searchParams);
         console.log(' data entry', store)
-        view.bindStore(store);
+
+//        view.bindStore(store);
         this.view.setStore(store);
+
     },
 
     downloadExcelMit: function () {  //modal confirmar descarga

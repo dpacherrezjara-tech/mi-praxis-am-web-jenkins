@@ -110,6 +110,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                     return value;
                 }
             },
+            {text: 'ARN', dataIndex: 'ARN', width: 200},
             {text: 'Ref. Number', dataIndex: 'AREFNBR', width: 140},
             {text: 'PNR', dataIndex: 'SPNR', width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {

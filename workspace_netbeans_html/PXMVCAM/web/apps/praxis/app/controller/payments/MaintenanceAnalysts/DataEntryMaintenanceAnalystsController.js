@@ -90,6 +90,7 @@ Ext.define('Ext.Praxis.controller.payments.MaintenanceAnalysts.DataEntryMaintena
     },
     
     onDeleClick: function () {
+         var me = this;
         var rec = me.view.params.rec;
             me.beanTMP.IN_OPTION = 'D';
             me.beanTMP.A4836DESCR = Ext.getCmp(prototype.id01 + '-txtA2665DESCR').getValue();

@@ -69,6 +69,15 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Options', {
                             listeners: {
                                 click: 'onClickClearBtn'
                             }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnAnalyzeReconciliationErrors',
+                            iconCls: 'prx-icon-image-list-error',
+                            tooltip: 'Analyze Reconciliation Errors',
+                            listeners: {
+                                click: 'onClickAnalyzeReconciliationErrors'
+                            }
                         }
                     ]
                 }

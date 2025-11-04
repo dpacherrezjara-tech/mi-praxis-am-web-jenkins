@@ -53,7 +53,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransaction.SummaryGridCont
         const viewParams = this.view.searchParams;
         return {
             IN_TFECHA: viewParams.IN_TFECHA,
-            FECHA_FROM: obj.fecha,
+            FECHA_FROM: obj.min_DATE,
+            FECHA_TO: obj.max_DATE,
             IN_PROCTYPE: obj.proctype,
             IN_PROCTYPESQ: obj.proctypesq,
             IN_MDA: obj.scurrency,

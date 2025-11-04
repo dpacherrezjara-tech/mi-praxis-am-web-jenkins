@@ -135,6 +135,9 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.DeUnaGrid', {
                 text: 'Status<br>Complement', dataIndex: 'A4791STATU', width: 100
             },
             {
+                text: 'DEUNA<br>Processor', dataIndex: 'A4791PROCE', width: 100
+            },
+            {
                 text: 'Reconciliation',
                 defaults: {
                     menuDisabled: true,
@@ -197,7 +200,6 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.DeUnaGrid', {
                     { text: 'Date', dataIndex: 'A4791FREVI', width: 80 }
                 ]
             },
-            
         ]
     },
     tbar: {

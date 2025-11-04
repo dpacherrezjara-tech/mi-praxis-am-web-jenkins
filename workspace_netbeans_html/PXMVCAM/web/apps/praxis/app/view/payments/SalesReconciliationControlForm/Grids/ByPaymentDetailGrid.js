@@ -172,7 +172,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         text: 'Invoice<br>Refer. Number<br>PNR', dataIndex: 'invoirn', width: 130
                     },
                     {
-                        text: 'ARN', dataIndex: 'arn', width: 150
+                        text: 'ARN', dataIndex: 'arn', width: 200
                     },
                     {
                         text: 'Ref. Number', dataIndex: 'arefnbr', width: 150

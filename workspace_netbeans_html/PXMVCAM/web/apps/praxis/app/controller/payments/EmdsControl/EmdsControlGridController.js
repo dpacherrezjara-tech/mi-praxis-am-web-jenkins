@@ -76,6 +76,22 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController
         });
         dataEntry.show();
     },
+    onClickByPayment: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {  
+        const me = this;
+        const obj = record.data;
+        
+//        let params = {
+//            IN_CCUST : obj.CCUST,
+//            IN_PRDA : obj.PRDA,
+//            IN_TDOC : obj.TDOC,
+//            IN_AREFNBR : obj.AREFNBR
+//        };
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry', {
+            id: prototype.id + '-TransacErrorBPODataEntry-1',
+            obj: obj,
+        });
+        dataEntry.show();
+    },
     saveValidate: async function (view){
         const me = this;
         let success = false;
@@ -111,7 +127,7 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController
             const tmp = await global.loadRecordsOnTable('PRAXISMP', 'XTEMPO', dataChanged);
             console.log('tmp', tmp);
             
-             let params = {
+            let params = {
                 IN_CUUID: tmp.cuuid,
                 IN_FUUID: tmp.fuuid
             };
@@ -129,7 +145,7 @@ Ext.define('Ext.Praxis.controller.payments.EmdsControl.EmdsControlGridController
                 notifier.warning('Error: ' + message);        
             }
             
-            // Lload search
+            // Load search
             this.getData(me.view);
             
             

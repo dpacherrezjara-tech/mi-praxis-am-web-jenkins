@@ -20,10 +20,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
         });
         winPnrDataEntry.show();
     },
-    copySPNR: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        navigator.clipboard.writeText(rowData.data.PNR.trim());
+    copyEMDTKT: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        navigator.clipboard.writeText(rowData.data.EMDNUMBER.trim());
         global.Msg({
-            msg: 'SPNR Copied to clipboard!: ' + rowData.data.PNR.trim()
+            msg: 'EMD NUMBER Copied to clipboard!: ' + rowData.data.EMDNUMBER.trim()
         });
     },
     onClickSearchTicket: function (grid, html, rowIndex, colIndex, obj) {
@@ -88,6 +88,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
            'Match Date (Plusgrade VS Amex)': x.AMEXFECSELEC,
            'Plusgrade VS Sales': x.DESCSTVAL,
            'Match Date (Plusgrade VS Sales)': x.DESCVSSALES,
+           'Rule Description': x.FREGLA_DESCRIPTION,
            'Sales Country': x.COUNTRY,
            'Sales Date': x.SDATE,
            'Credit Card Code': x.SCARCOD,
@@ -97,6 +98,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
            'Currency Offer': x.CUROFFER,
            'Total Amount': x.SVFOP,
            'Total Amount Off': x.AMOUNTOFF,
+           'Amount EMD' : x.TOTALEMD,
            'Sales Amount': x.SVFOPS,
            'Sales Difference': x.DIFF_AMOUNT,
            'Sales Country Praxis': x.SCOUNTRY,
@@ -105,15 +107,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
            'Plusgrade VS Chargeback': x.DESCFAMEXCHG,
            'PNR': x.PNR,
            'EMD Number': x.EMDNUMBER,
+           'Add EMD Amount' : x.TCVFEAMOFR,
+           'Add EMD Number' : x.EMDSNUMBER,
            'Accounting Status': x.STCON_DESCRIPTION,
            'Accounting Date': x.FCONT,
            'Accounting Praxis ID': x.IDCON,
            'Accounting ID FLEX': x.IDCONFLE,
-           
            'Error Code': x.CERROR,
            'Error Description': x.DES_CERROR,
-           'Add Pax EMD Number': x.ADDPAXEMD,
-           'Add Pax Ticket Number': x.ADDPAXTKT,
            'Token': x.PAYTOKEN,
            'User Updated': x.USUP,
            'Updated ': x.FEUP

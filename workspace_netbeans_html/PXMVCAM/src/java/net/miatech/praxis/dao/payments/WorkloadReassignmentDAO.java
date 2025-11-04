@@ -8,6 +8,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.A4836Filter;
@@ -63,7 +64,7 @@ public class WorkloadReassignmentDAO {
                 objRtn.PRDA1 = rs01.getString("PRDA");
                 objRtn.PROCTYPESQ1 = rs01.getString("PROCTYPESQ");
                 objRtn.PROCTYPE1 = rs01.getString("PROCTYPE");
-                objRtn.groupField = rs01.getString("PRDA") + " - " + rs01.getString("PROCTYPE");
+                objRtn.groupField = rs01.getString("PRDA") + " - " + rs01.getString("A4451DESC2");
 
                 lstRtn.add(objRtn);
 
@@ -100,12 +101,17 @@ public class WorkloadReassignmentDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL PRAXISMP.SQP05740(?,?,?,?,?,?,?)}";
 
+        String SQLCLL01 = "{CALL PRAXISMP.SQP05742(?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.registerOutParameter(8, Types.INTEGER);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_OPTION);
@@ -115,10 +121,23 @@ public class WorkloadReassignmentDAO {
             cstmt01.setString(6, filter.PROCTYPE1);
             cstmt01.setString(7, filter.PROCTYPESQ1);
 
+            cstmt01.setInt(8, filter.page.PAGNUM);
+            cstmt01.setInt(9, filter.page.PAGROW);
+            cstmt01.setInt(10, filter.page.TOTPAG);
+            cstmt01.setInt(11, filter.page.TOTROW);
+
             cstmt01.execute();
 
+            filter.page.PAGNUM = cstmt01.getInt(8);
+            filter.page.PAGROW = cstmt01.getInt(9);
+            filter.page.TOTPAG = cstmt01.getInt(10);
+            filter.page.TOTROW = cstmt01.getInt(11);
+
             rs01 = cstmt01.getResultSet();
+
             while (rs01.next()) {
+                objRtn = new SQP05739Filter();
+
                 objRtn = new SQP05739Filter();
                 objRtn.CCUST1 = rs01.getString("CCUST");
                 objRtn.PRDA1 = rs01.getString("PRDA");
@@ -139,13 +158,18 @@ public class WorkloadReassignmentDAO {
                 objRtn.STVAL1 = rs01.getString("STVAL");
                 objRtn.PMERCHID1 = rs01.getString("PMERCHID");
                 objRtn.TGROSAMOUN1 = rs01.getDouble("TGROSAMOUN");
+                objRtn.CHK = rs01.getString("CHK");
+
+                objRtn.page.PAGNUM = filter.page.PAGNUM;
+                objRtn.page.PAGROW = filter.page.PAGROW;
+                objRtn.page.TOTPAG = filter.page.TOTPAG;
+                objRtn.page.TOTROW = filter.page.TOTROW;
 
                 lstRtn.add(objRtn);
             }
-        } catch (SQLException e) {
-            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+
         } catch (Exception e) {
-            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            e.getMessage();
         } finally {
             if (rs01 != null) {
                 try {
@@ -164,7 +188,9 @@ public class WorkloadReassignmentDAO {
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
         }
+
         return lstRtn;
+
     }
 
     public String insertAuditor(ArrayList<SQP05739Filter> filter, String Auditor) throws SQLException, Exception {

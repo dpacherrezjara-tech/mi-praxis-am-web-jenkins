@@ -141,8 +141,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     labelAlign: 'right',
                                     width: 230,
                                     typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''
@@ -162,8 +162,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     labelAlign: 'right',
                                     width: 140,
                                     typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''
@@ -191,31 +191,32 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Status',
+                                    id: prototype.id + '-cmbStvalBTS',
                                     name: 'IN_STVAL',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['', 'All'],
-//                                            ['A', 'Match OC/Camepa'],
-                                            ['C', 'Match Complement'],
-//                                            ['D', 'Match Balance'],
-                                            ['E', 'Duplicate Payment'],
-                                            ['M', 'Match Multi-Payment'],
-                                            ['0', 'Stand By'],
-                                            ['1', 'Match'],
-                                            ['2', 'Sales Without Settl.'],
-                                            ['4', 'Match Partial'],
-                                            ['5', 'Match Manual'],
-//                                            ['6', 'Match Forced'],
-//                                            ['7', 'Match Compensation'],
-//                                            ['8', 'Match Transactional'],
-                                            ['9', 'Match Void'],
-                                        ]
-                                    }),
+//                                     store: Ext.create('Ext.data.SimpleStore', {
+//                                         fields: ['code', 'name'],
+//                                         data: [
+//                                             ['', 'All'],
+// //                                            ['A', 'Match OC/Camepa'],
+//                                             ['C', 'Match Complement'],
+// //                                            ['D', 'Match Balance'],
+//                                             ['E', 'Duplicate Payment'],
+//                                             ['M', 'Match Multi-Payment'],
+//                                             ['0', 'Stand By'],
+//                                             ['1', 'Match'],
+//                                             ['2', 'Sales Without Settl.'],
+//                                             ['4', 'Match Partial'],
+//                                             ['5', 'Match Manual'],
+// //                                            ['6', 'Match Forced'],
+// //                                            ['7', 'Match Compensation'],
+// //                                            ['8', 'Match Transactional'],
+//                                             ['9', 'Match Void'],
+//                                         ]
+//                                     }),
                                     labelWidth: 55,
                                     width: 250,
-                                    displayField: 'name',
-                                    valueField: 'code',
+                                    displayField: 'NAME',
+                                    valueField: 'CODE',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
@@ -311,24 +312,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Card Type',
+                                    id: prototype.id + '-cmbCardTypeBTSum',
                                     name: 'IN_TCARD',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['', 'All'],
-                                            ['2', 'Master Card'],
-                                            ['1', 'Visa'],
-                                            ['3', 'American Express'],
-                                            ['5', 'Dinners Club'],
-                                            ['6', 'UATP'],
-                                            ['4', 'Boomers'],
-                                            ['7', 'BNTL']
-                                        ]
-                                    }),
+                                    // store: Ext.create('Ext.data.SimpleStore', {
+                                    //     fields: ['code', 'name'],
+                                    //     data: [
+                                    //         ['', 'All'],
+                                    //         ['2', 'Master Card'],
+                                    //         ['1', 'Visa'],
+                                    //         ['3', 'American Express'],
+                                    //         ['5', 'Dinners Club'],
+                                    //         ['6', 'UATP'],
+                                    //         ['4', 'Boomers'],
+                                    //         ['7', 'BNTL']
+                                    //     ]
+                                    // }),
                                     labelWidth: 65,
                                     width: 190,
-                                    displayField: 'name',
-                                    valueField: 'code',
+                                    displayField: 'NAME',
+                                    valueField: 'CODE',
                                     queryMode: 'local',
                                     editable: false,
                                     listeners: {
@@ -344,8 +346,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     labelWidth: 65,
                                     width: 210,
                                     hidden: true,
-                                    displayField: 'a4451desc1',
-                                    valueField: 'a4451key3',
+                                    displayField: 'NAME',
+                                    valueField: 'CODE',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
@@ -470,8 +472,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     labelAlign: 'right',
                                     width: 230,
                                     typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''
@@ -491,8 +493,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     labelAlign: 'right',
                                     width: 140,
                                     typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''
@@ -695,31 +697,32 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Status',
+                                    id: prototype.id + '-cmbStvalBTD',
                                     name: 'IN_STVAL',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['', 'All'],
-//                                            ['A', 'Match OC/Camepa'],
-                                            ['C', 'Match Complement'],
-//                                            ['D', 'Match Balance'],
-                                            ['E', 'Duplicate Payment'],
-                                            ['M', 'Match Multi-Payment'],
-                                            ['0', 'Stand By'],
-                                            ['1', 'Match'],
-                                            ['2', 'Sales Without Settl.'],
-                                            ['4', 'Match Partial'],
-                                            ['5', 'Match Manual'],
-//                                            ['6', 'Match Forced'],
-//                                            ['7', 'Match ComForcedpensation'],
-//                                            ['8', 'Match Transactional'],
-                                            ['9', 'Match Void'],
-                                        ]
-                                    }),
+//                                     store: Ext.create('Ext.data.SimpleStore', {
+//                                         fields: ['code', 'name'],
+//                                         data: [
+//                                             ['', 'All'],
+// //                                            ['A', 'Match OC/Camepa'],
+//                                             ['C', 'Match Complement'],
+// //                                            ['D', 'Match Balance'],
+//                                             ['E', 'Duplicate Payment'],
+//                                             ['M', 'Match Multi-Payment'],
+//                                             ['0', 'Stand By'],
+//                                             ['1', 'Match'],
+//                                             ['2', 'Sales Without Settl.'],
+//                                             ['4', 'Match Partial'],
+//                                             ['5', 'Match Manual'],
+// //                                            ['6', 'Match Forced'],
+// //                                            ['7', 'Match ComForcedpensation'],
+// //                                            ['8', 'Match Transactional'],
+//                                             ['9', 'Match Void'],
+//                                         ]
+//                                     }),
                                     labelWidth: 55,
                                     width: 250,
-                                    displayField: 'name',
-                                    valueField: 'code',
+                                    displayField: 'NAME',
+                                    valueField: 'CODE',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
@@ -727,24 +730,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Card Type',
+                                    id: prototype.id + '-cmbCardTypeBT',
                                     name: 'IN_TCARD',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['', 'All'],
-                                            ['2', 'Master Card'],
-                                            ['1', 'Visa'],
-                                            ['3', 'American Express'],
-                                            ['5', 'Dinners Club'],
-                                            ['6', 'UATP'],
-                                            ['4', 'Boomers'],
-                                            ['7', 'BNTL']
-                                        ]
-                                    }),
+                                    // store: Ext.create('Ext.data.SimpleStore', {
+                                    //     fields: ['code', 'name'],
+                                    //     data: [
+                                    //         ['', 'All'],
+                                    //         ['2', 'Master Card'],
+                                    //         ['1', 'Visa'],
+                                    //         ['3', 'American Express'],
+                                    //         ['5', 'Dinners Club'],
+                                    //         ['6', 'UATP'],
+                                    //         ['4', 'Boomers'],
+                                    //         ['7', 'BNTL']
+                                    //     ]
+                                    // }),
                                     labelWidth: 65,
                                     width: 190,
-                                    displayField: 'name',
-                                    valueField: 'code',
+                                    displayField: 'NAME',
+                                    valueField: 'CODE',
                                     queryMode: 'local',
                                     editable: false,
                                     listeners: {
@@ -760,8 +764,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByTic
                                     labelWidth: 65,
                                     width: 210,
                                     hidden: true,
-                                    displayField: 'a4451desc1',
-                                    valueField: 'a4451key3',
+                                    displayField: 'NAME',
+                                    valueField: 'CODE',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''

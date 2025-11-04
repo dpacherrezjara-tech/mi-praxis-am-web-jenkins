@@ -13,6 +13,26 @@ public class A4497 {
 
     public String A4497CCUST;
 
+    public String A4497SCARD;
+    public String A4497TRSRC;
+    //
+
+    public String getA4497SCARD() {
+        return A4497SCARD;
+    }
+
+    public void setA4497SCARD(String A4497SCARD) {
+        this.A4497SCARD = A4497SCARD;
+    }
+
+    public String getA4497TRSRC() {
+        return A4497TRSRC;
+    }
+
+    public void setA4497TRSRC(String A4497TRSRC) {
+        this.A4497TRSRC = A4497TRSRC;
+    }
+
     public void setA4497CCUST(String A4497CCUST) {
         this.A4497CCUST = A4497CCUST;
     }
@@ -459,7 +479,5 @@ public class A4497 {
     public void setA4497FLAGDES(String A4497FLAGDES) {
         this.A4497FLAGDES = A4497FLAGDES;
     }
-    
 
-    
 }
