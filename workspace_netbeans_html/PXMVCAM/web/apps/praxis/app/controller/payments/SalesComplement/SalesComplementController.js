@@ -178,7 +178,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             panelFilter.show();
         }
     },
-     onClickClearBtn: function (obj) {
+    onClickClearBtn: function (obj) {
         Ext.getCmp(prototype.id + '-formFilters-1').getForm().reset();
         Ext.getCmp(prototype.id + '-formFilters-2').getForm().reset();
         Ext.getCmp(prototype.id + '-formFilters-3').getForm().reset();

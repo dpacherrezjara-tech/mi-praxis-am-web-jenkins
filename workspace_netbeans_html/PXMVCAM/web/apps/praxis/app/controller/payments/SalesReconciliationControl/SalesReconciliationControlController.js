@@ -18,130 +18,86 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         const me = this;
         const filterPanel = Ext.getCmp(prototype.id + '-contentFilter');
         filterPanel.mask('Loading Filters...');
-        const res = await fetch(`${me.url}/loadFilters`);
-        if (res.ok) {
-            const data = await res.json();
-            console.log('Filtros: ', data);
-            me.dataFilters = data ;
-            const procesadores = data.procesadores;
-            const monedas = data.monedas.map(x => ({code: x.a006PAIS, name: `${x.a006PAIS}`}));
-            const errores = data.cerror.map(x => ({name: `${x.a4451key3.trim()} - ${x.a4451desc1}`, code: x.a4451key3}));
+        try {
+            const response = await global.callStoreGet('PRAXISMP','SQP05276',{IN_STATUS:'1'});
+            const { lstVals, lstRs } = response;
 
-            me.creditcards = data.creditcards;
-            me.users = data.admins.map(x => x.a4451key3.trimEnd());
-            //<editor-fold defaultstate="collapsed" desc="Combos">
-            const cmbProcesadores = Ext.getCmp(prototype.id + '-cmbProctype');
-            me.setComboStore({cmp: cmbProcesadores, data: procesadores,
-                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
+            const dataCerror        = lstRs[0]  || [];
+            const dataCodadju       = lstRs[1]  || [];
+            const dataProcessors    = lstRs[2]  || [];
+            const dataCreditcards   = lstRs[3]  || [];
+            const dataPaises        = lstRs[4]  || [];
+            const dataMonedas       = lstRs[5]  || [];
+            const dataAdmins        = lstRs[6]  || [];
+            const dataCcGrupos      = lstRs[7]  || [];
+            const dataStvalSettlement = lstRs[8]  || [];
+            const dataAutoComment   = lstRs[9]  || [];
+            const dataFreglas       = lstRs[10] || [];
+            const dataStvalTicket   = lstRs[11]  || [];
 
-            const cmbProcesadoresf = Ext.getCmp(prototype.id + '-cmbProctypef');
-            me.setComboStore({cmp: cmbProcesadoresf, data: procesadores,
-                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
-
-            const cmbProctypeSettl = Ext.getCmp(prototype.id + '-cmbProctypeSettl');
-            me.setComboStore({cmp: cmbProctypeSettl, data: procesadores,
-                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
-
-            const cmbProctypeSettl2 = Ext.getCmp(prototype.id + '-cmbProctypeSettl2');
-            me.setComboStore({cmp: cmbProctypeSettl2, data: procesadores,
-                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
-
-
-            const cmbPaisesSettl2 = Ext.getCmp(prototype.id + '-cmbPaisesSettl2');
-            me.setComboStore({cmp: cmbPaisesSettl2, data: data.paises,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbPaises = Ext.getCmp(prototype.id + '-cmbPaisesBP');
-            me.setComboStore({cmp: cmbPaises, data: data.paises,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbPaisesf = Ext.getCmp(prototype.id + '-cmbPaisesfBP');
-            me.setComboStore({cmp: cmbPaisesf, data: data.paises,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbPaisesBT = Ext.getCmp(prototype.id + '-cmbPaisesBT');
-            me.setComboStore({cmp: cmbPaisesBT, data: data.paises,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbPaisesfBT = Ext.getCmp(prototype.id + '-cmbPaisesfBT');
-            me.setComboStore({cmp: cmbPaisesfBT, data: data.paises,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbPaisesSettl = Ext.getCmp(prototype.id + '-cmbPaisesSettl');
-            me.setComboStore({cmp: cmbPaisesSettl, data: data.paises,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbCerror = Ext.getCmp(prototype.id + '-cmbCerror');
-            me.setComboStore({cmp: cmbCerror, data: errores,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbCodadju = Ext.getCmp(prototype.id + '-cmbCodadju');
-            me.setComboStore({cmp: cmbCodadju, data: data.codadju,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
-
-            const cmbCerrorb = Ext.getCmp(prototype.id + '-cmbCerrorb');
-            me.setComboStore({cmp: cmbCerrorb, data: errores,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbCodadjub = Ext.getCmp(prototype.id + '-cmbCodadjub');
-            me.setComboStore({cmp: cmbCodadjub, data: data.codadju,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
-
-            const cmbMonedabST2 = Ext.getCmp(prototype.id + '-cmbMonedabST2');
-            me.setComboStore({cmp: cmbMonedabST2, data: monedas,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbMdasBT = Ext.getCmp(prototype.id + '-cmbMonedaBT');
-            me.setComboStore({cmp: cmbMdasBT, data: monedas,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbMdasbBT = Ext.getCmp(prototype.id + '-cmbMonedabBT');
-            me.setComboStore({cmp: cmbMdasbBT, data: monedas,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbMdasbBP = Ext.getCmp(prototype.id + '-cmbMonedaBP');
-            me.setComboStore({cmp: cmbMdasbBP, data: monedas,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbMdasfBP = Ext.getCmp(prototype.id + '-cmbMonedafBP');
-            me.setComboStore({cmp: cmbMdasfBP, data: monedas,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbMdasbST = Ext.getCmp(prototype.id + '-cmbMonedabST');
-            me.setComboStore({cmp: cmbMdasbST, data: monedas,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const dataAutoComments = data.autocomments.map(x => ({name: `${x.a4451key3.trim()} - ${x.a4451desc1}`, code: x.a4451key3}));
-            const cmbAutoComments = Ext.getCmp(prototype.id + '-cmbAutoComment');
-            me.setComboStore({cmp: cmbAutoComments, data: dataAutoComments,
-                valueField: 'code', displayField: 'name', value: ''});
-
+            const quantityAnalyzePending = lstVals.IO_QUANITY_ANALYZE_PENDING;
+ 
+            me.creditcards = dataCreditcards;
+            me.processors = dataProcessors;
+            me.countries = dataPaises;
+            me.currencies = dataMonedas;
+            me.users = dataAdmins.map(x => (x.A4451KEY3 || x.a4451key3 || '').toString().trim());
             
-            const dataReglas = data.reglas.map(x => ({name: `${x.a4451key3.trim()}:  ${x.a4451desc1}`, code: x.a4451key3, comment: x.a4451comen }));
-            console.log('data.reglas', data.reglas[0] );
-            console.log('dataReglas', dataReglas );
-            
-            const cmbReglas = Ext.getCmp(prototype.id + '-cmbReglas');
-            me.setComboStore({cmp: cmbReglas, data: dataReglas,
-                valueField: 'code', displayField: 'name',
-                fields: ['code', 'name', 'comment'],
-                value: ''});
+            console.table(me.creditcards);
 
+            //<editor-fold defaultstate="collapsed" desc="Bind Combos">
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctype'),      data: dataProcessors,   valueField: 'A4451KEY2', displayField: 'A4451DESC1',   value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctypef'),     data: dataProcessors,   valueField: 'A4451KEY2', displayField: 'A4451DESC1',   value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesBP'),      data: dataPaises,       valueField: 'CODE',      displayField: 'NAME',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesfBP'),     data: dataPaises,       valueField: 'CODE',      displayField: 'NAME',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedaBP'),      data: dataMonedas,      valueField: 'CODE',      displayField: 'NAME',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedafBP'),     data: dataMonedas,      valueField: 'CODE',      displayField: 'NAME',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCerror'),        data: dataCerror,       valueField: 'A4451KEY3', displayField: 'NAME',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCodadju'),       data: dataCodadju,      valueField: 'A4451KEY3', displayField: 'A4451DESC1',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbAutoComment'),   data: dataAutoComment,  valueField: 'CODE',      displayField: 'NAME',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbReglas'),        data: dataFreglas,      valueField: 'CODE',      displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalBPS'),      data: dataStvalSettlement,valueField: 'CODE',     displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalBPD'),      data: dataStvalSettlement,valueField: 'CODE',     displayField: 'NAME', value: ''});
+            
+            
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesBT'),      data: dataPaises,       valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesfBT'),     data: dataPaises,       valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedabBT'),     data: dataMonedas,      valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedaBT'),      data: dataMonedas,      valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCerrorb'),       data: dataCerror,       valueField: 'A4451KEY3',  displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCodadjub'),      data: dataCodadju,      valueField: 'A4451KEY3',  displayField: 'A4451DESC1', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalBTS'),      data: dataStvalTicket,  valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalBTD'),      data: dataStvalTicket,  valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCardTypeBT'),    data: dataCcGrupos,     valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCardTypeBTSum'), data: dataCcGrupos,     valueField: 'CODE',       displayField: 'NAME', value: ''});
+            
+
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctypeSettl'), data: dataProcessors, valueField: 'A4451KEY2', displayField: 'A4451DESC1',     value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctypeSettl2'),data: dataProcessors, valueField: 'A4451KEY2', displayField: 'A4451DESC1',     value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesSettl'),   data: dataPaises,       valueField: 'CODE',      displayField: 'NAME',           value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesSettl2'),  data: dataPaises,       valueField: 'CODE',      displayField: 'NAME',           value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedabST'),     data: dataMonedas,      valueField: 'CODE',      displayField: 'NAME',           value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedabST2'),    data: dataMonedas,      valueField: 'CODE',      displayField: 'NAME',           value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalSTS'),      data: dataStvalSettlement,valueField: 'CODE',     displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalSTD'),      data: dataStvalSettlement,valueField: 'CODE',     displayField: 'NAME', value: ''});
+            
             //</editor-fold>
+
+            if (typeof me.changeAnalyzePending === 'function') {
+                me.changeAnalyzePending(quantityAnalyzePending);
+            }
+
             me.showProcessBtn(me.users);
             me.showProductionBtn(me.users);
             me.showAddTicketBtn(me.users);
-            
-            // Establecer usuario por defecto en el campo IN_USER_ASSIGNED
             me.setDefaultUser();
 
+        } catch (e) {
+            console.log(e);
+            global.Msg({msg: 'Error loading filters'});
+        } finally {
+            filterPanel.unmask();
         }
-        
-        // Catalogs in session Storage
-        
-        // End Catalogs
-        
-        filterPanel.unmask();
     },
     //<editor-fold defaultstate="collapsed" desc="Option Buttons">
     showProcessBtn: function (users) {
@@ -197,6 +153,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             }
         } else {
             btn.hide();
+        }
+    },
+    changeAnalyzePending: function(quantity = 0){
+        const optionAnalyze = Ext.getCmp(prototype.id + '-btnAnalyzeReconciliationErrors');
+        if (optionAnalyze) {
+            const originalText = optionAnalyze.defaultText || optionAnalyze.getText() || '';
+            if (!optionAnalyze.defaultText) {
+                optionAnalyze.defaultText = originalText;
+            }
+            if (quantity > 0) {
+                optionAnalyze.setText(
+                    originalText + ` <span style="color: red; font-weight: bold;">(${quantity})</span>`
+                );
+            } else {
+                optionAnalyze.setText(originalText);
+            }
         }
     },
     setDefaultUser: function () {
@@ -436,24 +408,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     onChangeCreditCardBT: function (obj) {
         const me = this;
         const cmbCard = Ext.getCmp(prototype.id + '-cmbCreditCardBT');
+        
         if (obj.getValue() === '') {
             cmbCard.hide();
         } else {
-            const data = me.creditcards.filter(x => x.a4451cant1 === parseInt(obj.getValue()));
+            
+            const data = me.creditcards.filter(x => x.CODE_GROUP_CARD === obj.getValue());
+
             me.setComboStore({cmp: cmbCard, data: data,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+                valueField: 'CODE', displayField: 'NAME', value: ''});
             cmbCard.show();
         }
     },
     onChangeCreditCardBTSum: function (obj) {
         const me = this;
         const cmbCard = Ext.getCmp(prototype.id + '-cmbCreditCardBTSum');
+      
         if (obj.getValue() === '') {
             cmbCard.hide();
         } else {
-            const data = me.creditcards.filter(x => x.a4451cant1 === parseInt(obj.getValue()));
+
+            const data = me.creditcards.filter(x => x.CODE_GROUP_CARD === obj.getValue());
+
             me.setComboStore({cmp: cmbCard, data: data,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+                valueField: 'CODE', displayField: 'NAME', value: ''});
             cmbCard.show();
         }
     },
@@ -826,8 +804,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                     label.show();
             }
         }
+    },
+    onClickAnalyzeReconciliationErrors: function () {
+        const me = this;
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.AnalyzeReconciliationErrorsDataEntry', {
+            id: prototype.id + '-AnalyzeReconciliationErrorsDataEntry-1',
+            processors: me.processors
+        });
+        dataEntry.show();
     }
-
 });
 
 
