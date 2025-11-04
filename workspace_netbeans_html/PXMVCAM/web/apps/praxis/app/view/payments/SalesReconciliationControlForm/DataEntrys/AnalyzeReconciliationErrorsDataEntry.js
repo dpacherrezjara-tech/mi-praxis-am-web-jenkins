@@ -9,7 +9,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.A
     controller: 'AnalyzeReconciliationErrorsControlController',
     title: 'Analyze Reconciliation Errors',
     header: true,
-    width: 1300,
+    width: 1380,
     height: 600,
     maxHeight: 600,
     resizable: false,
@@ -105,7 +105,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.A
                         fieldLabel: 'Ref. Number',
                         name: 'IN_AREFNBR',
                         labelWidth: 90,
-                        width: 240,
+                        width: 220,
                         maxLength: 23,
                         maskRe: /[0-9]/,
                         enforceMaxLength: true,
@@ -153,8 +153,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.A
                         xtype: 'combobox',
                         fieldLabel: 'Status',
                         name: 'IN_STATUS',
-                        labelWidth: 60,
-                        width: 150,
+                        labelWidth: 50,
+                        width: 140,
                         store: Ext.create('Ext.data.SimpleStore', {
                             fields: ['code', 'name'],
                             data: [
@@ -257,7 +257,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.A
                     {
                         text: 'Processor',
                         dataIndex: 'PROSQ_DESCRIPTION',
-                        width: 100,
+                        width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "background-color:#FCF6DC;font-weight:bold;";
                             return value;
