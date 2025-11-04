@@ -24,7 +24,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
 
             const dataCerror        = lstRs[0]  || [];
             const dataCodadju       = lstRs[1]  || [];
-            const dataProcesadores  = lstRs[2]  || [];
+            const dataProcessors    = lstRs[2]  || [];
             const dataCreditcards   = lstRs[3]  || [];
             const dataPaises        = lstRs[4]  || [];
             const dataMonedas       = lstRs[5]  || [];
@@ -38,13 +38,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const quantityAnalyzePending = lstVals.IO_QUANITY_ANALYZE_PENDING;
  
             me.creditcards = dataCreditcards;
+            me.processors = dataProcessors;
+            me.countries = dataPaises;
+            me.currencies = dataMonedas;
             me.users = dataAdmins.map(x => (x.A4451KEY3 || x.a4451key3 || '').toString().trim());
             
             console.table(me.creditcards);
 
             //<editor-fold defaultstate="collapsed" desc="Bind Combos">
-            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctype'),      data: dataProcesadores, valueField: 'A4451KEY2', displayField: 'A4451DESC1',   value: ''});
-            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctypef'),     data: dataProcesadores, valueField: 'A4451KEY2', displayField: 'A4451DESC1',   value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctype'),      data: dataProcessors,   valueField: 'A4451KEY2', displayField: 'A4451DESC1',   value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctypef'),     data: dataProcessors,   valueField: 'A4451KEY2', displayField: 'A4451DESC1',   value: ''});
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesBP'),      data: dataPaises,       valueField: 'CODE',      displayField: 'NAME',  value: ''});
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesfBP'),     data: dataPaises,       valueField: 'CODE',      displayField: 'NAME',  value: ''});
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedaBP'),      data: dataMonedas,      valueField: 'CODE',      displayField: 'NAME',  value: ''});
@@ -69,8 +72,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCardTypeBTSum'), data: dataCcGrupos,     valueField: 'CODE',       displayField: 'NAME', value: ''});
             
 
-            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctypeSettl'), data: dataProcesadores, valueField: 'A4451KEY2', displayField: 'A4451DESC1',     value: ''});
-            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctypeSettl2'),data: dataProcesadores, valueField: 'A4451KEY2', displayField: 'A4451DESC1',     value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctypeSettl'), data: dataProcessors, valueField: 'A4451KEY2', displayField: 'A4451DESC1',     value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctypeSettl2'),data: dataProcessors, valueField: 'A4451KEY2', displayField: 'A4451DESC1',     value: ''});
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesSettl'),   data: dataPaises,       valueField: 'CODE',      displayField: 'NAME',           value: ''});
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesSettl2'),  data: dataPaises,       valueField: 'CODE',      displayField: 'NAME',           value: ''});
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedabST'),     data: dataMonedas,      valueField: 'CODE',      displayField: 'NAME',           value: ''});
@@ -801,8 +804,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                     label.show();
             }
         }
+    },
+    onClickAnalyzeReconciliationErrors: function () {
+        const me = this;
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.AnalyzeReconciliationErrorsDataEntry', {
+            id: prototype.id + '-AnalyzeReconciliationErrorsDataEntry-1',
+            processors: me.processors
+        });
+        dataEntry.show();
     }
-
 });
 
 
