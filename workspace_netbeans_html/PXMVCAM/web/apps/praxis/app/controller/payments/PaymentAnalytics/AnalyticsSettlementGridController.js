@@ -8,130 +8,6 @@ Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.AnalyticsSettlementG
         await this.getData();
         me.view.setLoading(false);
     },
-//    getData: async function () {
-//        const me = this;
-//        const view = me.view;
-//        console.log('view', view);
-//
-//        let store = await global.callStoreGet('PRAXISMP', 'SQP05725', view.searchParams);
-//        console.log('stores', store);
-//
-//        const response = store.lstRs?.at(0) || {};
-//        if (!response || Object.keys(response).length === 0) {
-//            global.Msg({msg: 'Data not Found'});
-//            return;
-//        }
-//        view.setStore(response);
-//    },
-
-
-//    getData: async function () {
-//        const me = this;
-//        const view = me.view;
-//
-//        let storeResponse = await global.callStoreGet('PRAXISMP', 'SQP05725', view.searchParams);
-//        
-//        // validacion si se tiene respuesta
-//        if (storeResponse.lstVals.OUT_RES === 0 ){
-//            global.Msg({msg: storeResponse.lstVals.OUT_MSG});
-//            return;
-//        }
-//        
-//        // data
-//        const data = storeResponse?.lstRs[0] || [] ;
-//        const firstRow = data[0] || [];
-//        if (data.length === 0) {
-//            view.reconfigure(Ext.create('Ext.data.Store', { fields: [], data: [] }), []); // limpiar grid
-//            return;
-//        }
-//        
-//        // Campos estáticos que siempre están presentes
-//        const staticFields = ['CCUST', 'PROCTYPE', 'PROCTYPESQ', 'STVAL', 'PROCESSOR', 'STATUS'];
-//        
-//        // Obtener campos dinámicos (monedas) excluyendo los estáticos
-//        const currencyFields = Object.keys(firstRow).filter(key => !staticFields.includes(key));
-//
-//        console.log('Currency fields found:', currencyFields);
-//        console.log('Sample data First Row:', firstRow);
-//
-//
-//        // Construir columnas estáticas que siempre quiero mostrar ---
-//        const staticColumns = [
-//            { 
-//                text: 'Processor', dataIndex: 'PROCESSOR', width: 160, locked: true },
-//            {
-//                text: 'Status', dataIndex: 'STVAL', width: 150, locked: true,
-//                renderer: function (value, meta, rec) {
-//                    return rec.data.STATUS || value; 
-//                }
-//            }
-//        ];
-//
-//
-//        // Crear las columnas dinámicas
-//        const dynamicCurrencyColumns = currencyFields.map(field => ({
-//            text: field,
-//            dataIndex: field,
-//            width: 120,
-//            align: 'right',
-//            renderer: function (v) {
-//                if (v === null || v === undefined) return '';
-//                return Ext.util.Format.number(v, '0,000.00');
-//            }
-////            renderer: Ext.util.Format.numberRenderer('0,0.00') // ejemplo: formato numérico
-//        }));
-//        
-//        console.log("dynamicCurrencyColumns", dynamicCurrencyColumns) ;
-//        
-//        // --- Agrupar las columnas dinámicas dentro de Amount ---
-//        const amountGroupColumn = {
-//            text: 'Amount',
-//            // usa itemId para buscar más tarde si necesitas
-//            itemId: prototype.id + '-Amount',
-//            // id si lo quieres en el ComponentManager: id: prototype.id + '-Amount'
-//            columns: dynamicCurrencyColumns
-//        };
-//
-//        // --- Columnas finales para el grid ---
-//        const finalColumns = [...staticColumns, amountGroupColumn];
-//        
-//        
-//        // --- Crear store dinámico con los campos correctos ---
-//        const storeFields = [...staticFields, ...currencyFields];
-//        
-//        const treeData = data.map(row => {
-//            const children = currencyFields.map(field => ({
-//                text: field,   // nombre moneda
-//                value: row[field],
-//                leaf: true
-//            }));
-//
-//            return {
-//                text: row.PROCESSOR,  // nodo padre
-//                STVAL: row.STVAL,
-//                children: children
-//            };
-//        });
-//
-//        const newStore = Ext.create('Ext.data.TreeStore', {
-//            root: {
-//                expanded: true,
-//                children: treeData
-//            }
-//        });
-//        
-//        console.log("newStore", newStore) ;
-//        
-//        // Reconfigurar el grid con store + columnas 
-//        view.reconfigure(newStore, finalColumns);
-//        
-//        // opcional: forzar refresco de vista
-////        view.getView().refresh();
-//    
-//        return;
-//        
-//    },
-
 
     getData: async function () {
         const me = this;
@@ -149,79 +25,229 @@ Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.AnalyticsSettlementG
         const data = storeResponse?.lstRs[0] || [] ;
         const firstRow = data[0] || [];
         if (data.length === 0) {
-            view.reconfigure(Ext.create('Ext.data.Store', { fields: [], data: [] }), []); // limpiar grid
+            const emptyStore = Ext.create('Ext.data.TreeStore', { 
+                root: { text: '.', expanded: false, children: [] } 
+            });
+            view.setStore(emptyStore);
             return;
         }
         
         // Campos estáticos
-        const staticFields = ['CCUST', 'PROCTYPE', 'PROCTYPESQ', 'STVAL', 'PROCESSOR', 'STATUS'];
+        const staticFields = ['CCUST', 'PROCTYPE', 'PROCTYPESQ', 'STVAL', 'PROCESSOR', 'STATUS', 'CURRENCY'];
         
-        // Obtener campos dinámicos (monedas) excluyendo los estáticos
-        const currencyFields = Object.keys(firstRow).filter(key => !staticFields.includes(key));
+        // Obtener campos dinámicos (fechas) excluyendo los estáticos
+        const dateFields = Object.keys(firstRow).filter(key => !staticFields.includes(key));
 
-        console.log('Currency fields found:', currencyFields);
+        console.log('Date fields found:', dateFields);
         console.log('Sample data First Row:', firstRow);
 
+        // Generar estructura jerárquica similar a SummaryTree
+        const tree = me.buildTreeStructure(data, dateFields);
+        
+        console.log("Tree structure:", tree);
+        
+        // Crear TreeStore
+        const storeTree = Ext.create('Ext.data.TreeStore', {
+            root: { text: '.', expanded: false, children: tree }
+        });
+        
+        // Configurar columnas dinámicas
+        me.configureDynamicColumns(dateFields);
+        
+        // Configurar el tree panel con store
+        view.setStore(storeTree);
+        
+        return;
+    },
 
-        // Construir columnas estáticas que siempre quiero mostrar ---
-        const staticColumns = [
-            { 
-                 text: 'Processor', dataIndex: 'PROCESSOR', width: 160, locked: true },
+    configureDynamicColumns: function(dateFields) {
+        const me = this;
+        const view = me.view;
+        
+        // Para TreePanel, necesitamos reconstruir las columnas completamente
+        const baseColumns = [
             {
-                text: 'Status', dataIndex: 'STVAL', width: 150, locked: true,
-                renderer: function (value, meta, rec) {
-                    return rec.data.STATUS || value; 
+                xtype: 'treecolumn',
+                text: 'Group',
+                dataIndex: 'text',
+                width: 240,
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    switch (record.data.type) {
+                        case 'header':
+                            metaData.style = "text-align:left;font-weight:bold;color:#302CFF;";
+                            break;
+                        case 'detail':
+                            metaData.style = "text-align:left;font-weight:bold;color:#008000;";
+                            break;
+                    }
+                    return value;
+                }
+            },
+            {
+                text: 'Processor',
+                dataIndex: 'PROCESSOR',
+                width: 160,
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    switch (record.data.type) {
+                        case 'header':
+                            metaData.style = "font-weight:bold;color:#302CFF;";
+                            break;
+                        case 'detail':
+                            metaData.style = "font-weight:bold;color:#008000;";
+                            break;
+                    }
+                    return value || '';
+                }
+            },
+            {
+                text: 'Status',
+                dataIndex: 'STATUS',
+                width: 150,
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    switch (record.data.type) {
+                        case 'header':
+                            metaData.style = "font-weight:bold;color:#302CFF;";
+                            break;
+                        case 'detail':
+                            metaData.style = "font-weight:bold;color:#008000;";
+                            break;
+                    }
+                    return value || '';
+                }
+            },
+            {
+                text: 'Currency',
+                dataIndex: 'CURRENCY',
+                width: 80,
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    switch (record.data.type) {
+                        case 'header':
+                            metaData.style = "font-weight:bold;color:#302CFF;";
+                            break;
+                        case 'detail':
+                            metaData.style = "font-weight:bold;color:#008000;";
+                            break;
+                    }
+                    return value || '';
                 }
             }
         ];
 
-
-        // Crear las columnas dinámicas
-        const dynamicCurrencyColumns = currencyFields.map(field => ({
-            text: field,
-            dataIndex: field,
-            width: 120,
-            align: 'right',
-            renderer: function (v) {
-                if (v === null || v === undefined) return '';
-                return Ext.util.Format.number(v, '0,000.00');
-            }
-//            renderer: Ext.util.Format.numberRenderer('0,0.00') // ejemplo: formato numérico
-        }));
-        
-        console.log("dynamicCurrencyColumns", dynamicCurrencyColumns) ;
-        
-        // --- Agrupar las columnas dinámicas dentro de Amount ---
-        const amountGroupColumn = {
+        // Crear agrupamiento de columnas dinámicas (fechas) bajo "Amount"
+        const amountGroupDynamicColumn = {
             text: 'Amount',
-            // usa itemId para buscar más tarde si necesitas
-            itemId: prototype.id + '-Amount',
-            // id si lo quieres en el ComponentManager: id: prototype.id + '-Amount'
-            columns: dynamicCurrencyColumns
+            columns: dateFields.map(field => ({
+                text: field,
+                dataIndex: field,
+                width: 120,
+                align: 'right',
+                renderer: function (value, metaData, record, rowIndex, colIndex) {
+                    if (value === null || value === undefined) return '';
+                    
+                    switch (record.data.type) {
+                        case 'header':
+                            metaData.style = "font-weight:bold;text-align:right"; //;background-color:#84AFCA
+                            break;
+                        case 'detail':
+                            metaData.style = "text-align:right;background-color:#6FCA96";
+                            break;
+                    }
+                    
+                    return Ext.util.Format.number(value, '0,000.00');
+                }
+            }))
         };
 
-        // Columnas finales para el grid
-        const finalColumns = [...staticColumns, amountGroupColumn];
+        // Combinar todas las columnas
+        const allColumns = [...baseColumns, amountGroupDynamicColumn];
         
+        // Reconfigurar el grid con las nuevas columnas
+        view.reconfigure(allColumns);
+    },
+
+    buildTreeStructure: function(data, dateFields) {
+        const me = this;
         
-        // Crear store dinámico con los campos correctos
-        const storeFields = [...staticFields, ...currencyFields];
-        const newStore = Ext.create('Ext.data.Store', {
-            fields: storeFields,
-            data: data
+        // Agrupar por Processor primero
+        const processorGroups = me.groupBy({ data: data, key: 'PROCESSOR' });
+        
+        const tree = Object.entries(processorGroups).map(([processor, processorData]) => {
+            // Calcular totales del procesador
+            const processorTotals = {};
+            dateFields.forEach(field => {
+                processorTotals[field] = me.sumBy({ data: processorData, key: field });
+            });
+            
+            // Agrupar por Currency dentro del procesador
+            const currencyGroups = me.groupBy({ data: processorData, key: 'CURRENCY' });
+            
+            const currencyNodes = Object.entries(currencyGroups).map(([currency, currencyData]) => {
+                // Calcular totales de la moneda
+                const currencyTotals = {};
+                dateFields.forEach(field => {
+                    currencyTotals[field] = me.sumBy({ data: currencyData, key: field });
+                });
+                
+                // Crear nodos hoja (registros individuales) directamente bajo Currency
+                const leafNodes = currencyData.map(row => ({
+                    text: `${row.PROCESSOR} - ${row.CURRENCY} - ${row.STATUS}`,
+                    type: 'detail',
+                    leaf: true,
+                    PROCESSOR: row.PROCESSOR,
+                    STATUS: row.STATUS,
+                    CURRENCY: row.CURRENCY,
+                    ...row
+                }));
+                
+                return {
+                    text: `${currency} (${currencyData.length} items)`,
+                    type: 'header',
+                    expanded: false,
+                    leaf: false,
+                    PROCESSOR: processor,
+                    STATUS: '',
+                    CURRENCY: currency,
+                    ...currencyTotals,
+                    children: leafNodes
+                };
+            });
+            
+            return {
+                text: `${processor} (${processorData.length} items)`,
+                type: 'header',
+                expanded: true,
+                leaf: false,
+                PROCESSOR: processor,
+                STATUS: '',
+                CURRENCY: '',
+                ...processorTotals,
+                children: currencyNodes
+            };
         });
         
-        console.log("newStore", newStore) ;
-        
-        // Reconfigurar el grid con store + columnas 
-        view.reconfigure(newStore, finalColumns);
-        
-        // opcional: forzar refresco de vista
-//        view.getView().refresh();
-    
-        return;
-        
+        return tree;
     },
+
+    //<editor-fold defaultstate="collapsed" desc="Utilitarios">
+    groupBy: function({data, key}) {
+        let grouped = data.reduce((groups, item) => {
+            let obj = item[key];
+            if (!groups[obj]) {
+                groups[obj] = [];
+            }
+            groups[obj].push(item);
+            return groups;
+        }, {});
+        return grouped;
+    },
+    
+    sumBy: function({data, key}) {
+        let sum = data.reduce(function (total, item) {
+            return total + (parseFloat(item[key]) || 0);
+        }, 0);
+        return sum;
+    },
+    //</editor-fold>
 
     downloadExcel: function (btn) {
         const me = this;
@@ -256,23 +282,25 @@ Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.AnalyticsSettlementG
                 return;
             }
             
-            const staticFields = ['CCUST', 'PROCTYPE', 'PROCTYPESQ', 'STVAL', 'PROCESSOR', 'STATUS'];
+            const staticFields = ['CCUST', 'PROCTYPE', 'PROCTYPESQ', 'STVAL', 'PROCESSOR', 'STATUS', 'CURRENCY'];
             const firstRow = data[0] || {};
-            const currencyFields = Object.keys(firstRow).filter(key => !staticFields.includes(key));
+            // Obtener campos dinámicos (fechas) excluyendo los estáticos
+            const dateFields = Object.keys(firstRow).filter(key => !staticFields.includes(key));
 
            
             let excel = data.map(row => {
                 // armar objeto para excel
                 let obj = {
                     'Processor': row.PROCESSOR,
-                    'Status': row.STATUS
+                    'Status': row.STATUS,
+                    'Currency': row.CURRENCY,
                 };
 
-                // añadir dinámicos (monedas)
-                currencyFields.forEach(field => {
-                    obj[field] = row[field];
+                // Agregar campos dinámicos (fechas) al final
+                dateFields.forEach(field => {
+                    obj["Amount " + field] = row[field];
                 });
-
+                
                 return obj;
             });
 
@@ -288,4 +316,3 @@ Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.AnalyticsSettlementG
     }
 
 });
-
