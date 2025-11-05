@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.SimplifiedUsage
         items: [{
             xtype: 'datefield',
             name: 'fecha',
-            fieldLabel: 'Fecha de Proceso',
+            fieldLabel: 'File Date',
             allowBlank: false,
             value: new Date(),
             format: 'd/m/Y',

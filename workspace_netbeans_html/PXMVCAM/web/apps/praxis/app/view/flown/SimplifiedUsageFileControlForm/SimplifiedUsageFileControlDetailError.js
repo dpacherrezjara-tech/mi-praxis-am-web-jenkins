@@ -11,9 +11,9 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.SimplifiedUsage
         'Ext.Praxis.controller.flown.SimplifiedUsageFileControl.SimplifiedUsageFileControlDetailErrorController',
         'Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.InfoGridDetError'
     ],
-    title: 'Detail errors',
+    title: 'Detail logs/errors',
     width: 600,
-    height: 350,
+    height: 500,
     border: false,
     resizable: false,
     layout: {
@@ -44,6 +44,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.SimplifiedUsage
                             layout: 'fit',
                             width: 700,
                             height: 400,
+                            border:1,
                             defaults: {
                                 margin: '2 2 2 2',
                                 border: false

@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.InfoGridDetErro
             id: prototype.id01 + '-boxPrincipal',
             layout: {
                 type: 'vbox',
-                align: 'center'
+//                align: 'center'
             },
             defaults: {
                 bodyStyle: 'background: transparent;',
@@ -34,7 +34,7 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.InfoGridDetErro
                     hidden: false,
                     layout: {
                         type: 'vbox',
-                        align: 'center'
+//                        align: 'center'
                     },
                     defaults: {
                         bodyStyle: 'background: transparent;',
@@ -47,23 +47,17 @@ Ext.define('Ext.Praxis.view.flown.SimplifiedUsageFileControlForm.InfoGridDetErro
                             xtype: 'grid',
                             id: prototype.id01 + '-gridData',
                             columnLines: true, 
-                            width: '99%',
-                            height: 250,
+                            width: '100%',
+                            height: 400,
                             padding: '2px 2px 2px 2px',
-//                            features: [
-//                                {
-//                                    dock: 'bottom',
-//                                    ftype: 'summary'
-//                                }
-//                            ],
                             columns: {
                                 items: [
-                                    {text: 'Nbr ID', dataIndex: 'SEQ', width: 80, align: 'center'},
+                                    {text: 'Nbr.', dataIndex: 'ID', width: 80, align: 'center'},
                                     {text: 'File Date', dataIndex: 'FECHA', align: 'center', width: 80},
-                                    {text: 'Message', dataIndex: 'LOGTXT', flex:1, width: 200, align: 'left',
+                                    {text: 'Message', dataIndex: 'LOGTXT', width: 400, align: 'left',
                                         renderer: function (value, metaData) {
-                                            metaData.style = 'font-weight:bold;color:red;';
-                                            return value;
+                                            metaData.style = 'font-weight:bold;color:red;white-space:pre-wrap; word-wrap:break-word; word-break:break-word;';
+                                            return Ext.String.htmlEncode(value);
                                         }
                                     }
                                 ],
