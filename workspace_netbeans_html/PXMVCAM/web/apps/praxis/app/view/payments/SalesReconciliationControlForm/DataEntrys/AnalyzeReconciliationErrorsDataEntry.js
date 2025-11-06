@@ -1,4 +1,4 @@
-prototype.idDE = prototype.id + '-AnalyzeReconciliationErrorsDataEntry';
+prototype.idAN = prototype.id + '-AnalyzeReconciliationErrorsDataEntry';
 
 Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.AnalyzeReconciliationErrorsDataEntry', {
     extend: 'Ext.window.Window',
@@ -27,7 +27,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.A
         items: [
             {
                 xtype: 'form',
-                id: prototype.idDE + '-filtersForm',
+                id: prototype.idAN + '-filtersForm',
                 layout: {
                     type: 'hbox',
                     pack: 'start'
@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.A
                         xtype: 'combobox',
                         fieldLabel: 'Search By Date',
                         name: 'IN_TYPE_DATE',
-                        id: prototype.idDE + '-filterTypeDate',
+                        id: prototype.idAN + '-filterTypeDate',
                         labelWidth: 100,
                         width: 200,
                         store: Ext.create('Ext.data.SimpleStore', {
@@ -76,7 +76,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.A
                         xtype: 'datefield',
                         fieldLabel: 'Date From',
                         name: 'IN_DATE_FROM',
-                        id: prototype.idDE + '-filterDateFrom',
+                        id: prototype.idAN + '-filterDateFrom',
                         format: 'Ymd',
                         labelWidth: 80,
                         width: 160,
@@ -90,7 +90,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.A
                         xtype: 'datefield',
                         fieldLabel: 'Date To',
                         name: 'IN_DATE_TO',
-                        id: prototype.idDE + '-filterDateTo',
+                        id: prototype.idAN + '-filterDateTo',
                         format: 'Ymd',
                         labelWidth: 60,
                         width: 140,
@@ -117,7 +117,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.A
                         xtype: 'combobox',
                         fieldLabel: 'Processor',
                         name: 'IN_PROCTYPESQ',
-                        id: prototype.idDE + '-filterProcessor',
+                        id: prototype.idAN + '-filterProcessor',
                         labelWidth: 70,
                         width: 220,
                         valueField: 'A4451KEY2',
@@ -204,7 +204,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.A
     items: [
         {
             xtype: 'grid',
-            id: prototype.idDE + '-grid',
+            id: prototype.idAN + '-grid',
             border: false,
             style: 'background: white',
             flex: 1,
@@ -225,6 +225,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.A
                         dataIndex: 'RN',
                         xtype: 'rownumberer',
                         width: 40
+                    },
+                    {
+                        sortable: false,
+                        xtype: 'actioncolumn',
+                        width: 40,
+                        text: 'Edit',
+                        locked: true,
+                        align: 'center',
+                        items: [
+                            {
+                                iconCls: 'prx-icon-detail',
+                                tooltip: 'Open Detail',
+                                handler: 'onClickDataEntryDetail'
+                            }
+                        ]
                     },
                     {
                         text: 'Ref. Number',
@@ -327,7 +342,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.A
             },
             bbar: {
                 xtype: 'pagingtoolbar',
-                id: prototype.idDE + '-pagingToolbar',
+                id: prototype.idAN + '-pagingToolbar',
                 displayInfo: true,
                 displayMsg: 'Displaying {0} - {1} of {2}',
                 emptyMsg: "No data to display",
