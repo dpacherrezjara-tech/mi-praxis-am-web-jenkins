@@ -265,6 +265,34 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
             notifier.async(loadExcel());
         };
         notifier.confirm('Download Excel?', onOk, null);
+    },
+    onClickFilterBtn: function () {
+        const radioBtn = Ext.getCmp(prototype.id + '-viewOption').lastValue;
+        const loadFilters = Ext.getCmp(prototype.id + '-panelFilters');
+        const formatFilters = Ext.getCmp(prototype.id + '-panelFilters2');
+        
+        switch (radioBtn.opcion) {
+            case 'L':
+                if (loadFilters.isVisible())
+                    loadFilters.hide();
+                else
+                    loadFilters.show();
+                break;
+            case 'F':
+                if (formatFilters.isVisible())
+                    formatFilters.hide();
+                else
+                    formatFilters.show();
+                break;
+        }
+    },
+    onClickClearBtn: function () {
+        const radioBtn = Ext.getCmp(prototype.id + '-viewOption').lastValue;
+        const loadFilters = Ext.getCmp(prototype.id + '-panelFilters');
+        const formatFilters = Ext.getCmp(prototype.id + '-panelFilters2');
+        loadFilters.reset();
+        formatFilters.reset();
+        this.onChangeModule(null, radioBtn);
     }
 
 });
