@@ -134,5 +134,18 @@ Ext.define('Ext.Praxis.controller.payments.PaymentAnalytics.PaymentAnalyticsCont
             filtroSettlement.hide();
         }
     },
-    
+    onClickFilterBtn: function () {
+        const filters = Ext.getCmp(prototype.id + '-contentFilter');
+        console.log("filters",filters);
+        if (filters.isVisible())
+            filters.hide();
+        else
+            filters.show();
+    },
+    onClickClearBtn: function () {
+        const filtroSettlement = Ext.getCmp(prototype.id + '-panelFiltersAnalytics-S');
+        const filtroAccounting = Ext.getCmp(prototype.id + '-panelFiltersAnalytics-A');
+        filtroSettlement.reset();
+        filtroAccounting.reset();
+    }
 });
