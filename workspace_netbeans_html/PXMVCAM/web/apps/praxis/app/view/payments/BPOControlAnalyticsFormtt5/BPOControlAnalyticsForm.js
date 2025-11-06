@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.BPOControlAnalytics
     extend: 'Ext.form.Panel',
     alias: 'widget.BPOControlAnalyticsForm',
     requires: [
-        'Ext.Praxis.controller.payments.BPOControlAnalytics.BpoControlAnalyticsController',
+        'Ext.Praxis.controller.payments.BPOControlAnalytics.BPOControlAnalyticsController',
         'Ext.Praxis.view.payments.BPOControlAnalyticsForm.Options',
         'Ext.Praxis.view.payments.BPOControlAnalyticsForm.Filters',
         'Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAnalyticsGrid'
