@@ -94,9 +94,8 @@ Ext.define('Ext.Praxis.controller.payments.UserMaintenance.UserMaintenanceContro
             fields: ['code', 'name'],
             data: [
                 ["", "ALL"],
-                {"code": "AMP", "name": "Amex Perú"},
-                {"code": "NIU", "name": "Niubiz"}
-
+                ["AMP", "Amex Perú"],
+                ["NIU", "Niubiz"]
             ]
         }));
         CmbTypeprocesa.setValue("");
