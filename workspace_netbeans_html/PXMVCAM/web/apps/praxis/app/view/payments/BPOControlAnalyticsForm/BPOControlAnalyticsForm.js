@@ -10,9 +10,13 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.BPOControlAnalytics
         'Ext.Praxis.controller.payments.BPOControlAnalytics.BPOControlAnalyticsController',
         'Ext.Praxis.view.payments.BPOControlAnalyticsForm.Options',
         'Ext.Praxis.view.payments.BPOControlAnalyticsForm.Filters',
-        'Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAnalyticsGrid'
+        // 'Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAnalyticsGrid'
+        'Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAnalyticsAnalisisGrid',
+        'Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAnalyticsRankingGrid',
+        'Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAnalyticsRendimientoGrid',
+        'Ext.Praxis.view.payments.BPOControlAnalyticsForm.Graphics.GraphicsRanking'
     ],
-    controller: 'BpoControlAnalyticsController',
+    controller: 'BPOControlAnalyticsController',
     layout: {
         type: 'fit'
     },
@@ -66,6 +70,18 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.BPOControlAnalytics
                                             id: prototype.id + '-mainContent',
                                             bodyStyle: 'background-color: #E3EAF9;',
                                             height: 630,
+                                            layout: {
+                                                type: 'vbox',
+                                                align: 'center'
+                                            },
+                                            items: [
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-grapichs',
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            width:'100%',
                                             layout: {
                                                 type: 'vbox',
                                                 align: 'center'
