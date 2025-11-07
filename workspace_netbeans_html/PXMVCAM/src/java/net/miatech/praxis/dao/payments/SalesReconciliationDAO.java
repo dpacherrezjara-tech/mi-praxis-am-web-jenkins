@@ -126,7 +126,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
 
     @Override
     public List<A3152> getPaises() throws Exception {
-        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05016",
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05745",
                 new BeanPropertyRowMapper<>(A3152.class));
         List<A3152> res = (List<A3152>) obj.get("result");
         return res;

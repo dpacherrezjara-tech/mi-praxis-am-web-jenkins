@@ -57,7 +57,7 @@ public class PaymentsCommissionsDAO implements PaymentsCommissionsLogic {
 
     @Override
     public List<A3152> getPaises() throws Exception {
-        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05016", new BeanPropertyRowMapper<>(A3152.class));
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05745", new BeanPropertyRowMapper<>(A3152.class));
         return ((List<A3152>) obj.get("result"));
     }
 
