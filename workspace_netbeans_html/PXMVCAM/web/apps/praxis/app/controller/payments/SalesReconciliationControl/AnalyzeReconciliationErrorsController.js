@@ -26,7 +26,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AnalyzeRec
             
             const dataProcesadores = me.processors || [];
             
-            const processorCombo = Ext.getCmp(prototype.idDE + '-filterProcessor');
+            const processorCombo = Ext.getCmp(prototype.idAN + '-filterProcessor');
             if (processorCombo) {
                 processorCombo.suspendEvents(false);
                 const store = me.createComboStore({
@@ -72,8 +72,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AnalyzeRec
 
     loadData: async function () {
         const me = this;
-        const form = Ext.getCmp(prototype.idDE + '-filtersForm').getForm();
-        const grid = Ext.getCmp(prototype.idDE + '-grid');
+        const form = Ext.getCmp(prototype.idAN + '-filtersForm').getForm();
+        const grid = Ext.getCmp(prototype.idAN + '-grid');
         
         me.view.setLoading(true);
         
@@ -115,7 +115,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AnalyzeRec
 
     onChangeDate: function (field, newValue, oldValue) {
         // Validar que la fecha "to" sea mayor o igual a la fecha "from"
-        const form = Ext.getCmp(prototype.idDE + '-filtersForm').getForm();
+        const form = Ext.getCmp(prototype.idAN + '-filtersForm').getForm();
         const formData = form.getValues();
         
         if (formData.IN_DATE_FROM && formData.IN_DATE_TO) {
@@ -135,9 +135,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AnalyzeRec
     },
 
     updateDateFieldsVisibility: function () {
-        const filterTypeDate = Ext.getCmp(prototype.idDE + '-filterTypeDate');
-        const filterDateFrom = Ext.getCmp(prototype.idDE + '-filterDateFrom');
-        const filterDateTo = Ext.getCmp(prototype.idDE + '-filterDateTo');
+        const filterTypeDate = Ext.getCmp(prototype.idAN + '-filterTypeDate');
+        const filterDateFrom = Ext.getCmp(prototype.idAN + '-filterDateFrom');
+        const filterDateTo = Ext.getCmp(prototype.idAN + '-filterDateTo');
         
         if (filterTypeDate && filterDateFrom && filterDateTo) {
             const currentValue = filterTypeDate.getValue();
@@ -163,13 +163,36 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AnalyzeRec
         }
     },
 
+    onClickDataEntryDetail: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
+        const data = record.data;
+        console.log("data", data);
+        // const obj = {
+        //     IN_CCUST: data.CCUST || '139',
+        //     IN_AREFNBR: data.AREFNBR || '',
+        //     IN_PRDA: data.PRDA || '',
+        //     IN_TDOC: data.TDOC || ''
+        // };
+        // console.log("obj", obj);
+
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry', {
+            id: prototype.idAN + '-TransacErrorBPODataEntry-1',
+            obj: data,
+            // callback: () => {
+            //     grid.getStore().load();
+            // }
+        });
+        dataEntry.show();
+
+    },
+
     onClickSearch: function () {
         const me = this;
         me.loadData();
     },
 
     onClickClear: function () {
-        const form = Ext.getCmp(prototype.idDE + '-filtersForm').getForm();
+        const form = Ext.getCmp(prototype.idAN + '-filtersForm').getForm();
         
         // Limpiar formulario
         form.reset();
@@ -206,7 +229,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AnalyzeRec
     downloadExcel: async function () {
         const me = this;
         const view = me.view;
-        const form = Ext.getCmp(prototype.idDE + '-filtersForm').getForm();
+        const form = Ext.getCmp(prototype.idAN + '-filtersForm').getForm();
         
         view.setLoading(true);
         
