@@ -341,8 +341,13 @@ Ext.define('Ext.Praxis.controller.payments.DownloadThePaymentFiles.DownloadThePa
         var me = this;
         var rec = grid.getStore().getAt(rowIndex);
         if (Ext.String.trim(rec.data.A4719ESTAT) === 'A') {
+          
             me.beanDownload.IN_DATETO = rec.data.A4719FCARG;
-            me.beanDownload.IN_TYPEPROCES = rec.data.A4719TYPEDES;
+            if(Ext.String.trim(rec.data.A4719TYPE)==='AMP'){
+                me.beanDownload.IN_TYPEPROCES = 'AMEXPE';
+            }else{
+                me.beanDownload.IN_TYPEPROCES = rec.data.A4719TYPEDES;
+            }
             me.exportFiles(prototype.url + '/DownloadFiles_python?beanString=' + encodeURI(JSON.stringify(me.beanDownload)));
         } else {
             Ext.Msg.alert('.: PRAXIS :.', 'The process status must be completed in order to perform the download.');
