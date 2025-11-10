@@ -97,8 +97,16 @@ Ext.define('Ext.Praxis.view.sales.OdvCitysForm.Filters', {
                                     name: 'IN_CODE',
                                     maxLength: 3,
                                     enforceMaxLength: true,
+                                    fieldStyle: 'text-align: center; text-transform: uppercase;',
+                                    maskRe: /[A-Za-z]/,
                                     listeners: {
-                                        specialkey: 'onEnterKeyPress'
+                                        specialkey: 'onEnterKeyPress',
+                                        change: function(field, newValue) {
+                                            var combo = Ext.getCmp(prototype.id + '-cbxFiltro');
+                                            if (combo && combo.getValue() === '3' && newValue.length > 2) {
+                                                field.setValue(newValue.substr(0, 2)); // recorta a 2 caracteres
+                                            }
+                                        }
                                     }
                                 },
                                 {
@@ -110,8 +118,10 @@ Ext.define('Ext.Praxis.view.sales.OdvCitysForm.Filters', {
                                     name: 'IN_NAME',
                                     maxLength: 50,
                                     enforceMaxLength: true,
+                                    fieldStyle: 'text-align: center; text-transform: uppercase;',
+                                    maskRe: /[A-Za-z]/,
                                     listeners: {
-                                        specialkey: 'onEnterKeyPress'
+                                        specialkey: 'onEnterKeyPress',
                                     }
                                 },
                             ]
