@@ -48,7 +48,25 @@ Ext.define('Ext.Praxis.controller.sales.OdvCitys.DataEntryOdvCitysController', {
         }
     },
 
-    onUpdateClick: async function () {
+
+    onUpdateClick: function(btn) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to update ?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'yes') {
+                   this.onUpdateClickAction();
+                }
+            }
+        });         
+    },
+
+
+    onUpdateClickAction: async function () {
         const me = this;
 
         try {
@@ -171,8 +189,23 @@ Ext.define('Ext.Praxis.controller.sales.OdvCitys.DataEntryOdvCitysController', {
         }
     },
 
+    onDeleteClick: function(btn) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to delete ?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'yes') {
+                   this.onDeleteClickAction();
+                }
+            }
+        });         
+    },
 
-    onDeleteClick: async function () {
+    onDeleteClickAction: async function () {
         console.log('onDeleteClick');
         const me = this;
 
