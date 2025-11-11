@@ -1088,7 +1088,7 @@ public class SalesReconciliationBPOController {
                 row.add(new CustomExcelCell(obj.getQTYTRN()));
                 row.add(new CustomExcelCell(obj.getSCURRENCY()));
                 row.add(new CustomExcelCell(obj.getTGROSAMOUN(), c1));
-                row.add(new CustomExcelCell(obj.getTGROSAMPAY_WCA(), c1));
+                row.add(new CustomExcelCell(obj.getTGROSAMOUN_WCA(), c1));
                 row.add(new CustomExcelCell(obj.getDISCAMOUN(), c1));
                 row.add(new CustomExcelCell(obj.getDISCAMOUNI(), c1));
                 row.add(new CustomExcelCell(obj.getSERVICEFEE(), c1));
