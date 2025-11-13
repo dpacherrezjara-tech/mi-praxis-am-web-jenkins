@@ -101,9 +101,9 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Filters', {
                                     width: 160,
                                     editable: false,
                                     name: 'IN_USER',
-                                    valueField: 'VALUE',        
+                                    valueField: 'A4836USER',        
                                     displayField: 'A4836USER',    
-                                    value:''
+                                    value:'All'
                                 },
 
                                 {

@@ -49,13 +49,13 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.BPOControlAnalytics
                                     id: prototype.id + '-centerC',
                                     layout: {
                                         type: 'vbox',
-                                        align: 'center'
+                                        align: 'stretch'
                                     },
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
                                         width: prototype.width,
-                                        align: 'center'
+                                        align: 'stretch'
                                     },
                                     items: [
                                         {
@@ -77,18 +77,15 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.BPOControlAnalytics
                                             items: [
                                             ]
                                         },
-                                        {
-                                            xtype: 'panel',
-                                            id: prototype.id + '-grapichs',
-                                            bodyStyle: 'background-color: #E3EAF9;',
-                                            width:'100%',
-                                            layout: {
-                                                type: 'vbox',
-                                                align: 'center'
-                                            },
-                                            items: [
-                                            ]
-                                        }
+                                        // {
+                                        //     xtype: 'panel',
+                                        //     title: 'Ranking - Progresión de Volumen',
+                                        //     layout: 'fit',
+                                        //     id: prototype.id + '-graphic',
+                                        //     hidden: true,
+                                        //     collapsible: true,  
+                                        //     items: []
+                                        // }
                                     ]
                                 }
                             ]

@@ -6,8 +6,8 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
     ],
     controller: 'GridBPOControlAnalyticsRankingController',
 
-    width: 1645,
-    height: 250,
+    width: 1637,
+    height: 243,
     columnLines: true,
     viewConfig: {
         stripeRows: true,
@@ -52,12 +52,41 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
                             if (!value) return '';
                             const date = Ext.Date.parse(value, 'Y-m-d'); // ej. 20251107
                             return `<span style="color:#6b7280;font-size:12px;">${Ext.Date.format(date, 'd/m/Y')}</span>`;
-                        }
+                        },
                     },
                     { text: 'Requests', dataIndex: 'SOL', width: 80,
-                        renderer: function(value) {
-                            return '<span style="font-weight:600;">' + value + '</span>';
-                        }
+                        listeners: {
+                            click: 'ondetalleRanking'
+                        },
+                        // listeners: {
+                        //     cellclick: 'onCellClick'
+                        // },
+                        renderer: function (value) {
+                            return `
+                                <div style="display:flex;align-items:center;justify-content:center;">
+                                    <div class="requests-btn" 
+                                         style="
+                                            background-color:#2563eb;
+                                            color:white;
+                                            font-weight:600;
+                                            font-size:13px;
+                                            border:none;
+                                            border-radius:6px;
+                                            padding:4px 10px;
+                                            cursor:pointer;
+                                            transition:all 0.2s ease;
+                                            text-align:center;
+                                         ">
+                                        ${value}
+                                    </div>
+                                </div>
+                            `;
+                        },
+                        // renderer: function(value) {
+                        //     // return '<span style="font-weight:600;">' + value + '</span>';
+                        //     return '<div style="display:flex;align-items:center;justify-content:center;gap:4px;">' +
+                        //    '<span style="font-weight:700;font-size:13px;color:#111827;">' + value + '</span></div>';
+                        // },
                     }, // Solicitud
                     { text: 'Avg. Time (min)', dataIndex: 'PROM_MIN', width: 120 ,
                         renderer: function(value) {

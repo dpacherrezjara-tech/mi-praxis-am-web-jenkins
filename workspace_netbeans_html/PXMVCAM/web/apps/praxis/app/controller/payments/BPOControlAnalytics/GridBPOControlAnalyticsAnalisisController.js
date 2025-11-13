@@ -14,6 +14,8 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
         console.log('view', view);
         view.setLoading(true);
 
+        view.searchParams.IN_USER =  view.searchParams.IN_USER === 'All' ? '' : view.searchParams.IN_USER;
+
         let store = await global.callStoreGet('PRAXISMP', 'SQP05743', view.searchParams);
         console.log('stores', store);
 
@@ -22,6 +24,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
         console.log('data', data);
 
         if (data.length === 0) {
+            view.setLoading(false);
             global.Msg({ msg: 'Data not found' });
             return;
         }

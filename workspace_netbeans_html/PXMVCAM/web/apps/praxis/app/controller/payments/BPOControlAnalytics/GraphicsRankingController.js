@@ -1,51 +1,236 @@
 
-// ============================================
-// CONTROLADOR
-// ============================================
-
-Ext.define('Ext.Praxis.view.payments.BPOControlAnalytics.GraphicsRankingController', {
+Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingController', {
     extend: 'Ext.app.ViewController',
-    // alias: 'controller.volumeprogression',
-    alias: 'controller.GraphicsRankingController',
+    alias: 'controller.graphicsrankingcontroller',
     
     /**
-     * Actualiza los datos del gráfico
+     * Método que se ejecuta cuando se renderiza el gráfico
+     */
+    onLoadChartData: function() {
+        let me = this;
+        me.loadDataFromGrid();
+    },
+    
+    /**
+     * Método principal para cargar datos desde el grid de ranking
+     * Carga los datos en los 4 gráficos (líneas, barras, área, dual)
+     */
+    loadDataFromGrid: function() {
+        let me = this;
+        let view = me.getView();
+        
+        // Referencias a los 4 gráficos
+        let lineChart = me.lookup('lineChart');
+        let barChart = me.lookup('barChart');
+        let areaChart = me.lookup('areaChart');
+        let dualChart = me.lookup('dualChart');
+        
+        // Referencias a las barras de estadísticas
+        let statsBarLine = me.lookup('statsBarLine');
+        let statsBarBar = me.lookup('statsBarBar');
+        let statsBarArea = me.lookup('statsBarArea');
+        let statsBarDual = me.lookup('statsBarDual');
+        
+        
+        if (!lineChart || !barChart || !areaChart || !dualChart) {
+            console.error('No se encontraron todos los gráficos');
+            return;
+        }
+        
+        // Ocultar el panel completo hasta que haya datos
+        if (view) {
+            view.setVisible(false);
+        }
+        
+        // Buscar el grid de ranking
+        let rankingGrid = Ext.getCmp(prototype.id + 'BPOControlAnalyticsRankingGrid');
+        
+        if (!rankingGrid) {
+            console.warn('Grid de ranking no encontrado aún. Esperando...');
+            me.updateStatsBar(statsBarLine, 'Esperando datos del grid...');
+            me.updateStatsBar(statsBarBar, 'Esperando datos del grid...');
+            me.updateStatsBar(statsBarArea, 'Esperando datos del grid...');
+            me.updateStatsBar(statsBarDual, 'Esperando datos del grid...');
+            return;
+        }
+        
+        let gridStore = rankingGrid.getStore();
+        
+        if (!gridStore || gridStore.getCount() === 0) {
+            console.warn('El grid no tiene datos cargados');
+            me.updateStatsBar(statsBarLine, 'No hay datos disponibles');
+            me.updateStatsBar(statsBarBar, 'No hay datos disponibles');
+            me.updateStatsBar(statsBarArea, 'No hay datos disponibles');
+            me.updateStatsBar(statsBarDual, 'No hay datos disponibles');
+            return;
+        }
+        
+        // Transformar los datos del grid al formato de los gráficos
+        let chartData = [];
+        let maxSolicitudes = 0;
+        let maxPromMin = 0;
+        
+        // Primera pasada: obtener máximos
+        gridStore.each(function(record) {
+            let solicitudes = record.get('SOL') || 0;
+            let promMin = record.get('PROM_MIN') || 0;
+            
+            if (solicitudes > maxSolicitudes) {
+                maxSolicitudes = solicitudes;
+            }
+            if (promMin > maxPromMin) {
+                maxPromMin = promMin;
+            }
+        });
+        
+        // Segunda pasada: crear datos con eficiencia calculada
+        gridStore.each(function(record) {
+            let solicitudes = record.get('SOL') || 0;
+            let promMin = record.get('PROM_MIN') || 0;
+            
+            // Calcular eficiencia
+            let eficienciaVolumen = maxSolicitudes > 0 ? (solicitudes / maxSolicitudes) * 100 : 0;
+            
+            // Para velocidad: menor tiempo = mayor eficiencia (invertir)
+            let eficienciaVelocidad = maxPromMin > 0 ? ((maxPromMin - promMin) / maxPromMin) * 100 : 0;
+            
+            // Promedio ponderado: 60% volumen + 40% velocidad
+            let eficienciaPct = Math.round((eficienciaVolumen * 0.6) + (eficienciaVelocidad * 0.4));
+            
+            chartData.push({
+                USUARIO: record.get('AUASI') || record.get('USUARIO') || '',
+                SOL: solicitudes,
+                PROM_MIN: promMin,
+                TOTAL: record.get('TOTAL') || 0,
+                CATEGORIA: record.get('CATEGORIA') || '',
+                EFICIENCIA_PCT: eficienciaPct
+            });
+        });
+        
+        // Validar que haya datos
+        if (chartData.length === 0) {
+            console.warn('No hay datos para mostrar en los gráficos');
+            me.updateStatsBar(statsBarLine, 'No hay datos para visualizar', 'exclamation-triangle');
+            me.updateStatsBar(statsBarBar, 'No hay datos para visualizar', 'exclamation-triangle');
+            me.updateStatsBar(statsBarArea, 'No hay datos para visualizar', 'exclamation-triangle');
+            me.updateStatsBar(statsBarDual, 'No hay datos para visualizar', 'exclamation-triangle');
+            return;
+        }
+        
+        // Cargar datos en los 4 gráficos
+        lineChart.getStore().loadData(chartData);
+        barChart.getStore().loadData(chartData);
+        areaChart.getStore().loadData(chartData);
+        dualChart.getStore().loadData(chartData);
+        
+        // Calcular estadísticas
+        let totalSol = chartData.reduce(function(sum, r) { return sum + r.SOL; }, 0);
+        let avgSol = (totalSol / chartData.length).toFixed(1);
+        let totalPromMin = chartData.reduce(function(sum, r) { return sum + r.PROM_MIN; }, 0);
+        let avgPromMin = (totalPromMin / chartData.length).toFixed(2);
+        let avgEficiencia = (chartData.reduce(function(sum, r) { return sum + r.EFICIENCIA_PCT; }, 0) / chartData.length).toFixed(1);
+        
+        // Encontrar el mejor y peor
+        let maxSol = Math.max.apply(null, chartData.map(function(r) { return r.SOL; }));
+        let minPromMin = Math.min.apply(null, chartData.map(function(r) { return r.PROM_MIN; }));
+        let maxEficiencia = Math.max.apply(null, chartData.map(function(r) { return r.EFICIENCIA_PCT; }));
+        
+        let bestAgent = chartData.find(function(r) { return r.SOL === maxSol; });
+        let fastestAgent = chartData.find(function(r) { return r.PROM_MIN === minPromMin; });
+        let mostEfficient = chartData.find(function(r) { return r.EFICIENCIA_PCT === maxEficiencia; });
+        
+        // Actualizar barras de estadísticas
+        me.updateStatsBar(
+            statsBarLine,
+            '<strong>Total Solicitudes:</strong> ' + totalSol + ' | ' +
+            '<strong>Promedio:</strong> ' + avgSol + ' | ' +
+            '<strong>Agentes:</strong> ' + chartData.length + ' | ' +
+            '<strong>Mayor Volumen:</strong> ' + (bestAgent ? bestAgent.USUARIO : 'N/A'),
+            'chart-line',
+            '#3b82f6'
+        );
+        
+        me.updateStatsBar(
+            statsBarBar,
+            '<strong>Total General:</strong> ' + totalSol + ' solicitudes | ' +
+            '<strong>Promedio por Agente:</strong> ' + avgSol + ' | ' +
+            '<strong>Líder:</strong> ' + (bestAgent ? bestAgent.USUARIO + ' (' + bestAgent.SOL + ')' : 'N/A'),
+            'chart-bar',
+            '#10b981'
+        );
+        
+        me.updateStatsBar(
+            statsBarArea,
+            '<strong>Promedio General:</strong> ' + avgPromMin + ' min | ' +
+            '<strong>Más Rápido:</strong> ' + (fastestAgent ? fastestAgent.USUARIO + ' (' + fastestAgent.PROM_MIN + ' min)' : 'N/A') + ' | ' +
+            '<strong>Agentes Analizados:</strong> ' + chartData.length,
+            'clock-o',
+            '#8b5cf6'
+        );
+        
+        me.updateStatsBar(
+            statsBarDual,
+            '<strong>Volumen Total:</strong> ' + totalSol + ' solicitudes | ' +
+            '<strong>Líder Volumen:</strong> ' + (bestAgent ? bestAgent.USUARIO + ' (' + bestAgent.SOL + ')' : 'N/A') + ' | ' +
+            '<strong>Más Eficiente:</strong> ' + (mostEfficient ? mostEfficient.USUARIO + ' (' + mostEfficient.EFICIENCIA_PCT + '%)' : 'N/A') + ' | ' +
+            '<strong>Eficiencia Promedio:</strong> ' + avgEficiencia + '%',
+            'line-chart',
+            '#0ea5e9'
+        );
+        
+        // Mostrar el panel con los gráficos
+        if (view) {
+            view.setVisible(true);
+        }
+        
+        console.log('✅ Datos cargados en los 4 gráficos:', chartData.length + ' registros');
+        console.log('✅ Eficiencia calculada para cada agente');
+        console.log('✅ Gráficos visibles');
+    },
+    
+    /**
+     * Helper para actualizar las barras de estadísticas
+     */
+    updateStatsBar: function(statsBar, message, icon, color) {
+        if (!statsBar) return;
+        
+        icon = icon || 'info-circle';
+        color = color || '#555';
+        
+        statsBar.setHtml(
+            '<i class="fa fa-' + icon + '" style="color:' + color + ';"></i> ' + message
+        );
+    },
+    
+    /**
+     * Handler para el botón "Actualizar"
      */
     onRefreshChart: function() {
-        var chart = this.lookup('volumeChart');
-        var store = chart.getStore();
+        let me = this;
         
-        // Simular actualización de datos
-        Ext.Msg.wait('Actualizando datos...', 'Cargando');
+        Ext.Msg.wait('Actualizando datos desde el grid...', 'Cargando');
         
         Ext.defer(function() {
-            store.loadData([
-                { orden: 1, auasi: 'MAGALIT', total: 145, prom_min: 3.8, eficiencia: 68.2 },
-                { orden: 2, auasi: 'KARENCT', total: 125, prom_min: 4.9, eficiencia: 39.0 },
-                { orden: 3, auasi: 'LRAMOST', total: 110, prom_min: 5.8, eficiencia: 56.0 },
-                { orden: 4, auasi: 'JTARDILLOT', total: 105, prom_min: 5.9, eficiencia: 55.0 },
-                { orden: 5, auasi: 'ROCIOST', total: 102, prom_min: 5.8, eficiencia: 38.0 },
-                { orden: 6, auasi: 'ABRINGAST', total: 63, prom_min: 7.8, eficiencia: 48.5 }
-            ]);
+            me.loadDataFromGrid();
             
             Ext.Msg.hide();
             Ext.toast({
-                html: 'Datos actualizados correctamente',
+                html: 'Datos actualizados correctamente en todos los gráficos',
                 title: 'Éxito',
                 align: 'tr',
                 iconCls: 'fa fa-check-circle'
             });
-        }, 1500);
+        }, 500);
     },
     
     /**
-     * Descarga el gráfico como imagen PNG
+     * Handler para exportar gráficos (se puede llamar desde cualquier botón)
      */
     onDownloadChart: function() {
-        var chart = this.lookup('volumeChart');
+        let lineChart = this.lookup('lineChart');
         
-        if (chart) {
-            chart.download({
+        if (lineChart) {
+            lineChart.download({
                 filename: 'progresion_volumen_' + Ext.Date.format(new Date(), 'Y-m-d_His'),
                 format: 'png'
             });
@@ -56,165 +241,208 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalytics.GraphicsRankingControll
                 align: 'tr',
                 iconCls: 'fa fa-download'
             });
+        } else {
+            Ext.Msg.alert('Error', 'No se pudo encontrar el gráfico para exportar');
         }
     }
 });
 
-// ============================================
-// EJEMPLO DE USO EN UNA VENTANA
-// ============================================
 
-// Ext.define('MyApp.view.VolumeWindow', {
-//     extend: 'Ext.window.Window',
-//     xtype: 'volumewindow',
+// Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingController', {
+//     extend: 'Ext.app.ViewController',
+//     alias: 'controller.graphicsrankingcontroller',
     
-//     title: 'Dashboard - Progresión de Volumen',
-//     iconCls: 'fa fa-bar-chart',
+//     /**
+//      * Método que se ejecuta cuando se renderiza el gráfico
+//      */
+//     onLoadChartData: function() {
+//         let me = this;
+//         me.loadDataFromGrid();
+//     },
     
-//     width: 800,
-//     height: 500,
-    
-//     layout: 'fit',
-//     modal: true,
-    
-//     items: [{
-//         xtype: 'volumeprogressionpanel',
-//         controller: 'volumeprogression'
-//     }],
-    
-//     buttons: [{
-//         text: 'Cerrar',
-//         iconCls: 'fa fa-times',
-//         handler: function(btn) {
-//             btn.up('window').close();
+//     /**
+//      * Método principal para cargar datos desde el grid de ranking
+//      * Carga los datos en los 3 gráficos (líneas, barras, área)
+//      */
+//     loadDataFromGrid: function() {
+//         let me = this;
+//         let view = me.getView();
+        
+//         // Referencias a los 3 gráficos
+//         let lineChart = me.lookup('lineChart');
+//         let barChart = me.lookup('barChart');
+//         let areaChart = me.lookup('areaChart');
+        
+//         // Referencias a las barras de estadísticas
+//         let statsBarLine = me.lookup('statsBarLine');
+//         let statsBarBar = me.lookup('statsBarBar');
+//         let statsBarArea = me.lookup('statsBarArea');
+        
+        
+//         if (!lineChart || !barChart || !areaChart) {
+//             console.error('No se encontraron todos los gráficos');
+//             return;
 //         }
-//     }]
+        
+//         // Ocultar el panel completo hasta que haya datos
+//         if (view) {
+//             view.setVisible(false);
+//         }
+        
+//         // Buscar el grid de ranking
+//         let rankingGrid = Ext.getCmp(prototype.id + 'BPOControlAnalyticsRankingGrid');
+        
+//         if (!rankingGrid) {
+//             console.warn('Grid de ranking no encontrado aún. Esperando...');
+//             me.updateStatsBar(statsBarLine, 'Esperando datos del grid...');
+//             me.updateStatsBar(statsBarBar, 'Esperando datos del grid...');
+//             me.updateStatsBar(statsBarArea, 'Esperando datos del grid...');
+//             return;
+//         }
+        
+//         let gridStore = rankingGrid.getStore();
+        
+//         if (!gridStore || gridStore.getCount() === 0) {
+//             console.warn('El grid no tiene datos cargados');
+//             me.updateStatsBar(statsBarLine, 'No hay datos disponibles');
+//             me.updateStatsBar(statsBarBar, 'No hay datos disponibles');
+//             me.updateStatsBar(statsBarArea, 'No hay datos disponibles');
+//             return;
+//         }
+        
+//         // Transformar los datos del grid al formato de los gráficos
+//         let chartData = [];
+//         gridStore.each(function(record) {
+//             chartData.push({
+//                 USUARIO: record.get('AUASI') || record.get('USUARIO') || '',
+//                 SOL: record.get('SOL') || 0,
+//                 PROM_MIN: record.get('PROM_MIN') || 0,
+//                 TOTAL: record.get('TOTAL') || 0,
+//                 CATEGORIA: record.get('CATEGORIA') || ''
+//             });
+//         });
+        
+//         // Validar que haya datos
+//         if (chartData.length === 0) {
+//             console.warn('No hay datos para mostrar en los gráficos');
+//             me.updateStatsBar(statsBarLine, 'No hay datos para visualizar', 'exclamation-triangle');
+//             me.updateStatsBar(statsBarBar, 'No hay datos para visualizar', 'exclamation-triangle');
+//             me.updateStatsBar(statsBarArea, 'No hay datos para visualizar', 'exclamation-triangle');
+//             return;
+//         }
+        
+//         // Cargar datos en los 3 gráficos
+//         lineChart.getStore().loadData(chartData);
+//         barChart.getStore().loadData(chartData);
+//         areaChart.getStore().loadData(chartData);
+        
+//         // Calcular estadísticas
+//         let totalSol = chartData.reduce(function(sum, r) { return sum + r.SOL; }, 0);
+//         let avgSol = (totalSol / chartData.length).toFixed(1);
+//         let totalPromMin = chartData.reduce(function(sum, r) { return sum + r.PROM_MIN; }, 0);
+//         let avgPromMin = (totalPromMin / chartData.length).toFixed(2);
+        
+//         // Encontrar el mejor y peor
+//         let maxSol = Math.max.apply(null, chartData.map(function(r) { return r.SOL; }));
+//         let minPromMin = Math.min.apply(null, chartData.map(function(r) { return r.PROM_MIN; }));
+        
+//         let bestAgent = chartData.find(function(r) { return r.SOL === maxSol; });
+//         let fastestAgent = chartData.find(function(r) { return r.PROM_MIN === minPromMin; });
+        
+//         // Actualizar barras de estadísticas
+//         me.updateStatsBar(
+//             statsBarLine,
+//             '<strong>Total Solicitudes:</strong> ' + totalSol + ' | ' +
+//             '<strong>Promedio:</strong> ' + avgSol + ' | ' +
+//             '<strong>Agentes:</strong> ' + chartData.length + ' | ' +
+//             '<strong>Mayor Volumen:</strong> ' + (bestAgent ? bestAgent.USUARIO : 'N/A'),
+//             'chart-line',
+//             '#3b82f6'
+//         );
+        
+//         me.updateStatsBar(
+//             statsBarBar,
+//             '<strong>Total General:</strong> ' + totalSol + ' solicitudes | ' +
+//             '<strong>Promedio por Agente:</strong> ' + avgSol + ' | ' +
+//             '<strong>Líder:</strong> ' + (bestAgent ? bestAgent.USUARIO + ' (' + bestAgent.SOL + ')' : 'N/A'),
+//             'chart-bar',
+//             '#10b981'
+//         );
+        
+//         me.updateStatsBar(
+//             statsBarArea,
+//             '<strong>Promedio General:</strong> ' + avgPromMin + ' min | ' +
+//             '<strong>Más Rápido:</strong> ' + (fastestAgent ? fastestAgent.USUARIO + ' (' + fastestAgent.PROM_MIN + ' min)' : 'N/A') + ' | ' +
+//             '<strong>Agentes Analizados:</strong> ' + chartData.length,
+//             'clock-o',
+//             '#8b5cf6'
+//         );
+        
+//         // Mostrar el panel con los gráficos
+//         if (view) {
+//             view.setVisible(true);
+//         }
+        
+//         console.log('✅ Datos cargados en los 3 gráficos:', chartData.length + ' registros');
+//         console.log('✅ Gráficos visibles');
+//     },
+    
+//     /**
+//      * Helper para actualizar las barras de estadísticas
+//      */
+//     updateStatsBar: function(statsBar, message, icon, color) {
+//         if (!statsBar) return;
+        
+//         icon = icon || 'info-circle';
+//         color = color || '#555';
+        
+//         statsBar.setHtml(
+//             '<i class="fa fa-' + icon + '" style="color:' + color + ';"></i> ' + message
+//         );
+//     },
+    
+//     /**
+//      * Handler para el botón "Actualizar"
+//      */
+//     onRefreshChart: function() {
+//         let me = this;
+        
+//         Ext.Msg.wait('Actualizando datos desde el grid...', 'Cargando');
+        
+//         Ext.defer(function() {
+//             me.loadDataFromGrid();
+            
+//             Ext.Msg.hide();
+//             Ext.toast({
+//                 html: 'Datos actualizados correctamente en todos los gráficos',
+//                 title: 'Éxito',
+//                 align: 'tr',
+//                 iconCls: 'fa fa-check-circle'
+//             });
+//         }, 500);
+//     },
+    
+//     /**
+//      * Handler para exportar gráficos (se puede llamar desde cualquier botón)
+//      */
+//     onDownloadChart: function() {
+//         let lineChart = this.lookup('lineChart');
+        
+//         if (lineChart) {
+//             lineChart.download({
+//                 filename: 'progresion_volumen_' + Ext.Date.format(new Date(), 'Y-m-d_His'),
+//                 format: 'png'
+//             });
+            
+//             Ext.toast({
+//                 html: 'Descargando gráfico...',
+//                 title: 'Exportar',
+//                 align: 'tr',
+//                 iconCls: 'fa fa-download'
+//             });
+//         } else {
+//             Ext.Msg.alert('Error', 'No se pudo encontrar el gráfico para exportar');
+//         }
+//     }
 // });
 
-// ============================================
-// INICIALIZACIÓN Y APERTURA
-// ============================================
-
-/**
- * Para abrir la ventana con el gráfico:
- * 
- * Ext.create('MyApp.view.VolumeWindow').show();
- */
-
-// ============================================
-// VARIANTE: PANEL PARA DASHBOARD
-// ============================================
-
-// Ext.define('MyApp.view.dashboard.VolumeProgressionCard', {
-//     extend: 'Ext.panel.Panel',
-//     xtype: 'volumecard',
-    
-//     title: '<i class="fa fa-line-chart"></i> Progresión de Volumen',
-    
-//     width: 500,
-//     height: 350,
-    
-//     layout: 'fit',
-    
-//     bodyPadding: 5,
-    
-//     tools: [{
-//         type: 'refresh',
-//         tooltip: 'Actualizar datos',
-//         callback: function(panel) {
-//             panel.down('cartesian').getStore().reload();
-//         }
-//     }, {
-//         type: 'maximize',
-//         tooltip: 'Maximizar',
-//         callback: function(panel) {
-//             Ext.create('MyApp.view.VolumeWindow').show();
-//         }
-//     }],
-    
-//     items: [{
-//         xtype: 'cartesian',
-        
-//         store: {
-//             fields: ['auasi', 'total', 'prom_min'],
-//             data: [
-//                 { auasi: 'MAGALIT', total: 141, prom_min: 4.00 },
-//                 { auasi: 'KARENCT', total: 121, prom_min: 5.00 },
-//                 { auasi: 'LRAMOST', total: 107, prom_min: 6.00 },
-//                 { auasi: 'JTARDILLOT', total: 101, prom_min: 6.00 },
-//                 { auasi: 'ROCIOST', total: 98, prom_min: 6.00 },
-//                 { auasi: 'ABRINGAST', total: 59, prom_min: 8.00 }
-//             ]
-//         },
-        
-//         theme: 'blue',
-        
-//         interactions: ['itemhighlight'],
-        
-//         axes: [{
-//             type: 'numeric',
-//             position: 'left',
-//             fields: ['total'],
-//             grid: true,
-//             minimum: 0
-//         }, {
-//             type: 'category',
-//             position: 'bottom',
-//             fields: ['auasi'],
-//             label: {
-//                 rotate: {
-//                     degrees: -45
-//                 }
-//             }
-//         }],
-        
-//         series: [{
-//             type: 'line',
-//             xField: 'auasi',
-//             yField: 'total',
-//             style: {
-//                 stroke: '#3b82f6',
-//                 lineWidth: 3
-//             },
-//             marker: {
-//                 radius: 5,
-//                 fill: '#3b82f6'
-//             },
-//             tooltip: {
-//                 trackMouse: true,
-//                 renderer: function(tooltip, record) {
-//                     tooltip.setHtml(
-//                         '<b>' + record.get('auasi') + '</b><br/>' +
-//                         'Total: ' + record.get('total') + '<br/>' +
-//                         'Promedio: ' + record.get('prom_min') + ' min'
-//                     );
-//                 }
-//             }
-//         }]
-//     }]
-// });
-
-// ============================================
-// EJEMPLO DE INTEGRACIÓN EN DASHBOARD
-// ============================================
-
-/**
- * Uso en un dashboard principal:
- * 
- * {
- *     xtype: 'panel',
- *     title: 'Dashboard de Productividad',
- *     layout: {
- *         type: 'hbox',
- *         align: 'stretch'
- *     },
- *     items: [{
- *         xtype: 'volumecard',
- *         flex: 1,
- *         margin: '0 10 0 0'
- *     }, {
- *         xtype: 'otrocard',
- *         flex: 1
- *     }]
- * }
- */
