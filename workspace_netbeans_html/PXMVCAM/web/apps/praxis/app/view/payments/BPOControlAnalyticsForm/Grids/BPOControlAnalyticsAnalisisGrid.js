@@ -35,9 +35,9 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
                     var pctCriticas = total > 0 ? (criticas / total * 100) : 0;
                     var alert = pctCriticas > 15 ? ' <span style="color:#ef4444;">⚠️</span>' : '';
 
-                    metaData.tdStyle = 'text-align:left; vertical-align:middle;';
+                    metaData.tdStyle = 'text-align:center; vertical-align:middle;';
 
-                    return '<div style="display:flex; align-items:center;">' +
+                    return '<div style="display:flex; align-items:center;justify-content:center">' +
                            '<span style="font-weight:700;font-size:13px;color:#111827;">' + value + '</span>'
                            //  +  alert + 
                            '</div>';
@@ -218,6 +218,10 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
 
     tbar: {
         layout: { pack: 'end' },
+        style: {
+            backgroundColor: '#ffffff !important',   
+            borderBottom: '1px solid #e5e7eb' 
+        },
         items: [
             {
                 xtype: 'button',

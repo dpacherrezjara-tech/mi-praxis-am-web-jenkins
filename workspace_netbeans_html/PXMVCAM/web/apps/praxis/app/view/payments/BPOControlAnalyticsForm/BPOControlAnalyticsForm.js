@@ -77,6 +77,18 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.BPOControlAnalytics
                                             items: [
                                             ]
                                         },
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-legend',
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            height: 630,
+                                            layout: {
+                                                type: 'vbox',
+                                                align: 'center'
+                                            },
+                                            items: [
+                                            ]
+                                        },
                                     ]
                                 }
                             ]

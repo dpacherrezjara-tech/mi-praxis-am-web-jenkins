@@ -29,7 +29,9 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
             global.Msg({ msg: 'Data not found' });
             return;
         }
+        
         view.setStore(data);
+        this.addLegend(view);
 
         view.setLoading(false);
     },
@@ -96,6 +98,56 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
         }
         view.setLoading(false);
     },
+
+     //legend 
+     addLegend: function (view) {
+
+        // Si ya existe, no lo volvemos a agregar
+        if (view.down('#analytics-legend')) return;
+    
+        const legend = {
+            xtype: 'container',
+            itemId: 'analytics-legend',
+            layout: 'hbox',
+            margin: '0 10 0 0',
+            style: {
+                background: '#ffffff',
+                padding: '8px 14px',
+                borderRadius: '6px',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.08)'
+            },
+            items: [
+                {
+                    xtype: 'component',
+                    html: `
+                        <div style="display:flex; gap:18px; align-items:center; font-size:12px; color:#374151;">
+                            
+                            
+                            <div style="display:flex; align-items:center; gap:4px;">
+                                <div style="width:14px;height:14px;background:#d1fae5;border-radius:4px;"></div>
+                                <span>Fast ≤ 3 min</span>
+                            </div>
+        
+                            <div style="display:flex; align-items:center; gap:4px;">
+                                <div style="width:14px;height:14px;background:#fef3c7;border-radius:4px;"></div>
+                                <span>Normal 3–6 min</span>
+                            </div>
+        
+                            <div style="display:flex; align-items:center; gap:4px;">
+                                <div style="width:14px;height:14px;background:#fee2e2;border-radius:4px;"></div>
+                                <span>Low ≥ 6 min</span>
+                            </div>
+        
+                        </div>
+                    `
+                }
+            ]
+        };
+        
+    
+        // Insertamos en el TBar (AL INICIO)
+        view.getDockedItems('toolbar[dock="top"]')[0].insert(0, legend);
+    }
 
 
 });

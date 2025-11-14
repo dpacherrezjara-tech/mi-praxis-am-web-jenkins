@@ -11,18 +11,14 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
     },
 
     getData: async function (view) {
-        console.log('view', view);
         view.setLoading(true);
-
-        view.searchParams.IN_USER =  view.searchParams.IN_USER === 'All' ? '' : view.searchParams.IN_USER;
-
+    
+        view.searchParams.IN_USER = view.searchParams.IN_USER === 'All' ? '' : view.searchParams.IN_USER;
+    
         let store = await global.callStoreGet('PRAXISMP', 'SQP05743', view.searchParams);
-        console.log('stores', store);
-
+    
         let data = store?.lstRs?.[0] || [];
-
-        console.log('data', data);
-
+    
         if (data.length === 0) {
             view.setLoading(false);
             global.Msg({ msg: 'Data not found' });
@@ -32,6 +28,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
 
         view.setLoading(false);
     },
+    
 
 
 
@@ -98,7 +95,10 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
             (s > 0 ? s + 's' : '');
     
         return timeStr.trim();
-    }
+    },
+
+   
+    
 
    
 
