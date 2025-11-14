@@ -370,6 +370,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
             this.bean.monthTo = this.getValue("cmbDateToMonth");
             this.bean.dayFrom = this.getValue("cmbDateFromDay");
             this.bean.dayTo = this.getValue("cmbDateToDay");
+            this.bean.NFLIGHT = this.getValue("txtFlight");
             //Fuente ======================================================
 //            this.bean.FFLOW = this.getValue("cmbFlagFlown");
             //Carrier =====================================================
@@ -783,6 +784,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
         });
         Ext.getCmp(prototype.id + '-gridDetail').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+        console.log(bean,'bean')
         _pathDetail = prototype.url + '/getXLSXDetail?' +
                 'yearFrom=' + bean.yearFrom + '&' +
                 'monthFrom=' + bean.monthFrom + '&' +
