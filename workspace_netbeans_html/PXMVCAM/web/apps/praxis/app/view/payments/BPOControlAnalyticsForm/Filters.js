@@ -125,9 +125,9 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Filters', {
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
                                         data: [
-                                            ['AU', 'Análisis de tiempos por usuario'],
-                                            ['RP', 'Ranking de productividad'],
-                                            ['RU', 'Rendimiento por usuario']
+                                            ['AU', 'User Time Analysis'],  // ANALISIS DE TIEMPO POR USUARIO
+                                            ['RP', 'Productivity Ranking'], // RANKING DE PRODUCTIVIDAD
+                                            ['RU', 'User Performance'] // RENDIMIENTO POR USUARIO
                                         ]
                                     }),
                                     labelWidth: 50,

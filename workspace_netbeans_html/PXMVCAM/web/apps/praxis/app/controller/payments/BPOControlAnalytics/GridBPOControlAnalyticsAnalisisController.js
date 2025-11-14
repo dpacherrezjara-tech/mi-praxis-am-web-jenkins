@@ -45,15 +45,60 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
         const me = this;
         const view = me.view;
         view.setLoading(true);
-        let res = await global.callStorePagginExcel('', '', view.searchParams);
+        let res = await global.callStoreGet('PRAXISMP', 'SQP05743', view.searchParams);
 
-        const data = (res?.length > 0)
-            ? res.map(x => ({ ID: x.A2439ID }))
-            : [{ ID: "" }];
+        if (res.lstRs) {
+            let data = res.lstRs.at(0);
+            if (data.length === 0) {
+                global.Msg({msg: 'No data'});
+                return;
+            }
 
-        await global.writeExcelFromJson(data, 'TaxLoadLog Information');
+            console.log('dataaa',data);
+
+            let excel = data.map(x => {
+                const rawMin = x.MIN_SEG;
+                const rawMax = x.MAX_SEG;
+            
+                const fmtMin = me.formtTime(rawMin);
+                const fmtMax = me.formtTime(rawMax);
+
+                const avgTime = (x.PROM_MIN !== undefined && x.PROM_MIN !== null)? x.PROM_MIN + ' min' : '';
+
+                const row = {
+                    "User": x.AUASI,
+                    "Date Authorization": x.FEAUT,
+                    "Total": x.TOTAL_SOL,
+                    "Fast": x.RAPIDAS,
+                    "Normal": x.NORMALES,
+                    "Critical": x.CRITICAS,
+                    "Avg Time": avgTime,
+                    "Min Time": fmtMin,
+                    "Max Time": fmtMax
+                };
+            
+                return row;
+            });
+            
+            global.writeExcelFromJson(excel, 'User Time Analysis');
+        }
         view.setLoading(false);
     },
+
+    formtTime: function (value) {
+        if (value == null) return '';
+    
+        const h = Math.floor(value / 3600);
+        const m = Math.floor((value % 3600) / 60);
+        const s = value % 60;
+    
+        const timeStr =
+            (h > 0 ? h + 'h ' : '') +
+            (m > 0 ? m + 'm ' : '') +
+            (s > 0 ? s + 's' : '');
+    
+        return timeStr.trim();
+    }
 
    
 

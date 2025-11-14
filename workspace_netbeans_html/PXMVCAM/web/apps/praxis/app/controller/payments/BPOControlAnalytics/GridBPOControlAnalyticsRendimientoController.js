@@ -46,14 +46,56 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
         const me = this;
         const view = me.view;
         view.setLoading(true);
-        let res = await global.callStorePagginExcel('', '', view.searchParams);
+        let res = await global.callStoreGet('PRAXISMP', 'SQP05743', view.searchParams);
 
-        const data = (res?.length > 0)
-            ? res.map(x => ({ ID: x.A2439ID }))
-            : [{ ID: "" }];
+        if (res.lstRs) {
+            let data = res.lstRs.at(0);
+            if (data.length === 0) {
+                global.Msg({msg: 'No data'});
+                return;
+            }
 
-        await global.writeExcelFromJson(data, 'TaxLoadLog Information');
+            // console.log('dataaa',data);
+
+            const formatSeconds = (value) => {
+                if (value == null || isNaN(parseFloat(value))) return value;
+        
+                const num = parseFloat(value);
+                const h = Math.floor(num / 3600);
+                const m = Math.floor((num % 3600) / 60);
+                const s = num % 60;
+        
+                return (h > 0 ? h + 'h ' : '') +
+                       (m > 0 ? m + 'm ' : '') +
+                       (s > 0 ? s + 's' : '');
+            };
+
+            const formatDate = (ymd) => {
+                if (!ymd) return "";
+                const y = ymd.substring(0, 4);
+                const m = ymd.substring(4, 6);
+                const d = ymd.substring(6, 8);
+                return `${d}/${m}/${y}`;
+            };
+
+            let excel = data.map((x, index) => {
+
+
+                const row = {
+                    "#": index + 1,
+                    User: x.USUARIO,
+                    Date: formatDate(x.FECHA),
+                    Time: x.HORA || "",
+                    Performance: formatSeconds(x.TIEMPO_SEG)
+                };
+            
+                return row;
+            });
+            
+            global.writeExcelFromJson(excel, 'User Performance');
+        }
         view.setLoading(false);
     },
+
 
 });

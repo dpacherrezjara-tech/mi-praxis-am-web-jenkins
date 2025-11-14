@@ -97,13 +97,49 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
         const me = this;
         const view = me.view;
         view.setLoading(true);
-        let res = await global.callStorePagginExcel('', '', view.searchParams);
+        let res = await global.callStoreGet('PRAXISMP', 'SQP05743', view.searchParams);
 
-        const data = (res?.length > 0)
-            ? res.map(x => ({ ID: x.A2439ID }))
-            : [{ ID: "" }];
+        if (res.lstRs) {
+            let data = res.lstRs.at(0);
+            if (data.length === 0) {
+                global.Msg({msg: 'No data'});
+                return;
+            }
 
-        await global.writeExcelFromJson(data, 'TaxLoadLog Information');
+            console.log('dataaa',data);
+
+            const formatDate = (iso) => {
+                if (!iso) return "";
+                const [y, m, d] = iso.split("-");
+                return `${d}/${m}/${y}`;
+            };
+
+            let excel = data.map(x => {
+
+
+                const row = {
+                    Rank: x.RK,
+                    User: x.USUARIO,
+                    StartDate: formatDate(x.FECHA_INICIO),
+                    EndDate: formatDate(x.FECHA_FIN),
+                    Requests: x.SOL,
+                    AvgTimeMin: x.PROM_MIN,
+                    PctFast: x.PCT_RAP + '%',
+                    PctCritical: x.PCT_CRI+ '%',
+                    SpeedVolume: x.SC_VOL,
+                    SpeedScore: x.SC_VEL,
+                    CounterScore: x.SC_CON,
+                    Penalty: x.PENALIZ,
+                    Bonus: x.BONUS,
+                    Total: x.TOTAL,
+                    Category: x.CATEGORIA
+                };
+            
+                return row;
+            });
+            
+            global.writeExcelFromJson(excel, 'Productivy Ranking');
+        }
         view.setLoading(false);
     },
 
@@ -125,27 +161,23 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
         // Verifica si es la columna 'SOL' (Requests)
             this.ondetalleRanking(record);
     },
-
-    ondetalleRanking: function(record){
-        console.log('on detalle')
-
-        const me = this;
-//        console.log('balance---', me.ticketData);
-        const obj = me.view;
-        console.log('view', me.view);
-
+    ondetalleRanking: function(grid, rowIndex, colIndex, item, e, record) {
+        console.log('on detalle');
         const rowData = record.getData();
         console.log('Datos de la fila:', rowData);
-
+        // console.log('this.getView()',this.getView());
+    
         const dataEntry = Ext.create('Ext.Praxis.view.payments.BPOControlAnalyticsForm.DataEntrys.DataEntryLogRanking', {
             id: prototype.id + '-DataEntryLogRanking',
-            searchParams: obj,
+            // searchParams: this.getView(),
             rowData: rowData
         });
-
-        dataEntry.show();
-    }
     
+        dataEntry.show();
+    }    
+    
+    
+        
     
 
 

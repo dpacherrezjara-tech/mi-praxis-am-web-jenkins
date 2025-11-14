@@ -77,15 +77,6 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.BPOControlAnalytics
                                             items: [
                                             ]
                                         },
-                                        // {
-                                        //     xtype: 'panel',
-                                        //     title: 'Ranking - Progresión de Volumen',
-                                        //     layout: 'fit',
-                                        //     id: prototype.id + '-graphic',
-                                        //     hidden: true,
-                                        //     collapsible: true,  
-                                        //     items: []
-                                        // }
                                     ]
                                 }
                             ]

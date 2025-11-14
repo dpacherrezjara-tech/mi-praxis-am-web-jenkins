@@ -1,4 +1,3 @@
-
 Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.graphicsrankingcontroller',
@@ -13,26 +12,24 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingCo
     
     /**
      * Método principal para cargar datos desde el grid de ranking
-     * Carga los datos en los 4 gráficos (líneas, barras, área, dual)
+     * Carga los datos en los 3 gráficos (líneas, barras, dual)
      */
     loadDataFromGrid: function() {
         let me = this;
         let view = me.getView();
         
-        // Referencias a los 4 gráficos
+        // Referencias a los 3 gráficos
         let lineChart = me.lookup('lineChart');
         let barChart = me.lookup('barChart');
-        let areaChart = me.lookup('areaChart');
         let dualChart = me.lookup('dualChart');
         
         // Referencias a las barras de estadísticas
         let statsBarLine = me.lookup('statsBarLine');
         let statsBarBar = me.lookup('statsBarBar');
-        let statsBarArea = me.lookup('statsBarArea');
         let statsBarDual = me.lookup('statsBarDual');
         
         
-        if (!lineChart || !barChart || !areaChart || !dualChart) {
+        if (!lineChart || !barChart || !dualChart) {
             console.error('No se encontraron todos los gráficos');
             return;
         }
@@ -47,10 +44,9 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingCo
         
         if (!rankingGrid) {
             console.warn('Grid de ranking no encontrado aún. Esperando...');
-            me.updateStatsBar(statsBarLine, 'Esperando datos del grid...');
-            me.updateStatsBar(statsBarBar, 'Esperando datos del grid...');
-            me.updateStatsBar(statsBarArea, 'Esperando datos del grid...');
-            me.updateStatsBar(statsBarDual, 'Esperando datos del grid...');
+            me.updateStatsBar(statsBarLine, 'Waiting for data...');
+            me.updateStatsBar(statsBarBar, 'Waiting for data...');
+            me.updateStatsBar(statsBarDual, 'Waiting for data...');
             return;
         }
         
@@ -58,10 +54,9 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingCo
         
         if (!gridStore || gridStore.getCount() === 0) {
             console.warn('El grid no tiene datos cargados');
-            me.updateStatsBar(statsBarLine, 'No hay datos disponibles');
-            me.updateStatsBar(statsBarBar, 'No hay datos disponibles');
-            me.updateStatsBar(statsBarArea, 'No hay datos disponibles');
-            me.updateStatsBar(statsBarDual, 'No hay datos disponibles');
+            me.updateStatsBar(statsBarLine, 'No data to display');
+            me.updateStatsBar(statsBarBar, 'No data to display');
+            me.updateStatsBar(statsBarDual, 'No data to display');
             return;
         }
         
@@ -110,17 +105,15 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingCo
         // Validar que haya datos
         if (chartData.length === 0) {
             console.warn('No hay datos para mostrar en los gráficos');
-            me.updateStatsBar(statsBarLine, 'No hay datos para visualizar', 'exclamation-triangle');
-            me.updateStatsBar(statsBarBar, 'No hay datos para visualizar', 'exclamation-triangle');
-            me.updateStatsBar(statsBarArea, 'No hay datos para visualizar', 'exclamation-triangle');
-            me.updateStatsBar(statsBarDual, 'No hay datos para visualizar', 'exclamation-triangle');
+            me.updateStatsBar(statsBarLine, 'No data to display', 'exclamation-triangle');
+            me.updateStatsBar(statsBarBar, 'No data to display', 'exclamation-triangle');
+            me.updateStatsBar(statsBarDual, 'No data to display', 'exclamation-triangle');
             return;
         }
         
-        // Cargar datos en los 4 gráficos
+        // Cargar datos en los 3 gráficos
         lineChart.getStore().loadData(chartData);
         barChart.getStore().loadData(chartData);
-        areaChart.getStore().loadData(chartData);
         dualChart.getStore().loadData(chartData);
         
         // Calcular estadísticas
@@ -142,38 +135,29 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingCo
         // Actualizar barras de estadísticas
         me.updateStatsBar(
             statsBarLine,
-            '<strong>Total Solicitudes:</strong> ' + totalSol + ' | ' +
-            '<strong>Promedio:</strong> ' + avgSol + ' | ' +
-            '<strong>Agentes:</strong> ' + chartData.length + ' | ' +
-            '<strong>Mayor Volumen:</strong> ' + (bestAgent ? bestAgent.USUARIO : 'N/A'),
+            '<strong>Total Requests:</strong> ' + totalSol + ' | ' +
+            '<strong>Average:</strong> ' + avgSol + ' | ' +
+            '<strong>Agents:</strong> ' + chartData.length + ' | ' +
+            '<strong>Highest Volume:</strong> ' + (bestAgent ? bestAgent.USUARIO : 'N/A'),
             'chart-line',
             '#3b82f6'
         );
         
         me.updateStatsBar(
             statsBarBar,
-            '<strong>Total General:</strong> ' + totalSol + ' solicitudes | ' +
-            '<strong>Promedio por Agente:</strong> ' + avgSol + ' | ' +
-            '<strong>Líder:</strong> ' + (bestAgent ? bestAgent.USUARIO + ' (' + bestAgent.SOL + ')' : 'N/A'),
+            '<strong>Grand Total:</strong> ' + totalSol + ' requests | ' +
+            '<strong>Average per Agent:</strong> ' + avgSol + ' | ' +
+            '<strong>Leader:</strong> ' + (bestAgent ? bestAgent.USUARIO + ' (' + bestAgent.SOL + ')' : 'N/A'),
             'chart-bar',
             '#10b981'
         );
         
         me.updateStatsBar(
-            statsBarArea,
-            '<strong>Promedio General:</strong> ' + avgPromMin + ' min | ' +
-            '<strong>Más Rápido:</strong> ' + (fastestAgent ? fastestAgent.USUARIO + ' (' + fastestAgent.PROM_MIN + ' min)' : 'N/A') + ' | ' +
-            '<strong>Agentes Analizados:</strong> ' + chartData.length,
-            'clock-o',
-            '#8b5cf6'
-        );
-        
-        me.updateStatsBar(
             statsBarDual,
-            '<strong>Volumen Total:</strong> ' + totalSol + ' solicitudes | ' +
-            '<strong>Líder Volumen:</strong> ' + (bestAgent ? bestAgent.USUARIO + ' (' + bestAgent.SOL + ')' : 'N/A') + ' | ' +
-            '<strong>Más Eficiente:</strong> ' + (mostEfficient ? mostEfficient.USUARIO + ' (' + mostEfficient.EFICIENCIA_PCT + '%)' : 'N/A') + ' | ' +
-            '<strong>Eficiencia Promedio:</strong> ' + avgEficiencia + '%',
+            '<strong>Total Volume:</strong> ' + totalSol + ' requests | ' +
+            '<strong>Volume Leader:</strong> ' + (bestAgent ? bestAgent.USUARIO + ' (' + bestAgent.SOL + ')' : 'N/A') + ' | ' +
+            '<strong>Most Efficient:</strong> ' + (mostEfficient ? mostEfficient.USUARIO + ' (' + mostEfficient.EFICIENCIA_PCT + '%)' : 'N/A') + ' | ' +
+            '<strong>Average Efficiency:</strong> ' + avgEficiencia + '%',
             'line-chart',
             '#0ea5e9'
         );
@@ -183,7 +167,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingCo
             view.setVisible(true);
         }
         
-        console.log('✅ Datos cargados en los 4 gráficos:', chartData.length + ' registros');
+        console.log('✅ Datos cargados en los 3 gráficos:', chartData.length + ' registros');
         console.log('✅ Eficiencia calculada para cada agente');
         console.log('✅ Gráficos visibles');
     },
@@ -246,203 +230,3 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingCo
         }
     }
 });
-
-
-// Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingController', {
-//     extend: 'Ext.app.ViewController',
-//     alias: 'controller.graphicsrankingcontroller',
-    
-//     /**
-//      * Método que se ejecuta cuando se renderiza el gráfico
-//      */
-//     onLoadChartData: function() {
-//         let me = this;
-//         me.loadDataFromGrid();
-//     },
-    
-//     /**
-//      * Método principal para cargar datos desde el grid de ranking
-//      * Carga los datos en los 3 gráficos (líneas, barras, área)
-//      */
-//     loadDataFromGrid: function() {
-//         let me = this;
-//         let view = me.getView();
-        
-//         // Referencias a los 3 gráficos
-//         let lineChart = me.lookup('lineChart');
-//         let barChart = me.lookup('barChart');
-//         let areaChart = me.lookup('areaChart');
-        
-//         // Referencias a las barras de estadísticas
-//         let statsBarLine = me.lookup('statsBarLine');
-//         let statsBarBar = me.lookup('statsBarBar');
-//         let statsBarArea = me.lookup('statsBarArea');
-        
-        
-//         if (!lineChart || !barChart || !areaChart) {
-//             console.error('No se encontraron todos los gráficos');
-//             return;
-//         }
-        
-//         // Ocultar el panel completo hasta que haya datos
-//         if (view) {
-//             view.setVisible(false);
-//         }
-        
-//         // Buscar el grid de ranking
-//         let rankingGrid = Ext.getCmp(prototype.id + 'BPOControlAnalyticsRankingGrid');
-        
-//         if (!rankingGrid) {
-//             console.warn('Grid de ranking no encontrado aún. Esperando...');
-//             me.updateStatsBar(statsBarLine, 'Esperando datos del grid...');
-//             me.updateStatsBar(statsBarBar, 'Esperando datos del grid...');
-//             me.updateStatsBar(statsBarArea, 'Esperando datos del grid...');
-//             return;
-//         }
-        
-//         let gridStore = rankingGrid.getStore();
-        
-//         if (!gridStore || gridStore.getCount() === 0) {
-//             console.warn('El grid no tiene datos cargados');
-//             me.updateStatsBar(statsBarLine, 'No hay datos disponibles');
-//             me.updateStatsBar(statsBarBar, 'No hay datos disponibles');
-//             me.updateStatsBar(statsBarArea, 'No hay datos disponibles');
-//             return;
-//         }
-        
-//         // Transformar los datos del grid al formato de los gráficos
-//         let chartData = [];
-//         gridStore.each(function(record) {
-//             chartData.push({
-//                 USUARIO: record.get('AUASI') || record.get('USUARIO') || '',
-//                 SOL: record.get('SOL') || 0,
-//                 PROM_MIN: record.get('PROM_MIN') || 0,
-//                 TOTAL: record.get('TOTAL') || 0,
-//                 CATEGORIA: record.get('CATEGORIA') || ''
-//             });
-//         });
-        
-//         // Validar que haya datos
-//         if (chartData.length === 0) {
-//             console.warn('No hay datos para mostrar en los gráficos');
-//             me.updateStatsBar(statsBarLine, 'No hay datos para visualizar', 'exclamation-triangle');
-//             me.updateStatsBar(statsBarBar, 'No hay datos para visualizar', 'exclamation-triangle');
-//             me.updateStatsBar(statsBarArea, 'No hay datos para visualizar', 'exclamation-triangle');
-//             return;
-//         }
-        
-//         // Cargar datos en los 3 gráficos
-//         lineChart.getStore().loadData(chartData);
-//         barChart.getStore().loadData(chartData);
-//         areaChart.getStore().loadData(chartData);
-        
-//         // Calcular estadísticas
-//         let totalSol = chartData.reduce(function(sum, r) { return sum + r.SOL; }, 0);
-//         let avgSol = (totalSol / chartData.length).toFixed(1);
-//         let totalPromMin = chartData.reduce(function(sum, r) { return sum + r.PROM_MIN; }, 0);
-//         let avgPromMin = (totalPromMin / chartData.length).toFixed(2);
-        
-//         // Encontrar el mejor y peor
-//         let maxSol = Math.max.apply(null, chartData.map(function(r) { return r.SOL; }));
-//         let minPromMin = Math.min.apply(null, chartData.map(function(r) { return r.PROM_MIN; }));
-        
-//         let bestAgent = chartData.find(function(r) { return r.SOL === maxSol; });
-//         let fastestAgent = chartData.find(function(r) { return r.PROM_MIN === minPromMin; });
-        
-//         // Actualizar barras de estadísticas
-//         me.updateStatsBar(
-//             statsBarLine,
-//             '<strong>Total Solicitudes:</strong> ' + totalSol + ' | ' +
-//             '<strong>Promedio:</strong> ' + avgSol + ' | ' +
-//             '<strong>Agentes:</strong> ' + chartData.length + ' | ' +
-//             '<strong>Mayor Volumen:</strong> ' + (bestAgent ? bestAgent.USUARIO : 'N/A'),
-//             'chart-line',
-//             '#3b82f6'
-//         );
-        
-//         me.updateStatsBar(
-//             statsBarBar,
-//             '<strong>Total General:</strong> ' + totalSol + ' solicitudes | ' +
-//             '<strong>Promedio por Agente:</strong> ' + avgSol + ' | ' +
-//             '<strong>Líder:</strong> ' + (bestAgent ? bestAgent.USUARIO + ' (' + bestAgent.SOL + ')' : 'N/A'),
-//             'chart-bar',
-//             '#10b981'
-//         );
-        
-//         me.updateStatsBar(
-//             statsBarArea,
-//             '<strong>Promedio General:</strong> ' + avgPromMin + ' min | ' +
-//             '<strong>Más Rápido:</strong> ' + (fastestAgent ? fastestAgent.USUARIO + ' (' + fastestAgent.PROM_MIN + ' min)' : 'N/A') + ' | ' +
-//             '<strong>Agentes Analizados:</strong> ' + chartData.length,
-//             'clock-o',
-//             '#8b5cf6'
-//         );
-        
-//         // Mostrar el panel con los gráficos
-//         if (view) {
-//             view.setVisible(true);
-//         }
-        
-//         console.log('✅ Datos cargados en los 3 gráficos:', chartData.length + ' registros');
-//         console.log('✅ Gráficos visibles');
-//     },
-    
-//     /**
-//      * Helper para actualizar las barras de estadísticas
-//      */
-//     updateStatsBar: function(statsBar, message, icon, color) {
-//         if (!statsBar) return;
-        
-//         icon = icon || 'info-circle';
-//         color = color || '#555';
-        
-//         statsBar.setHtml(
-//             '<i class="fa fa-' + icon + '" style="color:' + color + ';"></i> ' + message
-//         );
-//     },
-    
-//     /**
-//      * Handler para el botón "Actualizar"
-//      */
-//     onRefreshChart: function() {
-//         let me = this;
-        
-//         Ext.Msg.wait('Actualizando datos desde el grid...', 'Cargando');
-        
-//         Ext.defer(function() {
-//             me.loadDataFromGrid();
-            
-//             Ext.Msg.hide();
-//             Ext.toast({
-//                 html: 'Datos actualizados correctamente en todos los gráficos',
-//                 title: 'Éxito',
-//                 align: 'tr',
-//                 iconCls: 'fa fa-check-circle'
-//             });
-//         }, 500);
-//     },
-    
-//     /**
-//      * Handler para exportar gráficos (se puede llamar desde cualquier botón)
-//      */
-//     onDownloadChart: function() {
-//         let lineChart = this.lookup('lineChart');
-        
-//         if (lineChart) {
-//             lineChart.download({
-//                 filename: 'progresion_volumen_' + Ext.Date.format(new Date(), 'Y-m-d_His'),
-//                 format: 'png'
-//             });
-            
-//             Ext.toast({
-//                 html: 'Descargando gráfico...',
-//                 title: 'Exportar',
-//                 align: 'tr',
-//                 iconCls: 'fa fa-download'
-//             });
-//         } else {
-//             Ext.Msg.alert('Error', 'No se pudo encontrar el gráfico para exportar');
-//         }
-//     }
-// });
-

@@ -6,8 +6,8 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
     ],
     controller: 'GridBPOControlAnalyticsAnalisisController',
 
-    width: 1045,
-    height: 630,
+    width: 1025,
+    height: 598,
     columnLines: true,
     viewConfig: {
         stripeRows: true,
@@ -15,6 +15,7 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
         markDirty: false,
         scrollable: true
     },
+    
 
     columns: {
         defaults: {
@@ -26,27 +27,32 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
             {
                 text: 'User',
                 dataIndex: 'AUASI',
-                width: 140,
+                width: 120,
                 renderer: function(value, metaData, record) {
                     // Indicador visual si tiene métricas críticas
                     var total = record.get('TOTAL_SOL') || 0;
                     var criticas = record.get('CRITICAS') || 0;
                     var pctCriticas = total > 0 ? (criticas / total * 100) : 0;
                     var alert = pctCriticas > 15 ? ' <span style="color:#ef4444;">⚠️</span>' : '';
-                    
-                    return '<div style="display:flex;align-items:center;justify-content:center;gap:4px;">' +
-                           '<span style="font-weight:700;font-size:13px;color:#111827;">' + value + '</span>' +
-                           alert + '</div>';
+
+                    metaData.tdStyle = 'text-align:left; vertical-align:middle;';
+
+                    return '<div style="display:flex; align-items:center;">' +
+                           '<span style="font-weight:700;font-size:13px;color:#111827;">' + value + '</span>'
+                           //  +  alert + 
+                           '</div>';
                 }
             },
             {
                 text: 'Date Authorization',
                 dataIndex: 'FEAUT',
-                width: 140,
-                renderer: function(value) {
+                width: 130,
+                renderer: function(value,metaData) {
                     if (!value) return '';
                     const date = Ext.Date.parse(value, 'Ymd');
-                    return '<div style="color:#6b7280;font-size:12px;font-weight:500;">' +
+
+                    metaData.tdStyle = 'vertical-align:middle;';
+                    return '<div style="color:#6b7280;font-size:13px;font-weight:500;">' +
                            '<span style="color:#374151;">📅</span> ' + 
                            Ext.Date.format(date, 'd/m/Y') + '</div>';
                 }
@@ -55,7 +61,9 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
                 text: 'Total',
                 dataIndex: 'TOTAL_SOL',
                 width: 90,
-                renderer: function(value) {
+                renderer: function(value,metaData) {
+
+                    metaData.tdStyle = 'vertical-align:middle;';
                     return '<div style="font-size:16px;font-weight:700;color:#3b82f6;">' + 
                            value + '</div>';
                 }
@@ -68,7 +76,8 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
                     var total = record.get('TOTAL_SOL') || 1;
                     var pct = (value / total * 100).toFixed(0);
                     
-                    metaData.style = 'padding:8px 4px;';
+                    // metaData.style = 'padding:8px 4px;';
+                    metaData.tdStyle = 'vertical-align:middle;';
                     
                     return '<div style="display:flex;flex-direction:column;align-items:center;gap:2px;">' +
                            '<span style="background:#d1fae5;color:#065f46;font-weight:700;' +
@@ -87,7 +96,8 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
                     var total = record.get('TOTAL_SOL') || 1;
                     var pct = (value / total * 100).toFixed(0);
                     
-                    metaData.style = 'padding:8px 4px;';
+                    // metaData.style = 'padding:8px 4px;';
+                    metaData.tdStyle = 'vertical-align:middle;';
                     
                     return '<div style="display:flex;flex-direction:column;align-items:center;gap:2px;">' +
                            '<span style="background:#dbeafe;color:#1e40af;font-weight:700;' +
@@ -106,7 +116,8 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
                     var total = record.get('TOTAL_SOL') || 1;
                     var pct = (value / total * 100).toFixed(0);
                     
-                    metaData.style = 'padding:8px 4px;';
+                    // metaData.style = 'padding:8px 4px;';
+                    metaData.tdStyle = 'vertical-align:middle;';
                     
                     var alert = pct > 15 ? ' ⚠️' : '';
                     
@@ -114,7 +125,7 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
                            '<span style="background:#fee2e2;color:#991b1b;font-weight:700;' +
                            'border-radius:8px;padding:4px 10px;font-size:13px;min-width:45px;' +
                            'display:inline-block;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,0.05);">' +
-                           value + alert + '</span>' +
+                           value + '</span>' +
                            '<span style="font-size:10px;color:#dc2626;font-weight:600;">' + 
                            pct + '%</span></div>';
                 }
@@ -146,7 +157,7 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
                            'background:' + bg + ';color:' + color + ';font-weight:700;' +
                            'border-radius:8px;padding:6px 12px;font-size:13px;' +
                            'box-shadow:0 1px 3px rgba(0,0,0,0.1);">' +
-                           '<span>' + icon + '</span>' +
+                           '<span>' + '</span>' +
                            '<span>' + Ext.util.Format.number(value, '0.00') + ' min</span></div>';
                 }
             },
@@ -154,26 +165,33 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
                 text: 'Min Time',
                 dataIndex: 'MIN_SEG',
                 width: 110,
-                renderer: function(value) {
+                renderer: function(value, metaData) {
                     if (value == null) return '';
             
                     const h = Math.floor(value / 3600);
                     const m = Math.floor((value % 3600) / 60);
                     const s = value % 60;
+                    
+                    const timeStr = (h > 0 ? h + 'h ' : '') + 
+                                  (m > 0 ? m + 'm ' : '') + 
+                                  (s > 0 ? s + 's' : '');
+                    
+                    var color = value > 600 ? '#dc2626' : '#374151';
+                    var icon = value > 600 ? '⚠️ ' : '🏆';
+                    metaData.tdStyle = 'vertical-align:middle;text-align:center;';
             
-                    const timeStr = h > 0 
-                        ? `${h}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}` 
-                        : `${m}:${s.toString().padStart(2,'0')}`;
-            
-                    return '<div style="font-weight:600;color:#10b981;font-size:12px;">' +
-                           '🏆 ' + timeStr + '</div>';
+                    return '<div style="display:flex;justify-content:center;align-items:center;font-weight:600;color:' 
+                    // + color 
+                    + ';font-size:12px;">' 
+                    // + icon 
+                     + timeStr + '</div>';
                 }
             },
             {
                 text: 'Max Time',
                 dataIndex: 'MAX_SEG',
                 width: 130,
-                renderer: function(value) {
+                renderer: function(value, metaData) {
                     if (value == null) return '';
                     
                     const h = Math.floor(value / 3600);
@@ -184,12 +202,15 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Grids.BPOControlAna
                                   (m > 0 ? m + 'm ' : '') + 
                                   (s > 0 ? s + 's' : '');
                     
-                    // Color más intenso si el tiempo es muy alto
                     var color = value > 600 ? '#dc2626' : '#374151';
-                    var icon = value > 600 ? '⚠️ ' : '';
+                    var icon = value > 600 ? '⚠️ ' : '🏆';
+                    metaData.tdStyle = 'vertical-align:middle;text-align:center;';
                     
-                    return '<div style="font-weight:600;color:' + color + ';font-size:12px;">' +
-                           icon + timeStr + '</div>';
+                    return '<div style="display:flex;justify-content:center;align-items:center;font-weight:600;color:' 
+                    // + color 
+                    + ';font-size:12px;">' 
+                    // + icon 
+                     + timeStr + '</div>';
                 }
             }
         ]

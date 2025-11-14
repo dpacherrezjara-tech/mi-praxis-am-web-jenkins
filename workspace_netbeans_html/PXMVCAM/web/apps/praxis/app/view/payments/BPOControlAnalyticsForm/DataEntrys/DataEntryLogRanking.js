@@ -8,8 +8,8 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.DataEntrys.DataEntr
     ],
     title: 'Detail',
     header: true,
-    width: 1200,
-    height: 500,
+    width: 1600,
+    height: 618,
     resizable: true,
     layout: 'fit',
     modal: true,
@@ -42,6 +42,10 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.DataEntrys.DataEntr
             },
         ]
     },
+    bbar: {
+        xtype: 'pagingtoolbar',
+        displayInfo: true
+    },
 
     items: [
         {
@@ -51,7 +55,7 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.DataEntrys.DataEntr
                 align: 'stretch'
             },
             flex: 1,
-            padding: 8,
+            // padding: 4,
             style: 'background: white',
             items: [
                 {
@@ -60,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.DataEntrys.DataEntr
                         type: 'hbox',
                         align: 'stretch'
                     },
-                    padding: 8,
+                    // padding: 8,
                     flex: 1,
                     style: 'background: white',
                     items: [
@@ -75,108 +79,56 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.DataEntrys.DataEntr
                                 enableTextSelection: true
                             },
                             columns: [
-                                {text: 'Corrl.', dataIndex: 'CORRLANC', align: 'center', width: 60},
-                                {text: 'Rfic', dataIndex: 'RFICODE',align: 'center', width: 50},
-                                {text: 'Rfics', dataIndex: 'RFICSUBCO',align: 'center', width: 60},
-                                {text: 'Carrier<br>Code', dataIndex: 'CARRIERCO',align: 'center', width: 60},
-                                {text: 'Vendor', dataIndex: 'VENDOR',align: 'center', width: 60},
-                                {text: 'Type', dataIndex: 'EMDTYPE',align: 'center', width: 60},
-                                {text: 'Currency', dataIndex: 'BASEMDA',align: 'center', width: 80},
-                                {text: 'Fare', dataIndex: 'BASEPRINCE',align: 'center', width: 100,
-                                    renderer: function (value, metaData, record) {
-                                        return Ext.util.Format.number(value, '0,000.00');
-                                    }
-                                },
+                                {text: 'Date', dataIndex: 'PRDA', align: 'center', width: 80},
+                                {text: 'Country', dataIndex: 'SCOUNTRY', align: 'center', width: 60},
+                                // {text: 'PROCTYPE', dataIndex: 'PROCTYPE', align: 'center', width: 100},
+                                {text: 'Processor', dataIndex: 'PROCTYPE_DESC', align: 'center', width: 140},  // --
+                                {text: 'Merchant ID', dataIndex: 'PMERCHID', align: 'center', width: 120},
                                 {
-                                    text: 'Iva',
+                                    text: 'Credit Card',
                                     defaults: {
                                         align: 'center',
                                         menuDisabled: true,
                                         sortable: true
                                     },
                                     columns: [
-                                        {text: 'Code', dataIndex: 'TAXCODE',align: 'center', width: 60},
-                                        {text: 'Amount', dataIndex: 'TAXAMOUNT',align: 'center', width: 100,
-                                            renderer: function (value, metaData, record) {
-                                                return Ext.util.Format.number(value, '0,000.00');
-                                            }
-                                        },
-                                        {text: 'Include', dataIndex: 'TAXINCLUDE_CHECK',align: 'center', width: 60, xtype: 'checkcolumn', readOnly: true}
+                                        {text: 'Card Number', dataIndex: 'SCARDN', width: 130},
+                                        {text: 'Auth', dataIndex: 'SAUTHOC', width: 80},
                                     ]
                                 },
-                                {text: 'Fare + Iva', dataIndex: 'TOTATTLPRI',align: 'center', width: 130,
-                                    renderer: function (value, metaData, record) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                    }
-                                },
+                                {text: 'PNR', dataIndex: 'SPNR', align: 'center', width: 100},
+                                {text: 'Ticket', dataIndex: 'TKT', align: 'center', width: 110},
+                                {text: 'Qty Tkt', dataIndex: 'QTYTKT', align: 'center', width: 60},  // --
+                                // {text: 'Doc<br>Type', dataIndex: 'TDOC', align: 'center', width: 60},
+                                {text: 'Currrency', dataIndex: 'SCURRENCY', align: 'center', width: 100},
+                                {text: 'Transaction<br>Type', dataIndex: 'TRANSTYPE', align: 'center', width: 100},
+                                // {text: 'GRUPOT', dataIndex: 'GRUPOT', align: 'center', width: 90}, // --
+                                {text: 'Code Chbk', dataIndex: 'CODCHGBACK', align: 'center', width: 100},
                                 {
-                                    text: 'Flight',
+                                    text: 'Autorization',
                                     defaults: {
                                         align: 'center',
                                         menuDisabled: true,
                                         sortable: true
                                     },
                                     columns: [
-                                        {text: 'Airline', dataIndex: 'AIRLINCODE',align: 'center', width: 60},
-                                        {text: 'From', dataIndex: 'BOARDPOINT',align: 'center', width: 60},
-                                        {text: 'To', dataIndex: 'OFFPOINT',align: 'center', width: 60},
-                                        {text: 'Number', dataIndex: 'FLIGHTNUM',align: 'center', width: 60},
-                                        {text: 'Group', dataIndex: 'GROUPCODE',align: 'center', width: 60},
-                                        {text: 'Class', dataIndex: 'CLASSOFSER',align: 'center', width: 60},
-                                        {text: 'Date', dataIndex: 'DEPARTDATE',align: 'center', width: 80}
-                                    ]
-                                }, 
-                                {text: 'Issuance', dataIndex: 'BASE_DESCRIPTION',align: 'center', width: 130,
-                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                        metaData.style = "background-color:#C8F4B4;font-weight:bold";
-                                        return value;
-                                    }
-                                },
-				{
-                                    text: 'Passenger',
-                                    defaults: {
-                                        align: 'center',
-                                        menuDisabled: true,
-                                        sortable: true
-                                    },
-                                    columns: [
-                                        {text: 'Type', dataIndex: 'PASSTYPE',align: 'center', width: 60},
-                                        {text: 'Number', dataIndex: 'NAMENUMBER',align: 'center', width: 60},
-                                        {text: 'Name', dataIndex: 'PASSENGERN',align: 'center', width: 200}
-                                    ]
-                                },
-                                {text: 'Status', dataIndex: 'ESTATUS',align: 'center', width: 60,
-                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                        metaData.style = "background-color:#C8F4B4;font-weight:bold";
-                                        return value;
-                                    }
-                                },
-                                {
-                                    text: 'Created',
-                                    defaults: {
-                                        align: 'center',
-                                        menuDisabled: true,
-                                        sortable: true
-                                    },
-                                    columns: [
-                                        {text: 'User', dataIndex: 'REGIS', width: 80},
-                                        {text: 'Date', dataIndex: 'FREGI', width: 80},
-                                        {text: 'Time', dataIndex: 'HREGI', width: 80}
+                                        {text: 'Date', dataIndex: 'FEAUT', width: 80},
+                                        {text: 'Time', dataIndex: 'HOAUT', width: 70},
+                                        {text: 'User', dataIndex: 'AUASI', width: 100},
                                     ]
                                 },
                                 {
-                                    text: 'Updated',
+                                    text: 'Asignation',
                                     defaults: {
                                         align: 'center',
                                         menuDisabled: true,
                                         sortable: true
                                     },
                                     columns: [
-                                        {text: 'User', dataIndex: 'REVIS', width: 80},
-                                        {text: 'Date', dataIndex: 'FREVI', width: 80},
-                                        {text: 'Time', dataIndex: 'HREVI', width: 80}
+                                        {text: 'Date', dataIndex: 'FEASI', width: 80},
+                                        {text: 'Time', dataIndex: 'HOASI', width: 70},
                                     ]
-                                }
+                                },
                             ]
                         }
                     ]
