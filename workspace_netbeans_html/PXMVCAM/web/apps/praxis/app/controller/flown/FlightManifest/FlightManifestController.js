@@ -341,7 +341,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
         Ext.getCmp(prototype.id + '-pie').hide();
 //        var chkManifest = this.getValue("chkManifest");
 
-        if (this.getValue("txtTKT") !== '' || this.getValue("txtCDEPART") !== '' || this.getValue("txtLNAME") !== '' || this.getValue("txtCHAIR") !== '' || this.getValue("txtFlight") !== '' ) {
+        if (this.getValue("txtTKT") !== '' || this.getValue("txtCDEPART") !== '' || this.getValue("txtCARRIVA") !== '' 
+             || this.getValue("txtFNAME") !== '' || this.getValue("txtLNAME") !== '' || this.getValue("txtCHAIR") !== '' || this.getValue("txtFlight") !== '' ) {
             console.log('entra a tkt',this.getValue("txtTKT"))
             if( this.getValue("txtTKT") !== '' && this.getValue("txtTKT").length < 14  ){
                this.setValue('txtTKT', '')
@@ -358,6 +359,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
             this.objFLIGHTDETAIL.dayTo = this.getValue("cmbDateToDay");
             this.objFLIGHTDETAIL.NFLIGHT = this.getValue("txtFlight");
             this.objFLIGHTDETAIL.CDEPART = this.getValue("txtCDEPART");
+            this.objFLIGHTDETAIL.CARRIVA = this.getValue("txtCARRIVA");
+            this.objFLIGHTDETAIL.FNAME = this.getValue("txtFNAME");
             this.objFLIGHTDETAIL.LNAME = this.getValue("txtLNAME");
             this.objFLIGHTDETAIL.CHAIR = this.getValue("txtCHAIR");
             this.objFLIGHTDETAIL.TICKET = this.getValue("txtTKT").replace(" ", "".trim());
@@ -370,6 +373,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
             this.bean.monthTo = this.getValue("cmbDateToMonth");
             this.bean.dayFrom = this.getValue("cmbDateFromDay");
             this.bean.dayTo = this.getValue("cmbDateToDay");
+            this.bean.NFLIGHT = this.getValue("txtFlight");
             //Fuente ======================================================
 //            this.bean.FFLOW = this.getValue("cmbFlagFlown");
             //Carrier =====================================================
@@ -783,6 +787,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightManifest.FlightManifestController'
         });
         Ext.getCmp(prototype.id + '-gridDetail').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+        console.log(bean,'bean')
         _pathDetail = prototype.url + '/getXLSXDetail?' +
                 'yearFrom=' + bean.yearFrom + '&' +
                 'monthFrom=' + bean.monthFrom + '&' +
