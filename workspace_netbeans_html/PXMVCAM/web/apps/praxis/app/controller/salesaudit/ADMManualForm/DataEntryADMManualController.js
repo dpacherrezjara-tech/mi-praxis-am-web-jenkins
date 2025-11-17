@@ -1101,7 +1101,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
         var txtEPR = Ext.getCmp(prototype.id01 + '-txtEPR').getValue();
 
         //alert(ComboSource);
-
+        
+        
         if (ComboSource === null) {
             ComboSource = '';
         }
@@ -1144,6 +1145,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                 Ext.Msg.alert('.: PRAXIS :.', 'You must select the direct sales area for the ASR source');
                 bvalida = false;
             }
+        } else {
+            if (CmboType1 === 'NTD' || CmboType1 === 'NTC' || CmboType2 === 'NTD' || CmboType2 === 'NTC' || CmboType3 === 'NTD' || CmboType3 === 'NTC' || CmboType4 === 'NTD' || CmboType4 === 'NTC' || CmboType5 === 'NTD' || CmboType5 === 'NTC') {
+                Ext.Msg.alert('.: PRAXIS :.', 'Para la fuente seleccionada, solo se permiten los tipos ADM o ACM');
+                bvalida = false;
+            }
         }
         if (txtCountry === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'Enter Country');
@@ -1165,7 +1171,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
             Ext.Msg.alert('.: PRAXIS :.', 'The Ticket must be 10 characteres');
             bvalida = false;
         }
-        if (ComboSource === 'ASR' && ComboChannel === 'FRA' && ComboCurrency!=='MXN') {
+        if (ComboSource === 'ASR' && ComboChannel === 'FRA' && ComboCurrency !== 'MXN') {
             Ext.Msg.alert('.: PRAXIS :.', 'For franchise channel, it must be reported in national currency MXN');
             bvalida = false;
         }
