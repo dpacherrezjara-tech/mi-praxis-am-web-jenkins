@@ -17,7 +17,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.DataEntryLogRanki
     },
     getData: async function () {
         const me = this;
-        console.log('me get data', me.view.rowData);
+        // console.log('me get data', me.view.rowData);
         
         const data = me.view.rowData ;
         const params = {
@@ -31,12 +31,15 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.DataEntryLogRanki
         me.dataDetail =  params;
 
         const gridDet = Ext.getCmp(prototype.idRanking + '-grid-Detail');
+        const paggin = Ext.getCmp(prototype.idRanking + '-pagginLog');
+
 
         try {
             const res = await global.callStorePaggin('PRAXISMP', 'SQP05744', params);
-           console.log('res', res);
+        //    console.log('res', res);
 
            gridDet.setStore(res);
+           paggin.setStore(res)
 
         } catch (e) {
             console.error(e);
@@ -58,7 +61,6 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.DataEntryLogRanki
         const me = this;
         const view = me.view;
         view.setLoading(true);
-        // let res = await global.callStorePaggin('PRAXISMP', 'SQP05744', me.dataDetail);
         const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05744', me.dataDetail);
 
 
@@ -69,7 +71,6 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.DataEntryLogRanki
                 "Processor": x.PROCTYPE_DESC,
                 "Merchant ID": x.PMERCHID,
             
-                // Credit Card
                 "Card Number": x.SCARDN,
                 "Auth": x.SAUTHOC,
             
@@ -78,15 +79,11 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.DataEntryLogRanki
                 "Qty Tkt": x.QTYTKT,
                 "Currency": x.SCURRENCY,
                 "Transaction Type": x.TRANSTYPE,
-                // "GRUPOT": x.GRUPOT,
                 "Code Chbk": x.CODCHGBACK,
             
-                // Authorization
                 "Auth Date": x.FEAUT,
                 "Auth Time": x.HOAUT,
                 "Auth User": x.AUASI,
-            
-                // Asignation
                 "Asig Date": x.FEASI,
                 "Asig Time": x.HOASI,
             }));

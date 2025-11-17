@@ -51,7 +51,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
                 return;
             }
 
-            console.log('dataaa',data);
+            // console.log('dataaa',data);
 
             let excel = data.map(x => {
                 const rawMin = x.MIN_SEG;
@@ -96,10 +96,5 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
     
         return timeStr.trim();
     },
-
-   
-    
-
-   
 
 });

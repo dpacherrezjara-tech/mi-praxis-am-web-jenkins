@@ -388,33 +388,6 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Graphics.GraphicsRa
                     }],
             
                     series: [{
-                        type: 'bar',
-                        title: 'Volume',
-                        xField: 'USUARIO',
-                        yField: 'SOL',
-                        style: {
-                            fill: '#1E3A8A',   // azul marino
-                            opacity: 0.75
-                        },
-                        highlight: {
-                            fillStyle: '#172554',   // azul marino más oscuro
-                            opacity: 1
-                        },
-                        tooltip: {
-                            trackMouse: true,
-                            renderer: function (tooltip, record) {
-                                tooltip.setHtml(`
-                                    <div style="padding:8px; background:#1E3A8A; color:white; 
-                                                border-radius:6px; font-size:11px;">
-                                        <strong>${record.get('USUARIO')}</strong><br/>
-                                        Requests: <strong>${record.get('SOL')}</strong><br/>
-                                        Efficiency: <strong>${record.get('EFICIENCIA_PCT')}%</strong><br/>
-                                        Average: <strong>${record.get('PROM_MIN')}</strong> min
-                                    </div>
-                                `);
-                            }
-                        }
-                    }, {
                         type: 'line',
                         title: 'Efficiency',
                         xField: 'USUARIO',
@@ -445,6 +418,33 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.Graphics.GraphicsRa
                                         Efficiency: <strong>${record.get('EFICIENCIA_PCT')}%</strong><br/>
                                         Score: <strong>${record.get('TOTAL')}</strong><br/>
                                         Category: <strong>${record.get('CATEGORIA')}</strong>
+                                    </div>
+                                `);
+                            }
+                        }
+                    }, {
+                        type: 'bar',
+                        title: 'Volume',
+                        xField: 'USUARIO',
+                        yField: 'SOL',
+                        style: {
+                            fill: '#1E3A8A',   // azul marino
+                            opacity: 0.75
+                        },
+                        highlight: {
+                            fillStyle: '#172554',   // azul marino más oscuro
+                            opacity: 1
+                        },
+                        tooltip: {
+                            trackMouse: true,
+                            renderer: function (tooltip, record) {
+                                tooltip.setHtml(`
+                                    <div style="padding:8px; background:#1E3A8A; color:white; 
+                                                border-radius:6px; font-size:11px;">
+                                        <strong>${record.get('USUARIO')}</strong><br/>
+                                        Requests: <strong>${record.get('SOL')}</strong><br/>
+                                        Efficiency: <strong>${record.get('EFICIENCIA_PCT')}%</strong><br/>
+                                        Average: <strong>${record.get('PROM_MIN')}</strong> min
                                     </div>
                                 `);
                             }

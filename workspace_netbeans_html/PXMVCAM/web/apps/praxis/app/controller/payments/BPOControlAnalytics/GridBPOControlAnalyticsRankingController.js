@@ -11,17 +11,17 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
     },
 
     getData: async function (view) {
-        console.log('view', view);
+        // console.log('view', view);
         view.setLoading(true);
 
         view.searchParams.IN_USER =  view.searchParams.IN_USER === 'All' ? '' : view.searchParams.IN_USER;
 
         let store = await global.callStoreGet('PRAXISMP', 'SQP05743', view.searchParams);
-        console.log('stores', store);
+        // console.log('stores', store);
 
         let data = store?.lstRs?.[0] || [];
 
-        console.log('data', data);
+        // console.log('data', data);
 
         if (data.length === 0) {
             global.Msg({ msg: 'Data not found' });
@@ -37,8 +37,8 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
         view.setStore(gridStore);
         view.setLoading(false);
 
-        // ✅ AHORA SÍ: CREAR EL GRÁFICO DESPUÉS DE TENER LOS DATOS
-        console.log('Datos cargados, creando gráfico...');
+        // CREAR EL GRÁFICO DESPUÉS DE TENER LOS DATOS
+        // console.log('Datos cargados, creando gráfico...');
         
         Ext.defer(function() {
             // Buscar el mainPanel donde están los componentes
@@ -52,7 +52,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
             // Verificar si el gráfico ya existe (para evitar duplicados)
             const existingChart = Ext.getCmp(prototype.id + '-graphics-ranking');
             if (existingChart) {
-                console.log('El gráfico ya existe, actualizando datos...');
+                // console.log('El gráfico ya existe, actualizando datos...');
                 const controller = existingChart.getController();
                 if (controller && controller.loadDataFromGrid) {
                     controller.loadDataFromGrid();
@@ -72,7 +72,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
             // Agregar el gráfico al mainPanel
             mainPanel.add(chartPanel);
             
-            console.log('Gráfico creado y agregado');
+            // console.log('Gráfico creado y agregado');
             
             // Cargar los datos en el gráfico después de un pequeño delay
             Ext.defer(function() {
@@ -106,7 +106,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
                 return;
             }
 
-            console.log('dataaa',data);
+            // console.log('dataaa',data);
 
             const formatDate = (iso) => {
                 if (!iso) return "";
@@ -118,21 +118,21 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
 
 
                 const row = {
-                    Rank: x.RK,
-                    User: x.USUARIO,
-                    StartDate: formatDate(x.FECHA_INICIO),
-                    EndDate: formatDate(x.FECHA_FIN),
-                    Requests: x.SOL,
-                    AvgTimeMin: x.PROM_MIN,
-                    PctFast: x.PCT_RAP + '%',
-                    PctCritical: x.PCT_CRI+ '%',
-                    SpeedVolume: x.SC_VOL,
-                    SpeedScore: x.SC_VEL,
-                    CounterScore: x.SC_CON,
-                    Penalty: x.PENALIZ,
-                    Bonus: x.BONUS,
-                    Total: x.TOTAL,
-                    Category: x.CATEGORIA
+                    "Rank": x.RK,
+                    "User": x.USUARIO,
+                    "Start Date": formatDate(x.FECHA_INICIO),
+                    "End Date": formatDate(x.FECHA_FIN),
+                    "Requests": x.SOL,
+                    "Avg Time Min": x.PROM_MIN,
+                    "% Fast": x.PCT_RAP + '%',
+                    "% Critical": x.PCT_CRI+ '%',
+                    "Speed Volume": x.SC_VOL,
+                    "Speed Score": x.SC_VEL,
+                    "Counter Score": x.SC_CON,
+                    "Penalty": x.PENALIZ,
+                    "Bonus": x.BONUS,
+                    "Total": x.TOTAL,
+                    "Category": x.CATEGORIA
                 };
             
                 return row;
@@ -156,15 +156,15 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
     onCellClick: function(view, cell, cellIndex, record, tr, rowIndex, e) {
         // Obtén el nombre de la columna clickeada
         const column = view.getHeaderAtIndex(cellIndex);
-        console.log('colum', column)
+        // console.log('colum', column)
         
         // Verifica si es la columna 'SOL' (Requests)
             this.ondetalleRanking(record);
     },
     ondetalleRanking: function(grid, rowIndex, colIndex, item, e, record) {
-        console.log('on detalle');
+        // console.log('on detalle');
         const rowData = record.getData();
-        console.log('Datos de la fila:', rowData);
+        // console.log('Datos de la fila:', rowData);
         // console.log('this.getView()',this.getView());
     
         const dataEntry = Ext.create('Ext.Praxis.view.payments.BPOControlAnalyticsForm.DataEntrys.DataEntryLogRanking', {

@@ -101,6 +101,24 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingCo
                 EFICIENCIA_PCT: eficienciaPct
             });
         });
+
+        //oculta dual chart
+        // Ocultar SOLO el TAB del Dual Chart si solo hay 1 agente
+        let tabPanel = view.down('tabpanel');
+
+        // dualChart está dentro de su panel tab, obtenemos ese tab
+        let dualTab = dualChart.up('panel');  
+
+        if (chartData.length === 1) {
+            // Ocultrar tab solo del Dual Analysis
+            if (dualTab) dualTab.tab.hide();
+            if (dualTab) dualTab.hide();
+        } else {
+            // Mostrarlo cuando haya 2+ agentes
+            if (dualTab) dualTab.tab.show();
+            if (dualTab) dualTab.show();
+        }
+
         
         // Validar que haya datos
         if (chartData.length === 0) {
@@ -167,9 +185,9 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingCo
             view.setVisible(true);
         }
         
-        console.log('✅ Datos cargados en los 3 gráficos:', chartData.length + ' registros');
-        console.log('✅ Eficiencia calculada para cada agente');
-        console.log('✅ Gráficos visibles');
+        // console.log('Datos cargados en los 3 gráficos:', chartData.length + ' registros');
+        // console.log('Eficiencia calculada para cada agente');
+        // console.log('Gráficos visibles');
     },
     
     /**
@@ -207,26 +225,5 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GraphicsRankingCo
         }, 500);
     },
     
-    /**
-     * Handler para exportar gráficos (se puede llamar desde cualquier botón)
-     */
-    onDownloadChart: function() {
-        let lineChart = this.lookup('lineChart');
-        
-        if (lineChart) {
-            lineChart.download({
-                filename: 'progresion_volumen_' + Ext.Date.format(new Date(), 'Y-m-d_His'),
-                format: 'png'
-            });
-            
-            Ext.toast({
-                html: 'Descargando gráfico...',
-                title: 'Exportar',
-                align: 'tr',
-                iconCls: 'fa fa-download'
-            });
-        } else {
-            Ext.Msg.alert('Error', 'No se pudo encontrar el gráfico para exportar');
-        }
-    }
+
 });

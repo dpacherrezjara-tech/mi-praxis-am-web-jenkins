@@ -42,11 +42,7 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.DataEntrys.DataEntr
             },
         ]
     },
-    bbar: {
-        xtype: 'pagingtoolbar',
-        displayInfo: true
-    },
-
+   
     items: [
         {
             xtype: 'container',
@@ -138,4 +134,11 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.DataEntrys.DataEntr
 
         }
     ],
+
+    bbar: {
+        xtype: 'pagingtoolbar',
+        id: prototype.idRanking + '-pagginLog',
+        displayInfo: true
+    }
+
 });

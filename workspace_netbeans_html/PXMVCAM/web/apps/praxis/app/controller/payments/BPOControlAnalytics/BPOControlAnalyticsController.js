@@ -6,7 +6,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.BPOControlAnalyti
     init: function (view) {},
 
     afterRender: async function (obj, e) {
-        console.log('after render');
+        // console.log('after render');
         await this.loadFilters();
     },
 
@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.BPOControlAnalyti
             IN_TYPE: params.IN_TYPE
         };
     
-        console.log('params', orderedParams);
+        // console.log('params', orderedParams);
     
         // Crear el grid
         const newGrid = Ext.create(grid, {
@@ -69,9 +69,6 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.BPOControlAnalyti
             });
     
             mainPanel.add(chartPanel);
-
-
-            
         };
 
 
@@ -97,7 +94,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.BPOControlAnalyti
         const res = await global.callStoreGet('PRAXISMP', 'SQP05276', { IN_STATUS: '1' });
         const res2 = await global.callStoreGet('PXSAUDIT', 'SQP02745', { IN_CCUST: '139', IN_OPTION: '4' });
     
-        console.log('res2', res2);
+        // console.log('res2', res2);
     
         const cmbProcessor = Ext.getCmp(prototype.id + '-cmbProctypef');
         const cmbUser = Ext.getCmp(prototype.id + '-txtUser');
@@ -117,7 +114,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.BPOControlAnalyti
     
         // --- Usuarios ---
         let usuarios = res2.lstRs?.[0] || [];
-        usuarios.unshift({ A4836USER: 'All' }); // 👈 Añadimos opción All
+        usuarios.unshift({ A4836USER: 'All' }); // Añadimos opción All
     
         const userStore = Ext.create('Ext.data.Store', {
             fields: ['A4836USER'],
@@ -126,7 +123,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.BPOControlAnalyti
     
         cmbUser.setStore(userStore);
     
-        // 👇 Aquí forzamos la selección por defecto en “All”
+        //  Aquí forzamos la selección por defecto en “All”
         cmbUser.setValue('All');
     
         filters.setLoading(false);

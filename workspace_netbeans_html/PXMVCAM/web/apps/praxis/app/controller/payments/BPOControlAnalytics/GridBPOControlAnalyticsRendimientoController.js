@@ -12,7 +12,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
     },
 
     getData: async function (view) {
-        console.log('view', view);
+        // console.log('view', view);
         view.setLoading(true);
         
         view.searchParams.IN_USER =  view.searchParams.IN_USER === 'All' ? '' : view.searchParams.IN_USER;
@@ -22,7 +22,7 @@ Ext.define('Ext.Praxis.controller.payments.BPOControlAnalytics.GridBPOControlAna
 
         let data = store?.lstRs?.[0] || [];
 
-        console.log('data', data);
+        // console.log('data', data);
 
         if (data.length === 0) {
             view.setLoading(false);
