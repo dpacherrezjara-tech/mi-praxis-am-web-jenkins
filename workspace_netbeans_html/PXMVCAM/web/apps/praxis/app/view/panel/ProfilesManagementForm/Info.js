@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.panel.UsersForm.Info', {
+Ext.define('Ext.Praxis.view.panel.ProfilesManagementForm.Info', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-info',
     layout: 'border',
@@ -19,6 +19,7 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
+                width: 1200,
 //                height: 570,
                 align: 'center'
             },
@@ -35,16 +36,16 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.Info', {
                     defaults: {
                         bodyStyle: 'background: transparent;',
                         border: false,
-                        width: prototype.widthGrid,
+                        width: 1200,
 //                        height: 545,
                         align: 'center'
                     },
                     items: [
-                        // <editor-fold defaultstate="collapsed" desc="gridData">
                         {
+                            title: 'Info',
                             xtype: 'grid',
                             id: prototype.id + '-gridData',
-                            width: prototype.widthGrid,
+                            width: 1100,
                             height: 510,
                             columnLines: true,
                             columns: {
@@ -54,103 +55,19 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.Info', {
                                     align: 'center'
                                 },
                                 items: [
-                                    {
-                                        text: 'Customer',
-                                        dataIndex: 'CCUST',
-                                        width: 100,
-                                        align: 'center'
-                                    },
-                                    {
-                                        text: 'User',
-                                        dataIndex: 'USR',
-                                        width: 100,
-                                        align: 'center'
-                                    },
-                                    {
-                                        text: 'Name',
-                                        dataIndex: 'NOM',
-                                        width: 100,
-                                        align: 'center'
-                                    },
-                                    {
-                                        text: 'Last Name',
-                                        dataIndex: 'APE',
-                                        width: 100,
-                                        align: 'center'
-                                    },
-                                    {
-                                        text: 'Email',
-                                        dataIndex: 'CREMP',
-                                        width: 100,
-                                        align: 'center'
-                                    },
-                                    {
-                                        text: 'City',
-                                        dataIndex: 'CITY',
-                                        //width: 200,
-                                        flex:1,
-                                        align: 'left',
-                                        cls: 'column_header_double'
-                                    },
-                                    {
-                                        text: 'Status',
-                                        dataIndex: 'STAT',
-                                        //width: 200,
-                                        flex:1,
-                                        align: 'center',
-                                        cls: 'column_header_double'
-                                    },
-                                    {
-                                        text: 'Id Profile',
-                                        dataIndex: 'ID_PROFILE',
-                                        //width: 200,
-                                        flex:1,
-                                        align: 'center',
-                                        cls: 'column_header_double'
-                                    },
-                                    {
-                                        text: 'Profile',
-                                        dataIndex: 'PROFILE',
-                                        //width: 200,
-                                        flex:1,
-                                        align: 'center',
-                                        cls: 'column_header_double'
-                                    },
-                                    {                
-                                        text: 'User Create',
-                                        dataIndex: 'USCR',
-                                        width: 150,
-                                        cls: 'column_header_double',
-                                        align: 'center'
-                                    },
-                                    {                
-                                        text: 'Date Create',
-                                        dataIndex: 'DTCR',
-                                        //width: 100,
-                                        flex:1,
-                                        cls: 'column_header_double',
-                                        align: 'left'
-                                    },
-                                    {                
-                                        text: 'User Update',
-                                        dataIndex: 'USUP',
-                                        width: 150,
-                                        cls: 'column_header_double',
-                                        align: 'center'
-                                    },
-                                    {                
-                                        text: 'Date Update',
-                                        dataIndex: 'DTUP',
-                                        //width: 100,
-                                        flex:1,
-                                        cls: 'column_header_double',
-                                        align: 'left'
-                                    },
+                                    { text:'Customer', dataIndex: 'CCUST', type: 'string', width: 100, align: 'L' },
+                                    { text:'Id Profile', dataIndex: 'ID_PROFILE', type: 'string', width: 100, align: 'C' },
+                                    { text:'Profile', dataIndex: 'DESC1', type: 'string', width: 200, align: 'L' },
+                                    { text:'Status', dataIndex: 'STAT', type: 'string', width: 60, align: 'C'},
+                                    { text:'USCR', dataIndex: 'USCR', type: 'string', width: 100, align: 'L' },
+                                    { text:'DTCR', dataIndex: 'DTCR', type: 'string', width: 110, align: 'L'},
+                                    { text:'USUP', dataIndex: 'USUP', type: 'string', width: 100, align: 'L'},
+                                    { text:'DTUP', dataIndex: 'DTUP', type: 'string', width: 110, align: 'L'},
                                     {
                                         text: 'Edit',
                                         sortable: false,
                                         xtype: 'actioncolumn',
-                                        width: 90,
+                                        width: 60,
                                         align: 'center',
                                         items: [
                                             {
@@ -163,7 +80,6 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.Info', {
                                 ]
                             }
                         },
-                        // </editor-fold>
                         // <editor-fold defaultstate="collapsed" desc="pie">
                         {
                             xtype: 'panel',

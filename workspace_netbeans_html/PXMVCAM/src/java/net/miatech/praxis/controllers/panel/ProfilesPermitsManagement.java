@@ -17,7 +17,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.PX041S01INF001Filter;
-import net.miatech.beans.PX076S01INF053Filter;
+import net.miatech.beans.SQP05762Filter;
+import net.miatech.beans.SQP05763Filter;
+import net.miatech.beans.SQP05764Filter;
+import net.miatech.beans.SQP05851Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.panel.PanelLogic;
@@ -41,8 +44,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @Scope("request")
-@RequestMapping("/PerPro")
-public class PerProController extends BaseController {
+@RequestMapping("/ProfilesPermitsManagement")
+public class ProfilesPermitsManagement extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
 
@@ -55,21 +58,21 @@ public class PerProController extends BaseController {
     @RequestMapping(value = "search")
     public @ResponseBody String search(ModelMap map, HttpServletRequest request) {
         
-        PX041S01INF001Filter filter = new PX041S01INF001Filter();
+        SQP05762Filter filter = new SQP05762Filter();
         filter.VP_CCUST = "139";
         filter.VP_APLICA = "PX";
         
         if(request.getParameter("option")!=null && request.getParameter("group")!=null)
         {
-            filter.VP_USR = request.getParameter("option").toString().trim(); 
+            filter.VP_ID_PROFILE = request.getParameter("option").toString().trim(); 
             if(!"".equals(request.getParameter("group").toString().trim()))
                 filter.VP_TYPEF = Integer.parseInt(request.getParameter("group".toString().trim())); 
         }
-        List<PX041S01INF001Filter> lst_prmpanel;
+        List<SQP05762Filter> lst_prmpanel;
         try {
             PanelLogic logic = new PanelLogic();
             logic.setSession(this.serverSession.getServerSession());
-            lst_prmpanel = logic.loadPX041S01INF001(filter);
+            lst_prmpanel = logic.loadSQP05762(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -88,7 +91,8 @@ public class PerProController extends BaseController {
     @RequestMapping(value = "crud")
     public @ResponseBody String crud(HttpServletRequest request) {
         //REALIZA INSERT, UPDATE O DELETE 
-        PX076S01INF053Filter filter = new PX076S01INF053Filter(); 
+        SQP05763Filter filter = new SQP05763Filter(); 
+        SQP05851Filter objLog = new SQP05851Filter();
         filter.VP_CCUST = "139";
         filter.VP_APLICA = "PX";
         String response = "";
@@ -98,11 +102,12 @@ public class PerProController extends BaseController {
             
             filter.VP_ACTION = request.getParameter("strOption").toString().trim();
             //filter.VP_CCUST = request.getParameter("USR").toString().trim();
-            filter.VP_USR = request.getParameter("USR").toString().trim();
-            filter.VP_USRCOPY = request.getParameter("USRCOPY")!= null ? request.getParameter("USRCOPY").toString().trim() : "";
+            filter.VP_ID_PROFILE = request.getParameter("ID_PROFILE").toString().trim();
+            filter.VP_DESC1 = request.getParameter("DESC1").toString().trim();
+            //filter.VP_USRCOPY = request.getParameter("USRCOPY")!= null ? request.getParameter("USRCOPY").toString().trim() : "";
             //filter.VP_APLICA = request.getParameter("APLICA").toString().trim();
             filter.VP_NPROG = request.getParameter("NPROG")!= null ? request.getParameter("NPROG").toString().trim() : "";
-            filter.VP_MODULE = request.getParameter("MODULE")!= null ? request.getParameter("MODULE").toString().trim() : "";
+            //filter.VP_MODULE = request.getParameter("MODULE")!= null ? request.getParameter("MODULE").toString().trim() : "";
             filter.VP_PERMA = request.getParameter("PERMA").toString().trim();            
             filter.VP_PERML = request.getParameter("PERML").toString().trim();
             filter.VP_PERMC = request.getParameter("PERMC").toString().trim();
@@ -111,12 +116,15 @@ public class PerProController extends BaseController {
             filter.VP_PERMX = request.getParameter("PERMX").toString().trim();
             filter.VP_STAT = request.getParameter("STAT")!= null ? request.getParameter("STAT").toString().trim() : "";
             
-            if(filter.VP_ACTION.equals("CO")||filter.VP_ACTION.equals("IM")||filter.VP_ACTION.equals("DM")){
-                filter = logic.setSQP05412(filter);
-            }
-            else{
-                filter = logic.setPX076S01INF053(filter);   
-            }
+            //LOG INIT
+            objLog.VP_ACTIO = request.getParameter("strOption").toString().trim();
+            objLog.VP_ID_OPERATOR = request.getParameter("ID_PROFILE").trim();
+            objLog.VP_DESC1 = "PROFILES PERMITS MANAGEMENT - A:" + filter.VP_PERMA + " L:" + filter.VP_PERML + " C:" + filter.VP_PERMC + " M:" + filter.VP_PERMM + " E:" + filter.VP_PERME + " X:" + filter.VP_PERMX;
+            objLog.VP_OPER = request.getParameter("DESC1").toString().trim();
+            objLog.VP_NPROG = request.getParameter("NPROG")!= null ? request.getParameter("NPROG").toString().trim() : "";
+            logic.setSQP05851(objLog);
+            //LOG END
+            filter = logic.setSQP05763(filter);  
             response = filter.dbException.MESSAGE;
             
         } catch (Exception e) {
@@ -128,6 +136,33 @@ public class PerProController extends BaseController {
         m.put("response", response);
         return new Gson().toJson(m);
     }
+    
+    @RequestMapping(value = "searchProfiles")
+    public @ResponseBody String searchProfiles(ModelMap map, HttpServletRequest request) {
+        
+        SQP05764Filter filter = new SQP05764Filter();
+        filter.VP_FILTER = "";
+        filter.VP_TYPEF = 0;
+        List<SQP05764Filter> lst_prmpanel;
+        try {
+            PanelLogic logic = new PanelLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lst_prmpanel = logic.loadSQP05764(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        
+        HashMap m = new HashMap();
+        try{
+	        m.put("success",true);
+	        m.put("total",lst_prmpanel.get(0).page.TOTROWS);
+	        m.put("data",lst_prmpanel);
+        }catch (Exception e) {
+            throw new SpringException(e);
+        }        
+        return new Gson().toJson(m);
+    }
+    
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void GetXLSX(HttpServletRequest request, HttpServletResponse response) {

@@ -1,14 +1,14 @@
-Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
+Ext.define('Ext.Praxis.view.panel.ProfilesPermitsManagementForm.DataEntry',{
     extend: 'Ext.window.Window',
-    alias: 'widget.DataEntryUsersForm',
+    alias: 'widget.DataEntryProfilesPermitsManagementForm',
 
-    controller: 'DataEntryUsersController',
+    controller: 'DataEntryProfilesPermitsManagementController',
 
     requires:[
-        'Ext.Praxis.controller.panel.Users.DataEntryUsersController'
+        'Ext.Praxis.controller.panel.ProfilesPermitsManagement.DataEntryProfilesPermitsManagementController'
     ],
 
-    title:'Users Mant- Data Entry Form',
+    title:'Profiles / Programs Management - Data Entry Form',
     header:true,
     height:340,
     width:815,
@@ -36,190 +36,6 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                     items:[
                         { xtype: 'tbspacer', width: 7 },
                         {
-                            xtype: 'label',
-                            text: 'User: ',
-                            style: 'font-weight:bold;color:#000;',
-                            width: 80
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtUSR',
-                            text: '',
-                            maxLength: 10,
-                            enforceMaxLength: true,
-                            //style: 'font-weight:bold;color:red;',
-                            width: 120,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Mandatory Field'
-                            },
-                            listeners:{
-                                change: 'onUpperValue'
-                            }
-                        },
-                        { xtype: 'tbspacer', width: 7 },
-                        {
-                            xtype: 'checkboxfield',
-                            id: prototype.id + '-chkStatus',
-                            boxLabelAlign: 'after',
-                            width: 80,
-                            boxLabel: '<b>Status</b>',
-                            readOnly: false
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox' 
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
-                        {
-                            xtype: 'label',
-                            text: 'Name: ',
-                            style: 'font-weight:bold;color:#000;',
-                            width: 80
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtName',                            
-                            text: '',
-                            maxLength: 200,
-                            enforceMaxLength: true,
-                            //style: 'font-weight:bold;color:red;',
-                            width: 160,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Mandatory Field'
-                            },
-                            listeners:{
-                                change: 'onUpperValue'
-                            }
-                        },
-                        { xtype: 'tbspacer', width: 7 },
-                        {
-                            xtype: 'label',
-                            text: 'Last Name: ',
-                            style: 'font-weight:bold;color:#000;',
-                            width: 80
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtLastName',                            
-                            text: '',
-                            maxLength: 200,
-                            enforceMaxLength: true,
-                            //style: 'font-weight:bold;color:red;',
-                            width: 160,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Mandatory Field'
-                            },
-                            listeners:{
-                                change: 'onUpperValue'
-                            }
-                        },
-                        { xtype: 'tbspacer', width: 10 },
-                        {
-                            xtype: 'label',
-                            text: 'Email: ',
-                            style: 'font-weight:bold;color:#000;',
-                            width: 50
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtEmail',                            
-                            text: '',
-                            maxLength: 200,
-                            enforceMaxLength: true,
-                            //style: 'font-weight:bold;color:red;',
-                            width: 160,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Mandatory Field'
-                            },
-                            listeners:{
-                                change: 'onUpperValue'
-                            }
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox' 
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
-                        {
-                            xtype: 'label',
-                            text: 'Description: ',
-                            style: 'font-weight:bold;color:#000;',
-                            width: 80
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtDESC',                            
-                            text: '',
-                            maxLength: 30,
-                            enforceMaxLength: true,
-                            //style: 'font-weight:bold;color:red;',
-                            width: 320,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Mandatory Field'
-                            },
-                            listeners:{
-                                change: 'onUpperValue'
-                            }
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox' 
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
-                        {
-                            xtype: 'label',
-                            text: 'City: ',
-                            style: 'font-weight:bold;color:#000;',
-                            width: 80
-                        },
-                        {
-                            xtype:'combo',
-                            id: prototype.id + '-cboCity',
-                            store: new Ext.data.SimpleStore({
-                                fields: ['code', 'name'],
-                                data: [
-                                    ["", "- SELECT -"],
-                                    ["MEX", "MEXICO DF"],
-                                    ["LIM", "LIMA"]
-                                ]
-                            }),
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            forceSelection: true,
-                            caseSensitive: true,
-                            editable: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            width: 100,
-                            listConfig: {height: 111}
-                        },
-                        { xtype: 'tbspacer', width: 10 },
-                        {
                             xtype:'combo',
                             fieldLabel: '<span style="font-weight:bold;color:#000;">Profile</span>',
                             id: prototype.id + '-cboProfiles',
@@ -240,6 +56,15 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                                     obj.setValue('0'); //All
                                 }
                             }
+                        },
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkStatus',
+                            boxLabelAlign: 'after',
+                            width: 70,
+                            boxLabel: '<b>Status</b>',
+                            readOnly: false
                         }
                     ]
                 },
@@ -253,53 +78,19 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                     items:[
                         { xtype: 'tbspacer', width: 7 },
                         {
-                            xtype: 'checkboxfield',
-                            id: prototype.id + '-chkExpiredDate',
-                            width: 20,
-                            readOnly: false
-                        },
-                        {
                             xtype: 'label',
-                            text: 'Expiration Date: ',
+                            text: 'Program',
                             style: 'font-weight:bold;color:#000;',
-                            width: 120
-                        },
-                        {
-                            xtype: 'datefield',
-                            id:prototype.id+'-txtExpDate',
-                            format: 'Y/m/d',
-                            maskRe: /[0-9/]/,
-                            fieldStyle: 'text-align:center;',
-                            editable: false,
-                            enforceMaxLength: true,
-                            maxLength: 10,
-                            width: 90/*,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Format valid YYYY/MM/DD'
-                            }*/
-                        },
-                        { xtype: 'tbspacer', width: 20 },
-                        {
-                            xtype: 'checkboxfield',
-                            id: prototype.id + '-chkPass',
-                            width: 20,
-                            readOnly: false
-                        },
-                        {
-                            xtype: 'label',
-                            text: 'Enter Password: ',
-                            style: 'font-weight:bold;color:#000;',
-                            width: 120
+                            width: 70
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtPass',                            
+                            id: prototype.id + '-NPROG',                            
                             text: '',
                             maxLength: 10,
                             enforceMaxLength: true,
                             //style: 'font-weight:bold;color:red;',
-                            width: 220,
+                            width: 120,
                             autoEl: {
                                 tag: 'label',
                                 'data-qtip': 'Mandatory Field'
@@ -307,6 +98,95 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                             listeners:{
                                 change: 'onUpperValue'
                             }
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox' 
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    items:[
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'label',
+                            text: 'Permissions',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 70
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    items:[
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkAccess',
+                            boxLabelAlign: 'after',
+                            width: 70,
+                            boxLabel: '<b>Access</b>',
+                            readOnly: false
+                        },
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkInsert',
+                            boxLabelAlign: 'after',
+                            width: 70,
+                            boxLabel: '<b>Insert</b>',
+                            readOnly: false
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    items:[
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkRead',
+                            boxLabelAlign: 'after',
+                            width: 70,
+                            boxLabel: '<b>Read</b>',
+                            readOnly: false
+                        },
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkUpdate',
+                            boxLabelAlign: 'after',
+                            width: 70,
+                            boxLabel: '<b>Update</b>',
+                            readOnly: false
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    items:[
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkExport',
+                            boxLabelAlign: 'after',
+                            width: 70,
+                            boxLabel: '<b>Export</b>',
+                            readOnly: false
+                        },
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkDelete',
+                            boxLabelAlign: 'after',
+                            width: 70,
+                            boxLabel: '<b>Delete</b>',
+                            readOnly: false
                         }
                     ]
                 },

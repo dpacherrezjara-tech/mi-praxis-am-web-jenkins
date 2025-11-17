@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
+Ext.define('Ext.Praxis.controller.panel.ProfilesPermitsManagement.DataEntryProfilesPermitsManagementController',{
     extend: 'Ext.app.ViewController',
-    alias: 'controller.DataEntryUsersController',
+    alias: 'controller.DataEntryProfilesPermitsManagementController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     msjAlert: '',
     beanOption: '',
@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
     },
     afterRender: function(){
         this.p = this.view.params;
-        console.log(this.p.rec);
+        
         switch( this.p.action ){
             case 'U':
                 this.mostrarData(this.p.rec);
@@ -19,25 +19,22 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
                 Ext.getCmp(prototype.id+'-btn-update').show();
                 Ext.getCmp(prototype.id+'-btn-delete').show();
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
-                this.setValue("cboCity", this.p.rec.data.CITY);
-                this.setValue("cboProfiles", this.p.rec.data.ID_PROFILE);
+                Ext.getCmp(prototype.id+'-cboProfiles').setReadOnly(true);
                 break;
             case 'I':
                 Ext.getCmp(prototype.id+'-btn-save').show();
                 Ext.getCmp(prototype.id+'-btn-update').hide();
                 Ext.getCmp(prototype.id+'-btn-delete').hide();
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
-                this.setValue("cboCity", "");
-                this.setValue('cboProfiles', "0");
 //                Ext.getCmp(prototype.id + '-obj').setValue("X");
 //                Ext.getCmp(prototype.id + '-obj').focus();
                 break;                
-                
         }
         // global.AccessControlMaganer();
     },
     onMostrarCampoChange: function(cmp, newValue, oldValue, eOpts) {
-        this.limpiarCampos();        
+//        this.limpiarCampos();
+        
     },        
     
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
@@ -56,14 +53,15 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
     mostrarData: function(rec) {
         console.log('log rec');
         console.log(rec);
-        this.setValue('txtUSR', rec.get('USR'));
-        this.setValue('txtName', rec.get('NOM'));
-        this.setValue('txtLastName', rec.get('APE'));
-        this.setValue('txtEmail', rec.get('CREMP'));
-        this.setValue('cboCity', rec.get('CITY'));
         this.setValue('cboProfiles', rec.get('ID_PROFILE'));
-        Ext.getCmp(prototype.id+'-chkStatus').setValue(rec.get('STAT') === 'ACTIVO' ? true : false);
-        
+        this.setValue('NPROG', rec.get('NPROG'));
+        Ext.getCmp(prototype.id+'-chkStatus').setValue(rec.get('STAT') === 'A' ? true : false);
+        Ext.getCmp(prototype.id+'-chkAccess').setValue(rec.get('PERMA') === 'Y' ? true : false);
+        Ext.getCmp(prototype.id+'-chkRead').setValue(rec.get('PERML') === 'Y' ? true : false);
+        Ext.getCmp(prototype.id+'-chkInsert').setValue(rec.get('PERMC') === 'Y' ? true : false);
+        Ext.getCmp(prototype.id+'-chkUpdate').setValue(rec.get('PERMM') === 'Y' ? true : false);
+        Ext.getCmp(prototype.id+'-chkExport').setValue(rec.get('PERMX') === 'Y' ? true : false);
+        Ext.getCmp(prototype.id+'-chkDelete').setValue(rec.get('PERME') === 'Y' ? true : false);
         // <editor-fold defaultstate="collapsed" desc="ControlData">
         this.setValue('USCR', rec.get('USCR'));
         this.setValue('FECR', rec.get('DTCR'));
@@ -77,22 +75,22 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
     
     // <editor-fold defaultstate="collapsed" desc="CRUD">
     onSaveClick: function(btn) {
-        if (this.validaRequiredFields()) {            
-            Ext.Msg.show({
-                title: '.:PRAXIS:.',
-                msg: 'Are you sure to insert ?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function(btn) {
-                    if (btn === 'yes') {
-                        this.view.params.action = "I";
-                        this.llenarData();
-                        this.crud();
+        if (this.validaRequiredFields()) {
+                Ext.Msg.show({
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to insert ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function(btn) {
+                        if (btn === 'yes') {
+                            this.view.params.action = "I";
+                            this.llenarData();
+                            this.crud();
+                        }
                     }
-                }
-            });               
+                });
         } else {
             var msg = this.msjAlert;
             if (msg==='') msg = 'You must enter all required fields.';
@@ -102,22 +100,22 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
         }
     },
     onUpdateClick: function(btn) {
-        if (this.validaRequiredFields()) {            
-            Ext.Msg.show({
-                title: '.:PRAXIS:.',
-                msg: 'Are you sure to update ?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function(btn) {
-                    if (btn === 'yes') {
-                        this.view.params.action = "U";
-                        this.llenarData();
-                        this.crud();
+        if (this.validaRequiredFields()) {
+                Ext.Msg.show({
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to update ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function(btn) {
+                        if (btn === 'yes') {
+                            this.view.params.action = "U";
+                            this.llenarData();
+                            this.crud();
+                        }
                     }
-                }
-            });               
+                });
         } else {
             var msg = this.msjAlert;
             if (msg==='') msg = 'You must enter all required fields.';
@@ -130,8 +128,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
         this.view.close();
     },
     onDeleteClick: function(btn){        
-        if (this.validaRequiredFields()) {            
-            Ext.Msg.show({
+        Ext.Msg.show({
                 title: '.:PRAXIS:.',
                 msg: 'Are you sure to delete ?',
                 buttons: Ext.MessageBox.YESNO,
@@ -142,66 +139,44 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
                     if (btn === 'yes') {
                         this.view.params.action = "D";
                         this.llenarData();
+                        //console.log(this.beanOption);
                         this.crud();
                     }
                 }
-            });               
-        } else {
-            var msg = this.msjAlert;
-            if (msg==='') msg = 'You must enter all required fields.';
-            global.Msg({
-                msg: msg
-            });
-        }
+            });                       
     },
     // </editor-fold>
     
     validaRequiredFields: function() {
-        if(this.p.action==='I')
-        {
-            if (this.getValue('txtUSR')==='' || this.getValue('txtDESC')==='' || this.getValue('cboCity') === '') {
-                this.msjAlert='Enter mandatory data';
-                return false;
-            }  
+        if (this.getValue('cboProfiles')==='0' || this.getValue('NPROG') === null) {
+            this.msjAlert='Enter correct data';
+            return false;
         }
-        
-        if(this.p.action==='U')
-        {
-            if (this.getValue('txtUSR')==='' || this.getValue('cboCity') === '') {
-                this.msjAlert='Enter mandatory data';
-                return false;
-            }      
-        }        
-              
         return true;
     },
     
     crud: function() {
         var mod = this;
         Ext.Ajax.request({
-            url: prototype.url + '/setMantUser',
+            url: prototype.url + '/crud',
             method: 'POST',
             timeout: 60000000,
             params: this.beanOption,
             
-            beforerequest: Ext.getCmp('DataEntryUsersForm').mask('Loading...'),
+            beforerequest: Ext.getCmp('DataEntryProfilesPermitsManagementForm').mask('Loading...'),
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
-                    var msg = res.response;
-                    var msgInt = res.sql_code;
-                        
+                    var msg = res.response;                    
                     var icon=1;
-                    if(msgInt==='779'){
-                        icon=2;
-                    }
                     global.Msg({
                         msg: msg,
                         icon: icon,
                         fn: function() {
-                            if (msgInt==='779') {
-                                Ext.getCmp('DataEntryUsersForm').close(),
-                                Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                            if (msg==='Operation was successful') {
+                                Ext.getCmp('DataEntryProfilesPermitsManagementForm').unmask();
+//                                Ext.getCmp('DataEntryProfilesPermitsManagementForm').close(),
+//                                Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                             }
                         }
                     });
@@ -210,11 +185,11 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
                         msg: res.sesion
                     });
                 }
-                Ext.getCmp('DataEntryUsersForm').unmask();
+                Ext.getCmp('DataEntryProfilesPermitsManagementForm').unmask();
             },
             failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
-                Ext.getCmp('DataEntryUsersForm').unmask();
+                Ext.getCmp('DataEntryProfilesPermitsManagementForm').unmask();
             }
         });
     },
@@ -229,41 +204,40 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
     setValue: function(id, txt) {
         Ext.getCmp(prototype.id+'-'+id).setValue(txt);
     },
+    onUpperValue: function(field, newValue, oldValue){
+        field.setValue(newValue.toUpperCase());
+    },
     // </editor-fold>
     
     llenarData: function() {
         this.beanOption = {};
         
-        var USR = this.getValue('txtUSR');
-        var DESC = this.getValue('txtDESC');
-        var CITY = this.getValue('cboCity');
-        var NOM = this.getValue('txtName');
-        var APE = this.getValue('txtLastName');
-        var EMAIL = this.getValue('txtEmail');
-        var chkExpiredDate = Ext.getCmp(prototype.id+'-chkExpiredDate').getValue() ? 'true' : 'false';
-        var DTEXPIRED = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtExpDate').getValue(), 'Ymd');
-        var chkPass = Ext.getCmp(prototype.id+'-chkPass').getValue() ? 'true' : 'false';
-        var txtPass = this.getValue('txtPass');
-        var strOption = this.p.action;
+        var ID_PROFILE = Ext.getCmp(prototype.id+'-cboProfiles').getValue();
+        var NPROG = this.getValue('NPROG');
+        var DESC1 = Ext.getCmp(prototype.id+'-cboProfiles').getDisplayValue();
         var STAT =  Ext.getCmp(prototype.id+'-chkStatus').getValue() ? 'A' : 'L';
-        var ID_PROFILE = this.getValue('cboProfiles');
+        var PERMA =  Ext.getCmp(prototype.id+'-chkAccess').getValue() ? 'Y' : 'N';
+        var PERML =  Ext.getCmp(prototype.id+'-chkRead').getValue() ? 'Y' : 'N';
+        var PERMC =  Ext.getCmp(prototype.id+'-chkInsert').getValue() ? 'Y' : 'N';
+        var PERMM =  Ext.getCmp(prototype.id+'-chkUpdate').getValue() ? 'Y' : 'N';
+        var PERMX =  Ext.getCmp(prototype.id+'-chkExport').getValue() ? 'Y' : 'N';
+        var PERME =  Ext.getCmp(prototype.id+'-chkDelete').getValue() ? 'Y' : 'N';
+        console.log(this.beanOption);
         this.beanOption = {
-            USR: USR,
-            DESC: DESC,
-            CITY: CITY,
-            NOM: NOM,
-            APE: APE,
-            EMAIL: EMAIL,
-            chkExpiredDate: chkExpiredDate,
-            DTEXPIRED: DTEXPIRED,
-            chkPass: chkPass,
-            txtPass: txtPass,
+            ID_PROFILE: ID_PROFILE,
+            DESC1: DESC1,
+            NPROG: NPROG,
             STAT: STAT,
-            strOption: strOption,
-            ID_PROFILE: ID_PROFILE
+            PERMA: PERMA,
+            PERML: PERML,
+            PERMC: PERMC,
+            PERMM: PERMM,
+            PERMX: PERMX,
+            PERME: PERME,
+            strOption: this.view.params.action
         };
         console.log('beanOption');
-        console.log(this.beanOption);    
+        console.log(this.beanOption);        
     },
     limpiarCampos: function() {
                      
@@ -271,5 +245,5 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
     },
     onUpperValue: function(field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
-    },   
+    },        
 });

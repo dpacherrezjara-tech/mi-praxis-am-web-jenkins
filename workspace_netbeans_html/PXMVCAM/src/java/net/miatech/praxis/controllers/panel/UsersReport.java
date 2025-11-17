@@ -12,12 +12,9 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.miatech.beans.PX041S01INF001Filter;
-import net.miatech.beans.PX076S01INF053Filter;
+import net.miatech.beans.SQP05798Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.panel.PanelLogic;
@@ -41,8 +38,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @Scope("request")
-@RequestMapping("/PerPro")
-public class PerProController extends BaseController {
+@RequestMapping("/UsersReport")
+public class UsersReport extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
 
@@ -55,21 +52,20 @@ public class PerProController extends BaseController {
     @RequestMapping(value = "search")
     public @ResponseBody String search(ModelMap map, HttpServletRequest request) {
         
-        PX041S01INF001Filter filter = new PX041S01INF001Filter();
+        SQP05798Filter filter = new SQP05798Filter();
         filter.VP_CCUST = "139";
-        filter.VP_APLICA = "PX";
         
         if(request.getParameter("option")!=null && request.getParameter("group")!=null)
         {
-            filter.VP_USR = request.getParameter("option").toString().trim(); 
+            filter.VP_FILTER = request.getParameter("option").toString().trim(); 
             if(!"".equals(request.getParameter("group").toString().trim()))
                 filter.VP_TYPEF = Integer.parseInt(request.getParameter("group".toString().trim())); 
         }
-        List<PX041S01INF001Filter> lst_prmpanel;
+        List<SQP05798Filter> lst_prmpanel;
         try {
             PanelLogic logic = new PanelLogic();
             logic.setSession(this.serverSession.getServerSession());
-            lst_prmpanel = logic.loadPX041S01INF001(filter);
+            lst_prmpanel = logic.loadSQP05798(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -85,68 +81,24 @@ public class PerProController extends BaseController {
         return new Gson().toJson(m);
     }
     
-    @RequestMapping(value = "crud")
-    public @ResponseBody String crud(HttpServletRequest request) {
-        //REALIZA INSERT, UPDATE O DELETE 
-        PX076S01INF053Filter filter = new PX076S01INF053Filter(); 
-        filter.VP_CCUST = "139";
-        filter.VP_APLICA = "PX";
-        String response = "";
-        try {
-            PanelLogic logic = new PanelLogic();
-            logic.setSession(this.serverSession.getServerSession());
-            
-            filter.VP_ACTION = request.getParameter("strOption").toString().trim();
-            //filter.VP_CCUST = request.getParameter("USR").toString().trim();
-            filter.VP_USR = request.getParameter("USR").toString().trim();
-            filter.VP_USRCOPY = request.getParameter("USRCOPY")!= null ? request.getParameter("USRCOPY").toString().trim() : "";
-            //filter.VP_APLICA = request.getParameter("APLICA").toString().trim();
-            filter.VP_NPROG = request.getParameter("NPROG")!= null ? request.getParameter("NPROG").toString().trim() : "";
-            filter.VP_MODULE = request.getParameter("MODULE")!= null ? request.getParameter("MODULE").toString().trim() : "";
-            filter.VP_PERMA = request.getParameter("PERMA").toString().trim();            
-            filter.VP_PERML = request.getParameter("PERML").toString().trim();
-            filter.VP_PERMC = request.getParameter("PERMC").toString().trim();
-            filter.VP_PERMM = request.getParameter("PERMM").toString().trim();
-            filter.VP_PERME = request.getParameter("PERME").toString().trim();
-            filter.VP_PERMX = request.getParameter("PERMX").toString().trim();
-            filter.VP_STAT = request.getParameter("STAT")!= null ? request.getParameter("STAT").toString().trim() : "";
-            
-            if(filter.VP_ACTION.equals("CO")||filter.VP_ACTION.equals("IM")||filter.VP_ACTION.equals("DM")){
-                filter = logic.setSQP05412(filter);
-            }
-            else{
-                filter = logic.setPX076S01INF053(filter);   
-            }
-            response = filter.dbException.MESSAGE;
-            
-        } catch (Exception e) {
-            throw new SpringException(e);
-        }
-        
-        Map m = new LinkedHashMap();
-        m.put("success",true);
-        m.put("response", response);
-        return new Gson().toJson(m);
-    }
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void GetXLSX(HttpServletRequest request, HttpServletResponse response) {
 
-        System.out.println("UsersPerController : getXLSX");
-        String fileName = "usersPer_" + Functions.getFechaActual();
+        System.out.println("UsersReportController : getXLSX");
+        String fileName = "UsersReport_" + Functions.getFechaActual();
 
         try {
 
             Workbook workbook = null;
             File file = File.createTempFile(fileName, ".xlsx");
-            List<PX041S01INF001Filter> lstData = new ArrayList<PX041S01INF001Filter>();
-            PX041S01INF001Filter  filter = new PX041S01INF001Filter();
+            List<SQP05798Filter> lstData = new ArrayList<SQP05798Filter>();
+            SQP05798Filter  filter = new SQP05798Filter();
             filter.VP_CCUST = "139";
-            filter.VP_APLICA = "PX";
 
             if(request.getParameter("option")!=null && request.getParameter("group")!=null)
             {
-                filter.VP_USR = request.getParameter("option").toString().trim(); 
+                filter.VP_FILTER = request.getParameter("option").toString().trim(); 
                 if(!"".equals(request.getParameter("group").toString().trim()))
                     filter.VP_TYPEF = Integer.parseInt(request.getParameter("group".toString().trim())); 
             }
@@ -159,46 +111,50 @@ public class PerProController extends BaseController {
             try{
                 PanelLogic logic = new PanelLogic();
                 logic.setSession(this.serverSession.getServerSession());
-                lstData = logic.loadPX041S01INF001(filter);
+                lstData = logic.loadSQP05798(filter);
             }catch (Exception e) {
                 throw new SpringException(e);
             }    
             
             workbook = new XSSFWorkbook();
-            Sheet sheet = workbook.createSheet("Users Permisions");
+            Sheet sheet = workbook.createSheet("Programs Report");
             Integer vi = 0;
             Iterator iter = lstData.iterator();
             Integer vj = 0;
 
             Row row = sheet.createRow(vj);
             Cell cell00 = row.createCell(0);
-            cell00.setCellValue("USR");
+            cell00.setCellValue("CCUST");
             Cell cell01 = row.createCell(1);
-            cell01.setCellValue("NPROG");
+            cell01.setCellValue("USR");
             Cell cell02 = row.createCell(2);
-            cell02.setCellValue("PROG");
+            cell02.setCellValue("NOM");
             Cell cell03 = row.createCell(3);
-            cell03.setCellValue("PERMA");
+            cell03.setCellValue("APE");
             Cell cell04 = row.createCell(4);
-            cell04.setCellValue("PERML");
+            cell04.setCellValue("DESC1");
             Cell cell05 = row.createCell(5);
-            cell05.setCellValue("PERMC");
+            cell05.setCellValue("MAIL");
             Cell cell06 = row.createCell(6);
-            cell06.setCellValue("PERMM");
+            cell06.setCellValue("PROFILE");
             Cell cell07 = row.createCell(7);
-            cell07.setCellValue("PERME");
+            cell07.setCellValue("NPROG");
             Cell cell08 = row.createCell(8);
-            cell08.setCellValue("PERMX");
+            cell08.setCellValue("PERMA");
             Cell cell09 = row.createCell(9);
-            cell09.setCellValue("STAT");
+            cell09.setCellValue("PERML");
             Cell cell10 = row.createCell(10);
-            cell10.setCellValue("USCR");
+            cell10.setCellValue("PERMC");
             Cell cell11 = row.createCell(11);
-            cell11.setCellValue("DTCR");
+            cell11.setCellValue("PERMM");
             Cell cell12 = row.createCell(12);
-            cell12.setCellValue("USUP");
+            cell12.setCellValue("PERME");
             Cell cell13 = row.createCell(13);
-            cell13.setCellValue("DTUP");
+            cell13.setCellValue("PERMX");
+            Cell cell14 = row.createCell(14);
+            cell14.setCellValue("USRC");
+            Cell cell15 = row.createCell(15);
+            cell15.setCellValue("DATC");
 
             ++vj;
             while (iter.hasNext()) {
@@ -214,25 +170,29 @@ public class PerProController extends BaseController {
                 Cell cell7 = row.createCell(7);
                 Cell cell8 = row.createCell(8);
                 Cell cell9 = row.createCell(9);
-                Cell cel20 = row.createCell(10);
-                Cell cel21 = row.createCell(11);
-                Cell cel22 = row.createCell(12);
-                Cell cel23 = row.createCell(13);
+                Cell cell010 = row.createCell(10);
+                Cell cell011 = row.createCell(11);
+                Cell cell012 = row.createCell(12);
+                Cell cell013 = row.createCell(13);
+                Cell cell014 = row.createCell(14);
+                Cell cell015 = row.createCell(15);
 
-                cell0.setCellValue(lstData.get(vi).USR);
-                cell1.setCellValue(lstData.get(vi).NPROG);
-                cell2.setCellValue(lstData.get(vi).PROG);
-                cell3.setCellValue(lstData.get(vi).PERMA);
-                cell4.setCellValue(lstData.get(vi).PERML);
-                cell5.setCellValue(lstData.get(vi).PERMC);
-                cell6.setCellValue(lstData.get(vi).PERMM);
-                cell7.setCellValue(lstData.get(vi).PERME);
-                cell8.setCellValue(lstData.get(vi).PERMX);
-                cell9.setCellValue(lstData.get(vi).STAT);
-                cel20.setCellValue(lstData.get(vi).USCR);
-                cel21.setCellValue(lstData.get(vi).DTCR);
-                cel22.setCellValue(lstData.get(vi).USUP);
-                cel23.setCellValue(lstData.get(vi).DTUP);
+                cell0.setCellValue(lstData.get(vi).CCUST);
+                cell1.setCellValue(lstData.get(vi).USR);
+                cell2.setCellValue(lstData.get(vi).NOM);
+                cell3.setCellValue(lstData.get(vi).APE);
+                cell4.setCellValue(lstData.get(vi).DESC1);
+                cell5.setCellValue(lstData.get(vi).MAIL);
+                cell6.setCellValue(lstData.get(vi).PROFILE);
+                cell7.setCellValue(lstData.get(vi).NPROG);
+                cell8.setCellValue(lstData.get(vi).PERMA);
+                cell9.setCellValue(lstData.get(vi).PERML);
+                cell010.setCellValue(lstData.get(vi).PERMC);
+                cell011.setCellValue(lstData.get(vi).PERMM);
+                cell012.setCellValue(lstData.get(vi).PERME);
+                cell013.setCellValue(lstData.get(vi).PERMX);
+                cell014.setCellValue(lstData.get(vi).USRC);
+                cell015.setCellValue(lstData.get(vi).DATC);
 
                 iter.next();
                 ++vi;
@@ -242,7 +202,7 @@ public class PerProController extends BaseController {
             /**
              * fileNameDownload = Nombre de descarga
              */
-            String fileNameDownload = "usersPer_" + Functions.getFechaActual() + ".xlsx";
+            String fileNameDownload = "UsersReport_" + Functions.getFechaActual() + ".xlsx";
 
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");

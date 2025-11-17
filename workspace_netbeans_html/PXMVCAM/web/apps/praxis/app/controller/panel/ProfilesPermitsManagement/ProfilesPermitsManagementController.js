@@ -1,19 +1,19 @@
-Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
+Ext.define('Ext.Praxis.controller.panel.ProfilesPermitsManagement.ProfilesPermitsManagementController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.UsersController',
+    alias: 'controller.ProfilesPermitsManagementController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     fecha: new Date(),
+    beanOption: '',
     searchParams: {},    
     _path: '',
-    profilesdesc: [],
     profiles: [],
     // </editor-fold>
     init: function(view) {
         // <editor-fold defaultstate="collapsed" desc="prototype">
-        prototype.id = 'UsersForm';
-        prototype.url = CONTEXTPATH+'/Users';
+        prototype.id = 'ProfilesPermitsManagementForm';
+        prototype.url = CONTEXTPATH+'/ProfilesPermitsManagement';
         prototype.widthContenedor = 1300;
-        prototype.widthGrid = 863;
+        prototype.widthGrid = 1200;
         // </editor-fold>
         this.control({
         });
@@ -27,15 +27,15 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
     onMostrarFiltrosChange: function(cmp, newValue, oldValue, eOpts) {
         
     },
-    
-    // <editor-fold defaultstate="collapsed" desc="Combo Date">
+    // <editor-fold defaultstate="collapsed" desc="Combos">
     setStoreData: function() {
         var cboGroup = Ext.getCmp(prototype.id + '-cboGroup');
         cboGroup.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                ["1", "User"]
+                ["1", "Profile Id"],
+                ["2", "Program Id"]
             ]
         }));
     },
@@ -45,15 +45,15 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
     onEditClick: function(grid, rowIndex, colIndex) {
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
-        console.log(rec);
+        console.log(rec);        
         this.winDataEntry('U', rec);
     },
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
         rec.profiles = profiles;
-        Ext.create('Ext.Praxis.view.panel.UsersForm.DataEntry', {
-            id: 'DataEntryUsersForm',
+        Ext.create('Ext.Praxis.view.panel.ProfilesPermitsManagementForm.DataEntry', {
+            id: 'DataEntryProfilesPermitsManagementForm',
             params: {
                 action: action,
                 rec: rec
@@ -67,16 +67,16 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
     
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function(obj, e) {
-        var strModulo = this.getValue('cboGroup');
-        if (strModulo!=='') {
-            this.setFormatParameter();
-            this.setGridData();
-        } else {
+        var option = Ext.getCmp(prototype.id+'-codigo-option').getValue();
+        /*if (option==='') {
+            this.msjAlert='Enter data';
             global.Msg({
-                msg: 'Please select module.'
+                msg: this.msjAlert
             });
-            this.focus('cboGroup');
-        }
+            return false;
+        }*/
+        this.setFormatParameter();
+        this.setGridData();
     },
     btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id+'-boxSearchFilter');
@@ -99,9 +99,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
         });
     },
     btnClear_click: function(obj, e) {
-        //this.limpiarFiltros();
-        
-        //this.setValue("cboGroup", "");
+        this.limpiarFiltros();
         
         // <editor-fold defaultstate="collapsed" desc="Clear Grilla">
         Ext.getCmp(prototype.id+'-gridData').getStore().removeAll();
@@ -135,7 +133,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
                 group: group,
                 option: option
             };
-        
+             
         // <editor-fold defaultstate="collapsed" desc="asignación">
         _path = prototype.url+'/getXLSX?' +
                 'group='+searchParams.group+'&' +
@@ -146,7 +144,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
     
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setGridData: function() {
-        var storeGridDatas = Ext.create('Ext.Praxis.store.panel.Users.GridData', {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.panel.ProfilesPermitsManagement.GridData', {
             proxy: {
                 url: prototype.url+'/search'
             },
@@ -155,7 +153,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
                     obj.proxy.extraParams = searchParams;
                 },
                 load: function(obj, obj2, success, obj4, obj5) {
-                    win.lblUser_toolTip("Estructura: A1955");
+                    win.lblUser_toolTip("Estructura: INF053");
                     // <editor-fold defaultstate="collapsed" desc="paggin">
                     var pag = Ext.getCmp(prototype.id+'-paggin');
                     var pagData = pag.getPageData();
@@ -168,18 +166,12 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
                     Ext.getCmp(prototype.id+'-lbl-pageCount').setText(pageCount);
                     Ext.getCmp(prototype.id+'-lbl-total').setText(total);
                     // </editor-fold>
-                    if (obj.data.items.length === 0) {
+                    if (obj.data.length === 0) {
                         global.Msg({
                             msg: 'Data not found'
                         });
                     }
-                    var arr = [];
-                    arr = profilesdesc;
-                    obj.data.items.map((item, i)=>{
-                        var res = arr.find((profile)=> profile.id === item.data.ID_PROFILE);
-                        item.data.DESC1 = res === undefined ? '--': res.desc;
-                        return item;
-                    });
+                    console.log(obj.data.items.map((item)=>item.data));
                 }
             }
         });
@@ -190,15 +182,182 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
     
     exportExcel: function() {
         if (Ext.getCmp(prototype.id+'-boxMainData').isVisible()) {
+            this.setFormatParameter();
+            console.log("PATH XLS: "+_path);
             global.getFile(_path);
         }
     },
-    limpiarFiltros: function() {
+    onCopyUSR: function(btn) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to copy ?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'yes') {
+                    this.beanOption = {strOption : "CO"};
+                    this.llenarData();
+                    if (this.validaRequiredFields()) {
+                        this.crud();
+                    } else {
+                        var msg = this.msjAlert;
+                        if (msg==='') msg = 'You must enter all required fields.';
+                        global.Msg({
+                            msg: msg
+                        });
+                    }
+                }
+            }
+        });                                     
+    },
+    onInsertModule: function(btn) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to insert ?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'yes') {
+                    this.beanOption = {strOption : "IM"};
+                    this.llenarData();
+                    if (this.validaRequiredFields()) {
+                        this.crud();
+                    } else {
+                        var msg = this.msjAlert;
+                        if (msg==='') msg = 'You must enter all required fields.';
+                        global.Msg({
+                            msg: msg
+                        });
+                    }
+                }
+            }
+        });                                     
+    },
+    onDeleteModule: function(btn) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to delete ?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'yes') {
+                    this.beanOption = {strOption : "DM"};
+                    this.llenarData();
+                    if (this.validaRequiredFields()) {
+                        this.crud();
+                    } else {
+                        var msg = this.msjAlert;
+                        if (msg==='') msg = 'You must enter all required fields.';
+                        global.Msg({
+                            msg: msg
+                        });
+                    }
+                }
+            }
+        });                                     
+    },
+    validaRequiredFields: function() {
+        var option = this.beanOption.strOption;
+        if(option === "CO"){
+            var startUSR = Ext.getCmp(prototype.id+'-startUSR').getValue();
+            var endUSR = Ext.getCmp(prototype.id+'-endUSR').getValue();
+            if (startUSR ==='' || endUSR === '') {
+                this.msjAlert='Enter correct data';
+                return false;
+            }
+            return true;
+        }
+        else if(option === "IM" || option === "DM"){
+            var moduleUSR = Ext.getCmp(prototype.id+'-moduleUSR').getValue();
+            var MODULE = Ext.getCmp(prototype.id+'-cboModuleGroup').getValue();
+            if (moduleUSR ==='') {
+                this.msjAlert='Enter correct data';
+                return false;
+            }
+            return true;
+        }
+    },
+    // <editor-fold defaultstate="collapsed" desc="llenarData">
+    llenarData: function() {
+        var option = this.beanOption.strOption;
+        this.beanOption = {};
+        var USR = '';
+        if(option === "IM" || option === "DM"){
+            USR = Ext.getCmp(prototype.id+'-moduleUSR').getValue();
+        }
+        else if(option === "CO"){
+            USR = Ext.getCmp(prototype.id+'-endUSR').getValue();
+        }
+        var startUSR = Ext.getCmp(prototype.id+'-startUSR').getValue();
+        var MODULE = Ext.getCmp(prototype.id+'-cboModuleGroup').getValue();
+        var PERMA =  Ext.getCmp(prototype.id+'-moduleChkAccess').getValue() ? 'Y' : 'N';
+        var PERML =  Ext.getCmp(prototype.id+'-moduleChkRead').getValue() ? 'Y' : 'N';
+        var PERMC =  Ext.getCmp(prototype.id+'-moduleChkInsert').getValue() ? 'Y' : 'N';
+        var PERMM =  Ext.getCmp(prototype.id+'-moduleChkUpdate').getValue() ? 'Y' : 'N';
+        var PERMX =  Ext.getCmp(prototype.id+'-moduleChkExport').getValue() ? 'Y' : 'N';
+        var PERME =  Ext.getCmp(prototype.id+'-moduleChkDelete').getValue() ? 'Y' : 'N';
+        this.beanOption = {
+            USR: USR,
+            USRCOPY: startUSR,
+            MODULE: MODULE,
+            PERMA: PERMA,
+            PERML: PERML,
+            PERMC: PERMC,
+            PERMM: PERMM,
+            PERMX: PERMX,
+            PERME: PERME,
+            STAT:"A",
+            strOption: option
+        };
+        console.log('beanOption');
+        console.log(this.beanOption);     
         
-        // <editor-fold defaultstate="collapsed" desc="Clear Campos">
+    },
+    // </editor-fold>
+    crud: function() {
+        Ext.Ajax.request({
+            url: prototype.url + '/crud',
+            method: 'POST',
+            timeout: 60000000,
+            params: this.beanOption,
+            success: function(response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    var msg = res.response;                    
+                    var icon=1;
+                    global.Msg({
+                        msg: msg,
+                        icon: icon,
+                        fn: function() {
+                            if (msg==='Operation was successful') {
+                                Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                            }
+                        }
+                    });
+                } else {
+                    global.Msg({
+                        msg: res.sesion
+                    });
+                }
+            },
+            failure: function(response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
+    },
+    
+    limpiarFiltros: function() {
+        // <editor-fold defaultstate="collapsed" desc="Clear Option">
         Ext.getCmp(prototype.id+'-cboGroup').setValue('1');
         Ext.getCmp(prototype.id+'-codigo-option').setValue('');        
-        // </editor-fold>
+        // </editor-fold>        
+      
     },
 
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
@@ -251,15 +410,12 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 var arr = [];
-                var arr1 = [];
                 if (res.success) {
                     res.data.map((data, i)=>{
                         arr[i+1] = [data.ID_PROFILE, data.DESC1];
-                        arr1[i] = {id: data.ID_PROFILE, desc: data.DESC1};
                     });
                     arr[0] = ["0","-- SELECT --"];
                     profiles = arr;
-                    profilesdesc = arr1;
                     
                 } else {
                     global.Msg({
