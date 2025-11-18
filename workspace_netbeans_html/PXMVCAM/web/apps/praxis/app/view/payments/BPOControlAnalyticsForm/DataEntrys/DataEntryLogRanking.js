@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.BPOControlAnalyticsForm.DataEntrys.DataEntr
     ],
     title: 'Detail',
     header: true,
-    width: 1600,
+    width: 1200,
     height: 618,
     resizable: true,
     layout: 'fit',
