@@ -235,15 +235,15 @@ public class FlightManifestDAO {
 
         try {
 
-            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04322_V2(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04322_V5(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
             
-            cs.registerOutParameter(11, Types.INTEGER);
             cs.registerOutParameter(12, Types.INTEGER);
             cs.registerOutParameter(13, Types.INTEGER);
             cs.registerOutParameter(14, Types.INTEGER);
+            cs.registerOutParameter(15, Types.INTEGER);
             
             cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cs.setString(2, filter.yearFrom + filter.monthFrom + filter.dayFrom);
@@ -252,20 +252,21 @@ public class FlightManifestDAO {
             cs.setString(5, filter.NFLIGHT);
             cs.setString(6, filter.CDEPART);
             cs.setString(7, filter.CARRIVA);
-            cs.setString(8, filter.LNAME);
-            cs.setString(9, filter.CHAIR);
-            cs.setString(10, filter.TICKET);
+            cs.setString(8, filter.FNAME);
+            cs.setString(9, filter.LNAME);
+            cs.setString(10, filter.CHAIR);
+            cs.setString(11, filter.TICKET);
             
-            cs.setInt(11, filter.page.PAGNUM);
-            cs.setInt(12, filter.page.PAGROW);
-            cs.setInt(13, filter.page.TOTPAG);
-            cs.setInt(14, filter.page.TOTROW);
+            cs.setInt(12, filter.page.PAGNUM);
+            cs.setInt(13, filter.page.PAGROW);
+            cs.setInt(14, filter.page.TOTPAG);
+            cs.setInt(15, filter.page.TOTROW);
             cs.execute();
             
-            filter.page.PAGNUM = cs.getInt(11);
-            filter.page.PAGROW = cs.getInt(12);
-            filter.page.TOTPAG = cs.getInt(13);
-            filter.page.TOTROW = cs.getInt(14);
+            filter.page.PAGNUM = cs.getInt(12);
+            filter.page.PAGROW = cs.getInt(13);
+            filter.page.TOTPAG = cs.getInt(14);
+            filter.page.TOTROW = cs.getInt(15);
 
             rst = cs.getResultSet();
             while (rst.next()) {
