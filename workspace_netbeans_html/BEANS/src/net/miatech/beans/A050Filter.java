@@ -18,6 +18,9 @@ public class A050Filter extends A050 {
     public String IN_FECHA_FROM = "";
     public String IN_FECHA_TO = "";
     public String IN_PERIOD = "";
+    public String IN_FINPERIOD = "";
+    public String IN_CIA = "";
+
     public String IN_SFL = "";
     public String strFormatDate = "";
     public String strFormatDate1 = "";

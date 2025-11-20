@@ -146,6 +146,8 @@ Ext.define('Ext.Praxis.controller.interline.PricingProration.PricingProrationCon
         this.bean.PERIOD = win.getValue('cmbStatus');
         this.bean.TUSO = win.getValue('cmbSource');
         this.bean.IN_PERIOD = win.getValue('txtGRUPO');
+        this.bean.IN_FINPERIOD = win.getValue('txtFIN_GRUPO');
+        this.bean.IN_CIA = win.getValue('txtINCIA');
         
         var selectedValue = win.getValue('radiogroup1').radiogroup1;
         if(selectedValue === 'ISR' || selectedValue === 'ISRCL'){
@@ -248,6 +250,8 @@ Ext.define('Ext.Praxis.controller.interline.PricingProration.PricingProrationCon
     },
     imgClear_clickHandler: function(obj, e) {
         win.setValue('txtGRUPO', '');
+        win.setValue('txtFIN_GRUPO', '');
+        win.setValue('txtINCIA', '');
         win.setValue('txtAirline', '');
         win.setValue('txtA050FCONTA', '');
         win.setValue('txtA050TUSO', '');
