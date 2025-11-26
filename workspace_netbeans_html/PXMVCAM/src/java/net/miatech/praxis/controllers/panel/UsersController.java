@@ -23,8 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.A1692Filter;
 import net.miatech.beans.A1740Filter;
 import net.miatech.beans.JavaToFlexResponse;
-import net.miatech.beans.PX075S01INF001Filter;
-import net.miatech.beans.PX075S02INF001Filter;
+import net.miatech.beans.SQP05855Filter;
+import net.miatech.beans.SQP05856Filter;
+import net.miatech.beans.SQP05764Filter;
+import net.miatech.beans.SQP05851Filter;
 import net.miatech.beans.UserView;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A1007;
@@ -67,8 +69,8 @@ public class UsersController extends BaseController {
     
     @RequestMapping(value = "search")
     public @ResponseBody String search(HttpServletRequest request) {
-        PX075S01INF001Filter  filter = new PX075S01INF001Filter();
-        List<PX075S01INF001Filter> lstData = new ArrayList<PX075S01INF001Filter>();
+        SQP05855Filter  filter = new SQP05855Filter();
+        List<SQP05855Filter> lstData = new ArrayList<SQP05855Filter>();
         
         int limit = Integer.parseInt(request.getParameter("limit").toString());
         int start = Integer.parseInt(request.getParameter("start").toString());
@@ -87,7 +89,7 @@ public class UsersController extends BaseController {
         try {
             PanelLogic logic = new PanelLogic();
             logic.setSession(this.serverSession.getServerSession());
-            lstData = logic.loadPX075S01INF001(filter);
+            lstData = logic.loadSQP05855(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -105,33 +107,47 @@ public class UsersController extends BaseController {
     
     @RequestMapping(value = "setMantUser")
     public @ResponseBody String setMantUser(HttpServletRequest request) {
-        PX075S02INF001Filter filter = new PX075S02INF001Filter();
-        PX075S02INF001Filter objRtn = new PX075S02INF001Filter();      
+        SQP05856Filter filter = new SQP05856Filter();
+        SQP05856Filter objRtn = new SQP05856Filter();      
+        SQP05851Filter objLog = new SQP05851Filter();
         JavaToFlexResponse resp = new JavaToFlexResponse();
         boolean boValida = false;
         try {
             filter.VP_USR = request.getParameter("USR").trim();
             filter.VP_STAT = request.getParameter("STAT").trim();
             filter.VP_CITY = request.getParameter("CITY").trim();
+            filter.VP_NOM = request.getParameter("NOM").trim();
+            filter.VP_APE = request.getParameter("APE").trim();
+            filter.VP_EMAIL = request.getParameter("EMAIL").trim();
             filter.VP_ACTION = request.getParameter("strOption").trim();
             filter.VP_CCUST = "139";
             filter.VP_APLICA = "PX";
             filter.chkExpiredDate = ("true".equals(request.getParameter("chkExpiredDate")));
             filter.TOKEN = request.getParameter("txtPass").trim();
             filter.VP_DESC = request.getParameter("DESC").trim();
+            filter.VP_ID_PROFILE = request.getParameter("ID_PROFILE").trim();
             filter.DTEXPIRED = request.getParameter("DTEXPIRED").trim();
             filter.chkPass = ("true".equals(request.getParameter("chkPass")));
             UserLogic userLogic = new UserLogic();
             userLogic.setSession(this.serverSession.getServerSession());
             PanelLogic logic = new PanelLogic();
-            logic.setSession(this.serverSession.getServerSession());            
+            logic.setSession(this.serverSession.getServerSession());
+            
+            //LOG INIT
+            objLog.VP_ACTIO = request.getParameter("strOption").trim();
+            objLog.VP_ID_OPERATOR = request.getParameter("ID_PROFILE").trim();
+            objLog.VP_DESC1 = "USERS MANAGEMENT" + request.getParameter("USR").trim();
+            objLog.VP_OPER = request.getParameter("DESC").trim();
+            userLogic.SQP05851(objLog);
+            //LOG END
+            
             if("I".equals(filter.VP_ACTION))
             {
                 boValida = userLogic.SQP03268(filter.VP_USR); // VALIDA SI YA EXISTE USUARIO
                 if(!boValida)
                 {
                     userLogic.SQP03219(filter.VP_USR,filter.TOKEN,filter.VP_DESC); // REGISTRA AS400
-                    objRtn = logic.setPX075S02INF001(filter); // REGISTRO EN TABLAS PRAXIS
+                    objRtn = logic.setSQP05856(filter); // REGISTRO EN TABLAS PRAXIS
                     if("A".equals(filter.VP_STAT))
                     {
                         if(filter.chkExpiredDate) 
@@ -162,7 +178,7 @@ public class UsersController extends BaseController {
             }
             else if("U".equals(filter.VP_ACTION))
             {
-                objRtn = logic.setPX075S02INF001(filter); // ACTUALIZACION EN TABLAS PRAXIS
+                objRtn = logic.setSQP05856(filter); // ACTUALIZACION EN TABLAS PRAXIS
                 if("A".equals(filter.VP_STAT))
                 {
                    if(filter.chkExpiredDate) 
@@ -187,7 +203,7 @@ public class UsersController extends BaseController {
             }
             else
             {
-                objRtn = logic.setPX075S02INF001(filter); // ELIMINACION EN TABLAS PRAXIS
+                objRtn = logic.setSQP05856(filter); // ELIMINACION EN TABLAS PRAXIS
                 resp.info.add("User deleted successfully"); // objRtn.dbException.MESSAGE
             }
             
@@ -207,6 +223,32 @@ public class UsersController extends BaseController {
         return new Gson().toJson(m);
     }
     
+    @RequestMapping(value = "searchProfiles")
+    public @ResponseBody String searchProfiles(ModelMap map, HttpServletRequest request) {
+        
+        SQP05764Filter filter = new SQP05764Filter();
+        filter.VP_FILTER = "";
+        filter.VP_TYPEF = 0;
+        List<SQP05764Filter> lst_prmpanel;
+        try {
+            PanelLogic logic = new PanelLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lst_prmpanel = logic.loadSQP05764(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        
+        HashMap m = new HashMap();
+        try{
+	        m.put("success",true);
+	        m.put("total",lst_prmpanel.get(0).page.TOTROWS);
+	        m.put("data",lst_prmpanel);
+        }catch (Exception e) {
+            throw new SpringException(e);
+        }        
+        return new Gson().toJson(m);
+    }
+    
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void GetXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -218,8 +260,8 @@ public class UsersController extends BaseController {
 
             Workbook workbook = null;
             File file = File.createTempFile(fileName, ".xlsx");
-            List<PX075S01INF001Filter> lstData = new ArrayList<PX075S01INF001Filter>();
-            PX075S01INF001Filter  filter = new PX075S01INF001Filter();
+            List<SQP05855Filter> lstData = new ArrayList<SQP05855Filter>();
+            SQP05855Filter  filter = new SQP05855Filter();
             PanelLogic logic = new PanelLogic();
             logic.setSession(this.serverSession.getServerSession());
 
@@ -230,7 +272,7 @@ public class UsersController extends BaseController {
             filter.page.PAGINIT = 1;
 
             
-            lstData = logic.loadPX075S01INF001(filter);
+            lstData = logic.loadSQP05855(filter);
 
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Users Management");

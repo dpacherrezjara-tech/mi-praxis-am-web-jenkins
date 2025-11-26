@@ -12,6 +12,7 @@ import net.miatech.beans.PX041S01INF001Filter;
 import net.miatech.beans.S0007INF053Filter;
 import net.miatech.beans.S0008INF020Filter;
 import net.miatech.beans.S0010INF020Filter;
+import net.miatech.beans.SQP05851Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.program.UserDAO;
 import net.miatech.praxis.A2149;
@@ -69,5 +70,9 @@ public class UserLogic {
     
     public boolean SQP03268(String usuario) throws SQLException, Exception {
         return userDAO.SQP03268(usuario);
+    }
+            
+    public SQP05851Filter SQP05851(SQP05851Filter filter ) throws SQLException , Exception{ 
+        return userDAO.SQP05851(filter);
     }
 }

@@ -2772,8 +2772,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                                                     id: prototype.id + '-lblChargeback',
                                                                                     value: '',
                                                                                     readOnly: true,
-//                                                                                    fieldStyle: 'color:#ff0000;font-weight:bold;text-align:center;font-size:20px',
-                                                                                    fieldStyle: 'background:white;color:#0B333C;font-weight:bold;text-align:center;border-style:solid;border-color:#7F98A8;border-right-width:4px;border-bottom-width:4px;',
+                                                                                    fieldStyle: 'color:#ff0000;font-weight:bold;text-align:center;font-size:20px',
                                                                                     width: 150
                                                                                 }
                                                                             ]
@@ -3245,6 +3244,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                     case 'M': rtn = 'MEMO'; break;
                                                     case 'J': rtn = 'EXCH'; break;
                                                     case 'I': rtn = 'TAXC'; break;
+                                                    case 'D': rtn = 'DRTC'; break;
                                                     case 'R': 
                                                                 if(data.A1716CFOP.trim() === 'RFTX')
                                                                     rtn = 'RFTX';
@@ -3252,6 +3252,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                                     rtn = 'RFND';
                                                                 break;                                                        
                                                     case 'F': rtn = 'FLWN'; break;
+                                                    case 'D': rtn = 'FLWND'; break;
                                                     case 'C': rtn = 'COMM'; break;
                                                     case 'L': rtn = 'IPAY'; break;
                                                     case 'A': 

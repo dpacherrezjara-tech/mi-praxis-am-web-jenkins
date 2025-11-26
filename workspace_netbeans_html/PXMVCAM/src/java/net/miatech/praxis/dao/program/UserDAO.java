@@ -33,12 +33,14 @@ import net.miatech.beans.PX041S01INF001Filter;
 import net.miatech.beans.S0007INF053Filter;
 import net.miatech.beans.S0008INF020Filter;
 import net.miatech.beans.S0010INF020Filter;
+import net.miatech.beans.SQP05851Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.beans.spring.ServerSession;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.dao.implement.IBaseDAO;
 import net.miatech.dao.implement.IUserDAO;
 import net.miatech.praxis.A2149;
+import static net.miatech.praxis.dao.panel.PanelDAO.pasarGarbageCollector;
 //import net.miatech.praxis.INF001;
 //import net.miatech.praxis.INF020;
 import net.miatech.praxis.spring.INF001;
@@ -87,7 +89,7 @@ public class UserDAO  {
         List<PX041S01INF001Filter> lstAccessUser = new ArrayList<PX041S01INF001Filter>(0);
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL PRAXIS.PX041S03INF001(?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.PX041S03INF001(?,?,?)}"; //Nueva Funcionalidad de Perfiles SQP05858
         //String SQLCLL01 = "{CALL LIBSAP14.SQP02783(?,?,?)}";
         CallableStatement cstm01 = null;
         StringWriter sw = new StringWriter();
@@ -379,5 +381,30 @@ public class UserDAO  {
             }
             tmpCnx.close();
         }
+    }
+    
+    public SQP05851Filter  SQP05851( SQP05851Filter filter ) throws SQLException , Exception {        
+        //MANT. LOG TABLE   
+        CallableStatement cstmt = null;        
+        String SQLCLL01 = "{CALL PRAXIS.SQP05851(?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();  
+            cstmt = cnx.prepareCall(SQLCLL01);      
+            
+            cstmt.setString(1, filter.VP_ID_OPERATOR );
+            cstmt.setString(2, filter.VP_OPER );
+            cstmt.setString(3, filter.VP_NPROG );
+            cstmt.setString(4, filter.VP_DESC1);
+            cstmt.setString(5, filter.VP_ACTIO);
+            cstmt.execute();                                             
+        } finally {
+            if (cstmt != null) {                
+                try { cstmt.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return filter;
     }
 }

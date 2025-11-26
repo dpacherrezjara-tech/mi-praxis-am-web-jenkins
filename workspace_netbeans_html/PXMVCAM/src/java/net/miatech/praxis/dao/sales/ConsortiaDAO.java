@@ -450,6 +450,9 @@ public class ConsortiaDAO {
                 regA1729.A2445LOTE = rs01.getString("A2445LOTE");
                 regA1729.A2445IATA = rs01.getString("A2445IATA");
                 regA1729.A2445AGRAN = rs01.getString("A2445AGRAN");
+                
+                regA1729.A2445VTXRF = rs01.getDouble("A2445VTXRF");
+                regA1729.A2445CDTXS = rs01.getString("A2445CDTXS");
 
                 lstRws.add(regA1729);
             }

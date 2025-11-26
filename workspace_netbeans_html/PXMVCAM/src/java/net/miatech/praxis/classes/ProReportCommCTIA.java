@@ -290,7 +290,7 @@ public class ProReportCommCTIA {
             // FARE
             PYi = PYi - (Hlng);
             PoxT = PosX1;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Fare/Ancillaries: ", subFontT)), PoxT, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Fare/Ancillaries/Taxes: ", subFontT)), PoxT, PYi, 0);
             PoxT = PoxT + 150; //70
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(formato_numero(Data.A2444FARE), NORMAL), PoxT, PYi, 0);
 
@@ -454,7 +454,7 @@ public class ProReportCommCTIA {
             // genera Data en txt
             PrintStream out = new PrintStream(new FileOutputStream(fileTmp02));
             // Texto Header            
-            out.println("IATA;Ticket;Trans;cpn;cjn;Issue Date;Carr.;Fare Basis;Class;OD;IT Tour Cod.;FOP;Station IATA;CPN Fare;Comm.;Agr. Code;%;Ancillaries Amount;Ancillaries Comm.;Agr. Code;Ancillaries %;Lote");
+            out.println("IATA;Ticket;Trans;cpn;cjn;Issue Date;Carr.;Fare Basis;Class;OD;IT Tour Cod.;FOP;Station IATA;CPN Fare;Comm.;Agr. Code;%;Ancillaries Amount;Ancillaries Comm.;Agr. Code;Ancillaries %;Taxes;Code Taxe;Agr. Code;Lote");
 
             PYi = PYi - Hlng;  // SALTO DESPUES DEL TITULO DE COLUMNAS 
             for (int i = 0; i < Data.lstRws.size(); i++) {
@@ -540,6 +540,11 @@ public class ProReportCommCTIA {
                         + formato_numero(Data.lstRws.get(i).A2445COCAR) + ";"
                         + Data.lstRws.get(i).A2445AGRAN + ";"
                         + formato_numero(Data.lstRws.get(i).A2445POCAN) + ";"
+                        
+                        + formato_numero(Data.lstRws.get(i).A2445VTXRF) + ";"
+                        + Data.lstRws.get(i).A2445CDTXS + ";"
+                        + Data.lstRws.get(i).A2445CCST + ";"
+                        
                         + Data.lstRws.get(i).A2445LOTE);
 
                 PYi = PYi - 12;
