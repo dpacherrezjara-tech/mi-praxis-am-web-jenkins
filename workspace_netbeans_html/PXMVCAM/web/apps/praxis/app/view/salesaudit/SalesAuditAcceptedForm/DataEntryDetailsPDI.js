@@ -1,13 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * Desarrollado por: Zenobio Perez
- * -------------------------------
- */
 Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsPDI', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryDetailsPDI',
@@ -16,11 +6,12 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsPD
         'Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailsPDIController'
     ],
     header: true,
-    height: 410,
+    minHeight: 200,
+    height: 588,
     title: 'PDI Information',
-    width: 1100,
+    width: 1261,
     border: false,
-    resizable: false,
+    resizable: true,
     layout: 'fit',
     modal: true,
     closable: true,
@@ -29,45 +20,80 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsPD
     },
     items: [
         {
-            xtype: 'box',
-            id: prototype.id8 + '-contenido_html',
-            layout: 'fit',
+            xtype: 'grid',
+            id: prototype.id + '-gridPDI',
+            flex: 1,
             autoScroll: true,
-            style: 'background-color: black; color: white; padding: 4px; fontSize:14; fontFamily:Courier New; '
-        },
-        {
-            xtype: 'box',
-            hidden:true,
-            html: '<div id="content-contenido_html"></div>'
-        }
-    ],
-    dockedItems: [
-        {
-            xtype: 'toolbar',
-            dock: 'bottom',
-            ui: 'footer',
-            //margin: '10 0 10 0',
-            layout: {
-                pack: 'center'
+            viewConfig: {
+                stripeRows: true,
+                enableTextSelection: true,
+                markDirty: false
             },
-            fieldStyle: 'text-align:center',
-            defaults: {
-                scale: 'medium'
+            columnLines: true,
+            columns: {
+                defaults: {
+                    align: 'center',
+                    menuDisabled: true,
+                    sortable: true
+                },
+                items: [
+                    { text: 'ID', dataIndex: 'ID', width: 50, align: 'center' },
+                    { text: 'Processing<br>Date', dataIndex: 'PRDA', width: 100, align: 'center' },
+                    { text: 'PNR', dataIndex: 'PNR', width: 100, align: 'center' },
+                    { text: 'PNR Sabre', dataIndex: 'PNRAA', width: 100, align: 'center' },
+                    { text: 'Source', dataIndex: 'FUENTE', width: 100, align: 'center' },
+                    { text: 'Sabre Code', dataIndex: 'SRCODE', width: 100, align: 'center' },
+                    { text: 'Process', dataIndex: 'SRTYPE', width: 100, align: 'center' },
+                    { text: 'Sequence', dataIndex: 'RPH', width: 100, align: 'center' },
+                    { text: 'Type', dataIndex: 'TYPE', width: 100, align: 'center' },
+                    { text: 'Description', dataIndex: 'DESCRIP', width: 398 }
+                ]
             },
-            items: [
-                {
-                    xtype: 'button',
-                    width: 100,
-                    cls: 'x-btn-sent',
-                    overCls: 'x-btn-sent-over',
-                    text: '<span style="color: white; font-weight: bold;">Close</span>',
-                    listeners: {
-                        click: 'onCancelClick'
+            store: {
+                fields: [
+                    'ID', 'PRDA', 'PNR', 'PNRAA',
+                    'FUENTE', 'SRCODE', 'SRTYPE', 'RPH', 'TYPE',
+                    'DESCRIP'
+                ],
+                data: [],
+                pageSize: 20
+            },
+            tbar: {
+                layout: {
+                    pack: 'end'
+                },
+                defaults: {
+                    scale: 'medium'
+                },
+                items: [
+                    {
+                        xtype: 'button',
+                        iconCls: 'prx-icon-excel',
+                        scale: 'small',
+                        tooltip: 'Export to Excel',
+                        listeners: {
+                            click: 'downloadExcel'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        hidden: true,
+                        id: prototype.id + '-backButton-1',
+                        scale: 'small',
+                        iconCls: 'prx-icon-back',
+                        width: 25,
+                        tooltip: 'Back',
+                        listeners: {
+                            click: 'onClickBackButton'
+                        }
                     }
-                }
-            ]
+                ]
+            },
+            bbar: {
+                xtype: 'pagingtoolbar',
+                id: prototype.id + '-pagingToolbar',
+                displayInfo: true
+            }
         }
     ]
 });
-
-
