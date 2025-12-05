@@ -192,7 +192,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 },
                 columns: [
                     {
-                        text: 'Discount<br>Rate', dataIndex: 'DISCRATEI', width: 80,
+                        text: 'Discount<br>Rate', dataIndex: 'DISCRATE', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00 %');

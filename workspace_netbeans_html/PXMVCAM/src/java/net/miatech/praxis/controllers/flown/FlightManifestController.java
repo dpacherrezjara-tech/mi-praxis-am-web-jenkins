@@ -924,7 +924,7 @@ public class FlightManifestController extends BaseController {
     @RequestMapping(value = "getXLSXDetail")
     public @ResponseBody
     void getXLSXDetail(HttpServletRequest request, HttpServletResponse response) {
-        String fileNameDownload = String.format("Flight Conciliation Detail - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Flight Manifest - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             File file = File.createTempFile(fileNameDownload, ".xlsx");
 
@@ -949,7 +949,7 @@ public class FlightManifestController extends BaseController {
 
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
             Workbook workbook = new XSSFWorkbook();
-            Sheet sheet = workbook.createSheet("Flight Conciliation Detail");
+            Sheet sheet = workbook.createSheet("Flight Manifest");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
 //            CellStyle headerStyle = workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();

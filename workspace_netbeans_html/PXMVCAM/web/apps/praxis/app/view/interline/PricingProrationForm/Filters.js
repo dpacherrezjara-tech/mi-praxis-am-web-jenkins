@@ -23,7 +23,7 @@ Ext.define('Ext.Praxis.view.interline.PricingProrationForm.Filters', {
                 fieldStyle: 'text-align: center;',
                 padding: '0px 1px 0px 0px',
                 anchor: '100%',
-                width: 1000
+                width: 1070
             },
             items: [
                 /**
@@ -167,24 +167,54 @@ Ext.define('Ext.Praxis.view.interline.PricingProrationForm.Filters', {
                             listConfig: {maxHeight: 111, minWidth: 280}
                         },
                         {xtype: 'tbspacer', width: 15},
+                        
+                        //proamos
                         {
-                            xtype: 'textfield',
-                            id: prototype.id+'-txtGRUPO',
-                            required: true,
-                            disabled: false,
-                            readOnly: false,
-                            fieldLabel: 'Group Number',
-                            width: 160,
-                            labelWidth: 90,
-                            enableKeyEvents: true,
-                            labelAlign: 'right',
-                            enforceMaxLength: true,
-                            maxLength: 6,
-                            maskRe: /[0-9]/,
-                            listeners: {
-                                keypress: 'eventKey'
-                            }
+                            xtype: 'container',
+                            layout: {
+                                type: 'hbox',
+                                align: 'middle'
+                            },
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtGRUPO',
+                                    required: true,
+                                    disabled: false,
+                                    readOnly: false,
+                                    fieldLabel: 'Group Number',
+                                    width: 150,
+                                    labelWidth: 90,
+                                    enableKeyEvents: true,
+                                    labelAlign: 'right',
+                                    enforceMaxLength: true,
+                                    maxLength: 6,
+                                    maskRe: /[0-9]/,
+                                    listeners: {
+                                        keypress: 'eventKey'
+                                    }
+                                },
+                                {
+                                    xtype: 'displayfield',
+                                    value: 'to',
+                                    margin: '0 5 0 5', // espacio entre los campos
+                                    style: 'font-weight:bold; text-align:center',
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtFIN_GRUPO',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 6,
+                                    width: 60,
+                                    enableKeyEvents: false
+                                }
+                            ]
                         }
+
+                        
 
                     ]
                 },
@@ -214,11 +244,45 @@ Ext.define('Ext.Praxis.view.interline.PricingProrationForm.Filters', {
                                 {boxLabel: '<strong style="color:#148D28" >ISR Group </strong>', name: 'radiogroup1', inputValue: 'ISRGR', width: 100},
                                 {boxLabel: '<strong style="color:#148D28" >Pre Closing ISR </strong>', name: 'radiogroup1', inputValue: 'ISR', width: 130},
                                 {boxLabel: '<strong style="color:#610B0B" >ISR Closed </strong>', name: 'radiogroup1', inputValue: 'ISRCL', width: 100},
-                                {boxLabel: '<strong style="color:#08088A" >ISR Unmatch </strong>', name: 'radiogroup1', inputValue: 'ISRUM', width: 100}
+                                {boxLabel: '<strong style="color:#08088A" >ISR Unmatch </strong>', name: 'radiogroup1', inputValue: 'ISRUM', width: 100},
+
+                                {
+                                    xtype: 'container',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'middle'  // esto centra verticalmente los elementos
+                                    },
+                                    items: [
+
+                                        {xtype: 'tbspacer', width: 15},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Airline:',
+                                            width: 40,
+                                            margin: '0 5 0 0'
+                                        },
+
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtINCIA',
+                                            fieldStyle: 'text-align:center',
+                                            enforceMaxLength: true,
+                                            maskRe: /[0-9]/,
+                                            maxLength: 3,
+                                            width: 40,
+                                            enableKeyEvents: false
+                                        }
+                                    ]
+                                }
+
+                                
                             ],
                             listeners: {change: 'cmbTypeRep_changeHandler' }
+                            
+                            
                         }
                     ]
+                    
                 },
             ]
         }

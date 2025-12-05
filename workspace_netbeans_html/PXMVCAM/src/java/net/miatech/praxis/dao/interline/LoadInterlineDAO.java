@@ -1561,9 +1561,9 @@ public class LoadInterlineDAO {
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
                 if (rs01.getString("TGROSSG").trim().equals("M")) {
-                    totTGROSS += (rs01.getInt("TGROSS") * -1);
+                    totTGROSS += (rs01.getDouble("TGROSS") * -1);
                 } else {
-                    totTGROSS += (rs01.getInt("TGROSS"));
+                    totTGROSS += (rs01.getDouble("TGROSS"));
                 }
                 if (rs01.getString("TISCSG").trim().equals("M")) {
                     totTISC += (rs01.getDouble("TISC") * -1);

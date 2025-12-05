@@ -1058,8 +1058,11 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoices.PassengerInvoicesC
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchSourceDetail">
     searchSourceDetail: function (beanS30, boxActual) {
+        
+        console.log(this.bean30Source.SOURCOD)
+        
         boxActual = boxActual === undefined || boxActual === '' ? prototype.id + '-boxMainData_2' : boxActual;
-        if(this.bean30Source.SOURCOD==='01' || this.bean30Source.SOURCOD==='02' || this.bean30Source.SOURCOD==='03' ||
+        if(this.bean30Source.SOURCOD==='31' || this.bean30Source.SOURCOD==='01' || this.bean30Source.SOURCOD==='02' || this.bean30Source.SOURCOD==='03' ||
 	   this.bean30Source.SOURCOD==='08' || this.bean30Source.SOURCOD==='14' || this.bean30Source.SOURCOD==='21' ||
 	   this.bean30Source.SOURCOD==='23' || this.bean30Source.SOURCOD==='25' || this.bean30Source.SOURCOD==='26' || this.bean30Source.SOURCOD==='90'){
             //<editor-fold defaultstate="collapsed" desc="gridMainDataDetail20 => paggin5">
