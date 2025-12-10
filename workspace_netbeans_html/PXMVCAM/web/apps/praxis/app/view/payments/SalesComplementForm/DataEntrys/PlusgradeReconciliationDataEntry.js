@@ -1118,7 +1118,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                         {
                             items: [
                                 {labelWidth: 90, width: 180, fieldLabel: 'User Create', name: 'USCR'},
-                                {labelWidth: 90, width: 180, fieldLabel: 'Date Create', name: 'HOCR'},
+                                {labelWidth: 90, width: 180, fieldLabel: 'Date Create', name: 'FECR'},
                                 {labelWidth: 90, width: 180, fieldLabel: 'Hour Create', name: 'HOCR'}
                             ]
                         },
