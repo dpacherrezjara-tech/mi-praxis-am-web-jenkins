@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
     controller: 'DataEntryA3729Controller',
     title: 'Flight Manifest - Data Entry Form',
     header: true,
-    height: 480,
+    height: 520,
     width: 790,
     border: false,
     resizable: false,
@@ -93,7 +93,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                             maskRe: /[0-9]/,
                             maxLength: 1,
                             width: 35
-                        },                        
+                        },
                         {xtype: 'tbspacer', width: 65},
                         {
                             xtype: 'label',
@@ -121,7 +121,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                             maskRe: /[0-9]/,
                             maxLength: 5,
                             width: 50
-                        }                        
+                        }
                     ]
                 },
                 //<editor-fold defaultstate="collapsed" desc="Fila 2">
@@ -147,10 +147,8 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                             id: prototype.id + '-txtTICKET_2',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
-//                            allowBlank: false,
                             maskRe: /[0-9]/,
                             maxLength: 13,
-//                            readOnly: true,
                             width: 100,
                             enableKeyEvents: true
                         },
@@ -167,20 +165,17 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                             id: prototype.id + '-txtCUPON_2',
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
-//                            allowBlank: false,
-//                            readOnly: true,
                             maskRe: /[0-9]/,
                             maxLength: 1,
                             width: 35
                         },
-                        
                         {xtype: 'tbspacer', width: 65},
                         {
                             xtype: 'label',
                             text: 'New Sequence',
                             style: 'font-weight:bold;color:#000;',
                             width: 90
-                        },                        
+                        },
                         {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'textfield',
@@ -190,9 +185,32 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                             enforceMaxLength: true,
                             maxLength: 5,
                             width: 50
-                        }                        
+                        },
                     ]
                 },
+                //<editor-fold defaultstate="collapsed" desc="Fila 2">
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    margin: '5 0 0 2',
+                    items: [
+                        // === NUEVO CHECKBOX AQUI ===
+                        {xtype: 'tbspacer', width: 7},
+                        {
+                            xtype: 'checkbox',
+                            id: prototype.id + '-chkClearTkt',
+                            boxLabel: 'Clear Ticket & Coupon',
+                            labelWidth: 130,
+                            width: 170,
+                            style: 'font-weight:bold;color:#000;',
+                            listeners: {
+                                change: 'onClearTicketAndCupon'
+                            }
+                        }
+
+                    ]
+                },
+                //</editor-fold>
                 //</editor-fold>
                 //</editor-fold>
                 //<editor-fold defaultstate="collapsed" desc="Flight Information">
@@ -278,16 +296,17 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                                 {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'Pax Type',
+                                    text: 'Pax Type Sale',
                                     style: 'font-weight:bold;color:#000;',
                                     width: 90
                                 },
                                 {
                                     xtype: 'combo',
-                                    id:prototype.id+'-cmbTPAX',
+                                    id: prototype.id + '-cmbTPAXV',
                                     fieldStyle: 'text-align:left;',
                                     valueField: 'code',
                                     displayField: 'name',
+                                    disabled:true,
                                     allowBlank: true,
                                     width: 80,
                                     editable: false
@@ -318,12 +337,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                                     id: prototype.id + '-txtCDEPART',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
+                                    disabled: true,
                                     minLength: 3,
                                     maxLength: 3,
                                     maskRe: /[a-zA-Z]/,
                                     width: 60,
                                     margin: '0 0 0 10',
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue',
                                     }
                                 },
@@ -345,34 +365,32 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                                     id: prototype.id + '-txtCARRIVA',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
+                                    disabled: true,
                                     minLength: 3,
                                     maxLength: 3,
                                     maskRe: /[a-zA-Z]/,
                                     width: 60,
                                     margin: '0 0 0 10',
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue',
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 11},
+                                {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'Seat',
+                                    text: 'Pax Type Manifest',
                                     style: 'font-weight:bold;color:#000;',
-                                    width: 89,
-                                    margin: '0 0 0 30'
+                                    width: 90
                                 },
                                 {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-txtCHAIR',
-                                    fieldStyle: 'text-align:center',
-                                    readOnly: true,
-//                                    enforceMaxLength: true,
-//                                    maxLength: 3,
-                                    width: 30,
-                                    listeners:{
-                                        change: 'onUpperValue'
-                                    }
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbTPAX',
+                                    fieldStyle: 'text-align:left;',
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    allowBlank: true,
+                                    width: 80,
+                                    editable: false
                                 }
                             ]
                         },
@@ -399,9 +417,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
 //                                    enforceMaxLength: true,
 //                                    maxLength: 10,
                                     width: 110,
-                                    margin: '0 0 0 10'
+                                    margin: '0 0 0 10',
+                                    listeners: {
+                                        change: 'onUpperValue'
+                                    }
+
                                 },
-                                 {
+                                {
                                     xtype: 'label',
                                     text: 'First Name',
                                     style: 'font-weight:bold;color:#000;',
@@ -416,10 +438,33 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
 //                                    enforceMaxLength: true,
 //                                    maxLength: 10,
                                     width: 110,
-                                    margin: '0 0 0 10'
+                                    margin: '0 0 0 10',
+                                    listeners: {
+                                        change: 'onUpperValue'
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 11},
+                                {
+                                    xtype: 'label',
+                                    text: 'Seat',
+                                    style: 'font-weight:bold;color:#000;',
+                                    width: 89,
+                                    margin: '0 0 0 30'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtCHAIR',
+                                    fieldStyle: 'text-align:center',
+                                    readOnly: false,
+//                                    enforceMaxLength: true,
+//                                    maxLength: 3,
+                                    width: 30,
+                                    listeners: {
+                                        change: 'onUpperValue'
+                                    }
                                 }
-                                
-                                
+
+
                             ]
                         }
                     ]
@@ -444,7 +489,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                                     padding: '0px 80px 0px 0px',
                                     html: '<strong style="color:#000; text-decoration: underline; ">Information</strong>'
                                 },
-                                { xtype: 'tbspacer', width: 500 }
+                                {xtype: 'tbspacer', width: 500}
                             ]
                         },
                         {
@@ -463,7 +508,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                                 },
                                 {
                                     xtype: 'combo',
-                                    id:prototype.id+'-cmbSTVAL',
+                                    id: prototype.id + '-cmbSTVAL',
                                     fieldStyle: 'text-align:left;',
                                     valueField: 'code',
                                     displayField: 'name',
@@ -479,7 +524,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                                 },
                                 {
                                     xtype: 'combo',
-                                    id:prototype.id+'-cmbSTVCR',
+                                    id: prototype.id + '-cmbSTVCR',
                                     fieldStyle: 'text-align:left;',
                                     valueField: 'code',
                                     displayField: 'name',
@@ -496,7 +541,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'combo',
-                                    id:prototype.id+'-cmbFSALES',
+                                    id: prototype.id + '-cmbFSALES',
                                     fieldStyle: 'text-align:left;',
                                     valueField: 'code',
                                     displayField: 'name',
@@ -527,7 +572,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                                     padding: '0px 80px 0px 0px',
                                     html: '<strong style="color:#000; text-decoration: underline; ">Process Sabre</strong>'
                                 },
-                                { xtype: 'tbspacer', width: 500 }
+                                {xtype: 'tbspacer', width: 500}
                             ]
                         },
                         {
@@ -535,7 +580,6 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                             layout: 'hbox',
                             margin: '0 0 5 0',
                             border: false,
-    
                             bodyStyle: 'background: #EFE9E5',
                             items: [
                                 {
@@ -547,7 +591,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                                 },
                                 {
                                     xtype: 'combo',
-                                    id:prototype.id+'-cmbFSABRE',
+                                    id: prototype.id + '-cmbFSABRE',
                                     fieldStyle: 'text-align:left;',
                                     valueField: 'code',
                                     displayField: 'name',
@@ -561,14 +605,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                                     style: 'font-weight:bold;color:#000;',
                                     width: 120
                                 },
-                                 {
+                                {
                                     xtype: 'textfield',
                                     id: prototype.id + '-txtSTASABR',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 5,
                                     width: 60,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 }
