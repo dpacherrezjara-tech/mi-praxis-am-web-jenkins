@@ -883,14 +883,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background:#d5f4d5;";
                                                             if (record.data.DESCRIP !== '') {
-                                                                metaData.tdAttr = 'data-qtip="' + record.data.DESCRIP.substring(0,50).trim() + '<br>' + 
-                                                                        record.data.DESCRIP.substring(50,100).trim() + '<br>' +
-                                                                        record.data.DESCRIP.substring(100,150).trim() + '<br>' +
-                                                                        record.data.DESCRIP2.substring(0,50).trim() + '<br>' +
-                                                                        record.data.DESCRIP2.substring(50,100).trim() + '<br>' +
-                                                                        record.data.DESCRIP2.substring(100,150).trim() + '"' 
-                          ;
-                                                                console.log(record.data,"Esta es mi descripcion")
+                                                                metaData.tdAttr = 'data-qtip="' + record.data.DESCRIP.substring(0, 50).trim() + '<br>' +
+                                                                        record.data.DESCRIP.substring(50, 100).trim() + '<br>' +
+                                                                        record.data.DESCRIP.substring(100, 150).trim() + '<br>' +
+                                                                        record.data.DESCRIP2.substring(0, 50).trim() + '<br>' +
+                                                                        record.data.DESCRIP2.substring(50, 100).trim() + '<br>' +
+                                                                        record.data.DESCRIP2.substring(100, 150).trim() + '"'
+                                                                        ;
+                                                                console.log(record.data, "Esta es mi descripcion")
                                                                 return 'Y';
                                                             } else {
                                                                 return 'N';
@@ -1318,10 +1318,25 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Type <br> Pax', dataIndex: 'desPAX', width: 70, sortable: true,
-//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-//                                                            metaData.style = "text-align:center;background:#FFF9E0;";
-//                                                            return value;
-//                                                        }
+                                                        renderer: function (value, metaData, record) {
+
+                                                            var ticket = record.get('strTicket');
+                                                            var desPAXV = record.get('desPAXV');
+
+                                                            if (ticket && ticket.trim() !== '') {
+
+                                                                metaData.style = "text-align:center;background:#FFF9E0;";
+
+                                                                // Si desPAXV está vacío, usar desPAX
+                                                                if (!desPAXV || desPAXV.trim() === '') {
+                                                                    return value; // desPAX
+                                                                }
+
+                                                                return desPAXV;
+                                                            }
+
+                                                            return '';
+                                                        }
                                                     },
                                                     {
                                                         text: 'Seat', dataIndex: 'CHAIR', width: 70, sortable: true,
@@ -2648,12 +2663,6 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     metaData.style = "text-align:center;background:#FFF9E0;";
                                                     return value;
                                                 },
-//                                                        sorter: function (v1, v2) {
-//                                                            console.log('sorter');
-//                                                            v1 = v1.get('CHAIR');
-//                                                            v2 = v2.get('CHAIR');
-//                                                            return v1 > v2 ? 1 : ( v1 < v2 ? -1 : 0 );
-//                                                        }
                                             },
 //                                            {
 //                                                text: 'PNR', dataIndex: 'PNR', width: 80, sortable: true,

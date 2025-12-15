@@ -127,7 +127,7 @@ public class FlightConciliationLogic {
     public String SQP04320(A3729Filter filter) throws SQLException, Exception {
         return objDAO.SQP04320(filter);
     }
-
+    
     public boolean SQP04321(A3729Filter filter) throws SQLException, Exception {
         return objDAO.SQP04321(filter);
     }
@@ -142,5 +142,9 @@ public class FlightConciliationLogic {
 
     public String loadSQP05035(List<A1691Filter> listaTkt) throws SQLException, Exception {
         return objDAO.loadSQP05035(listaTkt);
+    }
+    
+    public String SQP03414_20(A3729Filter filter) throws SQLException, Exception {
+        return objDAO.SQP03414_20(filter);
     }
 }
