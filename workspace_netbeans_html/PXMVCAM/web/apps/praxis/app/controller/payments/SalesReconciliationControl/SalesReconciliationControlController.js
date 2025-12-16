@@ -43,7 +43,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.currencies = dataMonedas;
             me.users = dataAdmins.map(x => (x.A4451KEY3 || x.a4451key3 || '').toString().trim());
             
-            console.table(me.creditcards);
+//            console.table(me.processors);
 
             //<editor-fold defaultstate="collapsed" desc="Bind Combos">
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctype'),      data: dataProcessors,   valueField: 'A4451KEY2', displayField: 'A4451DESC1',   value: ''});
@@ -438,7 +438,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     onClickProcessBtn: function () {
         const processWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransactionProcessDataEntry', {
             id: prototype.id + '-TransactionProcessDataEntry-1',
-            dataFilters: this.dataFilters
+            processors: this.processors
         });
         processWin.show();
     },
