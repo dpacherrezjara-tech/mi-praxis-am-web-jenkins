@@ -7,20 +7,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
     },
     afterRender: function (obj, e) {
         const me = this;
-        const data = me.view.dataFilters ;
-        const procesadores = data.procesadores;
+        const processors = me.view.processors ;
         
         // combo
-        const cmbProcessProctype = Ext.getCmp(prototype.id + '-processProctype');
+        const cmbProcessProcessor = Ext.getCmp(prototype.id + '-ProcessProcessor');
         // set combo
-        global.setComboStoreWithoutAll(cmbProcessProctype, procesadores, 'a4451key2', 'a4451desc1', '');
+        global.setComboStoreWithoutAll(cmbProcessProcessor, processors, 'A4451KEY2', 'A4451DESC1', 'AMEX02');
         
     },
     onProcessClick: function (btn) {
         const me = this;
         const dateBtn = Ext.getCmp(prototype.id + '-processTransactionBatch').getValue();
         let date = Ext.Date.format(dateBtn, 'Ymd');
-        let proctype = Ext.getCmp(prototype.id + '-processProctype').getValue();
+        let processor = Ext.getCmp(prototype.id + '-ProcessProcessor').getValue();
         //console.log(date);
         Ext.Msg.show(
                 {
@@ -33,18 +32,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
-                            me.processDate(date, proctype);
+                            me.processDate(date, processor);
                         }
                     }
                 });
     },
-    processDate: async function (date, proctype) {
+    processDate: async function (date, processor) {
         const me = this;
         me.view.setLoading(true);
         let params = {
             VP_CCUST: '139',
             VP_FPROC: date,
-            VP_PROCESADOR: proctype
+            VP_PROCESADOR: processor
         };
         console.log(params);
         try {
