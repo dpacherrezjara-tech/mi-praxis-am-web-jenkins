@@ -492,9 +492,6 @@ public class FOBDAO {
                 regA1729.A1729LOTE = rs01.getString("A1729LOTE");
                 regA1729.A1729IATA = rs01.getString("A1729IATA");
                 regA1729.A1729AGRAN = rs01.getString("A1729AGRAN");
-                
-                regA1729.A1729VTXRF = rs01.getDouble("A1729VTXRF");
-                regA1729.A1729CDTXS = rs01.getString("A1729CDTXS");
 
                 lstRws.add(regA1729);
             }

@@ -62,7 +62,4 @@ public class A2445 {
     public String A2445IATAE =""; 
     public String A2445AGRAN ="";     
     
-    public double A2445VTXRF =0.00;
-    public String A2445CDTXS ="";     
-    
 }
