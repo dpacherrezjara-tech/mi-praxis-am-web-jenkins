@@ -34,6 +34,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const dataAutoComment   = lstRs[9]  || [];
             const dataFreglas       = lstRs[10] || [];
             const dataStvalTicket   = lstRs[11]  || [];
+            const dataStandByComment= lstRs[12]  || [];
 
             const quantityAnalyzePending = lstVals.IO_QUANITY_ANALYZE_PENDING;
  
@@ -42,7 +43,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.countries = dataPaises;
             me.currencies = dataMonedas;
             me.users = dataAdmins.map(x => (x.A4451KEY3 || x.a4451key3 || '').toString().trim());
-            
+            me.standByComment = dataStandByComment;
 //            console.table(me.processors);
 
             //<editor-fold defaultstate="collapsed" desc="Bind Combos">
