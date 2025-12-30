@@ -6,8 +6,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
     requires: [
         'Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErrorBPODataEntryController',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry',
-        'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ChargebackTrackingDataEntry',
-        'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ChangeStandByCommentDataEntry'
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ChargebackTrackingDataEntry'
     ],
     controller: 'TransacErrorBPODataEntryController',
     title: 'Transaction Error - Form',
@@ -997,7 +996,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             xtype: 'button',
                             id: prototype.idDE + '-revStandBy',
                             width: 25,
-                            iconCls: 'prx-icon-delete',
+                            iconCls: 'prx-icon-update',
                             hidden: true,
                             tooltip: 'Reverse Stand By',
                             listeners: {
@@ -1014,18 +1013,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                             listeners: {
                                 click: 'onCancelStandBy'
                             }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.idDE + '-changeStandByComment',
-                            width: 25,
-                            iconCls: 'prx-icon-update',
-                            hidden: false,
-                            tooltip: 'Change Stand By Comment',
-                            listeners: {
-                                click: 'onClickChangeStandByComment'
-                            }
-                        },
+                        }
                     ]
                 },
                 //</editor-fold>
