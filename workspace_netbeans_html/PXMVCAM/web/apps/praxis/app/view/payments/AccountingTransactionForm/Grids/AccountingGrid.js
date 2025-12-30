@@ -26,9 +26,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
     },
     columnLines: true,
     features: [{
-            ftype: 'summary',
-            dock: 'bottom'
-        }],
+        ftype: 'summary',
+        dock: 'bottom'
+    }],
     columns: {
         defaults: {
             align: 'center',
@@ -41,7 +41,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                 text: 'RN', dataIndex: 'RN',
                 xtype: 'rownumberer', width: 40//, hidden: true
             },
-            {text: 'Ticket',
+            {
+                text: 'Ticket',
                 width: 120,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
@@ -52,7 +53,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     return 'Total: ' + value;
                 }
             },
-            {text: 'Mode',
+            {
+                text: 'Mode',
                 dataIndex: 'a4183modo',
                 width: 50,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -70,31 +72,36 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     return opts[value.trim()] || value;
                 }
             },
-            {text: 'SRC', dataIndex: 'a4183fuent', width: 45,
+            {
+                text: 'SRC', dataIndex: 'a4183fuent', width: 45,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     return value;
                 }
             },
-            {text: 'Sub <br> SRC', dataIndex: 'a4183subfu', width: 45,
+            {
+                text: 'Sub <br> SRC', dataIndex: 'a4183subfu', width: 45,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     return value;
                 }
             },
-            {text: 'FOP', dataIndex: 'a4183fp', width: 45,
+            {
+                text: 'FOP', dataIndex: 'a4183fp', width: 45,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     return value;
                 }
             },
-            {text: 'CPN', dataIndex: 'a4183cupon', width: 50,
+            {
+                text: 'CPN', dataIndex: 'a4183cupon', width: 50,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     return value;
                 }
             },
-            {text: 'SEQ', dataIndex: 'a4183seq', width: 60,
+            {
+                text: 'SEQ', dataIndex: 'a4183seq', width: 60,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     return value;
@@ -108,13 +115,15 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     align: 'center'
                 },
                 columns: [
-                    {text: 'Date', dataIndex: 'a4183ffile', width: 80,
+                    {
+                        text: 'Date', dataIndex: 'a4183ffile', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;
                         }
                     },
-                    {text: 'Period', dataIndex: 'a4183fcont', width: 80,
+                    {
+                        text: 'Period', dataIndex: 'a4183fcont', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;
@@ -122,7 +131,11 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     }
                 ]
             },
-            {text: 'Account Number', dataIndex: 'a4183cuent', width: 120,
+            {
+                text: 'Account Number',
+                // dataIndex: 'a4183cuent', 
+                dataIndex: 'account',
+                width: 220,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     return value;
@@ -136,13 +149,15 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     align: 'center'
                 },
                 columns: [
-                    {text: 'Cur', dataIndex: 'a4183cur', width: 70,
+                    {
+                        text: 'Cur', dataIndex: 'a4183cur', width: 70,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;
                         }
                     },
-                    {text: 'Debit', dataIndex: 'a4183activ', width: 80,
+                    {
+                        text: 'Debit', dataIndex: 'a4183activ', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;";
                             return Ext.util.Format.number(value, '0,000.00');
@@ -151,7 +166,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                             return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
-                    {text: 'Credit', dataIndex: 'a4183pasiv', width: 80,
+                    {
+                        text: 'Credit', dataIndex: 'a4183pasiv', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;";
                             return Ext.util.Format.number(value, '0,000.00');
@@ -172,7 +188,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     align: 'center'
                 },
                 columns: [
-                    {text: 'Debit', dataIndex: 'a4183actrv', width: 80,
+                    {
+                        text: 'Debit', dataIndex: 'a4183actrv', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;";
                             return Ext.util.Format.number(value, '0,000.00');
@@ -181,7 +198,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                             return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
-                    {text: 'Credit', dataIndex: 'a4183pasrv', width: 80,
+                    {
+                        text: 'Credit', dataIndex: 'a4183pasrv', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;";
                             return Ext.util.Format.number(value, '0,000.00');
@@ -200,23 +218,29 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.AccountingG
                     align: 'center'
                 },
                 columns: [
-                    {text: 'Code', dataIndex: 'a4183orig', width: 60 },
-                    {text: 'Description', dataIndex: 'a4183titu', flex: 1 } 
+                    { text: 'Code', dataIndex: 'a4183orig', width: 60 },
+                    { text: 'Description', dataIndex: 'a4183titu', flex: 1 }
                 ]
             },
-            {text: 'Client', dataIndex: 'a4183cope', width: 70,
+            {
+                text: 'Client',
+                // dataIndex: 'a4183cope', 
+                dataIndex: 'a4183clien',
+                width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     return value;
                 }
             },
-            {text: 'Provider', dataIndex: 'a4183prov', width: 70,
+            {
+                text: 'Provider', dataIndex: 'a4183prov', width: 70,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     return value;
                 }
             },
-            {text: 'Praxis ID', dataIndex: 'a4183idcon', width: 280, autoSizeColumn: true,
+            {
+                text: 'Praxis ID', dataIndex: 'a4183idcon', width: 280, autoSizeColumn: true,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style += "text-align:center;";
                     return value;

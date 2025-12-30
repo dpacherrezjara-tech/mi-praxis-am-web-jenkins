@@ -278,7 +278,7 @@ public class ProReportCommFOB {
             // FARE
             PYi = PYi - (Hlng);
             PoxT = PosX1;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Fare/Ancillaries/Taxes: ", subFontT)), PoxT, PYi, 0);            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Fare/Ancillaries: ", subFontT)), PoxT, PYi, 0);            
             PoxT = PoxT + 150; //70
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase( formato_numero(Data.A1728FARE), NORMAL), PoxT, PYi, 0);
 
@@ -418,7 +418,7 @@ public class ProReportCommFOB {
             PrintStream out = new PrintStream(new FileOutputStream(fileTmp02));
             // Texto Header            
             //out.println("IATA;Ticket;Trans;cpn;cjn;Issue Date;Carr.;Fare Basis;Class;IT Tour Cod.;FOP;Station IATA;CPN Fare;Comm.;Agr. Code;%;Ancillaries Amount;Ancillaries Comm.;Agr. Code;Ancillaries %;Lote");
-            out.println("IATA;Ticket;Trans;cpn;cjn;Issue Date;Carr.;Fare Basis;Class;Origen;Dest;IT Tour Cod.;FOP;Station IATA;CPN Fare;Comm.;Agr. Code;%;Ancillaries Amount;Ancillaries Comm.;Agr. Code;Ancillaries %;Charge Amount;Charge Comm.;Charge Agr. Code;Charge %;Taxes;Code Taxe;Agr. Code;Lote");
+            out.println("IATA;Ticket;Trans;cpn;cjn;Issue Date;Carr.;Fare Basis;Class;Origen;Dest;IT Tour Cod.;FOP;Station IATA;CPN Fare;Comm.;Agr. Code;%;Ancillaries Amount;Ancillaries Comm.;Agr. Code;Ancillaries %;Charge Amount;Charge Comm.;Charge Agr. Code;Charge %;Lote");
             
             PYi = PYi - Hlng;  // SALTO DESPUES DEL TITULO DE COLUMNAS 
             for (int i = 0; i < Data.lstRws.size(); i++) {
@@ -507,10 +507,6 @@ public class ProReportCommFOB {
                         + formato_numero(Data.lstRws.get(i).A1729COCCR) + ";"
                         + Data.lstRws.get(i).A1729AGRCA + ";"
                         + formato_numero(Data.lstRws.get(i).A1729POCCA) + ";"
-                        
-                        + formato_numero(Data.lstRws.get(i).A1729VTXRF) + ";"
-                        + Data.lstRws.get(i).A1729CDTXS + ";"
-                        + Data.lstRws.get(i).A1729CCST + ";"
                         
                         + Data.lstRws.get(i).A1729LOTE);
 

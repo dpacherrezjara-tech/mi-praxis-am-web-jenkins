@@ -12,6 +12,7 @@ public class A1728 {
     public String A1728CCUST = ""; //    3A         COLHDG('CLIENTE')          
     public String A1728IATA = ""; //    8A         COLHDG('IATA_CODE')        
     public String A1728LOTE = ""; //   20A         COLHDG('ID_LOTE_PREFACT')
+    
     public String A1728FUENT = ""; //    3A         COLHDG('Fuente') BSP/ARC/ASR/MAN            
     public String A1728SFUEN = ""; //    3A         COLHDG('Sub Fuente')CTO/ATO/WEB/GSA/RES/AGV    
     public String A1728TFUEN = ""; //    3A         COLHDG('Tipo Sub_Fuente')  CTO/ATO/WEB/GSA/FRA/RES/INP ROB/AMP                        
