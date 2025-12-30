@@ -1,293 +1,279 @@
-/*
- * Desarrollado por: Zenobio Perez
- * -------------------------------
- */
 Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMaintenanceAnalystsController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryMaintenanceAnalystsController',
 
     beanTMP: {},
-    urlWin01: CONTEXTPATH + '/MaintenanceAnalysts',
-
-    A3406FALTA: '',
+    // urlWin01: CONTEXTPATH + '/MaintenanceAnalysts',
 
     init: function (view) {
-        var me = this;
     },
 
-    /**
-     * Se ejecuta luego de haber cargado todos los componentes
-     */
-    afterRender: function () {
-        const me = this;
-        const cmbProctypeSett2 = Ext.getCmp(prototype.id01 + '-cmbProctypeSett2');
-        cmbProctypeSett2.setStore(me.view.params.data);        
-        //        
+    afterRender: async function () {
+        this.onGetRules();
+        this.onGetData();
+        this.onGetAction();
+    },
 
-        switch (String(me.view.params.action)) {
-            case 'U':
-                var rec = me.view.params.rec;
+    onGetAction: function () {
+        let action = this.getView().params.action || 'C';
+        let win = this.getView();
 
-                Ext.getCmp(prototype.id01 + '-btn-save').hide();
-                Ext.getCmp(prototype.id01 + '-btn-update').show();
-                Ext.getCmp(prototype.id01 + '-btn-delete').show();
-
-                Ext.getCmp(prototype.id01 + '-txtA2665DESCR').setValue(rec.get('A4836DESCR'));
-                Ext.getCmp(prototype.id01 + '-txtuser').setValue(rec.get('A4836USER'));
-                //Ext.getCmp(prototype.id01 + '-cmbProctypeSett2').setValue(rec.get('A4836PROCE'));
-                me.OnLoadCmbStatus(rec.get('A4836FLAG'));
-                Ext.getCmp(prototype.id01 + '-cmbProctypeSett2').setValue(rec.get('A4836PROCE'));
-                // Ext.getCmp(prototype.id01 + '-CmbStatus').setValue(rec.get('A3406FLAG') == 'Enabled' ? 'AC' : 'IN');
-
-                Ext.getCmp(prototype.id01 + '-txtA3406REGIS').setValue(rec.get('A4836REGIS'));
-                Ext.getCmp(prototype.id01 + '-txtA3406FREGI').setValue(rec.get('A4836FREGI'));
-                Ext.getCmp(prototype.id01 + '-txtA3406HREGI').setValue(rec.get('A4836HREGI'));
-                Ext.getCmp(prototype.id01 + '-txtA3406REVIS').setValue(rec.get('A4836REVIS'));
-                Ext.getCmp(prototype.id01 + '-txtA3406FREVI').setValue(rec.get('A4836FREVI'));
-                Ext.getCmp(prototype.id01 + '-txtA3406HREVI').setValue(rec.get('A4836HREVI'));             
-
-                break;
-            case 'I':
-                Ext.getCmp(prototype.id01 + '-btn-save').show();
-                Ext.getCmp(prototype.id01 + '-btn-update').hide();
-                Ext.getCmp(prototype.id01 + '-btn-delete').hide();
-
-                Ext.getCmp(prototype.id01 + '-txtA2665DESCR').setValue('');
-
-                Ext.getCmp(prototype.id01 + '-txtuser').setValue('');
-                //Ext.getCmp(prototype.id01 + '-txtpais').setValue('');
-                Ext.getCmp(prototype.id01 + '-txtA3406REGIS').setValue('');
-                Ext.getCmp(prototype.id01 + '-txtA3406FREGI').setValue('');
-                Ext.getCmp(prototype.id01 + '-txtA3406HREGI').setValue('');
-                Ext.getCmp(prototype.id01 + '-txtA3406REVIS').setValue('');
-                Ext.getCmp(prototype.id01 + '-txtA3406FREVI').setValue('');
-                Ext.getCmp(prototype.id01 + '-txtA3406HREVI').setValue('');
-                //
-                me.OnLoadCmbStatus('AC');
-                Ext.getCmp(prototype.id01 + '-cmbProctypeSett2').setValue('AMEX00');
-                break;
-            default:
-                Ext.getCmp(prototype.id01 + '-btn-save').hide();
-                Ext.getCmp(prototype.id01 + '-btn-update').hide();
-                Ext.getCmp(prototype.id01 + '-btn-delete').hide();
+        if (action === 'C') {
+            win.setTitle('Crear Nuevo Registro');
+            Ext.getCmp(prototype.id01 + '-cmbSource').show();
+            Ext.getCmp(prototype.id01 + '-cmbChannel').show();
+            Ext.getCmp(prototype.id01 + '-panelControlData').hide();
+        } else if (action === 'U') {
+            win.setTitle('Editar Registro');
+            Ext.getCmp(prototype.id01 + '-cmbSource').hide();
+            Ext.getCmp(prototype.id01 + '-cmbChannel').hide();
+            Ext.getCmp(prototype.id01 + '-panelControlData').show();
         }
-        
     },
-    onCmbProctype: function (obj, records, eOpts) {
-        Ext.getCmp(prototype.id01 + '-txtA2665DESCR').setValue(obj.getRawValue());
-    },
-    OnLoadCmbStatus: function (id) {
-        var cmbSearch = Ext.getCmp(prototype.id01 + '-CmbStatus');
 
-        cmbSearch.bindStore(Ext.create('Ext.data.Store', {
+
+    onGetRules: async function () {
+        let me = this;
+        let param = me.view.params.rec;
+
+        console.log('on get rules', param);
+
+        let action = this.getView().params.action || 'C';
+
+        if (action === 'U') {
+            const user = param.data.A4886USER;
+
+            let grid = Ext.getCmp(prototype.id01 + '-gridDetails');
+            let store = grid.getStore();
+
+            grid.setLoading(true);
+
+            const params = {
+                IN_CCUST: '139',
+                IN_OPTION: '4',
+                IN_VAR1: user,
+                IN_VAR2: ''
+            };
+
+            let res = await global.callStoreGet('PXSAUDIT', 'SQP05872', params);
+
+            let data = (res.lstRs && res.lstRs.length)
+                ? res.lstRs[0]
+                : [];
+
+            data.forEach(r => r.__isNew = false);
+            console.log('data --', data);
+
+            me.dataUserRules = data;
+
+            store.loadData(data);
+            grid.setLoading(false);
+            return;
+        }
+
+
+
+
+    },
+
+
+    onGetData: async function () {
+        let param = this.getView().params.rec;
+
+        let form = Ext.getCmp(prototype.id01 + '-form').getForm();
+        let cmbSource = Ext.getCmp(prototype.id01 + '-cmbSource');
+        let cmbChannel = Ext.getCmp(prototype.id01 + '-cmbChannel');
+        let cmbTrans = Ext.getCmp(prototype.id01 + '-cmbTrans');
+
+        if (param && param.data) {
+            form.setValues(param.data);
+        } else {
+            form.reset();
+        }
+
+        cmbChannel.hide(); // oculto por defecto
+
+        // stores
+        cmbSource.setStore(Ext.create('Ext.data.Store', {
+            fields: ['code', 'name'],
             data: [
-                {"code": "AC", "name": "Enabled"},
-                {"code": "IN", "name": "Disabled"}
+                { code: 'ARC', name: 'ARC' },
+                { code: 'BSP', name: 'BSP' },
+                { code: 'ASR', name: 'ASR' }
             ]
         }));
 
-        cmbSearch.setValue(id);
-    },
-    
-    onDeleClick: function () {
-         var me = this;
-        var rec = me.view.params.rec;
-            me.beanTMP.IN_OPTION = 'D';
-            me.beanTMP.A4836DESCR = Ext.getCmp(prototype.id01 + '-txtA2665DESCR').getValue();
-            me.beanTMP.A4836USER = Ext.getCmp(prototype.id01 + '-txtuser').getValue();
-            me.beanTMP.A4836PROCE = Ext.getCmp(prototype.id01 + '-cmbProctypeSett2').getValue();
-            me.beanTMP.A4836FLAG = Ext.getCmp(prototype.id01 + '-CmbStatus').getValue();
-            me.beanTMP.A4836CORR = rec.get('A4836CORR');
-            me.beanTMP.A4836FALTA = rec.get('A4836FALTA');
-            me.beanTMP.A4836FBAJA = rec.get('A4836PROCE');
+        cmbChannel.setStore(Ext.create('Ext.data.Store', {
+            fields: ['code', 'name'],
+            data: [
+                { code: '', name: 'All' },
+                { code: 'ATO', name: 'ATO' },
+                { code: 'CCT', name: 'CCT' },
+                { code: 'CTO', name: 'CTO' },
+                { code: 'WEB', name: 'WEB' },
+                { code: 'FRA', name: 'FRA' }
+            ]
+        }));
 
-            if (me.beanTMP.A4836USER === '') {
-                Ext.Msg.alert('.: PRAXIS :.', 'Required Field Auditor');
-                return;
+        cmbTrans.setStore(Ext.create('Ext.data.Store', {
+            fields: ['code', 'name'],
+            data: [
+                { code: '', name: 'All' },
+                { code: 'EXCH', name: 'EXCH' },
+                { code: 'SALE', name: 'SALE' }
+            ]
+        }));
+
+        // EDIT
+        if (param && param.data) {
+            cmbSource.setValue(param.data.FUENTES);
+            cmbTrans.setValue(param.data.A4420TRAS);
+
+            if (param.data.FUENTES === 'ASR') {
+                cmbChannel.show();
+                cmbChannel.setValue(param.data.A4420CANAL);
             }
-            if (me.beanTMP.A4836PROCE === '') {
-                Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Procesador');
-                return;
-            }
-            if (me.beanTMP.A3406FLAG === '') {
-                Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Status');
-                return;
-            }
-
-            Ext.Msg.show({
-                title: '.: PRAXIS :.',
-                message: 'UPDATE RECORD?',
-                buttons: Ext.Msg.YESNO,
-                icon: Ext.Msg.QUESTION,
-                fn: function (btn) {
-                    if (btn === 'yes') {
-                        var mask = new Ext.LoadMask(Ext.getCmp(prototype.id01 + '-win'), {
-                            msg: 'Please Wait....'
-                        });
-                        mask.show();
-
-                        Ext.Ajax.request({
-                            url: me.urlWin01 + '/mantenimientoAuditor/',
-                            timeout: 60000000,
-                            method: 'POST',
-                            params: {beanString: JSON.stringify(me.beanTMP)},
-                            success: function (response, options) {
-                                mask.hide();
-                                var res = Ext.JSON.decode(response.responseText);
-                                var vp_icon = 0;
-                                if (res.data === 'RECORD INSERTED' || res.data === 'RECORD UPDATE' || res.data === 'RECORD DISABLED') {
-                                    vp_icon = 1;
-                                }
-                                global.Msg({msg: res.data, icon: vp_icon, fn: function () {
-                                        if (vp_icon === 1) {
-                                            Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                                            Ext.getCmp(prototype.id01 + '-win').close();
-
-                                        }
-
-
-                                    }});
-                            }
-                        });
-
-                    }
-                }
-            });
-    },
-    onSaveClick: function (obj) {
-        var me = this;
-        var action = String(me.view.params.action);
-
-        if (action === 'I') {
-            me.beanTMP.IN_OPTION = action;
-            me.beanTMP.A4836DESCR = Ext.getCmp(prototype.id01 + '-txtA2665DESCR').getValue();
-            me.beanTMP.A4836USER = Ext.getCmp(prototype.id01 + '-txtuser').getValue();
-            me.beanTMP.A4836PROCE = Ext.getCmp(prototype.id01 + '-cmbProctypeSett2').getValue();
-            me.beanTMP.A4836FLAG = Ext.getCmp(prototype.id01 + '-CmbStatus').getValue();
-            me.beanTMP.A4836CORR = 0;
-            me.beanTMP.A4836FALTA = "";
-            me.beanTMP.A4836FBAJA = "";
-
-            if (me.beanTMP.A4836USER === '') {
-                Ext.Msg.alert('.: PRAXIS :.', 'Required Field Auditor');
-                return;
-            }
-            if (me.beanTMP.A4836PROCE === '') {
-                Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Procesador');
-                return;
-            }
-            if (me.beanTMP.A3406FLAG === '') {
-                Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Status');
-                return;
-            }
-
-            Ext.Msg.show({
-                title: '.: PRAXIS :.',
-                message: 'SAVE RECORD?',
-                buttons: Ext.Msg.YESNO,
-                icon: Ext.Msg.QUESTION,
-                fn: function (btn) {
-                    if (btn === 'yes') {
-                        var mask = new Ext.LoadMask(Ext.getCmp(prototype.id01 + '-win'), {
-                            msg: 'Please Wait....'
-                        });
-                        mask.show();
-
-                        Ext.Ajax.request({
-                            url: me.urlWin01 + '/mantenimientoAuditor/',
-                            timeout: 60000000,
-                            method: 'POST',
-                            params: {beanString: JSON.stringify(me.beanTMP)},
-                            success: function (response, options) {
-                                mask.hide();
-                                var res = Ext.JSON.decode(response.responseText);
-                                var vp_icon = 0;
-                                if (res.data === 'RECORD INSERTED') {
-                                    vp_icon = 1;
-                                }
-                                global.Msg({msg: res.data, icon: vp_icon, fn: function () {
-                                        if (vp_icon === 1) {
-                                            Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                                            Ext.getCmp(prototype.id01 + '-win').close();
-
-                                        }
-
-
-                                    }});
-                            }
-                        });
-
-                    }
-                }
-            });
-        } else if (action === 'U' || action === 'D') {
-            var rec = me.view.params.rec;
-            me.beanTMP.IN_OPTION = action;
-            me.beanTMP.A4836DESCR = Ext.getCmp(prototype.id01 + '-txtA2665DESCR').getValue();
-            me.beanTMP.A4836USER = Ext.getCmp(prototype.id01 + '-txtuser').getValue();
-            me.beanTMP.A4836PROCE = Ext.getCmp(prototype.id01 + '-cmbProctypeSett2').getValue();
-            me.beanTMP.A4836FLAG = Ext.getCmp(prototype.id01 + '-CmbStatus').getValue();
-            me.beanTMP.A4836CORR = rec.get('A4836CORR');
-            me.beanTMP.A4836FALTA = rec.get('A4836FALTA');
-            me.beanTMP.A4836FBAJA = rec.get('A4836PROCE');
-
-            if (me.beanTMP.A4836USER === '') {
-                Ext.Msg.alert('.: PRAXIS :.', 'Required Field Auditor');
-                return;
-            }
-            if (me.beanTMP.A4836PROCE === '') {
-                Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Procesador');
-                return;
-            }
-            if (me.beanTMP.A3406FLAG === '') {
-                Ext.Msg.alert('.: PRAXIS :.', 'Required Field, Status');
-                return;
-            }
-
-            Ext.Msg.show({
-                title: '.: PRAXIS :.',
-                message: 'UPDATE RECORD?',
-                buttons: Ext.Msg.YESNO,
-                icon: Ext.Msg.QUESTION,
-                fn: function (btn) {
-                    if (btn === 'yes') {
-                        var mask = new Ext.LoadMask(Ext.getCmp(prototype.id01 + '-win'), {
-                            msg: 'Please Wait....'
-                        });
-                        mask.show();
-
-                        Ext.Ajax.request({
-                            url: me.urlWin01 + '/mantenimientoAuditor/',
-                            timeout: 60000000,
-                            method: 'POST',
-                            params: {beanString: JSON.stringify(me.beanTMP)},
-                            success: function (response, options) {
-                                mask.hide();
-                                var res = Ext.JSON.decode(response.responseText);
-                                var vp_icon = 0;
-                                if (res.data === 'RECORD INSERTED' || res.data === 'RECORD UPDATE' || res.data === 'RECORD DISABLED') {
-                                    vp_icon = 1;
-                                }
-                                global.Msg({msg: res.data, icon: vp_icon, fn: function () {
-                                        if (vp_icon === 1) {
-                                            Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                                            Ext.getCmp(prototype.id01 + '-win').close();
-
-                                        }
-
-
-                                    }});
-                            }
-                        });
-
-                    }
-                }
-            });
         }
     },
 
-    onCloseClick: function (obj) {
-        Ext.getCmp(prototype.id01 + '-win').close();
-    }
+
+    onSourceChange: function (combo, newValue) {
+        let cmbChannel = Ext.getCmp(prototype.id02 + '-cmbChannel');
+
+        if (newValue === 'ASR') {
+            cmbChannel.show();
+            cmbChannel.allowBlank = false;
+        } else {
+            cmbChannel.reset();
+            cmbChannel.hide();
+            cmbChannel.allowBlank = true;
+        }
+    },
+
+
+
+
+
+
+    onCloseClick: function () {
+        this.getView().close();
+    },
+
+    onAddDetailClick: function () {
+        Ext.create('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', {
+            id: prototype.id02 + '-winRules',
+            params: {
+                action: 'U',
+                dataUserRules: this.dataUserRules
+            }
+        }).show();
+    },
+
+    onDeleteDetailClick: function (grid, rowIndex) {
+        var store = grid.getStore();
+        var rec = store.getAt(rowIndex);
+
+        if (rec.get('__isNew')) {
+            store.remove(rec);
+            return;
+        }
+
+        Ext.Msg.confirm('Confirm', 'Delete this rule?', function (btn) {
+            if (btn === 'yes') {
+                let form = Ext.getCmp(prototype.id01 + '-form').getForm();
+                let values = form.getValues();
+
+                let paramsUser = {
+                    IN_CCUST: '139',
+                    IN_OPCION: 'EC',
+                    IN_USER: values.A4886USER || '',
+                    IN_USERNEW: values.A4886USERNEW || '',
+                    IN_NOMBRE: values.A4886DESCR || '',
+                    IN_COD: rec.get('A4420COD') || '',
+                    IN_FUENT: rec.get('A4420FUENT') || '',
+                    IN_CANAL: rec.get('A4420CANAL') || '',
+                    IN_QUEQ: rec.get('A4420QUEQ') || '',
+                    IN_TRAS: rec.get('A4420TRAS') || '',
+                    IN_IATA: rec.get('A4420IATA') || '',
+                    IN_FCMI: rec.get('A4420FCMI') || '',
+                    IN_REGI: values.A3406REGIS || values.A3406REVIS || '',
+                    IN_FREGI: values.A3406FREGI || values.A3406FREVI || '',
+                    IN_HORA: values.A3406HREGI || values.A3406HREVI || ''
+                };
+
+                global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
+                    .then(function () {
+                        store.remove(rec);
+                        Ext.Msg.alert('Success', 'Rule deleted');
+                    })
+                    .catch(function () {
+                        Ext.Msg.alert('Error', 'Error deleting rule');
+                    });
+            }
+        });
+    },
+
+
+    onSaveClick: function () {
+        let form = Ext.getCmp(prototype.id01 + '-form').getForm();
+        let values = form.getValues();
+        let grid = Ext.getCmp(prototype.id01 + '-gridDetails');
+        let store = grid.getStore();
+        // if (!form.isValid()) {
+        //     Ext.Msg.alert('Error', 'Please fill all required fields');
+        //     return;
+        // }
+
+        /**  CRUD USUARIO
+         * IN_OPCION =
+            'I' -> I: Insertar
+            'U'-> U: Actualizar
+            'D' -> D: Desactivar
+            'V' -> V: vacaciones
+) 
+         */
+
+        let paramsUser = {
+            IN_CCUST: '139',
+            IN_OPCION: '2',
+            IN_USER: values.A4886USER || '',
+            IN_USERNEW: values.A4886USERNEW || '',
+            IN_NOMBRE: values.A4886DESCR || '',
+            IN_COD: values.txtcod || '',
+            IN_FUENT: values.FUENTES || '',
+            IN_CANAL: values.A4420CANAL || '',
+            IN_QUEQ: values.A4420QUEQ || '',
+            IN_TRAS: values.A4420TRAS || '',
+            IN_IATA: values.A4420IATA || '',
+            IN_FCMI: values.A4420FCMI || '',
+            IN_REGI: values.A3406REGIS || values.A3406REVIS || '',
+            IN_FREGI: values.A3406FREGI || values.A3406FREVI || '',
+            IN_HORA: values.A3406HREGI || values.A3406HREVI || ''
+        };
+
+        console.log('paramsUser', paramsUser)
+
+        // global.callStorePost('PXSAUDIT', 'SQP05872', params)
+        //     .then(function () {
+        //         store.sync();
+        //         Ext.Msg.alert('Success', 'Rules saved');
+        //     })
+        //     .catch(function () {
+        //         Ext.Msg.alert('Error', 'Error saving rules');
+        //     });
+
+
+        /** MANTENIMIENTO REGLAS
+         * IN_OPCION =
+         * 'EC' -> EC: Eliminar Cola
+         * 
+         */
+
+
+
+
+    },
+
+
 
 });

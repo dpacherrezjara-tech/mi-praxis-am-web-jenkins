@@ -5,7 +5,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.Filters', {
     bodyStyle: 'background-color: #E3EAF9;',
     padding: '3 0',
     layout: 'column',
-    
+
     items: [{
         xtype: 'panel',
         id: prototype.id + '-contFilter',
@@ -15,7 +15,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.Filters', {
         bodyStyle: 'background: transparent',
         layout: 'vbox',
         defaults: { border: false },
-        
+
         items: [
             // Primera línea
             {
@@ -24,7 +24,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.Filters', {
                 layout: 'hbox',
                 bodyStyle: 'background: transparent',
                 defaults: { margin: '4 0' },
-                
+
                 items: [
                     {
                         xtype: 'combo',
@@ -40,7 +40,6 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.Filters', {
                         displayField: 'name',
                         allowBlank: false,
                         forceSelection: true,
-                        listeners: { change: 'onCmbSearchChange' }
                     },
                     { xtype: 'tbspacer', width: 10 },
                     {
@@ -67,7 +66,20 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.Filters', {
                     { xtype: 'tbspacer', width: 5 },
                     {
                         xtype: 'combo',
-                        id: prototype.id + '-txtUser',
+                        id: prototype.id + '-cmbFuente',
+                        fieldLabel: 'Fuente',
+                        queryMode: 'local',
+                        displayField: 'name',
+                        valueField: 'code',
+                        width: 200,
+                        labelWidth: 50,
+                        labelAlign: 'right',
+                        listConfig: { minWidth: 200 }
+                    },
+                    { xtype: 'tbspacer', width: 5 },
+                    {
+                        xtype: 'combo',
+                        id: prototype.id + '-cmbUser',
                         fieldLabel: 'Auditor',
                         queryMode: 'local',
                         displayField: 'A4836USER',
@@ -77,76 +89,26 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.Filters', {
                         labelAlign: 'right',
                         listConfig: { minWidth: 200 }
                     },
-                    { xtype: 'tbspacer', width: 5 },
-                    {
-                        xtype: 'textfield',
-                        id: prototype.id + '-txtFuente',
-                        fieldLabel: 'Fuente',
-                        labelAlign: 'right',
-                        width: 150,
-                        labelWidth: 50
-                    },
-                    { xtype: 'tbspacer', width: 5 },
-                    {
-                        xtype: 'textfield',
-                        id: prototype.id + '-txtCanal',
-                        fieldLabel: 'Canal',
-                        labelAlign: 'right',
-                        width: 150,
-                        labelWidth: 50
-                    },
-                    {
-                        xtype: 'textfield',
-                        id: prototype.id + '-txtFcmi',
-                        fieldLabel: 'Fcmi',
-                        labelAlign: 'right',
-                        width: 120,
-                        labelWidth: 50
-                    },
-                    { xtype: 'tbspacer', width: 5 },
-                    {
-                        xtype: 'textfield',
-                        id: prototype.id + '-txtKey',
-                        fieldLabel: 'Key',
-                        labelAlign: 'right',
-                        width: 150,
-                        labelWidth: 50
-                    },
-                ]
-            },
-            {
-                xtype: 'panel',
-                width: '100%',
-                layout: 'hbox',
-                bodyStyle: 'background: transparent',
-                defaults: { margin: '4 0' },
-                
-                items: [
-                    
-                    
-                    { xtype: 'tbspacer', width: 5 },
-                    {
-                        xtype: 'textfield',
-                        id: prototype.id + '-txtIata',
-                        fieldLabel: 'Iata',
-                        labelAlign: 'right',
-                        width: 110,
-                        labelWidth: 50
-                    },
+
                     { xtype: 'tbspacer', width: 5 },
                     {
                         xtype: 'combo',
-                        id: prototype.id + '-Cmbstatus',
+                        id: prototype.id + '-cmbStatus',
                         fieldLabel: 'Status',
                         queryMode: 'local',
                         displayField: 'name',
                         valueField: 'code',
-                        width: 150,
-                        labelWidth: 40,
-                        listConfig: { minWidth: 300 }
-                    }
+                        width: 200,
+                        labelWidth: 50,
+                        labelAlign: 'right',
+                        listConfig: { minWidth: 200 }
+                    },
+
+
+
                 ]
-            }
+            },
+
         ]
     }]
 });
