@@ -340,12 +340,13 @@ public class AccountingTransactionController {
                 row.add(new CustomExcelCell(obj.getA4183seq()));
                 row.add(new CustomExcelCell(obj.getA4183fpro()));
                 row.add(new CustomExcelCell(obj.getA4183fcont()));
-                row.add(new CustomExcelCell(obj.getA4183cuent()));
+               // row.add(new CustomExcelCell(obj.getA4183cuent()));
+                row.add(new CustomExcelCell(obj.getACCOUNT()));
                 row.add(new CustomExcelCell(obj.getA4183cur()));
                 row.add(new CustomExcelCell(obj.getA4183activ()));
                 row.add(new CustomExcelCell(obj.getA4183pasiv()));
                 row.add(new CustomExcelCell(obj.getA4183titu()));
-                row.add(new CustomExcelCell(obj.getA4183cope()));
+                row.add(new CustomExcelCell(obj.getA4183clien()));
                 row.add(new CustomExcelCell(obj.getA4183prov()));
                 row.add(new CustomExcelCell(obj.getA4183idcon()));
                 data.add(row);
