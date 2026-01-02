@@ -52,7 +52,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
         const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry', {
             id: prototype.id + '-TransacErrorBPODataEntry-1',
             obj: obj,
-            standByComment: me.standByComment,
             callback: () => {
                 grid.getStore().load();
             }

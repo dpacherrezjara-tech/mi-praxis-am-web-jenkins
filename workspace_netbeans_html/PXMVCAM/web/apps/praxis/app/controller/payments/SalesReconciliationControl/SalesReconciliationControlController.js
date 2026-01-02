@@ -34,17 +34,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const dataAutoComment   = lstRs[9]  || [];
             const dataFreglas       = lstRs[10] || [];
             const dataStvalTicket   = lstRs[11]  || [];
-            const dataStandByComment= lstRs[12]  || [];
+            const dataFreglasForProcessMasiveTransactional = lstRs[13] || [];
+            
 
             const quantityAnalyzePending = lstVals.IO_QUANITY_ANALYZE_PENDING;
  
+            // console.log('lstRs', lstRs[13]); 
+
             me.creditcards = dataCreditcards;
             me.processors = dataProcessors;
             me.countries = dataPaises;
             me.currencies = dataMonedas;
             me.users = dataAdmins.map(x => (x.A4451KEY3 || x.a4451key3 || '').toString().trim());
-            me.standByComment = dataStandByComment;
-//            console.table(me.processors);
+            me.freglasForProcessMasiveTransactional = dataFreglasForProcessMasiveTransactional;
+            // console.log('freglasForProcessMasiveTransactional', me.freglasForProcessMasiveTransactional); 
 
             //<editor-fold defaultstate="collapsed" desc="Bind Combos">
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctype'),      data: dataProcessors,   valueField: 'A4451KEY2', displayField: 'A4451DESC1',   value: ''});
@@ -262,7 +265,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     formatSettlementBrowserParams: function () {
         const formFilters = Ext.getCmp(prototype.id + '-filtersSettlement-2').getForm();
         const obj = formFilters.getValues();
-        console.log('obj browser settlement', obj);
+        // console.log('obj browser settlement', obj);
 
         const {creditcard, ...rest} = obj;
 
@@ -306,7 +309,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             mainPanel.removeAll();
             if (tfilter === 'S') {
                 let params = me.formatByPaymentSummaryParams();
-                console.log(params);
+                // console.log(params);
                 const panelTree = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentMonthSummaryGrid', {
                     id: prototype.id + '-ByPaymentMonthSummaryGrid-1',
                     url: me.url,
@@ -315,7 +318,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 mainPanel.add(panelTree);
             } else {
                 let params = me.formatByPaymentDetailParams();
-                console.log(params);
+                // console.log(params);
                 const panelDetail = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentDetailGrid', {
                     id: prototype.id + '-ByPaymentDetailGrid-1',
                     url: me.url,
@@ -338,7 +341,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 mainPanel.add(panelTree);
             } else {
                 let params = me.formatByTicketDetailParams();
-                console.log(params);
+                // console.log(params);
                 const panelDetail = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTicketDetailGrid', {
                     id: prototype.id + '-ByTicketDetailGrid-1',
                     url: me.url,
@@ -362,7 +365,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 mainPanel.add(panelSettl);
             } else {
                 let params = me.formatSettlementBrowserParams();
-                console.log(params);
+                // console.log(params);
                 const panelDetail = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SettlementDetailGrid', {
                     id: prototype.id + '-SettlementDetailGrid-1',
                     url: me.url,
@@ -439,7 +442,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     onClickProcessBtn: function () {
         const processWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransactionProcessDataEntry', {
             id: prototype.id + '-TransactionProcessDataEntry-1',
-            processors: this.processors
+            processors: this.processors,
+            freglasForProcessMasiveTransactional: this.freglasForProcessMasiveTransactional
         });
         processWin.show();
     },
