@@ -11,6 +11,8 @@ public class A4496Filter extends A4496{
     private String PROCDATE,PAYDATE,CHARGEBACK;
     private String BPO_COMEN,BPO_COMEN2,ADM_COMEN;
 
+    private Double RECONCILIATION_AMOUNT, DIFFERENCE_AMOUNT ;
+    
     public String getDESC_PROCTYPE() {
         return DESC_PROCTYPE;
     }
@@ -88,6 +90,23 @@ public class A4496Filter extends A4496{
 
     public void setCARDTYPE(String CARDTYPE) {
         this.CARDTYPE = CARDTYPE;
+    }
+    
+    
+    public Double getRECONCILIATION_AMOUNT() {
+        return RECONCILIATION_AMOUNT;
+    }
+
+    public void setRECONCILIATION_AMOUNT(Double RECONCILIATION_AMOUNT) {
+        this.RECONCILIATION_AMOUNT = RECONCILIATION_AMOUNT;
+    }
+    
+    public Double getDIFFERENCE_AMOUNT() {
+        return DIFFERENCE_AMOUNT;
+    }
+
+    public void setDIFFERENCE_AMOUNT(Double DIFFERENCE_AMOUNT) {
+        this.DIFFERENCE_AMOUNT = DIFFERENCE_AMOUNT;
     }
     
 }
