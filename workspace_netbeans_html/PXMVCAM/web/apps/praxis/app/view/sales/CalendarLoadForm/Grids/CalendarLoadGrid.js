@@ -65,8 +65,8 @@ Ext.define('Ext.Praxis.view.sales.CalendarLoadForm.Grids.CalendarLoadGrid', {
 
             { text: 'Type', dataIndex: 'A1837TCOMI', width: 100 },
             { text: 'Execution Date', dataIndex: 'A1837FEJEC', width: 150 },
-            { text: 'Period Start Date', dataIndex: 'A1837FFINP', width: 150 },
-            { text: 'Period End Date', dataIndex: 'A1837FINIP', width: 150 },
+            { text: 'Period Start Date', dataIndex: 'A1837FINIP', width: 150 },
+            { text: 'Period End Date', dataIndex: 'A1837FFINP', width: 150 },
             { text: 'Record Date', dataIndex: 'A1837FREGI', width: 150 },
             { text: 'Record Time', dataIndex: 'A1837HREGI', width: 150 }
 
