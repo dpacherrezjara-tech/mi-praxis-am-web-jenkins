@@ -37,9 +37,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
             '#MaintenanceAnalystsForm-btnAdd': {
                 click: this.onCreateClick
             },
-            // '#MaintenanceAnalystsForm-btnClear': {
-            //     click: this.btnClear_click
-            // },
+            '#MaintenanceAnalystsForm-btnClear': {
+                click: this.btnClear_click
+            },
             '#MaintenanceAnalystsForm-btnExcel': {
                 click: this.btnExcel_click
             },
@@ -51,13 +51,46 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
     },
 
     xpanel_afterrender: function (obj, e) {
-        // this.obtainData();
-        // this.onLoadUsers();
-        // this.loadFilters();
         this.onFilter();
         this.onGetData();
         Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, this);
         Ext.getCmp(prototype.id + '-pagginator-legend').show();
+    },
+
+
+
+    onAuditorFilter: async function () {
+
+        let params = {
+            IN_CCUST: '139',
+            IN_OPTION: '1',
+            IN_VAR1: '',
+            IN_VAR2: ''
+        };
+
+        let cmbUser = Ext.getCmp(prototype.id + '-cmbUser');
+        const res = await global.callStoreGet('PXSAUDIT', 'SQP05872', params);
+        console.log('res', res)
+
+        if (res.lstRs) {
+            let data = res.lstRs.at(0);
+            console.log('filter user', data);
+
+            // Normalizar por si viene "id"
+            let cleanData = data.map(item => ({
+                A4886USER: item.A4886USER
+            }));
+            cleanData.unshift({
+                A4886USER: 'All'
+            });
+
+            console.log('cleanData', cleanData)
+
+            let store = cmbUser.getStore();
+            store.removeAll();
+            store.loadData(cleanData);
+            cmbUser.setValue('All');
+        }
     },
 
 
@@ -74,26 +107,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
         let cmbDateFrom = Ext.getCmp(prototype.id + '-txtFilterDateFrom');
         let cmbDateTo = Ext.getCmp(prototype.id + '-txtFilterDateTo');
 
-        // ---- CARGAR COMBO DE USUARIOS (AUDITOR) ----
-        let storeUser = Ext.create('Ext.data.Store', {
-            proxy: {
-                type: 'ajax',
-                url: prototype.url + '/loadDataAuditor',
-                timeout: 60000000,
-                reader: {
-                    type: 'json',
-                    rootProperty: 'data',
-                    totalProperty: 'total'
-                }
-            },
-            autoLoad: true,
-            listeners: {
-                load: function (store, records) {
-                    cmbUser.setValue('ALL');
-                }
-            }
-        });
-        cmbUser.setStore(storeUser);
+        this.onAuditorFilter();
 
         // ---- CARGAR COMBO FUENTE ----
         cmbFuente.bindStore(Ext.create('Ext.data.Store', {
@@ -137,6 +151,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
     onGetData: async function () {
         me = this;
         const view = me.view;
+
         let cmbUser = Ext.getCmp(prototype.id + '-cmbUser');
         let cmbStatus = Ext.getCmp(prototype.id + '-cmbStatus');
         let cmbFuente = Ext.getCmp(prototype.id + '-cmbFuente');
@@ -181,6 +196,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
         // ---- Configurar paginador ----
         let pagginator01 = Ext.getCmp(prototype.id + '-pagginator-01');
         pagginator01.setStore(store01);
+    },
+
+    btnClear_click: function (obj, e) {
+        Ext.getCmp(prototype.id + '-panelFilters').getForm().reset();
+
     },
 
 
@@ -230,7 +250,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
         Ext.create('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryMaintenanceAnalysts', {
-            id: prototype.id01 + '-dataEntryUserMain',
+            // id: prototype.id01 + '-dataEntryUserMain',
             params: {
                 action: action,
                 rec: rec,
@@ -241,9 +261,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
 
     onCreateClick: function () {
         Ext.create('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryMaintenanceAnalysts', {
-            id: prototype.id01 + '-winMaintenanceAnalysts',
+            // id: prototype.id01 + '-winMaintenanceAnalysts',
             params: {
-                action: 'I'
+                action: 'C'
             }
         }).show();
     },
@@ -311,43 +331,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
 
         }
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.Filters', {
 
     items: [{
         xtype: 'panel',
-        id: prototype.id + '-contFilter',
+        // id: prototype.id + '-contFilter',
         margin: '0 7',
         border: false,
         width: 1800,
@@ -22,6 +22,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.Filters', {
                 xtype: 'panel',
                 width: '100%',
                 layout: 'hbox',
+                id: prototype.id + '-panelFilters',
                 bodyStyle: 'background: transparent',
                 defaults: { margin: '4 0' },
 
@@ -82,13 +83,20 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.Filters', {
                         id: prototype.id + '-cmbUser',
                         fieldLabel: 'Auditor',
                         queryMode: 'local',
-                        displayField: 'A4836USER',
-                        valueField: 'A4836USER',
+                        displayField: 'A4886USER',
+                        valueField: 'A4886USER',
                         width: 200,
                         labelWidth: 50,
                         labelAlign: 'right',
+                        editable: false,
+                        forceSelection: true,
+                        store: {
+                            fields: ['A4886USER'],
+                            data: []
+                        },
                         listConfig: { minWidth: 200 }
                     },
+
 
                     { xtype: 'tbspacer', width: 5 },
                     {

@@ -73,103 +73,105 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryMaintena
                             afterLabelTextTpl: '<b style="color: #BF6868;"> (*)</b>',
                             name: 'A4886DESCR',
                             enforceMaxLength: true,
-                            maxLength: 10,
+                            maxLength: 70,
                             labelWidth: 70,
                             // flex: 1
                             width: 420
                         },
                         { xtype: 'tbspacer', width: 10 },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id01 + '-cmbSource',
-                            fieldLabel: 'Source',
-                            afterLabelTextTpl: '<b style="color: #BF6868;"> (*)</b>',
-                            queryMode: 'local',
-                            displayField: 'name',
-                            valueField: 'code',
-                            editable: false,
-                            forceSelection: true,
-                            allowBlank: false,
-                            labelWidth: 70,
-                            width: 130,
-                            listeners: {
-                                change: 'onSourceChange'
-                            }
-                        },
-                        { xtype: 'tbspacer', width: 10 },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id01 + '-cmbChannel',
-                            fieldLabel: 'Channel',
-                            labelWidth: 50,
-                            queryMode: 'local',
-                            displayField: 'name',
-                            valueField: 'code',
-                            editable: false,
-                            forceSelection: true,
-                            allowBlank: false,
-                            width: 140,
-                        },
-                        { xtype: 'tbspacer', width: 10 },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id01 + '-cmbTrans',
-                            fieldLabel: 'Transaction',
-                            labelWidth: 65,
-                            queryMode: 'local',
-                            displayField: 'name',
-                            valueField: 'code',
-                            editable: false,
-                            forceSelection: true,
-                            allowBlank: false,
-                            width: 150
-                        },
+                        // {
+                        //     xtype: 'combo',
+                        //     id: prototype.id01 + '-cmbSource',
+                        //     fieldLabel: 'Source',
+                        //     afterLabelTextTpl: '<b style="color: #BF6868;"> (*)</b>',
+                        //     queryMode: 'local',
+                        //     displayField: 'name',
+                        //     valueField: 'code',
+                        //     editable: false,
+                        //     forceSelection: true,
+                        //     allowBlank: false,
+                        //     labelWidth: 70,
+                        //     width: 130,
+                        //     listeners: {
+                        //         change: 'onSourceChange'
+                        //     }
+                        // },
+                        // { xtype: 'tbspacer', width: 10 },
+                        // {
+                        //     xtype: 'combo',
+                        //     id: prototype.id01 + '-cmbChannel',
+                        //     fieldLabel: 'Channel',
+                        //     labelWidth: 50,
+                        //     queryMode: 'local',
+                        //     displayField: 'name',
+                        //     valueField: 'code',
+                        //     editable: false,
+                        //     forceSelection: true,
+                        //     allowBlank: false,
+                        //     width: 140,
+                        //     value: ''
+                        // },
+                        // { xtype: 'tbspacer', width: 10 },
+                        // {
+                        //     xtype: 'combo',
+                        //     id: prototype.id01 + '-cmbTrans',
+                        //     fieldLabel: 'Transaction',
+                        //     labelWidth: 65,
+                        //     queryMode: 'local',
+                        //     displayField: 'name',
+                        //     valueField: 'code',
+                        //     editable: false,
+                        //     forceSelection: true,
+                        //     allowBlank: false,
+                        //     width: 150,
+                        //     value: ''
+                        // },
                     ]
                 },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    items: [
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id01 + '-cmbFcmi',
-                            labelWidth: 50,
-                            name: 'A4420FCMI',
-                            fieldLabel: 'Fcmi',
-                            enforceMaxLength: true,
-                            maxLength: 10,
-                            labelWidth: 30,
-                            width: 150
-                            // flex: 1
-                        },
-                        { xtype: 'tbspacer', width: 10 },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id01 + '-cmbQueq',
-                            name: 'A4420QUEQ',
-                            fieldLabel: 'Queq',
-                            // afterLabelTextTpl: '<b style="color: #BF6868;"> (*)</b>',
-                            enforceMaxLength: true,
-                            maxLength: 10,
-                            labelWidth: 60,
-                            width: 450,
-                            // flex: 2
-                        },
-                        { xtype: 'tbspacer', width: 10 },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id01 + '-cmbIata',
-                            name: 'A4420IATA',
-                            fieldLabel: 'Iata',
-                            // afterLabelTextTpl: '<b style="color: #BF6868;"> (*)</b>',
-                            enforceMaxLength: true,
-                            maxLength: 10,
-                            labelWidth: 50,
-                            // flex: 1
-                            width: 450
-                        },
-                    ]
-                },
+                // {
+                //     xtype: 'panel',
+                //     layout: 'hbox',
+                //     items: [
+                //         {
+                //             xtype: 'textfield',
+                //             id: prototype.id01 + '-cmbFcmi',
+                //             labelWidth: 50,
+                //             name: 'A4420FCMI',
+                //             fieldLabel: 'Fcmi',
+                //             enforceMaxLength: true,
+                //             maxLength: 10,
+                //             labelWidth: 30,
+                //             width: 150
+                //             // flex: 1
+                //         },
+                //         { xtype: 'tbspacer', width: 10 },
+                //         {
+                //             xtype: 'textfield',
+                //             id: prototype.id01 + '-cmbQueq',
+                //             name: 'A4420QUEQ',
+                //             fieldLabel: 'Queq',
+                //             // afterLabelTextTpl: '<b style="color: #BF6868;"> (*)</b>',
+                //             enforceMaxLength: true,
+                //             maxLength: 10,
+                //             labelWidth: 60,
+                //             width: 450,
+                //             // flex: 2
+                //         },
+                //         { xtype: 'tbspacer', width: 10 },
+                //         {
+                //             xtype: 'textfield',
+                //             id: prototype.id01 + '-cmbIata',
+                //             name: 'A4420IATA',
+                //             fieldLabel: 'Iata',
+                //             // afterLabelTextTpl: '<b style="color: #BF6868;"> (*)</b>',
+                //             enforceMaxLength: true,
+                //             maxLength: 11,
+                //             labelWidth: 50,
+                //             // flex: 1
+                //             width: 450
+                //         },
+                //     ]
+                // },
 
 
 
@@ -304,7 +306,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryMaintena
                                             }
                                             return 'fa fa-trash';
                                         },
-                                        handler: 'onDeleteDetailClick'
+                                        handler: 'onDeleteRuleAuditorClick'
                                     }]
                                 }
                             ]
@@ -442,7 +444,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryMaintena
                     id: prototype.id01 + '-btn-disable',
                     iconCls: 'fa fa-ban',
                     listeners: {
-                        click: 'onDeleClick'
+                        click: 'onDisableAuditorClick'
                     }
                 },
                 {

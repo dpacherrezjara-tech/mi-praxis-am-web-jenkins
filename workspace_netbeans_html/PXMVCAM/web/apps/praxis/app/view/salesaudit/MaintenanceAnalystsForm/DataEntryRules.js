@@ -79,6 +79,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 									forceSelection: true,
 									allowBlank: false,
 									width: 140,
+									value: ''
 								},
 								{ xtype: 'tbspacer', width: 10 },
 								{
@@ -92,7 +93,8 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 									editable: false,
 									forceSelection: true,
 									allowBlank: false,
-									width: 150
+									width: 150,
+									value: ''
 								},
 								{ xtype: 'tbspacer', width: 10 },
 								{
@@ -156,7 +158,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 									text: 'Add New Rule',
 									scale: 'medium',
 									iconCls: 'prx-icon-save',
-									handler: 'onAddDetailClick'
+									handler: 'onAddNewRulesClick'
 								}
 							]
 						}
@@ -170,19 +172,6 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 					title: 'All Rules',
 					border: true,
 					margin: 3,
-					dockedItems: [
-						{
-							xtype: 'toolbar',
-							dock: 'bottom',
-							items: [
-								{
-									text: 'Add New Rule',
-									iconCls: 'fa fa-plus',
-									handler: 'onAddRulesClick'
-								}
-							]
-						}
-					],
 					items: [
 						{
 							xtype: 'grid',
@@ -300,7 +289,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 											}
 											return 'fa fa-trash';
 										},
-										handler: 'onDeleteDetailClick'
+										handler: 'onDeleteRuleClick'
 									}]
 								}
 							]

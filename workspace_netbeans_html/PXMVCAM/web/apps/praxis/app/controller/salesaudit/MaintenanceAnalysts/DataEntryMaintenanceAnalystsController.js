@@ -1,7 +1,7 @@
 Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMaintenanceAnalystsController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryMaintenanceAnalystsController',
-
+    closeAction: 'destroy',
     beanTMP: {},
     // urlWin01: CONTEXTPATH + '/MaintenanceAnalysts',
 
@@ -9,25 +9,52 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
     },
 
     afterRender: async function () {
+        let action = this.getView().params.action || 'C';
+
+        let grid = Ext.getCmp(prototype.id01 + '-gridDetails');
+        if (action === 'C' && grid) {
+            grid.getStore().removeAll(true);
+            grid.getStore().commitChanges();
+            this.dataUserRules = [];
+        }
+
+        // usuario logueado
+        let menuUser = document.getElementById('menuUser').innerText;
+
         this.onGetRules();
         this.onGetData();
         this.onGetAction();
     },
 
+
     onGetAction: function () {
         let action = this.getView().params.action || 'C';
+        console.log('action get action', action)
         let win = this.getView();
 
         if (action === 'C') {
-            win.setTitle('Crear Nuevo Registro');
-            Ext.getCmp(prototype.id01 + '-cmbSource').show();
-            Ext.getCmp(prototype.id01 + '-cmbChannel').show();
+            win.setTitle('Create');
+            // this.resetCreateView();
+            // Ext.getCmp(prototype.id01 + '-cmbSource').show();
+            // Ext.getCmp(prototype.id01 + '-cmbChannel').show();
             Ext.getCmp(prototype.id01 + '-panelControlData').hide();
+
+            Ext.getCmp(prototype.id01 + '-btn-update').hide();
+            Ext.getCmp(prototype.id01 + '-btn-save').show();
+            Ext.getCmp(prototype.id01 + '-btn-disable').hide();
+            Ext.getCmp(prototype.id01 + '-btn-vacation').hide();
+
         } else if (action === 'U') {
-            win.setTitle('Editar Registro');
-            Ext.getCmp(prototype.id01 + '-cmbSource').hide();
-            Ext.getCmp(prototype.id01 + '-cmbChannel').hide();
+            win.setTitle('Edit');
+            // Ext.getCmp(prototype.id01 + '-cmbSource').hide();
+            // Ext.getCmp(prototype.id01 + '-cmbChannel').hide();
             Ext.getCmp(prototype.id01 + '-panelControlData').show();
+
+            Ext.getCmp(prototype.id01 + '-btn-update').show();
+            Ext.getCmp(prototype.id01 + '-btn-save').hide();
+            Ext.getCmp(prototype.id01 + '-btn-disable').show();
+            Ext.getCmp(prototype.id01 + '-btn-vacation').show();
+
         }
     },
 
@@ -35,16 +62,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
     onGetRules: async function () {
         let me = this;
         let param = me.view.params.rec;
-
-        console.log('on get rules', param);
-
         let action = this.getView().params.action || 'C';
+
+        let grid = Ext.getCmp(prototype.id01 + '-gridDetails');
+        let store = grid.getStore();
 
         if (action === 'U') {
             const user = param.data.A4886USER;
-
-            let grid = Ext.getCmp(prototype.id01 + '-gridDetails');
-            let store = grid.getStore();
 
             grid.setLoading(true);
 
@@ -62,18 +86,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
                 : [];
 
             data.forEach(r => r.__isNew = false);
-            console.log('data --', data);
 
             me.dataUserRules = data;
-
             store.loadData(data);
+
             grid.setLoading(false);
             return;
         }
 
-
-
-
+        store.removeAll(true);
+        store.commitChanges();
+        this.dataUserRules = [];
     },
 
 
@@ -82,8 +105,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
 
         let form = Ext.getCmp(prototype.id01 + '-form').getForm();
         let cmbSource = Ext.getCmp(prototype.id01 + '-cmbSource');
-        let cmbChannel = Ext.getCmp(prototype.id01 + '-cmbChannel');
-        let cmbTrans = Ext.getCmp(prototype.id01 + '-cmbTrans');
+        // let cmbChannel = Ext.getCmp(prototype.id01 + '-cmbChannel');
+        // let cmbTrans = Ext.getCmp(prototype.id01 + '-cmbTrans');
 
         if (param && param.data) {
             form.setValues(param.data);
@@ -91,67 +114,71 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
             form.reset();
         }
 
-        cmbChannel.hide(); // oculto por defecto
+        // cmbChannel.hide(); // oculto por defecto
 
         // stores
-        cmbSource.setStore(Ext.create('Ext.data.Store', {
-            fields: ['code', 'name'],
-            data: [
-                { code: 'ARC', name: 'ARC' },
-                { code: 'BSP', name: 'BSP' },
-                { code: 'ASR', name: 'ASR' }
-            ]
-        }));
+        // cmbSource.setStore(Ext.create('Ext.data.Store', {
+        //     fields: ['code', 'name'],
+        //     data: [
+        //         { code: 'ARC', name: 'ARC' },
+        //         { code: 'BSP', name: 'BSP' },
+        //         { code: 'ASR', name: 'ASR' }
+        //     ]
+        // }));
 
-        cmbChannel.setStore(Ext.create('Ext.data.Store', {
-            fields: ['code', 'name'],
-            data: [
-                { code: '', name: 'All' },
-                { code: 'ATO', name: 'ATO' },
-                { code: 'CCT', name: 'CCT' },
-                { code: 'CTO', name: 'CTO' },
-                { code: 'WEB', name: 'WEB' },
-                { code: 'FRA', name: 'FRA' }
-            ]
-        }));
+        // cmbChannel.setStore(Ext.create('Ext.data.Store', {
+        //     fields: ['code', 'name'],
+        //     data: [
+        //         { code: '', name: 'All' },
+        //         { code: 'ATO', name: 'ATO' },
+        //         { code: 'CCT', name: 'CCT' },
+        //         { code: 'CTO', name: 'CTO' },
+        //         { code: 'WEB', name: 'WEB' },
+        //         { code: 'FRA', name: 'FRA' }
+        //     ]
+        // }));
 
-        cmbTrans.setStore(Ext.create('Ext.data.Store', {
-            fields: ['code', 'name'],
-            data: [
-                { code: '', name: 'All' },
-                { code: 'EXCH', name: 'EXCH' },
-                { code: 'SALE', name: 'SALE' }
-            ]
-        }));
+        // cmbTrans.setStore(Ext.create('Ext.data.Store', {
+        //     fields: ['code', 'name'],
+        //     data: [
+        //         { code: '', name: 'All' },
+        //         { code: 'EXCH', name: 'EXCH' },
+        //         { code: 'SALE', name: 'SALE' }
+        //     ]
+        // }));
 
-        // EDIT
-        if (param && param.data) {
-            cmbSource.setValue(param.data.FUENTES);
-            cmbTrans.setValue(param.data.A4420TRAS);
+        // if (param && param.data) {
 
-            if (param.data.FUENTES === 'ASR') {
-                cmbChannel.show();
-                cmbChannel.setValue(param.data.A4420CANAL);
-            }
-        }
+        //     // SOURCE
+        //     cmbSource.setValue(param.data.FUENTES);
+
+        //     // TRANSACTION
+        //     let transValue = param.data.A4420TRAS;
+        //     cmbTrans.setValue(transValue !== null && transValue !== undefined ? transValue : '');
+
+        //     // CHANNEL
+        //     if (param.data.FUENTES === 'ASR') {
+        //         cmbChannel.show();
+
+        //         let channelValue = param.data.A4420CANAL;
+        //         cmbChannel.setValue(channelValue !== null && channelValue !== undefined ? channelValue : '');
+        //     }
+        // }
     },
 
 
-    onSourceChange: function (combo, newValue) {
-        let cmbChannel = Ext.getCmp(prototype.id02 + '-cmbChannel');
+    // onSourceChange: function (combo, newValue) {
+    //     let cmbChannel = Ext.getCmp(prototype.id01 + '-cmbChannel');
 
-        if (newValue === 'ASR') {
-            cmbChannel.show();
-            cmbChannel.allowBlank = false;
-        } else {
-            cmbChannel.reset();
-            cmbChannel.hide();
-            cmbChannel.allowBlank = true;
-        }
-    },
-
-
-
+    //     if (newValue === 'ASR') {
+    //         cmbChannel.show();
+    //         cmbChannel.allowBlank = false;
+    //     } else {
+    //         cmbChannel.reset();
+    //         cmbChannel.hide();
+    //         cmbChannel.allowBlank = true;
+    //     }
+    // },
 
 
 
@@ -160,16 +187,24 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
     },
 
     onAddDetailClick: function () {
+        let grid = Ext.getCmp(prototype.id01 + '-gridDetails');
+        let store = grid.getStore();
+
+        this.dataUserRules = [];
+        store.each(function (record) {
+            this.dataUserRules.push(record.data);
+        }, this);
+
         Ext.create('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', {
-            id: prototype.id02 + '-winRules',
             params: {
-                action: 'U',
-                dataUserRules: this.dataUserRules
+                action: 'C',
+                dataUserRules: this.dataUserRules || []
             }
         }).show();
+
     },
 
-    onDeleteDetailClick: function (grid, rowIndex) {
+    onDeleteRuleAuditorClick: function (grid, rowIndex) {
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
 
@@ -183,25 +218,31 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
                 let form = Ext.getCmp(prototype.id01 + '-form').getForm();
                 let values = form.getValues();
 
-                let paramsUser = {
+                let menuUser = document.getElementById('menuUser').innerText;
+
+                const actualdate = Ext.Date.format(new Date(), 'Ymd');
+                let horaSistema = Ext.Date.format(new Date(), 'His');
+
+                let paramsRuleUser = {
                     IN_CCUST: '139',
                     IN_OPCION: 'EC',
-                    IN_USER: values.A4886USER || '',
-                    IN_USERNEW: values.A4886USERNEW || '',
-                    IN_NOMBRE: values.A4886DESCR || '',
+                    IN_USER: '',
+                    IN_USERNEW: '',
+                    IN_NOMBRE: '',
                     IN_COD: rec.get('A4420COD') || '',
-                    IN_FUENT: rec.get('A4420FUENT') || '',
-                    IN_CANAL: rec.get('A4420CANAL') || '',
-                    IN_QUEQ: rec.get('A4420QUEQ') || '',
-                    IN_TRAS: rec.get('A4420TRAS') || '',
-                    IN_IATA: rec.get('A4420IATA') || '',
-                    IN_FCMI: rec.get('A4420FCMI') || '',
-                    IN_REGI: values.A3406REGIS || values.A3406REVIS || '',
-                    IN_FREGI: values.A3406FREGI || values.A3406FREVI || '',
-                    IN_HORA: values.A3406HREGI || values.A3406HREVI || ''
+                    IN_FUENT: '',
+                    IN_CANAL: '',
+                    IN_QUEQ: '',
+                    IN_TRAS: '',
+                    IN_IATA: '',
+                    IN_FCMI: '',
+                    IN_REGI: menuUser,
+                    IN_FREGI: actualdate,
+                    IN_HORA: horaSistema
                 };
+                console.log('paramsRuleUser', paramsRuleUser)
 
-                global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
+                global.callStorePost('PXSAUDIT', 'SQP05873', paramsRuleUser)
                     .then(function () {
                         store.remove(rec);
                         Ext.Msg.alert('Success', 'Rule deleted');
@@ -209,71 +250,192 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
                     .catch(function () {
                         Ext.Msg.alert('Error', 'Error deleting rule');
                     });
+
+                // this.onGetData();
             }
         });
     },
-
 
     onSaveClick: function () {
         let form = Ext.getCmp(prototype.id01 + '-form').getForm();
         let values = form.getValues();
         let grid = Ext.getCmp(prototype.id01 + '-gridDetails');
         let store = grid.getStore();
-        // if (!form.isValid()) {
-        //     Ext.Msg.alert('Error', 'Please fill all required fields');
-        //     return;
-        // }
 
-        /**  CRUD USUARIO
-         * IN_OPCION =
-            'I' -> I: Insertar
-            'U'-> U: Actualizar
-            'D' -> D: Desactivar
-            'V' -> V: vacaciones
-) 
-         */
+        console.log('rules', store);
+        let rulesList = [];
 
-        let paramsUser = {
-            IN_CCUST: '139',
-            IN_OPCION: '2',
-            IN_USER: values.A4886USER || '',
-            IN_USERNEW: values.A4886USERNEW || '',
-            IN_NOMBRE: values.A4886DESCR || '',
-            IN_COD: values.txtcod || '',
-            IN_FUENT: values.FUENTES || '',
-            IN_CANAL: values.A4420CANAL || '',
-            IN_QUEQ: values.A4420QUEQ || '',
-            IN_TRAS: values.A4420TRAS || '',
-            IN_IATA: values.A4420IATA || '',
-            IN_FCMI: values.A4420FCMI || '',
-            IN_REGI: values.A3406REGIS || values.A3406REVIS || '',
-            IN_FREGI: values.A3406FREGI || values.A3406FREVI || '',
-            IN_HORA: values.A3406HREGI || values.A3406HREVI || ''
-        };
+        store.each(function (record) {
+            let cod = record.get('A4420COD');
+            if (cod !== null && cod !== undefined && cod !== '') {
+                rulesList.push(cod);
+            }
+        });
 
-        console.log('paramsUser', paramsUser)
+        console.log('rulesList', rulesList);
 
-        // global.callStorePost('PXSAUDIT', 'SQP05872', params)
-        //     .then(function () {
-        //         store.sync();
-        //         Ext.Msg.alert('Success', 'Rules saved');
-        //     })
-        //     .catch(function () {
-        //         Ext.Msg.alert('Error', 'Error saving rules');
-        //     });
+        let codesString = rulesList.join('|');
+        console.log('codesString', codesString);
+
+        let action = this.getView().params.action || 'C';
+        let win = this.getView();
+
+        console.log('save', action)
+        let menuUser = document.getElementById('menuUser').innerText;
+
+        const actualdate = Ext.Date.format(new Date(), 'Ymd');
+        let horaSistema = Ext.Date.format(new Date(), 'His');
 
 
-        /** MANTENIMIENTO REGLAS
-         * IN_OPCION =
-         * 'EC' -> EC: Eliminar Cola
-         * 
-         */
+        // creacion usuario
+        if (action === 'C') {
+            let paramsUser = {
+                IN_CCUST: '139',
+                IN_OPCION: 'I',
+                IN_USER: values.A4886USER || '',
+                IN_USERNEW: values.A4886USERNEW || '',
+                IN_NOMBRE: values.A4886DESCR || '',
+                IN_COD: codesString || '',
+                IN_FUENT: '',
+                IN_CANAL: '',
+                IN_QUEQ: '',
+                IN_TRAS: '',
+                IN_IATA: '',
+                IN_FCMI: '',
+                IN_REGI: menuUser,
+                IN_FREGI: actualdate,
+                IN_HORA: horaSistema
+            };
 
+            console.log('paramsUser', paramsUser)
 
+            global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
+                .then(function () {
+                    store.sync();
+                    Ext.Msg.alert('Success', 'User saved');
+                })
+                .catch(function () {
+                    Ext.Msg.alert('Error', 'Error saving user');
+                });
+            // this.onCloseClick();
+
+            //  Actualizacion usuaeio 
+        } else if (action === 'U') {
+
+            let userOld = values.A4886USER || ''
+
+            let paramsUser = {
+                IN_CCUST: '139',
+                IN_OPCION: 'U',
+                IN_USER: values.A4886USER || '',
+                IN_USERNEW: userOld,
+                IN_NOMBRE: values.A4886DESCR || '',
+                IN_COD: codesString || '',
+                IN_FUENT: '',
+                IN_CANAL: '',
+                IN_QUEQ: '',
+                IN_TRAS: '',
+                IN_IATA: '',
+                IN_FCMI: '',
+                IN_REGI: menuUser,
+                IN_FREGI: actualdate,
+                IN_HORA: horaSistema
+            };
+
+            console.log('paramsUser', paramsUser)
+
+            global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
+                .then(function () {
+                    store.sync();
+                    Ext.Msg.alert('Success', 'User Updated');
+                })
+                .catch(function () {
+                    Ext.Msg.alert('Error', 'Error updated user');
+                });
+
+            this.onGetData();
+            // this.onCloseClick();
+
+        }
 
 
     },
 
 
+    // Desactivar usuario
+    onDisableAuditorClick: function () {
+        console.log('desactivar');
+        const actualdate = Ext.Date.format(new Date(), 'Ymd');
+        let horaSistema = Ext.Date.format(new Date(), 'His');
+
+        let paramsUser = {
+            IN_CCUST: '139',
+            IN_OPCION: 'D',
+            IN_USER: values.A4886USER || '',
+            IN_USERNEW: userOld,
+            IN_NOMBRE: values.A4886DESCR || '',
+            IN_COD: '',
+            IN_FUENT: '',
+            IN_CANAL: '',
+            IN_QUEQ: '',
+            IN_TRAS: '',
+            IN_IATA: '',
+            IN_FCMI: '',
+            IN_REGI: menuUser,
+            IN_FREGI: actualdate,
+            IN_HORA: horaSistema
+        };
+
+        console.log('paramsUser', paramsUser)
+
+        global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
+            .then(function () {
+                store.sync();
+                Ext.Msg.alert('Success', 'User Disabled');
+            })
+            .catch(function () {
+                Ext.Msg.alert('Error', 'Error disabled user');
+            });
+        this.onCloseClick();
+
+    },
+
+    // vacaciones click
+    onVacationClick: function () {
+        console.log('vacaciones');
+        const actualdate = Ext.Date.format(new Date(), 'Ymd');
+        let horaSistema = Ext.Date.format(new Date(), 'His');
+
+        let paramsUser = {
+            IN_CCUST: '139',
+            IN_OPCION: 'V',
+            IN_USER: values.A4886USER || '',
+            IN_USERNEW: userOld,
+            IN_NOMBRE: values.A4886DESCR || '',
+            IN_COD: '',
+            IN_FUENT: '',
+            IN_CANAL: '',
+            IN_QUEQ: '',
+            IN_TRAS: '',
+            IN_IATA: '',
+            IN_FCMI: '',
+            IN_REGI: menuUser,
+            IN_FREGI: actualdate,
+            IN_HORA: horaSistema
+        };
+
+        console.log('paramsUser', paramsUser)
+
+        global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
+            .then(function () {
+                store.sync();
+                Ext.Msg.alert('Success', 'User Disabled');
+            })
+            .catch(function () {
+                Ext.Msg.alert('Error', 'Error disabled user');
+            });
+        this.onCloseClick();
+
+    },
 
 });
