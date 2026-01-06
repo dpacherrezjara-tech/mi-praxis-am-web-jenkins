@@ -12,6 +12,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         await this.getCodeAdjustments();
         await this.getData();
         me.view.setLoading(false);
+        me.standByComment = me.view.standByComment;
     },
     getData: async function () {
         const me = this;
@@ -247,11 +248,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const txtBpo = Ext.getCmp(prototype.idDE + '-bpocoment');
         const addStandBy = Ext.getCmp(prototype.idDE + '-addStandBy');
         const revStandBy = Ext.getCmp(prototype.idDE + '-revStandBy');
+        const changeStandByComment = Ext.getCmp(prototype.idDE + '-changeStandByComment');
         const hideStandBy = Ext.getCmp(prototype.idDE + '-hideStandBy');
         const adju = Ext.getCmp(prototype.idDE + '-addStandByAdju');
         if (show) {
             addStandBy.show();
             revStandBy.show();
+            changeStandByComment.show();
             hideStandBy.hide();
             standByBpo.show();
             if ((this.bean.cerror === '18' || this.bean.cerror === '19') && this.bean.stval === '0') {
@@ -275,6 +278,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             adju.setReadOnly(false);
             addStandBy.hide();
             revStandBy.hide();
+            changeStandByComment.hide();
             hideStandBy.show();
             standByBpo.hide();
         }
@@ -806,6 +810,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             reRender: me.afterRender
         });
         dataEntryCHBK.show();
+    },
+    onClickChangeStandByComment: function () {
+        const me = this;
+        const changeStandByWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ChangeStandByCommentDataEntry', {
+            id: prototype.idDE + '-ChangeStandByCommentDataEntry',
+            obj: me.bean,
+            standByComment: me.standByComment,
+            callback: () => {
+                me.afterRender();
+            }
+        });
+        changeStandByWin.show();
     },
     onShowUsages: function (grid, rowIndex, colIndex) {
         let obj = grid.getStore().getAt(rowIndex);
