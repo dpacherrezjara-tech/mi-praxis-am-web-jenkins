@@ -70,11 +70,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
 
         let cmbUser = Ext.getCmp(prototype.id + '-cmbUser');
         const res = await global.callStoreGet('PXSAUDIT', 'SQP05872', params);
-        console.log('res', res)
+        // console.log('res', res)
 
         if (res.lstRs) {
             let data = res.lstRs.at(0);
-            console.log('filter user', data);
+            // console.log('filter user', data);
 
             // Normalizar por si viene "id"
             let cleanData = data.map(item => ({
@@ -208,7 +208,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
 
     // render status
     onRendererColumnOnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        console.log('status', record.get('A4886FLAG'));
+        // console.log('status', record.get('A4886FLAG'));
         switch (String(record.get('A4886FLAG'))) {
             case 'ACTIVE':
                 value = 'green';
@@ -239,24 +239,39 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
 
 
     // Data Entry
-    viewDataEntry_clickHandler: function (grid, rowIndex, colIndex) {
-        console.log('grid', grid);
-        console.log('rowIndex', rowIndex);
-        console.log('colIndex', colIndex);
+    onEditUser: function (grid, rowIndex, colIndex) {
+
         var rec = grid.getStore().getAt(rowIndex);
-        this.winDataEntry('U', rec);
+        this.winDataEntry(grid, 'U', rec);
+
     },
-    winDataEntry: function (action, rec) {
+
+    winDataEntry: function (grid, action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-        Ext.create('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryMaintenanceAnalysts', {
+        // Ext.create('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryMaintenanceAnalysts', {
+        //     // id: prototype.id01 + '-dataEntryUserMain',
+        //     params: {
+        //         action: action,
+        //         rec: rec,
+        //         instancia: me
+        //     }
+        // }).show();
+
+        const dataEntry = Ext.create('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryMaintenanceAnalysts', {
             // id: prototype.id01 + '-dataEntryUserMain',
             params: {
                 action: action,
                 rec: rec,
                 instancia: me
+            },
+            callback: () => {
+                grid.getStore().load();
             }
-        }).show();
+        });
+
+        dataEntry.show();
+
     },
 
     onCreateClick: function () {
@@ -266,6 +281,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
                 action: 'C'
             }
         }).show();
+
     },
 
 

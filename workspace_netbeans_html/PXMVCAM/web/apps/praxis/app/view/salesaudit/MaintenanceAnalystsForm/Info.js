@@ -113,7 +113,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.Info', {
                                                     {
                                                         iconCls: 'prx-icon-edit',
                                                         tooltip: 'Detail',
-                                                        handler: 'viewDataEntry_clickHandler',
+                                                        handler: 'onEditUser',
                                                         isActionDisabled: 'OnEditActionDisabled'
                                                     }
                                                 ]

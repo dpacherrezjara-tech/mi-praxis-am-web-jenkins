@@ -26,6 +26,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
         this.onGetAction();
     },
 
+    reloadMainGrid: function () {
+        let callback = this.view.callback;
+        if (callback) {
+            callback();
+        }
+    },
+
 
     onGetAction: function () {
         let action = this.getView().params.action || 'C';
@@ -104,9 +111,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
         let param = this.getView().params.rec;
 
         let form = Ext.getCmp(prototype.id01 + '-form').getForm();
-        let cmbSource = Ext.getCmp(prototype.id01 + '-cmbSource');
-        // let cmbChannel = Ext.getCmp(prototype.id01 + '-cmbChannel');
-        // let cmbTrans = Ext.getCmp(prototype.id01 + '-cmbTrans');
 
         if (param && param.data) {
             form.setValues(param.data);
@@ -114,71 +118,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
             form.reset();
         }
 
-        // cmbChannel.hide(); // oculto por defecto
-
-        // stores
-        // cmbSource.setStore(Ext.create('Ext.data.Store', {
-        //     fields: ['code', 'name'],
-        //     data: [
-        //         { code: 'ARC', name: 'ARC' },
-        //         { code: 'BSP', name: 'BSP' },
-        //         { code: 'ASR', name: 'ASR' }
-        //     ]
-        // }));
-
-        // cmbChannel.setStore(Ext.create('Ext.data.Store', {
-        //     fields: ['code', 'name'],
-        //     data: [
-        //         { code: '', name: 'All' },
-        //         { code: 'ATO', name: 'ATO' },
-        //         { code: 'CCT', name: 'CCT' },
-        //         { code: 'CTO', name: 'CTO' },
-        //         { code: 'WEB', name: 'WEB' },
-        //         { code: 'FRA', name: 'FRA' }
-        //     ]
-        // }));
-
-        // cmbTrans.setStore(Ext.create('Ext.data.Store', {
-        //     fields: ['code', 'name'],
-        //     data: [
-        //         { code: '', name: 'All' },
-        //         { code: 'EXCH', name: 'EXCH' },
-        //         { code: 'SALE', name: 'SALE' }
-        //     ]
-        // }));
-
-        // if (param && param.data) {
-
-        //     // SOURCE
-        //     cmbSource.setValue(param.data.FUENTES);
-
-        //     // TRANSACTION
-        //     let transValue = param.data.A4420TRAS;
-        //     cmbTrans.setValue(transValue !== null && transValue !== undefined ? transValue : '');
-
-        //     // CHANNEL
-        //     if (param.data.FUENTES === 'ASR') {
-        //         cmbChannel.show();
-
-        //         let channelValue = param.data.A4420CANAL;
-        //         cmbChannel.setValue(channelValue !== null && channelValue !== undefined ? channelValue : '');
-        //     }
-        // }
     },
 
-
-    // onSourceChange: function (combo, newValue) {
-    //     let cmbChannel = Ext.getCmp(prototype.id01 + '-cmbChannel');
-
-    //     if (newValue === 'ASR') {
-    //         cmbChannel.show();
-    //         cmbChannel.allowBlank = false;
-    //     } else {
-    //         cmbChannel.reset();
-    //         cmbChannel.hide();
-    //         cmbChannel.allowBlank = true;
-    //     }
-    // },
 
 
 
@@ -353,8 +294,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
                     Ext.Msg.alert('Error', 'Error updated user');
                 });
 
-            this.onGetData();
-            // this.onCloseClick();
+            this.onGetRules();
+            this.reloadMainGrid();
 
         }
 

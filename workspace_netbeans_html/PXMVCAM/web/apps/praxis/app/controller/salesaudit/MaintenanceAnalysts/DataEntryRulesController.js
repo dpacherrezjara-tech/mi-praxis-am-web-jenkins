@@ -212,7 +212,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryRulesC
         let menuUser = document.getElementById('menuUser').innerText;
 
         const actualdate = Ext.Date.format(new Date(), 'Ymd');
-        let horaSistema = Ext.Date.format(new Date(), 'H:i:s');
+        let horaSistema = Ext.Date.format(new Date(), 'His');
 
         let paramsUser = {
             IN_CCUST: '139',
@@ -277,15 +277,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryRulesC
 
         console.log('paramsUser', paramsUser)
 
-        // global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
-        //     .then(function () {
-        //         store.sync();
-        //         Ext.Msg.alert('Success', 'Rule Deleted');
-        //     })
-        //     .catch(function () {
-        //         Ext.Msg.alert('Error', 'Error deleted rule');
-        //     });
-        // this.onCloseClick();
+        global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
+            .then(function () {
+                store.sync();
+                Ext.Msg.alert('Success', 'Rule Deleted');
+            })
+            .catch(function () {
+                Ext.Msg.alert('Error', 'Error deleted rule');
+            });
+        this.onCloseClick();
 
     },
 
