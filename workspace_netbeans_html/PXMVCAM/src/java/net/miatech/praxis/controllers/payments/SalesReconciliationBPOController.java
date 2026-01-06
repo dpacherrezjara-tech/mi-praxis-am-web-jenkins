@@ -821,7 +821,7 @@ public class SalesReconciliationBPOController {
             System.out.println("Total: " + filter.getResponse().size());
             List<Object[]> data = new ArrayList<>();
             //headers
-            Object[] headers = new Object[28];
+            Object[] headers = new Object[30];
             headers[0] = "Sale Date";
             headers[1] = "IATA";
             headers[2] = "Source";
@@ -842,17 +842,19 @@ public class SalesReconciliationBPOController {
             headers[17] = "Auth Code";
             headers[18] = "Amount";
             headers[19] = "Currency";
-            headers[20] = "Expected Date";
-            headers[21] = "Payment Date";
-            headers[22] = "Difference";
-            headers[23] = "Processing Date";
-            headers[24] = "Status";
-            headers[25] = "Processor";
-            headers[26] = "ADM St.";
-            headers[27] = "BPO Comment";
+            headers[20] = "Reconciliation Amount";
+            headers[21] = "Difference Amount";
+            headers[22] = "Expected Date";
+            headers[23] = "Payment Date";
+            headers[24] = "Difference";
+            headers[25] = "Processing Date";
+            headers[26] = "Status";
+            headers[27] = "Processor";
+            headers[28] = "ADM St.";
+            headers[29] = "BPO Comment";
             data.add(headers);
             for (A4496Filter obj : filter.getResponse()) {
-                Object[] row = new Object[28];
+                Object[] row = new Object[30];
                 row[0] = obj.getA4496FECVT();
                 row[1] = obj.getA4496AGENT();
                 row[2] = obj.getA4496FUENT();
@@ -873,17 +875,19 @@ public class SalesReconciliationBPOController {
                 row[17] = obj.getA4501CAPL();
                 row[18] = obj.getA4501VFOP();
                 row[19] = obj.getA4501MFOP();
-                row[20] = obj.getPROCDATE();
-                row[21] = obj.getPAYDATE();
-                row[22] = restaFechas(obj.getPROCDATE(), obj.getPAYDATE());
-                row[23] = obj.getA4501PRDA();
-                row[24] = convertStatus(obj.getA4501STVAL());
-                row[25] = obj.getDESC_PROCTYPE();
-                row[26] = obj.getA4501STADM();
+                row[20] = obj.getRECONCILIATION_AMOUNT();
+                row[21] = obj.getDIFFERENCE_AMOUNT();
+                row[22] = obj.getPROCDATE();
+                row[23] = obj.getPAYDATE();
+                row[24] = restaFechas(obj.getPROCDATE(), obj.getPAYDATE());
+                row[25] = obj.getA4501PRDA();
+                row[26] = convertStatus(obj.getA4501STVAL());
+                row[27] = obj.getDESC_PROCTYPE();
+                row[28] = obj.getA4501STADM();
                 if (obj.getA4501STADM().trim().isEmpty()) {
-                    row[27] = !obj.getBPO_COMEN2().isEmpty() ? obj.getBPO_COMEN2() : obj.getBPO_COMEN();
+                    row[29] = !obj.getBPO_COMEN2().isEmpty() ? obj.getBPO_COMEN2() : obj.getBPO_COMEN();
                 } else {
-                    row[27] = obj.getADM_COMEN();
+                    row[29] = obj.getADM_COMEN();
                 }
                 data.add(row);
             }
