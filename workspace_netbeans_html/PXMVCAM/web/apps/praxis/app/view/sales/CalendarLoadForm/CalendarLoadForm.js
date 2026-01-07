@@ -1,7 +1,7 @@
 // <editor-fold defaultstate="collapsed" desc="prototype">
 prototype.id = 'CalendarLoadForm';
 // prototype.url = CONTEXTPATH + '/CalendarLoadForm';
-prototype.widthContenedor = 1800;
+prototype.widthContenedor = 1400;
 // </editor-fold>
 
 Ext.define('Ext.Praxis.view.sales.CalendarLoadForm.CalendarLoadForm', {
