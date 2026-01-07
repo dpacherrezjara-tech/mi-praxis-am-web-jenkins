@@ -37,6 +37,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryRulesC
 
 
     onSaveClick: function () {
+        console.log('onsaveclick')
         let sourceGrid = Ext.getCmp(prototype.id02 + '-gridDetails'); // LAS REGLAS
         let targetGrid = Ext.getCmp(prototype.id01 + '-gridDetails'); // LISTA DE REGLAS DEL AUDITOR
         var regs = targetGrid.getStore().getCount();
@@ -46,7 +47,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryRulesC
 
 
         console.log('selected', selected);
-        //console.log('targetStore', targetStore);
+        console.log('targetStore', targetStore);
 
         // Obtener el controlador padre
         let parentWin = Ext.getCmp(prototype.id01 + '-winMaintenance');
@@ -144,6 +145,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryRulesC
         if (newValue === 'ASR') {
             cmbChannel.show();
             cmbChannel.allowBlank = false;
+            cmbChannel.setValue('');
         } else {
             cmbChannel.reset();
             cmbChannel.hide();
@@ -166,6 +168,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryRulesC
         cmbSource.setStore(Ext.create('Ext.data.Store', {
             fields: ['code', 'name'],
             data: [
+                { code: '', name: 'Select' },
                 { code: 'ARC', name: 'ARC' },
                 { code: 'BSP', name: 'BSP' },
                 { code: 'ASR', name: 'ASR' }
@@ -200,8 +203,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryRulesC
     },
 
 
-    onAddNewRulesClick: function () {
-        console.log('ADD NEW RULE');
+    onAddNewRulesClick: async function (btn, e) {
+        console.log('=== ADD NEW RULE ===');
+
+        if (e) {
+            e.stopPropagation();
+        }
 
         let source = Ext.getCmp(prototype.id02 + '-cmbSource').getValue();
         let channel = Ext.getCmp(prototype.id02 + '-cmbChannel').getValue();
@@ -209,8 +216,20 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryRulesC
         let fcmi = Ext.getCmp(prototype.id02 + '-cmbFcmi').getValue();
         let queq = Ext.getCmp(prototype.id02 + '-cmbQueq').getValue();
         let iata = Ext.getCmp(prototype.id02 + '-cmbIata').getValue();
-        let menuUser = document.getElementById('menuUser').innerText;
 
+        console.log('Valores:', { source, channel, trans, fcmi, queq, iata });
+
+        if (!source) {
+            Ext.Msg.alert('Validation', 'Please select a Source');
+            return;
+        }
+
+        if (iata && iata.trim() !== '' && iata.trim().length !== 10) {
+            Ext.Msg.alert('Validation', 'Iata must be exactly 10 characters or empty');
+            return;
+        }
+
+        let menuUser = document.getElementById('menuUser').innerText;
         const actualdate = Ext.Date.format(new Date(), 'Ymd');
         let horaSistema = Ext.Date.format(new Date(), 'His');
 
@@ -221,72 +240,98 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryRulesC
             IN_USERNEW: '',
             IN_NOMBRE: '',
             IN_COD: '',
-            IN_FUENT: source,
-            IN_CANAL: channel,
-            IN_QUEQ: queq,
-            IN_TRAS: trans,
-            IN_IATA: iata,
-            IN_FCMI: fcmi,
+            IN_FUENT: (source || '').trim(),
+            IN_CANAL: (channel || '').trim(),
+            IN_QUEQ: (queq || '').trim(),
+            IN_TRAS: (trans || '').trim(),
+            IN_IATA: (iata || '').trim(),
+            IN_FCMI: (fcmi || '').trim(),
             IN_REGI: menuUser,
             IN_FREGI: actualdate,
             IN_HORA: horaSistema
         };
 
-        console.log('paramsUser', paramsUser);
+        console.log('Params:', paramsUser);
 
-        global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
-            .then(function () {
-                store.sync();
-                Ext.Msg.alert('Success', 'Add rules succesfull');
-            })
-            .catch(function () {
-                Ext.Msg.alert('Error', 'Error add rules');
-            });
+        try {
+            let result = await global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser);
+            console.log('Resultado:', result);
 
-        // this.onCloseClick();
+            // Extraer los datos
+            let data = result.data || result; // Por si acaso viene directo o dentro de .data
 
-        this.onGetRules();
+            // Verificar si fue exitoso
+            if (data && data.lstRs && data.lstRs[0] && data.lstRs[0][0]) {
+                let response = data.lstRs[0][0];
+                if (response.VSQLCODE === 0) {
+                    // Éxito - recargar el grid
+                    await this.onGetRules();
+
+                    // Limpiar los campos
+                    Ext.getCmp(prototype.id02 + '-cmbSource').reset();
+                    Ext.getCmp(prototype.id02 + '-cmbChannel').reset();
+                    Ext.getCmp(prototype.id02 + '-cmbTrans').reset();
+                    Ext.getCmp(prototype.id02 + '-cmbFcmi').reset();
+                    Ext.getCmp(prototype.id02 + '-cmbQueq').reset();
+                    Ext.getCmp(prototype.id02 + '-cmbIata').reset();
+
+                    Ext.Msg.alert('Success', 'Rule added successfully');
+                } else {
+                    // Error del servidor
+                    Ext.Msg.alert('Error', 'Error adding rule');
+                }
+            } else {
+                throw new Error('Invalid response format');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            Ext.Msg.alert('Error', 'Error adding rule: ' + (error.message || error));
+        }
     },
 
 
 
-    onDeleteRuleClick: function (grid, rowIndex, colIndex, item, e, record) {
+    onDeleteRuleClick: async function (grid, rowIndex, colIndex, item, e, record) {
+        let me = this;
         let code = record.data.A4420COD;
 
-        let menuUser = document.getElementById('menuUser').innerText;
-        const actualdate = Ext.Date.format(new Date(), 'Ymd');
-        let horaSistema = Ext.Date.format(new Date(), 'H:i:s');
+        // Preguntar antes de eliminar
+        Ext.Msg.confirm('Confirm Delete', 'Are you sure you want to delete this rule?', async function (btn) {
+            if (btn === 'yes') {
+                let menuUser = document.getElementById('menuUser').innerText;
+                const actualdate = Ext.Date.format(new Date(), 'Ymd');
+                let horaSistema = Ext.Date.format(new Date(), 'His');
 
-        let paramsUser = {
-            IN_CCUST: '139',
-            IN_OPCION: 'EG',
-            IN_USER: '',
-            IN_USERNEW: '',
-            IN_NOMBRE: '',
-            IN_COD: code,
-            IN_FUENT: '',
-            IN_CANAL: '',
-            IN_QUEQ: '',
-            IN_TRAS: '',
-            IN_IATA: '',
-            IN_FCMI: '',
-            IN_REGI: menuUser,
-            IN_FREGI: actualdate,
-            IN_HORA: horaSistema
-        };
+                let paramsUser = {
+                    IN_CCUST: '139',
+                    IN_OPCION: 'EG',
+                    IN_USER: '',
+                    IN_USERNEW: '',
+                    IN_NOMBRE: '',
+                    IN_COD: code,
+                    IN_FUENT: '',
+                    IN_CANAL: '',
+                    IN_QUEQ: '',
+                    IN_TRAS: '',
+                    IN_IATA: '',
+                    IN_FCMI: '',
+                    IN_REGI: menuUser,
+                    IN_FREGI: actualdate,
+                    IN_HORA: horaSistema
+                };
 
-        console.log('paramsUser', paramsUser)
+                console.log('paramsUser', paramsUser);
 
-        global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
-            .then(function () {
-                store.sync();
-                Ext.Msg.alert('Success', 'Rule Deleted');
-            })
-            .catch(function () {
-                Ext.Msg.alert('Error', 'Error deleted rule');
-            });
-        this.onCloseClick();
-
+                try {
+                    await global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser);
+                    Ext.Msg.alert('Success', 'Rule Deleted');
+                    await me.onGetRules();
+                } catch (error) {
+                    Ext.Msg.alert('Error', 'Error deleted rule');
+                }
+            }
+        });
     },
 
 

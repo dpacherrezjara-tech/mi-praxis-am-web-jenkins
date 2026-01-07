@@ -31,9 +31,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
             '#MaintenanceAnalystsForm-xpanel': {
                 afterrender: me.xpanel_afterrender
             },
-            // '#MaintenanceAnalystsForm-btnSearch': {
-            //     click: this.onSearchClick
-            // },
+            '#MaintenanceAnalystsForm-btnSearch': {
+                click: this.onGetData
+            },
             '#MaintenanceAnalystsForm-btnAdd': {
                 click: this.onCreateClick
             },
@@ -51,13 +51,16 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
     },
 
     xpanel_afterrender: function (obj, e) {
+
+        const me = this;
+        const view = me.view;
+        console.log('after', view);
+
         this.onFilter();
         this.onGetData();
         Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, this);
         Ext.getCmp(prototype.id + '-pagginator-legend').show();
     },
-
-
 
     onAuditorFilter: async function () {
 
@@ -92,7 +95,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
             cmbUser.setValue('All');
         }
     },
-
 
     // ---- CARGAR DATA INICIAL
     onFilter: async function () {
@@ -165,11 +167,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
             procedure: "SQP05871",
             params: {
                 IN_CCUST: '139',
-                IN_USER: cmbUser.getValue() || '',
-                IN_STATUS: cmbStatus.getValue() || '',
+                // IN_USER: cmbUser.getValue() || '',
+                IN_USER: cmbUser.getValue() === 'All' ? '' : cmbUser.getValue() || '',
+                IN_STATUS: cmbStatus.getValue() === 'All' ? '' : cmbStatus.getValue() || '',
                 IN_DATETO: cmbDateTo.getValue() || '',
                 IN_DATEFROM: cmbDateFrom.getValue() || '',
-                IN_FUENT: cmbFuente.getValue() || '',
+                IN_FUENT: cmbFuente.getValue() === 'All' ? '' : cmbFuente.getValue() || '',
                 IN_OPTION: cmbFecFiltro.getValue() || '1'
             }
         };
@@ -203,9 +206,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
 
     },
 
-
-
-
     // render status
     onRendererColumnOnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
         // console.log('status', record.get('A4886FLAG'));
@@ -213,8 +213,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
             case 'ACTIVE':
                 value = 'green';
                 break;
-            case 'INACTIVE':
+            case 'DISABLED':
                 value = 'red';
+                break;
+            case 'ON VACATION':
+                value = 'blue';
                 break;
             default:
                 value = 'red';
@@ -222,14 +225,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
         return '<i class="fas fa-circle" style="font-size: 16px; color:' + value + ';"></i>';
     },
 
-
-
-
-
-
     //---- PAGINACION
     onPaginationChkChange: function (obj, newValue, oldValue, eOpts) {
-        this.onSearchClick();
+        this.onGetData();
         if (!newValue) {
             Ext.getCmp(prototype.id + '-pagginator-01').disable();
         } else {
@@ -237,33 +235,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
         }
     },
 
-
-    // Data Entry
-    onEditUser: function (grid, rowIndex, colIndex) {
-
-        var rec = grid.getStore().getAt(rowIndex);
-        this.winDataEntry(grid, 'U', rec);
-
-    },
-
-    winDataEntry: function (grid, action, rec) {
-        action = action === null || action === undefined ? 'U' : action;
-        rec = rec === null || rec === undefined ? {} : rec;
-        // Ext.create('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryMaintenanceAnalysts', {
-        //     // id: prototype.id01 + '-dataEntryUserMain',
-        //     params: {
-        //         action: action,
-        //         rec: rec,
-        //         instancia: me
-        //     }
-        // }).show();
-
+    onCreateClick: function (grid) {
         const dataEntry = Ext.create('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryMaintenanceAnalysts', {
-            // id: prototype.id01 + '-dataEntryUserMain',
+            id: prototype.id01 + '-dataEntryUserMain',
             params: {
-                action: action,
-                rec: rec,
-                instancia: me
+                action: 'C',
             },
             callback: () => {
                 grid.getStore().load();
@@ -274,16 +250,27 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
 
     },
 
-    onCreateClick: function () {
-        Ext.create('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryMaintenanceAnalysts', {
-            // id: prototype.id01 + '-winMaintenanceAnalysts',
-            params: {
-                action: 'C'
+    onEditClick: function (grid, rowIndex, colIndex, item, e, record) {
+
+        console.log('record real:', record);
+
+        const dataEntry = Ext.create(
+            'Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryMaintenanceAnalysts',
+            {
+                id: prototype.id01 + '-dataEntryUserMain',
+                params: {
+                    action: 'U',
+                    rec: record,
+                    instancia: me
+                },
+                callback: () => {
+                    grid.getStore().load();
+                }
             }
-        }).show();
+        );
 
+        dataEntry.show();
     },
-
 
     btnExcel_click: function (btn) {
         const me = this;
@@ -349,5 +336,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
     },
 
 
-}
+
+},
+
+
+
 );

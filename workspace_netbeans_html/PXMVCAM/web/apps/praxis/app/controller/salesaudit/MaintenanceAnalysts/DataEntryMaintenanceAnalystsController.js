@@ -18,9 +18,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
             this.dataUserRules = [];
         }
 
-        // usuario logueado
-        let menuUser = document.getElementById('menuUser').innerText;
-
         this.onGetRules();
         this.onGetData();
         this.onGetAction();
@@ -36,16 +33,16 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
 
     onGetAction: function () {
         let action = this.getView().params.action || 'C';
-        console.log('action get action', action)
+        // console.log('action get action', action)
         let win = this.getView();
+
+        let me = this;
+        let param = me.view.params.rec.data
+        console.log('params action get', param)
+
 
         if (action === 'C') {
             win.setTitle('Create');
-            // this.resetCreateView();
-            // Ext.getCmp(prototype.id01 + '-cmbSource').show();
-            // Ext.getCmp(prototype.id01 + '-cmbChannel').show();
-            Ext.getCmp(prototype.id01 + '-panelControlData').hide();
-
             Ext.getCmp(prototype.id01 + '-btn-update').hide();
             Ext.getCmp(prototype.id01 + '-btn-save').show();
             Ext.getCmp(prototype.id01 + '-btn-disable').hide();
@@ -53,14 +50,23 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
 
         } else if (action === 'U') {
             win.setTitle('Edit');
-            // Ext.getCmp(prototype.id01 + '-cmbSource').hide();
-            // Ext.getCmp(prototype.id01 + '-cmbChannel').hide();
-            Ext.getCmp(prototype.id01 + '-panelControlData').show();
-
             Ext.getCmp(prototype.id01 + '-btn-update').show();
             Ext.getCmp(prototype.id01 + '-btn-save').hide();
             Ext.getCmp(prototype.id01 + '-btn-disable').show();
             Ext.getCmp(prototype.id01 + '-btn-vacation').show();
+
+            console.log('status', param.A4886FLAG);
+
+            if (param.A4886FLAG === 'ACTIVE') {
+                Ext.getCmp(prototype.id01 + '-btn-disable').show();
+                Ext.getCmp(prototype.id01 + '-btn-vacation').show();
+            } else if (param.A4886FLAG === 'DISABLED') {
+                Ext.getCmp(prototype.id01 + '-btn-disable').hide();
+                Ext.getCmp(prototype.id01 + '-btn-vacation').show();
+            } else if (param.A4886FLAG === 'ON VACTION') {
+                Ext.getCmp(prototype.id01 + '-btn-disable').show();
+                Ext.getCmp(prototype.id01 + '-btn-vacation').hide();
+            }
 
         }
     },
@@ -69,13 +75,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
     onGetRules: async function () {
         let me = this;
         let param = me.view.params.rec;
+        // console.log('param get rules', param)
         let action = this.getView().params.action || 'C';
 
         let grid = Ext.getCmp(prototype.id01 + '-gridDetails');
         let store = grid.getStore();
 
         if (action === 'U') {
-            const user = param.data.A4886USER;
+            // console.log('param.data.A4886USER', param.data.A4886USER)
+            const user = param.data.A4886USER.trim();
 
             grid.setLoading(true);
 
@@ -109,6 +117,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
 
     onGetData: async function () {
         let param = this.getView().params.rec;
+        // console.log('param get data', param)
 
         let form = Ext.getCmp(prototype.id01 + '-form').getForm();
 
@@ -154,7 +163,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
             return;
         }
 
-        Ext.Msg.confirm('Confirm', 'Delete this rule?', function (btn) {
+        Ext.Msg.confirm('Confirm', 'Delete this rule?', async function (btn) {
             if (btn === 'yes') {
                 let form = Ext.getCmp(prototype.id01 + '-form').getForm();
                 let values = form.getValues();
@@ -183,27 +192,43 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
                 };
                 console.log('paramsRuleUser', paramsRuleUser)
 
-                global.callStorePost('PXSAUDIT', 'SQP05873', paramsRuleUser)
-                    .then(function () {
-                        store.remove(rec);
-                        Ext.Msg.alert('Success', 'Rule deleted');
-                    })
-                    .catch(function () {
-                        Ext.Msg.alert('Error', 'Error deleting rule');
-                    });
+                try {
+                    await global.callStorePost('PXSAUDIT', 'SQP05873', paramsRuleUser);
+                    store.remove(rec);
+                    Ext.Msg.alert('Success', 'Rule deleted');
+                } catch (error) {
+                    Ext.Msg.alert('Error', 'Error deleting rule');
 
+                }
                 // this.onGetData();
             }
         });
     },
 
-    onSaveClick: function () {
+    onSaveClick: async function () {
         let form = Ext.getCmp(prototype.id01 + '-form').getForm();
         let values = form.getValues();
         let grid = Ext.getCmp(prototype.id01 + '-gridDetails');
         let store = grid.getStore();
 
         console.log('rules', store);
+
+        if (!values.A4886USER || values.A4886USER.trim() === '') {
+            Ext.Msg.alert('Validation', 'The Auditor field is required.');
+            return;
+        }
+
+        if (!values.A4886DESCR || values.A4886DESCR.trim() === '') {
+            Ext.Msg.alert('Validation', 'The Name field is required.');
+            return;
+        }
+
+        if (store.getCount() === 0) {
+            Ext.Msg.alert('Validation', 'You must add at least one rule.');
+            return;
+        }
+
+
         let rulesList = [];
 
         store.each(function (record) {
@@ -233,9 +258,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
             let paramsUser = {
                 IN_CCUST: '139',
                 IN_OPCION: 'I',
-                IN_USER: values.A4886USER || '',
-                IN_USERNEW: values.A4886USERNEW || '',
-                IN_NOMBRE: values.A4886DESCR || '',
+                IN_USER: values.A4886USER.trim() || '',
+                IN_USERNEW: values.A4886USERNEW.trim() || '',
+                IN_NOMBRE: values.A4886DESCR.trim() || '',
                 IN_COD: codesString || '',
                 IN_FUENT: '',
                 IN_CANAL: '',
@@ -250,15 +275,18 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
 
             console.log('paramsUser', paramsUser)
 
-            global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
-                .then(function () {
-                    store.sync();
-                    Ext.Msg.alert('Success', 'User saved');
-                })
-                .catch(function () {
-                    Ext.Msg.alert('Error', 'Error saving user');
-                });
-            // this.onCloseClick();
+            try {
+                await global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser);
+                // store.sync();
+                Ext.Msg.alert('Success', 'User saved');
+
+                this.onGetRules();
+                this.reloadMainGrid();
+
+            } catch (error) {
+                Ext.Msg.alert('Error', 'Error saving user');
+                return;
+            }
 
             //  Actualizacion usuaeio 
         } else if (action === 'U') {
@@ -268,9 +296,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
             let paramsUser = {
                 IN_CCUST: '139',
                 IN_OPCION: 'U',
-                IN_USER: values.A4886USER || '',
+                IN_USER: values.A4886USER.trim() || '',
                 IN_USERNEW: userOld,
-                IN_NOMBRE: values.A4886DESCR || '',
+                IN_NOMBRE: values.A4886DESCR.trim() || '',
                 IN_COD: codesString || '',
                 IN_FUENT: '',
                 IN_CANAL: '',
@@ -285,17 +313,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
 
             console.log('paramsUser', paramsUser)
 
-            global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
-                .then(function () {
-                    store.sync();
-                    Ext.Msg.alert('Success', 'User Updated');
-                })
-                .catch(function () {
-                    Ext.Msg.alert('Error', 'Error updated user');
-                });
+            try {
+                await global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser);
+                // store.sync();
+                Ext.Msg.alert('Success', 'User Updated');
 
-            this.onGetRules();
-            this.reloadMainGrid();
+                this.onGetRules();
+                // this.onCloseClick();
+                this.reloadMainGrid();
+
+            } catch (error) {
+                Ext.Msg.alert('Error', 'Error updated user');
+                return;
+            }
 
         }
 
@@ -304,17 +334,20 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
 
 
     // Desactivar usuario
-    onDisableAuditorClick: function () {
+    onDisableAuditorClick: async function () {
         console.log('desactivar');
+        let form = Ext.getCmp(prototype.id01 + '-form').getForm();
+        let values = form.getValues();
+
         const actualdate = Ext.Date.format(new Date(), 'Ymd');
         let horaSistema = Ext.Date.format(new Date(), 'His');
 
         let paramsUser = {
             IN_CCUST: '139',
             IN_OPCION: 'D',
-            IN_USER: values.A4886USER || '',
-            IN_USERNEW: userOld,
-            IN_NOMBRE: values.A4886DESCR || '',
+            IN_USER: values.A4886USER.trim() || '',
+            IN_USERNEW: '',
+            IN_NOMBRE: values.A4886DESCR.trim() || '',
             IN_COD: '',
             IN_FUENT: '',
             IN_CANAL: '',
@@ -329,30 +362,37 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
 
         console.log('paramsUser', paramsUser)
 
-        global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
-            .then(function () {
-                store.sync();
-                Ext.Msg.alert('Success', 'User Disabled');
-            })
-            .catch(function () {
-                Ext.Msg.alert('Error', 'Error disabled user');
-            });
-        this.onCloseClick();
+        try {
+            await global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser);
+            // store.sync();
+            Ext.Msg.alert('Success', 'User Disabled');
+
+            // this.onGetRules();
+            this.onCloseClick();
+            this.reloadMainGrid();
+
+        } catch (error) {
+            Ext.Msg.alert('Error', 'Error disabled user');
+            return;
+        }
 
     },
 
     // vacaciones click
-    onVacationClick: function () {
+    onVacationClick: async function () {
         console.log('vacaciones');
+        let form = Ext.getCmp(prototype.id01 + '-form').getForm();
+        let values = form.getValues();
+
         const actualdate = Ext.Date.format(new Date(), 'Ymd');
         let horaSistema = Ext.Date.format(new Date(), 'His');
 
         let paramsUser = {
             IN_CCUST: '139',
             IN_OPCION: 'V',
-            IN_USER: values.A4886USER || '',
-            IN_USERNEW: userOld,
-            IN_NOMBRE: values.A4886DESCR || '',
+            IN_USER: values.A4886USER.trim() || '',
+            IN_USERNEW: '',
+            IN_NOMBRE: values.A4886DESCR.trim() || '',
             IN_COD: '',
             IN_FUENT: '',
             IN_CANAL: '',
@@ -367,15 +407,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
 
         console.log('paramsUser', paramsUser)
 
-        global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser)
-            .then(function () {
-                store.sync();
-                Ext.Msg.alert('Success', 'User Disabled');
-            })
-            .catch(function () {
-                Ext.Msg.alert('Error', 'Error disabled user');
-            });
-        this.onCloseClick();
+        try {
+            await global.callStorePost('PXSAUDIT', 'SQP05873', paramsUser);
+            // store.sync();
+            Ext.Msg.alert('Success', 'User Disabled');
+
+            // this.onGetRules();
+            this.onCloseClick();
+            this.reloadMainGrid();
+
+        } catch (error) {
+            Ext.Msg.alert('Error', 'Error disabled user');
+            return;
+        }
 
     },
 

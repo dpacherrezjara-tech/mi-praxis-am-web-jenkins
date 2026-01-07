@@ -9,8 +9,8 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 	requires: [
 		'Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryRulesController'
 	],
-	id: prototype.id02 + '-winRules',
 
+	id: prototype.id02 + '-winRules',
 	title: 'Rules',
 	header: true,
 	height: 530,
@@ -20,53 +20,50 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 	layout: 'fit',
 	modal: true,
 
-	defaults: {
-		border: false
-	},
 	listeners: {
 		afterrender: 'afterRender'
 	},
 
 	items: [
 		{
-			xtype: 'form',
-			id: prototype.id02 + '-form',
-			defaults: {
-				style: 'margin: 5px;',
-				border: false
+			xtype: 'panel',
+			layout: {
+				type: 'vbox',
+				align: 'stretch'
 			},
+			border: false,
+			bodyPadding: 5,
+			scrollable: true,
 			items: [
-
+				// SECCIÓN 1: NEW RULE
 				{
 					xtype: 'fieldset',
 					title: 'New Rule',
-					margin: 3,
-					border: true,
+					margin: '0 0 5 0',
+					flex: 0,
 					items: [
 						{
-							xtype: 'panel',
+							xtype: 'container',
 							layout: 'hbox',
 							margin: '0 0 5 0',
-							border: false,
 							items: [
 								{
 									xtype: 'combo',
 									id: prototype.id02 + '-cmbSource',
 									fieldLabel: 'Source',
-									// afterLabelTextTpl: '<b style="color: #BF6868;"> (*)</b>',
 									queryMode: 'local',
 									displayField: 'name',
 									valueField: 'code',
-									editable: false,
+									// editable: false,
 									forceSelection: true,
 									allowBlank: false,
 									labelWidth: 50,
 									width: 130,
+									margin: '0 10 0 0',
 									listeners: {
 										change: 'onSourceChange'
 									}
 								},
-								{ xtype: 'tbspacer', width: 10 },
 								{
 									xtype: 'combo',
 									id: prototype.id02 + '-cmbChannel',
@@ -75,13 +72,12 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 									queryMode: 'local',
 									displayField: 'name',
 									valueField: 'code',
-									editable: false,
+									// editable: false,
 									forceSelection: true,
 									allowBlank: false,
 									width: 140,
-									value: ''
+									margin: '0 10 0 0'
 								},
-								{ xtype: 'tbspacer', width: 10 },
 								{
 									xtype: 'combo',
 									id: prototype.id02 + '-cmbTrans',
@@ -90,94 +86,91 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 									queryMode: 'local',
 									displayField: 'name',
 									valueField: 'code',
-									editable: false,
+									// editable: false,
 									forceSelection: true,
 									allowBlank: false,
 									width: 150,
-									value: ''
+									margin: '0 10 0 0'
 								},
-								{ xtype: 'tbspacer', width: 10 },
 								{
 									xtype: 'textfield',
 									id: prototype.id02 + '-cmbFcmi',
-									labelWidth: 50,
 									name: 'A4420FCMI',
 									fieldLabel: 'Fcmi',
 									enforceMaxLength: true,
 									maxLength: 10,
 									labelWidth: 30,
 									width: 150
-									// flex: 1
-								},
-
+								}
 							]
 						},
 						{
-							xtype: 'panel',
+							xtype: 'container',
 							layout: 'hbox',
-							border: false,
+							margin: '0 0 10 0',
 							items: [
 								{
 									xtype: 'textfield',
 									id: prototype.id02 + '-cmbQueq',
 									name: 'A4420QUEQ',
 									fieldLabel: 'Queq',
-									// afterLabelTextTpl: '<b style="color: #BF6868;"> (*)</b>',
 									enforceMaxLength: true,
 									maxLength: 10,
 									labelWidth: 40,
 									width: 300,
-									// flex: 2
+									margin: '0 10 0 0'
 								},
-								{ xtype: 'tbspacer', width: 10 },
 								{
 									xtype: 'textfield',
 									id: prototype.id02 + '-cmbIata',
 									name: 'A4420IATA',
 									fieldLabel: 'Iata',
-									// afterLabelTextTpl: '<b style="color: #BF6868;"> (*)</b>',
 									enforceMaxLength: true,
 									maxLength: 10,
 									labelWidth: 30,
-									// flex: 1
 									width: 300
-								},
-
+								}
 							]
 						},
 						{
 							xtype: 'container',
 							layout: {
 								type: 'hbox',
-								pack: 'end'
+								pack: 'end',
+								padding: '5 10'
 							},
-							margin: '10 0 5 0',
 							items: [
 								{
 									xtype: 'button',
+									id: prototype.id02 + '-btn-addnew',
 									text: 'Add New Rule',
 									scale: 'medium',
 									iconCls: 'prx-icon-save',
-									handler: 'onAddNewRulesClick'
+									handler: 'onAddNewRulesClick',
+									listeners: {
+										click: function (btn, e) {
+											console.log('Click en Add New Rule button');
+											e.stopPropagation();
+										}
+									}
 								}
 							]
 						}
-
 					]
 				},
 
-
+				// SECCIÓN 2: ALL RULES (GRID)
 				{
 					xtype: 'fieldset',
 					title: 'All Rules',
-					border: true,
-					margin: 3,
+					flex: 1,
+					layout: 'fit',
+					margin: 0,
 					items: [
 						{
 							xtype: 'grid',
 							id: prototype.id02 + '-gridDetails',
-							height: 300,
-							width: '100%',
+							border: true,
 							columnLines: true,
 							selModel: {
 								selType: 'checkboxmodel',
@@ -202,7 +195,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 									text: 'Code',
 									dataIndex: 'A4420COD',
 									width: 70,
-									renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+									renderer: function (value, metaData, record) {
 										if (record.get('__isNew')) {
 											metaData.style = 'background-color: #d4edda; color: #155724; font-weight: bold;';
 										}
@@ -213,7 +206,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 									text: 'Channel',
 									dataIndex: 'A4420CANAL',
 									width: 80,
-									renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+									renderer: function (value, metaData, record) {
 										if (record.get('__isNew')) {
 											metaData.style = 'background-color: #d4edda; color: #155724; font-weight: bold;';
 										}
@@ -223,8 +216,8 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 								{
 									text: 'Fcmi',
 									dataIndex: 'A4420FCMI',
-									width: 40,
-									renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+									width: 60,
+									renderer: function (value, metaData, record) {
 										if (record.get('__isNew')) {
 											metaData.style = 'background-color: #d4edda; color: #155724; font-weight: bold;';
 										}
@@ -235,7 +228,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 									text: 'Source',
 									dataIndex: 'A4420FUENT',
 									width: 60,
-									renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+									renderer: function (value, metaData, record) {
 										if (record.get('__isNew')) {
 											metaData.style = 'background-color: #d4edda; color: #155724; font-weight: bold;';
 										}
@@ -245,8 +238,8 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 								{
 									text: 'IATA',
 									dataIndex: 'A4420IATA',
-									width: 150,
-									renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+									width: 120,
+									renderer: function (value, metaData, record) {
 										if (record.get('__isNew')) {
 											metaData.style = 'background-color: #d4edda; color: #155724; font-weight: bold;';
 										}
@@ -257,7 +250,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 									text: 'Queue',
 									dataIndex: 'A4420QUEQ',
 									flex: 1,
-									renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+									renderer: function (value, metaData, record) {
 										if (record.get('__isNew')) {
 											metaData.style = 'background-color: #d4edda; color: #155724; font-weight: bold;';
 										}
@@ -267,8 +260,8 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 								{
 									text: 'Trans',
 									dataIndex: 'A4420TRAS',
-									width: 100,
-									renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+									width: 80,
+									renderer: function (value, metaData, record) {
 										if (record.get('__isNew')) {
 											metaData.style = 'background-color: #d4edda; color: #155724; font-weight: bold;';
 										}
@@ -294,12 +287,12 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 								}
 							]
 						}
-
 					]
-				},
+				}
 			]
 		}
 	],
+
 	dockedItems: [
 		{
 			xtype: 'toolbar',
@@ -318,25 +311,23 @@ Ext.define('Ext.Praxis.view.salesaudit.MaintenanceAnalystsForm.DataEntryRules', 
 					text: 'Save',
 					id: prototype.id02 + '-btn-save',
 					iconCls: 'prx-icon-save',
-					handler: 'onSaveClick'  // ← Funciona porque tiene controlador
+					handler: 'onSaveClick',
+					listeners: {
+						click: function () {
+							console.log('Click en Save button');
+						}
+					}
 				},
-				// {
-				// 	text: 'Update',
-				// 	id: prototype.id02 + '-btn-update',
-				// 	iconCls: 'prx-icon-update',
-				// 	handler: 'onUpdateClick'  // ← Cambiado para diferenciarlo
-				// },
-				// {
-				// 	text: 'Delete',
-				// 	id: prototype.id02 + '-btn-delete',
-				// 	iconCls: 'prx-icon-delete',
-				// 	handler: 'onDeleClick'
-				// },
 				{
 					text: 'Cancel',
 					id: prototype.id02 + '-btn-close',
 					iconCls: 'prx-icon-cancel',
-					handler: 'onCloseClick'
+					handler: 'onCloseClick',
+					listeners: {
+						click: function () {
+							console.log('Click en Cancel button');
+						}
+					}
 				}
 			]
 		}
