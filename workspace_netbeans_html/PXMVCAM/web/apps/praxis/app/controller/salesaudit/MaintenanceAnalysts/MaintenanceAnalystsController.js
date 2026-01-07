@@ -206,24 +206,41 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.MaintenanceAnal
 
     },
 
-    // render status
-    onRendererColumnOnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        // console.log('status', record.get('A4886FLAG'));
+    onRendererColumnOnStatus: function (value, metaData, record) {
+        let iconCls = '';
+        let color = '';
+        let tooltip = '';
+
         switch (String(record.get('A4886FLAG'))) {
             case 'ACTIVE':
-                value = 'green';
+                iconCls = 'fas fa-check-circle';
+                color = '#28a745'; // verde
+                tooltip = 'Active';
                 break;
+
             case 'DISABLED':
-                value = 'red';
+                iconCls = 'fa fa-ban';
+                color = '#dc3545'; // rojo
+                tooltip = 'Disabled';
                 break;
+
             case 'ON VACATION':
-                value = 'blue';
+                iconCls = 'fa fa-plane';
+                color = '#007bff'; // azul
+                tooltip = 'On Vacation';
                 break;
+
             default:
-                value = 'red';
+                iconCls = 'fas fa-question-circle';
+                color = '#6c757d'; // gris
+                tooltip = 'Unknown';
         }
-        return '<i class="fas fa-circle" style="font-size: 16px; color:' + value + ';"></i>';
+
+        metaData.tdAttr = 'data-qtip="' + tooltip + '"';
+
+        return '<i class="' + iconCls + '" style="font-size:16px; color:' + color + ';"></i>';
     },
+
 
     //---- PAGINACION
     onPaginationChkChange: function (obj, newValue, oldValue, eOpts) {

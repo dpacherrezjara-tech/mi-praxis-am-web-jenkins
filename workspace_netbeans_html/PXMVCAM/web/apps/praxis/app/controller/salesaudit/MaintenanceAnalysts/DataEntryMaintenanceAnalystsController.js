@@ -63,7 +63,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
             } else if (param.A4886FLAG === 'DISABLED') {
                 Ext.getCmp(prototype.id01 + '-btn-disable').hide();
                 Ext.getCmp(prototype.id01 + '-btn-vacation').show();
-            } else if (param.A4886FLAG === 'ON VACTION') {
+            } else if (param.A4886FLAG === 'ON VACATION') {
                 Ext.getCmp(prototype.id01 + '-btn-disable').show();
                 Ext.getCmp(prototype.id01 + '-btn-vacation').hide();
             }
@@ -368,8 +368,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
             Ext.Msg.alert('Success', 'User Disabled');
 
             // this.onGetRules();
-            this.onCloseClick();
+
             this.reloadMainGrid();
+            this.onCloseClick();
 
         } catch (error) {
             Ext.Msg.alert('Error', 'Error disabled user');
@@ -413,8 +414,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MaintenanceAnalysts.DataEntryMainte
             Ext.Msg.alert('Success', 'User Disabled');
 
             // this.onGetRules();
-            this.onCloseClick();
+
             this.reloadMainGrid();
+            this.onCloseClick();
 
         } catch (error) {
             Ext.Msg.alert('Error', 'Error disabled user');
