@@ -139,7 +139,9 @@ Ext.define('Ext.Praxis.controller.sales.CalendarLoadForm.DataEntryCalendarLoadFo
 					for (let i = 0; i < data.length; i++) {
 						const fila = data[i];
 
-						console.log('user', me.user);
+						// console.log('user', me.user);
+
+						const usuario = document.getElementById('menuUser').innerText;
 						try {
 							let params = {
 								P_TIPO: tipoCombo,
@@ -148,7 +150,7 @@ Ext.define('Ext.Praxis.controller.sales.CalendarLoadForm.DataEntryCalendarLoadFo
 								P_FECHA_EJECUCION: fila['Fecha ejecución'] || '',
 								P_PERIODO_INICIO: fila['Fecha Inicio Periodo'] || '',
 								P_PERIODO_FIN: fila['Fecha Fin Periodo'] || '',
-								P_USUARIO: me.user || 'JYAURI' || 'FBACA',
+								P_USUARIO: usuario || 'JYAURI' || 'FBACA',
 								P_FILA_EXCEL: i + 1,
 								IN_FILA_DATA: JSON.stringify(fila)
 							};
