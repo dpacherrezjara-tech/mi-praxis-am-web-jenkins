@@ -180,28 +180,30 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                                     sortable: true
                                 },
                                 items: [
-                                    {text: 'Client', dataIndex: 'CCUST', width: 50,
+                                    {
+                                        text: 'Client', dataIndex: 'CCUST', width: 50,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "font-weight:bold;";
                                             return value;
                                         }
                                     },
-                                    {text: 'Agent', dataIndex: 'CIATA', width: 100},
-                                    {text: 'Agent<br>Name', dataIndex: 'NIATA', width: 200},
-                                    {text: 'Sale<br>Country', dataIndex: 'PAISV', width: 60},
-                                    {text: 'Sale<br>Date', dataIndex: 'SDATE', width: 80},
-                                    {text: 'Trnx', dataIndex: 'TRNCU', width: 80},
-                                    {text: 'Doc.<br>Type', dataIndex: 'TDOC', width: 80},
-                                    {text: 'Ticket', dataIndex: 'TICKET', width: 140,
+                                    { text: 'Agent', dataIndex: 'CIATA', width: 100 },
+                                    { text: 'Agent<br>Name', dataIndex: 'NIATA', width: 200 },
+                                    { text: 'Sale<br>Country', dataIndex: 'PAISV', width: 60 },
+                                    { text: 'Sale<br>Date', dataIndex: 'SDATE', width: 80 },
+                                    { text: 'Trnx', dataIndex: 'TRNCU', width: 80 },
+                                    { text: 'Doc.<br>Type', dataIndex: 'TDOC', width: 80 },
+                                    {
+                                        text: 'Ticket', dataIndex: 'TICKET', width: 140,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "font-weight:bold;";
                                             return value;
                                         }
                                     },
-                                    {text: 'SEQ', dataIndex: 'SEQ', width: 50},
-                                    {text: 'PNR', dataIndex: 'SPNR', width: 80},
-                                    {text: 'Pax Name', dataIndex: 'PAXNAME', width: 250},
-                                    {text: 'Itinerary', dataIndex: 'RUTABOL', width: 200},
+                                    { text: 'SEQ', dataIndex: 'SEQ', width: 50 },
+                                    { text: 'PNR', dataIndex: 'SPNR', width: 80 },
+                                    { text: 'Pax Name', dataIndex: 'PAXNAME', width: 250 },
+                                    { text: 'Itinerary', dataIndex: 'RUTABOL', width: 200 },
                                     {
                                         sortable: false,
                                         xtype: 'actioncolumn',
@@ -241,7 +243,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                     title: 'Loaded',
                     itemId: 'L',
                     id: prototype.idDE + '-tabLoaded',
-                    items:[
+                    items: [
                         {
                             xtype: 'grid',
                             margin: '5 0 5 0',
@@ -263,28 +265,30 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                                     sortable: true
                                 },
                                 items: [
-                                    {text: 'Client', dataIndex: 'CCUST', width: 50,
+                                    {
+                                        text: 'Client', dataIndex: 'CCUST', width: 50,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "font-weight:bold;";
                                             return value;
                                         }
                                     },
-                                    {text: 'Agent', dataIndex: 'CIATA', width: 100},
-                                    {text: 'Agent<br>Name', dataIndex: 'NIATA', width: 200},
-                                    {text: 'Sale<br>Country', dataIndex: 'PAISV', width: 60},
-                                    {text: 'Sale<br>Date', dataIndex: 'SDATE', width: 80},
-                                    {text: 'Trnx', dataIndex: 'TRNCU', width: 80},
-                                    {text: 'Doc.<br>Type', dataIndex: 'TDOC', width: 80},
-                                    {text: 'Ticket', dataIndex: 'TICKET', width: 140,
+                                    { text: 'Agent', dataIndex: 'CIATA', width: 100 },
+                                    { text: 'Agent<br>Name', dataIndex: 'NIATA', width: 200 },
+                                    { text: 'Sale<br>Country', dataIndex: 'PAISV', width: 60 },
+                                    { text: 'Sale<br>Date', dataIndex: 'SDATE', width: 80 },
+                                    { text: 'Trnx', dataIndex: 'TRNCU', width: 80 },
+                                    { text: 'Doc.<br>Type', dataIndex: 'TDOC', width: 80 },
+                                    {
+                                        text: 'Ticket', dataIndex: 'TICKET', width: 140,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "font-weight:bold;";
                                             return value;
                                         }
                                     },
-                                    {text: 'SEQ', dataIndex: 'SEQ', width: 50},
-                                    {text: 'PNR', dataIndex: 'SPNR', width: 80},
-                                    {text: 'Pax Name', dataIndex: 'PAXNAME', width: 250},
-                                    {text: 'Itinerary', dataIndex: 'RUTABOL', width: 200}
+                                    { text: 'SEQ', dataIndex: 'SEQ', width: 50 },
+                                    { text: 'PNR', dataIndex: 'SPNR', width: 80 },
+                                    { text: 'Pax Name', dataIndex: 'PAXNAME', width: 250 },
+                                    { text: 'Itinerary', dataIndex: 'RUTABOL', width: 200 }
                                 ]
                             }
                         }
@@ -389,8 +393,8 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                             sortable: true
                         },
                         items: [
-                            {text: 'Tax<br>Code', dataIndex: 'CTAX', width: 60},
-                            {text: 'Comment', dataIndex: 'COMMENT', flex: 1},
+                            { text: 'Tax<br>Code', dataIndex: 'CTAX', width: 60 },
+                            { text: 'Comment', dataIndex: 'COMMENT', flex: 1 },
                             {
                                 sortable: false,
                                 xtype: 'actioncolumn',
