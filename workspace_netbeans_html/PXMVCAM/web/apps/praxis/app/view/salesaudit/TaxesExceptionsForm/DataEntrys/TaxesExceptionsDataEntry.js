@@ -384,7 +384,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                     hidden: true,
                     columnLines: true,
                     id: prototype.idDE + '-gridTaxes',
-                    width: 700,
+                    width: 800,
                     maxHeight: 300,
                     columns: {
                         defaults: {
@@ -394,6 +394,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                         },
                         items: [
                             { text: 'Tax<br>Code', dataIndex: 'CTAX', width: 60 },
+                            { text: 'Ammount', dataIndex: 'AMOUNT', width: 100, id: prototype.idDE + '-gridTaxes-AMOUNT' },
                             { text: 'Comment', dataIndex: 'COMMENT', flex: 1 },
                             {
                                 sortable: false,
