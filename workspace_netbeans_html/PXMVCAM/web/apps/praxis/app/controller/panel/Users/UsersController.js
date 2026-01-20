@@ -5,8 +5,6 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
     fecha: new Date(),
     searchParams: {},    
     _path: '',
-    profilesdesc: [],
-    profiles: [],
     // </editor-fold>
     init: function(view) {
         // <editor-fold defaultstate="collapsed" desc="prototype">
@@ -21,7 +19,6 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
     afterRender: function () {
         this.setStoreData();
         this.btnClear_click();
-        this.searchProfiles();
 //        this.btnSearch_click();
     },
     onMostrarFiltrosChange: function(cmp, newValue, oldValue, eOpts) {
@@ -51,7 +48,6 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-        rec.profiles = profiles;
         Ext.create('Ext.Praxis.view.panel.UsersForm.DataEntry', {
             id: 'DataEntryUsersForm',
             params: {
@@ -168,18 +164,11 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
                     Ext.getCmp(prototype.id+'-lbl-pageCount').setText(pageCount);
                     Ext.getCmp(prototype.id+'-lbl-total').setText(total);
                     // </editor-fold>
-                    if (obj.data.items.length === 0) {
+                    if (obj.data.length === 0) {
                         global.Msg({
                             msg: 'Data not found'
                         });
                     }
-                    var arr = [];
-                    arr = profilesdesc;
-                    obj.data.items.map((item, i)=>{
-                        var res = arr.find((profile)=> profile.id === item.data.ID_PROFILE);
-                        item.data.DESC1 = res === undefined ? '--': res.desc;
-                        return item;
-                    });
                 }
             }
         });
@@ -241,36 +230,6 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
         if ( e.getKey() === e.ENTER ){
             this.btnSearch_click();
         }
-    },
-    searchProfiles: function() {
-        var mod = this;
-        Ext.Ajax.request({
-            url: prototype.url + '/searchProfiles',
-            method: 'POST',
-            timeout: 60000000,
-            success: function(response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                var arr = [];
-                var arr1 = [];
-                if (res.success) {
-                    res.data.map((data, i)=>{
-                        arr[i+1] = [data.ID_PROFILE, data.DESC1];
-                        arr1[i] = {id: data.ID_PROFILE, desc: data.DESC1};
-                    });
-                    arr[0] = ["0","-- SELECT --"];
-                    profiles = arr;
-                    profilesdesc = arr1;
-                    
-                } else {
-                    global.Msg({
-                        msg: res.sesion
-                    });
-                }
-            },
-            failure: function(response, opts) {
-                console.log('server-side failure with status code ' + response.status);
-            }
-        });
     }
     // </editor-fold>
 });
