@@ -122,7 +122,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsCont
                     'User Created': x.USCR,
                     'Date Created': x.FECR,
                     'User Update': x.USUP,
-                    'Date Update': x.FEUP
+                    'Date Update': x.FEUP,
+                    'Currency': x.MDA,
+                    'Amount': x.AMOUNT
                 }));
                 global.writeExcelFromJson(data, 'Tax Exceptions');
             }
