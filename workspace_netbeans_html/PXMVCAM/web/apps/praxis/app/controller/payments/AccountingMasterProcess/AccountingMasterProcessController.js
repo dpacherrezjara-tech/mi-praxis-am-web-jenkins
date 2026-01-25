@@ -25,9 +25,10 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.AccountingMas
 
             // Mapear los 5 result sets del stored procedure SQP05835
             const dataAccountingProcessor = lstRs[0] || [];  // ACCOUNTING_TYPE - Result Set 0
-            const dataProcessors = lstRs[2] || [];          // PROCESSORS - Result Set 1
-            const dataComplements = lstRs[3] || [];         // COMPLEMENTS - Result Set 2
-            const dataErrors = lstRs[4] || [];              // ERRORS - Result Set 3
+            const dataProcessors = lstRs[1] || [];          // PROCESSORS - Result Set 1
+            const dataComplements = lstRs[2] || [];         // COMPLEMENTS - Result Set 2
+            const dataErrors = lstRs[3] || [];              // ERRORS - Result Set 3
+            const dataStatus = lstRs[4] || [];              // STATUS - Result Set 4
 
             const nexDatetAccounting = lstVals.IO_NEXT_DATE_ACCOUNTING;
             const dateCalendarExist = lstVals.IO_DATE_CALENDAR_EXISTS;
@@ -37,9 +38,10 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.AccountingMas
             me.dataProcessors = dataProcessors;
             me.dataComplements = dataComplements;
             me.dataErrors = dataErrors;
+            me.dataStatus = dataStatus;
             me.nexDatetAccounting = nexDatetAccounting;
             me.dateCalendarExist = dateCalendarExist;
-
+            
             // Actualizar combos
             me.setComboStore({ 
                 cmp: Ext.getCmp(prototype.id + '-cmbAccountingModule'),
@@ -49,6 +51,14 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.AccountingMas
                 value: '', 
                 addValueAll: true });
             
+            me.setComboStore({ 
+                cmp: Ext.getCmp(prototype.id + '-cmbStatus'),
+                data: dataStatus,
+                valueField: 'CODE',
+                displayField: 'DESCRIPTION',
+                value: '',
+                addValueAll: true });
+
             // Parsear el string YYYYMMDD a objeto Date
             const accountingDate = Ext.Date.parse(nexDatetAccounting, 'Ymd');
             if (accountingDate) {

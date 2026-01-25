@@ -147,20 +147,11 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Filters', {
                                     fieldLabel: 'Status',
                                     labelWidth: 60,
                                     width: 180,
-                                    displayField: 'name',
-                                    valueField: 'code',
+                                    displayField: 'DESCRIPTION',
+                                    valueField: 'CODE',
                                     queryMode: 'local',
                                     editable: false,
-                                    value: '',
-                                    store: Ext.create('Ext.data.Store', {
-                                        data: [
-                                            {code: '', name: 'All'},
-                                            {code: 'PENDING', name: 'Pending'},
-                                            {code: 'PROCESSING', name: 'Processing'},
-                                            {code: 'COMPLETED', name: 'Completed'},
-                                            {code: 'ERROR', name: 'Error'}
-                                        ]
-                                    })
+                                    value: ''
                                 }
                             ]
                         }

@@ -5,7 +5,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
     titleAlign: 'center',
     minHeight: 200,
     maxHeight: 630,
-    width: '70%',
+    width: '75%',
     layout: 'fit',
     viewConfig: {
         stripeRows: true,
@@ -37,7 +37,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
                 text: 'RN',
                 dataIndex: 'RN',
                 xtype: 'rownumberer',
-                width: 50
+                width: 40
             },
             {
                 text: 'Number<br>Process',
@@ -134,17 +134,42 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
                     {
                         text: 'User',
                         dataIndex: 'A1955USRIN',
-                        width: 120
+                        width: 80
                     },
                     {
                         text: 'Date',
                         dataIndex: 'A1955FECIN',
-                        width: 100
+                        width: 80
                     },
                     {
                         text: 'Hour',
                         dataIndex: 'A1955HORIN',
+                        width: 60
+                    }
+                ]
+            },
+            {
+                text: 'Update',
+                defaults: {
+                    align: 'center',
+                    menuDisabled: true,
+                    sortable: true
+                },
+                columns: [
+                    {
+                        text: 'User',
+                        dataIndex: 'A1955USRAC',
                         width: 80
+                    },
+                    {
+                        text: 'Date',
+                        dataIndex: 'A1955FECAC',
+                        width: 80
+                    },
+                    {
+                        text: 'Hour',
+                        dataIndex: 'A1955HORAC',
+                        width: 60
                     }
                 ]
             },
