@@ -11,7 +11,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.AccountingMaste
         'Ext.Praxis.view.payments.AccountingMasterProcessForm.Filters',
         'Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.AccountingProcessGrid',
         'Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.ConsistencyDataEntry',
-        'Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.AccountingExecuteDataEntry'
+        'Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.AccountingExecuteDataEntry',
+        'Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.LogAccountingProcessDataEntry'
     ],
     controller: 'AccountingMasterProcessController',
     layout: {

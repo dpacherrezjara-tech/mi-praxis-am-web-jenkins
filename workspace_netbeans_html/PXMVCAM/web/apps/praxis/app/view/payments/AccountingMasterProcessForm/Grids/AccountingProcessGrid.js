@@ -40,6 +40,20 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
                 width: 40
             },
             {
+                sortable: false,
+                xtype: 'actioncolumn',
+                width: 40,
+                text: 'Log',
+                align: 'center',
+                items: [
+                    {
+                        iconCls: 'prx-icon-image-log',
+                        tooltip: 'Open Log',
+                        handler: 'onClickLog'
+                    }
+                ]
+            },
+            {
                 text: 'Number<br>Process',
                 dataIndex: 'A1955ENVIO',
                 width: 120
@@ -172,7 +186,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
                         width: 60
                     }
                 ]
-            },
+            }
         ]
     },
     bbar: {

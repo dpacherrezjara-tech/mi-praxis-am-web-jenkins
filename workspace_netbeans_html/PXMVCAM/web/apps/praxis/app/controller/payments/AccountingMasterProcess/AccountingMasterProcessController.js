@@ -223,6 +223,26 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.AccountingMas
         });
         dataEntry.show();
     },
+    
+    onClickLog: function (grid, rowIndex, colIndex, item, e, record) {
+        const me = this;
+        
+        // Obtener el Number Process del record seleccionado
+        const processId = record.get('A1955ENVIO') || '';
+        
+        if (!processId) {
+            global.Msg({msg: 'Process ID not found'});
+            return;
+        }
+        
+        // Abrir el DataEntry para mostrar el log del proceso
+        const logDataEntry = Ext.create('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.LogAccountingProcessDataEntry', {
+            id: prototype.id + '-LogAccountingProcessDataEntry-1',
+            processId: processId,
+            ccust: '139'
+        });
+        logDataEntry.show();
+    },
 
     
     setComboStore: function ( {cmp, data, valueField, displayField, value, addValueAll = true}){
