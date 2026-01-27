@@ -60,6 +60,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.LogA
                                 'A': '#B4FFB4',
                                 'F': '#B4FFB4',
                                 'E': '#FFB4B4',
+                                'K': '#FFCD85',
                             };
                             
                             bgColor = colorMap[codeStatus] || '';

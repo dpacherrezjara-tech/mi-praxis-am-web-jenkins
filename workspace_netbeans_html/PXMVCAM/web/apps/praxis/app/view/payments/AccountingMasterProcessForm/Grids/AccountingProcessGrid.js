@@ -97,6 +97,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
                         'A': '#B4FFB4',
                         'F': '#B4FFB4',
                         'E': '#FFB4B4',
+                        'K': '#FFCD85',
                     };
                     
                     // Obtener el color basado en el código del status
@@ -116,7 +117,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
                 dataIndex: 'RECORDS_PROCESSED',
                 width: 130,
                 renderer: function (value, metaData) {
-                    metaData.style = "text-align:right;";
+                    if (value > 0){
+                        metaData.style = (metaData.style || '') + 'color:blue;font-weight:bold;';
+                    }
                     return Ext.util.Format.number(value || 0, '0,000');
                 },
                 summaryType: 'sum',
@@ -129,7 +132,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
                 dataIndex: 'ERROR_FOUND',
                 width: 130,
                 renderer: function (value, metaData) {
-                    metaData.style = "text-align:right;";
+                    if (value > 0) {
+                        metaData.style = (metaData.style || '') + 'color:red;font-weight:bold;';
+                    }
                     return Ext.util.Format.number(value || 0, '0,000');
                 },
                 summaryType: 'sum',
