@@ -50,7 +50,6 @@ Ext.define('Ext.Praxis.view.payments.WorkloadReassignmentForm.Info', {
                                     id: prototype.id + '-gridDataMain',
                                     columnLines: true,
                                     autoScroll: true,
-                                    features: [{ftype: 'grouping', startCollapsed: true}],
                                     width: 700,
                                     height: 480,
                                     columns: {
@@ -58,19 +57,13 @@ Ext.define('Ext.Praxis.view.payments.WorkloadReassignmentForm.Info', {
                                             {
                                                 text: 'Processing Date',
                                                 dataIndex: 'PRDA1',
-                                                width: 200,
+                                                width: 150,
                                                 renderer: 'OnColumnAuditorRenderer'
                                             },
                                             {
-                                                text: 'Auditor',
-                                                dataIndex: 'AUASI',
-                                                width: 80,
-                                                align: 'left'
-                                            },
-                                            {
                                                 text: 'Procesador',
-                                                dataIndex: 'PROCTYPESQ1',
-                                                width: 100,
+                                                dataIndex: 'DESCRI',
+                                                width: 120,
                                                 align: 'left'
                                             },
                                             {
@@ -82,13 +75,31 @@ Ext.define('Ext.Praxis.view.payments.WorkloadReassignmentForm.Info', {
                                                 summaryRenderer: 'OnPendingColumnSummary'
                                             },
                                             {
+                                                text: 'Stand By',
+                                                dataIndex: 'STABY',
+                                                width: 80,
+                                                align: 'right',
+                                                summaryType: 'sum',
+                                                summaryRenderer: 'OnPendingColumnSummary'
+                                            },
+                                            //STABY 
+                                            {
                                                 text: 'Processed',
                                                 dataIndex: 'PROCE',
+                                                width: 150,
+                                                align: 'right',
+                                                summaryType: 'sum',
+                                                summaryRenderer: 'OnProcessedColumnSummary'
+                                            },
+                                            {
+                                                text: 'Total',
+                                                dataIndex: 'TOTAL',
                                                 width: 100,
                                                 align: 'right',
                                                 summaryType: 'sum',
                                                 summaryRenderer: 'OnProcessedColumnSummary'
                                             }
+
                                         ],
                                         defaults: {
                                             sortable: true,
@@ -108,88 +119,105 @@ Ext.define('Ext.Praxis.view.payments.WorkloadReassignmentForm.Info', {
                                     columnLines: true,
                                     autoScroll: true,
                                     hidden: true,
-                                    width: 1000,
+                                    width: 900,
                                     height: 480,
-                                    selModel: {
-                                        selType: 'checkboxmodel',
-                                        listeners: {
-                                            beforeselect: function (grid, record, index, eOpts, metaData) {
-                                                if (!record.get('CHK')) {
-                                                    return false;
-                                                } else {
-                                                    return true;
-                                                }
 
+                                    // 🔴 CLAVE: habilita summaries
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
 
-                                            }
-                                        }
-
-                                    },
                                     columns: {
-                                        items: [
-                                            {
-                                                text: 'Auditor',
-                                                dataIndex: 'AUASI1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Processing Date',
-                                                dataIndex: 'PRDA1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Sales Date',
-                                                dataIndex: 'SDATE1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Card Number',
-                                                dataIndex: 'SCARDN1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Autho',
-                                                dataIndex: 'SAUTHOC1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Ticket',
-                                                dataIndex: 'TICKET1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Country',
-                                                dataIndex: 'SCOUNTRY1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Status',
-                                                dataIndex: 'STVAL1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Procesador',
-                                                dataIndex: 'PROCTYPE1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Merchant ID',
-                                                dataIndex: 'PMERCHID1',
-                                                flex: 1
-                                            }
-                                        ],
                                         defaults: {
                                             sortable: true,
                                             menuDisabled: true,
                                             align: 'center'
-                                        }
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Auditor',
+                                                dataIndex: 'AUASI',
+                                                flex: 1,
+                                                summaryRenderer: function () {
+                                                    return '<b>TOTAL</b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'Processing Date',
+                                                dataIndex: 'PRDA1',
+                                                width: 150
+                                            },
+                                            {
+                                                text: 'Procesador',
+                                                dataIndex: 'DESCRI',
+                                                width: 120,
+                                                align: 'left'
+                                            },
+                                            {
+                                                text: 'Pending',
+                                                dataIndex: 'PEDIEN',
+                                                width: 80,
+                                                align: 'right',
+                                                summaryType: 'sum',
+                                                summaryRenderer: function (value) {
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                }
+                                            },
+                                            {
+                                                text: 'Stand By',
+                                                dataIndex: 'STABY',
+                                                width: 80,
+                                                align: 'right',
+                                                summaryType: 'sum',
+                                                summaryRenderer: function (value) {
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                }
+                                            },
+                                            {
+                                                text: 'Processed',
+                                                dataIndex: 'PROCE',
+                                                width: 100,
+                                                align: 'right',
+                                                summaryType: 'sum',
+                                                summaryRenderer: function (value) {
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                }
+                                            },
+                                            {
+                                                text: 'Total',
+                                                width: 100,
+                                                align: 'right',
+
+                                                // 🔹 Total por FILA
+                                                renderer: function (value, meta, record) {
+                                                    var total =
+                                                            (record.get('PEDIEN') || 0) +
+                                                            (record.get('STABY') || 0) +
+                                                            (record.get('PROCE') || 0);
+
+                                                    return Ext.util.Format.number(total, '0,000');
+                                                },
+
+                                                // 🔹 Total GENERAL (footer)
+                                                summaryRenderer: function (value, summaryData) {
+                                                    var total =
+                                                            (summaryData.PEDIEN || 0) +
+                                                            (summaryData.STABY || 0) +
+                                                            (summaryData.PROCE || 0);
+
+                                                    return Ext.util.Format.number(total, '0,000');
+                                                }
+                                            }
+                                        ]
                                     },
+
                                     viewConfig: {
                                         trackOver: false,
                                         stripeRows: true,
                                         enableTextSelection: true
                                     }
                                 }
+
 
 
                             ]
@@ -247,12 +275,6 @@ Ext.define('Ext.Praxis.view.payments.WorkloadReassignmentForm.Info', {
                                         },
                                         {
                                             id: prototype.id + '-lbl-total',
-                                            text: '0',
-                                            width: 50
-                                        },
-                                        {xtype: 'tbspacer', width: 20},
-                                        {
-                                            id: prototype.id + '-lblRowsTotalADM',
                                             text: '0',
                                             width: 50
                                         }
