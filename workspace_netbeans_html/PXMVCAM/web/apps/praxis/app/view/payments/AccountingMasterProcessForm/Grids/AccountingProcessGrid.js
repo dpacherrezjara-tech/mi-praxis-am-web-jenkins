@@ -96,6 +96,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
                         'P': '#B4E5FF',
                         'A': '#B4FFB4',
                         'F': '#B4FFB4',
+                        'C': '#B4FFB4',
                         'E': '#FFB4B4',
                         'K': '#FFCD85',
                     };

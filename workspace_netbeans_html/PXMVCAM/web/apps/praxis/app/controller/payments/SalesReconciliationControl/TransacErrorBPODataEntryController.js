@@ -886,8 +886,43 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const scan2 = Ext.getCmp(prototype.idDE + '-balanceScannerForm').getForm();
         try {
             const res = await global.callStoreGet('PRAXISMP', 'SQP05630', scan2.getValues());
-            balances.setStore(new Ext.data.Store({data: res.lstRs.at(0)}));
+            
+            // Verificar que la respuesta tenga datos
+            if (!res || !res.lstRs || res.lstRs.length === 0) {
+                return;
+            }
+            
+            // data
+            const newBalance = res.lstRs.at(0);
+            
+            // Obtener store actual
+            let currentStore = balances.getStore();
+            
+            // Obtener los datos existentes en el store
+            let existingData = [];
+            if (currentStore && currentStore.getCount() > 0) {
+                existingData = currentStore.getData().items.map(function(record) {
+                    return record.data;
+                });
+            }
+            
+            // Convertir en array si no lo es 
+            const newBalanceDataArray = Array.isArray(newBalance) ? newBalance : [newBalance];
+            
+            // Combinar datos
+            const combinedData = existingData.concat(newBalanceDataArray);
+            
+            // Crear o actualizar el store con todos los datos combinados
+            const updatedStore = Ext.create('Ext.data.Store', {
+                data: combinedData
+            });
+            
+            // Asignar el nuevo store
+            balances.setStore(updatedStore);
+            
         } catch (e) {
+            console.error('Error en onAddBalanceClick:', e);
+            global.Msg({msg: 'Error adding balance data: ' + e.message});
         } finally {
             grid2.setLoading(false);
         }

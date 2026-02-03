@@ -293,6 +293,58 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.ConsistencyCo
     },
 
     
+    onClickDetailSettlements: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
+        const data = record.data;
+        console.log('data -> ', data);
+        
+        // const obj = {
+        //     IN_CCUST: data.CCUST,
+        //     IN_PRDA: data.PRDA,
+        //     IN_TDOC: data.TDOC,
+        //     IN_AREFNBR: data.AREFNBR
+        // };
+        // console.log('obj -> ', obj);
+
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry', {
+            id: prototype.id + '-TransacErrorBPODataEntry-1',
+            obj: data,
+            callback: () => {
+                grid.getStore().load();
+            }
+        });
+        dataEntry.show();
+
+        // const obj = record.data;
+        // const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry', {
+        //     id: prototype.id + '-TransacErrorBPODataEntry-1',
+        //     obj: obj,
+        //     callback: () => {
+        //         grid.getStore().load();
+        //     }
+        // });
+        // dataEntry.show();
+    },
+
+    onClickDetailComplements: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
+        const data = record.data;
+        console.log('data -> ', data);
+        const obj = {
+            CCUST: data.CCUST,
+            PRDA: data.PRDA,
+            PLUSGRAID: data.PLUSGRADEID,
+            EMDNUMBER: data.CCIA + data.FORMA + data.SERIE || ' ',
+            PNR: data.PNR || ' ',
+            SDATE: data.SDATE || ' '
+        };
+
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeReconciliationDataEntry', {
+            id: prototype.id + '-PlusgradeReconciliationDataEntry-1',
+            obj: obj
+        });
+        dataEntry.show();
+    },
     onFilterChange: function (field, newValue, oldValue) {
         // Se puede agregar lógica adicional si es necesario
     },
@@ -412,6 +464,110 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.ConsistencyCo
             autoLoad: true,
             data: data,
             pageSize: 20
+        });
+    },
+
+    onDownloadSettlements: function () {
+        const me = this;
+        const grid = Ext.getCmp(prototype.idCN + '-gridSettlements');
+
+        if (!grid || !grid.getStore()) {
+            global.Msg({msg: 'No data to export'});
+            return;
+        }
+
+        const store = grid.getStore();
+        const records = store.getData().items;
+
+        if (!records || records.length === 0) {
+            global.Msg({msg: 'No data to export'});
+            return;
+        }
+
+        // const data = records.map(function (rec) {
+        //     return rec.getData();
+        // });
+        const data = records.map(function(rec, index) {
+            return {
+                'RN': index + 1,
+                'Customer': rec.get('CCUST') || '',
+                'Processing Date': rec.get('PRDA') || '',
+                'Type Document': rec.get('TDOC') || '',
+                'Ref. Number': rec.get('AREFNBR') || '',
+                'Ticket': rec.get('CCIA') + rec.get('FORMA') + rec.get('SERIE')	|| '',
+                'Seq': rec.get('SEQ') || '',
+                'Currency': rec.get('SCURRENCY') || '',
+                'Amount': rec.get('AMOUNT') || '',
+                'Sale Amount': rec.get('SALE_AMOUNT') || '',
+                'Processor': rec.get('PROCESSOR') || '',
+                'Status': rec.get('STATUS_DESCRIPTION') || '',
+                'Error Code': rec.get('CERROR') || '',
+                'Error Description': rec.get('DERROR') || ''
+            };
+        });
+
+        const fileName = 'Consistency_Settlements_' + Ext.Date.format(new Date(), 'Ymd_His');
+        global.writeExcelFromJson(data, fileName);
+
+        Ext.toast({
+            html: '<b>Excel file downloaded successfully</b>',
+            title: 'Success',
+            align: 't',
+            closable: true,
+            width: 280,
+            timeout: 3000
+        });
+    },
+
+    onDownloadComplements: function () {
+        const me = this;
+        const grid = Ext.getCmp(prototype.idCN + '-gridComplements');
+
+        if (!grid || !grid.getStore()) {
+            global.Msg({msg: 'No data to export'});
+            return;
+        }
+
+        const store = grid.getStore();
+        const records = store.getData().items;
+
+        if (!records || records.length === 0) {
+            global.Msg({msg: 'No data to export'});
+            return;
+        }
+
+        // const data = records.map(function (rec) {
+        //     return rec.getData();
+        // });
+        const data = records.map(function(rec, index) {
+            return {
+                'RN': index + 1,
+                'Customer': rec.get('CCUST') || '',
+                'Processing Date': rec.get('PRDA') || '',
+                'Plusgrade ID': rec.get('PLUSGRADEID') || '',
+                'Ref. Number': rec.get('AREFNBR') || '',
+                'Ticket': rec.get('CCIA') + rec.get('FORMA') + rec.get('SERIE')	|| '',
+                'Seq': rec.get('SEQ') || '',
+                'Currency': rec.get('SCURRENCY') || '',
+                'Amount': rec.get('AMOUNT') || '',
+                'Sale Amount': rec.get('SALE_AMOUNT') || '',
+                'Complement': rec.get('COMPLEMENT') || '',
+                'Status': rec.get('STATUS_DESCRIPTION') || '',
+                'Error Code': rec.get('CERROR') || '',
+                'Error Description': rec.get('DERROR') || ''
+            };
+        });
+
+        const fileName = 'Consistency_Complements_' + Ext.Date.format(new Date(), 'Ymd_His');
+        global.writeExcelFromJson(data, fileName);
+
+        Ext.toast({
+            html: '<b>Excel file downloaded successfully</b>',
+            title: 'Success',
+            align: 't',
+            closable: true,
+            width: 280,
+            timeout: 3000
         });
     }
 });

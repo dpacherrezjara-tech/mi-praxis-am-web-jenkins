@@ -61,5 +61,47 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.LogAccounting
     
     onClickClose: function () {
         this.view.close();
+    },
+    
+    downloadExcelLog: function () {
+        const me = this;
+        const grid = Ext.getCmp(prototype.idLOG + '-logGrid');
+        
+        if (!grid || !grid.getStore()) {
+            global.Msg({msg: 'No data to export'});
+            return;
+        }
+        
+        const store = grid.getStore();
+        const records = store.getData().items;
+        
+        if (!records || records.length === 0) {
+            global.Msg({msg: 'No data to export'});
+            return;
+        }
+        
+        const processId = me.view.processId || 'Log';
+        const data = records.map(function(rec, index) {
+            return {
+                'RN': rec.get('POSITION') || index + 1,
+                'Status': rec.get('STATUS_DESCRIPTION') || '',
+                'Log Message': rec.get('MESSAGE') || '',
+                'User': rec.get('USCR') || '',
+                'Date': rec.get('FECR') || '',
+                'Hour': rec.get('HOCR') || ''
+            };
+        });
+        
+        const fileName = 'AccountingProcessLog_' + processId;
+        global.writeExcelFromJson(data, fileName);
+        
+        Ext.toast({
+            html: '<b>Excel file downloaded successfully</b>',
+            title: 'Success',
+            align: 't',
+            closable: true,
+            width: 280,
+            timeout: 3000
+        });
     }
 });
