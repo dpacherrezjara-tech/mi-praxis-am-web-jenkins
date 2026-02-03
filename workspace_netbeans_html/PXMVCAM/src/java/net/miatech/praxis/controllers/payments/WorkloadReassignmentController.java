@@ -64,18 +64,30 @@ public class WorkloadReassignmentController extends BaseController {
             logic = new WorkloadReassignmentLogic();
             logic.setSession(this.serverSession.getServerSession());
 
+            int start = Integer.parseInt(request.getParameter("start"));
+
+            int pExcel = Integer.parseInt(request.getParameter("pexcel"));
+            Boolean bExcel = pExcel == 1 ? true : false;
+
             filter.IN_OPTION = request.getParameter("IN_OPTION").trim();
             filter.IN_DATEFROM = request.getParameter("IN_DATEFROM").trim();
             filter.IN_DATETO = request.getParameter("IN_DATETO").trim();
             filter.IN_USER = request.getParameter("IN_USER").trim();
             filter.IN_PROCESADOR = request.getParameter("IN_PROCESADOR").trim();
-            filter.page.PAGROW = 20;
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
 
             lst = logic.SearchGroupTaskAssignment(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
-
+ 
         map.put("success", true);
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
@@ -320,6 +332,40 @@ public class WorkloadReassignmentController extends BaseController {
         map.put("success", true);
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "ProcesaAsignacion")
+    public @ResponseBody
+    String ProcesaAsignacion(ModelMap map, HttpServletRequest request) {
+        String result = "";
+        String asigna = "";
+         
+        A4836Filter filter = new A4836Filter();
+        ArrayList<A4836Filter> gridDataAsiga = new ArrayList<A4836Filter>();
+        try {
+
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            JsonParser parser = new JsonParser();
+            // Obtain Array
+            JsonArray gsonCarga = parser.parse(request.getParameter("beanlstCarga")).getAsJsonArray();
+            //LISTA DE TKT
+            for (JsonElement obj : gsonCarga) {
+                JsonObject gsonObj = obj.getAsJsonObject();
+                A4836Filter data = new A4836Filter();
+                asigna = asigna + "|" + gsonObj.get("AUASI").getAsString() + "$" + gsonObj.get("PROCE").getAsString();
+            }
+            // "AUASI": rec.data.AUASI, "PROCE": rec.data.PROCE
+            logic = new WorkloadReassignmentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            result = logic.ProcesaAsignacion(filter, asigna);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        map.put("success", true);
+        map.put("data", result);
         return new Gson().toJson(map);
     }
 }
