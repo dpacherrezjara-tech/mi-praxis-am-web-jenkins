@@ -21,6 +21,25 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.LogA
     listeners: {
         afterrender: 'afterRender'
     },
+    tbar: {
+        layout: {
+            pack: 'end'
+        },
+        defaults: {
+            scale: 'medium'
+        },
+        items: [
+            {
+                xtype: 'button',
+                iconCls: 'prx-icon-excel',
+                scale: 'small',
+                tooltip: 'Export to Excel',
+                listeners: {
+                    click: 'downloadExcelLog'
+                }
+            }
+        ]
+    },
     items: [
         {
             xtype: 'grid',
@@ -59,6 +78,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.LogA
                                 'P': '#B4E5FF',
                                 'A': '#B4FFB4',
                                 'F': '#B4FFB4',
+                                'C': '#B4FFB4',
                                 'E': '#FFB4B4',
                                 'K': '#FFCD85',
                             };
@@ -125,6 +145,14 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.LogA
                     tooltip: 'Close',
                     listeners: {
                         click: 'onClickClose'
+                    }
+                },
+                {
+                    text: 'Reload',
+                    iconCls: 'prx-icon-reload',
+                    tooltip: 'Reload Log',
+                    listeners: {
+                        click: 'loadLogData'
                     }
                 }
             ]

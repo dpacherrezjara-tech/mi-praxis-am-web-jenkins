@@ -182,6 +182,17 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Cons
                             id: prototype.idCN + '-gridSettlements',
                             border: false,
                             style: 'background: white',
+                            tbar: [
+                                {
+                                    xtype: 'button',
+                                    iconCls: 'prx-icon-excel',
+                                    scale: 'small',
+                                    tooltip: 'Export to Excel',
+                                    listeners: {
+                                        click: 'onDownloadSettlements'
+                                    }
+                                }
+                            ],
                             viewConfig: {
                                 enableTextSelection: true,
                                 stripeRows: true
@@ -199,6 +210,21 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Cons
                                         dataIndex: 'RN',
                                         xtype: 'rownumberer',
                                         width: 40
+                                    },
+                                    {
+                                        sortable: false,
+                                        xtype: 'actioncolumn',
+                                        width: 50,
+                                        text: 'Detail',
+                                        locked: true,
+                                        align: 'center',
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-detail',
+                                                tooltip: 'Open Settlements Detail',
+                                                handler: 'onClickDetailSettlements'
+                                            }
+                                        ]
                                     },
                                     {
                                         text: 'Processing<br>Date',
@@ -258,7 +284,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Cons
                                     },
                                     {
                                         text: 'Error<br>Description',
-                                        dataIndex: 'DESCRIPTION',
+                                        dataIndex: 'DERROR',
                                         flex: 1,
                                         minWidth: 200,
                                         renderer: function (value, metaData) {
@@ -271,27 +297,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Cons
                                     }
 
                                 ]
-                            },
-                            // store: Ext.create('Ext.data.Store', {
-                            //     fields: [
-                            //         'RN',
-                            //         'AREFNBR',
-                            //         'PRDA',
-                            //         'TDOC',
-                            //         'AMOUNT',
-                            //         'PROCESSOR',
-                            //         'STATUS',
-                            //         'ERROR_CODE',
-                            //         'ERROR_DESC'
-                            //     ],
-                            //     data: []
-                            // }),
-                            bbar: {
-                                xtype: 'pagingtoolbar',
-                                id: prototype.idCN + '-pagingToolbarSettlements',
-                                displayInfo: true,
-                                displayMsg: 'Displaying {0} - {1} of {2}',
-                                emptyMsg: "No data to display"
                             }
                         }
                     ]
@@ -307,6 +312,17 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Cons
                             id: prototype.idCN + '-gridComplements',
                             border: false,
                             style: 'background: white',
+                            tbar: [
+                                {
+                                    xtype: 'button',
+                                    iconCls: 'prx-icon-excel',
+                                    scale: 'small',
+                                    tooltip: 'Export to Excel',
+                                    listeners: {
+                                        click: 'onDownloadComplements'
+                                    }
+                                }
+                            ],
                             viewConfig: {
                                 enableTextSelection: true,
                                 stripeRows: true
@@ -324,6 +340,21 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Cons
                                         dataIndex: 'RN',
                                         xtype: 'rownumberer',
                                         width: 40
+                                    },
+                                    {
+                                        sortable: false,
+                                        xtype: 'actioncolumn',
+                                        width: 50,
+                                        text: 'Detail',
+                                        locked: true,
+                                        align: 'center',
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-detail',
+                                                tooltip: 'Open Complements Detail',
+                                                handler: 'onClickDetailComplements'
+                                            }
+                                        ]
                                     },
                                     {
                                         text: 'Processing<br>Date',
@@ -382,7 +413,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Cons
                                     },
                                     {
                                         text: 'Error<br>Description',
-                                        dataIndex: 'DESCRIPTION',
+                                        dataIndex: 'DERROR',
                                         flex: 1,
                                         minWidth: 200,
                                         renderer: function (value, metaData) {
@@ -394,27 +425,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Cons
                                         }
                                     }
                                 ]
-                            },
-                            // store: Ext.create('Ext.data.Store', {
-                            //     fields: [
-                            //         'RN',
-                            //         'AREFNBR',
-                            //         'PRDA',
-                            //         'TDOC',
-                            //         'AMOUNT',
-                            //         'PROCESSOR',
-                            //         'STATUS',
-                            //         'ERROR_CODE',
-                            //         'ERROR_DESC'
-                            //     ],
-                            //     data: []
-                            // }),
-                            bbar: {
-                                xtype: 'pagingtoolbar',
-                                id: prototype.idCN + '-pagingToolbarComplements',
-                                displayInfo: true,
-                                displayMsg: 'Displaying {0} - {1} of {2}',
-                                emptyMsg: "No data to display"
                             }
                         }
                     ]
