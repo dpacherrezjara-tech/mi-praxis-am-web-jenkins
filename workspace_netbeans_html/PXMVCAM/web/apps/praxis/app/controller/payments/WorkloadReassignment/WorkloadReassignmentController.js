@@ -21,6 +21,7 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
     dataGrid: [],
     beanTMP: {},
     beantmpuser: {},
+    beanUser: [],
     beanEXCEL: {},
     beantmpdetaill: {},
     beanPaginationChkChange: {},
@@ -47,7 +48,7 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
             '#WorkloadReassignmentForm-btnback': {
                 click: this.btnback_click
             },
-            '#WorkloadReassignmentForm-btnsave': {
+            '#WorkloadReassignmentForm-btnuser': {
                 click: this.onChangeAuditorClick
             }
 
@@ -59,7 +60,9 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         this.obtainData();
         this.onLoadUsers();
         this.loadFilters();
-        Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, this);
+        Ext.getCmp(prototype.id + '-pagginator-legend').show();
+        // Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, this);
+        Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange02, this);
     },
     eventKey: function (e, eOpts) {
         if (eOpts.getKey() === 13) {
@@ -87,8 +90,13 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
             },
             autoLoad: true,
             listeners: {
-                load: function (obj, records, successful, operation, eOpts) {
-                    cmbUser.setValue('ALL');
+                load: function (store, records, successful) {
+                    if (successful) {
+                        // Guardar data completa en beanTMP
+                        me.beanUser = Ext.Array.pluck(records, 'data');
+
+                        cmbUser.setValue('ALL');
+                    }
                 }
             }
         });
@@ -187,7 +195,7 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         var store01 = Ext.create('Ext.data.Store', {
             storeId: prototype.id + '-store-grid01',
             pageSize: 20,
-            groupField: 'groupField',
+            //groupField: 'groupField',
             fields: [
                 {name: 'PRDA', type: 'string'},
                 {name: 'AUASI', type: 'string'},
@@ -208,6 +216,7 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
             }
         });
         grid01.setStore(store01);
+        Ext.getCmp(prototype.id + '-pagginator-01').setStore(store01);
 
         var grid03 = Ext.getCmp(prototype.id + '-gridDETALLE');
         var store03 = Ext.create('Ext.data.Store', {
@@ -249,7 +258,7 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
             autoLoad: false
         });
         grid03.setStore(store03);
-        Ext.getCmp(prototype.id + '-pagginator-01').setStore(store03);
+        //Ext.getCmp(prototype.id + '-pagginator-01').setStore(store03);
 
     },
     onCmbSearchChange: function (obj, records, eOpts) {
@@ -312,10 +321,11 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         var txtUser = Ext.getCmp(prototype.id + '-txtUser').getValue();
         //
         me.beanTMP.IN_OPTION = cmbFecFiltro;
-        me.beanTMP.IN_PROCESADOR = (CmbTypeprocesa === 'All') ? '' : CmbTypeprocesa;  
+        me.beanTMP.IN_PROCESADOR = (CmbTypeprocesa === 'All') ? '' : CmbTypeprocesa;
         me.beanTMP.IN_DATEFROM = txtFilterDateFrom;
         me.beanTMP.IN_DATETO = txtFilterDateTo;
         me.beanTMP.IN_USER = (txtUser === 'ALL') ? '' : txtUser;
+        me.beanTMP.pexcel = Ext.getCmp(prototype.id + '-pagination').getValue() ? 0 : 1;
 
         store01.loadPage(1, {
             params: me.beanTMP,
@@ -333,7 +343,7 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         var txtUser = Ext.getCmp(prototype.id + '-txtUser').getValue();
         //
         me.beanEXCEL.IN_OPTION = cmbFecFiltro;
-        me.beanEXCEL.IN_PROCESADOR =  (CmbTypeprocesa === 'All') ? '' : CmbTypeprocesa;  
+        me.beanEXCEL.IN_PROCESADOR = (CmbTypeprocesa === 'All') ? '' : CmbTypeprocesa;
         me.beanEXCEL.IN_DATEFROM = txtFilterDateFrom;
         me.beanEXCEL.IN_DATETO = txtFilterDateTo;
         me.beanEXCEL.IN_USER = (txtUser === 'ALL') ? '' : txtUser;
@@ -370,16 +380,27 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         } else {
             Ext.getCmp(prototype.id + '-pagginator-01').enable();
         }
-        me.beanPaginationChkChange.IN_OPTION = "1";
-        me.beanPaginationChkChange.AUASI = me.beantmpdetaill.AUASI;
-        me.beanPaginationChkChange.PRDA1 = me.beantmpdetaill.PRDA1;
-        me.beanPaginationChkChange.PRDA2 =  me.beantmpdetaill.PRDA2;
+
+        var txtFilterDateFrom = Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue();
+        var txtFilterDateTo = Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue();
+        var CmbTypeprocesa = Ext.getCmp(prototype.id + '-cmbProctypeSettl').getValue();
+        var cmbFecFiltro = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+        var txtUser = Ext.getCmp(prototype.id + '-txtUser').getValue();
         //
-        me.beanPaginationChkChange.PROCTYPE1 = me.beantmpdetaill.PROCTYPE1;
-        me.beanPaginationChkChange.PROCTYPESQ1 =  me.beantmpdetaill.PROCTYPESQ1;
+        me.beanPaginationChkChange.IN_OPTION = cmbFecFiltro;
+        me.beanPaginationChkChange.IN_PROCESADOR = (CmbTypeprocesa === 'All') ? '' : CmbTypeprocesa;
+        me.beanPaginationChkChange.IN_DATEFROM = txtFilterDateFrom;
+        me.beanPaginationChkChange.IN_DATETO = txtFilterDateTo;
+        me.beanPaginationChkChange.IN_USER = (txtUser === 'ALL') ? '' : txtUser;
         me.beanPaginationChkChange.pexcel = Ext.getCmp(prototype.id + '-pagination').getValue() ? 0 : 1;
-        //
-        var grid = Ext.getCmp(prototype.id + '-gridDETALLE');
+
+        store01.loadPage(1, {
+            params: me.beanTMP,
+            callback: function (records, operation, success) {
+
+            }
+        });
+        var grid = Ext.getCmp(prototype.id + '-gridDataMain');
         var store = grid.getStore();
         store.removeAll();
         store.loadPage(1, {
@@ -387,7 +408,45 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
             callback: function (records, operation, success) {
             }
         });
-        
+
+    },
+    OnDetail02: function (rowIndex) {
+        Ext.getCmp(prototype.id + '-cmbUser').setValue('Select');
+        var grid = Ext.getCmp(prototype.id + '-gridDETALLE');
+        var store = grid.getStore();
+        store.removeAll();
+        store.loadPage(1, {
+            params: this.beantmpdetaill,
+            callback: function (records, operation, success) {
+                if (!success) {
+                    return;
+                }
+
+                var map = {};
+                var data = [];
+
+                // 🔹 Opción SELECT
+                data.push({A4836USER: 'Select'});
+
+                Ext.Array.each(records, function (rec) {
+                    var auditor = rec.get('AUASI');
+
+                    if (auditor && !map[auditor]) {
+                        map[auditor] = true;
+                        data.push({A4836USER: auditor});
+                    }
+                });
+
+                var combo = Ext.getCmp(prototype.id + '-cmbUser');
+
+                combo.setStore(Ext.create('Ext.data.Store', {
+                    fields: ['A4836USER'],
+                    data: data
+                }));
+
+                combo.setValue('Select'); // queda en Select
+            }
+        });
     },
     OnDetail01: function (rowIndex) {
         const me = this;
@@ -406,10 +465,9 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         Ext.getCmp(prototype.id + '-cmbProctypeSettl').hide();
         //
         Ext.getCmp(prototype.id + '-gridDETALLE').show();
-        Ext.getCmp(prototype.id + '-cmbUser').show();
         Ext.getCmp(prototype.id + '-btnback').show();
-        Ext.getCmp(prototype.id + '-btnsave').show();
-        Ext.getCmp(prototype.id + '-pagginator-legend').show();
+        Ext.getCmp(prototype.id + '-btnuser').show();
+        Ext.getCmp(prototype.id + '-cmbUser').show();
         //
         me.beantmpuser.IN_OPTION = "2";
         me.beantmpuser.AUASI = rec.get('AUASI');
@@ -418,16 +476,19 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         me.beantmpuser.PROCTYPE1 = "";
         me.beantmpuser.PROCTYPESQ1 = rec.get('PROCTYPESQ1');
         //
-        me.onLoadUsers2();
+        // me.onLoadUsers2();
         //
         me.beantmpdetaill.IN_OPTION = "1";
         me.beantmpdetaill.AUASI = rec.get('AUASI');
-        me.beantmpdetaill.PRDA1 = rec.get('PRDA1').substring(0, 4) + '' + me.getDataMes(rec.get('PRDA1').substring(7, 4)) + '01';
-        me.beantmpdetaill.PRDA2 = rec.get('PRDA1').substring(0, 4) + '' + me.getDataMes(rec.get('PRDA1').substring(7, 4)) + '31';
+        me.beantmpdetaill.PRDA1 = rec.get('PRDA1');//.substring(0, 4) + '' + me.getDataMes(rec.get('PRDA1').substring(7, 4)) + '01';
+        me.beantmpdetaill.PRDA2 = rec.get('PRDA1');//.substring(0, 4) + '' + me.getDataMes(rec.get('PRDA1').substring(7, 4)) + '31';
         //
         me.beantmpdetaill.PROCTYPE1 = rec.get('PROCTYPE1');
         me.beantmpdetaill.PROCTYPESQ1 = rec.get('PROCTYPESQ1');
-        me.beantmpdetaill.pexcel = Ext.getCmp(prototype.id + '-pagination').getValue() ? 0 : 1;
+        me.beantmpdetaill.pexcel = 0;
+        Ext.getCmp(prototype.id + '-pagginator-legend').hide();
+        Ext.getCmp(prototype.id + '-pagi12').hide();
+
         //
         var grid = Ext.getCmp(prototype.id + '-gridDETALLE');
         var store = grid.getStore();
@@ -435,14 +496,43 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         store.loadPage(1, {
             params: this.beantmpdetaill,
             callback: function (records, operation, success) {
-                if (success)
-                    Ext.getCmp(prototype.id + '-pagi12').show();
+                if (!success) {
+                    return;
+                }
+
+                var map = {};
+                var data = [];
+
+                // 🔹 Opción SELECT
+                data.push({A4836USER: 'Select'});
+
+                Ext.Array.each(records, function (rec) {
+                    var auditor = rec.get('AUASI');
+
+                    if (auditor && !map[auditor]) {
+                        map[auditor] = true;
+                        data.push({A4836USER: auditor});
+                    }
+                });
+
+                var combo = Ext.getCmp(prototype.id + '-cmbUser');
+
+                combo.setStore(Ext.create('Ext.data.Store', {
+                    fields: ['A4836USER'],
+                    data: data
+                }));
+
+                combo.setValue('Select'); // queda en Select
             }
         });
     },
     onPagingBeforeChange01: function (obj, page, opts) {
         var me = this;
         obj.store.proxy.extraParams = me.beantmpdetaill;
+    },
+    onPagingBeforeChange02: function (obj, page, opts) {
+        var me = this;
+        obj.store.proxy.extraParams = me.beanTMP;
     },
     getDataMes: function (data) {
         var index = "";
@@ -484,117 +574,45 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         }
         return index;
     },
-    onLoadUsers2: function () {
-        const me = this;
-        var cmbUser = Ext.getCmp(prototype.id + '-cmbUser');
-        //
-        var store = Ext.create('Ext.data.JsonStore', {
-            proxy: {
-                type: 'ajax',
-                url: me.url + '/ListAuditorProcesa',
-                extraParams: me.beantmpuser,
-                timeout: 60000000,
-                reader: {
-                    type: 'json',
-                    rootProperty: 'data',
-                    totalProperty: 'total'
-                }
-            },
-            autoLoad: true,
-            listeners: {
-                load: function (store) {
-                    cmbUser.setValue('ALL');
-                }
-            }
-        });
-
-
-        cmbUser.setStore(store);
-    },
+    /*
+     onLoadUsers2: function () {
+     const me = this;
+     var cmbUser = Ext.getCmp(prototype.id + '-cmbUser');
+     //
+     var store = Ext.create('Ext.data.JsonStore', {
+     proxy: {
+     type: 'ajax',
+     url: me.url + '/ListAuditorProcesa',
+     extraParams: me.beantmpuser,
+     timeout: 60000000,
+     reader: {
+     type: 'json',
+     rootProperty: 'data',
+     totalProperty: 'total'
+     }
+     },
+     autoLoad: true,
+     listeners: {
+     load: function (store) {
+     cmbUser.setValue('ALL');
+     }
+     }
+     });
+     
+     
+     cmbUser.setStore(store);
+     },*/
     onChangeAuditorClick: function (obj) {
         var me = this;
-        var lstNewList = new Array();
-        var grid = Ext.getCmp(prototype.id + '-gridDETALLE');
-        var newAuditor = Ext.getCmp(prototype.id + '-cmbUser').getValue();
-        if (newAuditor === 'ALL' || newAuditor === null) {
-            newAuditor = '';
-        }
-        ;
-        if (newAuditor === '') {
-            Ext.Msg.alert('.: PRAXIS :.', 'Debes de ingresar el Auditor a Reasignar');
-            return;
-        }
-        if (grid.getSelectionModel().hasSelection()) {
-            var selection = grid.getSelectionModel().getSelected();
-            for (var i = 0; i < selection.length; i++) {
-                var row = grid.getSelectionModel().getSelection()[i];
-                if (Ext.String.trim(row.get('STVAL1')) === '3') {
-                    lstNewList.push(row.data);
-                }
-
+        Ext.create('Ext.Praxis.view.payments.WorkloadReassignmentForm.DataEntryAsigna', {
+            // id: prototype.id01 + '-dataEntryUserMain',
+            params: {
+                beanUser: me.beanUser,
+                PROCTYPE1: me.beantmpdetaill.PROCTYPE1,
+                PROCTYPESQ1: me.beantmpdetaill.PROCTYPESQ1,
+                PRDA1: me.beantmpdetaill.PRDA1
             }
-            if (lstNewList.length > 0) {
-                global.Msg({
-                    msg: 'Are you sure to Save?',
-                    icon: 3,
-                    buttons: 3,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-                            me.beanGuardar.IN_USER = newAuditor;
-                            var mask = new Ext.LoadMask(Ext.getCmp(prototype.id + '-Contenedor'), {
-                                msg: 'Please Wait....'
-                            });
-                            mask.show();
-                            Ext.Ajax.request({
-                                url: prototype.url + '/insertAuditor/',
-                                timeout: 60000000,
-                                method: 'POST',
-                                params: {beanString: JSON.stringify(me.beanGuardar),
-                                    beanlstRFND: JSON.stringify(lstNewList)},
-                                success: function (response, options) {
-                                    mask.hide();
-                                    var res = Ext.JSON.decode(response.responseText);
-                                    console.log(res.data);
-                                    var vp_icon = 0;
-                                    if (res.data === 'RECORD INSERTED') {
-                                        vp_icon = 1;
-                                    }
-                                    global.Msg({msg: res.data, icon: vp_icon, fn: function () {
-                                            if (vp_icon === 1) {
-                                                var grid = Ext.getCmp(prototype.id + '-gridDETALLE');
-                                                var store = grid.getStore();
-                                                store.removeAll();
-                                                store.loadPage(1, {
-                                                    params: me.beantmpdetaill,
-                                                    callback: function (records, operation, success) {
-
-                                                    }
-                                                });
-
-                                            }
-
-
-                                        }});
-                                }
-                            });
-                        }
-
-                    }
-                });
-                //fin
-
-
-            } else {
-                Ext.Msg.alert('.: PRAXIS :.', 'Debes selecionar una Solicitud');
-                return;
-            }
-
-        } else {
-            Ext.Msg.alert('.: PRAXIS :.', 'Debes selecionar una Solicitud');
-            return;
-        }
-
-
+        }).show();
 
     },
     btnback_click: function (obj, e) {
@@ -607,13 +625,15 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         Ext.getCmp(prototype.id + '-txtFilterDateTo').show();
         Ext.getCmp(prototype.id + '-txtUser').show();
         Ext.getCmp(prototype.id + '-cmbProctypeSettl').show();
+        Ext.getCmp(prototype.id + '-pagginator-legend').show();
+        Ext.getCmp(prototype.id + '-pagi12').show();
         //
         Ext.getCmp(prototype.id + '-gridDETALLE').hide();
-        Ext.getCmp(prototype.id + '-cmbUser').hide();
         Ext.getCmp(prototype.id + '-btnback').hide();
-        Ext.getCmp(prototype.id + '-btnsave').hide();
+        Ext.getCmp(prototype.id + '-btnuser').hide();
         Ext.getCmp(prototype.id + '-pagi12').hide();
-        Ext.getCmp(prototype.id + '-pagginator-legend').hide();
+        Ext.getCmp(prototype.id + '-cmbUser').hide();
+        //Ext.getCmp(prototype.id + '-pagginator-legend').hide();
         //
         var grid01 = Ext.getCmp(prototype.id + '-gridDataMain');
         var store01 = grid01.getStore();
@@ -797,13 +817,13 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         }
     },
     btnClear_click: function (obj, e) {
-       Ext.getCmp(prototype.id + '-txtFilterDateFrom').setValue('');
-       Ext.getCmp(prototype.id + '-txtFilterDateTo').setValue('');
-       Ext.getCmp(prototype.id + '-cmbProctypeSettl').setValue('All');
-       Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue('1');
-       Ext.getCmp(prototype.id + '-txtUser').setValue('ALL');
-       Ext.getCmp(prototype.id + '-gridDataMain').getStore().removeAll();  
-       Ext.getCmp(prototype.id + '-gridDETALLE').getStore().removeAll();
+        Ext.getCmp(prototype.id + '-txtFilterDateFrom').setValue('');
+        Ext.getCmp(prototype.id + '-txtFilterDateTo').setValue('');
+        Ext.getCmp(prototype.id + '-cmbProctypeSettl').setValue('All');
+        Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue('1');
+        Ext.getCmp(prototype.id + '-txtUser').setValue('ALL');
+        Ext.getCmp(prototype.id + '-gridDataMain').getStore().removeAll();
+        Ext.getCmp(prototype.id + '-gridDETALLE').getStore().removeAll();
     },
     btnFilter_click: function (obj) {
         var option = Ext.getCmp(prototype.id + '-contFilter');

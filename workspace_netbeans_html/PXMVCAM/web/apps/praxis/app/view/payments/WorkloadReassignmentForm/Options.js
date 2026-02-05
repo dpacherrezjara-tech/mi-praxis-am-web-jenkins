@@ -9,7 +9,6 @@ Ext.define('Ext.Praxis.view.payments.WorkloadReassignmentForm.Options', {
     items: [
         {
             xtype: 'panel',
-            hidden:true,
             layout: 'hbox',
             id: prototype.id + '-pagi12',
             border: false,
@@ -29,6 +28,7 @@ Ext.define('Ext.Praxis.view.payments.WorkloadReassignmentForm.Options', {
                 {
                     xtype: 'Paginator',
                     id: prototype.id + '-pagginator-01',
+                    hidden:true,
                     pagInfo: [
                         prototype.id + '-lbl-currentPage',
                         prototype.id + '-lbl-pageCount',
@@ -72,9 +72,9 @@ Ext.define('Ext.Praxis.view.payments.WorkloadReassignmentForm.Options', {
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnsave',
-                            iconCls: 'prx-icon-image-update',
-                            tooltip: 'Change Auditor',
+                            id: prototype.id + '-btnuser',
+                            iconCls: 'prx-icon-user',//'prx-icon-image-update',
+                            tooltip: 'Agregar carga de trabajo a los Analistas',
                             hidden: true
                         }
 

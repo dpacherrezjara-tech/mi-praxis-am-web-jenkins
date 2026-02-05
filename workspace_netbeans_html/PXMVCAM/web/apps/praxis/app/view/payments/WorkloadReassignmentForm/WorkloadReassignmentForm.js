@@ -6,7 +6,8 @@ Ext.define('Ext.Praxis.view.payments.WorkloadReassignmentForm.WorkloadReassignme
         'Ext.Praxis.view.payments.WorkloadReassignmentForm.Options',
         'Ext.Praxis.view.payments.WorkloadReassignmentForm.Filters',
         'Ext.Praxis.view.payments.WorkloadReassignmentForm.Info',
-        'Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassignmentController'
+        'Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassignmentController',
+        'Ext.Praxis.view.payments.WorkloadReassignmentForm.DataEntryAsigna'
     ],
     controller: 'WorkloadReassignmentController',
     id: prototype.id + '-Contenedor',
