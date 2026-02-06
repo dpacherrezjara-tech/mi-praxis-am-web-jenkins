@@ -49,6 +49,10 @@ public class A4836Filter extends A4836 {
 
     public String IN_AUASI = "";
     public String IN_PRDA = "";
+    
+    public String PROCTYPE1 = "";
+    public String PROCTYPESQ1 = "";
+    public String PRDA1 = "";
 
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();
     public DBException dbException = new DBException();

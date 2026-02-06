@@ -121,7 +121,7 @@ Ext.define('Ext.Praxis.view.payments.WorkloadReassignmentForm.Filters', {
                             value: ''
                         },
                         {
-                            xtype: 'combo', hidden: true,
+                            xtype: 'combo',
                             id: prototype.id + '-cmbUser',
                             fieldLabel: 'Auditor',
                             queryMode: 'local',
@@ -130,11 +130,32 @@ Ext.define('Ext.Praxis.view.payments.WorkloadReassignmentForm.Filters', {
                             width: 200,
                             labelWidth: 50,
                             labelAlign: 'right',
-                            emptyText: '',
-                            listConfig: {
-                                minWidth: 200
+                            editable: false,
+                            hidden: true,
+                            emptyText: 'Select', 
+                            forceSelection: true,
+
+                            listeners: {
+                                change: function (combo, newValue) {
+                                    var grid = Ext.getCmp(prototype.id + '-gridDETALLE');
+                                    var store = grid.getStore();
+
+                                    // 🔴 SIEMPRE limpia filtros
+                                    store.clearFilter(true);
+                                    // 🔹 SELECT → muestra todo
+                                    if (newValue === 'Select') {
+                                        store.loadData(store.getRange(), false); // 🔥 CLAVE
+                                        return;
+                                    }
+
+                                    // 🔹 Filtra por Auditor
+                                    store.filterBy(function (rec) {
+                                        return rec.get('AUASI') === newValue;
+                                    });
+                                }
                             }
                         }
+
                     ]
                 }
             ]

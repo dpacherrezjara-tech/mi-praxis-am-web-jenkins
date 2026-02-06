@@ -36,4 +36,8 @@ public class WorkloadReassignmentLogic {
     public List<A4836Filter> ListAuditorProcesa(A4836Filter filter) throws SQLException, Exception {
         return loadReassignmentDAO.ListAuditorProcesa(filter);
     }
+    public String ProcesaAsignacion(A4836Filter filter,String asigna) throws SQLException, Exception {
+        return loadReassignmentDAO.ProcesaAsignacion(filter, asigna);
+    }
+    
 }
