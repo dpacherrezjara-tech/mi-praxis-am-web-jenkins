@@ -212,10 +212,14 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.DataEntryAsignaC
         var me = this;
         var lstCarga = new Array();
         var gridcarga = Ext.getCmp(prototype.id + 'gridCarga');
+        var txtNewAuditor = Ext.getCmp(prototype.id + '-cmbUser').getValue();
+        if (txtNewAuditor === 'Select')
+            txtNewAuditor = '';
         gridcarga.store.data.each(function (rec) {
             lstCarga.push({"AUASI": rec.data.AUASI, "PROCE": rec.data.PROCE});
         });
         //
+        me.beanGuardar.IN_AUASI =txtNewAuditor;
         me.beanGuardar.PROCTYPE1 = me.view.params.PROCTYPE1;
         me.beanGuardar.PROCTYPESQ1 = me.view.params.PROCTYPESQ1;
         me.beanGuardar.PRDA1 = me.view.params.PRDA1;
