@@ -308,7 +308,7 @@ public class WorkloadReassignmentDAO {
         }
         return lstRtn;
     }
-    
+
     public String ProcesaAsignacion(A4836Filter filter, String listasigna) throws SQLException, Exception {
         CallableStatement cs = null;
         ResultSet rst = null;
@@ -317,15 +317,16 @@ public class WorkloadReassignmentDAO {
 
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL PRAXISMP.SQP05593(?,?,?,?,?,?,?,?)}"; 
+            String SQLCLL01 = "{CALL PRAXISMP.SQP05593(?,?,?,?,?,?,?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
+            cs.setString("IN_AUASI", filter.IN_AUASI);
             cs.setString("IN_PROCTYPE1", filter.PROCTYPE1.trim());
             cs.setString("IN_PROCTYPESQ1", filter.PROCTYPESQ1.trim());
             cs.setString("IN_PRDA1", filter.PRDA1.trim());
             //
-            cs.setString("IN_listasigna", listasigna); 
+            cs.setString("IN_listasigna", listasigna);
             cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
             cs.setString("IN_FREGI", Functions.getFechaActual());
             cs.setString("IN_HREGI", Functions.getHoraActual());
@@ -339,10 +340,10 @@ public class WorkloadReassignmentDAO {
             cs.close();
         } catch (SQLException e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT=e.getMessage();
+            STR_RESULT = e.getMessage();
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT=e.getMessage();
+            STR_RESULT = e.getMessage();
         } finally {
             strSQL = null;
             session.getCNXIBMDB2().close();
@@ -350,6 +351,5 @@ public class WorkloadReassignmentDAO {
 
         return STR_RESULT;
     }
-    
 
 }
