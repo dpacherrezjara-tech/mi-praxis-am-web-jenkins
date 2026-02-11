@@ -124,7 +124,9 @@ Ext.define('Ext.Praxis.controller.sales.OracleControlAcknowledgment.OracleContro
                 ["BANCOMER", "Bancomer"],
                 ["BANORTE", "Banorte"],
                 ["GENET", "Genet"],
-                ["WORLDPAY", "Worldpay"]
+                ["WORLDPAY", "Worldpay"],
+                ["PLUSGRADE", "Plusgrade"],
+                ["DIFFC","DIFFC"]
             ]
         }));
         cboModulo.setValue("");
