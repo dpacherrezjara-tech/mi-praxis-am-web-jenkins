@@ -448,9 +448,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeReconciliati
             IN_CCUST: '139',
             IN_PRDA: obj.PRDA.trim(),
             IN_PLUSGRAID: obj.PLUSGRAID.trim(),
-            IN_TICKET: obj.EMDNUMBER.trim(),
-            IN_PNR: obj.PNR.trim(),
-            IN_SDATE: obj.SDATE.trim()
+            IN_TICKET: obj.EMDNUMBER.trim() || '' ,
+            IN_PNR: obj.PNR.trim() || '' ,
+            IN_SDATE: obj.SDATE.trim() || '' 
         };
         return params;
     },

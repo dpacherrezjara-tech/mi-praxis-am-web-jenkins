@@ -5,8 +5,27 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
     titleAlign: 'center',
     minHeight: 200,
     maxHeight: 630,
-    width: '75%',
+    width: '78%',
     layout: 'fit',
+    tbar: {
+        layout: {
+            pack: 'end'
+        },
+        items: [
+            {
+                xtype: 'button',
+                iconCls: 'prx-icon-excel',
+                scale: 'small',
+                tooltip: 'Export to Excel',
+                listeners: {
+                    click: 'onDownloadExcelAccountingProcess'
+                }
+            }
+        ]
+    },
+    listeners: {
+        cellclick: 'onCellClickErrorsFound'
+    },
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,
@@ -54,6 +73,24 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
                 ]
             },
             {
+                sortable: false,
+                xtype: 'actioncolumn',
+                width: 60,
+                text: 'Reverse',
+                align: 'center',
+                items: [
+                    {
+                        iconCls: 'prx-icon-image-trash',
+                        tooltip: 'Reverse this process',
+                        handler: 'onClickReverseProcess',
+                        isDisabled: function(view, rowIndex, colIndex, item, record) {
+                            // Deshabilitar si ACTIVE_REVERSE !== 1
+                            return record.get('ACTIVE_REVERSE') !== 1 && record.get('ACTIVE_REVERSE') !== '1';
+                        }
+                    }
+                ]
+            },
+            {
                 text: 'Number<br>Process',
                 dataIndex: 'A1955ENVIO',
                 width: 120
@@ -87,8 +124,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
                     // Obtener el código del status desde el record
                     const codeStatus = record.get('CODE_STATUS') || '';
                     
-                    console.log("codeStatus", codeStatus);
-                    console.log("value", value);
                     // Definir colores basados en el código del status
                     let bgColor = '';
                     const colorMap = {
@@ -99,6 +134,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
                         'C': '#B4FFB4',
                         'E': '#FFB4B4',
                         'K': '#FFCD85',
+                        'R': '#FFB4B4',
                     };
                     
                     // Obtener el color basado en el código del status
@@ -134,7 +170,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.Accountin
                 width: 130,
                 renderer: function (value, metaData) {
                     if (value > 0) {
-                        metaData.style = (metaData.style || '') + 'color:red;font-weight:bold;';
+                        metaData.style = (metaData.style || '') + 'color:red;font-weight:bold;cursor:pointer;text-decoration:underline;';
+                        metaData.tdAttr = value > 0 ? 'data-qtip="Click to view errors"' : '';
                     }
                     return Ext.util.Format.number(value || 0, '0,000');
                 },

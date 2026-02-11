@@ -243,6 +243,202 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.AccountingMas
         });
         logDataEntry.show();
     },
+    
+    onDownloadExcelAccountingProcess: async function () {
+        const me = this;
+        const filtro1 = Ext.getCmp(prototype.id + '-panelFilters');
+        const grid = Ext.getCmp(prototype.id + '-AccountingProcessGrid');
+        
+        if (!filtro1 || !grid) {
+            global.Msg({msg: 'Filters or grid not found. Please search first.'});
+            return;
+        }
+        
+        let params = filtro1.getForm().getValues();
+        if (params.IN_DATE_FROM && params.IN_DATE_FROM instanceof Date) {
+            params.IN_DATE_FROM = Ext.Date.format(params.IN_DATE_FROM, 'Ymd');
+        }
+        if (params.IN_DATE_TO && params.IN_DATE_TO instanceof Date) {
+            params.IN_DATE_TO = Ext.Date.format(params.IN_DATE_TO, 'Ymd');
+        }
+        
+        const spParams = {
+            IN_CCUST: params.IN_CCUST || '139',
+            IN_DATE_FROM: params.IN_DATE_FROM || '',
+            IN_DATE_TO: params.IN_DATE_TO || '',
+            IN_MODULE: params.IN_MODULE || '',
+            IN_STATUS: params.IN_STATUS || ''
+        };
+        
+        grid.setLoading(true);
+        try {
+            const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05836', spParams);
+            if (!res || res.length === 0) {
+                global.Msg({msg: 'No data to export'});
+                return;
+            }
+            
+            const data = res.map(function (x, index) {
+                return {
+                    'RN': index + 1,
+                    'Number Process': x.A1955ENVIO || '',
+                    'Process Date': x.A1955FPROC || '',
+                    'Accounting Date': x.A1955FCONT || '',
+                    'Module Process': x.A4451DESC1 || '',
+                    'Status': x.STATUS_DESCRIPTION || '',
+                    'Records Processed': x.RECORDS_PROCESSED || 0,
+                    'Errors Found': x.ERROR_FOUND || 0,
+                    'Create User': x.A1955USRIN || '',
+                    'Create Date': x.A1955FECIN || '',
+                    'Create Hour': x.A1955HORIN || '',
+                    'Update User': x.A1955USRAC || '',
+                    'Update Date': x.A1955FECAC || '',
+                    'Update Hour': x.A1955HORAC || ''
+                };
+            });
+            
+            await global.writeExcelFromJson(data, 'AccountingMasterProcess_ExecutedProcesses');
+            Ext.toast({
+                html: '<b>Excel file downloaded successfully</b>',
+                title: 'Success',
+                align: 't',
+                closable: true,
+                width: 280,
+                timeout: 3000
+            });
+        } catch (e) {
+            console.error('Error downloading Excel:', e);
+            global.Msg({msg: 'Error downloading Excel: ' + (e.message || 'Unknown error')});
+        } finally {
+            grid.setLoading(false);
+        }
+    },
+   
+
+    onClickReverseProcess: function (view, rowIndex, colIndex, item, e, record) {
+        const me = this;
+        const grid = view ? view.up('gridpanel') : Ext.getCmp(prototype.id + '-AccountingProcessGrid');
+
+        if (!grid || !record) {
+            global.Msg({msg: 'Grid or record not found.'});
+            return;
+        }
+
+        const activeReverse = record.get('ACTIVE_REVERSE');
+        if (activeReverse !== 1) {
+            global.Msg({msg: 'Reverse is not allowed for this process.'});
+            return;
+        }
+
+        const idProcess = (record.get('A1955ENVIO') || '').toString().trim();
+        if (!idProcess) {
+            global.Msg({msg: 'Number Process not found in this row.'});
+            return;
+        }
+
+        const ccust = (grid.searchParams && grid.searchParams.IN_CCUST) ? grid.searchParams.IN_CCUST.toString().trim() : '139';
+
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure you want to reverse process <b>' + Ext.String.htmlEncode(idProcess) + '</b>?',
+            buttons: Ext.MessageBox.YESNO,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    me.executeReverseProcess(grid, ccust, idProcess);
+                }
+            }
+        });
+    },
+
+    executeReverseProcess: async function (grid, ccust, idProcess) {
+        const me = this;
+
+        grid.setLoading(true);
+
+        try {
+            const params = {
+                IN_CCUST: ccust || '139',
+                IN_IDPROCESS: idProcess
+            };
+
+            const res = await global.callStorePost('PRAXISMP', 'SQP05926', params);
+
+            const lstVals = (res && res.data && res.data.lstVals) ? res.data.lstVals : (res && res.lstVals) ? res.lstVals : {};
+            const response = lstVals.IO_REPONSE != null ? lstVals.IO_REPONSE : lstVals.IO_RESPONSE;
+            const message = (lstVals.IO_MESSAGE || '').toString().trim() || 'Reverse process completed.';
+
+            if (response === 1 || response === '1') {
+                Ext.toast({
+                    html: '<b>' + Ext.String.htmlEncode(message) + '</b>',
+                    title: 'Success',
+                    align: 't',
+                    closable: true,
+                    width: 320
+                });
+                if (grid.getStore() && grid.getStore().load) {
+                    grid.getStore().load();
+                }
+            } else {
+                Ext.MessageBox.show({
+                    title: 'Error',
+                    message: message || 'Reverse process failed.',
+                    icon: Ext.MessageBox.ERROR,
+                    buttons: Ext.MessageBox.OK
+                });
+            }
+        } catch (e) {
+            console.error('Error reversing process:', e);
+            global.Msg({msg: 'Error reversing process: ' + (e.message || 'Unknown error')});
+        } finally {
+            grid.setLoading(false);
+        }
+    },
+
+    onCellClickErrorsFound: function (view, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+        const me = this;
+        const grid = view.up('gridpanel');
+        if (!grid) return;
+        const column = grid.getVisibleColumnManager().getHeaderAtIndex(cellIndex);
+        if (!column || column.dataIndex !== 'ERROR_FOUND') {
+            return;
+        }
+        
+        const errorFound = record.get('ERROR_FOUND') || 0;
+        if (errorFound <= 0) {
+            return;
+        }
+        
+        const processId = record.get('A1955ENVIO') || '';
+        if (!processId) {
+            global.Msg({msg: 'Process ID not found'});
+            return;
+        }
+        
+        const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
+        if (!mainPanel) return;
+        
+        const searchParams = grid.searchParams || {};
+        
+        mainPanel.removeAll();
+        mainPanel.mask('Loading errors...');
+        
+        try {
+            const errorsFoundGrid = Ext.create('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.ErrorsFoundGrid', {
+                id: prototype.id + '-ErrorsFoundGrid',
+                processId: processId,
+                ccust: record.get('CCUST') || '139',
+                searchParams: searchParams
+            });
+            mainPanel.add(errorsFoundGrid);
+        } catch (err) {
+            console.error('Error opening Errors Found grid:', err);
+            global.Msg({msg: 'Error opening Errors Found grid'});
+        } finally {
+            mainPanel.unmask();
+        }
+    },
 
     
     setComboStore: function ( {cmp, data, valueField, displayField, value, addValueAll = true}){
