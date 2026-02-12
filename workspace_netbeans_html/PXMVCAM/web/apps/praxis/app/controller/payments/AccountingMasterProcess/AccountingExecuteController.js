@@ -10,28 +10,28 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.AccountingExe
         if (view.dataAccountingProcessor) {
             me.dataAccountingProcessor = view.dataAccountingProcessor;
         }
-        if (view.nexDatetAccounting) {
-            me.nexDatetAccounting = view.nexDatetAccounting;
+        if (view.nextDatetAccounting) {
+            me.nextDatetAccounting = view.nextDatetAccounting;
         }
     },
 
     afterRender: async function () {
         const me = this;
         
-        // Establecer valores por defecto de fechas usando nexDatetAccounting
-        if (me.nexDatetAccounting) {
+        // Establecer valores por defecto de fechas usando nextDatetAccounting
+        if (me.nextDatetAccounting) {
             const dateField = Ext.getCmp(prototype.idEX + '-filterDate');
             
             if (dateField ) {
                 try {
                     // Parsear el string YYYYMMDD a objeto Date
-                    const accountingDate = Ext.Date.parse(me.nexDatetAccounting, 'Ymd');
+                    const accountingDate = Ext.Date.parse(me.nextDatetAccounting, 'Ymd');
                     if (accountingDate) {
                         // Establecer el valor en ambos campos
                         dateField.setValue(accountingDate);
-                        console.log('Fechas establecidas correctamente:', me.nexDatetAccounting);
+                        console.log('Fechas establecidas correctamente:', me.nextDatetAccounting);
                     } else {
-                        console.warn('No se pudo parsear la fecha:', me.nexDatetAccounting);
+                        console.warn('No se pudo parsear la fecha:', me.nextDatetAccounting);
                     }
                 } catch (e) {
                     console.error('Error estableciendo fechas:', e);

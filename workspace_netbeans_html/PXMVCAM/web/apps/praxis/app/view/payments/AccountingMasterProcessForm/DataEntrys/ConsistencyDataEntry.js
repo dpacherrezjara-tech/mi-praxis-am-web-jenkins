@@ -182,17 +182,22 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Cons
                             id: prototype.idCN + '-gridSettlements',
                             border: false,
                             style: 'background: white',
-                            tbar: [
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'prx-icon-excel',
-                                    scale: 'small',
-                                    tooltip: 'Export to Excel',
-                                    listeners: {
-                                        click: 'onDownloadSettlements'
+                            tbar: {
+                                layout: {
+                                    pack: 'end'
+                                },
+                                items: [
+                                    {
+                                        xtype: 'button',
+                                        iconCls: 'prx-icon-excel',
+                                        scale: 'small',
+                                        tooltip: 'Export to Excel',
+                                        listeners: {
+                                            click: 'onDownloadSettlements'
+                                        }
                                     }
-                                }
-                            ],
+                                ]
+                            },
                             viewConfig: {
                                 enableTextSelection: true,
                                 stripeRows: true
@@ -312,17 +317,22 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Cons
                             id: prototype.idCN + '-gridComplements',
                             border: false,
                             style: 'background: white',
-                            tbar: [
-                                {
-                                    xtype: 'button',
-                                    iconCls: 'prx-icon-excel',
-                                    scale: 'small',
-                                    tooltip: 'Export to Excel',
-                                    listeners: {
-                                        click: 'onDownloadComplements'
+                            tbar: {
+                                layout: {
+                                    pack: 'end'
+                                },
+                                items: [
+                                    {
+                                        xtype: 'button',
+                                        iconCls: 'prx-icon-excel',
+                                        scale: 'small',
+                                        tooltip: 'Export to Excel',
+                                        listeners: {
+                                            click: 'onDownloadComplements'
+                                        }
                                     }
-                                }
-                            ],
+                                ]
+                            },
                             viewConfig: {
                                 enableTextSelection: true,
                                 stripeRows: true
