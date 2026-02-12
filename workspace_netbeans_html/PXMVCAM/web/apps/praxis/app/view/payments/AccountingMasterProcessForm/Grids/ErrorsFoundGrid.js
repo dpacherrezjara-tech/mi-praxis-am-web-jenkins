@@ -11,28 +11,34 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.Grids.ErrorsFou
         'Ext.Praxis.controller.payments.AccountingMasterProcess.ErrorsFoundGridController'
     ],
     controller: 'ErrorsFoundGridController',
-    tbar: [
-        {
-            xtype: 'button',
-            iconCls: 'prx-icon-back',
-            scale: 'small',
-            text: 'Back',
-            tooltip: 'Return to Accounting Master Process',
-            listeners: {
-                click: 'onClickBack'
-            }
+    tbar: {
+        layout: {
+            type: 'hbox',
+            pack: 'end' // Empuja todo el contenido al final (derecha)
         },
-        '->',
-        {
-            xtype: 'button',
-            iconCls: 'prx-icon-excel',
-            scale: 'small',
-            tooltip: 'Export to Excel',
-            listeners: {
-                click: 'onDownloadExcelErrors'
-            }
-        }
-    ],
+        items: [
+            {
+                xtype: 'button',
+                iconCls: 'prx-icon-back',
+                scale: 'small',
+                text: 'Back',
+                tooltip: 'Return to Accounting Master Process',
+                listeners: {
+                    click: 'onClickBack'
+                }
+            },
+            // '->',
+            {
+                xtype: 'button',
+                iconCls: 'prx-icon-excel',
+                scale: 'small',
+                tooltip: 'Export to Excel',
+                listeners: {
+                    click: 'onDownloadExcelErrors'
+                }
+            },
+        ]
+    },
     viewConfig: {
         stripeRows: true,
         enableTextSelection: true,

@@ -30,7 +30,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.AccountingMas
             const dataErrors = lstRs[3] || [];              // ERRORS - Result Set 3
             const dataStatus = lstRs[4] || [];              // STATUS - Result Set 4
 
-            const nexDatetAccounting = lstVals.IO_NEXT_DATE_ACCOUNTING;
+            const previousDatetAccounting = lstVals.IO_PREVIOUS_DATE_ACCOUNTING;
+            const nextDatetAccounting = lstVals.IO_NEXT_DATE_ACCOUNTING;
             const dateCalendarExist = lstVals.IO_DATE_CALENDAR_EXISTS;
 
             // Guardar datos en variables me. para uso en DataEntry y otros componentes
@@ -39,7 +40,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.AccountingMas
             me.dataComplements = dataComplements;
             me.dataErrors = dataErrors;
             me.dataStatus = dataStatus;
-            me.nexDatetAccounting = nexDatetAccounting;
+            me.nextDatetAccounting = nextDatetAccounting;
             me.dateCalendarExist = dateCalendarExist;
             
             // Actualizar combos
@@ -60,12 +61,13 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.AccountingMas
                 addValueAll: true });
 
             // Parsear el string YYYYMMDD a objeto Date
-            const accountingDate = Ext.Date.parse(nexDatetAccounting, 'Ymd');
-            if (accountingDate) {
-                dateAccountingFrom.setValue(accountingDate);
+            const previousDate = Ext.Date.parse(previousDatetAccounting, 'Ymd');
+            const accountingDate = Ext.Date.parse(nextDatetAccounting, 'Ymd');
+            if (accountingDate && previousDate) {
+                dateAccountingFrom.setValue(previousDate);
                 dateAccountingTo.setValue(accountingDate);
             } else {
-                console.warn('No se pudo parsear la fecha:', nexDatetAccounting);
+                console.warn('No se pudo parsear las fechas:', previousDatetAccounting, nextDatetAccounting);
             }
 
         } catch (e) {
@@ -126,7 +128,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.AccountingMas
             dataProcessors: me.dataProcessors || [],
             dataComplements: me.dataComplements || [],
             dataErrors: me.dataErrors || [],
-            nexDatetAccounting: me.nexDatetAccounting || '',
+            nextDatetAccounting: me.nextDatetAccounting || '',
         });
         dataEntry.show();
     },
@@ -219,7 +221,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingMasterProcess.AccountingMas
         const dataEntry = Ext.create('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.AccountingExecuteDataEntry', {
             id: prototype.id + '-AccountingExecuteDataEntry-1',
             dataAccountingProcessor: me.dataAccountingProcessor || [],
-            nexDatetAccounting: me.nexDatetAccounting || ''
+            nextDatetAccounting: me.nextDatetAccounting || ''
         });
         dataEntry.show();
     },

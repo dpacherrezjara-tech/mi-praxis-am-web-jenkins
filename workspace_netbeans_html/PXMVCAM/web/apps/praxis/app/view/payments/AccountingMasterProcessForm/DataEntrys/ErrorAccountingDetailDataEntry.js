@@ -533,7 +533,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Erro
                                         ]
                                     },
                                     {
-                                        text: 'Currency', dataIndex: 'SCURRENCY', width: 50,
+                                        text: 'Currency', dataIndex: 'SCURRENCY', width: 80,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
                                             return value;
