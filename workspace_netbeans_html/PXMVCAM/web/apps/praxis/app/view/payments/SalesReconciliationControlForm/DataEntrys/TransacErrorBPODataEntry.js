@@ -1644,12 +1644,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                     {
                                                         text: 'Status', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            const {stval} = record.data;
+                                                            const {STVAL} = record.data;
                                                             const opts = {
                                                                 '5': 'Chargeback',
                                                                 '6': 'Reverse Chbk'
                                                             };
-                                                            return opts[stval] || '';
+                                                            return opts[STVAL] || '';
                                                         }
                                                     },
                                                     {
@@ -1661,26 +1661,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Cod', dataIndex: 'codebank', width: 45
+                                                                text: 'Cod', dataIndex: 'CODEBANK', width: 45
                                                             },
                                                             {
-                                                                text: 'Number', dataIndex: 'cardnbr', width: 130
+                                                                text: 'Number', dataIndex: 'CARDNBR', width: 130
                                                             },
                                                             {
-                                                                text: 'Auth', dataIndex: 'authnbr', width: 55
+                                                                text: 'Auth', dataIndex: 'AUTHNBR', width: 55
                                                             },
                                                             {
-                                                                text: 'Curr', dataIndex: 'mfop', width: 50
+                                                                text: 'Curr', dataIndex: 'MFOP', width: 50
                                                             },
                                                             {
-                                                                text: 'Amount', dataIndex: 'vfop', width: 100,
+                                                                text: 'Amount', dataIndex: 'VFOP', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
                                                                     return Ext.util.Format.number(value, '0,000.00');
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Auth<br>Amount', dataIndex: 'autamount', width: 100,
+                                                                text: 'Auth<br>Amount', dataIndex: 'AUTAMOUNT', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
                                                                     return Ext.util.Format.number(value, '0,000.00');
@@ -1689,25 +1689,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         ]
                                                     },
                                                     {
-                                                        text: 'Doc.<br>Type', width: 65, dataIndex: 'tpdoc'
+                                                        text: 'Doc.<br>Type', width: 65, dataIndex: 'TPDOC'
                                                     },
                                                     {
-                                                        text: 'Ticket', width: 110,
+                                                        text: 'Ticket', width: 110, dataIndex: 'TICKET',
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background-color:#FCF6DC;font-weight:bold;";
-                                                            const {ccia, forma, serie} = record.data;
-                                                            const ticket = ccia + forma + serie;
-                                                            return ticket;
+                                                            return value;
                                                         }
                                                     },
                                                     {
-                                                        text: 'PNR', width: 70, dataIndex: 'pnr'
+                                                        text: 'PNR', width: 70, dataIndex: 'PNR'
                                                     },
                                                     {
-                                                        text: 'Sale<br>Date', width: 80, dataIndex: 'sentdate'
+                                                        text: 'Sale<br>Date', width: 80, dataIndex: 'SENTDATE'
                                                     },
                                                     {
-                                                        text: 'Status<br>Reverse', width: 90, dataIndex: 'reversa',
+                                                        text: 'Status<br>Reverse', width: 90, dataIndex: 'REVERSA',
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (value === 'Y') {
                                                                 value = 'Reversed';
@@ -1720,8 +1718,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                     {
                                                         text: 'Usages', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            const {usopxcp1, usopxcp2, usopxcp3, usopxcp4} = record.data;
-                                                            const usages = usopxcp1 + usopxcp2 + usopxcp3 + usopxcp4;
+                                                            const {USOPXCP1, USOPXCP2, USOPXCP3, USOPXCP4} = record.data;
+                                                            const usages = USOPXCP1 + USOPXCP2 + USOPXCP3 + USOPXCP4;
                                                             return usages;
                                                         }
                                                     }

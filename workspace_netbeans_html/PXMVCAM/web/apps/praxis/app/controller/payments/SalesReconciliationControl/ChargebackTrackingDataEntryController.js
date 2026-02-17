@@ -258,12 +258,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
                     }
                 });
     },
-    onUpdateSale: function () {
+    onUpdateCHBKSale: function () {
         const me = this;
         const grid = Ext.getCmp(prototype.idCHBK + '-gridSaleTracking');
+        console.log("grid",grid);
         let selected = grid.getSelectionModel().getSelected();
-        let sale = selected.filter(x => x.data.TRANSTYPE.trim() === 'SALE');
-        let chbk = selected.filter(x => x.data.TRANSTYPE.trim() === 'CHBK');
+        console.log("selected",selected);
+        console.log("selected.items.data",selected.items.data);
+        let selectedItems = selected.items || selected;
+        console.log("selectedItems",selectedItems);
+        let sale = selectedItems.filter(x => x.data.TRANSTYPE.trim() === 'SALE');
+        let chbk = selectedItems.filter(x => x.data.TRANSTYPE.trim() === 'CHBK');
+
+        console.log("Sales filtradas:", sale);
+        console.log("CHBK filtrados:", chbk);
+
         if (sale.length === 0 || sale.length > 1) {
             global.Msg({msg: 'You must select one sale'});
             return;
@@ -273,7 +282,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
             global.Msg({msg: 'You must select one chargeback'});
             return;
         }
-        let params = me.formatUpdateSaleChbk(sale,chbk);
+        let params = me.formatUpdateSaleChbk(sale[0].data,chbk[0].data);
         Ext.Msg.show(
                 {
                     title: '.:PRAXIS:.',
@@ -284,7 +293,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
-                            
+                            me.maintenanceChbkSale(params);
                         }
                     }
                 });
@@ -354,7 +363,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
             IN_TDOCS: sale.TDOC,
             IN_AREFNBRS: sale.AREFNBR
         };
-        console.log('Parametros Update Sale/CHBK: ',params);
+        console.log('Parameters Update Sale/CHBK: ',params);
         return params;
     },
     //</editor-fold>
@@ -442,20 +451,34 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
         }
     },
     maintenanceChbkSale:async function(params){
-        this.view.mask('Loading...');
-        const res = await fetch(`${me.url}/maintenanceChbkSaleConcil`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(params)
-        });
-        if(res.ok){
-            const data = await res.json();
-            const {SQLRES,SQLMSG} = data;
-            global.Msg({msg:SQLMSG});
+        const me = this;
+        const dataEntry = Ext.getCmp(prototype.id + '-TransacErrorBPODataEntry-1');
+        let notifier = new AWN();
+        let success = false;
+        let message = "" ;
+        me.view.mask('Loading...');
+        try{
+            const res = await global.callStorePost('PRAXISMP', 'SQP05313', params);
+                // console.log(res);
+            
+            success = res.data.lstVals.IO_RESPONSE === 1 ;
+            message = res.data.lstVals.IO_MESSAGE ;
+            
+            if ( success ) {
+                notifier.success(message);
+            }else{
+                notifier.warning('Error: ' + message);
+            }
+        } catch (e) {
+            console.error('Error of process: ', e);
+            notifier.alert('System Error');
+        } finally {
+            me.view.unmask();
         }
-        this.view.unmask();
+        if ( success ) {
+            dataEntry.getController().afterRender();
+            me.view.close();
+        }
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
