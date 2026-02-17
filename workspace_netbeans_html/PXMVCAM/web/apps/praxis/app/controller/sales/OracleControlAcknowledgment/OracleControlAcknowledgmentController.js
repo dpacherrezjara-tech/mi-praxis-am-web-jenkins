@@ -126,7 +126,8 @@ Ext.define('Ext.Praxis.controller.sales.OracleControlAcknowledgment.OracleContro
                 ["GENET", "Genet"],
                 ["WORLDPAY", "Worldpay"],
                 ["PLUSGRADE", "Plusgrade"],
-                ["DIFFC","DIFFC"]
+                ["DIFFC","DIFFC"],
+                ["GETNET", "Getnet"]
             ]
         }));
         cboModulo.setValue("");
