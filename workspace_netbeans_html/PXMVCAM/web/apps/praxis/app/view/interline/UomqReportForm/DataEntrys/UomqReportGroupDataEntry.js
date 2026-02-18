@@ -199,11 +199,30 @@ Ext.define('Ext.Praxis.view.interline.UomqReportForm.DataEntrys.UomqReportGroupD
                                                                 margin: '2 5 2 5',
                                                                 labelStyle: 'text-align:left;font-weight: bolder;',
                                                                 fieldStyle: 'text-align:center;',
+                                                                id: prototype.idDE + '-txtGroup',
                                                                 editable: true,
                                                                 fieldLabel: 'Group',
                                                                 labelWidth: 70,
                                                                 width: 200,
-                                                                maxLength: 30
+                                                                maxLength: 6,
+                                                                maskRe: /[0-9]/
+                                                            },
+                                                            {
+                                                                xtype: 'button',
+                                                                id: prototype.idDE + '-searchGroup',
+                                                                iconCls: 'prx-icon-search',
+                                                                tooltip: 'Search',
+                                                                listeners: {
+                                                                    click: 'onSearchGroup'
+                                                                }
+                                                            },
+                                                            {
+                                                                xtype: 'button',
+                                                                iconCls: 'prx-icon-excel',
+                                                                tooltip: 'Export to Excel',
+                                                                listeners: {
+                                                                    click: 'exportGroups'
+                                                                }
                                                             }
                                                         ]
                                                     },
@@ -221,8 +240,23 @@ Ext.define('Ext.Praxis.view.interline.UomqReportForm.DataEntrys.UomqReportGroupD
                                                                 width: 60
                                                             },
                                                             {text: 'Group', dataIndex: 'GRUPO', flex: 1},
-                                                            {text: 'Status', dataIndex: 'GRSTS', width: 120},
-                                                            {text: 'Tickets', dataIndex: 'QTKTS', width: 100},
+                                                            {text: 'Status', dataIndex: 'GRSTS', width: 120,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    const opts = {
+                                                                        'Y': () => {
+                                                                            metaData.style = "background-color:#83EB94;color:#4C4E57;font-weight:bold";
+                                                                            return 'Found';
+                                                                        },
+                                                                        'N': () => {
+                                                                            metaData.style = "background-color:#F54927;color:#ffffff;font-weight:bold";
+                                                                            return 'Not Found';
+                                                                        }
+                                                                    };
+                                                                    const key = (value || '').trim();
+                                                                    return opts[key] ? opts[key]() : 'Error';
+                                                                }
+                                                            },
+                                                            {text: 'Coupons', dataIndex: 'QTKTS', width: 100},
                                                             {text: 'Under', dataIndex: 'QUNDER', width: 100},
                                                             {text: 'Over', dataIndex: 'QOVER', width: 100},
                                                             {text: 'Match', dataIndex: 'QMATCH', width: 100}
@@ -245,6 +279,47 @@ Ext.define('Ext.Praxis.view.interline.UomqReportForm.DataEntrys.UomqReportGroupD
                                                     border: false,
                                                     id: prototype.idDE + '-gridDetail',
                                                     emptyText: 'No documents available',
+                                                    tbar: {
+                                                        xtype: 'panel',
+                                                        id: prototype.idDE + '-boxCoupon',
+                                                        layout: {
+                                                            type: 'hbox',
+                                                            pack: 'end'
+                                                        },
+                                                        width: '100%',
+                                                        items: [
+                                                            {
+                                                                xtype: 'textfield',
+                                                                margin: '2 5 2 5',
+                                                                labelStyle: 'text-align:left;font-weight: bolder;',
+                                                                fieldStyle: 'text-align:center;',
+                                                                id: prototype.idDE + '-txtTicket',
+                                                                editable: true,
+                                                                fieldLabel: 'Ticket',
+                                                                labelWidth: 70,
+                                                                width: 200,
+                                                                maxLength: 6,
+                                                                maskRe: /[0-9]/
+                                                            },
+                                                            {
+                                                                xtype: 'button',
+                                                                id: prototype.idDE + '-searchTicket',
+                                                                iconCls: 'prx-icon-search',
+                                                                tooltip: 'Search',
+                                                                listeners: {
+                                                                    click: 'onSearchTicket'
+                                                                }
+                                                            },
+                                                            {
+                                                                xtype: 'button',
+                                                                iconCls: 'prx-icon-excel',
+                                                                tooltip: 'Export to Excel',
+                                                                listeners: {
+                                                                    click: 'exportCoupons'
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
                                                     columns: {
                                                         defaults: {
                                                             align: 'center',
@@ -252,6 +327,12 @@ Ext.define('Ext.Praxis.view.interline.UomqReportForm.DataEntrys.UomqReportGroupD
                                                             sortable: true
                                                         },
                                                         items: [
+                                                            {
+                                                                text: 'RN',
+                                                                locked: true,
+                                                                xtype: 'rownumberer',
+                                                                width: 60
+                                                            },
                                                             {text: 'Group', dataIndex: 'GRUPO', width: 100},
                                                             {text: 'Ticket', dataIndex: 'TICKET', width: 160},
                                                             {text: 'Coupon', dataIndex: 'CUPON', width: 60},
@@ -261,8 +342,27 @@ Ext.define('Ext.Praxis.view.interline.UomqReportForm.DataEntrys.UomqReportGroupD
                                                             {text: 'Tax', dataIndex: 'TAX', width: 100},
                                                             {text: 'Net', dataIndex: 'NETO', width: 100},
                                                             {text: 'Comm.', dataIndex: 'COMISI', width: 100},
-                                                            {text: 'Flag', dataIndex: 'FLAG', width: 100}
-                                                            
+                                                            {text: 'Flag', dataIndex: 'FLAG', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    const opts = {
+                                                                        'U': () => {
+                                                                            metaData.style = "background-color:#C291E3;color:#4C4E57;font-weight:bold";
+                                                                            return 'Under';
+                                                                        },
+                                                                        'O': () => {
+                                                                            metaData.style = "background-color:#F54927;color:#ffffff;font-weight:bold";
+                                                                            return 'Over';
+                                                                        },
+                                                                        'M': () => {
+                                                                            metaData.style = "background-color:#F0E537;color:#4C4E57;font-weight:bold";
+                                                                            return 'Match';
+                                                                        }
+                                                                    };
+                                                                    const key = (value || '').trim();
+                                                                    return opts[key] ? opts[key]() : 'Error';
+                                                                }
+                                                            }
+
                                                         ]
                                                     },
                                                     bbar: {

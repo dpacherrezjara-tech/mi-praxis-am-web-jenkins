@@ -24,30 +24,12 @@ Ext.define('Ext.Praxis.view.interline.UomqReportForm.Options', {
                             }
                         },
                         {
-                            xtype: 'button',
-                            id: prototype.id + '-btnFilter',
-                            iconCls: 'prx-icon-filter',
-                            tooltip: 'Display filter',
-                            listeners: {
-                                click: 'imgFilter_clickHandler'
-                            }
-                        },
-                        {
                             xtype:'button',
-                            id: prototype.id + '-btnDisplay',
-                            icon: 'resources/img/botones/FalseChart.png',
-                            tooltip: 'Display Charts',
+                            id: prototype.id + '-btnProcess',
+                            iconCls: 'prx-icon-image-process',
+                            tooltip: 'Process',
                             listeners: {
-                                click: 'btnDisplay_click'
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnExcel',
-                            iconCls: 'prx-icon-excel',
-                            tooltip: 'Export to Excel',
-                            listeners: {
-                                click: 'imgExcel_clickHandler'
+                                click: 'onProcessClick'
                             }
                         },
                         {
@@ -56,7 +38,7 @@ Ext.define('Ext.Praxis.view.interline.UomqReportForm.Options', {
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options',
                             listeners: {
-                                click: 'imgClear_clickHandler'
+                                click: 'onClearFilters'
                             }
                         }
                     ]

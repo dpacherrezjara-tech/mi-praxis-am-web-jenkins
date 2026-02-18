@@ -18,5 +18,14 @@ Ext.define('Ext.Praxis.controller.interline.UomqReport.UomqReportController', {
             searchParams: params
         });
         mainPanel.add(gridData);
+    },
+    onProcessClick: function(){
+        const newWin = Ext.create('Ext.Praxis.view.interline.UomqReportForm.DataEntrys.UoqmReportProcessDataEntry',{
+            id: prototype.id + '-UoqmReportProcessDataEntry-1'
+        });
+        newWin.show();
+    },
+    onClearFilters: function(){
+        Ext.getCmp(prototype.id + '-formFilters').getForm().reset();
     }
 });

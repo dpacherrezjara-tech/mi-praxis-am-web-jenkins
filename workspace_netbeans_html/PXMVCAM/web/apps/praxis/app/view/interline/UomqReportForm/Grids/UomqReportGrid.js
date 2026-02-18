@@ -48,22 +48,37 @@ Ext.define('Ext.Praxis.view.interline.UomqReportForm.Grids.UomqReportGrid', {
             {text: 'ID', dataIndex: 'IDFILE', width:100},
             {text: 'Client', dataIndex: 'CCUST', width:100},
             {text: 'Proccesing<br>Date', dataIndex: 'PRDA', width:100},
-            {text: 'Input', dataIndex: 'TIPO', width:100},
+            {text: 'Input', dataIndex: 'TIPO', width:110,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    const opts = {
+                        'R': () => {
+                            metaData.style = "background-color:#2A6DB5;color:#ffffff;font-weight:bold";
+                            return 'Range of Groups';
+                        },
+                        'E': () => {
+                            metaData.style = "background-color:#2AB53A;color:#ffffff;font-weight:bold";
+                            return 'Excel File';
+                        }
+                    };
+                    const key = (value || '').trim();
+                    return opts[key] ? opts[key]() : 'Error';
+                }
+            },
             {text: 'Qty<br>Groups', dataIndex: 'QGRUPOS', width:100},
             {text: 'Status', dataIndex: 'STSPRO', flex:1,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     const opts = {
                         'P': () => {
-                            metaData.style = "background-color:#E6E3E3;color:#4C4E57;font-weight:bold";
-                            return 'Processing';
+                            metaData.tdAttr = `data-qtip="Processing"`;
+                            return '<img src="resources/img/icon/16x16/loading_robot.png"/>';
                         },
                         'L': () => {
-                            metaData.style = "background-color:#638be1;color:#ffffff;font-weight:bold";
-                            return 'Processed';
+                            metaData.tdAttr = `data-qtip="Completed"`;
+                            return '<img src="resources/img/icon/16x16/check.png"/>';
                         },
                         'E': () => {
-                            metaData.style = "background-color:#FFF091;color:#ce3232;font-weight:bold";
-                            return 'Error';
+                            metaData.tdAttr = `data-qtip="Error"`;
+                            return '<img src="resources/img/icon/delete.png"/>';
                         }
                     };
                     const key = (value || '').trim();
