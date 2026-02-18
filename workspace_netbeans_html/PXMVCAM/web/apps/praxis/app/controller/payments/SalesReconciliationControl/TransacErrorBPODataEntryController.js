@@ -1040,19 +1040,47 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         if (me.bean.transtype === 'CHBK') {
             gridDesglose.hide();
             gridDesgloseCHBK.show();
-            const res = await fetch(`${me.url}/loadErrorTransactionBPODesgloseCHBK?${new URLSearchParams(params)}`);
-            if (res.ok) {
-                const data = await res.json();
-                console.log(data);
-                me.dataDesglose = data.response;
+            // const res = await fetch(`${me.url}/loadErrorTransactionBPODesgloseCHBK?${new URLSearchParams(params)}`);
+            // if (res.ok) {
+            //     const data = await res.json();
+            //     console.log(data);
+            //     me.dataDesglose = data.response;
+            //     const storeDesglose = Ext.create('Ext.data.Store', {
+            //         data: data.response
+            //     });
+            //     gridDesgloseCHBK.setStore(storeDesglose);
+            //     const qtyc = Ext.getCmp(prototype.idDE + '-totDCTickets');
+            //     const amtc = Ext.getCmp(prototype.idDE + '-totDCAmount');
+            //     qtyc.setValue(data.response.length);
+            //     amtc.setValue(Ext.util.Format.number(storeDesglose.sum('vfop'), '0,000.00'));
+            // }
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05072', params);
+            if (res.lstRs.length > 0) {
+                me.dataDesglose = res.lstRs.at(0);
+                me.dataRelationSettlement = res.lstRs.at(1);
+//                const storeDesglose = Ext.data.Store({
+//                    data: res.lstRs.at(0)
+//                });c
                 const storeDesglose = Ext.create('Ext.data.Store', {
-                    data: data.response
+                    data: res.lstRs.at(0)
                 });
                 gridDesgloseCHBK.setStore(storeDesglose);
+                console.log('me.dataDesglose.response',me.dataDesglose);
+                
+                // ocultar select
+                let proceedVal = me.bean.stprocede === "1" ? true : false;
+                gridDesglose.down('gridcolumn[dataIndex=selected]').setVisible(!proceedVal);
+                
+                const storeRelationSettlement = Ext.create('Ext.data.Store', {
+                    data: res.lstRs.at(1)
+                });
+                gridRelationSettlement.setStore(storeRelationSettlement);
+                
                 const qtyc = Ext.getCmp(prototype.idDE + '-totDCTickets');
                 const amtc = Ext.getCmp(prototype.idDE + '-totDCAmount');
-                qtyc.setValue(data.response.length);
-                amtc.setValue(Ext.util.Format.number(storeDesglose.sum('vfop'), '0,000.00'));
+                qtyc.setValue(me.dataDesglose.length);
+                amtc.setValue(Ext.util.Format.number(storeDesglose.sum('VFOP'), '0,000.00'));
+                
             }
         } else {
             gridDesglose.show();
