@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.view.interline.UomqReportForm.DataEntrys.UomqReportGroupD
                 margin: '2 2 2 2',
                 width: '100%',
                 style: {
-                    backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
+                    backgroundColor: '#BAE1F5' // Cambiar el color de fondo a gris claro (#f0f0f0)
                 },
                 defaults: {
                     xtype: 'panel',
@@ -68,7 +68,7 @@ Ext.define('Ext.Praxis.view.interline.UomqReportForm.DataEntrys.UomqReportGroupD
                                     fieldLabel: 'ID',
                                     name: 'IDFILE',
                                     labelWidth: 20,
-                                    width: 180
+                                    width: 150
                                 },
                                 {
                                     fieldLabel: 'Proc. Date',
@@ -132,7 +132,7 @@ Ext.define('Ext.Praxis.view.interline.UomqReportForm.DataEntrys.UomqReportGroupD
                     ]
                 },
                 {
-                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Details</span>',
+                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:9px;">Details</span>',
                     defaults: {},
                     style: {
                         backgroundColor: '#9ebbd3ff' // Cambiar el color de fondo a gris claro (#f0f0f0)
@@ -373,6 +373,37 @@ Ext.define('Ext.Praxis.view.interline.UomqReportForm.DataEntrys.UomqReportGroupD
                                             ]
                                         },
                                     ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:9px;">User Details</span>',
+                    items: [
+                        {
+                            layout: {
+                                type: 'hbox',
+                                pack: 'center'
+                            },
+                            items: [
+                                {
+                                    fieldLabel: 'User Create',
+                                    name: 'USCR',
+                                    labelWidth: 100,
+                                    width: 200
+                                },
+                                {
+                                    fieldLabel: 'Date Create',
+                                    name: 'FECR',
+                                    labelWidth: 100,
+                                    width: 180
+                                },
+                                {
+                                    fieldLabel: 'Hour Create',
+                                    name: 'HOCR',
+                                    labelWidth: 100,
+                                    width: 180
                                 }
                             ]
                         }

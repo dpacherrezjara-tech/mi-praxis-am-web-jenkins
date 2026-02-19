@@ -81,5 +81,8 @@ Ext.define('Ext.Praxis.controller.interline.UomqReport.UoqmReportProcessDataEntr
             panelGr.show();
             panelEx.hide();
         }
+    },
+    onCancelClick: function(){
+        this.view.close();
     }
 });
