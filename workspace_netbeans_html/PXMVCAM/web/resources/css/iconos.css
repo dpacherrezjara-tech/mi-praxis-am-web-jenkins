@@ -110,6 +110,9 @@
 .prx-icon-pdf {
  background-image: url("../img/botones/16x16/pdf.png");
 }
+.prx-icon-exchangerate {
+  background-image: url("../img/botones/16x16/exchangerate.png");
+ }
 .prx-icon-prorrate {
  background-image: url("../img/botones/prorrate.png");
 }
