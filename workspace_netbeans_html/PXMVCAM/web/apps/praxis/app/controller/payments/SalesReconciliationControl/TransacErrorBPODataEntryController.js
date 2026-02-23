@@ -322,101 +322,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     //<editor-fold defaultstate="collapsed" desc="Handlers">
     reloadGridBPO: function () {
         const me = this;
-        const column = Ext.getCmp(prototype.idDE + '-colExchangeRateBPO');
-        column.setVisible(false);
         me.scanCreditCard(me.bean);
     },
-    toggleCalculateExchangeRate: function () {
-        const me = this;
-        const grid = Ext.getCmp(prototype.idDE + '-gridBPO');
-        const store = grid.getStore();
-        const column = Ext.getCmp(prototype.idDE + '-colExchangeRateBPO');
-        
-        if (!column) return;
-    
-        // Toggle
-        if (column.isVisible()) {
-            store.each(function (record) {
-                record.set('EXCHANGERT', 1.00);
-            });
-            column.setVisible(false);
-        } else {
-            me.calculateExchangeRate(store);
-
-            // 4. Mostrar la columna
-            column.setVisible(true);
-        }
-
-        // Refrescar la vista para asegurar que los renderers se disparen
-        grid.getView().refresh();
-
-        me.calculateSumGridBPO();
-    },
-    calculateExchangeRate: function (store) {
-        const me = this;
-        const currencySettlement = me.bean.scurrency; 
-        const totalSettlement = me.bean.tgrosamoun; 
-
-        let sumSameCurrency = 0;
-        let sumOtherCurrency = 0;
-
-        // 1. Calcular acumulados
-        store.each(function (record) {
-            if (record.get('scurrency') === currencySettlement) {
-                sumSameCurrency += record.get('svfops');
-            } else {
-                sumOtherCurrency += record.get('svfops');
-            }
-        });
-
-        // 2. Calcular el Exchange Rate (TC)
-        const baseCurrencyDifference = totalSettlement - sumSameCurrency;
-        let calculatedExchangeRate = 0;
-
-        if (sumOtherCurrency > 0) {
-            calculatedExchangeRate = baseCurrencyDifference / sumOtherCurrency;
-        }
-
-        // 3. Aplicar valores al store
-        store.each(function (record) {
-            if (record.get('scurrency') === currencySettlement) {
-                record.set('EXCHANGERT', 1.00);
-            } else {
-                record.set('EXCHANGERT', calculatedExchangeRate);
-            }
-        });
-    },
-    calculateSumGridBPO: function() {
-        const me = this;
-        const grid = Ext.getCmp(prototype.idDE + '-gridBPO');
-        const bpoStore = grid.getStore();
-        
-        let totalAmount = 0; 
-    
-        // Recorremos el store para calcular la sumatoria de los montos convertidos
-        bpoStore.each(function (record) {
-            const amount = record.get('svfops') || record.get('SVFOPS') || 0;
-            const rate = record.get('EXCHANGERT') || 1;
-            
-            // Validamos que el rate no sea 0 para no anular el monto
-            const validRate = (rate === 0) ? 1.00 : rate;
-
-            totalAmount += (amount * validRate);
-        });
-    
-        // Actualizamos los campos de totales en la interfaz
-        Ext.getCmp(prototype.idDE + '-totTickets').setValue(bpoStore.getCount());
-        Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number( totalAmount, '0,000.00'));
-    },
     onDeleteRecordBPO: function (grid, rowIndex, colIndex) {
-        const me = this;
         let registro = grid.getStore().getAt(rowIndex);
         if (registro) {
             grid.getStore().remove(registro);
         }
-        const store = grid.getStore();
-        me.calculateExchangeRate(store);
-        me.calculateSumGridBPO();
     },
     onAddAdjustment: function (grid, rowIndex, colIndex) {
         let registro = grid.getStore().getAt(rowIndex).data;
@@ -568,116 +480,41 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     }
                 });
     },
-    onUpdateClick: async function (btn) {
+    onUpdateClick: function (btn) {
         const me = this;
         let params = me.formatUpdateParams();
         let msgAdd = "";
         if (params.detail.filter(x => x.SCURRENCY !== params.IN_SCURRENCY).length > 0) {
-            msgAdd = "<b>One or more tickets have differents currency.</b>";
-            // global.Msg({msg: 'One or more tickets have differents currency!'});
-            // return;
+            global.Msg({msg: 'One or more tickets have differents currency!'});
+            return;
         }
         if (params.detail.length === 0) {
 //            global.Msg({msg: 'You must have at least one ticket.'});  
-            msgAdd = "<b>You haven't any ticket. The status will be changed to Stand By.</b>";
+            msgAdd = "You haven't any ticket. The status will be changed to Stand By. ";
         } else if (params.difference !== 0) {
 //            global.Msg({msg: 'There are differences in reconciliation.'});
 //            return;
-            msgAdd = '<b>There are differences in reconciliation.</b>';
+            msgAdd = 'There are differences in reconciliation. ';
         }
         if (params.ajustes > 0 && params.IN_CODADJU === '') {
             global.Msg({msg: 'Unidentified Adjustment.'});
             return;
         }
-
         Ext.Msg.show(
-            {
-                title: '.:PRAXIS:.',
-                msg: msgAdd + ' Are you sure to update?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                animateTarget: btn,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function (btn) {
-                    if (btn === 'yes') {
-                        me.updateReconciliation(params);
-                        // me.MaintenanceA4331(params);
+                {
+                    title: '.:PRAXIS:.',
+                    msg: msgAdd + 'Are you sure to update?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            me.MaintenanceA4331(params);
+                        }
                     }
-                }
-            });
-    },
-    updateReconciliation: async function (params) {
-
-        const me = this;
-        me.view.mask('Loading...');
-        let status =  0;
-        let message = '';
-
-        // const gridBPO = Ext.getCmp(prototype.idDE + '-gridBPO');
-        // const storeDataReconciliation = gridBPO.getStore().getData().items;
-        
-        // console.log('params.detail',params.detail);
-
-        try{
-            let recs = params.detail.map(x => {
-                return x
-            });
-
-            // console.log('recs', recs);
-
-            const tmp = await global.loadRecordsOnTable('PRAXISMP', 'XTEMPO', recs);
-            // console.log('tmp', tmp);
-
-            let response = {
-                IN_CUUID: tmp.cuuid,
-                IN_FUUID: tmp.fuuid
-            };
-            console.log('response', response);
-            
-            // store reconciliation
-            params.IN_CUUID = response.IN_CUUID;
-            params.IN_FUUID = response.IN_FUUID;
-            
-            const res = await global.callStorePost('PRAXISMP', 'SQP05048 ', params);
-            console.log(res); 
-
-            status = res.data.lstVals.IO_RESPONSE ;
-            message = res.data.lstVals.IO_MESSAGE ;
-
-            console.log('status', status);
-            console.log('message', message);
- 
-
-        } catch (e) {
-            console.log(e)
-            global.Msg({msg: 'Error'});
-            me.view.close();
-            return;
-        } finally {
-            me.view.unmask();
-        }
-
-        if (status === 1) {
-            Ext.toast({
-                html: `<b>${message}</b>`,
-                title: 'Notification',
-                align: 't',
-                closable: true,
-                width: 300,
-                timeout: 10000 // 10 segundos
-            });
-            me.reloadErrorGrid();
-            me.afterRender();
-        } else {
-            Ext.MessageBox.show({
-                title: 'Error',
-                message: 'Error in Update: ' || message ,
-                icon: Ext.MessageBox.ERROR,
-                buttons: Ext.MessageBox.OK
-            });
-        }
-
+                });
     },
     MaintenanceA4331: async function (params) {
         const me = this;
@@ -808,7 +645,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             let added = 0;
             let repeats = 0;
             data.response.forEach(obj => {
-                obj.EXCHANGERT = 1.00 ;
                 let repetido = dataStore.some(d =>
                     d.data.ccia === obj.ccia &&
                             d.data.forma === obj.forma &&
@@ -828,12 +664,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     repeats++;
                 }
             });
-            // Ext.getCmp(prototype.idDE + '-totTickets').setValue(bpoStore.getCount());
-            // Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(bpoStore.sum('svfops'), '0,000.00'));
-            
-            me.calculateExchangeRate(bpoStore);
-            me.calculateSumGridBPO();
-
+            Ext.getCmp(prototype.idDE + '-totTickets').setValue(bpoStore.getCount());
+            Ext.getCmp(prototype.idDE + '-totAmount')
+                    .setValue(Ext.util.Format.number(bpoStore.sum('svfops'), '0,000.00'));
             Ext.toast({
                 html: `<b>${added} Tickets were added.<br> ${repeats} Repeated or blocked.</b>`,
                 title: 'Notification',
@@ -1207,47 +1040,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         if (me.bean.transtype === 'CHBK') {
             gridDesglose.hide();
             gridDesgloseCHBK.show();
-            // const res = await fetch(`${me.url}/loadErrorTransactionBPODesgloseCHBK?${new URLSearchParams(params)}`);
-            // if (res.ok) {
-            //     const data = await res.json();
-            //     console.log(data);
-            //     me.dataDesglose = data.response;
-            //     const storeDesglose = Ext.create('Ext.data.Store', {
-            //         data: data.response
-            //     });
-            //     gridDesgloseCHBK.setStore(storeDesglose);
-            //     const qtyc = Ext.getCmp(prototype.idDE + '-totDCTickets');
-            //     const amtc = Ext.getCmp(prototype.idDE + '-totDCAmount');
-            //     qtyc.setValue(data.response.length);
-            //     amtc.setValue(Ext.util.Format.number(storeDesglose.sum('vfop'), '0,000.00'));
-            // }
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05072', params);
-            if (res.lstRs.length > 0) {
-                me.dataDesglose = res.lstRs.at(0);
-                me.dataRelationSettlement = res.lstRs.at(1);
-//                const storeDesglose = Ext.data.Store({
-//                    data: res.lstRs.at(0)
-//                });c
+            const res = await fetch(`${me.url}/loadErrorTransactionBPODesgloseCHBK?${new URLSearchParams(params)}`);
+            if (res.ok) {
+                const data = await res.json();
+                console.log(data);
+                me.dataDesglose = data.response;
                 const storeDesglose = Ext.create('Ext.data.Store', {
-                    data: res.lstRs.at(0)
+                    data: data.response
                 });
                 gridDesgloseCHBK.setStore(storeDesglose);
-                console.log('me.dataDesglose.response',me.dataDesglose);
-                
-                // ocultar select
-                let proceedVal = me.bean.stprocede === "1" ? true : false;
-                gridDesglose.down('gridcolumn[dataIndex=selected]').setVisible(!proceedVal);
-                
-                const storeRelationSettlement = Ext.create('Ext.data.Store', {
-                    data: res.lstRs.at(1)
-                });
-                gridRelationSettlement.setStore(storeRelationSettlement);
-                
                 const qtyc = Ext.getCmp(prototype.idDE + '-totDCTickets');
                 const amtc = Ext.getCmp(prototype.idDE + '-totDCAmount');
-                qtyc.setValue(me.dataDesglose.length);
-                amtc.setValue(Ext.util.Format.number(storeDesglose.sum('VFOP'), '0,000.00'));
-                
+                qtyc.setValue(data.response.length);
+                amtc.setValue(Ext.util.Format.number(storeDesglose.sum('vfop'), '0,000.00'));
             }
         } else {
             gridDesglose.show();
@@ -1302,42 +1107,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                         }
                     }
 
+//
                 
                 const storeRelationSettlement = Ext.create('Ext.data.Store', {
                     data: res.lstRs.at(1)
                 });
                 gridRelationSettlement.setStore(storeRelationSettlement);
                 
-                // Total Values
-                const columnExchangeRateDesglose = Ext.getCmp(prototype.idDE + '-colExchangeRateDesglose');
-                const quantityTicketField = Ext.getCmp(prototype.idDE + '-totDTickets');
-                const totalAmountField = Ext.getCmp(prototype.idDE + '-totDAmount');
-                let totalAmount = 0;
-                let viewColumnExchangeRate = false;
-
-                // Calculate Total Amount
-                storeDesglose.each(function (record) {
-                    const amount = record.get('SVFOPS') || 0.00;
-                    const rate = record.get('EXCHANGERT') || 1.00;
-
-                    // Validamos que el rate no sea 0 para no anular el monto
-                    const validRate = (rate === 0) ? 1.00 : rate;
-
-                    totalAmount += (amount * validRate);
-                    // Validar si se debe activar columna de Exhange Rate
-                    if ( viewColumnExchangeRate === false && validRate !== 1.00 ){
-                        viewColumnExchangeRate = true;
-                    }
-                });
-
-                columnExchangeRateDesglose.setVisible(viewColumnExchangeRate);
-                quantityTicketField.setValue(me.dataDesglose.length);
-                totalAmountField.setValue(Ext.util.Format.number(totalAmount, '0,000.00'));
-
+                const qty = Ext.getCmp(prototype.idDE + '-totDTickets');
+                const amt = Ext.getCmp(prototype.idDE + '-totDAmount');
+                qty.setValue(me.dataDesglose.length);
+                amt.setValue(Ext.util.Format.number(storeDesglose.sum('SVFOPS'), '0,000.00'));
                 
                 // validar si existe diferencia guardado como saldo
                 const existsBalance = me.dataDesglose.some(item => item.EXISTS_BALANCE === 1);
                 gridDesglose.down('gridcolumn[dataIndex=EXISTS_BALANCE]').setVisible(existsBalance);
+                
+            
                 
             }
         }
@@ -1370,52 +1156,42 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 });
     },
     onFilterBPOGrid: async function () {
-        const me = this;
+        const obj = this.bean;
         const grid = Ext.getCmp(prototype.idDE + '-gridBPO');
-
         grid.getView().mask('Loading...');
-        const bpoStore = grid.getStore();
-        const data = bpoStore.getData().items;
-        const tgrosamoun = me.bean.tgrosamoun;
-        const sauthoc = me.bean.sauthoc;
-        
+        const data = grid.getStore().getData().items;
         if (data.length === 0) {
             global.Msg({msg: 'No data in Scanner'});
             grid.getView().unmask();
             return;
         }
         const existeMonto = data.some(x =>
-            x.data.tgrosamoun === tgrosamoun);
+            x.data.tgrosamoun === obj.tgrosamoun);
         const existeAutorizacion = data.some(x =>
-            x.data.sauthoc === sauthoc);
+            x.data.sauthoc === obj.sauthoc);
         let foundRegis = {};
-
         if (existeMonto) {
             foundRegis = grid.getStore().queryBy(function (registro) {
-                return registro.get('tgrosamoun') === tgrosamoun;
+                return registro.get('tgrosamoun') === obj.tgrosamoun;
             });
             grid.getStore().removeAll();
             foundRegis.items.forEach(x => {
                 grid.getStore().add(x);
             });
-            // let amt = grid.getStore().sum('svfops');
-            // Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
-            // Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
-            me.calculateExchangeRate(bpoStore);
-            me.calculateSumGridBPO();
+            let amt = grid.getStore().sum('svfops');
+            Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
+            Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
         } else if (existeAutorizacion && !existeMonto) {
             foundRegis = grid.getStore().queryBy(function (registro) {
-                return registro.get('sauthoc') === sauthoc;
+                return registro.get('sauthoc') === obj.sauthoc;
             });
             grid.getStore().removeAll();
             foundRegis.items.forEach(x => {
                 grid.getStore().add(x);
             });
-            // let amt = grid.getStore().sum('svfops');
-            // Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
-            // Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
-            me.calculateExchangeRate(bpoStore);
-            me.calculateSumGridBPO();
+            let amt = grid.getStore().sum('svfops');
+            Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
+            Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
         } else {
             global.Msg({msg: 'Not found'});
         }
@@ -1592,8 +1368,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         params.IN_SVFOPS = sumDesglose;
         params.IN_FDESGLOSE = 'M';
         params.IN_FADM = codADJU === '03' ? 'Y' : '';
-        params.IN_CUUID = '';
-        params.IN_FUUID = '';
         console.log(params);
         return params;
     },
@@ -1685,8 +1459,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 
     //<editor-fold defaultstate="collapsed" desc="Proceed">
     onUpdateClickStatus: async function () {
-
+//        console.log('update')
         const me = this;
+//        let params = me.formatUpdateParams();
         me.view.setLoading(true);
         const radioGroup = Ext.getCmp(prototype.idDE + '-proceedRadioGroup').down('radiogroup');
         const selectedStatus = radioGroup.getValue()?.proceedStatus;
