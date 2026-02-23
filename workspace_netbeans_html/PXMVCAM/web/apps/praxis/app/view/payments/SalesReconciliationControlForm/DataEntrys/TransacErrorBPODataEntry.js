@@ -1192,6 +1192,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         }
                                                     },
                                                     {
+                                                        text: 'Exchange<br>Rate', dataIndex: 'EXCHANGERT', width: 90,
+                                                        id: prototype.idDE + '-colExchangeRateBPO',
+                                                        hidden: true,
+                                                        value: 1.00,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                            return Ext.util.Format.number(value, '0,000.0000');
+                                                        }
+                                                    },
+                                                    {
                                                         text: 'Sales<br>Amount', dataIndex: 'tgrosamoun', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
@@ -1303,6 +1313,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                 width: 180,
                                                 value: '0.00',
                                                 //reset:false
+                                            },
+                                            {
+                                                xtype: 'button',
+                                                width: 25,
+                                                iconCls: 'prx-icon-exchangerate',
+                                                tooltip: 'Calculate Exchange Rate Reconciliation',
+                                                listeners: {
+                                                    click: 'toggleCalculateExchangeRate'
+                                                }
                                             },
                                             {
                                                 xtype: 'button',
@@ -1545,6 +1564,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                     },
                                                     {
                                                         text: 'Amount', dataIndex: 'SVFOPS', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Exchange<br>Rate', dataIndex: 'EXCHANGERT', width: 90,
+                                                        id: prototype.idDE + '-colExchangeRateDesglose',
+                                                        hidden: true,
+                                                        value: 1.00,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
                                                             return Ext.util.Format.number(value, '0,000.00');
