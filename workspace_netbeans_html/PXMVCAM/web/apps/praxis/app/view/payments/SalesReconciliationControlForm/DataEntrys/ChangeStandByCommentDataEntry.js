@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
     title: 'Change Stand By Comment',
     header: true,
     width: 400,
-    height: 150,
+    height: 180,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -33,7 +33,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                 {
                     xtype: 'combo',
                     id: prototype.idDE + '-cmbCommentCode',
-                    name: 'codeComment',
+                    name: 'CODE_COMMENT',
                     fieldLabel: 'Comment Stand By',
                     labelWidth: 120,
                     width: 370,
@@ -48,7 +48,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                         fields: ['CODE', 'DESCRIPTION'],
                         data: []
                     })
-                }
+                },
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'Add Comment',
+                    name: 'ADD_COMMENT',
+                    labelWidth: 120,
+                    width: 370,
+                    maxLength: 70,
+                    maskRe: /[a-zA-Z0-9 ()[\]{}_\-+=/\\ ]/,
+                    enforceMaxLength: true,
+                    listeners: {
+                        change: function (field, newValue, oldValue) {
+                            field.setValue(newValue.toUpperCase());
+                        }
+                    }
+                },
             ]
         }
     ],
