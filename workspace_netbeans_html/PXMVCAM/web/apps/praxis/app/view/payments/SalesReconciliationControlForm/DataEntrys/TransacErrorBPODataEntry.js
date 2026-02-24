@@ -1198,7 +1198,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         value: 1.00,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
-                                                            return Ext.util.Format.number(value, '0,000.0000');
+                                                            return Ext.util.Format.number(value, '0,000.000000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Local<br>Amount', dataIndex: 'LOCAL_AMOUNT', width: 90,
+                                                        id: prototype.idDE + '-colLocalAmountBPO',
+                                                        hidden: true,
+                                                        value: 1.00,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                            return Ext.util.Format.number(value, '0,000.00');
                                                         }
                                                     },
                                                     {
@@ -1572,6 +1582,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                     {
                                                         text: 'Exchange<br>Rate', dataIndex: 'EXCHANGERT', width: 90,
                                                         id: prototype.idDE + '-colExchangeRateDesglose',
+                                                        hidden: true,
+                                                        value: 1.00,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                            return Ext.util.Format.number(value, '0,000.000000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Local<br>Amount', dataIndex: 'LOCAL_AMOUNT', width: 90,
+                                                        id: prototype.idDE + '-colLocalAmountDesglose',
                                                         hidden: true,
                                                         value: 1.00,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
