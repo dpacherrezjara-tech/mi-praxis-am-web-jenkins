@@ -784,6 +784,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     },
     reverseTransaction: function () {
         const me = this;
+        const columnExchangeRate = Ext.getCmp(prototype.idDE + '-colExchangeRateBPO');
+        const columnLocalAmount = Ext.getCmp(prototype.idDE + '-colLocalAmountBPO');
         me.view.mask('Loading...');
         let params = {
             IN_CCUST: 139,
@@ -826,6 +828,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                         me.view.close();
                     }
                     me.reloadErrorGrid();
+                    columnExchangeRate.setVisible(false);
+                    columnLocalAmount.setVisible(false);
                     me.view.unmask();
                     me.afterRender();
                 });
