@@ -322,37 +322,45 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     //<editor-fold defaultstate="collapsed" desc="Handlers">
     reloadGridBPO: function () {
         const me = this;
-        const column = Ext.getCmp(prototype.idDE + '-colExchangeRateBPO');
-        column.setVisible(false);
+        const columnExchangeRate = Ext.getCmp(prototype.idDE + '-colExchangeRateBPO');
+        const columnLocalAmount = Ext.getCmp(prototype.idDE + '-colLocalAmountBPO');
+        columnExchangeRate.setVisible(false);
+        columnLocalAmount.setVisible(false);
         me.scanCreditCard(me.bean);
     },
     toggleCalculateExchangeRate: function () {
         const me = this;
         const grid = Ext.getCmp(prototype.idDE + '-gridBPO');
         const store = grid.getStore();
-        const column = Ext.getCmp(prototype.idDE + '-colExchangeRateBPO');
-        
-        if (!column) return;
-    
+        const columnExchangeRate = Ext.getCmp(prototype.idDE + '-colExchangeRateBPO');
+        const columnLocalAmount = Ext.getCmp(prototype.idDE + '-colLocalAmountBPO');
+        let viewColumn = false ;
+
+        if (!columnExchangeRate || !columnLocalAmount) return;
+
         // Toggle
-        if (column.isVisible()) {
+        if (columnExchangeRate.isVisible()) {
             store.each(function (record) {
                 record.set('EXCHANGERT', 1.00);
+                record.set('LOCAL_AMOUNT', record.get('svfops'));
             });
-            column.setVisible(false);
+            me.recalculateSaleAmountBPO(store);
+            viewColumn = false;
         } else {
-            me.calculateExchangeRate(store);
-
-            // 4. Mostrar la columna
-            column.setVisible(true);
+            me.calculateExchangeRateBPO(store);
+            me.recalculateSaleAmountBPO(store);
+            viewColumn = true;
         }
+
+        columnExchangeRate.setVisible(viewColumn);
+        columnLocalAmount.setVisible(viewColumn);
 
         // Refrescar la vista para asegurar que los renderers se disparen
         grid.getView().refresh();
 
         me.calculateSumGridBPO();
     },
-    calculateExchangeRate: function (store) {
+    calculateExchangeRateBPO: function (store) {
         const me = this;
         const currencySettlement = me.bean.scurrency; 
         const totalSettlement = me.bean.tgrosamoun; 
@@ -377,14 +385,65 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             calculatedExchangeRate = baseCurrencyDifference / sumOtherCurrency;
         }
 
-        // 3. Aplicar valores al store
+        // 3. Aplicar valores al store (TC y Local Amount)
         store.each(function (record) {
+            const svfops = record.get('svfops') || 0;
+            let rate = 0;
+
             if (record.get('scurrency') === currencySettlement) {
-                record.set('EXCHANGERT', 1.00);
+                rate = 1.00;
+                
             } else {
-                record.set('EXCHANGERT', calculatedExchangeRate);
+                rate = calculatedExchangeRate;
             }
+
+            record.set('EXCHANGERT', rate);
+
+            // Local Amount (Monto convertido)
+            // Redondeamos a 2 decimales para precisión monetaria
+            const localAmount = Math.round((svfops * rate) * 100) / 100;
+            record.set('LOCAL_AMOUNT', localAmount);
         });
+    },
+    recalculateSaleAmountBPO: function(bpoStore) {        
+
+        const totalsMap = {};
+    
+        // 1. Primer recorrido: Agrupar y sumar montos
+        bpoStore.each(function(record) {
+            // Creamos una llave única combinando los campos de agrupación
+            const scardn = record.get('scardn') || '';
+            const sauthoc = record.get('sauthoc') || '';
+            const spnr = record.get('spnr') || '';
+            const tdoc = record.get('tdoc') || '';
+            
+            // La llave identifica de forma única al grupo
+            const key = scardn + '_' + sauthoc + '_' + spnr + '_' + tdoc;
+    
+            if (!totalsMap[key]) {
+                totalsMap[key] = 0;
+            }
+            
+            // Sumamos el monto convertido (svfops * EXCHANGERT) o el original si no hay TC
+            const amount = record.get('svfops') || 0;
+            const rate = record.get('EXCHANGERT') || 1;
+            
+            totalsMap[key] += (amount * rate);
+        });
+    
+        // 2. Segundo recorrido: Actualizar el campo tgrosamoun en cada registro
+        bpoStore.each(function(record) {
+            const key = (record.get('scardn') || '') + '_' + 
+                        (record.get('sauthoc') || '') + '_' + 
+                        (record.get('spnr') || '') + '_' + 
+                        (record.get('tdoc') || '');
+            
+            const groupTotal = totalsMap[key];
+    
+            // Redondeamos para evitar problemas de precisión en la UI
+            record.set('tgrosamoun', Math.round(groupTotal * 100) / 100);
+        });
+    
     },
     calculateSumGridBPO: function() {
         const me = this;
@@ -407,6 +466,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         // Actualizamos los campos de totales en la interfaz
         Ext.getCmp(prototype.idDE + '-totTickets').setValue(bpoStore.getCount());
         Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number( totalAmount, '0,000.00'));
+
+        return totalAmount ;
     },
     onDeleteRecordBPO: function (grid, rowIndex, colIndex) {
         const me = this;
@@ -415,7 +476,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             grid.getStore().remove(registro);
         }
         const store = grid.getStore();
-        me.calculateExchangeRate(store);
+        me.calculateExchangeRateBPO(store);
+        me.recalculateSaleAmountBPO(store);
         me.calculateSumGridBPO();
     },
     onAddAdjustment: function (grid, rowIndex, colIndex) {
@@ -831,7 +893,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             // Ext.getCmp(prototype.idDE + '-totTickets').setValue(bpoStore.getCount());
             // Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(bpoStore.sum('svfops'), '0,000.00'));
             
-            me.calculateExchangeRate(bpoStore);
+            me.calculateExchangeRateBPO(bpoStore);
+            me.recalculateSaleAmountBPO(bpoStore);
             me.calculateSumGridBPO();
 
             Ext.toast({
@@ -1310,6 +1373,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 
                 // Total Values
                 const columnExchangeRateDesglose = Ext.getCmp(prototype.idDE + '-colExchangeRateDesglose');
+                const columnLocalAmountDesglose = Ext.getCmp(prototype.idDE + '-colLocalAmountDesglose');
                 const quantityTicketField = Ext.getCmp(prototype.idDE + '-totDTickets');
                 const totalAmountField = Ext.getCmp(prototype.idDE + '-totDAmount');
                 let totalAmount = 0;
@@ -1331,6 +1395,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 });
 
                 columnExchangeRateDesglose.setVisible(viewColumnExchangeRate);
+                columnLocalAmountDesglose.setVisible(viewColumnExchangeRate);
                 quantityTicketField.setValue(me.dataDesglose.length);
                 totalAmountField.setValue(Ext.util.Format.number(totalAmount, '0,000.00'));
 
@@ -1401,7 +1466,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             // let amt = grid.getStore().sum('svfops');
             // Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
             // Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
-            me.calculateExchangeRate(bpoStore);
+            me.calculateExchangeRateBPO(bpoStore);
+            me.recalculateSaleAmountBPO(bpoStore);
             me.calculateSumGridBPO();
         } else if (existeAutorizacion && !existeMonto) {
             foundRegis = grid.getStore().queryBy(function (registro) {
@@ -1414,7 +1480,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             // let amt = grid.getStore().sum('svfops');
             // Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
             // Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
-            me.calculateExchangeRate(bpoStore);
+            me.calculateExchangeRateBPO(bpoStore);
+            me.recalculateSaleAmountBPO(bpoStore);
             me.calculateSumGridBPO();
         } else {
             global.Msg({msg: 'Not found'});
@@ -1513,9 +1580,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const codADJU = (Ext.getCmp(prototype.idDE + '-codAdjustment').getValue() || '').trim();
         const observADJU = Ext.getCmp(prototype.idDE + '-observAdjustment').getValue();
         //diferencia conciliacion manual
-        const sumScanner = parseFloat(gridBPO.sum('svfops').toFixed(2));
+        // const sumScanner = parseFloat(gridBPO.sum('svfops').toFixed(2));
+        const totalAmount = me.calculateSumGridBPO();
         const sumAdju = parseFloat(gridADJU.sum('svfops').toFixed(2));
-        const sumDesglose = parseFloat((sumScanner + sumAdju).toFixed(2));
+        const sumDesglose = parseFloat((totalAmount + sumAdju).toFixed(2));
         const totalGross = parseFloat(obj.tgrosamoun.toFixed(2));
         console.log('Suma Desglose BPO: ', sumDesglose);
         let difference = 0;
