@@ -132,7 +132,8 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
 
         cmbOrigen.bindStore(Ext.create('Ext.data.Store', {
             data: [
-                {"code": "NO", "name": "CADUCO"},
+                {"code": "CDI", "name": "CADUCO INMEDIATO"},
+                {"code": "CDN", "name": "CADUCO NATURAL"},
                 {"code": "US", "name": "EMD STAND ALONE"}
             ]
         }));
@@ -145,7 +146,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         }));
     },
     onCmbStatusOrigen: function (obj, newValue, oldValue, eOpts) {
-        obj.setValue('NO');
+        obj.setValue('CDN');
     },
     onCmbChange: function (obj, records, eOpts) {
         var txtLote = Ext.getCmp(prototype.id + '-txtLote');
@@ -288,6 +289,8 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         if (rec.data.A3676ORIG === 'EMD STAND ALONE') {
             origen = 'US';
         }
+        var CmbOrigen=Ext.getCmp(prototype.id + '-CmbOrigen').getValue();
+        if(origen==='') origen=CmbOrigen;
 
         this.bean2.IN_OPTION = '4';
         this.bean2.IN_ORIGEN = origen;
@@ -482,7 +485,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
                 this.bean3.IN_OPTION = cmbsearch;
                 this.bean3.IN_DATEFROM = txtDateFrom;
                 this.bean3.IN_DATETO = txtDateTo;
-                this.bean3.IN_ORIGEN = '';//'MEXVN';//'CSCVI';
+                this.bean3.IN_ORIGEN = CmbOrigen;
                 this.bean3.IN_LOTE = '';
                 this.bean3.IN_REFERENCE = txtLote;
                 Ext.getCmp(prototype.id + '-gridDataControl').getStore().loadPage(1, {
