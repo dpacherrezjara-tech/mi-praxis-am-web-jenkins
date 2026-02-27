@@ -366,7 +366,7 @@ Ext.define('Ext.Praxis.view.flown.ConciliationStatusForm.ConciliationStatusForm'
                                             }*/
                                         ]
                                     },
-                                    {
+                                    /*{
                                         text: 'Status initial',
                                         dataIndex: 'A3676STINI',
                                         width: 150,
@@ -379,7 +379,7 @@ Ext.define('Ext.Praxis.view.flown.ConciliationStatusForm.ConciliationStatusForm'
                                         width: 150,
                                         align: 'left',
                                         renderer: 'onRendererToltip'
-                                    },
+                                    },*/
                                     {
                                         text: 'Status',
                                         dataIndex: 'A3676STROB',

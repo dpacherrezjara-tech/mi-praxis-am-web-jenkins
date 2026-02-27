@@ -33,8 +33,8 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         //this.setUser();
         this.setStoresFilters();
         this.setStoresGrids();
-
         Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, this);
+        this.onSearchClick();
     },
     setStoresFilters: function () {
         var cmbSearch = Ext.getCmp(prototype.id + '-search-type');
@@ -47,47 +47,50 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "SELECTED"},
-                {"code": "4", "name": "PROCESSING DATE"},
-                {"code": "1", "name": "REFERENCE"},
+                //{"code": "4", "name": "PROCESSING DATE"},
+                //{"code": "1", "name": "REFERENCE"},
                 {"code": "2", "name": "SYSTEM DATE"},
-                {"code": "3", "name": "TICKET"},
-                {"code": "5", "name": "TICKET FATHER"}
+                {"code": "3", "name": "TICKET PRAXIS"},
+                {"code": "5", "name": "TICKET ROBOT"}
             ]
         }));
 
         cmbStatusIni.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
-                {"code": "CPNStat_EXCH", "name": "CPNStat_EXCH"},
-                {"code": "CPNStat_CHECKIN", "name": "CPNStat_CHECKIN"},
+                {"code": "EXCH", "name": "CPNStat_EXCH"},
+                {"code": "CTRL", "name": "CPNStat_CTRL"},
+                {"code": "CKIN", "name": "CPNStat_CHECKIN"},
                 {"code": "CPNStat_HISTORICALTICKET", "name": "CPNStat_HISTORICALTICKET"},
-                {"code": "CPNStat_NOGO", "name": "CPNStat_NOGO"},
-                {"code": "CPNStat_OK", "name": "CPNStat_OK"},
-                {"code": "CPNStat_RNFD", "name": "CPNStat_RNFD"},
-                {"code": "CPNStat_UNDET", "name": "CPNStat_UNDET"},
-                {"code": "CPNStat_USED", "name": "CPNStat_USED"},
-                {"code": "CPNStat_VOID", "name": "CPNStat_VOID"}
+                {"code": "NOGO", "name": "CPNStat_NOGO"},
+                {"code": "OK", "name": "CPNStat_OK"},
+                {"code": "RFND", "name": "CPNStat_RNFD"},
+                {"code": "UNDET", "name": "CPNStat_UNDET"},
+                {"code": "USED", "name": "CPNStat_USED"},
+                {"code": "VOID", "name": "CPNStat_VOID"}
             ]
         }));
 
         cmbStatusFin.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
-                {"code": "CPNStat_CHECKIN", "name": "CPNStat_CHECKIN"},
-                {"code": "CPNStat_EXCH", "name": "CPNStat_EXCH"},
+                {"code": "EXCH", "name": "CPNStat_EXCH"},
+                {"code": "CTRL", "name": "CPNStat_CTRL"},
+                {"code": "CKIN", "name": "CPNStat_CHECKIN"},
                 {"code": "CPNStat_HISTORICALTICKET", "name": "CPNStat_HISTORICALTICKET"},
-                {"code": "CPNStat_NOGO", "name": "CPNStat_NOGO"},
-                {"code": "CPNStat_OK", "name": "CPNStat_OK"},
-                {"code": "CPNStat_RFND", "name": "CPNStat_RFND"},
-                {"code": "CPNStat_UNDET", "name": "CPNStat_UNDET"},
-                {"code": "CPNStat_USED", "name": "CPNStat_USED"},
-                {"code": "CPNStat_VOID", "name": "CPNStat_VOID"}
+                {"code": "NOGO", "name": "CPNStat_NOGO"},
+                {"code": "OK", "name": "CPNStat_OK"},
+                {"code": "RFND", "name": "CPNStat_RNFD"},
+                {"code": "UNDET", "name": "CPNStat_UNDET"},
+                {"code": "USED", "name": "CPNStat_USED"},
+                {"code": "VOID", "name": "CPNStat_VOID"}
             ]
         }));
 
         cmbOrigen.bindStore(Ext.create('Ext.data.Store', {
             data: [
-                {"code": "NO", "name": "CADUCO"},
+                {"code": "CDI", "name": "CADUCO INMEDIATO"},
+                {"code": "CDN", "name": "CADUCO NATURAL"},
                 {"code": "US", "name": "EMD STAND ALONE"}
             ]
         }));
@@ -110,7 +113,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
             data: [
                 {"code": "", "name": "ALL"},
                 {"code": "1", "name": "TKT"},
-                {"code": "2", "name": "CPN"}
+                {"code": "2", "name": "EMD"}
 
             ]
         }));
@@ -143,7 +146,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         obj.store.proxy.extraParams = this.beanTMP;
     },
     onCmbSearchAfterRender: function (obj) {
-        obj.setValue('');
+        obj.setValue('2');
     },
     onCmbSearchChange: function (obj, newValue, oldValue, eOpts) {
         // console.log(String(newValue))
@@ -201,7 +204,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         obj.setValue('');
     },
     onCmbStatusOrigen: function (obj, newValue, oldValue, eOpts) {
-        obj.setValue('NO');
+        obj.setValue('CDN');
     },
     onSearchClick: function (btn) {
         var me = this;
