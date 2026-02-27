@@ -321,9 +321,9 @@ public class ChangeOfStatusFormDAO {
             while (rs01.next()) {
                 objRtn = new A3676Filter();
                 objRtn.A3676CCUST = rs01.getString("A3677CCUST");
-                objRtn.A3676SEQ = rs01.getString("A3677SEQ");
-                //objRtn.A3676ORIG = rs01.getString("A3677ORIG");
-                objRtn.A3676ORIG = filter.IN_TYPE;
+                objRtn.A3676SEQ = rs01.getString("A3677SEQ"); 
+                objRtn.A3676ORIG = rs01.getString("A3677ORIG");
+                //objRtn.A3676ORIG = filter.IN_TYPE;
                 objRtn.A3676STROB = rs01.getString("A3677FLAG");
                 objRtn.A3676TOTPAGI = rs01.getInt("A3677TOTPAGI");
                 objRtn.A3676CNTAM = rs01.getInt("A3677CANM");
