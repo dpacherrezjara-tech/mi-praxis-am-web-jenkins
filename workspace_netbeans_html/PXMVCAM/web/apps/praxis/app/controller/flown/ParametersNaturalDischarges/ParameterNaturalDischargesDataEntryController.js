@@ -7,11 +7,14 @@ Ext.define('Ext.Praxis.controller.flown.ParametersNaturalDischarges.ParameterNat
     },
     loadForm: async function(){
         const me = this;
+        me.authorization = me.view.authorization;
         const buttonSave = Ext.getCmp(prototype.idPND + '-btn-save');
         const buttonUpdate = Ext.getCmp(prototype.idPND + '-btn-update');
 //        const codeParameter = Ext.getCmp(prototype.idPND + '-A4807CPARM');
 
         const formControlData = Ext.getCmp(prototype.idPND + '-fsControlData');
+        buttonSave.disable();
+        buttonUpdate.disable();
         if(me.view.option === 'U'){
 //            codeParameter.disable();
             buttonSave.hide();
@@ -23,6 +26,12 @@ Ext.define('Ext.Praxis.controller.flown.ParametersNaturalDischarges.ParameterNat
             buttonSave.show();
             buttonUpdate.hide();
             formControlData.hide();
+        }
+        if(me.authorization.create === 'Y'){
+            buttonSave.enable();
+        }
+        if(me.authorization.update === 'Y'){
+            buttonUpdate.enable();
         }
         me.cmb_tipo1_clickHandler();
         me.cmb_tipo2_clickHandler();
