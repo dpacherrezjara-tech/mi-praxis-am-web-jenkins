@@ -52,15 +52,16 @@ Ext.define('Ext.Praxis.controller.flown.ParametersNaturalDischarges.ParametersNa
         const btnSearch = Ext.getCmp(prototype.id + '-btnSearch');
         const btnAdd = Ext.getCmp(prototype.id + '-btnAdd');
         
-        btnSearch.disable();
-        btnAdd.disable();
+        btnSearch.hide();
+        btnAdd.hide();
 
         try {
-            if(me.authorization.search === 'Y'){
-                btnSearch.enable();
+            if (btnSearch) {
+                btnSearch.setVisible(me.authorization.search === 'Y');
             }
-            if(me.authorization.create === 'Y'){
-                btnAdd.enable();
+            
+            if (btnAdd) {
+                btnAdd.setVisible(me.authorization.create === 'Y');
             }
         } catch (e) {
             console.error("Error changeAuthorizationForButtons:", e);
