@@ -13,26 +13,28 @@ Ext.define('Ext.Praxis.controller.flown.ParametersNaturalDischarges.ParameterNat
 //        const codeParameter = Ext.getCmp(prototype.idPND + '-A4807CPARM');
 
         const formControlData = Ext.getCmp(prototype.idPND + '-fsControlData');
-        buttonSave.disable();
-        buttonUpdate.disable();
+        buttonSave.hide();
+        buttonUpdate.hide();
         if(me.view.option === 'U'){
 //            codeParameter.disable();
             buttonSave.hide();
-            buttonUpdate.show();
+            // buttonUpdate.show();
+            buttonUpdate.setVisible(me.authorization.update === 'Y');
             formControlData.show();
             me.loadInformation();
         }else{
             me.dataDetail = {A4807CCUST: '139',A4807CORRL: 0};
-            buttonSave.show();
+            // buttonSave.show();
+            buttonSave.setVisible(me.authorization.create === 'Y');
             buttonUpdate.hide();
             formControlData.hide();
         }
-        if(me.authorization.create === 'Y'){
-            buttonSave.enable();
-        }
-        if(me.authorization.update === 'Y'){
-            buttonUpdate.enable();
-        }
+        // if(me.authorization.create === 'Y'){
+        //     buttonSave.enable();
+        // }
+        // if(me.authorization.update === 'Y'){
+        //     buttonUpdate.enable();
+        // }
         me.cmb_tipo1_clickHandler();
         me.cmb_tipo2_clickHandler();
     },
