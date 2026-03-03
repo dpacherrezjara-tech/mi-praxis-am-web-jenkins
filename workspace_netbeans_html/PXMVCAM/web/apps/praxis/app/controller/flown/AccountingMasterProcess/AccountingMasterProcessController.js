@@ -73,9 +73,11 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.AccountingMaster
             fields: ['code', 'name'],
             data: [
                 ["", "(Select)"],
-                ["PFLOWNPRE", "Flown Accounting"],
-                ["PFLOWN", "Flown Accounting (History)"],
-                ["PPFLOWN", "Flown Accounting Pending"]
+                ["PFLOWNPRE", "Flown Accounting PreCont"],
+                ["PFLOWN", "Flown Accounting Policies"],
+                ["PPFLOWN", "Flown Accounting Pending"],
+                ["PFLOWNLEG", "Flown Accounting LEG"],
+                ["PFLOWNLOG", "Flown Accounting Log"]
             ]}));
         cboModulo.setValue("");
 
