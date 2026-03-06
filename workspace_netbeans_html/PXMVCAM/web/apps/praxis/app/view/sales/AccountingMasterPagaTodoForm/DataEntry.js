@@ -1,39 +1,39 @@
-Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
+Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryAccountingMasterPagaTodoForm',
 
     controller: 'DataEntryAccountingMasterPagaTodoController',
 
-    requires:[
+    requires: [
         'Ext.Praxis.controller.sales.AccountingMasterPagaTodo.DataEntryAccountingMasterPagaTodoController'
     ],
 
-    title:'Catalogue Account - Data Entry Form',
-    header:true,
-    height:300,
-    width:790,
-    border:false,
-    resizable:false,
-    layout:'fit',
-    modal:true,
+    title: 'Catalogue Account - Data Entry Form',
+    header: true,
+    height: 300,
+    width: 790,
+    border: false,
+    resizable: false,
+    layout: 'fit',
+    modal: true,
 
-    defaults:{
+    defaults: {
         border: false
     },
 
-    items:[
+    items: [
         {
             xtype: 'form',
             id: prototype.id + '-formDataEntry',
-            defaults:{
+            defaults: {
                 style: 'margin: 3px;',
                 border: false
             },
-            items:[
+            items: [
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                         },
                         { xtype: 'tbspacer', width: 10 },
                         {
-                            xtype:'combo',
+                            xtype: 'combo',
                             id: prototype.id + '-cmbA1835FOPID',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
@@ -96,12 +96,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1835TARPT',
+                            id: prototype.id + '-txtA1835TARPT',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 19,
                             width: 200,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         }
@@ -110,7 +110,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -131,13 +131,14 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                             id: prototype.id + '-txtA1835UNIDA',
                             enforceMaxLength: true,
                             maxLength: 2,
-                            width: 30
+                            width: 30,
+                            readOnly: true
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1835CENCO',
                             enforceMaxLength: true,
-                            maxLength: 6,
+                            maxLength: 7,
                             width: 50
                         },
                         {
@@ -151,7 +152,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1835CUENT',
                             enforceMaxLength: true,
-                            maxLength: 4,
+                            maxLength: 6,
                             width: 40
                         },
                         {
@@ -180,7 +181,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -191,13 +192,13 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1835CONC',
+                            id: prototype.id + '-txtA1835CONC',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
-//                            maxLength: 30,
+                            //                            maxLength: 30,
                             maxLength: 40,
                             width: 300,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         }
@@ -206,7 +207,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -217,7 +218,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtStartDate',
+                            id: prototype.id + '-txtStartDate',
                             format: 'Y/m/d',
                             maskRe: /[0-9/]/,
                             fieldStyle: 'text-align:center;',
@@ -233,7 +234,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                         { xtype: 'tbspacer', width: 30 },
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtEndDate',
+                            id: prototype.id + '-txtEndDate',
                             format: 'Y/m/d',
                             maskRe: /[0-9/]/,
                             fieldStyle: 'text-align:center;',
@@ -250,12 +251,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                 },
                 {
                     xtype: 'fieldset',
-                    id: prototype.id+'-ControlData',
+                    id: prototype.id + '-ControlData',
                     title: 'Control Data',
-//                    margin: '15 0 8 0',
+                    //                    margin: '15 0 8 0',
                     width: 760,
                     border: true,
-                    defaults:{
+                    defaults: {
                         style: 'margin: 3px;',
                         border: false
                     },
@@ -267,7 +268,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                             defaults: {
                                 labelAlign: 'left'
                             },
-                            items:[
+                            items: [
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
@@ -277,11 +278,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-USCR',
+                                    id: prototype.id + '-USCR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -294,11 +295,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-FECR',
+                                    id: prototype.id + '-FECR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -311,11 +312,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-HOCR',
+                                    id: prototype.id + '-HOCR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 }
@@ -328,7 +329,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                             defaults: {
                                 labelAlign: 'left'
                             },
-                            items:[
+                            items: [
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
@@ -338,11 +339,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-USUP',
+                                    id: prototype.id + '-USUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -355,11 +356,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-FEUP',
+                                    id: prototype.id + '-FEUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -372,11 +373,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-HOUP',
+                                    id: prototype.id + '-HOUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 }
@@ -387,49 +388,49 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
             ]
         }
     ],
-    dockedItems:[
+    dockedItems: [
         {
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
             margin: '10 0 10 0',
-            layout:{
+            layout: {
                 pack: 'center'
             },
             fieldStyle: 'text-align:center',
-            defaults:{
+            defaults: {
                 scale: 'medium'
             },
-            items:[
+            items: [
                 {
                     text: 'Save',
-                    id:prototype.id+'-btn-save',
+                    id: prototype.id + '-btn-save',
                     iconCls: 'prx-icon-save',
-                    listeners:{
+                    listeners: {
                         click: 'onSaveClick'
                     }
                 },
                 {
                     text: 'Update',
-                    id:prototype.id+'-btn-update',
+                    id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
-                    listeners:{
+                    listeners: {
                         click: 'onUpdateClick'
                     }
                 },
                 {
                     text: 'Delete',
-                    id:prototype.id+'-btn-delete',
+                    id: prototype.id + '-btn-delete',
                     iconCls: 'prx-icon-delete',
-                    listeners:{
+                    listeners: {
                         click: 'onDeleteClick'
                     }
                 },
                 {
                     text: 'Cancel',
-                    id:prototype.id+'-btn-cancel',
+                    id: prototype.id + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
-                    listeners:{
+                    listeners: {
                         click: 'onCancelClick'
                     }
                 },
@@ -440,28 +441,28 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                     style: 'font-weight:bold;color:red;',
                     width: 120
                 }
-//                ,
-//                { xtype: 'tbspacer', width: 30 },
-//                {
-//                    xtype: 'button',
-//                    id:prototype.id+'-btn-prev',
-//                    icon: 'resources/img/botones/prev.png',
-//                    tooltip: 'View Previous Flight Manifest',
-//                    border: false,
-//                    listeners:{
-//                        click: 'onPrevClick'
-//                    }
-//                },
-//                {
-//                    xtype: 'button',
-//                    id:prototype.id+'-btn-next',
-//                    icon: 'resources/img/botones/next2.png',
-//                    tooltip: 'View Next Flight Manifest',
-//                    border: false,
-//                    listeners:{
-//                        click: 'onNextClick'
-//                    }
-//                }
+                //                ,
+                //                { xtype: 'tbspacer', width: 30 },
+                //                {
+                //                    xtype: 'button',
+                //                    id:prototype.id+'-btn-prev',
+                //                    icon: 'resources/img/botones/prev.png',
+                //                    tooltip: 'View Previous Flight Manifest',
+                //                    border: false,
+                //                    listeners:{
+                //                        click: 'onPrevClick'
+                //                    }
+                //                },
+                //                {
+                //                    xtype: 'button',
+                //                    id:prototype.id+'-btn-next',
+                //                    icon: 'resources/img/botones/next2.png',
+                //                    tooltip: 'View Next Flight Manifest',
+                //                    border: false,
+                //                    listeners:{
+                //                        click: 'onNextClick'
+                //                    }
+                //                }
             ]
         }
     ]

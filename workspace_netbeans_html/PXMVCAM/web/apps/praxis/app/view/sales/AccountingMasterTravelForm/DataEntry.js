@@ -68,7 +68,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.DataEntry', {
                                             html: '<strong style="color:red;font-size:13px;">(*)</strong>'
 
                                         },
-                                         {
+                                        {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1838TIPO',
                                             maxLength: 4,
@@ -79,11 +79,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.DataEntry', {
                                             labelWidth: 0,
                                             labelAlign: 'left',
                                             padding: '2px 5px 2px 3px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
 
-                                        },                                       
+                                        },
                                         {
                                             xtype: 'label',
                                             labelAlign: 'center',
@@ -91,7 +91,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.DataEntry', {
                                             padding: '2px 5px 2px 3px',
                                             html: '<strong style="color:#000;  ">Agent IATA</strong>'
 
-                                        },                                        
+                                        },
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1838AGENT',
@@ -103,13 +103,13 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.DataEntry', {
                                             labelWidth: 0,
                                             labelAlign: 'left',
                                             padding: '2px 5px 2px 3px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
-                                        }         
+                                        }
                                     ]
                                 },
-                                 {
+                                {
                                     xtype: 'panel',
                                     layout: 'column',
                                     margin: '1 0 1 0',
@@ -123,8 +123,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.DataEntry', {
                                             padding: '2px 5px 2px 10px',
                                             html: '<strong style="color:#000;  ">Description</strong>'
 
-                                        },                                       
-                                         {
+                                        },
+                                        {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1838DESCR',
                                             maxLength: 35,
@@ -135,12 +135,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.DataEntry', {
                                             labelWidth: 0,
                                             labelAlign: 'left',
                                             padding: '2px 5px 2px 3px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
-                                        }   
+                                        }
                                     ]
-                                },                              
+                                },
                                 {
                                     xtype: 'panel',
                                     layout: 'column',
@@ -183,13 +183,14 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.DataEntry', {
                                             maskRe: /[0-9]/,
                                             enforceMaxLength: true,
                                             labelAlign: 'left',
-                                            padding: '2px 1px 2px 1px'
+                                            padding: '2px 1px 2px 1px',
+                                            readOnly: 2
 
                                         },
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1838CENCO',
-                                            maxLength: 6,
+                                            maxLength: 7,
                                             fieldLabel: '',
                                             width: 50,
                                             border: true,
@@ -219,7 +220,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.DataEntry', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1838CUENT',
-                                            maxLength: 4,
+                                            maxLength: 6,
                                             fieldLabel: '',
                                             width: 40,
                                             border: true,
@@ -277,8 +278,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.DataEntry', {
                                         }
                                     ]
                                 },
-                               
-                                
+
+
                                 {
                                     xtype: 'panel',
                                     layout: 'column',
@@ -306,11 +307,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.DataEntry', {
                                             labelWidth: 0,
                                             padding: '2px 30px 2px 10px'
                                         },
-                                         {
+                                        {
                                             xtype: 'datefield',
                                             id: prototype.id + '-txtA1838FFIN',
                                             fieldStyle: 'text-align:center',
-                                             format: 'Y/m/d',
+                                            format: 'Y/m/d',
                                             editable: true,
                                             maskRe: /[0-9/]/,
                                             width: 80,
@@ -320,8 +321,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.DataEntry', {
                                         }
                                     ]
                                 }
-//                               
-//                               
+                                //                               
+                                //                               
                             ]
                         }
                     ]
@@ -373,7 +374,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.DataEntry', {
                                     labelWidth: 100,
                                     margin: '0 10 0 0',
                                     readOnly: true,
-                                    width: 180 
+                                    width: 180
                                 }
                             ]
                         },
