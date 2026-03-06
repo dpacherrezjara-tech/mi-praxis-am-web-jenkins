@@ -286,6 +286,7 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         {
                                             xtype: 'combo',
                                             id: prototype.id + '-CmbStatus',
+                                            hidden:true,
                                             fieldLabel: 'Status',
                                             queryMode: 'local',
                                             displayField: 'name',

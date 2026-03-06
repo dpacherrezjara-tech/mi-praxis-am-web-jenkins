@@ -266,6 +266,9 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
             params: me.beanTMP,
             callback: function (records, operation, success) {
                 Ext.getCmp(prototype.id + '-pagination').enable();
+                if (records.length === 0) {
+                    global.Msg({msg: 'Data Not Found.'});
+                }
             }
         });
 

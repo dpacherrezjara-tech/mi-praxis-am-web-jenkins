@@ -13,7 +13,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
 
     init: function (view) {
         var me = this;
-        this.setStoresFilters();
+        this.setStoresFilters();        
 
     },
     OnBeforeShow: function () {
@@ -29,6 +29,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         // alert('Controlador cargado correctamente')
         this.setStores();
         Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, this);
+        this.imgSearch_clickHandler();
     },
     onRendererColumnOnTime: function (value, metaData, record, rowIndex, colIndex, store, view) {
         switch (String(record.get('A3536FINA'))) {
