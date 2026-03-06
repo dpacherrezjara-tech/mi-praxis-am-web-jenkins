@@ -436,29 +436,29 @@ public class ChangeOfStatusFormController extends BaseController {
             CH_13 = row.createCell(13);
             CH_14 = row.createCell(14);
             CH_15 = row.createCell(15);
-            CH_16 = row.createCell(16);
-            CH_17 = row.createCell(17);
+            //CH_16 = row.createCell(16);
+            //CH_17 = row.createCell(17);
 
             CH_00.setCellValue("Origen");
             CH_01.setCellValue("System Date");
             //CH_02.setCellValue("Type");
-            CH_02.setCellValue("Currrency");
-            CH_03.setCellValue("Net");
-            CH_04.setCellValue("Ticket Praxis ");
-            CH_05.setCellValue("CPN Praxis");
-            CH_06.setCellValue("USE Praxis");
-            CH_07.setCellValue("Ticket Robot ");
-            CH_08.setCellValue("CPN Robot");
-            CH_09.setCellValue("USE Robot");
-            CH_10.setCellValue("Status initial");
-            CH_11.setCellValue("Status final");
-            CH_12.setCellValue("Status");
+           // CH_02.setCellValue("Currrency");
+           // CH_03.setCellValue("Net");
+            CH_02.setCellValue("Ticket Praxis ");
+            CH_03.setCellValue("CPN Praxis");
+            CH_04.setCellValue("USE Praxis"); 
+            CH_05.setCellValue("Ticket Robot ");
+            CH_06.setCellValue("CPN Robot");
+            CH_07.setCellValue("USE Robot");
+            CH_08.setCellValue("Status initial");
+            CH_09.setCellValue("Status final");
+            CH_10.setCellValue("Result");
             //CH_14.setCellValue("Result");
-            CH_13.setCellValue("Description");
-            CH_14.setCellValue("Lote");
-            CH_15.setCellValue("Reference");
-            CH_16.setCellValue("Hour");
-            CH_17.setCellValue("Type");
+            CH_11.setCellValue("Status");
+            CH_12.setCellValue("Lote");
+            CH_13.setCellValue("Reference");
+            CH_14.setCellValue("Hour");
+            CH_15.setCellValue("Type");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -476,8 +476,6 @@ public class ChangeOfStatusFormController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -495,8 +493,6 @@ public class ChangeOfStatusFormController extends BaseController {
             CH_13.setCellStyle(headerStyle);
             CH_14.setCellStyle(headerStyle);
             CH_15.setCellStyle(headerStyle);
-            CH_16.setCellStyle(headerStyle);
-            CH_17.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -521,31 +517,29 @@ public class ChangeOfStatusFormController extends BaseController {
                 CH_13 = row.createCell(13);
                 CH_14 = row.createCell(14);
                 CH_15 = row.createCell(15);
-                CH_16 = row.createCell(16);
-                CH_17 = row.createCell(17);
 
                 CH_00.setCellValue(listaData.get(vi).A3676ORIG);
                 CH_01.setCellValue(listaData.get(vi).A3676FREGI);
                 //CH_02.setCellValue(listaData.get(vi).A3676TIDOC);
-                CH_02.setCellValue(listaData.get(vi).A3676CUR);
-                CH_03.setCellValue(listaData.get(vi).A3676MONTO);
+                //CH_02.setCellValue(listaData.get(vi).A3676CUR);
+                //CH_03.setCellValue(listaData.get(vi).A3676MONTO);
 
-                CH_04.setCellValue(listaData.get(vi).A3676TIKET);
-                CH_05.setCellValue(listaData.get(vi).A3676CUPON);
-                CH_06.setCellValue(listaData.get(vi).A3676USE);
-                CH_07.setCellValue(listaData.get(vi).A3676TKT);
-                CH_08.setCellValue(listaData.get(vi).A3676CPNRB);
+                CH_02.setCellValue(listaData.get(vi).A3676TIKET);
+                CH_03.setCellValue(listaData.get(vi).A3676CUPON);
+                CH_04.setCellValue(listaData.get(vi).A3676USE);
+                CH_05.setCellValue(listaData.get(vi).A3676TKT);
+                CH_06.setCellValue(listaData.get(vi).A3676CPNRB);
 
-                CH_09.setCellValue(listaData.get(vi).A3676USEB);
-                CH_10.setCellValue(listaData.get(vi).A3676STINI);
-                CH_11.setCellValue(listaData.get(vi).A3676STFIN);
-                CH_12.setCellValue(listaData.get(vi).A3676RESUL);
+                CH_07.setCellValue(listaData.get(vi).A3676USEB);
+                CH_08.setCellValue(listaData.get(vi).A3676STINI);
+                CH_09.setCellValue(listaData.get(vi).A3676STFIN);
+                CH_10.setCellValue(listaData.get(vi).A3676RESUL);
                 //CH_14.setCellValue(listaData.get(vi).A3676DESCR);
-                CH_13.setCellValue(listaData.get(vi).A3676STROB);
-                CH_14.setCellValue(listaData.get(vi).A3676NARCH);
-                CH_15.setCellValue(listaData.get(vi).A3676REFER);
-                CH_16.setCellValue(listaData.get(vi).A3676HRECE);
-                CH_17.setCellValue(listaData.get(vi).A3676TIDOC);
+                CH_11.setCellValue(listaData.get(vi).A3676STROB);
+                CH_12.setCellValue(listaData.get(vi).A3676NARCH);
+                CH_13.setCellValue(listaData.get(vi).A3676REFER);
+                CH_14.setCellValue(listaData.get(vi).A3676HRECE);
+                CH_15.setCellValue(listaData.get(vi).A3676TIDOC);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -564,8 +558,6 @@ public class ChangeOfStatusFormController extends BaseController {
                 CH_13.setCellStyle(bodyStyle);
                 CH_14.setCellStyle(bodyStyle);
                 CH_15.setCellStyle(bodyStyle);
-                CH_16.setCellStyle(bodyStyle);
-                CH_17.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
