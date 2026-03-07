@@ -256,7 +256,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.DataEntry', {
                             id: prototype.id + '-txtA1740CECOS',
                             enforceMaxLength: true,
                             maxLength: 7,
-                            width: 50
+                            width: 60
                         },
                         {
                             xtype: 'textfield',

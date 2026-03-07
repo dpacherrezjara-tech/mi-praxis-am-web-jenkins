@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.Filters', {
                     padding: '8 5 5 5'
 
                 },
-                {xtype: 'tbspacer', width: 5},
+                { xtype: 'tbspacer', width: 5 },
                 {
                     xtype: 'textfield',
                     id: prototype.id + '-txtType',
@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.Filters', {
                     maxLength: 10,
                     enforceMaxLength: true
                 }
-                , {xtype: 'tbspacer', width: 5},
+                , { xtype: 'tbspacer', width: 5 },
                 {
                     xtype: 'textfield',
                     id: prototype.id + '-txtAgent',
@@ -60,7 +60,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.Filters', {
                     maxLength: 10,
                     enforceMaxLength: true
                 }
-                , {xtype: 'tbspacer', width: 5},
+                , { xtype: 'tbspacer', width: 5 },
                 {
                     xtype: 'textfield',
                     id: prototype.id + '-txtCta',
@@ -68,10 +68,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.Filters', {
                     fieldLabel: 'Account',
                     labelWidth: 50,
                     width: 150,
-                    maxLength: 4,
+                    maxLength: 6,
                     enforceMaxLength: true
                 }
-                , {xtype: 'tbspacer', width: 5},
+                , { xtype: 'tbspacer', width: 5 },
                 {
                     xtype: 'textfield',
                     id: prototype.id + '-txtSubCta',
