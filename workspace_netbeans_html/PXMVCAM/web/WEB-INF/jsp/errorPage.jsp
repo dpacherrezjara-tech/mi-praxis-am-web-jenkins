@@ -220,8 +220,8 @@
       <div class="h-right">
         <!-- <div class="badge badge-a">AUDIT PRO</div>
         <div class="badge badge-b">SAC v2.0</div> -->
-        <div class="badge badge-a"><img src="img/IATA_SP.png" width="120" /></div>
-        <div class="badge badge-b"><img src="img/logo_miatech3.png" width="150" /></div>
+        <div class="badge badge-a"><img src="img/menu/IATA_SP.png" width="120" /></div>
+        <div class="badge badge-b"><img src="img/menu/logo_miatech3.png" width="150" /></div>
       </div>
     </header>
 
