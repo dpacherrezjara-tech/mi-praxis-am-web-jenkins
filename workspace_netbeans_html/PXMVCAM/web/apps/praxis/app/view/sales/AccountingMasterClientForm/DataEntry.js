@@ -1,39 +1,39 @@
-Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
+Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryAccountingMasterClientForm',
 
     controller: 'DataEntryAccountingMasterClientController',
 
-    requires:[
+    requires: [
         'Ext.Praxis.controller.sales.AccountingMasterClient.DataEntryAccountingMasterClientController'
     ],
 
-    title:'Account Master Client - Data Entry Form',
-    header:true,
-    height:320,
-    width:890,
-    border:false,
-    resizable:false,
-    layout:'fit',
-    modal:true,
+    title: 'Account Master Client - Data Entry Form',
+    header: true,
+    height: 320,
+    width: 890,
+    border: false,
+    resizable: false,
+    layout: 'fit',
+    modal: true,
 
-    defaults:{
+    defaults: {
         border: false
     },
 
-    items:[
+    items: [
         {
             xtype: 'form',
             id: prototype.id + '-formDataEntry',
-            defaults:{
+            defaults: {
                 style: 'margin: 3px;',
                 border: false
             },
-            items:[
+            items: [
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         },
                         { xtype: 'tbspacer', width: 10 },
                         {
-                            xtype:'combo',
+                            xtype: 'combo',
                             id: prototype.id + '-cboSource',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
@@ -98,8 +98,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         },
                         { xtype: 'tbspacer', width: 10 },
                         {
-                            xtype:'combo',
-                                id: prototype.id + '-cboCountry2',
+                            xtype: 'combo',
+                            id: prototype.id + '-cboCountry2',
                             queryMode: 'local',
                             triggerAction: 'all',
                             autoSelect: false,
@@ -113,7 +113,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                             width: 140,
                             hidden: false,
                             hiddenLabel: false,
-                            listConfig: {height: 111}
+                            listConfig: { height: 111 }
                         },
                         { xtype: 'tbspacer', width: 15 },
                         {
@@ -134,7 +134,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         },
                         { xtype: 'tbspacer', width: 10 },
                         {
-                            xtype:'combo',
+                            xtype: 'combo',
                             id: prototype.id + '-cboType2',
                             queryMode: 'local',
                             triggerAction: 'all',
@@ -149,7 +149,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                             width: 70,
                             hidden: false,
                             hiddenLabel: false,
-                            listConfig: {height: 111}
+                            listConfig: { height: 111 }
                         },
                         { xtype: 'tbspacer', width: 31 },
                         {
@@ -161,12 +161,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtSubFu',
+                            id: prototype.id + '-txtSubFu',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 3,
                             width: 45,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         }
@@ -175,7 +175,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -195,7 +195,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         },
                         { xtype: 'tbspacer', width: 10 },
                         {
-                            xtype:'combo',
+                            xtype: 'combo',
                             id: prototype.id + '-cboCurrency2',
                             queryMode: 'local',
                             triggerAction: 'all',
@@ -210,7 +210,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                             width: 70,
                             hidden: false,
                             hiddenLabel: false,
-                            listConfig: {height: 111}
+                            listConfig: { height: 111 }
                         },
                         { xtype: 'tbspacer', width: 35 },
                         {
@@ -222,13 +222,13 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtDescription',
+                            id: prototype.id + '-txtDescription',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
-//                            maxLength: 30,
+                            //                            maxLength: 30,
                             maxLength: 50,
                             width: 260,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         },
@@ -241,7 +241,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         },
                         { xtype: 'tbspacer', width: 10 },
                         {
-                            xtype:'combo',
+                            xtype: 'combo',
                             id: prototype.id + '-cboFP2',
                             queryMode: 'local',
                             triggerAction: 'all',
@@ -256,14 +256,14 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                             width: 70,
                             hidden: false,
                             hiddenLabel: false,
-                            listConfig: {height: 111}
+                            listConfig: { height: 111 }
                         }
                     ]
                 },
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -274,12 +274,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtPayment',
+                            id: prototype.id + '-txtPayment',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 4,
                             width: 55,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         },
@@ -293,12 +293,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtTypePayment',
+                            id: prototype.id + '-txtTypePayment',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 15,
                             width: 115,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         },
@@ -312,12 +312,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtClient2',
+                            id: prototype.id + '-txtClient2',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 10,
                             width: 86,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         },
@@ -331,12 +331,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtAddress',
+                            id: prototype.id + '-txtAddress',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 10,
                             width: 95,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         }
@@ -345,7 +345,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -366,14 +366,15 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                             id: prototype.id + '-txtUNIDA',
                             enforceMaxLength: true,
                             maxLength: 2,
-                            width: 30
+                            width: 30,
+                            readOnly: true
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtCECOS',
                             enforceMaxLength: true,
-                            maxLength: 6,
-                            width: 50
+                            maxLength: 7,
+                            width: 60
                         },
                         {
                             xtype: 'textfield',
@@ -386,8 +387,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                             xtype: 'textfield',
                             id: prototype.id + '-txtCTA',
                             enforceMaxLength: true,
-                            maxLength: 4,
-                            width: 40
+                            maxLength: 6,
+                            width: 50
                         },
                         {
                             xtype: 'textfield',
@@ -410,7 +411,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                             maxLength: 2,
                             width: 30
                         },
-                        { xtype: 'tbspacer', width: 50 },
+                        { xtype: 'tbspacer', width: 30 },
                         {
                             xtype: 'label',
                             text: 'IATA',
@@ -420,12 +421,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtIATA2',
+                            id: prototype.id + '-txtIATA2',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 8,
                             width: 76,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         },
@@ -439,12 +440,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtTax',
+                            id: prototype.id + '-txtTax',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 1,
                             width: 31,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             },
                             autoEl: {
@@ -457,7 +458,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -468,7 +469,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtStartDate',
+                            id: prototype.id + '-txtStartDate',
                             format: 'Y/m/d',
                             maskRe: /[0-9/]/,
                             fieldStyle: 'text-align:center;',
@@ -484,7 +485,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                         { xtype: 'tbspacer', width: 30 },
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtEndDate',
+                            id: prototype.id + '-txtEndDate',
                             format: 'Y/m/d',
                             maskRe: /[0-9/]/,
                             fieldStyle: 'text-align:center;',
@@ -501,12 +502,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                 },
                 {
                     xtype: 'fieldset',
-                    id: prototype.id+'-ControlData',
+                    id: prototype.id + '-ControlData',
                     title: 'Control Data',
-//                    margin: '15 0 8 0',
+                    //                    margin: '15 0 8 0',
                     width: 760,
                     border: true,
-                    defaults:{
+                    defaults: {
                         style: 'margin: 3px;',
                         border: false
                     },
@@ -518,7 +519,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                             defaults: {
                                 labelAlign: 'left'
                             },
-                            items:[
+                            items: [
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
@@ -528,11 +529,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-USCR',
+                                    id: prototype.id + '-USCR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -545,11 +546,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-FECR',
+                                    id: prototype.id + '-FECR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -562,11 +563,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-HOCR',
+                                    id: prototype.id + '-HOCR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 }
@@ -579,7 +580,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                             defaults: {
                                 labelAlign: 'left'
                             },
-                            items:[
+                            items: [
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
@@ -589,11 +590,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-USUP',
+                                    id: prototype.id + '-USUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -606,11 +607,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-FEUP',
+                                    id: prototype.id + '-FEUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -623,11 +624,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-HOUP',
+                                    id: prototype.id + '-HOUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 }
@@ -638,49 +639,49 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
             ]
         }
     ],
-    dockedItems:[
+    dockedItems: [
         {
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
             margin: '10 0 10 0',
-            layout:{
+            layout: {
                 pack: 'center'
             },
             fieldStyle: 'text-align:center',
-            defaults:{
+            defaults: {
                 scale: 'medium'
             },
-            items:[
+            items: [
                 {
                     text: 'Save',
-                    id:prototype.id+'-btn-save',
+                    id: prototype.id + '-btn-save',
                     iconCls: 'prx-icon-save',
-                    listeners:{
+                    listeners: {
                         click: 'onSaveClick'
                     }
                 },
                 {
                     text: 'Update',
-                    id:prototype.id+'-btn-update',
+                    id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
-                    listeners:{
+                    listeners: {
                         click: 'onUpdateClick'
                     }
                 },
                 {
                     text: 'Delete',
-                    id:prototype.id+'-btn-delete',
+                    id: prototype.id + '-btn-delete',
                     iconCls: 'prx-icon-delete',
-                    listeners:{
+                    listeners: {
                         click: 'onDeleteClick'
                     }
                 },
                 {
                     text: 'Cancel',
-                    id:prototype.id+'-btn-cancel',
+                    id: prototype.id + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
-                    listeners:{
+                    listeners: {
                         click: 'onCancelClick'
                     }
                 },
@@ -691,28 +692,28 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                     style: 'font-weight:bold;color:red;',
                     width: 120
                 }
-//                ,
-//                { xtype: 'tbspacer', width: 30 },
-//                {
-//                    xtype: 'button',
-//                    id:prototype.id+'-btn-prev',
-//                    icon: 'resources/img/botones/prev.png',
-//                    tooltip: 'View Previous Flight Manifest',
-//                    border: false,
-//                    listeners:{
-//                        click: 'onPrevClick'
-//                    }
-//                },
-//                {
-//                    xtype: 'button',
-//                    id:prototype.id+'-btn-next',
-//                    icon: 'resources/img/botones/next2.png',
-//                    tooltip: 'View Next Flight Manifest',
-//                    border: false,
-//                    listeners:{
-//                        click: 'onNextClick'
-//                    }
-//                }
+                //                ,
+                //                { xtype: 'tbspacer', width: 30 },
+                //                {
+                //                    xtype: 'button',
+                //                    id:prototype.id+'-btn-prev',
+                //                    icon: 'resources/img/botones/prev.png',
+                //                    tooltip: 'View Previous Flight Manifest',
+                //                    border: false,
+                //                    listeners:{
+                //                        click: 'onPrevClick'
+                //                    }
+                //                },
+                //                {
+                //                    xtype: 'button',
+                //                    id:prototype.id+'-btn-next',
+                //                    icon: 'resources/img/botones/next2.png',
+                //                    tooltip: 'View Next Flight Manifest',
+                //                    border: false,
+                //                    listeners:{
+                //                        click: 'onNextClick'
+                //                    }
+                //                }
             ]
         }
     ]

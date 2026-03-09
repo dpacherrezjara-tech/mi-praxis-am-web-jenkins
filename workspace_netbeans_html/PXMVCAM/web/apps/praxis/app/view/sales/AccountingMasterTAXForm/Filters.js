@@ -14,7 +14,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
             layout: 'column',
             defaults: {
                 labelStyle: 'font-weight:bold;',
-//                fieldStyle: 'text-align: center;',
+                //                fieldStyle: 'text-align: center;',
                 padding: '5px 1px 5px 1px',
                 anchor: '100%',
                 hiddenLabel: false,
@@ -37,7 +37,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                 { xtype: 'tbspacer', width: 8 },
                 {
                     xtype: 'label',
-                    id: prototype.id+'-lblCountry',
+                    id: prototype.id + '-lblCountry',
                     html: 'Country',
                     align: 'center',
                     fieldStyle: 'text-align: center;',
@@ -45,7 +45,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                 },
                 { xtype: 'tbspacer', width: 4 },
                 {
-                    xtype:'combo',
+                    xtype: 'combo',
                     id: prototype.id + '-cmbCountry',
                     queryMode: 'local',
                     triggerAction: 'all',
@@ -59,10 +59,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                     emptyText: 'All',
                     valueField: 'code',
                     displayField: 'name',
-                    listConfig: {maxHeight: 111},
+                    listConfig: { maxHeight: 111 },
                     enableKeyEvents: true,
-                    listeners:{
-                        focus: function(combo) {
+                    listeners: {
+                        focus: function (combo) {
                             combo.expand();
                         }
                     }
@@ -70,14 +70,14 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                 { xtype: 'tbspacer', width: 8 },
                 {
                     xtype: 'label',
-                    id: prototype.id+'-lblTAX',
+                    id: prototype.id + '-lblTAX',
                     html: 'Tax',
                     align: 'center',
                     fieldStyle: 'text-align: center;',
                     padding: '8px 7px 8px 0px'
                 },
                 {
-                    xtype:'combo',
+                    xtype: 'combo',
                     id: prototype.id + '-cmbTAX',
                     queryMode: 'local',
                     triggerAction: 'all',
@@ -91,10 +91,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                     emptyText: 'All',
                     valueField: 'code',
                     displayField: 'name',
-                    listConfig: {maxHeight: 111},
+                    listConfig: { maxHeight: 111 },
                     enableKeyEvents: true,
-                    listeners:{
-                        focus: function(combo) {
+                    listeners: {
+                        focus: function (combo) {
                             combo.expand();
                         }
                     }
@@ -102,14 +102,14 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                 { xtype: 'tbspacer', width: 8 },
                 {
                     xtype: 'label',
-                    id: prototype.id+'-lblCurrency',
+                    id: prototype.id + '-lblCurrency',
                     html: 'Currency',
                     align: 'center',
                     fieldStyle: 'text-align: center;',
                     padding: '8px 7px 8px 0px'
                 },
                 {
-                    xtype:'combo',
+                    xtype: 'combo',
                     id: prototype.id + '-cmbCurrency',
                     queryMode: 'local',
                     triggerAction: 'all',
@@ -124,9 +124,9 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                     emptyText: 'All',
                     valueField: 'code',
                     displayField: 'name',
-                    listConfig: {maxHeight: 111},
-                    listeners:{
-                        focus: function(combo) {
+                    listConfig: { maxHeight: 111 },
+                    listeners: {
+                        focus: function (combo) {
                             combo.expand();
                         }
                     }
@@ -140,7 +140,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                     padding: '8px 7px 8px 0px'
                 },
                 {
-                    xtype:'combo',
+                    xtype: 'combo',
                     id: prototype.id + '-Brw_cmbA1741TIPO',
                     store: new Ext.data.SimpleStore({
                         fields: ['code', 'name'],
@@ -165,10 +165,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                     emptyText: 'All',
                     valueField: 'code',
                     displayField: 'name',
-                    listConfig: {maxHeight: 111},
+                    listConfig: { maxHeight: 111 },
                     enableKeyEvents: true,
-                    listeners:{
-                        focus: function(combo) {
+                    listeners: {
+                        focus: function (combo) {
                             combo.expand();
                         }
                     }
@@ -176,7 +176,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                 { xtype: 'tbspacer', width: 8 },
                 {
                     xtype: 'label',
-                    id: prototype.id+'-lblCta',
+                    id: prototype.id + '-lblCta',
                     html: 'Account',
                     align: 'center',
                     fieldStyle: 'text-align: center;',
@@ -187,16 +187,16 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                     id: prototype.id + '-txtCta',
                     fieldStyle: 'text-align:right',
                     enforceMaxLength: true,
-                    maxLength: 4,
+                    maxLength: 6,
                     width: 60,
-                    listeners:{
+                    listeners: {
                         change: 'onUpperValue'
                     }
                 },
                 { xtype: 'tbspacer', width: 8 },
                 {
                     xtype: 'label',
-                    id: prototype.id+'-lblSubCta',
+                    id: prototype.id + '-lblSubCta',
                     html: 'Sub Account',
                     align: 'center',
                     fieldStyle: 'text-align: center;',
@@ -209,7 +209,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                     enforceMaxLength: true,
                     maxLength: 5,
                     width: 60,
-                    listeners:{
+                    listeners: {
                         change: 'onUpperValue'
                     }
                 },
@@ -222,7 +222,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                     padding: '8px 7px 8px 0px'
                 },
                 {
-                    xtype:'combo',
+                    xtype: 'combo',
                     id: prototype.id + '-cboControlled',
                     store: new Ext.data.SimpleStore({
                         fields: ['code', 'name'],
