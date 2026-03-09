@@ -264,7 +264,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             id: prototype.id + '-txtA1819CECO',
                                             maxLength: 7,
                                             fieldLabel: '',
-                                            width: 50,
+                                            width: 60,
                                             border: true,
                                             fieldStyle: 'text-align: center;',
                                             labelWidth: 0,

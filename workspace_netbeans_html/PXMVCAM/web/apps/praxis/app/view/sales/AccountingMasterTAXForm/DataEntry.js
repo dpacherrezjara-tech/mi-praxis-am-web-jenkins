@@ -317,7 +317,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry', {
                             id: prototype.id + '-txtA1741CECOS',
                             enforceMaxLength: true,
                             maxLength: 7,
-                            width: 50,
+                            width: 60,
                             listeners: {
                                 change: 'onUpperValue'
                             }
@@ -372,7 +372,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry', {
                                 change: 'onUpperValue'
                             }
                         },
-                        { xtype: 'tbspacer', width: 30 },
+                        { xtype: 'tbspacer', width: 20 },
                         {
                             xtype: 'label',
                             text: 'Country Location',

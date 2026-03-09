@@ -139,7 +139,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry', {
                             id: prototype.id + '-txtA1835CENCO',
                             enforceMaxLength: true,
                             maxLength: 7,
-                            width: 50
+                            width: 60
                         },
                         {
                             xtype: 'textfield',
@@ -153,7 +153,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry', {
                             id: prototype.id + '-txtA1835CUENT',
                             enforceMaxLength: true,
                             maxLength: 6,
-                            width: 40
+                            width: 50
                         },
                         {
                             xtype: 'textfield',

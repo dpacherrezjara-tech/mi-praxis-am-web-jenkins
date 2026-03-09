@@ -374,7 +374,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry', {
                             id: prototype.id + '-txtCECOS',
                             enforceMaxLength: true,
                             maxLength: 7,
-                            width: 50
+                            width: 60
                         },
                         {
                             xtype: 'textfield',
@@ -411,7 +411,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry', {
                             maxLength: 2,
                             width: 30
                         },
-                        { xtype: 'tbspacer', width: 40 },
+                        { xtype: 'tbspacer', width: 30 },
                         {
                             xtype: 'label',
                             text: 'IATA',
