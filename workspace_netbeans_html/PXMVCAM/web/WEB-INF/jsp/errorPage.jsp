@@ -214,14 +214,14 @@
       <div class="h-left">
         <!-- <div class="logo-mark">‚??Ô∏è</div>
         <div class="logo-text">AeroFinance<br />Solutions</div> -->
-        <img src="img/menu/logo-aeromexico.png" width="248" />
+        <img src="resources/img/menu/logo_aeromexico.png" width="248" />
       </div>
       <div class="h-center"><h1>PRAXIS</h1></div>
       <div class="h-right">
         <!-- <div class="badge badge-a">AUDIT PRO</div>
         <div class="badge badge-b">SAC v2.0</div> -->
-        <div class="badge badge-a"><img src="img/menu/IATA_SP.png" width="120" /></div>
-        <div class="badge badge-b"><img src="img/menu/logo_miatech3.png" width="150" /></div>
+        <div class="badge badge-a"><img src="resources/img/menu/IATA_SP.png" width="120" /></div>
+        <div class="badge badge-b"><img src="resources/img/menu/logo_miatech3.png" width="150" /></div>
       </div>
     </header>
 
