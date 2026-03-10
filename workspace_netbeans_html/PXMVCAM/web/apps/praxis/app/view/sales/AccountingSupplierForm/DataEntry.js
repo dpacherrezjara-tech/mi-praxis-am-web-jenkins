@@ -13,7 +13,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.DataEntry', {
     ],
     title: 'Accounting Supplier Data Entry ',
     header: true,
-    width: 650,
+    width: 750,
     height: 370,
     border: false,
     resizable: false,
@@ -35,7 +35,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.DataEntry', {
                 {
                     xtype: 'panel',
                     layout: 'vbox',
-                    width: 650,
+                    width: 750,
                     margin: '5 20 5 2',
                     items: [
                         {
@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.DataEntry', {
                                             xtype: 'label',
                                             labelAlign: 'center',
                                             width: 100,
-                                            padding: '2px 5px 2px 3px',
+                                            padding: '2px 5px 2px 25px',
                                             html: '<strong style="color:#000;  ">Suplier</strong>'
 
                                         },
@@ -152,8 +152,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.DataEntry', {
                                         {
                                             xtype: 'label',
                                             labelAlign: 'center',
-                                            width: 100,
-                                            padding: '2px 5px 2px 3px',
+                                            width: 190,
+                                            padding: '2px 5px 2px 117px',
                                             html: '<strong style="color:#000;  ">Subsidiary</strong>'
 
                                         },

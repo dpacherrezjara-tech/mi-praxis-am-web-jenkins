@@ -77,7 +77,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.Filters', {
                     id: prototype.id + '-txtSubCta',
                     labelAlign: 'left',
                     fieldLabel: 'Sub Account',
-                    labelWidth: 110,
+                    labelWidth: 80,
                     width: 160,
                     maxLength: 5,
                     enforceMaxLength: true

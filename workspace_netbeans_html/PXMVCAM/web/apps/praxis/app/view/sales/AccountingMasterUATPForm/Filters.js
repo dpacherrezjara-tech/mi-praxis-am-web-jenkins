@@ -94,11 +94,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.Filters', {
                     id: prototype.id + '-txtSubCta',
                     labelAlign: 'left',
                     fieldLabel: 'Sub Account',
-                    labelWidth: 110,
+                    labelWidth: 85,
                     width: 160,
                     maxLength: 5,
                     enforceMaxLength: true
                 },
+                { xtype: 'tbspacer', width: 5 },
                 {
                     xtype: 'combo',
                     id: prototype.id + '-cboMode',
