@@ -61,7 +61,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.Filters', {
                     id: prototype.id + '-txtCliente',
                     labelAlign: 'left',
                     fieldLabel: 'Client',
-                    labelWidth: 50,
+                    labelWidth: 40,
                     width: 170,
                     maxLength: 15,
                     enforceMaxLength: true
@@ -72,7 +72,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.Filters', {
                     id: prototype.id + '-txtModo',
                     labelAlign: 'left',
                     fieldLabel: 'Mode',
-                    labelWidth: 50,
+                    labelWidth: 40,
                     width: 110,
                     maxLength: 2,
                     enforceMaxLength: true
@@ -83,7 +83,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.Filters', {
                     id: prototype.id + '-txtNumber',
                     labelAlign: 'left',
                     fieldLabel: 'Number Credit Card',
-                    labelWidth: 140,
+                    labelWidth: 130,
                     width: 270,
                     maxLength: 20,
                     enforceMaxLength: true
@@ -116,7 +116,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.Filters', {
                     id: prototype.id + '-txtSubCta',
                     labelAlign: 'left',
                     fieldLabel: 'Sub Account',
-                    labelWidth: 100,
+                    labelWidth: 80,
                     width: 150,
                     maxLength: 5,
                     enforceMaxLength: true

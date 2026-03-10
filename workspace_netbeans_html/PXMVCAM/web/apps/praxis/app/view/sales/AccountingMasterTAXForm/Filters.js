@@ -185,7 +185,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                 {
                     xtype: 'textfield',
                     id: prototype.id + '-txtCta',
-                    fieldStyle: 'text-align:right',
+                    // fieldStyle: 'text-align:right',
                     enforceMaxLength: true,
                     maxLength: 6,
                     width: 60,
@@ -205,7 +205,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                 {
                     xtype: 'textfield',
                     id: prototype.id + '-txtSubCta',
-                    fieldStyle: 'text-align:right',
+                    // fieldStyle: 'text-align:right',
                     enforceMaxLength: true,
                     maxLength: 5,
                     width: 60,

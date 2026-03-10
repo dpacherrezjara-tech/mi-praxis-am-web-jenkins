@@ -84,7 +84,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             xtype: 'label',
                                             labelAlign: 'center',
                                             width: 50,
-                                            padding: '2px 5px 2px 3px',
+                                            labelAlign: 'right',
+                                            padding: '2px 5px 2px 15px',
                                             html: '<strong style="color:#000;  ">Type</strong>'
 
                                         },
@@ -181,7 +182,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                         {
                                             xtype: 'label',
                                             labelAlign: 'left',
-                                            width: 150,
+                                            width: 200,
                                             padding: '2px 5px 2px 10px',
                                             html: '<strong style="color:#000;  ">Description</strong>'
 

@@ -395,7 +395,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.DataEntry', {
                                         {
                                             xtype: 'label',
                                             labelAlign: 'left',
-                                            width: 130,
+                                            width: 120,
                                             padding: '2px 5px 2px 10px',
                                             html: '<strong style="color:#000;">Efecctive</strong>'
 
@@ -407,7 +407,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.DataEntry', {
                                             format: 'Y/m/d',
                                             editable: true,
                                             maskRe: /[0-9/]/,
-                                            width: 80,
+                                            width: 90,
                                             fieldLabel: '',
                                             labelWidth: 0,
                                             padding: '2px 30px 2px 10px'
@@ -419,7 +419,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.DataEntry', {
                                             format: 'Ymd',
                                             editable: true,
                                             maskRe: /[0-9/]/,
-                                            width: 80,
+                                            width: 90,
                                             fieldLabel: '',
                                             labelWidth: 0,
                                             padding: '2px 5px 2px 10px'
