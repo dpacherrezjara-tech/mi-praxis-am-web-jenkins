@@ -380,11 +380,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.DataEntry', {
                                             labelWidth: 0,
                                             padding: '2px 30px 2px 10px'
                                         },
-                                         {
+                                        {
                                             xtype: 'datefield',
                                             id: prototype.id + '-txtEndDate',
                                             fieldStyle: 'text-align:center',
-                                             format: 'Ymd',
+                                            format: 'Ymd',
                                             editable: true,
                                             maskRe: /[0-9/]/,
                                             width: 80,
@@ -394,8 +394,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.DataEntry', {
                                         }
                                     ]
                                 }
-//                               
-//                               
+                                //                               
+                                //                               
                             ]
                         }
                     ]
@@ -447,7 +447,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.DataEntry', {
                                     labelWidth: 100,
                                     margin: '0 10 0 0',
                                     readOnly: true,
-                                    width: 180 
+                                    width: 180
                                 }
                             ]
                         },

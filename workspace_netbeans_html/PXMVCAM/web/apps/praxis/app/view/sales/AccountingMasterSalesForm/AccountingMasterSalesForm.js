@@ -7,10 +7,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.AccountingMasterSale
     extend: 'Ext.form.Panel',
     alias: 'widget.AccountingMasterSalesForm',
     requires: [
-          'Ext.Praxis.controller.sales.AccountingMasterSales.AccountingMasterSalesController',
-          'Ext.Praxis.view.sales.AccountingMasterSalesForm.Options',
-          'Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters',
-          'Ext.Praxis.view.sales.AccountingMasterSalesForm.Info'
+        'Ext.Praxis.controller.sales.AccountingMasterSales.AccountingMasterSalesController',
+        'Ext.Praxis.view.sales.AccountingMasterSalesForm.Options',
+        'Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters',
+        'Ext.Praxis.view.sales.AccountingMasterSalesForm.Info'
     ],
     controller: 'AccountingMasterSalesController',
     layout: {
@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.AccountingMasterSale
             layout: 'fit',
             items: [
                 {
-                    id: prototype.id +'-form',
+                    id: prototype.id + '-form',
                     border: false,
                     bodyCls: 'colorFondo',
                     layout: 'fit',
@@ -41,12 +41,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.AccountingMasterSale
                         {
                             xtype: 'panel',
                             region: 'center',
-//                          width: 900,
+                            //                          width: 900,
                             layout: 'border',
                             items: [
                                 {
                                     region: 'center',
-                                    id: prototype.id +'-centerC',
+                                    id: prototype.id + '-centerC',
                                     layout: {
                                         type: 'vbox',
                                         align: 'center'
@@ -59,12 +59,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.AccountingMasterSale
                                     },
                                     items: [
                                         {
-                                            xtype:prototype.id + '-options'
+                                            xtype: prototype.id + '-options'
                                         }
                                         ,
                                         {
-                                            xtype:prototype.id+ '-filters',
-                                            id: prototype.id+'-contentFilter'
+                                            xtype: prototype.id + '-filters',
+                                            id: prototype.id + '-contentFilter'
                                         }
                                         ,
                                         {
@@ -74,7 +74,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.AccountingMasterSale
                                             items: [
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.id+'-centerC-panel01',
+                                                    id: prototype.id + '-centerC-panel01',
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,
@@ -85,8 +85,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.AccountingMasterSale
                                                     items: [
                                                         {
                                                             region: 'center',
-                                                            xtype: prototype.id +'-info',
-                                                            id:prototype.id+'-contentInfo'
+                                                            xtype: prototype.id + '-info',
+                                                            id: prototype.id + '-contentInfo'
                                                         }
                                                     ]
                                                 }

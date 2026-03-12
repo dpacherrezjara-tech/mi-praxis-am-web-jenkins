@@ -2,7 +2,7 @@
 
 prototype.id = 'AccountingSupplierForm';
 prototype.url = CONTEXTPATH + '/AccountingSupplier';
-          
+
 Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.AccountingSupplierForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.AccountingSupplierForm',
@@ -41,7 +41,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.AccountingSupplierForm'
                         {
                             xtype: 'panel',
                             region: 'center',
-//                          width: 900,
+                            //                          width: 900,
                             layout: 'border',
                             items: [
                                 {
@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.AccountingSupplierForm'
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1300,
+                                        width: 1400,
                                         align: 'center'
                                     },
                                     items: [
