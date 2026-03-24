@@ -275,14 +275,14 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
         Ext.getCmp(prototype.id + '-txtA003FIANM2').setValue(data.A003FIANM2);
         Ext.getCmp(prototype.id + '-txtA003FIANI2').setValue(Ext.util.Format.number(data.A003FIANI2, '0.00'));
         Ext.getCmp(prototype.id + '-txtA003FIANB2').setValue(data.A003FIANB2);
-        Ext.getCmp(prototype.id + '-txtCIA').setValue(data.A003CTACIA);
-        Ext.getCmp(prototype.id + '-txtUNIDA').setValue(data.A003CTANEG);
-        Ext.getCmp(prototype.id + '-txtCECOS').setValue(data.A003CTACTO);
-        Ext.getCmp(prototype.id + '-txtUBICA').setValue(data.A003CTAUBC);
-        Ext.getCmp(prototype.id + '-txtCTA').setValue(data.A003CTACTA);
-        Ext.getCmp(prototype.id + '-txtSCTA').setValue(data.A003CTASCT);
-        Ext.getCmp(prototype.id + '-txtEQUI').setValue(data.A003CTAEQP);
-        Ext.getCmp(prototype.id + '-txtICIA').setValue(data.A003CTAICI);
+//        Ext.getCmp(prototype.id + '-txtCIA').setValue(data.A003CTACIA);
+//        Ext.getCmp(prototype.id + '-txtUNIDA').setValue(data.A003CTANEG);
+//        Ext.getCmp(prototype.id + '-txtCECOS').setValue(data.A003CTACTO);
+//        Ext.getCmp(prototype.id + '-txtUBICA').setValue(data.A003CTAUBC);
+//        Ext.getCmp(prototype.id + '-txtCTA').setValue(data.A003CTACTA);
+//        Ext.getCmp(prototype.id + '-txtSCTA').setValue(data.A003CTASCT);
+//        Ext.getCmp(prototype.id + '-txtEQUI').setValue(data.A003CTAEQP);
+//        Ext.getCmp(prototype.id + '-txtICIA').setValue(data.A003CTAICI);
         Ext.getCmp(prototype.id + '-txtA003AREA').setValue(data.A003AREA);
         Ext.getCmp(prototype.id + '-txtA003CPROVE').setValue(data.A003CPROVE);
         Ext.getCmp(prototype.id + '-txtA003CCLIEN').setValue(data.A003CCLIEN);
@@ -420,14 +420,14 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
             A003FIANI2 = 0;
         }
         var A003FIANB2 = Ext.getCmp(prototype.id + '-txtA003FIANB2').getValue();
-        var A003CTACIA = Ext.getCmp(prototype.id + '-txtCIA').getValue();
-        var A003CTANEG = Ext.getCmp(prototype.id + '-txtUNIDA').getValue();
-        var A003CTACTO = Ext.getCmp(prototype.id + '-txtCECOS').getValue();
-        var A003CTAUBC = Ext.getCmp(prototype.id + '-txtUBICA').getValue();
-        var A003CTACTA = Ext.getCmp(prototype.id + '-txtCTA').getValue();
-        var A003CTASCT = Ext.getCmp(prototype.id + '-txtSCTA').getValue();
-        var A003CTAEQP = Ext.getCmp(prototype.id + '-txtEQUI').getValue();
-        var A003CTAICI = Ext.getCmp(prototype.id + '-txtICIA').getValue();
+//        var A003CTACIA = Ext.getCmp(prototype.id + '-txtCIA').getValue();
+//        var A003CTANEG = Ext.getCmp(prototype.id + '-txtUNIDA').getValue();
+//        var A003CTACTO = Ext.getCmp(prototype.id + '-txtCECOS').getValue();
+//        var A003CTAUBC = Ext.getCmp(prototype.id + '-txtUBICA').getValue();
+//        var A003CTACTA = Ext.getCmp(prototype.id + '-txtCTA').getValue();
+//        var A003CTASCT = Ext.getCmp(prototype.id + '-txtSCTA').getValue();
+//        var A003CTAEQP = Ext.getCmp(prototype.id + '-txtEQUI').getValue();
+//        var A003CTAICI = Ext.getCmp(prototype.id + '-txtICIA').getValue();
         var A003AREA = Ext.getCmp(prototype.id + '-txtA003AREA').getValue();
         var A003CPROVE = Ext.getCmp(prototype.id + '-txtA003CPROVE').getValue();
         var A003CCLIEN = Ext.getCmp(prototype.id + '-txtA003CCLIEN').getValue();
@@ -496,14 +496,14 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
             A003FIANM2: A003FIANM2,
             A003FIANI2: A003FIANI2,
             A003FIANB2: A003FIANB2,
-            A003CTACIA: A003CTACIA,
-            A003CTANEG: A003CTANEG,
-            A003CTACTO: A003CTACTO,
-            A003CTAUBC: A003CTAUBC,
-            A003CTACTA: A003CTACTA,
-            A003CTASCT: A003CTASCT,
-            A003CTAEQP: A003CTAEQP,
-            A003CTAICI: A003CTAICI,
+//            A003CTACIA: A003CTACIA,
+//            A003CTANEG: A003CTANEG,
+//            A003CTACTO: A003CTACTO,
+//            A003CTAUBC: A003CTAUBC,
+//            A003CTACTA: A003CTACTA,
+//            A003CTASCT: A003CTASCT,
+//            A003CTAEQP: A003CTAEQP,
+//            A003CTAICI: A003CTAICI,
             A003AREA: A003AREA,
             A003CPROVE: A003CPROVE,
             A003CCLIEN: A003CCLIEN
@@ -676,7 +676,128 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
 //        }
         return '';
 
-    }
+    },
+    
+    onAccountDetailClick: async function(btn) {
+            var A003KEY   = Ext.getCmp(prototype.id + '-txtA003KEY').getValue();
+            var A003PSALF = Ext.getCmp(prototype.id + '-txtA003PSALF').getValue();
+
+            if (A003KEY.trim() === '') {
+                global.Msg({ msg: 'Required Field, Code' });
+                return;
+            }
+            if (A003PSALF.trim() === '') {
+                global.Msg({ msg: 'Required Field, Country Code' });
+                return;
+            }
+
+            var me = this;
+            Ext.getBody().mask('Loading...');
+
+            try {
+                const res = await global.callStorePost(
+                    'PRAXIS',       
+                    'SQP06028',     
+                    {
+                        A003KEY_IN:   A003KEY,
+                        A003PSALF_IN: A003PSALF
+                    }
+                );
+
+                Ext.getBody().unmask();
+
+                if (!res || !res.data) {
+                    global.Msg({ msg: 'No response' });
+                    return;
+                }
+
+                var records = res.data.lstRs?.[0] || [];
+                me.showAccountDetailWindow(records);
+
+            } catch (e) {
+                Ext.getBody().unmask();
+                global.Msg({ msg: 'Error calling SP: ' + e });
+            }
+        },
+
+        showAccountDetailWindow: function(data) {
+                var existing = Ext.getCmp(prototype.id + '-accountDetailWin');
+                if (existing) {
+                    existing.destroy();
+                }
+
+                var store = Ext.create('Ext.data.Store', {
+                    fields: [
+                        'A4059KEY',
+                        'A4059PSALF',
+                        'A4059DESDE',
+                        'A4059HASTA',
+                        'A4059CTAUN',
+                        'A4059CTACC',
+                        'A4059CTAUB',
+                        'A4059REGIS',
+                        'A4059FREGI',
+                        'A4059HREGI',
+                        'A4059REVIS',
+                        'A4059FREVI',
+                        'A4059HREVI'
+                    ],
+                    data: data
+                });
+
+                Ext.create('Ext.window.Window', {
+                    id: prototype.id + '-accountDetailWin',
+                    title: 'Account Detail - ' + Ext.getCmp(prototype.id + '-txtA003KEY').getValue(),
+                    width: 820,
+                    height: 350,
+                    modal: true,
+                    resizable: true,
+                    layout: 'fit',
+                    items: [
+                        {
+                            xtype: 'grid',
+                            store: store,
+                            border: false,
+                            columns: [
+                                { text: 'Code',        dataIndex: 'A4059KEY',    width: 80,  sortable: true, align: 'left'   },
+                                { text: 'Country',     dataIndex: 'A4059PSALF',  width: 65,  sortable: true, align: 'center' },
+                                { text: 'Date From',   dataIndex: 'A4059DESDE',  width: 85,  sortable: true, align: 'center' },
+                                { text: 'Date To',     dataIndex: 'A4059HASTA',  width: 85,  sortable: true, align: 'center' },
+                                { text: 'Unit',        dataIndex: 'A4059CTAUN',  width: 50,  sortable: true, align: 'center' },
+                                { text: 'Cost Center', dataIndex: 'A4059CTACC',  width: 90,  sortable: true, align: 'left'   },
+                                { text: 'Location',    dataIndex: 'A4059CTAUB',  width: 75,  sortable: true, align: 'center' },
+                                { text: 'Registered',  dataIndex: 'A4059REGIS',  width: 90,  sortable: true, align: 'left'   },
+                                { text: 'Reg. Date',   dataIndex: 'A4059FREGI',  width: 85,  sortable: true, align: 'center' },
+                                { text: 'Reg. Hour',   dataIndex: 'A4059HREGI',  width: 80,  sortable: true, align: 'center' },
+                                { text: 'Revised',     dataIndex: 'A4059REVIS',  width: 90,  sortable: true, align: 'left'   },
+                                { text: 'Rev. Date',   dataIndex: 'A4059FREVI',  width: 85,  sortable: true, align: 'center' },
+                                { text: 'Rev. Hour',   dataIndex: 'A4059HREVI',  width: 80,  sortable: true, align: 'center' }
+                            ],
+                            viewConfig: {
+                                stripeRows: true,
+                                emptyText: '<div style="text-align:center;padding:20px;">No records found for this agent.</div>'
+                            }
+                        }
+                    ],
+                    dockedItems: [
+                        {
+                            xtype: 'toolbar',
+                            dock: 'bottom',
+                            ui: 'footer',
+                            items: [
+                                '->',
+                                {
+                                    text: 'Close',
+                                    iconCls: 'prx-icon-cancel',
+                                    handler: function() {
+                                        Ext.getCmp(prototype.id + '-accountDetailWin').close();
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }).show();
+            },
 
 
 
