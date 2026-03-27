@@ -659,14 +659,16 @@ public class AgentsMasterFileController extends BaseController {
             filter.A003FIANM2 = request.getParameter("A003FIANM2");
             filter.A003FIANI2 = Double.parseDouble(request.getParameter("A003FIANI2"));
             filter.A003FIANB2 = request.getParameter("A003FIANB2");
-            filter.A003CTACIA = request.getParameter("A003CTACIA");
-            filter.A003CTANEG = request.getParameter("A003CTANEG");
-            filter.A003CTACTO = request.getParameter("A003CTACTO");
-            filter.A003CTAUBC = request.getParameter("A003CTAUBC");
-            filter.A003CTACTA = request.getParameter("A003CTACTA");
-            filter.A003CTASCT = request.getParameter("A003CTASCT");
-            filter.A003CTAEQP = request.getParameter("A003CTAEQP");
-            filter.A003CTAICI = request.getParameter("A003CTAICI");
+            //---------------//
+            filter.A003CTACIA = request.getParameter("A003CTACIA") != null ? request.getParameter("A003CTACIA") : "";
+            filter.A003CTANEG = request.getParameter("A003CTANEG") != null ? request.getParameter("A003CTANEG") : "";
+            filter.A003CTACTO = request.getParameter("A003CTACTO") != null ? request.getParameter("A003CTACTO") : "";
+            filter.A003CTAUBC = request.getParameter("A003CTAUBC") != null ? request.getParameter("A003CTAUBC") : "";
+            filter.A003CTACTA = request.getParameter("A003CTACTA") != null ? request.getParameter("A003CTACTA") : "";
+            filter.A003CTASCT = request.getParameter("A003CTASCT") != null ? request.getParameter("A003CTASCT") : "";
+            filter.A003CTAEQP = request.getParameter("A003CTAEQP") != null ? request.getParameter("A003CTAEQP") : "";
+            filter.A003CTAICI = request.getParameter("A003CTAICI") != null ? request.getParameter("A003CTAICI") : "";
+            
             filter.A003AREA = request.getParameter("A003AREA");
             filter.A003CPROVE = request.getParameter("A003CPROVE");
             filter.A003CCLIEN = request.getParameter("A003CCLIEN");
