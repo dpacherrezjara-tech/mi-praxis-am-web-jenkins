@@ -251,7 +251,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         me.beanTMP.IN_HORAINI = Ext.String.trim(Ext.getCmp(prototype.id + '-txthora1').getValue());
         me.beanTMP.IN_HORAFIN = Ext.String.trim(Ext.getCmp(prototype.id + '-txthora2').getValue());
         me.beanTMP.IN_STATUS = Ext.String.trim(Ext.getCmp(prototype.id + '-CmbStatus').getValue());
-        me.beanTMP.IN_CURRENCY = Ext.String.trim(Ext.getCmp(prototype.id + '-txtCurrency').getValue());
+        me.beanTMP.IN_CURRENCY = Ext.getCmp(prototype.id + '-tktpraxis').getValue() ? 'I' : '';//Ext.String.trim(Ext.getCmp(prototype.id + '-txtCurrency').getValue());
         me.beanTMP.IN_COUNTRY = Ext.String.trim(Ext.getCmp(prototype.id + '-txtCountry').getValue());
         me.beanTMP.IN_STATUSINI = Ext.String.trim(Ext.getCmp(prototype.id + '-CmbStatusIni').getValue());
         me.beanTMP.IN_STATUSFIN = Ext.String.trim(Ext.getCmp(prototype.id + '-CmbStatusFin').getValue());
@@ -291,6 +291,9 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
             Ext.getCmp(prototype.id + '-pagginator-01').enable();
             // Ext.getCmp(prototype.id + '-pagginator-legend').show();
         }
+    },
+    onTktPraxisChkChange: function (obj, newValue, oldValue, eOpts) {
+        this.onSearchClick();
     },
     onRendererToltip: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
