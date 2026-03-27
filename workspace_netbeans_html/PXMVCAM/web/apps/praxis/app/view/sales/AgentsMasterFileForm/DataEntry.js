@@ -1942,9 +1942,19 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
                                             height: 25,
                                             margin: '6 0 0 10', 
                                             padding: '0px 0px 0px 0px',
+                                            hidden: true,
                                             listeners: {
                                                 click: 'onAccountDetailClick'
                                             }
+                                        },
+                                        {
+                                            xtype: 'label',
+                                            id: prototype.id + '-lblAccountMsg',
+                                            labelAlign: 'left',
+                                            width: 420,
+                                            padding: '10px 5px 0px 15px',
+                                            hidden: true,
+                                            html: '<span style="color:#B56166; font-style:italic;">⚠ The account must be created after saving the agent.</span>'
                                         }
 //                                        {
 //                                            xtype: 'textfield',
