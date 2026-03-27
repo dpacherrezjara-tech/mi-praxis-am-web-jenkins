@@ -14,33 +14,36 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
     /**
      * Constructor
      */
-    init: function(view) {
+    init: function (view) {
         var me = this;
     },
     /**
      * Se ejecuta luego de haber cargado todos los componentes
      */
-    afterRender: function() {
+    afterRender: function () {
         var p = this.view.params;
         this.setDataStore();
+        global.AccessControlMaganer();
         switch (p.action) {
             case 'I':
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-save').show();
-               
+                Ext.getCmp(prototype.id + '-btn-account-detail').hide();
+                Ext.getCmp(prototype.id + '-lblAccountMsg').show();
                 break;
             case 'U':
                 this.getDataInputs();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 Ext.getCmp(prototype.id + '-btn-update').show();
                 Ext.getCmp(prototype.id + '-btn-delete').show();
-                 Ext.getCmp(prototype.id + '-txtA003KEY').setReadOnly(true);
+                Ext.getCmp(prototype.id + '-txtA003KEY').setReadOnly(true);
+                Ext.getCmp(prototype.id + '-btn-account-detail').show();
+                Ext.getCmp(prototype.id + '-lblAccountMsg').hide();
                 break;
         }
-        global.AccessControlMaganer();
     },
-    setDataStore: function() {
+    setDataStore: function () {
         var p = this.view.params;
         var cboA003CANAL = Ext.getCmp(prototype.id + '-cboA003CANAL');
         cboA003CANAL.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -81,7 +84,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
             autoLoad: true
         });
     },
-    cmbChangeChannel: function(obj) {
+    cmbChangeChannel: function (obj) {
 
         var channel = obj.getValue();
         var cboA003TIPO = Ext.getCmp(prototype.id + '-cboA003TIPO');
@@ -189,10 +192,10 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
         }
 
     },
-    onCancelClick: function(btn){
+    onCancelClick: function (btn) {
         this.view.close();
     },
-    getDataInputs: function() {
+    getDataInputs: function () {
         var p = this.view.params;
         var data = p.data;
         Ext.getCmp(prototype.id + '-txtA003KEY').setValue(data.A003KEY);
@@ -266,7 +269,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
         Ext.getCmp(prototype.id + '-lblA003FITER1').setText(data.A003FITER1);
         Ext.getCmp(prototype.id + '-txtA003FIANT1').setValue(data.A003FIANT1);
         Ext.getCmp(prototype.id + '-txtA003FIAND1').setValue(data.A003FIAND1);
-        Ext.getCmp(prototype.id + '-txtA003FIANM1').setValue(data.A003FIANM1);        
+        Ext.getCmp(prototype.id + '-txtA003FIANM1').setValue(data.A003FIANM1);
         Ext.getCmp(prototype.id + '-txtA003FIANI1').setValue(Ext.util.Format.number(data.A003FIANI1, '0.00'));
         Ext.getCmp(prototype.id + '-txtA003FIANB1').setValue(data.A003FIANB1);
         Ext.getCmp(prototype.id + '-lblA003FIINI2').setText(data.A003FIINI2);
@@ -287,7 +290,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
         Ext.getCmp(prototype.id + '-txtA003CPROVE').setValue(data.A003CPROVE);
         Ext.getCmp(prototype.id + '-txtA003CCLIEN').setValue(data.A003CCLIEN);
     },
-    getDataEntryValues: function(strOption) {
+    getDataEntryValues: function (strOption) {
 
 
         var A003KEY = Ext.getCmp(prototype.id + '-txtA003KEY').getValue();
@@ -398,7 +401,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
                 A003FREMES = 0;
             }
         }
-        var A003REMESA =Ext.util.Format.number(Ext.getCmp(prototype.id + '-txtA003REMESA').getValue(), '0') ;
+        var A003REMESA = Ext.util.Format.number(Ext.getCmp(prototype.id + '-txtA003REMESA').getValue(), '0');
         if (A003REMESA.trim() === '') {
             A003REMESA = 0;
         }
@@ -455,7 +458,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
             A003ZIPCOD: A003ZIPCOD,
             A003TELEF1: A003TELEF1,
             A003FAX: A003FAX,
-            A003COMENT:A003COMENT,
+            A003COMENT: A003COMENT,
 
             A003INDI1: A003INDI1,
             A003OFPRC: A003OFPRC,
@@ -509,7 +512,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
             A003CCLIEN: A003CCLIEN
         };
     },
-    onSaveClick: function(btn) {
+    onSaveClick: function (btn) {
 
         var strMsg = this.validateForm();
 
@@ -517,8 +520,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
             global.Msg({
                 msg: strMsg
             });
-        }
-        else {
+        } else {
             Ext.Msg.show({
                 title: '.:PRAXIS:.',
                 msg: 'Are you sure to insert?',
@@ -526,7 +528,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function (btn) {
                     if (btn === 'yes') {
                         this.view.params.action = "I";
                         this.crud();
@@ -535,35 +537,78 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
             });
         }
     },
-    crud: function() {
+    crud: function () {
         var p = this.view.params;
         var strOption = p.action;
-
-        console.log(this.getDataEntryValues(strOption));
+        var me = this;
 
         Ext.Ajax.request({
             url: this.url + '/mantenimiento',
             method: 'POST',
             timeout: 60000000,
             params: this.getDataEntryValues(strOption),
-            success: function(response, options) {
+            success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
-                var msg = res.msg;
                 var objRtn = res.objRtn;
 
                 global.Msg({
                     msg: objRtn.dbException.MESSAGE,
                     icon: 1,
-                    fn: function() {
-                        //exito
-                        Ext.getCmp(prototype.id + '-dataEntry').close();
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                    fn: function () {
+                        if (strOption === 'I') {
+                            // Refrescar grid principal
+                            Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+
+                            // Reabrir DataEntry en modo U con los datos recién guardados
+                            var A003KEY = Ext.getCmp(prototype.id + '-txtA003KEY').getValue();
+                            Ext.getCmp(prototype.id + '-dataEntry').close();
+
+                            Ext.Ajax.request({
+                                url: CONTEXTPATH + '/AgentsMasterFile/searchCompData',
+                                method: 'POST',
+                                timeout: 60000000,
+                                params: {
+                                    A003KEY: A003KEY,
+                                    action: 'U'
+                                },
+                                success: function (response2) {
+                                    var res2 = Ext.JSON.decode(response2.responseText);
+                                    var ciudades = res2.dataCity;
+                                    var paises = res2.dataPaises;
+                                    var data2 = res2.data;
+
+                                    var win = Ext.create('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
+                                        id: prototype.id + '-dataEntry',
+                                        params: {
+                                            action: 'U',
+                                            data: data2,
+                                            ciudades: ciudades,
+                                            paises: paises
+                                        }
+                                    });
+                                    win.show();
+
+                                    // Abrir grid de Account automáticamente luego del render
+                                    win.on('afterrender', function () {
+                                        var ctrl = win.getController();
+                                        setTimeout(function () {
+                                            ctrl.onAccountDetailClick(null, true);
+                                        }, 300);
+                                    }, null, {single: true});
+                                }
+                            });
+
+                        } else {
+                            // U o D: comportamiento normal
+                            Ext.getCmp(prototype.id + '-dataEntry').close();
+                            Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        }
                     }
                 });
             }
         });
     },
-    onUpdateClick: function(btn) {
+    onUpdateClick: function (btn) {
         //var p = this.view.params;
         Ext.Msg.show({
             title: '.:PRAXIS:.',
@@ -572,7 +617,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
             buttons: Ext.MessageBox.YESNO,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
+            fn: function (btn) {
                 if (btn === 'yes') {
                     this.view.params.action = "U";
 
@@ -582,7 +627,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
         });
     }
     ,
-    onDeleteClick: function(btn) {
+    onDeleteClick: function (btn) {
 
         Ext.Msg.show({
             title: '.:PRAXIS:.',
@@ -591,7 +636,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
+            fn: function (btn) {
                 if (btn === 'yes') {
                     this.view.params.action = "D";
 
@@ -600,7 +645,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
             }
         });
     },
-    validateForm: function() {
+    validateForm: function () {
         var mensaje = "";
         var txtA003KEY = Ext.getCmp(prototype.id + '-txtA003KEY').getValue();
         var cboA003CANAL = Ext.getCmp(prototype.id + '-cboA003CANAL').getValue();
@@ -617,35 +662,29 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
         if (txtA003KEY.trim() === '') {
             mensaje = 'Required Field, Code ';
             return mensaje;
-        }
-        else if (cboA003CANAL.trim() === '') {
+        } else if (cboA003CANAL.trim() === '') {
             mensaje = 'Required Field, Channel ';
             return mensaje;
-        }
-        else if (cboA003TIPO.trim() === '') {
+        } else if (cboA003TIPO.trim() === '') {
             mensaje = 'Required Field, Office Type  ';
             return mensaje;
-        }
-        else if (txtA003KEY3.trim() === '') {
+        } else if (txtA003KEY3.trim() === '') {
             mensaje = 'Required Field, Legal Name ';
             return mensaje;
-        }
-        else if (txtA003KEY1.trim() === '') {
+        } else if (txtA003KEY1.trim() === '') {
             mensaje = 'Required Field, Commercial Name  ';
             return mensaje;
-        }
-        else if (txtA003PSALF.trim() === '') {
+        } else if (txtA003PSALF.trim() === '') {
             mensaje = 'Required Field, Country Code ';
             return mensaje;
-        }
-        else if (txtA003CIUDAD.trim() === '') {
+        } else if (txtA003CIUDAD.trim() === '') {
             mensaje = 'Required Field, City';
             return mensaje;
         }
         var strPais = "";
         var bfind = false;
 
-        this.storeCiudades.each(function(record) {
+        this.storeCiudades.each(function (record) {
             //console.log(record.data);
             if (txtA003CIUDAD === record.data.A1007CIUD) {
                 strPais = record.data.A1007PAIS;
@@ -677,129 +716,427 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
         return '';
 
     },
-    
-    onAccountDetailClick: async function(btn) {
-            var A003KEY   = Ext.getCmp(prototype.id + '-txtA003KEY').getValue();
-            var A003PSALF = Ext.getCmp(prototype.id + '-txtA003PSALF').getValue();
 
-            if (A003KEY.trim() === '') {
-                global.Msg({ msg: 'Required Field, Code' });
-                return;
-            }
-            if (A003PSALF.trim() === '') {
-                global.Msg({ msg: 'Required Field, Country Code' });
-                return;
-            }
+    onAccountDetailClick: async function (btn, autoOpen) {
+        var A003KEY = Ext.getCmp(prototype.id + '-txtA003KEY').getValue();
+        var A003PSALF = Ext.getCmp(prototype.id + '-txtA003PSALF').getValue();
 
-            var me = this;
-            Ext.getBody().mask('Loading...');
+        if (A003KEY.trim() === '') {
+            global.Msg({msg: 'Required Field, Code'});
+            return;
+        }
+        if (A003PSALF.trim() === '') {
+            global.Msg({msg: 'Required Field, Country Code'});
+            return;
+        }
 
-            try {
-                const res = await global.callStorePost(
-                    'PRAXIS',       
-                    'SQP06028',     
+        var me = this;
+        var winMask = Ext.getCmp(prototype.id + '-dataEntry');
+        winMask.mask('Loading...');
+
+        try {
+            const res = await global.callStorePost(
+                    'PRAXIS',
+                    'SQP06028',
                     {
-                        A003KEY_IN:   A003KEY,
+                        A003KEY_IN: A003KEY,
                         A003PSALF_IN: A003PSALF
                     }
-                );
+            );
 
-                Ext.getBody().unmask();
+            winMask.unmask();
 
-                if (!res || !res.data) {
-                    global.Msg({ msg: 'No response' });
-                    return;
-                }
-
-                var records = res.data.lstRs?.[0] || [];
-                me.showAccountDetailWindow(records);
-
-            } catch (e) {
-                Ext.getBody().unmask();
-                global.Msg({ msg: 'Error calling SP: ' + e });
+            if (!res || !res.data) {
+                global.Msg({msg: 'No response'});
+                return;
             }
-        },
 
-        showAccountDetailWindow: function(data) {
-                var existing = Ext.getCmp(prototype.id + '-accountDetailWin');
-                if (existing) {
-                    existing.destroy();
-                }
+            var records = res.data.lstRs?.[0] || [];
+            me.showAccountDetailWindow(records, A003KEY, A003PSALF);
 
-                var store = Ext.create('Ext.data.Store', {
-                    fields: [
-                        'A4059KEY',
-                        'A4059PSALF',
-                        'A4059DESDE',
-                        'A4059HASTA',
-                        'A4059CTAUN',
-                        'A4059CTACC',
-                        'A4059CTAUB',
-                        'A4059REGIS',
-                        'A4059FREGI',
-                        'A4059HREGI',
-                        'A4059REVIS',
-                        'A4059FREVI',
-                        'A4059HREVI'
-                    ],
-                    data: data
-                });
+        } catch (e) {
+            winMask.unmask();
+            global.Msg({msg: 'Error calling SP ' + e});
+        }
+    },
 
-                Ext.create('Ext.window.Window', {
-                    id: prototype.id + '-accountDetailWin',
-                    title: 'Account Detail - ' + Ext.getCmp(prototype.id + '-txtA003KEY').getValue(),
-                    width: 820,
-                    height: 350,
-                    modal: true,
-                    resizable: true,
-                    layout: 'fit',
-                    items: [
+    showAccountDetailWindow: function (data, A003KEY, A003PSALF) {
+        var me = this;
+        var existing = Ext.getCmp(prototype.id + '-accountDetailWin');
+        if (existing) {
+            existing.destroy();
+        }
+
+        var store = Ext.create('Ext.data.Store', {
+            fields: [
+                'A4059KEY', 'A4059PSALF', 'A4059DESDE', 'A4059HASTA',
+                'A4059CTAUN', 'A4059CTACC', 'A4059CTAUB',
+                'A4059REGIS', 'A4059FREGI', 'A4059HREGI',
+                'A4059REVIS', 'A4059FREVI', 'A4059HREVI'
+            ],
+            data: data
+        });
+
+        Ext.create('Ext.window.Window', {
+            id: prototype.id + '-accountDetailWin',
+            title: 'Account Detail — ' + A003KEY + ' / ' + A003PSALF,
+            width: 1030,
+            height: 380,
+            modal: true,
+            resizable: true,
+            layout: 'fit',
+            items: [
+                {
+                    xtype: 'grid',
+                    id: prototype.id + '-accountGrid',
+                    store: store,
+                    border: false,
+                    columns: [
+                        {text: 'Date From', dataIndex: 'A4059DESDE', width: 85, sortable: true, align: 'center'},
+                        {text: 'Date To', dataIndex: 'A4059HASTA', width: 85, sortable: true, align: 'center'},
+                        {text: 'Unit', dataIndex: 'A4059CTAUN', width: 50, sortable: true, align: 'center'},
+                        {text: 'Cost Center', dataIndex: 'A4059CTACC', width: 90, sortable: true, align: 'left'},
+                        {text: 'Location', dataIndex: 'A4059CTAUB', width: 75, sortable: true, align: 'center'},
+                        {text: 'Registered', dataIndex: 'A4059REGIS', width: 90, sortable: true, align: 'left'},
+                        {text: 'Reg. Date', dataIndex: 'A4059FREGI', width: 85, sortable: true, align: 'center'},
+                        {text: 'Reg. Hour', dataIndex: 'A4059HREGI', width: 75, sortable: true, align: 'center'},
+                        {text: 'Revised', dataIndex: 'A4059REVIS', width: 90, sortable: true, align: 'left'},
+                        {text: 'Rev. Date', dataIndex: 'A4059FREVI', width: 85, sortable: true, align: 'center'},
+                        {text: 'Rev. Hour', dataIndex: 'A4059HREVI', width: 75, sortable: true, align: 'center'},
                         {
-                            xtype: 'grid',
-                            store: store,
-                            border: false,
+                            text: 'Actions',
+                            defaults: {
+                                align: 'center',
+                                menuDisabled: true,
+                                sortable: true
+
+                            },
                             columns: [
-                                { text: 'Code',        dataIndex: 'A4059KEY',    width: 80,  sortable: true, align: 'left'   },
-                                { text: 'Country',     dataIndex: 'A4059PSALF',  width: 65,  sortable: true, align: 'center' },
-                                { text: 'Date From',   dataIndex: 'A4059DESDE',  width: 85,  sortable: true, align: 'center' },
-                                { text: 'Date To',     dataIndex: 'A4059HASTA',  width: 85,  sortable: true, align: 'center' },
-                                { text: 'Unit',        dataIndex: 'A4059CTAUN',  width: 50,  sortable: true, align: 'center' },
-                                { text: 'Cost Center', dataIndex: 'A4059CTACC',  width: 90,  sortable: true, align: 'left'   },
-                                { text: 'Location',    dataIndex: 'A4059CTAUB',  width: 75,  sortable: true, align: 'center' },
-                                { text: 'Registered',  dataIndex: 'A4059REGIS',  width: 90,  sortable: true, align: 'left'   },
-                                { text: 'Reg. Date',   dataIndex: 'A4059FREGI',  width: 85,  sortable: true, align: 'center' },
-                                { text: 'Reg. Hour',   dataIndex: 'A4059HREGI',  width: 80,  sortable: true, align: 'center' },
-                                { text: 'Revised',     dataIndex: 'A4059REVIS',  width: 90,  sortable: true, align: 'left'   },
-                                { text: 'Rev. Date',   dataIndex: 'A4059FREVI',  width: 85,  sortable: true, align: 'center' },
-                                { text: 'Rev. Hour',   dataIndex: 'A4059HREVI',  width: 80,  sortable: true, align: 'center' }
-                            ],
-                            viewConfig: {
-                                stripeRows: true,
-                                emptyText: '<div style="text-align:center;padding:20px;">No records found for this agent.</div>'
-                            }
-                        }
-                    ],
-                    dockedItems: [
-                        {
-                            xtype: 'toolbar',
-                            dock: 'bottom',
-                            ui: 'footer',
-                            items: [
-                                '->',
-                                {
-                                    text: 'Close',
-                                    iconCls: 'prx-icon-cancel',
-                                    handler: function() {
-                                        Ext.getCmp(prototype.id + '-accountDetailWin').close();
-                                    }
+                                {text: 'Edit',
+                                    xtype: 'actioncolumn',
+                                    width: 70,
+                                    items: [
+                                        {
+                                            iconCls: 'prx-icon-edit',
+                                            tooltip: 'Edit',
+                                            handler: function (grid, rowIndex) {
+                                                var rec = grid.getStore().getAt(rowIndex);
+                                                me.openAccountForm('U', rec.data, A003KEY, A003PSALF, store);
+                                            }
+                                        }
+                                    ]
+                                },
+                                {text: 'Del.',
+                                    xtype: 'actioncolumn',
+                                    width: 70,
+                                    items: [
+                                        {
+                                            iconCls: 'prx-icon-cancel-action',
+                                            tooltip: 'Delete',
+                                            handler: function (grid, rowIndex) {
+                                                var rec = grid.getStore().getAt(rowIndex);
+                                                Ext.Msg.show({
+                                                    title: '.:PRAXIS:.',
+                                                    msg: 'Are you sure to delete this account?',
+                                                    buttons: Ext.MessageBox.YESNO,
+                                                    icon: Ext.MessageBox.QUESTION,
+                                                    scope: me,
+                                                    fn: function (btn) {
+                                                        if (btn === 'yes') {
+                                                            me.crudAccount('D', rec.data, A003KEY, A003PSALF, store);
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    ]
                                 }
                             ]
+                        },
+                    ],
+                    viewConfig: {
+                        stripeRows: true,
+                        emptyText: '<div style="text-align:center;padding:20px;">No accounts found for this agent.</div>'
+                    }
+                }
+            ],
+            dockedItems: [
+                {
+                    xtype: 'toolbar',
+                    dock: 'top',
+                    items: [
+                        {
+                            text: 'Add Account',
+                            iconCls: 'prx-icon-add',
+                            handler: function () {
+                                me.openAccountForm('I', null, A003KEY, A003PSALF, store);
+                            }
                         }
                     ]
-                }).show();
-            },
+                },
+                {
+                    xtype: 'toolbar',
+                    dock: 'bottom',
+                    ui: 'footer',
+                    items: [
+                        '->',
+                        {
+                            text: 'Close',
+                            iconCls: 'prx-icon-cancel',
+                            handler: function () {
+                                Ext.getCmp(prototype.id + '-accountDetailWin').close();
+                            }
+                        }
+                    ]
+                }
+            ]
+        }).show();
+    },
 
+    openAccountForm: function (action, data, A003KEY, A003PSALF, store) {
+        var me = this;
+        data = data || {};
 
+        var existing = Ext.getCmp(prototype.id + '-accountFormWin');
+        if (existing)
+            existing.destroy();
+
+        Ext.create('Ext.window.Window', {
+            id: prototype.id + '-accountFormWin',
+            title: (action === 'I' ? 'Add Account' : 'Edit Account') + ' — ' + A003KEY,
+            width: 420,
+            height: 340,
+            modal: true,
+            resizable: false,
+            layout: 'fit',
+            items: [
+                {
+                    xtype: 'form',
+                    id: prototype.id + '-accountForm',
+                    bodyStyle: 'background:#E3EAF9; padding:15px',
+                    border: false,
+                    defaults: {labelWidth: 100, labelAlign: 'right', width: 360},
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-frmA4059DESDE',
+                            fieldLabel: '<strong>Date From</strong>',
+                            value: data.A4059DESDE || '',
+                            maxLength: 8,
+                            enforceMaxLength: true,
+                            readOnly: action === 'U'   // clave primaria en edición
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-frmA4059HASTA',
+                            fieldLabel: '<strong>Date To</strong>',
+                            value: data.A4059HASTA || '',
+                            maxLength: 8,
+                            enforceMaxLength: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-frmA4059CTAUN',
+                            fieldLabel: '<strong>Unit</strong>',
+                            value: data.A4059CTAUN || '',
+                            maxLength: 2,
+                            enforceMaxLength: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-frmA4059CTACC',
+                            fieldLabel: '<strong>Cost Center</strong>',
+                            value: data.A4059CTACC || '',
+                            maxLength: 7,
+                            enforceMaxLength: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-frmA4059CTAUB',
+                            fieldLabel: '<strong>Location</strong>',
+                            value: data.A4059CTAUB || '',
+                            maxLength: 4,
+                            enforceMaxLength: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-frmA4059REGIS',
+                            fieldLabel: '<strong>Registered</strong>',
+                            value: data.A4059REGIS || '',
+                            maxLength: 10,
+                            enforceMaxLength: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-frmA4059FREGI',
+                            fieldLabel: '<strong>Reg. Date</strong>',
+                            value: data.A4059FREGI || '',
+                            maxLength: 8,
+                            enforceMaxLength: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-frmA4059HREGI',
+                            fieldLabel: '<strong>Reg. Hour</strong>',
+                            value: data.A4059HREGI || '',
+                            maxLength: 6,
+                            enforceMaxLength: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-frmA4059REVIS',
+                            fieldLabel: '<strong>Revised</strong>',
+                            value: data.A4059REVIS || '',
+                            maxLength: 10,
+                            enforceMaxLength: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-frmA4059FREVI',
+                            fieldLabel: '<strong>Rev. Date</strong>',
+                            value: data.A4059FREVI || '',
+                            maxLength: 8,
+                            enforceMaxLength: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-frmA4059HREVI',
+                            fieldLabel: '<strong>Rev. Hour</strong>',
+                            value: data.A4059HREVI || '',
+                            maxLength: 6,
+                            enforceMaxLength: true
+                        }
+                    ]
+                }
+            ],
+            dockedItems: [
+                {
+                    xtype: 'toolbar',
+                    dock: 'bottom',
+                    ui: 'footer',
+                    items: [
+                        '->',
+                        {
+                            text: action === 'I' ? 'Save' : 'Update',
+                            iconCls: action === 'I' ? 'prx-icon-save' : 'prx-icon-update',
+                            handler: function () {
+                                var formData = {
+                                    A4059DESDE: Ext.getCmp(prototype.id + '-frmA4059DESDE').getValue(),
+                                    A4059HASTA: Ext.getCmp(prototype.id + '-frmA4059HASTA').getValue(),
+                                    A4059CTAUN: Ext.getCmp(prototype.id + '-frmA4059CTAUN').getValue(),
+                                    A4059CTACC: Ext.getCmp(prototype.id + '-frmA4059CTACC').getValue(),
+                                    A4059CTAUB: Ext.getCmp(prototype.id + '-frmA4059CTAUB').getValue(),
+                                    A4059REGIS: Ext.getCmp(prototype.id + '-frmA4059REGIS').getValue(),
+                                    A4059FREGI: Ext.getCmp(prototype.id + '-frmA4059FREGI').getValue(),
+                                    A4059HREGI: Ext.getCmp(prototype.id + '-frmA4059HREGI').getValue(),
+                                    A4059REVIS: Ext.getCmp(prototype.id + '-frmA4059REVIS').getValue(),
+                                    A4059FREVI: Ext.getCmp(prototype.id + '-frmA4059FREVI').getValue(),
+                                    A4059HREVI: Ext.getCmp(prototype.id + '-frmA4059HREVI').getValue()
+                                };
+
+                                if (formData.A4059DESDE.trim() === '') {
+                                    global.Msg({msg: 'Required Field, Date From'});
+                                    return;
+                                }
+
+                                me.crudAccount(action, formData, A003KEY, A003PSALF, store);
+                            }
+                        },
+                        {
+                            text: 'Cancel',
+                            iconCls: 'prx-icon-cancel',
+                            handler: function () {
+                                Ext.getCmp(prototype.id + '-accountFormWin').close();
+                            }
+                        }
+                    ]
+                }
+            ]
+        }).show();
+    },
+
+    crudAccount: async function (action, data, A003KEY, A003PSALF, store) {
+        var me = this;
+        var winMask = Ext.getCmp(prototype.id + '-accountDetailWin');
+        winMask.mask('Loading...');
+
+        try {
+            const res = await global.callStorePost(
+                    'PRAXIS',
+                    'MPS598',
+                    {
+                        A4059KEY_IN: A003KEY,
+                        A4059PSALF_IN: A003PSALF,
+                        A4059DESDE_IN: data.A4059DESDE || '',
+                        A4059HASTA_IN: data.A4059HASTA || '',
+                        A4059CTAUN_IN: data.A4059CTAUN || '',
+                        A4059CTACC_IN: data.A4059CTACC || '',
+                        A4059CTAUB_IN: data.A4059CTAUB || '',
+                        A4059REGIS_IN: data.A4059REGIS || '',
+                        A4059FREGI_IN: data.A4059FREGI || '',
+                        A4059HREGI_IN: data.A4059HREGI || '',
+                        A4059REVIS_IN: data.A4059REVIS || '',
+                        A4059FREVI_IN: data.A4059FREVI || '',
+                        A4059HREVI_IN: data.A4059HREVI || '',
+                        STROPTION_IN: action
+                    }
+            );
+
+            winMask.unmask();
+
+            if (!res || !res.data) {
+                global.Msg({msg: 'No response from MPS598'});
+                return;
+            }
+
+            var result = res.data.lstRs?.[0]?.[0] || {};
+            var isError = result.RESULT === 'E';
+
+            global.Msg({
+                msg: result.MESSAGE || (isError ? 'Error processing account.' : 'Operation successful.'),
+                icon: isError ? 0 : 1,
+                fn: function () {
+                    if (!isError) {
+                        // Cerrar form y refrescar el store del grid
+                        var formWin = Ext.getCmp(prototype.id + '-accountFormWin');
+                        if (formWin)
+                            formWin.close();
+
+                        // Recargar datos del grid via SQP06028
+                        me.refreshAccountGrid(A003KEY, A003PSALF, store);
+                    }
+                }
+            });
+
+        } catch (e) {
+            winMask.unmask();
+            global.Msg({msg: 'Error calling MPS598: ' + e});
+        }
+
+    },
+
+    refreshAccountGrid: async function (A003KEY, A003PSALF, store) {
+        var winMask = Ext.getCmp(prototype.id + '-accountDetailWin');  // <-- mask sobre el grid
+        winMask.mask('Loading...');
+        try {
+            const res = await global.callStorePost(
+                    'PRAXIS',
+                    'SQP06028',
+                    {
+                        A003KEY_IN: A003KEY,
+                        A003PSALF_IN: A003PSALF
+                    }
+            );
+            winMask.unmask();
+
+            var records = res?.data?.lstRs?.[0] || [];
+            store.loadData(records);
+
+        } catch (e) {
+            winMask.unmask();
+            global.Msg({msg: 'Error refreshing accounts: ' + e});
+        }
+    },
 
 });
 
