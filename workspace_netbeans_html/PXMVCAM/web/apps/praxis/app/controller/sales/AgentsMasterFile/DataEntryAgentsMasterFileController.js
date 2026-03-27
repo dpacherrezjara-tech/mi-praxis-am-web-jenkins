@@ -291,7 +291,8 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
         Ext.getCmp(prototype.id + '-txtA003CCLIEN').setValue(data.A003CCLIEN);
     },
     getDataEntryValues: function (strOption) {
-
+        var p = this.view.params;
+        var originalData = (p && p.data) ? p.data : {};
 
         var A003KEY = Ext.getCmp(prototype.id + '-txtA003KEY').getValue();
         var A003CANAL = Ext.getCmp(prototype.id + '-cboA003CANAL').getValue();
@@ -423,14 +424,14 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
             A003FIANI2 = 0;
         }
         var A003FIANB2 = Ext.getCmp(prototype.id + '-txtA003FIANB2').getValue();
-//        var A003CTACIA = Ext.getCmp(prototype.id + '-txtCIA').getValue();
-//        var A003CTANEG = Ext.getCmp(prototype.id + '-txtUNIDA').getValue();
-//        var A003CTACTO = Ext.getCmp(prototype.id + '-txtCECOS').getValue();
-//        var A003CTAUBC = Ext.getCmp(prototype.id + '-txtUBICA').getValue();
-//        var A003CTACTA = Ext.getCmp(prototype.id + '-txtCTA').getValue();
-//        var A003CTASCT = Ext.getCmp(prototype.id + '-txtSCTA').getValue();
-//        var A003CTAEQP = Ext.getCmp(prototype.id + '-txtEQUI').getValue();
-//        var A003CTAICI = Ext.getCmp(prototype.id + '-txtICIA').getValue();
+        //        var A003CTACIA = Ext.getCmp(prototype.id + '-txtCIA').getValue();
+        //        var A003CTANEG = Ext.getCmp(prototype.id + '-txtUNIDA').getValue();
+        //        var A003CTACTO = Ext.getCmp(prototype.id + '-txtCECOS').getValue();
+        //        var A003CTAUBC = Ext.getCmp(prototype.id + '-txtUBICA').getValue();
+        //        var A003CTACTA = Ext.getCmp(prototype.id + '-txtCTA').getValue();
+        //        var A003CTASCT = Ext.getCmp(prototype.id + '-txtSCTA').getValue();
+        //        var A003CTAEQP = Ext.getCmp(prototype.id + '-txtEQUI').getValue();
+        //        var A003CTAICI = Ext.getCmp(prototype.id + '-txtICIA').getValue();
         var A003AREA = Ext.getCmp(prototype.id + '-txtA003AREA').getValue();
         var A003CPROVE = Ext.getCmp(prototype.id + '-txtA003CPROVE').getValue();
         var A003CCLIEN = Ext.getCmp(prototype.id + '-txtA003CCLIEN').getValue();
@@ -499,14 +500,14 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
             A003FIANM2: A003FIANM2,
             A003FIANI2: A003FIANI2,
             A003FIANB2: A003FIANB2,
-//            A003CTACIA: A003CTACIA,
-//            A003CTANEG: A003CTANEG,
-//            A003CTACTO: A003CTACTO,
-//            A003CTAUBC: A003CTAUBC,
-//            A003CTACTA: A003CTACTA,
-//            A003CTASCT: A003CTASCT,
-//            A003CTAEQP: A003CTAEQP,
-//            A003CTAICI: A003CTAICI,
+            A003CTACIA: originalData.A003CTACIA || '',
+            A003CTANEG: originalData.A003CTANEG || '',
+            A003CTACTO: originalData.A003CTACTO || '',
+            A003CTAUBC: originalData.A003CTAUBC || '',
+            A003CTACTA: originalData.A003CTACTA || '',
+            A003CTASCT: originalData.A003CTASCT || '',
+            A003CTAEQP: originalData.A003CTAEQP || '',
+            A003CTAICI: originalData.A003CTAICI || '',
             A003AREA: A003AREA,
             A003CPROVE: A003CPROVE,
             A003CCLIEN: A003CCLIEN
@@ -893,19 +894,18 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
         }).show();
     },
 
-    openAccountForm: function (action, data, A003KEY, A003PSALF, store) {
+   openAccountForm: function (action, data, A003KEY, A003PSALF, store) {
         var me = this;
         data = data || {};
 
         var existing = Ext.getCmp(prototype.id + '-accountFormWin');
-        if (existing)
-            existing.destroy();
+        if (existing) existing.destroy();
 
         Ext.create('Ext.window.Window', {
             id: prototype.id + '-accountFormWin',
-            title: (action === 'I' ? 'Add Account' : 'Edit Account') + ' — ' + A003KEY,
-            width: 420,
-            height: 340,
+            title: (action === 'I' ? 'Add Account' : 'Edit Account') + ' — ' + A003KEY + ' / ' + A003PSALF,
+            width: 580,
+            height: 310,
             modal: true,
             resizable: false,
             layout: 'fit',
@@ -913,98 +913,212 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
                 {
                     xtype: 'form',
                     id: prototype.id + '-accountForm',
-                    bodyStyle: 'background:#E3EAF9; padding:15px',
+                    bodyStyle: 'background:#E3EAF9; padding:10px 15px',
                     border: false,
-                    defaults: {labelWidth: 100, labelAlign: 'right', width: 360},
+                    layout: 'vbox',
                     items: [
+
+                        // ── Sección: Account Data ─────────────────────────────
                         {
-                            xtype: 'textfield',
-                            id: prototype.id + '-frmA4059DESDE',
-                            fieldLabel: '<strong>Date From</strong>',
-                            value: data.A4059DESDE || '',
-                            maxLength: 8,
-                            enforceMaxLength: true,
-                            readOnly: action === 'U'   // clave primaria en edición
+                            xtype: 'label',
+                            html: '<strong style="color:#000; text-decoration:underline;">Account Data</strong>',
+                            padding: '5px 0px 8px 0px'
                         },
+
+                        // Fila 1: Date From | Date To
                         {
-                            xtype: 'textfield',
-                            id: prototype.id + '-frmA4059HASTA',
-                            fieldLabel: '<strong>Date To</strong>',
-                            value: data.A4059HASTA || '',
-                            maxLength: 8,
-                            enforceMaxLength: true
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background:#E3EAF9',
+                            margin: '0 0 6 0',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-frmA4059DESDE',
+                                    fieldLabel: '<strong>Date From</strong>',
+                                    labelAlign: 'right',
+                                    labelWidth: 90,
+                                    width: 200,
+                                    value: data.A4059DESDE || '',
+                                    maxLength: 8,
+                                    enforceMaxLength: true,
+                                    fieldStyle: 'text-align:center',
+                                    maskRe: /[0-9]/
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-frmA4059HASTA',
+                                    fieldLabel: '<strong>Date To</strong>',
+                                    labelAlign: 'right',
+                                    labelWidth: 80,
+                                    width: 200,
+                                    padding: '0 0 0 15',
+                                    value: data.A4059HASTA || '',
+                                    maxLength: 8,
+                                    enforceMaxLength: true,
+                                    fieldStyle: 'text-align:center',
+                                    maskRe: /[0-9]/
+                                }
+                            ]
                         },
+
+                        // Fila 2: Unit | Cost Center | Location
                         {
-                            xtype: 'textfield',
-                            id: prototype.id + '-frmA4059CTAUN',
-                            fieldLabel: '<strong>Unit</strong>',
-                            value: data.A4059CTAUN || '',
-                            maxLength: 2,
-                            enforceMaxLength: true
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background:#E3EAF9',
+                            margin: '0 0 6 0',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-frmA4059CTAUN',
+                                    fieldLabel: '<strong>Unit</strong>',
+                                    labelAlign: 'right',
+                                    labelWidth: 90,
+                                    width: 140,
+                                    value: data.A4059CTAUN || '',
+                                    maxLength: 2,
+                                    enforceMaxLength: true,
+                                    fieldStyle: 'text-align:center'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-frmA4059CTACC',
+                                    fieldLabel: '<strong>Cost Center</strong>',
+                                    labelAlign: 'right',
+                                    labelWidth: 90,
+                                    width: 190,
+                                    padding: '0 0 0 15',
+                                    value: data.A4059CTACC || '',
+                                    maxLength: 7,
+                                    enforceMaxLength: true,
+                                    fieldStyle: 'text-align:left'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-frmA4059CTAUB',
+                                    fieldLabel: '<strong>Location</strong>',
+                                    labelAlign: 'right',
+                                    labelWidth: 70,
+                                    width: 160,
+                                    padding: '0 0 0 15',
+                                    value: data.A4059CTAUB || '',
+                                    maxLength: 4,
+                                    enforceMaxLength: true,
+                                    fieldStyle: 'text-align:center'
+                                }
+                            ]
                         },
+
+                        // ── Separador ─────────────────────────────────────────
                         {
-                            xtype: 'textfield',
-                            id: prototype.id + '-frmA4059CTACC',
-                            fieldLabel: '<strong>Cost Center</strong>',
-                            value: data.A4059CTACC || '',
-                            maxLength: 7,
-                            enforceMaxLength: true
+                            xtype: 'label',
+                            html: '<strong style="color:#000; text-decoration:underline;">Control Data</strong>',
+                            padding: '10px 0px 8px 0px'
                         },
+
+                        // Fila 3: Registered | Reg. Date | Reg. Hour
                         {
-                            xtype: 'textfield',
-                            id: prototype.id + '-frmA4059CTAUB',
-                            fieldLabel: '<strong>Location</strong>',
-                            value: data.A4059CTAUB || '',
-                            maxLength: 4,
-                            enforceMaxLength: true
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background:#E3EAF9',
+                            margin: '0 0 6 0',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-frmA4059REGIS',
+                                    fieldLabel: '<strong>Registered</strong>',
+                                    labelAlign: 'right',
+                                    labelWidth: 90,
+                                    width: 210,
+                                    value: data.A4059REGIS || '',
+                                    maxLength: 10,
+                                    enforceMaxLength: true,
+                                    disabled: true
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-frmA4059FREGI',
+                                    fieldLabel: '<strong>Date</strong>',
+                                    labelAlign: 'right',
+                                    labelWidth: 50,
+                                    width: 150,
+                                    padding: '0 0 0 15',
+                                    value: data.A4059FREGI || '',
+                                    maxLength: 8,
+                                    enforceMaxLength: true,
+                                    disabled: true,
+                                    fieldStyle: 'text-align:center'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-frmA4059HREGI',
+                                    fieldLabel: '<strong>Hour</strong>',
+                                    labelAlign: 'right',
+                                    labelWidth: 45,
+                                    width: 120,
+                                    padding: '0 0 0 15',
+                                    value: data.A4059HREGI || '',
+                                    maxLength: 6,
+                                    enforceMaxLength: true,
+                                    disabled: true,
+                                    fieldStyle: 'text-align:center'
+                                }
+                            ]
                         },
+
+                        // Fila 4: Updated | Upd. Date | Upd. Hour
                         {
-                            xtype: 'textfield',
-                            id: prototype.id + '-frmA4059REGIS',
-                            fieldLabel: '<strong>Registered</strong>',
-                            value: data.A4059REGIS || '',
-                            maxLength: 10,
-                            enforceMaxLength: true
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-frmA4059FREGI',
-                            fieldLabel: '<strong>Reg. Date</strong>',
-                            value: data.A4059FREGI || '',
-                            maxLength: 8,
-                            enforceMaxLength: true
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-frmA4059HREGI',
-                            fieldLabel: '<strong>Reg. Hour</strong>',
-                            value: data.A4059HREGI || '',
-                            maxLength: 6,
-                            enforceMaxLength: true
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-frmA4059REVIS',
-                            fieldLabel: '<strong>Revised</strong>',
-                            value: data.A4059REVIS || '',
-                            maxLength: 10,
-                            enforceMaxLength: true
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-frmA4059FREVI',
-                            fieldLabel: '<strong>Rev. Date</strong>',
-                            value: data.A4059FREVI || '',
-                            maxLength: 8,
-                            enforceMaxLength: true
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-frmA4059HREVI',
-                            fieldLabel: '<strong>Rev. Hour</strong>',
-                            value: data.A4059HREVI || '',
-                            maxLength: 6,
-                            enforceMaxLength: true
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background:#E3EAF9',
+                            margin: '0 0 6 0',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-frmA4059REVIS',
+                                    fieldLabel: '<strong>Updated by</strong>',
+                                    labelAlign: 'right',
+                                    labelWidth: 90,
+                                    width: 210,
+                                    value: data.A4059REVIS || '',
+                                    maxLength: 10,
+                                    enforceMaxLength: true,
+                                    disabled: true
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-frmA4059FREVI',
+                                    fieldLabel: '<strong>Date</strong>',
+                                    labelAlign: 'right',
+                                    labelWidth: 50,
+                                    width: 150,
+                                    padding: '0 0 0 15',
+                                    value: data.A4059FREVI || '',
+                                    maxLength: 8,
+                                    enforceMaxLength: true,
+                                    disabled: true,
+                                    fieldStyle: 'text-align:center'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-frmA4059HREVI',
+                                    fieldLabel: '<strong>Hour</strong>',
+                                    labelAlign: 'right',
+                                    labelWidth: 45,
+                                    width: 120,
+                                    padding: '0 0 0 15',
+                                    value: data.A4059HREVI || '',
+                                    maxLength: 6,
+                                    enforceMaxLength: true,
+                                    disabled: true,
+                                    fieldStyle: 'text-align:center'
+                                }
+                            ]
                         }
                     ]
                 }
@@ -1038,6 +1152,10 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
                                     global.Msg({msg: 'Required Field, Date From'});
                                     return;
                                 }
+                                if (formData.A4059HASTA.trim() === '') {
+                                    global.Msg({msg: 'Required Field, Date To'});
+                                    return;
+                                }
 
                                 me.crudAccount(action, formData, A003KEY, A003PSALF, store);
                             }
@@ -1057,13 +1175,15 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
 
     crudAccount: async function (action, data, A003KEY, A003PSALF, store) {
         var me = this;
-        var winMask = Ext.getCmp(prototype.id + '-accountDetailWin');
+            var winMask = action === 'D'
+        ? Ext.getCmp(prototype.id + '-accountDetailWin')
+        : Ext.getCmp(prototype.id + '-accountFormWin');
         winMask.mask('Loading...');
 
         try {
             const res = await global.callStorePost(
                     'PRAXIS',
-                    'MPS598',
+                    'SQP06032',
                     {
                         A4059KEY_IN: A003KEY,
                         A4059PSALF_IN: A003PSALF,
@@ -1085,7 +1205,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
             winMask.unmask();
 
             if (!res || !res.data) {
-                global.Msg({msg: 'No response from MPS598'});
+                global.Msg({msg: 'No response'});
                 return;
             }
 
@@ -1110,7 +1230,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
 
         } catch (e) {
             winMask.unmask();
-            global.Msg({msg: 'Error calling MPS598: ' + e});
+            global.Msg({msg: 'Error calling SP: ' + e});
         }
 
     },
