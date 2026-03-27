@@ -13,32 +13,66 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
     /**
      * Constructor
      */
-    init: function(view) {
+    init: function (view) {
         var me = this;
     },
     /**
      * Se ejecuta luego de haber cargado todos los componentes
      */
-    afterRender: function() {
+    // afterRender: function() {
+    //     var p = this.view.params;
+    //     this.setDataStore();
+    //     switch (p.action) {
+    //         case 'I':
+    //             Ext.getCmp(prototype.id + '-btn-delete').hide();
+    //             Ext.getCmp(prototype.id + '-btn-update').hide();
+    //             Ext.getCmp(prototype.id + '-btn-save').show();
+    //             break;
+    //         case 'U':
+    //             this.getDataInputs();
+    //             Ext.getCmp(prototype.id + '-btn-save').hide();
+    //             Ext.getCmp(prototype.id + '-btn-update').show();
+    //             Ext.getCmp(prototype.id + '-btn-delete').show();
+    //             break;
+    //     }
+    //     global.AccessControlMaganer();
+
+    // },
+    afterRender: function () {
         var p = this.view.params;
         this.setDataStore();
+        global.AccessControlMaganer();
+
+        const btnSave = Ext.getCmp(prototype.id + '-btn-save');
+        const btnUpdate = Ext.getCmp(prototype.id + '-btn-update');
+        const btnDelete = Ext.getCmp(prototype.id + '-btn-delete');
+        // const btnCancel = Ext.getCmp(prototype.id + '-btn-cancel');
+
         switch (p.action) {
             case 'I':
-                Ext.getCmp(prototype.id + '-btn-delete').hide();
-                Ext.getCmp(prototype.id + '-btn-update').hide();
-                Ext.getCmp(prototype.id + '-btn-save').show();
+                // if (btnCancel) btnCancel.show();
+                if (btnSave && accessSelect.PERMC === 'Y')
+                    btnSave.show();
+
+                if (btnUpdate) btnUpdate.hide();
+                if (btnDelete) btnDelete.hide();
                 break;
             case 'U':
                 this.getDataInputs();
-                Ext.getCmp(prototype.id + '-btn-save').hide();
-                Ext.getCmp(prototype.id + '-btn-update').show();
-                Ext.getCmp(prototype.id + '-btn-delete').show();
+                if (btnSave) btnSave.hide();
+                // if (btnCancel) btnCancel.show();
+
+                if (btnUpdate && accessSelect.PERMM === 'Y')
+                    btnUpdate.show();
+
+                if (btnDelete && accessSelect.PERME === 'Y')
+                    btnDelete.show();
                 break;
         }
         global.AccessControlMaganer();
 
     },
-    setDataStore: function() {
+    setDataStore: function () {
         var cbxA1819TIPO = Ext.getCmp(prototype.id + '-cbxA1819TIPO');
         cbxA1819TIPO.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -52,7 +86,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
         }));
         cbxA1819TIPO.setValue("");
     },
-    getDataInputs: function() {
+    getDataInputs: function () {
         var p = this.view.params;
         var data = p.rec.data;
 
@@ -91,7 +125,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
 
 
     },
-    getDataEntryValues: function(strOption) {
+    getDataEntryValues: function (strOption) {
 
 
         var A1806CCUST = '139';
@@ -113,7 +147,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
         var A1819FINI = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1819FINI').getValue(), 'Ymd');
         var A1819FFIN = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1819FFIN').getValue(), 'Ymd');
         var IN_A1819TACC_OLD = this.lblA1819TACC;
-        
+
 
         if (A1819FINI === '') {
             A1819FINI = '99999999';
@@ -145,7 +179,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
 
         };
     },
-    onSaveClick: function(btn) {
+    onSaveClick: function (btn) {
 
         var strMsg = this.validateForm();
 
@@ -162,7 +196,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function (btn) {
                     if (btn === 'yes') {
                         this.view.params.action = "I";
                         this.crud();
@@ -171,7 +205,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
             });
         }
     },
-    crud: function() {
+    crud: function () {
         var p = this.view.params;
         var strOption = p.action;
         console.log(this.getDataEntryValues(strOption));
@@ -181,7 +215,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
             method: 'POST',
             timeout: 60000000,
             params: this.getDataEntryValues(strOption),
-            success: function(response, options) {
+            success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 var msg = res.msg;
 
@@ -189,7 +223,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
                 global.Msg({
                     msg: msg,
                     icon: 1,
-                    fn: function() {
+                    fn: function () {
                         //exito
                         Ext.getCmp(prototype.id + '-dataEntry').close();
                         Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
@@ -198,7 +232,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
             }
         });
     },
-    onUpdateClick: function(btn) {
+    onUpdateClick: function (btn) {
 
 
         var strMsg = this.validateForm();
@@ -216,7 +250,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
                 buttons: Ext.MessageBox.YESNO,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function (btn) {
                     if (btn === 'yes') {
                         this.view.params.action = "U";
 
@@ -227,7 +261,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
         }
     }
     ,
-    onDeleteClick: function(btn) {
+    onDeleteClick: function (btn) {
 
         Ext.Msg.show({
             title: '.:PRAXIS:.',
@@ -236,7 +270,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
+            fn: function (btn) {
                 if (btn === 'yes') {
                     this.view.params.action = "D";
 
@@ -245,22 +279,22 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
             }
         });
     },
-    validateForm: function() {
-        
-    
+    validateForm: function () {
+
+
         var mensaje = "";
         var cbxA1819TIPO = Ext.getCmp(prototype.id + '-cbxA1819TIPO').getValue();
         var txtA1819TACC = Ext.getCmp(prototype.id + '-txtA1819TACC').getValue();
-        if(txtA1819TACC === '' || cbxA1819TIPO === ''){
+        if (txtA1819TACC === '' || cbxA1819TIPO === '') {
             mensaje = 'Insert fields required.';
         }
         return mensaje;
 
     },
-    onCancelClick: function(btn){
+    onCancelClick: function (btn) {
         this.view.close();
     },
-    onUpperValue: function(field, newValue, oldValue) {
+    onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
 

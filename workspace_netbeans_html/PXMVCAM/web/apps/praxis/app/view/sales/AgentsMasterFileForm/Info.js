@@ -25,7 +25,7 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1300,
+                width: 1500,
                 height: 500,
                 align: 'center'
             },
@@ -46,11 +46,11 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.Info', {
                         },
                         items: [
                             {text: 'Nbr.', width: 60, dataIndex: 'pos'},
-                            {text: 'Code', width: 70, dataIndex: 'A003KEY'},
+                            {text: 'Code', width: 100, dataIndex: 'A003KEY'},
                             {text: 'Type', width: 60, dataIndex: 'A003TIPO'},
                             {text: 'Channel', width: 60, dataIndex: 'A003CANAL'},
-                            {text: 'User', width: 60, dataIndex: 'A003OPERA'}, 
-                            {text: 'Base', width: 60, dataIndex: 'A003TRPM'},
+                            {text: 'User', width: 100, dataIndex: 'A003OPERA'}, 
+                            {text: 'Base', width: 80, dataIndex: 'A003TRPM'},
                             {text: 'Legal Name', width: 300, dataIndex: 'A003KEY1',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     var tool = record.data['A003KEY1'].trim();
@@ -96,7 +96,7 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.Info', {
                                     border: true
                                 },
                                 columns: [
-                                    {text: 'name', width: 100, dataIndex: 'A003DISTRI',
+                                    {text: 'name', width: 110, dataIndex: 'A003DISTRI',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             var tool = record.data['A003DISTRI'].trim();
                                             if (tool.length > 0) {
