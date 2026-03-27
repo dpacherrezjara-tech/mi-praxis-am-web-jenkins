@@ -55,6 +55,10 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import net.miatech.praxis.utils.PythonWS;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -231,7 +235,7 @@ public class ChangeOfStatusFormController extends BaseController {
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
-             sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
@@ -275,7 +279,7 @@ public class ChangeOfStatusFormController extends BaseController {
                 // <editor-fold defaultstate="collapsed" desc="data">
                 CH_00 = row.createCell(0);
                 CH_01 = row.createCell(1);
-                 CH_02 = row.createCell(2);
+                CH_02 = row.createCell(2);
                 CH_03 = row.createCell(3);
                 CH_04 = row.createCell(4);
                 CH_05 = row.createCell(5);
@@ -413,7 +417,7 @@ public class ChangeOfStatusFormController extends BaseController {
             Iterator iter = listaData.iterator();
 
             Row row;
-            Cell CH_00, CH_01,CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13,CH_14, CH_15, CH_16, CH_17, CH_18, CH_19;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -432,7 +436,7 @@ public class ChangeOfStatusFormController extends BaseController {
             CH_10 = row.createCell(10);
             CH_11 = row.createCell(11);
             CH_12 = row.createCell(12);
-           // CH_14 = row.createCell(14);
+            // CH_14 = row.createCell(14);
             CH_13 = row.createCell(13);
             CH_14 = row.createCell(14);
             CH_15 = row.createCell(15);
@@ -442,11 +446,11 @@ public class ChangeOfStatusFormController extends BaseController {
             CH_00.setCellValue("Origen");
             CH_01.setCellValue("System Date");
             //CH_02.setCellValue("Type");
-           // CH_02.setCellValue("Currrency");
-           // CH_03.setCellValue("Net");
+            // CH_02.setCellValue("Currrency");
+            // CH_03.setCellValue("Net");
             CH_02.setCellValue("Ticket Praxis ");
             CH_03.setCellValue("CPN Praxis");
-            CH_04.setCellValue("USE Praxis"); 
+            CH_04.setCellValue("USE Praxis");
             CH_05.setCellValue("Ticket Robot ");
             CH_06.setCellValue("CPN Robot");
             CH_07.setCellValue("USE Robot");
@@ -752,161 +756,173 @@ public class ChangeOfStatusFormController extends BaseController {
     @RequestMapping(value = "/getXLSXCAB")
     public @ResponseBody
     void getXLSXCAB(HttpServletRequest request, HttpServletResponse response) {
-        A3676Filter filter = new A3676Filter();
+
         try {
-            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            A3676Filter filter = new Gson().fromJson(request.getParameter("beanString"), A3676Filter.class);
 
             ChangeOfStatusFormLogic logic = new ChangeOfStatusFormLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A3676Filter> listaData = logic.SearchControl(filter);
 
-            // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
-            Workbook workbook = new XSSFWorkbook();
-            Sheet sheet = workbook.createSheet("ChangeOfStatusControl");
-            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-//            CellStyle headerStyle = workbook.createCellStyle();
-            CellStyle bodyStyle = workbook.createCellStyle();
-            Font headerFont = workbook.createFont();
-            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-            headerFont.setColor(IndexedColors.BLACK.getIndex());
-
-            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
-            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
-            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-//            headerStyle.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
-            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-            headerStyle.setFont(headerFont);
-
-            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
-            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
-            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            // </editor-fold>
-
-            Integer vi = 0, vj = 0;
-            Iterator iter = listaData.iterator();
-
-            Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08;
-            //<editor-fold defaultstate="collapsed" desc="row">
-            row = sheet.createRow(vj);
-
-            CH_00 = row.createCell(0);
-            CH_01 = row.createCell(1);
-            CH_02 = row.createCell(2);
-            CH_03 = row.createCell(3);
-            CH_04 = row.createCell(4);
-            CH_05 = row.createCell(5);
-            CH_06 = row.createCell(6);
-            CH_07 = row.createCell(7);
-            CH_08 = row.createCell(8);
-
-            CH_00.setCellValue("Origen");
-            CH_01.setCellValue("System Date");
-            CH_02.setCellValue("Processing date");
-            CH_03.setCellValue("Lote");
-            CH_04.setCellValue("Total Send TKT");
-            CH_05.setCellValue("Total Send CPN");
-            CH_06.setCellValue("Total Answer TKT");
-            CH_07.setCellValue("Total Answer CPN");
-            CH_08.setCellValue("Status");
-
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
-
-            CH_00.setCellStyle(headerStyle);
-            CH_01.setCellStyle(headerStyle);
-            CH_02.setCellStyle(headerStyle);
-            CH_03.setCellStyle(headerStyle);
-            CH_04.setCellStyle(headerStyle);
-            CH_05.setCellStyle(headerStyle);
-            CH_06.setCellStyle(headerStyle);
-            CH_07.setCellStyle(headerStyle);
-            CH_08.setCellStyle(headerStyle);
-
-            ++vj;
-            //</editor-fold>
-
-            while (iter.hasNext()) {
-                row = sheet.createRow(vj);
-                // <editor-fold defaultstate="collapsed" desc="data">
-                CH_00 = row.createCell(0);
-                CH_01 = row.createCell(1);
-                CH_02 = row.createCell(2);
-                CH_03 = row.createCell(3);
-                CH_04 = row.createCell(4);
-                CH_05 = row.createCell(5);
-                CH_06 = row.createCell(6);
-                CH_07 = row.createCell(7);
-                CH_08 = row.createCell(8);
-
-                CH_00.setCellValue(listaData.get(vi).A3676ORIG);
-                CH_01.setCellValue(listaData.get(vi).A3676FREGI);
-                CH_02.setCellValue(listaData.get(vi).A3676FRECE);
-                CH_03.setCellValue(listaData.get(vi).A3676NARCH);
-                CH_04.setCellValue(listaData.get(vi).A3676TETKT);
-
-                CH_05.setCellValue(listaData.get(vi).A3676TECPN);
-                CH_06.setCellValue(listaData.get(vi).A3676TECPN);
-                CH_07.setCellValue(listaData.get(vi).A3676TRCPN);
-                CH_08.setCellValue(listaData.get(vi).A3676STROB);
-
-                CH_00.setCellStyle(bodyStyle);
-                CH_01.setCellStyle(bodyStyle);
-                CH_02.setCellStyle(bodyStyle);
-                CH_03.setCellStyle(bodyStyle);
-                CH_04.setCellStyle(bodyStyle);
-                CH_05.setCellStyle(bodyStyle);
-                CH_06.setCellStyle(bodyStyle);
-                CH_07.setCellStyle(bodyStyle);
-                CH_08.setCellStyle(bodyStyle);
-
-                // </editor-fold>
-                iter.next();
-                ++vi;
-                ++vj;
+            if ("1".equals(filter.IN_TYPE)) {
+                generarExcelControl(filter, logic, response);
+            } else {
+                generarExcelEjecu(filter, logic, response);
             }
-            sheet.autoSizeColumn(0, true);
-            sheet.autoSizeColumn(1, true);
-            sheet.autoSizeColumn(2, true);
-            sheet.autoSizeColumn(3, true);
-            sheet.autoSizeColumn(4, true);
-            sheet.autoSizeColumn(5, true);
 
-            String fileNameDownload = String.format("ChangeOfStatusControl - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
-            response.setContentType("application/vnd.openxml");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
-
-            File file = File.createTempFile(fileNameDownload, ".xlsx");
-            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-            workbook.write(response.getOutputStream());
-
-            fos.close();
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
             throw new SpringException(e);
         }
+    }
+
+    private void generarExcelControl(A3676Filter filter, ChangeOfStatusFormLogic logic, HttpServletResponse response) throws Exception {
+
+        List<A3676Filter> listaData = logic.SearchControl(filter);
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("ChangeOfStatusControl");
+
+        CellStyle headerStyle = crearHeaderStyle(workbook);
+        CellStyle bodyStyle = crearBodyStyle(workbook);
+
+        int vj = 0;
+
+        // HEADER
+        Row row = sheet.createRow(vj);
+
+        String[] headers = {
+            "Origen", "System Date", "Lote",
+            "Total Send TKT", "Total Send CPN",
+            "Total Answer TKT", "Total Answer CPN",
+            "Status"
+        };
+
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = row.createCell(i);
+            cell.setCellValue(headers[i]);
+            cell.setCellStyle(headerStyle);
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, i, i));
+        }
+
+        vj++;
+
+        // DATA
+        for (A3676Filter item : listaData) {
+            row = sheet.createRow(vj++);
+
+            row.createCell(0).setCellValue(item.A3676ORIG);
+            row.createCell(1).setCellValue(item.A3676FREGI);
+            row.createCell(2).setCellValue(item.A3676NARCH);
+            row.createCell(3).setCellValue(item.A3676TETKT);
+            row.createCell(4).setCellValue(item.A3676TECPN);
+            row.createCell(5).setCellValue(item.A3676TRTKT);
+            row.createCell(6).setCellValue(item.A3676TRCPN);
+            row.createCell(7).setCellValue(item.A3676STROB);
+
+            for (int i = 0; i <= 7; i++) {
+                row.getCell(i).setCellStyle(bodyStyle);
+            }
+        }
+
+        descargarExcel(response, workbook, "ChangeOfStatusControl");
+    }
+
+    private void generarExcelEjecu(A3676Filter filter, ChangeOfStatusFormLogic logic, HttpServletResponse response) throws Exception {
+
+        List<A3676Filter> listaData = logic.SearchControlEjecu(filter);
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("ChangeOfStatusEjecu");
+
+        CellStyle headerStyle = crearHeaderStyle(workbook);
+        CellStyle bodyStyle = crearBodyStyle(workbook);
+
+        int vj = 0;
+
+        // HEADER (puedes cambiarlo según necesidad)
+        Row row = sheet.createRow(vj);
+
+        String[] headers = {
+            "System date", "Lote", "Origin",
+            "Total Praxis", "Total Robot",
+            "Status", "Hour"
+        };
+
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = row.createCell(i);
+            cell.setCellValue(headers[i]);
+            cell.setCellStyle(headerStyle);
+        }
+
+        vj++;
+
+        // DATA
+        for (A3676Filter item : listaData) {
+            row = sheet.createRow(vj++);
+
+            row.createCell(0).setCellValue(item.A3676FREGI);
+            row.createCell(1).setCellValue(item.A3676NARCH);
+            row.createCell(2).setCellValue(item.A3676ORIG);
+            row.createCell(3).setCellValue(item.A3676CNTAM);
+            row.createCell(4).setCellValue(item.A3676CNTPR);
+            row.createCell(5).setCellValue(item.A3676STROB);
+            row.createCell(6).setCellValue(item.A3676HREGI);
+
+            for (int i = 0; i <= 6; i++) {
+                row.getCell(i).setCellStyle(bodyStyle);
+            }
+        }
+
+        descargarExcel(response, workbook, "ChangeOfStatusEjecu");
+    }
+
+    private CellStyle crearHeaderStyle(Workbook workbook) {
+        XSSFCellStyle style = (XSSFCellStyle) workbook.createCellStyle();
+
+        Font font = workbook.createFont();
+        font.setBold(true);
+        font.setColor(IndexedColors.BLACK.getIndex());
+
+        style.setBorderTop(BorderStyle.THIN);
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBorderLeft(BorderStyle.THIN);
+        style.setBorderRight(BorderStyle.THIN);
+
+        style.setAlignment(HorizontalAlignment.CENTER);
+        style.setVerticalAlignment(VerticalAlignment.CENTER);
+
+        style.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        style.setFont(font);
+
+        return style;
+    }
+
+    private CellStyle crearBodyStyle(Workbook workbook) {
+        CellStyle style = workbook.createCellStyle();
+
+        style.setBorderTop(CellStyle.BORDER_THIN);
+        style.setBorderBottom(CellStyle.BORDER_THIN);
+        style.setBorderLeft(CellStyle.BORDER_THIN);
+        style.setBorderRight(CellStyle.BORDER_THIN);
+
+        style.setTopBorderColor(IndexedColors.BLACK.getIndex());
+        style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+        style.setRightBorderColor(IndexedColors.BLACK.getIndex());
+
+        return style;
+    }
+
+    private void descargarExcel(HttpServletResponse response, Workbook workbook, String nombre) throws Exception {
+
+        String fileName = nombre + "-" + Functions.getFechaActual() + ".xlsx";
+
+        response.setContentType("application/vnd.openxml");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+
+        workbook.write(response.getOutputStream());
+        workbook.close();
     }
 
     @RequestMapping(value = "/getXLSXCABDET")

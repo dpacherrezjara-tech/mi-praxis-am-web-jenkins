@@ -458,6 +458,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
             this.bean.IN_DATETO = txtDateTo;
             this.bean.IN_ORIGEN = CmbOrigen;
             this.bean.IN_LOTE = txtLote;
+            this.bean.IN_TYPE = CmbType;
             this.bean.IN_REFERENCE = '';
             this.SearchReport(this.bean, obj === true ? obj : false);
         } else {
@@ -488,6 +489,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
                 this.bean3.IN_DATETO = txtDateTo;
                 this.bean3.IN_ORIGEN = CmbOrigen;
                 this.bean3.IN_LOTE = '';
+                this.bean.IN_TYPE = CmbType;
                 this.bean3.IN_REFERENCE = txtLote;
                 Ext.getCmp(prototype.id + '-gridDataControl').getStore().loadPage(1, {
                     params: {
