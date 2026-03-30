@@ -124,6 +124,13 @@ public class AgentsMasterFileDAO {
                 objRtn.A003AREA = rs01.getString("A003AREA");
                 objRtn.A003CPROVE = rs01.getString("A003CPROVE");
                 objRtn.A003CCLIEN = rs01.getString("A003CCLIEN");
+                
+                // Cuenta — última vigente (MAX A4059HASTA)
+                try { objRtn.A4059DESDE = rs01.getString("A4059DESDE") != null ? rs01.getString("A4059DESDE").trim() : ""; } catch (Exception e) { objRtn.A4059DESDE = ""; }
+                try { objRtn.A4059HASTA = rs01.getString("A4059HASTA") != null ? rs01.getString("A4059HASTA").trim() : ""; } catch (Exception e) { objRtn.A4059HASTA = ""; }
+                try { objRtn.A4059CTAUN = rs01.getString("A4059CTAUN") != null ? rs01.getString("A4059CTAUN").trim() : ""; } catch (Exception e) { objRtn.A4059CTAUN = ""; }
+                try { objRtn.A4059CTACC = rs01.getString("A4059CTACC") != null ? rs01.getString("A4059CTACC").trim() : ""; } catch (Exception e) { objRtn.A4059CTACC = ""; }
+                try { objRtn.A4059CTAUB = rs01.getString("A4059CTAUB") != null ? rs01.getString("A4059CTAUB").trim() : ""; } catch (Exception e) { objRtn.A4059CTAUB = ""; }
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
