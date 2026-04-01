@@ -55,8 +55,32 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.Info', {
                                 },
                                 items: [
                                     {
+                                        text: 'Customer',
+                                        dataIndex: 'CCUST',
+                                        width: 100,
+                                        align: 'center'
+                                    },
+                                    {
                                         text: 'User',
                                         dataIndex: 'USR',
+                                        width: 100,
+                                        align: 'center'
+                                    },
+                                    {
+                                        text: 'Name',
+                                        dataIndex: 'NOM',
+                                        width: 100,
+                                        align: 'center'
+                                    },
+                                    {
+                                        text: 'Last Name',
+                                        dataIndex: 'APE',
+                                        width: 100,
+                                        align: 'center'
+                                    },
+                                    {
+                                        text: 'Email',
+                                        dataIndex: 'CREMP',
                                         width: 100,
                                         align: 'center'
                                     },
@@ -71,6 +95,22 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.Info', {
                                     {
                                         text: 'Status',
                                         dataIndex: 'STAT',
+                                        //width: 200,
+                                        flex:1,
+                                        align: 'center',
+                                        cls: 'column_header_double'
+                                    },
+                                    {
+                                        text: 'Id Profile',
+                                        dataIndex: 'ID_PROFILE',
+                                        //width: 200,
+                                        flex:1,
+                                        align: 'center',
+                                        cls: 'column_header_double'
+                                    },
+                                    {
+                                        text: 'Profile',
+                                        dataIndex: 'PROFILE',
                                         //width: 200,
                                         flex:1,
                                         align: 'center',
