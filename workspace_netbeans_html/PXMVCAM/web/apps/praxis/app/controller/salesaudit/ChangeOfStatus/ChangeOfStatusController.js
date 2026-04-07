@@ -33,6 +33,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ChangeOfStatus.ChangeOfStatusContro
         this.setStoresGrids();
 
         Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, this);
+        this.onSearchClick();
     },
     setStoresFilters: function() {
         var cmbSearch = Ext.getCmp(prototype.id + '-search-type');
@@ -44,42 +45,44 @@ Ext.define('Ext.Praxis.controller.salesaudit.ChangeOfStatus.ChangeOfStatusContro
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
-                {"code": "", "name": "SELECTED"},
-                {"code": "4", "name": "PROCESSING DATE"},
-                {"code": "1", "name": "REFERENCE"},
+                 {"code": "", "name": "SELECTED"},
+                //{"code": "4", "name": "PROCESSING DATE"},
+                //{"code": "1", "name": "REFERENCE"},
                 {"code": "2", "name": "SYSTEM DATE"},
-                {"code": "3", "name": "TICKET"},
-                {"code": "5", "name": "TICKET FATHER"}
+                {"code": "3", "name": "TICKET PRAXIS"},
+                {"code": "5", "name": "TICKET ROBOT"}
             ]
         }));
 
         cmbStatusIni.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
-                {"code": "CPNStat_EXCH", "name": "CPNStat_EXCH"},
-                {"code": "CPNStat_CHECKIN", "name": "CPNStat_CHECKIN"},
+                {"code": "EXCH", "name": "CPNStat_EXCH"},
+                {"code": "CTRL", "name": "CPNStat_CTRL"},
+                {"code": "CKIN", "name": "CPNStat_CHECKIN"},
                 {"code": "CPNStat_HISTORICALTICKET", "name": "CPNStat_HISTORICALTICKET"},
-                {"code": "CPNStat_NOGO", "name": "CPNStat_NOGO"},
-                {"code": "CPNStat_OK", "name": "CPNStat_OK"},
-                {"code": "CPNStat_RNFD", "name": "CPNStat_RNFD"},
-                {"code": "CPNStat_UNDET", "name": "CPNStat_UNDET"},
-                {"code": "CPNStat_USED", "name": "CPNStat_USED"},
-                {"code": "CPNStat_VOID", "name": "CPNStat_VOID"}
+                {"code": "NOGO", "name": "CPNStat_NOGO"},
+                {"code": "OK", "name": "CPNStat_OK"},
+                {"code": "RFND", "name": "CPNStat_RNFD"},
+                {"code": "UNDET", "name": "CPNStat_UNDET"},
+                {"code": "USED", "name": "CPNStat_USED"},
+                {"code": "VOID", "name": "CPNStat_VOID"}
             ]
         }));
 
         cmbStatusFin.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
-                {"code": "CPNStat_CHECKIN", "name": "CPNStat_CHECKIN"},
-                {"code": "CPNStat_EXCH", "name": "CPNStat_EXCH"},
+                {"code": "EXCH", "name": "CPNStat_EXCH"},
+                {"code": "CTRL", "name": "CPNStat_CTRL"},
+                {"code": "CKIN", "name": "CPNStat_CHECKIN"},
                 {"code": "CPNStat_HISTORICALTICKET", "name": "CPNStat_HISTORICALTICKET"},
-                {"code": "CPNStat_NOGO", "name": "CPNStat_NOGO"},
-                {"code": "CPNStat_OK", "name": "CPNStat_OK"},
-                {"code": "CPNStat_RFND", "name": "CPNStat_RFND"},
-                {"code": "CPNStat_UNDET", "name": "CPNStat_UNDET"},
-                {"code": "CPNStat_USED", "name": "CPNStat_USED"},
-                {"code": "CPNStat_VOID", "name": "CPNStat_VOID"}
+                {"code": "NOGO", "name": "CPNStat_NOGO"},
+                {"code": "OK", "name": "CPNStat_OK"},
+                {"code": "RFND", "name": "CPNStat_RNFD"},
+                {"code": "UNDET", "name": "CPNStat_UNDET"},
+                {"code": "USED", "name": "CPNStat_USED"},
+                {"code": "VOID", "name": "CPNStat_VOID"}
             ]
         }));
 
@@ -97,7 +100,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.ChangeOfStatus.ChangeOfStatusContro
 
         cmbStatus.bindStore(Ext.create('Ext.data.Store', {
             data: [
-                {"code": "", "name": "ALL"},
+                 {"code": "", "name": "ALL"},
+                {"code": "N", "name": "NOT PROCESSED"},
                 {"code": "Y", "name": "PENDING SENDING"},
                 {"code": "P", "name": "PROCESSED BY THE ROBOT"},
                 {"code": "I", "name": "REGISTERED BY THE ROBOT"},
@@ -144,7 +148,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ChangeOfStatus.ChangeOfStatusContro
         obj.store.proxy.extraParams = this.beanTMP;
     },
     onCmbSearchAfterRender: function(obj) {
-        obj.setValue('');
+        obj.setValue('2');
     },
     onCmbSearchChange: function(obj, newValue, oldValue, eOpts) {
         // console.log(String(newValue))
@@ -181,7 +185,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ChangeOfStatus.ChangeOfStatusContro
                 txtReference.setValue('');
                 break;
             case '3':
-            case '5':    
+            case '5':
                 txtReference.hide();
                 txtCia.show();
                 txtFrmaSerie.show();
@@ -288,9 +292,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.ChangeOfStatus.ChangeOfStatusContro
         metaData.tdAttr = 'data-qtip="' + value + '"';
         return value
     },
-    onRendererColumnStatus: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onRendererColumnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
         var color = '#FFFFFF';
-         switch (String(record.get('A3676STROB'))) {
+        switch (String(record.get('A3676STROB'))) {
             case 'PROCESSED BY THE ROBOT':
                 color = '#99FFCC';
                 value = 'PROCESSED BY THE ROBOT';
@@ -311,11 +315,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.ChangeOfStatus.ChangeOfStatusContro
                 color = '#FBBF48';
                 value = 'NOT MATCH';
                 break;
+            case 'NOT PROCESSED':
+                color = '#F5A9A9';
+                value = 'NOT PROCESSED';
+                break;
             case 'NOT ACTION SABRE':
                 color = '#F3F781';
                 value = 'NOT ACTION SABRE';
                 break;
-             case 'NOT APPLICABLE RULE':
+            case 'NOT APPLICABLE RULE':
                 color = '#F5DA81';
                 value = 'NOT APPLICABLE RULE';
                 break;

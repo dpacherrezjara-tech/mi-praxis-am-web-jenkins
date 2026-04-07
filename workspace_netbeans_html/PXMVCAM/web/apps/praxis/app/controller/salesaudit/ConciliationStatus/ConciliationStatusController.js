@@ -28,6 +28,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
     afterRender: function () {
         // alert('Controlador cargado correctamente')
         this.setStores();
+        this.imgSearch_clickHandler();
     },
     onRendererColumnOnTime: function (value, metaData, record, rowIndex, colIndex, store, view) {
         switch (String(record.get('A3536FINA'))) {
@@ -113,8 +114,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
             data: [
                 {"code": "EM", "name": "EMD RFND"},
                 {"code": "PB", "name": "POST BILLING"},
-                {"code": "RI", "name": "RFND BSPLINK"},
-                {"code": "RD", "name": "RFND ASR"},
+                {"code": "RBI", "name": "RFND BSPLINK"},
+                {"code": "RED", "name": "RFND ASR"},
                 {"code": "CB", "name": "RFND CHARGEBACK"}
             ]
         }));
@@ -177,7 +178,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
         }
     },
     onCmbStatusOrigen: function (obj, newValue, oldValue, eOpts) {
-        obj.setValue('RI');
+        obj.setValue('RBI');
     },
     onRendererColumnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
         var color = '#FFFFFF';
@@ -226,6 +227,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
         var grid = Ext.getCmp(prototype.id + '-gridData');
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
+        Ext.getCmp(prototype.id + '-box-filter-01').setVisible(false);
+        Ext.getCmp(prototype.id + '-btn-search').setVisible(false);
         Ext.getCmp(prototype.id + '-gridData').setVisible(false);
         Ext.getCmp(prototype.id + '-lbl-total').setVisible(false);
         Ext.getCmp(prototype.id + '-gridDataControl').setVisible(false);
@@ -324,6 +327,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
     onBackClick: function (obj, e) {
         Ext.getCmp(prototype.id + '-gridData').setVisible(true);
         Ext.getCmp(prototype.id + '-lbl-total').setVisible(true);
+        Ext.getCmp(prototype.id + '-box-filter-01').setVisible(true);
+        Ext.getCmp(prototype.id + '-btn-search').setVisible(true);
         this.tipo = '1';
         Ext.getCmp(prototype.id + '-lbl-total').setText('0');
         Ext.getCmp(prototype.id + '-gridDetalle').setVisible(false);
@@ -394,7 +399,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
                 return;
             }
         }
-
+        
 
         if (CmbType === '1') {
             //datos capturados del texto
@@ -403,7 +408,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
             this.bean.IN_DATETO = txtDateTo;
             this.bean.IN_ORIGEN = CmbOrigen;
             this.bean.IN_LOTE = txtLote;
+            this.bean.IN_TYPE = CmbType;
             this.bean.IN_REFERENCE = '';
+            this.tipo= '1';
             this.SearchReport(this.bean, obj === true ? obj : false);
         } else {
 
@@ -414,10 +421,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
                 case 'PB':
                     this.bean3.IN_TYPE = 'POST BILLING';
                     break;
-                case 'RI':
+                case 'RBI':
                     this.bean3.IN_TYPE = 'RFND BSPLINK';
                     break;
-                case 'RD':
+                case 'RED':
                     this.bean3.IN_TYPE = 'RFND ASR';
                     break;
                 case 'CB':
@@ -430,10 +437,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
             this.bean3.IN_OPTION = cmbsearch;
             this.bean3.IN_DATEFROM = txtDateFrom;
             this.bean3.IN_DATETO = txtDateTo;
-            this.bean3.IN_ORIGEN = '';//'MEXVN';//'CSCVI';
+            this.bean3.IN_ORIGEN = CmbOrigen;//'MEXVN';//'CSCVI';
             this.bean3.IN_LOTE = '';
-            this.bean3.IN_REFERENCE = txtLote;            
-            Ext.getCmp(prototype.id + '-gridDataControl').getStore().loadPage(1, {
+            this.bean3.IN_TYPE = '3'; 
+             this.tipo= '3';
+            this.bean3.IN_REFERENCE = txtLote;
+            var bExcel=obj === true ? obj : false;
+             if (!bExcel)  {
+                Ext.getCmp(prototype.id + '-gridDataControl').getStore().loadPage(1, {
                 params: {
                     beanString: JSON.stringify(this.bean3)
                             //beanString: bean
@@ -450,16 +461,25 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
 
                 }
             });
+            }else { this.SearchReport(this.bean3, obj === true ? obj : false); }
+            
+            
         }
 
 
     },
-    SearchReport: function (bean, bExcel) {
+    SearchReport: function (bean, bExcel) { 
         if (bExcel) {
             if (me.tipo === '1') {
                 me.exportExcel(prototype.url + '/getXLSXCAB?beanString=' + encodeURI(JSON.stringify(bean)));
             } else {
-                me.exportExcel(prototype.url + '/getXLSXCABDET?beanString=' + encodeURI(JSON.stringify(bean)));
+                 if (me.tipo === '2') {
+                      me.exportExcel(prototype.url + '/getXLSXCABDET?beanString=' + encodeURI(JSON.stringify(this.bean2)));
+                 }
+                 else { 
+                      me.exportExcel(prototype.url + '/getXLSXCAB?beanString=' + encodeURI(JSON.stringify(this.bean3)));
+                 }
+               
             }
 
         } else {
