@@ -109,7 +109,7 @@ public class InterlineCorrespondenceDAO {
                 }  else if (objRtn.A020CODOB1.equals("0902")) {
                     objRtn.strDescripcion2 = "Closed";
                 } else {
-                    objRtn.strDescripcion2 = "Pending";
+                    objRtn.strDescripcion2 = "Open";
                 }
 
                 //Paginación ===================================================
