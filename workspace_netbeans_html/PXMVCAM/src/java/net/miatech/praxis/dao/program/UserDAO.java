@@ -12,7 +12,12 @@ import com.ibm.as400.access.AS400Structure;
 import com.ibm.as400.access.ProgramCall;
 import com.ibm.as400.access.ProgramParameter;
 import java.beans.PropertyVetoException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -33,12 +38,14 @@ import net.miatech.beans.PX041S01INF001Filter;
 import net.miatech.beans.S0007INF053Filter;
 import net.miatech.beans.S0008INF020Filter;
 import net.miatech.beans.S0010INF020Filter;
+import net.miatech.beans.SQP05851Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.beans.spring.ServerSession;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.dao.implement.IBaseDAO;
 import net.miatech.dao.implement.IUserDAO;
 import net.miatech.praxis.A2149;
+import static net.miatech.praxis.dao.panel.PanelDAO.pasarGarbageCollector;
 //import net.miatech.praxis.INF001;
 //import net.miatech.praxis.INF020;
 import net.miatech.praxis.spring.INF001;
@@ -64,6 +71,8 @@ public class UserDAO  {
     //private static final Logger logError = Logger.getLogger("errorLog");
     private IServerSession session;
     private static final Logger logError = Logger.getLogger("errorLog");
+    private static final String CSV_PATH = "\\\\px\\PRAXISAM\\PERMITS.txt";
+
     //private ServerSession serverSession;
     private Application application;
     /**
@@ -87,7 +96,7 @@ public class UserDAO  {
         List<PX041S01INF001Filter> lstAccessUser = new ArrayList<PX041S01INF001Filter>(0);
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL PRAXIS.PX041S03INF001(?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.PX041S03INF001(?,?,?)}"; //Nueva Funcionalidad de Perfiles SQP05885 ANTES SQP05858
         //String SQLCLL01 = "{CALL LIBSAP14.SQP02783(?,?,?)}";
         CallableStatement cstm01 = null;
         StringWriter sw = new StringWriter();
@@ -100,6 +109,7 @@ public class UserDAO  {
             cstm01.setString("VP_CCUST", "139");
             cstm01.setString("VP_APLICA", "PX");
             cstm01.setString("VP_USR", filter.VP_USR);
+            //cstm01.setString("VP_ID_PROFILE", filter.VP_ID_PROFILE);
             cstm01.execute();
 
             rst = cstm01.getResultSet();
@@ -108,6 +118,7 @@ public class UserDAO  {
                 while (rst.next()) {
                     PX041S01INF001Filter accessProgram = new PX041S01INF001Filter();
                     accessProgram.USR = rst.getString("USR");
+                    //accessProgram.ID_PROFILE = rst.getString("ID_PROFILE");
                     accessProgram.NPROG = rst.getString("NPROG");
                     accessProgram.PERMA = rst.getString("PERMA");
                     accessProgram.PERMC = rst.getString("PERMC");
@@ -379,5 +390,131 @@ public class UserDAO  {
             }
             tmpCnx.close();
         }
+    }
+    
+    public SQP05851Filter  SQP05851( SQP05851Filter filter ) throws SQLException , Exception {        
+        //MANT. LOG TABLE   
+        CallableStatement cstmt = null;     
+        String SQLCLL01 = "{CALL PRAXIS.SQP05851(?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();  
+            cstmt = cnx.prepareCall(SQLCLL01);      
+            
+            cstmt.setString(1, filter.VP_ID_OPERATOR );
+            cstmt.setString(2, filter.VP_OPER );
+            cstmt.setString(3, filter.VP_NPROG );
+            cstmt.setString(4, filter.VP_DESC1);
+            cstmt.setString(5, filter.VP_ACTIO);
+            cstmt.execute();  
+            
+        } finally {
+            if (cstmt != null) {                
+                try { cstmt.close(); } catch(SQLException e) { logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage() ,e); }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return filter;
+    }
+    
+    // 1. CREATE: Añade una nueva línea al final
+    public static String create(String correo, String usuario, String contrasena) {
+        // 1. Validar si ya existe el correo o el usuario
+        if (exists(correo, usuario)) {
+            System.err.println("❌ Error: El correo o el usuario ya están registrados.");
+            return "Usuario o Correo ya existen";
+        }
+
+        // 2. Si no existen, procedemos a crear
+        String nuevaLinea = String.join(", ", correo, usuario, contrasena);
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CSV_PATH, true)))) {
+            out.println(nuevaLinea);
+            System.out.println("✅ Usuario creado con éxito.");
+        } catch (Exception e) {
+            System.err.println("❌ Error al crear: " + e.getMessage());
+            return "Error en Block" + e.getMessage();
+        }
+        return "Block register successfull";
+    }
+    
+    /**
+     * Método auxiliar para verificar duplicados por correo (columna 0) o usuario (columna 1).
+     */
+    private static boolean exists(String correo, String usuario) {
+        File file = new File(CSV_PATH);
+        if (!file.exists()) return false;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                if (data.length >= 2) {
+                    String correoExistente = data[0].trim();
+                    String usuarioExistente = data[1].trim();
+
+                    if (correoExistente.equalsIgnoreCase(correo.trim()) || 
+                        usuarioExistente.equalsIgnoreCase(usuario.trim())) {
+                        return true;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("❌ Error al validar duplicados: " + e.getMessage());
+        }
+        return false;
+    }
+    
+    public static boolean processFile(String targetUser, java.util.function.Function<String, String> mapper, String accion) {
+        File inputFile = new File(CSV_PATH);
+        File tempFile = new File(CSV_PATH + ".tmp");
+        boolean found = false;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+
+            String currentLine;
+            while ((currentLine = reader.readLine()) != null) {
+                String[] data = currentLine.split(",");
+                
+                // Verificamos si la línea actual coincide con el usuario buscado
+                if (data.length >= 2 && data[1].trim().equalsIgnoreCase(targetUser.trim())) {
+                    found = true;
+                    String processedLine = mapper.apply(currentLine);
+                    
+                    if (processedLine != null) {
+                        writer.write(processedLine + System.lineSeparator());
+                    }
+                    // Si es null (Delete), simplemente no se escribe nada y continúa el bucle
+                } else {
+                    writer.write(currentLine + System.lineSeparator());
+                }
+            }
+
+            // Cerramos flujos antes de manipular los archivos
+            writer.flush();
+            writer.close();
+            reader.close();
+
+            // Reemplazo de archivos
+            if (found) {
+                if (inputFile.delete()) {
+                    if (!tempFile.renameTo(inputFile)) {
+                        System.err.println("❌ No se pudo renombrar el archivo temporal.");
+                    } else {
+                        System.out.println("✅ Usuario " + targetUser + " " + accion + " con éxito.");
+                    }
+                } else {
+                    System.err.println("❌ No se pudo eliminar el archivo original para actualizarlo.");
+                }
+            } else {
+                tempFile.delete(); // Limpiamos el temporal si no hubo cambios
+                System.out.println("⚠️ Usuario '" + targetUser + "' no encontrado.");
+            }
+
+        } catch (IOException e) {
+            System.err.println("❌ Error de E/S: " + e.getMessage());
+        }
+        return found;
     }
 }
