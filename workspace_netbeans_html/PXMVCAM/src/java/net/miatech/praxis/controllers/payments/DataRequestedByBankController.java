@@ -633,8 +633,9 @@ public class DataRequestedByBankController extends BaseController {
                         emisor = "amaclaracionescontracargos@miatech.net";
                     }
                     receptores.add("jtorres@miatech.net");
+                    receptores.add("singa@miatech.net");
                     receptores.add("eneves@miatech.net");
-                    receptores.add("jugaz@miatech.net");
+//                    receptores.add("jugaz@miatech.net");
                     if (!strMails.trim().equals("")) {
                         String[] parts = strMails.split(";");
                         for (int i = 0; i < parts.length; i++) {
@@ -784,6 +785,7 @@ public class DataRequestedByBankController extends BaseController {
                     receptores.add("ealcibari@aeromexico.com");
                     receptores.add("eneves@miatech.net");
                     receptores.add("jtorres@miatech.net");
+                    receptores.add("singa@miatech.net");
                     emisor = "amcscaclaracioncontracargousaeur@miatech.net";
 
                 } else {
@@ -1051,6 +1053,7 @@ public class DataRequestedByBankController extends BaseController {
                     receptores.add("ealcibari@aeromexico.com");
                     receptores.add("eneves@miatech.net");
                     receptores.add("jtorres@miatech.net");
+                    receptores.add("singa@miatech.net");
                     emisor = "amcscaclaracioncontracargousaeur@miatech.net";
 
                 } else {
