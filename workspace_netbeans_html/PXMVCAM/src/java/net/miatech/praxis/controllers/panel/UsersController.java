@@ -188,7 +188,14 @@ public class UsersController extends BaseController {
                 objRtn = logic.setSQP05856(filter); // ACTUALIZACION EN TABLAS PRAXIS
                 if("A".equals(filter.VP_STAT))
                 {
-                   if(filter.chkExpiredDate) 
+                    if(filter.chkPass)
+                    {
+                        userLogic.update(filter.VP_USR, filter.VP_EMAIL, filter.TOKEN);
+                        userLogic.SQP03218(filter.VP_USR,filter.TOKEN);
+                        resp.info.add("User updated successfully");
+                    }
+                    
+                    if(filter.chkExpiredDate) 
                     {
                         if(filter.DTEXPIRED !=null && filter.DTEXPIRED.length()==8) // HABILITAMOS CON FECHA DE EXPIRACION
                             userLogic.SQP03266(filter.VP_USR,filter.DTEXPIRED);
@@ -200,12 +207,6 @@ public class UsersController extends BaseController {
                         resp.info.add("User updated successfully");
                     }
 
-                    if(filter.chkPass)
-                    {
-                        userLogic.SQP03218(filter.VP_USR,filter.TOKEN);
-                        userLogic.update(filter.VP_USR, filter.VP_EMAIL, filter.TOKEN);
-                        resp.info.add("User updated successfully");
-                    }
                 }
                 resp.info.add("User updated successfully"); // objRtn.dbException.MESSAGE
             }
