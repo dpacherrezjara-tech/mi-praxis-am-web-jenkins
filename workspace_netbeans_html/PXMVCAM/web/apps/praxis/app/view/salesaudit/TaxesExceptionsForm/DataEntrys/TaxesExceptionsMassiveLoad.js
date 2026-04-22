@@ -8,9 +8,9 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
     controller: 'TaxesExceptionsMassiveLoadController',
     title: 'Tax Exception Massive - Form',
     header: true,
-    width: 600,
+    width: 800,
     resizable: false,
-    layout: 'vbox',
+    layout: 'hbox',
     modal: true,
     border: false,
     bodyStyle: 'background: #ffffff;',
@@ -20,39 +20,53 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
     bodyPadding: 10,
     items: [
         {
-            xtype: 'filefield',
-            id: prototype.idDE2 + '-massiveExcelFile',
-            name: 'excelFile',
-            fieldLabel: 'Excel File',
-            labelWidth: 100,
-            msgTarget: 'side',
-            allowBlank: false,
+            xtype: 'container',
+            layout: {
+                type: 'hbox',
+                align: 'middle'
+            },
             width: '100%',
-            buttonText: 'Select File',
-            listeners: {
-                change: 'onSelectField'
-            }
+            margin: '10 0 5 0',
+            items: [
+
+                {
+                    xtype: 'filefield',
+                    flex: 1,
+                    fieldLabel: 'Excel File',
+                    labelWidth: 60,
+                    id: prototype.idDE2 + '-massiveExcelFile',
+                    name: 'excelFile',
+                    msgTarget: 'side',
+                    allowBlank: false,
+                    buttonText: 'Select File',
+                    listeners: {
+                        change: 'onSelectField'
+                    }
+                }
+            ]
         },
         {
             xtype: 'label',
-            width:'100%',
-            html: '<b style="color:#c82d2d;font-size:9px;text-align:right;display:block">Required Layout (*): TICKET-SALEDATE-TAXCODE-COMMENT</b>'
+            width: '100%',
+            margin: '0 0 5 0',
+            html: '<b style="color:#c82d2d;font-size:9px;display:block;text-align:right">Required Layout (*): TICKET-SALEDATE-TAXCODE-COMMENT</b>'
         },
         {
             xtype: 'grid',
-            margin: '5 0 5 0',
-            minHeight: 100,
+            id: prototype.idDE2 + '-gridErrors',
             hidden: true,
+            flex: 1,
+            minHeight: 100,
+            maxHeight: 300,
+            width: '100%',
+            margin: '5 0 5 0',
+            border: true,
+            columnLines: true,
             viewConfig: {
                 stripeRows: false,
                 enableTextSelection: true,
                 markDirty: true
             },
-            border: true,
-            columnLines: true,
-            id: prototype.idDE2 + '-gridErrors',
-            width: '100%',
-            maxHeight: 300,
             columns: {
                 defaults: {
                     align: 'center',
@@ -60,8 +74,8 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.DataEntrys.TaxesExcep
                     sortable: true
                 },
                 items: [
-                    {text: 'Ticket', dataIndex: 'TICKET', width: 100},
-                    {text: 'Error Comment', dataIndex: 'COMENTARIO', flex: 1}
+                    { text: 'Ticket', dataIndex: 'TICKET', width: 100 },
+                    { text: 'Error Comment', dataIndex: 'COMENTARIO', flex: 1 }
                 ]
             }
         }

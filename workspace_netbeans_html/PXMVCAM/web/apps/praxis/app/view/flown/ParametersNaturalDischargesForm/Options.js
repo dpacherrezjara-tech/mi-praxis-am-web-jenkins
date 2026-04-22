@@ -19,6 +19,7 @@ Ext.define('Ext.Praxis.view.flown.ParametersNaturalDischargesForm.Options', {
                             id: prototype.id + '-btnSearch',
                             iconCls: 'prx-icon-search',
                             tooltip: 'Search',
+                            hidden: true,
                             listeners:{
                                 click:'onClickSearchBtn'
                             }
@@ -28,6 +29,7 @@ Ext.define('Ext.Praxis.view.flown.ParametersNaturalDischargesForm.Options', {
                             id: prototype.id + '-btnAdd',
                             iconCls: 'prx-icon-add',
                             tooltip: 'Add',
+                            hidden: true,
                             listeners:{
                                 click:'onClickAddBtn'
                             }

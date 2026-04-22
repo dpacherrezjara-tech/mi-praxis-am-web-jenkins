@@ -19,8 +19,8 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Options', {
                             id: prototype.id + '-btnSearch',
                             iconCls: 'prx-icon-search',
                             tooltip: 'Search',
-                            listeners:{
-                                click:'onClickSearchBtn'
+                            listeners: {
+                                click: 'onClickSearchBtn'
                             }
                         },
                         {
@@ -28,8 +28,8 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Options', {
                             id: prototype.id + '-btnAdd',
                             iconCls: 'prx-icon-add',
                             tooltip: 'Add',
-                            listeners:{
-                                click:'onClickAddBtn'
+                            listeners: {
+                                click: 'onClickAddBtn'
                             }
                         },
                         {
@@ -52,7 +52,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Options', {
                         },
                         {
                             xtype: 'button',
-                            iconCls: 'prx-icon-excel',
+                            iconCls: 'fa fa-upload',
                             tooltip: 'Load From Excel',
                             listeners: {
                                 click: 'onMassiveLoad'

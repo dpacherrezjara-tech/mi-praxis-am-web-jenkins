@@ -257,6 +257,7 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txthora1',
+                                            hidden:true,
                                             maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
                                             fieldLabel: 'Start hour',
                                             labelAlign: 'right',
@@ -268,6 +269,7 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         },
                                         {
                                             xtype: 'textfield',
+                                            hidden:true,
                                             id: prototype.id + '-txthora2',
                                             maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
                                             fieldLabel: 'End hour',
@@ -284,6 +286,7 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         {
                                             xtype: 'combo',
                                             id: prototype.id + '-CmbStatus',
+                                            hidden:true,
                                             fieldLabel: 'Status',
                                             queryMode: 'local',
                                             displayField: 'name',
@@ -306,7 +309,7 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtCurrency',
                                             fieldLabel: 'Currency',
-                                            maskRe: /[A-Z,a-z,Ñ,ñ]/,
+                                            maskRe: /[A-Z,a-z,Ñ,ñ]/,hidden:true,
                                             maxLength: 3,
                                             enforceMaxLength: 3,
                                             labelWidth: 50,
@@ -468,11 +471,11 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         dataIndex: 'A3676FREGI',
                                         width: 80
                                     },
-                                    {
+                                    /*{
                                         text: 'Processing </br> date',
                                         dataIndex: 'A3676FRECE',
                                         width: 80
-                                    },
+                                    },*/
                                     /*{text: 'Cur.',dataIndex: 'A3676CUR',width: 40},
                                             {text: 'Net.',dataIndex: 'A3676MONTO',width: 70,align: 'right',
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
@@ -529,13 +532,13 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         align: 'left',
                                         renderer: 'onRendererToltip'
                                     },
-                                     {
+                                     /*{
                                         text: 'Description',
                                         dataIndex: 'A3676DESCR',
                                         width: 150,
                                         align: 'left',
                                         renderer: 'onRendererToltip'
-                                    },
+                                    },*/
                                     {
                                         text: 'Status',
                                         dataIndex: 'A3676STROB',

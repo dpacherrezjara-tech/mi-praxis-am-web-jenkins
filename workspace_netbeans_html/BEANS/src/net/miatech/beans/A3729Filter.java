@@ -26,6 +26,7 @@ public class A3729Filter extends A3729 {
     public String strDescripcion = "";
     public String desSTVCR = "";
     public String desPAX = "";
+    public String desPAXV = "";
     public String descFSABRE = "";
     public String descSTASABR = "";
     public String descFSALES = "";

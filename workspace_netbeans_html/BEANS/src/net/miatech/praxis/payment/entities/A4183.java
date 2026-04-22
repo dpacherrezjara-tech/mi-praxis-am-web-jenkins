@@ -655,4 +655,14 @@ public class A4183 {
     public Double getA4183tccom() {
         return A4183TCCOM;
     }
+    
+    private String ACCOUNT;
+
+    public void setACCOUNT(String ACCOUNT) {
+        this.ACCOUNT = ACCOUNT;
+    }
+
+    public String getACCOUNT() {
+        return ACCOUNT;
+    }
 }

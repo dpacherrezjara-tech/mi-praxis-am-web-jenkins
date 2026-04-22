@@ -876,10 +876,22 @@ public class FlightConciliationDAO {
                 beanCons.TPAX = rst.getString("TPAX").trim();
                 beanCons.TPAX_V = rst.getString("TPAX_V").trim();
 
-                if (!beanCons.TPAX_V.equals("")) {
-                    beanCons.TPAX = beanCons.TPAX_V;
-                }
+//                if (!beanCons.TPAX_V.equals("")) {
+//                    beanCons.TPAX = beanCons.TPAX_V;
+//                }
 
+                if (beanCons.TPAX_V.equals("A")) {
+                    beanCons.desPAXV = "Adult";
+                } else if (beanCons.TPAX_V.equals("C")) {
+                    beanCons.desPAXV = "Children";
+                } else if (beanCons.TPAX_V.equals("I")) {
+                    beanCons.desPAXV = "Infant";
+                } else if (beanCons.TPAX_V.equals("INF")) {
+                    beanCons.desPAXV = "Infant";
+                } else {
+                    beanCons.desPAXV = "";
+                }
+                
                 if (beanCons.TPAX.equals("A")) {
                     beanCons.desPAX = "Adult";
                 } else if (beanCons.TPAX.equals("C")) {
@@ -888,6 +900,8 @@ public class FlightConciliationDAO {
                     beanCons.desPAX = "Infant";
                 } else if (beanCons.TPAX.equals("INF")) {
                     beanCons.desPAX = "Infant";
+                } else {
+                    beanCons.desPAX = "";
                 }
 
                 beanCons.FA720 = rst.getString("FA720").trim();
@@ -2510,7 +2524,7 @@ public class FlightConciliationDAO {
         String strMsj = "";
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04320(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04320_V50(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2545,6 +2559,9 @@ public class FlightConciliationDAO {
             cstmt.setString(20, Functions.getFechaActual());
             cstmt.setString(21, Functions.getHoraActual());
             cstmt.setString(22, "A3729");
+            cstmt.setString(23, filter.OLD_CHAIR.trim());
+            cstmt.setString(24, filter.OLD_TICKET.trim());
+            cstmt.setString(25, filter.OLD_COUPON.trim());
             cstmt.execute();
 
             strMsj = "Upgrade was successful.";
@@ -2712,6 +2729,63 @@ public class FlightConciliationDAO {
             } else {
                 strMsj = "No records found.";
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return strMsj;
+
+    }
+    
+//    UPS
+     public String SQP03414_20(A3729Filter filter) throws SQLException, Exception {
+        //REALIZA UPDATE  DE UN REGISTRO EN LA TABLA A3729.
+
+        String strMsj = "";
+        CallableStatement cstmt = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03414_20(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, filter.option.trim());
+            cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
+            cstmt.setString(3, filter.TICKET.trim());
+            cstmt.setString(4, filter.CUPON.trim());
+            cstmt.setString(5, filter.DFLIGHT.trim());
+            cstmt.setString(6, filter.NFLIGHT.trim());
+            cstmt.setString(7, filter.TPAX.trim());
+            cstmt.setString(8, filter.CDEPART.trim());
+            cstmt.setString(9, filter.CARRIVA.trim());
+            cstmt.setString(10, filter.CHAIR.trim());
+            cstmt.setString(11, filter.LNAME.trim());
+            cstmt.setString(12, filter.FNAME.trim());
+            cstmt.setString(13, filter.STVAL.trim());
+            cstmt.setString(14, filter.STVCR.trim());
+            cstmt.setString(15, filter.FSALES.trim());
+            cstmt.setString(16, filter.FSABRE.trim());
+            cstmt.setString(17, filter.STASABR.trim());
+            cstmt.setString(18, session.getUserView().getUserInfo().USR);
+            cstmt.setString(19, Functions.getFechaActual());
+            cstmt.setString(20, Functions.getHoraActual());
+            cstmt.setString(21,filter.LNKMVLO.trim());
+            cstmt.execute();
+
+            strMsj = "Upgrade was successful.";
 
         } catch (Exception e) {
             e.printStackTrace();

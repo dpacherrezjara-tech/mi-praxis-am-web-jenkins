@@ -502,7 +502,33 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     actionCode: 'I'
                 }
             }).show();
+        } else if (this.peek() === prototype.id + '-boxDetailFlightManifest') {
+
+            var chkManifest = Ext.getCmp(prototype.id + '-chkManifest');
+
+            if (chkManifest && chkManifest.getValue() === true) {
+                Ext.Msg.alert(
+                        'Opción no habilitada',
+                        'Quite el check de <b>Flight Manifest</b> para continuar.'
+                        );
+                return;
+            }
+
+            // --- continúa flujo normal ---
+            var grid = Ext.getCmp(prototype.id + '-gridDetailFlightManifest');
+            var store = grid.getStore();
+            var firstRow = store.getAt(0);
+            var rec = firstRow ? firstRow : {};
+
+            Ext.create('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
+                id: prototype.id + '-DataEntryA3729',
+                params: {
+                    action: 'I',
+                    rec: rec
+                }
+            }).show();
         }
+
     },
     btnQuery_click: function () {
         var beanQuery = {};
@@ -985,7 +1011,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 
     },
     btnScanTicket_clickHandler: function () {
-        this.objFLIGHTMANIF.DFLIGHT = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtFilterDatem').getValue(), 'Ymd');
+        this.objFLIGHTMANIF.DFLIGHT = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtFilterDatem').getValue(), 'Ymd');
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Are you sure to Scan Tickets ?',
@@ -1015,7 +1041,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
                     var msj = res.msjOption;
-                    global.Msg({msg: msj});   
+                    global.Msg({msg: msj});
 //                    me.searchDetailFlightManifest(bean);
                 } else
                     global.Msg({msg: res.sesion});
@@ -1387,7 +1413,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     var msj = res.msjOption;
                     var beanCons = res.beanConsTkt;
                     global.Msg({msg: msj});
-                    if ( msj !== 'Error') {
+                    if (msj !== 'Error') {
                         meEntryTick.view.close();
                         console.log('sale');
                     }
@@ -1403,9 +1429,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     }
                 } else
                     var msj = res.msjOption;
-                    global.Msg({msg: msj});
+                global.Msg({msg: msj});
                 global.clear();
-               
+
             },
             failure: function (response, opts) {
                 Ext.getCmp('DataEntryTicketFlightConciliationForm').unmask();
@@ -1834,7 +1860,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }
         }).show();
 
-    },        
+    },
     onClickFileLoad_VLO: function () {
         Ext.Msg.show({
             title: '.:PRAXIS:.',

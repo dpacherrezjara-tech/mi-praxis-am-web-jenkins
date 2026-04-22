@@ -110,6 +110,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     }
                 },
                 columns: [
+                    {text: 'Reconciliation<br>Amount', dataIndex: 'reconciliation_AMOUNT', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;background-color:#F0D094";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
+                    {text: 'Difference<br>Amount', dataIndex: 'difference_AMOUNT', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;background-color:#F0D094";
+                            value = Ext.util.Format.number(value, '0,000.00');
+                            return value;
+                        }
+                    },
                     {text: 'Expected<br>Date', dataIndex: 'procdate', width: 80},
                     {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
                     {text: 'Difference', width: 80,

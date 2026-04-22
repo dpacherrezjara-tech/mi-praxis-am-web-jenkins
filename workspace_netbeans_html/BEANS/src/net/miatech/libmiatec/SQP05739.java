@@ -13,8 +13,11 @@ public class SQP05739 {
     public String AUASI;
     public int PEDIEN;
     public int PROCE;
+    public int STABY;
+    public int TOTAL;
     public String PRDA1;
     public String PRDA2;
+    public String DESCRI;
     public String PROCTYPESQ1;
     public String groupField;
     public String CCUST1;
@@ -35,6 +38,29 @@ public class SQP05739 {
     public Double TGROSAMOUN1;
     public String CHK;
 
+    public String getDESCRI() {
+        return DESCRI;
+    }
+
+    public void setDESCRI(String DESCRI) {
+        this.DESCRI = DESCRI;
+    }
+        
+    public int getSTABY() {
+        return STABY;
+    }
+
+    public void setSTABY(int STABY) {
+        this.STABY = STABY;
+    }
+    
+    public int getTOTAL() {
+        return TOTAL;
+    }
+
+    public void setTOTAL(int TOTAL) {
+        this.TOTAL = TOTAL;
+    }
     public String getCHK() {
         return CHK;
     }

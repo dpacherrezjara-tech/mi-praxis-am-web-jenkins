@@ -79,85 +79,6 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
-                            text: 'Name: ',
-                            style: 'font-weight:bold;color:#000;',
-                            width: 80
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtName',                            
-                            text: '',
-                            maxLength: 200,
-                            enforceMaxLength: true,
-                            //style: 'font-weight:bold;color:red;',
-                            width: 160,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Mandatory Field'
-                            },
-                            listeners:{
-                                change: 'onUpperValue'
-                            }
-                        },
-                        { xtype: 'tbspacer', width: 7 },
-                        {
-                            xtype: 'label',
-                            text: 'Last Name: ',
-                            style: 'font-weight:bold;color:#000;',
-                            width: 80
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtLastName',                            
-                            text: '',
-                            maxLength: 200,
-                            enforceMaxLength: true,
-                            //style: 'font-weight:bold;color:red;',
-                            width: 160,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Mandatory Field'
-                            },
-                            listeners:{
-                                change: 'onUpperValue'
-                            }
-                        },
-                        { xtype: 'tbspacer', width: 10 },
-                        {
-                            xtype: 'label',
-                            text: 'Email: ',
-                            style: 'font-weight:bold;color:#000;',
-                            width: 50
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtEmail',                            
-                            text: '',
-                            maxLength: 200,
-                            enforceMaxLength: true,
-                            //style: 'font-weight:bold;color:red;',
-                            width: 160,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Mandatory Field'
-                            },
-                            listeners:{
-                                change: 'onUpperValue'
-                            }
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox' 
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
-                        {
-                            xtype: 'label',
                             text: 'Description: ',
                             style: 'font-weight:bold;color:#000;',
                             width: 80
@@ -217,29 +138,6 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                             displayField: 'name',
                             width: 100,
                             listConfig: {height: 111}
-                        },
-                        { xtype: 'tbspacer', width: 10 },
-                        {
-                            xtype:'combo',
-                            fieldLabel: '<span style="font-weight:bold;color:#000;">Profile</span>',
-                            id: prototype.id + '-cboProfiles',
-                            labelAlign:'left',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            valueField: 'code',
-                            displayField: 'name',
-                            //emptyText: pxutils.emptyText,
-                            labelWidth: 70,
-                            width:'70',
-                            anchor:'100%',
-                            listeners: {
-                                afterrender: function(obj) {
-                                    obj.setValue('0'); //All
-                                }
-                            }
                         }
                     ]
                 },

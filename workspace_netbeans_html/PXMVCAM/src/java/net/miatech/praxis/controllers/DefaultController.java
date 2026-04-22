@@ -113,6 +113,11 @@ public class DefaultController extends BaseController {
             throw new SpringException(e);
         }
     }
+    
+    @RequestMapping(value = "/errorPage", method = RequestMethod.GET)
+    public String errorPage(){
+        return "errorPage";
+    }
 
     public String autoLogin(HttpServletRequest request, HttpServletResponse response, ModelMap map) throws Exception {
         System.out.println("DefaultController : autoLogin");

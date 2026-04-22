@@ -1,6 +1,13 @@
 Ext.define('Ext.Praxis.controller.flown.ParametersNaturalDischarges.ParametersNaturalDischargesController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.ParametersNaturalDischargesController',
+    authorization: {
+        search: 'N',
+        create: 'N',
+        update: 'N',
+        delete: 'N',
+        export: 'N'
+    },
     afterRender: async function () {
         await this.loadGrids();
     },
@@ -24,7 +31,41 @@ Ext.define('Ext.Praxis.controller.flown.ParametersNaturalDischarges.ParametersNa
             console.error(e);
         } finally {
             me.view.setLoading(false);
-        }        
+        }
+        me.setAuthorization();
+        me.changeAuthorizationForButtons();
+    },
+    setAuthorization: function(){
+        const me = this;
+        try {
+            me.authorization.search = window.accessSelect.PERML;
+            me.authorization.create = window.accessSelect.PERMC;
+            me.authorization.update = window.accessSelect.PERMM;
+            me.authorization.delete = window.accessSelect.PERME;
+            me.authorization.export = window.accessSelect.PERMX;
+        } catch (e) {
+            console.error("Error setAuthorization:", e);
+        }
+    },
+    changeAuthorizationForButtons: function(){
+        const me = this;
+        const btnSearch = Ext.getCmp(prototype.id + '-btnSearch');
+        const btnAdd = Ext.getCmp(prototype.id + '-btnAdd');
+        
+        btnSearch.hide();
+        btnAdd.hide();
+
+        try {
+            if (btnSearch) {
+                btnSearch.setVisible(me.authorization.search === 'Y');
+            }
+            
+            if (btnAdd) {
+                btnAdd.setVisible(me.authorization.create === 'Y');
+            }
+        } catch (e) {
+            console.error("Error changeAuthorizationForButtons:", e);
+        }
     },
     reloadGrid: function(){
         const grid = Ext.getCmp(prototype.id + '-gridParametersNaturalDischarges');
@@ -41,6 +82,7 @@ Ext.define('Ext.Praxis.controller.flown.ParametersNaturalDischarges.ParametersNa
             id:prototype.id + '-ParameterNaturalDischargesDataEntry-1',
             option:option,
             obj: data,
+            authorization: me.authorization,
             reloadGrid: () => me.loadGrids() //me.reloadGrid
         });
         newWin.show();

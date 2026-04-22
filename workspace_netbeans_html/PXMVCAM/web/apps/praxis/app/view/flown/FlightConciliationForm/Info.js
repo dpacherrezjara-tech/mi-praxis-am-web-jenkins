@@ -883,14 +883,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background:#d5f4d5;";
                                                             if (record.data.DESCRIP !== '') {
-                                                                metaData.tdAttr = 'data-qtip="' + record.data.DESCRIP.substring(0,50).trim() + '<br>' + 
-                                                                        record.data.DESCRIP.substring(50,100).trim() + '<br>' +
-                                                                        record.data.DESCRIP.substring(100,150).trim() + '<br>' +
-                                                                        record.data.DESCRIP2.substring(0,50).trim() + '<br>' +
-                                                                        record.data.DESCRIP2.substring(50,100).trim() + '<br>' +
-                                                                        record.data.DESCRIP2.substring(100,150).trim() + '"' 
-                          ;
-                                                                console.log(record.data,"Esta es mi descripcion")
+                                                                metaData.tdAttr = 'data-qtip="' + record.data.DESCRIP.substring(0, 50).trim() + '<br>' +
+                                                                        record.data.DESCRIP.substring(50, 100).trim() + '<br>' +
+                                                                        record.data.DESCRIP.substring(100, 150).trim() + '<br>' +
+                                                                        record.data.DESCRIP2.substring(0, 50).trim() + '<br>' +
+                                                                        record.data.DESCRIP2.substring(50, 100).trim() + '<br>' +
+                                                                        record.data.DESCRIP2.substring(100, 150).trim() + '"'
+                                                                        ;
+                                                                console.log(record.data, "Esta es mi descripcion")
                                                                 return 'Y';
                                                             } else {
                                                                 return 'N';
@@ -1318,10 +1318,69 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Type <br> Pax', dataIndex: 'desPAX', width: 70, sortable: true,
-//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-//                                                            metaData.style = "text-align:center;background:#FFF9E0;";
-//                                                            return value;
-//                                                        }
+                                                        sorter: function (record1, record2) {
+                                                            // Obtener los valores de display (lo que se muestra)
+                                                            var value1 = '';
+                                                            var value2 = '';
+
+                                                            var ticket1 = record1.get('strTicket');
+                                                            var ticket2 = record2.get('strTicket');
+
+                                                            // Obtener el valor que se mostraría (misma lógica que el renderer)
+                                                            if (ticket1 && ticket1.trim() !== '') {
+                                                                value1 = record1.get('desPAXV') || record1.get('desPAX') || '';
+                                                            }
+
+                                                            if (ticket2 && ticket2.trim() !== '') {
+                                                                value2 = record2.get('desPAXV') || record2.get('desPAX') || '';
+                                                            }
+
+                                                            // Orden personalizado: Adult > Children > Infant
+                                                            var order = {
+                                                                'Adult': 1,
+                                                                'Children': 2,
+                                                                'Child': 2, // por si acaso
+                                                                'Infant': 3,
+                                                                '': 99 // vacíos al final
+                                                            };
+
+                                                            var num1 = order[value1] || 99;
+                                                            var num2 = order[value2] || 99;
+
+                                                            return num1 - num2; // -1, 0, o 1
+                                                        },
+                                                        renderer: function (value, metaData, record) {
+                                                            var ticket = record.get('strTicket');
+                                                            var desPAXV = record.get('desPAXV');
+                                                            var desPAX = record.get('desPAX'); // value ya es desPAX, pero lo obtenemos directamente
+
+                                                            // DEBUG: Consolar todos los valores
+                                                            console.log('=== DEBUG Columna Type Pax ===');
+                                                            console.log('Registro ID:', record.getId());
+                                                            console.log('strTicket:', ticket);
+                                                            console.log('desPAX (original):', desPAX);
+                                                            console.log('desPAXV (alternativo):', desPAXV);
+                                                            console.log('value (parámetro):', value);
+                                                            console.log('¿Ticket válido?:', ticket && ticket.trim() !== '');
+                                                            console.log('¿desPAXV vacío?:', !desPAXV || desPAXV.trim() === '');
+                                                            console.log('======================');
+
+                                                            if (ticket && ticket.trim() !== '') {
+                                                                metaData.style = "text-align:center;background:#FFF9E0;";
+
+                                                                // Si desPAXV está vacío, usar desPAX
+                                                                if (!desPAXV || desPAXV.trim() === '') {
+                                                                    console.log('→ Usando desPAX:', desPAX);
+                                                                    return desPAX; // o value
+                                                                }
+
+                                                                console.log('→ Usando desPAXV:', desPAXV);
+                                                                return desPAXV;
+                                                            }
+
+                                                            console.log('→ Sin ticket, retornando vacío');
+                                                            return '';
+                                                        }
                                                     },
                                                     {
                                                         text: 'Seat', dataIndex: 'CHAIR', width: 70, sortable: true,
@@ -2648,12 +2707,6 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     metaData.style = "text-align:center;background:#FFF9E0;";
                                                     return value;
                                                 },
-//                                                        sorter: function (v1, v2) {
-//                                                            console.log('sorter');
-//                                                            v1 = v1.get('CHAIR');
-//                                                            v2 = v2.get('CHAIR');
-//                                                            return v1 > v2 ? 1 : ( v1 < v2 ? -1 : 0 );
-//                                                        }
                                             },
 //                                            {
 //                                                text: 'PNR', dataIndex: 'PNR', width: 80, sortable: true,

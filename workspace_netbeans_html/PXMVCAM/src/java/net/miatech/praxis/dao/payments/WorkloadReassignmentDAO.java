@@ -39,12 +39,17 @@ public class WorkloadReassignmentDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL PRAXISMP.SQP05739(?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXISMP.SQP05739(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
 
             cstmt01.setString(1, filter.IN_OPTION);
             cstmt01.setString(2, session.getUserView().getCustomerInfo().CCUST);
@@ -53,18 +58,36 @@ public class WorkloadReassignmentDAO {
             cstmt01.setString(5, filter.IN_USER);
             cstmt01.setString(6, filter.IN_PROCESADOR);
 
+            cstmt01.setInt(7, filter.page.PAGNUM);
+            cstmt01.setInt(8, filter.page.PAGROW);
+            cstmt01.setInt(9, filter.page.TOTPAG);
+            cstmt01.setInt(10, filter.page.TOTROW);
+
             cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(7);
+            filter.page.PAGROW = cstmt01.getInt(8);
+            filter.page.TOTPAG = cstmt01.getInt(9);
+            filter.page.TOTROW = cstmt01.getInt(10);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
                 objRtn = new SQP05739Filter();
-                objRtn.AUASI = rs01.getString("AUASI");
+                //objRtn.AUASI = rs01.getString("AUASI");
                 objRtn.PEDIEN = rs01.getInt("PEDIEN");
                 objRtn.PROCE = rs01.getInt("PROCE");
+                objRtn.STABY = rs01.getInt("STABY");
+                objRtn.TOTAL = rs01.getInt("PROCE") + rs01.getInt("PEDIEN") + rs01.getInt("STABY");
                 objRtn.PRDA1 = rs01.getString("PRDA");
                 objRtn.PROCTYPESQ1 = rs01.getString("PROCTYPESQ");
                 objRtn.PROCTYPE1 = rs01.getString("PROCTYPE");
+                objRtn.DESCRI = rs01.getString("A4451DESC2");
                 objRtn.groupField = rs01.getString("PRDA") + " - " + rs01.getString("A4451DESC2");
+
+                objRtn.page.PAGNUM = filter.page.PAGNUM;
+                objRtn.page.PAGROW = filter.page.PAGROW;
+                objRtn.page.TOTPAG = filter.page.TOTPAG;
+                objRtn.page.TOTROW = filter.page.TOTROW;
 
                 lstRtn.add(objRtn);
 
@@ -138,27 +161,15 @@ public class WorkloadReassignmentDAO {
             while (rs01.next()) {
                 objRtn = new SQP05739Filter();
 
-                objRtn = new SQP05739Filter();
-                objRtn.CCUST1 = rs01.getString("CCUST");
-                objRtn.PRDA1 = rs01.getString("PRDA");
-                objRtn.PRTIME1 = rs01.getString("PRTIME");
-                objRtn.RECTYPE1 = rs01.getString("RECTYPE");
-                objRtn.PROCTYPE1 = rs01.getString("PROCTYPE");
-                objRtn.PROCTYPESQ1 = rs01.getString("PROCTYPESQ");
-                objRtn.SMERCHID1 = rs01.getString("SMERCHID");
-                objRtn.AREFNBR1 = rs01.getString("AREFNBR");
-                objRtn.SDATE1 = rs01.getString("SDATE");
-                objRtn.STIME1 = rs01.getString("STIME");
-                objRtn.SCARDN1 = rs01.getString("SCARDN");
-                objRtn.SEQNBR1 = rs01.getString("SEQNBR");
                 objRtn.AUASI = rs01.getString("AUASI");
-                objRtn.SAUTHOC1 = rs01.getString("SAUTHOC");
-                objRtn.TICKET1 = rs01.getString("TICKET");
-                objRtn.SCOUNTRY1 = rs01.getString("SCOUNTRY");
-                objRtn.STVAL1 = rs01.getString("STVAL");
-                objRtn.PMERCHID1 = rs01.getString("PMERCHID");
-                objRtn.TGROSAMOUN1 = rs01.getDouble("TGROSAMOUN");
-                objRtn.CHK = rs01.getString("CHK");
+                objRtn.PEDIEN = rs01.getInt("PEDIEN");
+                objRtn.PROCE = rs01.getInt("PROCE");
+                objRtn.STABY = rs01.getInt("STABY");
+                objRtn.TOTAL = rs01.getInt("PROCE") + rs01.getInt("PEDIEN") + rs01.getInt("STABY");
+                objRtn.PRDA1 = rs01.getString("PRDA");
+                objRtn.PROCTYPESQ1 = rs01.getString("PROCTYPESQ");
+                objRtn.PROCTYPE1 = rs01.getString("PROCTYPE");
+                objRtn.DESCRI = rs01.getString("A4451DESC2");
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -296,6 +307,49 @@ public class WorkloadReassignmentDAO {
             pasarGarbageCollector();
         }
         return lstRtn;
+    }
+
+    public String ProcesaAsignacion(A4836Filter filter, String listasigna) throws SQLException, Exception {
+        CallableStatement cs = null;
+        ResultSet rst = null;
+        String strSQL;
+        String STR_RESULT = "";
+
+        session.getCNXIBMDB2().open();
+        try {
+            String SQLCLL01 = "{CALL PRAXISMP.SQP05593(?,?,?,?,?,?,?,?,?)}";
+            cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+
+            cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
+            cs.setString("IN_AUASI", filter.IN_AUASI);
+            cs.setString("IN_PROCTYPE1", filter.PROCTYPE1.trim());
+            cs.setString("IN_PROCTYPESQ1", filter.PROCTYPESQ1.trim());
+            cs.setString("IN_PRDA1", filter.PRDA1.trim());
+            //
+            cs.setString("IN_listasigna", listasigna);
+            cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
+            cs.setString("IN_FREGI", Functions.getFechaActual());
+            cs.setString("IN_HREGI", Functions.getHoraActual());
+            cs.execute();
+
+            rst = cs.getResultSet();
+
+            while (rst.next()) {
+                STR_RESULT = rst.getString("VMESSAGE");
+            }
+            cs.close();
+        } catch (SQLException e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            STR_RESULT = e.getMessage();
+        } catch (Exception e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            STR_RESULT = e.getMessage();
+        } finally {
+            strSQL = null;
+            session.getCNXIBMDB2().close();
+        }
+
+        return STR_RESULT;
     }
 
 }

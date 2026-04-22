@@ -12,6 +12,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         await this.getCodeAdjustments();
         await this.getData();
         me.view.setLoading(false);
+        me.standByComment = me.view.standByComment;
     },
     getData: async function () {
         const me = this;
@@ -247,11 +248,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const txtBpo = Ext.getCmp(prototype.idDE + '-bpocoment');
         const addStandBy = Ext.getCmp(prototype.idDE + '-addStandBy');
         const revStandBy = Ext.getCmp(prototype.idDE + '-revStandBy');
+        const changeStandByComment = Ext.getCmp(prototype.idDE + '-changeStandByComment');
         const hideStandBy = Ext.getCmp(prototype.idDE + '-hideStandBy');
         const adju = Ext.getCmp(prototype.idDE + '-addStandByAdju');
         if (show) {
             addStandBy.show();
             revStandBy.show();
+            changeStandByComment.show();
             hideStandBy.hide();
             standByBpo.show();
             if ((this.bean.cerror === '18' || this.bean.cerror === '19') && this.bean.stval === '0') {
@@ -275,6 +278,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             adju.setReadOnly(false);
             addStandBy.hide();
             revStandBy.hide();
+            changeStandByComment.hide();
             hideStandBy.show();
             standByBpo.hide();
         }
@@ -807,6 +811,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         });
         dataEntryCHBK.show();
     },
+    onClickChangeStandByComment: function () {
+        const me = this;
+        const changeStandByWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ChangeStandByCommentDataEntry', {
+            id: prototype.idDE + '-ChangeStandByCommentDataEntry',
+            obj: me.bean,
+            standByComment: me.standByComment,
+            callback: () => {
+                me.afterRender();
+            }
+        });
+        changeStandByWin.show();
+    },
     onShowUsages: function (grid, rowIndex, colIndex) {
         let obj = grid.getStore().getAt(rowIndex);
         const {ccia, forma, serie, seq, cpui,
@@ -886,8 +902,43 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const scan2 = Ext.getCmp(prototype.idDE + '-balanceScannerForm').getForm();
         try {
             const res = await global.callStoreGet('PRAXISMP', 'SQP05630', scan2.getValues());
-            balances.setStore(new Ext.data.Store({data: res.lstRs.at(0)}));
+            
+            // Verificar que la respuesta tenga datos
+            if (!res || !res.lstRs || res.lstRs.length === 0) {
+                return;
+            }
+            
+            // data
+            const newBalance = res.lstRs.at(0);
+            
+            // Obtener store actual
+            let currentStore = balances.getStore();
+            
+            // Obtener los datos existentes en el store
+            let existingData = [];
+            if (currentStore && currentStore.getCount() > 0) {
+                existingData = currentStore.getData().items.map(function(record) {
+                    return record.data;
+                });
+            }
+            
+            // Convertir en array si no lo es 
+            const newBalanceDataArray = Array.isArray(newBalance) ? newBalance : [newBalance];
+            
+            // Combinar datos
+            const combinedData = existingData.concat(newBalanceDataArray);
+            
+            // Crear o actualizar el store con todos los datos combinados
+            const updatedStore = Ext.create('Ext.data.Store', {
+                data: combinedData
+            });
+            
+            // Asignar el nuevo store
+            balances.setStore(updatedStore);
+            
         } catch (e) {
+            console.error('Error en onAddBalanceClick:', e);
+            global.Msg({msg: 'Error adding balance data: ' + e.message});
         } finally {
             grid2.setLoading(false);
         }

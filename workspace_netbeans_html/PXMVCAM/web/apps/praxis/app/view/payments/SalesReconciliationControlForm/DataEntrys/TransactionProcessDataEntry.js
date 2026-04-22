@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
     controller: 'TransactionProcessDataEntryController',
     title: 'Transaction Process - Form',
     header: true,
-    width: 600,
+    width: 440,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -19,52 +19,125 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
     items: [
         {
             xtype: 'panel',
+            width: '100%',
             layout: {
                 type: 'hbox',
-                pack: 'center'
+                align: 'center',
+                
+            },defaults: {
+                margin: '5 5 5 5'
             },
-            border: true,
+            border: false,
             items: [
                 {
-                    xtype: 'datefield',
-                    id: prototype.id + '-processTransactionBatch',
-                    fieldLabel: 'Select Date',
-                    margin: '5 5 5 5',
-                    format: 'Ymd',
-                    editable: false, // Deshabilita la edición del campo
-                    labelWidth: 100,
-                    width: 200,
-                    value: new Date()
+                    xtype: 'container',
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'start'
+                    },
+                    defaults: {
+                        margin: '5 5 5 5'
+                    },
+                    items: [
+                        {
+                            xtype: 'datefield',
+                            id: prototype.id + '-processTransactionBatchFrom',
+                            fieldLabel: 'From',
+                            format: 'Ymd',
+                            editable: false,
+                            labelWidth: 50,
+                            width: 150,
+                            value: new Date(),
+                            listeners: {
+                                change: 'onChangeDateProcessTransaction'
+                            }
+                        },
+                        {
+                            xtype: 'datefield',
+                            id: prototype.id + '-processTransactionBatchTo',
+                            fieldLabel: 'To',
+                            format: 'Ymd',
+                            editable: false,
+                            labelWidth: 50,
+                            width: 150,
+                            value: new Date(),
+                            listeners: {
+                                change: 'onChangeDateProcessTransaction'
+                            }
+                        }
+                    ]
                 },
                 {
-                    xtype: 'combo',
-                    id: prototype.id + '-processProctype',
-                    labelWidth: 70,
-                    width: 250,
-                    margin: '5 5 5 5',
-                    valueField: 'a4451key2',
-                    displayField: 'a4451desc1',
-                    fieldLabel: 'Processor',
-                    queryMode: 'local',
-                    editable: false,
-                    allowBlank: true,
-                    caseSensitive: false,
-                    caseSensitive: false,
-                    autoSelect: true,
-                    labelAlign: 'right',
-                    typeAhead: true,
-                    enableKeyEvents: true,
-                    triggerAction: 'all',
-                    forceSelection: true,
-                    
-//                    value: 'AMEX',
-//                    store: Ext.create('Ext.data.SimpleStore', {
-//                        fields: ['code', 'name'],
-//                        data: [
-//                            ['GETMEX00', 'Getnet MX'],
-//                            ['AMEX', 'American Express']
-//                        ]
-//                    })
+                    xtype: 'container',
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'start'
+                    },
+                    defaults: {
+                        margin: '5 5 5 5'
+                    },
+                    items: [
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-ProcessReglas',
+                            labelWidth: 70,
+                            width: 230,
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            fieldLabel: 'Rule Priority',
+                            queryMode: 'local',
+                            editable: false,
+                            allowBlank: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            labelAlign: 'right',
+                            typeAhead: true,
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            forceSelection: true,
+                            listeners: {
+                                render: function(combo) {
+                                    // Inicializamos QuickTipManager y registramos un tooltip base
+                                    Ext.tip.QuickTipManager.init();
+                                    Ext.tip.QuickTipManager.register({
+                                        target: combo.getId(),
+                                        text: 'Seleccione una regla para ver detalle'
+                                    });
+                                },
+                                select: function(combo, record) {
+                                    let comentario = record.get('COMMENT') || 'Sin descripción';
+
+                                    // Actualizamos el tooltip dinámicamente
+                                    Ext.tip.QuickTipManager.unregister(combo.getId());
+                                    Ext.tip.QuickTipManager.register({
+                                        target: combo.getId(),
+                                        text: comentario
+                                    });
+                                }
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-ProcessProcessor',
+                            labelWidth: 70,
+                            width: 230,
+                            valueField: 'A4451KEY2',
+                            displayField: 'A4451DESC1',
+                            fieldLabel: 'Processor',
+                            queryMode: 'local',
+                            editable: false,
+                            allowBlank: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            labelAlign: 'right',
+                            typeAhead: true,
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            forceSelection: true
+                        }
+                    ]
                 }
             ]
         }
@@ -74,7 +147,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
-            margin: '10 0 10 0',
+            margin: '5 0 5 0',
             layout: {
                 pack: 'center'
             },

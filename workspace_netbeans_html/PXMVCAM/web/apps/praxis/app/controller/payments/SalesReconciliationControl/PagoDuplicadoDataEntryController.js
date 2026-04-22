@@ -19,14 +19,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
         let pos = obj.proctype ==='BANORTE00'? -2:-4;
         
         let params = {
-            IN_PRDA : obj.prda,
+            IN_PAYDATE : obj.paydate,
             IN_TDOC: obj.tdoc,
             IN_SCARDN1: obj.scardn.slice(0,6),
             IN_SCARDN2: obj.scardn.trim().slice(pos)
-//            IN_DAYS: 30
         };
         
-        console.log(params);
+        // console.log(params);
+
         try {
             me.tkt = [me.view.obj];
             gridTkt.setStore(new Ext.data.Store({data: me.tkt}));
@@ -35,7 +35,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
             
             me.pending = res.lstRs.at(0);
             me.concil = res.lstRs.at(1);
-
             
             gridPending.setStore(new Ext.data.Store({data: me.pending}));
 
@@ -95,7 +94,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
             //const {cuuid, fuuid} = await global.loadRecordsOnTable('PRAXISMP', 'XTEMPO', [params]);
             const res = await global.callStorePost('PRAXISMP', 'SQP05653', params);
             
-            console.log("result", res);
+            // console.log("result", res);
             status_res = parseInt( res.data.lstVals.OUT_RES ) ;
             message = res.data.lstVals.OUT_MSG ;
             

@@ -7,21 +7,33 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
     },
     afterRender: function (obj, e) {
         const me = this;
-        const data = me.view.dataFilters ;
-        const procesadores = data.procesadores;
+        const processors = me.view.processors;
+        const freglasForProcessMasiveTransactional = me.view.freglasForProcessMasiveTransactional || [];
         
-        // combo
-        const cmbProcessProctype = Ext.getCmp(prototype.id + '-processProctype');
-        // set combo
-        global.setComboStoreWithoutAll(cmbProcessProctype, procesadores, 'a4451key2', 'a4451desc1', '');
+        // combo processor
+        const cmbProcessProcessor = Ext.getCmp(prototype.id + '-ProcessProcessor');
+        // set combo processor
+        global.setComboStoreWithoutAll(cmbProcessProcessor, processors, 'A4451KEY2', 'A4451DESC1', 'AMEX02');
         
+        // combo reglas - similar a dataFreglas con CODE y NAME
+        const cmbProcessReglas = Ext.getCmp(prototype.id + '-ProcessReglas');
+        if (cmbProcessReglas && freglasForProcessMasiveTransactional.length > 0) {
+            global.setComboStore(cmbProcessReglas, freglasForProcessMasiveTransactional, 'CODE', 'NAME', '');
+        }
     },
     onProcessClick: function (btn) {
         const me = this;
-        const dateBtn = Ext.getCmp(prototype.id + '-processTransactionBatch').getValue();
-        let date = Ext.Date.format(dateBtn, 'Ymd');
-        let proctype = Ext.getCmp(prototype.id + '-processProctype').getValue();
-        //console.log(date);
+        const dateFromBtn = Ext.getCmp(prototype.id + '-processTransactionBatchFrom').getValue();
+        const dateToBtn = Ext.getCmp(prototype.id + '-processTransactionBatchTo').getValue();
+        let dateIni = Ext.Date.format(dateFromBtn, 'Ymd');
+        let dateFin = Ext.Date.format(dateToBtn, 'Ymd');
+        let processor = Ext.getCmp(prototype.id + '-ProcessProcessor').getValue();
+        let regla = Ext.getCmp(prototype.id + '-ProcessReglas').getValue();
+        
+        // Si la regla es "All" (vacío), establecer como cadena vacía
+        let prioridad = (regla === '' || regla === null || regla === undefined) ? '' : regla;
+        
+        //console.log(dateIni, dateFin, processor, prioridad);
         Ext.Msg.show(
                 {
                     title: '.:PRAXIS:.',
@@ -33,20 +45,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
-                            me.processDate(date, proctype);
+                            me.processDate(dateIni, dateFin, processor, prioridad);
                         }
                     }
                 });
     },
-    processDate: async function (date, proctype) {
+    processDate: async function (dateIni, dateFin, processor, prioridad) {
         const me = this;
         me.view.setLoading(true);
         let params = {
             VP_CCUST: '139',
-            VP_FPROC: date,
-            VP_PROCESADOR: proctype
+            VP_FPROC_INI: dateIni,
+            VP_FPROC_FIN: dateFin,
+            VP_PROCESADOR: processor,
+            VP_PRIORIDAD: prioridad || ''
         };
-        console.log(params);
+        // console.log('params', params);
         try {
 //            res = global.callStorePostAsync('PRAXISMP','SQP05074',params);
             const res = await global.callStorePost('PRAXISMP','SQP05074',params);
@@ -118,6 +132,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
 //        }).finally(() => {
 //            me.view.unmask();
 //        });
+    },
+    onChangeDateProcessTransaction: function (obj) {
+        let option = obj.id.split('-').at(-1);
+        
+        const from = Ext.getCmp(prototype.id + '-processTransactionBatchFrom');
+        const to = Ext.getCmp(prototype.id + '-processTransactionBatchTo');
+        
+        const opts = {
+            'processTransactionBatchFrom': () => {
+                // Si cambia From, establecer To al mismo valor si To es menor
+                if (to.getValue() && from.getValue() && to.getValue() < from.getValue()) {
+                    to.setValue(from.getValue());
+                }
+            },
+            'processTransactionBatchTo': () => {
+                // Si cambia To y es menor que From, establecer From al valor de To
+                if (to.getValue() && from.getValue() && to.getValue() < from.getValue()) {
+                    from.setValue(to.getValue());
+                }
+            }
+        };
+        opts[option]();
     },
     onCancelClick: function () {
         this.view.close();
