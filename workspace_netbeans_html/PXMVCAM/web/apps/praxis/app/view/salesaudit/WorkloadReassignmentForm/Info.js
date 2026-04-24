@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1200,
+                width: 900,
                 height: 'auto',
                 align: 'center'
             },
@@ -39,55 +39,57 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Info', {
                             padding: '1',
                             border: true,
                             height: 480,
-                            width: 1040,
+                            width: 900,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
                             },
                             items: [
+
+                                // ── GRID PRINCIPAL ──────────────────────────────
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMain',
                                     columnLines: true,
                                     autoScroll: true,
-                                    features: [{ftype: 'grouping', startCollapsed: true}],
-                                    width: 700,
+                                    width: 900,
                                     height: 480,
+                                    features: [{ ftype: 'grouping', startCollapsed: true }],
                                     columns: {
                                         items: [
                                             {
                                                 text: 'Processing Date',
-                                                dataIndex: 'PRDA1',
-                                                width: 200,
+                                                dataIndex: 'A1672FPROC',
+                                                width: 150,
                                                 renderer: 'OnColumnAuditorRenderer'
                                             },
                                             {
-                                                text: 'Auditor',
-                                                dataIndex: 'AUASI',
-                                                width: 80,
-                                                align: 'left'
-                                            },
-                                            {
-                                                text: 'Procesador',
-                                                dataIndex: 'PROCTYPESQ1',
-                                                width: 100,
-                                                align: 'left'
+                                                text: 'Source',
+                                                dataIndex: 'A1672FUENT',
+                                                width: 80
                                             },
                                             {
                                                 text: 'Pending',
-                                                dataIndex: 'PEDIEN',
-                                                width: 80,
-                                                align: 'right',
-                                                summaryType: 'sum',
-                                                summaryRenderer: 'OnPendingColumnSummary'
+                                                align: 'center',
+                                                columns: [
+                                                    { text: 'Match', dataIndex: 'PEDINMACH', width: 100, align: 'center' },
+                                                    { text: 'ADM', dataIndex: 'PEDINADM', width: 100, align: 'center' },
+                                                    { text: 'ACM', dataIndex: 'PEDINACM', width: 100, align: 'center' },
+                                                    { text: 'Error', dataIndex: 'PEDINERROR', width: 100, align: 'cente' }
+                                                ]
                                             },
                                             {
-                                                text: 'Processed',
+                                                text: 'Processing',
                                                 dataIndex: 'PROCE',
+                                                flex: 1,
+                                                align: 'center',
+                                                summaryType: 'sum'
+                                            },
+                                            {
+                                                text: 'Total',
                                                 width: 100,
-                                                align: 'right',
-                                                summaryType: 'sum',
-                                                summaryRenderer: 'OnProcessedColumnSummary'
+                                                align: 'center',
+                                                renderer: 'OnColumnTotalRenderer'
                                             }
                                         ],
                                         defaults: {
@@ -97,92 +99,118 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Info', {
                                         }
                                     },
                                     viewConfig: {
-                                        // trackOver: false,
                                         stripeRows: true,
                                         enableTextSelection: true
                                     }
                                 },
+
+                                // ── GRID DETALLE ─────────────────────────────────
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDETALLE',
+                                    hidden: true,
                                     columnLines: true,
                                     autoScroll: true,
-                                    hidden: true,
-                                    width: 1000,
+                                    width: 850,
                                     height: 480,
-                                    selModel: {
-                                        selType: 'checkboxmodel',
-                                        listeners: {
-                                            beforeselect: function (grid, record, index, eOpts, metaData) {
-                                                if (!record.get('CHK')) {
-                                                    return false;
-                                                } else {
-                                                    return true;
-                                                }
-
-
-                                            }
-                                        }
-
-                                    },
+                                    features: [{
+                                        ftype: 'summary'
+                                    }],
                                     columns: {
-                                        items: [
-                                            {
-                                                text: 'Auditor',
-                                                dataIndex: 'AUASI1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Processing Date',
-                                                dataIndex: 'PRDA1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Sales Date',
-                                                dataIndex: 'SDATE1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Card Number',
-                                                dataIndex: 'SCARDN1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Autho',
-                                                dataIndex: 'SAUTHOC1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Ticket',
-                                                dataIndex: 'TICKET1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Country',
-                                                dataIndex: 'SCOUNTRY1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Status',
-                                                dataIndex: 'STVAL1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Procesador',
-                                                dataIndex: 'PROCTYPE1',
-                                                flex: 1
-                                            },
-                                            {
-                                                text: 'Merchant ID',
-                                                dataIndex: 'PMERCHID1',
-                                                flex: 1
-                                            }
-                                        ],
                                         defaults: {
                                             sortable: true,
                                             menuDisabled: true,
                                             align: 'center'
-                                        }
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Auditor',
+                                                dataIndex: 'A1672UASIG',
+                                                width: 120,
+                                                summaryRenderer: function () {
+                                                    return '<b>TOTAL</b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'Processing Date',
+                                                dataIndex: 'A1672FPROC',
+                                                width: 130
+                                            },
+                                            {
+                                                text: 'Source',
+                                                dataIndex: 'A1672FUENT',
+                                                width: 80
+                                            },
+                                            {
+                                                text: 'Pending',
+                                                align: 'center',
+                                                columns: [
+                                                    {
+                                                        text: 'Match',
+                                                        dataIndex: 'PEDINMACH',
+                                                        width: 80,
+                                                        align: 'right',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value) {
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'ADM',
+                                                        dataIndex: 'PEDINADM',
+                                                        width: 80,
+                                                        align: 'right',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value) {
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'ACM',
+                                                        dataIndex: 'PEDINACM',
+                                                        width: 80,
+                                                        align: 'right',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value) {
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Error',
+                                                        dataIndex: 'PEDINERROR',
+                                                        width: 80,
+                                                        align: 'right',
+                                                        summaryType: 'sum',
+                                                        summaryRenderer: function (value) {
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Processing',
+                                                dataIndex: 'PROCE',
+                                                width: 95,
+                                                align: 'right',
+                                                summaryType: 'sum',
+                                                summaryRenderer: function (value) {
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                }
+                                            },
+                                            {
+                                                text: 'Total',
+                                                dataIndex: 'TOTAL',
+                                                width: 100,
+                                                align: 'right',
+                                                summaryType: 'sum',
+                                                renderer: function (value) {
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                                summaryRenderer: function (value) {
+                                                    return '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                }
+                                            }
+                                        ]
                                     },
                                     viewConfig: {
                                         trackOver: false,
@@ -190,10 +218,10 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Info', {
                                         enableTextSelection: true
                                     }
                                 }
-
-
                             ]
                         },
+
+                        // ── LEYENDA PAGE / TOTAL
                         {
                             xtype: 'panel',
                             id: prototype.id + '-pagginator-legend',
@@ -202,6 +230,7 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Info', {
                                 pack: 'center'
                             },
                             border: true,
+                            width: 900,
                             bodyStyle: 'background-color: transparent;',
                             defaults: {
                                 border: false,
@@ -222,40 +251,13 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Info', {
                                         margin: '3px 0px 0px 5px'
                                     },
                                     items: [
-                                        {
-                                            text: 'Page',
-                                            width: 50
-                                        },
-                                        {
-                                            id: prototype.id + '-lbl-currentPage',
-                                            text: '1',
-                                            width: 50
-                                        },
-                                        {
-                                            text: 'Of',
-                                            width: 50
-                                        },
-                                        {
-                                            id: prototype.id + '-lbl-pageCount',
-                                            text: '0',
-                                            width: 50
-                                        },
-                                        {xtype: 'tbspacer', width: 100},
-                                        {
-                                            text: 'Total found',
-                                            width: 80
-                                        },
-                                        {
-                                            id: prototype.id + '-lbl-total',
-                                            text: '0',
-                                            width: 50
-                                        },
-                                        {xtype: 'tbspacer', width: 20},
-                                        {
-                                            id: prototype.id + '-lblRowsTotalADM',
-                                            text: '0',
-                                            width: 50
-                                        }
+                                        { text: 'Page', width: 50 },
+                                        { id: prototype.id + '-lbl-currentPage', text: '1', width: 50 },
+                                        { text: 'Of', width: 50 },
+                                        { id: prototype.id + '-lbl-pageCount', text: '0', width: 50 },
+                                        { xtype: 'tbspacer', width: 100 },
+                                        { text: 'Total found', width: 80 },
+                                        { id: prototype.id + '-lbl-total', text: '0', width: 50 }
                                     ]
                                 }
                             ]
@@ -276,7 +278,4 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Info', {
             ]
         }
     ]
-}
-);
-
-
+});

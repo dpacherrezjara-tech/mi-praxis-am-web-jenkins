@@ -22,7 +22,7 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Filters', {
                     xtype: 'panel',
                     width: '100%',
                     layout: 'hbox',
-//                    padding: '0 0 0 300',
+                    //                    padding: '0 0 0 300',
                     bodyStyle: 'background: transparent;"',
                     defaults: {
                         margin: '4 0'
@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Filters', {
                             caseSensitive: false,
                             autoSelect: true,
                             editable: true,
-//                            width: 150,
+                            //                            width: 150,
                             labelWidth: 65,
                             width: 210,
                             anchor: '100%',
@@ -55,7 +55,7 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Filters', {
                                 change: 'onCmbSearchChange'
                             }
                         },
-                        {xtype: 'tbspacer', width: 10},
+                        { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'datefield',
                             id: prototype.id + '-txtFilterDateFrom',
@@ -69,7 +69,7 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Filters', {
                                 specialkey: 'onSearchkey'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+                        { xtype: 'tbspacer', width: 5 },
                         {
                             xtype: 'datefield',
                             id: prototype.id + '-txtFilterDateTo',
@@ -83,15 +83,41 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Filters', {
                                 specialkey: 'onSearchkey'
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+                        { xtype: 'tbspacer', width: 5 },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtCountry',
+                            fieldLabel: 'Country',
+                            width: 100,
+                            labelWidth: 50,
+                            labelAlign: 'right',
+                            emptyText: '',
+                            listConfig: {
+                                minWidth: 200
+                            },
+                            maxLength: 2,
+                            enforceMaxLength: true,
+                            maskRe: /[a-zA-Z]/,
+                            regex: /^[a-zA-Z]{2}$/,
+
+                            listeners: {
+                                change: function (field, value) {
+                                    if (value) {
+                                        field.setValue(value.toUpperCase());
+                                    }
+                                }
+                            }
+                        },
+                        { xtype: 'tbspacer', width: 5 },
+
                         {
                             xtype: 'combo',
                             id: prototype.id + '-txtUser',
                             fieldLabel: 'Auditor',
                             queryMode: 'local',
-                            displayField: 'A4836USER',
-                            valueField: 'A4836USER',
-                            width: 200,
+                            displayField: 'A4886USER',
+                            valueField: 'A4886USER',
+                            width: 180,
                             labelWidth: 50,
                             labelAlign: 'right',
                             emptyText: '',
@@ -99,16 +125,17 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Filters', {
                                 minWidth: 200
                             }
                         },
-                        {xtype: 'tbspacer', width: 5},
+
+                        { xtype: 'tbspacer', width: 5 },
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbProctypeSettl',
                             name: 'IN_PROCTYPESQ',
-                            labelWidth: 70,
-                            width: 250,
-                            valueField: 'a4451key2',
-                            displayField: 'a4451desc1',
-                            fieldLabel: 'Processor',
+                            labelWidth: 50,
+                            width: 100,
+                            valueField: 'code',
+                            displayField: 'name',
+                            fieldLabel: 'Source',
                             queryMode: 'local',
                             editable: false,
                             allowBlank: true,
@@ -125,14 +152,17 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Filters', {
                             id: prototype.id + '-cmbUser',
                             fieldLabel: 'Auditor',
                             queryMode: 'local',
-                            displayField: 'A4836USER',
-                            valueField: 'A4836USER',
+                            displayField: 'A4886USER',
+                            valueField: 'A4886USER',
                             width: 200,
                             labelWidth: 50,
                             labelAlign: 'right',
                             emptyText: '',
                             listConfig: {
                                 minWidth: 200
+                            },
+                            listeners: {
+                                change: 'onFilterAuditorDetail'
                             }
                         }
                     ]

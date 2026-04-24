@@ -9,7 +9,7 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Options', {
     items: [
         {
             xtype: 'panel',
-            hidden:true,
+            hidden: true,
             layout: 'hbox',
             id: prototype.id + '-pagi12',
             border: false,
@@ -37,7 +37,7 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Options', {
                 }
             ]
         },
-        {xtype: 'tbspacer', width: 20},
+        { xtype: 'tbspacer', width: 20 },
         {
             xtype: 'panel',
             border: true,
@@ -72,9 +72,9 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Options', {
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnsave',
-                            iconCls: 'prx-icon-image-update',
-                            tooltip: 'Change Auditor',
+                            id: prototype.id + '-btnuser',
+                            iconCls: 'prx-icon-user',
+                            tooltip: 'Agregar carga de trabajo a los Analistas',
                             hidden: true
                         }
 
