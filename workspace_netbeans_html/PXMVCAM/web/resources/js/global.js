@@ -2003,15 +2003,15 @@ var LarSyrExt = function () {
         }
     };
     this.writeExcelFromJson = async function (data, name) {
-        const ws = XLSX.utils.json_to_sheet(data);
 
-        const headers = Object.keys(data[0]);
+        const ws = XLSX.utils.json_to_sheet(data || []);
+        const headers = Object.keys((data && data[0]) || {});
 
         //Define Headers
         const headerStyle = {
             font: {bold: true, color: {rgb: "FFFFFF"}}, // Texto blanco y negrita
             fill: {fgColor: {rgb: "020c41"}}, // Fondo rojo
-            alignment: {horizontal: "center", vertical: "center"}, // Centrado
+            alignment: {horizontal: "center", vertical: "center", wrapText: true}, // Centrado y salto de linea
             border: {
                 top: {style: "thin", color: {rgb: "FFFFFF"}},
                 bottom: {style: "thin", color: {rgb: "FFFFFF"}},
@@ -2026,6 +2026,9 @@ var LarSyrExt = function () {
             if (!ws[cellAddress]) {
                 ws[cellAddress] = {v: headers[colIndex]}; // Asegurar que la celda existe
             }
+            if (typeof ws[cellAddress].v === 'string') {
+                ws[cellAddress].v = ws[cellAddress].v.replace(/\\n/g, '\n');
+            }
             ws[cellAddress].s = headerStyle;
         });
 
@@ -2035,6 +2038,125 @@ var LarSyrExt = function () {
 
         let uuid = crypto.randomUUID().replace(/-/g, '').substring(0, 6);
         // Descargar archivo
+        XLSX.writeFile(wb, name + "_" + uuid + ".xlsx");
+    };
+    this.writeExcelFromJsonWithStyle = async function (config) {
+        const cfg = config || {};
+        const data = Array.isArray(cfg.data) ? cfg.data : [];
+        const columns = Array.isArray(cfg.columns) ? cfg.columns : [];
+        const name = cfg.name || 'excel';
+        const sheetName = cfg.sheetName || 'result';
+
+        if (!columns.length) {
+            return;
+        }
+
+        const parseHexColor = function (color, fallback) {
+            let value = (color || fallback || '#FFFFFF');
+            if (typeof value !== 'string') {
+                value = fallback || '#FFFFFF';
+            }
+            value = value.trim();
+            if (value[0] === '#') {
+                value = value.substring(1);
+            }
+            if (/^[0-9A-Fa-f]{3}$/.test(value)) {
+                value = value.split('').map((c) => c + c).join('');
+            }
+            if (/^[0-9A-Fa-f]{6}$/.test(value)) {
+                return value.toUpperCase();
+            }
+            let fb = (fallback || '#FFFFFF').toString().trim();
+            if (fb[0] === '#') {
+                fb = fb.substring(1);
+            }
+            return (/^[0-9A-Fa-f]{6}$/.test(fb) ? fb : 'FFFFFF').toUpperCase();
+        };
+
+        const defaultStyleConfig = {
+            defaultHeaderBgColor: '#020C41',
+            defaultHeaderFontColor: '#FFFFFF',
+            defaultDataBgColor: '#FFFFFF',
+            defaultDataFontColor: '#000000',
+            defaultHeaderAlign: 'center',
+            defaultDataAlign: 'left'
+        };
+        const resolvedConfig = Object.assign({}, defaultStyleConfig, cfg);
+
+        const defaultHeaderBgColor = parseHexColor(resolvedConfig.defaultHeaderBgColor, defaultStyleConfig.defaultHeaderBgColor);
+        const defaultHeaderFontColor = parseHexColor(resolvedConfig.defaultHeaderFontColor, defaultStyleConfig.defaultHeaderFontColor);
+        const defaultDataBgColor = parseHexColor(resolvedConfig.defaultDataBgColor, defaultStyleConfig.defaultDataBgColor);
+        const defaultDataFontColor = parseHexColor(resolvedConfig.defaultDataFontColor, defaultStyleConfig.defaultDataFontColor);
+        const defaultHeaderAlign = resolvedConfig.defaultHeaderAlign || defaultStyleConfig.defaultHeaderAlign;
+        const defaultDataAlign = resolvedConfig.defaultDataAlign || defaultStyleConfig.defaultDataAlign;
+
+        const normalizedColumns = columns.map((col, idx) => {
+            const title = (col.title || col.header || col.field || ('COL_' + (idx + 1))).toString();
+            const colDataAlign = col.DataAlign || col.dataAlign || defaultDataAlign;
+            return {
+                field: col.field,
+                title: title.replace(/\\n/g, '\n'),
+                valueGetter: col.valueGetter,
+                headerBgColor: parseHexColor(col.headerBgColor, defaultHeaderBgColor),
+                headerFontColor: parseHexColor(col.headerFontColor, defaultHeaderFontColor),
+                dataBgColor: parseHexColor(col.dataBgColor, defaultDataBgColor),
+                dataFontColor: parseHexColor(col.dataFontColor, defaultDataFontColor),
+                dataAlign: colDataAlign
+            };
+        });
+
+        const headerRow = normalizedColumns.map(col => col.title);
+        const bodyRows = data.map((row) => {
+            return normalizedColumns.map((col) => {
+                if (typeof col.valueGetter === 'function') {
+                    return col.valueGetter(row || {});
+                }
+                return (row || {})[col.field];
+            });
+        });
+
+        const ws = XLSX.utils.aoa_to_sheet([headerRow].concat(bodyRows));
+
+        normalizedColumns.forEach((col, colIdx) => {
+            const headerCell = XLSX.utils.encode_cell({r: 0, c: colIdx});
+            ws[headerCell] = ws[headerCell] || {v: col.title};
+            ws[headerCell].s = {
+                font: {bold: true, color: {rgb: col.headerFontColor}},
+                fill: {fgColor: {rgb: col.headerBgColor}},
+                alignment: {horizontal: defaultHeaderAlign, vertical: 'center', wrapText: true},
+                border: {
+                    top: {style: 'thin', color: {rgb: 'FFFFFF'}},
+                    bottom: {style: 'thin', color: {rgb: 'FFFFFF'}},
+                    left: {style: 'thin', color: {rgb: 'FFFFFF'}},
+                    right: {style: 'thin', color: {rgb: 'FFFFFF'}}
+                }
+            };
+        });
+
+        for (let rowIdx = 0; rowIdx < bodyRows.length; rowIdx++) {
+            normalizedColumns.forEach((col, colIdx) => {
+                const dataCell = XLSX.utils.encode_cell({r: rowIdx + 1, c: colIdx});
+                if (!ws[dataCell]) {
+                    ws[dataCell] = {v: ''};
+                }
+                ws[dataCell].s = {
+                    font: {color: {rgb: col.dataFontColor}},
+                    fill: {fgColor: {rgb: col.dataBgColor}},
+                    alignment: {horizontal: col.dataAlign, vertical: 'center'},
+                    border: {
+                        top: {style: 'thin', color: {rgb: 'E0E0E0'}},
+                        bottom: {style: 'thin', color: {rgb: 'E0E0E0'}},
+                        left: {style: 'thin', color: {rgb: 'E0E0E0'}},
+                        right: {style: 'thin', color: {rgb: 'E0E0E0'}}
+                    }
+                };
+            });
+        }
+
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, sheetName);
+
+        let uuid = crypto.randomUUID().replace(/-/g, '').substring(0, 6);
         XLSX.writeFile(wb, name + "_" + uuid + ".xlsx");
     };
     this.loadRecordsOnTable = async function (library, table, lst) {

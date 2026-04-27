@@ -11,41 +11,48 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
         const view = me.view;
         this.getData({view: view});
     },
-    getData: function ( {view}) {
+    getData: async function ( {view}) {
         const me = this;
-        let store = Ext.create('Ext.data.Store', {
-            loadMask: true,
-            pageSize: 20,
-            proxy: {
-                type: 'ajax',
-                enablePaging: true,
-                url: `${view.url}/loadByPaymentDetail`,
-                extraParams: view.searchParams,
-                timeout: 600000,
-                reader: {
-                    type: 'json',
-                    rootProperty: 'response',
-                    totalProperty: 'total'
-                }
-            },
-            autoLoad: true,
-            listeners: {
-                load: function (store, records, successful, operation) {
-                    if (!successful) {
-                        global.Msg({msg: 'Data not Found'});
-                    } else {
-                        //console.log(records);
-                        if (records.length === 0) {
-                            global.Msg({msg: 'Data not Found'});
-                        } else {
-                            me.showButtonCreditCard();
-                        }
-                    }
-                }
+        
+        // Ensure all required parameters are present in view.searchParams, set to '' if missing
+        const expectedParams = [
+            'IN_CCUST',
+            'IN_DATE',
+            'IN_MONTH',
+            'IN_DATEFROM',
+            'IN_DATETO',
+            'IN_PROCTYPE',
+            'IN_PROCTYPESQ',
+            'IN_SMERCHID',
+            'IN_TRANSTYPE',
+            'IN_SCOUNTRY',
+            'IN_FVOID',
+            'IN_TICKET',
+            'IN_SCARDN',
+            'IN_SAUTHOC',
+            'IN_SPNR',
+            'IN_TYPE',
+            'IN_STVAL',
+            'IN_CERROR',
+            'IN_CODADJU',
+            'IN_AREFNBR',
+            'IN_AMOUNT',
+            'IN_SCURRENCY',
+            'IN_NBRINSTA',
+            'IN_CODEAUTOCOMMENT',
+            'IN_FREGLA',
+            'IN_ARN',
+            'IN_USER_ASSIGNED'
+        ];
+        expectedParams.forEach(param => {
+            if (!(param in view.searchParams)) {
+                view.searchParams[param] = '';
             }
         });
-        view.setStore(store);
-        //view.bindStore(store);
+
+        const res = await global.callStorePaggin('PRAXISMP', 'SQP05060', view.searchParams);
+        view.setStore(res);
+        me.showButtonCreditCard();
     },
     onClickBPO: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const obj = record.data;
@@ -53,6 +60,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
             id: prototype.id + '-TransacErrorBPODataEntry-1',
             obj: obj,
             standByComment: me.standByComment,
+            users: me.users,
             callback: () => {
                 grid.getStore().load();
             }
