@@ -7,41 +7,39 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
     afterRender: function (obj, e) {
         this.getData();
     },
-    getData: async function () {
+    getData: function () {
         const me = this;
         const gridMSI = Ext.getCmp(prototype.idMSI + '-gridMSITracking');
         me.view.mask('Loading...');
         me.showButtons();
-        try {
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05061', me.view.searchParams);
-            const data = res?.lstRs?.[0] || [];
-            if (data.length === 0) {
-                global.Msg({msg: 'No data'});
-                me.view.close();
-                return;
-            }
-            const store = Ext.create('Ext.data.Store', {
-                data: data.map(x => {
-                    me.limpiaObjetoPX(x);
-                    if (me.view.obj.AREFNBR === x.AREFNBR) {
-                        x.main = true;
+        fetch(`${me.url}/loadMSITrackingInfo?${new URLSearchParams(me.view.searchParams)}`)
+                .then(async res => {
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.response.length === 0) {
+                            global.Msg({msg: 'No data'});
+                            me.view.close();
+                        }
+                        const store = Ext.create('Ext.data.Store', {
+                            data: data.response.map(x => {
+                                me.limpiaObjetoPX(x);
+                                if (me.view.obj.arefnbr === x.arefnbr) {
+                                    x.main = true;
+                                }
+                                return x;
+                            })
+                        });
+                        let bean = store.findRecord('arefnbr', me.view.obj.arefnbr);
+                        gridMSI.setStore(store);
+                        gridMSI.getSelectionModel().select(bean, true);
+                        //console.log(data);
                     }
-                    return x;
-                })
-            });
-            let bean = store.findRecord('AREFNBR', me.view.obj.AREFNBR);
-            gridMSI.setStore(store);
-            gridMSI.getSelectionModel().select(bean, true);
-        } catch (e) {
-            global.Msg({msg: 'Error loading data'});
-        } finally {
-            me.view.unmask();
-        }
+                }).then(() => me.view.unmask());
     },
     showButtons: function () {
         const me = this;
         const match = ['1', '5', '6', '7'];
-        if (match.some(x => me.view.obj.STVAL === x)) {
+        if (match.some(x => me.view.obj.stval === x)) {
             Ext.getCmp(prototype.idMSI + '-btn-update-msi').hide();
             Ext.getCmp(prototype.idMSI + '-btn-update-rmsi').hide();
             Ext.getCmp(prototype.idMSI + '-btn-update-man').hide();
@@ -66,7 +64,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         const match = ['1', '5', '6', '7'];
         let pendiente = true;
         seleccionados.forEach(x => {
-            if (match.some(b => b === x.data.STVAL)) {
+            if (match.some(b => b === x.data.stval)) {
                 pendiente = false;
             }
         });
@@ -119,16 +117,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         if (newValue) {
             const formFilters = Ext.getCmp(prototype.idMSI + '-filtersManual').getForm();
             let params = formFilters.getValues();
-            params.creditcard = me.view.obj.SCARDN.slice(0, 6);
-            params.creditcard2 = me.view.obj.PROCTYPE.trim() === 'BANORTE00' ?
-                    me.view.obj.SCARDN.slice(-2) : me.view.obj.SCARDN.slice(-4);
-            params.IN_SPNR = me.view.obj.SPNR.trim();
+            params.creditcard = me.view.obj.scardn.slice(0, 6);
+            params.creditcard2 = me.view.obj.proctype.trim() === 'BANORTE00' ?
+                    me.view.obj.scardn.slice(-2) : me.view.obj.scardn.slice(-4);
+            params.IN_SPNR = me.view.obj.spnr.trim();
             formFilters.setValues(params);
             Ext.getCmp(prototype.idMSI + '-gridMSITracking').hide();
             Ext.getCmp(prototype.idMSI + '-gridVoidTracking').show();
             Ext.getCmp(prototype.idMSI + '-btn-update-msi').hide();
             Ext.getCmp(prototype.idMSI + '-btn-update-rmsi').hide();
-            if (!match.some(x => me.view.obj.STVAL === x)) {
+            if (!match.some(x => me.view.obj.stval === x)) {
                 Ext.getCmp(prototype.idMSI + '-btn-update-man').show();
             }
             this.loadMainTransaction();
@@ -147,24 +145,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         const grid = Ext.getCmp(prototype.idMSI + '-gridVoidTracking');
         grid.setLoading(true);
         let trncs = [];
-        let procesador = obj.PROCTYPE.trim();
+        let procesador = obj.proctype.trim();
         let scardn = new String(), spnr = new String();
         //banorte solo usa 2 digitos de autorizacion
         if (procesador === 'BANORTE00') {
-            scardn = `${obj.SCARDN.slice(0, 6)}%${obj.SCARDN.slice(-2)}%`;
+            scardn = `${obj.scardn.slice(0, 6)}%${obj.scardn.slice(-2)}%`;
             //ADYEN solo busca con PNR
         } else if (procesador === 'ADYEN00') {
-            spnr = obj.SPNR.trim();
+            spnr = obj.spnr.trim();
         } else {
-            scardn = `${obj.SCARDN.slice(0, 6)}%${obj.SCARDN.slice(-4)}%`;
+            scardn = `${obj.scardn.slice(0, 6)}%${obj.scardn.slice(-4)}%`;
         }
-        let ticket = obj.TICKET.trim();
+        let ticket = obj.ticket.trim();
         let params = {
             IN_CCUST: '139',
-            IN_PROCTYPE: obj.PROCTYPE,
-            IN_PROCTYPESQ: obj.PROCTYPESQ,
-            IN_FROM: me.sumDate(obj.PRDA, -15),
-            IN_TO: me.sumDate(obj.PRDA, 15),
+            IN_PROCTYPE: obj.proctype,
+            IN_PROCTYPESQ: obj.proctypesq,
+            IN_FROM: me.sumDate(obj.prda, -15),
+            IN_TO: me.sumDate(obj.prda, 15),
             IN_SCARDN: scardn,
             IN_SAUTHOC: '',
             IN_SPNR: spnr,
@@ -174,7 +172,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
             const res = await global.callStoreGet('PRAXISMP', 'SQP05259', params);
             trncs = res.lstRs.at(0);
             trncs.forEach(x => {
-                if (x.AREFNBR.trim() === obj.AREFNBR.trim()) {
+                if (x.AREFNBR.trim() === obj.arefnbr.trim()) {
                     x.main = true;
                 }
             });
@@ -182,7 +180,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
                 data: trncs
             });
             grid.setStore(store);
-            let bean = store.findRecord('AREFNBR', obj.AREFNBR);
+            let bean = store.findRecord('AREFNBR', obj.arefnbr);
             grid.getSelectionModel().select(bean, true);
         } catch (e) {
             console.error(e);
@@ -200,18 +198,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         let obj = Object.assign({}, me.view.obj);
 
         let trncs = [];
-        let procesador = obj.PROCTYPE.trim();
+        let procesador = obj.proctype.trim();
         let scardn = new String();
-
+        
         if (procesador === 'BANORTE00') {
-            scardn = `${obj.SCARDN.slice(0, 6)}%${obj.SCARDN.slice(-2)}%`;
+            scardn = `${obj.scardn.slice(0, 6)}%${obj.scardn.slice(-2)}%`;
         } else {
-            scardn = `${obj.SCARDN.slice(0, 6)}%${obj.SCARDN.slice(-4)}%`;
+            scardn = `${obj.scardn.slice(0, 6)}%${obj.scardn.slice(-4)}%`;
         }
         let params = {
             IN_CCUST: '139',
-            IN_PROCTYPE: obj.PROCTYPE,
-            IN_PROCTYPESQ: obj.PROCTYPESQ,
+            IN_PROCTYPE: obj.proctype,
+            IN_PROCTYPESQ: obj.proctypesq,
             IN_SCARDN: scardn,
             ...formFilter
         };
@@ -283,7 +281,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
                 });
             }
 
-            let bean = grid.getStore().findRecord('AREFNBR', this.view.obj.AREFNBR);
+            let bean = grid.getStore().findRecord('AREFNBR', this.view.obj.arefnbr); 
             grid.getSelectionModel().select(bean, true);
             
         } catch (err) {
@@ -313,7 +311,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         const store = Ext.getCmp(prototype.idMSI + '-gridVoidTracking').getStore();
         store.clearFilter();
         if (valorSeleccionado !== '') {
-            store.filter('STVAL', valorSeleccionado);
+            store.filter('stval', valorSeleccionado);
         }
     },
     //</editor-fold>
@@ -325,13 +323,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
     },
     multiTransacBeforeSelect: function (selModel, record, index) {
         const match = ['6'];
-        if (match.some(x => record.data.STVAL === x)) {
+        if (match.some(x => record.data.stval === x)) {
             return false;
         }
     },
     multiTransacChangeSelect: function (selModel, seleccionados) {
         const sumaTotal = seleccionados.reduce((total, item) => {
-            return total + item.data.TGROSAMOUN;
+            return total + item.data.tgrosamoun;
         }, 0);
         const totalFormat = Ext.util.Format.number(sumaTotal, '0,000.00');
         Ext.getCmp(prototype.idMSI + '-totalDiff').setValue(totalFormat);
@@ -344,37 +342,41 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         const gridDet = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
         grid.getView().mask('Loading...');
         console.log(seleccionados);
-        let sale = seleccionados.find(x => x.data.TRANSTYPE.trim() === 'SALE');
-        let refund = seleccionados.find(x => x.data.TRANSTYPE.trim() === 'RFND');
+        let sale = seleccionados.find(x => x.data.transtype.trim() === 'SALE');
+        let refund = seleccionados.find(x => x.data.transtype.trim() === 'RFND');
         if (sale && refund) {
             let params = {
                 IN_CCUST: '139',
-                IN_PRDA1: sale.data.PRDA,
-                IN_TDOC1: sale.data.TDOC,
-                IN_AREFNBR1: sale.data.AREFNBR,
-                IN_PRDA2: refund.data.PRDA,
-                IN_TDOC2: refund.data.TDOC,
-                IN_AREFNBR2: refund.data.AREFNBR
+                IN_PRDA1: sale.data.prda,
+                IN_TDOC1: sale.data.tdoc,
+                IN_AREFNBR1: sale.data.arefnbr,
+                IN_PRDA2: refund.data.prda,
+                IN_TDOC2: refund.data.tdoc,
+                IN_AREFNBR2: refund.data.arefnbr
             };
-            try {
-                const res = await global.callStorePost('PRAXISMP', 'SQP05065', params);
-                const {SQLMSG} = res.data.lstVals;
+            const res = await fetch(`${me.url}/maintenanceMSITracking`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(params)
+            });
+            if (res.ok) {
+                const data = await res.json();
+                const {sqlres, sqlmsg} = data;
                 Ext.toast({
-                    html: `<b>${SQLMSG || 'Error in MSI'}</b>`,
+                    html: `<b>${sqlmsg || 'Error in MSI'}</b>`,
                     title: 'Notification',
                     align: 't',
                     closable: true,
                     width: 300,
-                    timeout: 10000
+                    timeout: 10000 // 10 segundos
                 });
                 dataEntry.getController().afterRender();
                 gridDet.getStore().load();
                 me.view.close();
-            } catch (e) {
-                global.Msg({msg: 'Error in MSI'});
-            } finally {
-                grid.getView().unmask();
             }
+            grid.getView().unmask();
         } else {
             Ext.toast({
                 html: `<b>Invalid Transactions</b>`,
@@ -394,52 +396,58 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.MSITrackin
         //const gridDet = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
         grid.getView().mask('Loading...');
         console.log(seleccionados);
-        let msi = seleccionados.find(x => x.data.TRANSTYPE.trim() === 'SALE'
-                    && x.data.INSTANBR > 0
-                    && x.data.NBRINSTA > 0
-                    && x.data.STVAL === '1');
-        let sale = seleccionados.find(x => x.data.TRANSTYPE.trim() === 'SALE'
-                    && x.data.INSTANBR === 0
-                    && x.data.NBRINSTA === 0);
-        let refund = seleccionados.find(x => x.data.TRANSTYPE.trim() === 'RFND'
-                    && x.data.INSTANBR === 0
-                    && x.data.NBRINSTA === 0);
+        let msi = seleccionados.find(x => x.data.transtype.trim() === 'SALE'
+                    && x.data.instanbr > 0
+                    && x.data.nbrinsta > 0
+                    && x.data.stval === '1');
+        let sale = seleccionados.find(x => x.data.transtype.trim() === 'SALE'
+                    && x.data.instanbr === 0
+                    && x.data.nbrinsta === 0);
+        let refund = seleccionados.find(x => x.data.transtype.trim() === 'RFND'
+                    && x.data.instanbr === 0
+                    && x.data.nbrinsta === 0);
         if (msi && sale && refund) {
             let params = {
                 IN_CCUST: '139',
-                IN_PRDA1: msi.data.PRDA,
-                IN_TDOC1: msi.data.TDOC,
-                IN_AREFNBR1: msi.data.AREFNBR,
-                IN_PRDA2: sale.data.PRDA,
-                IN_TDOC2: sale.data.TDOC,
-                IN_AREFNBR2: sale.data.AREFNBR,
-                IN_PRDA3: refund.data.PRDA,
-                IN_TDOC3: refund.data.TDOC,
-                IN_AREFNBR3: refund.data.AREFNBR
+                IN_PRDA1: msi.data.prda,
+                IN_TDOC1: msi.data.tdoc,
+                IN_AREFNBR1: msi.data.arefnbr,
+                IN_PRDA2: sale.data.prda,
+                IN_TDOC2: sale.data.tdoc,
+                IN_AREFNBR2: sale.data.arefnbr,
+                IN_PRDA3: refund.data.prda,
+                IN_TDOC3: refund.data.tdoc,
+                IN_AREFNBR3: refund.data.arefnbr
             };
-            try {
-                const res = await global.callStorePost('PRAXISMP', 'SQP05063', params);
-                const {SQLMSG} = res.data.lstVals;
+            console.log(params);
+            const res = await fetch(`${me.url}/maintenanceReverseMSITracking`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(params)
+            });
+            if (res.ok) {
+                const data = await res.json();
+                const {sqlres, sqlmsg} = data;
                 Ext.toast({
-                    html: `<b>${SQLMSG || 'Error in MSI'}</b>`,
+                    html: `<b>${sqlmsg || 'Error in MSI'}</b>`,
                     title: 'Notification',
                     align: 't',
                     closable: true,
                     width: 300,
-                    timeout: 10000
+                    timeout: 10000 // 10 segundos
                 });
+                //dataEntry.getController().afterRender();
+                //gridDet.getStore().load();
                 me.reloadMainTransaction();
                 me.reloadMainGrid();
                 me.view.close();
-            } catch (e) {
-                global.Msg({msg: 'Error in MSI'});
-            } finally {
-                grid.getView().unmask();
             }
         } else {
             global.Msg({msg: 'Invalid Transactions'});
-            grid.getView().unmask();
         }
+        grid.getView().unmask();
     },
     maintenanceManualMatch: async function () {
         const me = this;

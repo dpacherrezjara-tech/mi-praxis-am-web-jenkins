@@ -14,22 +14,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.BatchLogDa
         const filters = Ext.getCmp(prototype.idDE5 + '-formFilters')
                 .getForm().getValues();
         filters.IN_CCUST = '139';
-        try {
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05310', filters);
-            const data = res?.lstRs?.[0] || [];
-            if (data.length > 0) {
+        const res = await fetch(`${me.url}/loadBatchLog?${new URLSearchParams(filters)}`);
+        if (res.ok) {
+            const data = await res.json();
+            console.log(data);
+            if (data.response.length > 0) {
                 grid.setStore(Ext.create('Ext.data.Store', {
-                    data: data
+                    data: data.response
                 }));
             } else {
                 global.Msg({msg: 'No Data'});
             }
-        } catch (e) {
+
+        } else {
             global.Msg({msg: 'Error'});
-        } finally {
-            me.view.unmask();
-            me.view.center();
         }
+        me.view.unmask();
+        me.view.center();
     },
     onClickSearchBtn: function () {
         this.loadLog();
@@ -46,19 +47,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.BatchLogDa
         this.getDetail(record, gridDetail);
     },
     getDetail: async function (record, grid) {
-        let params = { IN_UUID: record.data.UUID };
+        const me = this;
+        const view = grid.getView();
+        let params = me.requestObjectPX(record.data);
         grid.mask('Loading...');
-        try {
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05311', params);
-            const data = res?.lstRs?.[0] || [];
-            grid.setStore(Ext.create('Ext.data.Store', {
-                data: data
+        const res = await fetch(`${me.url}/loadBatchLogInfo?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            grid.setStore(new Ext.data.Store({
+                autoLoad: true,
+                data: data.response
             }));
-        } catch (e) {
-            global.Msg({msg: 'Error loading detail'});
-        } finally {
-            grid.unmask();
         }
+        grid.unmask();
     },
     onClickInfo: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const {CCUST, PRDA, TDOC, AREFNBR} = record.data;
