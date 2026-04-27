@@ -60,6 +60,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
             id: prototype.id + '-TransacErrorBPODataEntry-1',
             obj: obj,
             standByComment: me.standByComment,
+            users: me.users,
             callback: () => {
                 grid.getStore().load();
             }
