@@ -266,7 +266,7 @@ Ext.define('Ext.Praxis.view.interline.InterlineCorrespondenceForm.Filters', {
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
-                                            ["", "All"], ["C", "Closed"], ["P", "Pending"]
+                                            ["", "All"], ["C", "Closed"], ["O", "Open"],  ["B", "Billed"]
                                         ]
                                     }),
                                     queryMode: 'local',
