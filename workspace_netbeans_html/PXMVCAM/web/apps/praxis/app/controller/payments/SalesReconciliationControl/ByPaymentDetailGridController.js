@@ -119,6 +119,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
             searchParams: formFilter.getValues()
         });
         winCreditCard.show();
+        winCreditCard.center(); 
     }
 });
 

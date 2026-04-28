@@ -207,12 +207,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const saleDate = Ext.getCmp(prototype.idDE + '-txtSDATE');
         const salesAmt = Ext.getCmp(prototype.idDE + '-txtSVFOPS');
         if (trnx === 'RFND') {
-            smerchid.setFieldLabel('Refund Merchant');
+            smerchid.setFieldLabel('Refund Merchant ID');
             trnxInfo.setTitle('<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Settlement Information</span>'); // Refund
             saleDate.setFieldLabel('Refund Date');
             salesAmt.setFieldLabel('Refund Amount');
         } else {
-            smerchid.setFieldLabel('Sale Merchant');
+            smerchid.setFieldLabel('Sale Merchant ID');
             trnxInfo.setTitle('<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Settlement Information</span>'); // Sale
             saleDate.setFieldLabel('Sale Date');
             salesAmt.setFieldLabel('Sale Amount');
@@ -298,15 +298,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         panelScan.mask('Scanning...');
         let scanParams = me.formatScanSbParams(obj);
         panelScan.setActiveTab('A');
-        const res = await fetch(`${me.url}/loadErrorTransactionStandByScanner?${new URLSearchParams(scanParams)}`);
-        if (res.ok) {
-            const data = await res.json();
-            console.log(data);
-            me.setBPOGrid(data.response);
-            me.setBlockedGrid(data.response);
-        } else {
-            global.Msg({msg: 'Error on scan'});
-        }
+        const res = await global.callStoreGet('PRAXISMP', 'SQP05187', scanParams);
+        const data = res?.lstRs?.[0] || [];
+        me.setBPOGrid(data);
+        me.setBlockedGrid(data);
         panelScan.unmask();
     },
     //<editor-fold defaultstate="collapsed" desc="Handlers">
@@ -584,47 +579,47 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         }
 
     },
-    MaintenanceA4331: async function (params) {
-        const me = this;
-        me.view.mask('Loading...');
-        const res = await fetch(me.url + '/maintenanceErrorTransactionBPO', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(params)
-        });
-        if (res.ok) {
-            const data = await res.json();
-            const {status, response} = data;
-            console.log('status', status);
-            console.log('response', response);
-            if (status === 1) {
-                Ext.toast({
-                    html: `<b>${response}</b>`,
-                    title: 'Notification',
-                    align: 't',
-                    closable: true,
-                    width: 300,
-                    timeout: 10000 // 10 segundos
-                });
-            } else {
-                Ext.MessageBox.show({
-                    title: 'Error',
-                    message: response || 'Error in Update',
-                    icon: Ext.MessageBox.ERROR,
-                    buttons: Ext.MessageBox.OK
-                });
-            }
-        } else {
-            global.Msg({msg: 'Error'});
-            me.view.close();
-            return;
-        }
-        me.reloadErrorGrid();
-        me.view.unmask();
-        me.afterRender();
-    },
+    // MaintenanceA4331: async function (params) {
+    //     const me = this;
+    //     me.view.mask('Loading...');
+    //     const res = await fetch(me.url + '/maintenanceErrorTransactionBPO', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(params)
+    //     });
+    //     if (res.ok) {
+    //         const data = await res.json();
+    //         const {status, response} = data;
+    //         console.log('status', status);
+    //         console.log('response', response);
+    //         if (status === 1) {
+    //             Ext.toast({
+    //                 html: `<b>${response}</b>`,
+    //                 title: 'Notification',
+    //                 align: 't',
+    //                 closable: true,
+    //                 width: 300,
+    //                 timeout: 10000 // 10 segundos
+    //             });
+    //         } else {
+    //             Ext.MessageBox.show({
+    //                 title: 'Error',
+    //                 message: response || 'Error in Update',
+    //                 icon: Ext.MessageBox.ERROR,
+    //                 buttons: Ext.MessageBox.OK
+    //             });
+    //         }
+    //     } else {
+    //         global.Msg({msg: 'Error'});
+    //         me.view.close();
+    //         return;
+    //     }
+    //     me.reloadErrorGrid();
+    //     me.view.unmask();
+    //     me.afterRender();
+    // },
     reverseTransaction: async function () {
         const me = this;
         me.view.mask('Loading...');

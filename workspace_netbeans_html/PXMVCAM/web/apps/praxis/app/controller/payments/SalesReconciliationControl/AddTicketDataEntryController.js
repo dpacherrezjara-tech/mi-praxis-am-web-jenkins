@@ -8,8 +8,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AddTicketD
     init: function (view) {
         prototype.idTicket = prototype.id + '-AddTicketDataEntry';
     },
-    afterRender: async function (obj, e) {
-        await this.fillFilters();
+    afterRender: function (obj, e) {
+        this.fillFilters();
     },
     onClickSearchBtn: async function () {
         const me = this;
@@ -22,26 +22,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AddTicketD
             return;
         }
         const searchTicket = Ext.getCmp(prototype.idTicket + '-mainForm').getForm().getValues();
-        const res = await fetch(`${me.url}/loadTicket?${new URLSearchParams(searchTicket)}`);
-        if (res.ok) {
-            const data = await res.json();
-            const txtResult = Ext.getCmp(prototype.idTicket + '-resultSearch');
-            const panelInfo = Ext.getCmp(prototype.idTicket + '-ticketInfo');
-            const saveBtn = Ext.getCmp(prototype.idTicket + '-saveTicketBtn');
-            const cancelBtn = Ext.getCmp(prototype.idTicket + '-btnCancel');
-            if (data.sqlres > 0) {
-                txtResult.setValue(data.sqlmsg);
-                txtResult.setFieldStyle('text-align: center;background-color: #FA1717;');
-                me.onCancelBtn();
-            } else {
-                txtResult.setValue(data.sqlmsg);
-                txtResult.setFieldStyle('text-align: center;background-color: #80EC75;');
-                panelInfo.show();
-                cancelBtn.show();
-                saveBtn.show();
-                txtForma.setReadOnly(true);
-                txtSerie.setReadOnly(true);
-            }
+        const params = {
+            IN_A4496CCUST: searchTicket.IN_A4496CCUST,
+            IN_A4496CIA: searchTicket.IN_A4496CIA,
+            IN_A4496FORMA: searchTicket.IN_A4496FORMA,
+            IN_A4496SERIE: searchTicket.IN_A4496SERIE
+        };
+        const res = await global.callStoreGet('PRAXISMP', 'SQP05217', params);
+        const { SQLRES, SQLMSG } = res?.lstVals || {};
+        const txtResult = Ext.getCmp(prototype.idTicket + '-resultSearch');
+        const panelInfo = Ext.getCmp(prototype.idTicket + '-ticketInfo');
+        const saveBtn = Ext.getCmp(prototype.idTicket + '-saveTicketBtn');
+        const cancelBtn = Ext.getCmp(prototype.idTicket + '-btnCancel');
+        if (SQLRES > 0) {
+            txtResult.setValue(SQLMSG);
+            txtResult.setFieldStyle('text-align: center;background-color: #FA1717;');
+            me.onCancelBtn();
+        } else {
+            txtResult.setValue(SQLMSG);
+            txtResult.setFieldStyle('text-align: center;background-color: #80EC75;');
+            panelInfo.show();
+            cancelBtn.show();
+            saveBtn.show();
+            txtForma.setReadOnly(true);
+            txtSerie.setReadOnly(true);
         }
     },
     addFormOfPayment: function () {
@@ -61,28 +65,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.AddTicketD
         grid.setStore(store);
         grid.bindStore(store);
     },
-    fillFilters: async function () {
+    fillFilters: function () {
         const me = this;
-        me.view.mask('Loading...');
-        const res = await fetch(`${me.url}/loadFilters`);
-        if (res.ok) {
-            const data = await res.json();
-            data.paises.forEach(x => me.limpiaObjetoPX(x));
-            data.creditcards.forEach(x => me.limpiaObjetoPX(x));
-            data.monedas.forEach(x => me.limpiaObjetoPX(x));
-            me.paises = data.paises;
-            me.tarjetas = data.creditcards;
-            me.monedas = data.monedas;
-            Ext.getCmp(prototype.idTicket + '-cmbPaises').setStore(
-                    Ext.create('Ext.data.Store', {
-                        data: me.paises
-                    }));
-            Ext.getCmp(prototype.idTicket + '-cmbMoneda').setStore(
-                    Ext.create('Ext.data.Store', {
-                        data: me.monedas
-                    }));
-        }
-        me.view.unmask();
+        me.paises = me.view.countries || [];
+        me.tarjetas = me.view.creditcards || [];
+        me.monedas = me.view.currencies || [];
+        me.paises.forEach(x => me.limpiaObjetoPX(x));
+        me.tarjetas.forEach(x => me.limpiaObjetoPX(x));
+        me.monedas.forEach(x => me.limpiaObjetoPX(x));
+        Ext.getCmp(prototype.idTicket + '-cmbPaises').setStore(
+                Ext.create('Ext.data.Store', {
+                    data: me.paises
+                }));
+        Ext.getCmp(prototype.idTicket + '-cmbMoneda').setStore(
+                Ext.create('Ext.data.Store', {
+                    data: me.monedas
+                }));
         Ext.getCmp(prototype.idTicket + '-mainForm').getForm().isValid();
     },
     onBeforeEdit: function (editor, context) {

@@ -98,8 +98,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.showProductionBtn(me.users);
             me.showAddTicketBtn(me.users);
             me.setDefaultUser();
-            const btn = Ext.getCmp(prototype.id + '-btnAddTicket');
-            btn.show()
         } catch (e) {
             console.log(e);
             global.Msg({msg: 'Error loading filters'});
@@ -521,8 +519,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         productionWin.show();
     },
     onClickAddTicketBtn: function () {
+        const me = this;
         const addticketWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.AddTicketDataEntry', {
-            id: prototype.id + '-AddTicketDataEntry-1'
+            id: prototype.id + '-AddTicketDataEntry-1',
+            countries: me.countries,
+            creditcards: me.creditcards,
+            currencies: me.currencies
         });
         addticketWin.show();
     },

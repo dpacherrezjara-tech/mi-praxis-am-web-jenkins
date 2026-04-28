@@ -9,40 +9,37 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
     afterRender: async function (obj, e) {
         const me = this;
         const view = me.view;
-        this.getData({view: view});
+        await this.getData({view: view});
     },
-    getData: function ( {view}) {
-        console.log("view.searchParams",view.searchParams);
+    getData: async function ({view, page}) {
+        const me = this;
+        const pageSize = 20;
+        const currentPage = page || 1;
+        let params = {
+            ...view.searchParams,
+            IO_PAGNUM: currentPage,
+            IO_PAGROW: pageSize,
+            IO_TOTPAG: 0,
+            IO_TOTROW: 0
+        };
+        view.mask('Loading...');
+        const res = await global.callStoreGet('PRAXISMP', 'SQP05089', params);
+        const data = res?.lstRs?.[0] || [];
+        const { IO_TOTROW } = res?.lstVals || {};
+        const total = parseInt(IO_TOTROW) || 0;
+        if (data.length === 0 && currentPage === 1) {
+            global.Msg({msg: 'Data not Found'});
+        }
         let store = Ext.create('Ext.data.Store', {
-            loadMask: true,
-            pageSize: 20,
-            proxy: {
-                type: 'ajax',
-                enablePaging: true,
-                url: `${view.url}/loadByTicketDetail`,
-                extraParams: view.searchParams,
-                timeout: 600000,
-                reader: {
-                    type: 'json',
-                    rootProperty: 'response',
-                    totalProperty: 'total'
-                }
-            },
-            autoLoad: true,
-            listeners: {
-                load: function (store, records, successful, operation) {
-                    if (!successful) {
-                        global.Msg({msg: 'Data not Found'});
-                    } else {
-                        console.log(records);
-                        if (records.length === 0) {
-                            global.Msg({msg: 'Data not Found'});
-                        }
-                    }
-                }
-            }
+            pageSize: pageSize,
+            data: data
         });
+        store.totalCount = total;
+        store.currentPage = currentPage;
+        store.loadPage = function (pg) { me.getData({view, page: pg}); };
+        store.load = function () { me.getData({view, page: 1}); };
         view.setStore(store);
+        view.unmask();
     },
     onClickTicket: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
@@ -59,13 +56,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
     },
     formatByTicketInfoParams: function (obj) {
         let params = {
-            IN_CCUST: obj.a4501CCUST,
-            IN_CIA: obj.a4501CIA,
-            IN_FORMA: obj.a4501FORMA,
-            IN_SERIE: obj.a4501SERIE,
-            IN_SEQ: obj.a4501SEQ,
-            IN_TDOC: obj.a4501TDOC,
-            IN_CORRL: obj.a4501CORRL
+            IN_CCUST: obj.A4501CCUST,
+            IN_CIA: obj.A4501CIA,
+            IN_FORMA: obj.A4501FORMA,
+            IN_SERIE: obj.A4501SERIE,
+            IN_SEQ: obj.A4501SEQ,
+            IN_TDOC: obj.A4501TDOC,
+            IN_CORRL: obj.A4501CORRL
         };
         return params;
     },
@@ -85,6 +82,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
+                            // todo ! cambiar por microservicio de descarga excel o en su defecto una descarga por proceso en cola
                             global.getFile(`${me.view.url}/downloadByTicketDetail?${new URLSearchParams(params)}`);
                         }
                     }
