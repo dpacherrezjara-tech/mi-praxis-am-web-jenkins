@@ -57,8 +57,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
+                            // todo ! cambiar por microservicio de descarga excel o en su defecto una descarga por proceso en cola
                             global.getFile(`${me.view.url}/downloadSettlementDetail?${new URLSearchParams(params)}`);
-//                            me.onDownloadExcel();
+                        //    me.onDownloadExcel();
                         }
                     }
                 });

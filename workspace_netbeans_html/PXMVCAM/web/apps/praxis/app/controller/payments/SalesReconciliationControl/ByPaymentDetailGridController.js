@@ -124,6 +124,3 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentD
 });
 
 
-
-
-

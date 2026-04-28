@@ -109,7 +109,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Options', {
                             id: prototype.id + '-btnAddTicket',
                             iconCls: 'prx-icon-add',
                             tooltip: 'Add Ticket',
-                            hidden: true,
+                            hidden: false,
                             listeners: {
                                 click: 'onClickAddTicketBtn'
                             }

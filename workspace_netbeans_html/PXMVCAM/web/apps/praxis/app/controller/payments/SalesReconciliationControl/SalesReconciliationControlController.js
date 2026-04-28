@@ -538,7 +538,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     },
     onClickBatchAdjuBtn: function () {
         const manualBatch = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ManualBatchDataEntry', {
-            id: prototype.id + '-ManualBatchDataEntry-1'
+            id: prototype.id + '-ManualBatchDataEntry-1',
+            processors: this.processors
         });
         manualBatch.show();
     },
@@ -568,26 +569,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Procesos">
     runConciliation: async function () {
-        const me = this;
         let params = {
             VP_CCUST: '139',
             VP_PROCESO: 'CONCILIA'
         };
-        const res = await fetch(`${me.url}/runAutomaticConciliation`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(params)
-        });
-        if (res.ok) {
-            const data = await res.json();
-            if (data.result === 'P') {
+        try {
+            const res = await global.callStorePostAsync('PRAXISMP', 'SQP05304', params);
+            const record = res?.lstRs?.[0]?.[0] || {};
+            if (record.RESULT === 'P') {
                 global.Msg({msg: 'Starting Process'});
             } else {
                 global.Msg({msg: 'Process is already running'});
             }
-        } else {
+        } catch (e) {
             global.Msg({msg: 'Error on Process'});
         }
     },
