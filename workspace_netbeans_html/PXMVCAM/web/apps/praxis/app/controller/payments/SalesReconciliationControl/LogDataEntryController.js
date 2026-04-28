@@ -17,9 +17,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.LogDataEnt
 //        console.log('me', me.view.obj)
         const data = me.view.obj;
         const params = {
-            IN_CCUST: data.ccust,
-            IN_PRDA: data.prda,
-            IN_AREFNBR: data.arefnbr
+            IN_CCUST: data.CCUST,
+            IN_PRDA: data.PRDA,
+            IN_AREFNBR: data.AREFNBR
         };
 
         me.dataNow = params;

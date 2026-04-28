@@ -76,9 +76,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                             sortable: true
                         },
                         items: [
-                            {text: 'Ticket', dataIndex: 'ticket', width: 140},
-                            {text: 'Doc.<br>Type', dataIndex: 'tipod', width: 55},
-                            {text: 'Itinerary', dataIndex: 'itin', flex: 1},
+                            {text: 'Ticket', dataIndex: 'TICKET', width: 140},
+                            {text: 'Doc.<br>Type', dataIndex: 'TIPOD', width: 55},
+                            {text: 'Itinerary', dataIndex: 'ITIN', flex: 1},
                             {
                                 text: 'Usages',
                                 defaults: {
@@ -91,10 +91,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                     }
                                 },
                                 columns: [
-                                    {text: 'C1', dataIndex: 'c1', width: 30},
-                                    {text: 'C2', dataIndex: 'c2', width: 30},
-                                    {text: 'C3', dataIndex: 'c3', width: 30},
-                                    {text: 'C4', dataIndex: 'c4', width: 30}
+                                    {text: 'C1', dataIndex: 'C1', width: 30},
+                                    {text: 'C2', dataIndex: 'C2', width: 30},
+                                    {text: 'C3', dataIndex: 'C3', width: 30},
+                                    {text: 'C4', dataIndex: 'C4', width: 30}
                                 ]
                             }
                         ]
@@ -123,11 +123,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                             sortable: true
                         },
                         items: [
-                            {text: 'Ticket', dataIndex: 'ticket', width: 140},
-                            {text: 'Doc.<br>Type', dataIndex: 'tipod', width: 55},
-                            {text: 'Coupon<br>Number', dataIndex: 'coupon', width: 75},
-                            {text: 'Start<br>Location', dataIndex: 'origin', width: 80},
-                            {text: 'End<br>Location', dataIndex: 'destiny', width: 80},
+                            {text: 'Ticket', dataIndex: 'TICKET', width: 140},
+                            {text: 'Doc.<br>Type', dataIndex: 'TIPOD', width: 55},
+                            {text: 'Coupon<br>Number', dataIndex: 'COUPON', width: 75},
+                            {text: 'Start<br>Location', dataIndex: 'ORIGIN', width: 80},
+                            {text: 'End<br>Location', dataIndex: 'DESTINY', width: 80},
                             {
                                 text: 'Usages',
                                 defaults: {
@@ -140,8 +140,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                     }
                                 },
                                 columns: [
-                                    {text: 'Previous<br>Status', dataIndex: 'oldstatus', width: 80},
-                                    {text: 'Current<br>Status', dataIndex: 'status', width: 80}
+                                    {text: 'Previous<br>Status', dataIndex: 'OLDSTATUS', width: 80},
+                                    {text: 'Current<br>Status', dataIndex: 'STATUS', width: 80}
                                 ]
                             }
                         ]

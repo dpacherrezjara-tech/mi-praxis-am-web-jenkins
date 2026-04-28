@@ -195,12 +195,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                         xtype: 'rownumberer', // Columna de número de fila
                                         width: 40 // Ancho de la columna de número de fila (ajusta según tus necesidades)
                                     },
-                                    {text: 'Processing<br>Date', dataIndex: 'prda', width: 80},
-                                    {text: 'Processor', dataIndex: 'desc_PROCTYPE', flex: 1},
-                                    {text: 'Country', dataIndex: 'scountry', width: 70},
-                                    {text: 'Card Number', dataIndex: 'scardn', width: 170},
+                                    {text: 'Processing<br>Date', dataIndex: 'PRDA', width: 80},
+                                    {text: 'Processor', dataIndex: 'DESC_PROCTYPE', flex: 1},
+                                    {text: 'Country', dataIndex: 'SCOUNTRY', width: 70},
+                                    {text: 'Card Number', dataIndex: 'SCARDN', width: 170},
                                     {
-                                        text: 'Qty<br>Sale', dataIndex: 'qty_SALE', width: 80,
+                                        text: 'Qty<br>Sale', dataIndex: 'QTY_SALE', width: 80,
                                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                                             metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
                                             metaData.style += "font-weight:bolder;color:#057ECB;";
@@ -211,7 +211,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                         }
                                     },
                                     {
-                                        text: 'Qty<br>Refund', dataIndex: 'qty_RFND', width: 80,
+                                        text: 'Qty<br>Refund', dataIndex: 'QTY_RFND', width: 80,
                                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                                             metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
                                             metaData.style += "font-weight:bolder;color:#057ECB;";
@@ -222,7 +222,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                         }
                                     },
                                     {
-                                        text: 'Qty<br>Chargeback', dataIndex: 'qty_CHBK', width: 80,
+                                        text: 'Qty<br>Chargeback', dataIndex: 'QTY_CHBK', width: 80,
                                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                                             metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
                                             metaData.style += "font-weight:bolder;color:#057ECB;";
@@ -233,7 +233,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                         }
                                     },
                                     {
-                                        text: 'Qty<br>Adjustment', dataIndex: 'qty_ADJU', width: 80,
+                                        text: 'Qty<br>Adjustment', dataIndex: 'QTY_ADJU', width: 80,
                                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                                             metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
                                             metaData.style += "font-weight:bolder;color:#057ECB;";
@@ -244,7 +244,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                         }
                                     },
                                     {
-                                        text: 'Qty<br>Void', dataIndex: 'qty_VOID', width: 80,
+                                        text: 'Qty<br>Void', dataIndex: 'QTY_VOID', width: 80,
                                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                                             metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
                                             metaData.style += "font-weight:bolder;color:#057ECB;";
@@ -255,12 +255,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                         }
                                     },
                                     {
-                                        text: 'Qty', dataIndex: 'qty', width: 80,
+                                        text: 'Qty', dataIndex: 'QTY', width: 80,
                                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                                             const obj = record.data;
                                             metaData.tdAttr = 'data-qtip="' +
-                                                    'MATCH: ' + obj.qty_MATCH + '<br>' +
-                                                    'PENDING: ' + obj.qty_PENDING
+                                                    'MATCH: ' + obj.QTY_MATCH + '<br>' +
+                                                    'PENDING: ' + obj.QTY_PENDING
                                                     + '"';
                                             metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
                                             metaData.style += "font-weight:bolder;color:#057ECB;background-color:#C0EDB3;";

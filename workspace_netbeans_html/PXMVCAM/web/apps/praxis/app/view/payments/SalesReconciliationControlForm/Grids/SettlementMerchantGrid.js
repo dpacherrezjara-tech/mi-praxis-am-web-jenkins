@@ -40,17 +40,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 text: 'Date',
                 width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    const {prda, paydate} = record.data;
-                    if (paydate) {
-                        value = paydate;
+                    const {PRDA, PAYDATE} = record.data;
+                    if (PAYDATE) {
+                        value = PAYDATE;
                     } else {
-                        value = prda;
+                        value = PRDA;
                     }
                     return value;
                 }
             },
             {
-                text: 'Merchant ID', dataIndex: 'pmerchid', width: 120,
+                text: 'Merchant ID', dataIndex: 'PMERCHID', width: 120,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;";
                     metaData.style += "font-weight:bolder;color:#057ECB;";
@@ -62,21 +62,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
 
             },
             {
-                text: 'Processor', dataIndex: 'desc_PROCTYPE', width: 200,
+                text: 'Processor', dataIndex: 'DESC_PROCTYPE', width: 200,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     //metaData.style = "text-align:center;background-color:#FCF6DC";
                     return value;
                 }
             },
             {
-                text: 'Country', dataIndex: 'scountry', width: 65,
+                text: 'Country', dataIndex: 'SCOUNTRY', width: 65,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     //metaData.style = "text-align:center;background-color:#FCF6DC";
                     return value;
                 }
             },
             {
-                text: 'Qty<br>Transactions', dataIndex: 'qtytrn', width: 85,
+                text: 'Qty<br>Transactions', dataIndex: 'QTYTRN', width: 85,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     return Ext.util.Format.number(value, '0,000');
                 },
@@ -88,14 +88,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 }
             },
             {
-                text: 'Currency', dataIndex: 'scurrency', width: 70,
+                text: 'Currency', dataIndex: 'SCURRENCY', width: 70,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     //metaData.style = "text-align:center;background-color:#FCF6DC";
                     return value;
                 }
             },
             {
-                text: 'Total<br>Amount', dataIndex: 'tgrosamoun', width: 100,
+                text: 'Total<br>Amount', dataIndex: 'TGROSAMOUN', width: 100,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:right;background-color:#B2DAFA";
                     value = Ext.util.Format.number(value, '0,000.00');
@@ -108,7 +108,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 }
             },
             {
-                text: 'GROSS<br>Amount', dataIndex: 'tgrosamoun_WCA', width: 130,
+                text: 'GROSS<br>Amount', dataIndex: 'TGROSAMOUN_WCA', width: 130,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:right;background-color:#B2DAFA";
                     return Ext.util.Format.number(value, '0,000.00');
@@ -128,7 +128,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 },
                 columns: [
                     {
-                        text: 'Amount', dataIndex: 'discamoun', width: 90,
+                        text: 'Amount', dataIndex: 'DISCAMOUN', width: 90,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             return Ext.util.Format.number(value, '0,000.00');
@@ -140,7 +140,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         }
                     },
                     {
-                        text: 'VAT', dataIndex: 'discamouni', width: 90,
+                        text: 'VAT', dataIndex: 'DISCAMOUNI', width: 90,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             return Ext.util.Format.number(value, '0,000.00');
@@ -163,7 +163,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 columns: [
                     {
                         text: 'Serv. Fee',
-                        dataIndex: 'servicefee',
+                        dataIndex: 'SERVICEFEE',
                         width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
@@ -177,7 +177,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         }
                     },
                     {
-                        text: 'Serv. Fee<br>VAT', dataIndex: 'overcom12', width: 100,
+                        text: 'Serv. Fee<br>VAT', dataIndex: 'OVERCOM12', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -200,7 +200,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 },
                 columns: [
                     {
-                        text: 'Amount', dataIndex: 'tgrosamoun_CB', width: 100,
+                        text: 'Amount', dataIndex: 'TGROSAMOUN_CB', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -213,7 +213,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         }
                     },
                     {
-                        text: 'Commission', dataIndex: 'discamoun_CB', width: 100,
+                        text: 'Commission', dataIndex: 'DISCAMOUN_CB', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -226,7 +226,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         }
                     },
                     {
-                        text: 'VAT', dataIndex: 'discamouni_CB', width: 100,
+                        text: 'VAT', dataIndex: 'DISCAMOUNI_CB', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -249,7 +249,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 },
                 columns: [
                     {
-                        text: 'Amount', dataIndex: 'adjustment', width: 100,
+                        text: 'Amount', dataIndex: 'ADJUSTMENT', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -262,7 +262,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         }
                     },
                     {
-                        text: 'Commission', dataIndex: 'discamoun_ADJ', width: 100,
+                        text: 'Commission', dataIndex: 'DISCAMOUN_ADJ', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -275,7 +275,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         }
                     },
                     {
-                        text: 'VAT', dataIndex: 'discamouni_ADJ', width: 100,
+                        text: 'VAT', dataIndex: 'DISCAMOUNI_ADJ', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#B2DAFA";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -290,7 +290,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 ]
             },
             {
-                text: 'TAX', dataIndex: 'tax', width: 100,
+                text: 'TAX', dataIndex: 'TAX', width: 100,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:right;background-color:#B2DAFA";
                     value = Ext.util.Format.number(value, '0,000.00');
@@ -304,7 +304,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
             },
             {
                 text: 'Net Amount',
-                dataIndex: 'netamoun',
+                dataIndex: 'NETAMOUN',
                 width: 130,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:right;background-color:#B2DAFA";
@@ -326,14 +326,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                 },
                 columns: [
                     {
-                        text: 'Currency', dataIndex: 'pcurrency', width: 80,
+                        text: 'Currency', dataIndex: 'PCURRENCY', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;background-color:#FCF6DC";
                             return value;
                         }
                     },
                     {
-                        text: 'Total<br>Amount', dataIndex: 'tgrosampay', width: 130,
+                        text: 'Total<br>Amount', dataIndex: 'TGROSAMPAY', width: 130,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#FCF6DC";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -346,7 +346,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         }
                     },
                     {
-                        text: 'GROSS<br>Amount', dataIndex: 'tgrosampay_WCA', width: 130,
+                        text: 'GROSS<br>Amount', dataIndex: 'TGROSAMPAY_WCA', width: 130,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#FCF6DC";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -367,7 +367,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         },
                         columns: [
                             {
-                                text: 'Amount', dataIndex: 'sfeeamou', width: 90,
+                                text: 'Amount', dataIndex: 'SFEEAMOU', width: 90,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:right;background-color:#FCF6DC";
                                     value = Ext.util.Format.number(value, '0,000.00');
@@ -380,7 +380,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                                 }
                             },
                             {
-                                text: 'VAT', dataIndex: 'ivacom12', width: 90,
+                                text: 'VAT', dataIndex: 'IVACOM12', width: 90,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:right;background-color:#FCF6DC";
                                     value = Ext.util.Format.number(value, '0,000.00');
@@ -404,7 +404,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         columns: [
                             {
                                 text: 'Serv. Fee',
-                                dataIndex: 'servicfeep',
+                                dataIndex: 'SERVICFEEP',
                                 width: 100,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:right;background-color:#FCF6DC";
@@ -418,7 +418,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                                 }
                             },
                             {
-                                text: 'Serv. Fee<br>VAT', dataIndex: 'overcom12P', width: 100,
+                                text: 'Serv. Fee<br>VAT', dataIndex: 'OVERCOM12P', width: 100,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:right;background-color:#FCF6DC";
                                     value = Ext.util.Format.number(value, '0,000.00');
@@ -433,7 +433,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                         ]
                     },
                     {
-                        text: 'TAX', dataIndex: 'taxp', width: 100,
+                        text: 'TAX', dataIndex: 'TAXP', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#FCF6DC";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -447,7 +447,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.Settle
                     },
                     {
                         text: 'Net Amount<br>to Receive AM',
-                        dataIndex: 'netopay',
+                        dataIndex: 'NETOPAY',
                         width: 130,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#FCF6DC";

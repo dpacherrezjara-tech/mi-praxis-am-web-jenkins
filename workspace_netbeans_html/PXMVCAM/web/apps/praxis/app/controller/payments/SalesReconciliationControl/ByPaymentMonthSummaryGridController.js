@@ -13,68 +13,54 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentM
     getData: async function () {
         const me = this;
         const view = this.view;
-        const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
         console.log(view.searchParams);
-        //const tdate = view.searchParams.IN_DATE === 'PRDA' ? 'Processing<br>Date' : 'Payment<br>Date';
-        let tdate = ''; 
-        if (view.searchParams.IN_DATE === 'PRDA'){
-            tdate = 'Processing<br>Date';   
-        }
-        else if (view.searchParams.IN_DATE === 'PAYDATE'){
+        let tdate = '';
+        if (view.searchParams.IN_DATE === 'PRDA') {
+            tdate = 'Processing<br>Date';
+        } else if (view.searchParams.IN_DATE === 'PAYDATE') {
             tdate = 'Payment<br>Date';
-        }
-        else {
+        } else {
             tdate = 'Update<br>Date';
         }
         me.view.columns[0].setText(tdate);
         if (me.view.backButton) {
             me.view.columns[1].hide();
         }
-        let store = Ext.create('Ext.data.Store', {
-            loadMask: true,
-            proxy: {
-                type: 'ajax',
-                url: `${view.url}/loadByPaymentSummary`,
-                extraParams: view.searchParams,
-                timeout: 600000,
-                reader: {
-                    type: 'json',
-                    rootProperty: 'response'
-                }
-            },
-            autoLoad: true,
-            listeners: {
-                load: function (store, records, successful, operation) {
-                    if (!successful) {
-                        global.Msg({msg: 'Data not Found'});
-                    } else {
-                        //console.log(records);
-                        if (records.length === 0) {
-                            global.Msg({msg: 'Data not Found'});
-                        }
-                    }
-                }
+        view.mask('Loading...');
+        
+        // default fields
+        view.searchParams.IN_PROCTYPE = '';
+        
+        try {
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05059', view.searchParams);
+            const data = res?.lstRs?.[0] || [];
+            if (data.length === 0) {
+                global.Msg({msg: 'Data not Found'});
             }
-        });
-        me.view.setStore(store);
+            let store = Ext.create('Ext.data.Store', {
+                data: data,
+                autoLoad: true
+            });
+            me.view.setStore(store);
+        } finally {
+            view.unmask();
+        }
     },
     onClickTotal: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
         const view = me.view;
         //console.log (record.data);
-        if (record.data.total === 0) {
+        if (record.data.TOTAL === 0) {
             global.Msg({msg: 'No data'});
             return;
         }
         let tdate = '';
-        if (record.data.paydate){
-            tdate = record.data.paydate;
-        }
-        else if (record.data.prda){
-            tdate = record.data.prda;
-        }
-        else {
-            tdate = record.data.feup;
+        if (record.data.PAYDATE) {
+            tdate = record.data.PAYDATE;
+        } else if (record.data.PRDA) {
+            tdate = record.data.PRDA;
+        } else {
+            tdate = record.data.FEUP;
         }
         me.openDaysSummary(tdate);
     },
@@ -132,14 +118,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByPaymentM
             ...me.view.searchParams
         };
         let tdate = '';
-        if (obj.paydate){
-            tdate = obj.paydate;
-        }
-        else if (obj.prda){
-            tdate = obj.prda;
-        }
-        else {
-            tdate = obj.feup;
+        if (obj.PAYDATE) {
+            tdate = obj.PAYDATE;
+        } else if (obj.PRDA) {
+            tdate = obj.PRDA;
+        } else {
+            tdate = obj.FEUP;
         }
         if (me.view.searchParams.IN_TDATE === 'M') {
             params.IN_MONTH = tdate;
