@@ -9,41 +9,36 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     afterRender: async function () {
         const me = this;
         me.view.setLoading(true);
-        await this.getCodeAdjustments();
         await this.getData();
         me.view.setLoading(false);
-        me.standByComment = me.view.standByComment;
+        me.standByComment = me.view.standByComment || [];
+        me.users = me.view.users || [];
     },
     getData: async function () {
         const me = this;
         let params = me.formatParameters(me.view.obj);
-        const res = await fetch(`${me.url}/loadErrorTransactionBPOInfo?${new URLSearchParams(params)}`);
-        if (res.ok) {
-            const data = await res.json();
-            const form = Ext.getCmp(prototype.idDE + '-informationForm').getForm();
-            me.limpiaObjetoPX(data.response);
-            me.bean = data.response;
-            me.dataInfo = data.response;
-            form.reset();
-            form.setValues(me.bean);
-            me.changePerspective();
+        const res = await global.callStoreGet('PRAXISMP', 'SQP05052', params);
+        const data = res?.lstRs?.[0] || [];
+        if (data.length === 0) {
+            global.Msg({msg: 'Data not Found'});
+            return;
         }
-    },
-    getCodeAdjustments: async function () {
-        const me = this;
-        const res = await fetch(`${me.url}/loadFilters`);
-        if (res.ok) {
-            const data = await res.json();
-            me.users = data.admins.map(x => x.a4451key3.trimEnd());
-        }
+        const form = Ext.getCmp(prototype.idDE + '-informationForm').getForm();
+        const record = data[0];
+        me.limpiaObjetoPX(record);
+        me.bean = record;
+        me.dataInfo = record;
+        form.reset();
+        form.setValues(me.bean);
+        me.changePerspective();
     },
     changePerspective: function () {
         const me = this;
         const userName = $('#menuUser').text();
         const match = ["1", "4", "5", "6", "7", "8", "9", "M", "C", "D", "E"];
         const matchComment = ["4", "M", "C", , "D", "E"];
-        const status = me.bean.stval;
-        const {autocomment} = me.bean;
+        const status = me.bean.STVAL;
+        const {AUTOCOMMENT} = me.bean;
 //        const {tgrosamoun, svfops} = me.bean;
 //        let diff = tgrosamoun - svfops;
 //        if (me.bean.transtype === 'CHBK') {
@@ -56,7 +51,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const scanner = Ext.getCmp(prototype.idDE + '-scannerInputs');
         const relationSettlement = Ext.getCmp(prototype.idDE + '-tabRelationSettlement');
         
-        let adj = me.bean.codadju.trim() === '' ? false : true;
+        let adj = me.bean.CODADJU.trim() === '' ? false : true;
         const adjucoment = Ext.getCmp(prototype.idDE + '-bpoComments2');
         const commentTransaction = Ext.getCmp(prototype.idDE + '-CommentTransaction');
         commentTransaction.hide();
@@ -99,8 +94,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             btnMSI.show();
             me.setDesgloseGrid();
             if (adj) {
-                if (me.bean.adjucoment.trim() !== '') {
-                    Ext.getCmp(prototype.idDE + '-adjucoment').setValue(me.bean.adjucoment);
+                if (me.bean.ADJUCOMENT.trim() !== '') {
+                    Ext.getCmp(prototype.idDE + '-adjucoment').setValue(me.bean.ADJUCOMENT);
                     adjucoment.show();
                 }
             }
@@ -138,14 +133,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         }
 
         // Comentarios automaticos
-        if (matchComment.includes(status) || autocomment.length > 1) {
-            Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.autocomment);
+        if (matchComment.includes(status) || AUTOCOMMENT.length > 1) {
+            Ext.getCmp(prototype.idDE + '-InputCommentTransaction').setValue(me.bean.AUTOCOMMENT);
             commentTransaction.show();
         }
 
         this.changeIniProces();
 
-        me.changeTrnxView(me.bean.transtype);
+        me.changeTrnxView(me.bean.TRANSTYPE);
         //me.setUserInformation(me.bean);
     },
 
@@ -162,14 +157,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 //        btnMultiPayment.show();
 
 
-        if (me.bean.stval === "4") {
+        if (me.bean.STVAL === "4") {
 
 //            console.log('mostrar');
 
             btnMultiPayment.show();
             btnUpdateStatus.show();
             statusProceed.show();
-            const proceedVal = me.bean.stprocede;
+            const proceedVal = me.bean.STPROCEDE;
 //            console.log('proceedVal', proceedVal);
 //            console.log('me.dataInfo', me.dataInfo);
 
@@ -212,12 +207,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const saleDate = Ext.getCmp(prototype.idDE + '-txtSDATE');
         const salesAmt = Ext.getCmp(prototype.idDE + '-txtSVFOPS');
         if (trnx === 'RFND') {
-            smerchid.setFieldLabel('Refund Merchant');
+            smerchid.setFieldLabel('Refund Merchant ID');
             trnxInfo.setTitle('<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Settlement Information</span>'); // Refund
             saleDate.setFieldLabel('Refund Date');
             salesAmt.setFieldLabel('Refund Amount');
         } else {
-            smerchid.setFieldLabel('Sale Merchant');
+            smerchid.setFieldLabel('Sale Merchant ID');
             trnxInfo.setTitle('<span style="font-weight: bold; text-decoration-line: underline;font-size:13px;">Settlement Information</span>'); // Sale
             saleDate.setFieldLabel('Sale Date');
             salesAmt.setFieldLabel('Sale Amount');
@@ -225,7 +220,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 
         Ext.getCmp(prototype.idDE + '-ChargebackTracking').hide();
         if (trnx === 'CHBK') {
-            let texto = me.bean.tgrosamoun >= 0 ? 'REVERSE CHARGEBACK' : 'CHARGEBACK';
+            let texto = me.bean.TGROSAMOUN >= 0 ? 'REVERSE CHARGEBACK' : 'CHARGEBACK';
             Ext.getCmp(prototype.idDE + '-specialPanel').show();
             Ext.getCmp(prototype.idDE + '-specialTitle').setText(texto);
             Ext.getCmp(prototype.idDE + '-ChargebackTracking').show();
@@ -257,13 +252,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             changeStandByComment.show();
             hideStandBy.hide();
             standByBpo.show();
-            if ((this.bean.cerror === '18' || this.bean.cerror === '19') && this.bean.stval === '0') {
+            if ((this.bean.CERROR === '18' || this.bean.CERROR === '19') && this.bean.STVAL === '0') {
                 txtBpo.setReadOnly(true);
                 adju.setValue(true);
                 adju.setReadOnly(true);
             }
             // stand by autocoment type SB
-            else if (this.bean.bpocoment.length > 0 && this.bean.stval === '0') {
+            else if (this.bean.BPOCOMENT.length > 0 && this.bean.STVAL === '0') {
                 txtBpo.setReadOnly(true);
                 adju.setValue(false);
                 adju.hide();
@@ -282,7 +277,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             hideStandBy.show();
             standByBpo.hide();
         }
-        Ext.getCmp(prototype.idDE + '-bpocoment').setValue(this.bean.bpocoment);
+        Ext.getCmp(prototype.idDE + '-bpocoment').setValue(this.bean.BPOCOMENT);
     },
     scanCreditCard: async function (obj) {
         const me = this;
@@ -290,15 +285,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         panelScan.mask('Scanning...');
         let scanParams = me.formatScanParams(obj);
         panelScan.setActiveTab('A');
-        const res = await fetch(`${me.url}/loadErrorTransactionBPOScanner?${new URLSearchParams(scanParams)}`);
-        if (res.ok) {
-            const data = await res.json();
-            console.log(data);
-            me.setBPOGrid(data.response);
-            me.setBlockedGrid(data.response);
-        } else {
-            global.Msg({msg: 'Error on scan'});
-        }
+        const res = await global.callStoreGet('PRAXISMP', 'SQP05054', scanParams);
+        const data = res?.lstRs?.[0] || [];
+        me.setBPOGrid(data);
+        me.setBlockedGrid(data);
         panelScan.unmask();
         me.view.center();
     },
@@ -308,195 +298,40 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         panelScan.mask('Scanning...');
         let scanParams = me.formatScanSbParams(obj);
         panelScan.setActiveTab('A');
-        const res = await fetch(`${me.url}/loadErrorTransactionStandByScanner?${new URLSearchParams(scanParams)}`);
-        if (res.ok) {
-            const data = await res.json();
-            console.log(data);
-            me.setBPOGrid(data.response);
-            me.setBlockedGrid(data.response);
-        } else {
-            global.Msg({msg: 'Error on scan'});
-        }
+        const res = await global.callStoreGet('PRAXISMP', 'SQP05187', scanParams);
+        const data = res?.lstRs?.[0] || [];
+        me.setBPOGrid(data);
+        me.setBlockedGrid(data);
         panelScan.unmask();
     },
     //<editor-fold defaultstate="collapsed" desc="Handlers">
     reloadGridBPO: function () {
         const me = this;
-        const columnExchangeRate = Ext.getCmp(prototype.idDE + '-colExchangeRateBPO');
-        const columnLocalAmount = Ext.getCmp(prototype.idDE + '-colLocalAmountBPO');
-        columnExchangeRate.setVisible(false);
-        columnLocalAmount.setVisible(false);
         me.scanCreditCard(me.bean);
     },
-    toggleCalculateExchangeRate: function () {
-        const me = this;
-        const grid = Ext.getCmp(prototype.idDE + '-gridBPO');
-        const store = grid.getStore();
-        const columnExchangeRate = Ext.getCmp(prototype.idDE + '-colExchangeRateBPO');
-        const columnLocalAmount = Ext.getCmp(prototype.idDE + '-colLocalAmountBPO');
-        let viewColumn = false ;
-
-        if (!columnExchangeRate || !columnLocalAmount) return;
-
-        // Toggle
-        if (columnExchangeRate.isVisible()) {
-            store.each(function (record) {
-                record.set('EXCHANGERT', 1.00);
-                record.set('LOCAL_AMOUNT', record.get('svfops'));
-            });
-            me.recalculateSaleAmountBPO(store);
-            viewColumn = false;
-        } else {
-            me.calculateExchangeRateBPO(store);
-            me.recalculateSaleAmountBPO(store);
-            viewColumn = true;
-        }
-
-        columnExchangeRate.setVisible(viewColumn);
-        columnLocalAmount.setVisible(viewColumn);
-
-        // Refrescar la vista para asegurar que los renderers se disparen
-        grid.getView().refresh();
-
-        me.calculateSumGridBPO();
-    },
-    calculateExchangeRateBPO: function (store) {
-        const me = this;
-        const currencySettlement = me.bean.scurrency; 
-        const totalSettlement = me.bean.tgrosamoun; 
-
-        let sumSameCurrency = 0;
-        let sumOtherCurrency = 0;
-
-        // 1. Calcular acumulados
-        store.each(function (record) {
-            if (record.get('scurrency') === currencySettlement) {
-                sumSameCurrency += record.get('svfops');
-            } else {
-                sumOtherCurrency += record.get('svfops');
-            }
-        });
-
-        // 2. Calcular el Exchange Rate (TC)
-        const baseCurrencyDifference = totalSettlement - sumSameCurrency;
-        let calculatedExchangeRate = 0;
-
-        if (sumOtherCurrency > 0) {
-            calculatedExchangeRate = baseCurrencyDifference / sumOtherCurrency;
-        }
-
-        // 3. Aplicar valores al store (TC y Local Amount)
-        store.each(function (record) {
-            const svfops = record.get('svfops') || 0;
-            let rate = 0;
-
-            if (record.get('scurrency') === currencySettlement) {
-                rate = 1.00;
-                
-            } else {
-                rate = calculatedExchangeRate;
-            }
-
-            record.set('EXCHANGERT', rate);
-
-            // Local Amount (Monto convertido)
-            // Redondeamos a 2 decimales para precisión monetaria
-            const localAmount = Math.round((svfops * rate) * 100) / 100;
-            record.set('LOCAL_AMOUNT', localAmount);
-        });
-    },
-    recalculateSaleAmountBPO: function(bpoStore) {        
-
-        const totalsMap = {};
-    
-        // 1. Primer recorrido: Agrupar y sumar montos
-        bpoStore.each(function(record) {
-            // Creamos una llave única combinando los campos de agrupación
-            const scardn = record.get('scardn') || '';
-            const sauthoc = record.get('sauthoc') || '';
-            const spnr = record.get('spnr') || '';
-            const tdoc = record.get('tdoc') || '';
-            
-            // La llave identifica de forma única al grupo
-            const key = scardn + '_' + sauthoc + '_' + spnr + '_' + tdoc;
-    
-            if (!totalsMap[key]) {
-                totalsMap[key] = 0;
-            }
-            
-            // Sumamos el monto convertido (svfops * EXCHANGERT) o el original si no hay TC
-            const amount = record.get('svfops') || 0;
-            const rate = record.get('EXCHANGERT') || 1;
-            
-            totalsMap[key] += (amount * rate);
-        });
-    
-        // 2. Segundo recorrido: Actualizar el campo tgrosamoun en cada registro
-        bpoStore.each(function(record) {
-            const key = (record.get('scardn') || '') + '_' + 
-                        (record.get('sauthoc') || '') + '_' + 
-                        (record.get('spnr') || '') + '_' + 
-                        (record.get('tdoc') || '');
-            
-            const groupTotal = totalsMap[key];
-    
-            // Redondeamos para evitar problemas de precisión en la UI
-            record.set('tgrosamoun', Math.round(groupTotal * 100) / 100);
-        });
-    
-    },
-    calculateSumGridBPO: function() {
-        const me = this;
-        const grid = Ext.getCmp(prototype.idDE + '-gridBPO');
-        const bpoStore = grid.getStore();
-        
-        let totalAmount = 0; 
-    
-        // Recorremos el store para calcular la sumatoria de los montos convertidos
-        bpoStore.each(function (record) {
-            const amount = record.get('svfops') || record.get('SVFOPS') || 0;
-            const rate = record.get('EXCHANGERT') || 1;
-            
-            // Validamos que el rate no sea 0 para no anular el monto
-            const validRate = (rate === 0) ? 1.00 : rate;
-
-            totalAmount += (amount * validRate);
-        });
-    
-        // Actualizamos los campos de totales en la interfaz
-        Ext.getCmp(prototype.idDE + '-totTickets').setValue(bpoStore.getCount());
-        Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number( totalAmount, '0,000.00'));
-
-        return totalAmount ;
-    },
     onDeleteRecordBPO: function (grid, rowIndex, colIndex) {
-        const me = this;
         let registro = grid.getStore().getAt(rowIndex);
         if (registro) {
             grid.getStore().remove(registro);
         }
-        const store = grid.getStore();
-        me.calculateExchangeRateBPO(store);
-        me.recalculateSaleAmountBPO(store);
-        me.calculateSumGridBPO();
     },
     onAddAdjustment: function (grid, rowIndex, colIndex) {
         let registro = grid.getStore().getAt(rowIndex).data;
-        let transacType = this.bean.transtype;
-        let transacAmt = this.bean.tgrosamoun;
+        let transacType = this.bean.TRANSTYPE;
+        let transacAmt = this.bean.TGROSAMOUN;
         const gridAmt = Ext.getCmp(prototype.idDE + '-totAmount').getValue().replace(/,/g, "");
         console.log(transacAmt, '-', gridAmt);
         const objClon = Object.assign({}, registro);
         if (transacType.trim() === 'CHBK') {
-            objClon.svfops = Math.abs(parseFloat(transacAmt)) - parseFloat(gridAmt);
+            objClon.SVFOPS = Math.abs(parseFloat(transacAmt)) - parseFloat(gridAmt);
         } else {
-            objClon.svfops = parseFloat(transacAmt) - parseFloat(gridAmt);
+            objClon.SVFOPS = parseFloat(transacAmt) - parseFloat(gridAmt);
         }
-        objClon.trnco = objClon.trncu;
-        objClon.trncu = 'ADJU';
-        const newCorrl = parseInt(objClon.corrl, 10) + 1;
-        objClon.corrl = newCorrl.toString().padStart(2, '0');
-        if (objClon.svfops === 0) {
+        objClon.TRNCO = objClon.TRNCU;
+        objClon.TRNCU = 'ADJU';
+        const newCorrl = parseInt(objClon.CORRL, 10) + 1;
+        objClon.CORRL = newCorrl.toString().padStart(2, '0');
+        if (objClon.SVFOPS === 0) {
             global.Msg({msg: 'Adjustment not required'});
             return;
         }
@@ -577,29 +412,34 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             txtBpo.setReadOnly(false);
         }
     },
-    onReverseStandBy: function () {
+    onReverseStandBy: async function () {
         const me = this;
         me.view.mask('Loading...');
-        const bpoComent = Ext.getCmp(prototype.idDE + '-bpocoment');
-        let params = me.formatStandByParams(me.bean, bpoComent.getValue());
-        fetch(`${me.url}/errorTransactionBPOreverseStandBy?${new URLSearchParams(params)}`)
-                .then(async res => {
-                    if (res.ok) {
-                        const data = await res.json();
-                        const {sqlres, sqlmsg} = data;
-                        Ext.toast({
-                            html: `<b>${sqlmsg}</b>`,
-                            title: 'Notification',
-                            align: 't',
-                            closable: true,
-                            width: 300,
-                            timeout: 10000 // 10 segundos
-                        });
-                        me.view.unmask();
-                    } else {
-                        global.Msg({msg: 'Error.'});
-                    }
-                }).then(() => me.afterRender());
+        let params = {
+            IN_CCUST: me.bean.CCUST,
+            IN_PRDA: me.bean.PRDA,
+            IN_TDOC: me.bean.TDOC,
+            IN_AREFNBR: me.bean.AREFNBR,
+            IN_PROCTYPE: me.bean.PROCTYPE,
+            IN_PROCTYPESQ: me.bean.PROCTYPESQ
+        };
+        try {
+            const res = await global.callStorePost('PRAXISMP', 'SQP05057', params);
+            const {SQLMSG} = res.data.lstVals;
+            Ext.toast({
+                html: `<b>${SQLMSG}</b>`,
+                title: 'Notification',
+                align: 't',
+                closable: true,
+                width: 300,
+                timeout: 10000
+            });
+        } catch (e) {
+            global.Msg({msg: 'Error.'});
+        } finally {
+            me.view.unmask();
+            me.afterRender();
+        }
     },
     onCancelStandBy: function () {
         Ext.getCmp(prototype.idDE + '-bpoComments').hide();
@@ -630,44 +470,42 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     }
                 });
     },
-    onUpdateClick: async function (btn) {
+    onUpdateClick: function (btn) {
         const me = this;
         let params = me.formatUpdateParams();
         let msgAdd = "";
         if (params.detail.filter(x => x.SCURRENCY !== params.IN_SCURRENCY).length > 0) {
-            msgAdd = "<b>One or more tickets have differents currency.</b>";
-            // global.Msg({msg: 'One or more tickets have differents currency!'});
-            // return;
+            global.Msg({msg: 'One or more tickets have differents currency!'});
+            return;
         }
         if (params.detail.length === 0) {
 //            global.Msg({msg: 'You must have at least one ticket.'});  
-            msgAdd = "<b>You haven't any ticket. The status will be changed to Stand By.</b>";
+            msgAdd = "You haven't any ticket. The status will be changed to Stand By. ";
         } else if (params.difference !== 0) {
 //            global.Msg({msg: 'There are differences in reconciliation.'});
 //            return;
-            msgAdd = '<b>There are differences in reconciliation.</b>';
+            msgAdd = 'There are differences in reconciliation. ';
         }
         if (params.ajustes > 0 && params.IN_CODADJU === '') {
             global.Msg({msg: 'Unidentified Adjustment.'});
             return;
         }
-
         Ext.Msg.show(
-            {
-                title: '.:PRAXIS:.',
-                msg: msgAdd + ' Are you sure to update?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                animateTarget: btn,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function (btn) {
-                    if (btn === 'yes') {
-                        me.updateReconciliation(params);
-                        // me.MaintenanceA4331(params);
+                {
+                    title: '.:PRAXIS:.',
+                    msg: msgAdd + 'Are you sure to update?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            // me.MaintenanceA4331(params);
+                            me.updateReconciliation(params);
+                        }
                     }
-                }
-            });
+                });
     },
     updateReconciliation: async function (params) {
 
@@ -741,98 +579,90 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         }
 
     },
-    MaintenanceA4331: async function (params) {
+    // MaintenanceA4331: async function (params) {
+    //     const me = this;
+    //     me.view.mask('Loading...');
+    //     const res = await fetch(me.url + '/maintenanceErrorTransactionBPO', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(params)
+    //     });
+    //     if (res.ok) {
+    //         const data = await res.json();
+    //         const {status, response} = data;
+    //         console.log('status', status);
+    //         console.log('response', response);
+    //         if (status === 1) {
+    //             Ext.toast({
+    //                 html: `<b>${response}</b>`,
+    //                 title: 'Notification',
+    //                 align: 't',
+    //                 closable: true,
+    //                 width: 300,
+    //                 timeout: 10000 // 10 segundos
+    //             });
+    //         } else {
+    //             Ext.MessageBox.show({
+    //                 title: 'Error',
+    //                 message: response || 'Error in Update',
+    //                 icon: Ext.MessageBox.ERROR,
+    //                 buttons: Ext.MessageBox.OK
+    //             });
+    //         }
+    //     } else {
+    //         global.Msg({msg: 'Error'});
+    //         me.view.close();
+    //         return;
+    //     }
+    //     me.reloadErrorGrid();
+    //     me.view.unmask();
+    //     me.afterRender();
+    // },
+    reverseTransaction: async function () {
         const me = this;
         me.view.mask('Loading...');
-        const res = await fetch(me.url + '/maintenanceErrorTransactionBPO', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(params)
-        });
-        if (res.ok) {
-            const data = await res.json();
-            const {status, response} = data;
-            console.log('status', status);
-            console.log('response', response);
-            if (status === 1) {
+        let params = {
+            IN_CCUST: '139',
+            IN_AREFNBR: me.bean.AREFNBR,
+            IN_TDOC: me.bean.TDOC,
+            IN_PRDA: me.bean.PRDA
+        };
+        try {
+            const res = await global.callStorePost('PRAXISMP', 'SQP04847', params);
+            const {SQLRES, SQLMSG} = res.data.lstVals;
+            if (SQLRES === 1) {
                 Ext.toast({
-                    html: `<b>${response}</b>`,
+                    html: `<b>${SQLMSG}</b>`,
                     title: 'Notification',
                     align: 't',
                     closable: true,
                     width: 300,
-                    timeout: 10000 // 10 segundos
+                    timeout: 10000
                 });
+                if (me.bean.STVAL === "4") {
+                    const proceedPanel = Ext.getCmp(prototype.idDE + '-proceedRadioGroup');
+                    if (proceedPanel) {
+                        proceedPanel.hide();
+                    }
+                }
             } else {
                 Ext.MessageBox.show({
-                    title: 'Error',
-                    message: response || 'Error in Update',
+                    title: 'Information',
+                    message: SQLMSG,
                     icon: Ext.MessageBox.ERROR,
                     buttons: Ext.MessageBox.OK
                 });
             }
-        } else {
+        } catch (e) {
             global.Msg({msg: 'Error'});
             me.view.close();
-            return;
+        } finally {
+            me.reloadErrorGrid();
+            me.view.unmask();
+            me.afterRender();
         }
-        me.reloadErrorGrid();
-        me.view.unmask();
-        me.afterRender();
-    },
-    reverseTransaction: function () {
-        const me = this;
-        const columnExchangeRate = Ext.getCmp(prototype.idDE + '-colExchangeRateBPO');
-        const columnLocalAmount = Ext.getCmp(prototype.idDE + '-colLocalAmountBPO');
-        me.view.mask('Loading...');
-        let params = {
-            IN_CCUST: 139,
-            IN_AREFNBR: me.bean.arefnbr,
-            IN_TDOC: me.bean.tdoc,
-            IN_PRDA: me.bean.prda
-        };
-        fetch(`${me.url}/ReverseTransaction?${new URLSearchParams(params)}`)
-                .then(async res => {
-                    if (res.ok) {
-                        const data = await res.json();
-                        const {status, response} = data;
-                        if (status === 1) {
-                            Ext.toast({
-                                html: `<b>${response}</b>`,
-                                title: 'Notification',
-                                align: 't',
-                                closable: true,
-                                width: 300,
-                                timeout: 10000 // 10 segundos
-                            });
-
-                            if (me.bean.stval === "4") {
-                                const proceedPanel = Ext.getCmp(prototype.idDE + '-proceedRadioGroup');
-                                if (proceedPanel) {
-                                    proceedPanel.hide();
-                                }
-                            }
-
-                        } else {
-                            Ext.MessageBox.show({
-                                title: 'Information',
-                                message: response,
-                                icon: Ext.MessageBox.ERROR,
-                                buttons: Ext.MessageBox.OK
-                            });
-                        }
-                    } else {
-                        global.Msg({msg: 'Error'});
-                        me.view.close();
-                    }
-                    me.reloadErrorGrid();
-                    columnExchangeRate.setVisible(false);
-                    columnLocalAmount.setVisible(false);
-                    me.view.unmask();
-                    me.afterRender();
-                });
     },
     onClearScannerInputs: function () {
         const scannerForm = Ext.getCmp(prototype.idDE + '-scannerForm').getForm();
@@ -850,9 +680,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         }
         let params = {
             IN_CCUST: '139',
-            IN_TRANSTYPE: me.bean.transtype,
-            IN_TDOC: me.bean.tdoc,
-            IN_SMERCHID: me.bean.smerchid,
+            IN_TRANSTYPE: me.bean.TRANSTYPE,
+            IN_TDOC: me.bean.TDOC,
+            IN_SMERCHID: me.bean.SMERCHID,
+            IN_SCARDN: '',
             ...scannerForm.getValues()
         };
         if (params.creditcard.at(0) !== '' && params.creditcard.at(1) !== '') {
@@ -867,49 +698,42 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const forceScan = Ext.getCmp(prototype.idDE + '-chkForceBlock').getValue();
         const bpoStore = Ext.getCmp(prototype.idDE + '-gridBPO').getStore();
         const dataStore = bpoStore.getData().getRange();
-        const res = await fetch(`${me.url}/loadScannerManual?${new URLSearchParams(params)}`);
-        if (res.ok) {
-            const data = await res.json();
-            console.log(data);
-            let added = 0;
-            let repeats = 0;
-            data.response.forEach(obj => {
-                obj.EXCHANGERT = 1.00 ;
-                let repetido = dataStore.some(d =>
-                    d.data.ccia === obj.ccia &&
-                            d.data.forma === obj.forma &&
-                            d.data.serie === obj.serie
-                );
-                if (!repetido) {
-                    if (obj.duplicates === 0) {
-                        bpoStore.insert(0, obj);
-                        added++;
-                    } else if (obj.duplicates > 0 && forceScan) {
-                        bpoStore.insert(0, obj);
-                        added++;
-                    } else {
-                        repeats++;
-                    }
+        const res = await global.callStoreGet('PRAXISMP', 'SQP05062', params);
+        const scanData = res?.lstRs?.[0] || [];
+        console.log(scanData);
+        let added = 0;
+        let repeats = 0;
+        scanData.forEach(obj => {
+            let repetido = dataStore.some(d =>
+                d.data.CCIA === obj.CCIA &&
+                        d.data.FORMA === obj.FORMA &&
+                        d.data.SERIE === obj.SERIE
+            );
+            if (!repetido) {
+                if (obj.DUPLICATES === 0) {
+                    bpoStore.insert(0, obj);
+                    added++;
+                } else if (obj.DUPLICATES > 0 && forceScan) {
+                    bpoStore.insert(0, obj);
+                    added++;
                 } else {
                     repeats++;
                 }
-            });
-            // Ext.getCmp(prototype.idDE + '-totTickets').setValue(bpoStore.getCount());
-            // Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(bpoStore.sum('svfops'), '0,000.00'));
-            
-            me.calculateExchangeRateBPO(bpoStore);
-            me.recalculateSaleAmountBPO(bpoStore);
-            me.calculateSumGridBPO();
-
-            Ext.toast({
-                html: `<b>${added} Tickets were added.<br> ${repeats} Repeated or blocked.</b>`,
-                title: 'Notification',
-                align: 't',
-                closable: true,
-                width: 300,
-                timeout: 10000 // 10 segundos
-            });
-        }
+            } else {
+                repeats++;
+            }
+        });
+        Ext.getCmp(prototype.idDE + '-totTickets').setValue(bpoStore.getCount());
+        Ext.getCmp(prototype.idDE + '-totAmount')
+                .setValue(Ext.util.Format.number(bpoStore.sum('SVFOPS'), '0,000.00'));
+        Ext.toast({
+            html: `<b>${added} Tickets were added.<br> ${repeats} Repeated or blocked.</b>`,
+            title: 'Notification',
+            align: 't',
+            closable: true,
+            width: 300,
+            timeout: 10000 // 10 segundos
+        });
         scannerInputs.unmask();
     },
     onAddDuplicated: async function () {
@@ -984,7 +808,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const me = this;
         
         // validate tdoc and close
-        if (me.bean.tdoc !== "S" ) {
+        if (me.bean.TDOC !== "S" ) {
             global.Msg({msg: "Duplicate payment is only enabled for Sale" });
             return ;
         }
@@ -1002,15 +826,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const me = this;
         let params = {
             IN_CCUST: '139',
-            IN_PRDA: me.bean.prda,
-            IN_PROCTYPE: me.bean.proctype,
-            IN_PROCTYPESQ: me.bean.proctypesq,
-            IN_TGROSAMOUN: me.bean.tgrosamoun
+            IN_PRDA: me.bean.PRDA,
+            IN_PROCTYPE: me.bean.PROCTYPE,
+            IN_PROCTYPESQ: me.bean.PROCTYPESQ,
+            IN_TGROSAMOUN: me.bean.TGROSAMOUN
         };
-        if (me.bean.proctype === 'BANORTE00') {
-            params.IN_SCARDN = `${me.bean.scardn.slice(0, 6)}%${me.bean.scardn.slice(-2)}%`;
+        if (me.bean.PROCTYPE === 'BANORTE00') {
+            params.IN_SCARDN = `${me.bean.SCARDN.slice(0, 6)}%${me.bean.SCARDN.slice(-2)}%`;
         } else {
-            params.IN_SCARDN = `${me.bean.scardn.slice(0, 6)}%${me.bean.scardn.slice(-4)}%`;
+            params.IN_SCARDN = `${me.bean.SCARDN.slice(0, 6)}%${me.bean.SCARDN.slice(-4)}%`;
         }
         const dataEntryMSI = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.MSITrackingDataEntry', {
             id: prototype.idDE + '-MSITrackingDataEntry',
@@ -1029,12 +853,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const me = this;
         let params = {
             IN_CCUST: '139',
-            IN_TGROSAMOUN: me.bean.tgrosamoun
+            IN_TGROSAMOUN: me.bean.TGROSAMOUN
         };
-        if (me.bean.proctype === 'BANORTE00') {
-            params.IN_SCARDN = `${me.bean.scardn.slice(0, 6)}%${me.bean.scardn.slice(-2)}%`;
+        if (me.bean.PROCTYPE === 'BANORTE00') {
+            params.IN_SCARDN = `${me.bean.SCARDN.slice(0, 6)}%${me.bean.SCARDN.slice(-2)}%`;
         } else {
-            params.IN_SCARDN = `${me.bean.scardn.slice(0, 6)}%${me.bean.scardn.slice(-4)}%`;
+            params.IN_SCARDN = `${me.bean.SCARDN.slice(0, 6)}%${me.bean.SCARDN.slice(-4)}%`;
         }
         const dataEntryCHBK = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ChargebackTrackingDataEntry', {
             id: prototype.idDE + '-CHBKTrackingDataEntry',
@@ -1059,19 +883,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     },
     onShowUsages: function (grid, rowIndex, colIndex) {
         let obj = grid.getStore().getAt(rowIndex);
-        const {ccia, forma, serie, seq, cpui,
-            ruta0, ruta1, ruta2, ruta3, ruta4, stdoc} = obj.data;
-        let fcpui = (cpui + '    ').slice(0, 4);
-        let itin = (ruta0 + '   ').slice(0, 3) +
-                (ruta1 + '   ').slice(0, 3) +
-                (ruta2 + '   ').slice(0, 3) +
-                (ruta3 + '   ').slice(0, 3) +
-                (ruta4 + '   ').slice(0, 3);
+        const {CCIA, FORMA, SERIE, SEQ, CPUI,
+            RUTA0, RUTA1, RUTA2, RUTA3, RUTA4, STDOC} = obj.data;
+        let fcpui = (CPUI + '    ').slice(0, 4);
+        let itin = (RUTA0 + '   ').slice(0, 3) +
+                (RUTA1 + '   ').slice(0, 3) +
+                (RUTA2 + '   ').slice(0, 3) +
+                (RUTA3 + '   ').slice(0, 3) +
+                (RUTA4 + '   ').slice(0, 3);
         let params = {
-            IN_CIA: ccia,
-            IN_FORMA: forma,
-            IN_SERIE: serie,
-            IN_SEQ: seq,
+            IN_CIA: CCIA,
+            IN_FORMA: FORMA,
+            IN_SERIE: SERIE,
+            IN_SEQ: SEQ,
             IN_CPUI: fcpui,
             IN_ITIN: itin
         };
@@ -1079,7 +903,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const usageWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.CouponsUsagesDataEntry', {
             id: prototype.idDE + '-CouponsUsagesDataEntry-1',
             searchParams: params,
-            doctype: stdoc
+            doctype: STDOC
         });
         usageWin.show();
     },
@@ -1088,15 +912,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     },
     onShowTransactionMatch: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const obj = record.data;
-        const {tdoc} = this.bean;
+        const {TDOC} = this.bean;
         let params = {
-            IN_CCUST: obj.ccust,
-            IN_CIA: obj.ccia,
-            IN_FORMA: obj.forma,
-            IN_SERIE: obj.serie,
-            IN_SEQ: obj.seq,
-            IN_TDOC: tdoc,
-            IN_CORRL: obj.tcorr
+            IN_CCUST: obj.CCUST,
+            IN_CIA: obj.CCIA,
+            IN_FORMA: obj.FORMA,
+            IN_SERIE: obj.SERIE,
+            IN_SEQ: obj.SEQ,
+            IN_TDOC: TDOC,
+            IN_CORRL: obj.TCORR
         };
         console.log('By Ticket Params: ', params);
         const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TicketConciliationDataEntry', {
@@ -1203,10 +1027,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             let data = balances.getStore().getData().items.map(x => ({...x.data}));
             const tmp = await global.loadRecordsOnTable('PRAXISMP', 'XTEMPO', data);
             let params = {
-                IN_CCUST: me.bean.ccust,
-                IN_PRDA: me.bean.prda,
-                IN_TDOC: me.bean.tdoc,
-                IN_AREFNBR: me.bean.arefnbr,
+                IN_CCUST: me.bean.CCUST,
+                IN_PRDA: me.bean.PRDA,
+                IN_TDOC: me.bean.TDOC,
+                IN_AREFNBR: me.bean.AREFNBR,
                 IN_STVAL: stval,
                 IN_CUUID: tmp.cuuid,
                 IN_FUUID: tmp.fuuid
@@ -1227,7 +1051,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     setBPOGrid: function (data) {
         //const me = this;
         const gridAdd = Ext.getCmp(prototype.idDE + '-gridBPO');
-        const pending = data.filter(x => x.duplicates === 0);
+        const pending = data.filter(x => x.DUPLICATES === 0);
         const storePending = Ext.create('Ext.data.Store', {
             data: pending,
             listeners: {
@@ -1235,7 +1059,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     const qty = Ext.getCmp(prototype.idDE + '-totTickets');
                     const amt = Ext.getCmp(prototype.idDE + '-totAmount');
                     qty.setValue(store.data.length);
-                    amt.setValue(Ext.util.Format.number(store.sum('svfops'), '0,000.00'));
+                    amt.setValue(Ext.util.Format.number(store.sum('SVFOPS'), '0,000.00'));
                 }
             }
         });
@@ -1243,12 +1067,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const qty = Ext.getCmp(prototype.idDE + '-totTickets');
         const amt = Ext.getCmp(prototype.idDE + '-totAmount');
         qty.setValue(storePending.data.length);
-        amt.setValue(Ext.util.Format.number(storePending.sum('svfops'), '0,000.00'));
+        amt.setValue(Ext.util.Format.number(storePending.sum('SVFOPS'), '0,000.00'));
     },
     setBlockedGrid: function (data) {
         const me = this;
         const gridBlock = Ext.getCmp(prototype.idDE + '-gridBlocked');
-        const blocked = data.filter(x => x.duplicates !== 0);
+        const blocked = data.filter(x => x.DUPLICATES !== 0);
         const storeBlocked = Ext.create('Ext.data.Store', {
             data: blocked
         });
@@ -1256,7 +1080,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const qty = Ext.getCmp(prototype.idDE + '-totBTickets');
         qty.setValue(blocked.length);
         const amt = Ext.getCmp(prototype.idDE + '-totBAmount');
-        let amtVal = me.sumBy({data: blocked, key: 'svfops'});
+        let amtVal = me.sumBy({data: blocked, key: 'SVFOPS'});
         amt.setValue(Ext.util.Format.number(amtVal, '0,000.00'));
     },
     setDesgloseGrid: async function () {
@@ -1271,67 +1095,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 //        const relationSettlement = Ext.getCmp(prototype.idDE + '-tabRelationSettlement');
         
         
-        if (me.bean.transtype === 'CHBK') {
+        if (me.bean.TRANSTYPE === 'CHBK') {
             gridDesglose.hide();
             gridDesgloseCHBK.show();
-            // const res = await fetch(`${me.url}/loadErrorTransactionBPODesgloseCHBK?${new URLSearchParams(params)}`);
-            // if (res.ok) {
-            //     const data = await res.json();
-            //     console.log(data);
-            //     me.dataDesglose = data.response;
-            //     const storeDesglose = Ext.create('Ext.data.Store', {
-            //         data: data.response
-            //     });
-            //     gridDesgloseCHBK.setStore(storeDesglose);
-            //     const qtyc = Ext.getCmp(prototype.idDE + '-totDCTickets');
-            //     const amtc = Ext.getCmp(prototype.idDE + '-totDCAmount');
-            //     qtyc.setValue(data.response.length);
-            //     amtc.setValue(Ext.util.Format.number(storeDesglose.sum('vfop'), '0,000.00'));
-            // }
             const res = await global.callStoreGet('PRAXISMP', 'SQP05072', params);
-            if (res.lstRs.length > 0) {
-                me.dataDesglose = res.lstRs.at(0);
-                me.dataRelationSettlement = res.lstRs.at(1);
-//                const storeDesglose = Ext.data.Store({
-//                    data: res.lstRs.at(0)
-//                });c
-                const storeDesglose = Ext.create('Ext.data.Store', {
-                    data: res.lstRs.at(0)
-                });
-                gridDesgloseCHBK.setStore(storeDesglose);
-                console.log('me.dataDesglose.response',me.dataDesglose);
-                
-                // ocultar select
-                let proceedVal = me.bean.stprocede === "1" ? true : false;
-                gridDesglose.down('gridcolumn[dataIndex=selected]').setVisible(!proceedVal);
-                
-                const storeRelationSettlement = Ext.create('Ext.data.Store', {
-                    data: res.lstRs.at(1)
-                });
-                gridRelationSettlement.setStore(storeRelationSettlement);
-                
-                const qtyc = Ext.getCmp(prototype.idDE + '-totDCTickets');
-                const amtc = Ext.getCmp(prototype.idDE + '-totDCAmount');
-                qtyc.setValue(me.dataDesglose.length);
-                amtc.setValue(Ext.util.Format.number(storeDesglose.sum('VFOP'), '0,000.00'));
-                
-            }
+            const chbkData = res?.lstRs?.[0] || [];
+            console.log(chbkData);
+            me.dataDesglose = chbkData;
+            const storeDesglose = Ext.create('Ext.data.Store', {
+                data: chbkData
+            });
+            gridDesgloseCHBK.setStore(storeDesglose);
+            const qtyc = Ext.getCmp(prototype.idDE + '-totDCTickets');
+            const amtc = Ext.getCmp(prototype.idDE + '-totDCAmount');
+            qtyc.setValue(chbkData.length);
+            amtc.setValue(Ext.util.Format.number(storeDesglose.sum('VFOP'), '0,000.00'));
         } else {
             gridDesglose.show();
             gridDesgloseCHBK.hide();
-//            const res = await fetch(`${me.url}/loadErrorTransactionBPODesglose?${new URLSearchParams(params)}`);
-//            if (res.ok) {
-//                const data = await res.json();
-//                me.dataDesglose = data.response;
-//                const storeDesglose = Ext.create('Ext.data.Store', {
-//                    data: data.response
-//                });
-//                gridDesglose.setStore(storeDesglose);
-//                const qty = Ext.getCmp(prototype.idDE + '-totDTickets');
-//                const amt = Ext.getCmp(prototype.idDE + '-totDAmount');
-//                qty.setValue(data.response.length);
-//                amt.setValue(Ext.util.Format.number(storeDesglose.sum('svfops'), '0,000.00'));
-//            }
             const res = await global.callStoreGet('PRAXISMP', 'SQP05055', params);
             if (res.lstRs.length > 0) {
                 me.dataDesglose = res.lstRs.at(0);
@@ -1346,7 +1127,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 console.log('me.dataDesglose.response',me.dataDesglose);
                 
                 // ocultar select
-                let proceedVal = me.bean.stprocede === "1" ? true : false;
+                let proceedVal = me.bean.STPROCEDE === "1" ? true : false;
                 gridDesglose.down('gridcolumn[dataIndex=selected]').setVisible(!proceedVal);
                 
                 
@@ -1369,44 +1150,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                         }
                     }
 
+//
                 
                 const storeRelationSettlement = Ext.create('Ext.data.Store', {
                     data: res.lstRs.at(1)
                 });
                 gridRelationSettlement.setStore(storeRelationSettlement);
                 
-                // Total Values
-                const columnExchangeRateDesglose = Ext.getCmp(prototype.idDE + '-colExchangeRateDesglose');
-                const columnLocalAmountDesglose = Ext.getCmp(prototype.idDE + '-colLocalAmountDesglose');
-                const quantityTicketField = Ext.getCmp(prototype.idDE + '-totDTickets');
-                const totalAmountField = Ext.getCmp(prototype.idDE + '-totDAmount');
-                let totalAmount = 0;
-                let viewColumnExchangeRate = false;
-
-                // Calculate Total Amount
-                storeDesglose.each(function (record) {
-                    const amount = record.get('SVFOPS') || 0.00;
-                    const rate = record.get('EXCHANGERT') || 1.00;
-
-                    // Validamos que el rate no sea 0 para no anular el monto
-                    const validRate = (rate === 0) ? 1.00 : rate;
-
-                    totalAmount += (amount * validRate);
-                    // Validar si se debe activar columna de Exhange Rate
-                    if ( viewColumnExchangeRate === false && validRate !== 1.00 ){
-                        viewColumnExchangeRate = true;
-                    }
-                });
-
-                columnExchangeRateDesglose.setVisible(viewColumnExchangeRate);
-                columnLocalAmountDesglose.setVisible(viewColumnExchangeRate);
-                quantityTicketField.setValue(me.dataDesglose.length);
-                totalAmountField.setValue(Ext.util.Format.number(totalAmount, '0,000.00'));
-
+                const qty = Ext.getCmp(prototype.idDE + '-totDTickets');
+                const amt = Ext.getCmp(prototype.idDE + '-totDAmount');
+                qty.setValue(me.dataDesglose.length);
+                amt.setValue(Ext.util.Format.number(storeDesglose.sum('SVFOPS'), '0,000.00'));
                 
                 // validar si existe diferencia guardado como saldo
                 const existsBalance = me.dataDesglose.some(item => item.EXISTS_BALANCE === 1);
                 gridDesglose.down('gridcolumn[dataIndex=EXISTS_BALANCE]').setVisible(existsBalance);
+                
+            
                 
             }
         }
@@ -1439,54 +1199,42 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 });
     },
     onFilterBPOGrid: async function () {
-        const me = this;
+        const obj = this.bean;
         const grid = Ext.getCmp(prototype.idDE + '-gridBPO');
-
         grid.getView().mask('Loading...');
-        const bpoStore = grid.getStore();
-        const data = bpoStore.getData().items;
-        const tgrosamoun = me.bean.tgrosamoun;
-        const sauthoc = me.bean.sauthoc;
-        
+        const data = grid.getStore().getData().items;
         if (data.length === 0) {
             global.Msg({msg: 'No data in Scanner'});
             grid.getView().unmask();
             return;
         }
         const existeMonto = data.some(x =>
-            x.data.tgrosamoun === tgrosamoun);
+            x.data.TGROSAMOUN === obj.TGROSAMOUN);
         const existeAutorizacion = data.some(x =>
-            x.data.sauthoc === sauthoc);
+            x.data.SAUTHOC === obj.SAUTHOC);
         let foundRegis = {};
-
         if (existeMonto) {
             foundRegis = grid.getStore().queryBy(function (registro) {
-                return registro.get('tgrosamoun') === tgrosamoun;
+                return registro.get('TGROSAMOUN') === obj.TGROSAMOUN;
             });
             grid.getStore().removeAll();
             foundRegis.items.forEach(x => {
                 grid.getStore().add(x);
             });
-            // let amt = grid.getStore().sum('svfops');
-            // Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
-            // Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
-            me.calculateExchangeRateBPO(bpoStore);
-            me.recalculateSaleAmountBPO(bpoStore);
-            me.calculateSumGridBPO();
+            let amt = grid.getStore().sum('SVFOPS');
+            Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
+            Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
         } else if (existeAutorizacion && !existeMonto) {
             foundRegis = grid.getStore().queryBy(function (registro) {
-                return registro.get('sauthoc') === sauthoc;
+                return registro.get('SAUTHOC') === obj.SAUTHOC;
             });
             grid.getStore().removeAll();
             foundRegis.items.forEach(x => {
                 grid.getStore().add(x);
             });
-            // let amt = grid.getStore().sum('svfops');
-            // Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
-            // Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
-            me.calculateExchangeRateBPO(bpoStore);
-            me.recalculateSaleAmountBPO(bpoStore);
-            me.calculateSumGridBPO();
+            let amt = grid.getStore().sum('SVFOPS');
+            Ext.getCmp(prototype.idDE + '-totTickets').setValue(foundRegis.items.length);
+            Ext.getCmp(prototype.idDE + '-totAmount').setValue(Ext.util.Format.number(amt, '0,000.00'));
         } else {
             global.Msg({msg: 'Not found'});
         }
@@ -1497,55 +1245,55 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     formatParameters: function (obj) {
         let params = {
             IN_CCUST: '139',
-            IN_PRDA: obj.prda ?? obj.PRDA,
-            IN_TDOC: obj.tdoc ?? obj.TDOC,
-            IN_AREFNBR: obj.arefnbr ?? obj.AREFNBR
+            IN_PRDA: obj.PRDA,
+            IN_TDOC: obj.TDOC,
+            IN_AREFNBR: obj.AREFNBR
         };
         return params;
     },
     formatScanParams: function (obj) {
         const me = this;
-        let cc1 = obj.scardn.trim().slice(0, 6);
-        let cc2 = obj.scardn.trim().slice(-4);
-        if (obj.proctype === 'BANORTE00') {
-            cc2 = obj.scardn.trim().slice(-2);
+        let cc1 = obj.SCARDN.trim().slice(0, 6);
+        let cc2 = obj.SCARDN.trim().slice(-4);
+        if (obj.PROCTYPE === 'BANORTE00') {
+            cc2 = obj.SCARDN.trim().slice(-2);
         }
         let scardn = `${cc1}%${cc2}%`;
         //Se agrego fecha de pago como opcional si no existe fecha de venta
-        let fecha = obj.sdate.trim() === '' ? obj.paydate : obj.sdate;
+        let fecha = obj.SDATE.trim() === '' ? obj.PAYDATE : obj.SDATE;
         const [inicio, fin] = me.getFechaRango(fecha);
         let params = {
-            IN_CCUST: obj.ccust,
+            IN_CCUST: obj.CCUST,
             IN_SCARDN: scardn,
             IN_DATE: fecha,
             IN_DATE_F: inicio,
             IN_DATE_T: fin,
-            IN_SMERCHID: obj.smerchid,
-            IN_SPNR: obj.spnr,
-            IN_TDOC: obj.tdoc,
-            IN_TRANSTYPE: obj.transtype,
-            IN_PROCTYPE: obj.proctype,
-            IN_PROCTYPESQ: obj.proctypesq,
-            IN_TICKET: obj.ticket
+            IN_SMERCHID: obj.SMERCHID,
+            IN_SPNR: obj.SPNR,
+            IN_TDOC: obj.TDOC,
+            IN_TRANSTYPE: obj.TRANSTYPE,
+            IN_PROCTYPE: obj.PROCTYPE,
+            IN_PROCTYPESQ: obj.PROCTYPESQ,
+            IN_TICKET: obj.TICKET
         };
         return params;
     },
     formatScanSbParams: function (obj) {
         let params = {
-            IN_CCUST: obj.ccust,
-            IN_PRDA: obj.prda,
-            IN_AREFNBR: obj.arefnbr,
-            IN_TDOC: obj.tdoc,
-            IN_TRANSTYPE: obj.transtype
+            IN_CCUST: obj.CCUST,
+            IN_PRDA: obj.PRDA,
+            IN_AREFNBR: obj.AREFNBR,
+            IN_TDOC: obj.TDOC,
+            IN_TRANSTYPE: obj.TRANSTYPE
         };
         return params;
     },
     formatDesgloseParams: function (obj) {
         let params = {
-            IN_CCUST: obj.ccust,
-            IN_TDOC: obj.tdoc,
-            IN_PRDA: obj.prda,
-            IN_AREFNBR: obj.arefnbr
+            IN_CCUST: obj.CCUST,
+            IN_TDOC: obj.TDOC,
+            IN_PRDA: obj.PRDA,
+            IN_AREFNBR: obj.AREFNBR
         };
         console.log('Desglose: ', params);
         return params;
@@ -1557,18 +1305,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const details = [...gridBPO.data.items.map(x => me.requestObjectPX(x.data))]
                 .map(x => ({
                         CCUST: 139,
-                        AREFNBR: obj.arefnbr,
-                        PRDA: obj.prda,
-                        TDOC: obj.tdoc,
+                        AREFNBR: obj.AREFNBR,
+                        PRDA: obj.PRDA,
+                        TDOC: obj.TDOC,
                         ...x
                     }));
         let params = {
-            IN_CCUST: obj.ccust,
-            IN_PRDA: obj.prda,
-            IN_TDOC: obj.tdoc,
-            IN_AREFNBR: obj.arefnbr,
-            IN_PROCTYPE: obj.proctype,
-            IN_PROCTYPESQ: obj.proctypesq,
+            IN_CCUST: obj.CCUST,
+            IN_PRDA: obj.PRDA,
+            IN_TDOC: obj.TDOC,
+            IN_AREFNBR: obj.AREFNBR,
+            IN_PROCTYPE: obj.PROCTYPE,
+            IN_PROCTYPESQ: obj.PROCTYPESQ,
             IN_OBSERV: comment,
             IN_ADJU: adju ? 'Y' : '',
             detail: details
@@ -1584,14 +1332,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         const codADJU = (Ext.getCmp(prototype.idDE + '-codAdjustment').getValue() || '').trim();
         const observADJU = Ext.getCmp(prototype.idDE + '-observAdjustment').getValue();
         //diferencia conciliacion manual
-        // const sumScanner = parseFloat(gridBPO.sum('svfops').toFixed(2));
-        const totalAmount = me.calculateSumGridBPO();
-        const sumAdju = parseFloat(gridADJU.sum('svfops').toFixed(2));
-        const sumDesglose = parseFloat((totalAmount + sumAdju).toFixed(2));
-        const totalGross = parseFloat(obj.tgrosamoun.toFixed(2));
+        const sumScanner = parseFloat(gridBPO.sum('SVFOPS').toFixed(2));
+        const sumAdju = parseFloat(gridADJU.sum('SVFOPS').toFixed(2));
+        const sumDesglose = parseFloat((sumScanner + sumAdju).toFixed(2));
+        const totalGross = parseFloat(obj.TGROSAMOUN.toFixed(2));
         console.log('Suma Desglose BPO: ', sumDesglose);
         let difference = 0;
-        if (me.bean.transtype === 'CHBK') {
+        if (me.bean.TRANSTYPE === 'CHBK') {
             //suma en caso de ser Chargeback
             difference = totalGross + sumDesglose;
         } else {
@@ -1607,21 +1354,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                 .map(x => ({
                         CCUST: 139,
                         STVAL: '5',
-                        SCOUNTRY: x.scountry,
-                        PMERCHID: obj.pmerchid,
-                        SMERCHID: obj.smerchid,
-                        PAYDATE: obj.paydate,
-                        PRDA: obj.prda,
-                        AREFNBR: obj.arefnbr,
-                        PROCTYPE: obj.proctype,
-                        PROCTYPESQ: obj.proctypesq,
+                        SCOUNTRY: x.SCOUNTRY,
+                        PMERCHID: obj.PMERCHID,
+                        SMERCHID: obj.SMERCHID,
+                        PAYDATE: obj.PAYDATE,
+                        PRDA: obj.PRDA,
+                        AREFNBR: obj.AREFNBR,
+                        PROCTYPE: obj.PROCTYPE,
+                        PROCTYPESQ: obj.PROCTYPESQ,
                         FORCESCAN: '0',
                         FREGLA: '4',
                         OBSERV: observADJU,
-                        CERROR: x.STMANUAL === 'Adjustment' ? codADJU : obj.cerror,
-                        NBRLIQUID: obj.nbrliquid,
-                        CODCHGBACK: obj.codchgback,
-                        CHGBNUM: obj.chgbnum,
+                        CERROR: x.STMANUAL === 'Adjustment' ? codADJU : obj.CERROR,
+                        NBRLIQUID: obj.NBRLIQUID,
+                        CODCHGBACK: obj.CODCHGBACK,
+                        CHGBNUM: obj.CHGBNUM,
                         ...x
                     })).map(o => {
             //nueva validacion de fuente
@@ -1629,11 +1376,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             if (o.STMANUAL === 'Adjustment' && o.CERROR === '03') {
                 o.TRNCU = o.TRNCO || '';
             }
-            o.TDOC = obj.tdoc;
-            if (o.STMANUAL !== 'Adjustment' && o.TDOC !== o.TDOCO) {
+            // assign Type Document of Ticket
+            o.TDOCVTA = o.TDOC;
+            // assign Type Document of Sttlement
+            o.TDOC = obj.TDOC;
+            if (o.STMANUAL !== 'Adjustment' && o.TDOC !== o.TDOCVTA) {
                 o.CERROR === '79';
                 cerror = '79';
             }
+            
             return o;
         });
         const conteo_void = details.filter(x => x.FVOID === 'V').length;
@@ -1666,7 +1417,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
         params.IN_FADM = codADJU === '03' ? 'Y' : '';
         params.IN_CUUID = '';
         params.IN_FUUID = '';
-        console.log(params);
+        console.log("params", params);
         return params;
     },
     //</editor-fold>
@@ -1757,8 +1508,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
 
     //<editor-fold defaultstate="collapsed" desc="Proceed">
     onUpdateClickStatus: async function () {
-
+//        console.log('update')
         const me = this;
+//        let params = me.formatUpdateParams();
         me.view.setLoading(true);
         const radioGroup = Ext.getCmp(prototype.idDE + '-proceedRadioGroup').down('radiogroup');
         const selectedStatus = radioGroup.getValue()?.proceedStatus;
@@ -1847,7 +1599,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
                     const {lstVals} = res.data;
                     global.Msg({msg: lstVals.OUT_MSG});
                     me.getData(me.view);
-                    me.dataInfo.stprocede = selectedStatus;
+                    me.dataInfo.STPROCEDE = selectedStatus;
                 }
                 
                 
