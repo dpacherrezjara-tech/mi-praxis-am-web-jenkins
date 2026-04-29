@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.view.payments.ClarificationFileLinkForm.Options', {
                             xtype: 'button',
                             id: prototype.id+'-btnSearch',
                             iconCls: 'prx-icon-search',
-                            tooltip: 'Search',
+                            tooltip: 'Search por Permiso',
                             listeners: {
                                 click: 'btnSearch_click'
                             }
