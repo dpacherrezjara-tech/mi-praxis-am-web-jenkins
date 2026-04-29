@@ -6,39 +6,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
             Ext.getCmp(prototype.id + '-backButtonDetail-2').hide();
         }
     },
-    afterRender: async function (obj, e) {
-        const me = this;
-        const view = me.view;
-        this.getData({view: view});
+    afterRender: function () {
+        this.getData(this.view);
     },
-    getData: function ( {view}) {
-        console.log("view.searchParams",view.searchParams);
-        let store = Ext.create('Ext.data.Store', {
-            loadMask: true,
-            pageSize: 20,
-            proxy: {
-                type: 'ajax',
-                enablePaging: true,
-                url: `${view.url}/loadByTicketDetail`,
-                extraParams: view.searchParams,
-                timeout: 600000,
-                reader: {
-                    type: 'json',
-                    rootProperty: 'response',
-                    totalProperty: 'total'
-                }
-            },
-            autoLoad: true,
-            listeners: {
-                load: function (store, records, successful, operation) {
-                    if (!successful) {
-                        global.Msg({msg: 'Data not Found'});
-                    } else {
-                        console.log(records);
-                        if (records.length === 0) {
-                            global.Msg({msg: 'Data not Found'});
-                        }
-                    }
+    getData: function (view) {
+        const expectedParams = [
+            'IN_CCUST', 'IN_DATE', 'IN_DATEFROM', 'IN_DATETO',
+            'IN_PROCTYPE', 'IN_TRNCU', 'IN_SCOUNTRY', 'IN_FVOID',
+            'IN_TICKET', 'IN_SCARDN', 'IN_SAUTHOC', 'IN_SPNR',
+            'IN_TYPE', 'IN_STVAL', 'IN_SAGENT', 'IN_FUENT',
+            'IN_SFUEN', 'IN_TCARD', 'IN_CCARD', 'IN_SCURRENCY',
+            'IN_AMOUNT', 'IN_PAX', 'IN_TIPOD', 'IN_TFOP', 'IN_GCARD'
+        ];
+        expectedParams.forEach(param => {
+            if (!(param in view.searchParams)) {
+                view.searchParams[param] = '';
+            }
+        });
+        const store = global.callStorePaggin('PRAXISMP', 'SQP05089', view.searchParams);
+        store.on('load', function (_s, records, successful) {
+            if (!successful) {
+                global.Msg({msg: 'Data not Found'});
+            } else {
+                if (records.length === 0) {
+                    global.Msg({msg: 'Data not Found'});
                 }
             }
         });
@@ -59,13 +50,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
     },
     formatByTicketInfoParams: function (obj) {
         let params = {
-            IN_CCUST: obj.a4501CCUST,
-            IN_CIA: obj.a4501CIA,
-            IN_FORMA: obj.a4501FORMA,
-            IN_SERIE: obj.a4501SERIE,
-            IN_SEQ: obj.a4501SEQ,
-            IN_TDOC: obj.a4501TDOC,
-            IN_CORRL: obj.a4501CORRL
+            IN_CCUST: obj.A4501CCUST,
+            IN_CIA: obj.A4501CIA,
+            IN_FORMA: obj.A4501FORMA,
+            IN_SERIE: obj.A4501SERIE,
+            IN_SEQ: obj.A4501SEQ,
+            IN_TDOC: obj.A4501TDOC,
+            IN_CORRL: obj.A4501CORRL
         };
         return params;
     },
@@ -85,6 +76,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
+                            // todo ! cambiar por microservicio de descarga excel o en su defecto una descarga por proceso en cola
                             global.getFile(`${me.view.url}/downloadByTicketDetail?${new URLSearchParams(params)}`);
                         }
                     }

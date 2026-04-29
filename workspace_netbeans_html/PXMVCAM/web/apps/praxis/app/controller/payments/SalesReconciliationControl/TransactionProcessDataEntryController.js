@@ -93,45 +93,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Transactio
             me.view.setLoading(false);
         }
 
-        
-//        fetch(`${me.url}/processTransactionsBatch`, {
-//            method: 'POST',
-//            headers: {
-//                'Content-Type': 'application/json'
-//            },
-//            body: JSON.stringify(params)
-//        }).then(async res => {
-//            if (res.ok) {
-//                const data = await res.json();
-//                const {vp_CANT} = data;
-//                Ext.toast({
-//                    html: `<b>Process Success<br>Total Affected: ${vp_CANT}</b>`,
-//                    title: 'Notification',
-//                    align: 't',
-//                    closable: true,
-//                    width: 300,
-//                    timeout: 10000 // 10 segundos
-//                });
-//                Ext.getCmp(prototype.id + '-processDownloadResult').show();
-//            } else {
-//                Ext.MessageBox.show({
-//                    title: 'Error',
-//                    message: 'Error in Process',
-//                    icon: Ext.MessageBox.ERROR,
-//                    buttons: Ext.MessageBox.OK
-//                });
-//            }
-//        }).catch(err => {
-//            console.error(err);
-//            Ext.MessageBox.show({
-//                title: 'Error',
-//                message: 'Error in Process',
-//                icon: Ext.MessageBox.ERROR,
-//                buttons: Ext.MessageBox.OK
-//            });
-//        }).finally(() => {
-//            me.view.unmask();
-//        });
     },
     onChangeDateProcessTransaction: function (obj) {
         let option = obj.id.split('-').at(-1);
