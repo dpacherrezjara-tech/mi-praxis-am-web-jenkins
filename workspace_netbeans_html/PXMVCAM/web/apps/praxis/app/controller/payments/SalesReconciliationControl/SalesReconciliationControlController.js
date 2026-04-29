@@ -98,6 +98,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.showProductionBtn(me.users);
             me.showAddTicketBtn(me.users);
             me.setDefaultUser();
+
         } catch (e) {
             console.log(e);
             global.Msg({msg: 'Error loading filters'});
@@ -519,12 +520,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         productionWin.show();
     },
     onClickAddTicketBtn: function () {
-        const me = this;
         const addticketWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.AddTicketDataEntry', {
-            id: prototype.id + '-AddTicketDataEntry-1',
-            countries: me.countries,
-            creditcards: me.creditcards,
-            currencies: me.currencies
+            id: prototype.id + '-AddTicketDataEntry-1'
         });
         addticketWin.show();
     },
@@ -538,8 +535,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     },
     onClickBatchAdjuBtn: function () {
         const manualBatch = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ManualBatchDataEntry', {
-            id: prototype.id + '-ManualBatchDataEntry-1',
-            processors: this.processors
+            id: prototype.id + '-ManualBatchDataEntry-1'
         });
         manualBatch.show();
     },
@@ -569,19 +565,26 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Procesos">
     runConciliation: async function () {
+        const me = this;
         let params = {
             VP_CCUST: '139',
             VP_PROCESO: 'CONCILIA'
         };
-        try {
-            const res = await global.callStorePostAsync('PRAXISMP', 'SQP05304', params);
-            const record = res?.lstRs?.[0]?.[0] || {};
-            if (record.RESULT === 'P') {
+        const res = await fetch(`${me.url}/runAutomaticConciliation`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        });
+        if (res.ok) {
+            const data = await res.json();
+            if (data.result === 'P') {
                 global.Msg({msg: 'Starting Process'});
             } else {
                 global.Msg({msg: 'Process is already running'});
             }
-        } catch (e) {
+        } else {
             global.Msg({msg: 'Error on Process'});
         }
     },

@@ -636,14 +636,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersSettl
                                                 specialkey: 'onEnterKeyPress'
                                             }
                                         },
-                                        {
+                                         {
                                             xtype: 'textfield',
                                             fieldLabel: 'ARN',
                                             labelWidth: 40,
                                             width: 200,
                                             name: 'IN_ARN',
                                             maxLength: 25,
-                                            maskRe: /[a-zA-Z0-9]/,
+                                            maskRe: /[0-9]/,
                                             enforceMaxLength: true,
                                             listeners: {
                                                 specialkey: 'onEnterKeyPress'

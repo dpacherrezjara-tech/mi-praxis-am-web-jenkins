@@ -74,21 +74,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
     onClickTotal: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
         const view = me.view;
-        if (record.data.TOTAL === 0) {
+        if (record.data.total === 0) {
             global.Msg({msg: 'No data'});
             return;
         }
         let fecha = '';
-        if (record.data.A4496FPROC) {
-            fecha = record.data.A4496FPROC;
+        if (record.data.a4496FPROC) {
+            fecha = record.data.a4496FPROC;
         }
-        else if (record.data.A4501PRDA) {
-            fecha = record.data.A4501PRDA;
+        else if (record.data.a4501PRDA) {
+            fecha = record.data.a4501PRDA;
         }  
-        else if (record.data.A4501FECVT) {
-            fecha = record.data.A4501FECVT;
+        else if (record.data.a4501FECVT) {
+            fecha = record.data.a4501FECVT;
         } else {
-            fecha = record.data.A4501FEUP;
+            fecha = record.data.a4501FEUP;
         }
         me.openDaysSummary(fecha);
     },
@@ -139,14 +139,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
         if ( me.view.summaryIsMonth ) {
             console.log("**search detail for month**");
             let month = '';
-            if (record.data.A4501FECVT) {
-                month = record.data.A4501FECVT;
-            } else if (record.data.A4501PRDA) {
-                month = record.data.A4501PRDA;
-            } else if (record.data.A4496FPROC) {
-                month = record.data.A4496FPROC;
+            if (record.data.a4501FECVT) {
+                month = record.data.a4501FECVT;
+            } else if (record.data.a4501PRDA) {
+                month = record.data.a4501PRDA;
+            } else if (record.data.a4496FPROC) {
+                month = record.data.a4496FPROC;
             } else {
-                month = record.data.A4501FEUP;
+                month = record.data.a4501FEUP;
             }
             params.IN_DATEFROM = month + '01';
             params.IN_DATETO = month + '31';
@@ -158,14 +158,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
         else {
             console.log("**search detail for day**");
             let day = '';
-            if (record.data.A4501FECVT) {
-                day = record.data.A4501FECVT;
-            } else if (record.data.A4501PRDA) {
-                day = record.data.A4501PRDA;
-            } else if (record.data.A4496FPROC) {
-                day = record.data.A4496FPROC;
+            if (record.data.a4501FECVT) {
+                day = record.data.a4501FECVT;
+            } else if (record.data.a4501PRDA) {
+                day = record.data.a4501PRDA;
+            } else if (record.data.a4496FPROC) {
+                day = record.data.a4496FPROC;
             } else {
-                day = record.data.A4501FEUP;
+                day = record.data.a4501FEUP;
             }
             params.IN_DATEFROM = day;
             params.IN_DATETO = day;
@@ -201,28 +201,37 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
         
     },
     
-    loadServiceSummaryByTicket: async function(params) {
+    loadServiceSummaryByTicket: function(params){
         const me = this;
-        const view = me.view;
-        view.mask('Loading...');
-        try {
-            // Llama a callStoreGet con el nuevo programa y params
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05646', params);
-            // Asegura que la respuesta tiene el formato esperado
-            const data = res?.lstRs?.[0] || [];
-            if (!data || data.length === 0) {
-                global.Msg({msg: 'Data not Found'});
+        
+        let store = Ext.create('Ext.data.Store', {
+            loadMask: true,
+            proxy: {
+                type: 'ajax',
+//                url: `${view.url}/loadByTicketSummary`,
+                url: `${me.view.url}/v2/loadByTicketSummary`,
+                extraParams: params,
+                timeout: 600000,
+                reader: {
+                    type: 'json',
+                    rootProperty: 'response'
+                }
+            },
+            autoLoad: true,
+            listeners: {
+                load: function (store, records, successful, operation) {
+                    if (!successful) {
+                        global.Msg({msg: 'Data not Found'});
+                    } else {
+                        console.log(records);
+                        if (records.length === 0) {
+                            global.Msg({msg: 'Data not Found'});
+                        }
+                    }
+                }
             }
-            // Crea el store e inyecta los datos
-            let store = Ext.create('Ext.data.Store', {
-                data: data
-            });
-            view.setStore(store);
-        } catch (e) {
-            global.Msg({msg: 'Data not Found'});
-        } finally {
-            view.unmask();
-        }
+        });
+        me.view.setStore(store);
     },
     formatParameters: function ( {type, obj}) {
         const me = this;
@@ -232,14 +241,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketMo
         };
         
         let month = '';
-        if (obj.A4501FECVT) {
-            month = obj.A4501FECVT;
-        } else if (obj.A4501PRDA) {
-            month = obj.A4501PRDA;
-        } else if (obj.A4496FPROC) {
-            month = obj.A4496FPROC;
+        if (obj.a4501FECVT) {
+            month = obj.a4501FECVT;
+        } else if (obj.a4501PRDA) {
+            month = obj.a4501PRDA;
+        } else if (obj.a4496FPROC) {
+            month = obj.a4496FPROC;
         } else {
-            month = obj.A4501FEUP;
+            month = obj.a4501FEUP;
         }
 
         if (me.view.searchParams.IN_TDATE === 'M') {

@@ -18,24 +18,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
     loadPraxisUsages: async function () {
         const me = this;
         me.view.mask('Loading...');
-        const {IN_CIA, IN_FORMA, IN_SERIE, IN_ITIN} = me.view.searchParams;
-        try {
-            const res = await global.callStorePost('PRAXISMP', 'SQP05075', me.view.searchParams);
-            const {OUT_USOS} = res.data.lstVals;
+        const res = await fetch(`${me.url}/loadTicketUses?${new URLSearchParams(me.view.searchParams)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const {IN_CIA, IN_FORMA, IN_SERIE, IN_ITIN} = me.view.searchParams;
+            const {out_USOS} = data;
             const store = Ext.create('Ext.data.Store', {
                 data: [{
-                        TICKET: IN_CIA + IN_FORMA + IN_SERIE,
-                        TIPOD: me.view.doctype,
-                        ITIN: IN_ITIN,
-                        C1: OUT_USOS.slice(0, 1),
-                        C2: OUT_USOS.slice(1, 2),
-                        C3: OUT_USOS.slice(2, 3),
-                        C4: OUT_USOS.slice(-1)
+                        ticket: IN_CIA + IN_FORMA + IN_SERIE,
+                        tipod: me.view.doctype,
+                        itin: IN_ITIN,
+                        c1: out_USOS.slice(0, 1),
+                        c2: out_USOS.slice(1, 2),
+                        c3: out_USOS.slice(2, 3),
+                        c4: out_USOS.slice(-1)
                     }]
             });
             Ext.getCmp(prototype.idUse + '-gridUsages').setStore(store);
-        } catch (e) {
-            global.Msg({msg: 'Error loading usages'});
         }
         let valid = me.validateDocType(me.view.doctype.slice(0, 3));
         if (!valid) {
@@ -63,13 +62,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.CouponsUsa
             let coupons = [];
             if (data.length > 0) {
                 coupons = data.map(x => ({
-                        TICKET: ticketParam,
-                        TIPOD: me.view.doctype,
-                        COUPON: x.coupon,
-                        ORIGIN: x.startLocation ? x.startLocation.value : '',
-                        DESTINY: x.endLocation ? x.endLocation.value : '',
-                        OLDSTATUS: x.previousStatus,
-                        STATUS: x.currentStatus
+                        ticket: ticketParam,
+                        tipod: me.view.doctype,
+                        coupon: x.coupon,
+                        origin: x.startLocation ? x.startLocation.value : '',
+                        destiny: x.endLocation ? x.endLocation.value : '',
+                        oldstatus: x.previousStatus,
+                        status: x.currentStatus
                     }));
             } else {
                 global.Msg({msg: 'No data'});

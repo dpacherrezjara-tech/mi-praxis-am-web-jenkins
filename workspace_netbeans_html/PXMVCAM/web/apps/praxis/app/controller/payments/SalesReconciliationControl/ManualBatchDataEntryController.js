@@ -7,43 +7,51 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
     afterRender: function (obj, e) {
         this.fillFilters();
     },
-    fillFilters: function () {
+    fillFilters: async function () {
         const me = this;
-        const cmbProcesadores = Ext.getCmp(prototype.idDE4 + '-cmbProctypesq');
-        const dataProcessors = me.view.processors;
-        console.log("me.view.processors", me.view.processors);
-        me.setComboStore({cmp: cmbProcesadores, data: dataProcessors, valueField: 'A4451KEY2', displayField: 'A4451DESC1', value: ''});
-        cmbProcesadores.fireEvent('change', cmbProcesadores, cmbProcesadores.getValue(), null);
+        const filterPanel = Ext.getCmp(prototype.idDE4 + '-formFilters');
+        filterPanel.mask('Loading Filters...');
+        const res = await fetch(`${me.url}/loadFilters`);
+        if (res.ok) {
+            const data = await res.json();
+            console.log('Filtros: ', data);
+            const procesadores = data.procesadores;
+            const cmbProcesadores = Ext.getCmp(prototype.idDE4 + '-cmbProctypesq');
+            me.setComboStore({cmp: cmbProcesadores, data: procesadores,
+                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
+            cmbProcesadores.fireEvent('change', cmbProcesadores,
+                    cmbProcesadores.getValue(), null);
+        }
+        filterPanel.unmask();
     },
     loadGrid: async function (params) {
         const me = this;
         const grid = Ext.getCmp(prototype.idDE4 + '-gridBatch');
         me.view.mask('Loading...');
-        try {
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05319', params);
-            const data = res?.lstRs?.[0] || [];
-            grid.setStore(Ext.create('Ext.data.Store', {
-                data: data
-            }));
+        const res = await fetch(`${me.url}/loadBatchInformation?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const store = Ext.create('Ext.data.Store', {
+                autoLoad: true,
+                data: data.response
+            });
+            console.log(data);
+            grid.setStore(store);
             this.view.center();
-        } catch (e) {
-            global.Msg({msg: 'Error loading data'});
-        } finally {
-            me.view.unmask();
         }
+        me.view.unmask();
     },
     processAdju: async function (params) {
         const me = this;
         me.view.mask('Loading...');
-        try {
-            const res = await global.callStorePost('PRAXISMP', 'SQP05302', params);
-            const {PROCESADOS, ENCONTRADOS} = res.data.lstVals;
-            global.Msg({msg: `Processed: ${PROCESADOS} / Found: ${ENCONTRADOS}`});
-        } catch (e) {
+        const res = await fetch(`${me.url}/processBatchInformation?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            global.Msg({msg: data.message});
+        } else {
             global.Msg({msg: 'Server Error'});
-        } finally {
-            me.view.unmask();
         }
+        me.view.unmask();
     },
     formatSearchParams: function () {
         const formFilters = Ext.getCmp(prototype.idDE4 + '-formFilters')
@@ -87,10 +95,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
     onChangeProctypesq: function (combo, newValue, oldValue) {
         const proctype = Ext.getCmp(prototype.idDE4 + '-cmbProctype');
         let store = combo.getStore();
-        let record = store.findRecord('A4451KEY2', newValue);
-        if (record){
-            proctype.setValue(record.data.A4451KEY3);
-        }
+        let record = store.findRecord('a4451key2', newValue);
+        proctype.setValue(record.data.a4451key3);
     },
     deleteTransactionInGrid: function (grid, arefnbr) {
         let store = grid.getStore();
@@ -126,18 +132,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
         params.IN_PROCTYPE = me.searchParams.IN_PROCTYPE;
         params.IN_PROCTYPESQ = me.searchParams.IN_PROCTYPESQ;
         params.IN_FDESGLOSE = 'A';
-        try {
-            const res = await global.callStorePost('PRAXISMP', 'SQP05307', params);
-            const {SQLRES, SQLMSG} = res.data.lstVals;
-            global.Msg({msg: SQLMSG});
-            if (SQLRES === 1) {
+        const res = await fetch(`${me.url}/autoMatchManual`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        });
+        if (res.ok) {
+            const data = await res.json();
+            if (data.SQLRES === 1) {
+                global.Msg({msg: data.SQLMSG});
                 me.deleteTransactionInGrid(grid, obj.AREFNBR);
+            } else {
+                global.Msg({msg: data.SQLMSG});
             }
-        } catch (e) {
-            global.Msg({msg: 'Error'});
-        } finally {
-            me.view.unmask();
         }
+        me.view.unmask();
     },
     onUpdateAll: function () {
         const me = this;
@@ -235,9 +246,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
     },
     createComboStore: function ( {data, valueField, displayField}) {
         //crea record vacio
-       let allRecord = {};
-       allRecord[displayField] = 'All';
-       allRecord[valueField] = '';
+//        let allRecord = {};
+//        allRecord[displayField] = 'All';
+//        allRecord[valueField] = '';
         //limpia record de data
         data.forEach(obj => {
             for (let attr in obj) {
@@ -252,7 +263,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ManualBatc
             data: data
         });
         //inserta record vacio
-        store.insert(0, allRecord);
+        //store.insert(0, allRecord);
         console.log('store creado', store);
         return store;
     }

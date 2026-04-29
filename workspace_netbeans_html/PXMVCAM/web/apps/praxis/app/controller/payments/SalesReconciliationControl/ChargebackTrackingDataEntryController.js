@@ -8,33 +8,34 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
         this.getData();
         this.loadInformationBrowser();
     },
-    getData: async function () {
+    getData: function () {
         const me = this;
         const gridCHBK = Ext.getCmp(prototype.idCHBK + '-gridCHBKTracking');
         me.view.mask('Loading...');
         me.showButtons();
-        console.log("me.view.searchParams", me.view.searchParams);
-        const { IN_CCUST, IN_SCARDN, IN_TGROSAMOUN } = me.view.searchParams;
-        const res = await global.callStoreGet('PRAXISMP', 'SQP05081', { IN_CCUST, IN_SCARDN, IN_TGROSAMOUN });
-        const data = res?.lstRs?.[0] || [];
-        if (data.length === 0) {
-            global.Msg({msg: 'No data'});
-            me.view.close();
-        } else {
-            const store = Ext.create('Ext.data.Store', {
-                data: data.map(x => {
-                    me.limpiaObjetoPX(x);
-                    if (me.view.obj.AREFNBR === x.AREFNBR) {
-                        x.main = true;
+        fetch(`${me.url}/loadChargebackTrackingInfo?${new URLSearchParams(me.view.searchParams)}`)
+                .then(async res => {
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.response.length === 0) {
+                            global.Msg({msg: 'No data'});
+                            me.view.close();
+                        }
+                        const store = Ext.create('Ext.data.Store', {
+                            data: data.response.map(x => {
+                                me.limpiaObjetoPX(x);
+                                if (me.view.obj.arefnbr === x.arefnbr) {
+                                    x.main = true;
+                                }
+                                return x;
+                            })
+                        });
+                        let bean = store.findRecord('arefnbr', me.view.obj.arefnbr);
+                        gridCHBK.setStore(store);
+                        gridCHBK.getSelectionModel().select(bean, true);
+                        //console.log(data);
                     }
-                    return x;
-                })
-            });
-            let bean = store.findRecord('AREFNBR', me.view.obj.AREFNBR);
-            gridCHBK.setStore(store);
-            gridCHBK.getSelectionModel().select(bean, true);
-        }
-        me.view.unmask();
+                }).then(() => me.view.unmask());
     },
     loadInformationBrowser: function () {
         const me = this;
@@ -45,7 +46,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
     showButtons: function () {
         const me = this;
         const match = ['1', '5', '6', '7'];
-        if (match.some(x => me.view.obj.STVAL === x)) {
+        if (match.some(x => me.view.obj.stval === x)) {
             Ext.getCmp(prototype.idCHBK + '-btn-update').hide();
             Ext.getCmp(prototype.idCHBK + '-rbOpcion').hide();
         } else {
@@ -134,39 +135,41 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
         const me = this;
         const formParams = Ext.getCmp(prototype.idCHBK + '-formCHBKBrowser').getForm();
         const browserGrid = Ext.getCmp(prototype.idCHBK + '-gridCHBKBrowser');
-        const formValues = formParams.getValues();
         let params = {
             IN_CCUST: '139',
             IN_SCARDN: me.view.searchParams.IN_SCARDN,
-            IN_DATEFROM: formValues.IN_DATEFROM,
-            IN_DATETO: formValues.IN_DATETO
+            ...formParams.getValues()
         };
         browserGrid.getView().mask('Loading...');
-        const res = await global.callStoreGet('PRAXISMP', 'SQP05182', params);
-        const data = res?.lstRs?.[0] || [];
-        const store = Ext.create('Ext.data.Store', {
-            data: data
-        });
-        browserGrid.setStore(store);
-        browserGrid.bindStore(store);
+        const res = await fetch(`${me.url}/loadChargebackTrackingBrowser?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const store = Ext.create('Ext.data.Store', {
+                data: data.response
+            });
+            browserGrid.setStore(store);
+            browserGrid.bindStore(store);
+        }
         browserGrid.getView().unmask();
     },
     loadDesgloseGrid: async function (obj) {
         let params = {
             IN_CCUST: '139',
-            IN_TDOC: obj.TDOC,
-            IN_PRDA: obj.PRDA,
-            IN_AREFNBR: obj.AREFNBR
+            IN_TDOC: obj.tdoc,
+            IN_PRDA: obj.prda,
+            IN_AREFNBR: obj.arefnbr
         };
         const desgloseGrid = Ext.getCmp(prototype.idCHBK + '-gridDesgloseCHBK');
         desgloseGrid.getView().mask('Loading...');
-        const res = await global.callStoreGet('PRAXISMP', 'SQP05072', params);
-        const data = res?.lstRs?.[0] || [];
-        const store = Ext.create('Ext.data.Store', {
-            data: data
-        });
-        desgloseGrid.setStore(store);
-        desgloseGrid.bindStore(store);
+        const res = await fetch(`${me.url}/loadErrorTransactionBPODesgloseCHBK?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const store = Ext.create('Ext.data.Store', {
+                data: data.response
+            });
+            desgloseGrid.setStore(store);
+            desgloseGrid.bindStore(store);
+        }
         desgloseGrid.getView().unmask();
     },
     loadSaleChbkGrid: async function () {
@@ -174,13 +177,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
         const gridCHBK = Ext.getCmp(prototype.idCHBK + '-gridSaleTracking');
         let params = me.formatSaleCHBKParams();
         me.view.mask('Loading...');
-        const res = await global.callStoreGet('PRAXISMP', 'SQP05312', params);
-        const data = res?.lstRs?.[0] || [];
-        let store = new Ext.data.Store({
-            autoLoad: true,
-            data: data
-        });
-        gridCHBK.setStore(store);
+        const res = await fetch(`${me.url}/loadSaleCHBKTrackingInfo?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            let store = new Ext.data.Store({
+                autoLoad: true,
+                data: data.response,
+                listeners: {
+                    load: function (store, records, successful) {
+                        const grilla = Ext.getCmp(prototype.idCHBK + '-gridSaleTracking');
+
+                    }
+                }
+            });
+            gridCHBK.setStore(store);
+        }
         me.view.unmask();
     },
     storeChangeSale: function (grid, newStore, oldStore) {
@@ -193,20 +204,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
         });
     },
     onSelectDesglose: function (rowModel, record, index) {
+        const obj = record.data;
         const desgloseGrid = Ext.getCmp(prototype.idCHBK + '-gridDesgloseCHBK');
         const registros = desgloseGrid.getSelectionModel().getSelection();
+        //console.log(registros);
         let sum = registros.reduce(function (total, item) {
-            return total + item.data['VFOP'];
+            return total + item.data['vfop'];
         }, 0);
         let formatSum = Ext.util.Format.number(sum, '0,000.00');
         Ext.getCmp(prototype.idCHBK + '-totTickets').setValue(registros.length);
         Ext.getCmp(prototype.idCHBK + '-totAmount').setValue(formatSum);
     },
     onDeselectDesglose: function (rowModel, record, index) {
+        const obj = record.data;
         const desgloseGrid = Ext.getCmp(prototype.idCHBK + '-gridDesgloseCHBK');
         const registros = desgloseGrid.getSelectionModel().getSelection();
         let sum = registros.reduce(function (total, item) {
-            return total + item.data['VFOP'];
+            return total + item.data['vfop'];
         }, 0);
         let formatSum = Ext.util.Format.number(sum, '0,000.00');
         Ext.getCmp(prototype.idCHBK + '-totTickets').setValue(registros.length);
@@ -270,10 +284,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
                     modal: true,
                     fn: function (btn) {
                         if (btn === 'yes') {
-                            me.maintenanceChbkSale(params);
+                            
                         }
                     }
                 });
+        
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Format Params">
@@ -286,20 +301,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
         const chargeback = browserGrid.getSelectionModel().getSelection().at(0).data;
         const registros = desgloseGrid.getSelectionModel().getSelection();
         let sum = registros.reduce(function (total, item) {
-            return total + item.data['VFOP'];
+            return total + item.data['vfop'];
         }, 0);
-        let difference = obj.TGROSAMOUN - sum;
+        let difference = obj.tgrosamoun - sum;
         let detail = registros.map(x => me.requestObjectPX({...x.data}));
         const {CCIA, FORMA, SERIE, PNR} = detail.at(0);
         let ticket = CCIA + FORMA + SERIE;
         let params = {
             IN_CCUST: '139',
-            IN_TDOC: chargeback.TDOC,
-            IN_PRDA: chargeback.PRDA,
-            IN_AREFNBR: chargeback.AREFNBR,
-            IN_RTDOC: obj.TDOC,
-            IN_RPRDA: obj.PRDA,
-            IN_RAREFNBR: obj.AREFNBR,
+            IN_TDOC: chargeback.tdoc,
+            IN_PRDA: chargeback.prda,
+            IN_AREFNBR: chargeback.arefnbr,
+            IN_RTDOC: obj.tdoc,
+            IN_RPRDA: obj.prda,
+            IN_RAREFNBR: obj.arefnbr,
             IN_TICKET: ticket,
             IN_SPNR: PNR,
             IN_QTYTKT: detail.length,
@@ -312,19 +327,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
     formatSaleCHBKParams: function () {
         const me = this;
         const obj = me.view.obj;
-        let cc1 = obj.SCARDN.trim().slice(0, 6);
-        let cc2 = obj.SCARDN.trim().slice(-4);
-        if (obj.PROCTYPE === 'BANORTE00') {
-            cc2 = obj.SCARDN.trim().slice(-2);
+        let cc1 = obj.scardn.trim().slice(0, 6);
+        let cc2 = obj.scardn.trim().slice(-4);
+        if (obj.proctype === 'BANORTE00') {
+            cc2 = obj.scardn.trim().slice(-2);
         }
         let scardn = `${cc1}%${cc2}%`;
         let params = {
-            IN_CCUST: obj.CCUST,
-            IN_TDOC: obj.TDOC,
-            IN_PRDA: obj.PRDA,
-            IN_AREFNBR: obj.AREFNBR,
+            IN_CCUST: obj.ccust,
+            IN_TDOC: obj.tdoc,
+            IN_PRDA: obj.prda,
+            IN_AREFNBR: obj.arefnbr,
             IN_SCARDN: scardn,
-            IN_TGROSAMOUN: obj.TGROSAMOUN
+            IN_TGROSAMOUN: obj.tgrosamoun
         };
         console.log('Parametros Sale/CHBK: ', params);
         return params;
@@ -350,31 +365,40 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
         const gridDet = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
         grid.getView().mask('Loading...');
         console.log(seleccionados);
-        let normal = seleccionados.find(x => x.data.TGROSAMOUN < 0);
-        let reverse = seleccionados.find(x => x.data.TGROSAMOUN > 0);
+        let normal = seleccionados.find(x => x.data.tgrosamoun < 0);
+        let reverse = seleccionados.find(x => x.data.tgrosamoun > 0);
         if (normal && reverse) {
             let params = {
                 IN_CCUST: '139',
-                IN_PRDA: normal.data.PRDA,
-                IN_TDOC: normal.data.TDOC,
-                IN_AREFNBR: normal.data.AREFNBR,
-                IN_RPRDA: reverse.data.PRDA,
-                IN_RTDOC: reverse.data.TDOC,
-                IN_RAREFNBR: reverse.data.AREFNBR
+                IN_PRDA: normal.data.prda,
+                IN_TDOC: normal.data.tdoc,
+                IN_AREFNBR: normal.data.arefnbr,
+                IN_RPRDA: reverse.data.prda,
+                IN_RTDOC: reverse.data.tdoc,
+                IN_RAREFNBR: reverse.data.arefnbr
             };
-            const res = await global.callStorePost('PRAXISMP', 'SQP05077', params);
-            const { SQLMSG } = res.data.lstVals;
-            Ext.toast({
-                html: `<b>${SQLMSG || 'Error in CHBK'}</b>`,
-                title: 'Notification',
-                align: 't',
-                closable: true,
-                width: 300,
-                timeout: 10000 // 10 segundos
+            const res = await fetch(`${me.url}/maintenanceChargebackTracking`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(params)
             });
-            me.getData();
-            dataEntry.getController().afterRender();
-            gridDet.getStore().load();
+            if (res.ok) {
+                const data = await res.json();
+                const {sqlres, sqlmsg} = data;
+                Ext.toast({
+                    html: `<b>${sqlmsg || 'Error in CHBK'}</b>`,
+                    title: 'Notification',
+                    align: 't',
+                    closable: true,
+                    width: 300,
+                    timeout: 10000 // 10 segundos
+                });
+                me.getData();
+                dataEntry.getController().afterRender();
+                gridDet.getStore().load();
+            }
             grid.getView().unmask();
         } else {
             Ext.toast({
@@ -394,27 +418,44 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
         const dataEntry = Ext.getCmp(prototype.id + '-TransacErrorBPODataEntry-1');
         const gridDet = Ext.getCmp(prototype.id + '-ByPaymentDetailGrid-1');
         me.view.mask('Loading...');
-        const res = await global.callStorePost('PRAXISMP', 'SQP05183', params);
-        const { SQLMSG } = res.data.lstVals;
-        Ext.toast({
-            html: `<b>${SQLMSG || 'Error in CHBK'}</b>`,
-            title: 'Notification',
-            align: 't',
-            closable: true,
-            width: 300,
-            timeout: 10000 // 10 segundos
+        const res = await fetch(`${me.url}/maintenanceChargebackManual`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
         });
-        dataEntry.getController().afterRender();
-        gridDet.getStore().load();
-        me.view.close();
+        if (res.ok) {
+            const data = await res.json();
+            const {sqlres, sqlmsg} = data;
+            Ext.toast({
+                html: `<b>${sqlmsg || 'Error in CHBK'}</b>`,
+                title: 'Notification',
+                align: 't',
+                closable: true,
+                width: 300,
+                timeout: 10000 // 10 segundos
+            });
+            dataEntry.getController().afterRender();
+            gridDet.getStore().load();
+            me.view.close();
+        }
     },
-    maintenanceChbkSale: async function(params){
-        const me = this;
-        me.view.mask('Loading...');
-        const res = await global.callStorePost('PRAXISMP', 'SQP05313', params);
-        const { IO_MESSAGE } = res.data.lstVals;
-        global.Msg({msg: IO_MESSAGE});
-        me.view.unmask();
+    maintenanceChbkSale:async function(params){
+        this.view.mask('Loading...');
+        const res = await fetch(`${me.url}/maintenanceChbkSaleConcil`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        });
+        if(res.ok){
+            const data = await res.json();
+            const {SQLRES,SQLMSG} = data;
+            global.Msg({msg:SQLMSG});
+        }
+        this.view.unmask();
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
@@ -453,3 +494,4 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
     }
     //</editor-fold>
 });
+

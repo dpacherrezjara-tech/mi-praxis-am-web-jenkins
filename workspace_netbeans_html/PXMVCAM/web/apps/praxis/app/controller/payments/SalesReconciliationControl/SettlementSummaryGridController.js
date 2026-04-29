@@ -16,28 +16,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
         view.mask('Loading...');
         const tdate = view.searchParams.IN_DATE === 'PRDA' ? 'Processing<br>Date' : 'Payment<br>Date';
         view.columns[0].setText(tdate);
-        
-        // build params additional use in detail summary settlement
-        let searchParams = Object.assign({}, view.searchParams || {});
-        searchParams.IN_MERCHANT = '';
-        searchParams.IN_PROCTYPE = '';
-        searchParams.IN_PCURRENCY = '';
-        console.log("view.searchParams params object:", searchParams);
-
-        // Use Paggin in view
-        try {
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05133', searchParams);
-            const data = res?.lstRs?.[0] || [];
-            view.setStore({
+        const res = await fetch(`${view.url}/loadSettlementSummary?${new URLSearchParams(view.searchParams)}`);
+        if (res.ok) {
+            const data = await res.json();
+            console.log(data);
+            let store = Ext.create('Ext.data.Store', {
                 pageSize: 20,
-                data,
-                proxy: { type: 'memory', enablePaging: true },
+                data: data.response,
+                proxy: {
+                    type: 'memory',
+                    enablePaging: true
+                },
                 autoLoad: true
             });
-        } finally {
-            view.unmask();
+            view.setStore(store);
         }
-   
+        view.unmask();
     },
     onClickDate: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
@@ -58,111 +52,33 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
         const me = this;
         let params = Object.assign({}, me.view.searchParams);
         params.IN_MERCHANT = 'M';
-        params.IN_DATEFROM = obj.PAYDATE ? obj.PAYDATE : obj.PRDA;
-        params.IN_DATETO = obj.PAYDATE ? obj.PAYDATE : obj.PRDA;
-        params.IN_PROCTYPE = '';
-        params.IN_PROCTYPESQ = obj.PROCTYPESQ;
-        params.IN_SCOUNTRY = obj.SCOUNTRY;
-        params.IN_SCURRENCY = obj.SCURRENCY;
-        params.IN_PCURRENCY = obj.PCURRENCY;
+        params.IN_DATEFROM = obj.paydate ? obj.paydate : obj.prda;
+        params.IN_DATETO = obj.paydate ? obj.paydate : obj.prda;
+        params.IN_PROCTYPESQ = obj.proctypesq;
+        params.IN_SCOUNTRY = obj.scountry;
+        params.IN_SCURRENCY = obj.scurrency;
+        params.IN_PCURRENCY = obj.pcurrency;
         return params;
     },
-    downloadExcel: function () {
+    downloadExcel:function(){
         const me = this;
-        const view = me.view;
-        const date = me.view.searchParams.IN_DATEFROM;
-        const nameFile = 'Settlement Summary ' + date ;
-        
-        Ext.Msg.show({
-            title: '.:PRAXIS:.',
-            msg: 'Download Excel?',
-            buttons: Ext.MessageBox.YESNO,
-            scope: this,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: async function (btn) {
-                if (btn !== 'yes') {
-                    return;
-                }
-                const store = view.getStore();
-                let allRows = [];
-                if (store) {
-                    const proxy = store.getProxy ? store.getProxy() : null;
-                    const proxyData = proxy ? (proxy.getData ? proxy.getData() : proxy.data) : null;
-
-                    // When using memory + enablePaging, proxy.data keeps the full dataset.
-                    if (Array.isArray(proxyData)) {
-                        allRows = proxyData;
-                    } else if (Array.isArray(store.getRange && store.getRange())) {
-                        allRows = store.getRange();
-                    } else if (store.getData && Array.isArray(store.getData().items)) {
-                        allRows = store.getData().items;
+        let params = Object.assign({}, me.view.searchParams);
+        params.excel = true;
+        console.log(params);
+        Ext.Msg.show(
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Download Excel?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            global.getFile(`${me.view.url}/downloadSettlementSummary?${new URLSearchParams(params)}`);
+                        }
                     }
-                }
-
-                const records = allRows.map(item => item && item.data ? item.data : item);
-                if (!records.length) {
-                    global.Msg({msg: 'No data to export'});
-                    return;
-                }
-
-                const includeMerchant = Boolean(
-                    (view.searchParams && view.searchParams.IN_MERCHANT)
-                    || records.some(r => r && r.PMERCHID)
-                );
-
-                const colorAmounts = '#B2DAFA';
-                const colorPaymentInfo = '#FCF6DC';
-                let columns = [
-                    {
-                        title: 'Processing\nDate',
-                        valueGetter: function (row) { return row.PRDA || row.PAYDATE || ''; }
-                    },
-                    {title: 'Processor', field: 'DESC_PROCTYPE'},
-                    {title: 'Country', field: 'SCOUNTRY'},
-                    {title: 'Qty\nTransactions', field: 'QTYTRN', dataAlign: 'right'},
-                    {title: 'Currency', field: 'SCURRENCY'},
-                    {title: 'Total\nAmount', field: 'TGROSAMOUN', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'GROSS\nAmount', field: 'TGROSAMOUN_WCA', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'Comm.\nAmount', field: 'DISCAMOUN', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'Comm.\nVAT', field: 'DISCAMOUNI', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'Serv. Fee', field: 'SERVICEFEE', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'Serv. Fee\nVAT', field: 'OVERCOM12', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'CHBK\nAmount', field: 'TGROSAMOUN_CB', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'CHBK\nComm.', field: 'DISCAMOUN_CB', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'CHBK\nVAT', field: 'DISCAMOUNI_CB', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'ADJU\nAmount', field: 'ADJUSTMENT', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'ADJU\nComm.', field: 'DISCAMOUN_ADJ', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'ADJU\nVAT', field: 'DISCAMOUNI_ADJ', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'TAX', field: 'TAX', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'NET Amount', field: 'NETAMOUN', dataBgColor: colorAmounts, dataAlign: 'right'},
-                    {title: 'Payment Info.\nCurrency', field: 'PCURRENCY', dataBgColor: colorPaymentInfo, dataAlign: 'right'},
-                    {title: 'Payment Info.\nTotal Amount', field: 'TGROSAMPAY', dataBgColor: colorPaymentInfo, dataAlign: 'right'},
-                    {title: 'Payment Info.\nGROSS Amount', field: 'TGROSAMPAY_WCA', dataBgColor: colorPaymentInfo, dataAlign: 'right'},
-                    {title: 'Payment Info.\nComm. Amount', field: 'SFEEAMOU', dataBgColor: colorPaymentInfo, dataAlign: 'right'},
-                    {title: 'Payment Info.\nComm. VAT', field: 'IVACOM12', dataBgColor: colorPaymentInfo, dataAlign: 'right'},
-                    {title: 'Payment Info.\nServ. Fee\nAmount', field: 'SERVICFEEP', dataBgColor: colorPaymentInfo, dataAlign: 'right'},
-                    {title: 'Payment Info.\nServ. Fee\nVAT', field: 'OVERCOM12P', dataBgColor: colorPaymentInfo, dataAlign: 'right'},
-                    {title: 'Payment Info.\nTAX', field: 'TAXP', dataBgColor: colorPaymentInfo, dataAlign: 'right'},
-                    {title: 'Payment Info.\nNET Amount\nTo receive AM', field: 'NETOPAY', dataBgColor: colorPaymentInfo, dataAlign: 'right'}
-               
-                ];
-
-                if (includeMerchant) {
-                    columns.splice(1, 0, {title: 'Merchant', field: 'PMERCHID'});
-                }
-
-                await global.writeExcelFromJsonWithStyle({
-                    data: records,
-                    name: nameFile,
-                    columns: columns,
-                    defaultHeaderBgColor: '7F98A8',
-                    defaultHeaderFontColor: '000000',
-                    defaultDataBgColor: 'FFFFFF',
-                    defaultDataFontColor: '000000'
                 });
-            }
-        });
     }
 });
 

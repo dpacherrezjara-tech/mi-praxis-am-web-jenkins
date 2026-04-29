@@ -13,6 +13,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
         me.view.mask('Loading...');
         const params = me.view.searchParams;
         const mainForm = Ext.getCmp(prototype.idDE2 + '-mainForm').getForm();
+        /*
+         const res = await fetch(`${me.url}/loadByTicketConciliationInfo?${new URLSearchParams(params)}`)
+         .catch(err => {
+         console.error(err);
+         global.Msg({msg: 'Not found'});
+         });
+         if (res.ok) {
+         const data = await res.json();
+         me.limpiaObjetoPX(data.response);
+         me.limpiaObjetoPX(data.desglose);
+         me.bean = data.response;
+         me.bean.desglose = data.desglose;
+         console.log(me.bean);
+         mainForm.reset();
+         const {a4496CIA, a4496FORMA, a4496SERIE, a4501STVAL, a4501STADM,
+         bpo_COMEN, bpo_COMEN2, adm_COMEN, a4496TKVOI, a4501PRTP, procdate} = data.response;
+         Ext.getCmp(prototype.idDE2 + '-ticketNumber').setValue(a4496CIA + ' ' + a4496FORMA + a4496SERIE);
+         Ext.getCmp(prototype.idDE2 + '-bpocoment').setValue(bpo_COMEN2 !== '' ? bpo_COMEN2 : bpo_COMEN);
+         Ext.getCmp(prototype.idDE2 + '-ADM-BPOCOMEN').setValue(adm_COMEN);
+         me.setADMInfo();
+         mainForm.setValues(data.response);
+         me.changePerspective(a4501STVAL, a4501STADM, a4496TKVOI, a4501PRTP, procdate);
+         }
+         */
         const res = await global.callStoreGet('PRAXISMP', 'SQP05126', params);
         me.bean = res.lstRs.at(0).at(0);
         me.bean.desglose = res.lstRs.at(1);
@@ -177,19 +201,31 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
     generateADM: async function (params) {
         const me = this;
         me.view.mask('Loading...');
-        const res = await global.callStorePost('PRAXISMP', 'SQP05130', params);
-        const { SQLRES, SQLMSG } = res.data.lstVals;
-        if (SQLRES === 1) {
-            Ext.toast({
-                html: `<b>${SQLMSG}</b>`,
-                title: 'Notification',
-                align: 't',
-                closable: true,
-                width: 300,
-                timeout: 10000
-            });
-            me.afterRender();
-            me.reloadTicketsGrid();
+        const res = await fetch(`${me.url}/ticketConciliationGenerateAdm`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        });
+        if (res.ok) {
+            const data = await res.json();
+            const {sqlres, sqlmsg} = data;
+            if (sqlres === 1) {
+                Ext.toast({
+                    html: `<b>${sqlmsg}</b>`,
+                    title: 'Notification',
+                    align: 't',
+                    closable: true,
+                    width: 300,
+                    timeout: 10000 // 10 segundos
+                });
+                me.afterRender();
+                me.reloadTicketsGrid();
+                //Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+            } else {
+                global.Msg({msg: 'Error'});
+            }
         } else {
             global.Msg({msg: 'Error'});
         }
@@ -198,19 +234,25 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
     reverseADM: async function (params) {
         const me = this;
         me.view.mask('Loading...');
-        const res = await global.callStorePost('PRAXISMP', 'SQP05132', params);
-        const { SQLRES, SQLMSG } = res.data.lstVals;
-        if (SQLRES === 1) {
-            Ext.toast({
-                html: `<b>${SQLMSG}</b>`,
-                title: 'Notification',
-                align: 't',
-                closable: true,
-                width: 300,
-                timeout: 10000
-            });
-            me.afterRender();
-            me.reloadTicketsGrid();
+        const res = await fetch(`${me.url}/ticketConciliationReverseADM?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const {sqlres, sqlmsg} = data;
+            if (sqlres === 1) {
+                Ext.toast({
+                    html: `<b>${sqlmsg}</b>`,
+                    title: 'Notification',
+                    align: 't',
+                    closable: true,
+                    width: 300,
+                    timeout: 10000 // 10 segundos
+                });
+                me.afterRender();
+                me.reloadTicketsGrid();
+                //Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+            } else {
+                global.Msg({msg: 'Error'});
+            }
         } else {
             global.Msg({msg: 'Error'});
         }
@@ -259,19 +301,25 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
     forceMatchVoid: async function (params) {
         const me = this;
         me.view.mask('Loading...');
-        const res = await global.callStorePost('PRAXISMP', 'SQP05141', params);
-        const { SQLRES, SQLMSG } = res.data.lstVals;
-        if (SQLRES === 1) {
-            Ext.toast({
-                html: `<b>${SQLMSG}</b>`,
-                title: 'Notification',
-                align: 't',
-                closable: true,
-                width: 300,
-                timeout: 10000
-            });
-            me.afterRender();
-            me.reloadTicketsGrid();
+        const res = await fetch(`${me.url}/ticketConciliationForceMatch?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const {sqlres, sqlmsg} = data;
+            if (sqlres === 1) {
+                Ext.toast({
+                    html: `<b>${sqlmsg}</b>`,
+                    title: 'Notification',
+                    align: 't',
+                    closable: true,
+                    width: 300,
+                    timeout: 10000 // 10 segundos
+                });
+                me.afterRender();
+                me.reloadTicketsGrid();
+                //Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+            } else {
+                global.Msg({msg: 'Error'});
+            }
         } else {
             global.Msg({msg: 'Error'});
         }
@@ -280,19 +328,25 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TicketConc
     RevForceMatchVoid: async function (params) {
         const me = this;
         me.view.mask('Loading...');
-        const res = await global.callStorePost('PRAXISMP', 'SQP05130', params);
-        const { SQLRES, SQLMSG } = res.data.lstVals;
-        if (SQLRES === 1) {
-            Ext.toast({
-                html: `<b>${SQLMSG}</b>`,
-                title: 'Notification',
-                align: 't',
-                closable: true,
-                width: 300,
-                timeout: 10000
-            });
-            me.afterRender();
-            me.reloadTicketsGrid();
+        const res = await fetch(`${me.url}/ticketConciliationRevForceMatch?${new URLSearchParams(params)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const {sqlres, sqlmsg} = data;
+            if (sqlres === 1) {
+                Ext.toast({
+                    html: `<b>${sqlmsg}</b>`,
+                    title: 'Notification',
+                    align: 't',
+                    closable: true,
+                    width: 300,
+                    timeout: 10000 // 10 segundos
+                });
+                me.afterRender();
+                me.reloadTicketsGrid();
+                //Ext.getCmp(prototype.id + '-ByTicketDetailGrid-1').getStore().load();
+            } else {
+                global.Msg({msg: 'Error'});
+            }
         } else {
             global.Msg({msg: 'Error'});
         }
