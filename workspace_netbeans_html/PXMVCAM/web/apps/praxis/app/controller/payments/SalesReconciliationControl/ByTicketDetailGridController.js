@@ -6,40 +6,34 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
             Ext.getCmp(prototype.id + '-backButtonDetail-2').hide();
         }
     },
-    afterRender: async function (obj, e) {
-        const me = this;
-        const view = me.view;
-        await this.getData({view: view});
+    afterRender: function () {
+        this.getData(this.view);
     },
-    getData: async function ({view, page}) {
-        const me = this;
-        const pageSize = 20;
-        const currentPage = page || 1;
-        let params = {
-            ...view.searchParams,
-            IO_PAGNUM: currentPage,
-            IO_PAGROW: pageSize,
-            IO_TOTPAG: 0,
-            IO_TOTROW: 0
-        };
-        view.mask('Loading...');
-        const res = await global.callStoreGet('PRAXISMP', 'SQP05089', params);
-        const data = res?.lstRs?.[0] || [];
-        const { IO_TOTROW } = res?.lstVals || {};
-        const total = parseInt(IO_TOTROW) || 0;
-        if (data.length === 0 && currentPage === 1) {
-            global.Msg({msg: 'Data not Found'});
-        }
-        let store = Ext.create('Ext.data.Store', {
-            pageSize: pageSize,
-            data: data
+    getData: function (view) {
+        const expectedParams = [
+            'IN_CCUST', 'IN_DATE', 'IN_DATEFROM', 'IN_DATETO',
+            'IN_PROCTYPE', 'IN_TRNCU', 'IN_SCOUNTRY', 'IN_FVOID',
+            'IN_TICKET', 'IN_SCARDN', 'IN_SAUTHOC', 'IN_SPNR',
+            'IN_TYPE', 'IN_STVAL', 'IN_SAGENT', 'IN_FUENT',
+            'IN_SFUEN', 'IN_TCARD', 'IN_CCARD', 'IN_SCURRENCY',
+            'IN_AMOUNT', 'IN_PAX', 'IN_TIPOD', 'IN_TFOP', 'IN_GCARD'
+        ];
+        expectedParams.forEach(param => {
+            if (!(param in view.searchParams)) {
+                view.searchParams[param] = '';
+            }
         });
-        store.totalCount = total;
-        store.currentPage = currentPage;
-        store.loadPage = function (pg) { me.getData({view, page: pg}); };
-        store.load = function () { me.getData({view, page: 1}); };
+        const store = global.callStorePaggin('PRAXISMP', 'SQP05089', view.searchParams);
+        store.on('load', function (_s, records, successful) {
+            if (!successful) {
+                global.Msg({msg: 'Data not Found'});
+            } else {
+                if (records.length === 0) {
+                    global.Msg({msg: 'Data not Found'});
+                }
+            }
+        });
         view.setStore(store);
-        view.unmask();
     },
     onClickTicket: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         const me = this;
