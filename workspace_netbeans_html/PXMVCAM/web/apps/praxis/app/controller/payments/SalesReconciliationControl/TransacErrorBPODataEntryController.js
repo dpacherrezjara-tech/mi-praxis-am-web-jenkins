@@ -9,10 +9,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
     afterRender: async function () {
         const me = this;
         me.view.setLoading(true);
-        await this.getData();
-        me.view.setLoading(false);
         me.standByComment = me.view.standByComment || [];
         me.users = me.view.users || [];
+        await this.getData();
+        me.view.setLoading(false);
     },
     getData: async function () {
         const me = this;
