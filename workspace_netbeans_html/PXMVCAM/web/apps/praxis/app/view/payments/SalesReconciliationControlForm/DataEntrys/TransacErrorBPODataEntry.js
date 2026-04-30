@@ -114,7 +114,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                 {
                                     fieldLabel: 'Sales Merchant ID',
                                     id: prototype.idDE + '-txtSMERCHID',
-                                    name: 'SMERCHIDF', //// proxima INd cambio por SMERCHID
+                                    name: 'SMERCHID',
                                     labelWidth: 120,
                                     width: 280
                                 }
