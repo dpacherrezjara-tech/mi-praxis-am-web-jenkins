@@ -16,13 +16,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
         
         let obj = me.view.obj;
         
-        let pos = obj.proctype ==='BANORTE00'? -2:-4;
+        let pos = obj.PROCTYPE === 'BANORTE00' ? -2 : -4;
         
         let params = {
-            IN_PAYDATE : obj.paydate,
-            IN_TDOC: obj.tdoc,
-            IN_SCARDN1: obj.scardn.slice(0,6),
-            IN_SCARDN2: obj.scardn.trim().slice(pos)
+            IN_PAYDATE : obj.PAYDATE,
+            IN_TDOC: obj.TDOC,
+            IN_SCARDN1: obj.SCARDN.slice(0,6),
+            IN_SCARDN2: obj.SCARDN.trim().slice(pos)
         };
         
         // console.log(params);
@@ -71,7 +71,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
         
         let objSel = seleccionados.at(0).data;
         
-        if (me.view.obj.tgrosamoun !== objSel.TGROSAMOUN) {
+        if (me.view.obj.TGROSAMOUN !== objSel.TGROSAMOUN) {
             global.Msg({msg: 'Amount not match'});
             me.view.setLoading(false);
             return;
@@ -79,9 +79,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
         
         let params = {
             IN_CCUST: '139',
-            IN_PRDA: me.view.obj.prda,
-            IN_TDOC: me.view.obj.tdoc,
-            IN_AREFNBR: me.view.obj.arefnbr,
+            IN_PRDA: me.view.obj.PRDA,
+            IN_TDOC: me.view.obj.TDOC,
+            IN_AREFNBR: me.view.obj.AREFNBR,
             IN_PRDA2: objSel.PRDA,
             IN_TDOC2: objSel.TDOC,
             IN_AREFNBR2: objSel.AREFNBR
@@ -120,7 +120,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
     },
     onChangeOption: function (obj) {
         const formParams = Ext.getCmp(prototype.idDE6 + '-liquiParams');
-        if (obj.lastValue.opcion === 'D') {
+        if (obj.lastValue.OPCION === 'D') {
             this.codadju = '02';
             formParams.hide();
         } else {
@@ -129,4 +129,3 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.PagoDuplic
         }
     }
 });
-
