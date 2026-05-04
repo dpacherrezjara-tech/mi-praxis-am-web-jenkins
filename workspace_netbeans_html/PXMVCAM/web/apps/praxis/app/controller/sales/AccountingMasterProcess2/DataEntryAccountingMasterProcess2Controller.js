@@ -192,8 +192,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                 dataentryParams.IN_FECHA_PROCESO = this.p.rec.get('A1955FPROC');
                 this.setReverse(this.p.rec);
                 break;
-               
-            case "PCADUCOS" : case "PADJMA" : 
+            case "PCADUCOS" : case "PADJMA" : case "PSALESEMDS" :
                 Ext.Msg.show({
                     title: '.:PRAXIS:.',
                     msg: 'Are you sure to delete ?',
