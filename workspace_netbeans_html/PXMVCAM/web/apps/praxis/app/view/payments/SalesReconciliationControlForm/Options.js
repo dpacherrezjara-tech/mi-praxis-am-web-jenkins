@@ -134,6 +134,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnProcessMassive',
+                            iconCls: 'prx-icon-image-process',
+                            tooltip: 'Process Massive',
+                            hidden: true,
+                            listeners: {
+                                click: 'onClickProcessMassiveBtn'
+                            }
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnAnalyzeReconciliationErrors',
                             iconCls: 'prx-icon-image-list-error',
                             tooltip: 'Analyze Reconciliation Errors',

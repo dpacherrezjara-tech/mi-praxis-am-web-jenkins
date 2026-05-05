@@ -36,7 +36,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             const dataStvalTicket   = lstRs[11]  || [];
             const dataStandByComment= lstRs[12]  || [];
             const dataFreglasForProcessMasiveTransactional = lstRs[13] || [];
-            
+            const dataProcessMassiveProgram = lstRs[14] || [];
+            const dataProcessMassiveParameter = lstRs[15] || [];
+            const dataProcessMassiveStatus = lstRs[16] || [];
 
             const quantityAnalyzePending = lstVals.IO_QUANITY_ANALYZE_PENDING;
  
@@ -48,9 +50,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.currencies = dataMonedas;
             me.users = dataAdmins.map(x => (x.A4451KEY3 || x.a4451key3 || '').toString().trim());
             me.standByComment = dataStandByComment;
-//            console.table(me.processors);
             me.freglasForProcessMasiveTransactional = dataFreglasForProcessMasiveTransactional;
-            // console.log('freglasForProcessMasiveTransactional', me.freglasForProcessMasiveTransactional); 
+            me.dataProcessMassiveProgram = dataProcessMassiveProgram;
+            me.dataProcessMassiveParameter = dataProcessMassiveParameter;
+            me.dataProcessMassiveStatus = dataProcessMassiveStatus;
 
             //<editor-fold defaultstate="collapsed" desc="Bind Combos">
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctype'),      data: dataProcessors,   valueField: 'A4451KEY2', displayField: 'A4451DESC1',   value: ''});
@@ -109,10 +112,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     showProcessBtn: function (users) {
         const userName = $('#menuUser').text();
         const lstBtns = [];
-        lstBtns.push(Ext.getCmp(prototype.id + '-btnProcess'));
-        lstBtns.push(Ext.getCmp(prototype.id + '-btnBatchAdju'));
-        lstBtns.push(Ext.getCmp(prototype.id + '-btnBatchLog'));
-        lstBtns.push(Ext.getCmp(prototype.id + '-btnConciliation'));
+        // lstBtns.push(Ext.getCmp(prototype.id + '-btnProcess'));
+        // lstBtns.push(Ext.getCmp(prototype.id + '-btnBatchAdju'));
+        // lstBtns.push(Ext.getCmp(prototype.id + '-btnBatchLog'));
+        // lstBtns.push(Ext.getCmp(prototype.id + '-btnConciliation'));
+        lstBtns.push(Ext.getCmp(prototype.id + '-btnProcessMassive'));
         const activeFilter = Ext.getCmp(prototype.id + '-filtersByPayment-1');
         if (activeFilter.isVisible()) {
             if (userName.slice(0, 3) === 'SAP') {
@@ -446,6 +450,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             id: prototype.id + '-TransactionProcessDataEntry-1',
             processors: this.processors,
             freglasForProcessMasiveTransactional: this.freglasForProcessMasiveTransactional
+        });
+        processWin.show();
+    },
+    onClickProcessMassiveBtn: function () {
+        const me = this;
+        const existingWin = Ext.getCmp(prototype.id + '-ProcessMassiveDataEntry-1');
+        if (existingWin) {
+            existingWin.close();
+        }
+        const processWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ProcessMassiveDataEntry', {
+            id: prototype.id + '-ProcessMassiveDataEntry-1',
+            processors: me.processors,
+            freglasForProcessMasiveTransactional: me.freglasForProcessMasiveTransactional,
+            dataProcessMassiveProgram: me.dataProcessMassiveProgram,
+            dataProcessMassiveParameter: me.dataProcessMassiveParameter,
+            dataProcessMassiveStatus: me.dataProcessMassiveStatus
         });
         processWin.show();
     },
