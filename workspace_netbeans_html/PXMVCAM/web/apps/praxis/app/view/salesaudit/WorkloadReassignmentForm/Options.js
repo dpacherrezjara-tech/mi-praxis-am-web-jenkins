@@ -37,7 +37,7 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Options', {
                 }
             ]
         },
-        { xtype: 'tbspacer', width: 20 },
+        {xtype: 'tbspacer', width: 20},
         {
             xtype: 'panel',
             border: true,
@@ -69,6 +69,12 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Options', {
                             id: prototype.id + '-btnClear',
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options'
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnAsigna',
+                            icon: 'resources/img/icon/process.png',
+                            tooltip: 'Automatic Assignment'
                         },
                         {
                             xtype: 'button',

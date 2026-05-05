@@ -1,10 +1,9 @@
 Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.DataEntryAsignaController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryAsignaController',
-
     beanGuardar: {},
-    urlWin01: CONTEXTPATH + '/WorkloadReassignment',
-
+    // ✅ FIX #2: afterRender ahora sí se ejecuta porque la vista lo conecta
+    //    via listeners: { afterrender: 'afterRender' }
     afterRender: function () {
         this.onLoadUsers();
         this.OnRendererPendinte();
@@ -22,7 +21,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.DataEntryAsign
             if (res.lstRs) {
                 const data = res.lstRs?.[0] || [];
 
-                data.unshift({ A4886USER: 'ALL' });
+                data.unshift({A4886USER: 'ALL'});
 
                 const cmb = Ext.getCmp(prototype.id + '-txtNewAuditor');
 
@@ -39,21 +38,32 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.DataEntryAsign
             }
 
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error cargando usuarios:', error);
         }
+    },
+
+    OnChangeTipoPendiente: function () {
+        this.OnRendererPendinte();
     },
 
     OnRendererPendinte: function () {
         var view = this.getView();
+
+        // gridDETALLE es el grid de la ventana PADRE que contiene los registros
+        // originales a reasignar. Debe existir antes de abrir esta ventana.
         var grid = Ext.getCmp(prototype.id + '-gridDETALLE');
 
-        if (!grid) return;
+        if (!grid) {
+            return;
+        }
 
         var store = grid.getStore();
-        if (!store || store.getCount() === 0) return;
+
+        if (!store || store.getCount() === 0) {
+            return;
+        }
 
         var tipo = Ext.getCmp(prototype.id + '-txtPending').getValue();
-
         var totalPending = 0;
 
         store.each(function (rec) {
@@ -70,50 +80,67 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.DataEntryAsign
                 case 'ERROR':
                     totalPending += rec.get('PEDINERROR') || 0;
                     break;
-                default:
+                default: // 'ALL'
                     totalPending +=
-                        (rec.get('PEDINMACH') || 0) +
-                        (rec.get('PEDINADM') || 0) +
-                        (rec.get('PEDINACM') || 0) +
-                        (rec.get('PEDINERROR') || 0);
+                            (rec.get('PEDINMACH') || 0) +
+                            (rec.get('PEDINADM') || 0) +
+                            (rec.get('PEDINACM') || 0) +
+                            (rec.get('PEDINERROR') || 0);
             }
         });
 
-        var totalAsignado = this.getTotalAsignado();
+        // Restar solo lo asignado en gridCarga que coincida con el tipo actual.
+        var totalAsignado = this.getTotalAsignado(tipo);
         totalPending = totalPending - totalAsignado;
 
-        if (totalPending < 0) totalPending = 0;
+        if (totalPending < 0) {
+            totalPending = 0;
+        }
 
+        // Guardar en la vista para usarlo en onClickAdd
         view.totalPending = totalPending;
 
+        // Actualizar el label
         var lbl = view.down('#lblPendientes');
-        lbl.update('<b>Pendientes:</b> ' + totalPending);
+        if (lbl) {
+            lbl.update('<b>Pendientes:</b> ' + totalPending);
+        }
     },
 
-    getTotalAsignado: function () {
+    // tipo: valor del combo Pendientes ('ALL','MACH','ADM','ACM','ERROR')
+    getTotalAsignado: function (tipo) {
         var gridCarga = Ext.getCmp(prototype.id + 'gridCarga');
         var total = 0;
 
-        if (!gridCarga) return 0;
+        if (!gridCarga) {
+            return 0;
+        }
 
         gridCarga.getStore().each(function (rec) {
-            total += rec.get('PROCE') || 0;
+            var pendingFila = rec.get('PENDING');
+            var descuenta = false;
+
+            if (tipo === 'ALL') {
+                // Viendo Todos: descuentan absolutamente todas las filas
+                descuenta = true;
+            } else if (pendingFila === tipo) {
+                // Tipo específico: solo descuenta si la fila coincide exactamente
+                descuenta = true;
+            }
+            // PENDING=null (asignado como ALL) NO descuenta en vista de tipo específico
+
+            if (descuenta) {
+                total += rec.get('PROCE') || 0;
+            }
         });
 
         return total;
     },
 
-    OnChangeTipoPendiente: function () {
-        this.OnRendererPendinte();
-    },
-
-    onCloseClick: function () {
-        this.getView().close();
-    },
-
     onClickAdd: function () {
         var auditor = Ext.getCmp(prototype.id + '-txtNewAuditor').getValue();
         var cantidad = Ext.getCmp(prototype.id + '-txtcantid').getValue();
+        var pending = Ext.getCmp(prototype.id + '-txtPending').getValue();
         var total = this.getView().totalPending || 0;
 
         if (total === 0) {
@@ -131,71 +158,99 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.DataEntryAsign
             return;
         }
 
-        var gridCarga = Ext.getCmp(prototype.id + 'gridCarga');
+        var grid = Ext.getCmp(prototype.id + 'gridCarga');
+        var existe = grid.getStore().findRecord('A1672UASIG', auditor);
 
-        // validar duplicados
-        var existe = gridCarga.getStore().findRecord('A1672UASIG', auditor);
         if (existe) {
-            global.Msg({ msg: "Ya existe el Auditor Asignado!", icon: 2 });
+            Ext.Msg.alert('.: PRAXIS :.', 'Ya existe el Auditor');
             return;
         }
 
-        gridCarga.getStore().add({
+        grid.getStore().add({
             A1672UASIG: auditor,
-            PROCE: cantidad
+            PROCE: cantidad,
+            PENDING: pending === 'ALL' ? null : pending
         });
 
         this.OnRendererPendinte();
     },
 
     OnAsignaRemove: function (grid, rowIndex) {
-        var me = this;
-        var store = grid.getStore();
-        var record = store.getAt(rowIndex);
+        grid.getStore().removeAt(rowIndex);
+        this.OnRendererPendinte();
+    },
 
+    onSaveClick: function () {
+        var me = this;
+        let notifier = new AWN();
+        let OUT_MSG = "";
+        let OUT_RES = 0;
+        var txtNewAuditor = Ext.getCmp(prototype.id + '-cmbUser').getValue();
+        //
+        var cmbTrans = Ext.getCmp(prototype.id + '-cmbTrans').getValue();
+        var txtFcmi = Ext.getCmp(prototype.id + '-txtFcmi').getValue();
+
+        if (txtNewAuditor === 'ALL')
+            txtNewAuditor = '';
+        var grid = Ext.getCmp(prototype.id + 'gridCarga');
+        var lstCarga = [];
+        //
+        grid.getStore().each(function (rec) {
+            lstCarga.push({
+                A1672UASIG: rec.get('A1672UASIG'),
+                A1672PROCE: rec.get('PROCE'),
+                A1672PENDI: rec.get('PENDING') ?? ''
+            });
+        });
+        var jsonCarga = JSON.stringify(lstCarga);
+        //
+        let params = {
+            IN_CCUST: '139',
+            IN_AUASI: txtNewAuditor,
+            IN_DATE: this.getView().params.IN_DATE,
+            IN_SOURCE: this.getView().params.IN_SOURCE,
+            IN_COUNTRY: this.getView().params.IN_COUNTRY,
+            IN_LISTASIGNA: jsonCarga,
+            IN_TRANS: cmbTrans,
+            IN_FCMI: txtFcmi
+
+        };
+        // 
         global.Msg({
-            msg: '¿Eliminar la Asignación?',
+            msg: 'Are you sure Data ?',
             icon: 3,
             buttons: 3,
-            fn: function (btn) {
+            fn: async function (btn) {      // ← async aquí es el fix
                 if (btn === 'yes') {
-                    store.remove(record);
+                    me.getView().setLoading(true);
+                    try {
+                        const res = await global.callStorePost('PXSAUDIT', 'SQP05877', params);
+                        if (res.status === 201) {
+                            OUT_RES = res.data.lstVals.OUT_RES;
+                            OUT_MSG = res.data.lstVals.OUT_MSG;
+                            Ext.getCmp(prototype.id + '-Contenedor').getController().OnDetail02();
+                            me.getView().reloadGrid();
 
-                    me.OnRendererPendinte();
+                        } else {
+                            OUT_MSG = 'Bad Request';
+                        }
+                    } catch (e) {
+                        OUT_MSG = 'Update Failed';
+                    } finally {
+                        me.getView().setLoading(false);
+                        if (OUT_RES === 1) {
+                            me.getView().close();
+                            notifier.success(OUT_MSG);
+                        } else {
+                            notifier.alert(OUT_MSG);
+                        }
+                    }
                 }
             }
         });
     },
 
-    onSaveClick: async function () {
-        var me = this;
-        var grid = Ext.getCmp(prototype.id + 'gridCarga');
-
-        var lstCarga = [];
-
-        grid.getStore().each(function (rec) {
-            lstCarga.push({
-                A1672UASIG: rec.get('A1672UASIG'),
-                PROCE: rec.get('PROCE')
-            });
-        });
-
-        let params = {
-            IN_LISTASIGNA: JSON.stringify(lstCarga)
-        };
-
-        try {
-            const res = await global.callStorePost('PRAXIS', 'SQP05877', params);
-
-            if (res.status === 201) {
-                notifier.success(res.data.lstVals.OUT_MSG);
-                me.getView().close();
-            } else {
-                notifier.alert('Error en la operación');
-            }
-
-        } catch (e) {
-            notifier.alert('Error al guardar');
-        }
+    onCloseClick: function () {
+        this.getView().close();
     }
 });
