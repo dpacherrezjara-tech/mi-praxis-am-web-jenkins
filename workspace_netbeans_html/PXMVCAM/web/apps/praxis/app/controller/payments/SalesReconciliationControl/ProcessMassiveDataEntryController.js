@@ -34,7 +34,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ProcessMas
         // Ocultar y resetear TODOS los campos dinamicos primero
         const dynamicFields = [
             { id: prototype.idPM + '-executeFrom',  isDate: true  },
-            { id: prototype.idPM + '-executedTo',   isDate: true  },
+            { id: prototype.idPM + '-executeTo',    isDate: true  },
             { id: prototype.idPM + '-cmbProcessor', isDate: false },
             { id: prototype.idPM + '-cmbPriority',  isDate: false }
         ];
