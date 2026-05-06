@@ -9,8 +9,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
     controller: 'ProcessMassiveDataEntryController',
     title: 'Process Massive',
     header: true,
-    width: 1200,
-    height: 600,
+    width: 1250,
+    height: 700,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                         },
                         {
                             xtype: 'datefield',
-                            id: prototype.idPM + '-fieldFrom',
+                            id: prototype.idPM + '-executeFrom',
                             fieldLabel: 'From',
                             format: 'Ymd',
                             editable: false,
@@ -73,11 +73,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                             value: new Date(anioActual, mesActual, 1),
                             validator: 'validaFecha',
                             labelAlign: 'right',
-                            hidden: true
+                            hidden: true,
+                            listeners: {
+                                change: 'onChangeDate'
+                            },
                         },
                         {
                             xtype: 'datefield',
-                            id: prototype.idPM + '-fieldTo',
+                            id: prototype.idPM + '-executeTo',
                             fieldLabel: 'To',
                             format: 'Ymd',
                             editable: false,
@@ -86,7 +89,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                             value: fechaActual,
                             validator: 'validaFecha',
                             labelAlign: 'right',
-                            hidden: true
+                            hidden: true,
+                            listeners: {
+                                change: 'onChangeDate'
+                            },
                         },
                         {
                             xtype: 'combo',
@@ -202,7 +208,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                     value: new Date(anioActual, mesActual, 1),
                                     validator: 'validaFecha',
                                     labelAlign: 'right',
-                                    tooltip: 'Filtro para Date Process'
+                                    tooltip: 'Filtro para Date Process',
+                                    listeners: {
+                                        change: 'onChangeDate'
+                                    },
                                 },
                                 {
                                     xtype: 'datefield',
@@ -215,7 +224,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                     value: fechaActual,
                                     validator: 'validaFecha',
                                     labelAlign: 'right',
-                                    tooltip: 'Filtro para Date Process'
+                                    tooltip: 'Filtro para Date Process',
+                                    listeners: {
+                                        change: 'onChangeDate'
+                                    },
                                 },
                                 {
                                     xtype: 'combo',
@@ -275,7 +287,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                     {
                                         text: 'Process',
                                         dataIndex: 'PROGRAM_DESCRIPTION',
-                                        width: 140
+                                        width: 150
                                     },
                                     {
                                         text: 'Processing Date',
@@ -303,15 +315,41 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                         width: 120
                                     },
                                     {
-                                        text: 'Total', dataIndex: 'TOTAL', width: 80
+                                        text: 'Total',
+                                        dataIndex: 'TOTAL',
+                                        width: 70,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            if (value > 0) {
+                                                metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;font-weight:bolder;color:blue;";
+                                                metaData.tdAttr = 'data-qtip="Click for total details"';
+                                                return '<a href="#" style="color:inherit;text-decoration:inherit;">' + value + '</a>';
+                                            } else {
+                                                metaData.style = "text-align:center;";
+                                                return value || 0;
+                                            }
+                                        },
+
                                     },
                                     {
-                                        text: 'Matchs', dataIndex: 'MATCHS', width: 80
+                                        text: 'Success',
+                                        dataIndex: 'SUCCESS',
+                                        width: 70,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            if (value > 0) {
+                                                metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;font-weight:bolder;color:green;";
+                                                metaData.tdAttr = 'data-qtip="Click for success details"';
+                                                return '<a href="#" style="color:inherit;text-decoration:inherit;">' + value + '</a>';
+                                            } else {
+                                                metaData.style = "text-align:center;";
+                                                return value || 0;
+                                            }
+                                        },
+
                                     },
                                     {
                                         text: 'Errors',
                                         dataIndex: 'ERRORS',
-                                        width: 80,
+                                        width: 70,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             // value ya contiene el valor de ERRORS
                                             if (value > 0) {
@@ -323,15 +361,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                                 return value || 0;
                                             }
                                         },
-                                        listeners: {
-                                            click: function(grid, td, cellIndex, value, tr, rowIndex, e, eOpts) {
-                                                // value es el valor directo de la celda 'ERRORS', no record.get
-                                                if (value > 0) {
-                                                    this.fireEvent('onClickErrors', grid, td, cellIndex, value, tr, rowIndex, e, eOpts);
-                                                }
-                                            }
-                                        }
+
                                     },
+                         
                                     {
                                         text: 'Status',
                                         dataIndex: 'STATUS_DESCRIPTION',
@@ -366,7 +398,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                     {
                                         text: 'Description',
                                         dataIndex: 'DESCRIP',
-                                        width: 160,
+                                        flex: 1,
+                                        minWidth: 100,
                                         align: 'center',
                                         renderer: function(value, metaData) {
                                             metaData.style = 'text-align:left;';
@@ -380,12 +413,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                         }
                                     },
                                     {
-                                        text: 'User', dataIndex: 'USCR', width: 80
-                                    },
-                                    {
-                                        text: 'Date<br>Process', dataIndex: 'FECR', width: 80
-                                    },
-                            
+                                        text: 'Created',
+                                        columns: [
+                                            {
+                                                text: 'User',
+                                                dataIndex: 'USCR',
+                                                width: 90,
+                                                align: 'center',
+                                            },
+                                            {
+                                                text: 'Date',
+                                                dataIndex: 'FECR',
+                                                width: 80,
+                                                align: 'center',
+                                            },
+                                            {
+                                                text: 'Hour',
+                                                dataIndex: 'HOCR',
+                                                width: 60,
+                                                align: 'center',
+                                            }
+                                        ]
+                                    },                            
                                 ]
                             },
                             bbar: {
@@ -394,8 +443,215 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                 displayInfo: true,
                                 displayMsg: 'Records {0} - {1} of {2}',
                                 emptyMsg: 'No records to display'
+                            },
+                            listeners: {
+                                cellclick: 'onGridCellClick'
                             }
+                        },
+                        //<editor-fold defaultstate="collapsed" desc="Detail Panel">
+                        {
+                            xtype: 'panel',
+                            id: prototype.idPM + '-detailPanel',
+                            flex: 1,
+                            hidden: true,
+                            border: false,
+                            layout: {
+                                type: 'vbox',
+                                align: 'stretch'
+                            },
+                            items: [
+                                {
+                                    xtype: 'toolbar',
+                                    border: false,
+                                    margin: '0 0 0 0',
+                                    layout: {
+                                        pack: 'end'
+                                    },
+                                    defaults: {
+                                        scale: 'small'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            scale: 'small',
+                                            iconCls: 'prx-icon-back',
+                                            width: 25,
+                                            tooltip: 'Back',
+                                            listeners: {
+                                                click: 'onClickBack'
+                                            }
+                                        },
+                                        {
+                                            id: prototype.idPM + '-downloadDetailExcel',
+                                            xtype: 'button',
+                                            iconCls: 'prx-icon-excel',
+                                            scale: 'small',
+                                            //hidden: true,
+                                            tooltip: 'Export to Excel',
+                                            listeners: {
+                                                click: 'onClickdownloadDetailExcel'
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.idPM + '-gridDetail',
+                                    flex: 1,
+                                    border: false,
+                                    store: Ext.create('Ext.data.Store', { data: [] }),
+                                    emptyText: 'No detail records found',
+                                    viewConfig: {
+                                        stripeRows: true,
+                                        enableTextSelection: true,
+                                        markDirty: false
+                                    },
+                                    columns: {
+                                        defaults: {
+                                            align: 'center',
+                                            menuDisabled: true,
+                                            sortable: true
+                                        },
+                                        items: [
+                                            {
+                                                text: 'RN',
+                                                xtype: 'rownumberer',
+                                                width: 40
+                                            },
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 40,
+                                                text: 'Open',
+                                                locked: true,
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-detail',
+                                                        tooltip: 'Open Detail',
+                                                        handler: 'onClickOpenByPayment'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Processing<br>Date',
+                                                dataIndex: 'PRDA',
+                                                width: 80,
+                                            },
+                                            {
+                                                text: 'Ref. Number',
+                                                dataIndex: 'AREFNBR',
+                                                width: 150
+                                            },
+                                            {
+                                                text: 'Doc.<br>Type',
+                                                dataIndex: 'TRANSTYPE',
+                                                width: 60
+                                            },
+                                            {
+                                                text: 'Card Number',
+                                                dataIndex: 'SCARDN',
+                                                width: 130
+                                            },
+                                            {
+                                                text: 'Auth.<br>Code',
+                                                dataIndex: 'SAUTHOC',
+                                                width: 70
+                                            },
+                                            {
+                                                text: 'Sale<br>Date',
+                                                dataIndex: 'SDATE',
+                                                width: 70
+                                            },
+                                            {
+                                                text: 'Currency',
+                                                dataIndex: 'SCURRENCY',
+                                                width: 70
+                                            },
+                                            {
+                                                text: 'Amount',
+                                                dataIndex: 'TGROSAMOUN',
+                                                width: 110,
+                                                xtype: 'numbercolumn',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                }
+                                            },
+                                            {
+                                                text: 'ARN',
+                                                dataIndex: 'ARN',
+                                                width: 130
+                                            },
+                                            {
+                                                text: 'Processor',
+                                                dataIndex: 'PROCESSOR_DESCRIPTION',
+                                                width: 110,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background-color:#FCF6DC;font-weight:bold;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Success',
+                                                dataIndex: 'ISSUCCESS',
+                                                width: 70,
+                                                renderer: function (value, metaData) {
+                                                    if (value === 1 || value === '1') {
+                                                        metaData.style = 'color:green;font-weight:bold;';
+                                                        return 'Yes';
+                                                    }
+                                                    return '';
+                                                }
+                                            },
+                                            {
+                                                text: 'Error',
+                                                dataIndex: 'ISERROR',
+                                                width: 70,
+                                                renderer: function (value, metaData) {
+                                                    if (value === 1 || value === '1') {
+                                                        metaData.style = 'color:red;font-weight:bold;';
+                                                        return 'Yes';
+                                                    }
+                                                    return '';
+                                                }
+                                            },
+                                            {
+                                                text: 'Created',
+                                                columns: [
+                                                    {
+                                                        text: 'User',
+                                                        dataIndex: 'USCR',
+                                                        width: 90,
+                                                        align: 'center',
+                                                    },
+                                                    {
+                                                        text: 'Date',
+                                                        dataIndex: 'FECR',
+                                                        width: 80,
+                                                        align: 'center',
+                                                    },
+                                                    {
+                                                        text: 'Hour',
+                                                        dataIndex: 'HOCR',
+                                                        width: 60,
+                                                        align: 'center',
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    bbar: {
+                                        xtype: 'pagingtoolbar',
+                                        id: prototype.idPM + '-gridDetailPagingBar',
+                                        displayInfo: true,
+                                        displayMsg: 'Records {0} - {1} of {2}',
+                                        emptyMsg: 'No records to display'
+                                    }
+                                }
+                            ]
                         }
+                        //</editor-fold>
                     ]
                 }
                 //</editor-fold>

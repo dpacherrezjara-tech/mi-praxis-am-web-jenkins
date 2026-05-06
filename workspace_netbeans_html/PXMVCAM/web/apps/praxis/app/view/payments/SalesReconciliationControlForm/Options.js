@@ -66,42 +66,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Options', {
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnConciliation',
-                            iconCls: 'prx-icon-reload',
-                            tooltip: 'Run Conciliation',
-                            hidden: true,
-                            listeners: {
-                                click: 'onClickConciliationBtn'
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnProcess',
-                            iconCls: 'prx-icon-image-process',
-                            tooltip: 'Process',
-                            hidden: true,
-                            listeners: {
-                                click: 'onClickProcessBtn'
-                            }
-                        },
-                        {
-                            xtype: 'button',
                             id: prototype.id + '-btnBatchAdju',
                             iconCls: 'prx-icon-processing',
                             tooltip: 'Batch Adjustment',
                             hidden: true,
                             listeners: {
                                 click: 'onClickBatchAdjuBtn'
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnBatchLog',
-                            iconCls: 'prx-icon-image-log',
-                            tooltip: 'Batch Log',
-                            hidden: true,
-                            listeners: {
-                                click: 'onClickBatchLogBtn'
                             }
                         },
                         {
