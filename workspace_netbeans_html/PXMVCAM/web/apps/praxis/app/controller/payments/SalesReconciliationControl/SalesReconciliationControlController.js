@@ -445,14 +445,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             cmbCard.show();
         }
     },
-    onClickProcessBtn: function () {
-        const processWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransactionProcessDataEntry', {
-            id: prototype.id + '-TransactionProcessDataEntry-1',
-            processors: this.processors,
-            freglasForProcessMasiveTransactional: this.freglasForProcessMasiveTransactional
-        });
-        processWin.show();
-    },
     onClickProcessMassiveBtn: function () {
         const me = this;
         const existingWin = Ext.getCmp(prototype.id + '-ProcessMassiveDataEntry-1');
@@ -562,48 +554,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             processors: this.processors
         });
         manualBatch.show();
-    },
-    onClickBatchLogBtn: function () {
-        const logBatch = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.BatchLogDataEntry', {
-            id: prototype.id + '-BatchLogDataEntry-1'
-        });
-        logBatch.show();
-    },
-    onClickConciliationBtn: function () {
-        const me = this;
-        Ext.Msg.show(
-                {
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to run Conciliation?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-                            me.runConciliation();
-                        }
-                    }
-                });
-    },
-    //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="Procesos">
-    runConciliation: async function () {
-        let params = {
-            VP_CCUST: '139',
-            VP_PROCESO: 'CONCILIA'
-        };
-        try {
-            const res = await global.callStorePostAsync('PRAXISMP', 'SQP05304', params);
-            const record = res?.lstRs?.[0]?.[0] || {};
-            if (record.RESULT === 'P') {
-                global.Msg({msg: 'Starting Process'});
-            } else {
-                global.Msg({msg: 'Process is already running'});
-            }
-        } catch (e) {
-            global.Msg({msg: 'Error on Process'});
-        }
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">

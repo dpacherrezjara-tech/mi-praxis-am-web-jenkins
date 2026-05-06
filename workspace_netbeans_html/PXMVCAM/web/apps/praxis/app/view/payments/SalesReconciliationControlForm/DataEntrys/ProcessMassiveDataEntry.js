@@ -573,7 +573,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                                 dataIndex: 'TGROSAMOUN',
                                                 width: 110,
                                                 xtype: 'numbercolumn',
-                                                format: '0,0.00'
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#c0f0af;font-weight:bold;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                }
                                             },
                                             {
                                                 text: 'ARN',
@@ -583,7 +586,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                             {
                                                 text: 'Processor',
                                                 dataIndex: 'PROCESSOR_DESCRIPTION',
-                                                width: 110
+                                                width: 110,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background-color:#FCF6DC;font-weight:bold;";
+                                                    return value;
+                                                }
                                             },
                                             {
                                                 text: 'Success',
