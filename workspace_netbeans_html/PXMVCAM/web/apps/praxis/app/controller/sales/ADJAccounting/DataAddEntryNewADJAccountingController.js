@@ -688,7 +688,7 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataAddEntryNewADJAccounti
             global.Msg({msg: 'Required Field, Must enter the account number'});
             return;
         }
-        if (Ext.String.trim(AccountNumber).length !== 36) {
+        if (Ext.String.trim(AccountNumber).length !== 35) {
             Ext.getCmp(prototype.idadjaddnew + '-de-AccountNumber1').focus();
             global.Msg({msg: 'Required Field, The account number must be 35 characters'});
             return;
