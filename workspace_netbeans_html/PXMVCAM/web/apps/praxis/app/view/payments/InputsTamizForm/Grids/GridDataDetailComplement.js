@@ -1,8 +1,4 @@
-/* 
- * @Dvicente
- */
-
-Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridDataDetailC', {
+Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataDetailComplement', {
     extend: 'Ext.panel.Panel',
     height: 650,
     width: 1400,
