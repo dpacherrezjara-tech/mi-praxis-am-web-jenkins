@@ -65,7 +65,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataSummary', {
                                             return value;
                                         },
                                         listeners: {
-                                            click: 'onClickReceived'
+                                            click: 'onClickReceivedProcessor'
                                         }
                                     },
                                     {text: 'Loaded', dataIndex: 'LOADED', width: 70, align: 'center',
@@ -78,7 +78,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataSummary', {
                                             return value;
                                         },
                                         listeners: {
-                                            click: 'onClickLoaded'
+                                            click: 'onClickLoadedProcessor'
                                         }
                                     },
                                     {text: 'Exonerated', dataIndex: 'EXONERATED', width: 90, align: 'center',
@@ -91,7 +91,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataSummary', {
                                             return value;
                                         },
                                         listeners: {
-                                            click: 'onClickExonerados'
+                                            click: 'onClickExoneradosProcessor'
                                         }
                                     },
                                     {
@@ -100,15 +100,15 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataSummary', {
                                         width: 90, 
                                         align: 'center',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = 'background:#A7ECC9;color:red;text-align:center;font-weight: bold;';
+                                            let meStyle = 'background:#A7ECC9;color:red;text-align:center;font-weight: bold;';
                                             if (value > 0) {
                                                 meStyle += 'cursor:pointer;text-decoration: underline;';
                                             }
                                             metaData.style = meStyle;
-                                            return value;
+                                            return value || 0;
                                         },
                                         listeners: {
-                                            click: 'onClickByPayment'                          
+                                            click: 'onClickByPaymentProcessor'                          
                                         }
                                     },
                                
@@ -182,7 +182,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataSummary', {
                                     return value;
                                 },
                                 listeners: {
-                                    click: 'onClickReceivedC'
+                                    click: 'onClickReceivedComplement'
                                 }
                             },
                             {text: 'Loaded', dataIndex: 'LOADED', width: 80,
@@ -191,7 +191,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataSummary', {
                                     return value;
                                 },
                                 listeners: {
-                                    click: 'onClickLoadedC'
+                                    click: 'onClickLoadedComplement'
                                 }
                             },
                             {text: 'Difference', dataIndex: 'DIFFERENCE', width: 80,

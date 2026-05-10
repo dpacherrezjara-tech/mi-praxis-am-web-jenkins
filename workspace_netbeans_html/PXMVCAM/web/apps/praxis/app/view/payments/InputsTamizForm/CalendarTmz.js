@@ -42,15 +42,19 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                         pack: 'end'
                     },
                     width: 1400,
-                    height: 30,
+                    height: 32,
                     border: false,
+                    bodyStyle: 'background-color:#FFFFFF;',
                     defaults: {
                         xtype: 'label',
-                        //margin: '10 0 0 10', // Margen para separar la etiqueta de otros componentes
                         padding: 5,
                         style: {
-                            textAlign: 'center', // Centro el texto horizontalmente
-                            fontWeight: 'bold'
+                            textAlign: 'center',
+                            fontWeight: 'bold',
+                            color: '#555',
+                            fontSize: '11px',
+                            letterSpacing: '1px',
+                            textTransform: 'uppercase'
                         }
                     },
                     items: [
@@ -79,7 +83,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                         type: 'hbox'
                     },
                     width: 1400,
-                    height: 550,
+                    height: 548,
                     autoScroll: true,
                     border: false,
                     items: [
@@ -93,13 +97,17 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                             },
                             width: 100,
                             border: true,
+                            bodyStyle: 'background-color:#FFFFFF;',
                             defaults: {
                                 xtype: 'label',
                                 style: {
-                                    textAlign: 'center', // Centro el texto horizontalmente
+                                    textAlign: 'center',
                                     'line-height': '115px',
                                     backgroundColor: 'transparent',
-                                    fontWeight: 'bold'
+                                    fontWeight: 'bold',
+                                    color: '#555',
+                                    fontSize: '13px',
+                                    letterSpacing: '1px'
                                 }
                             },
                             items: me.mesesAnual.map(x => {
@@ -178,107 +186,32 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                                     };
                                     let filtrado = fechas.filter(x => x.index === i);
                                     filtrado.forEach(x => {
-                                        //<editor-fold defaultstate="collapsed" desc="boton fecha">
-                                        const sts = {
-                                            'ok': {
-                                                style: {
-                                                    backgroundColor: 'transparent',
-                                                    color: 'green',
-                                                    fontWeight: 'bold',
-                                                    cursor: 'pointer'
-                                                },
-                                                listeners: {
-                                                    afterrender: function (label) {
-                                                        label.getEl().on('click', function () {
-                                                            me.clickCallback(label);
-                                                        });
-                                                    }
-                                                }
-                                            },
-                                            'incomplete': {
-                                                style: {
-                                                    backgroundColor: 'transparent',
-                                                    color: 'yellow',
-                                                    fontWeight: 'bold',
-                                                    cursor: 'pointer'
-                                                },
-                                                listeners: {
-                                                    afterrender: function (label) {
-                                                        label.getEl().on('click', function () {
-                                                            me.clickCallback(label);
-                                                        });
-                                                    }
-                                                }
-                                            },
-                                            'not found': {
-                                                style: {
-                                                    backgroundColor: 'transparent',
-                                                    color: 'black',
-                                                    fontWeight: 'bold',
-                                                    cursor: 'pointer'
-                                                },
-                                                listeners: {
-                                                    afterrender: function (label) {
-                                                        label.getEl().on('click', function () {
-                                                            me.clickCallback(label);
-                                                        });
-                                                    }
-                                                }
-                                            },
-                                            'not received': {
-                                                style: {
-                                                    backgroundColor: 'transparent',
-                                                    color: 'red',
-                                                    fontWeight: 'bold',
-                                                    cursor: 'pointer'
-                                                },
-                                                listeners: {
-                                                    afterrender: function (label) {
-                                                        label.getEl().on('click', function () {
-                                                            me.clickCallback(label);
-                                                        });
-                                                    }
-                                                }
-                                            },
-                                            'awaiting settlement': {
-                                                style: {
-                                                    backgroundColor: 'transparent',
-                                                    color: 'gray',
-                                                    fontWeight: 'bold',
-                                                    cursor: 'pointer'
-                                                },
-                                                listeners: {
-                                                    afterrender: function (label) {
-                                                        label.getEl().on('click', function () {
-                                                            me.clickCallback(label);
-                                                        });
-                                                    }
-                                                }
-                                            },
-                                            'with observation': {
-                                                style: {
-                                                    backgroundColor: 'transparent',
-                                                    color: 'blue',
-                                                    fontWeight: 'bold',
-                                                    cursor: 'pointer'
-                                                },
-                                                listeners: {
-                                                    afterrender: function (label) {
-                                                        label.getEl().on('click', function () {
-                                                            me.clickCallback(label);
-                                                        });
-                                                    }
-                                                }
-                                            },
+                                        const statusStyles = {
+                                            'OK':                  {bg: '#27ae60', color: '#fff'},
+                                            'INCOMPLETE':          {bg: '#f1c40f', color: '#2c3e50'},
+                                            'UNSCHEDULED':         {bg: '#2c3e50', color: '#fff'},
+                                            'NOT RECEIVED':        {bg: '#e74c3c', color: '#fff'},
+                                            'AWAITING SETTLEMENT': {bg: '#95a5a6', color: '#fff'},
+                                            'WITH OBSERVATION':    {bg: '#2980b9', color: '#fff'}
                                         };
-                                        //</editor-fold>
-                                        let props = {...sts[x.status]};
+                                        const sSt = statusStyles[x.status];
+                                        const dayNum = x.fecha || '';
+                                        const cellHtml = sSt && dayNum
+                                            ? `<div title="${x.status}" style="background:${sSt.bg};color:${sSt.color};border-radius:4px;font-size:9px;font-weight:bold;text-align:center;line-height:16px;width:100%;cursor:pointer;">${dayNum}</div>`
+                                            : `<div style="text-align:center;line-height:16px;font-size:9px;color:#bdc3c7;">${dayNum}</div>`;
+                                        const cellListeners = (sSt && dayNum) ? {
+                                            afterrender: function (label) {
+                                                label.getEl().on('click', function () {
+                                                    me.clickCallback(label);
+                                                });
+                                            }
+                                        } : {};
                                         componente.items.push({
-                                            text: x.fecha, //.substring(6, 8),
+                                            html: cellHtml,
                                             id: prototype.id + `-${!x.procesador ? 'none' : x.procesador}-m${e}-d${x}-f${x.rn}`,
-                                            fecha:x.fecha,
-                                            procesador:!x.procesador ? 'none' : x.procesador,
-                                            ...props
+                                            fecha: x.fecha,
+                                            procesador: !x.procesador ? 'none' : x.procesador,
+                                            listeners: cellListeners
                                         });
                                     });
                                     componentes.push(componente);
@@ -290,7 +223,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                                     id: prototype.id + `-mes-${e}`,
                                     width: 1200,
                                     height: 140,
-                                    bodyStyle: index%2===0?'background-color: #A7B4BD;':'background-color: #B3C0CA;',
+                                    bodyStyle: index%2===0?'background-color:#ecf0f1;':'background-color:#dfe6e9;',
                                     defaults: {
                                         xtype: 'panel',
                                         flex: 1,
@@ -308,6 +241,24 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                         },
                                 //</editor-fold>
                     ]
+                },
+                {
+                    xtype: 'panel',
+                    border: false,
+                    width: 1400,
+                    height: 26,
+                    layout: {type: 'hbox', align: 'middle'},
+                    bodyStyle: 'background-color:#f8f9fa; padding:0 10px; border-top:1px solid #dee2e6;',
+                    defaults: {xtype: 'label', margin: '0 5px 0 0', style: {fontSize: '10px', lineHeight: '18px'}},
+                    items: [
+                        {html: '<strong style="font-size:10px;color:#555;">Legend:</strong>'},
+                        {html: '<span style="background:#27ae60;color:#fff;border-radius:3px;padding:1px 6px;">OK</span>'},
+                        {html: '<span style="background:#f1c40f;color:#2c3e50;border-radius:3px;padding:1px 6px;">Incomplete</span>'},
+                        {html: '<span style="background:#e74c3c;color:#fff;border-radius:3px;padding:1px 6px;">Not Received</span>'},
+                        {html: '<span style="background:#2c3e50;color:#fff;border-radius:3px;padding:1px 6px;">Unscheduled</span>'},
+                        {html: '<span style="background:#95a5a6;color:#fff;border-radius:3px;padding:1px 6px;">Awaiting Settlement</span>'},
+                        {html: '<span style="background:#2980b9;color:#fff;border-radius:3px;padding:1px 6px;">With Observation</span>'}
+                    ]
                 }
             ]
         };
@@ -318,28 +269,23 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
     actualizarCalendario: function () {
         let me = this;
         const fechasAnio = me.getFechasCalendario(me.anio);
-        const fechasProceso = me.dataFechas;
+        const fechasProceso = me.dataFechas || [];
         const response = [];
         me.mesesAnual.forEach((e, index) => {
             response[index + 1] = []
         });
+        const processorDefault = fechasProceso.length > 0 ? fechasProceso[0].PROCESSOR : '';
         fechasAnio.forEach((element) => {
-            //let mes = me.mesesAnual[index-1];
             let mes = parseInt(element.fecha.substring(4, 6));
             let obj = {};
             obj.fecha = element.fecha;
             obj.index = element.index;
-            let fechaProceso = fechasProceso.find(y => y.fecha === element.fecha);
-            //console.log(fechaProceso);
-            fechaProceso ?
-                    obj.status = fechaProceso.status : obj.status = 'none';
-            obj.procesador = fechasProceso[0].procesador;
+            let fechaProceso = fechasProceso.find(y => y.DAY === element.fecha);
+            obj.status = fechaProceso ? fechaProceso.STATUS : 'none';
+            obj.procesador = processorDefault;
             response[mes].push(obj);
-
         });
-        //console.log(response.filter(x=>x!==undefined));
         me.fechas = response.filter(x => x !== undefined);
-
     },
     getFechasCalendario: function (anioStr) {
         const anio = parseInt(anioStr);
