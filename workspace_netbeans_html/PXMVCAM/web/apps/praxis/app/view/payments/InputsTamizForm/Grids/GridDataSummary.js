@@ -100,7 +100,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataSummary', {
                                         width: 90, 
                                         align: 'center',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            let meStyle = 'background:#A7ECC9;color:red;text-align:center;font-weight: bold;';
+                                            let meStyle = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;';
                                             if (value > 0) {
                                                 meStyle += 'cursor:pointer;text-decoration: underline;';
                                             }
@@ -112,9 +112,19 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataSummary', {
                                         }
                                     },
                                
-                                    {text: 'Loaded vs<br>By Payment', dataIndex: 'LOADED_VS_BY_PAYMENT', width: 90, align: 'center',
+                                    {
+                                        text: 'Loaded vs<br>By Payment', 
+                                        dataIndex: 'LOADED_VS_BY_PAYMENT', 
+                                        width: 90, 
+                                        align: 'center',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = 'background:#A7ECC9;color:red;text-align:center;font-weight: bold;';
+                                            let style = 'background:#A7ECC9;text-align:center;font-weight: bold;';
+                                            if (value > 0) {
+                                                style += 'color:red;';
+                                            } else {
+                                                style += 'color:#256892;';
+                                            }
+                                            metaData.style = style;
                                             return value;
                                         }
                                     }
