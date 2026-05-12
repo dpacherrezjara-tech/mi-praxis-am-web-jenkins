@@ -124,7 +124,6 @@ public class AccountingMasterProcess2Controller extends BaseController {
             if(strOption.equals("D")){                
                 switch(filter.A1955MODUL){
                     case "PSALES" :
-                    //case "PSALESEMDS" :
                         logic.reversaSales(reversa,"ASR","S");
                         logic.reversaSales(reversa,"BSP","S");
                         logic.reversaSales(reversa,"ARC","S");
@@ -135,7 +134,6 @@ public class AccountingMasterProcess2Controller extends BaseController {
                         }                
                         logic.reversaSalesReg(reversa.IN_FECHA_PROCESO,"", "F");
                         break;
-                        
                     case "PFLOWN" :
                         logic.reversaFlown(filter);
                         break;                        
