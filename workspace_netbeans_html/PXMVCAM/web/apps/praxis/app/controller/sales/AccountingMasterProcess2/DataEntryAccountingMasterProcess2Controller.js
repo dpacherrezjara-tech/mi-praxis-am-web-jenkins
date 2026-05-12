@@ -205,6 +205,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                             this.view.params.action = "D";
                             this.llenarData();
                             //console.log(this.beanOption);
+                            
                             this.crud();
                         }
                     }
@@ -301,7 +302,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                         msg: msg,
                         icon: icon,
                         fn: function() {
-                            if (msg==='RECORD INSERTED') {
+                            if (msg==='RECORD INSERTED' ||msg==='RECORD REMOVED') {
                                 Ext.getCmp('DataEntryAccountingMasterProcess2Form').close(),
                                 Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                             }
