@@ -1099,17 +1099,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             gridDesglose.hide();
             gridDesgloseCHBK.show();
             const res = await global.callStoreGet('PRAXISMP', 'SQP05072', params);
-            const chbkData = res?.lstRs?.[0] || [];
-            console.log(chbkData);
-            me.dataDesglose = chbkData;
-            const storeDesglose = Ext.create('Ext.data.Store', {
-                data: chbkData
-            });
-            gridDesgloseCHBK.setStore(storeDesglose);
-            const qtyc = Ext.getCmp(prototype.idDE + '-totDCTickets');
-            const amtc = Ext.getCmp(prototype.idDE + '-totDCAmount');
-            qtyc.setValue(chbkData.length);
-            amtc.setValue(Ext.util.Format.number(storeDesglose.sum('VFOP'), '0,000.00'));
+            if (res.lstRs.length > 0) {
+                me.dataDesglose = res.lstRs.at(0);
+                me.dataRelationSettlement = res.lstRs.at(1);
+                const storeDesglose = Ext.create('Ext.data.Store', {
+                    data: res.lstRs.at(0)
+                });
+                gridDesgloseCHBK.setStore(storeDesglose);
+                console.log('me.dataDesglose.response',me.dataDesglose);
+                
+                // ocultar select
+                let proceedVal = me.bean.stprocede === "1" ? true : false;
+                gridDesglose.down('gridcolumn[dataIndex=selected]').setVisible(!proceedVal);
+                
+                const storeRelationSettlement = Ext.create('Ext.data.Store', {
+                    data: res.lstRs.at(1)
+                });
+                gridRelationSettlement.setStore(storeRelationSettlement);
+                
+                const qtyc = Ext.getCmp(prototype.idDE + '-totDCTickets');
+                const amtc = Ext.getCmp(prototype.idDE + '-totDCAmount');
+                qtyc.setValue(me.dataDesglose.length);
+                amtc.setValue(Ext.util.Format.number(storeDesglose.sum('VFOP'), '0,000.00'));
+                
+            }
         } else {
             gridDesglose.show();
             gridDesgloseCHBK.hide();

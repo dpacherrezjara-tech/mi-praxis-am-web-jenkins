@@ -244,22 +244,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
                     }
                 });
     },
-    onUpdateSale: function () {
+    onUpdateCHBKSale: function () {
         const me = this;
         const grid = Ext.getCmp(prototype.idCHBK + '-gridSaleTracking');
         let selected = grid.getSelectionModel().getSelected();
-        let sale = selected.filter(x => x.data.TRANSTYPE.trim() === 'SALE');
-        let chbk = selected.filter(x => x.data.TRANSTYPE.trim() === 'CHBK');
+        let selectedItems = selected.items || selected;
+        let sale = selectedItems.filter(x => x.data.TRANSTYPE.trim() === 'SALE');
+        let chbk = selectedItems.filter(x => x.data.TRANSTYPE.trim() === 'CHBK');
+
         if (sale.length === 0 || sale.length > 1) {
             global.Msg({msg: 'You must select one sale'});
             return;
         }
-
         if (chbk.length === 0 || chbk.length > 1) {
             global.Msg({msg: 'You must select one chargeback'});
             return;
         }
-        let params = me.formatUpdateSaleChbk(sale,chbk);
+
+        let params = me.formatUpdateSaleChbk(sale[0].data,chbk[0].data);
         Ext.Msg.show(
                 {
                     title: '.:PRAXIS:.',
@@ -339,7 +341,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
             IN_TDOCS: sale.TDOC,
             IN_AREFNBRS: sale.AREFNBR
         };
-        console.log('Parametros Update Sale/CHBK: ',params);
+        console.log('Parameters Update Sale/CHBK: ',params);
         return params;
     },
     //</editor-fold>
@@ -408,13 +410,35 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Chargeback
         gridDet.getStore().load();
         me.view.close();
     },
-    maintenanceChbkSale: async function(params){
+    maintenanceChbkSale:async function(params){
         const me = this;
+        const dataEntry = Ext.getCmp(prototype.id + '-TransacErrorBPODataEntry-1');
+        let notifier = new AWN();
+        let success = false;
+        let message = "" ;
         me.view.mask('Loading...');
-        const res = await global.callStorePost('PRAXISMP', 'SQP05313', params);
-        const { IO_MESSAGE } = res.data.lstVals;
-        global.Msg({msg: IO_MESSAGE});
-        me.view.unmask();
+        try{
+            const res = await global.callStorePost('PRAXISMP', 'SQP05313', params);
+                // console.log(res);
+            
+            success = res.data.lstVals.IO_RESPONSE === 1 ;
+            message = res.data.lstVals.IO_MESSAGE ;
+            
+            if ( success ) {
+                notifier.success(message);
+            }else{
+                notifier.warning('Error: ' + message);
+            }
+        } catch (e) {
+            console.error('Error of process: ', e);
+            notifier.alert('System Error');
+        } finally {
+            me.view.unmask();
+        }
+        if ( success ) {
+            dataEntry.getController().afterRender();
+            me.view.close();
+        }
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
