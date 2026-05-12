@@ -1023,13 +1023,13 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${libs.LibraryWeb.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.LibraryStandard.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.LibraryJDBC.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${libs.LibraryiText.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.LibraryUnirest.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${libs.LibraryText.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.LibraryCommons.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.LibraryJNA.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.LibraryAOP.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${libs.LibraryXLSXStream.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.restapi.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${libs.LibraryXLSXLStream.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.JAXB-ENDORSED.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.jaxws21.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.jaxb.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
@@ -1046,13 +1046,13 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${libs.LibraryWeb.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.LibraryStandard.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.LibraryJDBC.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${libs.LibraryiText.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.LibraryUnirest.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${libs.LibraryText.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.LibraryCommons.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.LibraryJNA.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.LibraryAOP.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${libs.LibraryXLSXStream.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.restapi.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${libs.LibraryXLSXLStream.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.JAXB-ENDORSED.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.jaxws21.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.jaxb.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
