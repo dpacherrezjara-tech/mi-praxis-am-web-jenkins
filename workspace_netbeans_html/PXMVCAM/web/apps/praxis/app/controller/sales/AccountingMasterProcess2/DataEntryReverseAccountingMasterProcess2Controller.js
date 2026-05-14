@@ -45,7 +45,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryRevers
             IN_FECHA_PROCESO : Ext.getCmp(prototype.id+'-txtProcessDate2').getValue(),
             IN_FECHA_CONTABLE: Ext.getCmp(prototype.id+'-txtRegistrationDate2').getValue(),
             IN_ENVIO: Ext.getCmp(prototype.id+'-chkRegularizacion').getValue(),
-            A1955MODUL: 'PSALES',
+            A1955MODUL: Ext.getCmp(prototype.id+'-cbxModulo').getValue(),
+           // A1955MODUL: 'PSALES',
             strOption: 'D'
         };        
     },
