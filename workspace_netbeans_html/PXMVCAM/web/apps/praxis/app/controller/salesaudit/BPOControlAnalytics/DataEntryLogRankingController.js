@@ -25,6 +25,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.DataEntryLogRan
             IN_DATEFROM : data.FECHA_INICIO.replace(/-/g, ''),
             IN_DATETO:data.FECHA_FIN.replace(/-/g, ''),
             IN_USER: data.USUARIO,
+            IN_FLADM:data.IN_FLADM,
+            IN_TRNCU:data.IN_TRNCU
         };
 
 
@@ -35,7 +37,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.DataEntryLogRan
 
 
         try {
-            const res = await global.callStorePaggin('PRAXISMP', 'SQP05744', params);
+            const res = await global.callStorePaggin('PXSAUDIT', 'SQP06039', params);
         //    console.log('res', res);
 
            gridDet.setStore(res);

@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.BPOControlAnaly
 
     afterRender: async function (obj, e) {
         // console.log('after render');
-        await this.loadFilters();
+        //await this.loadFilters();
     },
 
     onSearchClickBtn: function () {
@@ -45,7 +45,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.BPOControlAnaly
             IN_DATEFROM: params.IN_DATEFROM,
             IN_DATETO: params.IN_DATETO,
             IN_USER: params.IN_USER,
-            IN_PROCESADOR: params.IN_PROCESADOR,
+            //IN_PROCESADOR: params.IN_PROCESADOR,
+            IN_FLADM:params.IN_FLADM,
+            IN_TRNCU:params.IN_TRNCU,
             IN_TYPE: params.IN_TYPE
         };
     
@@ -87,12 +89,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.BPOControlAnaly
         Ext.getCmp(prototype.id + '-panelFilters').getForm().reset();
     },
 
+    /*
     loadFilters: async function () {
         const filters = Ext.getCmp(prototype.id + '-contentFilter');
         filters.setLoading(true);
     
         const res = await global.callStoreGet('PRAXISMP', 'SQP05276', { IN_STATUS: '1' });
         const res2 = await global.callStoreGet('PXSAUDIT', 'SQP02745', { IN_CCUST: '139', IN_OPTION: '4' });
+        
+        //const filter = await global.callStoreGet('PXSAUDIT', 'SQP06038', { IN_CCUST: '139', IN_OPTION: '4' });
     
         // console.log('res2', res2);
     
@@ -128,7 +133,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.BPOControlAnaly
     
         filters.setLoading(false);
     },
-    
+    */
     
 
     onSearchkey: function (f, e) {

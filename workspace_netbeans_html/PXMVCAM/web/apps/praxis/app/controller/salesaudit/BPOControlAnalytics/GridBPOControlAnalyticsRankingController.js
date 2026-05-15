@@ -16,7 +16,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.GridBPOControlA
 
         view.searchParams.IN_USER =  view.searchParams.IN_USER === 'All' ? '' : view.searchParams.IN_USER;
 
-        let store = await global.callStoreGet('PRAXISMP', 'SQP05743', view.searchParams);
+        let store = await global.callStoreGet('PXSAUDIT', 'SQP06038', view.searchParams);
         // console.log('stores', store);
 
         let data = store?.lstRs?.[0] || [];
@@ -97,7 +97,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.GridBPOControlA
         const me = this;
         const view = me.view;
         view.setLoading(true);
-        let res = await global.callStoreGet('PRAXISMP', 'SQP05743', view.searchParams);
+        let res = await global.callStoreGet('PXSAUDIT', 'SQP06038', view.searchParams);
 
         if (res.lstRs) {
             let data = res.lstRs.at(0);

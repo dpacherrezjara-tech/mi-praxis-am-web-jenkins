@@ -57,12 +57,12 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Filters', {
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
                                         data: [
-                                            ['1', 'System Date'],
+                                            ['1', 'Processing Date'],
                                             ['2', 'Working Date']
                                         ]
                                     }),
-                                    labelWidth: 75,
-                                    width: 180,
+                                    labelWidth: 80,
+                                    width: 190,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -106,7 +106,7 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Filters', {
                                     value:'All'
                                 },
 
-                                {
+                                /*{
                                     xtype: 'combobox',
                                     fieldLabel: 'Processor',
                                     id: prototype.id + '-cmbProctypef',
@@ -117,7 +117,7 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Filters', {
                                     valueField: 'A4451KEY2',
                                     displayField: 'A4451DESC1',
                                     value: ''
-                                },
+                                },*/
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Type',
@@ -130,14 +130,67 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Filters', {
                                             ['RU', 'User Performance'] // RENDIMIENTO POR USUARIO
                                         ]
                                     }),
-                                    labelWidth: 50,
-                                    width: 270,
+                                    labelWidth: 40,
+                                    width: 210,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
                                     editable: false,
                                     name: 'IN_TYPE',
                                     value: 'AU'
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Transaccion',
+                                    id: prototype.id + '-cmbTransaccion',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'ALL'],  
+                                            ['SALE', 'SALE'],
+                                            ['EXCH', 'EXCH'],
+                                            ['RFND', 'RFND'] 
+                                        ]
+                                    }),
+                                    labelWidth: 75,
+                                    width: 150,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    name: 'IN_TRNCU',
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Status',
+                                    id: prototype.id + '-cmbstatus',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'ALL'],  
+                                            ['A', 'ACCEPTED'],
+                                            ['Z', 'AUTHORIZED'],
+                                            ['T', 'ADM DIRECT'],
+                                            ['W', 'GROUPING PENDING'],
+                                            ['D', 'IATA DISABLED'],
+                                            ['J', 'JUSTIFIED'],
+                                            ['F', 'MATCH FORCED'],
+                                            ['B', 'SPECIAL CASES'],
+                                            ['Y', 'SUGGESTED'],
+                                            ['N', 'REJECTED'],
+                                            ['R', 'REAUDITED'],
+                                            ['C', 'UNREGISTERED CLIENT'],
+                                        ]
+                                    }),
+                                    labelWidth: 50,
+                                    width: 270,
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    name: 'IN_FLADM',
+                                    value: ''
                                 },
                             ]
                         }
