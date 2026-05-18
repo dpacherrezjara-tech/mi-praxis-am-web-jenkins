@@ -32,7 +32,7 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         me.panelActual = '-panelGridDataMain';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.control({
-//            //   -------------------Eventos Genericos --------------------
+            //            //   -------------------Eventos Genericos --------------------
             '#WorkloadReassignmentForm-xpanel': {
                 afterrender: me.xpanel_afterrender
             },
@@ -66,6 +66,7 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
     },
     eventKey: function (e, eOpts) {
         if (eOpts.getKey() === 13) {
+            loadFilters
             this.onSearchClick();
         }
     },
@@ -115,26 +116,30 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
             //<editor-fold defaultstate="collapsed" desc="Combos">
 
             const cmbProctypeSettl = Ext.getCmp(prototype.id + '-cmbProctypeSettl');
-            me.setComboStore({cmp: cmbProctypeSettl, data: procesadores,
-                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
+            me.setComboStore({
+                cmp: cmbProctypeSettl, data: procesadores,
+                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''
+            });
 
             //</editor-fold>
 
         }
         filterPanel.unmask();
     },
-    setComboStore: function ( {cmp, data, valueField, displayField, value}){
+    setComboStore: function ({ cmp, data, valueField, displayField, value }) {
         const me = this;
         cmp.suspendEvents(false);
-        cmp.bindStore(me.createComboStore({data: data
-            , valueField: valueField, displayField: displayField}));
+        cmp.bindStore(me.createComboStore({
+            data: data
+            , valueField: valueField, displayField: displayField
+        }));
         cmp.setValue(value);
         cmp.resumeEvents();
     },
-    getCmp: function ( {id}){
+    getCmp: function ({ id }) {
         return Ext.getCmp(prototype.id + id);
     },
-    createComboStore: function ( {data, valueField, displayField}) {
+    createComboStore: function ({ data, valueField, displayField }) {
         //crea record vacio
         let allRecord = {};
         allRecord[displayField] = 'All';
@@ -148,13 +153,13 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
             }
         });
         //crea Store
-        let store = this.createStore({data: data});
+        let store = this.createStore({ data: data });
         //inserta record vacio
         store.insert(0, allRecord);
         //console.log('store creado',store);
         return store;
     },
-    createArrayStore: function ( {data}){
+    createArrayStore: function ({ data }) {
         const store = new Ext.data.SimpleStore({
             fields: ['code', 'name'],
             data: data.map(x => {
@@ -163,7 +168,7 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         });
         return store;
     },
-    createStore: function ( {data}){
+    createStore: function ({ data }) {
         return Ext.create('Ext.data.Store', {
             autoLoad: true,
             data: data,
@@ -197,12 +202,12 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
             pageSize: 20,
             //groupField: 'groupField',
             fields: [
-                {name: 'PRDA', type: 'string'},
-                {name: 'AUASI', type: 'string'},
-                {name: 'PROCTYPESQ', type: 'string'},
-                {name: 'groupField', type: 'string'},
-                {name: 'PEDIEN', type: 'int'},
-                {name: 'PROCE', type: 'int'}
+                { name: 'PRDA', type: 'string' },
+                { name: 'AUASI', type: 'string' },
+                { name: 'PROCTYPESQ', type: 'string' },
+                { name: 'groupField', type: 'string' },
+                { name: 'PEDIEN', type: 'int' },
+                { name: 'PROCE', type: 'int' }
             ],
             proxy: {
                 type: 'ajax',
@@ -223,26 +228,26 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
             storeId: prototype.id + '-store-grid03',
             pageSize: 20,
             fields: [
-                {name: 'CCUST1', type: 'string'},
-                {name: 'PRDA1', type: 'string'},
-                {name: 'PRTIME1', type: 'string'},
-                {name: 'RECTYPE1', type: 'string'},
-                {name: 'PROCTYPE1', type: 'string'},
-                {name: 'PROCTYPESQ1', type: 'string'},
-                {name: 'SMERCHID1', type: 'string'},
-                {name: 'AREFNBR1', type: 'string'},
-                {name: 'SDATE1', type: 'string'},
-                {name: 'STIME1', type: 'string'},
-                {name: 'SCARDN1', type: 'string'},
-                {name: 'SEQNBR1', type: 'string'},
-                {name: 'AUASI1', type: 'string'},
-                {name: 'SAUTHOC1', type: 'string'},
-                {name: 'TICKET1', type: 'string'},
-                {name: 'SCOUNTRY1', type: 'string'},
-                {name: 'STVAL1', type: 'string'},
-                {name: 'PMERCHID1', type: 'string'},
-                {name: 'TGROSAMOUN1', type: 'string'},
-                {name: 'CHK', type: 'bool'}
+                { name: 'CCUST1', type: 'string' },
+                { name: 'PRDA1', type: 'string' },
+                { name: 'PRTIME1', type: 'string' },
+                { name: 'RECTYPE1', type: 'string' },
+                { name: 'PROCTYPE1', type: 'string' },
+                { name: 'PROCTYPESQ1', type: 'string' },
+                { name: 'SMERCHID1', type: 'string' },
+                { name: 'AREFNBR1', type: 'string' },
+                { name: 'SDATE1', type: 'string' },
+                { name: 'STIME1', type: 'string' },
+                { name: 'SCARDN1', type: 'string' },
+                { name: 'SEQNBR1', type: 'string' },
+                { name: 'AUASI1', type: 'string' },
+                { name: 'SAUTHOC1', type: 'string' },
+                { name: 'TICKET1', type: 'string' },
+                { name: 'SCOUNTRY1', type: 'string' },
+                { name: 'STVAL1', type: 'string' },
+                { name: 'PMERCHID1', type: 'string' },
+                { name: 'TGROSAMOUN1', type: 'string' },
+                { name: 'CHK', type: 'bool' }
 
             ],
             proxy: {
@@ -426,14 +431,14 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
                 var data = [];
 
                 // 🔹 Opción SELECT
-                data.push({A4836USER: 'Select'});
+                data.push({ A4836USER: 'Select' });
 
                 Ext.Array.each(records, function (rec) {
                     var auditor = rec.get('AUASI');
 
                     if (auditor && !map[auditor]) {
                         map[auditor] = true;
-                        data.push({A4836USER: auditor});
+                        data.push({ A4836USER: auditor });
                     }
                 });
 
@@ -504,14 +509,14 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
                 var data = [];
 
                 // 🔹 Opción SELECT
-                data.push({A4836USER: 'Select'});
+                data.push({ A4836USER: 'Select' });
 
                 Ext.Array.each(records, function (rec) {
                     var auditor = rec.get('AUASI');
 
                     if (auditor && !map[auditor]) {
                         map[auditor] = true;
-                        data.push({A4836USER: auditor});
+                        data.push({ A4836USER: auditor });
                     }
                 });
 
@@ -650,21 +655,21 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         me.bean = {};
 
         me.bean.IN_DATE_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() +
-                Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() +
-                Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
+            Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() +
+            Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
 
         me.bean.IN_DATE_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
-                Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
-                Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
+            Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
+            Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
         //me.bean.IN_SCOUNTRY = Ext.getCmp(prototype.id + '-cmbCountry').getValue();
         //me.bean.IN_SPAYMENT = Ext.getCmp(prototype.id + '-cmbSPAYMENT').getValue();
         me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTKT').getValue();
         me.bean.IN_ADMNUM = Ext.getCmp(prototype.id + '-txtADMNUM').getValue();
-//        me.bean.IN_SAGENT = Ext.getCmp(prototype.id + '-txtSAGENT').getValue();
-//        me.bean.IN_SAUTHOC = Ext.getCmp(prototype.id + '-txtSAUTHOC').getValue();
-//        me.bean.IN_SPNR = Ext.getCmp(prototype.id + '-txtSPNR').getValue().trim();
-//        me.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCard1').getValue().trim();
-//        me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCard2').getValue().trim();
+        //        me.bean.IN_SAGENT = Ext.getCmp(prototype.id + '-txtSAGENT').getValue();
+        //        me.bean.IN_SAUTHOC = Ext.getCmp(prototype.id + '-txtSAUTHOC').getValue();
+        //        me.bean.IN_SPNR = Ext.getCmp(prototype.id + '-txtSPNR').getValue().trim();
+        //        me.bean.IN_SCARDN1 = Ext.getCmp(prototype.id + '-txtCard1').getValue().trim();
+        //        me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCard2').getValue().trim();
 
 
         var beanString = JSON.stringify(me.bean);
@@ -694,7 +699,8 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
         me.setWidthPie();
         var msj = this.validateFields();
         if (msj !== '') {
-            global.Msg({msg: msj
+            global.Msg({
+                msg: msj
             });
         } else {
             var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
@@ -741,7 +747,8 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
 
         var msj = this.validateFields();
         if (msj !== '') {
-            global.Msg({msg: msj
+            global.Msg({
+                msg: msj
             });
         } else {
             var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
@@ -766,7 +773,7 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
                         } else {
                             var data = obj.data.items[0].data;
                             Ext.getCmp(prototype.id + '-gridDataDet').setTitle('<center style="font-size:11px;">' + data.strTitulo + '</center>');
-//                            win.setText('lblTittleByDayS', data.strTitulo);
+                            //                            win.setText('lblTittleByDayS', data.strTitulo);
                         }
                     }
                 }
@@ -845,7 +852,7 @@ Ext.define('Ext.Praxis.controller.payments.WorkloadReassignment.WorkloadReassign
     getPaggin: function () {
         me.pagginActual = '';
         switch (me.panelActual) {
-            case  '-panelGridDataMain':
+            case '-panelGridDataMain':
                 me.pagginActual = '-paggin';
                 break;
         }
