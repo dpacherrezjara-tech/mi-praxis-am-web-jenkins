@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.BPOControlAnaly
 
     afterRender: async function (obj, e) {
         // console.log('after render');
-        //await this.loadFilters();
+        await this.onAuditorFilter();
     },
 
     onSearchClickBtn: function () {
@@ -135,6 +135,40 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.BPOControlAnaly
     },
     */
     
+    onAuditorFilter: async function () {
+
+        let params = {
+            IN_CCUST: '139',
+            IN_OPTION: '1',
+            IN_VAR1: '',
+            IN_VAR2: ''
+        };
+
+        let cmbUser = Ext.getCmp(prototype.id + '-cmbUser');
+        const res = await global.callStoreGet('PXSAUDIT', 'SQP05872', params);
+        // console.log('res', res)
+
+        if (res.lstRs) {
+            let data = res.lstRs.at(0);
+            // console.log('filter user', data);
+
+            // Normalizar por si viene "id"
+            let cleanData = data.map(item => ({
+                A4886USER: item.A4886USER
+            }));
+            cleanData.unshift({
+                A4886USER: 'All'
+            });
+
+            console.log('cleanData', cleanData)
+
+            let store = cmbUser.getStore();
+            store.removeAll();
+            store.loadData(cleanData);
+            cmbUser.setValue('All');
+        }
+    },
+
 
     onSearchkey: function (f, e) {
         if (e.getKey() === e.ENTER) {

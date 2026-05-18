@@ -63,8 +63,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.GridBPOControlA
                 const avgTime = (x.PROM_MIN !== undefined && x.PROM_MIN !== null)? x.PROM_MIN + ' min' : '';
 
                 const row = {
-                    "User": x.AUASI,
-                    "Date Authorization": x.FEAUT,
+                    "User": x.USUARIO,
+                    "Date Authorization": x.FECHA,
                     "Total": x.TOTAL_SOL,
                     "Fast": x.RAPIDAS,
                     "Normal": x.NORMALES,

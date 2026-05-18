@@ -18,19 +18,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.DataEntryLogRan
     getData: async function () {
         const me = this;
         // console.log('me get data', me.view.rowData);
-        
-        const data = me.view.rowData ;
+
+        const data = me.view.rowData;
         const params = {
-            IN_CCUST : '139' ,
-            IN_DATEFROM : data.FECHA_INICIO.replace(/-/g, ''),
-            IN_DATETO:data.FECHA_FIN.replace(/-/g, ''),
+            IN_CCUST: '139',
+            IN_DATEFROM: data.FECHA_INICIO.replace(/-/g, ''),
+            IN_DATETO: data.FECHA_FIN.replace(/-/g, ''),
             IN_USER: data.USUARIO,
-            IN_FLADM:data.IN_FLADM,
-            IN_TRNCU:data.IN_TRNCU
+            IN_FLADM: Ext.isEmpty(data.IN_FLADM) ? '' : data.IN_FLADM,
+            IN_TRNCU: Ext.isEmpty(data.IN_TRNCU) ? '' : data.IN_TRNCU
         };
 
 
-        me.dataDetail =  params;
+        me.dataDetail = params;
 
         const gridDet = Ext.getCmp(prototype.idRanking + '-grid-Detail');
         const paggin = Ext.getCmp(prototype.idRanking + '-pagginLog');
@@ -38,10 +38,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.DataEntryLogRan
 
         try {
             const res = await global.callStorePaggin('PXSAUDIT', 'SQP06039', params);
-        //    console.log('res', res);
+            //    console.log('res', res);
 
-           gridDet.setStore(res);
-           paggin.setStore(res)
+            gridDet.setStore(res);
+            paggin.setStore(res)
 
         } catch (e) {
             console.error(e);
@@ -60,40 +60,62 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.DataEntryLogRan
     },
 
     onDownloadExcel: async function () {
+
         const me = this;
         const view = me.view;
+
         view.setLoading(true);
-        const res = await global.callStorePagginExcel('PRAXISMP', 'SQP05744', me.dataDetail);
 
+        try {
 
-        if (res) {
-            let data = res.map(x=>({
-                "Date": x.PRDA,
-                "Country": x.SCOUNTRY,
-                "Processor": x.PROCTYPE_DESC,
-                "Merchant ID": x.PMERCHID,
-            
-                "Card Number": x.SCARDN,
-                "Auth": x.SAUTHOC,
-            
-                "PNR": x.SPNR,
-                "Ticket": x.TKT,
-                "Qty Tkt": x.QTYTKT,
-                "Currency": x.SCURRENCY,
-                "Transaction Type": x.TRANSTYPE,
-                "Code Chbk": x.CODCHGBACK,
-            
-                "Auth Date": x.FEAUT,
-                "Auth Time": x.HOAUT,
-                "Auth User": x.AUASI,
-                "Asig Date": x.FEASI,
-                "Asig Time": x.HOASI,
-            }));
+            const res = await global.callStorePagginExcel(
+                    'PXSAUDIT',
+                    'SQP06039',
+                    me.dataDetail
+                    );
 
-            const userName = me.view.rowData.USUARIO.replace(/\s+/g, '_');
+            if (res) {
 
-            global.writeExcelFromJson(data, `Detail_${userName}`);
+                let data = res.map(x => ({
+
+                        "Ticket Nbr": x.A1672TICKET,
+                        "Source": x.A1672FUENT,
+                        "Channel": x.A1672CANAL,
+                        "Country": x.A1672PAIVT,
+                        "IATA": x.A1672AGENT,
+                        "Trans.": x.A1672TRNCU,
+                        "Doc. Type": x.A1672TDOC,
+                        "Issue Date": x.A1672FVENT,
+                        "Processing Date": x.A1672FPROC,
+                        "Working Date": x.A1672FAASI,
+                        "Working Hour": x.A1672HAASI,
+                        "Suggested Date": x.A1672FREVI,
+                        "Status": x.A1672FLADM
+
+                    }));
+
+                const userName =
+                        me.view.rowData.USUARIO.replace(/\s+/g, '_');
+
+                global.writeExcelFromJson(
+                        data,
+                        `Detail_${userName}`
+                        );
+            }
+
+        } catch (e) {
+
+            console.error(e);
+
+            Ext.Msg.alert(
+                    'Error',
+                    'Error downloading Excel'
+                    );
+
+        } finally {
+
+            // SIEMPRE se ejecuta
+            view.setLoading(false);
         }
-        notifier.async(dwl(),'Successfully Download', 'Error on Download', 'Downloading File');
-    },
+    }
 });

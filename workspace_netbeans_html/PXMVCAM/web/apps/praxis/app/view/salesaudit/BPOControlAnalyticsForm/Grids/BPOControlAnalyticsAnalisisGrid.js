@@ -26,7 +26,7 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Grids.BPOControlA
         items: [
             {
                 text: 'User',
-                dataIndex: 'AUASI',
+                dataIndex: 'USUARIO',
                 width: 120,
                 renderer: function(value, metaData, record) {
                     // Indicador visual si tiene métricas críticas
@@ -45,16 +45,19 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Grids.BPOControlA
             },
             {
                 text: 'Date Authorization',
-                dataIndex: 'FEAUT',
+                dataIndex: 'FECHA',
                 width: 130,
-                renderer: function(value,metaData) {
+                renderer: function(value, metaData) {
                     if (!value) return '';
-                    const date = Ext.Date.parse(value, 'Ymd');
+
+                    const date = Ext.Date.parse(value, 'Y-m-d');
 
                     metaData.tdStyle = 'vertical-align:middle;';
+
                     return '<div style="color:#6b7280;font-size:13px;font-weight:500;">' +
-                           '<span style="color:#374151;">📅</span> ' + 
-                           Ext.Date.format(date, 'd/m/Y') + '</div>';
+                           '<span style="color:#374151;">📅</span> ' +
+                           Ext.Date.format(date, 'd/m/Y') +
+                           '</div>';
                 }
             },
             {

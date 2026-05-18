@@ -68,11 +68,13 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Filters', {
                                     queryMode: 'local',
                                     editable: false,
                                     name: 'IN_OPTION',
-                                    value: '1',
+                                    value: '2',
                                     // listeners: {
                                     //     change: 'onChangeFiltersBT'
                                     // }
                                 },
+                                {xtype: 'tbspacer', width: 5},
+
                                 {
                                     xtype: 'datefield',
                                     fieldLabel: 'From',
@@ -83,6 +85,8 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Filters', {
                                     width: 150,
                                     value: new Date()
                                 },
+                                {xtype: 'tbspacer', width: 5},
+
                                 {
                                     xtype: 'datefield',
                                     fieldLabel: 'To',
@@ -93,31 +97,41 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Filters', {
                                     width: 130,
                                     value: new Date()
                                 },
+                                {xtype: 'tbspacer', width: 5},
                                 {
                                     xtype: 'combo',
-                                    fieldLabel: 'Auditor',
-                                    id: prototype.id + '-txtUser',
-                                    labelWidth: 50,
-                                    width: 160,
-                                    editable: false,
+                                    id: prototype.id + '-cmbUser',
                                     name: 'IN_USER',
-                                    valueField: 'A4836USER',        
-                                    displayField: 'A4836USER',    
-                                    value:'All'
+                                    fieldLabel: 'Auditor',
+                                    queryMode: 'local',
+                                    displayField: 'A4886USER',
+                                    valueField: 'A4886USER',
+                                    width: 200,
+                                    labelWidth: 50,
+                                    labelAlign: 'right',
+                                    editable: false,
+                                    forceSelection: true,
+                                    store: {
+                                        fields: ['A4886USER'],
+                                        data: []
+                                    },
+                                    listConfig: {
+                                        minWidth: 200
+                                    }
                                 },
 
                                 /*{
-                                    xtype: 'combobox',
-                                    fieldLabel: 'Processor',
-                                    id: prototype.id + '-cmbProctypef',
-                                    labelWidth: 80,
-                                    width: 250,
-                                    editable: false,
-                                    name: 'IN_PROCESADOR',
-                                    valueField: 'A4451KEY2',
-                                    displayField: 'A4451DESC1',
-                                    value: ''
-                                },*/
+                                 xtype: 'combobox',
+                                 fieldLabel: 'Processor',
+                                 id: prototype.id + '-cmbProctypef',
+                                 labelWidth: 80,
+                                 width: 250,
+                                 editable: false,
+                                 name: 'IN_PROCESADOR',
+                                 valueField: 'A4451KEY2',
+                                 displayField: 'A4451DESC1',
+                                 value: ''
+                                 },*/
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Type',
@@ -125,7 +139,7 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Filters', {
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
                                         data: [
-                                            ['AU', 'User Time Analysis'],  // ANALISIS DE TIEMPO POR USUARIO
+                                            ['AU', 'User Time Analysis'], // ANALISIS DE TIEMPO POR USUARIO
                                             ['RP', 'Productivity Ranking'], // RANKING DE PRODUCTIVIDAD
                                             ['RU', 'User Performance'] // RENDIMIENTO POR USUARIO
                                         ]
@@ -139,6 +153,8 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Filters', {
                                     name: 'IN_TYPE',
                                     value: 'AU'
                                 },
+                                {xtype: 'tbspacer', width: 5},
+
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Transaccion',
@@ -146,10 +162,10 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Filters', {
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
                                         data: [
-                                            ['', 'ALL'],  
+                                            ['', 'ALL'],
                                             ['SALE', 'SALE'],
                                             ['EXCH', 'EXCH'],
-                                            ['RFND', 'RFND'] 
+                                            ['RFND', 'RFND']
                                         ]
                                     }),
                                     labelWidth: 75,
@@ -161,6 +177,8 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Filters', {
                                     name: 'IN_TRNCU',
                                     value: ''
                                 },
+                                {xtype: 'tbspacer', width: 5},
+
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Status',
@@ -168,7 +186,7 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.Filters', {
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
                                         data: [
-                                            ['', 'ALL'],  
+                                            ['', 'ALL'],
                                             ['A', 'ACCEPTED'],
                                             ['Z', 'AUTHORIZED'],
                                             ['T', 'ADM DIRECT'],
