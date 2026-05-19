@@ -419,9 +419,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.TransacErr
             IN_CCUST: me.bean.CCUST,
             IN_PRDA: me.bean.PRDA,
             IN_TDOC: me.bean.TDOC,
-            IN_AREFNBR: me.bean.AREFNBR,
-            IN_PROCTYPE: me.bean.PROCTYPE,
-            IN_PROCTYPESQ: me.bean.PROCTYPESQ
+            IN_AREFNBR: me.bean.AREFNBR
         };
         try {
             const res = await global.callStorePost('PRAXISMP', 'SQP05057', params);
