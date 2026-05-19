@@ -144,6 +144,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ProcessMas
         const mainGrid    = Ext.getCmp(prototype.idPM + '-gridProcessMassive');
         const detailPanel = Ext.getCmp(prototype.idPM + '-detailPanel');
         const pagingBar   = Ext.getCmp(prototype.idPM + '-gridPagingBar');
+        
+        view.setLoading(true);
 
         // Regresar a la grilla principal si esta en la vista de detalle
         if (detailPanel && detailPanel.isVisible()) {
@@ -189,7 +191,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ProcessMas
             global.Msg({msg: 'Error cargando los datos.'});
             console.error(e);
         } finally {
-            view.unmask && view.unmask();
+            // view.unmask && view.unmask();
+            view.setLoading(false);
         }
     },
 
@@ -200,14 +203,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ProcessMas
         if (!col) return;
 
         const dataIndex = col.dataIndex;
-        if (!['TOTAL', 'SUCCESS', 'ERRORS'].includes(dataIndex)) return;
+        if (!['TOTAL', 'SUCCESS', 'ERRORS','REVERSES'].includes(dataIndex)) return;
 
         const value = parseInt(record.get(dataIndex), 10);
         if (!value || value <= 0) return;
 
         const uuid = (  record.get('UUID') || '').toString().trim();
 
-        const optionMap = { TOTAL: 'T', SUCCESS: 'S', ERRORS: 'E' };
+        const optionMap = { TOTAL: 'T', SUCCESS: 'S', ERRORS: 'E', REVERSES: 'R' };
         me.showDetailGrid(uuid, '139', optionMap[dataIndex], record);
     },
 
@@ -231,7 +234,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ProcessMas
 
             const res  = await global.callStoreGet('PRAXISMP', 'SQP05311', params);
             const data = res?.lstRs?.[0] || [];
-
             
             // Store con paginado client-side (SQP05311 no soporta paginado server-side)
             const store = Ext.create('Ext.data.Store', {
@@ -361,6 +363,71 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ProcessMas
         });
     },
  
+    //
+    onClickReverseProcess: function (view, rowIndex, colIndex, item, e, record) {
+        const me = this;
+        const grid = view ? view.up('gridpanel') : Ext.getCmp(prototype.idPM + '-gridProcessMassive');
+
+        if (!grid || !record) {
+            global.Msg({msg: 'Grid or record not found.'});
+            return;
+        }
+        
+        const activeReverse = record.get('ACTIVE_REVERSE');
+        const idProcess = (record.get('UUID') || '').toString().trim();
+        const description = record.get('PROGRAM_DESCRIPTION');
+
+        if (activeReverse !== 1) {
+            global.Msg({msg: 'Reverse is not allowed for this process.'});
+            return;
+        }
+
+        if (!idProcess) {
+            global.Msg({msg: 'Number Process not found in this row.'});
+            return;
+        }
+
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure you want to reverse process <b>' + Ext.String.htmlEncode(description) + '</b>?',
+            buttons: Ext.MessageBox.YESNO,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    me.executeReverseProcess(grid, idProcess);
+                }
+            }
+        });
+    },
+
+    executeReverseProcess: async function (grid, idProcess) {
+        let notifier = new AWN();
+
+        grid.setLoading(true);
+
+        try {
+            const params = {
+                IN_CCUST: '139',
+                IN_UUID: idProcess,
+                IO_RESPONSE:  0,
+                IO_MESSAGE:   ''
+            };
+ 
+            const res = await global.callStorePostAsync('PRAXISMP', 'SQP05931', params);
+
+            if (res === 201) {
+                notifier.success('Reverse starting Process');
+            }
+            
+        } catch (e) {
+            console.error('Error reversing process:', e);
+            global.Msg({msg: 'Error reversing process: ' + (e.message || 'Unknown error')});
+        } finally {
+            grid.setLoading(false);
+        }
+    },
+
     onChangeDate: function (obj) {
         let option = obj.id.split('-').at(-1);
         

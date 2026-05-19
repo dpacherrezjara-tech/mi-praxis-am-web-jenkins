@@ -174,7 +174,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 },
                 columns: [
                     {
-                        text: 'Plusgrade', width: 200,
+                        text: 'Plusgrade',
                         columns: [
                             {
                                 text: 'Match', dataIndex: 'TOTAL_PG_MATCH', align: 'center', width: 100,
@@ -192,7 +192,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         ]
                     },
                     {
-                        text: 'Ligas', width: 200,
+                        text: 'Ligas',
                         columns: [
                             {
                                 text: 'Match', dataIndex: 'TOTAL_LIG_MATCH', align: 'center', width: 100,
@@ -209,7 +209,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         ]
                     },
                     {
-                        text: 'Tablets', width: 200,
+                        text: 'Tablets',
                         columns: [
                             {
                                 text: 'Match', dataIndex: 'TOTAL_TAB_MATCH', align: 'center', width: 100,

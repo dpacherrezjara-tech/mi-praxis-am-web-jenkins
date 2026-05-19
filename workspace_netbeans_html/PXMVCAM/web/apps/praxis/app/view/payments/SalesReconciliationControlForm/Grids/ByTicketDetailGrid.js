@@ -126,36 +126,36 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                     },
                     {text: 'Expected<br>Date', dataIndex: 'PROCDATE', width: 80},
                     {text: 'Payment<br>Date', dataIndex: 'PAYDATE', width: 80},
-                    {text: 'Difference', width: 80,
+                    {text: 'Difference', dataIndex: 'DIFFERENCE_DAYS', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;background-color:#F0D094;";
-                            const fecha1Str = record.data.PAYDATE;
-                            const fecha2Str = record.data.PROCDATE;
+                            // const fecha1Str = record.data.PAYDATE;
+                            // const fecha2Str = record.data.PROCDATE;
 
-                            if (!fecha2Str || !fecha1Str) {
-                                value = 0;
-                            } else {
-                                const fecha1 = new Date(
-                                        parseInt(fecha1Str.substring(0, 4)),
-                                        parseInt(fecha1Str.substring(4, 6)) - 1,
-                                        parseInt(fecha1Str.substring(6, 8))
-                                        );
+                            // if (!fecha2Str || !fecha1Str) {
+                            //     value = 0;
+                            // } else {
+                            //     const fecha1 = new Date(
+                            //             parseInt(fecha1Str.substring(0, 4)),
+                            //             parseInt(fecha1Str.substring(4, 6)) - 1,
+                            //             parseInt(fecha1Str.substring(6, 8))
+                            //             );
 
-                                const fecha2 = new Date(
-                                        parseInt(fecha2Str.substring(0, 4)),
-                                        parseInt(fecha2Str.substring(4, 6)) - 1,
-                                        parseInt(fecha2Str.substring(6, 8))
-                                        );
+                            //     const fecha2 = new Date(
+                            //             parseInt(fecha2Str.substring(0, 4)),
+                            //             parseInt(fecha2Str.substring(4, 6)) - 1,
+                            //             parseInt(fecha2Str.substring(6, 8))
+                            //             );
 
-                                if (isNaN(fecha1.getTime()) || isNaN(fecha2.getTime())) {
-                                    value = 0;
-                                } else {
-                                    const diferenciaEnMilisegundos = fecha1 - fecha2;
-                                    const diferenciaEnDias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
+                            //     if (isNaN(fecha1.getTime()) || isNaN(fecha2.getTime())) {
+                            //         value = 0;
+                            //     } else {
+                            //         const diferenciaEnMilisegundos = fecha1 - fecha2;
+                            //         const diferenciaEnDias = Math.floor(diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
 
-                                    value = diferenciaEnDias;
-                                }
-                            }
+                            //         value = diferenciaEnDias;
+                            //     }
+                            // }
                             return value;
                         }
                     },
@@ -165,27 +165,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                             return value;
                         }
                     },
-                    {text: 'Status', dataIndex: 'A4501STVAL', minWidth: 100, width: 100, autoSizeColumn: true,
+                    {text: 'Status', dataIndex: 'STVAL_DESCRIPTION', minWidth: 100, width: 100, autoSizeColumn: true,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
-                            const opts = {
-//                                'A': 'Match OC/Camepa',
-                                'C': 'Match Complement',
-//                                'D': 'Match Balance',
-                                'E': 'Duplicate Payment',
-                                'M': 'Match Multi-Payment',
-                                '0': 'Stand By',
-                                '1': 'Match',
-                                '2': 'Sales Without Settl.',
-                                '3': 'Settl. Without Sales',
-                                '4': 'Match Partial',
-                                '5': 'Match Manual',
-//                                '6': 'Match Forced',
-//                                '7': 'Match Compensation',
-                                '8': 'Match Transactional',
-                                '9': 'Match Void'
-                            };
-                            return opts[value] || '';
+                            return value || '';
                         }
                     },
                     {text: 'User<br>Update', dataIndex: 'A4501USUP', width: 100,
@@ -217,7 +200,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                             metaData.style = "text-align:center;font-weight:bold;background-color:#F0D094;";
                             return value.trim() === '' ? '' : 'Suggested';
                         }
-                    }
+                    },
+                    {text: 'Uses Sabre', dataIndex: 'USES_SABRE', width: 120}
                 ]
             }
             //</editor-fold>
