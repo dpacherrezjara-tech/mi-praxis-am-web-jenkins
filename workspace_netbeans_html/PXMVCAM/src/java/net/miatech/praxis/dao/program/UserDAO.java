@@ -427,7 +427,7 @@ public class UserDAO  {
         }
 
         // 2. Si no existen, procedemos a crear
-        String nuevaLinea = String.join(", ", correo, usuario, contrasena);
+        String nuevaLinea = String.join(",", correo.trim(), usuario.trim(), contrasena.trim());
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CSV_PATH, true)))) {
             out.println(nuevaLinea);
             System.out.println("✅ Usuario creado con éxito.");
