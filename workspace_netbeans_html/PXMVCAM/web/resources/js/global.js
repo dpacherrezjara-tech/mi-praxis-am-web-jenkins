@@ -1711,11 +1711,13 @@ var LarSyrExt = function () {
         });
         return resultado;
     };
-    this.setComboStore = function (cmp, data, valueField, displayField, value) {
+    this.setComboStore = function (cmp, data, valueField, displayField, value, addElementAll = true) {
         //crea record vacio
         let allRecord = {};
-        allRecord[displayField] = 'All';
-        allRecord[valueField] = '';
+        if (addElementAll) {
+            allRecord[displayField] = 'All';
+            allRecord[valueField] = '';
+        }
         //limpia record de data
         data.forEach(obj => {
             for (let attr in obj) {

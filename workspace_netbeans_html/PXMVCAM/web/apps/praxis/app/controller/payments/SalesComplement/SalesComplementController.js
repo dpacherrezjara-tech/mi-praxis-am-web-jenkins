@@ -24,41 +24,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
             const dataProcessorMatch = lstRs[4] || {};
             const quantityAnalyzePending = lstVals.IO_QUANITY_ANALYZE_PENDING ;
 
-            // console.log(dataCountry);
-            // console.log(dataCerror);
-
             const filterCountry = Ext.getCmp(prototype.id + '-cmbPaisesPG');
             const filterCerror = Ext.getCmp(prototype.id + '-cmbCerrorPG');
             const filterStval = Ext.getCmp(prototype.id + '-cmbStvalPG');
             const filterProcessorInsumo = Ext.getCmp(prototype.id + '-cmbProcessorInsumo');
             const filterProcessorMatch = Ext.getCmp(prototype.id + '-cmbProcessorMatch');
 
-            
-            filterCountry.suspendEvents(false);
-            filterCountry.bindStore(await me.createComboStore({data: dataCountry, valueField: 'CODE', displayField: 'NAME'}));
-            filterCountry.setValue('');
-            filterCountry.resumeEvents();
+            // sin "All"
+            await global.setComboStore(filterCountry, dataCountry, 'CODE', 'NAME', '', false);
+            await global.setComboStore(filterCerror, dataCerror, 'CODE', 'DESCRIPTION', '', false);
+            await global.setComboStore(filterStval, dataStval, 'STVAL', 'DESCRIPTION', 'X', false);
+            await global.setComboStore(filterProcessorInsumo, dataProcessorInsumo, 'CODE', 'DESCRIPTION', '', false);
 
-            filterCerror.suspendEvents(false);
-            filterCerror.bindStore(await me.createComboStore({data: dataCerror, valueField: 'CODE', displayField: 'DESCRIPTION', addElementAll: false}));
-            filterCerror.setValue('');
-            filterCerror.resumeEvents();
+            // con "All"
+            await global.setComboStore(filterProcessorMatch, dataProcessorMatch, 'A4451KEY2', 'A4451DESC1', '' );
 
-            filterStval.suspendEvents(false);
-            filterStval.bindStore(await me.createComboStore({data: dataStval, valueField: 'STVAL', displayField: 'DESCRIPTION', addElementAll: false}));
-            filterStval.setValue('X');
-            filterStval.resumeEvents();
-            
-            filterProcessorInsumo.suspendEvents(false);
-            filterProcessorInsumo.setStore(await me.createComboStore({data: dataProcessorInsumo, valueField: 'CODE', displayField: 'DESCRIPTION',addElementAll: false}));
-            filterProcessorInsumo.setValue('');
-            filterProcessorInsumo.resumeEvents();
-            
-            filterProcessorMatch.suspendEvents(false);
-            filterProcessorMatch.setStore(await me.createComboStore({data: dataProcessorMatch, valueField: 'A4451KEY2', displayField: 'A4451DESC1'}));
-            filterProcessorMatch.setValue('');
-            filterProcessorMatch.resumeEvents();
-        
             me.changeAnalyzePending(quantityAnalyzePending);
 
         } catch (e) {
@@ -81,34 +61,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.SalesComplementContro
                 optionAnalyze.setText(originalText);
             }
         }
-    },
-    createComboStore: async function ( {data, valueField, displayField, addElementAll = true}) {
-        //crea record vacio
-        let allRecord = {};
-        if (addElementAll) {
-            allRecord[displayField] = 'All';
-            allRecord[valueField] = '';
-        }
-        //limpia record de data
-        data.forEach(obj => {
-            for (let attr in obj) {
-                if (typeof obj[attr] === 'string') {
-                    obj[attr] = obj[attr].trimEnd();
-                }
-            }
-        });
-        //crea Store
-        let store = me.createStore({data: data});
-        //inserta record vacio
-        store.insert(0, allRecord);
-        return store;
-    },
-    createStore: function ( {data}){
-        return Ext.create('Ext.data.Store', {
-            autoLoad: true,
-            data: data,
-            pageSize: 20
-        });
     },
     onChangeModule: function(btn){
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent');

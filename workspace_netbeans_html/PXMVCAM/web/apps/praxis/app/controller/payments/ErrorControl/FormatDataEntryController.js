@@ -7,9 +7,8 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.FormatDataEntryControlle
     },
     afterRender: async function () {
         const me = this;
-        //console.log(me.view);
         me.view.mask('Loading Info...');
-        if (me.view.searchParams && me.view.searchUrl) {
+        if (me.view.searchParams) {
             const procesador = me.view.searchParams.IN_PROCTYPE;
             if (procesador === 'ADYEN00') {
                 const bin1 = Ext.getCmp(prototype.id + '-de-cardBin-1');
@@ -19,11 +18,9 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.FormatDataEntryControlle
                 bin2.allowBlank = true;
                 auth.allowBlank = true;
             }
-            const res = await fetch(`${me.view.searchUrl}?${new URLSearchParams(me.view.searchParams)}`);
-            if (res.ok) {
-                const data = await res.json();
-                //console.log(data);
-                me.setInfoData(data);
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05027', me.view.searchParams);
+            if (res.lstRs && res.lstRs.at(0) && res.lstRs.at(0).length > 0) {
+                me.setInfoData(res.lstRs.at(0)[0]);
             } else {
                 global.Msg({
                     msg: 'Data not Found'
@@ -47,24 +44,26 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.FormatDataEntryControlle
     updateVN0002PG: async function () {
         const me = this;
         const form = Ext.getCmp(prototype.id + '-formatDataEntryForm');
-        //console.log(form.getValues());
-        //console.log(form.isValid());
         if (form.isValid()) {
+            const formValues = form.getValues();
             let params = {
-                ...me.view.searchParams,
-                ...form.getValues()
+                IN_CCUST: me.view.searchParams.IN_CCUST,
+                IN_TKT: me.view.searchParams.IN_TKT,
+                IN_IDREF: me.view.searchParams.IN_IDREF,
+                IN_PROCTYPE: me.view.searchParams.IN_PROCTYPE,
+                UP_CC1: formValues.CCARD1,
+                UP_CC2: formValues.CCARD2,
+                UP_AUTH: formValues.AUTH,
+                UP_QTYPAX: formValues.QTYPAX,
+                UP_QTYTKT: formValues.QTYTK,
+                UP_CURR: formValues.MDA,
+                UP_SVFOP: formValues.TOTAMOUNT,
+                UP_AMTOFF: formValues.TOTAMOUNTO
             };
-            //console.log(params);
-            const res = await fetch(`${me.url}/updateVN0002PG`, {
-                method: 'PATCH',
-                body: JSON.stringify(params),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (res.ok) {
-                const data = await res.json();
-                if (data.status === 1) {
+            const res = await global.callStorePost('PRAXISMP', 'SQP05028', params);
+            if (res) {
+                const { lstVals, lstRs } = res.data;
+                if (lstVals.SQLRES === 1) {
                     global.Msg({
                         msg: 'Updated Successfull'
                     });
@@ -81,26 +80,24 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.FormatDataEntryControlle
                 msg: 'Errors found, check again.'
             });
         }
-
     },
     setInfoData: function (data) {
         const form = Ext.getCmp(prototype.id + '-formatDataEntryForm');
-        let creditcard = data.scardn.trimEnd();
+        let creditcard = data.SCARDN.trimEnd();
         let info = {
-            auth: data.sauthoc.trimEnd(),
-            ccard1: creditcard.substring(0, 6),
-            ccard2: creditcard.substring(creditcard.length - 4),
-            mda: data.curoffer,
-            qtypax: data.nbrofpax || 0,
-            qtytk: data.qtytkt || 0,
-            totamount: data.svfop || 0.00,
-            totamounto: data.amountoff || 0.00,
-            useru: data.usup,
-            dateu: data.feup
+            AUTH: data.SAUTHOC.trimEnd(),
+            CCARD1: creditcard.substring(0, 6),
+            CCARD2: creditcard.substring(creditcard.length - 4),
+            MDA: data.CUROFFER,
+            QTYPAX: data.NBROFPAX || 0,
+            QTYTK: data.QTYTKT || 0,
+            TOTAMOUNT: data.SVFOP || 0.00,
+            TOTAMOUNTO: data.AMOUNTOFF || 0.00,
+            USERU: data.USUP,
+            DATEU: data.FEUP
         };
         form.getForm().setValues(info);
         form.isValid();
-        //console.log(form.getForm().getValues());
     },
     reloadGrid: function () {
         const store = Ext.getStore(prototype.id + `-detail-store`);
