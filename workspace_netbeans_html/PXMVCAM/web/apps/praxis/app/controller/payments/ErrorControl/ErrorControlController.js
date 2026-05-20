@@ -114,7 +114,6 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
     },
     openAuditDataEntry: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         let rec = record.data;
-        let url = CONTEXTPATH + '/ErrorControl';
         let params = {
             IN_CCUST: rec.A4481CCUST,
             IN_PROCTYPE: rec.A4481TYPEP.trim(),
@@ -126,8 +125,7 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
             'VN0002': () => {
                 const VN0002dataEntry = Ext.create('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry', {
                     id: prototype.id + '-formatDataEntry',
-                    searchParams: params,
-                    searchUrl: url + '/loadVN0002Info'
+                    searchParams: params
                 });
                 VN0002dataEntry.show();
             }

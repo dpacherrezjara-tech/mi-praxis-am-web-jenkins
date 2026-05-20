@@ -70,71 +70,61 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
 
         view.setLoading(true);
         try {
-
-            let res = await global.callStorePagginExcel('PRAXISMP', 'SQP05134', view.searchParams); 
-            let data = res || [];
-
-            if (data.length === 0) {
-                global.Msg({ msg: 'No Data' });
-                view.setLoading(false);
-                return;
-            }
-           
-            let excel = data.map(x => ({
-                'Proccessing Date' : x.PRDA,
-                'Payment Date' : x.PAYDATE,
-                'Sales Date' : x.TRANSDATE,
-                'Settlement vs Sales' : me.formatSettlementVsSales(x.STVAL),
-                'Update Status': x.FEUP,
-                'Sale Merchant' : x.SMERCHID,
-                'Payment Merchant' : x.PMERCHID,
-                'Processor' : x.DESC_PROCTYPE,
-                'Country' : x.SCOUNTRY,
-                'Qty Tkts' : x.QTYTKT,
-                'Invoice Refer. Number PNR' : me.formatInvRefNumber(x),
-                'ARN' : x.ARN,
-                'Ref. Number' : x.AREFNBR,
-                'PNR' : x.SPNR,
-                'Document Type' : x.TRANSTYPE,
-                'Indust.Speci. Ref.Nbr' : x.ISREFNBR,
-                'Card Number' : x.SCARDN,
-                'Auth.' : x.SAUTHOC,
-                'Installment Plan' : x.NBRINSTA,
-                'Installment Number' : x.INSTANBR,
-                'Currency' : x.SCURRENCY,
-                'Sales Amount' : x.SVFOPS,
-                'Transaction Amount' : x.TGROSAMOUN,
-                'Rate Comm.' : me.formatPorcentaje(x.SFEERATE),
-                'Serv. Fee' : x.SERVICEFEE,
-                'VAT COMM 1 2' : x.OVERCOM12,
-                'Discount Rate' : me.formatPorcentaje(x.DISCRATEI),
-                'Discount Amount' : x.DISCAMOUN,
-                'Discount Rate VAT' :  me.formatPorcentaje(x.DISCRATEI),
-                'Discount Amount VAT' : me.formatDiscountAmountVAT(x),
-                'Number (Chargeback)' : x.CHGBNUM,
-                'Reason Code (Chargeback)' : x.CODCHGBACK,
-                'Amount (Chargeback)' : me.formatCHBAmount(x),
-                'Commission (Chargeback)' : me.formatCHBCom(x),
-                'VAT (Chargeback)' : me.formatCHBVAT(x),
-                'Amount (Adjustment)' : x.ADJUSMENT,
-                'Commission (Adjustment)' : me.formatAdjCom(x),
-                'VAT (Adjustment)' : me.formatAdjVAT(x),
-                'TAX' : x.f_TAX,
-                'Net Amount' : x.NETO,
-                'Net Amount to Receive AM' :x.NETOPAY,
-                'Currency Settlement' : x.PCURRENCY,
-                'Code (Rule)' : x.FREGLA,
-                'Description (Rule)' : me.formatRule(x.FREGLA),
-                'Flag Complement' : me.formatFlag(x.FCOMPL),
-                'Praxis ID' : x.IDCONL,
-                'Accounting Date' : x.FCONTL
-            }));
-
-            await global.writeExcelFromJson(excel, 'Settlement Detail Information');
-            view.setLoading(false);
-           
+            const excelFields = [
+                { title: 'Proccessing Date',          field: 'PRDA',                 order: 1  },
+                { title: 'Payment Date',               field: 'PAYDATE',              order: 2  },
+                { title: 'Sales Date',                 field: 'TRANSDATE',            order: 3  },
+                { title: 'Settlement vs Sales',        field: 'STVAL_DESCRIPTION',    order: 4  },
+                { title: 'Update Status',              field: 'FEUP',                 order: 5  },
+                { title: 'Sale Merchant',              field: 'SMERCHID',             order: 6  },
+                { title: 'Payment Merchant',           field: 'PMERCHID',             order: 7  },
+                { title: 'Processor',                  field: 'DESC_PROCTYPE',        order: 8  },
+                { title: 'Country',                    field: 'SCOUNTRY',             order: 9  },
+                { title: 'Qty Tkts',                   field: 'QTYTKT',               order: 10 },
+                { title: 'Invoice Refer. Number PNR',  field: 'PWREF',                order: 11 },
+                { title: 'ARN',                        field: 'ARN',                  order: 12 },
+                { title: 'Ref. Number',                field: 'AREFNBR',              order: 13 },
+                { title: 'PNR',                        field: 'SPNR',                 order: 14 },
+                { title: 'Document Type',              field: 'TRANSTYPE',            order: 15 },
+                { title: 'Indust.Speci. Ref.Nbr',      field: 'ISREFNBR',             order: 16 },
+                { title: 'Card Number',                field: 'SCARDN',               order: 17 },
+                { title: 'Auth.',                      field: 'SAUTHOC',              order: 18 },
+                { title: 'Installment Plan',           field: 'NBRINSTA',             order: 19 },
+                { title: 'Installment Number',         field: 'INSTANBR',             order: 20 },
+                { title: 'Currency',                   field: 'SCURRENCY',            order: 21 },
+                { title: 'Sales Amount',               field: 'SVFOPS',               order: 22 },
+                { title: 'Transaction Amount',         field: 'TGROSAMOUN',           order: 23 },
+                { title: 'Rate Comm.',                 field: 'SFEERATE',             order: 24 },
+                { title: 'Serv. Fee',                  field: 'SERVICEFEE',           order: 25 },
+                { title: 'VAT COMM 1 2',               field: 'OVERCOM12',            order: 26 },
+                { title: 'Discount Rate',              field: 'DISCRATEI',            order: 27 },
+                { title: 'Discount Amount',            field: 'DISCAMOUN',            order: 28 },
+                { title: 'Discount Rate VAT',          field: 'DISCRATEI',            order: 29 },
+                { title: 'Discount Amount VAT',        field: 'IVACOM12',             order: 30 },
+                { title: 'Number (Chargeback)',        field: 'CHGBNUM',              order: 31 },
+                { title: 'Reason Code (Chargeback)',   field: 'CODCHGBACK',           order: 32 },
+                { title: 'Amount (Chargeback)',        field: 'TGROSAMOUN',           order: 33 },
+                { title: 'Commission (Chargeback)',    field: 'DISCAMOUN',            order: 34 },
+                { title: 'VAT (Chargeback)',           field: 'DISCAMOUNI',           order: 35 },
+                { title: 'Amount (Adjustment)',        field: 'ADJUSMENT',            order: 36 },
+                { title: 'Commission (Adjustment)',    field: 'DISCAMOUN',            order: 37 },
+                { title: 'VAT (Adjustment)',           field: 'DISCAMOUNI',           order: 38 },
+                { title: 'TAX',                        field: 'f_TAX',                order: 39 },
+                { title: 'Net Amount',                 field: 'NETO',                 order: 40 },
+                { title: 'Net Amount to Receive AM',   field: 'NETOPAY',              order: 41 },
+                { title: 'Currency Settlement',        field: 'PCURRENCY',            order: 42 },
+                { title: 'Code (Rule)',                field: 'FREGLA',               order: 43 },
+                { title: 'Description (Rule)',         field: 'FREGLA_DESCRIPTION',   order: 44 },
+                { title: 'Flag Complement',            field: 'FCOMPL_DESCRIPTION',   order: 45 },
+                { title: 'Praxis ID',                  field: 'IDCONL',               order: 46 },
+                { title: 'Accounting Date',            field: 'FCONTL',               order: 47 }
+            ];
+            
+            await global.callStoreDownloadExcel('PRAXISMP', 'SQP05134', view.searchParams, 'PaymentsReconciliation - Settlement Detail', excelFields);
         } catch (e) {
             console.log(e);
+            global.Msg({ msg: 'Error descargando archivo' });
+        } finally {
             view.setLoading(false);
         }
     },
