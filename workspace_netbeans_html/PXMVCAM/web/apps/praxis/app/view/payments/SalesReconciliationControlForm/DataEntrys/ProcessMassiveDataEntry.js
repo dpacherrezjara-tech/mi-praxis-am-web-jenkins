@@ -285,6 +285,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                         width: 40
                                     },
                                     {
+                                        sortable: false,
+                                        xtype: 'actioncolumn',
+                                        width: 60,
+                                        text: 'Reverse',
+                                        align: 'center',
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-image-trash',
+                                                tooltip: 'Reverse this process',
+                                                handler: 'onClickReverseProcess',
+                                                isDisabled: function(view, rowIndex, colIndex, item, record) {
+                                                    // Deshabilitar si ACTIVE_REVERSE !== 1
+                                                    return record.get('ACTIVE_REVERSE') !== 1 && record.get('ACTIVE_REVERSE') !== '1';
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
                                         text: 'Process',
                                         dataIndex: 'PROGRAM_DESCRIPTION',
                                         width: 150
@@ -361,9 +379,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                                 return value || 0;
                                             }
                                         },
-
                                     },
-                         
+                                    {
+                                        text: 'Reverses',
+                                        dataIndex: 'REVERSES',
+                                        width: 70,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            // value ya contiene el valor de ERRORS
+                                            if (value > 0) {
+                                                metaData.style = "text-align:center;text-decoration:underline;cursor:pointer;font-weight:bolder;color:red;";
+                                                metaData.tdAttr = 'data-qtip="Click for reverses details"';
+                                                return '<a href="#" style="color:inherit;text-decoration:inherit;">' + value + '</a>';
+                                            } else {
+                                                metaData.style = "text-align:center;";
+                                                return value || 0;
+                                            }
+                                        },
+                                    },
                                     {
                                         text: 'Status',
                                         dataIndex: 'STATUS_DESCRIPTION',
@@ -381,6 +413,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                                 'P': '#B4E5FF', // Processing
                                                 'C': '#B4FFB4', // Completed
                                                 'E': '#FFB4B4', // Error
+                                                'R': '#FFB4B4', // Reversed
                                             };
                                             
                                             // Obtener el color basado en el código del status
@@ -605,12 +638,36 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                                 }
                                             },
                                             {
+                                                text: 'Active<br>Reverse',
+                                                dataIndex: 'REVERSEON',
+                                                width: 80,
+                                                renderer: function (value, metaData) {
+                                                    if (value === 1 || value === '1') {
+                                                        metaData.style = 'color:#3366cc;font-weight:bold;';
+                                                        return 'Yes';
+                                                    }
+                                                    return '';
+                                                }
+                                            },
+                                            {
                                                 text: 'Error',
                                                 dataIndex: 'ISERROR',
                                                 width: 70,
                                                 renderer: function (value, metaData) {
                                                     if (value === 1 || value === '1') {
                                                         metaData.style = 'color:red;font-weight:bold;';
+                                                        return 'Yes';
+                                                    }
+                                                    return '';
+                                                }
+                                            },
+                                            {
+                                                text: 'Reversed',
+                                                dataIndex: 'ISREVERSED',
+                                                width: 80,
+                                                renderer: function (value, metaData) {
+                                                    if (value === 1 || value === '1') {
+                                                        metaData.style = 'color:blue;font-weight:bold;';
                                                         return 'Yes';
                                                     }
                                                     return '';

@@ -1711,11 +1711,13 @@ var LarSyrExt = function () {
         });
         return resultado;
     };
-    this.setComboStore = function (cmp, data, valueField, displayField, value) {
+    this.setComboStore = function (cmp, data, valueField, displayField, value, addElementAll = true) {
         //crea record vacio
         let allRecord = {};
-        allRecord[displayField] = 'All';
-        allRecord[valueField] = '';
+        if (addElementAll) {
+            allRecord[displayField] = 'All';
+            allRecord[valueField] = '';
+        }
         //limpia record de data
         data.forEach(obj => {
             for (let attr in obj) {
@@ -1999,6 +2001,42 @@ var LarSyrExt = function () {
             }
         } catch (e) {
             console.error('Error on load', e);
+            return null;
+        }
+    };
+    this.callStoreDownloadExcel = async function (library, procedure, params, filename = "export", excelFields = []) {
+        let uri = CONTEXTPATH + '/Generic';
+        // let uri = gatewayBase + '/paymentscontrol/paymentscontrol-generic';
+        let request = axios.create({
+            baseURL: uri,
+            timeout: 0,
+            headers: this.getAuthHeaders()
+        });
+
+        // Armar el payload requerido por /downloadExcel
+        let requestPayload = {
+            LIBRARY: library,
+            PROGRAM: procedure,
+            PARAMS: params,
+            FILE_NAME: filename,
+            EXCEL_FIELDS: excelFields
+        };
+
+        try { 
+            const res = await request.post('/downloadExcel', requestPayload);
+            const { status, data } = res; 
+            if ((status === 200 || status === 201) 
+                && data?.status === "SUCCESS") {
+                // Abre una nueva pestaña para descargar el archivo usando downloadUrl
+                window.open(data.data.downloadUrl, "_blank");
+                return true;
+            } else {
+                global.Msg({ msg: 'No se recibió URL de descarga' });
+                return null;
+            }
+        } catch (e) {
+            console.error('Error descargando archivo:', e);
+            global.Msg({ msg: 'Error descargando archivo' });
             return null;
         }
     };
