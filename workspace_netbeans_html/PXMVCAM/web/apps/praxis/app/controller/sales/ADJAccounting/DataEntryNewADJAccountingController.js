@@ -1489,8 +1489,8 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryNewADJAccountingC
                     bvalida = false;
                     return;
                 }
-                if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716TITU')).length > 30) {
-                    Ext.Msg.alert('.: PRAXIS :.', 'The concept number must be 30 characters ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')) + ' ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716TITU')));
+                if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716TITU')).length > 50) {
+                    Ext.Msg.alert('.: PRAXIS :.', 'The concept number must be 20 characters ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')) + ' ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716TITU')));
                     bvalida = false;
                     return;
                 }
