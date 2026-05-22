@@ -423,8 +423,8 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "Titulo  Required";
                             break;
                         }
-                        if (fileA3344.A3344TITUC.length() > 30) {
-                            mensaje = "THE Titulo MUST BE 30 CHARACTERES  " + fileA3344.A3344TITUC;
+                        if (fileA3344.A3344TITUC.length() > 50) {
+                            mensaje = "THE Titulo MUST BE 50 CHARACTERES  " + fileA3344.A3344TITUC;
                             break;
                         }
                         //tipo de poliza
@@ -1110,8 +1110,8 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "Titulo  Required";
                             break;
                         }
-                        if (fileA3344.A3344TITUC.length() > 30) {
-                            mensaje = "THE Titulo MUST BE 30 CHARACTERES  " + fileA3344.A3344TITUC;
+                        if (fileA3344.A3344TITUC.length() > 50) {
+                            mensaje = "THE Titulo MUST BE 50 CHARACTERES  " + fileA3344.A3344TITUC;
                             break;
                         }
                         //tipo de poliza
