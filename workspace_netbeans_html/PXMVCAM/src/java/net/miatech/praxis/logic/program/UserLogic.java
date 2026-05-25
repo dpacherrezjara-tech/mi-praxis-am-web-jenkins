@@ -93,10 +93,18 @@ public class UserLogic {
         boolean encontrado = UserDAO.processFile(usuarioBuscado, line -> {
             String[] data = line.split(",");
             if (data.length >= 3) {
-                String correoOriginal = data[0].trim();
-                String usuarioOriginal = data[1].trim();
+                String correoOriginal = UserDAO.decrypt(data[0].trim());
+                String usuarioOriginal = UserDAO.decrypt(data[1].trim());
+                
+                String correoFinal = "".equals(nuevoCorreo)
+                    ? correoOriginal
+                    : nuevoCorreo.trim();
                 // Retornamos la línea con la contraseña actualizada
-                return String.join(", ", "".equals(nuevoCorreo) ? correoOriginal: nuevoCorreo, usuarioOriginal, nuevaContrasena);
+                return String.join(",",
+                    UserDAO.encrypt(correoFinal),
+                    UserDAO.encrypt(usuarioOriginal),
+                    UserDAO.encrypt(nuevaContrasena.trim())
+                );
             }
             return line; // Si la línea está mal formateada, la deja igual
         }, "actualizado");
@@ -105,6 +113,10 @@ public class UserLogic {
             System.out.println("ℹ️ Usuario no encontrado. Procediendo a crear registro nuevo...");
             create(nuevoCorreo, usuarioBuscado, nuevaContrasena);
         }
+    }
+    
+    public String decrypt(String encryptedText){
+        return UserDAO.decrypt(encryptedText);
     }
 
     // 3. DELETE: Busca por usuario y omite su línea
