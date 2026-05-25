@@ -1,8 +1,4 @@
-/* 
- * @Dvicente
- */
-
-Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
+Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataSummary', {
     extend: 'Ext.panel.Panel',
     height: 650,
     width: 900,
@@ -17,11 +13,6 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
     //padding: '10 10 10 10',
     fechas: [],
     items: [],
-    listeners: {
-        afterrender: function (panel) {
-            panel.getData();
-        }
-    },
     initComponent: function () {
         const me = this;
         me.title = 'Summary Detail TMZ';
@@ -52,20 +43,10 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                             sortable: true
                         },
                         items: [
-                            {text: 'Seq', dataIndex: 'rn', width: 50},
-                            {text: 'Processing',
-                                defaults: {
-                                    menuDisabled: true,
-                                    sortable: true,
-                                    align: 'center',
-                                    border: true
-                                },
-                                columns: [
-                                    {text: 'Date', width: 100, flex: 1, dataIndex: 'prda'}
-                                ]
-                            },
-                            {text: 'Load<br>Date', dataIndex: 'fregis', width: 100},
-                            {text: 'Source', dataIndex: 'nombreproc', flex: 1},
+                            {text: 'Seq', dataIndex: 'RN', width: 50},
+                            {text: 'Processing<br>Date', dataIndex: 'PRDA', width: 100},
+                            {text: 'Load<br>Date', dataIndex: 'FREGIS', width: 100},
+                            {text: 'Source', dataIndex: 'NOMBREPROC', flex: 1},
                             {text: 'Total Records',
                                 defaults: {
                                     menuDisabled: true,
@@ -73,43 +54,78 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                                     align: 'center'
                                 },
                                 columns: [
-                                    {text: 'Received', dataIndex: 'received', width: 70,
+                                    {text: 'Received', dataIndex: 'RECEIVED', width: 70,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;cursor:pointer;text-decoration: underline;';
+                                            let meStyle = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;';
+                                            if (value > 0) {
+                                                meStyle += 'cursor:pointer;text-decoration: underline;';
+                                            }
+                                            metaData.style = meStyle;
                                             return value;
                                         },
                                         listeners: {
-                                            click: 'onClickReceived'
+                                            click: 'onClickReceivedProcessor'
                                         }
                                     },
-                                    {text: 'Loaded', dataIndex: 'loaded', width: 70, align: 'center',
+                                    {text: 'Loaded', dataIndex: 'LOADED', width: 70, align: 'center',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;cursor:pointer;text-decoration: underline;';
+                                            let meStyle = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;';
+                                            if (value > 0) {
+                                                meStyle += 'cursor:pointer;text-decoration: underline;';
+                                            }
+                                            metaData.style = meStyle;
                                             return value;
                                         },
                                         listeners: {
-                                            click: 'onClickLoaded'
+                                            click: 'onClickLoadedProcessor'
                                         }
                                     },
-                                    {text: 'Exonerated', width: 90, align: 'center',
+                                    {text: 'Exonerated', dataIndex: 'EXONERATED', width: 90, align: 'center',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;cursor:pointer;text-decoration: underline;';
-                                            let loaded = record.get('loaded') || 0;
-                                            let received = record.get('received') || 0;
-                                            return (received - loaded);
+                                            let meStyle = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;';
+                                            if (value > 0) {
+                                                meStyle += 'cursor:pointer;text-decoration: underline;';
+                                            }
+                                            metaData.style = meStyle;
+                                            return value;
                                         },
                                         listeners: {
-                                            click: 'onClickExonerados'
+                                            click: 'onClickExoneradosProcessor'
                                         }
                                     },
-                                    {text: 'Differences', width: 90, align: 'center',
+                                    {
+                                        text: 'By Payment', 
+                                        dataIndex: 'BY_PAYMENT', 
+                                        width: 90, 
+                                        align: 'center',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = 'background:#A7ECC9;color:red;text-align:center;font-weight: bold;';
-                                            let loaded = record.get('loaded') || 0;
-                                            let received = record.get('received') || 0;
-                                            let exonerados = (received - loaded);
-                                            let resta = (received - loaded) - exonerados;
-                                            return resta;
+                                            let meStyle = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;';
+                                            if (value > 0) {
+                                                meStyle += 'cursor:pointer;text-decoration: underline;';
+                                            }
+                                            metaData.style = meStyle;
+                                            return value || 0;
+                                        },
+                                        listeners: {
+                                            click: 'onClickByPaymentProcessor'                          
+                                        }
+                                    },
+                               
+                                    {
+                                        text: 'Loaded vs<br>By Payment', 
+                                        dataIndex: 'LOADED_VS_BY_PAYMENT', 
+                                        width: 90, 
+                                        align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            let style = 'background:#A7ECC9;text-align:center;font-weight: bold;';
+                                            if (value > 0) {
+                                                style += 'color:red;';
+                                            } else {
+                                                style += 'color:#256892;';
+                                            }
+                                            metaData.style = style;
+                                            return value;
                                         }
                                     }
                                 ]
@@ -167,34 +183,31 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
                             sortable: true
                         },
                         items: [
-                            {text: 'Seq', dataIndex: 'rn', width: 50},
-                            {text: 'Processing<br>Date', dataIndex: 'prda', width: 90},
-                            {text: 'Complement', dataIndex: 'nombreproc', flex: 1},
-                            {text: 'Received', dataIndex: 'received', width: 80,
+                            {text: 'Seq', dataIndex: 'RN', width: 50},
+                            {text: 'Processing<br>Date', dataIndex: 'PRDA', width: 90},
+                            {text: 'Complement', dataIndex: 'NOMBREPROC', flex: 1},
+                            {text: 'Received', dataIndex: 'RECEIVED', width: 80,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;cursor:pointer;text-decoration: underline;';
                                     return value;
                                 },
                                 listeners: {
-                                    click: 'onClickReceivedC'
+                                    click: 'onClickReceivedComplement'
                                 }
                             },
-                            {text: 'Loaded', dataIndex: 'loaded', width: 80,
+                            {text: 'Loaded', dataIndex: 'LOADED', width: 80,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'background:#A7ECC9;color:#256892;text-align:center;font-weight: bold;cursor:pointer;text-decoration: underline;';
                                     return value;
                                 },
                                 listeners: {
-                                    click: 'onClickLoadedC'
+                                    click: 'onClickLoadedComplement'
                                 }
                             },
-                            {text: 'Difference', width: 80,
+                            {text: 'Difference', dataIndex: 'DIFFERENCE', width: 80,
                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'background:#A7ECC9;color:red;text-align:center;font-weight: bold;';
-                                    let loaded = record.get('loaded') || 0;
-                                    let received = record.get('received') || 0;
-                                    let resta = (received - loaded);
-                                    return resta;
+                                    return value;
                                 }}
                         ]
                     },
@@ -229,36 +242,4 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.GridData', {
         me.items = opts[me.gridtype]();
         me.callParent(arguments);
     },
-    getData: async function () {
-        const me = this;
-        me.mask('Loading Data...');
-        const data = await fetch(`${me.searchUrl}?${new URLSearchParams(me.searchParams)}`)
-                .then(async res => {
-                    if (res.ok) {
-                        const data = res.json();
-                        return data;
-                    }
-                    return [];
-                });
-        if (data.length === 0) {
-            global.Msg({msg: 'Data not found'});
-            me.unmask();
-            return;
-        }
-        let summaryStore = Ext.create('Ext.data.Store', {
-            storeId: prototype.id + '-summary-data',
-            pageSize: 20,
-            proxy: {
-                type: 'memory',
-                enablePaging: true
-            },
-            autoLoad: true,
-            autoSync: true,
-            data: data
-        });
-        Ext.getCmp(prototype.id + '-grid-summary01').setStore(summaryStore);
-        Ext.getCmp(prototype.id + '-summary-paggin01').setStore(summaryStore);
-        me.unmask();
-    }
 });
-
