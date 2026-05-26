@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.controller.payments.SabreTicketStatus.SabreTicketStatusGr
                     fn: function (btn) {
                         if (btn === 'yes') {
                             // todo ! cambiar por microservicio de descarga excel o en su defecto una descarga por proceso en cola
-                            global.getFile(`${me.view.url}/downloadByTicketDetail?${new URLSearchParams(params)}`);
+                            global.getFile(`${me.view.url}/downloadByTicketDetailv2?${new URLSearchParams(params)}`);
                         }
                     }
                 });

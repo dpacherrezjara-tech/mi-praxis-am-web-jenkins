@@ -22,17 +22,17 @@ Ext.define('Ext.Praxis.view.payments.SabreTicketStatusForm.Filters', {
                     border: false,
                     id: prototype.id + '-panelFilters',
                     bodyStyle: 'background: transparent',
-                    padding: '2px 5px 1px 5px',
+                    // padding: '2px 5px 1px 5px',
                     layout: 'vbox',
                     defaults: {
                         xtype: 'panel',
                         border: false,
                         bodyStyle: 'background: transparent',
-                        padding: '2px 5px 1px 5px',
+                        // padding: '2px 5px 1px 5px',
                         layout: 'hbox',
                         defaults: {
                             fieldStyle: 'text-align: center;',
-                            padding: '5px 1px 5px 1px',
+                            // padding: '5px 1px 5px 1px',
                             anchor: '100%',
                             hiddenLabel: false,
                             labelAlign: 'right',
@@ -41,8 +41,17 @@ Ext.define('Ext.Praxis.view.payments.SabreTicketStatusForm.Filters', {
                     },
                     items: [
                         // ── ROW 1 ────────────────────────────────────────────
+                        
                         {
                             id: prototype.id + '-rowFilters1',
+                            defaults: {
+                                fieldStyle: 'text-align: center;',
+                                padding: '5px 15px 5px 1px',
+                                anchor: '100%',
+                                hiddenLabel: false,
+                                labelAlign: 'right',
+                                hidden: false
+                            },
                             items: [
 
                                 {
@@ -93,7 +102,7 @@ Ext.define('Ext.Praxis.view.payments.SabreTicketStatusForm.Filters', {
                                     layout: 'hbox',
                                     defaults: {
                                         fieldStyle: 'text-align: center;',
-                                        padding: '5px 1px 5px 1px',
+                                        // padding: '5px 1px 5px 1px',
                                         labelAlign: 'right'
                                     },
                                     items: [
@@ -308,6 +317,7 @@ Ext.define('Ext.Praxis.view.payments.SabreTicketStatusForm.Filters', {
                             items: [
                                 {
                                     xtype: 'textfield',
+                                    padding: '0px 0px 0px 203px',
                                     fieldLabel: 'PNR',
                                     labelWidth: 40,
                                     width: 120,
