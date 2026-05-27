@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             padding: '1',
                             border: true,
-                            height: 480,
+                            // height: auto,
                             width: 900,
                             layout: {
                                 type: 'vbox',
@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Info', {
                                     columnLines: true,
                                     autoScroll: true,
                                     width: 900,
-                                    height: 480,
+                                    height: 510,
                                     features: [{ ftype: 'grouping', startCollapsed: true }],
                                     columns: {
                                         items: [
@@ -112,7 +112,7 @@ Ext.define('Ext.Praxis.view.salesaudit.WorkloadReassignmentForm.Info', {
                                     columnLines: true,
                                     autoScroll: true,
                                     width: 850,
-                                    height: 480,
+                                    // height: 480,
                                     features: [{
                                         ftype: 'summary'
                                     }],
