@@ -300,11 +300,7 @@ Ext.define('Ext.Praxis.controller.payments.SabreTicketStatus.SabreTicketStatusCo
             me.setComboStore({ cmp: Ext.getCmp(prototype.id + '-cmbStvalBTD'), data: dataStvalTicket, valueField: 'CODE', displayField: 'NAME', value: '' });
             me.setComboStore({ cmp: Ext.getCmp(prototype.id + '-cmbCardTypeBT'), data: dataCcGrupos, valueField: 'CODE', displayField: 'NAME', value: '' });
 
-            // ── IDs corregidos según la vista real ──────────────────────────
-            // '-filtersByTicket-1' no existe; el filtro ya está visible como '-contentFilter'
-            // '-mainContent2' → el panel correcto es '-mainContent'
             Ext.getCmp(prototype.id + '-mainContent').show();
-            // ────────────────────────────────────────────────────────────────
 
             me.changeAnalyzePending(quantityAnalyzePending);
             me.showProductionBtn(me.users);
@@ -321,9 +317,7 @@ Ext.define('Ext.Praxis.controller.payments.SabreTicketStatus.SabreTicketStatusCo
     showProductionBtn: function (users) {
         const userName = $('#menuUser').text();
         const btnProduction = Ext.getCmp(prototype.id + '-btnProduction');
-        // ── Guardia: el botón puede no existir en esta vista ───────────────
         if (!btnProduction) return;
-        // ──────────────────────────────────────────────────────────────────
         if (userName.slice(0, 3) === 'SAP' || users.includes(userName)) {
             btnProduction.show();
         } else {
@@ -334,9 +328,7 @@ Ext.define('Ext.Praxis.controller.payments.SabreTicketStatus.SabreTicketStatusCo
     showAddTicketBtn: function (users) {
         const userName = $('#menuUser').text();
         const btn = Ext.getCmp(prototype.id + '-btnAddTicket');
-        // ── Guardia: el botón puede no existir en esta vista ───────────────
         if (!btn) return;
-        // ──────────────────────────────────────────────────────────────────
         const activeFilter = Ext.getCmp(prototype.id + '-contentFilter'); // ID real del filtro
         if (activeFilter && activeFilter.isVisible()) {
             if (userName.slice(0, 3) === 'SAP' || users.includes(userName)) {
@@ -366,7 +358,7 @@ Ext.define('Ext.Praxis.controller.payments.SabreTicketStatus.SabreTicketStatusCo
             modal: true,
             fn: function (btn) {
                 if (btn === 'yes') {
-                    global.getFile(`${me.url}/downloadByTicketDetail?${new URLSearchParams(params)}`);
+                    global.getFile(`${me.url}/downloadByTicketDetailv2?${new URLSearchParams(params)}`);
                 }
             }
         });
