@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.WorkloadReassi
             if (res.lstRs) {
                 const data = res.lstRs?.[0] || [];
                 console.log('data: SQP02745', data);
-                data.unshift({A4886USER: 'ALL'});
+                data.unshift({ A4886USER: 'ALL' });
                 const cmb = Ext.getCmp(prototype.id + '-txtUser');
                 const store = Ext.create('Ext.data.Store', {
                     fields: ['A4886USER'],
@@ -101,7 +101,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.WorkloadReassi
         };
         const res = await global.callStorePaggin('PXSAUDIT', 'SQP05875', me.beanTMP);
         if (res) {
-            res.getProxy().setReader({type: 'json', rootProperty: 'response', totalProperty: 'totrow'});
+            res.getProxy().setReader({ type: 'json', rootProperty: 'response', totalProperty: 'totrow' });
             grid01.setStore(res);
             Ext.getCmp(prototype.id + '-pagginator-01').setStore(res);
         }
@@ -166,11 +166,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.WorkloadReassi
         let OUT_RES = 0;
         //
         if (Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue() === '' || Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue() === '') {
-            global.Msg({msg: 'Enter Date From  or To'});
+            global.Msg({ msg: 'Enter Date From  or To' });
             return;
         }
         if (Ext.getCmp(prototype.id + '-cmbProctypeSettl').getValue() === '') {
-            global.Msg({msg: 'Enter Source'});
+            global.Msg({ msg: 'Enter Source' });
             return;
         }
         // 
@@ -222,8 +222,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.WorkloadReassi
             IN_SOURCE: Ext.getCmp(prototype.id + '-cmbProctypeSettl').getValue() || '',
             IN_COUNTRY: '',
             IN_USER: Ext.getCmp(prototype.id + '-txtUser').getValue() === 'ALL'
-                    ? ''
-                    : Ext.getCmp(prototype.id + '-txtUser').getValue()
+                ? ''
+                : Ext.getCmp(prototype.id + '-txtUser').getValue()
         };
         try {
             const res = await global.callStorePaggin('PXSAUDIT', 'SQP05875', params);
@@ -241,31 +241,42 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.WorkloadReassi
             console.error('Error en búsqueda:', error);
         }
     },
+
     onLoadUsersDetail: async function (rec) {
         try {
             const me = this;
             const gridDetalle = Ext.getCmp(prototype.id + '-gridDETALLE');
             const storeGrid = gridDetalle.getStore();
+
             let map = {};
             let data = [];
-            data.push({A4886USER: 'ALL'});
+
+            data.push({ A4886USER: 'ALL' });
+            data.push({ A4886USER: 'PENDIENTES' });
+
             storeGrid.each(function (record) {
                 let user = (record.get('A1672UASIG') || '').trim();
+
                 if (user && !map[user]) {
                     map[user] = true;
-                    data.push({A4886USER: user});
+                    data.push({ A4886USER: user });
                 }
             });
+
             const cmb = Ext.getCmp(prototype.id + '-cmbUser');
+
             cmb.setStore(Ext.create('Ext.data.Store', {
                 fields: ['A4886USER'],
                 data: data
             }));
+
             cmb.un('change', me.onFilterAuditorDetail, me);
             cmb.on('change', me.onFilterAuditorDetail, me);
+
             cmb.suspendEvents();
             cmb.setValue('ALL');
             cmb.resumeEvents();
+
         } catch (error) {
             console.error('Error cargando usuarios detalle:', error);
         }
@@ -285,12 +296,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.WorkloadReassi
                 });
                 storeDetalle.each(function (rec) {
                     rec.set('TOTAL',
-                            ((rec.get('PEDINMACH')) || 0) +
-                            ((rec.get('PEDINADM')) || 0) +
-                            ((rec.get('PEDINACM')) || 0) +
-                            ((rec.get('PEDINERROR')) || 0) +
-                            ((rec.get('PROCE')) || 0)
-                            );
+                        ((rec.get('PEDINMACH')) || 0) +
+                        ((rec.get('PEDINADM')) || 0) +
+                        ((rec.get('PEDINACM')) || 0) +
+                        ((rec.get('PEDINERROR')) || 0) +
+                        ((rec.get('PROCE')) || 0)
+                    );
                 });
                 gridDetalle.setStore(storeDetalle);
                 Ext.defer(function () {
@@ -325,7 +336,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.WorkloadReassi
         // ← ocultar paginador y leyenda al entrar al detalle
         Ext.getCmp(prototype.id + '-pagi12').hide();
         Ext.getCmp(prototype.id + '-pagginator-legend').hide();
-        
+
         me.beantmpdetaill = {
             IN_OPTION: '1',
             IN_CCUST: '139',
@@ -347,12 +358,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.WorkloadReassi
                 });
                 storeDetalle.each(function (rec) {
                     rec.set('TOTAL',
-                            ((rec.get('PEDINMACH')) || 0) +
-                            ((rec.get('PEDINADM')) || 0) +
-                            ((rec.get('PEDINACM')) || 0) +
-                            ((rec.get('PEDINERROR')) || 0) +
-                            ((rec.get('PROCE')) || 0)
-                            );
+                        ((rec.get('PEDINMACH')) || 0) +
+                        ((rec.get('PEDINADM')) || 0) +
+                        ((rec.get('PEDINACM')) || 0) +
+                        ((rec.get('PEDINERROR')) || 0) +
+                        ((rec.get('PROCE')) || 0)
+                    );
                 });
                 gridDetalle.setStore(storeDetalle);
                 gridDetalle.setStore(storeDetalle);
@@ -365,22 +376,37 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.WorkloadReassi
             console.error('Error cargando detalle:', error);
         }
 
-        await me.onLoadUsersDetail(rec);
-    },
+        await me.onLoadUsersDetail
     onFilterAuditorDetail: function (combo, newValue) {
         const grid = Ext.getCmp(prototype.id + '-gridDETALLE');
         const store = grid.getStore();
+
         if (!store)
             return;
+
         store.clearFilter(false);
+
+        // Mostrar todos
         if (!newValue || newValue === 'ALL') {
             grid.getView().refresh();
             return;
         }
 
+        // Mostrar pendientes (usuario vacío)
+        if (newValue === 'PENDIENTES') {
+            store.filterBy(function (record) {
+                return !(record.get('A1672UASIG') || '').trim();
+            });
+
+            grid.getView().refresh();
+            return;
+        }
+
+        // Filtrar por auditor
         store.filterBy(function (record) {
             return (record.get('A1672UASIG') || '').trim() === newValue.trim();
         });
+
         grid.getView().refresh();
     },
     onChangeAuditorClick: function (obj) {
@@ -412,7 +438,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.WorkloadReassi
         Ext.getCmp(prototype.id + '-btnback').hide();
         Ext.getCmp(prototype.id + '-btnuser').hide();
         Ext.getCmp(prototype.id + '-cmbUser').hide();
-         Ext.getCmp(prototype.id + '-btnAsigna').show();
+        Ext.getCmp(prototype.id + '-btnAsigna').show();
         // limpiar filtros del detalle al volver
         var gridDetalle = Ext.getCmp(prototype.id + '-gridDETALLE');
         if (gridDetalle.getStore()) {
@@ -428,11 +454,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.WorkloadReassi
     },
     OnColumnTotalRenderer: function (value, metaData, record) {
         const total =
-                (record.get('PEDINMACH') || 0) +
-                (record.get('PEDINADM') || 0) +
-                (record.get('PEDINACM') || 0) +
-                (record.get('PEDINERROR') || 0) +
-                (record.get('PROCE') || 0);
+            (record.get('PEDINMACH') || 0) +
+            (record.get('PEDINADM') || 0) +
+            (record.get('PEDINACM') || 0) +
+            (record.get('PEDINERROR') || 0) +
+            (record.get('PROCE') || 0);
         return total;
     },
     onPagingBeforeChange01: function (obj, page, opts) {
