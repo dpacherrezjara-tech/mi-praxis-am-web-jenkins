@@ -186,7 +186,7 @@ Ext.define('Ext.Praxis.view.payments.SabreTicketStatusForm.Grids.SabreTicketStat
                             return value.trim() === '' ? '' : 'Suggested';
                         }
                     },
-                    { text: 'Uses Sabre', dataIndex: 'USES_SABRE', width: 180 }
+                    { text: 'Uses Sabre', dataIndex: 'ESTAF_CONCAT', width: 180 }
                 ]
             }
             //</editor-fold>
