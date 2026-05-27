@@ -376,7 +376,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.WorkloadReassi
             console.error('Error cargando detalle:', error);
         }
 
-        await me.onLoadUsersDetail
+        await me.onLoadUsersDetail(rec);
+    },
     onFilterAuditorDetail: function (combo, newValue) {
         const grid = Ext.getCmp(prototype.id + '-gridDETALLE');
         const store = grid.getStore();
