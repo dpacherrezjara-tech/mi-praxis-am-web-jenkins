@@ -427,7 +427,7 @@ Ext.define('Ext.Praxis.view.payments.SabreTicketStatusForm.Filters', {
                                 },
                                 {
                                     xtype: 'combobox',
-                                    fieldLabel: 'Status',
+                                    fieldLabel: 'Uses Sabre',
                                     name: 'IN_ESTATUS',
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
