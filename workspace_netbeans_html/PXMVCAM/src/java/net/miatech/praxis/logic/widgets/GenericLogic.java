@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import net.miatech.praxis.generics.CallStoreFilter;
 import net.miatech.praxis.generics.CallStorePaggin;
+import net.miatech.praxis.generics.DownloadExcelFilter;
 import net.miatech.praxis.generics.RecordsFilter;
 
 /**
@@ -15,4 +16,5 @@ public interface GenericLogic {
     Map<String,Object> callStoreProcedureAsync(CallStoreFilter filter) throws Exception;
     CallStorePaggin callStoreProcedurePaggin(CallStorePaggin filter) throws Exception;
     void loadRecordsOnTable(String LIBRARY,String TABLE,List<RecordsFilter> lst) throws Exception;
+    List<Object[]> getDataForExcel(DownloadExcelFilter filter) throws Exception;
 }

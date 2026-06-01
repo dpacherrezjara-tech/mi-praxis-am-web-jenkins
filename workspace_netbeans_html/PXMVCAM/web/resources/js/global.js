@@ -2004,13 +2004,15 @@ var LarSyrExt = function () {
             return null;
         }
     };
+    // this.getAuthHeaders = function () {
+    //     return {};
+    // };
     this.callStoreDownloadExcel = async function (library, procedure, params, filename = "export", excelFields = []) {
         let uri = CONTEXTPATH + '/Generic';
-        // let uri = gatewayBase + '/paymentscontrol/paymentscontrol-generic';
         let request = axios.create({
             baseURL: uri,
             timeout: 0,
-            headers: this.getAuthHeaders()
+            // headers: this.getAuthHeaders()
         });
 
         // Armar el payload requerido por /downloadExcel

@@ -184,6 +184,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTick
                         }
                     },
                     {text: 'Processor', dataIndex: 'DESC_PROCTYPE', width: 120},
+                    {text: 'Payment<br>Merchant', dataIndex: 'PMERCHID', width: 100},
                     {text: 'Chargeback<br>Status', dataIndex: 'CHARGEBACK', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                             metaData.style = "text-align:center;font-weight:bold;background-color:#F0D094;";
