@@ -77,9 +77,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCerrorb'),       data: dataCerror,       valueField: 'A4451KEY3',  displayField: 'NAME', value: ''});
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCodadjub'),      data: dataCodadju,      valueField: 'A4451KEY3',  displayField: 'A4451DESC1', value: ''});
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalBTS'),      data: dataStvalTicket,  valueField: 'CODE',       displayField: 'NAME', value: ''});
-            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalBTD'),      data: dataStvalTicket,  valueField: 'CODE',       displayField: 'NAME', value: ''});
-            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCardTypeBT'),    data: dataCcGrupos,     valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalBTD'),      data: dataStvalTicket,  valueField: 'CODE',       displayField: 'NAME',     value: ['']});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProcessorBTD'),  data: dataProcessors,   valueField: 'A4451KEY2',  displayField: 'A4451DESC1', value: ['']});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCardTypeBT'),    data: dataCcGrupos,     valueField: 'CODE',       displayField: 'NAME', value: ['']});
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCardTypeBTSum'), data: dataCcGrupos,     valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCreditCardBT'),  data: dataCreditcards,  valueField: 'CODE',       displayField: 'NAME', value: ['']});
             
 
             me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctypeSettl'), data: dataProcessors, valueField: 'A4451KEY2', displayField: 'A4451DESC1',     value: ''});
@@ -415,20 +417,26 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         this.showAddTicketBtn(me.users);
         this.showProcessBtn(me.users);
     },
-    onChangeCreditCardBT: function (obj) {
+    onChangeCreditCardBT: function (combo) {
         const me = this;
         const cmbCard = Ext.getCmp(prototype.id + '-cmbCreditCardBT');
-        
-        if (obj.getValue() === '') {
-            cmbCard.hide();
-        } else {
-            
-            const data = me.creditcards.filter(x => x.CODE_GROUP_CARD === obj.getValue());
 
-            me.setComboStore({cmp: cmbCard, data: data,
-                valueField: 'CODE', displayField: 'NAME', value: ''});
-            cmbCard.show();
+        let selectedTypes = combo.getValue();
+        if (!Ext.isArray(selectedTypes)) {
+            selectedTypes = (selectedTypes !== null && selectedTypes !== undefined) ? [selectedTypes] : [];
         }
+
+        // All selected (empty string CODE) or nothing selected → show all cards
+        const isAll = selectedTypes.length === 0 ||
+                      (selectedTypes.length === 1 && selectedTypes[0] === '');
+
+        const data = isAll
+            ? me.creditcards
+            : me.creditcards.filter(x => selectedTypes.includes(x.CODE_GROUP_CARD));
+
+        me.setComboStore({cmp: cmbCard, data: data,
+            valueField: 'CODE', displayField: 'NAME', value: ['']});
+        cmbCard.show();
     },
     onChangeCreditCardBTSum: function (obj) {
         const me = this;

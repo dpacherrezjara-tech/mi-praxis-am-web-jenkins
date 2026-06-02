@@ -61,6 +61,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import javax.crypto.Cipher;
+import javax.crypto.spec.GCMParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.SecureRandom;
+import java.util.Base64;
 
 /**
  *
@@ -72,6 +77,10 @@ public class UserDAO  {
     private IServerSession session;
     private static final Logger logError = Logger.getLogger("errorLog");
     private static final String CSV_PATH = "\\\\px\\PRAXISAM\\PERMITS.txt";
+    private static final String SECRET = "1234567890123456"; // 16 chars mínimo para AES-128
+    private static final String ALGORITHM = "AES/GCM/NoPadding";
+    private static final int IV_LENGTH = 12;
+    private static final int TAG_LENGTH = 128;
 
     //private ServerSession serverSession;
     private Application application;
@@ -427,7 +436,11 @@ public class UserDAO  {
         }
 
         // 2. Si no existen, procedemos a crear
-        String nuevaLinea = String.join(",", correo.trim(), usuario.trim(), contrasena.trim());
+        String nuevaLinea = String.join(",",
+            encrypt(correo.trim()),
+            encrypt(usuario.trim()),
+            encrypt(contrasena.trim())
+        );
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(CSV_PATH, true)))) {
             out.println(nuevaLinea);
             System.out.println("✅ Usuario creado con éxito.");
@@ -450,8 +463,8 @@ public class UserDAO  {
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
                 if (data.length >= 2) {
-                    String correoExistente = data[0].trim();
-                    String usuarioExistente = data[1].trim();
+                    String correoExistente = decrypt(data[0]).trim();
+                    String usuarioExistente = decrypt(data[1]).trim();
 
                     if (correoExistente.equalsIgnoreCase(correo.trim()) || 
                         usuarioExistente.equalsIgnoreCase(usuario.trim())) {
@@ -478,12 +491,17 @@ public class UserDAO  {
                 String[] data = currentLine.split(",");
                 
                 // Verificamos si la línea actual coincide con el usuario buscado
-                if (data.length >= 2 && data[1].trim().equalsIgnoreCase(targetUser.trim())) {
-                    found = true;
-                    String processedLine = mapper.apply(currentLine);
-                    
-                    if (processedLine != null) {
-                        writer.write(processedLine + System.lineSeparator());
+                if (data.length >= 2) {
+                    String usuarioExistente = decrypt(data[1].trim());
+                    if (usuarioExistente.equalsIgnoreCase(targetUser.trim())) {
+                        found = true;
+                        String processedLine = mapper.apply(currentLine);
+
+                        if (processedLine != null) {
+                            writer.write(processedLine + System.lineSeparator());
+                        }
+                    } else {
+                        writer.write(currentLine + System.lineSeparator());
                     }
                     // Si es null (Delete), simplemente no se escribe nada y continúa el bucle
                 } else {
@@ -516,5 +534,49 @@ public class UserDAO  {
             System.err.println("❌ Error de E/S: " + e.getMessage());
         }
         return found;
+    }
+    public static String encrypt(String text) {
+        try {
+            byte[] iv = new byte[IV_LENGTH];
+            new SecureRandom().nextBytes(iv);
+
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            SecretKeySpec keySpec = new SecretKeySpec(SECRET.getBytes(), "AES");
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(TAG_LENGTH, iv);
+
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec, gcmSpec);
+            byte[] encrypted = cipher.doFinal(text.getBytes());
+
+            byte[] combined = new byte[iv.length + encrypted.length];
+            System.arraycopy(iv, 0, combined, 0, iv.length);
+            System.arraycopy(encrypted, 0, combined, iv.length, encrypted.length);
+
+            return Base64.getEncoder().encodeToString(combined);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error cifrando dato", e);
+        }
+    }
+
+    public static String decrypt(String encryptedText) {
+        try {
+            byte[] combined = Base64.getDecoder().decode(encryptedText);
+
+            byte[] iv = new byte[IV_LENGTH];
+            byte[] encrypted = new byte[combined.length - IV_LENGTH];
+
+            System.arraycopy(combined, 0, iv, 0, IV_LENGTH);
+            System.arraycopy(combined, IV_LENGTH, encrypted, 0, encrypted.length);
+
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            SecretKeySpec keySpec = new SecretKeySpec(SECRET.getBytes(), "AES");
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(TAG_LENGTH, iv);
+
+            cipher.init(Cipher.DECRYPT_MODE, keySpec, gcmSpec);
+            return new String(cipher.doFinal(encrypted));
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error descifrando dato", e);
+        }
     }
 }
