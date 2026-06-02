@@ -2012,10 +2012,9 @@ var LarSyrExt = function () {
         let request = axios.create({
             baseURL: uri,
             timeout: 0,
-            // headers: this.getAuthHeaders()
+            responseType: 'blob'
         });
 
-        // Armar el payload requerido por /downloadExcel
         let requestPayload = {
             LIBRARY: library,
             PROGRAM: procedure,
@@ -2024,16 +2023,21 @@ var LarSyrExt = function () {
             EXCEL_FIELDS: excelFields
         };
 
-        try { 
+        try {
             const res = await request.post('/downloadExcel', requestPayload);
-            const { status, data } = res; 
-            if ((status === 200 || status === 201) 
-                && data?.status === "SUCCESS") {
-                // Abre una nueva pestaña para descargar el archivo usando downloadUrl
-                window.open(data.data.downloadUrl, "_blank");
+            if (res.status === 200 || res.status === 201) {
+                const blob = new Blob([res.data], { type: 'application/octet-stream' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename + '.zip';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
                 return true;
             } else {
-                global.Msg({ msg: 'No se recibió URL de descarga' });
+                global.Msg({ msg: 'No se pudo descargar el archivo' });
                 return null;
             }
         } catch (e) {

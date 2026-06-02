@@ -9,8 +9,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
     afterRender: function () {
         this.getData(this.view);
     },
-    getData: function (view) {
-        const expectedParams = [
+    getExpectedParams: function () {
+        return [
             'IN_CCUST', 'IN_DATE', 'IN_DATEFROM', 'IN_DATETO',
             'IN_PROCTYPE', 'IN_TRNCU', 'IN_SCOUNTRY', 'IN_FVOID',
             'IN_TICKET', 'IN_SCARDN', 'IN_SAUTHOC', 'IN_SPNR',
@@ -19,11 +19,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
             'IN_AMOUNT', 'IN_PAX', 'IN_TIPOD', 'IN_TFOP', 'IN_GCARD',
             'IN_PROCESSOR', 'IN_PMERCHID'
         ];
-        expectedParams.forEach(param => {
-            if (!(param in view.searchParams)) {
-                view.searchParams[param] = '';
+    },
+    normalizeSearchParams: function (searchParams) {
+        this.getExpectedParams().forEach(param => {
+            if (!(param in searchParams)) {
+                searchParams[param] = '';
             }
         });
+        return searchParams;
+    },
+    getData: function (view) {
+        this.normalizeSearchParams(view.searchParams);
         const store = global.callStorePaggin('PRAXISMP', 'SQP05089', view.searchParams);
         store.on('load', function (_s, records, successful) {
             if (!successful) {
@@ -61,11 +67,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
         };
         return params;
     },
+    getExcelFilename: function(searchParams) {
+        const now = new Date();
+        const DateDownload = now.getFullYear().toString().slice(-2) + (now.getMonth() + 1).toString().padStart(2, '0') + now.getDate().toString().padStart(2, '0');
+        const HourDownload = now.getHours().toString().padStart(2, '0') + now.getMinutes().toString().padStart(2, '0') + now.getSeconds().toString().padStart(2, '0');
+
+        const DateFilter = searchParams.IN_DATEFROM.toString();
+
+        return `PaymentsReconciliation ByTicket_${DateDownload}_${HourDownload} ${DateFilter}`.trim();
+    },
     downloadExcel: async function () {
         const me = this;
         const view = me.view;
 
+        me.normalizeSearchParams(view.searchParams);
         view.setLoading(true);
+        
         try {
             const excelFields = [
                 { title: 'Sale Date',                field: 'A4496FECVT',            order: 1  },
@@ -96,21 +113,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
                 { title: 'Processing Date',          field: 'A4501PRDA',             order: 28 },
                 { title: 'Status',                   field: 'STVAL_DESCRIPTION',     order: 29 },
                 { title: 'Processor',                field: 'DESC_PROCTYPE',         order: 30 },
-                { title: 'Chargeback Status',        field: 'CHARGEBACK',            order: 31 },
-                { title: 'ADM Status',               field: 'A4501STADM',            order: 32 },
-                { title: 'User Update',              field: 'A4501USUP',             order: 33 },
-                { title: 'Date Update',              field: 'A4501FEUP',             order: 34 }
+                { title: 'Payment Merchant',         field: 'PMERCHID',              order: 31 },
+                { title: 'Chargeback Status',        field: 'CHARGEBACK',            order: 32 },
+                { title: 'ADM Status',               field: 'A4501STADM',            order: 33 },
+                { title: 'Uses Sabre',               field: 'USES_SABRE',            order: 34 },
+                { title: 'User Update',              field: 'A4501USUP',             order: 35 },
+                { title: 'Date Update',              field: 'A4501FEUP',             order: 36 }
             ];
-            // • DESCARGA DE REPORTES
-            // o Al descargar el archivo de consulta éste deberá respetar la nomenclatura siguiente:
-            // PaymentsReconciliation ByTicket_FECHA_HORA-DESCARGA DATE-FILTER
-            // Ejemplo: PaymentsReconciliation ByTicket_260518_150030 260511
-            // ▪ FECHA_HORA-DESCARGA hace referencia al momento de descarga del archivo.
-            // ▪ DATE-FILTER hace referencia a la fecha de consulta, independientemente de si
-            // se ha seleccionado la opción Sale, Processing o Update.
-            // o El nuevo campo “Payment Merchant” deberá estar integrado en el reporte
+
+            // nomenclatura del nombre del archivo
+            const filename = this.getExcelFilename(view.searchParams);
             
-            await global.callStoreDownloadExcel('PRAXISMP', 'SQP05089', view.searchParams, 'PaymentsReconciliation ByTicket', excelFields);
+            await global.callStoreDownloadExcel('PRAXISMP', 'SQP05089', view.searchParams, filename, excelFields);
+
         } catch (e) {
             console.log(e);
             global.Msg({ msg: 'Error descargando archivo' });
@@ -118,28 +133,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.ByTicketDe
             view.setLoading(false);
         }
     }
-    // downloadExcel: function (btn) {
-    //     const me = this;
-    //     let params = Object.assign({}, me.view.searchParams);
-    //     params.excel = true;
-    //     console.log(params);
-    //     Ext.Msg.show(
-    //             {
-    //                 title: '.:PRAXIS:.',
-    //                 msg: 'Download Excel?',
-    //                 buttons: Ext.MessageBox.YESNO,
-    //                 scope: this,
-    //                 animateTarget: btn,
-    //                 icon: Ext.MessageBox.QUESTION,
-    //                 modal: true,
-    //                 fn: function (btn) {
-    //                     if (btn === 'yes') {
-    //                         // todo ! cambiar por microservicio de descarga excel o en su defecto una descarga por proceso en cola
-    //                         global.getFile(`${me.view.url}/downloadByTicketDetail?${new URLSearchParams(params)}`);
-    //                     }
-    //                 }
-    //             });
-    // }
 });
 
 

@@ -119,13 +119,9 @@ public class GenericDAO implements GenericLogic {
 
     @Override
     public List<Object[]> getDataForExcel(DownloadExcelFilter filter) throws Exception {
-        Map<String, Object> obj;
-        if (filter.getPARAMS() == null || filter.getPARAMS().isEmpty()) {
-            obj = jdbcUtils.executeSQP(filter.getLIBRARY(), filter.getPROGRAM());
-        } else {
-            MapSqlParameterSource params = new MapSqlParameterSource(filter.getPARAMS());
-            obj = jdbcUtils.executeSQP(filter.getLIBRARY(), filter.getPROGRAM(), params);
-        }
+        filter.setPaginationForExcel();
+        MapSqlParameterSource params = new MapSqlParameterSource(filter.getPARAMS());
+        Map<String, Object> obj = jdbcUtils.executeSQP(filter.getLIBRARY(), filter.getPROGRAM(), params);
 
         List<Map<String, Object>> resultSet = new ArrayList<>();
         for (Object value : obj.values()) {
