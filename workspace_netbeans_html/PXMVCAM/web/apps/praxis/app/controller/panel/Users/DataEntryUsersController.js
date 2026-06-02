@@ -243,6 +243,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
         var chkExpiredDate = Ext.getCmp(prototype.id+'-chkExpiredDate').getValue() ? 'true' : 'false';
         var DTEXPIRED = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtExpDate').getValue(), 'Ymd');
         var chkPass = Ext.getCmp(prototype.id+'-chkPass').getValue() ? 'true' : 'false';
+        var chkPassUpd = Ext.getCmp(prototype.id+'-chkPassUpd').getValue() ? 'true' : 'false';
         var txtPass = this.getValue('txtPass');
         var strOption = this.p.action;
         var STAT =  Ext.getCmp(prototype.id+'-chkStatus').getValue() ? 'A' : 'L';
@@ -257,6 +258,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
             chkExpiredDate: chkExpiredDate,
             DTEXPIRED: DTEXPIRED,
             chkPass: chkPass,
+            chkPassUpd: chkPassUpd,
             txtPass: txtPass,
             STAT: STAT,
             strOption: strOption,

@@ -307,6 +307,19 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                             listeners:{
                                 change: 'onUpperValue'
                             }
+                        },
+                        { xtype: 'tbspacer', width: 20 },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkPassUpd',
+                            width: 20,
+                            readOnly: false
+                        },
+                        {
+                            xtype: 'label',
+                            text: 'Requires Password Updates: ',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 120
                         }
                     ]
                 },
