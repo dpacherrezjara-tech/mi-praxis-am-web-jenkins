@@ -318,13 +318,13 @@ public class UserDAO  {
     }
     
     // CREAR USUARIO AS400
-    public void SQP03219(String usuario, String clave, String desc) throws SQLException, Exception {
+    public void SQP03219(String usuario, String clave, String desc, String checkPass) throws SQLException, Exception {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         //String user = session.getProperty("USR_HABILITAR_USUARIO");
         //String pass = session.getProperty("PASS_HABILITAR_USUARIO");
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP03219(?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP06081(?,?,?,?)}";
         Connection tmpCnx;
         tmpCnx = session.getCNXIBMDB2().getIBMDB2Connection();  // application.getConnection(user, pass);
         //tmpCnx.open();
@@ -335,6 +335,7 @@ public class UserDAO  {
             cstmt01.setString(1, usuario);
             cstmt01.setString(2, clave);
             cstmt01.setString(3, desc);
+            cstmt01.setString(4, checkPass);
             cstmt01.execute();
 
             rs01 = cstmt01.getResultSet();

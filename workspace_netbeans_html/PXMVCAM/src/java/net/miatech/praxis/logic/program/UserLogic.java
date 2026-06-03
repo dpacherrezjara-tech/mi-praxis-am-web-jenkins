@@ -68,8 +68,8 @@ public class UserLogic {
         userDAO.SQP03218(usuario, pass);
     }
     
-    public void SQP03219(String usuario, String clave, String desc) throws SQLException, Exception {
-        userDAO.SQP03219(usuario, clave, desc);
+    public void SQP03219(String usuario, String clave, String desc, String chckPass) throws SQLException, Exception {
+        userDAO.SQP03219(usuario, clave, desc, chckPass);
     }
     
     public boolean SQP03268(String usuario) throws SQLException, Exception {
