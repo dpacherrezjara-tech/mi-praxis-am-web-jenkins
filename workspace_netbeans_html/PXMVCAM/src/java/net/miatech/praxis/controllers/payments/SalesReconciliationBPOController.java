@@ -66,6 +66,7 @@ import net.miatech.praxis.payment.filter.SQP05312Filter;
 import net.miatech.praxis.payment.filter.SQP05313Filter;
 import net.miatech.praxis.payment.filter.SQP05319Filter;
 import net.miatech.praxis.payment.filter.SQP05646Filter;
+import net.miatech.praxis.payment.filter.SQP05709Filter;
 import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.ResponseUtils;
 import net.miatech.praxis.utils.SabreWebService;
@@ -1536,4 +1537,159 @@ public class SalesReconciliationBPOController {
         return ResponseUtils.ok(map);
     }
 //</editor-fold>
+
+// ticket sabre status
+    @RequestMapping(value = "downloadByTicketDetailv2")
+    public ResponseEntity<?> downloadByTicketDetailv2(@ModelAttribute SQP05709Filter params) {
+        try {
+            System.out.println("---------------SabreTicketStatus:downloadByTicketDetailv2-------------");
+
+            SQP05709Filter filter = logic.loadSQP05709Filter(params);
+
+            System.out.println("Total: " + filter.getResponse().size());
+
+            List<Object[]> data = new ArrayList<>();
+
+            // headers
+            Object[] headers = new Object[34];
+
+            headers[0] = "Sale Date";
+            headers[1] = "IATA";
+            headers[2] = "Src";
+            headers[3] = "Channel";
+            headers[4] = "Country";
+            headers[5] = "Agent";
+            headers[6] = "Trnx";
+            headers[7] = "Doc. Type";
+            headers[8] = "Void";
+            headers[9] = "RFIC";
+            headers[10] = "RFIS";
+            headers[11] = "Pax Name";
+            headers[12] = "Ticket";
+            headers[13] = "PNR";
+
+            headers[14] = "Card Type";
+            headers[15] = "Card Code";
+            headers[16] = "Card Number";
+            headers[17] = "Auth Number";
+            headers[18] = "Amount";
+            headers[19] = "Curr.";
+
+            headers[20] = "Reconciliation Amount";
+            headers[21] = "Difference Amount";
+            headers[22] = "Expected Date";
+            headers[23] = "Payment Date";
+            headers[24] = "Difference";
+            headers[25] = "Processing Date";
+            headers[26] = "Status";
+            headers[27] = "User Update";
+            headers[28] = "Date Update";
+            headers[29] = "Processor";
+            headers[30] = "Chargeback Status";
+            headers[31] = "ADM Status";
+            headers[32] = "Uses Sabre";
+            headers[33] = "BPO Comment";
+
+            data.add(headers);
+
+            for (A4496Filter obj : filter.getResponse()) {
+
+                Object[] row = new Object[34];
+
+                row[0] = obj.getA4496FECVT();
+                row[1] = obj.getA4496AGENT();
+                row[2] = obj.getA4496FUENT();
+                row[3] = obj.getA4496SFUEN();
+                row[4] = obj.getA4496PAIS();
+                row[5] = obj.getA4496CODAG();
+                row[6] = obj.getA4496TRNCU();
+                row[7] = obj.getA4496TIPOD();
+                row[8] = obj.getA4496TKVOI();
+                row[9] = obj.getA4496RFIC();
+                row[10] = obj.getA4496RFIS1();
+                row[11] = obj.getA4496PAX();
+
+                row[12] = obj.getA4496CIA()
+                        + obj.getA4496FORMA()
+                        + obj.getA4496SERIE();
+
+                row[13] = obj.getA4496PNR();
+
+                row[14] = obj.getCARDTYPE();
+                row[15] = obj.getA4501TTARJ();
+                row[16] = obj.getA4501NREF();
+                row[17] = obj.getA4501CAPL();
+                row[18] = obj.getA4501VFOP();
+                row[19] = obj.getA4501MFOP();
+
+                row[20] = obj.getRECONCILIATION_AMOUNT();
+                row[21] = obj.getDIFFERENCE_AMOUNT();
+                row[22] = obj.getPROCDATE();
+                row[23] = obj.getPAYDATE();
+
+                row[24] = restaFechas(
+                        obj.getPROCDATE(),
+                        obj.getPAYDATE()
+                );
+
+                row[25] = obj.getA4501PRDA();
+
+                row[26] = convertStatus(obj.getA4501STVAL());
+
+                row[27] = obj.getA4501USUP();
+
+                row[28] = obj.getA4501FEUP();
+
+                row[29] = obj.getDESC_PROCTYPE();
+
+                // Chargeback Status
+                String chargeback = obj.getCHARGEBACK();
+
+                if (chargeback == null) {
+                    chargeback = "";
+                }
+
+                switch (chargeback.trim()) {
+                    case "N":
+                        row[30] = "None";
+                        break;
+                    case "Y":
+                        row[30] = "Reversed";
+                        break;
+                    default:
+                        row[30] = "Pending Rev.";
+                        break;
+                }
+
+                // ADM Status
+                row[31] = obj.getA4501STADM().trim().isEmpty()
+                        ? ""
+                        : "Suggested";
+
+                row[32] = obj.getESTAF_CONCAT();
+
+                // BPO Comment
+                if (obj.getA4501STADM().trim().isEmpty()) {
+                    row[33] = !obj.getBPO_COMEN2().isEmpty()
+                            ? obj.getBPO_COMEN2()
+                            : obj.getBPO_COMEN();
+                } else {
+                    row[33] = obj.getADM_COMEN();
+                }
+
+                data.add(row);
+            }
+
+            return exportUtils.createExcel(
+                    data,
+                    "Payments - SabreTicketStatus " + Functions.getFechaActual()
+            );
+
+        } catch (Exception e) {
+
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 }

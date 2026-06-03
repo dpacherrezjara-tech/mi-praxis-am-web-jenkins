@@ -1692,12 +1692,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.T
                                                         text: 'Doc.<br>Type', width: 65, dataIndex: 'TPDOC'
                                                     },
                                                     {
-                                                        text: 'Ticket', width: 110,
+                                                        text: 'Ticket', width: 110, dataIndex: 'TICKET',
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background-color:#FCF6DC;font-weight:bold;";
-                                                            const {CCIA, FORMA, SERIE} = record.data;
-                                                            const ticket = CCIA + FORMA + SERIE;
-                                                            return ticket;
+                                                            return value;
                                                         }
                                                     },
                                                     {

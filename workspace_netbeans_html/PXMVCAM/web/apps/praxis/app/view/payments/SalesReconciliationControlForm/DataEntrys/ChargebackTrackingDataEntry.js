@@ -332,10 +332,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                                             {text: 'Number', dataIndex: 'INSTANBR', width: 60}
                                         ]
                                     },
-                                    {text: 'PNR', dataIndex: 'SPNR', width: 70},
-                                    {
-                                        text: 'Qty<br>Tkts', dataIndex: 'QTYTKT', width: 40
-                                    }
+                                    { text: 'PNR', dataIndex: 'SPNR', width: 70 },
+                                    { text: 'Qty<br>Tkts', dataIndex: 'QTYTKT', width: 40 },
+                                    { text: 'Invoice<br>Ref. Nbr.', dataIndex: 'INVOIRN', width: 120 },
                                 ]
                             },
                             {text: 'Error Description', dataIndex: 'DES_CERROR', width: 180, autoSizeColumn: true},
@@ -845,7 +844,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.C
                     id: prototype.idCHBK + '-btn-update-sale',
                     iconCls: 'prx-icon-update',
                     listeners: {
-                        click: 'onUpdateSALE'
+                        click: 'onUpdateCHBKSale'
                     }
                 },
                 {

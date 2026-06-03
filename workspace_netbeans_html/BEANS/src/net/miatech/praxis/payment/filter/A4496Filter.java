@@ -6,13 +6,13 @@ import net.miatech.praxis.payment.entities.A4496;
  *
  * @author Dvicente
  */
-public class A4496Filter extends A4496{
-    private String DESC_PROCTYPE,DESC_TARJ,TICKET,CARDTYPE;
-    private String PROCDATE,PAYDATE,CHARGEBACK;
-    private String BPO_COMEN,BPO_COMEN2,ADM_COMEN;
+public class A4496Filter extends A4496  {
+    private String DESC_PROCTYPE, DESC_TARJ, TICKET, CARDTYPE;
+    private String PROCDATE, PAYDATE, CHARGEBACK;
+    private String BPO_COMEN, BPO_COMEN2, ADM_COMEN;
 
-    private Double RECONCILIATION_AMOUNT, DIFFERENCE_AMOUNT ;
-    
+    private Double RECONCILIATION_AMOUNT, DIFFERENCE_AMOUNT;
+
     public String getDESC_PROCTYPE() {
         return DESC_PROCTYPE;
     }
@@ -84,6 +84,7 @@ public class A4496Filter extends A4496{
     public void setCHARGEBACK(String CHARGEBACK) {
         this.CHARGEBACK = CHARGEBACK;
     }
+
     public String getCARDTYPE() {
         return CARDTYPE;
     }
@@ -91,8 +92,7 @@ public class A4496Filter extends A4496{
     public void setCARDTYPE(String CARDTYPE) {
         this.CARDTYPE = CARDTYPE;
     }
-    
-    
+
     public Double getRECONCILIATION_AMOUNT() {
         return RECONCILIATION_AMOUNT;
     }
@@ -100,7 +100,7 @@ public class A4496Filter extends A4496{
     public void setRECONCILIATION_AMOUNT(Double RECONCILIATION_AMOUNT) {
         this.RECONCILIATION_AMOUNT = RECONCILIATION_AMOUNT;
     }
-    
+
     public Double getDIFFERENCE_AMOUNT() {
         return DIFFERENCE_AMOUNT;
     }
@@ -108,5 +108,52 @@ public class A4496Filter extends A4496{
     public void setDIFFERENCE_AMOUNT(Double DIFFERENCE_AMOUNT) {
         this.DIFFERENCE_AMOUNT = DIFFERENCE_AMOUNT;
     }
-    
+
+    // SQP05709
+    private String STVAL_DESCRIPTION;
+    private Integer DIFFERENCE_DAYS;
+    private String ESTAI_CONCAT;
+    private String ESTAF_CONCAT;
+    private String CUPON_CONCAT;
+
+    public String getSTVAL_DESCRIPTION() {
+        return STVAL_DESCRIPTION;
+    }
+
+    public void setSTVAL_DESCRIPTION(String STVAL_DESCRIPTION) {
+        this.STVAL_DESCRIPTION = STVAL_DESCRIPTION;
+    }
+
+    public Integer getDIFFERENCE_DAYS() {
+        return DIFFERENCE_DAYS;
+    }
+
+    public void setDIFFERENCE_DAYS(Integer DIFFERENCE_DAYS) {
+        this.DIFFERENCE_DAYS = DIFFERENCE_DAYS;
+    }
+
+    public String getESTAI_CONCAT() {
+        return ESTAI_CONCAT;
+    }
+
+    public void setESTAI_CONCAT(String ESTAI_CONCAT) {
+        this.ESTAI_CONCAT = ESTAI_CONCAT;
+    }
+
+    public String getESTAF_CONCAT() {
+        return ESTAF_CONCAT;
+    }
+
+    public void setESTAF_CONCAT(String ESTAF_CONCAT) {
+        this.ESTAF_CONCAT = ESTAF_CONCAT;
+    }
+
+    public String getCUPON_CONCAT() {
+        return CUPON_CONCAT;
+    }
+
+    public void setCUPON_CONCAT(String CUPON_CONCAT) {
+        this.CUPON_CONCAT = CUPON_CONCAT;
+    }
+
 }

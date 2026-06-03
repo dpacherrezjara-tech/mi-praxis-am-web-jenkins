@@ -409,7 +409,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "Cuenta  Required";
                             break;
                         }
-                        if (fileA3344.A3344CTAC.length() != 36) {
+                        if (fileA3344.A3344CTAC.length() != 35) {
                             mensaje = "THE Cuenta MUST BE 36 CHARACTERES  " + fileA3344.A3344CTAC;
                             break;
                         }
@@ -451,16 +451,16 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             }
                         }
                         if (filter.VP_OPTION.equals("SALE")) {
-                            if (fileA3344.A3344CTAC.equals("02-00-000000-0000-1131-11519-0000-00") || fileA3344.A3344CTAC.equals("02-00-000000-0000-1131-11520-0000-00")
-                                    || fileA3344.A3344CTAC.equals("02-00 000000-0000-1141-13821-0000-03") || fileA3344.A3344CTAC.equals("02-00 000000-0000-1141-13821-0000-06")
-                                    || fileA3344.A3344CTAC.equals("02-00 000000-0000-1141-13821-0000-07") || fileA3344.A3344CTAC.equals("02-00 000000-0000-1141-13821-0000-08")
-                                    || fileA3344.A3344CTAC.equals("02-00 000000-0000-1141-13821-0000-09") || fileA3344.A3344CTAC.equals("02-00 000000-0000-1141-13821-0000-13")
-                                    || fileA3344.A3344CTAC.equals("02-00 000000-0000-1141-13821-0000-37") || fileA3344.A3344CTAC.equals("03-00-000000-0000-2131-24702-0000-02")
-                                    || fileA3344.A3344CTAC.equals("06-00-000000-0000-2131-24702-0000-02") || fileA3344.A3344CTAC.equals("07-00-000000-0000-2131-24702-0000-02")
-                                    || fileA3344.A3344CTAC.equals("08-00-000000-0000-2131-24702-0000-02") || fileA3344.A3344CTAC.equals("09-00-000000-0000-2131-24702-0000-02")
-                                    || fileA3344.A3344CTAC.equals("13-00-000000-0000-2131-24702-0000-02") || fileA3344.A3344CTAC.equals("37-00-000000-0000-2131-24702-0000-02")
-                                    || fileA3344.A3344CTAC.equals("02-00-000000-0000-1141-13821-0000-04") || fileA3344.A3344CTAC.equals("04-00-000000-0000-2131-24702-0000-02")
-                                    || fileA3344.A3344CTAC.equals("06-00-000000-0000-1131-11404-0000-00")) {
+                            if (fileA3344.A3344CTAC.equals("02-0000000-0000-115301-0000-0000-00") || fileA3344.A3344CTAC.equals("02-0000000-0000-115410-0000-0000-00")
+                                    || fileA3344.A3344CTAC.equals("02-0000000-1MX1-116103-0000-0000-03") || fileA3344.A3344CTAC.equals("02-0000000-1MX1-116103-0000-0000-06")
+                                    || fileA3344.A3344CTAC.equals("02-0000000-1MX1-116103-0000-0000-30") || fileA3344.A3344CTAC.equals("02-0000000-1MX1-116103-0000-0000-08")
+                                    || fileA3344.A3344CTAC.equals("02-0000000-1MX1-116103-0000-0000-09") || fileA3344.A3344CTAC.equals("02-00 000000-0000-1141-13821-0000-13")
+                                    || fileA3344.A3344CTAC.equals("02-0000000-1MX1-116103-0000-0000-14") || fileA3344.A3344CTAC.equals("03-0000000-1MX1-217102-0000-0000-02")
+                                    || fileA3344.A3344CTAC.equals("06-0000000-1MX1-217102-0000-0000-02") //|| fileA3344.A3344CTAC.equals("07-00-000000-0000-2131-24702-0000-02") comentado por restructura contable
+                                    || fileA3344.A3344CTAC.equals("08-0000000-1MX1-217102-0000-0000-02") || fileA3344.A3344CTAC.equals("09-0000000-1MX1-217102-0000-0000-02")
+                                    || fileA3344.A3344CTAC.equals("13-0000000-1MX1-217102-0000-0000-02") || fileA3344.A3344CTAC.equals("14-0000000-1MX1-217102-0000-0000-02")
+                                    || fileA3344.A3344CTAC.equals("02-0000000-1MX1-116103-0000-0000-04") || fileA3344.A3344CTAC.equals("04-0000000-1MX1-217102-0000-0000-02")
+                                    || fileA3344.A3344CTAC.equals("06-0000000-0000-115311-0000-0000-00")) {
                                 fileA3344.A3344MARCA = "P";
                             } else if (!fileA3344.A3344MARCA.equals("")) {
                                 fileA3344.A3344MARCA = "P";
@@ -636,20 +636,6 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "Fecha de Proceso no válida: " + fileA3344.A3344FPROC + ". El formato correcto es: YYYYMMDD.";
                             break;
                         }
-
-                        /*if(!fileA3344.A3344FPROC.equals("")){
-                         String vl_A3344FPROC =fileA3344.A3344FPROC;
-                         java.util.Date date1=new Date(vl_A3344FPROC); 
-                         java.util.Date date2 = new Date();
-                         Integer fecha = date2.compareTo(date1);                             
-                         if(fecha > 0){
-                         mensaje = "La fecha debe de ser menor al del sistema";
-                         break;
-                         }
-                           
-                         }*/
-                        //f2=new Date(fecha2);
-                        //
                         //VALIDACION DEL PROCESO
                         if (fileA3344.A3344TRNCU.equals("EXCP")) {
                             if (fileA3344.A3344TKTAS.equals("")) {
@@ -1110,8 +1096,8 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "Cuenta  Required";
                             break;
                         }
-                        if (fileA3344.A3344CTAC.length() != 36) {
-                            mensaje = "THE Cuenta MUST BE 36 CHARACTERES  " + fileA3344.A3344CTAC;
+                        if (fileA3344.A3344CTAC.length() != 35) {
+                            mensaje = "THE Cuenta MUST BE 35 CHARACTERES  " + fileA3344.A3344CTAC;
                             break;
                         }
                         if (!isValidCuenta(fileA3344.A3344CTAC)) {
@@ -1349,58 +1335,81 @@ public class ADJMassiveaccountingFormController extends BaseController {
                                 break;
                             }
                             if (fileA3344.A3344CARRIR.equals("5D")) {
-                                if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") || fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") || fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") || fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03")) {
+                                if (fileA3344.A3344CTAC.equals("02-0000000-0000-116116-0000-0000-03") || fileA3344.A3344CTAC.equals("03-0000000-0000-116115-0000-0000-02")) {
                                     fileA3344.A3344MARCA = "X";
                                 }
 
-                                if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") && fileA3344.A3344FILE.equals("AR")) {
+                                if (fileA3344.A3344CTAC.equals("03-0000000-1MX1-116101-0000-0000-02") && fileA3344.A3344FILE.equals("AR")) {
                                     fileA3344.A3344CLIEN = "13939";
                                     fileA3344.A3344PROVE = "";
-                                    fileA3344.A3344DIREC = "16251";
+                                    if (fileA3344.A3344DIREC.equals("")) {
+                                        mensaje = "Direccion Required " + fileA3344.A3344CTAC;
+                                        break;
+                                    }
+                                    //fileA3344.A3344DIREC = "16251";//la direccion se tiene que validar
                                     fileA3344.A3344ORAC = "F_INTERCO";
                                 }
-                                if (fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") && fileA3344.A3344FILE.equals("AP")) {
+                                if (fileA3344.A3344CTAC.equals("02-0000000-0000-217104-0000-0000-03") && fileA3344.A3344FILE.equals("AP")) {
+                                    fileA3344.A3344PROVE = "7181";// validar
+                                }
+                                if (fileA3344.A3344CTAC.equals("02-0000000-1MX1-217101-0000-0000-03") && fileA3344.A3344FILE.equals("AP")) {
                                     fileA3344.A3344PROVE = "7181";
                                 }
-                                if (fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24701-0000-03") && fileA3344.A3344FILE.equals("AP")) {
-                                    fileA3344.A3344PROVE = "7181";
-                                }
-                                if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13801-0000-02") && fileA3344.A3344FILE.equals("AR")) {
+                                if (fileA3344.A3344CTAC.equals("03-0000000-1MX1-116101-0000-0000-02") && fileA3344.A3344FILE.equals("AR")) {
                                     fileA3344.A3344CLIEN = "13939";
                                     fileA3344.A3344PROVE = "";
-                                    fileA3344.A3344DIREC = "16251";
+                                    if (fileA3344.A3344DIREC.equals("")) {
+                                        mensaje = "Direccion Required " + fileA3344.A3344CTAC;
+                                        break;
+                                    }
+                                    //fileA3344.A3344DIREC = "16251";
                                     fileA3344.A3344ORAC = "F_INTERCO";
                                 }
-                                if (fileA3344.A3344CTAC.equals("02-00-000000-0000-1141-13830-0000-03") && fileA3344.A3344FILE.equals("AP")) {
+                                if (fileA3344.A3344CTAC.equals("02-0000000-0000-116116-0000-0000-03") && fileA3344.A3344FILE.equals("AP")) {
                                     fileA3344.A3344PROVE = "7181";
                                 }
-                                /* if (fileA3344.A3344FILE.equals("AP")) {
-                                 if (!fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24701-0000-03") && !fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") && !fileA3344.A3344CTAC.equals("02-00-000000-0000-1141-13830-0000-03")) {
-                                 mensaje = "The account must is incorrect AP " + fileA3344.A3344CTAC + " - " + vl_A3344TKT;// +" amount "+vl_CTACAP_A3344DBREV+" amount "+vl_CTACAP_A3344CRREV;
-                                 break;
-                                 }
-                                 }
-                                 if (fileA3344.A3344FILE.equals("AR")) {
-                                 if (!fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13801-0000-02") && !fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02")) {
-                                 mensaje = "The account must is incorrect AR " + fileA3344.A3344CTAC + " - " + vl_A3344TKT;// +" amount "+vl_CTACAP_A3344DBREV+" amount "+vl_CTACAP_A3344CRREV;
-                                 break;
-                                 }
-                                 }*/
 
                             }
                             //03-00-000000-0000-1141-13833-0000-02
                             //Las cuentas 6111 o 6112 deben estar cuadradas con la cuenta 1161 subcuta 14104.
-                            if (fileA3344.A3344CTAC.substring(18, 22).equals("6111") || fileA3344.A3344CTAC.substring(18, 22).equals("6112")) {
+                            //if (fileA3344.A3344CTAC.substring(18, 22).equals("6111") || fileA3344.A3344CTAC.substring(18, 22).equals("6112")) {
+                            if (fileA3344.A3344CTAC.substring(18, 22).equals("611501")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("611401")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("611103")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("611402")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("611403")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("611101")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("611102")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("611301")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("611601")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617101")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617102")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617103")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617104")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617105")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617106")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("611701")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617110")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617111")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("618101")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617113")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617114")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617116")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617115")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617117")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617118")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("611801")
+                                    || fileA3344.A3344CTAC.substring(18, 22).equals("617107")) {
                                 fileA3344.A3344CONP1 = "CM";
                             }
-                            if (fileA3344.A3344CTAC.substring(18, 22).equals("1161") && fileA3344.A3344CTAC.substring(22, 28).equals("14104")) {
+                            if (fileA3344.A3344CTAC.substring(17, 21).equals("117202") && fileA3344.A3344CTAC.substring(21, 27).equals("0000")) {
                                 fileA3344.A3344CONP1 = "CM";
                             }
                         }
                         //VALIDACION PARA INTERLIEAL POR PAGAR
                         if (filter.VP_OPTION.equals("IXP")) {
                             //La cuenta 2171 TNU siempre debe de llenar el apartado de Proveedor.
-                            if (fileA3344.A3344CTAC.substring(18, 22).equals("2171")) {
+                            if (fileA3344.A3344CTAC.substring(17, 21).equals("2171")) {
                                 if (fileA3344.A3344CONP1.equals("")) {
                                     mensaje = "Concepto 1 Required";
                                     break;
@@ -1447,27 +1456,27 @@ public class ADJMassiveaccountingFormController extends BaseController {
                                         break;
                                     }
                                     if (vl_A3344CTAC_AR114113833 != vl_A3344CTAC_GL114113833) {
-                                        mensaje = "The account must is incorrect AR AND GL 03-00-000000-0000-1141-13833-0000-02 " + vl_A3344CTAC_GL114113833 + " - " + vl_A3344CTAC_AR114113833 + " - " + vl_A3344TKT;
+                                        mensaje = "The account must is incorrect AR " + vl_A3344CTAC_GL114113833 + " - " + vl_A3344CTAC_AR114113833 + " - " + vl_A3344TKT;
                                         break;
                                     }
                                     if (vl_A3344CTAC_AP213124704 != vl_A3344CTAC_GL213124704) {
-                                        mensaje = "The account must is incorrect AP AND GL 02-00-000000-0000-2131-24704-0000-03 " + vl_A3344CTAC_AP213124704 + " - " + vl_A3344CTAC_GL213124704 + " - " + vl_A3344TKT;
+                                        mensaje = "The account must is incorrect AP  " + vl_A3344CTAC_AP213124704 + " - " + vl_A3344CTAC_GL213124704 + " - " + vl_A3344TKT;
                                         break;
                                     }
                                     if (!formatter.format(vl_CTACAP_A3344DBREV).equals(formatter.format(vl_CTACAP_A3344CRREV))) {
-                                        mensaje = "The amounts do not match  02-00-000000-0000-2131-24704-0000-03 AND 02-00-000000-0000-1141-13830-0000-03 " + vl_CTACAP_A3344DBREV + " - " + vl_CTACAP_A3344CRREV + " - " + vl_A3344TKT;
+                                        mensaje = "The amounts do not match  " + vl_CTACAP_A3344DBREV + " - " + vl_CTACAP_A3344CRREV + " - " + vl_A3344TKT;
                                         break;
                                     }
                                     if (!formatter.format(vl_CTACAR_A3344DBREV).equals(formatter.format(vl_CTACAR_A3344CRREV))) {
-                                        mensaje = "The amounts do not match  03-00-000000-0000-1141-13801-0000-02 AND 03-00-000000-0000-1141-13833-0000-02 " + vl_CTACAR_A3344CRREV + " - " + vl_CTACAR_A3344DBREV + " - " + vl_A3344TKT;
+                                        mensaje = "The amounts do not match  " + vl_CTACAR_A3344CRREV + " - " + vl_CTACAR_A3344DBREV + " - " + vl_A3344TKT;
                                         break;
                                     }
                                     if (!formatter.format(vl_CTACAP_213124704DBREV).equals(formatter.format(vl_CTACAR_213124704DBREV))) {
-                                        mensaje = "The amounts do not match AR AND AP  02-00-000000-0000-2131-24704-0000-03 AND 03-00-000000-0000-1141-13833-0000-02 " + vl_CTACAP_213124704DBREV + " - " + vl_CTACAR_213124704DBREV + " - " + vl_A3344TKT;
+                                        mensaje = "The amounts do not match AR AND AP   " + vl_CTACAP_213124704DBREV + " - " + vl_CTACAR_213124704DBREV + " - " + vl_A3344TKT;
                                         break;
                                     }
                                     if (!formatter.format(vl_CTACAR_114113833DBREV).equals(formatter.format(vl_CTACAR_114113833CRREV))) {
-                                        mensaje = "The amounts do not match GL  03-00-000000-0000-1141-13833-0000-02 AND 02-00-000000-0000-2131-24704-0000-03 " + vl_CTACAR_114113833DBREV + " - " + vl_CTACAR_114113833CRREV + " - " + vl_A3344TKT;
+                                        mensaje = "The amounts do not match GL  " + vl_CTACAR_114113833DBREV + " - " + vl_CTACAR_114113833CRREV + " - " + vl_A3344TKT;
                                         break;
                                     }
                                     //.equals("03-00-000000-0000-1141-13833-0000-02") 
@@ -1494,15 +1503,6 @@ public class ADJMassiveaccountingFormController extends BaseController {
                                     }
                                 }
 
-                                /*if (!formatter.format(vl_CTAC_2171).equals(formatter.format(vl_CTAC_4101_4102))) {
-                                 mensaje = "The amounts do not match TNU  2171 - account 4101 o 4102 " + vl_CTAC_2171 + " - " + vl_CTAC_4101_4102 + " - " + vl_A3344TKT;
-                                 break;
-                                 }*/
- /*if (!formatter.format(vl_CTAC_6111_6112).equals(formatter.format(vl_CTAC_116114104))) {
-                                 mensaje = "The amounts do not match account 6111 o 6112 - account 116114104 " + vl_CTAC_6111_6112 + " - " + vl_CTAC_116114104 + " - " + vl_A3344TKT;
-                                 break;
-                                 }*/
-                                //Las cuentas 6111 o 6112 deben estar cuadradas con la cuenta 1161 subcuta 14104.
                             }
 
                             vl_A3344DBLOC = 0;
@@ -1537,10 +1537,6 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             vl_CTA02_CRREV = 0;
                             vl_CTA03_DBREV = 0;
                             vl_CTA03_CRREV = 0;
-                            // vl_CTAC_2171 = 0;
-                            //vl_CTAC_4101_4102 = 0;
-                            //vl_CTAC_6111_6112 = 0;
-                            //vl_CTAC_116114104 = 0;
 
                             vl_A3344DBLOC = vl_A3344DBLOC + fileA3344.A3344DBLOC;
                             vl_A3344CRLOC = vl_A3344CRLOC + fileA3344.A3344CRLOC;
@@ -1552,53 +1548,58 @@ public class ADJMassiveaccountingFormController extends BaseController {
                              */
                             if (filter.VP_OPTION.equals("FLWN")) {
                                 if (fileA3344.A3344CARRIR.equals("5D")) {
-                                    /*if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") || fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") || fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") || fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03")) {
-                                     fileA3344.A3344MARCA = "X";
-                                     }
-                                     */
-                                    if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") || fileA3344.A3344CTAC.equals("03-00-000000-0000-2131-24705-0000-02") || fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") || fileA3344.A3344CTAC.equals("02-00-000000-0000-1141-13835-0000-03")) {
+
+                                    if (fileA3344.A3344CTAC.equals("03-0000000-0000-116115-0000-0000-02") || fileA3344.A3344CTAC.equals("03-0000000-0000-217105-0000-0000-02") || fileA3344.A3344CTAC.equals("02-0000000-0000-217104-0000-0000-03") || fileA3344.A3344CTAC.equals("02-0000000-0000-116114-0000-0000-03")) {
                                         fileA3344.A3344MARCA = "X";
                                     }
 
-                                    if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") && fileA3344.A3344FILE.equals("AR")) {
+                                    if (fileA3344.A3344CTAC.equals("03-0000000-0000-116115-0000-0000-02") && fileA3344.A3344FILE.equals("AR")) {
                                         vl_A3344CTAC_AR114113833 = vl_A3344CTAC_AR114113833 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                         fileA3344.A3344CLIEN = "13939";
                                         fileA3344.A3344PROVE = "";
-                                        fileA3344.A3344DIREC = "16251";
+                                        if (fileA3344.A3344DIREC.equals("")) {
+                                            mensaje = "Direccion Required " + fileA3344.A3344CTAC;
+                                            break;
+                                        }
+                                        //fileA3344.A3344DIREC = "16251";
                                         fileA3344.A3344ORAC = "F_INTERCO";
                                     }
 
-                                    if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13801-0000-02") && fileA3344.A3344FILE.equals("AR")) {
+                                    if (fileA3344.A3344CTAC.equals("03-0000000-1MX1-116101-0000-0000-02") && fileA3344.A3344FILE.equals("AR")) {
                                         fileA3344.A3344CLIEN = "13939";
                                         fileA3344.A3344PROVE = "";
-                                        fileA3344.A3344DIREC = "16251";
+                                        if (fileA3344.A3344DIREC.equals("")) {
+                                            mensaje = "Direccion Required " + fileA3344.A3344CTAC;
+                                            break;
+                                        }
+                                        //fileA3344.A3344DIREC = "16251";
                                         fileA3344.A3344ORAC = "F_INTERCO";
                                     }
                                     //new ewn ar
-                                    if (fileA3344.A3344CTAC.equals("02-00-000000-0000-1141-13835-0000-03") && fileA3344.A3344FILE.equals("AR")) {
+                                    /*if (fileA3344.A3344CTAC.equals("02-00-000000-0000-1141-13835-0000-03") && fileA3344.A3344FILE.equals("AR")) {
                                         fileA3344.A3344CLIEN = "12383";
                                         fileA3344.A3344PROVE = "";
                                         fileA3344.A3344DIREC = "5408";
                                         fileA3344.A3344ORAC = "F_INTERCO";
-                                    }
-                                    if (fileA3344.A3344CTAC.equals("02-00-000000-0000-1141-13830-0000-03") && fileA3344.A3344FILE.equals("AP")) {
+                                    }*/
+                                    if (fileA3344.A3344CTAC.equals("02-0000000-0000-116116-0000-0000-03") && fileA3344.A3344FILE.equals("AP")) {
                                         fileA3344.A3344PROVE = "7181";
                                     }
                                     //new
-                                    if (fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") && fileA3344.A3344FILE.equals("AP")) {
+                                    if (fileA3344.A3344CTAC.equals("02-0000000-0000-217104-0000-0000-03") && fileA3344.A3344FILE.equals("AP")) {
                                         fileA3344.A3344PROVE = "7181";
                                     }
-                                    if (fileA3344.A3344CTAC.equals("03-00-000000-0000-2131-24705-0000-02") && fileA3344.A3344FILE.equals("AP")) {
+                                    if (fileA3344.A3344CTAC.equals("03-0000000-0000-217105-0000-0000-02") && fileA3344.A3344FILE.equals("AP")) {
                                         fileA3344.A3344PROVE = "4614";
                                     }
 
-                                    if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") && fileA3344.A3344FILE.equals("GL")) {
+                                    if (fileA3344.A3344CTAC.equals("03-0000000-0000-116115-0000-0000-02") && fileA3344.A3344FILE.equals("GL")) {
                                         vl_A3344CTAC_GL114113833 = vl_A3344CTAC_GL114113833 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                     }
-                                    if (fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") && fileA3344.A3344FILE.equals("GL")) {
+                                    if (fileA3344.A3344CTAC.equals("02-0000000-0000-217104-0000-0000-03") && fileA3344.A3344FILE.equals("GL")) {
                                         vl_A3344CTAC_GL213124704 = vl_A3344CTAC_GL213124704 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                     }
-                                    if (fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") && fileA3344.A3344FILE.equals("AP")) {
+                                    if (fileA3344.A3344CTAC.equals("02-0000000-0000-217104-0000-0000-03") && fileA3344.A3344FILE.equals("AP")) {
                                         vl_A3344CTAC_AP213124704 = vl_A3344CTAC_AP213124704 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                     }
                                     if (fileA3344.A3344FILE.equals("AP")) {
@@ -1613,16 +1614,16 @@ public class ADJMassiveaccountingFormController extends BaseController {
                                     }
 
                                     if (fileA3344.A3344FILE.equals("AR") || fileA3344.A3344FILE.equals("AP")) {
-                                        if (fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") && fileA3344.A3344FILE.equals("AP")) {
+                                        if (fileA3344.A3344CTAC.equals("02-0000000-0000-217104-0000-0000-03") && fileA3344.A3344FILE.equals("AP")) {
                                             vl_CTACAP_213124704DBREV = vl_CTACAP_213124704DBREV + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                         }
-                                        if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") && fileA3344.A3344FILE.equals("AR")) {
+                                        if (fileA3344.A3344CTAC.equals("03-0000000-0000-116115-0000-0000-02") && fileA3344.A3344FILE.equals("AR")) {
                                             vl_CTACAR_213124704DBREV = vl_CTACAR_213124704DBREV + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                         }
 
                                     }
                                     if (fileA3344.A3344FILE.equals("GL")) {
-                                        if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") || fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03")) {
+                                        if (fileA3344.A3344CTAC.equals("03-0000000-0000-116115-0000-0000-02") || fileA3344.A3344CTAC.equals("02-0000000-0000-217104-0000-0000-03")) {
                                             vl_CTACAR_114113833DBREV = vl_CTACAR_114113833DBREV + fileA3344.A3344DBREV;
                                             vl_CTACAR_114113833CRREV = vl_CTACAR_114113833CRREV + fileA3344.A3344CRREV;
                                         }
@@ -1645,28 +1646,15 @@ public class ADJMassiveaccountingFormController extends BaseController {
 
                                 }
                                 //Las cuentas 6111 o 6112 deben estar cuadradas con la cuenta 1161 subcuta 14104.
-                                if (fileA3344.A3344CTAC.substring(18, 22).equals("6111") || fileA3344.A3344CTAC.substring(18, 22).equals("6112")) {
+                                if (fileA3344.A3344CTAC.substring(17, 21).equals("117202") || fileA3344.A3344CTAC.substring(17, 21).equals("0000")) {
                                     //vl_CTAC_6111_6112 = vl_CTAC_6111_6112 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                     fileA3344.A3344CONP1 = "CM";
                                 }
-                                //02-00-000000-0000-1161-14104-0000-00 03-00-000000-0000-1141-13833-0000-02
-                                if (fileA3344.A3344CTAC.substring(18, 28).equals("1161-14104")) {
+                                //02-00-000000-0000-1161-14104-0000-00 03-00-000000-0000-1141-13833-0000-02   18 - 28
+                                if (fileA3344.A3344CTAC.substring(17, 27).equals("117202-0000")) {
                                     //vl_CTAC_116114104 = vl_CTAC_116114104 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                     fileA3344.A3344CONP1 = "CM";
                                 }
-                                // La cuenta 2171 TNU siempre debe de cuadrar con la cuenta de ingreso 4101 o 4102.
-                                /*
-                                 if (fileA3344.A3344CTAC.substring(18, 22).equals("2171")) {
-                                 vl_CTAC_2171 = vl_CTAC_2171 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
-                                 }
-                                 if (fileA3344.A3344CTAC.substring(18, 28).equals("2275-29403")) {
-                                 vl_CTAC_2171 = vl_CTAC_2171 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
-                                 }
-                                 if (fileA3344.A3344CTAC.substring(18, 22).equals("4101") || fileA3344.A3344CTAC.substring(18, 22).equals("4102")) {
-                                 vl_CTAC_4101_4102 = vl_CTAC_4101_4102 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
-                                 }
-                                 */
-                                ///nuevo
                                 if (fileA3344.A3344CTAC.substring(0, 2).equals("02")) {
                                     vl_CTA02_DBREV = vl_CTA02_DBREV + fileA3344.A3344DBREV;
                                     vl_CTA02_CRREV = vl_CTA02_CRREV + fileA3344.A3344CRREV;
@@ -1690,51 +1678,62 @@ public class ADJMassiveaccountingFormController extends BaseController {
                                     /*if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") || fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") || fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") || fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03")) {
                                      fileA3344.A3344MARCA = "X";
                                      }*/
-                                    if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") || fileA3344.A3344CTAC.equals("03-00-000000-0000-2131-24705-0000-02") || fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") || fileA3344.A3344CTAC.equals("02-00-000000-0000-1141-13835-0000-03")) {
+                                    if (fileA3344.A3344CTAC.equals("03-0000000-0000-116115-0000-0000-02") || fileA3344.A3344CTAC.equals("03-0000000-0000-217105-0000-0000-02") || fileA3344.A3344CTAC.equals("02-0000000-0000-217104-0000-0000-03") || fileA3344.A3344CTAC.equals("02-0000000-0000-116114-0000-0000-03")) {
                                         fileA3344.A3344MARCA = "X";
                                     }
 
-                                    if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") && fileA3344.A3344FILE.equals("AR")) {
+                                    if (fileA3344.A3344CTAC.equals("03-0000000-0000-116115-0000-0000-02") && fileA3344.A3344FILE.equals("AR")) {
                                         vl_A3344CTAC_AR114113833 = vl_A3344CTAC_AR114113833 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                         fileA3344.A3344CLIEN = "13939";
                                         fileA3344.A3344PROVE = "";
-                                        fileA3344.A3344DIREC = "16251";
+                                        if (fileA3344.A3344DIREC.equals("")) {
+                                            mensaje = "Direccion Required " + fileA3344.A3344CTAC;
+                                            break;
+                                        }
+                                        //fileA3344.A3344DIREC = "16251";
                                         fileA3344.A3344ORAC = "F_INTERCO";
                                     }
-                                    if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13801-0000-02") && fileA3344.A3344FILE.equals("AR")) {
+                                    if (fileA3344.A3344CTAC.equals("03-0000000-1MX1-116101-0000-0000-02") && fileA3344.A3344FILE.equals("AR")) {
                                         fileA3344.A3344CLIEN = "13939";
                                         fileA3344.A3344PROVE = "";
-                                        fileA3344.A3344DIREC = "16251";
+                                        if (fileA3344.A3344DIREC.equals("")) {
+                                            mensaje = "Direccion Required " + fileA3344.A3344CTAC;
+                                            break;
+                                        }
+                                        //fileA3344.A3344DIREC = "16251";
                                         fileA3344.A3344ORAC = "F_INTERCO";
                                     }
                                     //new ewn ar
-                                    if (fileA3344.A3344CTAC.equals("02-00-000000-0000-1141-13835-0000-03") && fileA3344.A3344FILE.equals("AR")) {
+                                    if (fileA3344.A3344CTAC.equals("02-0000000-0000-116114-0000-0000-03") && fileA3344.A3344FILE.equals("AR")) {
                                         fileA3344.A3344CLIEN = "12383";
                                         fileA3344.A3344PROVE = "";
-                                        fileA3344.A3344DIREC = "5408";
+                                        if (fileA3344.A3344DIREC.equals("")) {
+                                            mensaje = "Direccion Required " + fileA3344.A3344CTAC;
+                                            break;
+                                        }
+                                        //fileA3344.A3344DIREC = "5408";
                                         fileA3344.A3344ORAC = "F_INTERCO";
                                     }
 
-                                    if (fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") && fileA3344.A3344FILE.equals("AP")) {
+                                    if (fileA3344.A3344CTAC.equals("02-0000000-0000-217104-0000-0000-03") && fileA3344.A3344FILE.equals("AP")) {
                                         fileA3344.A3344PROVE = "7181";
                                     }
 
-                                    if (fileA3344.A3344CTAC.equals("02-00-000000-0000-1141-13830-0000-03") && fileA3344.A3344FILE.equals("AP")) {
+                                    /*if (fileA3344.A3344CTAC.equals("02-00-000000-0000-1141-13830-0000-03") && fileA3344.A3344FILE.equals("AP")) {
                                         fileA3344.A3344PROVE = "7181";
-                                    }
-
+                                    }*/
                                     //new
-                                    if (fileA3344.A3344CTAC.equals("03-00-000000-0000-2131-24705-0000-02") && fileA3344.A3344FILE.equals("AP")) {
+                                    if (fileA3344.A3344CTAC.equals("03-0000000-0000-217105-0000-0000-02") && fileA3344.A3344FILE.equals("AP")) {
                                         fileA3344.A3344PROVE = "4614";
                                     }
 
-                                    if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") && fileA3344.A3344FILE.equals("GL")) {
+                                    if (fileA3344.A3344CTAC.equals("03-0000000-0000-116115-0000-0000-02") && fileA3344.A3344FILE.equals("GL")) {
                                         vl_A3344CTAC_GL114113833 = vl_A3344CTAC_GL114113833 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                     }
-                                    if (fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") && fileA3344.A3344FILE.equals("GL")) {
+                                    if (fileA3344.A3344CTAC.equals("02-0000000-0000-217104-0000-0000-03") && fileA3344.A3344FILE.equals("GL")) {
                                         vl_A3344CTAC_GL213124704 = vl_A3344CTAC_GL213124704 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                     }
-                                    if (fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") && fileA3344.A3344FILE.equals("AP")) {
+                                    if (fileA3344.A3344CTAC.equals("02-0000000-0000-217104-0000-0000-03") && fileA3344.A3344FILE.equals("AP")) {
                                         vl_A3344CTAC_AP213124704 = vl_A3344CTAC_AP213124704 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                     }
                                     if (fileA3344.A3344FILE.equals("AP")) {
@@ -1747,16 +1746,16 @@ public class ADJMassiveaccountingFormController extends BaseController {
                                     }
 
                                     if (fileA3344.A3344FILE.equals("AR") || fileA3344.A3344FILE.equals("AP")) {
-                                        if (fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03") && fileA3344.A3344FILE.equals("AP")) {
+                                        if (fileA3344.A3344CTAC.equals("02-0000000-0000-217104-0000-0000-03") && fileA3344.A3344FILE.equals("AP")) {
                                             vl_CTACAP_213124704DBREV = vl_CTACAP_213124704DBREV + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                         }
-                                        if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") && fileA3344.A3344FILE.equals("AR")) {
+                                        if (fileA3344.A3344CTAC.equals("03-0000000-0000-116115-0000-0000-02") && fileA3344.A3344FILE.equals("AR")) {
                                             vl_CTACAR_213124704DBREV = vl_CTACAR_213124704DBREV + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                         }
 
                                     }
                                     if (fileA3344.A3344FILE.equals("GL")) {
-                                        if (fileA3344.A3344CTAC.equals("03-00-000000-0000-1141-13833-0000-02") || fileA3344.A3344CTAC.equals("02-00-000000-0000-2131-24704-0000-03")) {
+                                        if (fileA3344.A3344CTAC.equals("03-0000000-0000-116115-0000-0000-02") || fileA3344.A3344CTAC.equals("02-0000000-0000-217104-0000-0000-03")) {
                                             vl_CTACAR_114113833DBREV = vl_CTACAR_114113833DBREV + fileA3344.A3344DBREV;
                                             vl_CTACAR_114113833CRREV = vl_CTACAR_114113833CRREV + fileA3344.A3344CRREV;
                                         }
@@ -1783,22 +1782,10 @@ public class ADJMassiveaccountingFormController extends BaseController {
                                     fileA3344.A3344CONP1 = "CM";
                                 }
                                 //02-00-000000-0000-1161-14104-0000-00 03-00-000000-0000-1141-13833-0000-02
-                                if (fileA3344.A3344CTAC.substring(18, 28).equals("1161-14104")) {
+                                if (fileA3344.A3344CTAC.substring(17, 27).equals("117202-0000")) {
                                     //vl_CTAC_116114104 = vl_CTAC_116114104 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
                                     fileA3344.A3344CONP1 = "CM";
                                 }
-                                // La cuenta 2171 TNU siempre debe de cuadrar con la cuenta de ingreso 4101 o 4102.
-                                /*
-                                 if (fileA3344.A3344CTAC.substring(18, 22).equals("2171")) {
-                                 vl_CTAC_2171 = vl_CTAC_2171 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
-                                 }
-                                 if (fileA3344.A3344CTAC.substring(18, 28).equals("2275-29403")) {
-                                 vl_CTAC_2171 = vl_CTAC_2171 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
-                                 }
-                                 if (fileA3344.A3344CTAC.substring(18, 22).equals("4101") || fileA3344.A3344CTAC.substring(18, 22).equals("4102")) {
-                                 vl_CTAC_4101_4102 = vl_CTAC_4101_4102 + fileA3344.A3344DBREV + fileA3344.A3344CRREV;
-                                 }
-                                 */
                                 ///nuevo
                                 if (fileA3344.A3344CTAC.substring(0, 2).equals("02")) {
                                     vl_CTA02_DBREV = vl_CTA02_DBREV + fileA3344.A3344DBREV;
@@ -1866,8 +1853,8 @@ public class ADJMassiveaccountingFormController extends BaseController {
         return str.matches("^\\d+$");
     }
 
-    private static boolean isValidCuenta(String str) {
-        String expr = "^\\d{2}-\\d{2}-\\d{6}-[A-Z0-9]{4}-\\d{4}-\\d{5}-\\d{4}-\\d{2}$";
+    private static boolean isValidCuenta(String str) { //02-0000000-0000-259305-0000-0000-00
+        String expr = "^\\d{2}-\\d{7}-[A-Z0-9]{4}-\\d{6}-\\d{4}-\\d{4}-\\d{2}$";
         return str.matches(expr);
     }
 
