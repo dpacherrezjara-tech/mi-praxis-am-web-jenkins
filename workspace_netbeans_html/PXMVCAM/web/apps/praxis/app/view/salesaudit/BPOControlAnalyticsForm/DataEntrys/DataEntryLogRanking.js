@@ -87,13 +87,7 @@ Ext.define('Ext.Praxis.view.salesaudit.BPOControlAnalyticsForm.DataEntrys.DataEn
                                 {text: 'Working<br>Date', dataIndex: 'A1672FAASI', width: 70},
                                 {text: 'Working<br>Hour', dataIndex: 'A1672HAASI', width: 70},
                                 {text: 'Suggested<br>Date', dataIndex: 'A1672FREVI', width: 75},
-                                {text: 'Status', dataIndex: 'A1672FLADM', width: 88, sortable: false,
-                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                        var data = record.data;
-                                        value = data.A1672FLADM === 'C' ? 'Unregistered Client' : data.A1672FLADM === 'D' ? 'IATA disabled' : data.A1672FLADM === 'T' ? 'Reaudited BPO' : 'Suggested';
-                                        return value;
-                                    }
-                                }
+                                {text: 'Status', dataIndex: 'A1672FLADM', width: 88}
                             ]
                         }
                     ]
