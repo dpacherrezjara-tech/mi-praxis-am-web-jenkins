@@ -820,6 +820,8 @@ public class FlightConciliationDAO {
                 beanCons.RN = rst.getLong("RN");
                 beanCons.CHAIR = rst.getString("CHAIR").trim();
                 beanCons.strTicket = rst.getString("TICKET").trim();
+                beanCons.TKT_A1691 = rst.getString("TKT_A1691").trim();
+                beanCons.CUPON_A1691 = rst.getString("CUPON_A1691").trim();
 //                beanCons.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
 //                beanCons.NPAX = rst.getString("NPAX").trim();
                 beanCons.QTYTOTPS = rst.getInt("QTYTOTPS");
