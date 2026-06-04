@@ -19,6 +19,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
                 Ext.getCmp(prototype.id+'-btn-update').show();
                 Ext.getCmp(prototype.id+'-btn-delete').show();
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
+                Ext.getCmp(prototype.id+'-chkPassUpd').hide();
                 this.setValue("cboCity", this.p.rec.data.CITY);
                 this.setValue("cboProfiles", this.p.rec.data.ID_PROFILE);
                 break;
@@ -27,6 +28,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
                 Ext.getCmp(prototype.id+'-btn-update').hide();
                 Ext.getCmp(prototype.id+'-btn-delete').hide();
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
+                Ext.getCmp(prototype.id+'-chkPassUpd').show();
                 this.setValue("cboCity", "");
                 this.setValue('cboProfiles', "0");
 //                Ext.getCmp(prototype.id + '-obj').setValue("X");
