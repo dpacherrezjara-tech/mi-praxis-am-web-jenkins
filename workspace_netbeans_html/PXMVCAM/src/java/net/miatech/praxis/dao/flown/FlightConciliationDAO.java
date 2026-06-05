@@ -1797,7 +1797,7 @@ public class FlightConciliationDAO {
         if (strOption.trim().equals("I")) {
             filter.STVAL = "1";//Status Pendiente
             if (filter.VCPN > 0) {
-                filter.STVAL = "2";//Status Valorizado
+//                filter.STVAL = "2";//Status Valorizado
                 filter.FECVAL = Functions.getFechaActual();
                 if (filter.MDACP.trim().equals("MXN")) {
                     filter.FVAL = "3";
@@ -1806,7 +1806,7 @@ public class FlightConciliationDAO {
                 }
             }
         } else if (filter.VCPN > 0 && filter.STVAL.trim().equals("1")) {
-            filter.STVAL = "2";//Status Valorizado
+//            filter.STVAL = "2";//Status Valorizado
             filter.FECVAL = Functions.getFechaActual();
             if (filter.MDACP.trim().equals("MXN")) {
                 filter.FVAL = "3";
