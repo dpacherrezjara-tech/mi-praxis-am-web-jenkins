@@ -1,15 +1,19 @@
 package net.miatech.praxis.dao.widgets;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import net.miatech.praxis.logic.widgets.GenericLogic;
 import net.miatech.praxis.generics.CallStoreFilter;
 import net.miatech.praxis.generics.CallStorePaggin;
+import net.miatech.praxis.generics.DownloadExcelFilter;
+import net.miatech.praxis.generics.ExcelFieldDef;
 import net.miatech.praxis.generics.RecordsFilter;
 import net.miatech.praxis.utils.JdbcUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,6 +115,43 @@ public class GenericDAO implements GenericLogic {
         }
         res.put("lstRs", listaDeResultados);
         return res;
+    }
+
+    @Override
+    public List<Object[]> getDataForExcel(DownloadExcelFilter filter) throws Exception {
+        filter.setPaginationForExcel();
+        MapSqlParameterSource params = new MapSqlParameterSource(filter.getPARAMS());
+        Map<String, Object> obj = jdbcUtils.executeSQP(filter.getLIBRARY(), filter.getPROGRAM(), params);
+
+        List<Map<String, Object>> resultSet = new ArrayList<>();
+        for (Object value : obj.values()) {
+            if (value instanceof List) {
+                resultSet = (List<Map<String, Object>>) value;
+                break;
+            }
+        }
+
+        List<ExcelFieldDef> fields = filter.getEXCEL_FIELDS().stream()
+                .sorted(Comparator.comparingInt(ExcelFieldDef::getOrder))
+                .collect(Collectors.toList());
+
+        List<Object[]> data = new ArrayList<>();
+
+        Object[] headers = new Object[fields.size()];
+        for (int i = 0; i < fields.size(); i++) {
+            headers[i] = fields.get(i).getTitle();
+        }
+        data.add(headers);
+
+        for (Map<String, Object> row : resultSet) {
+            Object[] dataRow = new Object[fields.size()];
+            for (int i = 0; i < fields.size(); i++) {
+                dataRow[i] = row.get(fields.get(i).getField());
+            }
+            data.add(dataRow);
+        }
+
+        return data;
     }
 
     @Override

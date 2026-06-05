@@ -5,7 +5,9 @@ import java.util.Map;
 import net.miatech.praxis.logic.widgets.GenericLogic;
 import net.miatech.praxis.generics.CallStoreFilter;
 import net.miatech.praxis.generics.CallStorePaggin;
+import net.miatech.praxis.generics.DownloadExcelFilter;
 import net.miatech.praxis.generics.RecordsFilter;
+import net.miatech.praxis.utils.ExportUtils;
 import net.miatech.praxis.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -28,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class GenericController {
     @Autowired
     private GenericLogic logic;
+    @Autowired
+    private ExportUtils exportUtils;
     
     @RequestMapping(value = "CallStoreGet",method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public ResponseEntity<?> CallStoreGet(@RequestBody CallStoreFilter params) throws Exception {
@@ -69,12 +73,26 @@ public class GenericController {
     @RequestMapping(value = "loadRecordsOnTable/{library}/{table}",method = RequestMethod.POST)
     public ResponseEntity<?> loadRecordsOnTable(
             @PathVariable String library,
-            @PathVariable String table, 
+            @PathVariable String table,
             @RequestBody List<RecordsFilter> lst) throws Exception {
         System.out.println("***** Generic - loadRecordsOnTable *****");
         System.out.println("Parameters: " + library + "." + table);
         System.out.println("Total Records on load: " + lst.size() );
         logic.loadRecordsOnTable(library, table, lst);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "downloadExcel", method = RequestMethod.POST)
+    public ResponseEntity<byte[]> downloadExcel(@RequestBody DownloadExcelFilter params) {
+        try {
+            System.out.println("***** Generic - downloadExcel *****");
+            System.out.println("Parameters: " + params.getLIBRARY() + "." + params.getPROGRAM());
+            List<Object[]> data = logic.getDataForExcel(params);
+            String fileName = params.getFILE_NAME() != null ? params.getFILE_NAME() : "export";
+            return exportUtils.createExcel(data, fileName);
+        } catch (Exception e) {
+            System.out.println("Error on downloadExcel: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
