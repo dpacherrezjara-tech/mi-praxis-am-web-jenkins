@@ -387,10 +387,6 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeRec
                     style: {
                         backgroundColor: '#efe5e5'
                     },
-                    listeners: {
-                        'expand': 'onCenterDataEntry',
-                        'collapse': 'onCenterDataEntry'
-                    },
                     items: [
                         {
                             xtype: 'form',

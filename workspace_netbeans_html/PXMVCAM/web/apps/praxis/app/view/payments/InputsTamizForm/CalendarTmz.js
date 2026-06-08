@@ -208,7 +208,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmz', {
                                         } : {};
                                         componente.items.push({
                                             html: cellHtml,
-                                            id: prototype.id + `-${!x.procesador ? 'none' : x.procesador}-m${e}-d${x}-f${x.rn}`,
+                                            id: prototype.id + `-${(!x.procesador ? 'none' : x.procesador).replace(/\s+/g, '_')}-m${e}-d${x.fecha || x.rn}-f${x.rn}`,
                                             fecha: x.fecha,
                                             procesador: !x.procesador ? 'none' : x.procesador,
                                             listeners: cellListeners

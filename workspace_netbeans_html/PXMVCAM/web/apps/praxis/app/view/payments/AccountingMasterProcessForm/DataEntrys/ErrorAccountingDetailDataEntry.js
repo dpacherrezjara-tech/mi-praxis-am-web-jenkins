@@ -235,7 +235,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Erro
                                     },
                                     {
                                         text: 'Concept',
-                                        width: 300,
                                         defaults: {
                                             menuDisabled: true,
                                             sortable: false,
@@ -374,7 +373,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Erro
                                     },
                                     {
                                         text: 'Commision',
-                                        width: 140,
                                         defaults: {
                                             menuDisabled: true,
                                             sortable: false,
@@ -418,7 +416,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Erro
                                     { text: 'PNR', dataIndex: 'SPNR', width: 90 },
                                     {
                                         text: 'Credit Card',
-                                        width: 180,
                                         defaults: {
                                             menuDisabled: true,
                                             sortable: false,
@@ -431,7 +428,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Erro
                                     },
                                     {
                                         text: 'Accounting',
-                                        width: 320,
                                         defaults: {
                                             menuDisabled: true,
                                             sortable: false,
@@ -548,7 +544,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Erro
                                     },
                                     {
                                         text: 'Commision',
-                                        width: 280,
                                         defaults: {
                                             menuDisabled: true,
                                             sortable: false,
@@ -782,4 +777,3 @@ Ext.define('Ext.Praxis.view.payments.AccountingMasterProcessForm.DataEntrys.Erro
         }
     ]
 });
-
