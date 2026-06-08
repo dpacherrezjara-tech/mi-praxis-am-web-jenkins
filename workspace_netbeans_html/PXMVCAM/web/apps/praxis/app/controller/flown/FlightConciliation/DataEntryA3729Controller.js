@@ -118,12 +118,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
     },
     mostrarData: function (record) {
         meDE.oldCHAIR = record.CHAIR;
-        meDE.oldTICKET = record.strTicket.substring(0, 13);
-        meDE.oldCoupon = record.strTicket.substring(14);
+        meDE.oldTICKET = record.TKT_A1691;
+        meDE.oldCoupon = record.CUPON_A1691;
 
 
-        this.setValue('txtTICKET', record.strTicket.substring(0, 13));
-        this.setValue('txtCUPON', record.strTicket.substring(14));
+        this.setValue('txtTICKET', record.TKT_A1691);
+        this.setValue('txtCUPON', record.CUPON_A1691);
         this.setValue('txtSEQ', record.SEQ);
 
         this.setValue('txtDFLIGHT', record.DFLIGHT);

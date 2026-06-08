@@ -21,6 +21,8 @@ public class A3729Filter extends A3729 {
     public String dayTo = "";
  
     public String strTicket = "";
+    public String TKT_A1691 = "";
+    public String CUPON_A1691 = "";
     public String desSTVAL = "";
     public String strFormatDate = "";
     public String strDescripcion = "";

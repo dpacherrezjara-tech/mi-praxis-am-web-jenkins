@@ -159,8 +159,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
                 hiddenLabel: false,
                 labelAlign: 'right',
                 xtype: 'textfield',
-                hidden: false,
-                selectOnFocus: true
+                hidden: false
             },
             items: [
                 

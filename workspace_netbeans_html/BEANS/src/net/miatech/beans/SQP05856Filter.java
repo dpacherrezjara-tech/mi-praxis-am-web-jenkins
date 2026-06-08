@@ -24,7 +24,6 @@ public class SQP05856Filter {
     public String TOKEN = "";
     public String DTEXPIRED = "";
     public boolean chkExpiredDate = false;
-    public boolean chkPassUpd = false;
     public boolean chkPass = false;
     
     

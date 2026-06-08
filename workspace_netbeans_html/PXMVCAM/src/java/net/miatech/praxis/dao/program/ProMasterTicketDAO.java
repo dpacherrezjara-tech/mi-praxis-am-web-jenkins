@@ -2365,6 +2365,7 @@ public class ProMasterTicketDAO {
                 objRtn.A1531CAPL = rs01.getString("A1531CAPL");
                 objRtn.A720SEQ = rs01.getString("A720SEQ");
                 objRtn.A720TKVOID = rs01.getString("A720TKVOID");
+                objRtn.STATUSMP = rs01.getString("STATUSMP");
                 //objRtn.SCARDN = rs01.getString("SCARDN");
                 //objRtn.SAUTHOC = rs01.getString("SAUTHOC");
                 lstRtn.add(objRtn);
