@@ -409,7 +409,7 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "Cuenta  Required";
                             break;
                         }
-                        if (fileA3344.A3344CTAC.length() != 35) {
+                        if (fileA3344.A3344CTAC.length() != 36) {
                             mensaje = "THE Cuenta MUST BE 36 CHARACTERES  " + fileA3344.A3344CTAC;
                             break;
                         }
@@ -1096,8 +1096,8 @@ public class ADJMassiveaccountingFormController extends BaseController {
                             mensaje = "Cuenta  Required";
                             break;
                         }
-                        if (fileA3344.A3344CTAC.length() != 35) {
-                            mensaje = "THE Cuenta MUST BE 35 CHARACTERES  " + fileA3344.A3344CTAC;
+                        if (fileA3344.A3344CTAC.length() != 36) {
+                            mensaje = "THE Cuenta MUST BE 36 CHARACTERES  " + fileA3344.A3344CTAC;
                             break;
                         }
                         if (!isValidCuenta(fileA3344.A3344CTAC)) {
@@ -1854,7 +1854,8 @@ public class ADJMassiveaccountingFormController extends BaseController {
     }
 
     private static boolean isValidCuenta(String str) { //02-0000000-0000-259305-0000-0000-00
-        String expr = "^\\d{2}-\\d{7}-[A-Z0-9]{4}-\\d{6}-\\d{4}-\\d{4}-\\d{2}$";
+        //String expr = "^\\d{2}-\\d{7}-[A-Z0-9]{4}-\\d{6}-\\d{4}-\\d{4}-\\d{2}$";
+         String expr = "^\\d{2}-\\d{2}-\\d{6}-[A-Z0-9]{4}-\\d{4}-\\d{5}-\\d{4}-\\d{2}$";
         return str.matches(expr);
     }
 
