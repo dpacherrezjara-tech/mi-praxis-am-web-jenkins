@@ -23,9 +23,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
         }
     },
     features: [{
-            ftype: 'summary',
-            dock: 'bottom'
-        }],
+        ftype: 'summary',
+        dock: 'bottom'
+    }],
     columnLines: true,
     columns: {
         defaults: {
@@ -36,29 +36,28 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Ticket Cols">
             {
-                text: 'RN', dataIndex: 'rn', width: 40, hidden: true
+                text: 'RN', dataIndex: 'RN', width: 40, hidden: true
             },
-            {text: 'Payment <br> Date', dataIndex: 'paydate', width: 80,
+            {text: 'Payment <br> Date', dataIndex: 'PAYDATE', width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     return value;
                 }
             },
-            {text: 'Status', dataIndex: 'stval', width: 80,
+            {text: 'Status', dataIndex: 'STVAL_DESCRIPTION', width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
-                    const sts = ['1','5','6','7'];
-                    return sts.includes(value)?'Match':'Pending';
+                    return value;
                 }
             },
-            {text: 'Ticket', dataIndex: 'tkt', flex:1,
+            {text: 'Ticket', dataIndex: 'TKT', flex: 1,
                 listeners: {
                     click: 'onClickTicketInfo'
                 },
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    if(record.data.tkt.trim()===''){
+                    if (record.data.TKT.trim() === '') {
                         metaData.style = "background-color:#FCF6DC;";
-                    }else{
+                    } else {
                         metaData.style = "background-color:#FCF6DC;font-weight:bold;color:#057ECB;text-decoration:underline;cursor:pointer";
                     }
                     return value;
@@ -68,7 +67,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
                     return 'Total Tickets: ' + value;
                 }
             },
-            {text: 'Seq', dataIndex: 'seq', width: 40,
+            {text: 'Seq', dataIndex: 'SEQ', width: 40,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     return value;
@@ -82,13 +81,13 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
                     sortable: true
                 },
                 columns: [
-                    {text: 'Number', dataIndex: 'scardn', width: 130,
+                    {text: 'Number', dataIndex: 'SCARDN', width: 130,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;
                         }
                     },
-                    {text: 'Auth.', dataIndex: 'sauthoc', width: 60,
+                    {text: 'Auth.', dataIndex: 'SAUTHOC', width: 60,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;
@@ -104,26 +103,26 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
                     align: 'center'
                 },
                 columns: [
-                    {text: 'PNR', dataIndex: 'spnr', width: 60, autoSizeColumn: true,
+                    {text: 'PNR', dataIndex: 'SPNR', width: 60, autoSizeColumn: true,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;
                         }
                     },
-                    {text: 'Date', dataIndex: 'sdate', width: 80,
+                    {text: 'Date', dataIndex: 'SDATE', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;
                         }
                     },
-                    {text: 'Currency', dataIndex: 'scurrency', width: 80,
+                    {text: 'Currency', dataIndex: 'SCURRENCY', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;
                         }
                     },
                     {
-                        text: 'Total Sale<br>Amount', dataIndex: 'svfops_TOTAL', width: 100,
+                        text: 'Total Sale<br>Amount', dataIndex: 'SVFOPS_TOTAL', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -139,7 +138,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
                             return Ext.util.Format.number(value, '0,000.00');
                         }
                     },
-                    {text: 'Amount<br>Transaction', dataIndex: 'svfops', width: 100,
+                    {text: 'Amount<br>Transaction', dataIndex: 'SVFOPS', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -161,13 +160,13 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
                     align: 'center'
                 },
                 columns: [
-                    {text: 'Date', dataIndex: 'fcont', width: 80,
+                    {text: 'Date', dataIndex: 'FCONT', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;
                         }
                     },
-                    {text: 'Id', dataIndex: 'idcon', width: 310}
+                    {text: 'Id', dataIndex: 'IDCON', width: 310}
                 ]
             },
             {
@@ -178,27 +177,22 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
                     align: 'center'
                 },
                 columns: [
-                    {text: 'Date', dataIndex: 'liq_FCON', width: 80,
+                    {text: 'Date', dataIndex: 'LIQ_FCON', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;
                         }
                     },
-                    {text: 'Id', dataIndex: 'liq_IDCON', width: 310,
+                    {text: 'Id', dataIndex: 'LIQ_IDCON', width: 310,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
                             return value;
                         }
                     },
-                    {text: 'Status', dataIndex: 'liq_STCON', width: 80, hidden: false,
+                    {text: 'Status', dataIndex: 'STCONL_DESCRIPTION', width: 80, hidden: false,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;";
-                            const opts = {
-                              '':'Pending',
-                              '1':'Accounted',
-                              '2':'Debug'
-                            };
-                            return opts[value.trim()]||'';
+                            return value;
                         }
                     }
                 ]
@@ -216,8 +210,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailTicke
         items: [
             {
                 xtype: 'button',
-                //id: prototype.id + '-btnExcel',
-                //text:'<strong>Excel</strong>',
                 iconCls: 'prx-icon-excel',
                 scale: 'small',
                 tooltip: 'Export to Excel',

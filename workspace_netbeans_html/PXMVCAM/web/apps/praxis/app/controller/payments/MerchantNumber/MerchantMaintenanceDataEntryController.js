@@ -2,30 +2,18 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantMaintenanceDat
     extend: 'Ext.app.ViewController',
     alias: 'controller.MerchantMaintenanceDataEntryController',
     url: CONTEXTPATH + '/MerchantNumberTmz',
-    paises: {},
-    tarjetas: {},
-    monedas: {},
     init: function (view) {
         Ext.getCmp(prototype.idDE + '-gridIATA').getStore().removeAll();
     },
     afterRender: async function (obj, e) {
         obj.mask('Loading...');
-        await this.fillFilters();
+        this.fillFilters();
         await this.getData(obj);
         obj.unmask();
     },
-    fillFilters: async function () {
-        const me = this;
-        const res = await fetch(`${me.url}/loadFilters`);
-        if (res.ok) {
-            const data = await res.json();
-            console.log(data);
-            //<editor-fold defaultstate="collapsed" desc="Combos">
-            const cmbPaises = Ext.getCmp(prototype.idDE + '-cmbPaises');
-            me.setComboStore({cmp: cmbPaises, data: data.paises,
-                valueField: 'code', displayField: 'name', value: ''});
-            //</editor-fold>
-        }
+    fillFilters: function () {
+        const cmbPaises = Ext.getCmp(prototype.idDE + '-cmbPaises');
+        global.setComboStore(cmbPaises, prototype.filterPaises || [], 'CODE', 'NAME', '');
     },
     getData: async function (obj) {
         const me = this;
@@ -47,28 +35,32 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantMaintenanceDat
             Ext.getCmp(prototype.idDE + '-mainForm').getForm().reset();
         }
         Ext.getCmp(prototype.idDE + '-mainForm').getForm().isValid();
-
     },
     getMerchantInfo: async function (params) {
         const me = this;
         const mainForm = Ext.getCmp(prototype.idDE + '-mainForm').getForm();
         const gridIatas = Ext.getCmp(prototype.idDE + '-gridIATA');
-        const res = await fetch(`${me.url}/loadMerchantInfo?${new URLSearchParams(params)}`);
-        if (res.ok) {
-            const data = await res.json();
-            me.limpiaObjetoPX(data.response);
-            const obj = data.response;
-            if (obj.codagrup !== '') {
-                obj.codagrupa = obj.codagrup.slice(0, 2);
-                if (obj.codagrupa === 'GR') {
-                    obj.nbragrupa = obj.codagrup.slice(2);
+        try {
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05255', params);
+            const rows = (res && res.lstRs && res.lstRs.length > 0) ? res.lstRs[0] : [];
+            const iatas = (res && res.lstRs && res.lstRs.length > 1) ? res.lstRs[1] : [];
+            if (rows.length > 0) {
+                const obj = rows[0];
+                me.limpiaObjetoPX(obj);
+                if (obj.CODAGRUP && obj.CODAGRUP.trim() !== '') {
+                    obj.CODAGRUPA = obj.CODAGRUP.trim().slice(0, 2);
+                    if (obj.CODAGRUPA === 'GR') {
+                        obj.NBRAGRUPA = obj.CODAGRUP.trim().slice(2);
+                    }
                 }
+                console.log('Response: ', obj);
+                mainForm.setValues(obj);
+                gridIatas.setStore(Ext.create('Ext.data.Store', {
+                    data: iatas
+                }));
             }
-            console.log('Response: ', obj);
-            mainForm.setValues(data.response);
-            gridIatas.setStore(Ext.create('Ext.data.Store', {
-                data: data.iatas
-            }));
+        } catch (e) {
+            console.error('Error getMerchantInfo', e);
         }
     },
     onChangeStatusCmb: function (obj) {
@@ -89,42 +81,39 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantMaintenanceDat
         }
     },
     onAddCodeIata: async function () {
-        const me = this;
         const grid = Ext.getCmp(prototype.idDE + '-gridIATA');
         grid.view.mask('Loading...');
         const store = grid.getStore();
         const codeIata = Ext.getCmp(prototype.idDE + '-codeIataAdd');
-        let found = store.query('ciata', codeIata);
-        //console.log(found);
+        let found = store.query('CIATA', codeIata.getValue());
         if (found.items.length > 0) {
             global.Msg({msg: 'No duplicates allowed'});
+            grid.view.unmask();
             return;
         }
         let param = {
             IN_IATA: codeIata.getValue()
         };
         codeIata.setValue('');
-        const res = await fetch(`${me.url}/loadIataInfo?${new URLSearchParams(param)}`);
-        if (res.ok) {
-            const data = await res.json();
-            if (data.sqlcod === 1) {
-                global.Msg({msg: data.sqlmsg});
+        try {
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05258', param);
+            const rows = (res && res.lstRs && res.lstRs.length > 0) ? res.lstRs[0] : [];
+            if (rows.length === 0) {
+                global.Msg({msg: 'IATA Not found'});
             } else {
-                const obj = data.response;
-                if (obj) {
-                    let iata = {
-                        ciata: obj.a003KEY,
-                        niata: obj.a003KEY3,
-                        canal: obj.a003CANAL,
-                        scountry: obj.a003PSALF
-                    };
-                    store.add(iata);
-                    grid.bindStore(store);
-                } else {
-                    global.Msg({msg: 'IATA Not found'});
-                }
+                const obj = rows[0];
+                let iata = {
+                    CIATA: obj.A003KEY,
+                    NIATA: obj.A003KEY3,
+                    CANAL: obj.A003CANAL,
+                    SCOUNTRY: obj.A003PSALF
+                };
+                store.add(iata);
+                grid.bindStore(store);
             }
-
+        } catch (e) {
+            console.error('Error onAddCodeIata', e);
+            global.Msg({msg: 'Error loading IATA info'});
         }
         grid.view.unmask();
     },
@@ -135,37 +124,34 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantMaintenanceDat
         }
     },
     onSaveClick: async function () {
-        Ext.Msg.show(
-                {
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to Insert?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-                            this.maintenanceMerchant('C');
-                        }
-                    }
-                });
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to Insert?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    this.maintenanceMerchant('C');
+                }
+            }
+        });
     },
     onUpdateClick: async function () {
-        Ext.Msg.show(
-                {
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to Update?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-                            this.maintenanceMerchant('U');
-                        }
-                    }
-                });
-
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to Update?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    this.maintenanceMerchant('U');
+                }
+            }
+        });
     },
     onCancelClick: function () {
         this.view.close();
@@ -173,32 +159,50 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantMaintenanceDat
     maintenanceMerchant: async function (option) {
         const me = this;
         me.view.mask('Loading...');
-        let params = me.formatParameters(option);
         let valid = Ext.getCmp(prototype.idDE + '-mainForm').getForm().isValid();
         if (!valid) {
             global.Msg({msg: 'Invalid Parameters'});
             me.view.unmask();
             return;
         }
-        const res = await fetch(`${me.url}/maintenanceMerchant`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(params)
+        const merchantParams = me.formatMerchantParams(option);
+        const iataParamsList = me.formatIataParams(merchantParams.IN_MERCHN);
+        const expectedParams = [
+            'IN_CHOPTION', 'IN_CCUST', 'IN_MERCHN', 'IN_DESCR', 'IN_RSOCIAL',
+            'IN_CIATA', 'IN_CANAL', 'IN_SCOUNTRY', 'IN_UNIOPE', 'IN_CODCLIT1',
+            'IN_DIRCLIT1', 'IN_CODCLIT2', 'IN_DIRCLIT2', 'IN_MERCHP', 'IN_STATUS',
+            'IN_CODAGRUP', 'IN_DESCAGRUP', 'IN_FECHAINI', 'IN_FECHAFIN'
+        ];
+        expectedParams.forEach(param => {
+            if (!(param in merchantParams)) {
+                merchantParams[param] = '';
+            }
         });
-        if (res.ok) {
-            global.Msg({msg: 'Change Successfull'});
-            me.view.option = 'U';
-            me.view.searchParams = {
-                IN_CCUST: '139',
-                IN_MERCHN: params.IN_MERCHN
-            };
-            await this.getData(me.view);
-            Ext.getCmp(prototype.id + '-MerchantsGrid-1').getStore().load();
-        } else {
-            const msg = await res.text();
-            console.error('Error: ' + msg);
+        try {
+            const res = await global.callStorePost('PRAXISMP', 'SQP05256', merchantParams);
+            const {INOUT_STATUS, INOUT_MESSAGE} = res.data.lstVals;
+            if (INOUT_STATUS === 1) {
+                for (const iataParams of iataParamsList) {
+                    await global.callStorePost('PRAXISMP', 'SQP05257', iataParams);
+                }
+                global.Msg({msg: 'Change Successfull'});
+                me.view.option = 'U';
+                me.view.searchParams = {
+                    IN_CCUST: '139',
+                    IN_MERCHN: merchantParams.IN_MERCHN
+                };
+                await this.getData(me.view);
+                Ext.getCmp(prototype.id + '-MerchantsGrid-1').getStore().load();
+            } else {
+                Ext.MessageBox.show({
+                    title: 'Error',
+                    message: INOUT_MESSAGE || 'Error!<br>Check Console for more<br>Information.',
+                    icon: Ext.MessageBox.ERROR,
+                    buttons: Ext.MessageBox.OK
+                });
+            }
+        } catch (e) {
+            console.error('Error maintenanceMerchant', e);
             Ext.MessageBox.show({
                 title: 'Error',
                 message: 'Error!<br>Check Console for more<br>Information.',
@@ -208,95 +212,52 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantMaintenanceDat
         }
         me.view.unmask();
     },
-    formatParameters: function (option) {
+    formatMerchantParams: function (option) {
         const me = this;
         const form = Ext.getCmp(prototype.idDE + '-mainForm').getForm().getValues();
-        const iatas = Ext.getCmp(prototype.idDE + '-gridIATA').getStore();
         const codgrupo = Ext.getCmp(prototype.idDE + '-de-cmbCODAGRUP').getValue();
         const nrbgrupo = Ext.getCmp(prototype.idDE + '-cmbNBRAGRUP').getValue();
         const nomgrupo = codgrupo === 'GR' ? 'Grupo ' + nrbgrupo :
                 Ext.getCmp(prototype.idDE + '-de-cmbCODAGRUP').getRawValue();
-        const nomiata = iatas.data.items.length > 0 ? iatas.getAt(0).data.ciata : '';
-        //console.log(iatas);
+        const iatas = Ext.getCmp(prototype.idDE + '-gridIATA').getStore();
+        const nomiata = iatas.data.items.length > 0 ? iatas.getAt(0).data.CIATA : '';
         let params = {
             ...me.requestObjectSP(form),
-            iatas: iatas.getData().items.map(x =>
-                ({CCUST: '139',
-                    MERCHN: form.merchn,
-                    ...me.requestObjectPX(x.data)})),
             IN_CODAGRUP: codgrupo === 'GR' ? codgrupo + nrbgrupo : codgrupo,
             IN_DESCAGRUP: nomgrupo,
             IN_CHOPTION: option,
             IN_CCUST: '139',
             IN_CIATA: nomiata
         };
-        console.log(params);
+        console.log('merchantParams', params);
         return params;
     },
+    formatIataParams: function (merchn) {
+        const iatas = Ext.getCmp(prototype.idDE + '-gridIATA').getStore();
+        return iatas.getData().items.map(x => ({
+            IN_CCUST: '139',
+            IN_MERCHN: merchn,
+            IN_IATA: x.data.CIATA,
+            IN_SCOUNTRY: x.data.SCOUNTRY,
+            IN_CANAL: x.data.CANAL
+        }));
+    },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
-    getCmp: function ( {id}){
+    getCmp: function ({id}) {
         return Ext.getCmp(prototype.id + id);
-    },
-    setComboStore: function ( {cmp, data, valueField, displayField, value}){
-        const me = this;
-        cmp.suspendEvents(false);
-        cmp.bindStore(me.createComboStore({data: data
-            , valueField: valueField, displayField: displayField}));
-        cmp.setValue(value);
-        cmp.resumeEvents();
-    },
-    createComboStore: function ( {data, valueField, displayField}) {
-        //crea record vacio
-        let allRecord = {};
-        allRecord[displayField] = 'None';
-        allRecord[valueField] = '';
-        //limpia record de data
-        data.forEach(obj => {
-            for (let attr in obj) {
-                if (typeof obj[attr] === 'string') {
-                    obj[attr] = obj[attr].trimEnd();
-                }
-            }
-        });
-        //crea Store
-        let store = this.createStore({data: data});
-        //inserta record vacio
-        store.insert(0, allRecord);
-        //console.log('store creado',store);
-        return store;
-    },
-    createArrayStore: function ( {data}){
-        const store = new Ext.data.SimpleStore({
-            fields: ['code', 'name'],
-            data: data.map(x => {
-                return [x.code, x.name];
-            })
-        });
-        return store;
-    },
-    createStore: function ( {data}){
-        return Ext.create('Ext.data.Store', {
-            autoLoad: true,
-            data: data,
-            pageSize: 20
-        });
     },
     parseInt: function (number) {
         if (number && number !== '') {
             return parseInt(number);
         }
-        ;
         return number;
     },
     getDistinct: function (lst, key) {
         let valoresVistos = {};
-        // Filtra el array para eliminar duplicados según la columna "nombre"
         let resultado = lst.filter(function (item) {
             if (valoresVistos[item[key]]) {
-                // Si el valor ya se ha visto, exclúyelo
                 return false;
             }
-            // Si es la primera vez que se ve, márcalo como visto y manténlo en el resultado
             valoresVistos[item[key]] = true;
             return true;
         });
@@ -313,23 +274,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantMaintenanceDat
         const resultado = {};
         for (const clave in jsonData) {
             if (jsonData.hasOwnProperty(clave)) {
-                // Convierte la clave a mayúsculas y añade "IN" como prefijo
                 const nuevaClave = `IN_${clave.toUpperCase()}`;
-
-                // Asigna el valor original a la nueva clave
-                resultado[nuevaClave] = jsonData[clave];
-            }
-        }
-        return resultado;
-    },
-    requestObjectPX: function (jsonData) {
-        const resultado = {};
-        for (const clave in jsonData) {
-            if (jsonData.hasOwnProperty(clave)) {
-                // Convierte la clave a mayúsculas y añade "IN" como prefijo
-                const nuevaClave = `${clave.toUpperCase()}`;
-
-                // Asigna el valor original a la nueva clave
                 resultado[nuevaClave] = jsonData[clave];
             }
         }
@@ -338,4 +283,3 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantMaintenanceDat
     //</editor-fold>
 
 });
-

@@ -145,8 +145,8 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Filters', {
                                     labelAlign: 'right',
                                     width: 230,
                                     typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''
