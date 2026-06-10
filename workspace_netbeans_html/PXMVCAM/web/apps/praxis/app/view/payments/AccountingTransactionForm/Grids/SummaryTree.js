@@ -1,7 +1,7 @@
 prototype.idTree = prototype.id + '-SummaryTree';
 Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree', {
-    extend: 'Ext.tree.Panel', // Extendemos la clase Ext.tree.Panel
-    alias: 'widget.' + prototype.id + '-summaryTree', // Alias para usar en el xtype
+    extend: 'Ext.tree.Panel',
+    alias: 'widget.' + prototype.id + '-summaryTree',
     requires: [
         'Ext.Praxis.controller.payments.AccountingTransaction.SummaryTreeController',
         'Ext.Praxis.view.payments.AccountingTransactionForm.Grids.DetailGrid'
@@ -34,7 +34,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                 xtype: 'treecolumn',
                 text: '',
                 id: prototype.idTree + '-colFechaP',
-                dataIndex: 'fecha',
+                dataIndex: 'FECHA',
                 width: 150,
                 enableTextSelection: false,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
@@ -53,7 +53,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                 text: '...',
                 id: prototype.idTree + '-colFechaH',
                 width: 350,
-                //dataIndex: 'idflex',
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                     const {type} = record.data;
                     switch (type) {
@@ -75,17 +74,16 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                 align: 'center',
                 items: [
                     {
-                        //iconCls: 'prx-icon-image-log',
                         tooltip: 'copy ID',
                         handler: 'copyID',
                         getClass: function (value, metadata, record) {
                             if (record.data.type === 'header')
-                                return  '';
+                                return '';
                             return 'prx-icon-image-log';
                         },
                         isDisabled: function (view, rowIndex, colIndex, item, record) {
                             if (record.data.type === 'header')
-                                return  true;
+                                return true;
                             return false;
                         }
                     }
@@ -95,7 +93,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                 text: '...',
                 id: prototype.idTree + '-colFechaN',
                 width: 350,
-                //dataIndex: 'Praxis ID',
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                     const {type} = record.data;
                     switch (type) {
@@ -112,9 +109,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                     click: 'onClickTotal'
                 }
             },
-            {text: 'Processor', dataIndex: 'proc_DESC', align: 'center', flex: 1},
-            {text: 'Currency', dataIndex: 'scurrency', align: 'center', width: 80},
-            {text: 'Match', dataIndex: 'accounted', align: 'center', width: 120,
+            {text: 'Processor', dataIndex: 'PROC_DESC', align: 'center', flex: 1},
+            {text: 'Currency', dataIndex: 'SCURRENCY', align: 'center', width: 80},
+            {text: 'Match', dataIndex: 'ACCOUNTED', align: 'center', width: 120,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     switch (record.data.type) {
                         case 'header':
@@ -128,7 +125,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                     return value;
                 }
             },
-            {text: 'Qty<br>Match', dataIndex: 'qty_ACCOUNTED', align: 'center', width: 80,
+            {text: 'Qty<br>Match', dataIndex: 'QTY_ACCOUNTED', align: 'center', width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     switch (record.data.type) {
                         case 'header':
@@ -144,7 +141,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                     click: 'onClickAccounted'
                 }
             },
-            {text: 'Pending', dataIndex: 'pending', align: 'center', width: 120,
+            {text: 'Pending', dataIndex: 'PENDING', align: 'center', width: 120,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     switch (record.data.type) {
                         case 'header':
@@ -156,8 +153,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                     }
                     value = Ext.util.Format.number(value, '0,000.00');
                     return value;
-                }},
-            {text: 'Qty<br>Pending', dataIndex: 'qty_PENDING', align: 'center', width: 80,
+                }
+            },
+            {text: 'Qty<br>Pending', dataIndex: 'QTY_PENDING', align: 'center', width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     switch (record.data.type) {
                         case 'header':
@@ -173,7 +171,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                     click: 'onClickPending'
                 }
             },
-            {text: 'Total', dataIndex: 'total', align: 'center', width: 120,
+            {text: 'Total', dataIndex: 'TOTAL', align: 'center', width: 120,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     switch (record.data.type) {
                         case 'header':
@@ -185,8 +183,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
                     }
                     value = Ext.util.Format.number(value, '0,000.00');
                     return value;
-                }},
-            {text: 'Qty<br>Trns.', dataIndex: 'qty_TOTAL', align: 'center', width: 80,
+                }
+            },
+            {text: 'Qty<br>Trns.', dataIndex: 'QTY_TOTAL', align: 'center', width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     switch (record.data.type) {
                         case 'header':
@@ -223,7 +222,6 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
             },
             {
                 text: '<strong style="color:white;">Back<strong>',
-                //id: prototype.id + '-detArch-btnBack',
                 cls: 'x-btn-sent',
                 width: 100,
                 scale: 'small',
@@ -266,7 +264,4 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryTree
             }
         ]
     }
-    //store: 'MyTreeStore', // Aquí debes usar el nombre de tu tienda (store)
-
-    // Otras configuraciones y propiedades del TreePanel
 });

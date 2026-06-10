@@ -31,17 +31,17 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Grids.MerchantsGrid', {
         },
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Cols">
-            {text: 'Nbr', dataIndex: 'rn', width: 40, hidden: true},
-            {text: 'Merchant<br>Nbr.', dataIndex: 'merchn', width: 75},
-            {text: 'Merchant Name', dataIndex: 'descr', flex:1,
+            {text: 'Nbr', dataIndex: 'RN', width: 40, hidden: true},
+            {text: 'Merchant<br>Nbr.', dataIndex: 'MERCHN', width: 75},
+            {text: 'Merchant Name', dataIndex: 'DESCR', flex: 1,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     var data = record.data;
                     metaData.style = "text-align:left;";
-                    metaData.tdAttr = 'data-qtip="' + data.descr + '"';
-                    return  value;
+                    metaData.tdAttr = 'data-qtip="' + data.DESCR + '"';
+                    return value;
                 }
             },
-            {text: 'Status', dataIndex: 'status', width: 70,
+            {text: 'Status', dataIndex: 'STATUS', width: 70,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:left;";
                     const sts = {
@@ -51,7 +51,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Grids.MerchantsGrid', {
                     return sts[value.trim()];
                 }
             },
-            {text: 'Operative<br>Unit', dataIndex: 'uniope', width: 120,
+            {text: 'Operative<br>Unit', dataIndex: 'UNIOPE', width: 120,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     const sts = {
@@ -63,7 +63,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Grids.MerchantsGrid', {
                     return sts[value.trim()];
                 }
             },
-            {text: 'Channel', dataIndex: 'canal', width: 60},
+            {text: 'Channel', dataIndex: 'CANAL', width: 60},
             {text: 'Social',
                 defaults: {
                     menuDisabled: true,
@@ -71,11 +71,11 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Grids.MerchantsGrid', {
                     align: 'center'
                 },
                 columns: [
-                    {text: 'Reason', dataIndex: 'rsocial', width: 250,
+                    {text: 'Reason', dataIndex: 'RSOCIAL', width: 250,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             var data = record.data;
                             metaData.style = "text-align:left;";
-                            metaData.tdAttr = 'data-qtip="' + data.rsocial + '"';
+                            metaData.tdAttr = 'data-qtip="' + data.RSOCIAL + '"';
                             return value;
                         }
                     }
@@ -89,10 +89,10 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Grids.MerchantsGrid', {
                     align: 'center'
                 },
                 columns: [
-                    {text: 'Payment', dataIndex: 'merchp', width: 75}
+                    {text: 'Payment', dataIndex: 'MERCHP', width: 75}
                 ]
             },
-            {text: 'Country', dataIndex: 'scountry', width: 60,
+            {text: 'Country', dataIndex: 'SCOUNTRY', width: 60,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;";
                     return value;
@@ -106,8 +106,8 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Grids.MerchantsGrid', {
                     align: 'center'
                 },
                 columns: [
-                    {text: 'Code', dataIndex: 'ciata', width: 70},
-                    {text: 'Name', dataIndex: 'strDescrip', width: 200,
+                    {text: 'Code', dataIndex: 'CIATA', width: 70},
+                    {text: 'Name', dataIndex: 'STRDESCRIP', width: 200,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:left;";
                             return value;
@@ -123,16 +123,16 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Grids.MerchantsGrid', {
                     align: 'center'
                 },
                 columns: [
-                    {text: 'Client Code', dataIndex: 'codclit1', width: 77,
+                    {text: 'Client Code', dataIndex: 'CODCLIT1', width: 77,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;background-color:#e5ecef;";
-                            return  value;
+                            return value;
                         }
                     },
-                    {text: 'Client Address', dataIndex: 'dirclit1', width: 165,
+                    {text: 'Client Address', dataIndex: 'DIRCLIT1', width: 165,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:left;background-color:#e5ecef;";
-                            return  value;
+                            return value;
                         }
                     }
                 ]
@@ -145,16 +145,16 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Grids.MerchantsGrid', {
                     align: 'center'
                 },
                 columns: [
-                    {text: 'Client Code', dataIndex: 'codclit2', width: 77,
+                    {text: 'Client Code', dataIndex: 'CODCLIT2', width: 77,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;background-color:#e5ecef;";
-                            return  value;
+                            return value;
                         }
                     },
-                    {text: 'Client Address', dataIndex: 'dirclit2', width: 165,
+                    {text: 'Client Address', dataIndex: 'DIRCLIT2', width: 165,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:left;background-color:#e5ecef;";
-                            return  value;
+                            return value;
                         }
                     }
                 ]
@@ -204,7 +204,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Grids.MerchantsGrid', {
                 scale: 'small',
                 tooltip: 'Export to Excel',
                 listeners: {
-                    click: 'downloadExcel'
+                    click: 'onDownloadExcel'
                 }
             }
         ]
@@ -214,5 +214,3 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Grids.MerchantsGrid', {
         displayInfo: true
     }
 });
-
-

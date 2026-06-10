@@ -113,8 +113,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     fieldLabel: 'Processor',
                                     labelWidth: 70,
                                     width: 250,
-                                    displayField: 'a4451desc1',
-                                    valueField: 'a4451key2',
+                                    displayField: 'NAME',
+                                    valueField: 'CODE',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
@@ -182,8 +182,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     labelAlign: 'right',
                                     width: 140,
                                     typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''
