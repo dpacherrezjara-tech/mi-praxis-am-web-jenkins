@@ -266,7 +266,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                             ['', 'All'],
                                             ['Y', 'PENDING'],
                                             ['C', 'UNREGISTERED CLIENT'],
-                                            ['S', 'SALE NOT RECORDED'],
+                                            ['S', 'UNREGISTERED SALE'],
                                             ['A', 'APPROVED'],
                                             ['F', 'WITH ACM']
                                             

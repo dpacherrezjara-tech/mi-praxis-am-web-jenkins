@@ -58,7 +58,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Grids.TaxesExceptions
                                 'UNREGISTERED CLIENT': { text: 'Unregistered Client', color: '#FFE0B2', textColor: '#E65100' }, // naranja bajo
                                 'APPROVED': { text: 'Approved', color: '#C8E6C9', textColor: '#1B5E20' }, // verde
                                 'WITH ACM': { text: 'With ACM', color: '#B3E5FC', textColor: '#01579B' }, // celeste
-                                'Sale Not Recorded': { text: 'Sale Not Recorded', color: '#FEF3C7', textColor: '#92400E' } //NARAJN 
+                                'UNREGISTERED SALE': { text: 'Unregistered Sale', color: '#FEF3C7', textColor: '#92400E' } //NARAJN 
                             };
 
                             const status = opts[value];
