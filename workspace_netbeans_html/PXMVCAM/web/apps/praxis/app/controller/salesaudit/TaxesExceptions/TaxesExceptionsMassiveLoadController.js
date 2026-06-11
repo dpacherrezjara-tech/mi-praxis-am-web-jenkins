@@ -54,6 +54,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.TaxesExceptions.TaxesExceptionsMass
                 }
                 if (lstVals.OUT_ERRORS > 0) {
                     notifier.alert('Tickets with Error ' + lstVals.OUT_ERRORS);
+                    console.log(lstRs);
                     let store = new Ext.data.Store({
                         data: lstRs.at(0)
                     });
