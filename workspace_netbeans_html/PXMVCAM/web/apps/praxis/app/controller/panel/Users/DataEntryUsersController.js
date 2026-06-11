@@ -19,6 +19,8 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
                 Ext.getCmp(prototype.id+'-btn-update').show();
                 Ext.getCmp(prototype.id+'-btn-delete').show();
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
+                Ext.getCmp(prototype.id+'-chkPassUpd').hide();
+                Ext.getCmp(prototype.id+'-lblChkPassUpd').hide();
                 this.setValue("cboCity", this.p.rec.data.CITY);
                 this.setValue("cboProfiles", this.p.rec.data.ID_PROFILE);
                 break;
@@ -27,6 +29,8 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
                 Ext.getCmp(prototype.id+'-btn-update').hide();
                 Ext.getCmp(prototype.id+'-btn-delete').hide();
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
+                Ext.getCmp(prototype.id+'-chkPassUpd').show();
+                Ext.getCmp(prototype.id+'-lblChkPassUpd').show();
                 this.setValue("cboCity", "");
                 this.setValue('cboProfiles', "0");
 //                Ext.getCmp(prototype.id + '-obj').setValue("X");
@@ -243,6 +247,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
         var chkExpiredDate = Ext.getCmp(prototype.id+'-chkExpiredDate').getValue() ? 'true' : 'false';
         var DTEXPIRED = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtExpDate').getValue(), 'Ymd');
         var chkPass = Ext.getCmp(prototype.id+'-chkPass').getValue() ? 'true' : 'false';
+        var chkPassUpd = Ext.getCmp(prototype.id+'-chkPassUpd').getValue() ? 'true' : 'false';
         var txtPass = this.getValue('txtPass');
         var strOption = this.p.action;
         var STAT =  Ext.getCmp(prototype.id+'-chkStatus').getValue() ? 'A' : 'L';
@@ -257,6 +262,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
             chkExpiredDate: chkExpiredDate,
             DTEXPIRED: DTEXPIRED,
             chkPass: chkPass,
+            chkPassUpd: chkPassUpd,
             txtPass: txtPass,
             STAT: STAT,
             strOption: strOption,

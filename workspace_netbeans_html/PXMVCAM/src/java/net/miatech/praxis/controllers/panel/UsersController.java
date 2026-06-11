@@ -129,6 +129,7 @@ public class UsersController extends BaseController {
             filter.VP_APLICA = "PX";
             filter.chkExpiredDate = ("true".equals(request.getParameter("chkExpiredDate")));
             filter.TOKEN = request.getParameter("txtPass").trim();
+            filter.chkPassUpd = ("true".equals(request.getParameter("chkPassUpd"))); ///NUEVA FUNCIONALIDAD
             filter.VP_DESC = request.getParameter("DESC").trim();
             filter.VP_ID_PROFILE = request.getParameter("ID_PROFILE").trim();
             filter.DTEXPIRED = request.getParameter("DTEXPIRED").trim();
@@ -148,10 +149,10 @@ public class UsersController extends BaseController {
             
             if("I".equals(filter.VP_ACTION))
             {
-                boValida = userLogic.SQP03268(filter.VP_USR); // VALIDA SI YA EXISTE USUARIO
+                //boValida = userLogic.SQP03268(filter.VP_USR); // VALIDA SI YA EXISTE USUARIO
                 if(!boValida)
                 {
-                    userLogic.SQP03219(filter.VP_USR,filter.TOKEN,filter.VP_DESC); // REGISTRA AS400
+                    userLogic.SQP03219(filter.VP_USR,filter.TOKEN,filter.VP_DESC, filter.chkPassUpd? "1":"0"); // REGISTRA AS400
                     objRtn = logic.setSQP05856(filter); // REGISTRO EN TABLAS PRAXIS
                     String blockres = userLogic.create(filter.VP_EMAIL, filter.VP_USR, filter.TOKEN);
                     resp.info.add(blockres);
