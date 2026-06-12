@@ -385,7 +385,7 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
             '0': 'Received',
             '1': 'Loaded',
             '2': 'Exonerated',
-            '3': 'By Payment'
+            '3': 'ByPayment'
         };
         const estructuras = {
             '0': 'Estructura: A4305',
@@ -420,7 +420,10 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
             const store = global.callStorePaggin('PRAXISMP', 'SQP04976', params);
             const grid = Ext.getCmp(prototype.id + `-grid-${tipoLabel}01`);
             const paging = Ext.getCmp(prototype.id + `-${tipoLabel}-paggin01`);
-            if (grid) grid.bindStore(store);
+            if (grid) {
+                grid.bindStore(store);
+                grid.downloadParams = Ext.apply({}, params);
+            }
             if (paging) paging.bindStore(store);
         }, 50);
     },
@@ -474,12 +477,11 @@ Ext.define('Ext.Praxis.controller.payments.InputsTamiz.InputsTamizController', {
     //<editor-fold defaultstate="collapsed" desc="Descarga Exceles">
     downloadProcessor: async function (obj) {
         const grid = obj.up('gridpanel');
-        const proxy = grid && grid.getStore() ? grid.getStore().getProxy() : null;
-        if (!proxy) {
-            global.Msg({msg: 'No se encontró el proxy del store'});
+        if (!grid) {
+            global.Msg({msg: 'No se encontró el grid'});
             return;
         }
-        const params = Object.assign({}, proxy.extraParams);
+        const params = Object.assign({}, grid.downloadParams || {});
         const tipoGrid = params.TIPO;
 
         const records = await global.callStorePagginExcel('PRAXISMP', 'SQP04976', params);

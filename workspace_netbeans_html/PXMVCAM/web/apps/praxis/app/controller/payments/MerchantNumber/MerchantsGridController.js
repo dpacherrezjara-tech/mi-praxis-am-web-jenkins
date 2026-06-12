@@ -4,41 +4,13 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantsGridControlle
     url: CONTEXTPATH + '/MerchantNumberTmz',
     init: function (view) {
     },
-    afterRender: async function (obj, e) {
+    afterRender: function (obj, e) {
         const me = this;
         const view = me.view;
         this.getData({view: view});
     },
-    getData: function ( {view}) {
-        let store = Ext.create('Ext.data.Store', {
-            loadMask: true,
-            pageSize: 20,
-            proxy: {
-                type: 'ajax',
-                enablePaging: true,
-                url: `${view.url}/loadMerchants`,
-                extraParams: view.searchParams,
-                timeout: 600000,
-                reader: {
-                    type: 'json',
-                    rootProperty: 'response',
-                    totalProperty: 'total'
-                }
-            },
-            autoLoad: true,
-            listeners: {
-                load: function (store, records, successful, operation) {
-                    if (!successful) {
-                        global.Msg({msg: 'Data not Found'});
-                    } else {
-                        //console.log(records);
-                        if (records.length === 0) {
-                            global.Msg({msg: 'Data not Found'});
-                        }
-                    }
-                }
-            }
-        });
+    getData: function ({view}) {
+        let store = global.callStorePaggin('PRAXISMP', 'SQP05254', view.searchParams);
         view.setStore(store);
     },
     onEditClick: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
@@ -52,46 +24,54 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantsGridControlle
         dataEntry.show();
     },
     onDeleteClick: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-        const merchant = record.data.merchn;
-
-        Ext.Msg.show(
-                {
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to delete?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-                            this.deleteMerchantNumber(merchant);
-                        }
-                    }
-                });
+        const merchant = record.data.MERCHN;
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to delete?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    this.deleteMerchantNumber(merchant);
+                }
+            }
+        });
     },
     deleteMerchantNumber: async function (merchant) {
-        const me = this;
-
         let params = {
             IN_MERCHN: merchant,
             IN_CCUST: '139',
             IN_CHOPTION: 'D'
         };
-
-        const res = await fetch(`${me.url}/maintenanceMerchant`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(params)
+        const expectedParams = [
+            'IN_CHOPTION', 'IN_CCUST', 'IN_MERCHN', 'IN_DESCR', 'IN_RSOCIAL',
+            'IN_CIATA', 'IN_CANAL', 'IN_SCOUNTRY', 'IN_UNIOPE', 'IN_CODCLIT1',
+            'IN_DIRCLIT1', 'IN_CODCLIT2', 'IN_DIRCLIT2', 'IN_MERCHP', 'IN_STATUS',
+            'IN_CODAGRUP', 'IN_DESCAGRUP', 'IN_FECHAINI', 'IN_FECHAFIN'
+        ];
+        expectedParams.forEach(param => {
+            if (!(param in params)) {
+                params[param] = '';
+            }
         });
-
-        if (res.ok) {
-            global.Msg({msg: 'Deleted Successfull'});
-            Ext.getCmp(prototype.id + '-MerchantsGrid-1').getStore().load();
-        } else {
-            const msg = await res.text();
-            console.error('Error: ' + msg);
+        try {
+            const res = await global.callStorePost('PRAXISMP', 'SQP05256', params);
+            const {INOUT_STATUS, INOUT_MESSAGE} = res.data.lstVals;
+            if (INOUT_STATUS === 1) {
+                global.Msg({msg: 'Deleted Successfull'});
+                Ext.getCmp(prototype.id + '-MerchantsGrid-1').getStore().load();
+            } else {
+                Ext.MessageBox.show({
+                    title: 'Error',
+                    message: INOUT_MESSAGE || 'Error!<br>Check Console for more<br>Information.',
+                    icon: Ext.MessageBox.ERROR,
+                    buttons: Ext.MessageBox.OK
+                });
+            }
+        } catch (e) {
+            console.error('Error deleteMerchantNumber', e);
             Ext.MessageBox.show({
                 title: 'Error',
                 message: 'Error!<br>Check Console for more<br>Information.',
@@ -103,29 +83,52 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantsGridControlle
     formatEditParams: function (rec) {
         let params = {
             IN_CCUST: '139',
-            IN_MERCHN: rec.merchn
+            IN_MERCHN: rec.MERCHN
         };
         return params;
     },
-    downloadExcel: function () {
+    onDownloadExcel: async function () {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: async function (btn) {
+                if (btn === 'yes') {
+                    this.downloadExcel();
+                }
+            }
+        });
+    },
+    downloadExcel: async function () {
         const view = this.view;
-        let params = Object.assign({}, view.searchParams);
-        params.excel = true;
-        Ext.Msg.show(
-                {
-                    title: '.:PRAXIS:.',
-                    msg: 'Download Excel?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-                            global.getFile(`${view.url}/downloadMerchants?${new URLSearchParams(params)}`);
-                        }
-                    }
-                });
+        view.setLoading(true);
+        try {
+            const excelFields = [
+                {title: 'Merchant Nbr.',          field: 'MERCHN',            order: 0},
+                {title: 'Merchant Name',          field: 'DESCR',             order: 1},
+                {title: 'Status',                 field: 'STATUS_DESCRIPTION',order: 2},
+                {title: 'Operative Unit',         field: 'UNIOPE_DESCRIPTION',order: 3},
+                {title: 'Channel',                field: 'CANAL',             order: 4},
+                {title: 'Social Reason',          field: 'RSOCIAL',           order: 5},
+                {title: 'Merchant Payment',       field: 'MERCHP',            order: 6},
+                {title: 'Country',                field: 'SCOUNTRY',          order: 7},
+                {title: 'IATA Code',              field: 'CIATA',             order: 8},
+                {title: 'IATA Name',              field: 'NIATA',             order: 9},
+                {title: 'Comm. Client Code',      field: 'CODCLIT1',          order: 10},
+                {title: 'Comm. Client Address',   field: 'DIRCLIT1',          order: 11},
+                {title: 'Chbk. Client Code',      field: 'CODCLIT2',          order: 12},
+                {title: 'Chbk. Client Address',   field: 'DIRCLIT2',          order: 13}
+            ];
+            const dateStr = win.getFechaFormat();
+            await global.callStoreDownloadExcel('PRAXISMP', 'SQP05254', view.searchParams, 'MerchantNumberTmz - ' + dateStr, excelFields);
+        } catch (e) {
+            console.error('Error downloadExcel', e);
+            global.Msg({msg: 'Error downloading file'});
+        } finally {
+            view.setLoading(false);
+        }
     }
 });
-
-

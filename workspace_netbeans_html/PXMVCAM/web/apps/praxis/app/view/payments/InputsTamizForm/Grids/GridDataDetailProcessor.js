@@ -26,10 +26,11 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataDetailProcess
             tipo = 'Unknown';
         }
         me.title = `${tipo} Detail - ${me.titleGrid}`;
+        const tipoId = tipo.replace(/\s+/g, '');
         let panel = null;
         if (me.tipoGrid === '0') {
             panel = Ext.create('Ext.grid.Panel', {
-                id: prototype.id + `-grid-${tipo}01`,
+                id: prototype.id + `-grid-${tipoId}01`,
                 height: 550,
                 width: 1390,
                 features: [
@@ -63,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataDetailProcess
                         },
                         {
                             text: '<strong style="color:white;">Back<strong>',
-                            id: prototype.id + '-det-btn-atras' + tipo,
+                            id: prototype.id + '-det-btn-atras' + tipoId,
                             cls: 'x-btn-sent',
                             width: 100,
                             scale: 'small',
@@ -128,13 +129,13 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataDetailProcess
                     ]
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
-                    id: prototype.id + `-${tipo}-paggin01`,
+                    id: prototype.id + `-${tipoId}-paggin01`,
                     displayInfo: true
                 })
             });
         } else if (me.tipoGrid === '1') {
             panel = Ext.create('Ext.grid.Panel', {
-                id: prototype.id + `-grid-${tipo}01`,
+                id: prototype.id + `-grid-${tipoId}01`,
                 height: 550,
                 width: 1400,
                 features: [
@@ -167,7 +168,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataDetailProcess
                         },
                         {
                             text: '<strong style="color:white;">Back<strong>',
-                            id: prototype.id + '-det-btn-atras' + tipo,
+                            id: prototype.id + '-det-btn-atras' + tipoId,
                             cls: 'x-btn-sent',
                             width: 100,
                             scale: 'small',
@@ -200,13 +201,13 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataDetailProcess
                     ]
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
-                    id: prototype.id + `-${tipo}-paggin01`,
+                    id: prototype.id + `-${tipoId}-paggin01`,
                     displayInfo: true
                 })
             });
         } else if (me.tipoGrid === '2') {
             panel = Ext.create('Ext.grid.Panel', {
-                id: prototype.id + `-grid-${tipo}01`,
+                id: prototype.id + `-grid-${tipoId}01`,
                 height: 550,
                 width: 1390,
                 features: [
@@ -240,7 +241,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataDetailProcess
                         },
                         {
                             text: '<strong style="color:white;">Back<strong>',
-                            id: prototype.id + '-det-btn-atras' + tipo,
+                            id: prototype.id + '-det-btn-atras' + tipoId,
                             cls: 'x-btn-sent',
                             width: 100,
                             scale: 'small',
@@ -305,13 +306,13 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataDetailProcess
                     ]
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
-                    id: prototype.id + `-${tipo}-paggin01`,
+                    id: prototype.id + `-${tipoId}-paggin01`,
                     displayInfo: true
                 })
             });
         } else if (me.tipoGrid === '3') {
             panel = Ext.create('Ext.grid.Panel', {
-                id: prototype.id + `-grid-${tipo}01`,
+                id: prototype.id + `-grid-${tipoId}01`,
                 height: 550,
                 width: 1390,
                 features: [
@@ -345,7 +346,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataDetailProcess
                         },
                         {
                             text: '<strong style="color:white;">Back<strong>',
-                            id: prototype.id + '-det-btn-atras' + tipo,
+                            id: prototype.id + '-det-btn-atras' + tipoId,
                             cls: 'x-btn-sent',
                             width: 100,
                             scale: 'small',
@@ -408,7 +409,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Grids.GridDataDetailProcess
                     ]
                 },
                 bbar: Ext.create('Ext.toolbar.Paging', {
-                    id: prototype.id + `-${tipo}-paggin01`,
+                    id: prototype.id + `-${tipoId}-paggin01`,
                     displayInfo: true
                 })
             });

@@ -214,7 +214,6 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmzDataEntry', {
                             id: prototype.id + '-btn-save-comment',
                             ui: 'default',
                             iconCls: 'prx-icon-save-blue-16',
-                            handler: 'onClickUpdateProcessor',
                             tooltip: 'Save BPO Comment',
                             listeners: {
                                 click: 'onSaveCommentClick'
@@ -225,7 +224,6 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmzDataEntry', {
                             id: prototype.id + '-btn-delete-comment',
                             ui: 'default',
                             iconCls: 'prx-icon-image-trash',
-                            handler: 'onClickUpdateProcessor',
                             tooltip: 'Delete BPO Comment',
                             hidden:true,
                             listeners: {
