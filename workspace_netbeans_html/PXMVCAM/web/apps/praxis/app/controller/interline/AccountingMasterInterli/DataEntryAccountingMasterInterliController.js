@@ -172,15 +172,15 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterInterli.DataEntryAcc
         this.setValue('txtA1740SUBTI', this.bean.A1740SUBTI);
         this.setValue('txtA1740CATEG', this.bean.A1740CATEG);
         this.setValue('cmbINTNU', this.bean.A1740INTNU === 'YES' ? 'Y' : 'N');
-        this.setValue('txtA1740CIA', this.bean.A1740CIA);
-        this.setValue('txtA1740UNIDA', this.bean.A1740UNIDA);
-        this.setValue('txtA1740CECOS', this.bean.A1740CECOS);
-        this.setValue('txtA1740UBICA', this.bean.A1740UBICA);
-        this.setValue('txtA1740CTA', this.bean.A1740CTA);
-        this.setValue('txtA1740SCTA', this.bean.A1740SCTA);
-        this.setValue('txtA1740EQUI', this.bean.A1740EQUI);
-        this.setValue('txtA1740ICIA', this.bean.A1740ICIA);
-        this.setValue('txtA1740CLIE', this.bean.A1740CLIE);
+        this.setValue('txtA1740CIA', this.bean.A1740CIA.trim());
+        this.setValue('txtA1740UNIDA', this.bean.A1740UNIDA.trim());
+        this.setValue('txtA1740CECOS', this.bean.A1740CECOS.trim());
+        this.setValue('txtA1740UBICA', this.bean.A1740UBICA.trim());
+        this.setValue('txtA1740CTA', this.bean.A1740CTA.trim());
+        this.setValue('txtA1740SCTA', this.bean.A1740SCTA.trim());
+        this.setValue('txtA1740EQUI', this.bean.A1740EQUI.trim());
+        this.setValue('txtA1740ICIA', this.bean.A1740ICIA.trim());
+        this.setValue('txtA1740CLIE', this.bean.A1740CLIE.trim());
         this.setValue('txtA1740FINI', this.bean.A1740FINI);
         this.setValue('txtA1740FFIN', this.bean.A1740FFIN='9999/99/99' ? '' : this.bean.A1740FFIN);
         

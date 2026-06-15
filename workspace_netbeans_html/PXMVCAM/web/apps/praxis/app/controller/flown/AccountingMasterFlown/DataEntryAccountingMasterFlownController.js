@@ -302,16 +302,16 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
         Ext.getCmp(prototype.id + '-cmbCategoryDataEntry').setValue(rec.get('A1740CATEG'));
         Ext.getCmp(prototype.id + '-cmbINTNU').setValue(rec.get('A1740INTNU')=== 'YES' ? 'Y' : 'N');
         
-        Ext.getCmp(prototype.id + '-txtA1740CIA').setValue(rec.get('A1740CIA'));
-        Ext.getCmp(prototype.id + '-txtA1740UNIDA').setValue(rec.get('A1740UNIDA'));
-        Ext.getCmp(prototype.id + '-txtA1740CECOS').setValue(rec.get('A1740CECOS'));
-        Ext.getCmp(prototype.id + '-txtA1740UBICA').setValue(rec.get('A1740UBICA'));
-        Ext.getCmp(prototype.id + '-txtA1740CTA').setValue(rec.get('A1740CTA'));
-        Ext.getCmp(prototype.id + '-txtA1740SCTA').setValue(rec.get('A1740SCTA'));
-        Ext.getCmp(prototype.id + '-txtA1740EQUI').setValue(rec.get('A1740EQUI'));
-        Ext.getCmp(prototype.id + '-txtA1740ICIA').setValue(rec.get('A1740ICIA'));
+        Ext.getCmp(prototype.id + '-txtA1740CIA').setValue(rec.get('A1740CIA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740UNIDA').setValue(rec.get('A1740UNIDA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740CECOS').setValue(rec.get('A1740CECOS').trim());
+        Ext.getCmp(prototype.id + '-txtA1740UBICA').setValue(rec.get('A1740UBICA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740CTA').setValue(rec.get('A1740CTA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740SCTA').setValue(rec.get('A1740SCTA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740EQUI').setValue(rec.get('A1740EQUI').trim());
+        Ext.getCmp(prototype.id + '-txtA1740ICIA').setValue(rec.get('A1740ICIA').trim());
 
-        Ext.getCmp(prototype.id + '-txtA1740CLIE').setValue(rec.get('A1740CLIE'));
+        Ext.getCmp(prototype.id + '-txtA1740CLIE').setValue(rec.get('A1740CLIE').trim());
         Ext.getCmp(prototype.id + '-txtA1740FINI').setValue(rec.get('A1740FINI'));
         Ext.getCmp(prototype.id + '-txtA1740FFIN').setValue(rec.get('A1740FFIN'));
         
