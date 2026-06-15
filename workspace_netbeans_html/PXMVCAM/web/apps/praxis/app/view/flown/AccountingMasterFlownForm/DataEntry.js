@@ -262,7 +262,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterFlownForm.DataEntry', {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1740SCTA',
                             enforceMaxLength: true,
-                            maxLength: 5,
+                            maxLength: 4,
                             width: 50
                         },
                         {
