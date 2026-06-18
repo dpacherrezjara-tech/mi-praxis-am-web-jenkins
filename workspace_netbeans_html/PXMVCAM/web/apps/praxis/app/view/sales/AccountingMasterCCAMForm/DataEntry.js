@@ -315,7 +315,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1819SCTA',
-                                            maxLength: 5,
+                                            maxLength: 4,
                                             fieldLabel: '',
                                             width: 50,
                                             border: true,
