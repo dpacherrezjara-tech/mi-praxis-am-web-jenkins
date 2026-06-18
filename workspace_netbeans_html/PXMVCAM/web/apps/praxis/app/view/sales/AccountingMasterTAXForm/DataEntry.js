@@ -346,7 +346,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry', {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1741SCTA',
                             enforceMaxLength: true,
-                            maxLength: 5,
+                            maxLength: 4,
                             width: 50,
                             listeners: {
                                 change: 'onUpperValue'

@@ -2036,7 +2036,7 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
 //                                            labelWidth: 0,
 //                                            labelAlign: 'center',
 //                                            fieldStyle: ' text-align:left ',
-//                                            maxLength: 5,
+//                                            maxLength: 4,
 //                                            padding: '10px 5px 0px 5px',
 //                                            enforceMaxLength: true
 //                                        },
