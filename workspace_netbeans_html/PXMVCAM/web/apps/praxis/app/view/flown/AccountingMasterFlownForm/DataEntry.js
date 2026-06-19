@@ -235,13 +235,14 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterFlownForm.DataEntry', {
                             id: prototype.id + '-txtA1740UNIDA',
                             enforceMaxLength: true,
                             maxLength: 2,
-                            width: 30
+                            width: 30,
+                            hidden: true
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1740CECOS',
                             enforceMaxLength: true,
-                            maxLength: 6,
+                            maxLength: 7,
                             width: 50
                         },
                         {
@@ -255,7 +256,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterFlownForm.DataEntry', {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1740CTA',
                             enforceMaxLength: true,
-                            maxLength: 4,
+                            maxLength: 6,
                             width: 40
                         },
                         {
