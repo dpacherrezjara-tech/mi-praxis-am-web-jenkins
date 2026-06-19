@@ -235,7 +235,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.DataEntry', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1838SUBCT',
-                                            maxLength: 5,
+                                            maxLength: 4,
                                             fieldLabel: '',
                                             width: 50,
                                             border: true,

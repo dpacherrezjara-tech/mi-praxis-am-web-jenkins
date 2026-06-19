@@ -311,7 +311,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.DataEntry', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1806SUBCT',
-                                            maxLength: 5,
+                                            maxLength: 4,
                                             fieldLabel: '',
                                             width: 50,
                                             border: true,
