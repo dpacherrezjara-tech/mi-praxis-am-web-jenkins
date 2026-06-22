@@ -236,7 +236,7 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterFlownForm.DataEntry', {
                             enforceMaxLength: true,
                             maxLength: 2,
                             width: 30,
-                            hidden: true
+                            readOnly: true
                         },
                         {
                             xtype: 'textfield',
