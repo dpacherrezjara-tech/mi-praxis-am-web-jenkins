@@ -340,7 +340,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.DataEntry', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1820SCTA',
-                                            maxLength: 5,
+                                            maxLength: 4,
                                             fieldLabel: '',
                                             width: 50,
                                             border: true,

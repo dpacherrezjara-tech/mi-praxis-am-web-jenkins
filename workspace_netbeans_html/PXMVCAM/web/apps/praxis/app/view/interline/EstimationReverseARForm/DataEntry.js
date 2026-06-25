@@ -520,7 +520,7 @@ Ext.define('Ext.Praxis.view.interline.EstimationReverseARForm.DataEntry', {
                                                     fieldStyle: 'text-align:left;',
                                                     enableKeyEvents: true,
                                                     enforceMaxLength: true,
-                                                    maxLength: 5,
+                                                    maxLength: 4,
                                                     width: 50,
                                                     readOnly: true
                                                 },

@@ -158,7 +158,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.DataEntry',{
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1835SUBCT',
                             enforceMaxLength: true,
-                            maxLength: 5,
+                            maxLength: 4,
                             width: 50
                         },
                         {
