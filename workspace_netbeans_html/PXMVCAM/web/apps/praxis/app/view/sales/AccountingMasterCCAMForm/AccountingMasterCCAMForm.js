@@ -2,7 +2,7 @@
 
 prototype.id = 'AccountingMasterCCAMForm';
 prototype.url = CONTEXTPATH + '/AccountingMasterCCAM';
-          
+
 Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.AccountingMasterCCAMForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.AccountingMasterCCAMForm',
@@ -41,7 +41,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.AccountingMasterCCAMF
                         {
                             xtype: 'panel',
                             region: 'center',
-//                          width: 900,
+                            //                          width: 900,
                             layout: 'border',
                             items: [
                                 {

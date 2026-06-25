@@ -1934,18 +1934,18 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
 
                                         },
                                         {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtCIA',
-                                            required: true,
-                                            disabled: false,
-                                            fieldLabel: '',
-                                            width: 30,
-                                            labelWidth: 0,
-                                            labelAlign: 'center',
-                                            fieldStyle: ' text-align:left ',
-                                            maxLength: 2,
-                                            padding: '10px 5px 0px 5px',
-                                            enforceMaxLength: true
+                                            xtype: 'button',
+                                            id: prototype.id + '-btn-account-detail',
+                                            text: 'Detail',
+                                            iconCls: 'prx-icon-search',
+                                            width: 120, 
+                                            height: 25,
+                                            margin: '6 0 0 10', 
+                                            padding: '0px 0px 0px 0px',
+                                            hidden: true,
+                                            listeners: {
+                                                click: 'onAccountDetailClick'
+                                            }
                                         },
                                         {
                                             xtype: 'textfield',
@@ -2045,6 +2045,118 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
                                             padding: '10px 5px 0px 5px',
                                             enforceMaxLength: true
                                         }
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-txtCIA',
+//                                            required: true,
+//                                            disabled: false,
+//                                            fieldLabel: '',
+//                                            width: 30,
+//                                            labelWidth: 0,
+//                                            labelAlign: 'center',
+//                                            fieldStyle: ' text-align:left ',
+//                                            maxLength: 2,
+//                                            padding: '10px 5px 0px 5px',
+//                                            enforceMaxLength: true
+//                                        },
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-txtUNIDA',
+//                                            required: true,
+//                                            disabled: false,
+//                                            fieldLabel: '',
+//                                            width: 30,
+//                                            labelWidth: 0,
+//                                            labelAlign: 'center',
+//                                            fieldStyle: ' text-align:left ',
+//                                            maxLength: 2,
+//                                            padding: '10px 5px 0px 5px',
+//                                            enforceMaxLength: true
+//                                        },
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-txtCECOS',
+//                                            required: true,
+//                                            disabled: false,
+//                                            fieldLabel: '',
+//                                            width: 50,
+//                                            labelWidth: 0,
+//                                            labelAlign: 'center',
+//                                            fieldStyle: ' text-align:left ',
+//                                            maxLength: 6,
+//                                            padding: '10px 5px 0px 5px',
+//                                            enforceMaxLength: true
+//                                        },
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-txtUBICA',
+//                                            required: true,
+//                                            disabled: false,
+//                                            fieldLabel: '',
+//                                            width: 40,
+//                                            labelWidth: 0,
+//                                            labelAlign: 'center',
+//                                            fieldStyle: ' text-align:left ',
+//                                            maxLength: 4,
+//                                            padding: '10px 5px 0px 5px',
+//                                            enforceMaxLength: true
+//                                        },
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-txtCTA',
+//                                            required: true,
+//                                            disabled: false,
+//                                            fieldLabel: '',
+//                                            width: 40,
+//                                            labelWidth: 0,
+//                                            labelAlign: 'center',
+//                                            fieldStyle: ' text-align:left ',
+//                                            maxLength: 4,
+//                                            padding: '10px 5px 0px 5px',
+//                                            enforceMaxLength: true
+//                                        },
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-txtSCTA',
+//                                            required: true,
+//                                            disabled: false,
+//                                            fieldLabel: '',
+//                                            width: 50,
+//                                            labelWidth: 0,
+//                                            labelAlign: 'center',
+//                                            fieldStyle: ' text-align:left ',
+//                                            maxLength: 5,
+//                                            padding: '10px 5px 0px 5px',
+//                                            enforceMaxLength: true
+//                                        },
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-txtEQUI',
+//                                            required: true,
+//                                            disabled: false,
+//                                            fieldLabel: '',
+//                                            width: 40,
+//                                            labelWidth: 0,
+//                                            labelAlign: 'center',
+//                                            fieldStyle: ' text-align:left ',
+//                                            maxLength: 4,
+//                                            padding: '10px 5px 0px 5px',
+//                                            enforceMaxLength: true
+//                                        },
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-txtICIA',
+//                                            required: true,
+//                                            disabled: false,
+//                                            fieldLabel: '',
+//                                            width: 30,
+//                                            labelWidth: 0,
+//                                            labelAlign: 'center',
+//                                            fieldStyle: ' text-align:left ',
+//                                            maxLength: 2,
+//                                            padding: '10px 5px 0px 5px',
+//                                            enforceMaxLength: true
+//                                        }
                                     ]
                                 },
                                 {

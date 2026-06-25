@@ -68,23 +68,24 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             html: '<strong style="color:red;font-size:13px;">(*)</strong>'
 
                                         },
-                                         {
+                                        {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1819TACC',
                                             maxLength: 50,
                                             enforceMaxLength: true,
                                             width: 250,
                                             fieldStyle: 'text-align: center;',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
 
-                                        },                                       
+                                        },
                                         {
                                             xtype: 'label',
                                             labelAlign: 'center',
                                             width: 50,
-                                            padding: '2px 5px 2px 3px',
+                                            labelAlign: 'right',
+                                            padding: '2px 5px 2px 15px',
                                             html: '<strong style="color:#000;  ">Type</strong>'
 
                                         },
@@ -112,7 +113,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                         }
                                     ]
                                 },
-                                 {
+                                {
                                     xtype: 'panel',
                                     layout: 'column',
                                     margin: '1 0 1 0',
@@ -126,8 +127,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             padding: '2px 5px 2px 10px',
                                             html: '<strong style="color:#000;  ">Customer</strong>'
 
-                                        },                                       
-                                         {
+                                        },
+                                        {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1819CLIEN',
                                             maxLength: 50,
@@ -138,20 +139,20 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             labelWidth: 0,
                                             labelAlign: 'left',
                                             padding: '2px 5px 2px 3px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
 
-                                        },      
-                                         {
+                                        },
+                                        {
                                             xtype: 'label',
                                             labelAlign: 'left',
                                             width: 130,
                                             padding: '2px 5px 2px 50px',
                                             html: '<strong style="color:#000;  ">CAM Nature</strong>'
 
-                                        },                                       
-                                         {
+                                        },
+                                        {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1819NATU',
                                             maxLength: 50,
@@ -162,13 +163,13 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             labelWidth: 0,
                                             labelAlign: 'left',
                                             padding: '2px 5px 2px 3px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
 
-                                        },       
-                                       
-                                       
+                                        },
+
+
                                     ]
                                 },
                                 {
@@ -181,12 +182,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                         {
                                             xtype: 'label',
                                             labelAlign: 'left',
-                                            width: 150,
+                                            width: 200,
                                             padding: '2px 5px 2px 10px',
                                             html: '<strong style="color:#000;  ">Description</strong>'
 
-                                        },                                       
-                                         {
+                                        },
+                                        {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1819DESCR',
                                             maxLength: 50,
@@ -197,14 +198,14 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             labelWidth: 0,
                                             labelAlign: 'left',
                                             padding: '2px 5px 2px 3px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
 
-                                        }     
-                                        
-                                       
-                                       
+                                        }
+
+
+
                                     ]
                                 },
                                 {
@@ -235,7 +236,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             enforceMaxLength: true,
                                             labelAlign: 'left',
                                             padding: '2px 1px 2px 1px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
 
@@ -253,17 +254,18 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             enforceMaxLength: true,
                                             labelAlign: 'left',
                                             padding: '2px 1px 2px 1px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
-                                            }
+                                            },
+                                            readOnly: true
 
                                         },
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1819CECO',
-                                            maxLength: 6,
+                                            maxLength: 7,
                                             fieldLabel: '',
-                                            width: 50,
+                                            width: 60,
                                             border: true,
                                             fieldStyle: 'text-align: center;',
                                             labelWidth: 0,
@@ -271,7 +273,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             enforceMaxLength: true,
                                             labelAlign: 'left',
                                             padding: '2px 1px 2px 1px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
 
@@ -289,7 +291,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             enforceMaxLength: true,
                                             labelAlign: 'left',
                                             padding: '2px 1px 2px 1px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
 
@@ -297,9 +299,9 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1819CTA',
-                                            maxLength: 4,
+                                            maxLength: 6,
                                             fieldLabel: '',
-                                            width: 40,
+                                            width: 50,
                                             border: true,
                                             fieldStyle: 'text-align: center;',
                                             labelWidth: 0,
@@ -307,7 +309,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             enforceMaxLength: true,
                                             labelAlign: 'left',
                                             padding: '2px 1px 2px 1px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
 
@@ -325,7 +327,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             enforceMaxLength: true,
                                             labelAlign: 'left',
                                             padding: '2px 1px 2px 1px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
 
@@ -343,7 +345,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             enforceMaxLength: true,
                                             labelAlign: 'left',
                                             padding: '2px 1px 2px 1px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
 
@@ -361,14 +363,14 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             enforceMaxLength: true,
                                             labelAlign: 'left',
                                             padding: '2px 1px 2px 1px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
                                         }
                                     ]
                                 },
-                                
-                                
+
+
                                 {
                                     xtype: 'panel',
                                     layout: 'column',
@@ -384,7 +386,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             html: '<strong style="color:#000;  ">Addres</strong>'
 
                                         },
-                                       
+
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1819DIREC',
@@ -396,7 +398,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             labelWidth: 0,
                                             labelAlign: 'left',
                                             padding: '2px 5px 2px 3px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
 
@@ -409,7 +411,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             html: '<strong style="color:#000;  ">Mode</strong>'
 
                                         },
-                                       
+
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtA1819MODO',
@@ -421,14 +423,14 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             labelWidth: 0,
                                             labelAlign: 'left',
                                             padding: '2px 5px 2px 3px',
-                                            listeners:{
+                                            listeners: {
                                                 change: 'onUpperValue'
                                             }
 
                                         }
                                     ]
                                 },
-                                
+
                                 {
                                     xtype: 'panel',
                                     layout: 'column',
@@ -456,11 +458,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                             labelWidth: 0,
                                             padding: '2px 30px 2px 10px'
                                         },
-                                         {
+                                        {
                                             xtype: 'datefield',
                                             id: prototype.id + '-txtA1819FFIN',
                                             fieldStyle: 'text-align:center',
-                                             format: 'Ymd',
+                                            format: 'Ymd',
                                             editable: true,
                                             maskRe: /[0-9/]/,
                                             width: 80,
@@ -470,8 +472,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                         }
                                     ]
                                 }
-//                               
-//                               
+                                //                               
+                                //                               
                             ]
                         }
                     ]
@@ -506,7 +508,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                     margin: '0 10 0 0',
                                     readOnly: true,
                                     width: 180,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -518,7 +520,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                     margin: '0 10 0 0',
                                     readOnly: true,
                                     width: 180,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -529,8 +531,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                     labelWidth: 100,
                                     margin: '0 10 0 0',
                                     readOnly: true,
-                                    width: 180 ,
-                                    listeners:{
+                                    width: 180,
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 }
@@ -552,7 +554,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                     readOnly: true,
                                     margin: '0 10 0 0',
                                     width: 180,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -564,7 +566,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                     readOnly: true,
                                     margin: '0 10 0 0',
                                     width: 180,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -576,7 +578,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.DataEntry', {
                                     readOnly: true,
                                     margin: '0 10 0 0',
                                     width: 180,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 }

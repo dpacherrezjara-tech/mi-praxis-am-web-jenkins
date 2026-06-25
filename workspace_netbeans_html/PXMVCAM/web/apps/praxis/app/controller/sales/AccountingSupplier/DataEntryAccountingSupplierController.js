@@ -18,32 +18,65 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
     /**
      * Constructor
      */
-    init: function(view) {
+    init: function (view) {
         var me = this;
     },
     /**
      * Se ejecuta luego de haber cargado todos los componentes
      */
-    afterRender: function() {
+    // afterRender: function() {
+    //     var p = this.view.params;
+    //     this.setDataStore();
+    //     switch (p.action) {
+    //         case 'I':
+    //             Ext.getCmp(prototype.id + '-btn-delete').hide();
+    //             Ext.getCmp(prototype.id + '-btn-update').hide();
+    //             Ext.getCmp(prototype.id + '-btn-save').show();
+    //             break;
+    //         case 'U':
+    //             this.getDataInputs();
+    //             Ext.getCmp(prototype.id + '-btn-save').hide();
+    //             Ext.getCmp(prototype.id + '-btn-update').show();
+    //             Ext.getCmp(prototype.id + '-btn-delete').show();
+    //             break;
+    //     }
+    //     global.AccessControlMaganer();
+
+    // },
+    afterRender: function () {
         var p = this.view.params;
         this.setDataStore();
+        global.AccessControlMaganer();
+
+        const btnSave = Ext.getCmp(prototype.id + '-btn-save');
+        const btnUpdate = Ext.getCmp(prototype.id + '-btn-update');
+        const btnDelete = Ext.getCmp(prototype.id + '-btn-delete');
+        // const btnCancel = Ext.getCmp(prototype.id + '-btn-cancel');
+
         switch (p.action) {
             case 'I':
-                Ext.getCmp(prototype.id + '-btn-delete').hide();
-                Ext.getCmp(prototype.id + '-btn-update').hide();
-                Ext.getCmp(prototype.id + '-btn-save').show();
+                // if (btnCancel) btnCancel.show();
+                if (btnSave && accessSelect.PERMC === 'Y')
+                    btnSave.show();
+
+                if (btnUpdate) btnUpdate.hide();
+                if (btnDelete) btnDelete.hide();
                 break;
             case 'U':
                 this.getDataInputs();
-                Ext.getCmp(prototype.id + '-btn-save').hide();
-                Ext.getCmp(prototype.id + '-btn-update').show();
-                Ext.getCmp(prototype.id + '-btn-delete').show();
+                if (btnSave) btnSave.hide();
+                // if (btnCancel) btnCancel.show();
+
+                if (btnUpdate && accessSelect.PERMM === 'Y')
+                    btnUpdate.show();
+
+                if (btnDelete && accessSelect.PERME === 'Y')
+                    btnDelete.show();
                 break;
         }
-        global.AccessControlMaganer();
 
     },
-    setDataStore: function() {
+    setDataStore: function () {
         var cbxType = Ext.getCmp(prototype.id + '-cbxType');
         cbxType.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -61,7 +94,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
         }));
         cbxType.setValue("");
     },
-    getDataInputs: function() {
+    getDataInputs: function () {
         var p = this.view.params;
         var data = p.rec.data;
 
@@ -99,8 +132,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
 
 
 
-//	txtStartDate.text = app.trim(beanDTY.A1806FINI)=='9999/99/99' ? '' : app.trim(beanDTY.A1806FINI);// app.trim(bean.A1806FINI);
-//	txtEndDate.text = app.trim(beanDTY.A1806FFIN)=='9999/99/99' ? '' : app.trim(beanDTY.A1806FFIN);
+        //	txtStartDate.text = app.trim(beanDTY.A1806FINI)=='9999/99/99' ? '' : app.trim(beanDTY.A1806FINI);// app.trim(bean.A1806FINI);
+        //	txtEndDate.text = app.trim(beanDTY.A1806FFIN)=='9999/99/99' ? '' : app.trim(beanDTY.A1806FFIN);
         this.lblA1806TIPO = data.A1806TIPOC;
         this.lblA1806PROVE = data.A1806PROVE;
         this.lblA1806NUM = data.A1806NUM;
@@ -111,7 +144,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
 
 
     },
-    getDataEntryValues: function(strOption) {
+    getDataEntryValues: function (strOption) {
 
 
         var A1806CCUST = '139';
@@ -168,7 +201,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
             IN_A1806MONED_OLD: IN_A1806MONED_OLD
         };
     },
-    onSaveClick: function(btn) {
+    onSaveClick: function (btn) {
 
         var strMsg = this.validateForm();
 
@@ -185,7 +218,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function (btn) {
                     if (btn === 'yes') {
                         this.view.params.action = "I";
                         this.crud();
@@ -194,25 +227,25 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
             });
         }
     },
-    crud: function() {
+    crud: function () {
         var p = this.view.params;
         var strOption = p.action;
         console.log(this.getDataEntryValues(strOption));
-        
+
         Ext.Ajax.request({
             url: this.url + '/mantenimiento',
             method: 'POST',
             timeout: 60000000,
             params: this.getDataEntryValues(strOption),
-            success: function(response, options) {
+            success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 var msg = res.msg;
-                
+
 
                 global.Msg({
-                    msg:msg,
+                    msg: msg,
                     icon: 1,
-                    fn: function() {
+                    fn: function () {
                         //exito
                         Ext.getCmp(prototype.id + '-dataEntry').close();
                         Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
@@ -221,7 +254,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
             }
         });
     },
-    onUpdateClick: function(btn) {      
+    onUpdateClick: function (btn) {
 
 
         var strMsg = this.validateForm();
@@ -239,7 +272,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
                 buttons: Ext.MessageBox.YESNO,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function (btn) {
                     if (btn === 'yes') {
                         this.view.params.action = "U";
 
@@ -250,7 +283,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
         }
     }
     ,
-    onDeleteClick: function(btn) {
+    onDeleteClick: function (btn) {
 
         Ext.Msg.show({
             title: '.:PRAXIS:.',
@@ -259,7 +292,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
+            fn: function (btn) {
                 if (btn === 'yes') {
                     this.view.params.action = "D";
 
@@ -268,7 +301,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
             }
         });
     },
-    validateForm: function() {
+    validateForm: function () {
         var mensaje = "";
         var cmbType = Ext.getCmp(prototype.id + '-cbxType').getValue();
         if (cmbType === '') {
@@ -277,7 +310,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
         return mensaje;
 
     },
-    onCancelClick: function(btn){
+    onCancelClick: function (btn) {
         this.view.close();
     }
 

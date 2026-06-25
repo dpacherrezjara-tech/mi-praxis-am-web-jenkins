@@ -244,6 +244,11 @@ public class AgentsMasterFileController extends BaseController {
             Cell CH1_10 = row.createCell(10);
             Cell CH1_11 = row.createCell(11);
             Cell CH1_12 = row.createCell(12);
+            Cell CH1_13 = row.createCell(13);
+            Cell CH1_14 = row.createCell(14);
+            Cell CH1_15 = row.createCell(15);
+            Cell CH1_16 = row.createCell(16);
+            Cell CH1_17 = row.createCell(17);
 
             CH1_00.setCellValue("Nbr.");
             CH1_01.setCellValue("Code");
@@ -257,6 +262,11 @@ public class AgentsMasterFileController extends BaseController {
             CH1_10.setCellValue("Zip Code");
             CH1_11.setCellValue("Sabre Ctry");
             CH1_12.setCellValue("Emai Catalogo");
+            CH1_13.setCellValue("Acct Date From");
+            CH1_14.setCellValue("Acct Date To");
+            CH1_15.setCellValue("Acct Unit");
+            CH1_16.setCellValue("Acct Cost Ctr");
+            CH1_17.setCellValue("Acct Location");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
@@ -270,6 +280,11 @@ public class AgentsMasterFileController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 17, 17));
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -284,6 +299,11 @@ public class AgentsMasterFileController extends BaseController {
             CH1_10.setCellStyle(headerStyle);
             CH1_11.setCellStyle(headerStyle);
             CH1_12.setCellStyle(headerStyle);
+            CH1_13.setCellStyle(headerStyle);
+            CH1_14.setCellStyle(headerStyle);
+            CH1_15.setCellStyle(headerStyle);
+            CH1_16.setCellStyle(headerStyle);
+            CH1_17.setCellStyle(headerStyle);
 
             ++vj;
             row = sheet.createRow(vj);
@@ -300,6 +320,11 @@ public class AgentsMasterFileController extends BaseController {
             Cell CH2_10 = row.createCell(10);
             Cell CH2_11 = row.createCell(11);
             Cell CH2_12 = row.createCell(12);
+            Cell CH2_13 = row.createCell(13);
+            Cell CH2_14 = row.createCell(14);
+            Cell CH2_15 = row.createCell(15);
+            Cell CH2_16 = row.createCell(16);
+            Cell CH2_17 = row.createCell(17);
 
             CH2_08.setCellValue("Name");
             CH2_09.setCellValue("Code");
@@ -317,6 +342,11 @@ public class AgentsMasterFileController extends BaseController {
             CH2_10.setCellStyle(headerStyle);
             CH2_11.setCellStyle(headerStyle);
             CH2_12.setCellStyle(headerStyle);
+            CH2_13.setCellStyle(headerStyle);
+            CH2_14.setCellStyle(headerStyle);
+            CH2_15.setCellStyle(headerStyle);
+            CH2_16.setCellStyle(headerStyle);
+            CH2_17.setCellStyle(headerStyle);
 
             //          ========================================================
             ++vj;
@@ -336,6 +366,11 @@ public class AgentsMasterFileController extends BaseController {
                 Cell rcell10 = row.createCell(10);
                 Cell rcell11 = row.createCell(11);
                 Cell rcell12 = row.createCell(12);
+                Cell rcell13 = row.createCell(13);
+                Cell rcell14 = row.createCell(14);
+                Cell rcell15 = row.createCell(15);
+                Cell rcell16 = row.createCell(16);
+                Cell rcell17 = row.createCell(17);
 
                 rcell0.setCellValue(listaData.get(vi).pos);
                 rcell1.setCellValue(listaData.get(vi).A003KEY);
@@ -350,6 +385,11 @@ public class AgentsMasterFileController extends BaseController {
                 rcell10.setCellValue(listaData.get(vi).A003ZIPCOD);
                 rcell11.setCellValue(listaData.get(vi).A003SABCTY);
                 rcell12.setCellValue(listaData.get(vi).A003MAIL);
+                rcell13.setCellValue(listaData.get(vi).A4059DESDE);
+                rcell14.setCellValue(listaData.get(vi).A4059HASTA);
+                rcell15.setCellValue(listaData.get(vi).A4059CTAUN);
+                rcell16.setCellValue(listaData.get(vi).A4059CTACC);
+                rcell17.setCellValue(listaData.get(vi).A4059CTAUB);
 
                 rcell0.setCellStyle(bodyStyle);
                 rcell1.setCellStyle(bodyStyle);
@@ -364,6 +404,11 @@ public class AgentsMasterFileController extends BaseController {
                 rcell10.setCellStyle(bodyStyle);
                 rcell11.setCellStyle(bodyStyle);
                 rcell12.setCellStyle(bodyStyle);
+                rcell13.setCellStyle(bodyStyle);
+                rcell14.setCellStyle(bodyStyle);
+                rcell15.setCellStyle(bodyStyle);
+                rcell16.setCellStyle(bodyStyle);
+                rcell17.setCellStyle(bodyStyle);
 
                 iter.next();
                 ++vi;
@@ -383,6 +428,11 @@ public class AgentsMasterFileController extends BaseController {
             sheet.autoSizeColumn(10, true);
             sheet.autoSizeColumn(11, true);
             sheet.autoSizeColumn(12, true);
+            sheet.autoSizeColumn(13, true);
+            sheet.autoSizeColumn(14, true);
+            sheet.autoSizeColumn(15, true);
+            sheet.autoSizeColumn(16, true);
+            sheet.autoSizeColumn(17, true);
 
             /**
              * fileNameDownload = Nombre de descarga
@@ -409,9 +459,17 @@ public class AgentsMasterFileController extends BaseController {
         String fileNameDownload = String.format("Agents Master File- " + Functions.getFechaActual() + ".txt", UUID.randomUUID().toString().toLowerCase());
         StringBuilder line = new StringBuilder();
         String delim = "\t";
-        String texto = "Code" + delim + "Type" + delim + "Channel" + delim + "LegalName" + delim + "Country" + delim + "State" + delim + "County" + delim + "CityName" + delim + "CityCode" + delim + "ZipCode" + delim + "SabreCity";
-        texto += "Company" + delim + "Unit" + delim + "Cost Center" + delim + "Ubication" + delim + "Account" + delim + "Sub Account"
-                + delim + "Equipment" + delim + "Inter Company" + delim + "Area" + delim + "Supplier" + delim + "Client" + delim + "Base" + delim + "User" + "\r\n";
+        
+        String texto = "Code" + delim + "Type" + delim + "Channel" + delim + "LegalName" + delim 
+                     + "Country" + delim + "State" + delim + "County" + delim + "CityName" + delim 
+                     + "CityCode" + delim + "ZipCode" + delim + "SabreCity";
+        texto += "Company" + delim + "Unit" + delim + "Cost Center" + delim + "Ubication" + delim 
+               + "Account" + delim + "Sub Account" + delim + "Equipment" + delim + "Inter Company" 
+               + delim + "Area" + delim + "Supplier" + delim + "Client" + delim + "Base" + delim + "User"
+               + delim + "Acct Date From" + delim + "Acct Date To"    
+               + delim + "Acct Unit"      + delim + "Acct Cost Ctr"   
+               + delim + "Acct Location"                               
+               + "\r\n";
 
         line.append(texto.toString());
 
@@ -431,29 +489,35 @@ public class AgentsMasterFileController extends BaseController {
             String strTexto = "";
             for (A003 item : listaData) {
 //                strTexto = ""; 
-                strTexto += item.A003KEY + delim
-                        + item.A003TIPO + delim
-                        + item.A003CANAL + delim
-                        + item.A003KEY1 + delim
-                        + item.A003PSALF + delim
-                        + item.A003DEPART + delim
-                        + item.A003PROVIN + delim
-                        + item.A003DISTRI + delim
-                        + item.A003CIUDAD + delim
-                        + item.A003SABCTY + delim
-                        + item.A003CTACIA + delim
-                        + item.A003CTANEG + delim
-                        + item.A003CTACTO + delim
-                        + item.A003CTAUBC + delim
-                        + item.A003CTACTA + delim
-                        + item.A003CTASCT + delim
-                        + item.A003CTAEQP + delim
-                        + item.A003CTAICI + delim
-                        + item.A003AREA + delim
-                        + item.A003CPROVE + delim
-                        + item.A003CCLIEN + delim
-                        + item.A003TRPM + delim
-                        + item.A003OPERA + "\r\n";
+                   strTexto += item.A003KEY + delim
+                            + item.A003TIPO + delim
+                            + item.A003CANAL + delim
+                            + item.A003KEY1 + delim
+                            + item.A003PSALF + delim
+                            + item.A003DEPART + delim
+                            + item.A003PROVIN + delim
+                            + item.A003DISTRI + delim
+                            + item.A003CIUDAD + delim
+                            + item.A003SABCTY + delim
+                            + item.A003CTACIA + delim
+                            + item.A003CTANEG + delim
+                            + item.A003CTACTO + delim
+                            + item.A003CTAUBC + delim
+                            + item.A003CTACTA + delim
+                            + item.A003CTASCT + delim
+                            + item.A003CTAEQP + delim
+                            + item.A003CTAICI + delim
+                            + item.A003AREA + delim
+                            + item.A003CPROVE + delim
+                            + item.A003CCLIEN + delim
+                            + item.A003TRPM + delim
+                            + item.A003OPERA + delim
+                            + item.A4059DESDE + delim   
+                            + item.A4059HASTA + delim   
+                            + item.A4059CTAUN + delim   
+                            + item.A4059CTACC + delim   
+                            + item.A4059CTAUB           
+                            + "\r\n";
 
             }
             line.append(strTexto.toString());
@@ -595,14 +659,16 @@ public class AgentsMasterFileController extends BaseController {
             filter.A003FIANM2 = request.getParameter("A003FIANM2");
             filter.A003FIANI2 = Double.parseDouble(request.getParameter("A003FIANI2"));
             filter.A003FIANB2 = request.getParameter("A003FIANB2");
-            filter.A003CTACIA = request.getParameter("A003CTACIA");
-            filter.A003CTANEG = request.getParameter("A003CTANEG");
-            filter.A003CTACTO = request.getParameter("A003CTACTO");
-            filter.A003CTAUBC = request.getParameter("A003CTAUBC");
-            filter.A003CTACTA = request.getParameter("A003CTACTA");
-            filter.A003CTASCT = request.getParameter("A003CTASCT");
-            filter.A003CTAEQP = request.getParameter("A003CTAEQP");
-            filter.A003CTAICI = request.getParameter("A003CTAICI");
+            //---------------//
+            filter.A003CTACIA = request.getParameter("A003CTACIA") != null ? request.getParameter("A003CTACIA") : "";
+            filter.A003CTANEG = request.getParameter("A003CTANEG") != null ? request.getParameter("A003CTANEG") : "";
+            filter.A003CTACTO = request.getParameter("A003CTACTO") != null ? request.getParameter("A003CTACTO") : "";
+            filter.A003CTAUBC = request.getParameter("A003CTAUBC") != null ? request.getParameter("A003CTAUBC") : "";
+            filter.A003CTACTA = request.getParameter("A003CTACTA") != null ? request.getParameter("A003CTACTA") : "";
+            filter.A003CTASCT = request.getParameter("A003CTASCT") != null ? request.getParameter("A003CTASCT") : "";
+            filter.A003CTAEQP = request.getParameter("A003CTAEQP") != null ? request.getParameter("A003CTAEQP") : "";
+            filter.A003CTAICI = request.getParameter("A003CTAICI") != null ? request.getParameter("A003CTAICI") : "";
+            
             filter.A003AREA = request.getParameter("A003AREA");
             filter.A003CPROVE = request.getParameter("A003CPROVE");
             filter.A003CCLIEN = request.getParameter("A003CCLIEN");
