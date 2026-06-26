@@ -128,7 +128,7 @@ public class AccountingMasterCCAMController extends BaseController {
 
         // String fileNameDownload = String.format("Accounting Master CCAM- " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         String fileNameDownload = String.format(
-                "Accounting Master ADN " + Functions.getFechaActual() + 
+                "Accounting Master CCAM " + Functions.getFechaActual() + 
                         "_" + Functions.getHoraActualHHMM().replace(":", "") + 
                         " " + Functions.getAbreviaturaMes(Functions.getFechaActual().substring(4, 6)) + 
                         " " + Functions.getFechaActual().substring(0, 4)  + ".xlsx", UUID.randomUUID().toString().toLowerCase()
