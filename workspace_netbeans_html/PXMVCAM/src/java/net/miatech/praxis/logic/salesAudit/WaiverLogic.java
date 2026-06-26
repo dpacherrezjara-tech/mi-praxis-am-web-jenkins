@@ -7,6 +7,7 @@ package net.miatech.praxis.logic.salesAudit;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import net.miatech.beans.SaleAudit.A2537Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.salesAudit.WaiverDAO;
@@ -26,6 +27,10 @@ public class WaiverLogic {
 
     public List<A2537Filter> Search(A2537Filter filter) throws SQLException, Exception {
         return waiverDAO.lstsearch(filter);
+    }
+
+    public List<Map<String, String>> lstTicketWaiver(String ccust, String tickets) throws SQLException, Exception {
+        return waiverDAO.lstTicketWaiver(ccust, tickets);
     }
 
     public A2537Filter mantenimientoWaiver(A2537Filter filter) throws SQLException, Exception {
