@@ -366,7 +366,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry',{
                             id: prototype.id + '-txtUNIDA',
                             enforceMaxLength: true,
                             maxLength: 2,
-                            width: 30
+                            width: 30,
                         },
                         {
                             xtype: 'textfield',
