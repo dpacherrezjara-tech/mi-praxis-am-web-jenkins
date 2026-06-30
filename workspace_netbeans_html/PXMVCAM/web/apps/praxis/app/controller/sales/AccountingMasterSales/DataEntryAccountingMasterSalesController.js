@@ -60,6 +60,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
         this.lblA1740TIPO = rec.get('A1740TIPO');
         this.lblA1740SUBTI = rec.get('A1740SUBTI');
         this.lblA1740CATEG = rec.get('A1740CATEG');
+        this.lblFINIOld = Ext.util.Format.date(rec.get('A1740FINI'), 'Ymd');
+        this.lblFFINOld = Ext.util.Format.date(rec.get('A1740FFIN'), 'Ymd');
         
         Ext.getCmp(prototype.id + '-USCR').setValue(rec.get('A1740REGIS'));
         Ext.getCmp(prototype.id + '-FECR').setValue(rec.get('A1740FREGI'));
@@ -333,8 +335,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
             A1740SUBTI: A1740SUBTI,
             A1740CATEG: A1740CATEG,
             A1740CIA: A1740CIA,
-            A1740FINI_OLD: Ext.util.Format.date((this.lblFINIOld), 'Ymd'),
-            A1740FFIN_OLD: Ext.util.Format.date((this.lblFFINOld),'Ymd'),
+            IN_A1740FINI_OLD: this.lblFINIOld,
+            IN_A1740FFIN_OLD: this.lblFFINOld,
             A1740UNIDA: A1740UNIDA,
             A1740CECOS: A1740CECOS,
             A1740UBICA: A1740UBICA,
