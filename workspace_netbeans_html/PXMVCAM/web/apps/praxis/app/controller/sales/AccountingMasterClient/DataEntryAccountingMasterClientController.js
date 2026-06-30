@@ -9,7 +9,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterClient.DataEntryAccounti
     lblFPOld: '',
     lblIATAOld: '',
     lblCIAOld: '',
-    init: function(view){
+    lblFINIOld: '',
+    lblFFINOld: '',
+    init: function (view) {
         this.cargarComboBoxes();
     },
     afterRender: function(){
@@ -80,6 +82,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterClient.DataEntryAccounti
         this.lblFPOld = rec.get('A1736FP');
         this.lblIATAOld = rec.get('A1736IATA');
         this.lblCIAOld = rec.get('A1736CIA');
+        this.lblFINIOld = Ext.util.Format.date(rec.get('A1736FINI'), 'Ymd');
+        this.lblFFINOld = Ext.util.Format.date(rec.get('A1736FFIN'), 'Ymd');
+        
     },
     cargarComboBoxes: function () {
         this.p = this.view.params;
@@ -333,7 +338,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterClient.DataEntryAccounti
             IN_A1736SUBFU_OLD: this.lblSubFuOld,
             IN_A1736FP_OLD: this.lblFPOld,
             IN_A1736IATA_OLD: this.lblIATAOld,
-            IN_A1736CIA_OLD: this.lblCIAOld
+            IN_A1736CIA_OLD: this.lblCIAOld,
+            IN_A1736FINI_OLD: this.lblFINIOld,
+            IN_A1736FFIN_OLD: this.lblFFINOld
         };
     }
     

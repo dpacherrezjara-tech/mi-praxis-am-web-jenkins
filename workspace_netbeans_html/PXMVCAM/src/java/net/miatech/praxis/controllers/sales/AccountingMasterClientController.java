@@ -156,6 +156,9 @@ public class AccountingMasterClientController extends BaseController {
             filter.IN_A1736FP_OLD = request.getParameter("IN_A1736FP_OLD");
             filter.IN_A1736IATA_OLD = request.getParameter("IN_A1736IATA_OLD");
             filter.IN_A1736CIA_OLD = request.getParameter("IN_A1736CIA_OLD");
+            
+            filter.IN_A1736FINI_OLD = request.getParameter("IN_A1736FINI_OLD");
+            filter.IN_A1736FFIN_OLD = request.getParameter("IN_A1736FFIN_OLD");
 
             logic = new AccountingMasterClientLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());

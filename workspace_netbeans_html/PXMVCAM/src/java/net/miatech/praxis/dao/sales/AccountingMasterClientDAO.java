@@ -350,7 +350,7 @@ public class AccountingMasterClientDAO {
     
     public String salesAccountMaintanceClient(A1736Filter filter, String strOption) {
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX128S02A1736(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".PX128S02A1736(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
             cs.setString(2, "139");
@@ -389,6 +389,9 @@ public class AccountingMasterClientDAO {
             cs.setString(35, filter.IN_A1736FP_OLD);
             cs.setString(36, filter.IN_A1736IATA_OLD);
             cs.setString(37, filter.IN_A1736CIA_OLD);
+            
+            cs.setString(38, filter.IN_A1736FINI_OLD);
+            cs.setString(39, filter.IN_A1736FFIN_OLD);
             cs.execute();
             
             rst = cs.getResultSet();
