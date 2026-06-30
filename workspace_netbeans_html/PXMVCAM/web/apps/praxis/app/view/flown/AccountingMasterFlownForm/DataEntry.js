@@ -464,6 +464,16 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterFlownForm.DataEntry', {
                             xtype: 'textfield',
                             id:prototype.id+'-lblA1740CATEG',
                             hidden: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id:prototype.id+'-lblA1740FINI',
+                            hidden: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id:prototype.id+'-lblA1740FFIN',
+                            hidden: true
                         }
                     ]
                 },
