@@ -82,8 +82,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterClient.DataEntryAccounti
         this.lblFPOld = rec.get('A1736FP');
         this.lblIATAOld = rec.get('A1736IATA');
         this.lblCIAOld = rec.get('A1736CIA');
-        this.lblFINIOld = rec.get('A1736FINI');
-        this.lblFFINOld = rec.get('A1736FFIN');
+        this.lblFINIOld = Ext.util.Format.date(rec.get('A1736FINI'), 'Ymd');
+        this.lblFFINOld = Ext.util.Format.date(rec.get('A1736FFIN'), 'Ymd');
         
     },
     cargarComboBoxes: function () {
