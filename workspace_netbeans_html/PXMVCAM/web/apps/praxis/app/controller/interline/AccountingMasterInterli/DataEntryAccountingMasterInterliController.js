@@ -6,6 +6,8 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterInterli.DataEntryAcc
     actionCode: '',
     PERMISO: false,
     bean: {},
+    lblFINIOld: '',
+    lblFFINOld: '',
     // </editor-fold>
     init: function(view) {
         meDE = this;
@@ -195,6 +197,9 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterInterli.DataEntryAcc
         this.setValue('lblA1740TIPO', this.bean.A1740TIPO);
         this.setValue('lblA1740SUBTI', this.bean.A1740SUBTI);
         this.setValue('lblA1740CATEG', this.bean.A1740CATEG);
+        this.lblFINIOld = Ext.util.Format.date(this.bean.A1740FINI, 'Ymd');
+        this.lblFFINOld = Ext.util.Format.date(this.bean.A1740FFIN, 'Ymd');
+        
     },
     //</editor-fold>
     
@@ -223,6 +228,10 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterInterli.DataEntryAcc
 	beanOption.IN_A1740TIPO_OLD = this.getValue("lblA1740TIPO");
 	beanOption.IN_A1740SUBTI_OLD = this.getValue("lblA1740SUBTI");
 	beanOption.IN_A1740CATEG_OLD = this.getValue("lblA1740CATEG");
+        
+        beanOption.IN_A1740FINI_OLD = this.lblFINIOld;
+        beanOption.IN_A1740FFIN_OLD = this.lblFFINOld;
+        
     },
     //</editor-fold>
     validaRequiredFields: function() {
