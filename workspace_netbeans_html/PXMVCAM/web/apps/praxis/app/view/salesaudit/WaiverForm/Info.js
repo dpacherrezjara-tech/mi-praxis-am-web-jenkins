@@ -72,6 +72,9 @@ Ext.define('Ext.Praxis.view.salesaudit.WaiverForm.Info', {
                                     width: 1300,
                                     columnLines: true,
                                     resizable: false,
+                                    viewConfig: {
+                                        enableTextSelection: true
+                                    },
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -80,6 +83,16 @@ Ext.define('Ext.Praxis.view.salesaudit.WaiverForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
+                                            {
+                                                text: 'File', width: 75, dataIndex: 'A2537RUTAA',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'color:#008FE3;text-align:center;text-decoration:underline;';
+                                                    return '<a href="#salesaudit-waiver-form" style="color:#008FE3;">Download</a>';
+                                                },
+                                                listeners: {
+                                                    click: 'onDownloadFile'
+                                                }
+                                            },
                                             { text: 'Case', width: 90, dataIndex: 'A2537NCASO' },
                                             {
                                                 text: 'Case Type', width: 200, dataIndex: 'A2537TCASO',
@@ -118,7 +131,10 @@ Ext.define('Ext.Praxis.view.salesaudit.WaiverForm.Info', {
                                                 renderer: function (value, metaData) {
                                                     if (!value) return '';
                                                     metaData.style = 'cursor:pointer; color:#1a56db; text-decoration:underline;';
-                                                    return value.trim();
+                                                    var unique = value.trim().split(' ').filter(function (v, i, a) {
+                                                        return v !== '' && a.indexOf(v) === i;
+                                                    }).join(' ');
+                                                    return unique;
                                                 },
                                                 listeners: {
                                                     click: 'onTicketClick'
@@ -177,16 +193,61 @@ Ext.define('Ext.Praxis.view.salesaudit.WaiverForm.Info', {
                                                     return value;
                                                 }
                                             },
+                                            { text: 'Seq', width: 100, dataIndex: 'A2537SEQ' },
+                                            { text: 'Close<br>Time', width: 75, dataIndex: 'A2537HCRRE' },
+                                            { text: 'Expiry<br>Time', width: 75, dataIndex: 'A2537HVETO' },
                                             {
-                                                text: 'File', width: 75, dataIndex: 'A2537RUTAA',
+                                                text: 'Flight No', width: 180, dataIndex: 'A2537NVLO',
                                                 renderer: function (value, metaData) {
-                                                    metaData.style = 'color:#008FE3;text-align:center;text-decoration:underline;';
-                                                    return '<a href="#salesaudit-waiver-form" style="color:#008FE3;">Download</a>';
-                                                },
-                                                listeners: {
-                                                    click: 'onDownloadFile'
+                                                    metaData.style = 'text-align:left';
+                                                    return value;
                                                 }
                                             },
+                                            {
+                                                text: 'Flight Date', width: 200, dataIndex: 'A2537FVLO',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Flight Time', width: 150, dataIndex: 'A2537HVLO',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    return value;
+                                                }
+                                            },
+                                            { text: 'IATA', width: 80, dataIndex: 'A2537IATAE' },
+                                            {
+                                                text: 'Executive', width: 250, dataIndex: 'A2537EJECB',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    if (value && value.trim().length > 0) {
+                                                        metaData.tdAttr = 'data-qtip="' + value.trim() + '"';
+                                                    }
+                                                    return value;
+                                                }
+                                            },
+                                            { text: 'Pax', width: 50, dataIndex: 'A2537NPAX' },
+                                            { text: 'Entered<br>By', width: 100, dataIndex: 'A2537INGRE' },
+                                            { text: 'Entry<br>Date', width: 90, dataIndex: 'A2537FINGR' },
+                                            { text: 'Entry<br>Time', width: 80, dataIndex: 'A2537HINGR' },
+                                            { text: 'Modified<br>By', width: 100, dataIndex: 'A2537MODIF' },
+                                            { text: 'Modify<br>Date', width: 90, dataIndex: 'A2537FMODI' },
+                                            { text: 'Modify<br>Time', width: 80, dataIndex: 'A2537HMODI' },
+                                            {
+                                                xtype: 'actioncolumn',
+                                                text: 'Edit',
+                                                width: 40,
+                                                sortable: false,
+                                                resizable: false,
+                                                align: 'center',
+                                                items: [{
+                                                    iconCls: 'prx-icon-edit',
+                                                    tooltip: 'Edit',
+                                                    handler: 'onEditWaiverClick'
+                                                }]
+                                            }
                                         ]
                                     }
                                 }

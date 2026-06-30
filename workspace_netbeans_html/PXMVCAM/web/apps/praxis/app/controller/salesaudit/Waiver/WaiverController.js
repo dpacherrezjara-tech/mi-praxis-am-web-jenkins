@@ -47,6 +47,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
             '#WaiverForm-btnAdd': {
                 click: this.btnAdd_click
             },
+            '#WaiverForm-btnCreate': {
+                click: this.btnCreate_click
+            },
             '#WaiverForm-btnBack': {
                 click: this.btnBack_click
             },
@@ -167,6 +170,46 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
         this.setFormatParameter();
         this.setGridData();
     },
+    btnCreate_click: function () {
+        var existing = Ext.getCmp(prototype.id + '-recordFormWin');
+        if (existing) existing.close();
+        Ext.create('Ext.Praxis.view.salesaudit.WaiverForm.WaiverRecordForm', {
+            id: prototype.id + '-recordFormWin',
+            params: {
+                action: 'C',
+                onSuccess: function () { me.btnSearch_click(); }
+            }
+        }).show();
+    },
+
+    onEditWaiverClick: function (grid, rowIndex, colIndex, item, e, record) {
+        var existing = Ext.getCmp(prototype.id + '-recordFormWin');
+        if (existing) existing.close();
+        Ext.create('Ext.Praxis.view.salesaudit.WaiverForm.WaiverRecordForm', {
+            id: prototype.id + '-recordFormWin',
+            params: {
+                action: 'U',
+                rec: record,
+                onSuccess: function () { me.btnSearch_click(); }
+            }
+        }).show();
+    },
+
+    btnAdd_click: function () {
+        var grid = Ext.getCmp(prototype.id + '-gridData');
+        var sel  = grid.getSelection();
+        if (!sel || sel.length === 0) {
+            global.Msg({ msg: 'Please select a record.' });
+            return;
+        }
+        var rec = sel[0];
+        var existing = Ext.getCmp(prototype.id + '-dataEntry');
+        if (existing) existing.close();
+        Ext.create('Ext.Praxis.view.salesaudit.WaiverForm.DataEntry', {
+            id: prototype.id + '-dataEntry',
+            params: { rec: rec }
+        }).show();
+    },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
 
     setGridData: function () {
@@ -221,6 +264,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
     },
     onTicketClick: function (col, metaData, rowNum, columnNum, e, record) {
         if (!record || !record.data || !record.data.A2537TKTS) return;
+
+        var unique = record.data.A2537TKTS.trim().split(' ').filter(function (v, i, a) {
+            return v !== '' && a.indexOf(v) === i;
+        }).join(' ');
+        record.data.A2537TKTS = unique;
+
         var existing = Ext.getCmp(prototype.id + '-dataEntry');
         if (existing) existing.close();
         Ext.create('Ext.Praxis.view.salesaudit.WaiverForm.DataEntry', {

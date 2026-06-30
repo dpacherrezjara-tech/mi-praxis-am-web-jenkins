@@ -9,7 +9,9 @@ Ext.define('Ext.Praxis.view.salesaudit.WaiverForm.WaiverForm', {
         'Ext.Praxis.view.salesaudit.WaiverForm.Options',
         'Ext.Praxis.view.salesaudit.WaiverForm.Filters',
         'Ext.Praxis.view.salesaudit.WaiverForm.Info',
-        'Ext.Praxis.controller.salesaudit.Waiver.WaiverController'
+        'Ext.Praxis.view.salesaudit.WaiverForm.WaiverRecordForm',
+        'Ext.Praxis.controller.salesaudit.Waiver.WaiverController',
+        'Ext.Praxis.controller.salesaudit.Waiver.WaiverRecordController'
     ],
     controller: 'WaiverController',
     layout: {
