@@ -120,7 +120,8 @@ public class AccountingMasterSalesController extends BaseController {
             filter.IN_A1740TIPO_OLD = request.getParameter("IN_A1740TIPO_OLD");
             filter.IN_A1740SUBTI_OLD = request.getParameter("IN_A1740SUBTI_OLD");
             filter.IN_A1740CATEG_OLD = request.getParameter("IN_A1740CATEG_OLD");
-            
+            filter.IN_A1740FINI_OLD = request.getParameter("IN_A1740FINI_OLD");
+            filter.IN_A1740FFIN_OLD = request.getParameter("IN_A1740FFIN_OLD");
             logic = new AccountingMasterSalesLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             String result = logic.accountMasterMaintance(filter, strOption);

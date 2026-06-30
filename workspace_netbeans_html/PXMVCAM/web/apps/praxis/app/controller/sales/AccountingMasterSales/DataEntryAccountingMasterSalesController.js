@@ -5,7 +5,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
     lblA1740TIPO: '',
     lblA1740SUBTI: '',
     lblA1740CATEG: '',
-    init: function(view){
+    lblFINIOld: '',
+    lblFFINOld: '',
+    init: function (view) {
     },
     afterRender: function(){ 
         this.p = this.view.params;
@@ -331,6 +333,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
             A1740SUBTI: A1740SUBTI,
             A1740CATEG: A1740CATEG,
             A1740CIA: A1740CIA,
+            A1740FINI_OLD: Ext.util.Format.date((this.lblFINIOld), 'Ymd'),
+            A1740FFIN_OLD: Ext.util.Format.date((this.lblFFINOld),'Ymd'),
             A1740UNIDA: A1740UNIDA,
             A1740CECOS: A1740CECOS,
             A1740UBICA: A1740UBICA,
