@@ -54,6 +54,8 @@ Ext.define('Ext.Praxis.view.interline.AccountingMasterInterliForm.Info', {
                             {text: 'Country Location', width: 120, dataIndex: 'A1740INTNU'},
                             {text: 'Client', flex: 1, dataIndex: 'A1740CLIE'},
                             {text: 'Effective', width: 90, dataIndex: 'A1740FINI'},
+                            {text: 'Initial Date', width: 100, dataIndex: 'A1740FINI'},
+                            {text: 'End Date', width: 100, dataIndex: 'A1740FFIN'},
                             {
                                 sortable: false,
                                 xtype: 'actioncolumn',
