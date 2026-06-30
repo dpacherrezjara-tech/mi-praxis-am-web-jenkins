@@ -81,7 +81,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.Info', {
                                     metaData.style = 'text-align :left ; margin-left : 3px ';
                                     return value;}},                          
                             {text: 'Equipment', width: 90, dataIndex: 'A1820EQUI'},
-                            {text: 'Inter <br>Company', width: 70, dataIndex: 'A1820ICIA'},
+                            {text: 'Initial Date', width: 70, dataIndex: 'A1820FINI'},
+                            {text: 'End Date', width: 100, dataIndex: 'A1820FFIN'},
                                 
                            
                             {

@@ -10,6 +10,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterUATP.DataEntryAccounting
     alias: 'controller.' + prototype.id + '-dataEntryController',
     url: CONTEXTPATH + '/AccountingMasterUATP',
     lblTarjetaOld: '',
+    lblFINIOld: '',
+    lblFFINOld: '',
     /**
      * Constructor
      */
@@ -95,7 +97,10 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterUATP.DataEntryAccounting
         Ext.getCmp(prototype.id + '-txtFEUP').setValue(data.A1820FREVI);
         Ext.getCmp(prototype.id + '-txtHOUP').setValue(data.A1820HREVI);       
 
-        this.lblTarjetaOld = data.A1820TCUAT;    
+        this.lblTarjetaOld = data.A1820TCUAT;
+        this.lblFINIOld = Ext.util.Format.date(data.A1820FINI, 'Ymd');
+        let fecha = Ext.Date.parse(data.A1820FFIN, 'Ymd');
+        this.lblFFINOld = fecha ? Ext.util.Format.date(fecha, 'Ymd') : '';
 	
 
     },
@@ -121,6 +126,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterUATP.DataEntryAccounting
         var A1820FINI = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1820FINI').getValue(), 'Ymd');
         var A1820FFIN = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1820FFIN').getValue(), 'Ymd');
         var IN_A1820TCUAT_OLD = this.lblTarjetaOld;
+        var IN_A1820FINI_OLD = this.lblFINIOld;
+        var IN_A1820FFIN_OLD = this.lblFFINOld;
 
         if (A1820FINI === '') {
             A1820FINI = '99999999';
@@ -149,7 +156,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterUATP.DataEntryAccounting
             A1820MODO: A1820MODO,
             A1820FINI: A1820FINI,
             A1820FFIN: A1820FFIN,
-            IN_A1820TCUAT_OLD: IN_A1820TCUAT_OLD
+            IN_A1820TCUAT_OLD: IN_A1820TCUAT_OLD,
+            IN_A1820FINI_OLD: IN_A1820FINI_OLD,
+            IN_A1820FFIN_OLD: IN_A1820FFIN_OLD
 
         };
     },
