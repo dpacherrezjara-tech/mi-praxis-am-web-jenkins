@@ -61,7 +61,7 @@ public class AccountingMasterCCAMDAO {
             if (filter.page.PAGNUM > 0) {
                 PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
             }
-            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX160S01A1819(?,?,?,?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX160S01A1819(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
@@ -208,6 +208,8 @@ public class AccountingMasterCCAMDAO {
             cs.setString(21, Functions.getFechaActual());
             cs.setString(22, Functions.getHoraActual());
             cs.setString(23, filter.IN_A1819TACC_OLD);
+            cs.setString(24, filter.IN_A1819FINI_OLD);
+            cs.setString(25, filter.IN_A1819FFIN_OLD);
             cs.execute();
             
             rst = cs.getResultSet();

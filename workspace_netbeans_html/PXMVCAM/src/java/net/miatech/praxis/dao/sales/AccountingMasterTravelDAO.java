@@ -175,7 +175,7 @@ public class AccountingMasterTravelDAO {
 
         Connection cnx = null;
         try {
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX172S02A1838(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".PX172S02A1838(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
 
@@ -199,6 +199,8 @@ public class AccountingMasterTravelDAO {
             cs.setString(18, Functions.getHoraActual());
             cs.setString(19, filter.IN_A1838TIPO_OLD);
             cs.setString(20, filter.IN_A1838AGENT_OLD);
+            cs.setString(21, filter.IN_A1838FINI_OLD);
+            cs.setString(22, filter.IN_A1838FFIN_OLD);
             cs.execute();
 
             rst = cs.getResultSet();
