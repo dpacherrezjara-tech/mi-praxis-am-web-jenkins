@@ -1981,7 +1981,7 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
                                             labelWidth: 0,
                                             labelAlign: 'center',
                                             fieldStyle: ' text-align:left ',
-                                            maxLength: 6,
+                                            maxLength: 7,
                                             padding: '10px 5px 0px 5px',
                                             enforceMaxLength: true
                                         },
@@ -2009,7 +2009,7 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
                                             labelWidth: 0,
                                             labelAlign: 'center',
                                             fieldStyle: ' text-align:left ',
-                                            maxLength: 4,
+                                            maxLength: 6,
                                             padding: '10px 5px 0px 5px',
                                             enforceMaxLength: true
                                         },
