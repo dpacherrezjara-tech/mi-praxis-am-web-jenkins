@@ -71,7 +71,6 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterUATP.DataEntryAccounting
         var data = p.rec.data;
 
 
-
         Ext.getCmp(prototype.id + '-cbxType').setValue(data.A1820TIPO);
 
         Ext.getCmp(prototype.id + '-txtA1820TCUAT').setValue(Ext.String.trim(data.A1820TCUAT));
@@ -99,7 +98,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterUATP.DataEntryAccounting
 
         this.lblTarjetaOld = data.A1820TCUAT;
         this.lblFINIOld = Ext.util.Format.date(data.A1820FINI, 'Ymd');
-        let fecha = Ext.Date.parse(data.A1820FFIN, 'Ymd');
+        let fecha = Ext.Date.parse(data.A1820FFIN, 'Y/m/d');
         this.lblFFINOld = fecha ? Ext.util.Format.date(fecha, 'Ymd') : '99999999';
 	
 

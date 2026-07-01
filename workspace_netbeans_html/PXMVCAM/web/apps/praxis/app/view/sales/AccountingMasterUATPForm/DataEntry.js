@@ -415,7 +415,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.DataEntry', {
                                             xtype: 'datefield',
                                             id: prototype.id + '-txtA1820FFIN',
                                             fieldStyle: 'text-align:center',
-                                            format: 'Ymd',
+                                            format: 'Y/m/d',
                                             editable: true,
                                             maskRe: /[0-9/]/,
                                             width: 80,

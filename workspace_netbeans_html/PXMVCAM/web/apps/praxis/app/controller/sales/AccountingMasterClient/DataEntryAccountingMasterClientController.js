@@ -83,7 +83,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterClient.DataEntryAccounti
         this.lblIATAOld = rec.get('A1736IATA');
         this.lblCIAOld = rec.get('A1736CIA');
         this.lblFINIOld = Ext.util.Format.date(rec.get('A1736FINI'), 'Ymd');
-        var fecha = Ext.Date.parse(rec.get('A1736FFIN'), 'Ymd');
+        var fecha = Ext.Date.parse(rec.get('A1736FFIN'), 'Y/m/d');
         this.lblFFINOld = fecha ? Ext.util.Format.date(fecha, 'Ymd') : '99999999';
         
     },
