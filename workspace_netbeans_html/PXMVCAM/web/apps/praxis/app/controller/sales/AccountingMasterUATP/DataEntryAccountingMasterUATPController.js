@@ -100,7 +100,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterUATP.DataEntryAccounting
         this.lblTarjetaOld = data.A1820TCUAT;
         this.lblFINIOld = Ext.util.Format.date(data.A1820FINI, 'Ymd');
         let fecha = Ext.Date.parse(data.A1820FFIN, 'Ymd');
-        this.lblFFINOld = fecha ? Ext.util.Format.date(fecha, 'Ymd') : '';
+        this.lblFFINOld = fecha ? Ext.util.Format.date(fecha, 'Ymd') : '99999999';
 	
 
     },
