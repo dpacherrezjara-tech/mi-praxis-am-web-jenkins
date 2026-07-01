@@ -10,6 +10,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
     alias: 'controller.' + prototype.id + '-dataEntryController',
     url: CONTEXTPATH + '/AccountingMasterCCAM',
     lblA1819TACC: '',
+    lblFINIOld: '',
+    lblFFINOld: '',
     /**
      * Constructor
      */
@@ -121,6 +123,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
         //txtA1819FFIN.text = beanDTY.A1819FFIN == "99999999" ? "" : Util.parseStringToDate(app.trim(beanDTY.A1819FFIN));
 
         this.lblA1819TACC = data.A1819TACC;
+        this.lblFINIOld = Ext.util.Format.date(data.A1819FINI, 'Ymd');
+        this.lblFFINOld = Ext.util.Format.date(data.A1819FFIN, 'Ymd');
         console.log(this.lblA1819TACC);
 
 
@@ -147,8 +151,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
         var A1819FINI = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1819FINI').getValue(), 'Ymd');
         var A1819FFIN = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1819FFIN').getValue(), 'Ymd');
         var IN_A1819TACC_OLD = this.lblA1819TACC;
-
-
+        
+        var IN_A1819FINI_OLD = this.lblFINIOld;
+        var IN_A1819FFIN_OLD = this.lblFFINOld;
         if (A1819FINI === '') {
             A1819FINI = '99999999';
         }
@@ -175,7 +180,11 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
             A1819ICIA: A1819ICIA,
             A1819FINI: A1819FINI,
             A1819FFIN: A1819FFIN,
-            IN_A1819TACC_OLD: IN_A1819TACC_OLD
+            IN_A1819TACC_OLD: IN_A1819TACC_OLD,
+            
+            IN_A1819FINI_OLD: IN_A1819FINI_OLD,
+            IN_A1819FFIN_OLD: IN_A1819FFIN_OLD
+            
 
         };
     },

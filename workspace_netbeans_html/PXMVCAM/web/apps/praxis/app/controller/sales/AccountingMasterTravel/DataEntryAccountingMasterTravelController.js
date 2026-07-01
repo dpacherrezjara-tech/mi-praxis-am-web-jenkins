@@ -11,6 +11,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
     url: CONTEXTPATH + '/AccountingMasterTravel',
     lblA1838TIPO: '',
     lblA1838AGENT: '',
+    lblFINIOld: '',
+    lblFFINOld: '',
     /**
      * Constructor
      */
@@ -101,6 +103,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
 
         this.lblA1838TIPO = data.A1838TIPO;
         this.lblA1838AGENT = data.A1838AGENT;
+        this.lblFINIOld = Ext.util.Format.date(data.A1838FINI, 'Ymd');
+        this.lblFFINOld = Ext.util.Format.date(data.A1838FFIN, 'Ymd');
+        
     },
     getDataEntryValues: function (strOption) {
 
@@ -142,7 +147,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
             A1838FINI: A1838FINI,
             A1838FFIN: A1838FFIN,
             IN_A1838TIPO_OLD: IN_A1838TIPO_OLD,
-            IN_A1838AGENT_OLD: IN_A1838AGENT_OLD
+            IN_A1838AGENT_OLD: IN_A1838AGENT_OLD,
+            IN_A1838FINI_OLD: this.lblFINIOld,
+            IN_A1838FFIN_OLD: this.lblFFINOld
 
         };
     },

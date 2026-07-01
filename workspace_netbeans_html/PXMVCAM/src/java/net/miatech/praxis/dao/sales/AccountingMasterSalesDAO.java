@@ -258,7 +258,7 @@ public class AccountingMasterSalesDAO {
      public String accountMasterMaintance(A1740Filter filter, String strOption) {
         String STR_RESULT = "";
         try {
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04481(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; // PX126S02A1740
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04481(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; // PX126S02A1740
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
@@ -286,6 +286,8 @@ public class AccountingMasterSalesDAO {
             cs.setString(23, filter.IN_A1740SUBTI_OLD);
             cs.setString(24, filter.IN_A1740CATEG_OLD);
             cs.setString(25, filter.A1740INTNU);
+             cs.setString(26, filter.IN_A1740FINI_OLD);
+            cs.setString(27, filter.IN_A1740FFIN_OLD);
             cs.execute();
 
             rst = cs.getResultSet();
