@@ -232,22 +232,22 @@ Ext.define('Ext.Praxis.view.salesaudit.WaiverForm.Info', {
                                             { text: 'Entered<br>By', width: 100, dataIndex: 'A2537INGRE' },
                                             { text: 'Entry<br>Date', width: 90, dataIndex: 'A2537FINGR' },
                                             { text: 'Entry<br>Time', width: 80, dataIndex: 'A2537HINGR' },
-                                            { text: 'Modified<br>By', width: 100, dataIndex: 'A2537MODIF' },
-                                            { text: 'Modify<br>Date', width: 90, dataIndex: 'A2537FMODI' },
-                                            { text: 'Modify<br>Time', width: 80, dataIndex: 'A2537HMODI' },
-                                            {
-                                                xtype: 'actioncolumn',
-                                                text: 'Edit',
-                                                width: 40,
-                                                sortable: false,
-                                                resizable: false,
-                                                align: 'center',
-                                                items: [{
-                                                    iconCls: 'prx-icon-edit',
-                                                    tooltip: 'Edit',
-                                                    handler: 'onEditWaiverClick'
-                                                }]
-                                            }
+                                            // { text: 'Modified<br>By', width: 100, dataIndex: 'A2537MODIF' },
+                                            // { text: 'Modify<br>Date', width: 90, dataIndex: 'A2537FMODI' },
+                                            // { text: 'Modify<br>Time', width: 80, dataIndex: 'A2537HMODI' },
+                                            // {
+                                            //     xtype: 'actioncolumn',
+                                            //     text: 'Edit',
+                                            //     width: 40,
+                                            //     sortable: false,
+                                            //     resizable: false,
+                                            //     align: 'center',
+                                            //     items: [{
+                                            //         iconCls: 'prx-icon-edit',
+                                            //         tooltip: 'Edit',
+                                            //         handler: 'onEditWaiverClick'
+                                            //     }]
+                                            // }
                                         ]
                                     }
                                 }

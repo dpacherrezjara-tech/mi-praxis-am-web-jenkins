@@ -31,14 +31,18 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.DataEntryWaiverController', 
 
     loadWaiverData: async function (ccust, tickets) {
         var grid = Ext.getCmp(prototype.id + '-de-gridTickets');
-        grid.mask('Loading...');
+        grid.setLoading(true);
         try {
             var res = await global.callStoreGet('PXSAUDIT', 'SQP01444', {
                 V_ACTION:  'T',
                 V_CCUST:   ccust,
-                V_TICKETS: tickets
+                V_TICKETS: tickets,
+                V_CIA:     '',
+                V_FORMA:   '',
+                V_SERIE:   '',
+                V_CODWA:   ''
             });
-            grid.unmask();
+            grid.setLoading(false);
 
             var returned = (res && res.lstRs && res.lstRs[0]) ? res.lstRs[0] : [];
             var returnedMap = {};
@@ -65,7 +69,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.DataEntryWaiverController', 
             grid.getStore().loadData(storeData);
             meDe.resetForm();
         } catch (e) {
-            grid.unmask();
+            grid.setLoading(false);
         }
     },
 
@@ -104,20 +108,21 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.DataEntryWaiverController', 
         var hasWaiver = (rec.get('A1672CODWA') || '').trim() !== '';
         var action = hasWaiver ? 'U' : 'C';
 
-        grid.mask('Saving...');
+        grid.setLoading(true);
         try {
             await global.callStoreGet('PXSAUDIT', 'SQP01444', {
-                V_ACTION: action,
-                V_CCUST:  rec.get('A1672CCUST'),
-                V_CIA:    rec.get('A1672CIA'),
-                V_FORMA:  rec.get('A1672FORMA'),
-                V_SERIE:  rec.get('A1672SERIE'),
-                V_CODWA:  codwa
+                V_ACTION:  action,
+                V_CCUST:   rec.get('A1672CCUST'),
+                V_TICKETS: '',
+                V_CIA:     rec.get('A1672CIA'),
+                V_FORMA:   rec.get('A1672FORMA'),
+                V_SERIE:   rec.get('A1672SERIE'),
+                V_CODWA:   codwa
             });
-            grid.unmask();
+            grid.setLoading(false);
             await meDe.loadWaiverData(meDe._ccust, meDe._tickets);
         } catch (e) {
-            grid.unmask();
+            grid.setLoading(false);
             global.Msg({ msg: 'Error saving waiver.' });
         }
     },

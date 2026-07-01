@@ -203,13 +203,18 @@ public class WaiverDAO {
         List<Map<String, String>> lstRtn = new ArrayList<>();
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL PXSAUDIT.SQP01444(?,?)}";
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP01444(?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
             cstmt01.setString(1, ccust);
             cstmt01.setString(2, tickets);
+            cstmt01.setString(3, "T");
+            cstmt01.setString(4, "");
+            cstmt01.setString(5, "");
+            cstmt01.setString(6, "");
+            cstmt01.setString(7, "");
             cstmt01.execute();
             rs01 = cstmt01.getResultSet();
             while (rs01 != null && rs01.next()) {

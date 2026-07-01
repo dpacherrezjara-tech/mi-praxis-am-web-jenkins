@@ -29,40 +29,6 @@ Ext.define('Ext.Praxis.view.salesaudit.WaiverForm.DataEntry', {
             },
             items: [
                 {
-                    xtype: 'panel',
-                    height: 50,
-                    border: false,
-                    bodyPadding: '8 10',
-                    layout: {
-                        type: 'hbox',
-                        align: 'middle'
-                    },
-                    items: [
-                        {
-                            xtype: 'label',
-                            text: 'Waiver Code:',
-                            width: 90
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-de-txtCodwa',
-                            width: 140,
-                            maxLength: 10,
-                            enforceMaxLength: true,
-                            emptyText: 'Enter code...'
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-de-save',
-                            text: 'Save',
-                            iconCls: 'prx-icon-save',
-                            margin: '0 0 0 8',
-                            disabled: true,
-                            listeners: { click: 'onSaveClick' }
-                        }
-                    ]
-                },
-                {
                     xtype: 'grid',
                     flex: 1,
                     id: prototype.id + '-de-gridTickets',
