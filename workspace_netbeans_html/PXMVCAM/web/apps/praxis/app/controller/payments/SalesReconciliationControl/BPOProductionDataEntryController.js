@@ -104,23 +104,54 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.BPOProduct
         const me = this;
         const formFilter = Ext.getCmp(prototype.idDeProd + '-formFilters').getForm();
         let params = me.formatParams(formFilter);
+
+        const excelFieldsByPayment = [
+            {title: 'Worked Date',      field: 'FEUP',          order: 1  },
+            {title: 'Worked Hour',      field: 'HOUP',          order: 2  },
+            {title: 'Username',         field: 'USUP',          order: 3  },
+            {title: 'Doc. Type',        field: 'TRANSTYPE',     order: 4  },
+            {title: 'Processor',        field: 'DESC_PROCTYPE', order: 5  },
+            {title: 'Country',          field: 'SCOUNTRY',      order: 6  },
+            {title: 'Processing Date',  field: 'PRDA',          order: 7  },
+            {title: 'Status',           field: 'STVAL_DESCRIPTION', order: 8  },
+            {title: 'Card Number',      field: 'SCARDN',        order: 9  },
+            {title: 'Auth Code',        field: 'SAUTHOC',       order: 10 },
+            {title: 'Amount',           field: 'TGROSAMOUN',    order: 11 },
+            {title: 'Currency',         field: 'SCURRENCY',     order: 12 },
+            {title: 'PNR',              field: 'SPNR',          order: 13 },
+            {title: 'Qty Tkts',         field: 'QTYTKT',        order: 14 },
+            {title: 'Ticket',           field: 'TICKET',        order: 15 },
+            {title: 'Reference Number', field: 'AREFNBR',       order: 16 },
+            {title: 'Adjustment',       field: 'DESC_CODADJU',  order: 17 },
+            {title: 'BPO Comment',      field: 'BPOCOMENT',     order: 18 }
+        ];
+
+        const excelFieldsByTicket = [
+            {title: 'Worked Date', field: 'A4501FEUP',     order: 1  },
+            {title: 'Worked Hour', field: 'A4501HOUP',     order: 2  },
+            {title: 'Username',    field: 'A4501USUP',     order: 3  },
+            {title: 'Doc. Type',   field: 'A4496TRNCU',    order: 4  },
+            {title: 'Processor',   field: 'DESC_PROCTYPE', order: 5  },
+            {title: 'Country',     field: 'A4496PAIS',     order: 6  },
+            {title: 'Sale Date',   field: 'A4496FECVT',    order: 7  },
+            {title: 'Status',      field: 'STVAL_DESCRIPTION',order: 8  },
+            {title: 'Card Number', field: 'A4501NREF',     order: 9  },
+            {title: 'Auth Code',   field: 'A4501CAPL',     order: 10 },
+            {title: 'Amount',      field: 'A4501VFOP',     order: 11 },
+            {title: 'Currency',    field: 'A4501MFOP',     order: 12 },
+            {title: 'PNR',         field: 'A4496PNR',      order: 13 },
+            {title: 'Card Type',   field: 'DESC_TARJ',     order: 14 },
+            {title: 'Ticket',      field: 'TICKET',        order: 15 },
+            {title: 'BPO Comment', field: 'BPO_COMEN',     order: 16 },
+            {title: 'ADM Comment', field: 'ADM_COMEN',     order: 17 }
+        ];
+
+        const isPayment = params.IN_ORIG === 'P';
+        const excelFields = isPayment ? excelFieldsByPayment : excelFieldsByTicket;
+        const filename = isPayment ? 'BPO Production By Payment' : 'BPO Production By Ticket';
+
         try {
-            const res = await global.callStoreGet('PRAXISMP', 'SQP05247', params);
-            const data = res?.lstRs?.[0] || [];
-            await global.writeExcelFromJsonWithStyle({
-                data: data,
-                name: 'BPO_Production',
-                sheetName: 'Production',
-                columns: [
-                    {field: 'FEUP',         title: 'Worked Date',   dataAlign: 'center'},
-                    {field: 'USUP',         title: 'Username',      dataAlign: 'center'},
-                    {field: 'TRANSTYPE',    title: 'Doc. Type',     dataAlign: 'center'},
-                    {field: 'STVAL',        title: 'Status',        dataAlign: 'center'},
-                    {field: 'SCOUNTRY',     title: 'Country',       dataAlign: 'center'},
-                    {field: 'DESC_PROCTYPE',title: 'Processor',     dataAlign: 'left'},
-                    {field: 'QTRN',         title: 'Qty Trnx',      dataAlign: 'center'}
-                ]
-            });
+            await global.callStoreDownloadExcel('PRAXISMP', 'SQP05247', params, filename, excelFields);
         } catch (e) {
             global.Msg({msg: 'Error on Export'});
         }
