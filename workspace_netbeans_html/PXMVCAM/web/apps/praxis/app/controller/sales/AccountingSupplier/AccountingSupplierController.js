@@ -129,7 +129,6 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.AccountingSupplierCon
                 ["06", "FRANCHISE OPERATOR"],
                 ["08", "SISTEM"],
                 ["09", "CARGO"],
-                ["10", "ESENSA"],
                 ["37", "CENTRO DE SERVICIOS COMPARTIDOS"]
 
             ]
