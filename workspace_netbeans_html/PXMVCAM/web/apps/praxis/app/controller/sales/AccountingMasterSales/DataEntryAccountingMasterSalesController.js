@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountingMasterSalesController', {
+Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountingMasterSalesController',{
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryAccountingMasterSalesController',
     lblA1740TITRA: '',
@@ -9,96 +9,37 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
     lblFFINOld: '',
     init: function (view) {
     },
-    // afterRender: function () {
-    //     // this.p = this.view.params;
-    //     console.log('this.view', this.view.params)
-    //     this.p = this.view.params;
-    //     console.log('accion', this.p.action)
-
-    //     global.AccessControlMaganer();
-
-    //     switch (this.p.action) {
-    //         case 'U':
-    //             console.log('save boton', Ext.getCmp(prototype.id + '-btn-save'));
-    //             this.getDataInputs(this.p.rec);
-    //             Ext.getCmp(prototype.id + '-btn-save').hide();
-    //             Ext.getCmp(prototype.id + '-btn-update').show();
-    //             Ext.getCmp(prototype.id + '-btn-delete').show();
-    //             Ext.getCmp(prototype.id + '-btn-cancel').show();
-    //             break;
-    //         case 'I':
-    //             Ext.getCmp(prototype.id + '-btn-save').show();
-    //             Ext.getCmp(prototype.id + '-btn-update').hide();
-    //             Ext.getCmp(prototype.id + '-btn-delete').hide();
-    //             Ext.getCmp(prototype.id + '-btn-cancel').show();
-    //             Ext.getCmp(prototype.id + '-txtA1740TITRA').focus();
-    //             Ext.getCmp(prototype.id + '-cmbCtaType2').setValue("");
-    //             Ext.getCmp(prototype.id + '-cmbINTNU').setValue("");
-    //             break;
-    //     }
-    //     Ext.getCmp(prototype.id + '-label_required01').show();
-    //     Ext.getCmp(prototype.id + '-label_required02').hide();
-    //     Ext.getCmp(prototype.id + '-label_required03').hide();
-    //     Ext.getCmp(prototype.id + '-label_CtaSubType').setWidth(110);
-    //     Ext.getCmp(prototype.id + '-label_Category').setWidth(95);
-    //     // global.AccessControlMaganer();
-    // },
-
-    afterRender: function () {
-
+    afterRender: function(){ 
         this.p = this.view.params;
-        console.log('accion', this.p.action);
-
-        global.AccessControlMaganer();
-
-        const btnSave = Ext.getCmp(prototype.id + '-btn-save');
-        const btnUpdate = Ext.getCmp(prototype.id + '-btn-update');
-        const btnDelete = Ext.getCmp(prototype.id + '-btn-delete');
-        const btnCancel = Ext.getCmp(prototype.id + '-btn-cancel');
-
-        // console.log('acces ', accessSelect)
-        switch (this.p.action) {
-
+        switch( this.p.action ){
             case 'U':
                 this.getDataInputs(this.p.rec);
-                if (btnSave) btnSave.hide();
-                if (btnCancel) btnCancel.show();
-
-                if (btnUpdate && accessSelect.PERMM === 'Y')
-                    btnUpdate.show();
-
-                if (btnDelete && accessSelect.PERME === 'Y')
-                    btnDelete.show();
+                Ext.getCmp(prototype.id+'-btn-save').hide();
+                Ext.getCmp(prototype.id+'-btn-update').show();
+                Ext.getCmp(prototype.id+'-btn-delete').show();
+                Ext.getCmp(prototype.id+'-btn-cancel').show();
                 break;
-
             case 'I':
-
-                if (btnCancel) btnCancel.show();
-                if (btnSave && accessSelect.PERMC === 'Y')
-                    btnSave.show();
-
-                if (btnUpdate) btnUpdate.hide();
-                if (btnDelete) btnDelete.hide();
-
+                Ext.getCmp(prototype.id+'-btn-save').show();
+                Ext.getCmp(prototype.id+'-btn-update').hide();
+                Ext.getCmp(prototype.id+'-btn-delete').hide();
+                Ext.getCmp(prototype.id+'-btn-cancel').show();
                 Ext.getCmp(prototype.id + '-txtA1740TITRA').focus();
                 Ext.getCmp(prototype.id + '-cmbCtaType2').setValue("");
                 Ext.getCmp(prototype.id + '-cmbINTNU').setValue("");
                 break;
         }
-
-        Ext.getCmp(prototype.id + '-btn-cancel').show();
-
         Ext.getCmp(prototype.id + '-label_required01').show();
         Ext.getCmp(prototype.id + '-label_required02').hide();
         Ext.getCmp(prototype.id + '-label_required03').hide();
         Ext.getCmp(prototype.id + '-label_CtaSubType').setWidth(110);
         Ext.getCmp(prototype.id + '-label_Category').setWidth(95);
+        global.AccessControlMaganer();
     },
-
-    getDataInputs: function (rec) {
-        //        this.setComboBoxItemData(rec.get('A1740TIPO'));
+    getDataInputs: function(rec) {
+//        this.setComboBoxItemData(rec.get('A1740TIPO'));
         Ext.getCmp(prototype.id + '-cmbCtaType2').setValue(rec.get('A1740TIPO'));
-        Ext.getCmp(prototype.id + '-cmbINTNU').setValue(rec.get('A1740INTNU') === 'YES' ? 'Y' : 'N');
+        Ext.getCmp(prototype.id + '-cmbINTNU').setValue(rec.get('A1740INTNU')=== 'YES' ? 'Y' : 'N');
         Ext.getCmp(prototype.id + '-txtA1740TITRA').setValue(rec.get('A1740TITRA'));
         Ext.getCmp(prototype.id + '-txtA1740SUBTI').setValue(rec.get('A1740SUBTI'));
         Ext.getCmp(prototype.id + '-txtA1740CATEG').setValue(rec.get('A1740CATEG'));
@@ -113,14 +54,15 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
         Ext.getCmp(prototype.id + '-txtA1740ICIA').setValue(rec.get('A1740ICIA').trim());
         Ext.getCmp(prototype.id + '-txtA1740CLIE').setValue(rec.get('A1740CLIE').trim());
         Ext.getCmp(prototype.id + '-txtA1740FINI2').setValue(rec.get('A1740FINI'));
-        Ext.getCmp(prototype.id + '-txtA1740FFIN2').setValue(rec.get('A1740FFIN') === '9999/99/99' ? '' : rec.get('A1740FFIN'));
+        Ext.getCmp(prototype.id + '-txtA1740FFIN2').setValue(rec.get('A1740FFIN') === '9999/99/99' ? '' : Ext.Date.parse(rec.get('A1740FFIN'), 'Y/m/d'));
 
         this.lblA1740TITRA = rec.get('A1740TITRA');
         this.lblA1740TIPO = rec.get('A1740TIPO');
         this.lblA1740SUBTI = rec.get('A1740SUBTI');
         this.lblA1740CATEG = rec.get('A1740CATEG');
         this.lblFINIOld = Ext.util.Format.date(rec.get('A1740FINI'), 'Ymd');
-        this.lblFFINOld = Ext.util.Format.date(rec.get('A1740FFIN'), 'Ymd');
+        var fecha = Ext.Date.parse(rec.get('A1740FFIN'), 'Y/m/d');
+        this.lblFFINOld = rec.get('A1740FFIN') === '9999/99/99' ? '99999999' : Ext.util.Format.date(fecha, 'Ymd');
         
         Ext.getCmp(prototype.id + '-USCR').setValue(rec.get('A1740REGIS'));
         Ext.getCmp(prototype.id + '-FECR').setValue(rec.get('A1740FREGI'));
@@ -129,17 +71,17 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
         Ext.getCmp(prototype.id + '-FEUP').setValue(rec.get('A1740FREVI'));
         Ext.getCmp(prototype.id + '-HOUP').setValue(rec.get('A1740HREVI'));
     },
-    setComboBoxItemData: function (data) {
+    setComboBoxItemData: function(data) {
         var index = this.getIndexData(data);
         console.log("index: " + index);
         if (index !== -1) {
             Ext.getCmp(prototype.id + '-cmbCtaType2').setValue(index);
         }
     },
-    getIndexData: function (data) {
+    getIndexData: function(data) {
         console.info("data: " + data);
         var store = Ext.getCmp(prototype.id + '-cmbCtaType2').getStore();
-        store.each(function (record, id) {
+        store.each(function(record,id){
             console.info(record.data.name);
             if (record.data.name === data) {
                 return record.data.code;
@@ -147,10 +89,10 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
         });
         return -1;
     },
-    onTITRABlur: function () {
+    onTITRABlur: function() {
         var TypeDocument = Ext.getCmp(prototype.id + '-txtA1740TITRA').getValue();
         Ext.getCmp(prototype.id + '-label_required01').show();
-
+        
         switch (TypeDocument) {
             case "EMD":
                 Ext.getCmp(prototype.id + '-label_required02').show();
@@ -171,75 +113,77 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
                 Ext.getCmp(prototype.id + '-label_Category').setWidth(95);
         }
     },
-    onCancelClick: function (btn) {
+    onCancelClick: function(btn){
         this.view.close();
     },
-    onUpperValue: function (field, newValue, oldValue) {
+    onUpperValue: function(field, newValue, oldValue){
         field.setValue(newValue.toUpperCase());
     },
-    validaRequiredFields: function () {
+    validaRequiredFields: function() {
         var bvalida = true;
         var TypeDocument = Ext.getCmp(prototype.id + '-txtA1740TITRA').getValue();
         var cmbCtaType2 = Ext.getCmp(prototype.id + '-cmbCtaType2').getValue();
         var cmbINTNU = Ext.getCmp(prototype.id + '-cmbINTNU').getValue();
         var txtA1740SUBTI = Ext.getCmp(prototype.id + '-txtA1740SUBTI').getValue();
         var txtA1740CATEG = Ext.getCmp(prototype.id + '-txtA1740CATEG').getValue();
-
+        
         switch (TypeDocument) {
             case "EMD":
-                if (cmbINTNU === "" || cmbCtaType2 === "" || txtA1740SUBTI === "" || txtA1740CATEG === "") {
+                if( cmbINTNU ==="" || cmbCtaType2 ==="" || txtA1740SUBTI === "" || txtA1740CATEG ===""){
                     bvalida = false;
                 }
                 break;
             case "MPD":
-                if (cmbINTNU === "" || cmbCtaType2 === "" || txtA1740SUBTI === "") {
+                if( cmbINTNU ==="" || cmbCtaType2 ==="" || txtA1740SUBTI === ""){
                     bvalida = false;
                 }
                 break;
             default:
-                if (TypeDocument.length === 0 || cmbCtaType2 === "" || cmbINTNU === "") {//cmbDocumentType.selectedIndex
+                if(TypeDocument.length === 0 || cmbCtaType2 ==="" || cmbINTNU ===""){//cmbDocumentType.selectedIndex
                     bvalida = false;
                 }
         }
         return bvalida;
     },
-    onSaveClick: function (btn) {
+    onSaveClick: function(btn) {
         var p = this.view.params;
-
+        
         if (!this.validaRequiredFields()) {
             global.Msg({
                 msg: 'You must enter all required fields.',
-                fn: function () { }
+                fn: function() {}
             });
         } else {
             var txtA1740FINI2 = Ext.getCmp(prototype.id + '-txtA1740FINI2').getValue();
             var txtA1740FFIN2 = Ext.getCmp(prototype.id + '-txtA1740FFIN2').getValue();
-
+            
             console.log(txtA1740FINI2 + '-' + txtA1740FFIN2);
-            if (txtA1740FFIN2 !== null) {
-                if (txtA1740FINI2 !== null && txtA1740FFIN2 !== null && txtA1740FINI2 <= txtA1740FFIN2) {
+            if(txtA1740FFIN2 !== null)
+            {
+                if ( txtA1740FINI2 !== null && txtA1740FFIN2 !== null && txtA1740FINI2 <= txtA1740FFIN2){
                     Ext.Msg.show({
-                        title: '.:PRAXIS:.',
-                        msg: 'Are you sure to insert ?',
-                        buttons: Ext.MessageBox.YESNO,
-                        scope: this,
-                        icon: Ext.MessageBox.QUESTION,
-                        modal: true,
-                        fn: function (btn) {
-                            if (btn === 'yes') {
-                                this.view.params.action = "I";
-                                this.crud();
-                            }
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to insert ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function(btn) {
+                        if (btn === 'yes') {
+                            this.view.params.action = "I";
+                            this.crud();
                         }
-                    });
-                } else {
+                    }
+                    }); 
+                }else{
                     global.Msg({
-                        msg: 'End date must be greater than start date.',
-                        fn: function () { }
+                    msg: 'End date must be greater than start date.',
+                    fn: function() {}
                     });
                 }
             }
-            else {
+            else
+            {
                 Ext.Msg.show({
                     title: '.:PRAXIS:.',
                     msg: 'Are you sure to insert ?',
@@ -247,65 +191,67 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
                     scope: this,
                     icon: Ext.MessageBox.QUESTION,
                     modal: true,
-                    fn: function (btn) {
+                    fn: function(btn) {
                         if (btn === 'yes') {
                             this.view.params.action = "I";
                             this.crud();
                         }
                     }
-                });
+                    }); 
             }
-
+            
         }
     },
-    onUpdateClick: function (btn) {
+    onUpdateClick: function(btn) {
         var p = this.view.params;
-
+        
         if (!this.validaRequiredFields()) {
             global.Msg({
                 msg: 'You must enter all required fields.',
-                fn: function () { }
+                fn: function() {}
             });
-        } else {
+        } else { 
             var txtA1740FINI2 = Ext.getCmp(prototype.id + '-txtA1740FINI2').getValue();
             var txtA1740FFIN2 = Ext.getCmp(prototype.id + '-txtA1740FFIN2').getValue();
-
+            
             console.log(txtA1740FINI2 + '-' + txtA1740FFIN2);
-            if (txtA1740FFIN2 !== null) {
-                if (txtA1740FINI2 !== null && txtA1740FFIN2 !== null && txtA1740FINI2 <= txtA1740FFIN2) {
-                    Ext.Msg.show({
-                        title: '.:PRAXIS:.',
-                        msg: 'Are you sure to update ?',
-                        buttons: Ext.MessageBox.YESNO,
-                        scope: this,
-                        animateTarget: btn,
-                        icon: Ext.MessageBox.QUESTION,
-                        modal: true,
-                        fn: function (btn) {
-                            if (btn === 'yes') {
-                                this.view.params.action = "U";
-                                this.crud();
-                            }
-                        }
-                    });
-                } else {
-                    global.Msg({
-                        msg: 'End date must be greater than start date.',
-                        fn: function () { }
-                    });
-                }
-            }
-            else {
+            if(txtA1740FFIN2 !== null)
+            {
+                if ( txtA1740FINI2 !== null && txtA1740FFIN2 !== null && txtA1740FINI2 <= txtA1740FFIN2){
                 Ext.Msg.show({
-                    title: '.:PRAXIS:.',
+                    title:'.:PRAXIS:.',
                     msg: 'Are you sure to update ?',
                     buttons: Ext.MessageBox.YESNO,
                     scope: this,
                     animateTarget: btn,
                     icon: Ext.MessageBox.QUESTION,
                     modal: true,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
+                    fn: function(btn){
+                        if (btn === 'yes'){
+                            this.view.params.action = "U";
+                            this.crud();
+                        }
+                    }
+                });
+                }else{
+                    global.Msg({
+                    msg: 'End date must be greater than start date.',
+                    fn: function() {}
+                    });
+                }
+            }
+            else
+            {
+                Ext.Msg.show({
+                    title:'.:PRAXIS:.',
+                    msg: 'Are you sure to update ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function(btn){
+                        if (btn === 'yes'){
                             this.view.params.action = "U";
                             this.crud();
                         }
@@ -316,7 +262,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
 
         }
     },
-    onDeleteClick: function (btn) {
+    onDeleteClick: function(btn) {
         var p = this.view.params;
         Ext.Msg.show({
             title: '.:PRAXIS:.',
@@ -325,7 +271,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function (btn) {
+            fn: function(btn) {
                 if (btn === 'yes') {
                     this.view.params.action = "D";
                     this.crud();
@@ -333,37 +279,37 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
             }
         });
     },
-    crud: function () {
+    crud: function() {
         Ext.Ajax.request({
             url: prototype.url + '/Maintance',
             method: 'POST',
             timeout: 60000000,
             params: this.getDataEntryValues(),
-            success: function (response, options) {
+            success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 var msg = res.intResult;
-                var icon = 1;
-                if (msg === 'DUPLICATE KEY, VERIFY!') {
-                    icon = 2;
+                var icon=1;
+                if(msg==='DUPLICATE KEY, VERIFY!'){
+                    icon=2;
                 }
 
                 global.Msg({
                     msg: msg,
                     icon: icon,
-                    fn: function () {
+                    fn: function() {
                         //exito
                         Ext.getCmp('DataEntryAccountingMasterSalesForm').close(),
-                            Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     }
                 });
             }
         });
     },
-    getDataEntryValues: function () {
+    getDataEntryValues: function() {
         var p = this.view.params;
 
         var strOption = p.action;
-
+        
         var A1740TITRA = Ext.getCmp(prototype.id + '-txtA1740TITRA').getValue();
         var A1740TIPO = Ext.getCmp(prototype.id + '-cmbCtaType2').getValue();
         var A1740INTNU = Ext.getCmp(prototype.id + '-cmbINTNU').getValue();
@@ -381,7 +327,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
         var A1740FINI = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1740FINI2').getValue(), 'Ymd');
         var A1740FFIN = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1740FFIN2').getValue(), 'Ymd');
         A1740FFIN = A1740FFIN === '' ? '99999999' : A1740FFIN;
-
+        
         return {
             strOption: strOption,
             A1740TITRA: A1740TITRA,
@@ -408,5 +354,5 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
             IN_A1740CATEG_OLD: this.lblA1740CATEG
         };
     }
-
+    
 });
