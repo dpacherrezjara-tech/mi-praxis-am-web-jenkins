@@ -609,8 +609,8 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
         var txtA003KEY1 = Ext.getCmp(prototype.id + '-txtA003KEY1').getValue();
         var txtA003PSALF = Ext.getCmp(prototype.id + '-txtA003PSALF').getValue();
         var txtA003CIUDAD = Ext.getCmp(prototype.id + '-txtA003CIUDAD').getValue();
-        var txtCECOS = Ext.getCmp(prototype.id + '-txtCECOS').getValue();
-        var txtUBICA = Ext.getCmp(prototype.id + '-txtUBICA').getValue();
+        //var txtCECOS = Ext.getCmp(prototype.id + '-txtCECOS').getValue();
+        //var txtUBICA = Ext.getCmp(prototype.id + '-txtUBICA').getValue();
         var txtA003CIUDAD = Ext.getCmp(prototype.id + '-txtA003CIUDAD').getValue();
         var txtA003PSALF = Ext.getCmp(prototype.id + '-txtA003PSALF').getValue();
 

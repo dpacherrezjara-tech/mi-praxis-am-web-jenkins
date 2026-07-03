@@ -1948,6 +1948,30 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
                                             enforceMaxLength: true
                                         },
                                         {
+                                            xtype: 'label',
+                                            id: prototype.id + '-lblAccountMsg',
+                                            labelAlign: 'left',
+                                            width: 420,
+                                            padding: '10px 5px 0px 15px',
+                                            hidden: true,
+                                            html: '<span style="color:#B56166; font-style:italic;">⚠ The account must be created after saving the agent.</span>'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtCIA',
+                                            required: true,
+                                            disabled: false,
+                                            fieldLabel: '',
+                                            width: 30,
+                                            labelWidth: 0,
+                                            labelAlign: 'center',
+                                            fieldStyle: ' text-align:left ',
+                                            maxLength: 2,
+                                            padding: '10px 5px 0px 5px',
+                                            enforceMaxLength: true,
+                                            hidden: true
+                                        },
+                                        {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtUNIDA',
                                             required: true,
@@ -1959,7 +1983,8 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
                                             fieldStyle: ' text-align:left ',
                                             maxLength: 2,
                                             padding: '10px 5px 0px 5px',
-                                            enforceMaxLength: true
+                                            enforceMaxLength: true,
+                                            hidden: true
                                         },
                                         {
                                             xtype: 'textfield',
@@ -1971,9 +1996,10 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
                                             labelWidth: 0,
                                             labelAlign: 'center',
                                             fieldStyle: ' text-align:left ',
-                                            maxLength: 7,
+                                            maxLength: 6,
                                             padding: '10px 5px 0px 5px',
-                                            enforceMaxLength: true
+                                            enforceMaxLength: true,
+                                            hidden: true
                                         },
                                         {
                                             xtype: 'textfield',
@@ -1987,7 +2013,8 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
                                             fieldStyle: ' text-align:left ',
                                             maxLength: 4,
                                             padding: '10px 5px 0px 5px',
-                                            enforceMaxLength: true
+                                            enforceMaxLength: true,
+                                            hidden: true
                                         },
                                         {
                                             xtype: 'textfield',
@@ -1999,9 +2026,10 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
                                             labelWidth: 0,
                                             labelAlign: 'center',
                                             fieldStyle: ' text-align:left ',
-                                            maxLength: 6,
+                                            maxLength: 4,
                                             padding: '10px 5px 0px 5px',
-                                            enforceMaxLength: true
+                                            enforceMaxLength: true,
+                                            hidden: true
                                         },
                                         {
                                             xtype: 'textfield',
@@ -2013,9 +2041,10 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
                                             labelWidth: 0,
                                             labelAlign: 'center',
                                             fieldStyle: ' text-align:left ',
-                                            maxLength: 4,
+                                            maxLength: 5,
                                             padding: '10px 5px 0px 5px',
-                                            enforceMaxLength: true
+                                            enforceMaxLength: true,
+                                            hidden: true
                                         },
                                         {
                                             xtype: 'textfield',
@@ -2029,7 +2058,8 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
                                             fieldStyle: ' text-align:left ',
                                             maxLength: 4,
                                             padding: '10px 5px 0px 5px',
-                                            enforceMaxLength: true
+                                            enforceMaxLength: true,
+                                            hidden: true
                                         },
                                         {
                                             xtype: 'textfield',
@@ -2043,7 +2073,8 @@ Ext.define('Ext.Praxis.view.sales.AgentsMasterFileForm.DataEntry', {
                                             fieldStyle: ' text-align:left ',
                                             maxLength: 2,
                                             padding: '10px 5px 0px 5px',
-                                            enforceMaxLength: true
+                                            enforceMaxLength: true,
+                                            hidden: true
                                         }
                                     ]
                                 },
