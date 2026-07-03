@@ -54,14 +54,15 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
         Ext.getCmp(prototype.id + '-txtA1740ICIA').setValue(rec.get('A1740ICIA').trim());
         Ext.getCmp(prototype.id + '-txtA1740CLIE').setValue(rec.get('A1740CLIE').trim());
         Ext.getCmp(prototype.id + '-txtA1740FINI2').setValue(rec.get('A1740FINI'));
-        Ext.getCmp(prototype.id + '-txtA1740FFIN2').setValue(rec.get('A1740FFIN')==='9999/99/99' ? '' : rec.get('A1740FFIN'));
-        
+        Ext.getCmp(prototype.id + '-txtA1740FFIN2').setValue(rec.get('A1740FFIN') === '9999/99/99' ? '' : Ext.Date.parse(rec.get('A1740FFIN'), 'Y/m/d'));
+
         this.lblA1740TITRA = rec.get('A1740TITRA');
         this.lblA1740TIPO = rec.get('A1740TIPO');
         this.lblA1740SUBTI = rec.get('A1740SUBTI');
         this.lblA1740CATEG = rec.get('A1740CATEG');
         this.lblFINIOld = Ext.util.Format.date(rec.get('A1740FINI'), 'Ymd');
-        this.lblFFINOld = Ext.util.Format.date(rec.get('A1740FFIN'), 'Ymd');
+        var fecha = Ext.Date.parse(rec.get('A1740FFIN'), 'Y/m/d');
+        this.lblFFINOld = rec.get('A1740FFIN') === '9999/99/99' ? '99999999' : Ext.util.Format.date(fecha, 'Ymd');
         
         Ext.getCmp(prototype.id + '-USCR').setValue(rec.get('A1740REGIS'));
         Ext.getCmp(prototype.id + '-FECR').setValue(rec.get('A1740FREGI'));
