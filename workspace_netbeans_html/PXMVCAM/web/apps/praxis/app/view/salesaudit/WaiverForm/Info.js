@@ -72,160 +72,182 @@ Ext.define('Ext.Praxis.view.salesaudit.WaiverForm.Info', {
                                     width: 1300,
                                     columnLines: true,
                                     resizable: false,
+                                    viewConfig: {
+                                        enableTextSelection: true
+                                    },
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
                                             sortable: true,
-                                            resizable: false,
+                                            resizable: true,
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Ticket', width: 100, dataIndex: 'A2537TIKET', renderer: 'getText'},
-                                            {text: 'Country', width: 80, dataIndex: 'A2537CNTRY'},
-                                            {text: 'Request <br> Date', width: 80, dataIndex: 'A2537DSOLI'},
-                                            {text: 'Action <br> Waiver', width: 100, dataIndex: 'A2537ACTW',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:left';
-                                                    var tool = record.data['A2537ACTW'].trim();
-                                                    if (tool.length > 0) {
-                                                        metaData.tdAttr = 'data-qtip = "' + tool + '"';
-                                                    }
-                                                    metaData.style = 'text-align:left';
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Refund <br> Date', width: 80, dataIndex: 'A2537DRFND'},
-                                            {text: 'Emission <br> Date', width: 80, dataIndex: 'A2537DEMI'},
-                                            {text: 'Flown <br> Date', width: 80, dataIndex: 'A2537DVOL'},
-                                            {text: 'System <br> Date', width: 80, dataIndex: 'A2537FINGR'},
-                                            {text: 'Agency', width: 90, dataIndex: 'A2537IATA'},
-                                            {text: 'Name <br> Agency', width: 100, dataIndex: 'A2537NAGEN',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:left';
-                                                    var tool = record.data['A2537NAGEN'].trim();
-                                                    if (tool.length > 0) {
-                                                        metaData.tdAttr = 'data-qtip = "' + tool + '"';
-                                                    }
-                                                    metaData.style = 'text-align:left';
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Agent', width: 100, dataIndex: 'A2537AGENT',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:left';
-                                                    var tool = record.data['A2537AGENT'].trim();
-                                                    if (tool.length > 0) {
-                                                        metaData.tdAttr = 'data-qtip = "' + tool + '"';
-                                                    }
-                                                    metaData.style = 'text-align:left';
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Tour<br>Code', width: 100, dataIndex: 'A2537TCODE',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:left';
-                                                    var tool = record.data['A2537TCODE'].trim();
-                                                    if (tool.length > 0) {
-                                                        metaData.tdAttr = 'data-qtip = "' + tool + '"';
-                                                    }
-                                                    metaData.style = 'text-align:left';
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Route', width: 100, dataIndex: 'A2537RUTA',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:left';
-                                                    var tool = record.data['A2537RUTA'].trim();
-                                                    if (tool.length > 0) {
-                                                        metaData.tdAttr = 'data-qtip = "' + tool + '"';
-                                                    }
-                                                    metaData.style = 'text-align:left';
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Pax', width: 100, dataIndex: 'A2537NPAX',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:left';
-                                                    var tool = record.data['A2537RUTA'].trim();
-                                                    if (tool.length > 0) {
-                                                        metaData.tdAttr = 'data-qtip = "' + tool + '"';
-                                                    }
-                                                    metaData.style = 'text-align:left';
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'N° Pax', width: 80, dataIndex: 'A2537NUPAX'},
-                                            {text: 'Class', width: 90, dataIndex: 'A2537CLASE',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:left';
-                                                    var tool = record.data['A2537CLASE'].trim();
-                                                    if (tool.length > 0) {
-                                                        metaData.tdAttr = 'data-qtip = "' + tool + '"';
-                                                    }
-                                                    metaData.style = 'text-align:left';
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Pnr', width: 80, dataIndex: 'A2537PNR'},
-                                            {text: 'Code Waiver', width: 80, dataIndex: 'A2537CWAIV'},
-                                            {text: 'Rate Appli.', width: 80, dataIndex: 'A2537FAPP'},
-                                            {text: 'Curr Appli.', width: 80, dataIndex: 'A2537MAPP'},
-                                            {text: 'Rate Pay.', width: 80, dataIndex: 'A2537TPAY'},
-                                            {text: 'Curr Pay.', width: 80, dataIndex: 'A2537MPAY'},
-                                            {text: 'Rate Reb.', width: 80, dataIndex: 'A2537FREB'},
-                                            {text: 'Cur Reb.', width: 80, dataIndex: 'A2537MREB'},
-                                            {text: 'Appli. Sale', width: 80, dataIndex: 'A2537APPS'},
-                                            {text: 'Appli. Rfnd', width: 80, dataIndex: 'A2537APPR'},
-                                            {text: 'Appli. Exch', width: 80, dataIndex: 'A2537APPE'},
-                                            {text: 'Description', width: 90, dataIndex: 'A2537DESC',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = 'text-align:left';
-                                                    var tool = record.data['A2537DESC'].trim();
-                                                    if (tool.length > 0) {
-                                                        metaData.tdAttr = 'data-qtip = "' + tool + '"';
-                                                    }
-                                                    metaData.style = 'text-align:left';
-                                                    return value;
-                                                }
-                                            },
-                                            {text: '', width: 80, dataIndex: '',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = ' color:#008FE3;text-align:center;text-decoration:underline;';
-                                                    return '<a href="#salesaudit-waiver-form" style="color:#008FE3;">' + "Download" + '</a>';
+                                            {
+                                                text: 'File', width: 75, dataIndex: 'A2537RUTAA',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'color:#008FE3;text-align:center;text-decoration:underline;';
+                                                    return '<a href="#salesaudit-waiver-form" style="color:#008FE3;">Download</a>';
                                                 },
                                                 listeners: {
                                                     click: 'onDownloadFile'
                                                 }
                                             },
+                                            { text: 'Case', width: 90, dataIndex: 'A2537NCASO' },
                                             {
-                                                sortable: false,
-                                                width: 60,
-                                                text: 'Status',
-                                                align: 'center',
-                                                renderer: function(value, metadata, record, rowIndex, colIndex, store, view) {
-                                                    var data = record.data;
-                                                    if (Number(data.A2537STAT) === 0) {
-                                                        return '<img src="resources/img/semaforo/Circle_Green.png" width="12px"/>';
-                                                    } else {
-                                                        return '<img src="resources/img/semaforo/Circle_Red.png" width="12px"/>';
+                                                text: 'Case Type', width: 200, dataIndex: 'A2537TCASO',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    if (value && value.trim().length > 0) {
+                                                        metaData.tdAttr = 'data-qtip="' + value.trim() + '"';
                                                     }
-
+                                                    return value;
                                                 }
                                             },
                                             {
-                                                sortable: false,
-                                                xtype: 'actioncolumn',
-                                                text: 'Edit',
-                                                width: 40,
-                                                align: 'center',
-                                                items: [
-                                                    {
-                                                        iconCls: 'prx-icon-edit',
-                                                        tooltip: 'Edit',
-                                                        handler: 'onEditClick'
+                                                text: 'Status', width: 120, dataIndex: 'A2537ESTAD',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Name', width: 250, dataIndex: 'A2537PCASO',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    if (value && value.trim().length > 0) {
+                                                        metaData.tdAttr = 'data-qtip="' + value.trim() + '"';
                                                     }
-                                                ]
-                                            }
+                                                    return value;
+                                                }
+                                            },
+                                            { text: 'Close<br>Date', width: 75, dataIndex: 'A2537FCRRE' },
+                                            { text: 'Expiry<br>Date', width: 75, dataIndex: 'A2537FVETO' },
+                                            { text: 'PNR', width: 75, dataIndex: 'A2537PNR' },
+                                            {
+                                                text: 'Ticket',
+                                                width: 220,
+                                                dataIndex: 'A2537TKTS',
+                                                renderer: function (value, metaData) {
+                                                    if (!value) return '';
+                                                    metaData.style = 'cursor:pointer; color:#1a56db; text-decoration:underline;';
+                                                    var unique = value.trim().split(' ').filter(function (v, i, a) {
+                                                        return v !== '' && a.indexOf(v) === i;
+                                                    }).join(' ');
+                                                    return unique;
+                                                },
+                                                listeners: {
+                                                    click: 'onTicketClick'
+                                                }
+                                            },
+                                            { text: 'Reservation', width: 110, dataIndex: 'A2537CODIT' },
+                                            {
+                                                text: 'Itinerary', width: 250, dataIndex: 'A2537ITIN',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    if (value && value.trim().length > 0) {
+                                                        metaData.tdAttr = 'data-qtip="' + value.trim() + '"';
+                                                    }
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Agency', width: 250, dataIndex: 'A2537AGENE',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    if (value && value.trim().length > 0) {
+                                                        metaData.tdAttr = 'data-qtip="' + value.trim() + '"';
+                                                    }
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Concept', width: 200, dataIndex: 'A2537CCPTO',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Sub Concept', width: 200, dataIndex: 'A2537SCPTO',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    return value;
+                                                }
+                                            },
+                                            { text: 'Curr', width: 50, dataIndex: 'A2537CURRW' },
+                                            {
+                                                text: 'Amount', width: 65, dataIndex: 'A2537AMOUW',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:right';
+                                                    return value ? value.trim() : '';
+                                                }
+                                            },
+                                            {
+                                                text: 'Description', width: 200, dataIndex: 'A2537DESCR',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    if (value && value.trim().length > 0) {
+                                                        metaData.tdAttr = 'data-qtip="' + value.trim() + '"';
+                                                    }
+                                                    return value;
+                                                }
+                                            },
+                                            { text: 'Seq', width: 100, dataIndex: 'A2537SEQ' },
+                                            { text: 'Close<br>Time', width: 75, dataIndex: 'A2537HCRRE' },
+                                            { text: 'Expiry<br>Time', width: 75, dataIndex: 'A2537HVETO' },
+                                            {
+                                                text: 'Flight No', width: 180, dataIndex: 'A2537NVLO',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Flight Date', width: 200, dataIndex: 'A2537FVLO',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Flight Time', width: 150, dataIndex: 'A2537HVLO',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    return value;
+                                                }
+                                            },
+                                            { text: 'IATA', width: 80, dataIndex: 'A2537IATAE' },
+                                            {
+                                                text: 'Executive', width: 250, dataIndex: 'A2537EJECB',
+                                                renderer: function (value, metaData) {
+                                                    metaData.style = 'text-align:left';
+                                                    if (value && value.trim().length > 0) {
+                                                        metaData.tdAttr = 'data-qtip="' + value.trim() + '"';
+                                                    }
+                                                    return value;
+                                                }
+                                            },
+                                            { text: 'Pax', width: 50, dataIndex: 'A2537NPAX' },
+                                            { text: 'Entered<br>By', width: 100, dataIndex: 'A2537INGRE' },
+                                            { text: 'Entry<br>Date', width: 90, dataIndex: 'A2537FINGR' },
+                                            { text: 'Entry<br>Time', width: 80, dataIndex: 'A2537HINGR' },
+                                            // { text: 'Modified<br>By', width: 100, dataIndex: 'A2537MODIF' },
+                                            // { text: 'Modify<br>Date', width: 90, dataIndex: 'A2537FMODI' },
+                                            // { text: 'Modify<br>Time', width: 80, dataIndex: 'A2537HMODI' },
+                                            // {
+                                            //     xtype: 'actioncolumn',
+                                            //     text: 'Edit',
+                                            //     width: 40,
+                                            //     sortable: false,
+                                            //     resizable: false,
+                                            //     align: 'center',
+                                            //     items: [{
+                                            //         iconCls: 'prx-icon-edit',
+                                            //         tooltip: 'Edit',
+                                            //         handler: 'onEditWaiverClick'
+                                            //     }]
+                                            // }
                                         ]
                                     }
                                 }
@@ -284,7 +306,7 @@ Ext.define('Ext.Praxis.view.salesaudit.WaiverForm.Info', {
                                     text: '0',
                                     width: 50
                                 },
-                                {xtype: 'tbspacer', width: 100},
+                                { xtype: 'tbspacer', width: 100 },
                                 {
                                     text: 'Total found',
                                     width: 80

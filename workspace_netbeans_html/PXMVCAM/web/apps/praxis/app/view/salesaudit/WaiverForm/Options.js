@@ -103,18 +103,20 @@ Ext.define('Ext.Praxis.view.salesaudit.WaiverForm.Options', {
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options'
                         },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnAdd',
-                            iconCls: 'prx-icon-add',
-                            tooltip: 'New'
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnBack',
-                            iconCls: 'prx-icon-back',
-                            tooltip: 'Back'
-                        }
+                        
+                        // {
+                        //     xtype: 'button',
+                        //     id: prototype.id + '-btnCreate',
+                        //     iconCls: 'prx-icon-add',
+                        //     // text: 'Create',
+                        //     tooltip: 'New'
+                        // },
+                        // {
+                        //     xtype: 'button',
+                        //     id: prototype.id + '-btnBack',
+                        //     iconCls: 'prx-icon-back',
+                        //     tooltip: 'Back'
+                        // }
                     ]
                 }
             ]

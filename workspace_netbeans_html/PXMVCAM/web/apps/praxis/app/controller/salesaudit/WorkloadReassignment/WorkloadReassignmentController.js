@@ -540,5 +540,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.WorkloadReassignment.WorkloadReassi
     getDoubleColor3: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#FCF5F2';
         return Ext.util.Format.number(value, '0,000.00');
-    } 
+    }
+
 });

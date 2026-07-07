@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
     me: '',
     searchParams: {},
     paramsDetail: {},
-    init: function(view) {
+    init: function (view) {
         me = this;
         prototype.id = 'WaiverForm';
         prototype.url = CONTEXTPATH + '/Waiver';
@@ -47,6 +47,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
             '#WaiverForm-btnAdd': {
                 click: this.btnAdd_click
             },
+            '#WaiverForm-btnCreate': {
+                click: this.btnCreate_click
+            },
             '#WaiverForm-btnBack': {
                 click: this.btnBack_click
             },
@@ -69,35 +72,35 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
 
         });
     },
-    xpanel_afterrender: function(obj, e) {
+    xpanel_afterrender: function (obj, e) {
         this.setStoreData();
         //this.btnSearch_click();
     },
-    eventKey: function(e, eOpts) {
+    eventKey: function (e, eOpts) {
         if (eOpts.getKey() === 13) {
             this.btnSearch_click();
         }
     },
-    onUpperValue: function(field, newValue, oldValue) {
+    onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    onChangeCmbType: function(obj, value) {
+    onChangeCmbType: function (obj, value) {
 
         Ext.getCmp(prototype.id + '-panelFilter1').hide();
         Ext.getCmp(prototype.id + '-panelFilter2').hide();
         Ext.getCmp(prototype.id + '-panelFilter3').hide();
         Ext.getCmp(prototype.id + '-panelFilter4').hide();
         Ext.getCmp(prototype.id + '-panelFilter5').hide();
-        Ext.getCmp(prototype.id + '-panelFilter6').hide();
-        Ext.getCmp(prototype.id + '-panelFilter7').hide();
-        Ext.getCmp(prototype.id + '-panelFilter8').hide();
+        // Ext.getCmp(prototype.id + '-panelFilter6').hide();
+        // Ext.getCmp(prototype.id + '-panelFilter7').hide();
+        // Ext.getCmp(prototype.id + '-panelFilter8').hide();
 
         if (value !== '') {
             Ext.getCmp(prototype.id + '-panelFilter' + value).show();
         }
 
     },
-    setStoreData: function() {
+    setStoreData: function () {
 
         var cmbType = Ext.getCmp(prototype.id + '-cmbType');
         cmbType.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -105,50 +108,56 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
             fields: ['code', 'name'],
             data: [
                 ["", "All"],
-                ["1", "Request Date"],
-                ["2", "Rfnd Date"],
-                ["3", "Emission Date"],
-                ["4", "Flown Date"],
-                ["5", "System Date"],
-                ["6", "Iata Date"],
-                ["7", "Ticket"],
-                ["8", "Tour Code"]
+                ["1", "Case"],
+                ["2", "Ticket"],
+                ["3", "Reservation"],
+                ["4", "Closing Date"],
+                ["5", "Expiration Date"],
             ]
         }));
         cmbType.setValue('');
-        var cmbstatus = Ext.getCmp(prototype.id + '-cmbstatus');
-        cmbstatus.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["0", "Active"],
-                ["1", "Inactive"]
-            ]
-        }));
-        cmbstatus.setValue('');
+        // var cmbstatus = Ext.getCmp(prototype.id + '-cmbstatus');
+        // cmbstatus.bindStore(Ext.create('Ext.data.ArrayStore', {
+        //     autoLoad: false,
+        //     fields: ['code', 'name'],
+        //     data: [
+        //         ["", "All"],
+        //         ["0", "Active"],
+        //         ["1", "Inactive"]
+        //     ]
+        // }));
+        // cmbstatus.setValue('');
     },
-    setFormatParameter: function() {
+    setFormatParameter: function () {
 
         me.bean = {};
         me.bean.VP_FILTER = Ext.getCmp(prototype.id + '-cmbType').getValue();
-        me.bean.VP_IATA = Ext.getCmp(prototype.id + '-txtIATA').getValue();
-        me.bean.VP_Frma = Ext.getCmp(prototype.id + '-txtFrmaSerie').getValue().substring(0, 4);
-        me.bean.VP_Serie = Ext.getCmp(prototype.id + '-txtFrmaSerie').getValue().substring(4, 10);
-        me.bean.VP_TourCode = Ext.getCmp(prototype.id + '-Tour').getValue();
-        me.bean.VP_Country = Ext.getCmp(prototype.id + '-Country').getValue();
-        me.bean.A2537STAT = Ext.getCmp(prototype.id + '-cmbstatus').getValue();
+        me.bean.VP_NCASO = Ext.getCmp(prototype.id + '-txtCaso').getValue();
+        me.bean.VP_TKTS = Ext.getCmp(prototype.id + '-txtTicket').getValue();
+        me.bean.VP_CODIT = Ext.getCmp(prototype.id + '-txtReserva').getValue();
 
-        me.bean.VP_Request1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Request1').getValue(), 'Ymd');
-        me.bean.VP_Request2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Request2').getValue(), 'Ymd');
-        me.bean.VP_Rfnd1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Rfnd1').getValue(), 'Ymd');
-        me.bean.VP_Rfnd2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Rfnd2').getValue(), 'Ymd');
-        me.bean.VP_Emission1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Emission1').getValue(), 'Ymd');
-        me.bean.VP_Emission2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Emission2').getValue(), 'Ymd');
-        me.bean.VP_Flown1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Flown1').getValue(), 'Ymd');
-        me.bean.VP_Flown2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Flown2').getValue(), 'Ymd');
-        me.bean.VP_System1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-System1').getValue(), 'Ymd');
-        me.bean.VP_System2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-System2').getValue(), 'Ymd');
+        me.bean.VP_FCRRE1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-FechaCierreFrom').getValue(), 'Ymd');
+        me.bean.VP_FCRRE2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-FechaCierreTo').getValue(), 'Ymd');
+        me.bean.VP_FVETO1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-FechaVencimientoFrom').getValue(), 'Ymd');
+        me.bean.VP_FVETO2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-FechaVencimientoTo').getValue(), 'Ymd');
+
+        // me.bean.VP_IATA = Ext.getCmp(prototype.id + '-txtIATA').getValue();
+        // me.bean.VP_Frma = Ext.getCmp(prototype.id + '-txtFrmaSerie').getValue().substring(0, 4);
+        // me.bean.VP_Serie = Ext.getCmp(prototype.id + '-txtFrmaSerie').getValue().substring(4, 10);
+        // me.bean.VP_TourCode = Ext.getCmp(prototype.id + '-Tour').getValue();
+        // me.bean.VP_Country = Ext.getCmp(prototype.id + '-Country').getValue();
+        // me.bean.A2537STAT = Ext.getCmp(prototype.id + '-cmbstatus').getValue();
+
+        // me.bean.VP_Request1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Request1').getValue(), 'Ymd');
+        // me.bean.VP_Request2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Request2').getValue(), 'Ymd');
+        // me.bean.VP_Rfnd1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Rfnd1').getValue(), 'Ymd');
+        // me.bean.VP_Rfnd2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Rfnd2').getValue(), 'Ymd');
+        // me.bean.VP_Emission1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Emission1').getValue(), 'Ymd');
+        // me.bean.VP_Emission2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Emission2').getValue(), 'Ymd');
+        // me.bean.VP_Flown1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Flown1').getValue(), 'Ymd');
+        // me.bean.VP_Flown2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-Flown2').getValue(), 'Ymd');
+        // me.bean.VP_System1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-System1').getValue(), 'Ymd');
+        // me.bean.VP_System2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-System2').getValue(), 'Ymd');
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -157,13 +166,53 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
         };
         console.log(me.bean);
     },
-    btnSearch_click: function(obj, e) {
+    btnSearch_click: function (obj, e) {
         this.setFormatParameter();
         this.setGridData();
     },
+    btnCreate_click: function () {
+        var existing = Ext.getCmp(prototype.id + '-recordFormWin');
+        if (existing) existing.close();
+        Ext.create('Ext.Praxis.view.salesaudit.WaiverForm.WaiverRecordForm', {
+            id: prototype.id + '-recordFormWin',
+            params: {
+                action: 'C',
+                onSuccess: function () { me.btnSearch_click(); }
+            }
+        }).show();
+    },
+
+    onEditWaiverClick: function (grid, rowIndex, colIndex, item, e, record) {
+        var existing = Ext.getCmp(prototype.id + '-recordFormWin');
+        if (existing) existing.close();
+        Ext.create('Ext.Praxis.view.salesaudit.WaiverForm.WaiverRecordForm', {
+            id: prototype.id + '-recordFormWin',
+            params: {
+                action: 'U',
+                rec: record,
+                onSuccess: function () { me.btnSearch_click(); }
+            }
+        }).show();
+    },
+
+    btnAdd_click: function () {
+        var grid = Ext.getCmp(prototype.id + '-gridData');
+        var sel  = grid.getSelection();
+        if (!sel || sel.length === 0) {
+            global.Msg({ msg: 'Please select a record.' });
+            return;
+        }
+        var rec = sel[0];
+        var existing = Ext.getCmp(prototype.id + '-dataEntry');
+        if (existing) existing.close();
+        Ext.create('Ext.Praxis.view.salesaudit.WaiverForm.DataEntry', {
+            id: prototype.id + '-dataEntry',
+            params: { rec: rec }
+        }).show();
+    },
     // <editor-fold defaultstate="collapsed" desc="setGridData">
 
-    setGridData: function() {
+    setGridData: function () {
         win.lblUser_toolTip("Estructura: A2537");
 
         me.panelActual = '-panelGridData';
@@ -172,17 +221,18 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
         this.setFormatParameter();
         var msj = this.validateFields();
         if (msj !== '') {
-            global.Msg({msg: msj
+            global.Msg({
+                msg: msj
             });
         } else {
             var storeGridDatas = Ext.create('Ext.Praxis.store.salesAudit.GridData', {
                 proxy: {
                     url: prototype.url + '/search'
                 }, listeners: {
-                    beforeload: function(obj) {
+                    beforeload: function (obj) {
                         obj.proxy.extraParams = searchParams;
                     },
-                    load: function(obj) {
+                    load: function (obj) {
                         var pag = Ext.getCmp(prototype.id + '-paggin');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -205,21 +255,29 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
 
 
 
-    validateFields: function() {
+    validateFields: function () {
         var msj = '';
         var bean = searchParams.bean;
 
 
         return msj;
     },
-    btnAdd_click: function() {
-        this.winDataEntry('I');
+    onTicketClick: function (col, metaData, rowNum, columnNum, e, record) {
+        if (!record || !record.data || !record.data.A2537TKTS) return;
+
+        var unique = record.data.A2537TKTS.trim().split(' ').filter(function (v, i, a) {
+            return v !== '' && a.indexOf(v) === i;
+        }).join(' ');
+        record.data.A2537TKTS = unique;
+
+        var existing = Ext.getCmp(prototype.id + '-dataEntry');
+        if (existing) existing.close();
+        Ext.create('Ext.Praxis.view.salesaudit.WaiverForm.DataEntry', {
+            id: prototype.id + '-dataEntry',
+            params: { rec: record }
+        }).show();
     },
-    onEditClick: function(grid, rowIndex, colIndex) {
-        var rec = grid.getStore().getAt(rowIndex);
-        this.winDataEntry('U', rec);
-    },
-    winDataEntry: function(action, rec) {
+    winDataEntry: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
         Ext.create('Ext.Praxis.view.salesaudit.WaiverForm.DataEntry', {
@@ -230,7 +288,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
             }
         }).show();
     },
-    btnBack_click: function(obj, e) {
+    btnBack_click: function (obj, e) {
 
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
@@ -249,7 +307,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
             global.showMenu();
         }
     },
-    btnClear_click: function(obj, e) {
+    btnClear_click: function (obj, e) {
         Ext.getCmp(prototype.id + '-cmbType').setValue('');
         Ext.getCmp(prototype.id + '-Request1').setValue('');
         Ext.getCmp(prototype.id + '-Request2').setValue('');
@@ -270,12 +328,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
         Ext.getCmp(prototype.id + '-cmbstatus').setValue('');
 
     },
-    btnExcel_click: function(obj, e) {
+    btnExcel_click: function (obj, e) {
 
         this.setFormatParameter();
         var msj = this.validateFields();
         if (msj !== '') {
-            global.Msg({msg: msj
+            global.Msg({
+                msg: msj
             });
         } else {
             Ext.Msg.show({
@@ -285,7 +344,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function (btn) {
                     if (btn === 'ok') {
                         this.exportExcel();
                     }
@@ -293,35 +352,37 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
             });
         }
     },
-    exportExcel: function() {
+    exportExcel: function () {
         this.setFormatParameter();
         switch (me.panelActual) {
-            case  '-panelGridData':
+            case '-panelGridData':
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
                 break;
             default:
                 global.Msg(
-                        {msg: 'Under Construction'
-                        });
+                    {
+                        msg: 'Under Construction'
+                    });
         }
 
     },
-    onDownloadFile: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onDownloadFile: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.paramsDetail.beanString = JSON.stringify(rowData.data);
-        me.fileName = rowData.data.A2536NAMEF;
+        var rutaa = rowData.data.A2537RUTAA || '';
+        me.fileName = rutaa.split('\\').pop() || 'download.csv';
         Ext.Ajax.request({
             url: prototype.url + '/download',
             method: 'POST',
             timeout: 60000000,
             beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...'),
             params: me.paramsDetail,
-            success: function(response, options) {
+            success: function (response, options) {
                 Ext.getCmp(prototype.id + '-gridData').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
 
                 var resultByte = res.bytes;
                 var bytes = new Uint8Array(resultByte); // pass your byte response to this constructor
-                var blob = new Blob([bytes], {type: "application/png"});// change resultByte to bytes
+                var blob = new Blob([bytes], { type: "application/png" });// change resultByte to bytes
 
                 var link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
@@ -331,7 +392,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
         });
 
     },
-    btnFilter_click: function(obj) {
+    btnFilter_click: function (obj) {
         var option = Ext.getCmp(prototype.id + '-panelFilters1');
         if (option.isVisible()) {
             option.setVisible(false);
@@ -339,14 +400,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
             option.setVisible(true);
         }
     },
-    setWidthPie: function() {
+    setWidthPie: function () {
         var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
         Ext.getCmp(prototype.id + '-panelPie').setWidth(ancho);
     },
-    getPaggin: function() {
+    getPaggin: function () {
         me.pagginActual = '';
         switch (me.panelActual) {
-            case  '-panelGridData':
+            case '-panelGridData':
                 me.pagginActual = '-paggin';
                 break;
         }
@@ -354,46 +415,46 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverController', {
     /*     
      * Funciones para la paginacion     
      */
-    pagFirst: function(obj, e) {
+    pagFirst: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveFirst();
-    }, pagPrevious: function(obj, e) {
+    }, pagPrevious: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.movePrevious();
     },
-    pagNext: function(obj, e) {
+    pagNext: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveNext();
     },
-    pagLast: function(obj, e) {
+    pagLast: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveLast();
     },
-    getInt: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getInt: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right';
         return Ext.util.Format.number(value, '0,000');
     },
-    getDouble: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDouble: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right';
         return Ext.util.Format.number(value, '0,000.00');
     },
-    getText: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getText: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:left';
         return value;
     },
-    getDoubleColor1: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDoubleColor1: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#F2FAFC';
         return Ext.util.Format.number(value, '0,000.00');
     },
-    getDoubleColor2: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDoubleColor2: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#DFF0ED';
         return Ext.util.Format.number(value, '0,000.00');
     },
-    getDoubleColor3: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDoubleColor3: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#FCF5F2';
         return Ext.util.Format.number(value, '0,000.00');
     }
