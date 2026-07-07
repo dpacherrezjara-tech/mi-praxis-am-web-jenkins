@@ -208,7 +208,15 @@ public class ProReportClarification {
 //            fileTmp01 = File.createTempFile(strNomFile + "_", ".pdf");
             
             fileTmp01 = new File(RUTA_DOWNLOAD + "\\" + strNomFile + ".pdf");
-                    
+            File parentDir = fileTmp01.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                boolean dirsCreated = parentDir.mkdirs(); 
+                if (!dirsCreated) {
+                    System.err.println("No se pudieron crear los directorios en la ruta: " + parentDir.getAbsolutePath());
+
+                }
+            }   
+            
             lstFileTmp.add(fileTmp01);
             PYi = 550;
             Hlng = 20;
