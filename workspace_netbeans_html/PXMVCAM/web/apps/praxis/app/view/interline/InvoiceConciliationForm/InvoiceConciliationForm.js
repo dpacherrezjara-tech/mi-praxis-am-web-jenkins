@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.InvoiceConciliatio
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1300,
+                                        width: 1500,
                                         align: 'center'
                                     },
                                     items: [
@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.InvoiceConciliatio
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1300,
+                                                    width: 1500,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,
