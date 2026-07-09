@@ -2084,6 +2084,31 @@ var LarSyrExt = function () {
         // Descargar archivo
         XLSX.writeFile(wb, name + "_" + uuid + ".xlsx");
     };
+    this.exportExcelFromStore = async function (library, procedure, searchParams, columns, fileName) {
+        try {
+            let res = await global.callStorePagginExcel(library, procedure, searchParams);
+
+            const data = (res?.length > 0)
+                ? res.map((x, idx) => {
+                    const row = {};
+                    for (let col of columns) {
+                        let val = row[col.header] = x[col.dataIndex] ?? "";
+                        if (typeof col.formatter === "function") {
+                            val = col.formatter(val, x, idx);
+                        }
+
+                        row[col.header] = val;
+                    }
+                    return row;
+                })
+                : [Object.fromEntries(columns.map(col => [col.header, ""]))];
+
+            await global.writeExcelFromJson(data, fileName);
+
+        } catch (e) {
+            console.error("Error exportando Excel:", e);
+        }
+    };
     this.writeExcelFromJsonWithStyle = async function (config) {
         const cfg = config || {};
         const data = Array.isArray(cfg.data) ? cfg.data : [];

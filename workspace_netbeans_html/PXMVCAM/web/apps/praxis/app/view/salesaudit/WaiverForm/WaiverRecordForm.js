@@ -3,208 +3,295 @@ Ext.define('Ext.Praxis.view.salesaudit.WaiverForm.WaiverRecordForm', {
     extend: 'Ext.window.Window',
     alias: 'widget.' + prototype.id + '-recordForm',
     requires: [
-        'Ext.Praxis.controller.salesaudit.Waiver.WaiverRecordController'
+        'Ext.Praxis.controller.salesaudit.Waiver.WaiverRecordController',
+        'Ext.Praxis.view.widgets.StoreProcGrid'
     ],
     controller: 'WaiverRecordController',
     title: 'Waiver',
-    header: true,
-    height: 620,
-    width: 870,
-    resizable: false,
-    layout: 'fit',
+    header: false,
+    height: 780,
+    width: 980,
+    resizable: true,
+    layout: 'border',
     modal: true,
     border: false,
-    defaults: {
-        border: false
-    },
     listeners: {
         afterrender: 'afterRender'
     },
     items: [
+        // ── Header bar ──────────────────────────────────────────────────────
         {
-            xtype: 'form',
-            autoScroll: true,
-            defaults: {
-                style: 'margin: 3px;',
-                border: false
-            },
+            xtype: 'panel',
+            region: 'north',
+            height: 52,
+            border: false,
+            bodyStyle: 'background:#1f2d3d; padding:0 18px;',
+            layout: { type: 'hbox', align: 'middle' },
             items: [
                 {
-                    xtype: 'panel',
-                    bodyStyle: 'background: transparent;',
+                    xtype: 'component',
+                    html: '<span style="color:#fff;font-size:15px;font-weight:600;letter-spacing:.3px;">Waiver Detail</span>'
+                        + '<span id="' + prototype.id + '-rec-headerSub" style="color:#9fb3c8;font-size:12px;margin-left:12px;"></span>'
+                },
+                { xtype: 'component', flex: 1 },
+                {
+                    xtype: 'button',
+                    text: 'Download Original File',
+                    id: prototype.id + '-rec-btnDownload',
+                    iconCls: 'prx-icon-download',
+                    listeners: { click: 'onDownloadOriginalFile' }
+                }
+            ]
+        },
+        // ── Body ─────────────────────────────────────────────────────────────
+        {
+            xtype: 'form',
+            region: 'center',
+            autoScroll: true,
+            border: false,
+            bodyStyle: 'background:#eef1f5; padding:12px;',
+            fieldDefaults: {
+                labelAlign: 'right',
+                msgTarget: 'none'
+            },
+            defaults: {
+                border: true,
+                style: 'margin: 0 0 10px 0;',
+                bodyStyle: 'background:#fff; padding:10px 12px;'
+            },
+            items: [
+                // ── Case Information ───────────────────────────────────────
+                {
+                    xtype: 'fieldset',
+                    title: 'Case Information',
                     layout: 'vbox',
                     defaults: {
                         anchor: '100%',
                         xtype: 'panel',
                         layout: 'hbox',
                         border: false,
-                        padding: '2 0'
+                        padding: '3 0'
                     },
                     items: [
-                        // Row: Case No + Status
                         {
                             items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Case No:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: '(*)', style: 'font-weight:bold;color:#9C1717;', width: 25 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtNcaso', width: 110, maxLength: 10, maskRe: /[0-9]/, enforceMaxLength: true },
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtNcaso', fieldLabel: 'Case No', labelWidth: 90, width: 210 },
                                 { xtype: 'tbspacer', width: 20 },
-                                { xtype: 'label', text: 'Status:', style: 'font-weight:bold;color:#0B333C;', width: 55 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtEstad', width: 180, maxLength: 30, enforceMaxLength: true },
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtEstad', fieldLabel: 'Status', labelWidth: 55, width: 230 },
                                 { xtype: 'tbspacer', width: 20 },
-                                { xtype: 'label', text: 'Pax:', style: 'font-weight:bold;color:#0B333C;', width: 35 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtNpax', width: 60, maxLength: 5, maskRe: /[0-9]/, enforceMaxLength: true }
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtNpax', fieldLabel: 'Pax', labelWidth: 35, width: 90 }
                             ]
                         },
-                        // Row: Name
                         {
                             items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Name:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: '(*)', style: 'font-weight:bold;color:#9C1717;', width: 25 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtPcaso', width: 580, maxLength: 200, enforceMaxLength: true }
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtPcaso', fieldLabel: 'Name', labelWidth: 90, width: 850 }
                             ]
                         },
-                        // Row: Case Type
                         {
                             items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Case Type:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: ' ', width: 25 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtTcaso', width: 580, maxLength: 200, enforceMaxLength: true }
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtTcaso', fieldLabel: 'Case Type', labelWidth: 90, width: 850 }
                             ]
-                        },
-                        // Row: Close Date + Close Time
+                        }
+                    ]
+                },
+                // ── Dates ─────────────────────────────────────────────────
+                {
+                    xtype: 'fieldset',
+                    title: 'Dates',
+                    layout: 'vbox',
+                    defaults: {
+                        anchor: '100%',
+                        xtype: 'panel',
+                        layout: 'hbox',
+                        border: false,
+                        padding: '3 0'
+                    },
+                    items: [
                         {
                             items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Close Date:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: ' ', width: 25 },
-                                { xtype: 'datefield', id: prototype.id + '-rec-dtFcrre', format: 'Ymd', submitFormat: 'Ymd', width: 130 },
+                                { xtype: 'datefield', id: prototype.id + '-rec-dtFcrre', fieldLabel: 'Close Date', format: 'Ymd', labelWidth: 90, width: 210 },
+                                { xtype: 'tbspacer', width: 12 },
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtHcrre', fieldLabel: 'Time', labelWidth: 40, width: 100 },
+                                { xtype: 'tbspacer', width: 30 },
+                                { xtype: 'datefield', id: prototype.id + '-rec-dtFveto', fieldLabel: 'Expiry Date', format: 'Ymd', labelWidth: 90, width: 210 },
+                                { xtype: 'tbspacer', width: 12 },
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtHveto', fieldLabel: 'Time', labelWidth: 40, width: 100 }
+                            ]
+                        }
+                    ]
+                },
+                // ── Reservation & Ticket ───────────────────────────────────
+                {
+                    xtype: 'fieldset',
+                    title: 'Reservation & Ticket',
+                    layout: 'vbox',
+                    defaults: {
+                        anchor: '100%',
+                        xtype: 'panel',
+                        layout: 'hbox',
+                        border: false,
+                        padding: '3 0'
+                    },
+                    items: [
+                        {
+                            items: [
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtPnr', fieldLabel: 'PNR', labelWidth: 90, width: 190 },
                                 { xtype: 'tbspacer', width: 20 },
-                                { xtype: 'label', text: 'Close Time:', style: 'font-weight:bold;color:#0B333C;', width: 80 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtHcrre', width: 80, maxLength: 6, maskRe: /[0-9]/, enforceMaxLength: true }
-                            ]
-                        },
-                        // Row: Expiry Date + Expiry Time
-                        {
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Expiry Date:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: ' ', width: 25 },
-                                { xtype: 'datefield', id: prototype.id + '-rec-dtFveto', format: 'Ymd', submitFormat: 'Ymd', width: 130 },
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtIatae', fieldLabel: 'IATA', labelWidth: 45, width: 160 },
                                 { xtype: 'tbspacer', width: 20 },
-                                { xtype: 'label', text: 'Expiry Time:', style: 'font-weight:bold;color:#0B333C;', width: 80 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtHveto', width: 80, maxLength: 6, maskRe: /[0-9]/, enforceMaxLength: true }
-                            ]
-                        },
-                        // Row: PNR + IATA + Seq
-                        {
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'PNR:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: ' ', width: 25 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtPnr', width: 130, maxLength: 15, enforceMaxLength: true },
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtSeq', fieldLabel: 'Seq', labelWidth: 35, width: 130 },
                                 { xtype: 'tbspacer', width: 20 },
-                                { xtype: 'label', text: 'IATA:', style: 'font-weight:bold;color:#0B333C;', width: 40 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtIatae', width: 100, maxLength: 10, enforceMaxLength: true },
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtCodit', fieldLabel: 'Reservation', labelWidth: 75, width: 210 }
+                            ]
+                        },
+                        {
+                            items: [
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtTkts', fieldLabel: 'Tickets', labelWidth: 90, width: 850 }
+                            ]
+                        }
+                    ]
+                },
+                // ── Financial ───────────────────────────────────────────────
+                {
+                    xtype: 'fieldset',
+                    title: 'Financial',
+                    layout: 'vbox',
+                    defaults: {
+                        anchor: '100%',
+                        xtype: 'panel',
+                        layout: 'hbox',
+                        border: false,
+                        padding: '3 0'
+                    },
+                    items: [
+                        {
+                            items: [
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtAgene', fieldLabel: 'Agency', labelWidth: 90, width: 850 }
+                            ]
+                        },
+                        {
+                            items: [
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtCcpto', fieldLabel: 'Concept', labelWidth: 90, width: 400 },
                                 { xtype: 'tbspacer', width: 20 },
-                                { xtype: 'label', text: 'Seq:', style: 'font-weight:bold;color:#0B333C;', width: 35 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtSeq', width: 80, maxLength: 10, enforceMaxLength: true }
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtScpto', fieldLabel: 'Sub Concept', labelWidth: 90, width: 400 }
                             ]
                         },
-                        // Row: Tickets
                         {
                             items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Tickets:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: ' ', width: 25 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtTkts', width: 580, maxLength: 500, enforceMaxLength: true }
-                            ]
-                        },
-                        // Row: Reservation
-                        {
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Reservation:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: ' ', width: 25 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtCodit', width: 200, maxLength: 15, enforceMaxLength: true }
-                            ]
-                        },
-                        // Row: Agency
-                        {
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Agency:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: ' ', width: 25 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtAgene', width: 580, maxLength: 200, enforceMaxLength: true }
-                            ]
-                        },
-                        // Row: Concept + Sub Concept
-                        {
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Concept:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: ' ', width: 25 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtCcpto', width: 230, maxLength: 100, enforceMaxLength: true },
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtCurrw', fieldLabel: 'Currency', labelWidth: 90, width: 150 },
                                 { xtype: 'tbspacer', width: 20 },
-                                { xtype: 'label', text: 'Sub Concept:', style: 'font-weight:bold;color:#0B333C;', width: 90 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtScpto', width: 230, maxLength: 100, enforceMaxLength: true }
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtAmouw', fieldLabel: 'Amount', labelWidth: 60, width: 180, fieldStyle: 'text-align:right; font-weight:600;' }
                             ]
-                        },
-                        // Row: Currency + Amount
+                        }
+                    ]
+                },
+                // ── Flight Information ─────────────────────────────────────
+                {
+                    xtype: 'fieldset',
+                    title: 'Flight Information',
+                    layout: 'vbox',
+                    defaults: {
+                        anchor: '100%',
+                        xtype: 'panel',
+                        layout: 'hbox',
+                        border: false,
+                        padding: '3 0'
+                    },
+                    items: [
                         {
                             items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Currency:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: ' ', width: 25 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtCurrw', width: 60, maxLength: 3, enforceMaxLength: true },
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtEjecb', fieldLabel: 'Executive', labelWidth: 90, width: 850 }
+                            ]
+                        },
+                        {
+                            items: [
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtNvlo', fieldLabel: 'Flight No', labelWidth: 90, width: 260 },
                                 { xtype: 'tbspacer', width: 20 },
-                                { xtype: 'label', text: 'Amount:', style: 'font-weight:bold;color:#0B333C;', width: 60 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtAmouw', width: 120, maxLength: 20, enforceMaxLength: true }
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtFvlo', fieldLabel: 'Date', labelWidth: 45, width: 320 },
+                                { xtype: 'tbspacer', width: 20 },
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtHvlo', fieldLabel: 'Time', labelWidth: 45, width: 260 }
                             ]
-                        },
-                        // Row: Executive
+                        }
+                    ]
+                },
+                // ── Itinerary & Description ────────────────────────────────
+                {
+                    xtype: 'fieldset',
+                    title: 'Itinerary & Description',
+                    layout: 'vbox',
+                    defaults: {
+                        anchor: '100%',
+                        xtype: 'panel',
+                        layout: 'hbox',
+                        border: false,
+                        padding: '3 0'
+                    },
+                    items: [
                         {
                             items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Executive:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: ' ', width: 25 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtEjecb', width: 400, maxLength: 100, enforceMaxLength: true }
+                                { xtype: 'textfield', id: prototype.id + '-rec-txtItin', fieldLabel: 'Itinerary', labelWidth: 90, width: 850 }
                             ]
                         },
-                        // Row: Flight No + Flight Date + Flight Time
                         {
                             items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Flight No:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: ' ', width: 25 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtNvlo', width: 150, maxLength: 50, enforceMaxLength: true },
-                                { xtype: 'tbspacer', width: 15 },
-                                { xtype: 'label', text: 'Date:', style: 'font-weight:bold;color:#0B333C;', width: 40 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtFvlo', width: 100, maxLength: 20, enforceMaxLength: true },
-                                { xtype: 'tbspacer', width: 15 },
-                                { xtype: 'label', text: 'Time:', style: 'font-weight:bold;color:#0B333C;', width: 40 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtHvlo', width: 80, maxLength: 10, enforceMaxLength: true }
+                                { xtype: 'textarea', id: prototype.id + '-rec-txtDescr', fieldLabel: 'Description', labelWidth: 90, width: 850, height: 55 }
                             ]
-                        },
-                        // Row: Itinerary
+                        }
+                    ]
+                },
+                // ── Ticket Waivers (detalle, SQP06127 — no paginado) ───────
+                {
+                    xtype: 'fieldset',
+                    title: 'Ticket Waivers',
+                    layout: 'fit',
+                    height: 250,
+                    bodyStyle: 'background:#fff; padding:4px;',
+                    items: [
                         {
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Itinerary:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: ' ', width: 25 },
-                                { xtype: 'textfield', id: prototype.id + '-rec-txtItin', width: 580, maxLength: 500, enforceMaxLength: true }
-                            ]
-                        },
-                        // Row: Description
-                        {
-                            items: [
-                                { xtype: 'tbspacer', width: 7 },
-                                { xtype: 'label', text: 'Description:', style: 'font-weight:bold;color:#0B333C;', width: 120 },
-                                { xtype: 'label', text: ' ', width: 25 },
-                                { xtype: 'textarea', id: prototype.id + '-rec-txtDescr', width: 580, height: 60, maxLength: 1000, enforceMaxLength: true }
-                            ]
+                            xtype: 'storeprocgrid',
+                            id: prototype.id + '-rec-detailGrid',
+                            library: 'PXSAUDIT',
+                            storeProcedure: 'SQP06127',
+                            memoryPaging: true,
+                            autoSearch: false,
+                            showExcelButton: false,
+                            showEmptyMsg: true,
+                            border: false,
+                            height: 210,
+                            storeParams: {
+                                IN_CCUST: '',
+                                IN_SEQ: ''
+                            },
+                            gridColumns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    resizable: true,
+                                    align: 'center'
+                                },
+                                items: [
+                                    {
+                                        text: 'Ticket Number', dataIndex: 'A1672CIA', width: 180,
+                                        renderer: function (value, meta, record) {
+                                            var cia = (record.get('A1672CIA') || '').trim();
+                                            var forma = (record.get('A1672FORMA') || '').trim();
+                                            var serie = (record.get('A1672SERIE') || '').trim();
+                                            return cia + forma + serie;
+                                        }
+                                    },
+                                    { text: 'Issue Date', dataIndex: 'A1672FVENT', width: 110 },
+                                    {
+                                        text: 'Waiver Code', dataIndex: 'A1672CODWA', flex: 1,
+                                        renderer: function (value) {
+                                            var v = (value || '').trim();
+                                            if (!v) {
+                                                return '<span style="color:#aaa;">—</span>';
+                                            }
+                                            return '<span style="background:#e6f4ea;color:#1e7e34;border-radius:10px;padding:2px 10px;font-weight:600;">' + v + '</span>';
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }
@@ -216,22 +303,14 @@ Ext.define('Ext.Praxis.view.salesaudit.WaiverForm.WaiverRecordForm', {
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
-            margin: '10 0',
-            layout: {
-                pack: 'center'
-            },
-            defaults: {
-                scale: 'medium'
-            },
+            border: true,
+            margin: '0',
+            style: 'background:#1f2d3d; border-top:2px solid #33455a;',
+            layout: { pack: 'center' },
+            defaults: { scale: 'medium' },
             items: [
                 {
-                    text: 'Save',
-                    id: prototype.id + '-rec-btnSave',
-                    iconCls: 'prx-icon-save',
-                    listeners: { click: 'onSaveClick' }
-                },
-                {
-                    text: 'Cancel',
+                    text: 'Close',
                     id: prototype.id + '-rec-btnCancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: { click: 'onCancelClick' }

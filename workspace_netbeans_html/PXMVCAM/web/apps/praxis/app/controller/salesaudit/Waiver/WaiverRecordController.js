@@ -5,13 +5,35 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverRecordController', {
 
     afterRender: function () {
         var p = this.view.params || {};
+        var headerSub = Ext.get(prototype.id + '-rec-headerSub');
+
+        this.view.query('textfield, datefield, textarea').forEach(function (f) {
+            f.setReadOnly(true);
+        });
 
         if (p.action === 'U' && p.rec) {
             this.fillForm(p.rec);
-            this.view.setTitle('Edit Waiver');
-        } else {
-            this.view.setTitle('Create Waiver');
+            var d = p.rec.data || p.rec;
+            if (headerSub) {
+                headerSub.update('&middot; Case ' + (d.A2537NCASO || '').trim());
+            }
+            this.loadDetailGrid(d);
         }
+    },
+
+    /**
+     * @private Carga la grilla de tickets asociados (SQP06127, no paginado)
+     * para el CCUST/SEQ del registro que se está viendo.
+     * Requiere el fix null-safe en CallStorePaggin.setPageOut() (BEANS) para
+     * SPs que no declaran los 4 parámetros INOUT de paginación.
+     */
+    loadDetailGrid: function (d) {
+        var grid = Ext.getCmp(prototype.id + '-rec-detailGrid');
+        if (!grid) { return; }
+        grid.getController().reload({
+            IN_CCUST: (d.A2537CCUST || '').trim(),
+            IN_SEQ: (d.A2537SEQ || '').trim()
+        });
     },
 
     fillForm: function (rec) {
@@ -46,7 +68,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverRecordController', {
         Ext.getCmp(prototype.id + '-rec-txtCcpto').setValue(d.A2537CCPTO || '');
         Ext.getCmp(prototype.id + '-rec-txtScpto').setValue(d.A2537SCPTO || '');
         Ext.getCmp(prototype.id + '-rec-txtCurrw').setValue(d.A2537CURRW || '');
-        Ext.getCmp(prototype.id + '-rec-txtAmouw').setValue(d.A2537AMOUW || '');
+        Ext.getCmp(prototype.id + '-rec-txtAmouw').setValue(Ext.util.Format.number(parseFloat(d.A2537AMOUW) || 0, '0,000.00'));
         Ext.getCmp(prototype.id + '-rec-txtEjecb').setValue(d.A2537EJECB || '');
         Ext.getCmp(prototype.id + '-rec-txtNvlo').setValue(d.A2537NVLO || '');
         Ext.getCmp(prototype.id + '-rec-txtFvlo').setValue(d.A2537FVLO || '');
@@ -55,73 +77,55 @@ Ext.define('Ext.Praxis.controller.salesaudit.Waiver.WaiverRecordController', {
         Ext.getCmp(prototype.id + '-rec-txtDescr').setValue(d.A2537DESCR || '');
     },
 
-    onSaveClick: async function () {
-        var p = this.view.params || {};
-        var action = p.action || 'C';
-
-        var getVal = function (id) {
-            return (Ext.getCmp(prototype.id + id).getValue() || '');
-        };
-        var getDateVal = function (id) {
-            var dt = Ext.getCmp(prototype.id + id).getValue();
-            return dt ? Ext.util.Format.date(dt, 'Ymd') : '';
-        };
-
-        var ncaso = getVal('-rec-txtNcaso').toString().trim();
-        var pcaso = getVal('-rec-txtPcaso').trim();
-        if (!ncaso) { global.Msg({ msg: 'Case No is required.' }); return; }
-        if (!pcaso) { global.Msg({ msg: 'Name is required.' }); return; }
-
-        var ccust = Ext.getCmp(prototype.id + '-Ccust').getValue() || '';
-
-        var params = {
-            V_ACTION:  action,
-            V_CCUST:   ccust,
-            V_NCASO:   ncaso,
-            V_ESTAD:   getVal('-rec-txtEstad').trim(),
-            V_PNR:     getVal('-rec-txtPnr').trim(),
-            V_NPAX:    getVal('-rec-txtNpax').trim(),
-            V_PCASO:   pcaso,
-            V_TCASO:   getVal('-rec-txtTcaso').trim(),
-            V_FCRRE:   getDateVal('-rec-dtFcrre'),
-            V_HCRRE:   getVal('-rec-txtHcrre').trim(),
-            V_FVETO:   getDateVal('-rec-dtFveto'),
-            V_HVETO:   getVal('-rec-txtHveto').trim(),
-            V_TKTS:    getVal('-rec-txtTkts').trim(),
-            V_CODIT:   getVal('-rec-txtCodit').trim(),
-            V_IATAE:   getVal('-rec-txtIatae').trim(),
-            V_SEQ:     getVal('-rec-txtSeq').trim(),
-            V_AGENE:   getVal('-rec-txtAgene').trim(),
-            V_CCPTO:   getVal('-rec-txtCcpto').trim(),
-            V_SCPTO:   getVal('-rec-txtScpto').trim(),
-            V_CURRW:   getVal('-rec-txtCurrw').trim(),
-            V_AMOUW:   getVal('-rec-txtAmouw').trim(),
-            V_EJECB:   getVal('-rec-txtEjecb').trim(),
-            V_NVLO:    getVal('-rec-txtNvlo').trim(),
-            V_FVLO:    getVal('-rec-txtFvlo').trim(),
-            V_HVLO:    getVal('-rec-txtHvlo').trim(),
-            V_ITIN:    getVal('-rec-txtItin').trim(),
-            V_DESCR:   getVal('-rec-txtDescr').trim()
-        };
-
-        if (action === 'U' && p.rec) {
-            params.V_RUTAA = (p.rec.data || p.rec).A2537RUTAA || '';
-        }
-
-        var winRef = this.view;
-        winRef.mask('Saving...');
-        try {
-            await global.callStoreGet('PXSAUDIT', 'SQP01444', params);
-            winRef.unmask();
-            winRef.close();
-            if (p.onSuccess) p.onSuccess();
-        } catch (e) {
-            winRef.unmask();
-            global.Msg({ msg: 'Error saving record.' });
-        }
-    },
-
     onCancelClick: function () {
         this.view.close();
+    },
+
+    /**
+     * Descarga el archivo original asociado al caso (A2537RUTAA), vía el
+     * mismo endpoint que usaba la grilla principal.
+     */
+    onDownloadOriginalFile: function () {
+        var p = this.view.params || {};
+        var d = (p.rec && (p.rec.data || p.rec)) || {};
+        var rutaa = (d.A2537RUTAA || '').trim();
+
+        if (!rutaa) {
+            global.Msg({ msg: 'This case has no file attached.' });
+            return;
+        }
+
+        var fileName = rutaa.split('\\').pop() || 'download.csv';
+        var winRef = this.view;
+
+        winRef.mask('Downloading...');
+        Ext.Ajax.request({
+            // URL fija (no depender de prototype.url, que es global y otras
+            // pantallas lo reescriben en su propio init()).
+            url: CONTEXTPATH + '/Waiver/download',
+            method: 'POST',
+            timeout: 60000000,
+            params: { beanString: JSON.stringify(d) },
+            success: function (response) {
+                winRef.unmask();
+                var res = Ext.JSON.decode(response.responseText);
+                if (!res || !res.bytes) {
+                    global.Msg({ msg: (res && res.mensaje) || 'The file cannot be found on the server.' });
+                    return;
+                }
+                var bytes = new Uint8Array(res.bytes);
+                var blob = new Blob([bytes], { type: 'application/png' });
+
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = fileName;
+                link.click();
+            },
+            failure: function (response) {
+                winRef.unmask();
+                console.error('Download failed:', response.status, response.responseText);
+                global.Msg({ msg: 'Error downloading file.' });
+            }
+        });
     }
 });
