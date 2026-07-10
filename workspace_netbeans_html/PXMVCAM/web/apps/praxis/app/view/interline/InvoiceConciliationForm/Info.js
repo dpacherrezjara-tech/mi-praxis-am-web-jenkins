@@ -96,7 +96,7 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.Info', {
                                                 },
                                                 items: [
                                                     {text: 'Clear<br> Date', width: 80, dataIndex: 'strFormatDate', height: 45,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = ' color:#008FE3;text-align:center;text-decoration:underline;';
                                                             return '<a href="#interline-invoice-conciliation-form" style="color:#008FE3;">' + value + '</a>';
                                                         },
@@ -116,7 +116,7 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.Info', {
                                             id: prototype.id + '-gridDataP2',
                                             bodyStyle: 'background-color: #E3EAEF;',
                                             height: 560,
-                                            width: 500,
+                                            width: 600,
                                             columnLines: true,
                                             resizable: false,
                                             border: false,
@@ -140,50 +140,74 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.Info', {
                                                             border: true
                                                         },
                                                         columns: [
-                                                            {text: 'IS-IDEC', width: 80, dataIndex: 'ISIDEC',
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            {
+                                                                text: 'IS-IDEC ',
+                                                                width: 100,
+                                                                dataIndex: 'ISIDEC',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = 'text-align:right;background:#E1FFE1';
-                                                                    return Ext.util.Format.number(value, '0,000');
+                                                                    return Ext.util.Format.number(value, '0,000.00');
                                                                 },
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataP2').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totISIDEC, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totISIDEC, '0,000.00') + '</b>';
                                                                 }
                                                             },
-                                                            {text: 'Passenger', width: 80, dataIndex: 'A508PASJP', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'Passenger', width: 100, dataIndex: 'A508PASJP', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataP2').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA508PASJP, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA508PASJP, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'UATP', width: 80, dataIndex: 'A508UATPP', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'UATP', width: 90, dataIndex: 'A508UATPP', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataP2').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA508UATPP, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA508UATPP, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'CARGO', width: 80, dataIndex: 'A508CARGOP', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'CARGO', width: 90, dataIndex: 'A508CARGOP', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataP2').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA508CARGOP, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA508CARGOP, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'MISCELANEOS', width: 100, dataIndex: 'A508MISCP', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'MISCELANEOS', width: 100, dataIndex: 'A508MISCP', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataP2').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA508MISCP, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA508MISCP, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'NETO', width: 80, dataIndex: 'A508NETOP', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'NETO', width: 110, dataIndex: 'A508NETOP', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataP2').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA508NETOP, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA508NETOP, '0,000.00') + '<b>';
                                                                 }
                                                             }
                                                         ]
@@ -199,7 +223,7 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.Info', {
                                             id: prototype.id + '-gridDataP3',
                                             bodyStyle: 'background-color: #E3EAEF;',
                                             height: 560,
-                                            width: 420,
+                                            width: 500,
                                             columnLines: true,
                                             resizable: false,
                                             border: false,
@@ -223,39 +247,59 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.Info', {
                                                             border: true
                                                         },
                                                         columns: [
-                                                            {text: 'Passenger', width: 80, dataIndex: 'A508PASJC', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'Passenger', width: 100, dataIndex: 'A508PASJC', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataP3').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA508PASJC, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA508PASJC, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'UATP', width: 80, dataIndex: 'A508UATPC', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'UATP', width: 100, dataIndex: 'A508UATPC', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataP3').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA508UATPC, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA508UATPC, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'CARGO', width: 80, dataIndex: 'A508CARGOC', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'CARGO', width: 90, dataIndex: 'A508CARGOC', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataP3').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA508CARGOC, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA508CARGOC, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'MISCELANEOS', width: 100, dataIndex: 'A508MISCC', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'MISCELANEOS', width: 100, dataIndex: 'A508MISCC', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataP3').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA508MISCC, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA508MISCC, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'NETO', width: 80, dataIndex: 'A508NETOC', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'NETO', width: 100, dataIndex: 'A508NETOC', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataP3').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA508NETOC, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA508NETOC, '0,000.00') + '<b>';
                                                                 }
                                                             }
                                                         ]
@@ -287,11 +331,15 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.Info', {
                                                     align: 'center'
                                                 },
                                                 items: [
-                                                    {text: 'Balance', width: 100, dataIndex: 'A508BALANC', renderer: 'getInt', height: 45,
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    {text: 'Balance', width: 100, dataIndex: 'A508BALANC',  height: 45,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataP4').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
-                                                            return '<b>' + Ext.util.Format.number(data.totA508BALANC, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totA508BALANC, '0,000.00') + '<b>';
                                                         }
                                                     }
                                                 ]
@@ -354,7 +402,7 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.Info', {
                                                 },
                                                 items: [
                                                     {text: 'CIA', width: 100, dataIndex: 'A094CIA', height: 45,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var tool = record.data['strDescripcion'].trim();
                                                             if (tool.length > 0) {
                                                                 metaData.tdAttr = 'data-qtip = "' + tool + '"';
@@ -377,7 +425,7 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.Info', {
                                             id: prototype.id + '-gridDataA094P2',
                                             bodyStyle: 'background-color: #E3EAEF;',
                                             height: 560,
-                                            width: 500,
+                                            width: 600,
                                             columnLines: true,
                                             resizable: false,
                                             border: false,
@@ -401,50 +449,70 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.Info', {
                                                             border: true
                                                         },
                                                         columns: [
-                                                            {text: 'IS-IDEC', width: 80, dataIndex: 'ISIDEC',
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            {text: 'IS-IDEC', width: 110, dataIndex: 'ISIDEC',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = 'text-align:right;background:#E1FFE1';
-                                                                    return Ext.util.Format.number(value, '0,000');
+                                                                    return Ext.util.Format.number(value, '0,000.00');
                                                                 },
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataA094P2').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totISIDEC, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totISIDEC, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'Passenger', width: 80, dataIndex: 'A094PASJP', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'Passenger', width: 110, dataIndex: 'A094PASJP', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataA094P2').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA094PASJP, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA094PASJP, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'UATP', width: 80, dataIndex: 'A094UATPP', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'UATP', width: 80, dataIndex: 'A094UATPP', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataA094P2').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA094UATPP, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA094UATPP, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'CARGO', width: 80, dataIndex: 'A094CARGOP', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'CARGO', width: 80, dataIndex: 'A094CARGOP', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataA094P2').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA094CARGOP, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA094CARGOP, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'MISCELANEOS', width: 100, dataIndex: 'A094MISCP', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'MISCELANEOS', width: 100, dataIndex: 'A094MISCP', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataA094P2').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA094MISCP, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA094MISCP, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'NETO', width: 80, dataIndex: 'A094NETOP', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'NETO', width: 100, dataIndex: 'A094NETOP', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataA094P2').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA094NETOP, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA094NETOP, '0,000.00') + '<b>';
                                                                 }
                                                             }
                                                         ]
@@ -460,7 +528,7 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.Info', {
                                             id: prototype.id + '-gridDataA094P3',
                                             bodyStyle: 'background-color: #E3EAEF;',
                                             height: 560,
-                                            width: 420,
+                                            width: 530,
                                             columnLines: true,
                                             resizable: false,
                                             border: false,
@@ -484,39 +552,59 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.Info', {
                                                             border: true
                                                         },
                                                         columns: [
-                                                            {text: 'Passenger', width: 80, dataIndex: 'A094PASJC', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'Passenger', width: 100, dataIndex: 'A094PASJC', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataA094P3').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA094PASJC, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA094PASJC, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'UATP', width: 80, dataIndex: 'A094UATPC', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'UATP', width: 100, dataIndex: 'A094UATPC', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataA094P3').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA094UATPC, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA094UATPC, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'CARGO', width: 80, dataIndex: 'A094CARGOC', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'CARGO', width: 100, dataIndex: 'A094CARGOC',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataA094P3').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA094CARGOC, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA094CARGOC, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'MISCELANEOS', width: 100, dataIndex: 'A094MISCC', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'MISCELANEOS', width: 100, dataIndex: 'A094MISCC', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataA094P3').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA094MISCC, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA094MISCC, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {text: 'NETO', width: 80, dataIndex: 'A094NETOC', renderer: 'getInt',
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            {text: 'NETO', width: 110, dataIndex: 'A094NETOC', 
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataA094P3').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA094NETOC, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA094NETOC, '0,000.00') + '<b>';
                                                                 }
                                                             }
                                                         ]
@@ -555,7 +643,7 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.Info', {
                                     id: prototype.id + '-gridDataBySource',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     height: 560,
-                                    width: 880,
+                                    width: 930,
                                     columnLines: true,
                                     resizable: false,
                                     border: false,
@@ -592,46 +680,70 @@ Ext.define('Ext.Praxis.view.interline.InvoiceConciliationForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'GROSS', width: 80, dataIndex: 'A096TOTAL', renderer: 'getInt',
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    {text: 'GROSS', width: 90, dataIndex: 'A096TOTAL',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataBySource').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
-                                                            return '<b>' + Ext.util.Format.number(data.totA096TOTAL, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totA096TOTAL, '0,000.00') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'ISC', width: 80, dataIndex: 'A096ISC', renderer: 'getInt',
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    {text: 'ISC', width: 80, dataIndex: 'A096ISC', 
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataBySource').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
-                                                            return '<b>' + Ext.util.Format.number(data.totA096ISC, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totA096ISC, '0,000.00') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'UATP', width: 80, dataIndex: 'A096UATP', renderer: 'getInt',
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    {text: 'UATP', width: 80, dataIndex: 'A096UATP', 
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataBySource').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
-                                                            return '<b>' + Ext.util.Format.number(data.totA096UATP, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totA096UATP, '0,000.00') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'Others', width: 80, dataIndex: 'A096OTROS', renderer: 'getInt',
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    {text: 'Others', width: 80, dataIndex: 'A096OTROS', 
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataBySource').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
-                                                            return '<b>' + Ext.util.Format.number(data.totA096OTROS, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totA096OTROS, '0,000.00') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'TAX', width: 80, dataIndex: 'A096TAX', renderer: 'getInt',
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    {text: 'TAX', width: 90, dataIndex: 'A096TAX', 
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataBySource').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
-                                                            return '<b>' + Ext.util.Format.number(data.totA096TAX, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totA096TAX, '0,000.00') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'NETO', width: 80, dataIndex: 'A096NETO', renderer: 'getInt',
-                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    {text: 'NETO', width: 90, dataIndex: 'A096NETO', 
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background:#E1FFE1';
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataBySource').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right';
-                                                            return '<b>' + Ext.util.Format.number(data.totA096NETO, '0,000') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totA096NETO, '0,000.00') + '<b>';
                                                         }
                                                     }
                                                 ]
