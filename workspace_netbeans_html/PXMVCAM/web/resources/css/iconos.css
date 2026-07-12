@@ -107,6 +107,15 @@
 .prx-icon-104-ticket {
  background-image: url("../img/botones/1400098721_cv.png");
 }
+.prx-icon-rules {
+ background-image: url("../img/botones/16x16/rules.png");
+}
+.prx-icon-logfile {
+ background-image: url("../img/botones/16x16/log-file.png");
+}
+.prx-icon-log {
+ background-image: url("../img/botones/16x16/log.png");
+}
 .prx-icon-pdf {
  background-image: url("../img/botones/16x16/pdf.png");
 }
