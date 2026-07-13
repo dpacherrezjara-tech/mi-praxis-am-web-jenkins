@@ -3321,6 +3321,30 @@ public class FlightConciliationController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    @RequestMapping(value = "/actualizarContador")
+    public @ResponseBody
+    String actualizarContador(ModelMap map, HttpServletRequest request) {
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            String mes = request.getParameter("mes").trim();
+            String anio = request.getParameter("anio").trim();
+
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            logic.actualizarContador(anio, mes);
+
+            map.put("success", true);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
     //-------------------------------------------------------------------------------------------------------------
     @RequestMapping(value = "/updateCouponA3729", method = RequestMethod.POST)
     public @ResponseBody
