@@ -185,7 +185,7 @@ public class AccountingProcessConsortiaController extends BaseController {
         filter.page.START = 0;
         filter.page.LIMIT = 0;
         
-        String fileNameDownload = String.format("Accounting Master Process Sales - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Accounting Master Consortia - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         
         try {
             Workbook workbook = null;

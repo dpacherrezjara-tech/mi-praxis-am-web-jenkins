@@ -87,6 +87,7 @@ import net.miatech.praxis.payment.filter.SQP05313Filter;
 import net.miatech.praxis.payment.filter.SQP05319Filter;
 import net.miatech.praxis.payment.filter.SQP05646Filter;
 import net.miatech.praxis.payment.filter.ScannerFilter;
+import net.miatech.praxis.payment.filter.SQP05709Filter;
 import net.miatech.praxis.utils.JdbcUtils;
 import net.miatech.praxis.utils.MailUtils;
 import net.miatech.utils.Functions;
@@ -126,7 +127,7 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
 
     @Override
     public List<A3152> getPaises() throws Exception {
-        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05016",
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05745",
                 new BeanPropertyRowMapper<>(A3152.class));
         List<A3152> res = (List<A3152>) obj.get("result");
         return res;
@@ -161,6 +162,10 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         mappers.add(new BeanPropertyRowMapper(A3152.class));
         mappers.add(new BeanPropertyRowMapper(A006.class));
         mappers.add(new BeanPropertyRowMapper(A4451MP.class));
+        mappers.add(new BeanPropertyRowMapper(A4451MP.class));
+        mappers.add(new BeanPropertyRowMapper(A4451MP.class));
+        mappers.add(new BeanPropertyRowMapper(A4451MP.class));
+        mappers.add(new BeanPropertyRowMapper(A4451MP.class));
         Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05276",
                 params, mappers);
         filter.setCERROR((List<A4451MP>) obj.get("result0"));
@@ -170,6 +175,9 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         filter.setPAISES((List<A3152>) obj.get("result4"));
         filter.setMONEDAS((List<A006>) obj.get("result5"));
         filter.setADMINS((List<A4451MP>) obj.get("result6"));
+        filter.setSTVALS((List<A4451MP>) obj.get("result8"));
+        filter.setAUTOCOMMENTS((List<A4451MP>) obj.get("result9"));
+        filter.setREGLAS((List<A4451MP>) obj.get("result10"));
         return filter;
     }
 
@@ -452,6 +460,18 @@ public class SalesReconciliationDAO implements SalesReconciliationLogic {
         filter.setPageOut(obj);
         return filter;
     }
+
+    @Override
+    public SQP05709Filter loadSQP05709Filter(SQP05709Filter filter) throws Exception {
+        filter.setPage();
+        SqlParameterSource params = new BeanPropertySqlParameterSource(filter);
+        Map<String, Object> obj = jdbcUtils.executeSQP(LIBRARY, "SQP05709", params,
+                new BeanPropertyRowMapper<>(A4496Filter.class));
+        filter.setResponse((List<A4496Filter>) obj.get("result"));
+        filter.setPageOut(obj);
+        return filter;
+    }
+
 
     @Override
     public SQP05074Filter loadSQP05074Filter(SQP05074Filter filter) throws Exception {

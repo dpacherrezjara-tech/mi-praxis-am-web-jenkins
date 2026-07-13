@@ -60,10 +60,4 @@ public class A1817 {
     public String USUP = "";
     public String FEUP = "";
     public String HOUP = "";
-    
-    // GUARDANDO CLAVE INICIAL
-    public String CDEPART_OLD = "";
-    public String CARRIVA_OLD = "";
-    public String NFLIGHT_OLD = "";
-    public String DFLIGHT_OLD = "";
 }

@@ -393,7 +393,7 @@ public class PassengerInvoicesController extends BaseController {
 
             LoadInterlineLogic logic = new LoadInterlineLogic();
             logic.setSession(this.serverSession.getServerSession());
-            if (filter.SOURCOD.equals("01") || filter.SOURCOD.equals("02") || filter.SOURCOD.equals("03")
+            if (filter.SOURCOD.equals("31") || filter.SOURCOD.equals("01") || filter.SOURCOD.equals("02") || filter.SOURCOD.equals("03")
                     || filter.SOURCOD.equals("08") || filter.SOURCOD.equals("14") || filter.SOURCOD.equals("21")
                     || filter.SOURCOD.equals("23") || filter.SOURCOD.equals("25") || filter.SOURCOD.equals("26") || filter.SOURCOD.equals("90")) {
 

@@ -42,7 +42,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                 {
                     items: [
                         {
-                            name: 'merchn',
+                            name: 'MERCHN',
                             id: prototype.idDE + '-txtMerchant',
                             fieldLabel: 'Merchant Nbr',
                             labelWidth: 120,
@@ -56,7 +56,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                         {
                             xtype: 'combobox',
                             fieldLabel: 'Channel',
-                            name: 'canal',
+                            name: 'CANAL',
                             store: Ext.create('Ext.data.SimpleStore', {
                                 fields: ['code', 'name'],
                                 data: [
@@ -84,7 +84,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                         {
                             xtype: 'combobox',
                             id: prototype.idDE + '-cmbPaises',
-                            name: 'scountry',
+                            name: 'SCOUNTRY',
                             queryMode: 'local',
                             allowBlank: true,
                             forceSelection: true,
@@ -95,9 +95,8 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                             labelWidth: 65,
                             labelAlign: 'right',
                             width: 180,
-                            typeAhead: true,
-                            valueField: 'code',
-                            displayField: 'name',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
                             enableKeyEvents: true,
                             triggerAction: 'all',
                             value: ''
@@ -107,7 +106,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                 {
                     items: [
                         {
-                            name: 'descr',
+                            name: 'DESCR',
                             fieldLabel: 'Merchant Name',
                             labelWidth: 120,
                             width: 500,
@@ -120,7 +119,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                 {
                     items: [
                         {
-                            name: 'rsocial',
+                            name: 'RSOCIAL',
                             fieldLabel: 'Social Reason',
                             labelWidth: 120,
                             width: 500,
@@ -133,7 +132,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                 {
                     items: [
                         {
-                            name: 'merchp',
+                            name: 'MERCHP',
                             fieldLabel: 'Merchant Payment',
                             labelWidth: 120,
                             width: 240,
@@ -148,7 +147,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                     items: [
                         {
                             xtype: 'combo',
-                            name: 'uniope',
+                            name: 'UNIOPE',
                             id: prototype.idDE + '-cmbUNIOPE',
                             queryMode: 'local',
                             fieldLabel: 'Op. Unit',
@@ -161,7 +160,6 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                             autoSelect: true,
                             editable: false,
                             disabled: false,
-                            typeAhead: true,
                             valueField: 'code',
                             displayField: 'name',
                             enableKeyEvents: true,
@@ -182,7 +180,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                         },
                         {
                             xtype: 'combo',
-                            name: 'status',
+                            name: 'STATUS',
                             id: prototype.idDE + '-cmbStatus',
                             queryMode: 'local',
                             fieldLabel: 'Status',
@@ -194,9 +192,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                             caseSensitive: false,
                             autoSelect: true,
                             editable: false,
-                            //disabled: true,
                             readOnly: true,
-                            typeAhead: true,
                             valueField: 'code',
                             displayField: 'name',
                             enableKeyEvents: true,
@@ -216,7 +212,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                     items: [
                         {
                             xtype: 'combobox',
-                            name: 'codagrupa',
+                            name: 'CODAGRUPA',
                             id: prototype.idDE + '-de-cmbCODAGRUP',
                             store: Ext.create('Ext.data.SimpleStore', {
                                 fields: ['code', 'name'],
@@ -241,7 +237,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                         },
                         {
                             xtype: 'combobox',
-                            name: 'nbragrupa',
+                            name: 'NBRAGRUPA',
                             id: prototype.idDE + '-cmbNBRAGRUP',
                             hidden: true,
                             store: Ext.create('Ext.data.SimpleStore', {
@@ -267,7 +263,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                         },
                         {
                             xtype: 'datefield',
-                            name: 'fechaini',
+                            name: 'FECHAINI',
                             fieldLabel: 'Validity',
                             labelStyle: 'color:#0B333C;',
                             format: 'Ymd',
@@ -279,7 +275,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                         },
                         {
                             xtype: 'datefield',
-                            name: 'fechafin',
+                            name: 'FECHAFIN',
                             fieldLabel: 'To',
                             format: 'Ymd',
                             editable: true,
@@ -293,14 +289,14 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                 {
                     items: [
                         {
-                            name: 'ciata',
+                            name: 'CIATA',
                             fieldLabel: 'IATA',
                             labelWidth: 120,
                             width: 220,
                             readOnly: true
                         },
                         {
-                            name: 'niata',
+                            name: 'NIATA',
                             width: 250,
                             readOnly: true
                         }
@@ -381,31 +377,31 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                             columns: [
                                 {
                                     header: 'IATA',
-                                    dataIndex: 'ciata',
+                                    dataIndex: 'CIATA',
                                     align: 'center',
                                     width: 100
                                 },
                                 {
                                     header: 'Name',
-                                    dataIndex: 'niata',
+                                    dataIndex: 'NIATA',
                                     align: 'center',
                                     flex: 1,
                                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                         var data = record.data;
                                         metaData.style = "text-align:left;";
-                                        metaData.tdAttr = 'data-qtip="' + data.niata + '"';
-                                        return  value;
+                                        metaData.tdAttr = 'data-qtip="' + data.NIATA + '"';
+                                        return value;
                                     }
                                 },
                                 {
                                     header: 'Country',
-                                    dataIndex: 'scountry',
+                                    dataIndex: 'SCOUNTRY',
                                     align: 'center',
                                     width: 80
                                 },
                                 {
                                     header: 'Channel',
-                                    dataIndex: 'canal',
+                                    dataIndex: 'CANAL',
                                     align: 'center',
                                     width: 80
                                 },
@@ -432,13 +428,13 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                     xtype: 'fieldset',
                     title: '<strong style="color:#121E31; text-decoration: underline; ">Commission Policy Information</strong>',
                     style: {
-                        backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
+                        backgroundColor: '#efe5e5'
                     },
                     margin: '0 10 0 10',
                     width: '100%',
                     items: [
                         {
-                            name: 'codclit1',
+                            name: 'CODCLIT1',
                             fieldLabel: 'Client Code 1',
                             labelWidth: 120,
                             width: 190,
@@ -447,7 +443,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                             maskRe: /[0-9]/
                         },
                         {
-                            name: 'dirclit1',
+                            name: 'DIRCLIT1',
                             fieldLabel: 'Client Address 1',
                             labelWidth: 120,
                             width: 220,
@@ -461,13 +457,13 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                     xtype: 'fieldset',
                     title: '<strong style="color:#121E31; text-decoration: underline; ">Chargeback Policy Information</strong>',
                     style: {
-                        backgroundColor: '#efe5e5' // Cambiar el color de fondo a gris claro (#f0f0f0)
+                        backgroundColor: '#efe5e5'
                     },
                     margin: '0 10 0 10',
                     width: '100%',
                     items: [
                         {
-                            name: 'codclit2',
+                            name: 'CODCLIT2',
                             fieldLabel: 'Client Code 2',
                             labelWidth: 120,
                             width: 190,
@@ -476,7 +472,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                             maskRe: /[0-9]/
                         },
                         {
-                            name: 'dirclit2',
+                            name: 'DIRCLIT2',
                             fieldLabel: 'Client Address 2',
                             labelWidth: 120,
                             width: 220,
@@ -490,7 +486,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                     xtype: 'fieldset',
                     title: '<strong style="color:#121E31; text-decoration: underline; ">Control Data</strong>',
                     style: {
-                        backgroundColor: '#E6EEF1' // Cambiar el color de fondo a gris claro (#f0f0f0)
+                        backgroundColor: '#E6EEF1'
                     },
                     margin: '0 10 0 10',
                     width: '100%',
@@ -521,21 +517,21 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                         {
                             items: [
                                 {
-                                    name: 'uscr',
+                                    name: 'USCR',
                                     fieldLabel: 'Created User',
                                     labelWidth: 90,
                                     width: 190,
                                     readOnly: true
                                 },
                                 {
-                                    name: 'fecr',
+                                    name: 'FECR',
                                     fieldLabel: 'Crt. Date',
                                     labelWidth: 90,
                                     width: 170,
                                     readOnly: true
                                 },
                                 {
-                                    name: 'hocr',
+                                    name: 'HOCR',
                                     fieldLabel: 'Crt. Time',
                                     labelWidth: 90,
                                     width: 150,
@@ -546,21 +542,21 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaint
                         {
                             items: [
                                 {
-                                    name: 'usup',
+                                    name: 'USUP',
                                     fieldLabel: 'Update User',
                                     labelWidth: 90,
                                     width: 190,
                                     readOnly: true
                                 },
                                 {
-                                    name: 'feup',
+                                    name: 'FEUP',
                                     fieldLabel: 'Upd. Date',
                                     labelWidth: 90,
                                     width: 170,
                                     readOnly: true
                                 },
                                 {
-                                    name: 'houp',
+                                    name: 'HOUP',
                                     fieldLabel: 'Upd. Time',
                                     labelWidth: 90,
                                     width: 150,

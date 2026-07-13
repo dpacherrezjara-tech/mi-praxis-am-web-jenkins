@@ -37,9 +37,9 @@ public class SpringAsyncConfig {
     @Bean(name = "sabreRobotExecutor")
     public TaskExecutor sabreRobotExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(4); // Número de hilos que se mantendrán en el pool
-        executor.setMaxPoolSize(4); // Máximo número de hilos
-        executor.setQueueCapacity(4); // Capacidad de la cola
+        executor.setCorePoolSize(5); // Número de hilos que se mantendrán en el pool
+        executor.setMaxPoolSize(5); // Máximo número de hilos
+        executor.setQueueCapacity(5); // Capacidad de la cola
         executor.setThreadNamePrefix("SabreRobot-");
         executor.setWaitForTasksToCompleteOnShutdown(false);
         // Establecer el manejador de rechazo para lanzar una excepción cuando la cola esté llena

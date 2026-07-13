@@ -11,14 +11,20 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
     },
     afterRender: function(){
         this.p = this.view.params;
+        global.AccessControlMaganer();
         
         switch( this.p.action ){
             case 'U':
                 this.mostrarData(this.p.rec);
                 Ext.getCmp(prototype.id+'-btn-save').hide();
-                Ext.getCmp(prototype.id+'-btn-update').hide();
+                //Ext.getCmp(prototype.id+'-btn-update').hide();
                 if(this.p.rec.data.ESTADO === 'Error'){
                     Ext.getCmp(prototype.id+'-btn-delete').show();
+                }
+                else if(this.p.rec.data.ESTADO === 'Completed'){
+                    Ext.getCmp(prototype.id+'-btn-delete').hide();
+                    Ext.getCmp(prototype.id+'-btn-save').hide();
+                    Ext.getCmp(prototype.id+'-btn-update').hide();
                 }else{
                     Ext.getCmp(prototype.id+'-btn-delete').hide();
                 }                            
@@ -34,7 +40,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                 break;
                 
         }
-        global.AccessControlMaganer();
+        
     },
     onMostrarCampoChange: function(cmp, newValue, oldValue, eOpts) {
         this.limpiarCampos();
@@ -42,10 +48,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
         
         switch (strModulo) {
             case 'PSALES':
-            case 'PSALESARC':
-            case 'PSALESASR':
-            case 'PSALESBSP':
-            case 'PSALESMAN':
+            case 'PSALESEMDS':
             case 'PPSALES':
             case 'PADJMA':
             case '':
@@ -90,7 +93,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
         Ext.getCmp(prototype.id+'-cbxModulo').setReadOnly(true);
         
         switch (rec.get('A1955MODUL')) {
-            case 'PSALES': case 'PSALESARC':  case 'PSALESASR':  case 'PSALESBSP':  case 'PSALESMAN': case 'PFLOWN': case 'PADJMA': case "PPSALES" :  
+            case 'PSALES': case 'PSALESEMDS': case 'PFLOWN': case 'PADJMA': case "PPSALES" :  
                 Ext.getCmp(prototype.id+'-boxFecha').show();
                 //Ext.getCmp(prototype.id+'-boxPeriodo').hide();
                 Ext.getCmp(prototype.id+'-boxCaducos').hide();
@@ -132,11 +135,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
     onSaveClick: function(btn) {
         if (this.validaRequiredFields()) {
             switch (this.getValue('cbxModulo')) {
-                case "PSALES" : 
-                case "PSALESARC" : 
-                case "PSALESASR" : 
-                case "PSALESBSP" : 
-                case "PSALESMAN" : 
+                case "PSALES" :
+                case "PSALESEMDS": 
                 case "PCADUCOS" : 
                 case "PADJMA" : 
                     Ext.Msg.show({
@@ -187,16 +187,12 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
     onDeleteClick: function(btn){        
         switch (this.getValue('cbxModulo')) {
             case "PSALES" : 
-            case "PSALESARC" : 
-            case "PSALESASR" : 
-            case "PSALESBSP" :
-            case "PSALESMAN" :
                 dataentryParams = {};
                 dataentryParams.IN_MODULO = 'SALES';
                 dataentryParams.IN_FECHA_PROCESO = this.p.rec.get('A1955FPROC');
                 this.setReverse(this.p.rec);
                 break;
-            case "PCADUCOS" : case "PADJMA" : 
+            case "PCADUCOS" : case "PADJMA" : case "PSALESEMDS" :
                 Ext.Msg.show({
                     title: '.:PRAXIS:.',
                     msg: 'Are you sure to delete ?',
@@ -209,6 +205,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                             this.view.params.action = "D";
                             this.llenarData();
                             //console.log(this.beanOption);
+                            
                             this.crud();
                         }
                     }
@@ -243,7 +240,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
             return false;
         } else {
             switch (cbxModulo) {
-                case "PSALES" : case "PSALESARC" :  case "PSALESASR" : case "PSALESBSP" : case "PSALESMAN" : case "PFLOWN": case "PADJMA" : case "PPSALES" :                           
+                case "PSALES" : case "PSALESEMDS" : case "PFLOWN": case "PADJMA" : case "PPSALES" :                           
                     if (this.getValue('txtProcessDate')==='' || this.getValue('txtProcessDate') === null) {
                         this.msjAlert='Enter correct data';
                         return false;
@@ -305,7 +302,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                         msg: msg,
                         icon: icon,
                         fn: function() {
-                            if (msg==='RECORD INSERTED') {
+                            if (msg==='RECORD INSERTED' ||msg==='RECORD REMOVED') {
                                 Ext.getCmp('DataEntryAccountingMasterProcess2Form').close(),
                                 Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                             }
@@ -386,7 +383,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
         var A1955MODUL = this.getValue('cbxModulo');
         
         switch (this.getValue('cbxModulo')) {
-            case "PSALES" : case "PSALESARC" : case "PSALESASR" : case "PSALESBSP" : case "PSALESMAN" : case "PFLOWN": case "PADJMA" : case "PPSALES" :
+            case "PSALES" : case "PSALESEMDS" : case "PFLOWN": case "PADJMA" : case "PPSALES" :
                 IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtProcessDate').getValue(), 'Ymd');
                 break;
             /*case "PAPINT" : case "PARINT" :

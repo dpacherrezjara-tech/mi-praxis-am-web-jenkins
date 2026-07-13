@@ -11,7 +11,7 @@ public class SQP05133Filter {
     private String IN_CCUST,IN_DATEFROM,IN_DATETO,IN_DATE,IN_MERCHANT,
             IN_STVAL,IN_PNR,IN_TRANSTYPE,IN_PROCTYPE,IN_PROCTYPESQ,IN_SCOUNTRY,IN_SCURRENCY,IN_PCURRENCY,
             IN_SCARDN,IN_SAUTHOC,
-            IN_PMERCHID;
+            IN_PMERCHID ; //, IN_AREFNBR;
     private List<A4331STFilter> response = new ArrayList<>();
 
     public String getIN_CCUST() {
@@ -141,6 +141,14 @@ public class SQP05133Filter {
     public void setIN_PMERCHID(String IN_PMERCHID) {
         this.IN_PMERCHID = IN_PMERCHID;
     }
+    
+//    public String getIN_AREFNBR() {
+//        return IN_AREFNBR;
+//    }
+//
+//    public void setIN_AREFNBR(String IN_AREFNBR) {
+//        this.IN_AREFNBR = IN_AREFNBR;
+//    }
 
     public List<A4331STFilter> getResponse() {
         return response;

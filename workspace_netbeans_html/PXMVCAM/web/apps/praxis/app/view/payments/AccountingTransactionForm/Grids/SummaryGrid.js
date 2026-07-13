@@ -28,10 +28,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryGrid
         items: [
             //<editor-fold defaultstate="collapsed" desc="Summary Cols">
             {
-                text: 'RN', dataIndex: 'rn', width: 40,hidden:true
+                text: 'RN', dataIndex: 'RN', width: 40, hidden: true
             },
             {
-                text: 'Processing<br>Date', dataIndex: 'fecha', width: 80,
+                text: 'Processing<br>Date', dataIndex: 'FECHA', width: 80,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:center;text-decoration:underline;color:#057ECB;cursor:pointer";
                     var date = Ext.Date.parse(value, 'Ym');
@@ -40,21 +40,20 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryGrid
                         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
                     ];
 
-                    // Formatea la fecha según el formato deseado
                     var formattedDate = Ext.Date.format(date, 'Y-M', {
                         monthNames: monthNames
                     });
                     return formattedDate;
                 },
-                listeners:{
-                    click:'onClickMonth'
+                listeners: {
+                    click: 'onClickMonth'
                 }
             },
             {
-                text: 'Processor', dataIndex: 'proc_DESC', flex: 1
+                text: 'Processor', dataIndex: 'PROC_DESC', flex: 1
             },
             {
-                text: 'Currency', dataIndex: 'scurrency', width: 80
+                text: 'Currency', dataIndex: 'SCURRENCY', width: 80
             },
             {
                 text: 'Accounting Trassaction', flex: 1,
@@ -65,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryGrid
                 },
                 columns: [
                     {
-                        text: 'Accounted', dataIndex: 'accounted', width: 120,
+                        text: 'Accounted', dataIndex: 'ACCOUNTED', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#6FCA96";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -73,14 +72,14 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryGrid
                         }
                     },
                     {
-                        text: 'Qty<br>Accounted', dataIndex: 'qty_ACCOUNTED', width: 80,
+                        text: 'Qty<br>Accounted', dataIndex: 'QTY_ACCOUNTED', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#6FCA96";
                             return value;
                         }
                     },
                     {
-                        text: 'Pending', dataIndex: 'pending', width: 120,
+                        text: 'Pending', dataIndex: 'PENDING', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#D3DA66";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -88,14 +87,14 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryGrid
                         }
                     },
                     {
-                        text: 'Qty<br>Pending', dataIndex: 'qty_PENDING', width: 80,
+                        text: 'Qty<br>Pending', dataIndex: 'QTY_PENDING', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#D3DA66";
                             return value;
                         }
                     },
                     {
-                        text: 'Total', dataIndex: 'total', width: 120,
+                        text: 'Total', dataIndex: 'TOTAL', width: 120,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#6BA9CF";
                             value = Ext.util.Format.number(value, '0,000.00');
@@ -103,13 +102,15 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Grids.SummaryGrid
                         }
                     },
                     {
-                        text: 'Qty<br>Total', dataIndex: 'qty_TOTAL', width: 80,
+                        text: 'Qty<br>Total', dataIndex: 'QTY_TOTAL', width: 80,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:right;background-color:#6BA9CF";
                             return value;
                         }
-                    }
-
+                    },
+                    { text: 'min_date', dataIndex: 'MIN_DATE', width: 80, hidden: true },
+                    { text: 'max_date', dataIndex: 'MAX_DATE', width: 80, hidden: true },
+                    { text: 'Select<br>Download', headerCheckbox: false, dataIndex: 'CHECK', width: 70, xtype: 'checkcolumn' }
                 ]
             }
             //</editor-fold>

@@ -8,8 +8,8 @@ import java.util.List;
  * @author Dvicente
  */
 public class SQP05037Filter {
-    private String IN_TFECHA,FECHA_FROM
-            ,IN_PROCTYPE,IN_PROCTYPESQ,IN_MDA,IN_TDOC,IN_PNR,IN_FLEXID,IN_PRAXISID;
+    private String IN_TFECHA,FECHA_FROM,FECHA_TO
+            ,IN_PROCTYPE,IN_PROCTYPESQ,IN_MDA,IN_TDOC,IN_PNR,IN_FLEXID,IN_PRAXISID,IN_AREFNBR,IN_TICKET;
     
     private List<A4331AT2Filter> response = new ArrayList<>();
 
@@ -28,7 +28,15 @@ public class SQP05037Filter {
     public void setFECHA_FROM(String FECHA_FROM) {
         this.FECHA_FROM = FECHA_FROM;
     }
+    
+    public String getFECHA_TO() {
+        return FECHA_TO;
+    }
 
+    public void setFECHA_TO(String FECHA_TO) {
+        this.FECHA_TO = FECHA_TO;
+    }
+    
     public String getIN_PROCTYPE() {
         return IN_PROCTYPE;
     }
@@ -91,6 +99,22 @@ public class SQP05037Filter {
 
     public void setIN_PRAXISID(String IN_PRAXISID) {
         this.IN_PRAXISID = IN_PRAXISID;
+    }
+ 
+    public String getIN_AREFNBR() {
+        return IN_AREFNBR;
+    }
+
+    public void setIN_AREFNBR(String IN_AREFNBR) {
+        this.IN_AREFNBR = IN_AREFNBR;
+    }
+    
+    public String getIN_TICKET() {
+        return IN_TICKET;
+    }
+
+    public void setIN_TICKET(String IN_TICKET) {
+        this.IN_TICKET = IN_TICKET;
     }
     
 }

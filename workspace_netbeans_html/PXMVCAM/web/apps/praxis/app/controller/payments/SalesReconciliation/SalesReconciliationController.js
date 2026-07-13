@@ -815,7 +815,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliation.SalesReconciliati
                 break;
             case prototype.id + '-boxDetTktMatch':
                 global.getFileExcelPost('searchDetTktByStval', JSON.stringify(me.beanboxDetTktS2), Ext.getCmp(prototype.id + '-gridDetTktMatch').config.columns.items);
-                break;
+                break;  
+            
             default:
                 break;
         }

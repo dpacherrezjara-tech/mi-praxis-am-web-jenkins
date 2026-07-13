@@ -51,19 +51,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                     sortable: true
                                 },
                                 items: [
-                                    {text: 'Processing<br>Date', dataIndex: 'prda', width: 80},
-                                    {text: 'Payment<br>Date', dataIndex: 'paydate', width: 80},
-                                    {text: 'PNR', dataIndex: 'spnr', width: 70},
-                                    {text: 'Doc.<br>Type', dataIndex: 'transtype', width: 60},
-                                    {text: 'Payment<br>Merchant ID', dataIndex: 'pmerchid', width: 110},
+                                    {text: 'Processing<br>Date', dataIndex: 'PRDA', width: 80},
+                                    {text: 'Payment<br>Date', dataIndex: 'PAYDATE', width: 80},
+                                    {text: 'PNR', dataIndex: 'SPNR', width: 70},
+                                    {text: 'Doc.<br>Type', dataIndex: 'TRANSTYPE', width: 60},
+                                    {text: 'Payment<br>Merchant ID', dataIndex: 'PMERCHID', width: 110},
                                     {
-                                        text: 'Status', dataIndex: 'stval', width: 120,
+                                        text: 'Status', dataIndex: 'STVAL', width: 120,
                                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                                             metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                                             const opts = {
-//                                                'A': 'Match OC/Camepa',
+        //                                                'A': 'Match OC/Camepa',
                                                 'C': 'Match Complement',
-//                                                'D': 'Match Balance',
+        //                                                'D': 'Match Balance',
                                                 'E': 'Duplicate Payment',
                                                 'M': 'Match Multi-Payment',
                                                 '0': 'Stand By',
@@ -72,8 +72,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                                 '3': 'Settl. Without Sales',
                                                 '4': 'Match Partial',
                                                 '5': 'Match Manual',
-//                                                '6': 'Match Forced',
-//                                                '7': 'Match Compensation',
+        //                                                '6': 'Match Forced',
+        //                                                '7': 'Match Compensation',
                                                 '8': 'Match Transactional',
                                                 '9': 'Match Void'
                                             };
@@ -92,19 +92,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                             }
                                         },
                                         columns: [
-                                            {text: 'Plan', dataIndex: 'nbrinsta', width: 60},
-                                            {text: 'Number', dataIndex: 'instanbr', width: 60}
+                                            {text: 'Plan', dataIndex: 'NBRINSTA', width: 60},
+                                            {text: 'Number', dataIndex: 'INSTANBR', width: 60}
                                         ]
                                     },
                                     {
-                                        text: 'Card Number', dataIndex: 'scardn', width: 130
+                                        text: 'Card Number', dataIndex: 'SCARDN', width: 130
                                     },
                                     {
-                                        text: 'Auth<br>Code', dataIndex: 'sauthoc', width: 75
+                                        text: 'Auth<br>Code', dataIndex: 'SAUTHOC', width: 75
                                     },
-                                    {text: 'Curr', dataIndex: 'scurrency', width: 60},
+                                    {text: 'Curr', dataIndex: 'SCURRENCY', width: 60},
                                     {
-                                        text: 'Transac.<br>Amount', dataIndex: 'tgrosamoun', width: 120,
+                                        text: 'Transac.<br>Amount', dataIndex: 'TGROSAMOUN', width: 120,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -112,13 +112,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.P
                                         }
                                     },
                                     {
-                                        text: 'Sales<br>Amount', dataIndex: 'svfops', width: 120,
+                                        text: 'Sales<br>Amount', dataIndex: 'SVFOPS', width: 120,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                             value = Ext.util.Format.number(value, '0,000.00');
                                             return value;
                                         }
                                     }
+                        
                                 ]
                             }
 

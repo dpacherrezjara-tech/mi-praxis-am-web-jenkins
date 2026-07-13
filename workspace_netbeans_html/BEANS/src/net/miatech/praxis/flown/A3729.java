@@ -39,6 +39,11 @@ public class A3729 {
     public String FSABRE = "";
     public String STASABR = "";
     public String FSALES = "";    
+    
+    
+    public String OLD_CHAIR = "";    
+    public String OLD_TICKET = "";    
+    public String OLD_COUPON = "";    
 
     //Auditoria
     public String USCR = "";

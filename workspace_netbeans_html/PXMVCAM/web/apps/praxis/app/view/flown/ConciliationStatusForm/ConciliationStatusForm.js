@@ -286,7 +286,7 @@ Ext.define('Ext.Praxis.view.flown.ConciliationStatusForm.ConciliationStatusForm'
                             id: prototype.id + '-gridData',
                             columnLines: true,
                             autoScroll: true,
-                            width: 980,
+                            width: 1150,
                             height: 600,
                             columns: {
                                 defaults: {
@@ -296,8 +296,8 @@ Ext.define('Ext.Praxis.view.flown.ConciliationStatusForm.ConciliationStatusForm'
                                 },
                                 items: [
                                     {text: 'System <br> date', dataIndex: 'A3676FREGI', width: 100, sortable: true, align: 'center'},
-                                    {text: 'Lote', dataIndex: 'A3676LOTE', width: 150, align: 'left', renderer: 'onRendererColumnOnLote'},
-                                    {text: 'Origin', dataIndex: 'A3676ORIG', width: 100, sortable: true, align: 'center'},
+                                    {text: 'Lote', dataIndex: 'A3676NARCH', width: 300, align: 'left', renderer: 'onRendererColumnOnLote'},
+                                    {text: 'Origin', dataIndex: 'A3676ORIG', width: 120, sortable: true, align: 'center'},
                                     {text: 'Total Send <br> TKT', dataIndex: 'A3676TETKT', width: 100, sortable: true, align: 'right'},
                                     {text: 'Total Send <br> CPN', dataIndex: 'A3676TECPN', width: 100, sortable: true, align: 'right'},
                                     {text: 'Total Answer <br> TKT', dataIndex: 'A3676TRTKT', width: 100, sortable: true, align: 'right'},
@@ -366,7 +366,7 @@ Ext.define('Ext.Praxis.view.flown.ConciliationStatusForm.ConciliationStatusForm'
                                             }*/
                                         ]
                                     },
-                                    {
+                                    /*{
                                         text: 'Status initial',
                                         dataIndex: 'A3676STINI',
                                         width: 150,
@@ -379,7 +379,7 @@ Ext.define('Ext.Praxis.view.flown.ConciliationStatusForm.ConciliationStatusForm'
                                         width: 150,
                                         align: 'left',
                                         renderer: 'onRendererToltip'
-                                    },
+                                    },*/
                                     {
                                         text: 'Status',
                                         dataIndex: 'A3676STROB',
@@ -411,7 +411,7 @@ Ext.define('Ext.Praxis.view.flown.ConciliationStatusForm.ConciliationStatusForm'
                             id: prototype.id + '-gridDataControl',
                             columnLines: true,
                             autoScroll: true,
-                            width: 1050,
+                            width: 1100,
                             height: 600,
                             columns: {
                                 defaults: {
@@ -421,13 +421,13 @@ Ext.define('Ext.Praxis.view.flown.ConciliationStatusForm.ConciliationStatusForm'
                                 },
                                 items: [
                                     {text: 'System <br> date', dataIndex: 'A3676FREGI', width: 100, sortable: true, align: 'center'},
-                                    {text: 'Lote', dataIndex: 'A3676NARCH', width: 200, align: 'left'},//renderer: 'onRendererColumnOnLote'
-                                    {text: 'Origin', dataIndex: 'A3676ORIG', width: 100, sortable: true, align: 'center'},
+                                    {text: 'Lote', dataIndex: 'A3676NARCH', width: 300, align: 'left'},//renderer: 'onRendererColumnOnLote'
+                                    {text: 'Origin', dataIndex: 'A3676ORIG', width: 150, sortable: true, align: 'center'},
                                     {text: 'Total <br> Praxis', dataIndex: 'A3676CNTAM', width: 100, sortable: true, align: 'right'},
                                     {text: 'Total <br> Robot', dataIndex: 'A3676CNTPR', width: 100, sortable: true, align: 'right'},
                                     {text: 'Status',dataIndex: 'A3676STROB',width: 215,renderer: 'onRendererColumnStatusContr'},
-                                    {text: 'Hour <br> Initial', dataIndex: 'A3676HREGI',width: 70},
-                                    {text: 'Hour end', dataIndex: 'A3676HREVI',width: 70},
+                                    {text: 'Hour', dataIndex: 'A3676HREGI',width: 70},
+                                    //{text: 'Hour end', dataIndex: 'A3676HREVI',width: 70},
                                     {text: '', dataIndex: 'A3676STROB', width: 40, align: 'right',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             if (value === 'Running') {

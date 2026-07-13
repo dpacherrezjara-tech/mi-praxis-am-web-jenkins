@@ -28,7 +28,7 @@ public class A4183 {
     public String A4183COPE = "";
     public String A4183PROV = "";
     public String A4183IDCON = "";
-    
+     public String A4183CLIEN = "";
   
     
     

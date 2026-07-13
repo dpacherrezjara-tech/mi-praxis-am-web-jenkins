@@ -120,6 +120,7 @@ public class InvoiceProcessController extends BaseController {
             filter.IN_ENVIO = "true".equals(filter.IN_ENVIO) ? "1" : "0";
             filter.IN_SEQ = request.getParameter("IN_SEQ") == null ? "" : request.getParameter("IN_SEQ");
             filter.IN_SEQREG = request.getParameter("IN_SEQREG") == null ? "" : request.getParameter("IN_SEQREG");
+            filter.IN_LOTEREG = request.getParameter("IN_LOTEREG") == null ? "" : request.getParameter("IN_LOTEREG");
             
             logic = new InvoiceProcessLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());            

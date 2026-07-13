@@ -992,21 +992,27 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
 
             }
         } else {
-            for (var i = 0; i < regs; i++) {
-                if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '1') {
-                    Ext.getCmp(prototype.idDetailTicket + '-txtCpn1').show();
-                }
-                if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '2') {
-                    Ext.getCmp(prototype.idDetailTicket + '-txtCpn2').show();
-                }
-                if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '3') {
-                    Ext.getCmp(prototype.idDetailTicket + '-txtCpn3').show();
-                }
-                if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '4') {
-                    Ext.getCmp(prototype.idDetailTicket + '-txtCpn4').show();
-                }
+            if (regs.length > 0) {
+                for (var i = 0; i < regs; i++) {
+                    if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '1') {
+                        Ext.getCmp(prototype.idDetailTicket + '-txtCpn1').show();
+                    }
+                    if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '2') {
+                        Ext.getCmp(prototype.idDetailTicket + '-txtCpn2').show();
+                    }
+                    if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '3') {
+                        Ext.getCmp(prototype.idDetailTicket + '-txtCpn3').show();
+                    }
+                    if (Ext.String.trim(grid03.getStore().getAt(i).get('A3654CPN')) === '4') {
+                        Ext.getCmp(prototype.idDetailTicket + '-txtCpn4').show();
+                    }
 
+                }
+            } else {
+                Ext.getCmp(prototype.idDetailTicket + '-txtCpn1').show();
+                Ext.getCmp(prototype.idDetailTicket + '-txtCpn2').show();
             }
+
         }
     },
     validaRequiredFields: function () {
@@ -1380,7 +1386,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                         bvalida = false;
                         return;
                     }
-                    
+
                     if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653CFOP')) === 'CA' || Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653CFOP')) === 'RA') {
                         if (gridPAYMENT.getStore().getAt(p).get('A3653TYCAR') !== '') {
                             Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is cash, you not must enter the card type');
@@ -1441,6 +1447,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                                         bvalida = false;
                                         return;
                                     }
+                                }
+                                if (gridPAYMENT.getStore().getAt(p).get('A3653TYCAR') === 'BR') {
+                                    if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653NTARJ')).length !== 16) {
+                                        Ext.Msg.alert('.: PRAXIS :.', 'The Fop BR must have BR characters');
+                                        bvalida = false;
+                                        return;
+                                    }
                                 } else {
                                     if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653NTARJ')).length > 16 || Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653NTARJ')).length > 14) {
                                         Ext.Msg.alert('.: PRAXIS :.', 'The Fop must have 14 or 16 characters');
@@ -1461,11 +1474,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                     }
                     vl_netofop = (vl_netofop + parseFloat(gridPAYMENT.getStore().getAt(p).get('A3653TOTAL')));
 
-
-
                 }
             }
-            vl_netofop = (txtTotalram - vl_netofop);
+            vl_netofop = (txtTotalram - vl_netofop.toFixed(2));
             if (vl_netofop !== 0) {
                 Ext.Msg.alert('.: PRAXIS :.', 'the total fop must be equal to the total refund');
                 bvalida = false;
@@ -1532,7 +1543,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketController', 
                     txtmdasale = Ext.String.trim(recvta.get('A3648XMDA'));
                 }
             }
-            if(txtmdasalePant!==txtmdasale) {
+            if (txtmdasalePant !== txtmdasale) {
                 Ext.Msg.alert('.: PRAXIS :.', 'The currency of sale is different from the RFND');
                 bvalida = false;
             }

@@ -10,9 +10,12 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmzDataEntry', {
         searchParams: null
     },
     header: true,
-    height: 180,
+//    height: 300,
     width: 540,
-    resizable: false,
+    maxWidth: 540,
+    autoHeight: true,        // ajuste automático
+    shrinkWrap: true,        // para forzar ajuste al contenido
+    resizable: true,
     layout: 'fit',
     modal: true,
     border: false,
@@ -23,6 +26,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmzDataEntry', {
         {
             xtype: 'form',
             id: prototype.id + '-form-calendar-de01',
+//            maxWidth: 540,
             defaults: {
                 style: 'margin: 3px;',
                 border: true
@@ -32,18 +36,21 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmzDataEntry', {
                     xtype: 'panel',
                     id: prototype.id + '-panel-calendar-de01',
                     bodyStyle: 'background: transparent;"',
-                    layout: 'vbox',
-                    width: 510,
-                    height: 100,
+                    layout: 'fit',
+                    width: 520,
+                    height: 120,
                     defaults: {
                         anchor: '100%'
+                    },resizable: {
+                        split: true,
+                        edges: 'east'
                     },
                     items: [
                         {
                             xtype: 'grid',
                             id: prototype.id + '-grid-calendar-de01',
                             width: 510,
-                            height: 100,
+                            
                             viewConfig: {
                                 stripeRows: true,
                                 enableTextSelection: true,
@@ -57,16 +64,16 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmzDataEntry', {
                                     sortable: true,
                                 },
                                 items: [
-                                    {text: 'Processor', dataIndex: 'procesador', flex: 1,
+                                    {text: 'Processor', dataIndex: 'PROCESADOR', flex: 1,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = 'background:#CBCDA0;text-align:center;font-weight: bold;';
                                             return value;
                                         }
                                     },
-                                    {text: 'File Type', dataIndex: 'tfile', flex:1},
-                                    {text: 'Date', dataIndex: 'fecha', width: 80},
-                                    {text: 'Total', dataIndex: 'totalrows', width: 60},
-                                    {text: 'Status', dataIndex: 'status', width: 50,
+                                    {text: 'File Type', dataIndex: 'TFILE', flex:1},
+                                    {text: 'Date', dataIndex: 'FECHA', width: 80},
+                                    {text: 'Total', dataIndex: 'TOTALROWS', width: 60},
+                                    {text: 'Status', dataIndex: 'STATUS', width: 50,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                 const opcion = {
                                                     '0':()=>{
@@ -86,7 +93,146 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmzDataEntry', {
 
                         }
                     ]
-                }
+                },
+                //<editor-fold defaultstate="collapsed" desc="Error Control">
+                {
+//                    xtype: 'fieldset',
+                    xtype: 'panel',
+                    title: 'Error Control',
+                    titleCollapse: true,
+                    id: prototype.id + '-panel-error-control-de01',
+                    bodyStyle: 'background: transparent;"',
+//                    layout: 'hbox',
+                    width: 520,
+                    height: 120,
+                    flex: 1,
+                    defaults: {
+                        shadow: true,
+                        anchor: '100%'
+                    },
+                    resizable: {
+                        split: true,
+                        edges: 'east'
+                    },
+                    collapsible: {
+                        direction: 'top',
+                        dynamic: true
+                    },
+                    layout: 'fit',
+                    items: [
+                        {
+                            xtype: 'grid',
+                            id: prototype.id + '-grid-error-control-de01',
+                            width: 510,
+                            viewConfig: {
+                                stripeRows: true,
+                                enableTextSelection: true,
+                                markDirty: false,
+                            },
+                            columnLines: true,
+                            columns: {
+                                defaults: {
+                                    align: 'center',
+                                    menuDisabled: true,
+                                    sortable: true,
+                                },
+                                items: [
+                                    {text: 'Code<br>Error', dataIndex: 'A4701CDERR', width: 80 },
+                                    {text: 'Message', dataIndex: 'A4701MSN', flex:1}
+                                ]
+                            }
+
+                        }
+                    ]
+                },
+                //</editor-fold>
+                
+                //<editor-fold defaultstate="collapsed" desc="Comment of BPO">
+                {
+//                    xtype: 'fieldset',
+                    xtype: 'form',
+                    title: 'BPO Comment',
+                    titleCollapse: true,
+                    id: prototype.id + '-panel-comment-de01',
+                    bodyStyle: 'background: transparent;"',
+//                    layout: 'hbox',
+                    width: 520,
+                    flex: 1,
+                    defaults: {
+                        shadow: true,
+                        anchor: '100%'
+                    },
+//                    resizable: {
+//                        split: true,
+//                        edges: 'east'
+//                    },
+                     collapsible: {
+                        direction: 'top',
+                        dynamic: true
+                    },
+
+                    layout: 'fit',
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            name: 'OPTION',
+                            hidden: true,
+                            value: 'C'
+                        },
+                        {
+                            xtype: 'textfield',
+                            fieldLabel: 'PRDA',
+                            name: 'PRDA',
+                            hidden: true,
+                            editable: false,
+                            labelWidth: 30,
+                            width: 110
+                        },
+                        {
+                            xtype: 'textfield',
+                            fieldLabel: 'PROCTYPESQ',
+                            name: 'PROCTYPESQ',
+                            hidden: true,
+                            editable: false,
+                            labelWidth: 30,
+                            width: 110
+                        },
+                        {
+                            xtype: 'textareafield',
+                            margin: '5px',
+                            name: 'NOTE',
+                            maxLength: 200,
+                            editable: true,
+                            width: '100%',
+                            enforceMaxLength: true,
+                        },
+                        
+                    ],
+                    rbar: [
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btn-save-comment',
+                            ui: 'default',
+                            iconCls: 'prx-icon-save-blue-16',
+                            tooltip: 'Save BPO Comment',
+                            listeners: {
+                                click: 'onSaveCommentClick'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btn-delete-comment',
+                            ui: 'default',
+                            iconCls: 'prx-icon-image-trash',
+                            tooltip: 'Delete BPO Comment',
+                            hidden:true,
+                            listeners: {
+                                click: 'onDeleteCommentClick'
+                            }
+                        }
+                    ]
+                },
+                //</editor-fold>
             ]
         }
     ],
@@ -105,6 +251,16 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.CalendarTmzDataEntry', {
                 scale: 'medium'
             },
             items: [
+                
+//                {
+//                    text: 'Save',
+//                    id: prototype.id + '-btn-save-comment',
+//                    iconCls: 'prx-icon-save-blue-24',
+//                    tooltip: 'Save BPO Comment',
+//                    listeners: {
+//                        click: 'onSaveCommentClick'
+//                    }
+//                },
 //                {
 //                    text: 'Save',
 //                    id: prototype.id + '-btn-save',

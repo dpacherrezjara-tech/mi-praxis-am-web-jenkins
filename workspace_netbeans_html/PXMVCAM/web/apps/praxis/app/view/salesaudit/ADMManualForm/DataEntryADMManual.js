@@ -481,7 +481,6 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                             id: prototype.id01 + '-txtA1740UNIDA',
                             enforceMaxLength: true,
                             maxLength: 2,
-                            readOnly: true,
                             width: 30
                         },
                         {

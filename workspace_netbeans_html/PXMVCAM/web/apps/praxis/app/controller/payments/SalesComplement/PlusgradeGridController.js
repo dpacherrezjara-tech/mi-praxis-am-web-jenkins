@@ -20,22 +20,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
         });
         winPnrDataEntry.show();
     },
-    copySPNR: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        navigator.clipboard.writeText(rowData.data.PNR.trim());
+    copyEMDTKT: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        navigator.clipboard.writeText(rowData.data.EMDNUMBER.trim());
         global.Msg({
-            msg: 'SPNR Copied to clipboard!: ' + rowData.data.pnr.trim()
+            msg: 'EMD NUMBER Copied to clipboard!: ' + rowData.data.EMDNUMBER.trim()
         });
     },
-    
-    
-    
-    
-    
     onClickSearchTicket: function (grid, html, rowIndex, colIndex, obj) {
         let data = obj.record.data;
         console.log(data);
-        let strTkt = data.emdnumber || data.tkt;
-        let strSeq = data.seq || '00';
+        let strTkt = data.EMDNUMBER || data.TKT;
+        let strSeq = data.SEQ || '00';
         if (!strTkt) {
             return;
         }
@@ -54,6 +49,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
         console.log(beanProMasterTicket);
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },
+    onClickOpenReconciliation: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const obj = record.data;
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesComplementForm.DataEntrys.PlusgradeReconciliationDataEntry', {
+            id: prototype.id + '-PlusgradeReconciliationDataEntry-1',
+            obj: obj,
+//            callback: () => {
+//                grid.getStore().load();
+//            }
+        });
+        dataEntry.show();
     },
     
     downloadExcelPlusgrade: function (){  //modal confirmar descarga
@@ -79,7 +85,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
            'Processing Date': x.PRDA,
            'Diff Days': x.PASSED_DAYS,
            'Plusgrade VS AMEX': x.DESCFAMEX,
+           'Match Date (Plusgrade VS Amex)': x.AMEXFECSELEC,
            'Plusgrade VS Sales': x.DESCSTVAL,
+           'Match Date (Plusgrade VS Sales)': x.DESCVSSALES,
+           'Rule Description': x.FREGLA_DESCRIPTION,
            'Sales Country': x.COUNTRY,
            'Sales Date': x.SDATE,
            'Credit Card Code': x.SCARCOD,
@@ -87,23 +96,29 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplement.PlusgradeGridControll
            'Credit Card Auth.': x.SAUTHOC,
            'Qty Pax': x.NBROFPAX,
            'Currency Offer': x.CUROFFER,
-           'Total': x.SVFOP,
+           'Total Amount': x.SVFOP,
            'Total Amount Off': x.AMOUNTOFF,
+           'Amount EMD' : x.TOTALEMD,
            'Sales Amount': x.SVFOPS,
            'Sales Difference': x.DIFF_AMOUNT,
-           'Sales Country': x.SCOUNTRY,
-           'Sales Date': x.SDATES,
-           'Qty Tkts': x.QTYTKT,
+           'Sales Country Praxis': x.SCOUNTRY,
+           'Sales Date Praxis': x.SDATES,
+           'Qty Tickets': x.QTYTKT,
            'Plusgrade VS Chargeback': x.DESCFAMEXCHG,
            'PNR': x.PNR,
            'EMD Number': x.EMDNUMBER,
-           'Accounting ID Sales FLEX': x.IDCONFLE,
+           'Add EMD Amount' : x.TCVFEAMOFR,
+           'Add EMD Number' : x.EMDSNUMBER,
+           'Accounting Status': x.STCON_DESCRIPTION,
            'Accounting Date': x.FCONT,
-           'Accounting IF': x.ID,
+           'Accounting Praxis ID': x.IDCON,
+           'Accounting ID FLEX': x.IDCONFLE,
            'Error Code': x.CERROR,
-           'Add Pax EMD Number': x.ADDPAXEMD,
-           'Add Pax Ticket Number': x.ADDPAXTKT,
-           'Token': x.PAYTOKEN        
+           'Error Description': x.DES_CERROR,
+           'Token': x.PAYTOKEN,
+           'User Updated': x.USUP,
+           'Updated ': x.FEUP
+           
         }));
         await global.writeExcelFromJson(data,'Plusgrade Information'); 
         view.setLoading(false);

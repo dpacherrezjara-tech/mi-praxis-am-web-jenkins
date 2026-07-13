@@ -1484,13 +1484,13 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryNewADJAccountingC
                     bvalida = false;
                     return;
                 }
-                if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).length !== 36) {
-                    Ext.Msg.alert('.: PRAXIS :.', 'The account number must be 36 characters' + ' ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')));
+                if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).length !== 35) {
+                    Ext.Msg.alert('.: PRAXIS :.', 'The account number must be 35 characters' + ' ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')));
                     bvalida = false;
                     return;
                 }
-                if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716TITU')).length > 30) {
-                    Ext.Msg.alert('.: PRAXIS :.', 'The concept number must be 30 characters ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')) + ' ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716TITU')));
+                if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716TITU')).length > 50) {
+                    Ext.Msg.alert('.: PRAXIS :.', 'The concept number must be 20 characters ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')) + ' ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716TITU')));
                     bvalida = false;
                     return;
                 }
@@ -1502,19 +1502,26 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryNewADJAccountingC
                         return;
                     }
                     if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716FILE')) === 'AP' || Ext.String.trim(grid01.getStore().getAt(o).get('A1716FILE')) === 'A') {
+                        if (('1161160000' !== Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(17, 21) + "" + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(22, 27)) && ('2171040000' !== Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(17, 21) + "" + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(22, 27))) {
+                            Ext.Msg.alert('.: PRAXIS :.', 'The account must is incorrect AP' + ' ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')) + ' ' + " Must be 116116-0000 or 217104- 0000 ");
+                            bvalida = false;
+                            return;
+                        }
+                    } // 02-00-000000-0000-1141-13830-0000-03 02-0000000-0000-116116-0000-0000-03
+                    /*if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716FILE')) === 'AP' || Ext.String.trim(grid01.getStore().getAt(o).get('A1716FILE')) === 'A') {
                         if (('114113830' !== Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(18, 22) + "" + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(23, 28)) && ('213124704' !== Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(18, 22) + "" + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(23, 28))) {
                             Ext.Msg.alert('.: PRAXIS :.', 'The account must is incorrect AP' + ' ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')) + ' ' + " Must be 1141-13830 or 2131-24704 ");
                             bvalida = false;
                             return;
                         }
-                    }
-                    if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716FILE')) === 'AR' || Ext.String.trim(grid01.getStore().getAt(o).get('A1716FILE')) === 'R') {
+                    }*/
+                    /*if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716FILE')) === 'AR' || Ext.String.trim(grid01.getStore().getAt(o).get('A1716FILE')) === 'R') {
                         if (('114113801' !== Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(18, 22) + "" + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(23, 28)) && ('114113833' !== Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(18, 22) + "" + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(23, 28))) {
                             Ext.Msg.alert('.: PRAXIS :.', 'The account must is incorrect AR' + ' ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')) + ' ' + " Must be 1141-13801 or 1141-13833 ");
                             bvalida = false;
                             return;
                         }
-                    }
+                    }*/
                     if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716SUBFU')).length === 0) {
                         Ext.Msg.alert('.: PRAXIS :.', 'You must enter a correct Carrier' + ' ' + Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')));
                         bvalida = false;
@@ -1558,7 +1565,8 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryNewADJAccountingC
                         vl_MontoLoCredit2 = (vl_MontoLoCredit2 + parseFloat(grid01.getStore().getAt(o).get('A1716PASIV')));
                         vl_MontoRevDebit2 = (vl_MontoRevDebit2 + parseFloat(grid01.getStore().getAt(o).get('ACTIV2')));
                         vl_MontoRevCredit2 = (vl_MontoRevCredit2 + parseFloat(grid01.getStore().getAt(o).get('PASIV2')));
-                        if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(18, 22) === '2131' && Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(23, 28) === '24704') {
+                        //if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(18, 22) === '2131' && Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(23, 28) === '24704') {
+                        if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(17, 21) === '217104' && Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(22, 27) === '0000') {
                             vl_MontoLoDebit4 = (vl_MontoLoDebit4 + parseFloat(grid01.getStore().getAt(o).get('A1716ACTIV')));
                             vl_MontoLoCredit4 = (vl_MontoLoCredit4 + parseFloat(grid01.getStore().getAt(o).get('A1716PASIV')));
                             vl_MontoRevDebit4 = (vl_MontoRevDebit4 + parseFloat(grid01.getStore().getAt(o).get('ACTIV2')));
@@ -1575,7 +1583,8 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryNewADJAccountingC
                         vl_MontoLoCredit3 = (vl_MontoLoCredit3 + parseFloat(grid01.getStore().getAt(o).get('A1716PASIV')));
                         vl_MontoRevDebit3 = (vl_MontoRevDebit3 + parseFloat(grid01.getStore().getAt(o).get('ACTIV2')));
                         vl_MontoRevCredit3 = (vl_MontoRevCredit3 + parseFloat(grid01.getStore().getAt(o).get('PASIV2')));
-                        if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(18, 22) === '1141' && Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(23, 28) === '13833') {
+                        //if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(18, 22) === '1141' && Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(23, 28) === '13833') {
+                        if (Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(17, 21) === '116115' && Ext.String.trim(grid01.getStore().getAt(o).get('A1716CUENT')).substring(22, 27) === '0000') {
                             vl_MontoLoDebit5 = (vl_MontoLoDebit5 + parseFloat(grid01.getStore().getAt(o).get('A1716ACTIV')));
                             vl_MontoLoCredit5 = (vl_MontoLoCredit5 + parseFloat(grid01.getStore().getAt(o).get('A1716PASIV')));
                             vl_MontoRevDebit5 = (vl_MontoRevDebit5 + parseFloat(grid01.getStore().getAt(o).get('ACTIV2')));

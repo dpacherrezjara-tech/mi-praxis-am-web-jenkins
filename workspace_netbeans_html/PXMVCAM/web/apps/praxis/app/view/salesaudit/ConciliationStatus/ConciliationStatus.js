@@ -2,7 +2,7 @@
 prototype.id = 'ConciliationStatus';
 prototype.url2 = CONTEXTPATH + '/ConciliationStatus';
 prototype.url = CONTEXTPATH + '/ChangeOfStatusForm';
-prototype.widthWindow = 1366;
+prototype.widthWindow = 1190;
 prototype.heightWindow = 768;
 
 Ext.define('Ext.Praxis.view.salesaudit.ConciliationStatus.ConciliationStatus',{
@@ -276,7 +276,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ConciliationStatus.ConciliationStatus',{
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridDetalle',
-                             width: 1360,
+                             width: 1185,
                             hidden: true,
                             height: 500,
                             columnLines: true,
@@ -307,46 +307,67 @@ Ext.define('Ext.Praxis.view.salesaudit.ConciliationStatus.ConciliationStatus',{
                                         columns: [
                                             {text: 'Ticket', dataIndex: 'A3676TIKET',width: 100},
                                             { text: 'CPN',dataIndex: 'A3676CUPON',width: 40},
-                                            {text: 'Cur.',dataIndex: 'A3676CUR',width: 40},
+                                            /*{text: 'Cur.',dataIndex: 'A3676CUR',width: 40},
                                             {text: 'Net.',dataIndex: 'A3676MONTO',width: 70,align: 'right',
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     return win.formatDblNumber(value);
                                                 }
-                                            }
+                                            }*/
                                         ]
                                     },
                                     {text: 'Robot',
                                         columns: [
                                              {text: 'Ticket', dataIndex: 'A3676TKT',width: 100},
                                              { text: 'CPN',dataIndex: 'A3676CPNRB',width: 40},
-                                             {text: 'Cur.',dataIndex: 'A3676CURRB',width: 40},
+                                             /*{text: 'Cur.',dataIndex: 'A3676CURRB',width: 40},
                                              {text: 'Net.',dataIndex: 'A3676MONRB',width: 70,align: 'right',
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     return win.formatDblNumber(value);
                                                 }
-                                            }
+                                            }*/
                                         ]
                                     },
                                     {
+                                        text: 'Status initial',
+                                        dataIndex: 'A3676STINI',
+                                        width: 150,
+                                        align: 'left',
+                                        renderer: 'onRendererToltip'
+                                    },
+                                    {
+                                        text: 'Status end',
+                                        dataIndex: 'A3676STFIN',
+                                        width: 150,
+                                        align: 'left',
+                                        renderer: 'onRendererToltip'
+                                    },
+                                    {
+                                        text: 'Result',
+                                        dataIndex: 'A3676RESUL',
+                                        width: 150,
+                                        align: 'left',
+                                        renderer: 'onRendererToltip'
+                                    },
+                                    /*{
                                         text: 'Status',
                                         dataIndex: 'A3676STROB',
                                         width: 200,
                                          renderer: 'onRendererColumnStatus'
-                                    },
+                                    },*/
                                     {
                                         text: 'Lote',
                                         dataIndex: 'A3676NARCH',
                                         width: 300,
                                         align: 'left',
                                         renderer: 'onRendererToltip'
-                                    },
+                                    }/*,
                                     {
                                         text: 'Hour',
                                         dataIndex: 'A3676HRECE',
                                         width: 70
-                                    }
+                                    }*/
                                    
                                 ]
                             }, viewConfig: {
@@ -360,8 +381,8 @@ Ext.define('Ext.Praxis.view.salesaudit.ConciliationStatus.ConciliationStatus',{
                             id: prototype.id + '-gridDataControl',
                             columnLines: true,
                             autoScroll: true,
-                            width: 1050,
-                            height: 600,
+                            width: 900,
+                            height: 300,
                             columns: {
                                 defaults: {
                                     menuDisabled: true,
@@ -375,8 +396,8 @@ Ext.define('Ext.Praxis.view.salesaudit.ConciliationStatus.ConciliationStatus',{
                                     {text: 'Total <br> Praxis', dataIndex: 'A3676CNTAM', width: 100, sortable: true, align: 'right'},
                                     {text: 'Total <br> Robot', dataIndex: 'A3676CNTPR', width: 100, sortable: true, align: 'right'},
                                     {text: 'Status',dataIndex: 'A3676STROB',width: 215,renderer: 'onRendererColumnStatusContr'},
-                                    {text: 'Hour <br> Initial', dataIndex: 'A3676HREGI',width: 70},
-                                    {text: 'Hour end', dataIndex: 'A3676HREVI',width: 70},
+                                    {text: 'Hour', dataIndex: 'A3676HREGI',width: 70},
+                                    //{text: 'Hour end', dataIndex: 'A3676HREVI',width: 70},
                                     {text: '', dataIndex: 'A3676STROB', width: 40, align: 'right',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             if (value === 'Running') {

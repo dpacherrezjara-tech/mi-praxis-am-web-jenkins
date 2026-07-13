@@ -21,11 +21,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.SalesReconci
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SettlementMerchantGrid',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SettlementDetailGrid',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransacErrorBPODataEntry',
-        'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransactionProcessDataEntry',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.CouponsUsagesDataEntry',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.BPOProductionDataEntry',
         'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.CreditCardFilterDataEntry',
-        'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.AddTicketDataEntry'
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.AddTicketDataEntry',
+        'Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.AnalyzeReconciliationErrorsDataEntry'
     ],
     controller: 'SalesReconciliationControlController',
     layout: {

@@ -39,12 +39,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 flex: 1,
                 renderer: function (value, metaData, record, rowIndex, colIndex) {
                     metaData.style = "text-align:center;font-weight:bold;color:#8B5199;";
-                    if (record.data.paydate) {
-                        value = record.data.paydate;
-                    } else if (record.data.prda) {
-                        value = record.data.prda;
+                    if (record.data.PAYDATE) {
+                        value = record.data.PAYDATE;
+                    } else if (record.data.PRDA) {
+                        value = record.data.PRDA;
                     } else {
-                        value = record.data.feup;
+                        value = record.data.FEUP;
                     }
                     return value;
                 }
@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 },
                 columns: [
                     {
-                        text: 'Total', dataIndex: 'total', align: 'center', width: 100,
+                        text: 'Total', dataIndex: 'TOTAL', align: 'center', width: 100,
                         listeners: {
                             click: 'onClickTotal'
                         },
@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         }
                     },
                     {
-                        text: 'Match', dataIndex: 'total_MATCH', align: 'center', width: 100,
+                        text: 'Match', dataIndex: 'TOTAL_MATCH', align: 'center', width: 100,
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         }
                     },
                     {
-                        text: 'Pending', dataIndex: 'total_PENDING', align: 'center', width: 100,
+                        text: 'Pending', dataIndex: 'TOTAL_PENDING', align: 'center', width: 100,
                         listeners: {
                             click: 'onClickDetail'
                         },
@@ -100,7 +100,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         text: '%', align: 'center', width: 100,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             metaData.style = "text-align:center;background-color:#d5f4d5;color:red;";
-                            value = (record.data.total_PENDING / record.data.total) * 100;
+                            value = (record.data.TOTAL_PENDING / record.data.TOTAL) * 100;
                             return value.toFixed(2) + '%';
                         },
                         summaryType: 'customPercent',
@@ -136,13 +136,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 },
                 columns: [
                     {
-                        text: 'Match', dataIndex: 'total_NC_MATCH', align: 'center', width: 100,
+                        text: 'Match', dataIndex: 'TOTAL_NC_MATCH', align: 'center', width: 100,
                         listeners: {
                             click: 'onClickDetail'
                         }
                     },
                     {
-                        text: 'Pending', dataIndex: 'total_NC_PENDING', align: 'center', width: 100,
+                        text: 'Pending', dataIndex: 'TOTAL_NC_PENDING', align: 'center', width: 100,
                         listeners: {
                             click: 'onClickDetail'
                         }
@@ -174,17 +174,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 },
                 columns: [
                     {
-                        text: 'Plusgrade', width: 200,
+                        text: 'Plusgrade',
                         columns: [
                             {
-                                text: 'Match', dataIndex: 'total_PG_MATCH', align: 'center', width: 100,
+                                text: 'Match', dataIndex: 'TOTAL_PG_MATCH', align: 'center', width: 100,
                                 listeners: {
                                     click: 'onClickDetail'
                                 }
 
                             },
                             {
-                                text: 'Pending', dataIndex: 'total_PG_PENDING', align: 'center', width: 100,
+                                text: 'Pending', dataIndex: 'TOTAL_PG_PENDING', align: 'center', width: 100,
                                 listeners: {
                                     click: 'onClickDetail'
                                 }
@@ -192,16 +192,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         ]
                     },
                     {
-                        text: 'Ligas', width: 200,
+                        text: 'Ligas',
                         columns: [
                             {
-                                text: 'Match', dataIndex: 'total_LIG_MATCH', align: 'center', width: 100,
+                                text: 'Match', dataIndex: 'TOTAL_LIG_MATCH', align: 'center', width: 100,
                                 listeners: {
                                     click: 'onClickDetail'
                                 }
                             },
                             {
-                                text: 'Pending', dataIndex: 'total_LIG_PENDING', align: 'center', width: 100,
+                                text: 'Pending', dataIndex: 'TOTAL_LIG_PENDING', align: 'center', width: 100,
                                 listeners: {
                                     click: 'onClickDetail'
                                 }
@@ -209,16 +209,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                         ]
                     },
                     {
-                        text: 'Tablets', width: 200,
+                        text: 'Tablets',
                         columns: [
                             {
-                                text: 'Match', dataIndex: 'total_TAB_MATCH', align: 'center', width: 100,
+                                text: 'Match', dataIndex: 'TOTAL_TAB_MATCH', align: 'center', width: 100,
                                 listeners: {
                                     click: 'onClickDetail'
                                 }
                             },
                             {
-                                text: 'Pending', dataIndex: 'total_TAB_PENDING', align: 'center', width: 100,
+                                text: 'Pending', dataIndex: 'TOTAL_TAB_PENDING', align: 'center', width: 100,
                                 listeners: {
                                     click: 'onClickDetail'
                                 }
@@ -228,7 +228,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaym
                 ]
             },
             {
-                text: 'Total<br>By Ticket', dataIndex: 'total_BY_TICKET', align: 'center', width: 100,
+                text: 'Total<br>By Ticket', dataIndex: 'TOTAL_BY_TICKET', align: 'center', width: 100,
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                         return Ext.util.Format.number(value, '0,000');
                     },

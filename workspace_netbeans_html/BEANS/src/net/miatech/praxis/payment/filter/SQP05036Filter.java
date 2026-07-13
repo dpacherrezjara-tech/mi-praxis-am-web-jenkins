@@ -17,6 +17,9 @@ public class SQP05036Filter {
     private String IN_PNR;
     private String IN_FLEXID;
     private String IN_PRAXISID;
+    private String IN_AREFNBR;
+    private String IN_TICKET;
+    
     private List<A4331AT1Filter> response =  new ArrayList<>();
 
     public String getIN_TFECHA() {
@@ -98,4 +101,21 @@ public class SQP05036Filter {
     public void setIN_PRAXISID(String IN_PRAXISID) {
         this.IN_PRAXISID = IN_PRAXISID;
     }
+    
+    public String getIN_AREFNBR() {
+        return IN_AREFNBR;
+    }
+
+    public void setIN_AREFNBR(String IN_AREFNBR) {
+        this.IN_AREFNBR = IN_AREFNBR;
+    }
+    
+    public String getIN_TICKET() {
+        return IN_TICKET;
+    }
+
+    public void setIN_TICKET(String IN_TICKET) {
+        this.IN_TICKET = IN_TICKET;
+    }
+    
 }

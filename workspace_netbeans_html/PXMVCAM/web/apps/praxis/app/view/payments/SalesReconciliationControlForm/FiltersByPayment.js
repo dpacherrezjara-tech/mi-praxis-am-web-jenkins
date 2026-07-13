@@ -132,8 +132,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     name: 'IN_PROCTYPESQ',
                                     labelWidth: 70,
                                     width: 250,
-                                    valueField: 'a4451key2',
-                                    displayField: 'a4451desc1',
+                                    valueField: 'A4451KEY2',
+                                    displayField: 'A4451DESC1',
                                     fieldLabel: 'Processor',
                                     queryMode: 'local',
                                     editable: false,
@@ -161,8 +161,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     labelAlign: 'right',
                                     width: 230,
                                     typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''
@@ -182,8 +182,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     labelAlign: 'right',
                                     width: 140,
                                     typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''
@@ -241,34 +241,38 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                             items: [
                                 {
                                     xtype: 'combobox',
+                                    id: prototype.id + '-cmbStvalBPS',
                                     fieldLabel: 'Status',
                                     name: 'IN_STVAL',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['', 'All'],
-//                                            ['A', 'Match OC/Camepa'],
-                                            ['C', 'Match Complement'],
-//                                            ['D', 'Match Balance'],
-                                            ['E', 'Duplicate Payment'],
-                                            ['M', 'Match Multi-Payment'],
-                                            ['0', 'Stand By'],
-                                            ['1', 'Match'],
-                                            ['3', 'Settl. Without Sales'],
-                                            ['4', 'Match Partial'],
-                                            ['5', 'Match Manual'],
-//                                            ['6', 'Match Forced'],
-//                                            ['7', 'Match Compensation'],
-                                            ['8', 'Match Transactional'],
-//                                            ['8', 'Match Void']
-                                        ]
-                                    }),
+//                                     store: Ext.create('Ext.data.SimpleStore', {
+//                                         fields: ['code', 'name'],
+//                                         data: [
+//                                             ['', 'All'],
+// //                                            ['A', 'Match OC/Camepa'],
+//                                             ['C', 'Match Complement'],
+// //                                            ['D', 'Match Balance'],
+//                                             ['E', 'Duplicate Payment'],
+//                                             ['M', 'Match Multi-Payment'],
+//                                             ['0', 'Stand By'],
+//                                             ['1', 'Match'],
+//                                             ['3', 'Settl. Without Sales'],
+//                                             ['4', 'Match Partial'],
+//                                             ['5', 'Match Manual'],
+// //                                            ['6', 'Match Forced'],
+// //                                            ['7', 'Match Compensation'],
+//                                             ['8', 'Match Transactional'],
+// //                                            ['9', 'Match Void']
+//                                         ]
+//                                     }),
                                     labelWidth: 55,
                                     width: 250,
-                                    displayField: 'name',
-                                    valueField: 'code',
+                                    displayField: 'NAME',
+                                    valueField: 'CODE',
                                     queryMode: 'local',
                                     editable: false,
+                                    autoSelect: true,
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
                                     value: ''
                                 },
                                 {
@@ -278,8 +282,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     name: 'IN_CERROR',
                                     labelWidth: 80,
                                     width: 290,
-                                    displayField: 'name',
-                                    valueField: 'code',
+                                    displayField: 'NAME',
+                                    valueField: 'A4451KEY3',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
@@ -291,8 +295,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     name: 'IN_CODADJU',
                                     labelWidth: 70,
                                     width: 230,
-                                    displayField: 'a4451desc1',
-                                    valueField: 'a4451key3',
+                                    displayField: 'A4451DESC1',
+                                    valueField: 'A4451KEY3',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
@@ -401,8 +405,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     name: 'IN_PROCTYPESQ',
                                     labelWidth: 70,
                                     width: 250,
-                                    valueField: 'a4451key2',
-                                    displayField: 'a4451desc1',
+                                    valueField: 'A4451KEY2',
+                                    displayField: 'A4451DESC1',
                                     fieldLabel: 'Processor',
                                     queryMode: 'local',
                                     editable: false,
@@ -433,11 +437,53 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     labelAlign: 'right',
                                     width: 230,
                                     typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbReglas',
+                                    name: 'IN_FREGLA',
+                                    queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    fieldLabel: 'Regla',
+                                    labelWidth: 50,
+                                    labelAlign: 'right',
+                                    width: 250,
+                                    typeAhead: true,
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    value: '',
+                                    editable: false,
+                                    listeners: {
+                                        render: function(combo) {
+                                            // Inicializamos QuickTipManager y registramos un tooltip base
+                                            Ext.tip.QuickTipManager.init();
+                                            Ext.tip.QuickTipManager.register({
+                                                target: combo.getId(),
+                                                text: 'Seleccione una regla para ver detalle'
+                                            });
+                                        },
+                                        select: function(combo, record) {
+                                            let comentario = record.get('COMMENT') || 'Sin descripción';
+
+                                            // Actualizamos el tooltip dinámicamente
+                                            Ext.tip.QuickTipManager.unregister(combo.getId());
+                                            Ext.tip.QuickTipManager.register({
+                                                target: combo.getId(),
+                                                text: comentario
+                                            });
+                                        }
+                                    }
                                 },
                                 {
                                     xtype: 'checkbox',
@@ -450,6 +496,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     listeners: {
                                         change: function (checkbox, newValue) {}
                                     }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'User Assigned',
+                                    id: prototype.id + '-filterUserAssigned',
+                                    labelWidth: 90,
+                                    width: 160,
+                                    name: 'IN_USER_ASSIGNED',
+                                    maxLength: 10,
+                                    maskRe: /[a-zA-Z0-9]/,
+                                    enforceMaxLength: true,
                                 }
                             ]
                         },
@@ -494,31 +551,32 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                 {
                                     xtype: 'combobox',
                                     fieldLabel: 'Status',
+                                    id: prototype.id + '-cmbStvalBPD',
                                     name: 'IN_STVAL',
-                                    store: Ext.create('Ext.data.SimpleStore', {
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ['', 'All'],
-//                                            ['A', 'Match OC/Camepa'],
-                                            ['C', 'Match Complement'],
-//                                            ['D', 'Match Balance'],
-                                            ['E', 'Duplicate Payment'],
-                                            ['M', 'Match Multi-Payment'],
-                                            ['0', 'Stand By'],
-                                            ['1', 'Match'],
-                                            ['3', 'Settl. Without Sales'],
-                                            ['4', 'Match Partial'],
-                                            ['5', 'Match Manual'],
-//                                            ['6', 'Match Forced'],
-//                                            ['7', 'Match Compensation'],
-                                            ['8', 'Match Transactional'],
-//                                            ['8', 'Match Void'],
-                                        ]
-                                    }),
+//                                     store: Ext.create('Ext.data.SimpleStore', {
+//                                         fields: ['code', 'name'],
+//                                         data: [
+//                                             ['', 'All'],
+// //                                            ['A', 'Match OC/Camepa'],
+//                                             ['C', 'Match Complement'],
+// //                                            ['D', 'Match Balance'],
+//                                             ['E', 'Duplicate Payment'],
+//                                             ['M', 'Match Multi-Payment'],
+//                                             ['0', 'Stand By'],
+//                                             ['1', 'Match'],
+//                                             ['3', 'Settl. Without Sales'],
+//                                             ['4', 'Match Partial'],
+//                                             ['5', 'Match Manual'],
+// //                                            ['6', 'Match Forced'],
+// //                                            ['7', 'Match Compensation'],
+//                                             ['8', 'Match Transactional'],
+// //                                            ['9', 'Match Void'],
+//                                         ]
+//                                     }),
                                     labelWidth: 55,
                                     width: 250,
-                                    displayField: 'name',
-                                    valueField: 'code',
+                                    displayField: 'NAME',
+                                    valueField: 'CODE',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
@@ -607,12 +665,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     labelAlign: 'right',
                                     width: 140,
                                     typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''
-                                }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'ARN',
+                                    labelWidth: 40,
+                                    width: 200,
+                                    name: 'IN_ARN',
+                                    maxLength: 25, 
+                                    maskRe: /[0-9]/, 
+                                    enforceMaxLength: true,
+                                    listeners: {
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
                             ]
                         },
                         {
@@ -649,8 +720,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     name: 'IN_CERROR',
                                     labelWidth: 80,
                                     width: 290,
-                                    displayField: 'name',
-                                    valueField: 'code',
+                                    displayField: 'NAME',
+                                    valueField: 'A4451KEY3',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
@@ -662,8 +733,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     name: 'IN_CODADJU',
                                     labelWidth: 70,
                                     width: 230,
-                                    displayField: 'a4451desc1',
-                                    valueField: 'a4451key3',
+                                    displayField: 'A4451DESC1',
+                                    valueField: 'A4451KEY3',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
@@ -706,6 +777,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.FiltersByPay
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    id: prototype.id + '-cmbAutoComment',
+                                    fieldLabel: 'Auto. Comment',
+                                    name: 'IN_CODEAUTOCOMMENT',
+                                    labelWidth: 100,
+                                    width: 320,
+                                    displayField: 'NAME',
+                                    valueField: 'CODE',
+                                    queryMode: 'local',
+                                    editable: false,
+                                    value: ''
                                 }
                             ]
                         }

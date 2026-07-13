@@ -13,8 +13,6 @@ import net.miatech.praxis.interline.WRF016;
 public class WRF016Filter extends WRF016{
  
     public int RN;
-    
-    public double VATRM = 0;
     public String IN_FECHA_FROM = "";
     public String IN_FECHA_TO = "";
     public int IN_TIPOFECHA = 0;

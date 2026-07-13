@@ -18,8 +18,6 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.streaming.SXSSFRow;
-import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
@@ -42,8 +40,7 @@ public class ExportUtils {
     private final SXSSFWorkbook wb;
 
     public ExportUtils() {
-        this.wb = new SXSSFWorkbook(SXSSFWorkbook.DEFAULT_WINDOW_SIZE);
-        this.wb.setCompressTempFiles(true);
+        this.wb = new SXSSFWorkbook();
     }
 
     public SXSSFWorkbook getWorkbook() {
@@ -58,8 +55,7 @@ public class ExportUtils {
             String prefix = nameArr[0];
             String suffix = "." + nameArr[1];
             File file = File.createTempFile(prefix + UUID.randomUUID(), suffix);
-            SXSSFSheet sheet = (SXSSFSheet) workbook.createSheet();
-            sheet.setRandomAccessWindowSize(100);
+            Sheet sheet = workbook.createSheet();
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
@@ -102,7 +98,7 @@ public class ExportUtils {
             }
 
             for (int i = 1; i < data.size(); i++) {
-                SXSSFRow row = (SXSSFRow) sheet.createRow(i);
+                Row row = sheet.createRow(i);
                 for (int x = 0; x < data.get(i).length; x++) {
                     Cell cell = row.createCell(x);
                     Object obj = data.get(i)[x];
@@ -177,7 +173,7 @@ public class ExportUtils {
             String prefix = nameArr[0];
             String suffix = "." + nameArr[1];
             File file = File.createTempFile(prefix + UUID.randomUUID(), suffix);
-            SXSSFSheet sheet = (SXSSFSheet) workbook.createSheet();
+            Sheet sheet = workbook.createSheet();
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
@@ -220,7 +216,7 @@ public class ExportUtils {
             }
 
             for (int i = 1; i < data.size(); i++) {
-                SXSSFRow row = (SXSSFRow) sheet.createRow(i);
+                Row row = sheet.createRow(i);
                 for (int x = 0; x < data.get(i).size(); x++) {
                     Cell cell = row.createCell(x);
                     CustomExcelCell obj = data.get(i).get(x);

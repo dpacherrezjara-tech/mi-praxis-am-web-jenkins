@@ -122,6 +122,8 @@ public class AccountingMasterInterliController extends BaseController {
             filter.IN_A1740TIPO_OLD = request.getParameter("IN_A1740TIPO_OLD").trim();
             filter.IN_A1740SUBTI_OLD = request.getParameter("IN_A1740SUBTI_OLD").trim();
             filter.IN_A1740CATEG_OLD = request.getParameter("IN_A1740CATEG_OLD").trim();
+            filter.IN_A1740FINI_OLD = request.getParameter("IN_A1740FINI_OLD").trim();
+            filter.IN_A1740FFIN_OLD = request.getParameter("IN_A1740FFIN_OLD").trim();
             
             logic = new AccountingMasterInterliLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());

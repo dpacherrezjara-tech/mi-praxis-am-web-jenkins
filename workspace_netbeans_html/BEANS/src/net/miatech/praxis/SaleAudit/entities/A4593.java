@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class A4593 {
-    private String A4593KEY1,  
+    private String  A4593KEY1,  
                 A4593KEY2,  
                 A4593KEY3,  
                 A4593DESC1, 

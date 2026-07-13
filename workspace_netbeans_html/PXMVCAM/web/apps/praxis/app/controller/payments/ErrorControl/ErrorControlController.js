@@ -67,7 +67,15 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
     },
     searchFormatErrors: async function () {
         const grid = Ext.getCmp(prototype.id + '-formatErrorGrid');
+        const gridDet = Ext.getCmp(prototype.id + '-formatErrorDetGrid');
+        grid.show();
+         
+        if(gridDet){
+            gridDet.hide();
+        }
+       
         grid.setLoading(true);
+        
         let params = this.formatFormatParams();
         console.log(params);
         const res = await global.callStoreGet('PRAXISMP', 'SQP05020', params);
@@ -106,7 +114,6 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
     },
     openAuditDataEntry: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
         let rec = record.data;
-        let url = CONTEXTPATH + '/ErrorControl';
         let params = {
             IN_CCUST: rec.A4481CCUST,
             IN_PROCTYPE: rec.A4481TYPEP.trim(),
@@ -118,8 +125,7 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
             'VN0002': () => {
                 const VN0002dataEntry = Ext.create('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry', {
                     id: prototype.id + '-formatDataEntry',
-                    searchParams: params,
-                    searchUrl: url + '/loadVN0002Info'
+                    searchParams: params
                 });
                 VN0002dataEntry.show();
             }
@@ -161,8 +167,9 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
                 };
                 let data = res.map(x => ({
                         'Processing Date': x.A4701PRDA,
-                        'Process': x.A4701PROCE,
+                        'Processor': x.A4701PROCE,
                         'File': x.A4701TFILE,
+                        'Sequence': x.A4701SEQ,
                         'File Name': x.A4701NFILE,
                         'File Path': x.A4701PATH,
                         'Transfer': opts[x.A4701UPLOA],
@@ -170,7 +177,9 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
                         'Format': opts[x.A4701FORMA],
                         'Status': x.A4701STAT === 'OK' ? 'OK' : 'ERROR',
                         'Error Code': x.A4701CDERR,
-                        'Message': x.A4701MSN
+                        'Message': x.A4701MSN,
+                        'Processed Date': x.A4701FPROC,
+                        'Processed Hour': x.A4701HPROC
                     }));
                 global.writeExcelFromJson(data, 'MDP Load Control');
             };
@@ -254,6 +263,34 @@ Ext.define('Ext.Praxis.controller.payments.ErrorControl.ErrorControlController',
             notifier.async(loadExcel());
         };
         notifier.confirm('Download Excel?', onOk, null);
+    },
+    onClickFilterBtn: function () {
+        const radioBtn = Ext.getCmp(prototype.id + '-viewOption').lastValue;
+        const loadFilters = Ext.getCmp(prototype.id + '-panelFilters');
+        const formatFilters = Ext.getCmp(prototype.id + '-panelFilters2');
+        
+        switch (radioBtn.opcion) {
+            case 'L':
+                if (loadFilters.isVisible())
+                    loadFilters.hide();
+                else
+                    loadFilters.show();
+                break;
+            case 'F':
+                if (formatFilters.isVisible())
+                    formatFilters.hide();
+                else
+                    formatFilters.show();
+                break;
+        }
+    },
+    onClickClearBtn: function () {
+        const radioBtn = Ext.getCmp(prototype.id + '-viewOption').lastValue;
+        const loadFilters = Ext.getCmp(prototype.id + '-panelFilters');
+        const formatFilters = Ext.getCmp(prototype.id + '-panelFilters2');
+        loadFilters.reset();
+        formatFilters.reset();
+        this.onChangeModule(null, radioBtn);
     }
 
 });

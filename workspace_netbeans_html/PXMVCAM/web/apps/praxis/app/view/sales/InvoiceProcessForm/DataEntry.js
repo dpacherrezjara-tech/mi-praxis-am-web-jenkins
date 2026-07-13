@@ -14,7 +14,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceProcessForm.DataEntry', {
     title: 'INVOICE PROCESS - Data Entry',
     header: true,
     width: 700,
-    height: 300,
+    height: 350,
     border: false,
     resizable: false,
     layout: {
@@ -185,6 +185,45 @@ Ext.define('Ext.Praxis.view.sales.InvoiceProcessForm.DataEntry', {
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtSEQREG',
+                                    required: true,
+                                    editable: true,
+                                    fieldLabel: '',
+                                    enableKeyEvents: true,
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9/]/,
+                                    maxLength: 10,
+                                    width: 100,
+                                    labelWidth: 0,
+                                    fieldStyle: 'text-align: left;',
+                                    labelAlign: 'left',
+                                    margin: '1 0 0 10'
+                                }
+                            ]
+                        },
+                        {
+                            layout: 'hbox',
+                            width: 650,
+                            margin: '1 0 5 0',
+                            border: false,
+                            bodyStyle: 'background: #E5ECEF',
+                            items: [
+                                {
+                                    xtype: 'label',
+                                    labelAlign: 'left',
+                                    html: '<b>LOTE Reg.</b>',
+                                    width: 100,
+                                    padding: '3px 5px 0px 10px'
+                                },
+                                {
+                                    xtype: 'label',
+                                    labelAlign: 'center',
+                                    padding: '3px 5px 0px 10px',
+                                    html: '<strong style="color:#AC4546;font-size:13px;"></strong>',
+                                    width: 30
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtLOTEREG',
                                     required: true,
                                     editable: true,
                                     fieldLabel: '',

@@ -49,26 +49,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.TicketsGridContr
             me.backButton();
         }
     },
-    downloadExcel: function () {
-        const me = this;
-        const view = this.view;
-        let params = Object.assign({}, view.searchParams);
-        params.excel = true;
-        Ext.Msg.show(
-            {
-                title: '.:PRAXIS:.',
-                msg: 'Download Excel?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function (btn) {
-                    if (btn === 'yes') {
-                        global.getFile(`${me.url}/downloadTickets?${new URLSearchParams(params)}`);
-                    }
-                }
-            });
-    },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
     getCmp: function ( {id}){
         return Ext.getCmp(prototype.id + id);

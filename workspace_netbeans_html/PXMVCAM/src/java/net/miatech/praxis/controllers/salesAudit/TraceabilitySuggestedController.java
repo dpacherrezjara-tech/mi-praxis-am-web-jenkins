@@ -121,6 +121,7 @@ public class TraceabilitySuggestedController extends BaseController {
                 map01.put("TOTALGROUP", lst.lst_reporte1.get(vi).TOTALGROUP);
                 map01.put("A1672AGENT", lst.lst_reporte1.get(vi).A1672AGENT);
                 map01.put("A1672IATAO", lst.lst_reporte1.get(vi).A1672IATAO);
+                map01.put("CANTPYR", lst.lst_reporte1.get(vi).CANTPYR);
 
                 lst_reporte1.add(map01);
             }

@@ -9,8 +9,8 @@ import net.miatech.praxis.payment.entities.CustomPageImpl;
  * @author Dvicente
  */
 public class SQP05134Filter extends CustomPageImpl{
-    private String IN_CCUST,IN_DATEFROM,IN_DATE,IN_MERCHANT,IN_STVAL,IN_PNR,IN_TRANSTYPE,IN_PROCTYPE,IN_PROCTYPESQ,
-            IN_SCOUNTRY,IN_SCURRENCY,IN_PCURRENCY,IN_SCARDN,IN_SAUTHOC;
+    private String IN_CCUST,IN_DATEFROM,IN_DATETO,IN_DATE,IN_MERCHANT,IN_STVAL,IN_PNR,IN_TRANSTYPE,IN_PROCTYPE,IN_PROCTYPESQ,
+            IN_SCOUNTRY,IN_SCURRENCY,IN_PCURRENCY,IN_SCARDN,IN_SAUTHOC, IN_AREFNBR, IN_TICKET, IN_ARN;
     private List<A4331Filter> response = new ArrayList<>();
 
     public String getIN_CCUST() {
@@ -28,9 +28,25 @@ public class SQP05134Filter extends CustomPageImpl{
     public void setIN_DATEFROM(String IN_DATEFROM) {
         this.IN_DATEFROM = IN_DATEFROM;
     }
+    
+    public String getIN_DATETO() {
+        return IN_DATETO;
+    }
+
+    public void setIN_DATETO(String IN_DATETO) {
+        this.IN_DATETO = IN_DATETO;
+    }
 
     public String getIN_DATE() {
         return IN_DATE;
+    }
+    
+    public String getIN_ARN() {
+        return IN_ARN;
+    }
+
+    public void setIN_ARN(String IN_ARN) {
+        this.IN_ARN = IN_ARN;
     }
 
     public void setIN_DATE(String IN_DATE) {
@@ -125,6 +141,22 @@ public class SQP05134Filter extends CustomPageImpl{
         this.IN_SAUTHOC = IN_SAUTHOC;
     }
 
+    public String getIN_AREFNBR() {
+        return IN_AREFNBR;
+    }
+
+    public void setIN_AREFNBR(String IN_AREFNBR) {
+        this.IN_AREFNBR = IN_AREFNBR;
+    }
+    
+    public String getIN_TICKET() {
+        return IN_TICKET;
+    }
+
+    public void setIN_TICKET(String IN_TICKET) {
+        this.IN_TICKET = IN_TICKET;
+    }       
+    
     public List<A4331Filter> getResponse() {
         return response;
     }

@@ -48,7 +48,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry
                             items: [
                                 {
                                     xtype: 'textfield',
-                                    name: 'ccard1',
+                                    name: 'CCARD1',
                                     fieldLabel: 'Credit Card',
                                     labelWidth: 70,
                                     width: 130,
@@ -66,7 +66,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry
                                 },
                                 {
                                     xtype: 'textfield',
-                                    name: 'ccard2',
+                                    name: 'CCARD2',
                                     maskRe: /[0-9]/, // Solo se permiten números
                                     width: 40,
                                     maxLength: 4, // Máximo de 5 caracteres permitidos
@@ -78,7 +78,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry
                         },
                         {
                             xtype: 'textfield',
-                            name: 'auth',
+                            name: 'AUTH',
                             fieldLabel: 'Authorization Code',
                             labelWidth: 110,
                             width: 170,
@@ -91,7 +91,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry
                         ,
                         {
                             xtype: 'numberfield',
-                            name: 'qtypax',
+                            name: 'QTYPAX',
                             fieldLabel: 'Qty. Passengers',
                             labelWidth: 100,
                             width: 150,
@@ -100,7 +100,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry
                         },
                         {
                             xtype: 'numberfield',
-                            name: 'qtytk',
+                            name: 'QTYTK',
                             fieldLabel: 'Qty. Tickets',
                             labelWidth: 90,
                             width: 140,
@@ -109,7 +109,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry
                         },
                         {
                             xtype: 'textfield',
-                            name: 'mda',
+                            name: 'MDA',
                             fieldLabel: 'Currency',
                             labelWidth: 65,
                             maskRe: /[a-zA-Z\s]/,
@@ -126,7 +126,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry
                         },
                         {
                             xtype: 'textfield',
-                            name: 'totamount',
+                            name: 'TOTAMOUNT',
                             fieldLabel: 'Total Amount',
                             labelWidth: 80,
                             width: 180,
@@ -136,7 +136,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry
                         },
                         {
                             xtype: 'textfield',
-                            name: 'totamounto',
+                            name: 'TOTAMOUNTO',
                             fieldLabel: 'Total Amount Off',
                             labelWidth: 100,
                             width: 200,
@@ -160,7 +160,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry
                                 {
                                     xtype: 'textfield',
                                     fieldLabel: 'User',
-                                    name: 'useru',
+                                    name: 'USERU',
                                     labelWidth: 30,
                                     width: 120,
                                     editable: false
@@ -168,7 +168,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.DataEntrys.FormatDataEntry
                                 {
                                     xtype: 'textfield',
                                     fieldLabel: 'Date Update',
-                                    name: 'dateu',
+                                    name: 'DATEU',
                                     labelWidth: 80,
                                     width: 150,
                                     margin: '0 5 0 5',

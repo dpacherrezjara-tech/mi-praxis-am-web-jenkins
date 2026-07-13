@@ -3,7 +3,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
     alias: 'widget.' + prototype.id + '-filters',
     border: true,
     bodyStyle: 'background-color: #E3EAF9;',
-//    padding: '2px 0px 1px 0px',
+    //    padding: '2px 0px 1px 0px',
     padding: '3px',
     layout: 'vbox',
     items: [
@@ -51,7 +51,7 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                     },
                     items: [
                         {
-                            items: [    
+                            items: [
                                 {
                                     xtype: 'textfield',
                                     name: 'IN_CCUST',
@@ -225,7 +225,59 @@ Ext.define('Ext.Praxis.view.salesaudit.TaxesExceptionsForm.Filters', {
                                     listeners: {
                                         keypress: 'onEnterKeyPress'
                                     }
-                                }
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Type',
+                                    labelWidth: 40,
+                                    width: 160,
+                                    name: 'IN_TYPE',
+                                    //                                    margin: '0 10 0 0',
+                                    //                                    labelStyle: 'font-weight:bold;',
+                                    //                                    fieldStyle: 'text-align:center;font-weight:bold;',
+                                    // id: prototype.id + '-cmbTktType',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['EX', 'Exceptuados'],
+                                            ['AC', "Acm's"]
+                                        ]
+                                    }),
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    //                                    editable: false,
+                                    value: ''
+                                },
+                                {
+                                    xtype: 'combobox',
+                                    fieldLabel: 'Status',
+                                    labelWidth: 40,
+                                    width: 160,
+                                    name: 'IN_STATUS',
+                                    //                                    margin: '0 10 0 0',
+                                    //                                    labelStyle: 'font-weight:bold;',
+                                    //                                    fieldStyle: 'text-align:center;font-weight:bold;',
+                                    // id: prototype.id + '-cmbTktType',
+                                    store: Ext.create('Ext.data.SimpleStore', {
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ['', 'All'],
+                                            ['Y', 'PENDING'],
+                                            ['C', 'UNREGISTERED CLIENT'],
+                                            ['S', 'UNREGISTERED SALE'],
+                                            ['A', 'APPROVED'],
+                                            ['F', 'WITH ACM']
+                                            
+                                        ]
+                                    }),
+                                    displayField: 'name',
+                                    valueField: 'code',
+                                    queryMode: 'local',
+                                    //                                    editable: false,
+                                    value: ''
+                                },
                             ]
                         }
                     ]

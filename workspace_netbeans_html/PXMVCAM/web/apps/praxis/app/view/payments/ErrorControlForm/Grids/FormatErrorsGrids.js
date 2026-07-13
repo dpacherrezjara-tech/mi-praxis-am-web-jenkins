@@ -100,7 +100,7 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Grids.FormatErrorsGrids', 
             border: false,
             width: '100%',
             minHeight: 250,
-            hidden:true,
+            hidden: true,
             id: prototype.id + '-formatErrorDetGrid',
             viewConfig: {
                 stripeRows: true,

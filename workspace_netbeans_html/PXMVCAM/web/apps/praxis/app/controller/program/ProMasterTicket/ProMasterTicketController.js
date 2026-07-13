@@ -1439,7 +1439,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         win.setValue('lblIssuedInExchangeFor', strIssuedInExchangeFor);
                         win.setValue('lblOriDes', me01.beanResultSet01.fileA720.A720ACCO + '-' + me01.beanResultSet01.fileA720.A720ACCD);
                         win.setValue('lblDocumentType', me01.beanResultSet01.fileA720.A720TDOC);
-                        if(me01.beanResultSet01.fileA720.A720TDOC === 'EMD'||me01.beanResultSet01.fileA720.A720TDOC === 'EMDA'){
+                        if(me01.beanResultSet01.fileA720.A720TDOC === 'EMD'||me01.beanResultSet01.fileA720.A720TDOC === 'EMDA'||me01.beanResultSet01.fileA720.A720TDOC === 'EMDS'){
                             win.setValue('lblDocumentTypeCod', me01.beanResultSet01.fileA720.A720TDOC_COD);
                             win.setValue('lblDocumentTypeCon', me01.beanResultSet01.fileA720.A720TDOC_CON);
                         }//Cuando sea VOU se usara el SearchEMD automaticamente que se encuentra mas abajo
@@ -3678,41 +3678,51 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         });
     },
 
-    loadSTVAL: function (bean) {
+    loadSTVAL: async function (bean) {
         var me01 = this;
-        prototype.url = URL_VIEWTICKET;
-        Ext.Ajax.request({
-            url: prototype.url + '/loadSTVAL',
-            method: 'POST',
-            timeout: 60000000,
-            params: {beanString: JSON.stringify(bean)},
-            success: function (response, options) {
-                Ext.getBody().unmask();
-                var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {
-                    //win.setValue('txtFilterTicketSeq', '');
-                    console.log(res.filterTKTSTVAL);//res.filterTKTSTVAL[0].IN_STVAL
-                    me01.bean.IN_STVAL = res.filterTKTSTVAL[0].IN_STVAL;
-                    if (me01.bean.IN_STVAL !== "") {
-                        if(me01.bean.SCARDNpos === 1){
-                            Ext.getCmp(prototype.id + '-lblMP1').setValue(me01.bean.IN_STVAL);
-                        }
-                        else if (me01.bean.SCARDNpos === 2){
-                            Ext.getCmp(prototype.id + '-lblMP2').setValue(me01.bean.IN_STVAL);
-                        }
-                        else {
-                            Ext.getCmp(prototype.id + '-lblMP1').setValue(me01.bean.IN_STVAL);
-                        }
-                        
+        var params = {
+            IN_A720AIRLIN: me01.beanResultSet01.fileA720.A720AIRLIN,
+            IN_A720CIA: bean.IN_CIA,
+            IN_A720FORMA: bean.IN_FORMA,
+            IN_A720SERIE: bean.IN_SERIE,
+            IN_A720SEQ: bean.IN_SEQ
+        };
+        try {
+            var res = await global.callStoreGet('PRAXIS', 'SQP05174', params);
+            var rows = (res && res.lstRs && res.lstRs.length > 0) ? res.lstRs[0] : [];
+            
+            var fop1Card = Ext.getCmp(prototype.id + '-lblFOP1CCNumber').getValue().replace(/X/g, '*');
+            var fop1Auth = String(Ext.getCmp(prototype.id + '-lblFOP1CCAprov').getValue());
+            var fop1Amount = Ext.getCmp(prototype.id + '-lblFOP1CCAmount').getValue();
+
+            var fop2Card = Ext.getCmp(prototype.id + '-lblFOP2CCNumber').getValue().replace(/X/g, '*');
+            var fop2Auth = String(Ext.getCmp(prototype.id + '-lblFOP2CCAprov').getValue());
+            var fop2Amount = Ext.getCmp(prototype.id + '-lblFOP2CCAmount').getValue();
+
+            // console.log("fop1Amount", fop1Amount);
+            // console.log("fop2Amount", fop2Amount);
+
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                var rowCard = String(row.A1531NREF || '').substr(0, 16);
+                var rowAuth = String(row.A1531CAPL || '');
+                var rowAmount = Ext.util.Format.number(row.A1531VFOP, '0,000.00') + ' ' + (row.A1531MFOP || '');
+                var statusMP = row.STATUSMP || '';
+                // console.log('loadSTVAL row', i, rowCard, rowAuth, rowAmount, statusMP);
+                // console.log('STATUSMP 1:', fop1Card, fop1Auth, fop1Amount);
+                // console.log('STATUSMP 2:', fop2Card, fop2Auth, fop2Amount);
+                if (statusMP !== '') {
+                    if (rowCard === fop1Card && rowAuth === fop1Auth && rowAmount === fop1Amount) {
+                        Ext.getCmp(prototype.id + '-lblMP1').setValue(statusMP);
+                    } else if (rowCard === fop2Card && rowAuth === fop2Auth && rowAmount === fop2Amount) {
+                        Ext.getCmp(prototype.id + '-lblMP2').setValue(statusMP);
                     }
-                } else
-                    global.Msg({msg: "Bad Request 5"});
-            },
-            failure: function (response, opts) {
-                Ext.getBody().unmask();
-                console.log('server-side failure with status code ' + response.status);
+                }
             }
-        });
+        } catch (e) {
+            console.error('Error loadSTVAL', e);
+        }
+        Ext.getBody().unmask();
     },
 
     // </editor-fold>

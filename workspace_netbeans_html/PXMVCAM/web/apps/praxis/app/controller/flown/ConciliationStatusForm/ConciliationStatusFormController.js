@@ -13,7 +13,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
 
     init: function (view) {
         var me = this;
-        this.setStoresFilters();
+        this.setStoresFilters();        
 
     },
     OnBeforeShow: function () {
@@ -29,6 +29,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         // alert('Controlador cargado correctamente')
         this.setStores();
         Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, this);
+        this.imgSearch_clickHandler();
     },
     onRendererColumnOnTime: function (value, metaData, record, rowIndex, colIndex, store, view) {
         switch (String(record.get('A3536FINA'))) {
@@ -132,7 +133,8 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
 
         cmbOrigen.bindStore(Ext.create('Ext.data.Store', {
             data: [
-                {"code": "NO", "name": "CADUCO"},
+                {"code": "CDI", "name": "CADUCO INMEDIATO"},
+                {"code": "CDN", "name": "CADUCO NATURAL"},
                 {"code": "US", "name": "EMD STAND ALONE"}
             ]
         }));
@@ -145,7 +147,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         }));
     },
     onCmbStatusOrigen: function (obj, newValue, oldValue, eOpts) {
-        obj.setValue('NO');
+        obj.setValue('CDN');
     },
     onCmbChange: function (obj, records, eOpts) {
         var txtLote = Ext.getCmp(prototype.id + '-txtLote');
@@ -288,6 +290,8 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         if (rec.data.A3676ORIG === 'EMD STAND ALONE') {
             origen = 'US';
         }
+        var CmbOrigen=Ext.getCmp(prototype.id + '-CmbOrigen').getValue();
+        if(origen==='') origen=CmbOrigen;
 
         this.bean2.IN_OPTION = '4';
         this.bean2.IN_ORIGEN = origen;
@@ -454,6 +458,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
             this.bean.IN_DATETO = txtDateTo;
             this.bean.IN_ORIGEN = CmbOrigen;
             this.bean.IN_LOTE = txtLote;
+            this.bean.IN_TYPE = CmbType;
             this.bean.IN_REFERENCE = '';
             this.SearchReport(this.bean, obj === true ? obj : false);
         } else {
@@ -482,8 +487,9 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
                 this.bean3.IN_OPTION = cmbsearch;
                 this.bean3.IN_DATEFROM = txtDateFrom;
                 this.bean3.IN_DATETO = txtDateTo;
-                this.bean3.IN_ORIGEN = '';//'MEXVN';//'CSCVI';
+                this.bean3.IN_ORIGEN = CmbOrigen;
                 this.bean3.IN_LOTE = '';
+                this.bean.IN_TYPE = CmbType;
                 this.bean3.IN_REFERENCE = txtLote;
                 Ext.getCmp(prototype.id + '-gridDataControl').getStore().loadPage(1, {
                     params: {

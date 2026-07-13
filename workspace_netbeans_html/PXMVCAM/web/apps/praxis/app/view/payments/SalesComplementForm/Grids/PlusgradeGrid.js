@@ -23,26 +23,47 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
         items: [
             //<editor-fold defaultstate="collapsed" desc="Detail Cols">
             {
-                text: 'Plusgrade ID', dataIndex: 'PLUSGRAID', width: 85
+                text: 'RN',
+                locked: true,
+                dataIndex: 'RN',
+                xtype: 'rownumberer', // Columna de número de fila
+                width: 40 // Ancho de la columna de número de fila (ajusta según tus necesidades)
             },
             {
-                text: 'Merchant', dataIndex: 'MERCHID', width: 90
-            },
-            {
-                text: 'Processing',
-                defaults: {
-                    menuDisabled: true,
-                    sortable: false,
-                    align: 'center'
-                },
-                columns: [
+                sortable: false,
+                xtype: 'actioncolumn',
+                width: 40,
+                text: 'Edit',
+                locked: true,
+                align: 'center',
+                items: [
                     {
-                        text: 'Date', dataIndex: 'PRDA', width: 90
+                        iconCls: 'prx-icon-detail',
+                        tooltip: 'Open Reconciliation',
+                        handler: 'onClickOpenReconciliation'
                     }
                 ]
             },
             {
-                text: 'Diff.',
+                text: 'Plusgrade<br>ID', dataIndex: 'PLUSGRAID', width: 80
+            },
+            {
+                text: 'Merchant', dataIndex: 'MERCHID', width: 110
+            },
+            {
+                text: 'Processing<br>Date', dataIndex: 'PRDA', width: 90
+            },
+            {
+                text: 'Diff.<br>Days', dataIndex: 'PASSED_DAYS', width: 55,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    if (value > 15) {
+                        metaData.style = "color:#de2828";
+                    }
+                    return value;
+                },
+            },
+            {
+                text: 'Plusgrade VS AMEX',
                 defaults: {
                     menuDisabled: true,
                     sortable: false,
@@ -50,18 +71,19 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                 },
                 columns: [
                     {
-                        text: 'Days', dataIndex: 'PASSED_DAYS', width: 55,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            if (value > 15) {
-                                metaData.style = "color:#de2828";
-                            }
+                        text: 'Status', dataIndex: 'DESCFAMEX', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                             return value;
-                        },
+                        }
+                    },
+                    {
+                        text: 'Date', dataIndex: 'AMEXFECSELEC', width: 70
                     }
                 ]
             },
             {
-                text: 'Plusgrade',
+                text: 'Plusgrade VS Sales',
                 defaults: {
                     menuDisabled: true,
                     sortable: false,
@@ -69,13 +91,17 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                 },
                 columns: [
                     {
-                        text: 'VS AMEX', dataIndex: 'DESCFAMEX', width: 80
+                        text: 'Status', dataIndex: 'DESCSTVAL', width: 100,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
+                            return value;
+                        }
                     },
-                    {
-                        text: 'VS Sales', dataIndex: 'DESCSTVAL', width: 80
-                    },
+                    { text: 'Date', dataIndex: 'DESCVSSALES', width: 70 },
+                    { text: 'Rule', dataIndex: 'FREGLA_DESCRIPTION', width: 100 }
                 ]
             },
+
             {
                 text: 'Sales',
                 defaults: {
@@ -137,48 +163,38 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                     metaData.style = "text-align:center;background-color:#8ac6eb";
 
                     return Ext.util.Format.number(value, '0,000');
-                },
+                }
             },
             {
-                text: 'Currency',
-                defaults: {
-                    menuDisabled: true,
-                    sortable: false,
-                    align: 'center'
-                },
-                columns: [
-                    {
-                        text: 'Offer', dataIndex: 'CUROFFER', width: 80,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "background-color:#8ac6eb";
-                            return value;
-                        },
-                    },
-                ]
+                text: 'Currency<br>Offer', dataIndex: 'CUROFFER', width: 80,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "background-color:#8ac6eb";
+                    return value;
+                }
             },
             {
-                text: 'Total',
-                defaults: {
-                    menuDisabled: true,
-                    sortable: false,
-                    align: 'center'
-                },
-                columns: [
-                    {
-                        text: 'Amount', dataIndex: 'SVFOP', width: 80,
-                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "text-align:right;background-color:#8ac6eb";
-                            return Ext.util.Format.number(value, '0,000.00');
-                        },
-                    },
-                ]
-            },
-            {
-                text: 'Total <br> Amount Off', dataIndex: 'AMOUNTOFF', width: 80,
+                text: 'Total<br>Amount', dataIndex: 'SVFOP', width: 80,
+                tooltip: 'Monto Total de Plusgrade ID',
                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                     metaData.style = "text-align:right;background-color:#8ac6eb";
                     return Ext.util.Format.number(value, '0,000.00');
-                },
+                }
+            },
+            {
+                text: 'Total<br>Amount Off', dataIndex: 'AMOUNTOFF', width: 80,
+                tooltip: 'Monto Total de linea agrupada',
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:right;background-color:#8ac6eb";
+                    return Ext.util.Format.number(value, '0,000.00');
+                }
+            },
+            {
+                text: 'Amount<br>EMD', dataIndex: 'TOTALEMD', width: 80,
+                tooltip: 'Monto del EMD',
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:right;background-color:#8ac6eb";
+                    return Ext.util.Format.number(value, '0,000.00');
+                }
             },
             {
                 text: 'Sales',
@@ -214,19 +230,11 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                         text: 'Date', dataIndex: 'SDATES', width: 90,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             return value;
-                        },
+                        }
                     }
                 ]
             },
-            {text: 'Qty<br>Tkts', dataIndex: 'QTYTKT', width: 40,
-//                listeners: {
-//                    click: 'onClickTktDetail'
-//                },
-//                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-//                    metaData.style = "text-align:center;text-decoration:underline;color:#057ECB;cursor:pointer";
-//                    return value;
-//                }
-            },
+            { text: 'Qty<br>Tkts', dataIndex: 'QTYTKT', width: 40 },
             {
                 text: 'Plusgrade',
                 defaults: {
@@ -257,13 +265,24 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                 items: [
                     {
                         iconCls: 'prx-icon-image-log',
-                        tooltip: 'copy SPNR',
-                        handler: 'copySPNR'
+                        tooltip: 'copy Ticket EMD',
+                        handler: 'copyEMDTKT'
                     }
                 ]
             },
             {
-                text: 'EMD',
+                text: 'EMD<br>Number', dataIndex: 'EMDNUMBER', width: 120,
+                listeners: {
+                    click: 'onClickSearchTicket'
+                }, renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    metaData.style = "text-align:center;text-decoration:underline;color:#057ECB;cursor:pointer";
+                    value = '<b>' + value + '</b>';
+                    return value;
+                }
+            },
+            {
+                text: 'Add EMD',
+                id: prototype.id + '-plusAddPax',
                 defaults: {
                     menuDisabled: true,
                     sortable: false,
@@ -271,15 +290,15 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                 },
                 columns: [
                     {
-                        text: 'Number', dataIndex: 'EMDNUMBER', width: 100,
-                        listeners: {
-                            click: 'onClickSearchTicket'
-                        }, renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                            metaData.style = "text-align:center;text-decoration:underline;color:#057ECB;cursor:pointer";
-                            value = '<b>' + value + '</b>';
-                            return value;
-                        }
+                        text: 'Amount', dataIndex: 'TCVFEAMOFR', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                            metaData.style = "text-align:right;";
+                            return Ext.util.Format.number(value, '0,000.00');
+                        },
                     },
+                    {
+                        text: 'EMD Number', dataIndex: 'EMDSNUMBER', width: 120
+                    }
                 ]
             },
             {
@@ -288,17 +307,32 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                 defaults: {
                     menuDisabled: true,
                     sortable: false,
-                    align: 'center'
+                    align: 'center',
+                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                        metaData.style = "background-color:#FCF6DC";
+                        if (value) {
+                            //tooltip
+                            metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
+                        }
+                        return value;
+                    }
                 },
                 columns: [
                     {
-                        text: 'ID Sales FLEX', dataIndex: 'IDCONFLE', width: 250
+                        text: 'Status', dataIndex: 'STCON_DESCRIPTION', width: 80,
+                        renderer: function (value, metaData, record, rowIndex, colIndex) {
+                            metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
+                            return value;
+                        }
                     },
                     {
-                        text: 'Date', dataIndex: 'FCONT', width: 100
+                        text: 'Date', dataIndex: 'FCONT', width: 80
                     },
                     {
-                        text: 'ID', dataIndex: 'IDCON', width: 250
+                        text: 'Praxis ID', dataIndex: 'IDCON', width: 280
+                    },
+                    {
+                        text: 'ID FLEX', dataIndex: 'IDCONFLE', width: 280
                     }
                 ]
             },
@@ -321,30 +355,25 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementForm.Grids.PlusgradeGrid', {
                 ]
             },
             {
-                text: 'Add Pax',
-                id: prototype.id + '-plusAddPax',
+                text: 'Token', dataIndex: 'PAYTOKEN', width: 150,
+                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                    value = '<b>' + value + '</b>';
+                    metaData.style = "text-align:center;";
+                    return value;
+                }
+            },
+            {
+                text: 'Updated',
                 defaults: {
                     menuDisabled: true,
                     sortable: false,
                     align: 'center'
                 },
                 columns: [
-                    {
-                        text: 'EMD Number', dataIndex: 'ADDPAXEMD', width: 280
-                    },
-                    {
-                        text: 'Ticket Number', dataIndex: 'ADDPAXTKT', width: 280
-                    },
+                    { text: 'User', dataIndex: 'USUP', width: 80 },
+                    { text: 'Date', dataIndex: 'FEUP', width: 80 }
                 ]
             },
-            {
-                text: 'Token', dataIndex: 'PAYTOKEN', width: 140,
-                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                    value = '<b>' + value + '</b>';
-                    metaData.style = "text-align:center;";
-                    return value;
-                }
-            }
             //</editor-fold>
         ]
     },

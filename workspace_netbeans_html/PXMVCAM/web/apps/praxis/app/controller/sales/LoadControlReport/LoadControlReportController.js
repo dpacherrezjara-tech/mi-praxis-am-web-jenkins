@@ -32,10 +32,10 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportContr
     },
     btnExcel_click: function (obj, e) {
         var beanXLS = {};
-        
+
         beanXLS.VP_FPROC1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha01-excel').getValue(), 'Ymd');
         beanXLS.VP_FPROC2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha02-excel').getValue(), 'Ymd');
-                
+
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Download Excel ?',
@@ -43,7 +43,7 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportContr
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
+            fn: function (btn) {
                 if (btn === 'ok') {
                     global.getFile(prototype.url + '/LoadControlReportExcel?beanString=' + encodeURI(JSON.stringify(beanXLS)));
                 }
@@ -169,11 +169,101 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlReport.LoadControlReportContr
             Ext.getCmp(prototype.id + '-fecha01-excel').enable();
             Ext.getCmp(prototype.id + '-fecha02-excel').enable();
             Ext.getCmp(prototype.id + '-fecha01-excel').focus();
-        } else{
+        } else {
             Ext.getCmp(prototype.id + '-fecha01-excel').disable();
-            Ext.getCmp(prototype.id + '-fecha02-excel').disable();            
+            Ext.getCmp(prototype.id + '-fecha02-excel').disable();
         }
 
-    }
+    },
+
+    onClickComment: function (view, cellEl, rowIndex, cellIndex, e, record) {
+
+        const target = Ext.fly(e.target).findParent('.comment-cell', view.el, true);
+
+        const dayNum = target.getAttribute('data-daynum');
+        const fecha = record.get(`PRDA${dayNum}`);
+        const dia = record.get(`PRDA${dayNum}_`);
+        const nhot = record.get('NHOT');
+        const status = record.get(`STATUS${dayNum}`);
+        const comentario = record.get(`COMMENT${dayNum}`) || '';
+        const rowData = record.getData();
+
+
+//        console.log('dataaaa',rowData);
+//        console.log('comentario',comentario);
+        const dataEntry = Ext.create('Ext.Praxis.view.sales.LoadControlReportForm.DataEntrys.DataEntryLoadControlReport', {
+            id: prototype.idDE + '-DataEntryLoadControlReport',
+            rowId: nhot,
+            dayNum: dayNum,
+            dia: dia,
+            fecha: fecha,
+            status: status,
+            comentario: comentario,
+            rowData: rowData
+        });
+
+        dataEntry.show();
+    },
+
+//    getDayCellStyle: function (record, store, dayIndex) {
+//        const label = record.get(`LABEL${dayIndex}`) || '';
+//        const flag = record.get(`FLG${dayIndex}`) || '';
+//        const status = record.get(`STATUS${dayIndex}`) || '';
+//        const comment = (record.get(`COMMENT${dayIndex}`) || '').trim();
+//        const country = record.get('COUNTRY_CODE');
+//
+//        // Reunir todos los registros del mismo país
+//        const sameCountryRecords = store.getRange().filter(r => r.get('COUNTRY_CODE') === country);
+//
+//        // Verificar si alguna moneda del país recibió insumo
+//        const someHasInsumo = sameCountryRecords.some(r => {
+//            const s = r.get(`STATUS${dayIndex}`) || '';
+//            const i = r.get(`ISSUDT${dayIndex}`) || '';
+//            return s.trim() !== '' || i.trim() !== '';
+//        });
+//
+//        // Verificar si ninguna moneda recibió insumo
+//        const allWithoutInsumo = sameCountryRecords.every(r => {
+//            const s = r.get(`STATUS${dayIndex}`) || '';
+//            const i = r.get(`ISSUDT${dayIndex}`) || '';
+//            return s.trim() === '' && i.trim() === '';
+//        });
+//
+//        let style = '';
+//
+//        // 🟥 1️⃣ Prioridad máxima: LABEL = 'R' (rojo o naranja)
+//        if (label === 'R') {
+//            return comment !== ''
+//                    ? 'font-weight:bold;background:#F26922;color:white;'  // tiene comentario → naranja
+//                    : 'font-weight:bold;background:#FF0000;color:white;'; // sin comentario → rojo
+//        }
+//
+//        // 🟦 2️⃣ LABEL = 'A' (azul)
+//        if (label === 'A') {
+//            return 'font-weight:bold;background:#5B9BD5;color:white;';
+//        }
+//
+//        // 🟪 3️⃣ País sin insumo → rojo global
+//        if (allWithoutInsumo) {
+//            return 'font-weight:bold;background:#FF0000;color:white;';
+//        }
+//
+//        // 🟣 4️⃣ Alguna moneda recibió, pero esta no → morado
+//        if (someHasInsumo && (!status || status.trim() === '')) {
+//            return 'font-weight:bold;background:#8688DB;color:white;';
+//        }
+//
+//        // 🟣 5️⃣ Caso original: sin STATUS, con flag Y y no es A → morado
+//        if (status === '' && flag === 'Y' && label !== 'A') {
+//            return 'font-weight:bold;background:#8688DB;color:white;';
+//        }
+//
+//        // ⚪ 6️⃣ Por defecto (sin estilo especial)
+//        return style;
+//    }
+//
+
+
+
 
 });

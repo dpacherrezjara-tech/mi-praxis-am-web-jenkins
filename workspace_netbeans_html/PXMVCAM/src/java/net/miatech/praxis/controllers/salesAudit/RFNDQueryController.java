@@ -1049,9 +1049,9 @@ public class RFNDQueryController extends BaseController {
             logic = new RFNDQueryLogic();
             logic.setSession(this.serverSession.getServerSession());
             result = logic.ProcesaManualRFNDTCKT(filter, taxes, razones, fop);
-            if (result.equals("Proceso Culminado")) {
+            /*if (result.equals("Proceso Culminado")) {
                 result2 = this.rfndnotifipagina(filter);
-            }
+            }*/
 
         } catch (Exception e) {
             throw new SpringException(e);

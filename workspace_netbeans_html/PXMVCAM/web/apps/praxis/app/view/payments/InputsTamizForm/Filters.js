@@ -159,8 +159,7 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
                 hiddenLabel: false,
                 labelAlign: 'right',
                 xtype: 'textfield',
-                hidden: false,
-                selectOnFocus: true
+                hidden: false
             },
             items: [
                 
@@ -184,18 +183,17 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
                 {
                     xtype: 'combo',
                     fieldLabel: 'Source',
-                    id: prototype.id + '-cmbFUENTE',
+                    id: prototype.id + '-cmbSourceCalendar',
                     enableKeyEvents: true,
                     readOnly: false,
                     editable: false,
-                    valueField: 'a051KEY2',
-                    displayField: 'a051DESCR1',
+                    valueField: 'A051KEY2',
+                    displayField: 'A051DESCR1',
                     labelWidth: 50,
                     width: 250,
                     margin: '0px 0px 0px 20px',
                     hidden: true,
                     fieldStyle: 'text-align: left;',
-                    emptyText: 'All',
                     queryMode: 'local',
                     triggerAction: 'all'
                 },
@@ -235,8 +233,8 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
                     enableKeyEvents: true,
                     readOnly: false,
                     editable: false,
-                    valueField: 'a051KEY2',
-                    displayField: 'a051DESCR1',
+                    valueField: 'A051KEY2',
+                    displayField: 'A051DESCR1',
                     labelWidth: 50,
                     width: 250,
                     margin: '0px 0px 0px 20px',
@@ -248,8 +246,20 @@ Ext.define('Ext.Praxis.view.payments.InputsTamizForm.Filters', {
                     listeners: {
                         select: 'onClickSearchBtn'
                     }
+                },
+                {
+                    xtype: 'button',
+                    text: 'Days Receipt',
+                    margin: '0px 0px 0px 20px',
+                    padding: '3px 5px',
+                    hidden: true,
+                    id: prototype.id + '-btnDaysReceiptSettlement',
+                    iconCls: 'prx-icon-query',
+                    tooltip: 'Days Receipt of Settlement',
+                    listeners: {
+                        click: 'onClickViewDaysReceiptSettlement'
+                    }
                 }
-                
             ]
         }
 

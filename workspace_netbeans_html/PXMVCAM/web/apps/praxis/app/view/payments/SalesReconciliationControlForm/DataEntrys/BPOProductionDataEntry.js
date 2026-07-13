@@ -210,7 +210,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                             autoScroll: true,
                             minHeight: 180,
                             width: 340,
-                            maxHeight: 200,
+                            maxHeight: 300,
                             margin: '5 5 5 5',
                             viewConfig: {
                                 stripeRows: true,
@@ -229,9 +229,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                                         xtype: 'rownumberer', // Columna de número de fila
                                         width: 40 // Ancho de la columna de número de fila (ajusta según tus necesidades)
                                     },
-                                    {text: 'Worked<br>Date', dataIndex: 'feup', width: 80},
-                                    {text: 'Username', dataIndex: 'usup', flex: 1},
-                                    {text: 'Qty<br>Trnx', dataIndex: 'qtrn', width: 80,
+                                    {text: 'Worked<br>Date', dataIndex: 'FEUP', width: 80},
+                                    {text: 'Username', dataIndex: 'USUP', flex: 1},
+                                    {text: 'Qty<br>Trnx', dataIndex: 'QTRN', width: 80,
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             return '<b>' + value + '<b>';
@@ -254,7 +254,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                             titleAlign: 'center',
                             id: prototype.idDeProd + '-gridDetail',
                             minHeight: 180,
-                            maxHeight: 200,
+                            maxHeight: 300,
                             flex: 1,
                             margin: '5 5 5 5',
                             viewConfig: {
@@ -271,13 +271,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                                     sortable: true
                                 },
                                 items: [
-                                    {text: 'Doc. Type', dataIndex: 'transtype', width: 100},
-                                    {text: 'Processor', dataIndex: 'desc_PROCTYPE', flex: 1},
+                                    {text: 'Doc. Type', dataIndex: 'TRANSTYPE', width: 100},
+                                    {text: 'Processor', dataIndex: 'DESC_PROCTYPE', flex: 1},
                                     {
-                                        text: 'Country', dataIndex: 'scountry', width: 80
+                                        text: 'Country', dataIndex: 'SCOUNTRY', width: 80
                                     },
                                     {
-                                        text: 'Status', dataIndex: 'stval', width: 120,
+                                        text: 'Status', dataIndex: 'STVAL', width: 120,
                                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                                             metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                                             const opts = {
@@ -301,7 +301,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                                         }
                                     },
                                     {
-                                        text: 'Qty', dataIndex: 'qtrn', width: 80,
+                                        text: 'Qty', dataIndex: 'QTRN', width: 80,
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             return '<b>' + value + '<b>';
@@ -322,7 +322,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                             id: prototype.idDeProd + '-gridDetail2',
                             hidden: true,
                             minHeight: 180,
-                            maxHeight: 200,
+                            maxHeight: 300,
                             flex: 1,
                             margin: '5 5 5 5',
                             viewConfig: {
@@ -339,7 +339,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                                     sortable: true
                                 },
                                 items: [
-                                    {text: 'Fop Type', dataIndex: 'a4501TFOP', width: 100,
+                                    {text: 'Fop Type', dataIndex: 'A4501TFOP', width: 100,
                                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                                             metaData.style = "text-align:center;font-weight:bold;";
                                             const opts = {
@@ -349,15 +349,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                                             return opts[value] || '';
                                         }
                                     },
-                                    {text: 'Processor', dataIndex: 'desc_PROCTYPE', flex: 1},
+                                    {text: 'Processor', dataIndex: 'DESC_PROCTYPE', flex: 1},
                                     {
-                                        text: 'Card Name', dataIndex: 'desc_TARJ', flex: 1
+                                        text: 'Card Name', dataIndex: 'DESC_TARJ', flex: 1
                                     },
                                     {
-                                        text: 'Sale Date', dataIndex: 'a4496FECVT', width: 100
+                                        text: 'Sale Date', dataIndex: 'A4496FECVT', width: 100
                                     },
                                     {
-                                        text: 'Status', dataIndex: 'a4501STVAL', width: 120,
+                                        text: 'Status', dataIndex: 'A4501STVAL', width: 120,
                                         renderer: function (value, metaData, record, rowIndex, colIndex) {
                                             metaData.style = "text-align:center;font-weight:bold;background-color:#8EDFB3;";
                                             const opts = {
@@ -381,7 +381,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.B
                                         }
                                     },
                                     {
-                                        text: 'Qty', dataIndex: 'qtkt', width: 80,
+                                        text: 'Qty', dataIndex: 'QTKT', width: 80,
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                             return '<b>' + value + '<b>';

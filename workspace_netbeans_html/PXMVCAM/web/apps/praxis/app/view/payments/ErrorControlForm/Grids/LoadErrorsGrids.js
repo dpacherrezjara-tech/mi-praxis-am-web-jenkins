@@ -32,9 +32,10 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Grids.LoadErrorsGrids', {
                     sortable: true
                 },
                 items: [
-                    {text: 'Processing<br>Date', dataIndex: 'A4701PRDA', width: 100},
-                    {text: 'Process', dataIndex: 'A4701PROCE', width: 100},
-                    {text: 'File', dataIndex: 'A4701TFILE', width: 100},
+                    {text: 'Processing<br>Date', dataIndex: 'A4701PRDA', width: 100, locked: true},
+                    {text: 'Processor', dataIndex: 'A4701PROCE', width: 100, locked: true},
+                    {text: 'File', dataIndex: 'A4701TFILE', width: 100, locked: true},
+                    {text: 'Sequence', dataIndex: 'A4701SEQ', width: 70, locked: true},
                     {text: 'File Name', dataIndex: 'A4701NFILE', width: 450},
                     {text: 'File Path', dataIndex: 'A4701PATH', width: 450},
                     {text: 'Transfer', dataIndex: 'A4701UPLOA', width: 100,
@@ -114,7 +115,20 @@ Ext.define('Ext.Praxis.view.payments.ErrorControlForm.Grids.LoadErrorsGrids', {
                         }
                     },
                     {text: 'Error Code', dataIndex: 'A4701CDERR', width: 100},
-                    {text: 'Message', dataIndex: 'A4701MSN', width: 350}
+                    {text: 'Message', dataIndex: 'A4701MSN', width: 350},
+                    {
+                        text: 'Processed',
+                        defaults: {
+                            align: 'center',
+                            menuDisabled: true,
+                            sortable: true
+                        },
+                        columns: [
+                            {text: 'Date', dataIndex: 'A4701FPROC', width: 80},
+                            {text: 'Hour', dataIndex: 'A4701HPROC', width: 80}
+                        ]
+                    }
+                    
                 ]
             },
             tbar: {

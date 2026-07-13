@@ -87,7 +87,6 @@ public class RejectedReportFormDAO {
                     objRtn.A3456FREGI = rs01.getString("A3456FREGI");
                     objRtn.A3456HREGI = rs01.getString("A3456HREGI");
                     objRtn.A3456TOTALPAGI = rs01.getInt("A3456TOTALPAGI");
-                    objRtn.A3456TYPE = rs01.getString("A3456TYPE");
                 } else {
                     objRtn.A3456CCUST = rs01.getString("A3457CCUST");
                     objRtn.A3456CIA = rs01.getString("A3457CIA");

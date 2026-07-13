@@ -119,7 +119,15 @@ Ext.define('Ext.Praxis.controller.sales.OracleControlAcknowledgment.OracleContro
                 ["IXPEST", "IXP Estimated"],
                 ["IXCEST", "IXC Estimated"],
                 ["IXPREV", "IXP REV Estimated"],
-                ["IXCREV", "IXC REV Estimated"]
+                ["IXCREV", "IXC REV Estimated"],
+                ["AMEX","Amex"],
+                ["BANCOMER", "Bancomer"],
+                ["BANORTE", "Banorte"],
+                ["GENET", "Genet"],
+                ["WORLDPAY", "Worldpay"],
+                ["PLUSGRADE", "Plusgrade"],
+                ["DIFFC","DIFFC"],
+                ["GETNET", "Getnet"]
             ]
         }));
         cboModulo.setValue("");

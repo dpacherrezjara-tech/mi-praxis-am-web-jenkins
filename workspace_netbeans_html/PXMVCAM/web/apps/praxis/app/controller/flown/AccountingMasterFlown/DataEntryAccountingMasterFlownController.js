@@ -13,6 +13,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
     IN_A1740TIPO_OLD: null,
     IN_A1740SUBTI_OLD: '',
     IN_A1740CATEG_OLD: null,
+    IN_A1740FINI_OLD: null,
+    IN_A1740FFIN_OLD: null,
     /**
      * Constructor
      */
@@ -224,6 +226,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
             IN_A1740TIPO_OLD = Ext.getCmp(prototype.id + '-lblA1740TIPO').getValue();
             IN_A1740SUBTI_OLD = Ext.getCmp(prototype.id + '-lblA1740SUBTI').getValue();
             IN_A1740CATEG_OLD = Ext.getCmp(prototype.id + '-lblA1740CATEG').getValue();
+            IN_A1740FINI_OLD = Ext.util.Format.date(Ext.getCmp(prototype.id + '-lblA1740FINI').getValue(), 'Ymd');
+            IN_A1740FFIN_OLD = Ext.util.Format.date(Ext.getCmp(prototype.id + '-lblA1740FFIN').getValue(), 'Ymd');
         } 
         else 
         {
@@ -231,6 +235,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
             IN_A1740TITRA_OLD = "";
             IN_A1740TIPO_OLD = "";
             IN_A1740CATEG_OLD = "";
+            IN_A1740FINI_OLD = "";
+            IN_A1740FFIN_OLD = "";
         }
         
         var A1740TITRA = Ext.getCmp(prototype.id + '-cmbDocumentTypeDataEntry').getValue();
@@ -258,6 +264,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
         if (IN_A1740TITRA_OLD === null) IN_A1740TITRA_OLD = "";
         if (IN_A1740TIPO_OLD === null) IN_A1740TIPO_OLD = "";
         if (IN_A1740CATEG_OLD === null) IN_A1740CATEG_OLD = "";
+        if (IN_A1740FINI_OLD === null) IN_A1740FINI_OLD = "";
+        if (IN_A1740FFIN_OLD === null) IN_A1740FFIN_OLD = "";
         
         return {
             strOption: strOption,
@@ -280,7 +288,9 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
             IN_A1740TITRA_OLD: IN_A1740TITRA_OLD,
             IN_A1740TIPO_OLD: IN_A1740TIPO_OLD,
             IN_A1740SUBTI_OLD: IN_A1740SUBTI_OLD,
-            IN_A1740CATEG_OLD: IN_A1740CATEG_OLD
+            IN_A1740CATEG_OLD: IN_A1740CATEG_OLD,
+            IN_A1740FINI_OLD: IN_A1740FINI_OLD,
+            IN_A1740FFIN_OLD: IN_A1740FFIN_OLD
         };
     }
     ,
@@ -302,16 +312,16 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
         Ext.getCmp(prototype.id + '-cmbCategoryDataEntry').setValue(rec.get('A1740CATEG'));
         Ext.getCmp(prototype.id + '-cmbINTNU').setValue(rec.get('A1740INTNU')=== 'YES' ? 'Y' : 'N');
         
-        Ext.getCmp(prototype.id + '-txtA1740CIA').setValue(rec.get('A1740CIA'));
-        Ext.getCmp(prototype.id + '-txtA1740UNIDA').setValue(rec.get('A1740UNIDA'));
-        Ext.getCmp(prototype.id + '-txtA1740CECOS').setValue(rec.get('A1740CECOS'));
-        Ext.getCmp(prototype.id + '-txtA1740UBICA').setValue(rec.get('A1740UBICA'));
-        Ext.getCmp(prototype.id + '-txtA1740CTA').setValue(rec.get('A1740CTA'));
-        Ext.getCmp(prototype.id + '-txtA1740SCTA').setValue(rec.get('A1740SCTA'));
-        Ext.getCmp(prototype.id + '-txtA1740EQUI').setValue(rec.get('A1740EQUI'));
-        Ext.getCmp(prototype.id + '-txtA1740ICIA').setValue(rec.get('A1740ICIA'));
+        Ext.getCmp(prototype.id + '-txtA1740CIA').setValue(rec.get('A1740CIA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740UNIDA').setValue(rec.get('A1740UNIDA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740CECOS').setValue(rec.get('A1740CECOS').trim());
+        Ext.getCmp(prototype.id + '-txtA1740UBICA').setValue(rec.get('A1740UBICA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740CTA').setValue(rec.get('A1740CTA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740SCTA').setValue(rec.get('A1740SCTA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740EQUI').setValue(rec.get('A1740EQUI').trim());
+        Ext.getCmp(prototype.id + '-txtA1740ICIA').setValue(rec.get('A1740ICIA').trim());
 
-        Ext.getCmp(prototype.id + '-txtA1740CLIE').setValue(rec.get('A1740CLIE'));
+        Ext.getCmp(prototype.id + '-txtA1740CLIE').setValue(rec.get('A1740CLIE').trim());
         Ext.getCmp(prototype.id + '-txtA1740FINI').setValue(rec.get('A1740FINI'));
         Ext.getCmp(prototype.id + '-txtA1740FFIN').setValue(rec.get('A1740FFIN'));
         
@@ -326,6 +336,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
         Ext.getCmp(prototype.id + '-lblA1740TIPO').setValue(rec.get('A1740TIPO'));
         Ext.getCmp(prototype.id + '-lblA1740SUBTI').setValue(rec.get('A1740SUBTI'));
         Ext.getCmp(prototype.id + '-lblA1740CATEG').setValue(rec.get('A1740CATEG'));
+        Ext.getCmp(prototype.id + '-lblA1740FINI').setValue(rec.get('A1740FINI'));
+        Ext.getCmp(prototype.id + '-lblA1740FFIN').setValue(rec.get('A1740FFIN'));
         
     }
 

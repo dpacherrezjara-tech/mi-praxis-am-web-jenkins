@@ -70,6 +70,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.AdmaccountingReportForm.Admaccounti
             data: [
                 {"code": "", "name": "ALL"},
                 {"code": "PR", "name": "AUTOMATIC"},
+                {"code": "AP", "name": "BENEFITS AUDIT"},
                 {"code": "MA", "name": "MANUAL"},
                 {"code": "QR", "name": "QUERYS"},
                 {"code": "MS", "name": "MASSIVE"},

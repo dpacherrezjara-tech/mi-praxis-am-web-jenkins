@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Options', {
                             iconCls: 'prx-icon-filter',
                             tooltip: 'Display filter',
                             listeners: {
-                                click: 'onDisplayFilterBtn'
+                                click: 'onClickFilterBtn'
                             }
 
                         },
@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Options', {
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options',
                             listeners: {
-                                click: 'onClearOptionsBtn'
+                                click: 'onClickClearBtn'
                             }
                         }
                     ]

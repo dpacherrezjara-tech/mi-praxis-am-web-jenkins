@@ -135,13 +135,13 @@ Ext.define('Ext.Praxis.controller.payments.SettlBalancesCtrl.DataEntryBalanceCon
     bindData: function () {
         const me = this;
         const updBtn = Ext.getCmp(prototype.idDE2 + '-btn-update');
-        if (me.view.stval === '4') {
-            updBtn.show();
-            updBtn.setDisabled(false);
-        } else {
-            updBtn.hide();
-            updBtn.setDisabled(true);
-        }
+//        if (me.view.stval === '4') {
+//            updBtn.show();
+//            updBtn.setDisabled(false);
+//        } else {
+//            updBtn.hide();
+//            updBtn.setDisabled(true);
+//        }
     }
 });
 

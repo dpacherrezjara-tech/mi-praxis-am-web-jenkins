@@ -178,7 +178,7 @@ public class AccountingMasterUATPDAO {
         
         Connection cnx = null;
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX161S02A1820(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".PX161S02A1820(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
             cs.setString(2, "139");
@@ -205,6 +205,8 @@ public class AccountingMasterUATPDAO {
             cs.setString(21, Functions.getHoraActual());
             cs.setString(22, filter.A1820MODO);
             cs.setString(23, filter.IN_A1820TCUAT_OLD);
+            cs.setString(24, filter.IN_A1820FINI_OLD);
+            cs.setString(25, filter.IN_A1820FFIN_OLD);
             cs.execute();
             
             rst = cs.getResultSet();

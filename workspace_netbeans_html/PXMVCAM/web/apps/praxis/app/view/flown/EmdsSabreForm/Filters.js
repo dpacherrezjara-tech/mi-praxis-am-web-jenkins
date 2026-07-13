@@ -101,7 +101,8 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Filters', {
                                     editable: true, // Deshabilita la edición del campo
                                     labelWidth: 50,
                                     width: 150,
-                                    value: new Date(),
+//                                    value: new Date(),
+                                    value: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
                                     listeners: {
                                         specialkey: 'onEnterKeyPress'
                                     }
@@ -170,9 +171,9 @@ Ext.define('Ext.Praxis.view.flown.EmdsSabreForm.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ["", "All"],
-                                            ["AD", "ADT"],
-                                            ["CH", "CHD"],
-                                            ["IN", "INF"]
+                                            ["A", "ADT"],
+                                            ["C", "CHD"],
+                                            ["I", "INF"]
                                         ]
                                     }),
                                     labelWidth: 60,

@@ -118,6 +118,8 @@ public class AccountingMasterFlownController extends BaseController {
             objFilter.IN_A1740TIPO_OLD = request.getParameter("IN_A1740TIPO_OLD").trim();
             objFilter.IN_A1740SUBTI_OLD = request.getParameter("IN_A1740SUBTI_OLD").trim();
             objFilter.IN_A1740CATEG_OLD = request.getParameter("IN_A1740CATEG_OLD");
+            objFilter.IN_A1740FINI_OLD = request.getParameter("IN_A1740FINI_OLD");
+            objFilter.IN_A1740FFIN_OLD = request.getParameter("IN_A1740FFIN_OLD");
             
             logic = new AccountingMasterFlownLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());

@@ -37,18 +37,9 @@ public class A3456 {
     public String A3456FREVI;
     public String A3456HREVI;
     public int A3456TOTAL;
-    public String A3456TYPE;
 
     public double A3456TOTALPAGI;
 
-    public String getA3456TYPE() {
-        return A3456TYPE;
-    }
-
-    public void setA3456TYPE(String A3456TYPE) {
-        this.A3456TYPE = A3456TYPE;
-    }
-    
     public String getA3456ESTAT() {
         return A3456ESTAT;
     }

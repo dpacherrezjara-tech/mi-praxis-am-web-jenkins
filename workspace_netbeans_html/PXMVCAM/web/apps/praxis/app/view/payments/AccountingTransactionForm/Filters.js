@@ -46,6 +46,12 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                         {
                             items: [
                                 {
+                                    xtype: 'textfield',
+                                    name: 'IN_CCUST',
+                                    value: '139',
+                                    hidden: true
+                                },
+                                {
                                     xtype: 'combobox',
                                     fieldLabel: 'Date',
                                     name: 'IN_TFECHA',
@@ -54,11 +60,13 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ['P', 'Processing Date'],
-                                            ['S', 'Sale Date']
+                                            ['S', 'Sale Date'],
+//                                            ['X', 'Execute Date'],
+//                                            ['A', 'Accounting Date']
                                         ]
                                     }),
                                     labelWidth: 50,
-                                    width: 180,
+                                    width: 200,
                                     displayField: 'name',
                                     valueField: 'code',
                                     queryMode: 'local',
@@ -66,10 +74,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     value: 'P'
                                 },
                                 {
-                                    xtype: 'monthfield',
+                                    xtype: 'datefield',
                                     fieldLabel: 'From',
-                                    format: 'Ym',
-                                    altFormats: 'm/Y',
+                                    format: 'Ymd',
+//                                    altFormats: 'm/Y',
                                     editable: false, // Deshabilita la edición del campo
                                     labelWidth: 50,
                                     width: 150,
@@ -82,10 +90,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     }
                                 },
                                 {
-                                    xtype: 'monthfield',
+                                    xtype: 'datefield',
                                     fieldLabel: 'To',
-                                    format: 'Ym',
-                                    altFormats: 'm',
+                                    format: 'Ymd',
+//                                    altFormats: 'm',
                                     editable: false, // Deshabilita la edición del campo
                                     lastDay: true,
                                     labelWidth: 30,
@@ -104,9 +112,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     name: 'IN_PROCESADOR',
                                     fieldLabel: 'Processor',
                                     labelWidth: 70,
-                                    width: 200,
-                                    displayField: 'a4451desc1',
-                                    valueField: 'a4451key2',
+                                    width: 250,
+                                    displayField: 'NAME',
+                                    valueField: 'CODE',
                                     queryMode: 'local',
                                     editable: false,
                                     value: ''
@@ -131,7 +139,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                         ]
                                     }),
                                     queryMode: 'local',
-                                    value: 'SALE',
+                                    value: '',
                                     listeners: {
                                         change: 'onClickSearchBtn'
                                     }
@@ -174,8 +182,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     labelAlign: 'right',
                                     width: 140,
                                     typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
+                                    valueField: 'CODE',
+                                    displayField: 'NAME',
                                     enableKeyEvents: true,
                                     triggerAction: 'all',
                                     value: ''
@@ -185,12 +193,31 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     id: prototype.id + '-txtPNR',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
-                                    maskRe: /[a-zA-Z]/,
+                                    maskRe: /[a-zA-Z0-9]/,
                                     maxLength: 6,
                                     fieldLabel: 'PNR',
                                     name: 'IN_PNR',
-                                    labelWidth: 70,
-                                    width: 170,
+                                    labelWidth: 50,
+                                    width: 120,
+                                    enableKeyEvents: true,
+                                    listeners:{
+                                        specialkey: 'onEnterKeyPress',
+                                        change: function(field, newValue) {
+                                            field.setValue(newValue.toUpperCase());
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtTICKET',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 13,
+                                    fieldLabel: 'TICKET',
+                                    name: 'IN_TICKET',
+                                    labelWidth: 60,
+                                    width: 160,
                                     enableKeyEvents: true,
                                     listeners:{
                                         specialkey: 'onEnterKeyPress'
@@ -223,6 +250,22 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Filters', {
                                     fieldLabel: 'FLEX ID',
                                     labelWidth: 100,
                                     width: 390,
+                                    enableKeyEvents: true,
+                                    listeners:{
+                                        specialkey: 'onEnterKeyPress'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtAREFNBR',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 23,
+                                    fieldLabel: 'AREFNBR',
+                                    name: 'IN_AREFNBR',
+                                    labelWidth: 80,
+                                    width: 240,
                                     enableKeyEvents: true,
                                     listeners:{
                                         specialkey: 'onEnterKeyPress'

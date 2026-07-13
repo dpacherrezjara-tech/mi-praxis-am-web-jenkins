@@ -227,6 +227,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.Postbilling.DetailPostbillingContro
         me.beanTMP.IN_DESCRI = Ext.String.trim(Ext.getCmp(prototype.id1 + '-Argument').getValue());
         me.beanTMP.IN_COUNTRY = Ext.String.trim(rec.get('A3537PAIS'));
         me.beanTMP.IN_STATUS = Ext.getCmp(prototype.id1 + '-ComboStatus').getValue();
+        me.beanTMP.A3537ARCHV = Ext.getCmp(prototype.id1 + '-File').getValue();
+        me.beanTMP.A2553ARCHV2 = Ext.getCmp(prototype.id1 + '-File2').getValue();
+        me.beanTMP.A2553ARCHV3 = Ext.getCmp(prototype.id1 + '-File3').getValue();
         me.beanTMP.IN_TRNCU = "ADM";
         console.log(me.beanTMP);
         var form = Ext.getCmp(prototype.id1 + '-form').getForm();

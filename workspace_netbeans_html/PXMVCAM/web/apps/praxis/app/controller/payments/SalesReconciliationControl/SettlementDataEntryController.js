@@ -12,14 +12,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
     },
     getData: async function () {
         const me = this;
-        let params = me.formatParameters(me.view.obj);
-        const res = await fetch(`${me.url}/loadErrorTransactionBPOInfo?${new URLSearchParams(params)}`);
-        if (res.ok) {
-            const data = await res.json();
-            console.log(data);
+        let params = me.formatParametersInfo(me.view.obj);
+        const res = await global.callStoreGet('PRAXISMP', 'SQP05052', params);
+        const data = res?.lstRs?.[0]?.[0] || {};
+        if (Object.keys(data).length) {
             const form = Ext.getCmp(prototype.idDE3 + '-mainForm').getForm();
-            me.limpiaObjetoPX(data.response);
-            me.bean = data.response;
+            me.limpiaObjetoPX(data);
+            me.bean = data;
             form.reset();
             form.setValues(me.bean);
             me.setExtraInformation(me.bean);
@@ -27,9 +26,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
         }
     },
     setExtraInformation: function (bean) {
-        let tipo = bean.transtype;
-        let monto = bean.tgrosamoun;
-        let procesador = bean.proctype;
+        let tipo = bean.TRANSTYPE;
+        let monto = bean.TGROSAMOUN;
+        let procesador = bean.PROCTYPE;
         const panelChbk = Ext.getCmp(prototype.idDE3 + '-panelChbk');
         const labelChbk = Ext.getCmp(prototype.idDE3 + '-typeChbk');
         const txtInvoirn = Ext.getCmp(prototype.idDE3 + '-txtInvoirn');
@@ -48,36 +47,37 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
         }
         
         if(procesador === 'BANORTE00'){
-            txtInvoirn.setValue(bean.pwref);
+            txtInvoirn.setValue(bean.PWREF);
         }
     },
     setDesgloseGrid: async function () {
         const me = this;
         const panelDesglose = Ext.getCmp(prototype.idDE3 + '-panelDesglose');
         panelDesglose.mask('Loading..');
-        let params = me.formatParameters(me.bean);
+//        console.log('me.bean---',me.bean);
+        let params = me.formatParametersDesglose(me.bean);
+        let paramsChbk = me.formatParametersDesgloseChbk(me.bean);
         const gridDesglose = Ext.getCmp(prototype.idDE3 + '-gridDesglose');
         const gridDesgloseCHBK = Ext.getCmp(prototype.idDE3 + '-gridDesgloseCHBK');
-        if (me.bean.transtype === 'CHBK') {
+        if (me.bean.TRANSTYPE === 'CHBK') {
             gridDesglose.hide();
             gridDesgloseCHBK.show();
-            const res = await fetch(`${me.url}/loadErrorTransactionBPODesgloseCHBK?${new URLSearchParams(params)}`);
-            if (res.ok) {
-                const data = await res.json();
-                console.log(data);
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05072', paramsChbk);
+            const data = res?.lstRs?.[0] || [];
+            if (data.length) {
                 const storeDesglose = Ext.create('Ext.data.Store', {
-                    data: data.response
+                    data: data
                 });
                 gridDesgloseCHBK.setStore(storeDesglose);
             }
         } else {
             gridDesglose.show();
             gridDesgloseCHBK.hide();
-            const res = await fetch(`${me.url}/loadErrorTransactionBPODesglose?${new URLSearchParams(params)}`);
-            if (res.ok) {
-                const data = await res.json();
+            const res = await global.callStoreGet('PRAXISMP', 'SQP05055', params);
+            const data = res?.lstRs?.[0] || [];
+            if (data.length) {
                 const storeDesglose = Ext.create('Ext.data.Store', {
-                    data: data.response
+                    data: data
                 });
                 gridDesglose.setStore(storeDesglose);
                 //debugger;
@@ -88,13 +88,33 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.Settlement
     onCancelClick: function () {
         this.view.close();
     },
-    //<editor-fold defaultstate="collapsed" desc="Formateo de Parametros">
-    formatParameters: function (obj) {
+    //<editor-fold defaultstate="collapsed" desc="Formateo de Parametros api">
+    formatParametersInfo: function (obj) {
         let params = {
-            IN_CCUST: obj.ccust,
-            IN_PRDA: obj.prda,
-            IN_TDOC: obj.tdoc,
-            IN_AREFNBR: obj.arefnbr
+            IN_CCUST: obj.CCUST,
+            IN_PRDA: obj.PRDA,
+            IN_TDOC: obj.TDOC,
+            IN_AREFNBR: obj.AREFNBR
+        };
+        return params;
+    },
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Formateo de Parametros">
+    formatParametersDesglose: function (obj) {
+        let params = {
+            IN_CCUST: obj.CCUST,
+            IN_PRDA: obj.PRDA,
+            IN_AREFNBR: obj.AREFNBR
+        };
+        return params;
+    },
+    formatParametersDesgloseChbk: function (obj) {
+        let params = {
+            IN_CCUST: obj.CCUST,
+            IN_TDOC: obj.TDOC,
+            IN_PRDA: obj.PRDA,
+            IN_AREFNBR: obj.AREFNBR
         };
         return params;
     },

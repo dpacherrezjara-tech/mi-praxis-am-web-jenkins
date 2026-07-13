@@ -25,6 +25,15 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactionForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            iconCls: 'prx-icon-excel',
+//                            scale: 'small',
+                            tooltip: 'Export All Detail Accounting to Excel',
+                            listeners: {
+                                click: 'downloadAllDetailAccountingExcel'
+                            }
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnFilter',
                             iconCls: 'prx-icon-filter',
                             tooltip: 'Display filter',

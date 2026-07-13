@@ -123,7 +123,7 @@ public class AccountingMasteZoneGSAController extends BaseController {
 
         // String fileNameDownload = String.format("Accounting Master Zone GSA- " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         String fileNameDownload = String.format(
-                "Accounting Supplier " + Functions.getFechaActual() + 
+                "Accounting Master Zone GSA " + Functions.getFechaActual() + 
                         "_" + Functions.getHoraActualHHMM().replace(":", "") + 
                         " " + Functions.getAbreviaturaMes(Functions.getFechaActual().substring(4, 6)) + 
                         " " + Functions.getFechaActual().substring(0, 4)  + ".xlsx", UUID.randomUUID().toString().toLowerCase()

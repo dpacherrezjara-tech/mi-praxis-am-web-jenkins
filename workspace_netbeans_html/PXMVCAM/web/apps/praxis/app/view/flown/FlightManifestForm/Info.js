@@ -866,7 +866,10 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.Info', {
                                                     ftype: 'summary'
                                                 }],
                                             columnLines: true,
-                                            
+                                            viewConfig: {
+                                                enableTextSelection: true
+                                            },
+
                                             columns: {
                                                 defaults: {
                                                     menuDisabled: true,
@@ -930,13 +933,14 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.Info', {
                                                     },
                                                     {
                                                         text: 'Ticket', dataIndex: 'strTicket', width: 130, sortable: true,
-                                                        listeners: {
-//                                                            click: 'viewTicket'
-                                                        },
+//                                                        listeners: {
+////                                                            click: 'viewTicket'
+//                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background:#d5f4d5;";
                                                             value = value ;
-                                                            return '<a href="#flown-flight-manifest-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+//                                                             href="#flown-flight-manifest-form" 
+                                                            return '<span style="color:#057ECB;text-decoration:underline;">' + value + '</span>';
                                                         }
                                                     },
 //                                                    {text: 'Status', dataIndex: 'desSTVAL', width: 110, sortable: true},
@@ -2247,7 +2251,7 @@ Ext.define('Ext.Praxis.view.flown.FlightManifestForm.Info', {
 //                                                }
 //                                            },
                                             {
-                                                text: 'Ticket', dataIndex: 'strTicket', width: 130, sortable: true,
+                                                text: 'Ticket ', dataIndex: 'strTicket', width: 130, sortable: true,
                                                 listeners: {
                                                     click: 'viewTicket'
                                                 },

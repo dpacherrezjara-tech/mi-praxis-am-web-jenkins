@@ -7,7 +7,7 @@ import net.miatech.praxis.payment.entities.A4331;
  * @author Dvicente
  */
 public class A4331AT1Filter extends A4331{
-    private String FECHA,PROC_DESC;
+    private String FECHA, PROC_DESC, MIN_DATE, MAX_DATE;
     private Double TOTAL,PENDING,ACCOUNTED,TO_DEBUG;
     private Integer RN,QTY_PENDING,QTY_ACCOUNTED,QTY_TO_DEBUG,QTY_TOTAL;
 
@@ -99,5 +99,20 @@ public class A4331AT1Filter extends A4331{
         this.QTY_TOTAL = QTY_TOTAL;
     }
     
+    public String getMIN_DATE() {
+        return MIN_DATE;
+    }
+    
+    public void setMIN_DATE(String MIN_DATE) {
+        this.MIN_DATE = MIN_DATE;
+    }
+    
+    public String getMAX_DATE() {
+        return MAX_DATE;
+    }
+    
+    public void setMAX_DATE(String MAX_DATE) {
+        this.MAX_DATE = MAX_DATE;
+    }
     
 }

@@ -9,6 +9,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         prototype.width = 1850;
         prototype.height = 630;
     },
+    dataFilters:[],
     afterRender: async function (obj, e) {
         const me = this;
         await me.fillFilters();
@@ -17,99 +18,107 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         const me = this;
         const filterPanel = Ext.getCmp(prototype.id + '-contentFilter');
         filterPanel.mask('Loading Filters...');
-        const res = await fetch(`${me.url}/loadFilters`);
-        if (res.ok) {
-            const data = await res.json();
-            console.log('Filtros: ', data);
-            const procesadores = data.procesadores;
-            const monedas = data.monedas.map(x => ({code: x.a006PAIS, name: `${x.a006PAIS}`}));
-            const errores = data.cerror.map(x => ({name: `${x.a4451key3.trim()} - ${x.a4451desc1}`, code: x.a4451key3}));
-            me.creditcards = data.creditcards;
-            me.users = data.admins.map(x => x.a4451key3.trimEnd());
-            //<editor-fold defaultstate="collapsed" desc="Combos">
-            const cmbProcesadores = Ext.getCmp(prototype.id + '-cmbProctype');
-            me.setComboStore({cmp: cmbProcesadores, data: procesadores,
-                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
+        try {
+            const response = await global.callStoreGet('PRAXISMP','SQP05276',{IN_STATUS:'1'});
+            const { lstVals, lstRs } = response;
 
-            const cmbProcesadoresf = Ext.getCmp(prototype.id + '-cmbProctypef');
-            me.setComboStore({cmp: cmbProcesadoresf, data: procesadores,
-                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
+            const dataCerror        = lstRs[0]  || [];
+            const dataCodadju       = lstRs[1]  || [];
+            const dataProcessors    = lstRs[2]  || [];
+            const dataCreditcards   = lstRs[3]  || [];
+            const dataPaises        = lstRs[4]  || [];
+            const dataMonedas       = lstRs[5]  || [];
+            const dataAdmins        = lstRs[6]  || [];
+            const dataCcGrupos      = lstRs[7]  || [];
+            const dataStvalSettlement = lstRs[8]  || [];
+            const dataAutoComment   = lstRs[9]  || [];
+            const dataFreglas       = lstRs[10] || [];
+            const dataStvalTicket   = lstRs[11]  || [];
+            const dataStandByComment= lstRs[12]  || [];
+            const dataFreglasForProcessMasiveTransactional = lstRs[13] || [];
+            const dataProcessMassiveProgram = lstRs[14] || [];
+            const dataProcessMassiveParameter = lstRs[15] || [];
+            const dataProcessMassiveStatus = lstRs[16] || [];
 
-            const cmbProctypeSettl = Ext.getCmp(prototype.id + '-cmbProctypeSettl');
-            me.setComboStore({cmp: cmbProctypeSettl, data: procesadores,
-                valueField: 'a4451key2', displayField: 'a4451desc1', value: ''});
+            const quantityAnalyzePending = lstVals.IO_QUANITY_ANALYZE_PENDING;
+ 
+            // console.log('lstRs', lstRs[13]); 
 
-            const cmbPaises = Ext.getCmp(prototype.id + '-cmbPaisesBP');
-            me.setComboStore({cmp: cmbPaises, data: data.paises,
-                valueField: 'code', displayField: 'name', value: ''});
+            me.creditcards = dataCreditcards;
+            me.processors = dataProcessors;
+            me.countries = dataPaises;
+            me.currencies = dataMonedas;
+            me.users = dataAdmins.map(x => (x.A4451KEY3 || x.a4451key3 || '').toString().trim());
+            me.standByComment = dataStandByComment;
+            me.freglasForProcessMasiveTransactional = dataFreglasForProcessMasiveTransactional;
+            me.dataProcessMassiveProgram = dataProcessMassiveProgram;
+            me.dataProcessMassiveParameter = dataProcessMassiveParameter;
+            me.dataProcessMassiveStatus = dataProcessMassiveStatus;
 
-            const cmbPaisesf = Ext.getCmp(prototype.id + '-cmbPaisesfBP');
-            me.setComboStore({cmp: cmbPaisesf, data: data.paises,
-                valueField: 'code', displayField: 'name', value: ''});
+            //<editor-fold defaultstate="collapsed" desc="Bind Combos">
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctype'),      data: dataProcessors,   valueField: 'A4451KEY2', displayField: 'A4451DESC1',   value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctypef'),     data: dataProcessors,   valueField: 'A4451KEY2', displayField: 'A4451DESC1',   value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesBP'),      data: dataPaises,       valueField: 'CODE',      displayField: 'NAME',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesfBP'),     data: dataPaises,       valueField: 'CODE',      displayField: 'NAME',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedaBP'),      data: dataMonedas,      valueField: 'CODE',      displayField: 'NAME',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedafBP'),     data: dataMonedas,      valueField: 'CODE',      displayField: 'NAME',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCerror'),        data: dataCerror,       valueField: 'A4451KEY3', displayField: 'NAME',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCodadju'),       data: dataCodadju,      valueField: 'A4451KEY3', displayField: 'A4451DESC1',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbAutoComment'),   data: dataAutoComment,  valueField: 'CODE',      displayField: 'NAME',  value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbReglas'),        data: dataFreglas,      valueField: 'CODE',      displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalBPS'),      data: dataStvalSettlement,valueField: 'CODE',     displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalBPD'),      data: dataStvalSettlement,valueField: 'CODE',     displayField: 'NAME', value: ''});
+            
+            
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesBT'),      data: dataPaises,       valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesfBT'),     data: dataPaises,       valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedabBT'),     data: dataMonedas,      valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedaBT'),      data: dataMonedas,      valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCerrorb'),       data: dataCerror,       valueField: 'A4451KEY3',  displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCodadjub'),      data: dataCodadju,      valueField: 'A4451KEY3',  displayField: 'A4451DESC1', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalBTS'),      data: dataStvalTicket,  valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalBTD'),      data: dataStvalTicket,  valueField: 'CODE',       displayField: 'NAME',     value: ['']});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProcessorBTD'),  data: dataProcessors,   valueField: 'A4451KEY2',  displayField: 'A4451DESC1', value: ['']});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCardTypeBT'),    data: dataCcGrupos,     valueField: 'CODE',       displayField: 'NAME', value: ['']});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCardTypeBTSum'), data: dataCcGrupos,     valueField: 'CODE',       displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbCreditCardBT'),  data: dataCreditcards,  valueField: 'CODE',       displayField: 'NAME', value: ['']});
+            
 
-            const cmbPaisesBT = Ext.getCmp(prototype.id + '-cmbPaisesBT');
-            me.setComboStore({cmp: cmbPaisesBT, data: data.paises,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbPaisesfBT = Ext.getCmp(prototype.id + '-cmbPaisesfBT');
-            me.setComboStore({cmp: cmbPaisesfBT, data: data.paises,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbPaisesSettl = Ext.getCmp(prototype.id + '-cmbPaisesSettl');
-            me.setComboStore({cmp: cmbPaisesSettl, data: data.paises,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbCerror = Ext.getCmp(prototype.id + '-cmbCerror');
-            me.setComboStore({cmp: cmbCerror, data: errores,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbCodadju = Ext.getCmp(prototype.id + '-cmbCodadju');
-            me.setComboStore({cmp: cmbCodadju, data: data.codadju,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
-
-            const cmbCerrorb = Ext.getCmp(prototype.id + '-cmbCerrorb');
-            me.setComboStore({cmp: cmbCerrorb, data: errores,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbCodadjub = Ext.getCmp(prototype.id + '-cmbCodadjub');
-            me.setComboStore({cmp: cmbCodadjub, data: data.codadju,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
-
-            const cmbMdasBT = Ext.getCmp(prototype.id + '-cmbMonedaBT');
-            me.setComboStore({cmp: cmbMdasBT, data: monedas,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbMdasbBT = Ext.getCmp(prototype.id + '-cmbMonedabBT');
-            me.setComboStore({cmp: cmbMdasbBT, data: monedas,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbMdasbBP = Ext.getCmp(prototype.id + '-cmbMonedaBP');
-            me.setComboStore({cmp: cmbMdasbBP, data: monedas,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbMdasfBP = Ext.getCmp(prototype.id + '-cmbMonedafBP');
-            me.setComboStore({cmp: cmbMdasfBP, data: monedas,
-                valueField: 'code', displayField: 'name', value: ''});
-
-            const cmbMdasbST = Ext.getCmp(prototype.id + '-cmbMonedabST');
-            me.setComboStore({cmp: cmbMdasbST, data: monedas,
-                valueField: 'code', displayField: 'name', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctypeSettl'), data: dataProcessors, valueField: 'A4451KEY2', displayField: 'A4451DESC1',     value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbProctypeSettl2'),data: dataProcessors, valueField: 'A4451KEY2', displayField: 'A4451DESC1',     value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesSettl'),   data: dataPaises,       valueField: 'CODE',      displayField: 'NAME',           value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbPaisesSettl2'),  data: dataPaises,       valueField: 'CODE',      displayField: 'NAME',           value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedabST'),     data: dataMonedas,      valueField: 'CODE',      displayField: 'NAME',           value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbMonedabST2'),    data: dataMonedas,      valueField: 'CODE',      displayField: 'NAME',           value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalSTS'),      data: dataStvalSettlement,valueField: 'CODE',     displayField: 'NAME', value: ''});
+            me.setComboStore({cmp: Ext.getCmp(prototype.id + '-cmbStvalSTD'),      data: dataStvalSettlement,valueField: 'CODE',     displayField: 'NAME', value: ''});
+            
             //</editor-fold>
+
+            if (typeof me.changeAnalyzePending === 'function') {
+                me.changeAnalyzePending(quantityAnalyzePending);
+            }
+
             me.showProcessBtn(me.users);
             me.showProductionBtn(me.users);
             me.showAddTicketBtn(me.users);
-
+            me.setDefaultUser();
+        } catch (e) {
+            console.log(e);
+            global.Msg({msg: 'Error loading filters'});
+        } finally {
+            filterPanel.unmask();
         }
-        filterPanel.unmask();
     },
     //<editor-fold defaultstate="collapsed" desc="Option Buttons">
     showProcessBtn: function (users) {
         const userName = $('#menuUser').text();
         const lstBtns = [];
-        lstBtns.push(Ext.getCmp(prototype.id + '-btnProcess'));
-        lstBtns.push(Ext.getCmp(prototype.id + '-btnBatchAdju'));
-        lstBtns.push(Ext.getCmp(prototype.id + '-btnBatchLog'));
-        lstBtns.push(Ext.getCmp(prototype.id + '-btnConciliation'));
+        // lstBtns.push(Ext.getCmp(prototype.id + '-btnProcess'));
+        // lstBtns.push(Ext.getCmp(prototype.id + '-btnBatchAdju'));
+        // lstBtns.push(Ext.getCmp(prototype.id + '-btnBatchLog'));
+        // lstBtns.push(Ext.getCmp(prototype.id + '-btnConciliation'));
+        lstBtns.push(Ext.getCmp(prototype.id + '-btnProcessMassive'));
         const activeFilter = Ext.getCmp(prototype.id + '-filtersByPayment-1');
         if (activeFilter.isVisible()) {
             if (userName.slice(0, 3) === 'SAP') {
@@ -158,6 +167,43 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             btn.hide();
         }
     },
+    changeAnalyzePending: function(quantity = 0){
+        const optionAnalyze = Ext.getCmp(prototype.id + '-btnAnalyzeReconciliationErrors');
+        if (optionAnalyze) {
+            const originalText = optionAnalyze.defaultText || optionAnalyze.getText() || '';
+            if (!optionAnalyze.defaultText) {
+                optionAnalyze.defaultText = originalText;
+            }
+            if (quantity > 0) {
+                optionAnalyze.setText(
+                    originalText + ` <span style="color: red; font-weight: bold;">(${quantity})</span>`
+                );
+            } else {
+                optionAnalyze.setText(originalText);
+            }
+        }
+    },
+    setDefaultUser: function () {
+        const me = this;
+        try {
+            // Obtener el usuario del elemento #menuUser
+            const menuUserElement = document.getElementById('menuUser');
+            if (menuUserElement) {
+                const currentUser = menuUserElement.textContent.trim();
+                
+                // Establecer usuario default
+                const userAssignedField = Ext.getCmp(prototype.id + '-filterUserAssigned');
+                if (userAssignedField) {
+                    userAssignedField.setValue(currentUser);
+                    console.log('Usuario establecido en IN_USER_ASSIGNED:', currentUser);
+                }
+            } else {
+                console.warn('No se encontró el elemento #menuUser');
+            }
+        } catch (error) {
+            console.error('Error al establecer usuario por defecto:', error);
+        }
+    },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Format Params">
     formatByPaymentSummaryParams: function () {
@@ -192,8 +238,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         let params = {
             IN_CCUST: '139',
             IN_TDATE: 'M',
-            IN_DATEFROM: obj.month.at(0),
-            IN_DATETO: obj.month.at(1),
             ...obj
         };
         return params;
@@ -221,7 +265,35 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         };
         if (obj.creditcard.at(0) !== '' && obj.creditcard.at(1) !== '') {
             params.IN_SCARDN = `${obj.creditcard.at(0)}%${obj.creditcard.at(1)}%`;
+        }else {
+            params.IN_SCARDN = '';
         }
+        return params;
+    },
+    formatSettlementBrowserParams: function () {
+        const formFilters = Ext.getCmp(prototype.id + '-filtersSettlement-2').getForm();
+        const obj = formFilters.getValues();
+        // console.log('obj browser settlement', obj);
+
+        const {creditcard, ...rest} = obj;
+
+        let params = {
+            IN_CCUST: '139',
+            IN_PCURRENCY: '',
+            IN_PROCTYPE: '',
+            IN_MERCHANT: '',
+            IN_DATEFROM: obj.IN_DATEFROM,
+            IN_DATETO: obj.IN_DATETO,
+            ...rest
+//            ...obj
+        };
+
+        if (creditcard?.at(0) !== '' && creditcard?.at(1) !== '') {
+            params.IN_SCARDN = `${creditcard.at(0)}%${creditcard.at(1)}%`;
+        } else {
+            params.IN_SCARDN = '';
+        }
+
         return params;
     },
     formatSummaryParams: function () {
@@ -245,7 +317,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             mainPanel.removeAll();
             if (tfilter === 'S') {
                 let params = me.formatByPaymentSummaryParams();
-                console.log(params);
+                // console.log(params);
                 const panelTree = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentMonthSummaryGrid', {
                     id: prototype.id + '-ByPaymentMonthSummaryGrid-1',
                     url: me.url,
@@ -254,7 +326,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 mainPanel.add(panelTree);
             } else {
                 let params = me.formatByPaymentDetailParams();
-                console.log(params);
+                // console.log(params);
                 const panelDetail = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByPaymentDetailGrid', {
                     id: prototype.id + '-ByPaymentDetailGrid-1',
                     url: me.url,
@@ -277,7 +349,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 mainPanel.add(panelTree);
             } else {
                 let params = me.formatByTicketDetailParams();
-                console.log(params);
+                // console.log(params);
                 const panelDetail = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.ByTicketDetailGrid', {
                     id: prototype.id + '-ByTicketDetailGrid-1',
                     url: me.url,
@@ -287,15 +359,31 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             }
         } else if (rb === 'S') {
             win.lblUser_toolTip('Estructura: A4331');
+            const tfilter = Ext.getCmp(prototype.id + '-cmbFiltersST').getValue();
             const mainPanel = Ext.getCmp(prototype.id + '-mainContentSettl');
             mainPanel.removeAll();
-            let params = me.formatSettlementParams();
-            const panelSettl = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SettlementSummaryGrid', {
-                id: prototype.id + '-SettlementSummaryGrid-1',
-                url: me.url,
-                searchParams: params
-            });
-            mainPanel.add(panelSettl);
+
+            if (tfilter === 'S') {
+                let params = me.formatSettlementParams();
+                const panelSettl = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SettlementSummaryGrid', {
+                    id: prototype.id + '-SettlementSummaryGrid-1',
+                    url: me.url,
+                    searchParams: params
+                });
+                mainPanel.add(panelSettl);
+            } else {
+                let params = me.formatSettlementBrowserParams();
+                // console.log(params);
+                const panelDetail = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.Grids.SettlementDetailGrid', {
+                    id: prototype.id + '-SettlementDetailGrid-1',
+                    url: me.url,
+                    searchParams: params
+                });
+                mainPanel.add(panelDetail);
+            }
+
+
+
         }
     },
     onChangeModule: function (radiogroup, newValue, oldValue) {
@@ -322,37 +410,62 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             Ext.getCmp(prototype.id + '-mainContent').hide();
             Ext.getCmp(prototype.id + '-filtersByTicket-1').hide();
             Ext.getCmp(prototype.id + '-mainContent2').hide();
+
+            Ext.getCmp(prototype.id + '-filtersSettlement-1').show();
+            Ext.getCmp(prototype.id + '-filtersSettlement-2').hide();
         }
         this.showAddTicketBtn(me.users);
         this.showProcessBtn(me.users);
     },
-    onChangeCreditCardBT: function (obj) {
+    onChangeCreditCardBT: function (combo) {
         const me = this;
         const cmbCard = Ext.getCmp(prototype.id + '-cmbCreditCardBT');
-        if (obj.getValue() === '') {
-            cmbCard.hide();
-        } else {
-            const data = me.creditcards.filter(x => x.a4451cant1 === parseInt(obj.getValue()));
-            me.setComboStore({cmp: cmbCard, data: data,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
-            cmbCard.show();
+
+        let selectedTypes = combo.getValue();
+        if (!Ext.isArray(selectedTypes)) {
+            selectedTypes = (selectedTypes !== null && selectedTypes !== undefined) ? [selectedTypes] : [];
         }
+
+        // All selected (empty string CODE) or nothing selected → show all cards
+        const isAll = selectedTypes.length === 0 ||
+                      (selectedTypes.length === 1 && selectedTypes[0] === '');
+
+        const data = isAll
+            ? me.creditcards
+            : me.creditcards.filter(x => selectedTypes.includes(x.CODE_GROUP_CARD));
+
+        me.setComboStore({cmp: cmbCard, data: data,
+            valueField: 'CODE', displayField: 'NAME', value: ['']});
+        cmbCard.show();
     },
     onChangeCreditCardBTSum: function (obj) {
         const me = this;
         const cmbCard = Ext.getCmp(prototype.id + '-cmbCreditCardBTSum');
+      
         if (obj.getValue() === '') {
             cmbCard.hide();
         } else {
-            const data = me.creditcards.filter(x => x.a4451cant1 === parseInt(obj.getValue()));
+
+            const data = me.creditcards.filter(x => x.CODE_GROUP_CARD === obj.getValue());
+
             me.setComboStore({cmp: cmbCard, data: data,
-                valueField: 'a4451key3', displayField: 'a4451desc1', value: ''});
+                valueField: 'CODE', displayField: 'NAME', value: ''});
             cmbCard.show();
         }
     },
-    onClickProcessBtn: function () {
-        const processWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.TransactionProcessDataEntry', {
-            id: prototype.id + '-TransactionProcessDataEntry-1'
+    onClickProcessMassiveBtn: function () {
+        const me = this;
+        const existingWin = Ext.getCmp(prototype.id + '-ProcessMassiveDataEntry-1');
+        if (existingWin) {
+            existingWin.close();
+        }
+        const processWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ProcessMassiveDataEntry', {
+            id: prototype.id + '-ProcessMassiveDataEntry-1',
+            processors: me.processors,
+            freglasForProcessMasiveTransactional: me.freglasForProcessMasiveTransactional,
+            dataProcessMassiveProgram: me.dataProcessMassiveProgram,
+            dataProcessMassiveParameter: me.dataProcessMassiveParameter,
+            dataProcessMassiveStatus: me.dataProcessMassiveStatus
         });
         processWin.show();
     },
@@ -367,12 +480,27 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         } else {
             filtroFil.show();
             filtroSumm.hide();
+            // Establecer usuario por defecto cuando se cambie a Browser
+            this.setDefaultUser();
         }
     },
     onChangeFiltersBT: function (obj) {
         const filtroSumm = Ext.getCmp(prototype.id + '-formFiltersBT-1');
         const filtroFil = Ext.getCmp(prototype.id + '-formFiltersBT-2');
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent2');
+        mainPanel.removeAll();
+        if (obj.getValue() === 'S') {
+            filtroSumm.show();
+            filtroFil.hide();
+        } else {
+            filtroFil.show();
+            filtroSumm.hide();
+        }
+    },
+    onChangeFiltersST: function (obj) {
+        const filtroSumm = Ext.getCmp(prototype.id + '-filtersSettlement-1');
+        const filtroFil = Ext.getCmp(prototype.id + '-filtersSettlement-2');
+        const mainPanel = Ext.getCmp(prototype.id + '-mainContentSettl');
         mainPanel.removeAll();
         if (obj.getValue() === 'S') {
             filtroSumm.show();
@@ -401,6 +529,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             Ext.getCmp(prototype.id + '-formFiltersBT-2').getForm().reset();
         } else if (filterST.isVisible()) {
             Ext.getCmp(prototype.id + '-filtersSettlement-1').getForm().reset();
+            Ext.getCmp(prototype.id + '-filtersSettlement-2').getForm().reset();
         }
     },
     onClickProduction: function () {
@@ -410,8 +539,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
         productionWin.show();
     },
     onClickAddTicketBtn: function () {
+        const me = this;
         const addticketWin = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.AddTicketDataEntry', {
-            id: prototype.id + '-AddTicketDataEntry-1'
+            id: prototype.id + '-AddTicketDataEntry-1',
+            countries: me.countries,
+            creditcards: me.creditcards,
+            currencies: me.currencies
         });
         addticketWin.show();
     },
@@ -425,58 +558,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     },
     onClickBatchAdjuBtn: function () {
         const manualBatch = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.ManualBatchDataEntry', {
-            id: prototype.id + '-ManualBatchDataEntry-1'
+            id: prototype.id + '-ManualBatchDataEntry-1',
+            processors: this.processors
         });
         manualBatch.show();
-    },
-    onClickBatchLogBtn: function () {
-        const logBatch = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.BatchLogDataEntry', {
-            id: prototype.id + '-BatchLogDataEntry-1'
-        });
-        logBatch.show();
-    },
-    onClickConciliationBtn: function () {
-        const me = this;
-        Ext.Msg.show(
-                {
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to run Conciliation?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function (btn) {
-                        if (btn === 'yes') {
-                            me.runConciliation();
-                        }
-                    }
-                });
-    },
-    //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="Procesos">
-    runConciliation: async function () {
-        const me = this;
-        let params = {
-            VP_CCUST: '139',
-            VP_PROCESO: 'CONCILIA'
-        };
-        const res = await fetch(`${me.url}/runAutomaticConciliation`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(params)
-        });
-        if (res.ok) {
-            const data = await res.json();
-            if (data.result === 'P') {
-                global.Msg({msg: 'Starting Process'});
-            } else {
-                global.Msg({msg: 'Process is already running'});
-            }
-        } else {
-            global.Msg({msg: 'Error on Process'});
-        }
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Fechas Func">
@@ -505,6 +590,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                 to.setValue(from.getValue());
             },
             'monthfieldToBT': () => {
+                if (to.getValue() < from.getValue()) {
+                    from.setValue(to.getValue());
+                }
+            }
+        };
+        opts[option]();
+    },
+    onChangeMonthSTBtn: function (obj) {
+        let option = obj.id.split('-').at(-1);
+        const from = Ext.getCmp(prototype.id + '-datefieldFromST');
+        const to = Ext.getCmp(prototype.id + '-datefieldToST');
+        const opts = {
+            'datefieldFromST': () => {
+                to.setValue(from.getValue());
+            },
+            'datefieldToST': () => {
                 if (to.getValue() < from.getValue()) {
                     from.setValue(to.getValue());
                 }
@@ -546,8 +647,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     },
     onChangeDateSTBtn: function (obj) {
         let option = obj.id.split('-').at(-1);
+
         const from = Ext.getCmp(prototype.id + '-datefieldFromST');
         const to = Ext.getCmp(prototype.id + '-datefieldToST');
+
+        const from2 = Ext.getCmp(prototype.id + '-datefieldFromST2');
+        const to2 = Ext.getCmp(prototype.id + '-datefieldToST2');
         const opts = {
             'datefieldFromST': () => {
                 to.setValue(from.getValue());
@@ -555,6 +660,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
             'datefieldToST': () => {
                 if (to.getValue() < from.getValue()) {
                     from.setValue(to.getValue());
+                }
+            },
+            'datefieldFromST2': () => {
+                to2.setValue(from2.getValue());
+            },
+            'datefieldToST2': () => {
+                if (to2.getValue() < from2.getValue()) {
+                    from2.setValue(to2.getValue());
                 }
             }
         };
@@ -581,8 +694,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
     setComboStore: function ( {cmp, data, valueField, displayField, value}){
         const me = this;
         cmp.suspendEvents(false);
-        cmp.bindStore(me.createComboStore({data: data
-            , valueField: valueField, displayField: displayField}));
+        cmp.bindStore(me.createComboStore({data: data, valueField: valueField, displayField: displayField}));
         cmp.setValue(value);
         cmp.resumeEvents();
     },
@@ -675,8 +787,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationControl.SalesRecon
                     label.show();
             }
         }
+    },
+    onClickAnalyzeReconciliationErrors: function () {
+        const me = this;
+        const dataEntry = Ext.create('Ext.Praxis.view.payments.SalesReconciliationControlForm.DataEntrys.AnalyzeReconciliationErrorsDataEntry', {
+            id: prototype.id + '-AnalyzeReconciliationErrorsDataEntry-1',
+            processors: me.processors
+        });
+        dataEntry.show();
     }
-
 });
 
 

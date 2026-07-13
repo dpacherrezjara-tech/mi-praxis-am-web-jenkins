@@ -60,7 +60,37 @@ public class PythonWS {
         String status = jsonObject.getString("status");
         String url = jsonObject.getString("url");
         // Si la respuesta HTTP tiene éxito, leemos los datos de la respuesta
-        if (status.equals("success")) {
+        if (status.equals("success") || status.equals("SUCCESS")) {
+
+            byte[] responseBody = downloadFile(url);
+            //
+            String nombreFile = Paths.get(new URL(url).getPath())
+                    .getFileName().toString();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", nombreFile);
+
+            // Devolvemos un ResponseEntity con los datos de la respuesta y el código de estado HTTP 200
+            return new ResponseEntity<>(responseBody, headers, HttpStatus.OK);
+        } else {
+            System.out.println("Falló la descarga del archivo. Código de respuesta HTTP: " + status.equals("success"));
+            // Devolvemos un ResponseEntity con el código de estado HTTP 400 si la descarga falla
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    public ResponseEntity<byte[]> downloadFilesDirectorioFromPython(String endpoint, Map queryParams) throws Exception {
+        Unirest.setTimeouts(3600000, 3600000);
+        HttpResponse<JsonNode> response = Unirest.get(this.getRestUrl(endpoint)).queryString(queryParams).asJson();
+        JsonNode body = response.getBody();
+        //JSONObject jsonObject = body.getObject();
+        JSONArray jsonArray = body.getArray();
+        JSONObject jsonObject = jsonArray.getJSONObject(0);
+        String status = jsonObject.getString("status");
+        String url = jsonObject.getString("url");
+        // Si la respuesta HTTP tiene éxito, leemos los datos de la respuesta
+        if (status.equals("success") || status.equals("SUCCESS")) {
 
             byte[] responseBody = downloadFile(url);
             //

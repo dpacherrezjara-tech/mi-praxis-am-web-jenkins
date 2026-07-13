@@ -29,10 +29,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.PnrsGridControll
             listeners: {
                 load: function (store, records, successful, operation) {
                     if (!successful) {
-                        global.Msg({msg: 'Data not Found'});
+                        global.Msg({ msg: 'Data not Found' });
                     } else {
                         if (records.length === 0) {
-                            global.Msg({msg: 'Data not Found'});
+                            global.Msg({ msg: 'Data not Found' });
                         }
                     }
                 }
@@ -46,8 +46,16 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.PnrsGridControll
         const mainPanel = Ext.getCmp(prototype.id + '-mainContent');
         const drillDown = mainPanel.items.items;
         drillDown.at(-1).hide();
-        const panelDet = Ext.create('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.TicketsGrid', {
-            id: prototype.id + '-TicketsGrid-1',
+        // const panelDet = Ext.create('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.TicketsGrid', {
+        //     id: prototype.id + '-TicketsGrid-1',
+        //     searchParams: me.formatTicketsParams(obj),
+        //     backButton: () => {
+        //         drillDown.at(-1).destroy();
+        //         drillDown.at(-1).show();
+        //     }
+        // });
+        const panelDet = Ext.create('Ext.Praxis.view.salesaudit.ReservationBrowserForm.Grids.PnrDetailGrid', {
+            id: prototype.id + '-PnrDetailGrid-1',
             searchParams: me.formatTicketsParams(obj),
             backButton: () => {
                 drillDown.at(-1).destroy();
@@ -56,49 +64,41 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.PnrsGridControll
         });
         mainPanel.add(panelDet);
     },
+
+
+
     formatTicketsParams: function (obj) {
+        // let params = {
+        //     IN_CCUST: '139',
+        //     IN_PNR: obj.PNR,
+        //     IN_OPTION: 'T',
+        //     IN_FROM: obj.PRDA,
+        //     IN_TO: obj.PRDA
+        // };
         let params = {
-            IN_CCUST: '139',
-            IN_PNR: obj.PNR,
-            IN_OPTION: 'T',
-            IN_FROM: obj.PRDA,
-            IN_TO: obj.PRDA
+            "IN_OPTION": '1',
+            "IN_CCUST": '139',
+            "IN_DATEFROM": "",
+            "IN_DATETO": "",
+            "IN_PNR": obj.PNR,
         };
-        return params;
-    },
-    downloadExcel: function () {
-        const me = this;
-        const view = this.view;
-        let params = Object.assign({}, view.searchParams);
-        params.excel = true;
-        Ext.Msg.show(
-            {
-                title: '.:PRAXIS:.',
-                msg: 'Download Excel?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function (btn) {
-                    if (btn === 'yes') {
-                        global.getFile(`${me.url}/downloadPNR?${new URLSearchParams(params)}`);
-                    }
-                }
-            });
+        return params
     },
     //<editor-fold defaultstate="collapsed" desc="Utilitarios">
-    getCmp: function ( {id}){
+    getCmp: function ({ id }) {
         return Ext.getCmp(prototype.id + id);
     },
-    setComboStore: function ( {cmp, data, valueField, displayField, value}){
+    setComboStore: function ({ cmp, data, valueField, displayField, value }) {
         const me = this;
         cmp.suspendEvents(false);
-        cmp.bindStore(me.createComboStore({data: data
-            , valueField: valueField, displayField: displayField}));
+        cmp.bindStore(me.createComboStore({
+            data: data
+            , valueField: valueField, displayField: displayField
+        }));
         cmp.setValue(value);
         cmp.resumeEvents();
     },
-    createComboStore: function ( {data, valueField, displayField}) {
+    createComboStore: function ({ data, valueField, displayField }) {
         //crea record vacio
         let allRecord = {};
         allRecord[displayField] = 'All';
@@ -112,13 +112,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.PnrsGridControll
             }
         });
         //crea Store
-        let store = this.createStore({data: data});
+        let store = this.createStore({ data: data });
         //inserta record vacio
         store.insert(0, allRecord);
         //console.log('store creado',store);
         return store;
     },
-    createArrayStore: function ( {data}){
+    createArrayStore: function ({ data }) {
         const store = new Ext.data.SimpleStore({
             fields: ['code', 'name'],
             data: data.map(x => {
@@ -127,7 +127,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.PnrsGridControll
         });
         return store;
     },
-    createStore: function ( {data}){
+    createStore: function ({ data }) {
         return Ext.create('Ext.data.Store', {
             autoLoad: true,
             data: data,
@@ -154,6 +154,135 @@ Ext.define('Ext.Praxis.controller.salesaudit.ReservationBrowser.PnrsGridControll
             return true;
         });
         return resultado;
+    },
+
+    ondownloadExcel: function () {
+        const me = this;
+        const view = me.view;
+        let params = Object.assign({}, view.searchParams);
+        params.excel = true;
+        Ext.Msg.show(
+            {
+                title: '.:PRAXIS:.',
+                msg: 'Download Excel?',
+                buttons: Ext.MessageBox.YESNO,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: async function (btn) {
+                    if (btn === 'yes') {
+                        me.downloadExcel();
+                    }
+                }
+            });
+    },
+    downloadExcel: async function () {
+        const me = this;
+        const view = me.view;
+        // console.log('downloadExcel view.searchParams', view.searchParams)
+
+        view.setLoading(true);
+        try {
+            let data = await global.callStorePagginExcel('PXSAUDIT', 'SQP05377', view.searchParams);
+
+            if (data.length === 0) {
+                global.Msg({ msg: 'Data not Found' });
+                view.setLoading(false);
+                return;
+            }
+
+            let excel = data.map((x, index) => ({
+                'RN': index + 1,
+                'Processing Date': x.PRDA,
+                'PNR': x.PNR,
+                'PNR Sabre': x.PNRAA,
+                'Source': x.FUENTE,
+                'Queue': x.JOBQUEUE,
+                'Ticket Ref.': x.REFTKT,
+                'Qty Tkts': x.QTYTKT,
+                'Status': x.STSEARCH?.trim() === 'P' ? 'Pending' : x.STSEARCH?.trim() === 'F' ? 'Found' : x.STSEARCH?.trim() === 'N' ? 'Not found' : x.STSEARCH,
+                'Search Nbr': x.NBRSEARCH,
+                'Origin': x.TXTORIGIN?.trim() === 'SW' ? 'Sabre WS' : x.TXTORIGIN?.trim() === 'CC' ? 'Command Center' : x.TXTORIGIN
+            }));
+
+            await global.writeExcelFromJson(excel, 'Reservation Browser PNR Information');
+            view.setLoading(false);
+
+        } catch (e) {
+            console.log(e);
+            view.setLoading(false);
+
+        }
+    },
+
+
+
+    ondownloadExcelPNR: function () {
+        const me = this;
+        const view = me.view;
+        let params = Object.assign({}, view.searchParams);
+        params.excel = true;
+        Ext.Msg.show(
+            {
+                title: '.:PRAXIS:.',
+                msg: 'Download Excel?',
+                buttons: Ext.MessageBox.YESNO,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: async function (btn) {
+                    if (btn === 'yes') {
+                        me.downloadExcelPNR();
+                    }
+                }
+            });
+    },
+
+    downloadExcelPNR: async function () {
+        const me = this;
+        const view = me.view;
+        // console.log(' view.searchParams', view.searchParams)
+
+        const { IN_FROM, IN_TO } = view.searchParams;
+        let params = {
+            "IN_OPTION": '2',
+            "IN_CCUST": '139',
+            "IN_DATEFROM": IN_FROM,
+            "IN_DATETO": IN_TO,
+            "IN_PNR": ""
+        };
+
+        view.setLoading(true);
+        try {
+            let data = await global.callStorePagginExcel('PXSAUDIT', 'SQP05832', params);
+
+            if (data.length === 0) {
+                global.Msg({ msg: 'Data not Found' });
+                view.setLoading(false);
+                return;
+            }
+
+            let excel = data.map(x => ({
+                'Id': x.ID,
+                'Processing Date': x.PRDA,
+                'PNR': x.PNR,
+                'PNR Sabre': x.PNRAA,
+                'Source': x.FUENTE,
+                'Sabre Code': x.SRCODE,
+                'Process': x.SRTYPE,
+                'Sequence': x.RPH,
+                'Type': x.TYPE,
+                'Description': x.DESCRIP
+            }));
+
+            await global.writeExcelFromJson(excel, 'Tickets Sabre Information');
+            view.setLoading(false);
+
+        } catch (e) {
+            console.log(e);
+            view.setLoading(false);
+
+        }
     }
     //</editor-fold>
 });

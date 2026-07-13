@@ -465,7 +465,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RejectedReportForm.RejectedReportForm', {
                                     columnLines: true,
                                     autoScroll: true,
                                     hidden: true,
-                                    width: 1000,
+                                    width: 800,
                                     height: 600,
                                     features: [{
                                             //id: 'group',
@@ -507,8 +507,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RejectedReportForm.RejectedReportForm', {
                                                     xtype: 'numberfield'
                                                 }
                                             },
-                                            {text: 'Type', dataIndex: 'A3456TYPE', width: 200, sortable: false, align: 'right',renderer: 'onRendererColumnOnType'},
-                                            {text: 'Status', dataIndex: 'A3456ESTAD', width: 300, sortable: false, align: 'right'},
+                                            {text: 'Status', dataIndex: 'A3456ESTAD', width: 200, sortable: false, align: 'right'},
                                             {text: '', dataIndex: '', width: 60, renderer: 'onRendererColumnOnTime'}
 
                                         ]

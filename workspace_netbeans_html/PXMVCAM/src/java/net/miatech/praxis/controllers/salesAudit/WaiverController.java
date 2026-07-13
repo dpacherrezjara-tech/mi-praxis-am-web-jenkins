@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -131,24 +132,17 @@ public class WaiverController extends BaseController {
 
         byte[] bytes = null;
         try {
-            String A2537RUTAF = filter.A2537RUTAF.trim();
-            String nomArchivo = filter.A2537NAMEF.trim();
+            String strArchivo = filter.A2537RUTAA.trim();
+            File archivo = new File(strArchivo);
+            Path filePath = archivo.toPath();
 
-            String rutaMemo = "\\\\PX\\am_inventariado\\" + A2537RUTAF;
-            Path dir = Paths.get(rutaMemo);
-
-            if (!Files.exists(dir)) {
+            if (!Files.exists(filePath)) {
                 map.put("mensaje", "The file cannot be found on the server.");
             } else {
-                String strArchivo = rutaMemo + "\\" + nomArchivo;
-                File archivo = new File(strArchivo);
-
                 FileInputStream fs = new FileInputStream(archivo);
-
                 bytes = new byte[(int) archivo.length()];
                 fs.read(bytes);
                 fs.close();
-
                 map.put("bytes", bytes);
                 map.put("mensaje", "OK");
             }
@@ -157,6 +151,26 @@ public class WaiverController extends BaseController {
             logError.error(e.getMessage());
         }
 
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "searchTicketWaiver")
+    public @ResponseBody
+    String searchTicketWaiver(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Waiver : searchTicketWaiver-------------");
+        map.put("success", true);
+        try {
+            logic = new WaiverLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            String ccust   = this.serverSession.getServerSession().getUserView().getCustomerInfo().CCUST;
+            String tickets = request.getParameter("tickets");
+            List<Map<String, String>> lst = logic.lstTicketWaiver(ccust, tickets != null ? tickets : "");
+            map.put("data", lst);
+            map.put("total", lst.size());
+        } catch (Exception e) {
+            map.put("success", false);
+            logError.error("searchTicketWaiver -> " + e.getMessage(), e);
+        }
         return new Gson().toJson(map);
     }
 
@@ -248,47 +262,23 @@ public class WaiverController extends BaseController {
             Cell CH1_13 = row1.createCell(13);
             Cell CH1_14 = row1.createCell(14);
             Cell CH1_15 = row1.createCell(15);
-            Cell CH1_16 = row1.createCell(16);
-            Cell CH1_17 = row1.createCell(17);
-            Cell CH1_18 = row1.createCell(18);
-            Cell CH1_19 = row1.createCell(19);
-            Cell CH1_20 = row1.createCell(20);
-            Cell CH1_21 = row1.createCell(21);
-            Cell CH1_22 = row1.createCell(22);
-            Cell CH1_23 = row1.createCell(23);
-            Cell CH1_24 = row1.createCell(24);
-            Cell CH1_25 = row1.createCell(25);
-            Cell CH1_26 = row1.createCell(26);
-            Cell CH1_27 = row1.createCell(27);
 
-            CH1_0.setCellValue("Ticket");
-            CH1_1.setCellValue("Country");
-            CH1_2.setCellValue("Request Date");
-            CH1_3.setCellValue("Action Waiver");
-            CH1_4.setCellValue("Rfnd Date");
-            CH1_5.setCellValue("Emission Date");
-            CH1_6.setCellValue("Flown Date");
-            CH1_7.setCellValue("System Date");
-            CH1_8.setCellValue("Agency");
-            CH1_9.setCellValue("Name Agency");
-            CH1_10.setCellValue("Agent");
-            CH1_11.setCellValue("Tour Code");
-            CH1_12.setCellValue("Route");
-            CH1_13.setCellValue("Pax");
-            CH1_14.setCellValue("N° Pax");
-            CH1_15.setCellValue("Class");
-            CH1_16.setCellValue("Pnr");
-            CH1_17.setCellValue("Code Waiver");
-            CH1_18.setCellValue("Rate Appli");
-            CH1_19.setCellValue("Curr Appli");
-            CH1_20.setCellValue("Rate Pay");
-            CH1_21.setCellValue("Curr Pay");
-            CH1_22.setCellValue("Rate Reb");
-            CH1_23.setCellValue("Curr Reb");
-            CH1_24.setCellValue("Appli Sale");
-            CH1_25.setCellValue("Appli Rfnd");
-            CH1_26.setCellValue("Appli Exch");
-            CH1_27.setCellValue("Descripcion");
+            CH1_0.setCellValue("Case");
+            CH1_1.setCellValue("Case Type");
+            CH1_2.setCellValue("Status");
+            CH1_3.setCellValue("Name");
+            CH1_4.setCellValue("Close Date");
+            CH1_5.setCellValue("Expiry Date");
+            CH1_6.setCellValue("PNR");
+            CH1_7.setCellValue("Ticket");
+            CH1_8.setCellValue("Reservation");
+            CH1_9.setCellValue("Itinerary");
+            CH1_10.setCellValue("Agency");
+            CH1_11.setCellValue("Concept");
+            CH1_12.setCellValue("Sub Concept");
+            CH1_13.setCellValue("Curr");
+            CH1_14.setCellValue("Amount");
+            CH1_15.setCellValue("Description");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -306,18 +296,6 @@ public class WaiverController extends BaseController {
             CH1_13.setCellStyle(headerStyle);
             CH1_14.setCellStyle(headerStyle);
             CH1_15.setCellStyle(headerStyle);
-            CH1_16.setCellStyle(headerStyle);
-            CH1_17.setCellStyle(headerStyle);
-            CH1_18.setCellStyle(headerStyle);
-            CH1_19.setCellStyle(headerStyle);
-            CH1_20.setCellStyle(headerStyle);
-            CH1_21.setCellStyle(headerStyle);
-            CH1_22.setCellStyle(headerStyle);
-            CH1_23.setCellStyle(headerStyle);
-            CH1_24.setCellStyle(headerStyle);
-            CH1_25.setCellStyle(headerStyle);
-            CH1_26.setCellStyle(headerStyle);
-            CH1_27.setCellStyle(headerStyle);
 
             ++vj;
             //============================================
@@ -340,47 +318,23 @@ public class WaiverController extends BaseController {
                 Cell rcell13 = row1.createCell(13);
                 Cell rcell14 = row1.createCell(14);
                 Cell rcell15 = row1.createCell(15);
-                Cell rcell16 = row1.createCell(16);
-                Cell rcell17 = row1.createCell(17);
-                Cell rcell18 = row1.createCell(18);
-                Cell rcell19 = row1.createCell(19);
-                Cell rcell20 = row1.createCell(20);
-                Cell rcell21 = row1.createCell(21);
-                Cell rcell22 = row1.createCell(22);
-                Cell rcell23 = row1.createCell(23);
-                Cell rcell24 = row1.createCell(24);
-                Cell rcell25 = row1.createCell(25);
-                Cell rcell26 = row1.createCell(26);
-                Cell rcell27 = row1.createCell(27);
 
-                rcell0.setCellValue(listaData.get(vi).A2537TIKET);
-                rcell1.setCellValue(listaData.get(vi).A2537CNTRY);
-                rcell2.setCellValue(listaData.get(vi).A2537DSOLI);
-                rcell3.setCellValue(listaData.get(vi).A2537ACTW);
-                rcell4.setCellValue(listaData.get(vi).A2537DRFND);
-                rcell5.setCellValue(listaData.get(vi).A2537DEMI);
-                rcell6.setCellValue(listaData.get(vi).A2537DVOL);
-                rcell7.setCellValue(listaData.get(vi).A2537FINGR);
-                rcell8.setCellValue(listaData.get(vi).A2537IATA);
-                rcell9.setCellValue(listaData.get(vi).A2537NAGEN);
-                rcell10.setCellValue(listaData.get(vi).A2537AGENT);
-                rcell11.setCellValue(listaData.get(vi).A2537TCODE);
-                rcell12.setCellValue(listaData.get(vi).A2537RUTA);
-                rcell13.setCellValue(listaData.get(vi).A2537NPAX);
-                rcell14.setCellValue(listaData.get(vi).A2537NUPAX);
-                rcell15.setCellValue(listaData.get(vi).A2537CLASE);
-                rcell16.setCellValue(listaData.get(vi).A2537PNR);
-                rcell17.setCellValue(listaData.get(vi).A2537CWAIV);
-                rcell18.setCellValue(listaData.get(vi).A2537FAPP);
-                rcell19.setCellValue(listaData.get(vi).A2537MAPP);
-                rcell20.setCellValue(listaData.get(vi).A2537TPAY);
-                rcell21.setCellValue(listaData.get(vi).A2537MPAY);
-                rcell22.setCellValue(listaData.get(vi).A2537FREB);
-                rcell23.setCellValue(listaData.get(vi).A2537MREB);
-                rcell24.setCellValue(listaData.get(vi).A2537APPS);
-                rcell25.setCellValue(listaData.get(vi).A2537APPR);
-                rcell26.setCellValue(listaData.get(vi).A2537APPE);
-                rcell27.setCellValue(listaData.get(vi).A2537DESC);
+                rcell0.setCellValue(listaData.get(vi).A2537NCASO);
+                rcell1.setCellValue(listaData.get(vi).A2537TCASO);
+                rcell2.setCellValue(listaData.get(vi).A2537ESTAD);
+                rcell3.setCellValue(listaData.get(vi).A2537PCASO);
+                rcell4.setCellValue(listaData.get(vi).A2537FCRRE);
+                rcell5.setCellValue(listaData.get(vi).A2537FVETO);
+                rcell6.setCellValue(listaData.get(vi).A2537PNR);
+                rcell7.setCellValue(listaData.get(vi).A2537TKTS);
+                rcell8.setCellValue(listaData.get(vi).A2537CODIT);
+                rcell9.setCellValue(listaData.get(vi).A2537ITIN);
+                rcell10.setCellValue(listaData.get(vi).A2537AGENE);
+                rcell11.setCellValue(listaData.get(vi).A2537CCPTO);
+                rcell12.setCellValue(listaData.get(vi).A2537SCPTO);
+                rcell13.setCellValue(listaData.get(vi).A2537CURRW);
+                rcell14.setCellValue(listaData.get(vi).A2537AMOUW);
+                rcell15.setCellValue(listaData.get(vi).A2537DESCR);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -402,18 +356,6 @@ public class WaiverController extends BaseController {
             sheet.autoSizeColumn(13, true);
             sheet.autoSizeColumn(14, true);
             sheet.autoSizeColumn(15, true);
-            sheet.autoSizeColumn(16, true);
-            sheet.autoSizeColumn(17, true);
-            sheet.autoSizeColumn(18, true);
-            sheet.autoSizeColumn(19, true);
-            sheet.autoSizeColumn(20, true);
-            sheet.autoSizeColumn(21, true);
-            sheet.autoSizeColumn(22, true);
-            sheet.autoSizeColumn(23, true);
-            sheet.autoSizeColumn(24, true);
-            sheet.autoSizeColumn(25, true);
-            sheet.autoSizeColumn(26, true);
-            sheet.autoSizeColumn(27, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");

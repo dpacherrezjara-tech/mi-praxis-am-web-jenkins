@@ -132,7 +132,7 @@ public class AccountingMasterTNUController extends BaseController {
     void GetXLSX(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("AccountingMasterBINES : getXLSX");
 
-        String fileNameDownload = String.format("Accounting Master Bines- " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Accounting Master TNU - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
 
         try {
 

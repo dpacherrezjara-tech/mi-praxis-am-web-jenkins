@@ -191,7 +191,7 @@ public class AccountingMasterFlownDAO {
 
         try {
             //PX12200004
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04487(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; // PX122S04A1740
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04487(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; // PX122S04A1740
             //cs = session.getCNXIBMDB2().getConnection().prepareCall(strSQL);
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -221,6 +221,8 @@ public class AccountingMasterFlownDAO {
             cs.setString(23, filter.IN_A1740SUBTI_OLD);
             cs.setString(24, filter.IN_A1740CATEG_OLD);
             cs.setString(25, filter.A1740INTNU);
+            cs.setString(26, filter.IN_A1740FINI_OLD);
+            cs.setString(27, filter.IN_A1740FFIN_OLD);
             cs.execute();
 
             rst = cs.getResultSet();

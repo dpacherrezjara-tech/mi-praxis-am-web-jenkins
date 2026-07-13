@@ -42,7 +42,7 @@ Ext.define('Ext.Praxis.view.interline.PaxRejectionsForm.Info', {
                             xtype: 'grid',
                             id: prototype.id + '-gridDetailByMonth',
 //                            width: prototype.widthGrid,
-                            width: 1530,
+                            width: 1487,
                             height: 357,
                             columnLines: true,
                             columns: {
@@ -255,13 +255,6 @@ Ext.define('Ext.Praxis.view.interline.PaxRejectionsForm.Info', {
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;";
                                             return Ext.util.Format.number(value, '0,000');
-                                        }
-                                    },
-                                    {
-                                        text: 'VAT', dataIndex: 'VATRM', width: 50,
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
-                                            return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
                                     {
@@ -482,13 +475,6 @@ Ext.define('Ext.Praxis.view.interline.PaxRejectionsForm.Info', {
                                             metaData.style = "text-align:right;";
                                             return Ext.util.Format.number(value, '0,000');
                                         }
-                                    },
-                                    {
-                                        text: 'VAT', dataIndex: 'VATRM', width: 50,
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }
                                     }
                                 ]
                             }
@@ -674,13 +660,6 @@ Ext.define('Ext.Praxis.view.interline.PaxRejectionsForm.Info', {
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;";
                                             return Ext.util.Format.number(value, '0,000.00')+'%';
-                                        }
-                                    },
-                                    {
-                                        text: 'VAT', dataIndex: 'VATRM', width: 50,
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
-                                            return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
                                     {
@@ -923,14 +902,7 @@ Ext.define('Ext.Praxis.view.interline.PaxRejectionsForm.Info', {
                                                 }
                                             }
                                         ]
-                                    },
-                                    {
-                                        text: 'VAT', dataIndex: 'VATRM', width: 50,
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }
-                                    },
+                                    }
                                 ]
                             }
                         }

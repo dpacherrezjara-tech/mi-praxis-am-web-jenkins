@@ -13,16 +13,14 @@
 .prx-icon-clear {
   background-image: url("../img/botones/clear.png");
 }
-.prx-icon-key {
-  background-image: url("../img/botones/key.png");
-  background-position: center center;
-  background-size: 16px;
-}
-.prx-icon-run {
-  background-image: url("../img/botones/run.png");
-}
 .prx-icon-add {
   background-image: url("../img/botones/add.png");
+}
+.prx-icon-query {
+  background-image: url("../img/botones/query.png");
+}
+.prx-icon-user {
+  background-image: url("../img/botones/user.png");
 }
 .prx-icon-back {
   background-image: url("../img/botones/back.png");
@@ -38,6 +36,12 @@
 }
 .prx-icon-save {
   background-image: url("../img/botones/24x24/1337982029_3floppy_unmount.png");
+}
+.prx-icon-save-blue-16 {
+  background-image: url("../img/botones/16x16/icons8-save-blue-16.png");
+}
+.prx-icon-save-blue-24 {
+  background-image: url("../img/botones/24x24/icons8-save-blue-24.png");
 }
 .prx-icon-update {
   background-image: url("../img/botones/24x24/1337982080_system-software-update.png");
@@ -75,6 +79,9 @@
 }
 .prx-icon-image-log {
   background-image: url("../img/botones/log.png");
+}
+.prx-icon-image-list-error {
+  background-image: url("../img/botones/list-error.png");
 }
 .prx-icon-image-trash {
   background-image: url("../img/icon/trash.png");

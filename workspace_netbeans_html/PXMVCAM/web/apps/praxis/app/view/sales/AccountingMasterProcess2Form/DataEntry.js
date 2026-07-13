@@ -1,3 +1,4 @@
+prototype.idDE=prototype.id + '-DataEntryAccountingMPSales';
 Ext.define('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntry',{
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryAccountingMasterProcess2Form',
@@ -60,12 +61,9 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterProcess2Form.DataEntry',{
                                 data: [
                                     ["", "(Select)"],
                                     ["PSALES", "Sales Accounting"],
-                                    ["PSALESARC", "Sales Accounting ARC"],
-                                    ["PSALESASR", "Sales Accounting ASR"],
-                                    ["PSALESBSP", "Sales Accounting BSP"],
-                                    ["PSALESMAN", "Sales Accounting MAN"],
-                                    ["PADJMA", "Manual Adjustment"],
-                                    ["PCADUCOS", "Caducos"],
+                                    ["PSALESEMDS", "Sales EMDs"],
+                                   // ["PADJMA", "Manual Adjustment"],
+                                    //["PCADUCOS", "Caducos"],
                                     ["PPSALES", "Sales Accounting Pending"]
                                 ]
                             }),
