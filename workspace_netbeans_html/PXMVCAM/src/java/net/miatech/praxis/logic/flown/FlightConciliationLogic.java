@@ -116,6 +116,10 @@ public class FlightConciliationLogic {
         return objDAO.loadSQP03651();
     }
 
+    public void actualizarContador(String anio, String mes) throws SQLException, Exception {
+        objDAO.actualizarContador(anio, mes);
+    }
+
     public A3729Filter SQP04282(List<A3729Filter> lstData) throws Exception {
         return objDAO.SQP04282(lstData);
     }
@@ -127,7 +131,7 @@ public class FlightConciliationLogic {
     public String SQP04320(A3729Filter filter) throws SQLException, Exception {
         return objDAO.SQP04320(filter);
     }
-
+    
     public boolean SQP04321(A3729Filter filter) throws SQLException, Exception {
         return objDAO.SQP04321(filter);
     }
@@ -142,5 +146,9 @@ public class FlightConciliationLogic {
 
     public String loadSQP05035(List<A1691Filter> listaTkt) throws SQLException, Exception {
         return objDAO.loadSQP05035(listaTkt);
+    }
+    
+    public String SQP03414_20(A3729Filter filter) throws SQLException, Exception {
+        return objDAO.SQP03414_20(filter);
     }
 }

@@ -51,6 +51,13 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 //        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
+
+        this.setValue('cmbAnioContador', new Date().getFullYear());
+        if (month < 10) {
+            Ext.getCmp(prototype.id + '-cmbMesContador').setValue('0' + month);
+        } else {
+            Ext.getCmp(prototype.id + '-cmbMesContador').setValue((month));
+        }
     },
     cbxDateFromYear_changeHandler: function () {
         this.setValue('cmbDateToYear', this.getValue("cmbDateFromYear"));
@@ -65,10 +72,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         var storeComboDataYear = win.getStoreYear(true);
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateToYear').bindStore(storeComboDataYear);
+        Ext.getCmp(prototype.id + '-cmbAnioContador').bindStore(storeComboDataYear);
 
         var storeComboDataMonth = win.getStoreMonth(true);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(storeComboDataMonth);
+        Ext.getCmp(prototype.id + '-cmbMesContador').bindStore(storeComboDataMonth);
 
         var storeComboDataMonth = win.getStoreDays(true);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataMonth);
@@ -502,7 +511,33 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     actionCode: 'I'
                 }
             }).show();
+        } else if (this.peek() === prototype.id + '-boxDetailFlightManifest') {
+
+            var chkManifest = Ext.getCmp(prototype.id + '-chkManifest');
+
+            if (chkManifest && chkManifest.getValue() === true) {
+                Ext.Msg.alert(
+                        'Opción no habilitada',
+                        'Quite el check de <b>Flight Manifest</b> para continuar.'
+                        );
+                return;
+            }
+
+            // --- continúa flujo normal ---
+            var grid = Ext.getCmp(prototype.id + '-gridDetailFlightManifest');
+            var store = grid.getStore();
+            var firstRow = store.getAt(0);
+            var rec = firstRow ? firstRow : {};
+
+            Ext.create('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
+                id: prototype.id + '-DataEntryA3729',
+                params: {
+                    action: 'I',
+                    rec: rec
+                }
+            }).show();
         }
+
     },
     btnQuery_click: function () {
         var beanQuery = {};
@@ -985,7 +1020,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 
     },
     btnScanTicket_clickHandler: function () {
-        this.objFLIGHTMANIF.DFLIGHT = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtFilterDatem').getValue(), 'Ymd');
+        this.objFLIGHTMANIF.DFLIGHT = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtFilterDatem').getValue(), 'Ymd');
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Are you sure to Scan Tickets ?',
@@ -1015,7 +1050,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
                     var msj = res.msjOption;
-                    global.Msg({msg: msj});   
+                    global.Msg({msg: msj});
 //                    me.searchDetailFlightManifest(bean);
                 } else
                     global.Msg({msg: res.sesion});
@@ -1387,7 +1422,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     var msj = res.msjOption;
                     var beanCons = res.beanConsTkt;
                     global.Msg({msg: msj});
-                    if ( msj !== 'Error') {
+                    if (msj !== 'Error') {
                         meEntryTick.view.close();
                         console.log('sale');
                     }
@@ -1403,9 +1438,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     }
                 } else
                     var msj = res.msjOption;
-                    global.Msg({msg: msj});
+                global.Msg({msg: msj});
                 global.clear();
-               
+
             },
             failure: function (response, opts) {
                 Ext.getCmp('DataEntryTicketFlightConciliationForm').unmask();
@@ -1789,6 +1824,42 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     actualizar: function () {
         this.searchControlODS();
     },
+    btnActualizarContador_click: function () {
+        var anio = this.getValue("cmbAnioContador");
+        var mes = this.getValue("cmbMesContador");
+
+        if (!anio || !mes) {
+            global.Msg({msg: 'Select year and month'});
+            return;
+        }
+
+        Ext.getCmp(prototype.id + '-btnActualizarContador').disable();
+
+        Ext.Ajax.request({
+            url: prototype.url + '/actualizarContador',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-centerC').mask('Processing...'),
+            params: {anio: anio, mes: mes},
+            success: function (response, opts) {
+                var res = Ext.JSON.decode(response.responseText);
+                Ext.getCmp(prototype.id + '-centerC').unmask();
+                Ext.getCmp(prototype.id + '-btnActualizarContador').enable();
+                if (res.success) {
+                    global.Msg({msg: 'Contador actualizado correctamente'});
+                    me.searchControlODS();
+                    me.btnSearch_click();
+                } else {
+                    global.Msg({msg: res.sesion});
+                }
+            },
+            failure: function (response, opts) {
+                Ext.getCmp(prototype.id + '-centerC').unmask();
+                Ext.getCmp(prototype.id + '-btnActualizarContador').enable();
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
+    },
     //<editor-fold defaultstate="collapsed" desc="searchControlODS">
     searchControlODS: function () {
 
@@ -1834,7 +1905,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }
         }).show();
 
-    },        
+    },
     onClickFileLoad_VLO: function () {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
