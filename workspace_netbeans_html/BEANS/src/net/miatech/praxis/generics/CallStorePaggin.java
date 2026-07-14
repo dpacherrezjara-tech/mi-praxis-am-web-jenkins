@@ -45,7 +45,11 @@ public class CallStorePaggin {
                 // Desactivar paginacion
                 this.IO_PAGROW = -1;
                 this.IO_PAGNUM = 1;
+            }else{
+                this.IO_PAGROW = 20;
+                this.IO_PAGNUM = (start / this.IO_PAGROW) + 1;
             }
+                
         }
         else{
             this.IO_PAGROW = 20;
