@@ -36,7 +36,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Compensation0425Form
                         {
                             xtype: 'panel',
                             region: 'center',
-                            width: 1650,
+                            width: '100%',
                             layout: 'border',
                             items: [
                                 {
@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Compensation0425Form
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1650,
+                                        width: '100%',
                                         align: 'center'
                                     },
                                     items: [
@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Compensation0425Form
                                             xtype: 'panel',
 //                                            height: 500,
                                             minHeight: 300,
-                                            width: 1650,
+                                            width: '100%',
                                             bodyStyle: 'background: #E3EAF9',
                                             layout: 'fit',
                                             defaults: {
@@ -80,7 +80,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Compensation0425Form
                                         {
                                             xtype: 'panel',
                                             height: 500,
-                                            width: 1650,
+                                            width: '100%',
                                             bodyStyle: 'background: #E3EAF9',
                                             layout: 'fit',
                                             defaults: {

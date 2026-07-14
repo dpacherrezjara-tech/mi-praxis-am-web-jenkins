@@ -78,12 +78,30 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                     valueField: 'code',
                                     queryMode: 'local',
                                     editable: false,
-                                    value: 'FECR'
+                                    value: 'FECR',
+                                    listeners: {
+                                        change: 'onCmbSearchChange'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    name: 'IN_TICKET',
+                                    labelWidth: 40,
+                                    id: prototype.id + '-IN_TICKET',
+                                    width: 140,
+                                    enforceMaxLength: true,
+                                    maxLength: 13,
+                                    maskRe: /^[0-9]$/,
+                                    enableKeyEvents: true,
+                                    listeners: {
+                                        keypress: 'onEnterKeyPress'
+                                    }
                                 },
                                 {
                                     xtype: 'datefield',
                                     fieldLabel: 'From',
                                     name: 'IN_DATEF',
+                                    id: prototype.id + '-IN_DATEF',
                                     format: 'Ymd',
                                     labelWidth: 30,
                                     width: 130,
@@ -93,6 +111,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                     xtype: 'datefield',
                                     fieldLabel: 'To',
                                     name: 'IN_DATET',
+                                     id: prototype.id + '-IN_DATET',
                                     format: 'Ymd',
                                     labelWidth: 20,
                                     width: 130,
@@ -101,6 +120,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                 {
                                     xtype: 'combobox',
                                     name: 'IN_TRNCU',
+                                    id: prototype.id + '-IN_TRNCU',
                                     fieldLabel: 'Transaction',
                                     store: Ext.create('Ext.data.SimpleStore', {
                                         fields: ['code', 'name'],
@@ -143,6 +163,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                 {
                                     xtype: 'textfield',
                                     name: 'IN_CIATA',
+                                    id: prototype.id + '-IN_CIATA',
                                     fieldLabel: 'IATA',
                                     labelWidth: 30,
                                     width: 130,
@@ -173,6 +194,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                     xtype: 'textfield',
                                     name: 'IN_SPNR',
                                     fieldLabel: 'PNR',
+                                    id: prototype.id + '-IN_SPNR',
                                     labelWidth: 30,
                                     width: 150,
                                     enforceMaxLength: true,
@@ -183,22 +205,9 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                     }
                                 },
                                 {
-                                    xtype: 'textfield',
-                                    name: 'IN_TICKET',
-                                    fieldLabel: 'Ticket',
-                                    labelWidth: 40,
-                                    width: 140,
-                                    enforceMaxLength: true,
-                                    maxLength: 13,
-                                    maskRe: /^[0-9]$/,
-                                    enableKeyEvents: true,
-                                    listeners: {
-                                        keypress: 'onEnterKeyPress'
-                                    }
-                                },
-                                {
                                     xtype: 'combobox',
                                     fieldLabel: 'Status',
+                                    id: prototype.id + '-IN_STATUS',
                                     labelWidth: 40,
                                     width: 160,
                                     name: 'IN_STATUS',
@@ -215,7 +224,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                             ['S', 'UNREGISTERED SALE'],
                                             ['A', 'APPROVED'],
                                             ['F', 'WITH ACM']
-                                            
+
                                         ]
                                     }),
                                     displayField: 'name',

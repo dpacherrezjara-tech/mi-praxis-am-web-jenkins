@@ -10,11 +10,16 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Charts.Compensation0
     },
     width: '100%',
     border: false,
+    scrollable: {
+        x: 'auto',
+        y: false
+    },
     bodyStyle: 'background-color: #f9f9f7; padding: 8px;',
     defaults: {
         xtype: 'panel',
         layout: 'fit',
         flex: 1,
+        minWidth: 430,
         margin: '0 4 0 4',
         bodyStyle: 'background-color: #fcfcfb;',
         style: {
@@ -34,11 +39,11 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Charts.Compensation0
                     data: []
                 },
                 background: '#fcfcfb',
-                insetPadding: 30,
+                insetPadding: 40,
                 innerPadding: 20,
                 interactions: ['rotate', 'itemhighlight'],
                 legend: {
-                    docked: 'right',
+                    docked: 'bottom',
                     label: {
                         color: '#0b0b0b'
                     }
@@ -83,10 +88,10 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Charts.Compensation0
                     data: []
                 },
                 background: '#fcfcfb',
-                insetPadding: '20 40 10 10',
-                innerPadding: '0 20 10 0',
+                insetPadding: '20 20 10 10',
+                innerPadding: '0 10 10 0',
                 legend: {
-                    docked: 'right',
+                    docked: 'bottom',
                     label: {
                         color: '#0b0b0b'
                     }

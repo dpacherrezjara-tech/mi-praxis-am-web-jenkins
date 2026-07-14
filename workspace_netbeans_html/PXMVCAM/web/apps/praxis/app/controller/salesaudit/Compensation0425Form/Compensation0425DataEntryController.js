@@ -36,10 +36,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
             Ext.getCmp(prototype.idDE + '-CmbEstatus').enable();
             Ext.getCmp(prototype.idDE + '-CmbAddRazon').show();
             Ext.getCmp(prototype.idDE + '-btn-update').show();
+            Ext.getCmp(prototype.idDE + '-colRazonRemove').hide();
         } else {
             Ext.getCmp(prototype.idDE + '-CmbEstatus').disable();
             Ext.getCmp(prototype.idDE + '-CmbAddRazon').hidden();
             Ext.getCmp(prototype.idDE + '-btn-update').hidden();
+            Ext.getCmp(prototype.idDE + '-colRazonRemove').show();
         }
         me.loadTicketInformation();
         me.isNewTicket = false;
@@ -47,6 +49,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
     loadTicketInformation: async function () {
         const me = this;
         const gridTkt = Ext.getCmp(prototype.idDE + '-gridBoletos');
+        const gridRazones = Ext.getCmp(prototype.idDE + '-gridRazones');
         gridTkt.setLoading(true);
         let params = {
             IN_CCUST: me.view.params.obj.A4961CCUST,
@@ -61,12 +64,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
         };
         try {
             const res = await global.callStoreGet('PXSAUDIT', 'SQP06087', params);
+            console.log('Novo ',res)
             if (res.lstRs.length > 0) {
                 let store = new Ext.data.Store({
                     data: res.lstRs.at(0)
                 });
                 gridTkt.setStore(store);
-
+                //
+                let stores = new Ext.data.Store({
+                    data: res.lstRs.at(1)
+                });
+                gridRazones.setStore(stores);
                 // me.loadActiveChangesCompensation0425Data();
 
             }

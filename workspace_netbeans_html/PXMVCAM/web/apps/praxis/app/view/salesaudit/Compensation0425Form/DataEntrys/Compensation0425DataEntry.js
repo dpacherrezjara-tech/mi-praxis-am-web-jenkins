@@ -172,6 +172,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                             {text: 'Description', dataIndex: 'A3404ERROR', width: 500, editor: 'textfield'},
                                             {
                                                 xtype: 'actioncolumn',
+                                                id: prototype.idDE + '-colRazonRemove',
                                                 width: 50,
                                                 menuDisabled: true,
                                                 sortable: false,

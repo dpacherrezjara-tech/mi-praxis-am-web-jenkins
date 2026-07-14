@@ -23,6 +23,28 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
             me.view.setLoading(false);
         }
     },
+    onCmbSearchChange: function (obj, records, eOpts) {
+        
+        if (obj.getValue() === "TICKET" ) {
+             Ext.getCmp( prototype.id + '-IN_TICKET').show();
+             Ext.getCmp(prototype.id + '-IN_DATEF').hide();
+             Ext.getCmp(prototype.id + '-IN_DATET').hide();
+             Ext.getCmp(prototype.id + '-IN_TRNCU').hide();
+             Ext.getCmp(prototype.id + '-cmbPaises').hide();
+             Ext.getCmp(prototype.id + '-IN_CIATA').hide();
+             Ext.getCmp(prototype.id + '-IN_SPNR').hide();
+             Ext.getCmp(prototype.id + '-IN_STATUS').hide();
+        }else{
+            Ext.getCmp( prototype.id + '-IN_TICKET').hide();
+             Ext.getCmp(prototype.id + '-IN_DATEF').show();
+             Ext.getCmp(prototype.id + '-IN_DATET').show();
+             Ext.getCmp(prototype.id + '-IN_TRNCU').show();
+             Ext.getCmp(prototype.id + '-cmbPaises').show();
+             Ext.getCmp(prototype.id + '-IN_CIATA').show();
+             Ext.getCmp(prototype.id + '-IN_SPNR').show();
+             Ext.getCmp(prototype.id + '-IN_STATUS').show();
+        }
+    },
     loadTickets: async function () {
         const me = this;
         const grid = Ext.getCmp(prototype.id + '-gridExceptionTickets');
@@ -199,17 +221,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
         newWin.show();
     },
     loadTaxDetails: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
-       const me = this;
+        const me = this;
         const winId = prototype.id + '-Compensation0425DataEntry';
         const existingWin = Ext.getCmp(winId);
         if (existingWin) {
             existingWin.destroy();
         }
-         var win = new Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensation0425DataEntry({
+        var win = new Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensation0425DataEntry({
             id: winId,
             params: {
                 obj: record.data,
-            reloadGrid: me.reloadGrid
+                reloadGrid: me.reloadGrid
             }
         });
         win.show();
@@ -230,29 +252,29 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
         let notifier = new AWN();
         let params = this.formatParams();
         const dwl = async () => {
-            const res = await global.callStorePagginExcel('PXSAUDIT', 'SQP05586', params);
+            const res = await global.callStorePagginExcel('PXSAUDIT', 'SQP06086', params);
             if (res) {
                 let data = res.map(x => ({
-                    'Ticket': x.A4961TICKET,
-                    'SEQ': x.A4961SEQ,
-                    'Currency': x.MDA,
-                    'Amount': x.A4961NETOR,
-                    'Agent': x.A4961AGENT,
-                    'Agent Name': x.NIATA,
-                    'Sale Country': x.A4961PAIS,
-                    'Sale Date': x.A4961FVENT,
-                    'Processing Date': x.A4961FPROC,
-                    'Notices Date': x.A4961FANOT,
-                    'Transaction': x.A4961TRNCU,
-                    'Doc. Type': x.A4961TDOC,
-                    'PNR': x.A4961PNR,
-                    'Pax Name': x.A4961PAX,
-                    'Itinerary': x.A4961ITIN,
-                    'RFIC': x.A4961VRIC,
-                    'EPR': x.A4961EPR,
-                    'Associated ticket': x.A4961TKCNX,
-                    'Status': x.A4961FLADMDES
-                }));
+                        'Ticket': x.A4961TICKET,
+                        'SEQ': x.A4961SEQ,
+                        'Currency': x.MDA,
+                        'Amount': x.A4961NETOR,
+                        'Agent': x.A4961AGENT,
+                        'Agent Name': x.NIATA,
+                        'Sale Country': x.A4961PAIS,
+                        'Sale Date': x.A4961FVENT,
+                        'Processing Date': x.A4961FPROC,
+                        'Notices Date': x.A4961FANOT,
+                        'Transaction': x.A4961TRNCU,
+                        'Doc. Type': x.A4961TDOC,
+                        'PNR': x.A4961PNR,
+                        'Pax Name': x.A4961PAX,
+                        'Itinerary': x.A4961ITIN,
+                        'RFIC': x.A4961VRIC,
+                        'EPR': x.A4961EPR,
+                        'Associated ticket': x.A4961TKCNX,
+                        'Status': x.A4961FLADMDES
+                    }));
                 global.writeExcelFromJson(data, 'Compensation 0425');
             }
         };
