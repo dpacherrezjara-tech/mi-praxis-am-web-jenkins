@@ -151,8 +151,8 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                                     labelStyle: 'text-align:left;font-weight: bolder;',
                                                     flex: 1,
                                                     height: 70,
-                                                    maxLength: 500,
-                                                    enforceMaxLength: 500,
+                                                    maxLength: 1000,
+                                                    enforceMaxLength: 1000,
                                                     validator: function (value) {
                                                         if (!value) {
                                                             return true;

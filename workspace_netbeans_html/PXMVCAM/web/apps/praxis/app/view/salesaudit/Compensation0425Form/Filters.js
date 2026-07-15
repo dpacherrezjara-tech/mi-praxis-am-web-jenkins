@@ -224,7 +224,8 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                             ['AM', 'AM Consult'],
                                             ['RM', 'Manual review'],
                                             ['SR', 'No applicable rule'],
-                                            ['MA', 'Match']
+                                            ['MA', 'Match'],
+                                            ['SA', 'Supervisor Authorization']
                                         ]
                                     }),
                                     displayField: 'name',
