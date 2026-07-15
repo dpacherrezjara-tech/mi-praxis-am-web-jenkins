@@ -87,15 +87,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
     onFilterDescripChange: function (field, newValue) {
         const grid = Ext.getCmp(prototype.idDE + '-gridBoletos');
         const store = grid.getStore();
-        store.clearFilter(true);
         const value = Ext.String.trim(newValue || '');
         if (value !== '') {
+            store.clearFilter(true);
             store.filter({
                 property: 'DESCRIP',
                 value: value,
                 anyMatch: true,
                 caseSensitive: false
             });
+        } else {
+            store.clearFilter();
         }
     },
     onExportBoletosExcel: function () {

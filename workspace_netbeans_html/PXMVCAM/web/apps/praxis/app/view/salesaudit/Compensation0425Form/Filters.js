@@ -219,12 +219,12 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ['', 'All'],
-                                            ['Y', 'PENDING'],
+                                            ['SU', 'Suggested'],
                                             ['C', 'UNREGISTERED CLIENT'],
-                                            ['S', 'UNREGISTERED SALE'],
-                                            ['A', 'APPROVED'],
-                                            ['F', 'WITH ACM']
-
+                                            ['AM', 'AM Consult'],
+                                            ['RM', 'Manual review'],
+                                            ['SR', 'No applicable rule'],
+                                            ['MA', 'Match']
                                         ]
                                     }),
                                     displayField: 'name',

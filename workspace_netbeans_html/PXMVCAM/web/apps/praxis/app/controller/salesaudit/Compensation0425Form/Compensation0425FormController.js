@@ -75,10 +75,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
         let storeChartPie = res.lstRs.at(0);
         let rawLineal = res.lstRs.at(1);
 
-        // ocultar si no hay resultados
-        if (storeChartPie.length <= 0 || rawLineal.length <= 0) {
-            chartPie.hide();
-            chartLineal.hide();
+        // Sin resultados: limpiar por completo ambos graficos (no dejar datos previos) y ocultarlos
+        if (!storeChartPie.length || !rawLineal.length) {
+            me.clearCharts(chartPie, chartLineal);
             return;
         }
 
@@ -90,11 +89,27 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
                 storeChartPie.map(r => r.A4961FLADM).concat(rawLineal.map(r => r.ESTATUS))
                 );
 
-        chartPie.setStore(storeChartPie);
+        chartPie.setStore(new Ext.data.Store({
+            fields: ['A4961FLADM', 'PERCENT'],
+            data: storeChartPie
+        }));
         chartPie.getSeries()[0].setColors(storeChartPie.map(r => colorMap[r.A4961FLADM] || '#898781'));
 
         me.renderLinealChart(chartLineal, rawLineal, colorMap);
 
+    },
+    clearCharts: function (chartPie, chartLineal) {
+        chartPie.setStore(new Ext.data.Store({
+            fields: ['A4961FLADM', 'PERCENT'],
+            data: []
+        }));
+        chartLineal.setSeries([]);
+        chartLineal.setStore(new Ext.data.Store({
+            fields: ['PERIOD'],
+            data: []
+        }));
+        chartPie.hide();
+        chartLineal.hide();
     },
     renderLinealChart: function (chart, rawData, colorMap) {
         const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

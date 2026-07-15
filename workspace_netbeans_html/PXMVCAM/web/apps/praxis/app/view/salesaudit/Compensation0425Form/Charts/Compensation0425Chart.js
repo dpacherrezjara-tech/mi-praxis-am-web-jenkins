@@ -63,14 +63,14 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Charts.Compensation0
                         },
                         renderer: function (text, sprite, config, rendererData, index) {
                             var record = rendererData.store.getAt(index);
-                            return record ? (text + ' (' + record.get('PERCENT') + '%)') : text;
+                            return record ? (text + ' (' + Ext.util.Format.number(record.get('PERCENT'), '0.0') + '%)') : text;
                         }
                     },
                     highlight: true,
                     tooltip: {
                         trackMouse: true,
                         renderer: function (tooltip, record) {
-                            tooltip.setHtml(record.get('A4961FLADM') + ': ' + record.get('PERCENT') + '%');
+                            tooltip.setHtml(record.get('A4961FLADM') + ': ' + Ext.util.Format.number(record.get('PERCENT'), '0.0') + '%');
                         }
                     }
                 }]

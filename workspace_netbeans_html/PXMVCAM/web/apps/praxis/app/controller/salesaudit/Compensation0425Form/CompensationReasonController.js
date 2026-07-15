@@ -43,15 +43,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.CompensationRe
     onFilterDescripChange: function (field, newValue) {
         const grid = Ext.getCmp(prototype.idDE3 + '-gridListReason');
         const store = grid.getStore();
-        store.clearFilter(true);
         const value = Ext.String.trim(newValue || '');
         if (value !== '') {
+            store.clearFilter(true);
             store.filter({
                 property: 'A2560COMES',
                 value: value,
                 anyMatch: true,
                 caseSensitive: false
             });
+        } else {
+            store.clearFilter();
         }
     },
     OnChkRFNDHandler: function(grid, rowIndex, colIndex,item,e,record) {
