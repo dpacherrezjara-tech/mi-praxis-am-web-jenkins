@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                 {
                                     xtype: 'textfield',
                                     name: 'IN_TICKET',
-                                    labelWidth: 40,
+                                    labelWidth: 40,hidden:true,
                                     id: prototype.id + '-IN_TICKET',
                                     width: 140,
                                     enforceMaxLength: true,
@@ -178,6 +178,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                 {
                                     xtype: 'checkboxfield',
                                     name: 'pagination',
+                                    id: prototype.id + '-pagination',
                                     boxLabel: 'Enable Pagination',
                                     inputValue: true,
                                     uncheckedValue: false,

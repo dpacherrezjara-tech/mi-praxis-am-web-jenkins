@@ -58,7 +58,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Grids.Compensation04
                     {text: 'EPR', dataIndex: 'A4961EPR', width: 80},
                     {text: 'Associated <br>ticket', dataIndex: 'A4961TKCNX', width: 140},
                     {
-                        text: 'Status', dataIndex: 'A4961FLADMDES', width: 110,
+                        text: 'Status', dataIndex: 'A4961FLADMDES', width: 150,
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             const opts = {
                                 'Suggested': {text: 'Suggested', bg: '#FFF9C4', color: '#F57F17'}, // amarillo

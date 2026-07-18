@@ -24,7 +24,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
         }
     },
     onCmbSearchChange: function (obj, records, eOpts) {
-        
         if (obj.getValue() === "TICKET" ) {
              Ext.getCmp( prototype.id + '-IN_TICKET').show();
              Ext.getCmp(prototype.id + '-IN_DATEF').hide();
@@ -34,6 +33,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
              Ext.getCmp(prototype.id + '-IN_CIATA').hide();
              Ext.getCmp(prototype.id + '-IN_SPNR').hide();
              Ext.getCmp(prototype.id + '-IN_STATUS').hide();
+             Ext.getCmp(prototype.id + '-pagination').hide(); 
         }else{
             Ext.getCmp( prototype.id + '-IN_TICKET').hide();
              Ext.getCmp(prototype.id + '-IN_DATEF').show();
@@ -43,6 +43,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
              Ext.getCmp(prototype.id + '-IN_CIATA').show();
              Ext.getCmp(prototype.id + '-IN_SPNR').show();
              Ext.getCmp(prototype.id + '-IN_STATUS').show();
+             Ext.getCmp(prototype.id + '-pagination').show(); 
         }
     },
     loadTickets: async function () {
