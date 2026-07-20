@@ -4,10 +4,21 @@
  * and open the template in the editor.
  */
 
+// Campos que no se pueden desmarcar cuando tabla === 'A1672' (Tickets Invol):
+// son la llave fisica de A1672 + TEXCH, necesarios para poder actualizar el
+// registro despues al re-subir el Excel, + USOS/INDIC CPN (campos FIELDTYPE='C'
+// cuyo "campo"/SYSTFIELD es la llamada a funcion completa, no un nombre simple).
+var protectedFieldsA1672 = ['A1672CCUST', 'A1672CIA', 'A1672FORMA', 'A1672SERIE', 'A1672SEQ', 'A1672CUPON', 'A1672TRNCU', 'A1672TEXCH', 'A1672DI',
+    'PRAXIS.F01_PX449_USO(A1672CCUST, A1672CIA, A1672FORMA, A1672SERIE,A1672SEQ)',
+    'PRAXIS.F02_PX449_USO(A1672CCUST, A1672CIA, A1672FORMA, A1672SERIE,A1672SEQ)'];
+
 var controller = {
     select: function (value, row) {
         var dataStore = Ext.getCmp(prototype.id + '-gridDataColumns').getStore();
         var dataRow = dataStore.data.items[row].data;
+        if (dataRow.tabla === 'A1672' && protectedFieldsA1672.indexOf(dataRow.campo) !== -1) {
+            return;
+        }
         //console.log(dataRow);
         var name = dataRow.DESCRIPT;
         if (dataRow.select === true) {
@@ -200,6 +211,10 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Info', {
 //                                                                }
                                                                 renderer: function (value, meta, record, row, col) {
                                                                     var check = record.data.select;
+                                                                    var locked = record.data.tabla === 'A1672' && protectedFieldsA1672.indexOf(record.data.campo) !== -1;
+                                                                    if (locked) {
+                                                                        return '<input type="checkbox" checked disabled title="Campo requerido para Tickets Invol">';
+                                                                    }
                                                                     if (check) {
                                                                         return '<input type="checkbox" checked  onclick="controller.select(this.checked,' + row + ')">';
                                                                     } else {

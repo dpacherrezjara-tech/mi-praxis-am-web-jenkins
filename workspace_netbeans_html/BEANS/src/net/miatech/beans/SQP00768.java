@@ -52,6 +52,23 @@ public class SQP00768 {
     public int strAscDesc = 0;
     public boolean chkGroup=false;
     
+    // Calculados solo para A1672 (Tickets Invol): Ticket = CIA+FORMA+SERIE,
+    // Ticket Ori = CIAOR+FOROR+SEROR, isChainRoot = true si la fila no es un exchange
+    // (TRNCU <> 'EXCH'), usado para alternar el color de fondo por cadena en el Excel.
+    public String ticket = "";
+    public String ticketOri = "";
+    public boolean isChainRoot = false;
+
+    // pxSeqKey = A1672SEQ real de la fila (viene siempre del SP, sin importar
+    // en que columnN haya quedado SEQ si el usuario lo marco como columna).
+    // sortKey = identidad de la raiz de la cadena (para agrupar). pnrMismatch
+    // = true si dentro de esa cadena hay mas de un PNR distinto (se pinta en
+    // verde en la grilla como alerta de calidad de dato).
+    public String pxSeqKey = "";
+    public String sortKey = "";
+    public boolean pnrMismatch = false;
+    public boolean paxMismatch = false;
+
     public String column1 = "";
     public String column2 = "";
     public String column3 = "";

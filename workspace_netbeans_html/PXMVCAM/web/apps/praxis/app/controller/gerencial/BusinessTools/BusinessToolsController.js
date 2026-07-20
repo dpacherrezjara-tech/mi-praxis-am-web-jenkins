@@ -161,13 +161,18 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                 this.obtainData(tabla, '', dato);
             }
         }
+        
+        console.log(tabla,'tabla')
 
         //Panel para la funcion de valoracion
-        if (tabla === 'A1692') {
+        if (tabla === 'A1692' || tabla === 'A1672') {
+            console.log(me.validateAccess('M'),'aaaa')
             if (me.validateAccess('M')) {
+                console.log(1)
                 Ext.getCmp(prototype.id + '-boxFunctions').show();
             }
         } else {
+             console.log(2)
             Ext.getCmp(prototype.id + '-boxFunctions').hide();
         }
 
@@ -248,6 +253,22 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                     };
                     listaCamposGrid.push(datosCamposGrid);
                 }
+
+                // Sales Audit (A1672): campos marcados por defecto, en el orden indicado.
+                if (tabla === 'A1672') {
+                    var defaultFieldsA1672 = ['A1672CIA', 'A1672FORMA', 'A1672SERIE', 'A1672CIAOR', 'A1672FOROR', 'A1672SEROR', 'A1672FPROC', 'A1672FVENT', 'A1672TEXCH', 'A1672TRNCU', 'A1672ITIN','A1672FUENT','A1672CANAL','A1672AGENT', 'A1672NVLO','A1672HVLO', 'A1672FVLO','PRAXIS.F01_PX449_USO(A1672CCUST, A1672CIA, A1672FORMA, A1672SERIE,A1672SEQ)','PRAXIS.F02_PX449_USO(A1672CCUST, A1672CIA, A1672FORMA, A1672SERIE,A1672SEQ)', 'A1672PNR', 'A1672STAT', 'A1672PAX','A1672DI','A1672SEQ', 'A1672CCUST', 'A1672CUPON','A1672CMBPO'];
+                    for (var d = 0; d < defaultFieldsA1672.length; d++) {
+                        for (var k = 0; k < listaCamposGrid.length; k++) {
+                            if (listaCamposGrid[k].campo === defaultFieldsA1672[d]) {
+                                listaCamposGrid[k].select = true;
+                                listaCamposGrid[k].check = true;
+                                storeList.add(listaCamposGrid[k]);
+                                break;
+                            }
+                        }
+                    }
+                }
+
                 var storeData = Ext.create('Ext.data.Store', {
                     data: lista,
                     autoLoad: true
@@ -405,9 +426,11 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             fields: ['code', 'name'],
             data: [
                 ['', 'Select'],
-                ["1", "Valoración"]
+                ["1", "Valoración"],
+                ["2", "Tickets Invol"],
             ]}));
         cmbFunctions.setValue('');
+        this.changeFunction();
 
         Ext.Ajax.request({
             url: prototype.url + '/loadFiles',
@@ -496,6 +519,9 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         var strFecha = Ext.getCmp(prototype.id + '-cmbTipoFecha').getValue();
         var IN_TABLA = Ext.getCmp(prototype.id + '-cmbTabla').getValue();
         var IN_TABLA2 = Ext.getCmp(prototype.id + '-cmbTabla2').getValue();
+
+        console.log('IN_TABLA:', IN_TABLA, '| cmbFunctions:', Ext.getCmp(prototype.id + '-cmbFunctions').getValue(), '| strSQL (antes de filtro hardcode):', strSQL);
+
         var strCliente = this.obtenerDatoCombo('-cmbTabla', 'TABNAME', 'cli');
         var IN_SOURCEF = this.obtenerDatoCombo('-cmbTabla', 'TABNAME', 'SOURCEF');
         var IN_SOURCEF2 = this.obtenerDatoCombo('-cmbTabla2', 'TABNAME', 'SOURCEF');
@@ -526,7 +552,8 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             strSelectN: '',
             RN: '',
             IN_FLAG_CPN_SALE: v_flag_cpn_sale,
-            IN_VALID_MFSTO: ''
+            IN_VALID_MFSTO: '',
+            IN_FUNCTION: Ext.getCmp(prototype.id + '-cmbFunctions').getValue()
         };
 
 
@@ -940,6 +967,9 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             bodyStyle: 'background: transparent;',
             columnLines: true,
             enableColumnMove: true,
+            viewConfig: {
+                enableTextSelection: true
+            },
             features: [{
                     ftype: 'summary',
                     dock: 'bottom'
@@ -991,15 +1021,45 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
     configurarGridData: function () {
         console.log('configurarGridDataaaaaa');
 
+        var vgridData = Ext.getCmp(prototype.id + '-gridDanamic');
+
+        // El store del grid se recarga tanto en la busqueda inicial como en
+        // cada cambio de pagina (mismo listener 'load'). Las columnas solo
+        // se arman UNA vez por busqueda -- configurarGrid() ya crea un grid
+        // nuevo (sin columnas) en cada busqueda nueva, asi que si aca ya se
+        // armaron antes, es un cambio de pagina y no hay que reinsertarlas.
+        if (vgridData.columnasYaConstruidas) {
+            return;
+        }
+        vgridData.columnasYaConstruidas = true;
+
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
         var numColumns = me.searchParams.RN;
-        var vgridData = Ext.getCmp(prototype.id + '-gridDanamic');
 
         var column1 = Ext.create('Ext.grid.column.Column', {text: 'RN', width: 50, align: 'center', dataIndex: 'RN'});
         vgridData.headerCt.insert(0, column1);
         vgridData.getView().refresh();
 
+        var tabla = Ext.getCmp(prototype.id + '-cmbTabla').getValue();
+        var tabla2 = Ext.getCmp(prototype.id + '-cmbTabla2').getValue();
+        var funcion = Ext.getCmp(prototype.id + '-cmbFunctions').getValue();
 
+        // campo (A1672CIA, A1672FORMA, ...) -> {columna, nro} de las columnas dinamicas
+        // creadas en el loop de abajo. Se usa para el merge de columnas de A1672 (Tickets Invol).
+        var v_columnasPorCampo = {};
+
+        // Anchos reducidos SOLO para Sales Audit (A1672) -> Tickets Invol (funcion 2).
+        // No afecta el ancho de estas mismas columnas en ningun otro tabla/funcion.
+        var v_anchoA1672 = {
+            'A1672FPROC': 85,
+            'A1672FVENT': 85,
+            'A1672TEXCH': 55,
+            'A1672TRNCU': 65,
+            'A1672ITIN': 180,
+            'A1672STAT': 55,
+            'A1672PAX': 180,
+            'A1672DI': 140
+        };
 
         for (var i = 0; i < numColumns; i++) {
 //            var gridView = Ext.getCmp(prototype.id + '-gridDanamic');
@@ -1012,7 +1072,46 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             }
             var v_cabecera = arr2[i].data["DCOLHDG"];
             var v_fields = Ext.getCmp(prototype.id + '-panelListColumns').getStore().getData().items[i].data;
+            if (tabla === 'A1672' && funcion === '2' && v_fields.campo === 'A1672ITIN') {
+                v_align = 'left';
+            }
             var v_columnaGrid = me.retornaColumna(v_cabecera, v_nroColumna, v_align, v_fields);
+            if (tabla === 'A1672' && funcion === '2' && v_anchoA1672[v_fields.campo]) {
+                v_columnaGrid.setWidth(v_anchoA1672[v_fields.campo]);
+            }
+            // Sales Audit (A1672) -> Tickets Invol: si el PNR no es igual en
+            // toda la cadena (pnrMismatch, calculado en el DAO), se pinta de
+            // verde como alerta de calidad de dato -- no afecta otras tablas.
+            if (tabla === 'A1672' && funcion === '2' && v_fields.campo === 'A1672PNR') {
+                v_columnaGrid.renderer = function (value, metaData, record) {
+                    if (record.data.pnrMismatch) {
+                        metaData.style = 'background-color: #B6F5B6;';
+                    }
+                    return value;
+                };
+            }
+            if (tabla === 'A1672' && funcion === '2' && v_fields.campo === 'A1672PAX') {
+                v_columnaGrid.renderer = function (value, metaData, record) {
+                    if (record.data.paxMismatch) {
+                        metaData.style = 'background-color: #B6F5B6;';
+                    }
+                    return value;
+                };
+            }
+            // Tickets Invol: A1672DI trae 'D'/'I' -- se muestra la etiqueta
+            // completa en vez del codigo (D: DOMESTIC / I: INTERNATIONAL).
+            if (tabla === 'A1672' && funcion === '2' && v_fields.campo === 'A1672DI') {
+                v_columnaGrid.renderer = function (value) {
+                    var v = Ext.util.Format.trim(value || '').toUpperCase();
+                    if (v === 'D') {
+                        return 'D: DOMESTIC';
+                    } else if (v === 'I') {
+                        return 'I: INTERNATIONAL';
+                    }
+                    return value;
+                };
+            }
+            v_columnasPorCampo[v_fields.campo] = {columna: v_columnaGrid, nro: v_nroColumna};
 
 //            var column = Ext.create('Ext.grid.column.Column', {text: arr2[i].data["DCOLHDG"], dataIndex: 'column' + (v_nroColumna), align: v_align
 //                        ,summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -1043,9 +1142,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 //            console.log(i+'-->'+Ext.getCmp(prototype.id+'-gridDanamic').columns.length);
         }
 
-        var tabla = Ext.getCmp(prototype.id + '-cmbTabla').getValue();
-        var tabla2 = Ext.getCmp(prototype.id + '-cmbTabla2').getValue();
-        if (tabla === 'A1692' && tabla2 === 'A720' && Ext.getCmp(prototype.id + '-cmbFunctions').getValue() === '1') {
+        if (tabla === 'A1692' && tabla2 === 'A720' && funcion === '1') {
 
 //            var gridView_d = Ext.getCmp(prototype.id + '-gridDanamic');
 
@@ -1104,6 +1201,88 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             vgridData.getView().refresh();
         }
 
+        // Sales Audit (A1672) -> Tickets Invol (funcion 2): CIA+FORMA+SERIE se
+        // ven todos juntos como "Ticket" en una sola columna, sin afectar el
+        // resto de tablas/funciones que usan esta misma grilla generica.
+        if (tabla === 'A1672' && funcion === '2') {
+            var v_cia = v_columnasPorCampo['A1672CIA'];
+            var v_forma = v_columnasPorCampo['A1672FORMA'];
+            var v_serie = v_columnasPorCampo['A1672SERIE'];
+
+            if (v_cia && v_forma && v_serie) {
+                var v_diCia = 'column' + v_cia.nro;
+                var v_diForma = 'column' + v_forma.nro;
+                var v_diSerie = 'column' + v_serie.nro;
+
+                var columnTicket = Ext.create('Ext.grid.column.Column', {
+                    text: 'Ticket', width: 100, align: 'center',
+                    renderer: function (value, metaData, record) {
+                        return record.get(v_diCia) + record.get(v_diForma) + record.get(v_diSerie);
+                    }
+                });
+
+                vgridData.headerCt.insert(v_cia.nro, columnTicket);
+                v_cia.columna.hide();
+                v_forma.columna.hide();
+                v_serie.columna.hide();
+                vgridData.getView().refresh();
+            }
+
+            // CIAOR+FOROR+SEROR juntos como "Ticket Ori" (el ticket al que
+            // apunta esta fila como su original), mismo patron que "Ticket".
+            var v_ciaor = v_columnasPorCampo['A1672CIAOR'];
+            var v_foror = v_columnasPorCampo['A1672FOROR'];
+            var v_seror = v_columnasPorCampo['A1672SEROR'];
+
+            if (v_ciaor && v_foror && v_seror) {
+                var v_diCiaor = 'column' + v_ciaor.nro;
+                var v_diForor = 'column' + v_foror.nro;
+                var v_diSeror = 'column' + v_seror.nro;
+
+                var columnTicketOri = Ext.create('Ext.grid.column.Column', {
+                    text: 'Ticket Ori', width: 100, align: 'center',
+                    renderer: function (value, metaData, record) {
+                        return record.get(v_diCiaor) + record.get(v_diForor) + record.get(v_diSeror);
+                    }
+                });
+
+                vgridData.headerCt.insert(v_ciaor.nro, columnTicketOri);
+                v_ciaor.columna.hide();
+                v_foror.columna.hide();
+                v_seror.columna.hide();
+                vgridData.getView().refresh();
+            }
+
+            // Alterna un color por CADENA completa (raiz + todos sus exchanges),
+            // para que se note a simple vista que esas filas pertenecen al mismo
+            // grupo. Como el SP ya ordena por (SORTKEY, SORTORDER) y cada cadena
+            // siempre arranca con la fila raiz (TRNCU distinto de 'EXCH'), basta
+            // con alternar el color cada vez que aparece una fila que NO es EXCH.
+            var v_trncu = v_columnasPorCampo['A1672TRNCU'];
+            if (v_trncu) {
+                if (!Ext.util.CSS.getRule('.row-grupo-a')) {
+                    Ext.util.CSS.createStyleSheet(
+                        '.row-grupo-a, .row-grupo-a td.x-grid-cell { background-color: #FFFFFF !important; } ' +
+                        '.row-grupo-b, .row-grupo-b td.x-grid-cell { background-color: #BFDDF5 !important; }',
+                        'businessTools-grupo-style'
+                    );
+                }
+                var v_diTrncu = 'column' + v_trncu.nro;
+                var v_grupoState = {toggle: 0};
+                vgridData.getView().getRowClass = function (record, rowIndex) {
+                    if (rowIndex === 0) {
+                        v_grupoState.toggle = 0;
+                    }
+                    // CHAR de AS400 -> puede venir con espacios de relleno (ej. "EXCH   ").
+                    var v_valorTrncu = (record.get(v_diTrncu) || '').toString().trim();
+                    if (v_valorTrncu !== 'EXCH') {
+                        v_grupoState.toggle = 1 - v_grupoState.toggle;
+                    }
+                    return (v_grupoState.toggle === 0) ? 'row-grupo-a' : 'row-grupo-b';
+                };
+                vgridData.getView().refresh();
+            }
+        }
 
     },
     retornaColumna: function (v_cabecera, v_columna, v_align, v_fields) {
@@ -1661,15 +1840,30 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
     },
     changeFunction: function () {
 
-        if (Ext.getCmp(prototype.id + '-cmbFunctions').getValue() === '') {
+        var funcion = Ext.getCmp(prototype.id + '-cmbFunctions').getValue();
+        var fileTicketsInvol = Ext.getCmp(prototype.id + '-fileTicketsInvol');
+
+        // El checkbox "No valida Manifiesto" es exclusivo de la opción 1 (Valoración)
+        Ext.getCmp(prototype.id + '-chkManifiesto').setVisible(funcion === '1');
+
+        // El filefield de Excel es exclusivo de la opción 2 (Tickets Invol)
+        fileTicketsInvol.reset();
+        fileTicketsInvol.setVisible(funcion === '2');
+
+        if (funcion === '2') {
+            // Tickets Invol: Process solo se habilita cuando se carga un Excel
             Ext.getCmp(prototype.id + '-btnFunct').setDisabled(true);
         } else {
-            Ext.getCmp(prototype.id + '-btnFunct').setDisabled(false);
+            Ext.getCmp(prototype.id + '-btnFunct').setDisabled(funcion === '');
         }
 
     },
+    onChangeFileTicketsInvol: function (cmp, value) {
+        Ext.getCmp(prototype.id + '-btnFunct').setDisabled(value === '');
+    },
     procesar_function: function (obj, e) {
 
+        var funcion = Ext.getCmp(prototype.id + '-cmbFunctions').getValue();
 
         Ext.Msg.show({
             title: '.:PRAXIS:.',
@@ -1680,7 +1874,14 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             modal: true,
             fn: function (btn) {
                 if (btn === 'ok') {
-                    this.process_valuation();
+                    switch (funcion) {
+                        case '1':
+                            this.process_valuation();
+                            break;
+                        case '2':
+                            this.process_ticketsInvol();
+                            break;
+                    }
                 }
             }
         });
@@ -1709,6 +1910,25 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             }});
 
 
+    },
+    // Opción 2 del cmbFunctions ("Tickets Invol") -> logica separada de process_valuation.
+    process_ticketsInvol: function () {
+        var form = Ext.getCmp(prototype.id + '-formTicketsInvol').getForm();
+        form.submit({
+            url: prototype.url + '/uploadTicketsInvol',
+            waitMsg: 'Procesando archivo...',
+            success: function (form, action) {
+                var res = action.result;
+                global.Msg({
+                    msg: res.mensaje
+                });
+            },
+            failure: function (form, action) {
+                global.Msg({
+                    msg: 'Error al procesar el archivo.'
+                });
+            }
+        });
     },
     exportTXT: function () {
 
@@ -1853,6 +2073,25 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             columns.push(data);
 
 
+        }
+
+        // Sales Audit (A1672) -> Tickets Invol (funcion 2): agrega "Ticket" y
+        // "Ticket Ori" (CIA+FORMA+SERIE / CIAOR+FOROR+SEROR) como columnas extra
+        // de solo lectura en el Excel, a la izquierda de FPROC -- no reemplaza
+        // las columnas originales (siguen ahi para poder re-subir y actualizar).
+        if (Ext.getCmp(prototype.id + '-cmbTabla').getValue() === 'A1672' && Ext.getCmp(prototype.id + '-cmbFunctions').getValue() === '2') {
+            var idxFproc = -1;
+            for (var k = 0; k < numColumns; k++) {
+                if (arr2[k].data['campo'] === 'A1672FPROC') {
+                    idxFproc = k;
+                    break;
+                }
+            }
+            var posFproc = (idxFproc === -1) ? 0 : idxFproc;
+            columns.splice(posFproc, 0,
+                {dataIndex: 'ticket', name: 'ticket', text: 'Ticket', align: 'center', type: 'string', width: 100, level: 1},
+                {dataIndex: 'ticketOri', name: 'ticketOri', text: 'Ticket Ori', align: 'center', type: 'string', width: 100, level: 1}
+            );
         }
 
         return columns;
