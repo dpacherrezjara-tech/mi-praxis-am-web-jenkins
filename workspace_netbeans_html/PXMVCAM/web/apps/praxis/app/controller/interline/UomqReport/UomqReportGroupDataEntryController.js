@@ -143,19 +143,44 @@ Ext.define('Ext.Praxis.controller.interline.UomqReport.UomqReportGroupDataEntryC
         };
 
         let lstJson = lst.map(x => {
-            global.cleanPXobj(x);
-            let obj = {
-                'Group': x.GRUPO,
-                'Ticket': x.TICKET,
-                'Coupon': x.CUPON,
-                'Class': x.CLASE,
-                'Route': x.RUTA,
-                'Debit': x.REDEBI,
-                'Tax': x.TAX,
-                'Net': x.NETO,
-                'Comm.': x.COMISI,
-                'Flag': optsFlag[x.FLAG] || 'Error'
-            };
+        global.cleanPXobj(x);
+        let obj = {
+            'Group': x.GRUPO,
+            'Class': x.CLASE,
+            'Route': x.RUTA,
+            'Debit': x.REDEBI,
+            'Tax': x.TAX,
+            'Net': x.NETO,
+            'Comm.': x.COMISI,
+            'Ticket': x.TICKET,
+            'Coupon': x.CUPON,
+            'Billing Gross': x.BILLGROSS,
+            'Billing ISC': x.BILLISC,
+            'Billing Porc %': x.BILLPORC,
+            'Billing Tax': x.BILLTAX,
+            'Miatech Gross': x.MIAGROSS,
+            'Miatech ISC': x.MIAISC,
+            'Miatech Porc %': x.MIAPORC,
+            'Miatech Tax': x.MIATAX,
+            'Codobs1': x.CODOBS1,
+            'Codobs2': x.CODOBS2,
+            'Codobs3': x.CODOBS3,
+            'Codobs4': x.CODOBS4,
+            'Codobs5': x.CODOBS5,
+            'Commen1': x.COMMEN1,
+            'Commen2': x.COMMEN2,
+            'Commen3': x.COMMEN3,
+            'Commen4': x.COMMEN4,
+            'Commen5': x.COMMEN5,
+            'Commen6': x.COMMEN6,
+            'Botcrm': x.BOTCRM,
+            'Buatrm': x.BUATRM,
+            'Aotcrm': x.AOTCRM,
+            'Auatrm': x.AUATRM,
+            'Ahafrm': x.AHAFRM,
+            'Avatrm': x.AVATRM,
+            'Flag': optsFlag[x.FLAG] || 'Error'
+        };
             return obj;
         });
 
