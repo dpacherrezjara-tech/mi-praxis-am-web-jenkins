@@ -117,7 +117,7 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                             width: 140,
                             anchor: '100%',
                             listeners: {
-                                change: function(field, newValue) {
+                                change: function (field, newValue) {
 //                                    field.setValue(newValue.toUpperCase());
                                     Ext.getCmp(prototype.id + '-cmbDateToDay').setValue(newValue);
                                 }
@@ -1679,7 +1679,7 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                 // anchor: '100%'
                             },
                             items: [
-                                 {
+                                {
                                     xtype: 'combo',
                                     id: prototype.id + '-cmbFunctions',
                                     fieldLabel: 'Functions ',
@@ -1694,11 +1694,11 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                     displayField: 'name',
                                     emptyText: 'All',
                                     labelWidth: 70,
-                                    width: 160,
+                                    width: 200,
                                     anchor: '100%',
                                     listeners: {
-                                        change: function(field, newValue) {
-        //                                    field.setValue(newValue.toUpperCase());
+                                        change: function (field, newValue) {
+                                            //                                    field.setValue(newValue.toUpperCase());
 //                                            Ext.getCmp(prototype.id + '-cmbDateToDay').setValue(newValue);
                                             me.changeFunction();
                                         }
@@ -1712,6 +1712,35 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                     boxLabel: 'No valida Manifiesto'
                                 },
                                 {
+                                    xtype: 'form',
+                                    id: prototype.id + '-formTicketsInvol',
+                                    border: false,
+                                    bodyStyle: 'background: transparent',
+                                    items: [
+                                        {
+                                            xtype: 'filefield',
+                                            id: prototype.id + '-fileTicketsInvol',
+                                            name: 'excelfileTicketsInvol',
+                                            hidden: true,
+                                            fieldLabel: '',
+                                            labelWidth: 0,
+                                            width: 220,
+                                            margin: '0 0 5 0',
+                                            allowBlank: true,
+                                            accept: '.xlsx, .xls',
+                                            buttonConfig: {
+                                                text: '<strong>Select excel...</strong>',
+                                                width: 130
+                                            },
+                                            regex: /(.)+((\.xlsx)|(\.xls)|(\.csv)(\w)?)$/i,
+                                            regexText: 'Only XLS and XLSX formats are accepted',
+                                            listeners: {
+                                                change: 'onChangeFileTicketsInvol'
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
                                     xtype: 'button',
                                     id: prototype.id + '-btnFunct',
                                     disabled: true,
@@ -1722,7 +1751,7 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                     margin: '8px 5px 5px 5px',
                                     padding: '4 5 5 2',
                                     listeners: {
-                                         click: 'procesar_function'
+                                        click: 'procesar_function'
                                     }
 
                                 }
@@ -1801,8 +1830,32 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Filters', {
                                     '<div style="text-decoration:underline;color:#FFA500;font-weight: bold;" class="x-boundlist-item">{DESCRIPT}</div>' +
                                     '</tpl></tpl>'
                                     )
-                        }
-
+                        },
+//                        {
+//                            xtype: 'combo',
+//                            id: prototype.id + '-cmbFunctions',
+//                            fieldLabel: 'Functions', 
+//                            fieldStyle: 'text-align: left;',
+//                            labelAlign: 'right',
+//                            queryMode: 'local',
+//                            triggerAction: 'all',
+//                            editable: false,
+//                            enableKeyEvents: true,
+//                            caseSensitive: true,
+//                            valueField: 'code',
+//                            displayField: 'name',
+//                            emptyText: 'All',
+//                            labelWidth: 80, 
+//                            width: 250,
+//                            anchor: '100%',
+//                            store: Ext.create('Ext.data.Store', {
+//                                fields: ['code', 'name'],
+//                                data: [
+//                                    {"code": "", "name": "Select"},
+//                                    {"code": "INVOL", "name": "INVOL"}
+//                                ]
+//                            })
+//                        }
                     ]
                 }
                 // </editor-fold>

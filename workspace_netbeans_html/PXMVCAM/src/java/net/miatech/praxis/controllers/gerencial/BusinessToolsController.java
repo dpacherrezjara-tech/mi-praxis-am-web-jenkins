@@ -13,7 +13,9 @@ import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -21,21 +23,30 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SQP00768;
+import net.miatech.beans.SaleAudit.A1672Filter;
 import net.miatech.libmiatec.A1248;
 import net.miatech.praxis.classes.ExportSchema;
 import net.miatech.praxis.classes.ExportUtil;
 import net.miatech.praxis.controllers.BaseController;
+import net.miatech.praxis.dao.gerencial.BusinessToolsDAO;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.gerencial.BusinessToolsLogic;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -172,7 +183,9 @@ public class BusinessToolsController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            if (!filter.strSelect.equals("")) {
+            if ("A1672".equals(filter.IN_TABLA) && "2".equals(filter.IN_FUNCTION)) {
+                lst = logic.loadSQP0076VSales(filter);
+            } else if (!filter.strSelect.equals("")) {
                 lst = logic.loadPXPRUEBA2(filter);
             } else {
                 lst = logic.loadPXPRUEBA(filter);
@@ -290,15 +303,41 @@ public class BusinessToolsController extends BaseController {
     @RequestMapping(value = "getFieldsXLSX")
     public @ResponseBody
     void exportFields(HttpServletRequest request, HttpServletResponse response) {
+        long t0 = System.currentTimeMillis();
         List<SQP00768> lst = this.getList(request, true);
+        long t1 = System.currentTimeMillis();
+        System.out.println("exportFields: consulta (" + lst.size() + " filas) demoro " + (t1 - t0) + " ms");
         String downloadName = String.format("BussinessTools_%1$s.xlsx", UUID.randomUUID().toString().toLowerCase());
 
         try {
             String schema = request.getParameter("schema");
             ExportSchema exportSchema = new Gson().fromJson(schema, ExportSchema.class);
-            
-            ExportUtil.exportToXLSX(response, downloadName, SQP00768.class, lst, exportSchema);
-            
+
+            // Tickets Invol (A1672/funcion 2): alterna el color de fondo por cadena
+            // en el Excel usando el campo boolean isChainRoot (ver BusinessToolsDAO),
+            // y pinta en verde PNR/PAX cuando difieren dentro de la misma cadena
+            // (pnrMismatch/paxMismatch, calculados en el mismo DAO).
+            SQP00768 filterCheck = new Gson().fromJson(request.getParameter("beanString"), SQP00768.class);
+            String groupBreakField = null;
+            Map<String, String> highlightFields = null;
+            if ("A1672".equals(filterCheck.IN_TABLA) && "2".equals(filterCheck.IN_FUNCTION)) {
+                groupBreakField = "isChainRoot";
+                highlightFields = new HashMap<>();
+                Integer colPnr = BusinessToolsDAO.findColumnNumber(filterCheck.strSelectA, "A1672PNR");
+                Integer colPax = BusinessToolsDAO.findColumnNumber(filterCheck.strSelectA, "A1672PAX");
+                if (colPnr != null) {
+                    highlightFields.put("column" + colPnr, "pnrMismatch");
+                }
+                if (colPax != null) {
+                    highlightFields.put("column" + colPax, "paxMismatch");
+                }
+            }
+
+            long t2 = System.currentTimeMillis();
+            ExportUtil.exportToXLSX(response, downloadName, SQP00768.class, lst, exportSchema, groupBreakField, highlightFields);
+            long t3 = System.currentTimeMillis();
+            System.out.println("exportFields: generar excel demoro " + (t3 - t2) + " ms");
+
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -456,6 +495,97 @@ public class BusinessToolsController extends BaseController {
 
         map.put("success", true);
         map.put("mensaje", msj);
+
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "uploadTicketsInvol", method = RequestMethod.POST)
+    public @ResponseBody
+    String uploadTicketsInvol(ModelMap map, @RequestParam("excelfileTicketsInvol") MultipartFile excelfile) {
+        System.out.println("-------------- BusinessTools : uploadTicketsInvol-------------");
+        List<A1672Filter> lstUpdate = new ArrayList<>(0);
+        int totalInvol = 0;
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook(excelfile.getInputStream());
+            Sheet sheet = workbook.getSheetAt(0);
+            DataFormatter formatter = new DataFormatter();
+            Iterator<Row> iterator = sheet.iterator();
+
+            Map<String, Integer> colIndex = new HashMap<>();
+            if (iterator.hasNext()) {
+                Row header = iterator.next();
+                for (Cell cell : header) {
+                    colIndex.put(formatter.formatCellValue(cell).trim().toUpperCase(), cell.getColumnIndex());
+                }
+            }
+
+            Integer idxTexch = colIndex.get("TEXCH");
+            Integer idxCia = colIndex.get("CIA");
+            Integer idxForma = colIndex.get("FORMA");
+            Integer idxSerie = colIndex.get("SERIE");
+            Integer idxSeq = colIndex.get("SEQ");
+            Integer idxCupon = colIndex.get("CUPON");
+            Integer idxTrncu = colIndex.get("TRNCU");
+            Integer idxCmbpo = colIndex.get("CMBPO");
+
+            while (iterator.hasNext()) {
+                Row row = iterator.next();
+
+                String texch = (idxTexch == null || row.getCell(idxTexch) == null) ? "" : formatter.formatCellValue(row.getCell(idxTexch)).trim();
+                if (!"I".equals(texch)) {
+                    continue;
+                }
+                totalInvol++;
+
+                String cmbpo = (idxCmbpo == null || row.getCell(idxCmbpo) == null) ? "" : formatter.formatCellValue(row.getCell(idxCmbpo)).trim();
+                if (cmbpo.isEmpty()) {
+                    continue; // solo se actualiza si el usuario lleno CMBPO
+                }
+
+                A1672Filter item = new A1672Filter();
+                item.A1672CIA = (idxCia == null || row.getCell(idxCia) == null) ? "" : formatter.formatCellValue(row.getCell(idxCia)).trim();
+                item.A1672FORMA = (idxForma == null || row.getCell(idxForma) == null) ? "" : formatter.formatCellValue(row.getCell(idxForma)).trim();
+                item.A1672SERIE = (idxSerie == null || row.getCell(idxSerie) == null) ? "" : formatter.formatCellValue(row.getCell(idxSerie)).trim();
+                item.A1672SEQ = (idxSeq == null || row.getCell(idxSeq) == null) ? "" : formatter.formatCellValue(row.getCell(idxSeq)).trim();
+                item.A1672CUPON = (idxCupon == null || row.getCell(idxCupon) == null) ? "" : formatter.formatCellValue(row.getCell(idxCupon)).trim();
+                item.A1672TRNCU = (idxTrncu == null || row.getCell(idxTrncu) == null) ? "" : formatter.formatCellValue(row.getCell(idxTrncu)).trim();
+                item.A1672CMBPO = cmbpo;
+
+                String ccust = this.serverSession.getServerSession().getUserView().getCustomerInfo().CCUST;
+                System.out.println("TicketsInvol I -> CCUST=" + ccust + " CIA=" + item.A1672CIA + " FORMA=" + item.A1672FORMA
+                        + " SERIE=" + item.A1672SERIE + " SEQ=" + item.A1672SEQ + " CUPON=" + item.A1672CUPON
+                        + " TRNCU=" + item.A1672TRNCU + " CMBPO=" + item.A1672CMBPO);
+                lstUpdate.add(item);
+            }
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+
+        List<A1672Filter> lstFallos = new ArrayList<>(0);
+        try {
+            logic = new BusinessToolsLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstFallos = logic.updateCMBPOTicketsInvol(lstUpdate);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+
+        int totalOk = lstUpdate.size() - lstFallos.size();
+        StringBuilder msj = new StringBuilder();
+        msj.append("Se encontraron ").append(totalInvol).append(" registro(s) con TEXCH = 'I'.<br>")
+                .append(lstUpdate.size()).append(" con CMBPO para actualizar.<br>")
+                .append(totalOk).append(" actualizado(s) correctamente.");
+        if (!lstFallos.isEmpty()) {
+            msj.append("<br><br>Fallaron ").append(lstFallos.size()).append(":");
+            for (A1672Filter f : lstFallos) {
+                msj.append("<br>&nbsp;&nbsp;- ").append(f.A1672CIA).append("/").append(f.A1672FORMA).append("/").append(f.A1672SERIE)
+                        .append(" (").append(f.dbException.MESSAGE).append(")");
+            }
+        }
+
+        map.put("success", true);
+        map.put("mensaje", msj.toString());
+        map.put("fallos", lstFallos);
 
         return new Gson().toJson(map);
     }
