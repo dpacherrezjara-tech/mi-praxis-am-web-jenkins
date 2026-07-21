@@ -1016,6 +1016,10 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryNewADJAccountingC
                     if (Ext.String.trim(res.data[0].ESTA_TNU) !== '') {
                         Ext.getCmp(prototype.idadjnew + '-txtAffectTNU').setValue(true);
                     }
+                     Ext.getCmp(prototype.idadjnew + '-txtRegula').setValue(false); 
+                    if (Ext.String.trim(res.data[0].A1541FPFISC) !== '') {
+                        Ext.getCmp(prototype.idadjnew + '-txtRegula').setValue(true);
+                    }
                     if (Ext.String.trim(res.data[0].A2024ESTTRX) !== '') {
                         Ext.getCmp(prototype.idadjnew + '-de-cmbTYPEUSE').show();
                         Ext.getCmp(prototype.idadjnew + '-de-cmbTYUSEASS').show();
@@ -1870,6 +1874,10 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryNewADJAccountingC
             var country = Ext.getCmp(prototype.idadjnew + '-country').getValue();
             var txaReference = Ext.getCmp(prototype.idadjnew + '-txaReference').getValue();
             var vl_A720TCAMB = me.listloadTicket.A720TCAMB;
+            var txtRegula = '';
+            if (Ext.getCmp(prototype.idadjnew + '-txtRegula').getValue()) {
+                txtRegula = '1';
+            }
             //vl_A720TCAMB=vl_A720TCAMB.toString();
             //console.log(lblAmount_de);
 
@@ -1935,6 +1943,7 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryNewADJAccountingC
                         me.listdatosguadar.A1541RSCMV = lblSCommisionREV_de;
                         me.listdatosguadar.A1541LYQVERV = lblYQREV_de;
                         me.listdatosguadar.A1541AGENTE = lblIATATrx;
+                         me.listdatosguadar.ESTA_REGULA = Ext.String.trim(txtRegula); 
 
                         var lstCorrectData = new Array();
                         for (var i = 0; i < Ext.getCmp(prototype.idadjnew + '-de-gridCorrectData').getStore().data.length; i++) {

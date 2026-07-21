@@ -1034,6 +1034,13 @@ Ext.define('Ext.Praxis.view.sales.ADJAccountingForm.DataEntryNew', {
                                         specialkey: 'onSearchkey',
                                         change: 'onchange'
                                     }
+                                },
+                                {
+                                    xtype: 'checkboxfield',
+                                    id: prototype.idadjnew + '-txtRegula',
+                                    labelWidth: 105,
+                                    labelSeparator: '',
+                                    fieldLabel: 'Regularization Adj'
                                 }
 
 
