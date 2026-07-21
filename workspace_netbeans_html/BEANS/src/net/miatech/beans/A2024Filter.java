@@ -37,4 +37,5 @@ public class A2024Filter extends A2024 {
     public boolean VP_FlagDisabled = false;
     public Pagination page = new Pagination();
     public DBException dbException = new DBException();
+    public String ESTA_REGULA = "";
 }
