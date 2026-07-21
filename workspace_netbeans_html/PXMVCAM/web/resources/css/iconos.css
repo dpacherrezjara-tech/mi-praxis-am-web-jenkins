@@ -80,6 +80,9 @@
 .prx-icon-image-log {
   background-image: url("../img/botones/log.png");
 }
+.prx-icon-image-log_tem {
+  background-image: url("../img/icon/16x16/log_tem1.png");
+}
 .prx-icon-image-list-error {
   background-image: url("../img/botones/list-error.png");
 }
