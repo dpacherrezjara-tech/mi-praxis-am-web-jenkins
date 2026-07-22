@@ -1,4 +1,4 @@
-prototype.idDE = prototype.id + '-Compensation0425DataEntry';
+prototype.idDE0425 = prototype.id + '-Compensation0425DataEntry';
 
 Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensation0425DataEntry', {
     extend: 'Ext.window.Window',
@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
     header: true,
     width: 830,
     height: 600,
-    id: prototype.idDE + '-Compensation0425DataEntry',
+    id: prototype.idDE0425 + '-Compensation0425DataEntry',
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -55,7 +55,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                     },
                                     border: true,
                                     columnLines: true,
-                                    id: prototype.idDE + '-gridBoletos',
+                                    id: prototype.idDE0425 + '-gridBoletos',
                                     width: 820,
                                     height: 250,
                                     dockedItems: [
@@ -65,7 +65,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                             items: [
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.idDE + '-txtFilterDescrip',
+                                                    id: prototype.idDE0425 + '-txtFilterDescrip',
                                                     fieldLabel: 'Description',
                                                     labelWidth: 60,
                                                     labelAlign: 'left',
@@ -116,7 +116,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                 },
                                 {
                                     xtype: 'grid',
-                                    id: prototype.idDE + '-gridRazones',
+                                    id: prototype.idDE0425 + '-gridRazones',
                                     columnLines: true,
                                     autoScroll: true,
                                     selModel: 'cellmodel',
@@ -136,7 +136,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                                     xtype: 'combobox',
                                                     name: 'IN_STATUDATA',
                                                     fieldLabel: 'Status',
-                                                    id: prototype.idDE + '-CmbEstatus',
+                                                    id: prototype.idDE0425 + '-CmbEstatus',
                                                     store: Ext.create('Ext.data.SimpleStore', {
                                                         fields: ['code', 'name'],
                                                         data: [
@@ -157,7 +157,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                                 {
                                                     xtype: 'button',
                                                     text: 'Add Razon',
-                                                    id: prototype.idDE + '-CmbAddRazon',
+                                                    id: prototype.idDE0425 + '-CmbAddRazon',
                                                     iconCls: 'prx-icon-add',
                                                     listeners: {
                                                         click: 'onAddRazonClick'
@@ -172,7 +172,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                             {text: 'Description', dataIndex: 'A3404ERROR', width: 500, editor: 'textfield'},
                                             {
                                                 xtype: 'actioncolumn',
-                                                id: prototype.idDE + '-colRazonRemove',
+                                                id: prototype.idDE0425 + '-colRazonRemove',
                                                 width: 50,
                                                 menuDisabled: true,
                                                 sortable: false,
@@ -195,7 +195,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                         },
                         {
                             xtype: 'fieldset',
-                            id: prototype.idDE + '-fsControlDatas',
+                            id: prototype.idDE0425 + '-fsControlDatas',
                             title: '<span style="font-weight: bold; text-decoration-line: underline;font-size:10px;">Control Data</span>',
                             layout: {
                                 type: 'vbox',
@@ -240,21 +240,21 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                                 {
                                                     labelWidth: 75,
                                                     width: 175,
-                                                    id: prototype.idDE + '-fsControlUSCR',
+                                                    id: prototype.idDE0425 + '-fsControlUSCR',
                                                     fieldLabel: 'User Crt.',
                                                     name: 'USCR'
                                                 },
                                                 {
                                                     labelWidth: 75,
                                                     width: 175,
-                                                    id: prototype.idDE + '-fsControlFECR',
+                                                    id: prototype.idDE0425 + '-fsControlFECR',
                                                     fieldLabel: 'Date Crt.',
                                                     name: 'FECR'
                                                 },
                                                 {
                                                     labelWidth: 75,
                                                     width: 175,
-                                                    id: prototype.idDE + '-fsControlHOCR',
+                                                    id: prototype.idDE0425 + '-fsControlHOCR',
                                                     fieldLabel: 'Hour Crt.',
                                                     name: 'HOCR'
                                                 }
@@ -265,21 +265,21 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                                 {
                                                     labelWidth: 75,
                                                     width: 175,
-                                                    id: prototype.idDE + '-fsControlUSUP',
+                                                    id: prototype.idDE0425 + '-fsControlUSUP',
                                                     fieldLabel: 'User Upd.',
                                                     name: 'USUP'
                                                 },
                                                 {
                                                     labelWidth: 75,
                                                     width: 175,
-                                                    id: prototype.idDE + '-fsControlFEUP',
+                                                    id: prototype.idDE0425 + '-fsControlFEUP',
                                                     fieldLabel: 'Date Upd.',
                                                     name: 'FEUP'
                                                 },
                                                 {
                                                     labelWidth: 75,
                                                     width: 175,
-                                                    id: prototype.idDE + '-fsControlHOUP',
+                                                    id: prototype.idDE0425 + '-fsControlHOUP',
                                                     fieldLabel: 'Hour Upd.',
                                                     name: 'HOUP'
                                                 }
@@ -312,7 +312,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
             items: [
                 {
                     text: 'Save',
-                    id: prototype.idDE + '-btn-update',
+                    id: prototype.idDE0425 + '-btn-update',
                     iconCls: 'prx-icon-reload',
                     listeners: {
                         click: 'onSaveClick'
@@ -320,7 +320,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                 },
                 {
                     text: 'History Log',
-                    id: prototype.idDE + '-btn-viewCompensation0425FormLog',
+                    id: prototype.idDE0425 + '-btn-viewCompensation0425FormLog',
                     iconCls: 'prx-icon-detail',
                     listeners: {
                         click: 'onViewCompensation0425FormLog'
@@ -328,7 +328,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                 },
                 {
                     text: 'Cancel',
-                    id: prototype.idDE + '-btn-cancel',
+                    id: prototype.idDE0425 + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'

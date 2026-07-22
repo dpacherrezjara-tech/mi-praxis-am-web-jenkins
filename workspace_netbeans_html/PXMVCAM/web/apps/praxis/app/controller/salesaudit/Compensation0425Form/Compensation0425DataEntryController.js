@@ -11,45 +11,45 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
     loadForm: async function () {
         const me = this;
 
-        var grid03 = Ext.getCmp(prototype.idDE + '-gridBoletos');
+        var grid03 = Ext.getCmp(prototype.idDE0425 + '-gridBoletos');
         var store03 = Ext.create('Ext.data.Store', {
-            storeId: prototype.idDE + '-store-gridBoleto'
+            storeId: prototype.idDE0425 + '-store-gridBoleto'
         });
         grid03.setStore(store03);
 
-        var gridRazones = Ext.getCmp(prototype.idDE + '-gridRazones');
+        var gridRazones = Ext.getCmp(prototype.idDE0425 + '-gridRazones');
         var storeRazones = Ext.create('Ext.data.Store', {
-            storeId: prototype.idDE + '-store-gridRazones'
+            storeId: prototype.idDE0425 + '-store-gridRazones'
         });
         gridRazones.setStore(storeRazones);
-        Ext.getCmp(prototype.idDE + '-CmbEstatus').setValue(me.view.params.obj.A4961FLADM);
+        Ext.getCmp(prototype.idDE0425 + '-CmbEstatus').setValue(me.view.params.obj.A4961FLADM);
         //
-        Ext.getCmp(prototype.idDE + '-fsControlUSCR').setValue(me.view.params.obj.A4961REGIS);
-        Ext.getCmp(prototype.idDE + '-fsControlFECR').setValue(me.view.params.obj.A4961FREGI);
-        Ext.getCmp(prototype.idDE + '-fsControlHOCR').setValue(me.view.params.obj.A4961HREGI);
+        Ext.getCmp(prototype.idDE0425 + '-fsControlUSCR').setValue(me.view.params.obj.A4961REGIS);
+        Ext.getCmp(prototype.idDE0425 + '-fsControlFECR').setValue(me.view.params.obj.A4961FREGI);
+        Ext.getCmp(prototype.idDE0425 + '-fsControlHOCR').setValue(me.view.params.obj.A4961HREGI);
         //
-        Ext.getCmp(prototype.idDE + '-fsControlUSUP').setValue(me.view.params.obj.A4961REVIS);
-        Ext.getCmp(prototype.idDE + '-fsControlFEUP').setValue(me.view.params.obj.A4961FREVI);
-        Ext.getCmp(prototype.idDE + '-fsControlHOUP').setValue(me.view.params.obj.A4961HREVI);
+        Ext.getCmp(prototype.idDE0425 + '-fsControlUSUP').setValue(me.view.params.obj.A4961REVIS);
+        Ext.getCmp(prototype.idDE0425 + '-fsControlFEUP').setValue(me.view.params.obj.A4961FREVI);
+        Ext.getCmp(prototype.idDE0425 + '-fsControlHOUP').setValue(me.view.params.obj.A4961HREVI);
         //
         if (Ext.String.trim(me.view.params.obj.A4961PREME) === '') {
-            Ext.getCmp(prototype.idDE + '-CmbEstatus').enable();
-            Ext.getCmp(prototype.idDE + '-CmbAddRazon').show();
-            Ext.getCmp(prototype.idDE + '-btn-update').show();
-            Ext.getCmp(prototype.idDE + '-colRazonRemove').hide();
+            Ext.getCmp(prototype.idDE0425 + '-CmbEstatus').enable();
+            Ext.getCmp(prototype.idDE0425 + '-CmbAddRazon').show();
+            Ext.getCmp(prototype.idDE0425 + '-btn-update').show();
+            Ext.getCmp(prototype.idDE0425 + '-colRazonRemove').hide();
         } else {
-            Ext.getCmp(prototype.idDE + '-CmbEstatus').disable();
-            Ext.getCmp(prototype.idDE + '-CmbAddRazon').hidden();
-            Ext.getCmp(prototype.idDE + '-btn-update').hidden();
-            Ext.getCmp(prototype.idDE + '-colRazonRemove').show();
+            Ext.getCmp(prototype.idDE0425 + '-CmbEstatus').disable();
+            Ext.getCmp(prototype.idDE0425 + '-CmbAddRazon').hidden();
+            Ext.getCmp(prototype.idDE0425 + '-btn-update').hidden();
+            Ext.getCmp(prototype.idDE0425 + '-colRazonRemove').show();
         }
         me.loadTicketInformation();
         me.isNewTicket = false;
     },
     loadTicketInformation: async function () {
         const me = this;
-        const gridTkt = Ext.getCmp(prototype.idDE + '-gridBoletos');
-        const gridRazones = Ext.getCmp(prototype.idDE + '-gridRazones');
+        const gridTkt = Ext.getCmp(prototype.idDE0425 + '-gridBoletos');
+        const gridRazones = Ext.getCmp(prototype.idDE0425 + '-gridRazones');
         gridTkt.setLoading(true);
         let params = {
             IN_CCUST: me.view.params.obj.A4961CCUST,
@@ -85,7 +85,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
         }
     },
     onFilterDescripChange: function (field, newValue) {
-        const grid = Ext.getCmp(prototype.idDE + '-gridBoletos');
+        const grid = Ext.getCmp(prototype.idDE0425 + '-gridBoletos');
         const store = grid.getStore();
         const value = Ext.String.trim(newValue || '');
         if (value !== '') {
@@ -101,7 +101,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
         }
     },
     onExportBoletosExcel: function () {
-        const grid = Ext.getCmp(prototype.idDE + '-gridBoletos');
+        const grid = Ext.getCmp(prototype.idDE0425 + '-gridBoletos');
         const store = grid.getStore();
         if (!store || store.getCount() === 0) {
             Ext.Msg.alert('.: PRAXIS :.', 'No data to export.');
@@ -139,7 +139,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
     },
     onReasonAdded: function (beanDatos) {
         const me = this;
-        const grid03 = Ext.getCmp(prototype.idDE + '-gridRazones');
+        const grid03 = Ext.getCmp(prototype.idDE0425 + '-gridRazones');
         if (!grid03) {
             return;
         }
@@ -155,10 +155,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
     },
 
     onAddTicket: async function () {
-        const form = Ext.getCmp(prototype.idDE + '-ticketFilters').getForm();
-        const tabTickets = Ext.getCmp(prototype.idDE + '-tabTickets');
-        const gridPending = Ext.getCmp(prototype.idDE + '-gridTickets');
-        const gridLoaded = Ext.getCmp(prototype.idDE + '-gridTicketsLoaded');
+        const form = Ext.getCmp(prototype.idDE0425 + '-ticketFilters').getForm();
+        const tabTickets = Ext.getCmp(prototype.idDE0425 + '-tabTickets');
+        const gridPending = Ext.getCmp(prototype.idDE0425 + '-gridTickets');
+        const gridLoaded = Ext.getCmp(prototype.idDE0425 + '-gridTicketsLoaded');
         let notifier = new AWN();
         let params = form.getValues();
         const me = this;
@@ -188,7 +188,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
                 //                notifier.success('Tickets to Add: ' + pending.length);
 
                 if (pending.length > 0) {
-                    const btnUpdate = Ext.getCmp(prototype.idDE + '-btn-update');
+                    const btnUpdate = Ext.getCmp(prototype.idDE0425 + '-btn-update');
                     btnUpdate.show();
                     me.activeChanges = true;
                     notifier.success('Tickets added succesfly: ' + pending.length);
@@ -236,9 +236,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
     },
     onSaveClick: async function () {
         const me = this;
-        var CmbEstatus = Ext.getCmp(prototype.idDE + '-CmbEstatus').getValue();
+        var CmbEstatus = Ext.getCmp(prototype.idDE0425 + '-CmbEstatus').getValue();
         var lstRazones = new Array();
-        var gridRazones = Ext.getCmp(prototype.idDE + '-gridRazones');
+        var gridRazones = Ext.getCmp(prototype.idDE0425 + '-gridRazones');
         gridRazones.store.data.each(function (rec) {
             lstRazones.push({
                 "A3404CODRZ": rec.data.A3404CODRZ,

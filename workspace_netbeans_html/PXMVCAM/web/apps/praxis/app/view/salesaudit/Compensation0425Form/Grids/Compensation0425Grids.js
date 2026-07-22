@@ -55,7 +55,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Grids.Compensation04
                     {text: 'Pax Name', dataIndex: 'A4961PAX', width: 200},
                     {text: 'Itinerary', dataIndex: 'A4961ITIN', width: 140},
                     {text: 'RFIC', dataIndex: 'A4961VRIC', width: 80},
-                    {text: 'EPR', dataIndex: 'A4961EPR', width: 80},
+                    {text: 'Agent Code', dataIndex: 'A4961EPR', width: 80},
                     {text: 'Associated <br>ticket', dataIndex: 'A4961TKCNX', width: 140},
                     {
                         text: 'Status', dataIndex: 'A4961FLADMDES', width: 150,

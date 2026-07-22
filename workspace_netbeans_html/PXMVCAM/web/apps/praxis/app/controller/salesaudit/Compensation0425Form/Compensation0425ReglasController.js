@@ -11,9 +11,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
     loadForm: async function () {
         const me = this;
 
-        var gridReglas = Ext.getCmp(prototype.idDE + '-gridReglas');
+        var gridReglas = Ext.getCmp(prototype.idReglas0425 + '-gridReglas');
         var storeReglas = Ext.create('Ext.data.Store', {
-            storeId: prototype.idDE + '-store-gridReglas'
+            storeId: prototype.idReglas0425 + '-store-gridReglas'
         });
         gridReglas.setStore(storeReglas);
         me.loadCompensation0425Reglas();
@@ -21,7 +21,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
     },
     loadCompensation0425Reglas: async function () {
         const me = this;
-        const gridReglas = Ext.getCmp(prototype.idDE + '-gridReglas');
+        const gridReglas = Ext.getCmp(prototype.idReglas0425 + '-gridReglas');
         gridReglas.setLoading(true);
         let params = {
             IN_CCUST: "139",
@@ -55,23 +55,23 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
     },
     metadata_detalle: function (column, e, row, column, x, rowData) {
         var data = x.record.data;
-        Ext.getCmp(prototype.idDE + '-currency').setValue(data.A4963MDA);
-        Ext.getCmp(prototype.idDE + '-Amount').setValue(data.A4963NETOL);
-        Ext.getCmp(prototype.idDE + '-Filter').setValue(data.A4963REGLA);
-        Ext.getCmp(prototype.idDE + '-Rule1').setValue(data.A4963DESCC);
-        Ext.getCmp(prototype.idDE + '-Rule2').setValue(data.A4961DESCR);
-        Ext.getCmp(prototype.idDE + '-code').setValue(data.A4963CODI);
+        Ext.getCmp(prototype.idReglas0425 + '-currency').setValue(data.A4963MDA);
+        Ext.getCmp(prototype.idReglas0425 + '-Amount').setValue(data.A4963NETOL);
+        Ext.getCmp(prototype.idReglas0425 + '-Filter').setValue(data.A4963REGLA);
+        Ext.getCmp(prototype.idReglas0425 + '-Rule1').setValue(data.A4963DESCC);
+        Ext.getCmp(prototype.idReglas0425 + '-Rule2').setValue(data.A4961DESCR);
+        Ext.getCmp(prototype.idReglas0425 + '-code').setValue(data.A4963CODI);
     },
     onClickClearOptionsBtn: function () {
-        Ext.getCmp(prototype.idDE + '-currency').setValue("");
-        Ext.getCmp(prototype.idDE + '-Amount').setValue(0);
-        Ext.getCmp(prototype.idDE + '-Filter').setValue("");
-        Ext.getCmp(prototype.idDE + '-Rule1').setValue("");
-        Ext.getCmp(prototype.idDE + '-Rule2').setValue("");
-        Ext.getCmp(prototype.idDE + '-code').setValue("");
+        Ext.getCmp(prototype.idReglas0425 + '-currency').setValue("");
+        Ext.getCmp(prototype.idReglas0425 + '-Amount').setValue(0);
+        Ext.getCmp(prototype.idReglas0425 + '-Filter').setValue("");
+        Ext.getCmp(prototype.idReglas0425 + '-Rule1').setValue("");
+        Ext.getCmp(prototype.idReglas0425 + '-Rule2').setValue("");
+        Ext.getCmp(prototype.idReglas0425 + '-code').setValue("");
     },
     onFilterDescripChange: function (field, newValue) {
-        const grid = Ext.getCmp(prototype.idDE + '-gridBoletos');
+        const grid = Ext.getCmp(prototype.idReglas0425 + '-gridBoletos');
         const store = grid.getStore();
         store.clearFilter(true);
         const value = Ext.String.trim(newValue || '');
@@ -85,7 +85,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
         }
     },
     onExportBoletosExcel: function () {
-        const grid = Ext.getCmp(prototype.idDE + '-gridReglas');
+        const grid = Ext.getCmp(prototype.idReglas0425 + '-gridReglas');
         const store = grid.getStore();
         if (!store || store.getCount() === 0) {
             Ext.Msg.alert('.: PRAXIS :.', 'No data to export.');
@@ -109,12 +109,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
     },
     onSaveClick: async function () {
         const me = this;
-        var currency = Ext.getCmp(prototype.idDE + '-currency').getValue();
-        var Amount = Ext.getCmp(prototype.idDE + '-Amount').getValue();
-        var Filter = Ext.getCmp(prototype.idDE + '-Filter').getValue();
-        var Rule1 = Ext.getCmp(prototype.idDE + '-Rule1').getValue();
-        var Rule2 = Ext.getCmp(prototype.idDE + '-Rule2').getValue();
-        var code = Ext.getCmp(prototype.idDE + '-code').getValue();
+        var currency = Ext.getCmp(prototype.idReglas0425 + '-currency').getValue();
+        var Amount = Ext.getCmp(prototype.idReglas0425 + '-Amount').getValue();
+        var Filter = Ext.getCmp(prototype.idReglas0425 + '-Filter').getValue();
+        var Rule1 = Ext.getCmp(prototype.idReglas0425 + '-Rule1').getValue();
+        var Rule2 = Ext.getCmp(prototype.idReglas0425 + '-Rule2').getValue();
+        var code = Ext.getCmp(prototype.idReglas0425 + '-code').getValue();
         //
         let params = {
             IN_CCUST: '139',

@@ -1,4 +1,4 @@
-prototype.idDE = prototype.id + '-Compensation0425Reglas';
+prototype.idReglas0425 = prototype.id + '-Compensation0425Reglas';
 Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensation0425Reglas', {
     extend: 'Ext.window.Window',
     alias: 'widget.Compensation0425Reglas',
@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
     header: true,
     width: 930,
     height: 520,
-    id: prototype.idDE + '-Compensation0425Reglas',
+    id: prototype.idReglas0425 + '-Compensation0425Reglas',
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -74,7 +74,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                             items: [
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.idDE + '-code',
+                                                    id: prototype.idReglas0425 + '-code',
                                                     fieldLabel: 'Code',
                                                     maskRe: /[A-Z,a-z,Ñ,ñ]/, readOnly: true,
                                                     fieldStyle: 'text-align:center;',
@@ -83,7 +83,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                                 },
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.idDE + '-currency',
+                                                    id: prototype.idReglas0425 + '-currency',
                                                     fieldLabel: 'Currency',
                                                     maskRe: /[A-Z,a-z,Ñ,ñ]/,
                                                     maxLength: 3,
@@ -94,7 +94,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                                 },
                                                 {
                                                     xtype: 'numberfield',
-                                                    id: prototype.idDE + '-Amount',
+                                                    id: prototype.idReglas0425 + '-Amount',
                                                     fieldLabel: 'Amount',
                                                     value: 0,
                                                     decimalPrecision: 2,
@@ -108,7 +108,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                                 },
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.idDE + '-Filter',
+                                                    id: prototype.idReglas0425 + '-Filter',
                                                     fieldLabel: 'Filter',
                                                     maxLength: 2,
                                                     enforceMaxLength: 2,
@@ -124,7 +124,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                             items: [
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.idDE + '-Rule1',
+                                                    id: prototype.idReglas0425 + '-Rule1',
                                                     fieldLabel: 'Rule 1',
                                                     maxLength: 50,
                                                     enforceMaxLength: 50,
@@ -145,7 +145,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                             items: [
                                                 {
                                                     xtype: 'textarea',
-                                                    id: prototype.idDE + '-Rule2',
+                                                    id: prototype.idReglas0425 + '-Rule2',
                                                     fieldLabel: 'Rule 2',
                                                     labelWidth: 45,
                                                     labelStyle: 'text-align:left;font-weight: bolder;',
@@ -176,7 +176,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                     items: [
                                         {
                                             xtype: 'button',
-                                            id: prototype.idDE + '-btnclear',
+                                            id: prototype.idReglas0425 + '-btnclear',
                                             text: 'Clear',
                                             iconCls: 'prx-icon-clear',
                                             tooltip: 'Clear Data',
@@ -187,7 +187,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                         {xtype: 'tbspacer', width: 10},
                                         {
                                             xtype: 'button',
-                                            id: prototype.idDE + '-btnupdate',
+                                            id: prototype.idReglas0425 + '-btnupdate',
                                             text: 'Save',
                                             iconCls: 'prx-icon-reload',
                                             tooltip: 'Update Data',
@@ -208,7 +208,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                     },
                                     border: true,
                                     columnLines: true,
-                                    id: prototype.idDE + '-gridReglas',
+                                    id: prototype.idReglas0425 + '-gridReglas',
                                     width: 890,
                                     height: 250,
                                     dockedItems: [
@@ -218,7 +218,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                             items: [
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.idDE + '-txtFilterDescrip',
+                                                    id: prototype.idReglas0425 + '-txtFilterDescrip',
                                                     fieldLabel: 'Description',
                                                     labelWidth: 60,
                                                     labelAlign: 'left',
@@ -288,7 +288,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
             items: [
                 {
                     text: 'Cancel',
-                    id: prototype.idDE + '-btn-cancel',
+                    id: prototype.idReglas0425 + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'
