@@ -104,6 +104,12 @@ public class AccountingMasterClientController extends BaseController {
             logic = new AccountingMasterClientLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             List<A1736Filter> listaData = logic.loadPX128S01A1736(filter);
+			
+			if (filter.A1736OLD_REGISTERS.equals("false")) {
+                listaData = listaData.stream().filter(reg
+                        -> !reg.A1736FFIN.equals("9999/99/99")
+                ).collect(Collectors.toList());
+            }
 
             map.put("success", true);
             map.put("data", listaData);

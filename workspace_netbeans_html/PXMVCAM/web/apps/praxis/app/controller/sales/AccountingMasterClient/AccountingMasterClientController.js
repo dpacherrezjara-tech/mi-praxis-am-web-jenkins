@@ -175,6 +175,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterClient.AccountingMasterC
         var IN_A1736FP = Ext.getCmp(prototype.id + '-cboFP').getValue();
         var A1736CLIEN = Ext.getCmp(prototype.id + '-txtClient').getValue();
         var A1736IATA = Ext.getCmp(prototype.id + '-txtIATA').getValue();
+        var A1736OLD_REGISTERS = Ext.getCmp(prototype.id + '-txtoldregisters').getValue();
         
         searchParams = {
             IN_A1736CCUST: '139',
@@ -185,7 +186,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterClient.AccountingMasterC
             IN_A1736SUBFU: IN_A1736SUBFU,
             IN_A1736FP: IN_A1736FP,
             A1736CLIEN: A1736CLIEN,
-            A1736IATA: A1736IATA
+            A1736IATA: A1736IATA,
+            A1736OLD_REGISTERS: A1736OLD_REGISTERS
         };
     },
     //<editor-fold defaultstate="collapsed" desc="search">

@@ -26,6 +26,7 @@ public class A1736Filter extends A1736 {
     public String IN_A1736FP_OLD="";
     public String IN_A1736IATA_OLD="";
     public String IN_A1736CIA_OLD="";
+	public String A1736OLD_REGISTERS = "";
     
     public Pagination page = new Pagination();
 
