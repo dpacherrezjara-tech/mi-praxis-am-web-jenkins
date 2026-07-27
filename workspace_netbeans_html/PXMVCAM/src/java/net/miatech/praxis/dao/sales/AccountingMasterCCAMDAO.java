@@ -183,7 +183,7 @@ public class AccountingMasterCCAMDAO {
         Connection cnx = null;
         
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX160S02A1819(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; 
+            strSQL = "{CALL " + session.getMainLibrary() + ".PX160S02A1819(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
             cs.setString(2, filter.A1819CCUST);
