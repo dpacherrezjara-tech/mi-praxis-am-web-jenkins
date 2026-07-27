@@ -61,7 +61,7 @@ public class AccountingMasterCCAMDAO {
             if (filter.page.PAGNUM > 0) {
                 PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
             }
-            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX160S01A1819(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX160S01A1819(?,?,?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
