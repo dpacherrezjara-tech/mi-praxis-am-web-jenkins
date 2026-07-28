@@ -358,9 +358,10 @@ public class AccountingMasterCCAMController extends BaseController {
             filter.A1819ICIA = request.getParameter("A1819ICIA");
             filter.A1819FINI = request.getParameter("A1819FINI");
             filter.A1819FFIN = request.getParameter("A1819FFIN");
-            filter.IN_A1819TACC_OLD = request.getParameter("IN_A1819TACC_OLD");             
+            filter.IN_A1819TACC_OLD = request.getParameter("IN_A1819TACC_OLD");
+            filter.IN_A1819FINI_OLD = request.getParameter("IN_A1819FINI_OLD");
+            filter.IN_A1819FFIN_OLD = request.getParameter("IN_A1819FFIN_OLD");
         
-           
              msj = logic.accountADMMaintance(filter, strOption);      
             
 

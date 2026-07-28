@@ -123,8 +123,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
         //txtA1819FFIN.text = beanDTY.A1819FFIN == "99999999" ? "" : Util.parseStringToDate(app.trim(beanDTY.A1819FFIN));
 
         this.lblA1819TACC = data.A1819TACC;
-        this.lblFINIOld = Ext.util.Format.date(data.A1819FINI, 'Ymd');
-        this.lblFFINOld = Ext.util.Format.date(data.A1819FFIN, 'Ymd');
+        this.lblFINIOld = data.A1819FINI;
+        var fecha = Ext.Date.parse(data.A1819FFIN, 'Ymd');
+        this.lblFFINOld = fecha === null ? "99999999":Ext.util.Format.date(fecha, 'Ymd');
         console.log(this.lblA1819TACC);
 
 
@@ -152,8 +153,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
         var A1819FFIN = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1819FFIN').getValue(), 'Ymd');
         var IN_A1819TACC_OLD = this.lblA1819TACC;
         
-        var IN_A1819FINI_OLD = this.lblFINIOld;
-        var IN_A1819FFIN_OLD = this.lblFFINOld;
+        var IN_A1819FINI_OLD = this.lblFINIOld === "" ? '99999999' : this.lblFINIOld;
+        var IN_A1819FFIN_OLD = this.lblFFINOld === "" ? '99999999' : this.lblFFINOld;
         if (A1819FINI === '') {
             A1819FINI = '99999999';
         }
