@@ -428,6 +428,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                 ['', 'Select'],
                 ["1", "Valoración"],
                 ["2", "Tickets Invol"],
+                ["3", "Tickets SKCHG"],
             ]}));
         cmbFunctions.setValue('');
         this.changeFunction();
@@ -1044,6 +1045,10 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         var tabla2 = Ext.getCmp(prototype.id + '-cmbTabla2').getValue();
         var funcion = Ext.getCmp(prototype.id + '-cmbFunctions').getValue();
 
+        // Tickets Invol (2) y Tickets SKCHG (3) comparten toda esta logica de
+        // grilla -- solo cambia el logico de donde arranca la cadena en el SP.
+        var v_esChainA1672 = (tabla === 'A1672' && (funcion === '2' || funcion === '3'));
+
         // campo (A1672CIA, A1672FORMA, ...) -> {columna, nro} de las columnas dinamicas
         // creadas en el loop de abajo. Se usa para el merge de columnas de A1672 (Tickets Invol).
         var v_columnasPorCampo = {};
@@ -1072,35 +1077,36 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             }
             var v_cabecera = arr2[i].data["DCOLHDG"];
             var v_fields = Ext.getCmp(prototype.id + '-panelListColumns').getStore().getData().items[i].data;
-            if (tabla === 'A1672' && funcion === '2' && v_fields.campo === 'A1672ITIN') {
+            if (v_esChainA1672 && v_fields.campo === 'A1672ITIN') {
                 v_align = 'left';
             }
             var v_columnaGrid = me.retornaColumna(v_cabecera, v_nroColumna, v_align, v_fields);
-            if (tabla === 'A1672' && funcion === '2' && v_anchoA1672[v_fields.campo]) {
+            if (v_esChainA1672 && v_anchoA1672[v_fields.campo]) {
                 v_columnaGrid.setWidth(v_anchoA1672[v_fields.campo]);
             }
-            // Sales Audit (A1672) -> Tickets Invol: si el PNR no es igual en
-            // toda la cadena (pnrMismatch, calculado en el DAO), se pinta de
-            // verde como alerta de calidad de dato -- no afecta otras tablas.
-            if (tabla === 'A1672' && funcion === '2' && v_fields.campo === 'A1672PNR') {
+            // Sales Audit (A1672) -> Tickets Invol / Tickets SKCHG: si el PNR
+            // no es igual en toda la cadena (pnrMismatch, calculado en el DAO),
+            // se pinta de rojo como alerta de calidad de dato -- no afecta
+            // otras tablas.
+            if (v_esChainA1672 && v_fields.campo === 'A1672PNR') {
                 v_columnaGrid.renderer = function (value, metaData, record) {
                     if (record.data.pnrMismatch) {
-                        metaData.style = 'background-color: #B6F5B6;';
+                        metaData.style = 'background-color: #F5B6B6;';
                     }
                     return value;
                 };
             }
-            if (tabla === 'A1672' && funcion === '2' && v_fields.campo === 'A1672PAX') {
+            if (v_esChainA1672 && v_fields.campo === 'A1672PAX') {
                 v_columnaGrid.renderer = function (value, metaData, record) {
                     if (record.data.paxMismatch) {
-                        metaData.style = 'background-color: #B6F5B6;';
+                        metaData.style = 'background-color: #F5B6B6;';
                     }
                     return value;
                 };
             }
-            // Tickets Invol: A1672DI trae 'D'/'I' -- se muestra la etiqueta
-            // completa en vez del codigo (D: DOMESTIC / I: INTERNATIONAL).
-            if (tabla === 'A1672' && funcion === '2' && v_fields.campo === 'A1672DI') {
+            // A1672DI trae 'D'/'I' -- se muestra la etiqueta completa en vez
+            // del codigo (D: DOMESTIC / I: INTERNATIONAL).
+            if (v_esChainA1672 && v_fields.campo === 'A1672DI') {
                 v_columnaGrid.renderer = function (value) {
                     var v = Ext.util.Format.trim(value || '').toUpperCase();
                     if (v === 'D') {
@@ -1201,10 +1207,10 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             vgridData.getView().refresh();
         }
 
-        // Sales Audit (A1672) -> Tickets Invol (funcion 2): CIA+FORMA+SERIE se
-        // ven todos juntos como "Ticket" en una sola columna, sin afectar el
+        // Sales Audit (A1672) -> Tickets Invol / Tickets SKCHG: CIA+FORMA+SERIE
+        // se ven todos juntos como "Ticket" en una sola columna, sin afectar el
         // resto de tablas/funciones que usan esta misma grilla generica.
-        if (tabla === 'A1672' && funcion === '2') {
+        if (v_esChainA1672) {
             var v_cia = v_columnasPorCampo['A1672CIA'];
             var v_forma = v_columnasPorCampo['A1672FORMA'];
             var v_serie = v_columnasPorCampo['A1672SERIE'];
@@ -1252,6 +1258,34 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                 v_seror.columna.hide();
                 vgridData.getView().refresh();
             }
+
+            // CSR "Match Masivos ASR" (Casuistica 1/2/3): regla de CIERRE
+            // aritmetica (misma ruta + variacion de fecha dentro de 48h/72h
+            // segun DI), calculada en el DAO (reglaCierreOK/reglaCierreDetalle)
+            // SOLO para filas EXCH -- NO valida la evidencia (REAC/OSI/IT),
+            // eso sigue siendo manual. Solo se muestra si el usuario tiene
+            // marcados ITIN/FVLO/DI (si no, el DAO deja reglaCierreDetalle
+            // vacio para todas las filas y esta columna sale en blanco).
+            var columnReglaCierre = Ext.create('Ext.grid.column.Column', {
+                text: 'Regla Cierre', width: 230, align: 'center',
+                renderer: function (value, metaData, record) {
+                    if (record.data.isChainRoot) {
+                        return '';
+                    }
+                    var detalle = record.data.reglaCierreDetalle || '';
+                    if (detalle === '') {
+                        return '';
+                    }
+                    // Solo se pinta cuando NO cumple (rojo) -- si cumple, sin
+                    // color, para no meter ruido visual en lo que ya esta bien.
+                    if (!record.data.reglaCierreOK) {
+                        metaData.style = 'background-color: #F5B6B6;';
+                    }
+                    return detalle;
+                }
+            });
+            vgridData.headerCt.add(columnReglaCierre);
+            vgridData.getView().refresh();
 
             // Alterna un color por CADENA completa (raiz + todos sus exchanges),
             // para que se note a simple vista que esas filas pertenecen al mismo
@@ -1846,12 +1880,14 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         // El checkbox "No valida Manifiesto" es exclusivo de la opción 1 (Valoración)
         Ext.getCmp(prototype.id + '-chkManifiesto').setVisible(funcion === '1');
 
-        // El filefield de Excel es exclusivo de la opción 2 (Tickets Invol)
+        // El filefield de Excel es exclusivo de las opciones 2 (Tickets Invol)
+        // y 3 (Tickets SKCHG) -- mismo flujo de subir Excel y actualizar CMBPO,
+        // solo cambia el logico de donde arranca la cadena en la consulta.
         fileTicketsInvol.reset();
-        fileTicketsInvol.setVisible(funcion === '2');
+        fileTicketsInvol.setVisible(funcion === '2' || funcion === '3');
 
-        if (funcion === '2') {
-            // Tickets Invol: Process solo se habilita cuando se carga un Excel
+        if (funcion === '2' || funcion === '3') {
+            // Tickets Invol / Tickets SKCHG: Process solo se habilita cuando se carga un Excel
             Ext.getCmp(prototype.id + '-btnFunct').setDisabled(true);
         } else {
             Ext.getCmp(prototype.id + '-btnFunct').setDisabled(funcion === '');
@@ -1879,6 +1915,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
                             this.process_valuation();
                             break;
                         case '2':
+                        case '3':
                             this.process_ticketsInvol();
                             break;
                     }
@@ -2075,11 +2112,12 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
 
         }
 
-        // Sales Audit (A1672) -> Tickets Invol (funcion 2): agrega "Ticket" y
-        // "Ticket Ori" (CIA+FORMA+SERIE / CIAOR+FOROR+SEROR) como columnas extra
-        // de solo lectura en el Excel, a la izquierda de FPROC -- no reemplaza
-        // las columnas originales (siguen ahi para poder re-subir y actualizar).
-        if (Ext.getCmp(prototype.id + '-cmbTabla').getValue() === 'A1672' && Ext.getCmp(prototype.id + '-cmbFunctions').getValue() === '2') {
+        // Sales Audit (A1672) -> Tickets Invol / Tickets SKCHG: agrega "Ticket"
+        // y "Ticket Ori" (CIA+FORMA+SERIE / CIAOR+FOROR+SEROR) como columnas
+        // extra de solo lectura en el Excel, a la izquierda de FPROC -- no
+        // reemplaza las columnas originales (siguen ahi para re-subir y actualizar).
+        var v_funcionColumns = Ext.getCmp(prototype.id + '-cmbFunctions').getValue();
+        if (Ext.getCmp(prototype.id + '-cmbTabla').getValue() === 'A1672' && (v_funcionColumns === '2' || v_funcionColumns === '3')) {
             var idxFproc = -1;
             for (var k = 0; k < numColumns; k++) {
                 if (arr2[k].data['campo'] === 'A1672FPROC') {
@@ -2091,6 +2129,13 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
             columns.splice(posFproc, 0,
                 {dataIndex: 'ticket', name: 'ticket', text: 'Ticket', align: 'center', type: 'string', width: 100, level: 1},
                 {dataIndex: 'ticketOri', name: 'ticketOri', text: 'Ticket Ori', align: 'center', type: 'string', width: 100, level: 1}
+            );
+
+            // CSR "Match Masivos ASR": resultado de la regla de cierre
+            // (misma ruta + 48h/72h), calculado en el DAO -- se agrega al
+            // final, solo texto (sin resaltado de color por ahora en Excel).
+            columns.push(
+                {dataIndex: 'reglaCierreDetalle', name: 'reglaCierreDetalle', text: 'Regla Cierre', align: 'center', type: 'string', width: 260, level: 1}
             );
         }
 

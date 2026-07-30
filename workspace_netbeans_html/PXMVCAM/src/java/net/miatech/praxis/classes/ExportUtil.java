@@ -325,9 +325,9 @@ public final class ExportUtil {
             CellStyle intRowStyleAlt = getCellStyle(workbook, "int", true);
             CellStyle floatRowStyleAlt = getCellStyle(workbook, "float", true);
 
-            CellStyle rowStyleHighlight = getCellStyleGreen(workbook, "default");
-            CellStyle intRowStyleHighlight = getCellStyleGreen(workbook, "int");
-            CellStyle floatRowStyleHighlight = getCellStyleGreen(workbook, "float");
+            CellStyle rowStyleHighlight = getCellStyleHighlight(workbook, "default");
+            CellStyle intRowStyleHighlight = getCellStyleHighlight(workbook, "int");
+            CellStyle floatRowStyleHighlight = getCellStyleHighlight(workbook, "float");
 
             boolean groupToggle = false;
             Field breakField = (groupBreakField != null) ? _class.getField(groupBreakField) : null;
@@ -498,9 +498,12 @@ public final class ExportUtil {
         return getCellStyle(workbook, style, false);
     }
 
-    private static CellStyle getCellStyleGreen(Workbook workbook, String style){
+    // Rojo -- se usa para marcar mismatch de PNR/PAX dentro de la misma
+    // cadena (Tickets Invol/SKCHG): es una alerta de dato inconsistente, no
+    // un "ok", por eso rojo y no verde.
+    private static CellStyle getCellStyleHighlight(Workbook workbook, String style){
         CellStyle rowStyle = getCellStyle(workbook, style, false);
-        rowStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+        rowStyle.setFillForegroundColor(IndexedColors.ROSE.getIndex());
         rowStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
         return rowStyle;
     }

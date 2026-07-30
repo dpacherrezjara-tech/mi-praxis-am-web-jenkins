@@ -11,6 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -250,6 +254,13 @@ public class BusinessToolsDAO {
         return loadPXPRUEBA(filter, "SQP0076_V_SALES");
     }
 
+    // Tickets SKCHG (funcion 3): identico a Tickets Invol, solo que el SP
+    // arranca la cadena desde el logico A1672Z (SELECT/OMIT A1672QUEUE =
+    // 'SKCHG') en vez de A1672W -- ver SQP0076_V_SALES_SKCHG.sql.
+    public List<SQP00768> loadSQP0076VSalesSkchg(SQP00768 filter) throws Exception {
+        return loadPXPRUEBA(filter, "SQP0076_V_SALES_SKCHG");
+    }
+
     private List<SQP00768> loadPXPRUEBA(SQP00768 filter, String procName) throws Exception {
 
         //Para traer data del Programa de Query del Manifiesto de Vuelo
@@ -317,7 +328,7 @@ public class BusinessToolsDAO {
             // sale bien). Forzando fetch de 1 fila a la vez se descarta que
             // sea un problema del driver JDBC reusando buffer entre filas
             // de un mismo bloque para una columna no-fisica (funcion SQL).
-            if ("SQP0076_V_SALES".equals(procName)) {
+            if ("SQP0076_V_SALES".equals(procName) || "SQP0076_V_SALES_SKCHG".equals(procName)) {
                 cstmt.setFetchSize(1);
             }
 
@@ -468,7 +479,7 @@ public class BusinessToolsDAO {
                     obj.column6 = rst.getString("column6");
                     obj.column7 = rst.getString("column7");
 
-                    if ("A1672".equals(filter.IN_TABLA) && "2".equals(filter.IN_FUNCTION)) {
+                    if ("A1672".equals(filter.IN_TABLA) && ("2".equals(filter.IN_FUNCTION) || "3".equals(filter.IN_FUNCTION))) {
                         // Asume el orden por defecto de defaultFieldsA1672 (JS): column1..6 =
                         // CIA,FORMA,SERIE,CIAOR,FOROR,SEROR y column10 = TRNCU. Si el usuario
                         // reordena manualmente las columnas en la grilla esto podria calcular mal
@@ -489,7 +500,7 @@ public class BusinessToolsDAO {
                         obj.column13 = rst.getString("column13");
                         obj.column14 = rst.getString("column14");
 
-                        if ("A1672".equals(filter.IN_TABLA) && "2".equals(filter.IN_FUNCTION)) {
+                        if ("A1672".equals(filter.IN_TABLA) && ("2".equals(filter.IN_FUNCTION) || "3".equals(filter.IN_FUNCTION))) {
                             obj.isChainRoot = !"EXCH".equals(obj.column10.trim());
                         }
                     }
@@ -707,7 +718,7 @@ public class BusinessToolsDAO {
         // No se asume una posicion fija de columna: se busca en el SELECT
         // real (filter.strSelectA) en que columnN quedo cada campo, asi
         // funciona sin importar el orden en que el usuario los marco.
-        if ("SQP0076_V_SALES".equals(procName) && !lista.isEmpty()) {
+        if (("SQP0076_V_SALES".equals(procName) || "SQP0076_V_SALES_SKCHG".equals(procName)) && !lista.isEmpty()) {
             Integer colUsos = findColumnNumber(filter.strSelectA, "F01_PX449_USO");
             Integer colIndicCpn = findColumnNumber(filter.strSelectA, "F02_PX449_USO");
             Integer colPnr = findColumnNumber(filter.strSelectA, "A1672PNR");
@@ -764,9 +775,119 @@ public class BusinessToolsDAO {
             Integer colPax = findColumnNumber(filter.strSelectA, "A1672PAX");
             computeGroupMismatch(lista, colPnr, "pnrMismatch");
             computeGroupMismatch(lista, colPax, "paxMismatch");
+            computeReglaCierre(lista, filter.strSelectA);
         }
 
         return lista;
+    }
+
+    // CSR "Match Masivos ASR" (Casuisticas 1/2/3): valida SOLO la regla de
+    // cierre comun a esas 3 casuisticas -- NO detecta la evidencia (REAC/OSI
+    // ATREVETE/IT flexibilidad), eso sigue siendo manual por ahora. Para cada
+    // fila EXCH, compara contra su predecesor inmediato (Ticket Ori, no
+    // necesariamente la raiz de la cadena -- puede haber re-exchanges):
+    //   a) misma ruta = mismo origen y mismo destino final del ITIN, aunque
+    //      cambien las escalas intermedias (asi lo pide el CSR: "Origen
+    //      destino, from to").
+    //   b) variacion de fecha de vuelo dentro del umbral segun DI (48h
+    //      domestico / 72h internacional -- FVLO solo trae fecha, no hora,
+    //      asi que el umbral se compara en dias: 2 / 3).
+    // Requiere que el usuario tenga marcados A1672ITIN, A1672FVLO y A1672DI
+    // como columnas (los 2 primeros no estan en protectedFieldsA1672 -- si
+    // los desmarca, esta validacion se salta silenciosamente para esa busqueda).
+    private void computeReglaCierre(List<SQP00768> lista, String selectA) {
+        Integer colItin = findColumnNumber(selectA, "A1672ITIN");
+        Integer colFvlo = findColumnNumber(selectA, "A1672FVLO");
+        Integer colDi = findColumnNumber(selectA, "A1672DI");
+        if (colItin == null || colFvlo == null || colDi == null) {
+            return;
+        }
+
+        Map<String, SQP00768> porTicket = new HashMap<>();
+        for (SQP00768 objRow : lista) {
+            if (objRow.ticket != null && !objRow.ticket.isEmpty()) {
+                porTicket.put(objRow.ticket, objRow);
+            }
+        }
+
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyyMMdd");
+
+        for (SQP00768 objRow : lista) {
+            if (objRow.isChainRoot || objRow.ticketOri == null || objRow.ticketOri.isEmpty()) {
+                continue;
+            }
+            SQP00768 pred = porTicket.get(objRow.ticketOri);
+            if (pred == null) {
+                continue;
+            }
+
+            String rutaPred = rutaEndpoints(getColumnValue(pred, colItin));
+            String rutaThis = rutaEndpoints(getColumnValue(objRow, colItin));
+            objRow.rutaOK = !rutaPred.isEmpty() && rutaPred.equals(rutaThis);
+
+            LocalDate fechaPred = maxFecha(getColumnValue(pred, colFvlo), fmt);
+            LocalDate fechaThis = maxFecha(getColumnValue(objRow, colFvlo), fmt);
+            String di = getColumnValue(objRow, colDi);
+            di = di == null ? "" : di.trim().toUpperCase();
+            long umbralDias = "D".equals(di) ? 2 : 3;
+
+            if (fechaPred != null && fechaThis != null) {
+                long dias = Math.abs(ChronoUnit.DAYS.between(fechaPred, fechaThis));
+                objRow.fechaOK = dias <= umbralDias;
+                objRow.reglaCierreOK = objRow.rutaOK && objRow.fechaOK;
+                // El texto deja explicito que es un GATE: si no cumple, no hace
+                // falta seguir buscando evidencia (REAC/OSI/IT) para este ticket.
+                objRow.reglaCierreDetalle = (objRow.reglaCierreOK
+                        ? "CUMPLE - continuar validando evidencia - "
+                        : "NO CUMPLE - no revisar evidencia - ")
+                        + dias + " dia(s) (umbral " + umbralDias + "d, DI=" + (di.isEmpty() ? "?" : di) + ")"
+                        + (objRow.rutaOK ? "" : ", ruta distinta");
+            } else {
+                objRow.reglaCierreOK = false;
+                objRow.reglaCierreDetalle = "NO CUMPLE - no se pudo leer FVLO";
+            }
+        }
+    }
+
+    // Primer y ultimo aeropuerto del ITIN (ej. "SFO-GDL-MEX-SFO" -> "SFO|SFO")
+    // -- compara origen/destino sin importar cuantas escalas intermedias
+    // cambien entre el ticket original y el canje.
+    private String rutaEndpoints(String itin) {
+        if (itin == null) {
+            return "";
+        }
+        String[] tramos = itin.trim().split("-");
+        if (tramos.length == 0 || tramos[0].trim().isEmpty()) {
+            return "";
+        }
+        String origen = tramos[0].trim();
+        String destino = tramos[tramos.length - 1].trim();
+        return origen + "|" + destino;
+    }
+
+    // FVLO trae varias fechas separadas por "-" (una por tramo, ej.
+    // "20260509-20260526-20260526") -- se toma la mas reciente como la fecha
+    // "de cierre" del itinerario para comparar contra el canje.
+    private LocalDate maxFecha(String fvlo, DateTimeFormatter fmt) {
+        if (fvlo == null) {
+            return null;
+        }
+        LocalDate max = null;
+        for (String parte : fvlo.trim().split("-")) {
+            String p = parte.trim();
+            if (p.length() != 8) {
+                continue;
+            }
+            try {
+                LocalDate fecha = LocalDate.parse(p, fmt);
+                if (max == null || fecha.isAfter(max)) {
+                    max = fecha;
+                }
+            } catch (DateTimeParseException e) {
+                // segmento no parseable (ej. relleno de blancos), se ignora
+            }
+        }
+        return max;
     }
 
     private void computeGroupMismatch(List<SQP00768> lista, Integer colNumber, String targetField) {

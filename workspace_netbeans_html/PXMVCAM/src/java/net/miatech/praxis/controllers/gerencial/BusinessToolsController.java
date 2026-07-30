@@ -185,6 +185,8 @@ public class BusinessToolsController extends BaseController {
 
             if ("A1672".equals(filter.IN_TABLA) && "2".equals(filter.IN_FUNCTION)) {
                 lst = logic.loadSQP0076VSales(filter);
+            } else if ("A1672".equals(filter.IN_TABLA) && "3".equals(filter.IN_FUNCTION)) {
+                lst = logic.loadSQP0076VSalesSkchg(filter);
             } else if (!filter.strSelect.equals("")) {
                 lst = logic.loadPXPRUEBA2(filter);
             } else {
@@ -320,7 +322,7 @@ public class BusinessToolsController extends BaseController {
             SQP00768 filterCheck = new Gson().fromJson(request.getParameter("beanString"), SQP00768.class);
             String groupBreakField = null;
             Map<String, String> highlightFields = null;
-            if ("A1672".equals(filterCheck.IN_TABLA) && "2".equals(filterCheck.IN_FUNCTION)) {
+            if ("A1672".equals(filterCheck.IN_TABLA) && ("2".equals(filterCheck.IN_FUNCTION) || "3".equals(filterCheck.IN_FUNCTION))) {
                 groupBreakField = "isChainRoot";
                 highlightFields = new HashMap<>();
                 Integer colPnr = BusinessToolsDAO.findColumnNumber(filterCheck.strSelectA, "A1672PNR");
