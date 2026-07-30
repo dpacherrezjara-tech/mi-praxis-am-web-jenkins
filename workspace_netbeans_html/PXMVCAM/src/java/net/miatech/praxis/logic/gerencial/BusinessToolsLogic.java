@@ -48,6 +48,10 @@ public class BusinessToolsLogic {
         return businessToolsDAO.loadSQP0076VSales(filter);
     }
 
+    public List<SQP00768> loadSQP0076VSalesSkchg(SQP00768 filter) throws Exception {
+        return businessToolsDAO.loadSQP0076VSalesSkchg(filter);
+    }
+
     public String loadPX282SQP00777(SQP00768 filter) throws Exception {
         return businessToolsDAO.loadPX282SQP00777(filter);
     }

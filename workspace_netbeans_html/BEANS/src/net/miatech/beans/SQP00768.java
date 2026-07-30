@@ -69,6 +69,16 @@ public class SQP00768 {
     public boolean pnrMismatch = false;
     public boolean paxMismatch = false;
 
+    // CSR Match Masivos ASR (Casuistica 1/2/3, regla de cierre comun): solo
+    // aplica a filas EXCH (no a la raiz). Compara contra su predecesor
+    // inmediato (Ticket Ori) -- NO valida la evidencia (REAC/OSI/IT), solo
+    // el cierre aritmetico: misma ruta (origen-destino) y variacion de fecha
+    // de vuelo dentro del umbral (48h domestico / 72h internacional segun DI).
+    public boolean rutaOK = false;
+    public boolean fechaOK = false;
+    public boolean reglaCierreOK = false;
+    public String reglaCierreDetalle = "";
+
     public String column1 = "";
     public String column2 = "";
     public String column3 = "";
