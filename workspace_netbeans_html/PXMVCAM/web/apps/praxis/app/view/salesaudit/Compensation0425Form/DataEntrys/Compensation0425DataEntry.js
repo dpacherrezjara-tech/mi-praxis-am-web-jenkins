@@ -162,6 +162,22 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                                     listeners: {
                                                         click: 'onAddRazonClick'
                                                     }
+                                                },
+                                                {xtype: 'tbspacer', width: 10},
+                                                {
+                                                    xtype: 'numberfield',
+                                                    id: prototype.idDE0425 + '-MontoDebit',
+                                                    fieldLabel: 'Amount',
+                                                    name: 'IN_AMOUNT',
+                                                    value: 0,
+                                                    decimalPrecision: 2,
+                                                    allowExponential: false,
+                                                    hideTrigger: true,
+                                                    keyNavEnabled: false,
+                                                    mouseWheelEnable: false,
+                                                    fieldStyle: 'text-align:right;',
+                                                    labelWidth: 50,
+                                                    width: 150
                                                 }
                                             ]
                                         }
