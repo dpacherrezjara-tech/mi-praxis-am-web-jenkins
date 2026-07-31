@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
         };
         try {
             const res = await global.callStoreGet('PXSAUDIT', 'SQP06087', params);
-            console.log('Novo ',res)
+            console.log('Novo ', res)
             if (res.lstRs.length > 0) {
                 let store = new Ext.data.Store({
                     data: res.lstRs.at(0)
@@ -239,6 +239,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
         var CmbEstatus = Ext.getCmp(prototype.idDE0425 + '-CmbEstatus').getValue();
         var lstRazones = new Array();
         var gridRazones = Ext.getCmp(prototype.idDE0425 + '-gridRazones');
+        var regs = gridRazones.getStore().getCount();
+        var IN_AMOUNT = Ext.getCmp(prototype.idDE0425 + '-MontoDebit').getValue();
+        // VALIDA
+        if (CmbEstatus === 'SU') {
+            if (regs === 0) {
+                Ext.Msg.alert('.: PRAXIS :.', 'Please enter the issue reason to be debited');
+                return;
+            }
+            if(IN_AMOUNT===0){
+                Ext.Msg.alert('.: PRAXIS :.', 'Please enter the amount to be debited');
+                return;
+            }
+        }
         gridRazones.store.data.each(function (rec) {
             lstRazones.push({
                 "A3404CODRZ": rec.data.A3404CODRZ,
@@ -255,7 +268,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
             IN_SEQ: me.view.params.obj.A4961SEQ,
             IN_TRNCU: me.view.params.obj.A4961TRNCU,
             IN_STATUS: CmbEstatus,
-            IN_JSON_DET: JSON.stringify(lstRazones)
+            IN_JSON_DET: JSON.stringify(lstRazones),
+            IN_AMOUNT: IN_AMOUNT
         };
         let notifier = new AWN();
         me.view.setLoading(true);
