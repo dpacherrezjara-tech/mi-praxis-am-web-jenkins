@@ -359,6 +359,7 @@ public class LoadInterline02DAO {
                 data.A020TOTDEB = rst.getDouble("A050TOTDEB");
                 data.A020NETO = rst.getDouble("A050NETO");
                 data.A020USER = rst.getString("A050USER").trim();
+                data.A020USERR = rst.getString("A050USERR").trim();
                 data.A020SDATE = rst.getString("A050SDATE").trim();
                 data.A020ACEPTA = rst.getDouble("A050ACEPTA");
                 data.A020TOTHAB = rst.getDouble("A050TOTHAB");
