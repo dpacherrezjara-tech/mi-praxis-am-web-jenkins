@@ -83,6 +83,7 @@ public class A020 implements Serializable {
     public String A020RMANT = "";
     public String A020FIMPRE = "";
     public String A020USER = "";
+    public String A020USERR = "";
     public String A020SDATE = "";
     public String A020STIME = "";
     public String A020CRT = "";

@@ -197,7 +197,7 @@ Ext.define('Ext.Praxis.controller.program.ProFacsimil.ProFacsimilController', {
         Ext.getCmp(prototype.id+'-txtA728CTYEMI').setValue(this.beanA728.A728CTYEMI.trim());
         Ext.getCmp(prototype.id+'-txtA728CTYVTA').setValue(this.beanA728.A728CTYVTA.trim());
         Ext.getCmp(prototype.id+'-txtA728CODIT').setValue(this.beanA728.A728CODIT.trim());
-        Ext.getCmp(prototype.id+'-txtA020USER').setValue(this.beanA020.A020USER.trim());
+        Ext.getCmp(prototype.id+'-txtA020USER').setValue(this.beanA020.A020USERR.trim());
         Ext.getCmp(prototype.id+'-txtA020PSTRF').setValue(this.beanA020.A020PSTRF.trim());
         Ext.getCmp(prototype.id+'-txtA728ATBP').setValue(Ext.util.Format.number(this.beanA728.A728ATBP, '0,000.00'));
         Ext.getCmp(prototype.id+'-txtA728MDAATB').setValue(this.beanA728.A728MDAATB.trim());
