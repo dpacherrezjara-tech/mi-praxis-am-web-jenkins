@@ -34,8 +34,16 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
              Ext.getCmp(prototype.id + '-IN_SPNR').hide();
              Ext.getCmp(prototype.id + '-IN_STATUS').hide();
              Ext.getCmp(prototype.id + '-pagination').hide(); 
+             //
+             Ext.getCmp(prototype.id + '-IN_DATEF').setValue('');
+             Ext.getCmp(prototype.id + '-IN_DATET').setValue('');
+             Ext.getCmp(prototype.id + '-IN_TRNCU').setValue('');
+             Ext.getCmp(prototype.id + '-cmbPaises').setValue('');
+             Ext.getCmp(prototype.id + '-IN_CIATA').setValue('');
+             Ext.getCmp(prototype.id + '-IN_SPNR').setValue('');
+             Ext.getCmp(prototype.id + '-IN_STATUS').setValue('');
         }else{
-            Ext.getCmp( prototype.id + '-IN_TICKET').hide();
+             Ext.getCmp( prototype.id + '-IN_TICKET').hide();
              Ext.getCmp(prototype.id + '-IN_DATEF').show();
              Ext.getCmp(prototype.id + '-IN_DATET').show();
              Ext.getCmp(prototype.id + '-IN_TRNCU').show();
@@ -44,6 +52,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
              Ext.getCmp(prototype.id + '-IN_SPNR').show();
              Ext.getCmp(prototype.id + '-IN_STATUS').show();
              Ext.getCmp(prototype.id + '-pagination').show(); 
+             // 
+             Ext.getCmp( prototype.id + '-IN_TICKET').setValue('');
+             Ext.getCmp(prototype.id + '-IN_DATEF').setValue(new Date());
+             Ext.getCmp(prototype.id + '-IN_DATET').setValue(new Date());
         }
     },
     loadTickets: async function () {
@@ -274,7 +286,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
                         'Ticket': x.A4961TICKET,
                         'SEQ': x.A4961SEQ,
                         'Currency': x.MDA,
-                        'Amount Vou': x.A4961NETOR,
+                        'Amount Vou': x.A4961NETOL,
                         'Amount ADM': x.A4961NETDI, 
                         'Agent': x.A4961AGENT,
                         'Agent Name': x.NIATA,
