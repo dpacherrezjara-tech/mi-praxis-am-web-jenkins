@@ -205,6 +205,17 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters', {
                     enforceMaxLength: true,
                     maxLength: 10,
                     width: 90
+                },
+                { xtype: 'tbspacer', width: 30 },
+                {
+                    xtype: 'label',
+                    html: 'Old Registers',
+                    fieldStyle: 'text-align: center;',
+                    padding: '8px 7px 8px 0px'
+                },
+                {
+                    xtype: 'checkboxfield',
+                    id: prototype.id + '-txtoldregisters'
                 }
             ]
         }

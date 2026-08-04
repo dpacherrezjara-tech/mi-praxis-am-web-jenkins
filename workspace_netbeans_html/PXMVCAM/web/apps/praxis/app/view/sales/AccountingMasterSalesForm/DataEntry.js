@@ -276,7 +276,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.DataEntry', {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1740SCTA',
                             enforceMaxLength: true,
-                            maxLength: 5,
+                            maxLength: 4,
                             width: 50
                         },
                         {
@@ -312,7 +312,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.DataEntry', {
                             id: prototype.id + '-txtA1740CLIE',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
-                            maxLength: 40,
+                            maxLength: 50,
                             width: 310,
                             listeners: {
                                 change: 'onUpperValue'
