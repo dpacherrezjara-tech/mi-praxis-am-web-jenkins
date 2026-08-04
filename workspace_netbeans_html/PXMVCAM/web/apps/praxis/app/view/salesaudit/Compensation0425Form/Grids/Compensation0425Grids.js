@@ -72,7 +72,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Grids.Compensation04
                                 'No applicable rule': {text: 'No applicable rule', bg: '#E0E0E0', color: '#424242'},  // gris
                                 'Supervisor Authorization': {text: 'Supervisor Authorization', bg: '#D7CCC8', color: '#5D4037'},  //marrón
                                 'Without Reservation': {text: 'Without Reservation', bg: '#F8BBD0', color: '#880E4F'},  // rosa
-                                'Customer service': {text: 'Customer service', bg: '#FFECB3', color: '#FF6F00'} // amber
+                                'Customer service': {text: 'Customer service', bg: '#F0F4C3', color: '#827717'} // lime
                             };
                             const status = opts[value];
                             if (status) {
