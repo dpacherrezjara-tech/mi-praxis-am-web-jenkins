@@ -63,15 +63,16 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Grids.Compensation04
                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                             const opts = {
                                 'Suggested': {text: 'Suggested', bg: '#FFF9C4', color: '#F57F17'}, // amarillo
-                                'UNREGISTERED CLIENT': {text: 'Unregistered Client', bg: '#FFE0B2', color: '#E65100'}, // naranja
-                                'UNREGISTERED SALE': {text: 'Unregistered Sale', bg: '#FFCCBC', color: '#BF360C'}, // naranja-rojizo
+                                'Unregistered Client': {text: 'Unregistered Client', bg: '#FFE0B2', color: '#E65100'}, // naranja
+                                'Unregistered Sale': {text: 'Unregistered Sale', bg: '#FFCCBC', color: '#BF360C'}, // naranja-rojizo
                                 'APPROVED': {text: 'Approved', bg: '#C8E6C9', color: '#1B5E20'}, // verde
                                 'Match': {text: 'Match', bg: '#BBDEFB', color: '#0D47A1'}, // azul
                                 'AM Consult': {text: 'AM Consult', bg: '#B2EBF2', color: '#006064'}, // teal
                                 'Manual review': {text: 'Manual review', bg: '#E1BEE7', color: '#6A1B9A'}, // púrpura
                                 'No applicable rule': {text: 'No applicable rule', bg: '#E0E0E0', color: '#424242'},  // gris
                                 'Supervisor Authorization': {text: 'Supervisor Authorization', bg: '#D7CCC8', color: '#5D4037'},  //marrón
-                                'Without Reservation': {text: 'Without Reservation', bg: '#F8BBD0', color: '#880E4F'}  // rosa
+                                'Without Reservation': {text: 'Without Reservation', bg: '#F8BBD0', color: '#880E4F'},  // rosa
+                                'Customer service': {text: 'Customer service', bg: '#F0F4C3', color: '#827717'} // lime
                             };
                             const status = opts[value];
                             if (status) {

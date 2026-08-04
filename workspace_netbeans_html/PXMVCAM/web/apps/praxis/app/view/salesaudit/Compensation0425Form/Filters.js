@@ -210,7 +210,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                     fieldLabel: 'Status',
                                     id: prototype.id + '-IN_STATUS',
                                     labelWidth: 40,
-                                    width: 160,
+                                    width: 250,
                                     name: 'IN_STATUS',
                                     //                                    margin: '0 10 0 0',
                                     //                                    labelStyle: 'font-weight:bold;',
@@ -221,12 +221,16 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                         data: [
                                             ['', 'All'],
                                             ['SU', 'Suggested'],
-                                            ['C', 'UNREGISTERED CLIENT'],
+                                            ['UC', 'Unregistered Client'],
+                                            ['US', 'Unregistered Sale'],
                                             ['AM', 'AM Consult'],
                                             ['RM', 'Manual review'],
                                             ['SR', 'No applicable rule'],
                                             ['MA', 'Match'],
-                                            ['SA', 'Supervisor Authorization']
+                                            ['SA', 'Supervisor Authorization'],
+                                            ['AC', 'Customer service'],
+                                            ['RN', 'Without Reservation'],
+                                            ['AP', 'Approved']                                            
                                         ]
                                     }),
                                     displayField: 'name',
