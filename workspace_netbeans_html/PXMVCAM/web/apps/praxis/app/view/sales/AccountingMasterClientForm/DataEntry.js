@@ -367,7 +367,6 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry', {
                             enforceMaxLength: true,
                             maxLength: 2,
                             width: 30,
-                            readOnly: true
                         },
                         {
                             xtype: 'textfield',
@@ -394,7 +393,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.DataEntry', {
                             xtype: 'textfield',
                             id: prototype.id + '-txtSCTA',
                             enforceMaxLength: true,
-                            maxLength: 5,
+                            maxLength: 4,
                             width: 50
                         },
                         {

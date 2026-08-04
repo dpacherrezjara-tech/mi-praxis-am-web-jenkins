@@ -200,6 +200,20 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterClientForm.Info', {
                                 }
                             },
                             {
+                                text: 'Initial Date', width: 100, dataIndex: 'A1736FINI',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:left;";
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'End Date', width: 100, dataIndex: 'A1736FFIN',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:left;";
+                                    return value;
+                                }
+                            },
+                            {
                                 text: 'Edit',
                                 sortable: false,
                                 xtype: 'actioncolumn',

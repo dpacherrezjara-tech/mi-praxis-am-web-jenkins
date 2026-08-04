@@ -224,7 +224,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterClient.AccountingMasterC
         });
         Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
-        _path = prototype.url + '/getXLSX?beanString=' + JSON.stringify(searchParams);
+        _path = prototype.url + '/getXLSX?beanString=' + encodeURIComponent(JSON.stringify(searchParams));
     },
     //</editor-fold>
     exportExcel: function() {
