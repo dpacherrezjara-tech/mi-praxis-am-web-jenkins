@@ -9,7 +9,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
     controller: 'Compensation0425DataEntryController',
     title: 'Compensation 0425 - Form',
     header: true,
-    width: 830,
+    width: 930,
     height: 600,
     id: prototype.idDE0425 + '-Compensation0425DataEntry',
     resizable: false,
@@ -56,7 +56,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                     border: true,
                                     columnLines: true,
                                     id: prototype.idDE0425 + '-gridBoletos',
-                                    width: 820,
+                                    width: 920,
                                     height: 250,
                                     dockedItems: [
                                         {
@@ -110,7 +110,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                             {text: 'SRCODE', dataIndex: 'SRCODE', width: 60},
                                             {text: 'SRTYPE', dataIndex: 'SRTYPE', width: 80},
                                             {text: 'TYPE', dataIndex: 'TYPE', width: 80},
-                                            {text: 'Description', dataIndex: 'DESCRIP', width: 400}
+                                            {text: 'Description', dataIndex: 'DESCRIP', width: 500}
                                         ]
                                     }
                                 },
