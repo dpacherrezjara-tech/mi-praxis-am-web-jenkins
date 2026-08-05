@@ -144,7 +144,11 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                                             ['AM', 'AM Consult'],
                                                             ['RM', 'Manual review'],
                                                             ['SR', 'No applicable rule'],
-                                                            ['MA', 'Match']
+                                                            ['MA', 'Match'],
+                                                            ['AC', 'Customer service']
+                                                            ['SA', 'Supervisor Authorization'],
+                                                            ['RN', 'Without Reservation'],
+                                                            ['AP', 'Approved']                                                            
                                                         ]
                                                     }),
                                                     width: 200,
