@@ -145,7 +145,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                                             ['RM', 'Manual review'],
                                                             ['SR', 'No applicable rule'],
                                                             ['MA', 'Match'],
-                                                            ['AC', 'Customer service']
+                                                            ['AC', 'Customer service'],
                                                             ['SA', 'Supervisor Authorization'],
                                                             ['RN', 'Without Reservation'],
                                                             ['AP', 'Approved']                                                            
