@@ -41,7 +41,9 @@ public class A1691Filter2 {
     public long QCPNTOT = 0;
     public long totQCPNTOT = 0;
     public long QCPNVAL = 0;
+    public long QCPNCONTAB = 0;
     public long totQCPNVAL = 0;
+    public long totQCPNCONTAB = 0;
     public String strFormatDate3 = "";
     public int QCPNFI = 0;
     public int QCPNFRE = 0;
