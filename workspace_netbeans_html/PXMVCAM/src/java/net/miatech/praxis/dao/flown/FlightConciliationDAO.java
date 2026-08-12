@@ -2146,6 +2146,23 @@ public class FlightConciliationDAO {
         System.gc();
     }
 
+    public void actualizarContador(String anio, String mes) throws SQLException, Exception {
+
+        try {
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQPPRO11391(?,?)}";
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = cnx.prepareCall(strSQL);
+
+            cs.setString(1, mes);
+            cs.setString(2, anio);
+            cs.execute();
+
+        } finally {
+            setClose();
+        }
+    }
+
     public HashMap loadSQP03651() throws SQLException, Exception {
 
         HashMap hm = new HashMap();

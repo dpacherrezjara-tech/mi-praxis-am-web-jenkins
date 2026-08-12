@@ -385,8 +385,8 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
                             maskRe: /[0-9]/,
-//                            maxLength: 13,
-                            width: 156,
+                            maxLength: 15,
+                            width: 100,
                             enableKeyEvents: true,
                             listeners: {
                                 change: 'onValidarChange',
@@ -415,7 +415,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 keypress: 'BuscarTKT_keyDownHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 10},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'label',
                             id: prototype.id + '-labelFSabre',
@@ -452,7 +452,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 change: 'cmbFSabre_changeHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 10},
+                        {xtype: 'tbspacer', width: 0},
                         {
                             xtype: 'label',
                             id: prototype.id + '-labelScanTicket',
@@ -514,7 +514,59 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
 //                                click: 'btnScanTicket_clickHandler'
 //                            }
 //                        },
-                        {xtype: 'tbspacer', width: 650},
+//                        {xtype: 'tbspacer', width: 25},
+                        {
+                            xtype: 'label',
+                            html: 'Flight Date:',
+                            align: 'center',
+                            fieldStyle: 'text-align: center;',
+                            padding: '7px 7px 6px 0px'
+                        },
+                        {xtype: 'tbspacer', width: 4},
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbAnioContador',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            autoSelect: false,
+                            enableKeyEvents: true,
+                            forceSelection: true,
+                            caseSensitive: true,
+                            editable: false,
+                            valueField: 'code',
+                            displayField: 'name',
+                            width: 70,
+                            listConfig: {maxHeight: 111, minWidth: 70}
+                        },
+//                        {xtype: 'tbspacer', width: 4},
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbMesContador',
+                            labelAlign: 'right',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            editable: false,
+                            autoSelect: false,
+                            enableKeyEvents: true,
+                            caseSensitive: true,
+                            valueField: 'code', displayField: 'name',
+                            listConfig: {minWidth: 60},
+                            width: 60,
+                            anchor: '100%'
+                        },
+                        {xtype: 'tbspacer', width: 10},
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnActualizarContador',
+                            html: '<strong style="color:white;">Upd. Counter</strong>',
+                            style: 'background:#24678D;color:white;font-weight:bold;',
+                            border: false,
+                            margin: '2 0 0 0',
+                            listeners: {
+                                click: 'btnActualizarContador_click'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbControl',
