@@ -744,6 +744,27 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 ]
                                             },
                                             {
+                                                text: 'Cpns',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Accounted', dataIndex: 'QCPNCONTAB', width: 75, sortable: true,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = "text-align:right;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
+                                                            return Ext.util.Format.number(data.totQCPNCONTAB, '0,000');
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
                                                 text: 'Physical Manifest',
                                                 id: prototype.id + '-adgcPhysical',
                                                 hidden: true,
