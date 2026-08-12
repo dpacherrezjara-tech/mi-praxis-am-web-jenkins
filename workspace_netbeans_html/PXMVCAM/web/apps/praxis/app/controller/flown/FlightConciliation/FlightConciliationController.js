@@ -1833,6 +1833,21 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             return;
         }
 
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure you want to update the counters?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    me.executeActualizarContador(anio, mes);
+                }
+            }
+        });
+    },
+    executeActualizarContador: function (anio, mes) {
         Ext.getCmp(prototype.id + '-btnActualizarContador').disable();
 
         Ext.Ajax.request({
