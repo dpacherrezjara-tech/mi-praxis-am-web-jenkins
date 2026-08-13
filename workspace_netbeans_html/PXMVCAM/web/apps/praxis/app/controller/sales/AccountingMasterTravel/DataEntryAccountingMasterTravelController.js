@@ -104,7 +104,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
         this.lblA1838TIPO = data.A1838TIPO;
         this.lblA1838AGENT = data.A1838AGENT;
         this.lblFINIOld = Ext.util.Format.date(data.A1838FINI, 'Ymd');
-        this.lblFFINOld = Ext.util.Format.date(data.A1838FFIN, 'Ymd');
+        var fecha = Ext.Date.parse(data.A1838FFIN, 'Y/m/d');
+        this.lblFFINOld = fecha ? Ext.util.Format.date(fecha, 'Ymd') : '99999999';
         
     },
     getDataEntryValues: function (strOption) {
@@ -127,9 +128,12 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
         var IN_A1838TIPO_OLD = this.lblA1838TIPO;
         var IN_A1838AGENT_OLD = this.lblA1838AGENT;
 
-        //        if (A1838FFIN === '') {
-        //            A1838FFIN = '99999999';
-        //        }
+        if (A1838FFIN === '') {
+            A1838FFIN = '99999999';
+        }
+        if(this.lblFFINOld === ''){
+            this.lblFFINOld = '99999999';
+        }
         return {
             strOption: strOption,
             A1838CCUST: '139',
