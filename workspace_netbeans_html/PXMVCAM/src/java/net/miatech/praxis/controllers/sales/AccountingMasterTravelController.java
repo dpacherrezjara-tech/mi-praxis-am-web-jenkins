@@ -330,7 +330,9 @@ public class AccountingMasterTravelController extends BaseController {
             filter.A1838FINI = request.getParameter("A1838FINI");
             filter.A1838FFIN = request.getParameter("A1838FFIN");
             filter.IN_A1838TIPO_OLD = request.getParameter("IN_A1838TIPO_OLD");
-            filter.IN_A1838AGENT_OLD = request.getParameter("IN_A1838AGENT_OLD");          
+            filter.IN_A1838AGENT_OLD = request.getParameter("IN_A1838AGENT_OLD");
+            filter.IN_A1838FINI_OLD = request.getParameter("IN_A1838FINI_OLD");
+            filter.IN_A1838FFIN_OLD = request.getParameter("IN_A1838FFIN_OLD");
             
              msj = logic.Maintance(filter, strOption);                  
 
