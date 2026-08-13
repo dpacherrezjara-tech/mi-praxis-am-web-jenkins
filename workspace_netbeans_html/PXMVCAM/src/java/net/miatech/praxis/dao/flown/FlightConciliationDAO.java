@@ -422,7 +422,7 @@ public class FlightConciliationDAO {
                 QCPINF = rst.getLong("QCPINF");
                 QCPTRA = rst.getLong("QCPTRA");
                 QCPNVAL = rst.getLong("QCPNVAL");
-//                QCPNCONTAB = rst.getLong("QCPNCONTAB");
+                QCPNCONTAB = rst.getLong("QCPNCONTAB");
 
                 DIFFODSVCR = QCPNOD - QCPNVC;
             }
@@ -507,7 +507,7 @@ public class FlightConciliationDAO {
                     beanCons.QCPNMA = rst.getLong("QCPNMA");
                     beanCons.QCPNTOT = rst.getLong("QCPNTOT");
                     beanCons.QCPNVAL = rst.getLong("QCPNVAL");
-//                    beanCons.QCPNCONTAB = rst.getLong("QCPNCONTAB");
+                    beanCons.QCPNCONTAB = rst.getLong("QCPNCONTAB");
                     beanCons.lngQDIFF = rst.getLong("QCPNTOT") - rst.getInt("QCPNFI");
                     beanCons.DIFFODSVCR = rst.getLong("QCPNOD") - (rst.getInt("QCPNTOT") + rst.getInt("QCPNFRE"));
 
